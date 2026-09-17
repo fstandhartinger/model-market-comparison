@@ -55,29 +55,45 @@ export function predictForAxis(view: BenchmarkView, maps: Map<string, Map<string
 export function topPairs(view: BenchmarkView, stats: Map<string, FitStats>, opts?: { limit?: number; minN?: number }): PairSignal[];
 export function topPredictions(view: BenchmarkView, maps: Map<string, Map<string, number>>, evid: Map<string, Map<string, number>>, stats: Map<string, FitStats>, opts?: { limit?: number }): GapPrediction[];
 export function bottomDecileTags(view: BenchmarkView, opts?: { minPeers?: number; minAxes?: number; minFamilies?: number }, maps?: Map<string, Map<string, number>>): DecileResult;
-export interface RadarAxis { id: string; name: string; version: string; category: string; value: number | null; missing: boolean; unit: string }
+export type BenchmaxxingTier = 'headline' | 'heldout' | 'domain' | 'secondary' | 'aggregate' | 'judged';
+export interface RadarAxis { id: string; name: string; version: string; category: string; value: number | null; missing: boolean; unit: string; nativeValue?: number | null; observedDate?: string | null; tier: BenchmaxxingTier; side: 'headline' | 'heldout' | null }
+export interface BenchmaxxingPair {
+  category: string;
+  headline: { id: string; name: string; version: string };
+  heldout: { id: string; name: string; version: string };
+  headlinePercentile: number;
+  heldoutPercentile: number;
+  /** headlinePercentile − heldoutPercentile, both ranked among the pair's common cohort. */
+  gap: number;
+  cohort: number;
+}
 export interface BenchmaxxingReport {
   status: 'scored' | 'insufficient-coverage';
-  /** Shrunk within-topic spread (the ranking basis); null below the coverage rule. */
+  /** CR-69.2: mean signed headline − held-out gap, shrunk toward zero; null below the coverage rule. */
   score: number | null;
   rawScore: number | null;
   coverage: number;
   profile: { modelId: string; axes: RadarAxis[]; measured: number; total: number };
   domainSpecialization: number | null;
+  /** n = distinct headline boards + distinct held-out boards in the model's pairs − 1. */
   comparisons: number;
   topics: number;
-  topicSpread: { category: string; measured: number; spread: number }[];
+  headlineBoards: number;
+  heldoutBoards: number;
+  pairCount: number;
+  topicGaps: { category: string; pairs: number; gap: number }[];
+  drivers: { positive: BenchmaxxingPair[]; negative: BenchmaxxingPair[] };
   rule: { minComparisons: number; minTopics: number };
   shrinkage?: { priorMean: number; k: number };
-  jumps: { category: string; from: string; to: string; magnitude: number }[];
-  /** CR-65.6: set by benchmaxxingSignals for models inside a tag band. */
   interval?: { lower: number; upper: number; level: number; replicates: number } | null;
 }
+export const BENCHMAXX_TIERS: readonly BenchmaxxingTier[];
+export const BENCHMAXX_TIER_TABLE: { version: string; note: string; tiers: Record<string, { tier: BenchmaxxingTier; reason: string; domain?: string }> };
+export function benchmaxxingTier(axis: { family?: string; version?: string; benchmaxxingTier?: BenchmaxxingTier }): { tier: BenchmaxxingTier; reason: string; domain?: string | null; untiered?: boolean };
+export function benchmaxxingSide(axis: BenchmarkView['axes'][number]): 'headline' | 'heldout' | null;
 export const BENCHMAXX_MIN_COMPARISONS: number;
 export const BENCHMAXX_TAG_MIN_COMPARISONS: number;
-export const BENCHMAXX_LEVEL_MIN_MODELS: number;
 export const BENCHMAXX_PAIR_MIN_MODELS: number;
-export const BENCHMAXX_LEVEL_FLOOR: number;
 export const BENCHMAXX_MIN_TOPICS: number;
 export const BENCHMAXX_MIN_SHRINK: number;
 export const BENCHMAXX_MAX_SHRINK: number;
@@ -86,11 +102,12 @@ export const BENCHMAXX_WEAK_SHARE: number;
 export function percentileFor(axis: BenchmarkView['axes'][number], modelId: string): number | null;
 export function percentileCohortSize(axis: BenchmarkView['axes'][number]): number;
 export function groupedRadarProfile(view: BenchmarkView, modelId: string): BenchmaxxingReport['profile'];
-export function scoreBenchmaxxing(view: BenchmarkView, modelId: string, opts?: { minMeasured?: number; minComparisons?: number; minTopics?: number }): BenchmaxxingReport;
-export function benchmaxxingPrior(view: BenchmarkView): { mean: number | null; shrink: number; eligible: number };
+export function scoreBenchmaxxing(view: BenchmarkView, modelId: string, opts?: { minComparisons?: number; minTopics?: number }): BenchmaxxingReport;
+export function benchmaxxingPrior(view: BenchmarkView): { mean: number; catalogMean: number | null; shrink: number; eligible: number };
 export const BENCHMAXX_BOOTSTRAP_REPLICATES: number;
 export const BENCHMAXX_INTERVAL: number;
 export function benchmaxxingInterval(view: BenchmarkView, modelId: string, opts?: { replicates?: number; level?: number }): { lower: number; upper: number; level: number; replicates: number } | null;
-export function benchmaxxingSignals(view: BenchmarkView, modelIds?: Iterable<string> | null): { reports: [string, BenchmaxxingReport][]; tagged: Set<string>; weak: Set<string>; average: number | null };
-export function benchmaxxingFamilySignals(view: BenchmarkView): { reports: [string, BenchmaxxingReport][]; tagged: Set<string>; taggedFamilies: Set<string>; weak: Set<string>; weakFamilies: Set<string>; representatives: Map<string, string>; variantsOf: (id: string) => number; average: number | null };
+export type BenchmaxxingBanded = { id: string; band: 'strong' | 'weak'; passes: boolean };
+export function benchmaxxingSignals(view: BenchmarkView, modelIds?: Iterable<string> | null): { reports: [string, BenchmaxxingReport][]; tagged: Set<string>; weak: Set<string>; average: number | null; banded: BenchmaxxingBanded[] };
+export function benchmaxxingFamilySignals(view: BenchmarkView): { reports: [string, BenchmaxxingReport][]; tagged: Set<string>; taggedFamilies: Set<string>; weak: Set<string>; weakFamilies: Set<string>; representatives: Map<string, string>; variantsOf: (id: string) => number; average: number | null; banded: BenchmaxxingBanded[] };
 export function isCapabilityAxis(axis: { kind?: string; category?: string }): boolean;

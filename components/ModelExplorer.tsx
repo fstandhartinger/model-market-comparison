@@ -325,8 +325,8 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
     <summary className="cursor-pointer select-none text-gray-400 hover:text-inherit">Legend: marks and tags</summary>
     <dl className="mt-2 grid grid-cols-[auto_1fr] items-center gap-x-3 gap-y-1.5">
       {showThin && <><dt><span className="bh-legend-stripe" aria-label="Striped score bar" role="img" /></dt><dd>Score built on fewer than 3 of 7 inputs</dd></>}
-      {showBmx && <><dt data-bh-tag-legend="benchmaxxing"><span className="bh-bmx-tag" data-level="strong">⚠&nbsp;Benchmaxxing</span></dt><dd>Among the most uneven across related benchmarks; opens the model&apos;s radar</dd>
-        <dt><span className="bh-bmx-tag" data-level="weak">△&nbsp;Benchmaxxing</span></dt><dd>Uneven, less clearly; a screening flag, not proof</dd></>}
+      {showBmx && <><dt data-bh-tag-legend="benchmaxxing"><span className="bh-bmx-tag" data-level="strong">⚠&nbsp;Benchmaxxing</span></dt><dd>Ranks clearly higher on famous public benchmarks than on held-out ones; opens the model&apos;s radar</dd>
+        <dt><span className="bh-bmx-tag" data-level="weak">△&nbsp;Benchmaxxing</span></dt><dd>Same lean, less clearly; a screening flag, not proof</dd></>}
       <dt data-bh-tag-legend="value"><span className="bh-value-tag" data-kind="cheap" data-level="strong">↓ cheaper</span> <span className="bh-value-tag" data-kind="pricey" data-level="strong">↑ pricier</span></dt><dd>Cost well below / above models with a similar score in this list</dd>
       <dt><span className="bh-value-tag" data-kind="cheap" data-level="weak">↘ cheaper</span> <span className="bh-value-tag" data-kind="pricey" data-level="weak">↗ pricier</span></dt><dd>Somewhat below / above</dd>
     </dl>
@@ -659,7 +659,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
       {/* CR-63.1 (Florian 2026-09-16: "benchmaxxing tab should be moved up in priority"): a one-line teaser in the style of the row below. */}
       <p className="card mt-4 px-4 py-3 text-sm" data-bh-benchmaxxing-teaser>
         <span aria-hidden="true" className="text-warn">⚠ </span><strong>Benchmaxxing check.</strong>{" "}
-        <span className="text-gray-400">Some models score high on one benchmark and slump on its siblings. We flag uneven results so you don&apos;t trust a single headline number.</span>{" "}
+        <span className="text-gray-400">Some models shine on the famous public benchmarks and slip on held-out ones nobody can train for. We flag that gap so you don&apos;t trust a single headline number.</span>{" "}
         <Link href="/benchmaxxing" className="whitespace-nowrap font-semibold text-accent underline decoration-dotted underline-offset-2">See which models are flagged →</Link>
       </p>
       <SubscriptionsPanel perTask={s.priceMode === "adjusted"}

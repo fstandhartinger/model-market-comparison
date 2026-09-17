@@ -7,10 +7,11 @@ const src = (path) => readFile(new URL(`../${path}`, import.meta.url), 'utf8');
 
 test('F-108 (e): the Benchmaxxing radar copy says what the signal measures, with both caveats', async () => {
   const report = await src('components/BenchmaxxingReport.tsx');
-  assert.match(report, /Jumps between neighbouring benchmarks of one topic are what the signal measures\. Mid-table models jump more often, and models at the rim look smooth — a flag is a screen, not proof\./);
+  // CR-69.4 replaced the unevenness copy: the note now explains the headline/held-out markers.
+  assert.match(report, /A jagged shape between topics is specialisation, not a flag — a flag is a screen, not proof\./);
   assert.match(report, /Dashed ring = \{compare \? "each model's" : "this model's"\} average percentile\./);
   assert.doesNotMatch(report + await src('components/BenchmaxxingOverview.tsx'), /more jagged/i);
-  assert.match(await src('app/about/page.tsx'), /mid-table models jump more often and models at the rim\s+look smooth/);
+  assert.match(await src('app/about/page.tsx'), /screen, not proof/);
 });
 
 test('F-108 (a–c): zero ring, ring labels and a dashed average ring in TopicRadar', async () => {

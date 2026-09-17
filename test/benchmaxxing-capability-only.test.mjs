@@ -30,7 +30,7 @@ test('no cost or efficiency axis reaches a profile, a signal or the decile tags'
     assert.ok(profile.axes.every((a) => !nonCapability.has(a.id)), m.id);
   }
   const { reports } = benchmaxxingFamilySignals(view);
-  for (const [, r] of reports) assert.ok(r.profile.axes.every((a) => !nonCapability.has(a.id)) && r.topicSpread.every((t) => t.category !== 'Efficiency'));
+  for (const [, r] of reports) assert.ok(r.profile.axes.every((a) => !nonCapability.has(a.id)) && r.topicGaps.every((t) => t.category !== 'Efficiency'));
   const deciles = bottomDecileTags(view);
   assert.ok(deciles.perAxis.size > 0);
   for (const axisId of deciles.perAxis.keys()) assert.ok(!nonCapability.has(axisId), axisId);

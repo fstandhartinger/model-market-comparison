@@ -2,7 +2,8 @@
 import { useState } from 'react';
 import { humanVersion } from '../lib/version-label';
 
-export type RadarAxisMeta = { id: string; name: string; version: string; category: string };
+/** CR-69.4: `side` marks a Benchmaxxing axis — headline boards filled, held-out hollow, boards the signal does not use greyed. */
+export type RadarAxisMeta = { id: string; name: string; version: string; category: string; side?: 'headline' | 'heldout' | null };
 /** `value` is the 0–100 radar position (null = gap); `label` is the exact value shown on hover/tap/focus. */
 export type RadarPoint = { value: number | null; label: string };
 export type RadarSeries = { id: string; name: string; color: string; dash?: string; points: RadarPoint[] };
@@ -52,7 +53,7 @@ const TOPIC_COLORS = ['#5b9dff', '#7ee0c0', '#f5b65b', '#cc9aff', '#ff8aa8', '#8
  *  F-108 (CR-65.18): zero is a ring (radius starts at the spoke start), the rings are labelled, each series gets a
  *  dashed ring at its average position, singleton topics form one trailing "Other" arc, and topic labels wrap inside
  *  the chart instead of being clipped. `rings="position"` labels the rings as plain 0–100 positions (Compare, native). */
-export function TopicRadar({ axes: givenAxes, series: givenSeries, label, compact = false, rings = 'percentile', averages = true }: { axes: RadarAxisMeta[]; series: RadarSeries[]; label: string; compact?: boolean; rings?: 'percentile' | 'position'; averages?: boolean }) {
+export function TopicRadar({ axes: givenAxes, series: givenSeries, label, compact = false, rings = 'percentile', averages = true, markSides = false }: { axes: RadarAxisMeta[]; series: RadarSeries[]; label: string; compact?: boolean; rings?: 'percentile' | 'position'; averages?: boolean; markSides?: boolean }) {
   const [active, setActive] = useState<RadarActive>(null);
   // F-108 (g): topics with fewer than two axes go after every multi-axis topic, so "Other" is one contiguous arc.
   const topicSize = new Map<string, number>();
@@ -117,7 +118,8 @@ export function TopicRadar({ axes: givenAxes, series: givenSeries, label, compac
         {averages && series.length === 1 && avgText[0] && <text x={c + 5} y={c - radius(means[0]!) - 3} fill={series[0].color} data-radar-average-label>{avgText[0]}</text>}
       </g>}
       {series.map((s) => runs(s).map((points, k) => <polyline key={`${s.id}-${k}`} points={points.join(' ')} fill="none" stroke={s.color} strokeWidth="2" strokeDasharray={s.dash} strokeLinejoin="round" />))}
-      {series.map((s, si) => s.points.map((p, i) => { if (p?.value == null) return null; const [x, y] = at(si, i); return <circle key={`${s.id}-${i}`} cx={x} cy={y} r={active?.s === si && active?.i === i ? 7 : 5} fill={s.color} stroke="var(--surface, #161b22)" strokeWidth="1.5" pointerEvents="none" />; }))}
+      {series.map((s, si) => s.points.map((p, i) => { if (p?.value == null) return null; const [x, y] = at(si, i); const side = markSides ? axes[i].side ?? null : undefined; const hollow = side === 'heldout';
+        return <circle key={`${s.id}-${i}`} cx={x} cy={y} r={active?.s === si && active?.i === i ? 7 : 5} fill={hollow ? 'var(--surface, #161b22)' : s.color} stroke={hollow ? s.color : 'var(--surface, #161b22)'} strokeWidth={hollow ? 2 : 1.5} opacity={side === null ? 0.35 : undefined} data-radar-side={markSides ? side ?? 'unused' : undefined} pointerEvents="none" />; }))}
       {!compact && series.map((s, si) => s.points.map((p, i) => { if (p?.value == null) return null; const [x, y] = at(si, i); return <RadarHit key={`hit-${s.id}-${i}`} cx={x} cy={y} s={si} i={i} active={active} setActive={setActive} label={`${s.name}, ${axes[i].name}: ${p.label}`} />; }))}
     </svg>
     {/* F-108 (d): a label anchors on its own side and may use only the room between its anchor and that edge, so it wraps instead of leaving the wrapper. */}

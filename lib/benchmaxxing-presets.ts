@@ -16,7 +16,7 @@ export type BenchmaxxingOverviewRow = {
   tagged: boolean;
   /** CR-43.3: the published tag level (strong = top 10 %, weak = next 10 %), for the expandable row. */
   level: "strong" | "weak" | null;
-  /** CR-65.6: 80 % bootstrap interval of the score, for models inside a tag band; null elsewhere. */
+  /** CR-69.3: 80 % bootstrap interval of the score; null when it cannot be computed. */
   interval?: { lower: number; upper: number } | null;
 };
 
@@ -25,7 +25,7 @@ export type BenchmaxxingPreset = "featured" | "signals" | "all";
 // CR-63.4 (2026-09-16): Strongest signals is the default and comes first, so a first visit opens on flagged models.
 export const DEFAULT_BENCHMAXXING_PRESET: BenchmaxxingPreset = "signals";
 export const BENCHMAXXING_PRESETS: { key: BenchmaxxingPreset; label: string; heading: string }[] = [
-  { key: "signals", label: "Strongest signals", heading: "The strongest unevenness signals" },
+  { key: "signals", label: "Strongest signals", heading: "The strongest headline-over-held-out signals" },
   { key: "featured", label: "Featured models", heading: "Today’s featured models" },
   { key: "all", label: "All scored", heading: "Every scored model" },
 ];

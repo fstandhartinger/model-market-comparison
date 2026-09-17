@@ -26,7 +26,7 @@ const loadReport = (id: string) => {
 function QuickLook({ row, onOpenReport }: { row: BenchmaxxingOverviewRow; onOpenReport: (id: string) => void }) {
   const [report, setReport] = useState<BenchmaxxingReportData | null | undefined>(undefined);
   useEffect(() => { let live = true; loadReport(row.id).then((r) => { if (live) setReport(r); }); return () => { live = false; }; }, [row.id]);
-  const reading = interpretBenchmaxxing(report ?? { status: "scored", score: row.score, topicSpread: [] }, row.level);
+  const reading = interpretBenchmaxxing(report ?? { status: "scored", score: row.score, topicGaps: [] }, row.level);
   const axes = (report?.profile.axes ?? []).filter((a) => !a.missing && a.value != null);
   return <div className="grid gap-4 md:grid-cols-[minmax(0,400px)_1fr] md:items-center">
     <div className="min-h-[120px]">
@@ -40,7 +40,7 @@ function QuickLook({ row, onOpenReport }: { row: BenchmaxxingOverviewRow; onOpen
       <p className="text-3xl leading-none"><SignalValue score={row.score} level={row.level} /></p>
       <p className="font-medium" data-quick-reading>{reading.headline}</p>
       {reading.detail && <p className="bh-muted" data-quick-detail>{reading.detail}</p>}
-      <p className="bh-muted text-xs">{reading.caveat} Jumps between neighbouring benchmarks of one topic are what the signal measures.</p>
+      <p className="bh-muted text-xs">{reading.caveat}</p>
       <a href={`?model=${encodeURIComponent(row.id)}#radar`} className="bh-button inline-flex min-h-9 items-center px-3" data-quick-report
         onClick={(e) => { if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return; e.preventDefault(); onOpenReport(row.id); }}>
         Open the full report for {row.name} ↓
@@ -117,16 +117,15 @@ export function BenchmaxxingOverview({ rows, preset, onPreset, selected, onSelec
   // CR-21.2 → CR-63.5: the bar spans 0 → the highest signal of every scored model, one scale for all tabs, so a
   // model's bar keeps its length when the list changes.
   const maxScore = Math.max(1e-9, ...rows.map((row) => row.score));
-  // CR-65.6: tags are no longer a contiguous score band, so the InfoTip names the rule and today's catalog average instead.
-  const average = tagAverage;
+  // CR-69.3: tags are no longer a contiguous score band; the InfoTip names the rule (interval above zero).
   const heading = BENCHMAXXING_PRESETS.find((p) => p.key === preset)!.heading;
   return <section className="bh-panel p-5" aria-label="Benchmaxxing overview">
     <div className="grid gap-5 md:grid-cols-[1fr_auto] md:items-start">
       <div>
         <h2 className="text-xl font-semibold">{heading}</h2>
-        <p className="bh-muted mt-2 max-w-3xl text-sm">A signal highlights models whose results jump between related benchmarks. It is a screening flag—not proof of leakage, contamination, or intent. Select a row to open its report below, or ▸ for a quick look.</p>
+        <p className="bh-muted mt-2 max-w-3xl text-sm">Plus means a model ranks higher on famous public benchmarks than on held-out ones of the same topic (questions nobody can train for); zero means no sign. It is a screening flag—not proof of leakage, contamination, or intent. Select a row to open its report below, or ▸ for a quick look.</p>
       </div>
-      <div className="rounded-lg border border-line px-4 !py-2 text-sm"><b>{taggedCount}</b> models carry the strong tag <span className="bh-muted">· scored from {minComparisons} comparisons in {minTopics} topics; a tag needs {tagMinComparisons}</span></div>
+      <div className="rounded-lg border border-line px-4 !py-2 text-sm">{taggedCount ? <><b>{taggedCount}</b> models carry the strong tag</> : <b data-bmx-none-flagged>No model is credibly flagged</b>} <span className="bh-muted">· scored from n = {minComparisons} in {minTopics} topics; a tag needs n ≥ {tagMinComparisons}</span></div>
     </div>
     <div role="group" aria-label="Model list preset" className="mt-4 flex flex-wrap gap-2">
       {BENCHMAXXING_PRESETS.map((p) => <button key={p.key} type="button" aria-pressed={preset === p.key} onClick={() => onPreset(p.key)}
@@ -138,15 +137,15 @@ export function BenchmaxxingOverview({ rows, preset, onPreset, selected, onSelec
         <colgroup><col className="w-[44%] md:w-[28%]" /><col className="w-[22%] md:w-[14%]" /><col className="hidden md:table-column md:w-[20%]" /><col className="w-[34%] md:w-[18%]" /><col className="hidden md:table-column md:w-[20%]" /></colgroup>
         <thead><tr>
           <th scope="col" className="text-left">Model</th>
-          <th scope="col" className="text-left">Signal <InfoTip title="Benchmaxxing signal" label="the Signal column">Within-topic percentile spread (each pair of related benchmarks ranked among the models both cover), 0–100, adjusted for the model’s level (mid-table models jump more by chance) and for coverage. The tags are ranks among models with at least 10 related comparisons — the top 10 % can carry the strong ⚠ tag, the next 10 % the weak △ tag — and a model is tagged only when its 80 % bootstrap interval (its benchmarks resampled within each topic) lies above the catalog average{average != null ? ` (today ${average.toFixed(1)})` : ""}, so a high but uncertain signal stays untagged — the same tags as on the Overview table. It is a screening flag, not proof of leakage or intent. <span data-signal-max>Bars run from 0 to {maxScore.toFixed(1)}, the highest signal of any scored model, in every list.</span> <a href="/about#benchmaxxing" className="text-accent underline">How the signal works</a></InfoTip></th>
-          <th scope="col" className="hidden text-left md:table-cell">Related comparisons</th>
+          <th scope="col" className="text-left">Signal <InfoTip title="Benchmaxxing signal" label="the Signal column">Average signed gap, in percentile points, between public headline benchmarks and held-out benchmarks of the same topic (each pair ranked among the models both cover), pulled toward zero when few boards are compared. Plus = better on famous public tests than on tests nobody can train for. The tags are ranks among models with n ≥ 10 — the top 10 % can carry the strong ⚠ tag, the next 10 % the weak △ tag — and a model is tagged only when its 80 % bootstrap interval (its headline and held-out boards resampled) stays above zero, so a high but uncertain signal stays untagged — the same tags as on the Overview table. It is a screening flag, not proof of leakage or intent. <span data-signal-max>Bars run from 0 to {maxScore.toFixed(1)}, the highest signal of any scored model, in every list; a score at or below zero has no bar.</span> <a href="/about#benchmaxxing" className="text-accent underline">How the signal works</a></InfoTip></th>
+          <th scope="col" className="hidden text-left md:table-cell">Boards compared (n)</th>
           <th scope="col" className="text-left">Measured</th>
-          <th scope="col" className="hidden text-left md:table-cell">Domain specialization <InfoTip title="Domain specialization" label="the Domain specialization column">Disclosed for context and deliberately not added to the Benchmaxxing signal. Consistently strong coding and weak writing is specialisation, not unevenness within a topic.</InfoTip></th>
+          <th scope="col" className="hidden text-left md:table-cell">Domain specialization <InfoTip title="Domain specialization" label="the Domain specialization column">Disclosed for context and deliberately not added to the Benchmaxxing signal. Consistently strong coding and weak writing is specialisation, not a headline-over-held-out gap.</InfoTip></th>
         </tr></thead>
         <tbody><Rows rows={visible} maxScore={maxScore} selected={selected} onSelect={onSelect} expanded={expanded} onExpand={setExpanded} onOpenReport={onOpenReport} /></tbody>
       </table>
     </div>
-    {!listed.length ? <p className="bh-empty mt-4">No scored model in this preset.</p> : null}
+    {!listed.length ? <p className="bh-empty mt-4">{preset === "signals" ? "No model is credibly flagged: no score in the top band stays above zero when its benchmarks are resampled." : "No scored model in this preset."}</p> : null}
     {listed.length > 10 ? <button type="button" className="bh-button mt-4" onClick={() => onShowAll(!showAll)} aria-expanded={showAll}>{showAll ? "Show first 10" : `Show all ${listed.length} in this list`}</button> : null}
   </section>;
 }

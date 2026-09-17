@@ -2,6 +2,8 @@ import { getDataset } from "../../lib/data";
 import { AaCredit } from '../../components/AaCredit';
 import { EpochCredit } from '../../components/EpochCredit';
 import { previewMetadata } from "../../lib/seo";
+import { BENCHMAXX_TIER_TABLE } from "../../lib/benchmax.mjs";
+import { getBenchmarkView } from "../../lib/benchmark-data";
 
 
 export const metadata = previewMetadata({ path: "/about", documentTitle: "About & data sources", title: "How Benchmark Heaven works — sources & methodology",
@@ -9,11 +11,24 @@ export const metadata = previewMetadata({ path: "/about", documentTitle: "About 
 
 export default async function AboutPage() {
   const ds = await getDataset();
+  const view = await getBenchmarkView();
   // R4.4: the featured shortlist is derived at build time and published in the dataset,
   // so this page lists exactly what the site is filtering on — never a stale hand-list.
   const featured = ds.build_diagnostics?.featured_selection ?? null;
   const familyNames = new Map(ds.models.map((m) => [m.family_key, m.family_name || m.family_key]));
   const familyName = (key: string) => familyNames.get(key) ?? key;
+  // CR-69.1: the Benchmaxxing tier table, one row per board (a family@version key names that version only).
+  const registryName = (key: string) => {
+    const [family, version] = key.split("@");
+    const rows = view.axes.filter((b) => b.family === family && (version ? b.version === version : !BENCHMAXX_TIER_TABLE.tiers[`${family}@${b.version}`]));
+    if (!rows.length) return key;
+    const names = [...new Set(rows.map((b) => b.name))];
+    return names.length === 1 ? names[0] : names[0].replace(/\s+v?\d+(\.\d+)*(?=\s*\(|$)/, "");
+  };
+  const tierLabel: Record<string, string> = { headline: "Headline", heldout: "Held-out", domain: "Domain (not used)", secondary: "Secondary (not used)", aggregate: "Index (not used)", judged: "Judged (not used)" };
+  const tierOrder = ["headline", "heldout", "domain", "secondary", "aggregate", "judged"];
+  const tierRows = Object.entries(BENCHMAXX_TIER_TABLE.tiers).map(([key, t]) => ({ key, name: registryName(key), ...t }))
+    .sort((a, b) => tierOrder.indexOf(a.tier) - tierOrder.indexOf(b.tier) || a.name.localeCompare(b.name));
   return (
     <div className="max-w-3xl">
       <h1 className="text-2xl font-bold">About &amp; data sources</h1>
@@ -178,24 +193,36 @@ export default async function AboutPage() {
       {/* CR-63.19: the third headline feature beside adjusted cost and the score. */}
       <h3 id="benchmaxxing" className="mt-6 mb-2 font-semibold">Benchmaxxing signal</h3>
       <p className="text-sm text-gray-400">
-        A model that was tuned for particular benchmarks tends to score very differently on benchmarks that test the same
-        skill. We compare each model&apos;s results between related benchmarks (coding with coding, maths with maths): the more
-        they jump within a topic, the higher its signal. Each pair of related benchmarks is compared among the models both
-        benchmarks have results for, so a board that only tests frontier models and one that tests every model are put on
-        the same footing. Being consistently strong in one field and weak in another is
-        specialisation and does not count. Only benchmarks with a verifiable score count: boards decided by a vote or a judge
-        model (writing, roleplay, some arena and rubric boards) and willingness-to-answer boards are left out, and cost
-        boards were never in. Percentiles are bounded, so a model in the middle of the field jumps more by chance than one
-        near the top or bottom; each model&apos;s spread is therefore divided by the spread expected at its level (its
-        average percentile), fitted on the whole catalog, so frontier models are no longer immune. Scores with few
-        comparisons are pulled towards the catalog average. Among models with at least 10 related comparisons, the top
-        10 % can carry the strong ⚠ tag and the next 10 % the weak △ tag — but only when the model&apos;s 80 % bootstrap
-        interval (its benchmarks resampled within each topic, 400 times) lies above the catalog average. Neighbouring
-        signals near the top differ by less than their own uncertainty, so a high but uncertain signal stays untagged. On the radar, mid-table models jump more often and models at the rim
-        look smooth, which is why the signal is adjusted for level and a flag is a screen, not proof. It is a screening flag that invites a closer look at
-        the sources, not proof of contamination or intent.{" "}
+        We split benchmarks into public &ldquo;headline&rdquo; tests that labs quote in launch posts and &ldquo;held-out&rdquo; tests whose
+        questions are private, brand-new or newer than the models; indexes built from other boards, judge- or vote-graded
+        boards and legal, finance and medical specialist boards are left out. For every headline/held-out pair in the same
+        topic (for example GPQA Diamond against CritPt in science), the model is ranked among the models that took both tests,
+        and the score is the average of how much higher it ranks on the headline test, in percentile points. With few pairs
+        the score is pulled toward zero, and the ⚠ tag needs the top tenth (the next tenth for the weaker △ tag), at least
+        ten comparisons, and a gap that stays above zero when its benchmarks are resampled.
+      </p>
+      <p className="mt-2 text-sm text-gray-400">
+        How to read it: plus means better on famous public tests than on tests nobody can train for, minus the other way
+        round, and zero means no sign. Differences between topics — strong at coding, weaker at maths — are specialisation
+        and do not count. In detail: n is the number of distinct headline boards plus held-out boards in the model&apos;s pairs
+        minus one; a score needs n ≥ 6 and pairs in at least two topics; the pull toward zero is n / (n + k) with k estimated
+        from the catalog (how much score variance falls as n grows, clamped to 6–50); the interval resamples the model&apos;s
+        headline and held-out boards separately, 400 times, and the tag needs the lower end of its 80 % interval above zero.
+        If no model passes, none is flagged. It is a screen, not proof: a positive gap fits benchmark-targeted training, but
+        it also fits a model that is simply weaker at long agent work, which several held-out boards lean toward. Model
+        names, labs, openness and prices are never inputs; a tier is decided from benchmark facts alone.{" "}
         <a href="/benchmaxxing" className="text-accent">See the flagged models and their radars</a>.
       </p>
+      <details id="benchmaxxing-tiers" className="mt-3 text-sm">
+        <summary className="cursor-pointer font-medium">Benchmark tiers used by the signal ({tierRows.length} boards)</summary>
+        <p className="mt-2 text-xs text-gray-400">A board without an entry counts as secondary and is not used until it gets a deliberate tier.</p>
+        <div className="bh-table-wrap mt-2">
+          <table className="bh-table w-full text-sm" data-bmx-tier-table>
+            <thead><tr><th scope="col" className="text-left">Board</th><th scope="col" className="text-left">Tier</th><th scope="col" className="text-left">Reason</th></tr></thead>
+            <tbody>{tierRows.map((t) => <tr key={t.key}><th scope="row" className="text-left font-medium">{t.name}</th><td className="whitespace-nowrap">{tierLabel[t.tier] ?? t.tier}</td><td className="text-gray-400">{t.reason}</td></tr>)}</tbody>
+          </table>
+        </div>
+      </details>
 
       <h3 id="score" className="mt-6 mb-2 font-semibold">The composite score</h3>
       {/* CR-35.4: Epoch AI's recommended citation (CC BY). */}

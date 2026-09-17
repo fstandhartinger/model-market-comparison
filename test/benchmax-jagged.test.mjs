@@ -24,23 +24,6 @@ test('groupedRadarProfile keeps semantic topic neighbors adjacent and leaves mis
   assert.equal(profile.axes.find((a) => a.id === 'missing').missing, true);
 });
 
-test('scoreBenchmaxxing gives within-topic zig-zags more signal than smooth domain specialization', () => {
-  const peers = Object.fromEntries(Array.from({ length: 11 }, (_, i) => [`p${i}`, i * 10]));
-  const a = (id, category, smooth, jagged) => axis(id, category, { ...peers, smooth, jagged });
-  const v = {
-    models: [{ id: 'smooth', name: 'Smooth', org: 'Test' }, { id: 'jagged', name: 'Jagged', org: 'Test' }],
-    axes: [
-      a('code-a', 'Coding', 90, 95), a('code-b', 'Coding', 88, 20), a('code-c', 'Coding', 86, 92), a('code-d', 'Coding', 89, 25),
-      a('writing-a', 'Writing', 30, 50), a('writing-b', 'Writing', 32, 48), a('writing-c', 'Writing', 31, 52), a('writing-d', 'Writing', 33, 49),
-    ],
-  };
-  const smooth = scoreBenchmaxxing(v, 'smooth');
-  const jagged = scoreBenchmaxxing(v, 'jagged');
-  assert.equal(smooth.status, 'scored');
-  assert.equal(jagged.status, 'scored');
-  assert.ok(jagged.score > smooth.score, 'within-topic oscillation outranks smooth cross-domain specialization');
-  assert.ok(smooth.domainSpecialization > 0, 'specialization remains disclosed, not folded into anomaly score');
-});
 
 test('scoreBenchmaxxing reports insufficient coverage instead of synthesizing a score', () => {
   const v = view([
@@ -56,59 +39,6 @@ test('scoreBenchmaxxing reports insufficient coverage instead of synthesizing a 
 
 // B3 (review 2026-09-13): coverage must not decide the tag.
 const catalogAxis = (id, category, entries) => axis(id, category, Object.fromEntries(entries));
-
-test('scoreBenchmaxxing refuses a score below the comparison and topic floor', () => {
-  // 5 measured axes in one topic: 4 comparisons, 1 topic -> not scored.
-  // Peers keep each axis and each pair a real cohort (CR-22.1: >= 3 model families; CR-65.7: >= 10 models on both boards).
-  const peers = (i) => Object.fromEntries(Array.from({ length: 8 }, (_, k) => [`peer${k}`, 20 + k * 8 + i]));
-  const axes = Array.from({ length: 5 }, (_, i) => axis(`code-${i}`, 'Coding', { smooth: 50 + i, jagged: i % 2 ? 10 : 90, ...peers(i) }));
-  const out = scoreBenchmaxxing(view(axes), 'jagged');
-  assert.equal(out.status, 'insufficient-coverage');
-  assert.equal(out.score, null);
-  assert.equal(out.comparisons, 4);
-  assert.equal(out.topics, 1);
-});
-
-test('scoreBenchmaxxing does not depend on axis order within a topic', () => {
-  const peers = Object.fromEntries(Array.from({ length: 11 }, (_, i) => [`p${i}`, i * 10]));
-  const values = [95, 20, 90, 25, 60];
-  const build = (names) => ({
-    models: [{ id: 'm', name: 'M', org: 'T' }],
-    axes: [
-      ...names.map((name, i) => axis(name, 'Coding', { ...peers, m: values[i] })),
-      axis('w-a', 'Writing', { ...peers, m: 40 }), axis('w-b', 'Writing', { ...peers, m: 45 }), axis('w-c', 'Writing', { ...peers, m: 42 }),
-    ],
-  });
-  const a = scoreBenchmaxxing(build(['a', 'b', 'c', 'd', 'e']), 'm');
-  const b = scoreBenchmaxxing(build(['e', 'a', 'd', 'b', 'c']), 'm');
-  assert.equal(a.status, 'scored');
-  assert.ok(Math.abs(a.rawScore - b.rawScore) < 1e-9, 'renaming axes (changing their alphabetical order) leaves the score unchanged');
-});
-
-test('Benchmaxxing tag rate does not concentrate on low-coverage models (synthetic catalog)', () => {
-  // Every model has the SAME underlying unevenness; only coverage differs.
-  let seed = 7;
-  const rand = () => { seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; };
-  const models = Array.from({ length: 200 }, (_, i) => ({ id: `m${i}`, name: `m${i}`, org: 'T', sparse: i % 2 === 0 }));
-  const topics = ['Coding', 'Writing', 'Math'];
-  const axesList = [];
-  for (const topic of topics) for (let k = 0; k < 7; k += 1) {
-    const entries = [];
-    for (const m of models) {
-      if (m.sparse && k >= 3) continue; // sparse models: 3 per topic -> 6 comparisons; dense: 7 per topic -> 18
-      entries.push([m.id, 50 + (rand() - 0.5) * 60]);
-    }
-    axesList.push(catalogAxis(`${topic}-${k}`, topic, entries));
-  }
-  const v = { models, axes: axesList };
-  const { reports, tagged } = benchmaxxingSignals(v);
-  assert.equal(reports.length, 200, 'both coverage levels meet the floor');
-  const sparseTagged = models.filter((m) => m.sparse && tagged.has(m.id)).length;
-  const denseTagged = models.filter((m) => !m.sparse && tagged.has(m.id)).length;
-  assert.ok(sparseTagged <= denseTagged * 2 + 2, `sparse ${sparseTagged} vs dense ${denseTagged}`);
-  const raw = [...models].filter((m) => m.sparse).map((m) => scoreBenchmaxxing(v, m.id));
-  assert.ok(raw.every((r) => r.score !== r.rawScore || r.rawScore === r.shrinkage.priorMean), 'scores are shrunk toward the catalog mean');
-});
 
 test('real dataset: Benchmaxxing tag rate does not fall as coverage grows', async () => {
   const fs = await import('node:fs');
@@ -128,103 +58,6 @@ test('real dataset: Benchmaxxing tag rate does not fall as coverage grows', asyn
   assert.ok(high >= low * 0.5, `tag rate high-coverage ${high.toFixed(3)} must not collapse vs low-coverage ${low.toFixed(3)}`);
 });
 
-// CR-65.5 (data & math gauntlet B1): release test. A simulated catalog WITHOUT any benchmaxxing — every axis is
-// skill plus independent noise — must not tag mid-table models preferentially: the tagged share (strong + weak)
-// in each level tercile stays within ±10 percentage points of the overall share. The unadjusted spread fails
-// this (mid-pack models spread most because percentiles are bounded), which the second assertion pins.
-test('CR-65.5: without benchmaxxing, tags spread evenly across level bands (null simulation)', () => {
-  for (const seed0 of [7, 11, 23]) {
-    let seed = seed0;
-    const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
-    const gauss = () => Math.sqrt(-2 * Math.log(rnd())) * Math.cos(2 * Math.PI * rnd());
-    const models = Array.from({ length: 300 }, (_, i) => ({ id: `m${i}`, skill: gauss() }));
-    const axes = [];
-    for (const topic of ['Coding', 'Math', 'Agentic']) for (let k = 0; k < 5; k += 1) {
-      axes.push({ ...axis(`${topic}-${k}`, topic, {}), scores: models.map((m) => ({ modelId: m.id, value: m.skill + 0.45 * gauss(), basis: 'measured', lowSample: false })) });
-    }
-    const v = { models, axes };
-    const { reports, tagged, weak } = benchmaxxingSignals(v);
-    assert.equal(reports.length, 300);
-    assert.ok(reports.every(([, r]) => r.levelAdjustment), 'a catalog this size is level-adjusted');
-    const level = new Map(reports.map(([id, r]) => [id, r.levelAdjustment.level]));
-    const bands = [[0, 100 / 3], [100 / 3, 200 / 3], [200 / 3, 101]];
-    const share = (set) => bands.map(([lo, hi]) => { const ids = reports.map(([id]) => id).filter((id) => level.get(id) >= lo && level.get(id) < hi); return ids.filter((id) => set(id)).length / ids.length; });
-    const overall = (tagged.size + weak.size) / reports.length;
-    for (const s of share((id) => tagged.has(id) || weak.has(id))) assert.ok(Math.abs(s - overall) <= 0.10, `seed ${seed0}: band share ${s.toFixed(3)} vs overall ${overall.toFixed(3)}`);
-    // Power check: ranking by the unadjusted spread puts most of the same number of models in the middle band.
-    const byRaw = [...reports].sort((a, b) => b[1].rawScore - a[1].rawScore).slice(0, tagged.size + weak.size).map(([id]) => id);
-    const mid = byRaw.filter((id) => level.get(id) >= 100 / 3 && level.get(id) < 200 / 3).length / byRaw.length;
-    assert.ok(mid > 0.6, `seed ${seed0}: unadjusted spread is mid-table heavy (${mid.toFixed(2)})`);
-  }
-});
-
-test('CR-65.5: the expected-spread fit recovers a known quadratic and is not applied to a tiny catalog', async () => {
-  const { fitLevelCurve, BENCHMAXX_LEVEL_MIN_MODELS } = await import('../lib/benchmax.mjs');
-  const truth = (m) => -3.9 + 1.04 * m - 0.0098 * m * m;
-  const curve = fitLevelCurve(Array.from({ length: 21 }, (_, i) => ({ x: i * 5, y: truth(i * 5) })));
-  for (const m of [10, 50, 90]) assert.ok(Math.abs(curve.at(m) - truth(m)) < 1e-6, `fit at ${m}`);
-  assert.equal(fitLevelCurve([{ x: 1, y: 1 }, { x: 2, y: 2 }]), null);
-  assert.ok(BENCHMAXX_LEVEL_MIN_MODELS >= 20);
-  const peers = Object.fromEntries(Array.from({ length: 11 }, (_, i) => [`p${i}`, i * 10]));
-  const small = { models: [{ id: 'm' }], axes: ['a', 'b', 'c', 'd'].flatMap((k) => [axis(`c-${k}`, 'Coding', { ...peers, m: 50 }), axis(`w-${k}`, 'Writing', { ...peers, m: 60 })]) };
-  assert.equal(scoreBenchmaxxing(small, 'm').levelAdjustment, null);
-});
-
-test('CR-65.6 / CR-65.7: a thin model at the top is untagged; judged and Uncensored axes do not move the signal', async () => {
-  const { BENCHMAXX_TAG_MIN_COMPARISONS, BENCHMAXX_MIN_SHRINK, isSignalAxis } = await import('../lib/benchmax.mjs');
-  assert.ok(BENCHMAXX_TAG_MIN_COMPARISONS >= 10);
-  assert.ok(BENCHMAXX_MIN_SHRINK >= 6);
-  // 40 smooth peers with 12 comparisons each and one very jagged model with only 8 comparisons.
-  let seed = 3; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
-  const models = Array.from({ length: 40 }, (_, i) => ({ id: `p${i}` })).concat([{ id: 'thin' }]);
-  const axes = [];
-  for (const topic of ['Coding', 'Math', 'Agentic']) for (let k = 0; k < 5; k += 1) {
-    const entries = models.filter((m) => m.id !== 'thin' || k < 4).map((m, i) => [m.id, m.id === 'thin' ? (k % 2 ? 0 : 100) : i * 2 + rnd() * 10]);
-    axes.push(catalogAxis(`${topic}-${k}`, topic, entries));
-  }
-  const v = { models, axes };
-  const thin = scoreBenchmaxxing(v, 'thin');
-  assert.equal(thin.comparisons, 9);
-  const { reports, tagged, weak } = benchmaxxingSignals(v);
-  assert.equal(reports[0][0], 'thin', 'the thin model has the highest score');
-  assert.ok(!tagged.has('thin') && !weak.has('thin'), 'but fewer than 10 comparisons never carry a named tag');
-  // A judged axis and an Uncensored axis with a wild value leave the score unchanged.
-  const withNoise = { models, axes: [...axes,
-    { ...catalogAxis('judged-a', 'Coding', models.map((m, i) => [m.id, m.id === 'p3' ? 100 : i])), judged: true },
-    { ...catalogAxis('judged-b', 'Coding', models.map((m, i) => [m.id, m.id === 'p3' ? 0 : i])), judged: true },
-    catalogAxis('ugi-a', 'Uncensored', models.map((m, i) => [m.id, m.id === 'p3' ? 100 : i])),
-    catalogAxis('ugi-b', 'Uncensored', models.map((m, i) => [m.id, m.id === 'p3' ? 0 : i])),
-  ] };
-  assert.equal(isSignalAxis(withNoise.axes.at(-1)), false);
-  assert.equal(isSignalAxis(withNoise.axes.at(-3)), false);
-  assert.equal(scoreBenchmaxxing(withNoise, 'p3').score, scoreBenchmaxxing(v, 'p3').score);
-});
-
-test('CR-65.6: a bootstrap interval gates the tag — deterministic, and a noisy leader without a credible lead stays untagged', async () => {
-  const { benchmaxxingInterval } = await import('../lib/benchmax.mjs');
-  let seed = 5; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
-  const models = Array.from({ length: 60 }, (_, i) => ({ id: `p${i}` }));
-  const axes = [];
-  for (const topic of ['Coding', 'Math', 'Agentic']) for (let k = 0; k < 6; k += 1) {
-    axes.push(catalogAxis(`${topic}-${k}`, topic, models.map((m, i) => {
-      // p0: one wild benchmark per topic, otherwise smooth → high score, wide interval. p1: consistently jagged.
-      const base = i * 1.5 + rnd() * 8;
-      if (m.id === 'p0') return [m.id, k === 0 ? 0 : 60];
-      if (m.id === 'p1') return [m.id, k % 2 ? 5 : 85];
-      return [m.id, base];
-    })));
-  }
-  const v = { models, axes };
-  const a = benchmaxxingInterval(v, 'p1'), b = benchmaxxingInterval(v, 'p1');
-  assert.deepEqual(a, b, 'seeded by model id');
-  assert.ok(a.lower <= scoreBenchmaxxing(v, 'p1').score && scoreBenchmaxxing(v, 'p1').score <= a.upper);
-  const { reports, tagged, weak, average } = benchmaxxingSignals(v);
-  assert.ok(tagged.has('p1'), 'a consistently jagged model is tagged');
-  for (const id of [...tagged, ...weak]) assert.ok(reports.find(([x]) => x === id)[1].interval.lower > average);
-  const p0 = reports.find(([x]) => x === 'p0')[1];
-  assert.ok(p0.interval.upper - p0.interval.lower > a.upper - a.lower, 'one wild benchmark per topic gives a wider interval');
-});
-
 // CR-65.7 (data & math gauntlet B5): a frontier-only board and an all-comers board rank different fields. The signal
 // compares each pair of boards among the models measured on both, so identical orders give identical percentiles.
 test('CR-65.7: two boards with the same order but different cohorts give a zero gap and no signal', async () => {
@@ -241,30 +74,3 @@ test('CR-65.7: two boards with the same order but different cohorts give a zero 
   assert.equal(pairDistances({ ...v, axes: [open, tiny] }, open, tiny), null);
 });
 
-test('CR-65.7: without benchmaxxing, frontier-only boards do not make the signal track model strength (null simulation)', () => {
-  const spearman = (xs, ys) => {
-    const rank = (a) => { const r = new Array(a.length); a.map((x, i) => [x, i]).sort((p, q) => p[0] - q[0]).forEach(([, i], k) => { r[i] = k; }); return r; };
-    const rx = rank(xs), ry = rank(ys), m = (xs.length - 1) / 2;
-    let sxy = 0, sxx = 0; rx.forEach((x, i) => { sxy += (x - m) * (ry[i] - m); sxx += (x - m) ** 2; });
-    return sxy / sxx;
-  };
-  for (const seed0 of [7, 11, 23]) {
-    let seed = seed0;
-    const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
-    const gauss = () => Math.sqrt(-2 * Math.log(rnd())) * Math.cos(2 * Math.PI * rnd());
-    const models = Array.from({ length: 300 }, (_, i) => ({ id: `f${i}::v`, skill: gauss() }));
-    const top = new Set([...models].sort((a, b) => b.skill - a.skill).slice(0, 90).map((m) => m.id));
-    const axes = [];
-    for (const topic of ['Coding', 'Math', 'Agentic']) for (let k = 0; k < 6; k += 1) {
-      // Every other board tests (almost) only the strongest 30 % of models.
-      const members = models.filter((m) => k % 2 === 0 || top.has(m.id) || rnd() < 0.05);
-      axes.push({ ...axis(`${topic}-${k}`, topic, {}), scores: members.map((m) => ({ modelId: m.id, value: m.skill + 0.45 * gauss(), basis: 'measured', lowSample: false })) });
-    }
-    const { reports } = benchmaxxingSignals({ models, axes });
-    const skill = new Map(models.map((m) => [m.id, m.skill]));
-    const pool = reports.filter(([, r]) => r.comparisons >= 10);
-    const rho = spearman(pool.map(([, r]) => r.score), pool.map(([id]) => skill.get(id)));
-    // Global percentiles gave rho ≈ −0.65 here (strong models on frontier boards read as uneven, the rest smooth).
-    assert.ok(Math.abs(rho) <= 0.35, `seed ${seed0}: signal vs strength rank correlation ${rho.toFixed(2)}`);
-  }
-});
