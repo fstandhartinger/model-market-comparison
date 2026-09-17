@@ -103,6 +103,6 @@ export function PickFromChart({ candidates, score, scoreLabel, ids, onToggle, ma
         })}
       </svg>}
     </div>
-    <p className="bh-muted text-xs">Candidates are the models your filters allow, at their cheapest adjusted cost within those filters. The green line joins the models no other candidate beats on both score and cost. Lettered points are the table&apos;s columns.</p>
+    <p className="bh-muted text-xs">Candidates are the models your filters allow, at their cheapest adjusted cost within those filters. The green line joins the models no cheaper candidate beats by more than half a point of capability (a small tolerance, so a model marginally behind the leader at its price stays on the line). Lettered points are the table&apos;s columns.</p>
   </div>;
 }

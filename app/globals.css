@@ -232,6 +232,10 @@ table.dtable tbody tr:hover { background: rgb(var(--accent) / .04); }
 .bh-thin-tag { display: inline-flex; align-items: center; white-space: nowrap; border-radius: 999px; padding: 0 6px; font-size: 10px; font-weight: 500; line-height: 14px; vertical-align: middle; color: var(--muted); border: 1px dashed var(--control-border); background: rgb(var(--line) / .2); cursor: help; }
 .bh-thin-tag .bh-thin-compact { display: none; }
 @media (max-width: 1023px) { .bh-thin-tag { padding: 0 4px; } .bh-thin-tag .bh-thin-full { display: none; } .bh-thin-tag .bh-thin-compact { display: inline; } }
+/* CR-77.2: a Benchmaxxing tag built on thin evidence (few comparisons, or an interval reaching below zero) keeps its
+   level and carries this muted marker; the reason is in its title, never colour alone. */
+.bh-bmx-uncertain { display: inline-block; margin-left: 4px; color: var(--muted); font-size: 11px; line-height: 1; vertical-align: middle; cursor: help; }
+.bh-bmx-tag .bh-bmx-uncertain { margin-left: 3px; color: inherit; opacity: .75; font-size: 10px; }
 .bh-legend-stripe { display: inline-block; width: 28px; height: 10px; vertical-align: middle; border-radius: 2px; background: repeating-linear-gradient(135deg, rgb(var(--accent) / .6) 0 4px, transparent 4px 8px); }
 .bh-magnitude-warn .bh-magnitude-fill { background: rgb(var(--warn) / .8); }
 .bh-row-chevron { display: inline-block; width: 12px; color: var(--muted); font-size: 17px; line-height: 12px; opacity: .5; transition: color .15s ease, opacity .15s ease, transform .15s ease; }

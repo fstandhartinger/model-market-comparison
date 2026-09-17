@@ -16,7 +16,7 @@ import { useSettings } from "./SettingsContext";
 import { GearIcon } from "./GearIcon";
 import { preferredVariantIds, collapseModels, collapsedName, selectableModels } from "../lib/variants";
 import { paretoFrontier } from "../lib/pareto.mjs";
-import { COST_AXIS, LABEL_LIMIT, QUADRANT_NOTE, annotationBox, attractiveQuadrant, costAxisCaption, labelCandidates, placeLabels, valueMapYDomain } from "../lib/value-map.mjs";
+import { COST_AXIS, LABEL_LIMIT, QUADRANT_NOTE, annotationBox, attractiveQuadrant, costAxisCaption, FRONTIER_GRACE_NOTE, frontierGrace, labelCandidates, placeLabels, valueMapYDomain } from "../lib/value-map.mjs";
 import { AaCredit } from "./AaCredit";
 import { EpochCredit } from "./EpochCredit";
 
@@ -199,10 +199,14 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
   // Pareto frontier: models not dominated on (cheaper cost, higher capability).
   // F-17: only points that pass the current limits can be on the frontier — a dimmed point
   // with a halo would contradict the dimming.
+  // CR-77.3: with a grace band on the capability axis, so a model only marginally behind the frontier at its price
+  // (Claude Fable 5.1 against GPT-6 Astra) is part of the line.
   const pareto = useMemo(() => {
-    const frontier = paretoFrontier(allPoints.filter((p) => p.pass)) as typeof allPoints;
+    const passing = allPoints.filter((p) => p.pass);
+    const grace = frontierGrace(passing.map((p) => p.y), { elo: score.startsWith("designarena") });
+    const frontier = paretoFrontier(passing, { grace }) as typeof allPoints;
     return compact ? frontier.map((p) => pinFree(p, xFloor)) : frontier.filter((p) => !logCostAxis || p.x > 0);
-  }, [allPoints, logCostAxis, compact, xFloor]);
+  }, [allPoints, logCostAxis, compact, xFloor, score]);
 
   const xs = (compact ? compactPoints : points).map((p) => p.x);
   const xMin = xs.length ? Math.min(...xs) : 0.1;
@@ -230,7 +234,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
     // F-13: inside Simple's shortlist card the map has no card of its own, one header line.
     return <div className="bh-value-map" role="img" aria-label={`Score versus adjusted cost value map: ${compactPoints.length} models. Higher scores are further up and cheaper models further right, so the most attractive models sit in the top-right quadrant.`}>
       <div className="relative flex items-center justify-end gap-2 lg:mb-1">
-        <span className="text-[11px] text-gray-500">{advanced && !wide ? "cheaper → right · green line = Pareto frontier" : advanced ? `Value map · ${compactPoints.length} models · cheaper → right · green line = Pareto` : `${compactPoints.length} models · cheaper → right`} · <AaCredit /> · <EpochCredit bare /></span>
+        <span className="text-[11px] text-gray-500"><span title={FRONTIER_GRACE_NOTE}>{advanced && !wide ? "cheaper → right · green line = Pareto frontier" : advanced ? `Value map · ${compactPoints.length} models · cheaper → right · green line = Pareto` : `${compactPoints.length} models · cheaper → right`}</span> · <AaCredit /> · <EpochCredit bare /></span>
         <button type="button" aria-label="Chart settings" aria-expanded={prefsOpen} aria-controls="bh-value-map-settings" data-value-map-settings onClick={() => setPrefsOpen((o) => !o)}
           className="inline-flex h-7 min-h-0 w-7 items-center justify-center rounded-md text-gray-400 hover:bg-accent/10 hover:text-accent">
           <GearIcon />
@@ -265,7 +269,8 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
         </ResponsiveContainer>
       </div>
       {/* CR-75.2: the home page says what the green line means, in words, right under the chart. */}
-      {!advanced && mapPrefs.pareto && pareto.length > 0 && <p className="mt-1 text-xs text-gray-400" data-bh-pareto-caption>Models on the green line are the most capable in their price range.</p>}
+      {/* CR-77.3: the sentence stays as Florian phrased it; the small tolerance is named in its tooltip and on /about. */}
+      {!advanced && mapPrefs.pareto && pareto.length > 0 && <p className="mt-1 text-xs text-gray-400" data-bh-pareto-caption title={FRONTIER_GRACE_NOTE}>Models on the green line are the most capable in their price range.</p>}
       {advanced && !wide && <div className="flex justify-between text-[11px] text-gray-500"><span>{SCORE_SHORT_LABELS[score]} ↑</span><span>Adjusted cost · {logCostAxis ? "log scale" : "linear scale"}</span></div>}
     </div>;
   }

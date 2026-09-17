@@ -18,8 +18,10 @@ export type BenchmaxxingOverviewRow = {
   /** CR-74.2: false for deprecated families the Overview hides by default; Top 50 skips them. */
   alive?: boolean;
   tagged: boolean;
-  /** CR-74.1: the published tag level (light ≥ +3, medium ≥ +6, strong ≥ +12; n ≥ 10 and interval above zero). */
+  /** CR-74.1 / CR-77.1: the published tag level (light ≥ +3, medium ≥ +6, strong ≥ +12), decided by the score alone. */
   level: BenchmaxxingLevel | null;
+  /** CR-77.2: why the tag is uncertain (few comparisons, interval reaching below zero); null when it is not. */
+  uncertain?: string | null;
   /** CR-69.3: 80 % bootstrap interval of the score; null when it cannot be computed. */
   interval?: { lower: number; upper: number } | null;
 };

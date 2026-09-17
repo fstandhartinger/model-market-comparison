@@ -7,8 +7,8 @@ import { buildBenchmarkView } from '../lib/benchmark-view.mjs';
 import { BENCHMAXXING_PRESETS, DEFAULT_BENCHMAXXING_PRESET, presetLimit, presetRows, presetShowing } from '../lib/benchmaxxing-presets.ts';
 
 // CR-74.1 (Florian 2026-09-17, supersedes CR-42.2 rank bands and CR-71.3): three tag levels on the signed score —
-// light ≥ +3.0, medium ≥ +6.0, very strong ≥ +12.0 (inclusive, on the one-decimal published score). Guards: n ≥ 10
-// and the 80 % bootstrap interval's lower end above zero.
+// light ≥ +3.0, medium ≥ +6.0, very strong ≥ +12.0 (inclusive, on the one-decimal published score).
+// CR-77.1 (same day): the score alone decides; the old guards (n ≥ 10, interval above zero) only mark a tag uncertain.
 const src = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
 
 test('CR-74.1: level edges 2.9 none, 3.0 light, 5.9 light, 6.0 medium, 11.9 medium, 12.0 strong', () => {
@@ -19,7 +19,7 @@ test('CR-74.1: level edges 2.9 none, 3.0 light, 5.9 light, 6.0 medium, 11.9 medi
   assert.deepEqual(BENCHMAXX_LEVELS.map((x) => [x.level, x.min, x.label]), [['light', 3, 'light'], ['medium', 6, 'medium'], ['strong', 12, 'very strong']]);
 });
 
-test('CR-74.1: every published level on the real dataset satisfies threshold + n + interval; untagged-above-threshold only via guards', async () => {
+test('CR-74.1 + CR-77.1: on the real dataset every scored model that reaches a threshold carries exactly that level', async () => {
   const view = buildBenchmarkView(JSON.parse(await readFile(new URL('../data/dataset.json', import.meta.url), 'utf8')));
   const fam = benchmaxxingFamilySignals(view);
   assert.equal(fam.average, 0);
@@ -28,14 +28,15 @@ test('CR-74.1: every published level on the real dataset satisfies threshold + n
   for (const [id, r] of fam.reports) {
     const level = fam.familyLevels.get(familyOf.get(id)) ?? null;
     const reached = benchmaxxingLevelFor(r.score);
+    // CR-77.1: nothing between the score and the tag — a representative reaching a threshold is tagged, and a
+    // representative below +3.0 never is.
+    assert.equal(level, reached, `${id}: level ${level} vs score ${r.score}`);
+    if (!level) continue;
+    lines.push(`${level} ${familyOf.get(id)} ${r.score.toFixed(1)}`);
+    // CR-77.2: the old guards survive as the uncertainty note, exactly when they would have suppressed the tag.
     const guarded = r.comparisons >= BENCHMAXX_TAG_MIN_COMPARISONS && Boolean(r.interval && r.interval.lower > 0);
-    if (level) {
-      assert.equal(level, reached, `${id}: level ${level} vs score ${r.score}`);
-      assert.ok(guarded, `${id}: tagged with n = ${r.comparisons}, interval ${JSON.stringify(r.interval)}`);
-      lines.push(`${level} ${familyOf.get(id)} ${r.score.toFixed(1)}`);
-    } else if (reached) {
-      assert.ok(!guarded, `${id}: score ${r.score} reaches ${reached} and passes the guards but is untagged`);
-    }
+    assert.equal(fam.uncertain.has(id), !guarded, `${id}: n = ${r.comparisons}, interval ${JSON.stringify(r.interval)}`);
+    if (!guarded) assert.match(fam.uncertain.get(id).note, /treat this tag as uncertain$/);
   }
   // Variants share their family's level; the representative-level map and the per-model map agree.
   for (const m of view.models) assert.equal(fam.levels.get(m.id) ?? null, fam.familyLevels.get(familyOf.get(m.id)) ?? null, m.id);

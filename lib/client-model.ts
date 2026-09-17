@@ -7,8 +7,11 @@ import type { BenchmaxxingLevel } from "./benchmaxxing-levels.mjs";
 export interface ClientBenchmaxxing {
   score: number | null;
   signal: boolean;
-  /** CR-74.1: the published tag level (lib/benchmaxxing-levels.mjs): light ≥ +3, medium ≥ +6, strong ≥ +12, guards applied. */
+  /** CR-74.1 / CR-77.1: the published tag level (lib/benchmaxxing-levels.mjs): light ≥ +3, medium ≥ +6, strong ≥ +12,
+   *  decided by the score alone. */
   level?: BenchmaxxingLevel | null;
+  /** CR-77.2: why this tag rests on thin evidence (few comparisons, interval reaching below zero); null when it does not. */
+  uncertain?: string | null;
   /** F-104: the family's scored representative — the Benchmaxxing report whose score the tag shows. */
   reportId?: string;
 }
@@ -112,6 +115,8 @@ export interface ClientModel {
   benchmaxxing_score?: number | null;
   benchmaxxing_signal?: boolean;
   benchmaxxing_level?: BenchmaxxingLevel | null;
+  /** CR-77.2: the "treat this tag as uncertain" note, or null when the tag rests on the full evidence. */
+  benchmaxxing_uncertain?: string | null;
   benchmaxxing_report_id?: string;
 }
 
@@ -256,7 +261,8 @@ export function clientData(ds: Dataset, benchmaxxing: Record<string, ClientBench
       copilot_multiplier: m.copilot?.multiplier ?? null,
       copilot_usd_per_request: m.copilot?.usd_per_request ?? null,
       ...(Object.prototype.hasOwnProperty.call(benchmaxxing, m.id)
-        ? { benchmaxxing_score: benchmaxxing[m.id].score, benchmaxxing_signal: benchmaxxing[m.id].signal, benchmaxxing_level: benchmaxxing[m.id].level ?? null, benchmaxxing_report_id: benchmaxxing[m.id].reportId ?? m.id }
+        ? { benchmaxxing_score: benchmaxxing[m.id].score, benchmaxxing_signal: benchmaxxing[m.id].signal, benchmaxxing_level: benchmaxxing[m.id].level ?? null,
+            benchmaxxing_uncertain: benchmaxxing[m.id].uncertain ?? null, benchmaxxing_report_id: benchmaxxing[m.id].reportId ?? m.id }
         : {}),
     };
   });

@@ -18,7 +18,7 @@ import { OptionsInline } from "./GlobalFilters";
 import { CostCapabilityScatter } from "./CostCapabilityScatter";
 import { SubscriptionsPanel } from "./SubscriptionsPanel";
 import { preferredVariantIds, collapsedName, selectableModels } from "../lib/variants";
-import { BENCHMAXX_GUARD_TEXT, BENCHMAXX_LEVELS, benchmaxxingLevelInfo, benchmaxxingThresholdText, type BenchmaxxingLevel } from "../lib/benchmaxxing-levels.mjs";
+import { BENCHMAXX_LEVELS, BENCHMAXX_TAG_RULE_TEXT, BENCHMAXX_UNCERTAIN_MARK, BENCHMAXX_UNCERTAIN_TEXT, benchmaxxingLevelInfo, benchmaxxingThresholdText, type BenchmaxxingLevel } from "../lib/benchmaxxing-levels.mjs";
 import { capShortlist } from "../lib/shortlist.mjs";
 import { SIMPLE_LIMIT, SIMPLE_SCORE_CHOICES, activeCostMeasure, costMeasureChoices, derivedMinScore, topCandidates } from "../lib/value-map.mjs";
 import { FIXED_BLENDS } from "../lib/effective-cost.mjs";
@@ -331,7 +331,9 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
       {showThin && <><dt data-bh-tag-legend="thin"><span className="bh-thin-tag"><span aria-hidden="true">◔</span>&nbsp;Thin data</span> <span className="bh-legend-stripe" aria-label="Striped score bar" role="img" /></dt><dd>Score built on fewer than 3 of 7 Composite inputs (◔ 2/7 = 2 of 7); ranked with everyone else, but its position is uncertain</dd></>}
       {/* CR-74.1: one legend line per Benchmaxxing level, strongest first, with its threshold and the guards. */}
       {showBmx && <>{[...BENCHMAXX_LEVELS].reverse().map((x, k) => <Fragment key={x.level}><dt data-bh-tag-legend={k === 0 ? "benchmaxxing" : undefined}><span className="bh-bmx-tag" data-level={x.level}><BenchmaxxingTagFace level={x.level} /></span></dt><dd>{x.title}: signal ≥ +{x.min}{k === 0 ? "; ranks higher on famous public benchmarks than on held-out ones; opens the model's radar" : ""}</dd></Fragment>)}
-        <dt className="sr-only">Guards</dt><dd className="col-start-2 text-gray-400">Every level {BENCHMAXX_GUARD_TEXT}; a screening flag, not proof</dd></>}
+        {/* CR-77.2: the old guards are information now — the marker, never a suppressed tag. */}
+        <dt data-bh-tag-legend="benchmaxxing-uncertain"><span className="bh-bmx-tag" data-level="medium"><BenchmaxxingTagFace level="medium" uncertain /></span></dt><dd>{BENCHMAXX_UNCERTAIN_TEXT.replace(`${BENCHMAXX_UNCERTAIN_MARK} marks`, "Marks")}; the level still follows the score</dd>
+        <dt className="sr-only">Tag rule</dt><dd className="col-start-2 text-gray-400">Every level: {BENCHMAXX_TAG_RULE_TEXT}; a screening flag, not proof</dd></>}
       <dt data-bh-tag-legend="value"><span className="bh-value-tag" data-kind="cheap" data-level="strong">↓ cheaper</span> <span className="bh-value-tag" data-kind="pricey" data-level="strong">↑ pricier</span></dt><dd>Cost well below / above models with a similar score in this list</dd>
       <dt><span className="bh-value-tag" data-kind="cheap" data-level="weak">↘ cheaper</span> <span className="bh-value-tag" data-kind="pricey" data-level="weak">↗ pricier</span></dt><dd>Somewhat below / above</dd>
     </dl>
@@ -497,7 +499,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                   {m.open_weights && <span className="ml-2 hidden rounded bg-accent2/15 px-1.5 py-0.5 text-[10px] text-accent2 md:inline">open</span>}
                   {m.deprecated && <span className="ml-1 hidden rounded bg-amber-500/15 px-1.5 py-0.5 text-[10px] text-amber-300 md:inline">deprecated</span>}
                   {m.featured && !simple && <span className="ml-1 hidden text-[10px] text-warn md:inline" title="Featured model">★</span>}
-                  {m.benchmaxxing_level && <BenchmaxxingTag id={m.benchmaxxing_report_id ?? m.id} name={String(collapsedName(m, s.collapse, preferredId))} level={m.benchmaxxing_level} score={m.benchmaxxing_score ?? null} />}
+                  {m.benchmaxxing_level && <BenchmaxxingTag id={m.benchmaxxing_report_id ?? m.id} name={String(collapsedName(m, s.collapse, preferredId))} level={m.benchmaxxing_level} score={m.benchmaxxing_score ?? null} uncertain={m.benchmaxxing_uncertain ?? null} />}
                   <span className="mt-0.5 flex flex-wrap items-center gap-1.5 text-[11px] text-gray-500 md:hidden">
                     <span className="inline-block h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: orgColor(m.org) }} />
                     {m.org}
@@ -683,27 +685,28 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
   );
 }
 
-/** CR-74.1: the tag's visible face — light "Benchmaxxing?", medium "⚠ Benchmaxxing", very strong "⚠⚠ Benchmaxxing". */
-function BenchmaxxingTagFace({ level, value = null }: { level: BenchmaxxingLevel; value?: string | null }) {
-  return <>{level !== "light" && <span aria-hidden="true">{benchmaxxingLevelInfo(level)!.mark}&nbsp;</span>}<span className="bh-bmx-words">Benchmaxxing{level === "light" ? "?" : ""}</span>{value && <span className="bh-bmx-score">&nbsp;{value}</span>}</>;
+/** CR-74.1: the tag's visible face — light "Benchmaxxing?", medium "⚠ Benchmaxxing", very strong "⚠⚠ Benchmaxxing".
+ *  CR-77.2: a tag on thin evidence carries the muted "◔" behind the words (the reason is in the tag's title). */
+function BenchmaxxingTagFace({ level, value = null, uncertain = false }: { level: BenchmaxxingLevel; value?: string | null; uncertain?: boolean }) {
+  return <>{level !== "light" && <span aria-hidden="true">{benchmaxxingLevelInfo(level)!.mark}&nbsp;</span>}<span className="bh-bmx-words">Benchmaxxing{level === "light" ? "?" : ""}</span>{value && <span className="bh-bmx-score">&nbsp;{value}</span>}{uncertain && <span className="bh-bmx-uncertain" aria-hidden="true">{BENCHMAXX_UNCERTAIN_MARK}</span>}</>;
 }
 
 /** F-104 / CR-42.2 + CR-48.1: the Benchmaxxing tag is a real link to the model's radar. CR-74.1: three levels (light,
  *  medium, very strong). It never expands the row: click/Enter bubble as a click and are stopped here; Space (which
  *  does not activate links natively) navigates too. */
-function BenchmaxxingTag({ id, name, level, score }: { id: string; name: string; level: BenchmaxxingLevel; score: number | null }) {
+function BenchmaxxingTag({ id, name, level, score, uncertain = null }: { id: string; name: string; level: BenchmaxxingLevel; score: number | null; uncertain?: string | null }) {
   const href = `/benchmaxxing?model=${encodeURIComponent(id)}#radar`;
   const value = score != null ? score.toFixed(1) : null;
   const info = benchmaxxingLevelInfo(level)!;
-  return <Link href={href} className="bh-bmx-tag ml-2" data-level={level}
-    aria-label={`Benchmaxxing signal, ${info.label}${value ? ` (${value})` : ""} — open the report for ${name}`}
-    title={`${info.title} Benchmaxxing signal${value ? ` ${value}` : ""} (${benchmaxxingThresholdText()}; a tag ${BENCHMAXX_GUARD_TEXT}): ranks higher on famous public benchmarks than on held-out ones of the same topic — a screening flag, not evidence of intent. Opens the radar.`}
+  return <Link href={href} className="bh-bmx-tag ml-2" data-level={level} data-bmx-uncertain={uncertain ? "" : undefined}
+    aria-label={`Benchmaxxing signal, ${info.label}${value ? ` (${value})` : ""}${uncertain ? `, uncertain: ${uncertain}` : ""} — open the report for ${name}`}
+    title={`${info.title} Benchmaxxing signal${value ? ` ${value}` : ""} (${benchmaxxingThresholdText()}; ${BENCHMAXX_TAG_RULE_TEXT}): ranks higher on famous public benchmarks than on held-out ones of the same topic — a screening flag, not evidence of intent.${uncertain ? ` ${uncertain}.` : ""} Opens the radar.`}
     onClick={(e) => e.stopPropagation()}
     onKeyDown={(e) => {
       if (e.key === "Enter") e.stopPropagation();
       if (e.key === " ") { e.preventDefault(); e.stopPropagation(); e.currentTarget.click(); }
     }}>
-    <BenchmaxxingTagFace level={level} value={value} />
+    <BenchmaxxingTagFace level={level} value={value} uncertain={Boolean(uncertain)} />
   </Link>;
 }
 

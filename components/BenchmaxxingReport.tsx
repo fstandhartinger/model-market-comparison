@@ -5,7 +5,8 @@ import { SignalValue } from './SignalValue';
 import { formatRadarValue } from '../lib/radar.mjs';
 import type { BenchmaxxingLevel } from '../lib/benchmaxxing-levels.mjs';
 
-export type BenchmaxxingModel = { id: string; name: string; org: string; composite: number | null; coverageAxes: number; totalAxes: number; tagged: boolean; level?: BenchmaxxingLevel | null };
+export type BenchmaxxingModel = { id: string; name: string; org: string; composite: number | null; coverageAxes: number; totalAxes: number; tagged: boolean; level?: BenchmaxxingLevel | null;
+  /** CR-77.2: why the tag rests on thin evidence; null when it does not. */ uncertain?: string | null };
 type Axis = { id: string; name: string; version: string; category: string; value: number | null; nativeValue?: number | null; observedDate?: string | null; unit: string; missing: boolean; tier?: string; side?: 'headline' | 'heldout' | null };
 type Pair = { category: string; headline: { id: string; name: string }; heldout: { id: string; name: string }; headlinePercentile: number; heldoutPercentile: number; gap: number; cohort: number };
 export type BenchmaxxingReportData = { status: 'scored' | 'insufficient-coverage'; score: number | null; coverage: number; domainSpecialization: number | null; profile: { axes: Axis[]; measured: number; total: number }; comparisons: number; topics: number; rule: { minComparisons: number; minTopics: number };
@@ -31,12 +32,14 @@ function Drivers({ report }: { report: BenchmaxxingReportData }) {
   </div>;
 }
 
-function SignalCard({ name, slot, compare, report, level }: { name: string; slot: number; compare: boolean; report: BenchmaxxingReportData; level?: BenchmaxxingLevel | null }) {
+function SignalCard({ name, slot, compare, report, level, uncertain = null }: { name: string; slot: number; compare: boolean; report: BenchmaxxingReportData; level?: BenchmaxxingLevel | null; uncertain?: string | null }) {
   return <aside className="rounded-xl border border-line p-4" style={compare ? { borderLeft: `3px solid ${SERIES[slot].color}` } : undefined}>
     <p className="text-xs font-semibold uppercase tracking-wide text-gray-400">{compare ? `${String.fromCharCode(65 + slot)} · ` : ''}Benchmaxxing signal</p>
     {compare && <p className="mt-1 truncate text-sm font-medium">{name}</p>}
     {report.status === 'scored' ? <>
-      <p className="mt-2"><SignalValue score={report.score ?? 0} level={level} large /></p>
+      <p className="mt-2"><SignalValue score={report.score ?? 0} level={level} uncertain={uncertain} large /></p>
+      {/* CR-77.2: the tag follows the score; thin evidence is stated here, not used to hide the tag. */}
+      {uncertain && <p className="bh-muted mt-2 text-sm" data-bmx-report-uncertain>{uncertain}.</p>}
       <p className="bh-muted mt-2 text-sm">Plus = ranks higher on famous public benchmarks than on held-out ones nobody can train for; minus = the other way round; zero = no sign. Percentile points, same topic only.</p>
       <Drivers report={report} />
     </> : <><p className="mt-3 text-lg font-semibold">Not enough coverage</p><p className="bh-muted mt-2 text-sm">{report.profile.measured}/{report.profile.total} measured axes; n = {report.comparisons} headline/held-out boards in {report.topics} {report.topics === 1 ? 'topic' : 'topics'} — a score needs n ≥ {report.rule.minComparisons} in {report.rule.minTopics} topics. No score is synthesized from missing results.</p></>}
@@ -91,7 +94,7 @@ export function BenchmaxxingReport({ models, ids, initial, compare, onToggleComp
         <p className="bh-muted text-xs" data-radar-axes-note>Axes: the {radarAxes.length} benchmarks {compare ? 'either model has' : 'this model has'} results for, grouped clockwise by topic. Rings: 0 · 50 · 100 percentile. Dashed ring = {compare ? "each model's" : "this model's"} average percentile.</p>
       </div>
       <div className={compare ? 'grid gap-4 md:grid-cols-2' : 'space-y-5 lg:flex lg:h-full lg:flex-col lg:gap-5 lg:space-y-0'}>
-        {shown.map((s, k) => <SignalCard key={s.id} name={s.name} slot={k} compare={compare} report={s.report!} level={models.find((m) => m.id === s.id)?.level ?? null} />)}
+        {shown.map((s, k) => <SignalCard key={s.id} name={s.name} slot={k} compare={compare} report={s.report!} level={models.find((m) => m.id === s.id)?.level ?? null} uncertain={models.find((m) => m.id === s.id)?.uncertain ?? null} />)}
         <details className={`text-sm ${compare ? 'md:col-span-2' : 'lg:min-h-0 lg:flex-1'}`}><summary className="cursor-pointer font-medium">Advanced details: topic groups and method</summary><div className="bh-muted mt-3 grid gap-3 md:grid-cols-2 lg:grid-cols-1">{Object.entries(grouped).map(([topic, axes]) => <div key={topic}><b>{topic}</b><p>{axes.map((axis) => `${axis.name}${axis.side === 'headline' ? ' (headline)' : axis.side === 'heldout' ? ' (held-out)' : ''}${axis.missing ? ' (gap)' : ''}`).join(' · ')}</p></div>)}<p className="md:col-span-2 lg:col-span-1">The radar shows each benchmark's percentile within its own exact cohort. The signal compares each headline board with each held-out board of the same topic, both ranked among the models measured on both. This is a descriptive screening signal, not evidence that a benchmark leaked into training or that any training team acted improperly.</p></div></details>
       </div>
     </div>}

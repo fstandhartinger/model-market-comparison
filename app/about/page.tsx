@@ -192,6 +192,16 @@ export default async function AboutPage() {
       </p>
 
       {/* CR-63.19: the third headline feature beside adjusted cost and the score. */}
+      <h3 id="value-map" className="mt-6 mb-2 font-semibold">The value map and its green line</h3>
+      <p className="text-sm text-gray-400">
+        The value map plots each model&apos;s capability score against its adjusted cost per task; cheaper models sit to
+        the right, so the most attractive models are in the top-right corner. The green line joins the models that no
+        cheaper model beats on capability &mdash; the Pareto frontier &mdash; with one small tolerance (Florian,
+        17 Sep 2026): a model stays on the line unless a model at the same price or cheaper is ahead of it by more than
+        half a point of capability, that is 0.5 % of the score scale (on Elo boards, which have no fixed scale, 0.5 % of
+        the plotted range). Without it, two models that are a tenth of a point apart &mdash; a difference no benchmark
+        resolves and nobody can see on the chart &mdash; would look like a clear win for one of them.
+      </p>
       <h3 id="benchmaxxing" className="mt-6 mb-2 font-semibold">Benchmaxxing signal</h3>
       <p className="text-sm text-gray-400">
         We split benchmarks into public &ldquo;headline&rdquo; tests that labs quote in launch posts and &ldquo;held-out&rdquo; tests whose
@@ -200,8 +210,10 @@ export default async function AboutPage() {
         topic (for example GPQA Diamond against CritPt in science), the model is ranked among the models that took both tests,
         and the score is the average of how much higher it ranks on the headline test, in percentile points. With few pairs
         the score is pulled toward zero. Tags come in three levels on the published score (one decimal): <b>light</b> from
-        +3.0, <b>medium</b> from +6.0 and <b>very strong</b> from +12.0. Every level needs at least ten comparisons and a
-        gap that stays above zero when its benchmarks are resampled.
+        +3.0, <b>medium</b> from +6.0 and <b>very strong</b> from +12.0, and the level follows that score alone. How much
+        evidence stands behind a tag is shown next to it, never used to hide it: a tag built on fewer than ten comparisons,
+        or one whose gap does not stay above zero when its benchmarks are resampled, is marked <b>◔ uncertain</b> and says
+        which of the two it is.
       </p>
       <p className="mt-2 text-sm text-gray-400">
         How to read it: plus means better on famous public tests than on tests nobody can train for, minus the other way
@@ -209,8 +221,8 @@ export default async function AboutPage() {
         and do not count. In detail: n is the number of distinct headline boards plus held-out boards in the model&apos;s pairs
         minus one; a score needs n ≥ 6 and pairs in at least two topics; the pull toward zero is n / (n + k) with k estimated
         from the catalog (how much score variance falls as n grows, clamped to 6–50); the interval resamples the model&apos;s
-        headline and held-out boards separately, 400 times, and the tag needs the lower end of its 80 % interval above zero.
-        If no model passes, none is flagged. It is a screen, not proof: a positive gap fits benchmark-targeted training, but
+        headline and held-out boards separately, 400 times, and a tag whose 80 % interval reaches below zero is marked
+        uncertain rather than dropped (Florian, 17 Sep 2026). It is a screen, not proof: a positive gap fits benchmark-targeted training, but
         it also fits a model that is simply weaker at long agent work, which several held-out boards lean toward. Model
         names, labs, openness and prices are never inputs; a tier is decided from benchmark facts alone.{" "}
         <a href="/benchmaxxing" className="text-accent">See the flagged models and their radars</a>.

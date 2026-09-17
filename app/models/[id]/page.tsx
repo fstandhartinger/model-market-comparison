@@ -133,8 +133,10 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
           {clientModel.composite_raw != null && clientModel.composite_base != null && Math.abs(clientModel.composite_raw - clientModel.composite_base) > 1
             && <p className="text-xs text-gray-500" data-bh-composite-adjusted title="A better-measured model with results at least as good on every input this model has keeps the higher score">dominance-adjusted from {num(clientModel.composite_base)}: a better-measured model that is at least as good on each of these inputs ranks above it</p>}
           {bmx?.score != null && bmx.level && <p className="mt-2 text-sm" data-bh-model-benchmaxxing>
-            <span className="bh-muted">Benchmaxxing signal</span> <SignalValue score={bmx.score} level={bmx.level} /> <span className="bh-muted">· {benchmaxxingLevelInfo(bmx.level)?.label}</span>{" "}
+            <span className="bh-muted">Benchmaxxing signal</span> <SignalValue score={bmx.score} level={bmx.level} uncertain={bmx.uncertain} /> <span className="bh-muted">· {benchmaxxingLevelInfo(bmx.level)?.label}</span>{" "}
             <Link href={`/benchmaxxing?model=${encodeURIComponent(bmx.reportId)}#radar`} className="text-accent underline">report →</Link>
+            {/* CR-77.2: the tag follows the score; where its evidence is thin the page says so instead of hiding the tag. */}
+            {bmx.uncertain && <span className="bh-muted block text-xs" data-bh-model-benchmaxxing-uncertain>{bmx.uncertain}.</span>}
           </p>}
           <MiniRadar axes={radarAxes.map(({ label, value }) => ({ label, value }))} />
           <p className="mt-2 flex flex-wrap justify-center gap-x-3 gap-y-1 text-xs text-gray-400">
