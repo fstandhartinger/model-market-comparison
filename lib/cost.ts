@@ -71,7 +71,9 @@ const SOURCE_KEYS: Record<string, string> = {
 };
 
 /** Source selection is separate from pure arithmetic. Exact model + endpoint
- * identity is mandatory for cache statistics; direct routes never borrow OR data. */
+ * identity is mandatory for cache statistics: a route never borrows another endpoint's measured rate. CR-65.9: the one
+ * documented exception is the typical baseline (median of OpenRouter endpoints), applied to any route — OpenRouter or
+ * direct — that publishes a cache-read price, so one model costs the same caching share wherever it is sold. */
 export function offerPrice(offer: ClientOffer, context: Pricing = 10): PriceResult {
   const settings = typeof context === "number" ? { priceMode: "raw" as const, inputWeight: context } : context;
   const priceUrl = offer.platform === "OpenRouter" && offer.or_model_id ? `https://openrouter.ai/api/v1/models/${offer.or_model_id}/endpoints`
@@ -127,9 +129,10 @@ export function offerPrice(offer: ClientOffer, context: Pricing = 10): PriceResu
   const hit = exactEndpoint?.cache_hit_rate;
   const observedHit = freshUsage(hit, data) && hit!.value <= 1;
   // 2026-09-15: a route without its own usable observation gets the documented typical rate (median of
-  // OpenRouter endpoints that bill cache reads), not 0 %. It only lowers cost where the route publishes
-  // a cache-read price below its input price; otherwise cached input is charged at the input price.
-  const baseline = observedHit ? null : baselineFor(data);
+  // OpenRouter endpoints that bill cache reads), not 0 %. CR-65.9: only on routes that publish a cache-read price
+  // (where caching is billed); a route without one gets no rate at all, so the modal never claims a cache share.
+  const baselineApplies = !observedHit && valid(offer.cache_read_per_1m);
+  const baseline = baselineApplies ? baselineFor(data) : null;
   if (observedHit) {
     sources.push({ label: "Cache-hit rate", source: hit!.source, url: hit!.url, date: hit!.collected_at, basis: hit!.basis, note: hit!.definition });
     extra.push("Reported endpoint cache-hit fraction applied to input tokens; denominator and summary interval are unpublished. This mapping is assumed.");
@@ -139,18 +142,31 @@ export function offerPrice(offer: ClientOffer, context: Pricing = 10): PriceResu
       sources.push({ label: "Cache-hit rate (typical baseline)", source: `Median of ${baseline.endpoints} OpenRouter endpoints`, url: baseline.url,
         date: baseline.collected_from === baseline.collected_to ? baseline.collected_to : `${baseline.collected_from} to ${baseline.collected_to}`, basis: baseline.basis, note: baseline.definition });
       extra.push(`No usable cache-hit observation for this route: typical baseline ${(baseline.value * 100).toFixed(1)}% applied (${baseline.definition})`);
-    } else extra.push("No usable cache-hit observation or baseline: no cache discount credited.");
+    } else extra.push(valid(offer.cache_read_per_1m) ? "No usable cache-hit observation or baseline: no cache discount credited."
+      : "This route publishes no cache-read price: no cache-hit rate applied and no cache discount credited.");
   }
   if (endpoint && !exactEndpoint) extra.push("Conflicting/ambiguous endpoint identity ignored; no endpoint cache statistics borrowed.");
   const appliedHit = observedHit ? hit!.value : baseline?.value ?? null;
-  const result = effectiveCost({
+  const costInputs = {
     input_per_1m: offer.input_per_1m, output_per_1m: offer.output_per_1m,
     cache_read_per_1m: offer.cache_read_per_1m,
     cache_write_per_1m: offer.cache_write_per_1m,
     output_tokens_per_task: tokens && !tokens.stale ? tokens.value.output : null,
     input_output_ratio: ratio?.value,
     cache_hit_rate: appliedHit,
-  });
+  };
+  let result = effectiveCost(costInputs);
+  // CR-65.9: a route that publishes a cache-write price above its input price (explicit caching, e.g. Anthropic's
+  // 1.25×) bills the input it has to cache at that price. When cache reads are credited, every uncached input token
+  // is assumed to be written once (an upper bound); the engine adds only the surcharge over the input price.
+  const hitRate = result.inputs.cache_hit_rate ?? 0, writePrice = offer.cache_write_per_1m, inputPrice = result.inputs.input_per_1m;
+  if (hitRate > 0 && valid(writePrice) && typeof inputPrice === "number" && writePrice > inputPrice) {
+    const writes = result.inputs.input_tokens_per_task * (1 - hitRate);
+    result = effectiveCost({ ...costInputs, cache_write_tokens: writes, cache_write_per_1m: writePrice - inputPrice });
+    result.inputs.cache_write_per_1m = writePrice;
+    result.assumptions = result.assumptions.filter((a) => !/^Cache-write volume unmeasured/.test(a));
+    extra.push(`Cache writes: the ${Math.round((1 - hitRate) * 100)}% of input not read from cache is assumed written once at the published write price ($${writePrice}/1M, a surcharge of $${Number((writePrice - inputPrice).toFixed(6))}/1M over input); an upper bound.`);
+  }
   const read = result.inputs.cache_read_per_1m, input = result.inputs.input_per_1m;
   const cache: PriceCache = { kind: observedHit ? "observed" : baseline ? "baseline" : "none", rate: result.inputs.cache_hit_rate ?? 0,
     discounted: typeof read === "number" && typeof input === "number" && read < input };

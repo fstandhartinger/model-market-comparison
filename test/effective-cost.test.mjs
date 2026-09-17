@@ -112,3 +112,30 @@ test('2026-09-15 cache baseline: a thin sample sets no norm', () => {
   assert.equal(cacheHitBaseline(eff(Array.from({ length: 19 }, () => endpoint(0.7))), '2026-09-15T05:00:00Z'), null);
   assert.equal(cacheHitBaseline(undefined, '2026-09-15T05:00:00Z'), null);
 });
+
+test('CR-65.9: cache-read prices outside the provider band are flagged; documented exceptions carry their citation', async () => {
+  const { cacheReadPriceOutliers } = await import('../lib/effective-cost.mjs');
+  // Median read/input 0.1; the band is ×/÷ 4, so 0.02 is outside it and 1.0 (no discount) is never banded.
+  const offer = (read, input = 10) => ({ platform: 'Anthropic', provider: 'Anthropic', input_per_1m: input, cache_read_per_1m: read });
+  const models = [
+    { id: 'claude-opus-5::max', family_key: 'claude-opus-5', offers: [offer(1)] },
+    { id: 'claude-sonnet-5::high', family_key: 'claude-sonnet-5', offers: [offer(0.3, 3)] },
+    { id: 'claude-haiku-5::default', family_key: 'claude-haiku-5', offers: [offer(0.1, 1)] },
+    { id: 'claude-fable-5.1::max', family_key: 'claude-fable-5.1', offers: [offer(0.2)] },
+    { id: 'typo::default', family_key: 'typo', offers: [offer(5)] },
+    { id: 'nodiscount::default', family_key: 'nodiscount', offers: [offer(10)] },
+  ];
+  const out = cacheReadPriceOutliers(models);
+  assert.deepEqual(out.map((o) => [o.model_id, o.documented != null]), [['claude-fable-5.1::max', true], ['typo::default', false]]);
+  assert.match(out[0].documented, /0\.025x/);
+  assert.deepEqual(cacheReadPriceOutliers(models.slice(0, 2)), [], 'fewer than three priced offers per provider: no band, no warning');
+});
+
+test('CR-65.9 live: the committed dataset records its cache-read outliers, exceptions marked as documented', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const { CACHE_READ_RATIO_EXCEPTIONS } = await import('../lib/effective-cost.mjs');
+  const ds = JSON.parse(await readFile(new URL('../data/dataset.json', import.meta.url), 'utf8'));
+  const outliers = ds.build_diagnostics.cache_read_price_outliers;
+  assert.ok(Array.isArray(outliers));
+  for (const o of outliers) assert.equal(o.documented != null, Object.keys(CACHE_READ_RATIO_EXCEPTIONS).some((f) => o.model_id.startsWith(`${f}::`)), o.model_id);
+});

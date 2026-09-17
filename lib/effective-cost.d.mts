@@ -30,3 +30,6 @@ export interface CacheHitBaseline {
 }
 export function cacheHitBaseline(efficiency: unknown, generatedAt: string): CacheHitBaseline | null;
 export function fixedCost(input: number | null | undefined, output: number | null | undefined, inputWeight?: number): { value: number | null; assumptions: string[]; inputWeight: number };
+export const CACHE_READ_RATIO_EXCEPTIONS: Readonly<Record<string, string>>;
+export const CACHE_READ_RATIO_BAND: number;
+export function cacheReadPriceOutliers(models: Array<{ id: string; family_key?: string; offers?: Array<{ platform?: string; provider?: string; input_per_1m?: number | null; cache_read_per_1m?: number | null }> }>, minOffers?: number): Array<{ provider: string; model_id: string; read_to_input: number; provider_median: number; documented: string | null }>;

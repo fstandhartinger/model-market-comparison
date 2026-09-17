@@ -3,6 +3,7 @@
 // Output shape is documented in data/SCHEMA.md and consumed by the DB seeder
 // (scripts/seed-db.mjs) and as the app's bundled fallback dataset.
 import { readFile, writeFile } from "node:fs/promises";
+import { cacheReadPriceOutliers } from "../lib/effective-cost.mjs";
 import { createHash } from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
@@ -1150,6 +1151,10 @@ async function build() {
   modelRows = [...models.values()];
   const epochEciAttachment = attachEpochEci(modelRows, epochEci);
   const featuredSelection = selectFeaturedFamilies(modelRows);
+  // CR-65.9: a cache-read price far outside its provider's usual read/input band is flagged (documented exceptions are listed, not warned).
+  const cacheReadOutliers = cacheReadPriceOutliers(modelRows);
+  const undocumentedReadOutliers = cacheReadOutliers.filter((o) => !o.documented);
+  if (undocumentedReadOutliers.length) console.warn(`! ${undocumentedReadOutliers.length} cache-read price(s) outside their provider's usual band:`, undocumentedReadOutliers.slice(0, 8).map((o) => `${o.model_id} @ ${o.provider} ${o.read_to_input} vs ${o.provider_median}`).join("; "));
   if (featuredSelection.missingPins.length) {
     console.warn("! featured pin without an AA Intelligence Index:", featuredSelection.missingPins.join(", "));
   }
@@ -1303,6 +1308,7 @@ async function build() {
       },
     },
     build_diagnostics: {
+      cache_read_price_outliers: cacheReadOutliers,
       artificialanalysis_rows_input: aa.models.length,
       artificialanalysis_rows_output: modelRows.filter((row) => row.aa_model_id).length,
       artificialanalysis_openrouter_ambiguous_ids: ambiguousAaOrIds,

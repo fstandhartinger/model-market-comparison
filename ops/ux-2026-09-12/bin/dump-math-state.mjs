@@ -2,7 +2,7 @@
 // adjusted cost (default settings, unrestricted scope), value tags, Benchmaxxing level — for before/after diffs.
 // Usage: node ops/ux-2026-09-12/bin/dump-math-state.mjs OUT.json   |   ... --diff BEFORE.json AFTER.json
 import { readFileSync, writeFileSync } from "node:fs";
-const root = "/opt/model-market-comparison";
+const root = process.env.BH_ROOT || "/opt/model-market-comparison";
 if (process.argv[2] === "--diff") {
   const [a, b] = [3, 4].map((i) => JSON.parse(readFileSync(process.argv[i], "utf8")));
   const top = (s) => s.top40.map((r) => `${r.id} ${r.composite}`);

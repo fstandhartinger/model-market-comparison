@@ -67,17 +67,19 @@ export function PriceValue({ price, compact = false, showEstimate = true, contex
           <li>{cache?.kind === "observed"
             ? <>Cache-efficiency data from OpenRouter: {percent(cache.rate)} of input tokens are read from cache on this route.</>
             : cache?.kind === "baseline"
-            ? <>Cache efficiency: this route has no OpenRouter measurement of its own, so the typical rate across OpenRouter routes, {percent(cache.rate)} of input tokens read from cache, is used.</>
+            ? <>Cache efficiency: this route has no measurement of its own, so the typical rate across OpenRouter routes that bill cache reads, {percent(cache.rate)} of input tokens read from cache, is used.</>
             : <>Cache efficiency: no cache data is available, so no cache discount is counted.</>}
-            {cache && cache.kind !== "none" && !cache.discounted && <> This provider publishes no cheaper cache-read price, so caching does not lower this cost.</>}</li>
+            {cache && cache.kind !== "none" && !cache.discounted && <> This provider publishes no cheaper cache-read price, so caching does not lower this cost.</>}
+            {e.terms && e.terms.cache_write > 0 && <> This route charges more to write to the cache ({priceNumber(e.inputs.cache_write_per_1m)} per 1M) than for plain input, so the input not read from cache is assumed to be written once at that price — an upper bound.</>}</li>
           {context?.cheapest !== false && <li>{context?.cheapest ? "The cheapest provider that survives your current filters" : "Provider"}: {price.provider}.</li>}
           {context && <li>{context.strongest ? "The strongest reasoning variant of the model present in benchmark data" : "The exact model variant shown"}: {price.model}.</li>}
         </ul>
         <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-1 border-t border-line/60 pt-3 text-xs tabular">
           <dt className="text-gray-400">Input / output price per 1M tokens</dt><dd>{priceNumber(e.inputs.input_per_1m)} / {priceNumber(e.inputs.output_per_1m)}</dd>
           <dt className="text-gray-400">Cache-read price per 1M tokens</dt><dd>{priceNumber(e.inputs.cache_read_per_1m)}</dd>
+          {e.terms && e.terms.cache_write > 0 && <><dt className="text-gray-400">Cache-write price per 1M tokens</dt><dd>{priceNumber(e.inputs.cache_write_per_1m)}</dd></>}
           <dt className="text-gray-400">Input : output ratio</dt><dd>{e.inputs.input_output_ratio == null ? "—" : `${e.inputs.input_output_ratio.toFixed(1)} : 1`}</dd>
-          {e.terms && <><dt className="text-gray-400">Cost split</dt><dd>input {priceNumber(e.terms.uncached_input)} + cached {priceNumber(e.terms.cached_input)} + output {priceNumber(e.terms.output)}</dd></>}
+          {e.terms && <><dt className="text-gray-400">Cost split</dt><dd>input {priceNumber(e.terms.uncached_input)} + cached {priceNumber(e.terms.cached_input)}{e.terms.cache_write > 0 && <> + cache-write surcharge {priceNumber(e.terms.cache_write)}</>} + output {priceNumber(e.terms.output)}</dd></>}
         </dl>
       </> : <p className="leading-relaxed">This is the provider&apos;s published list price per million tokens, blended at the input : output mix chosen in your settings. It does not use task or cache data.</p>}
       <h3 className="mt-4 font-semibold">Sources</h3>

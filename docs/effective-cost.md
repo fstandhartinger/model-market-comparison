@@ -29,7 +29,7 @@ Every fallback appears in `assumptions` and the price dialog. Non-finite, negati
 | Input/output list prices | If exactly one rate is missing, substitute the published counterpart, visibly assumed (legacy fixed-blend behavior). If both are missing, return unavailable, never free. |
 | Cache-hit rate | Exact OpenRouter SKU + endpoint tag + provider identity, with ambiguous/conflicting/stale observations rejected; another endpoint's observation is never borrowed. Otherwise (since 2026-09-15) the **typical baseline**: the median of the fresh, measured OpenRouter endpoint cache-hit rates whose endpoint publishes a cache-read price (`cacheHitBaseline` in `lib/effective-cost.mjs`; 169 endpoints, 72.6% in the 2026-09-15 dataset; at least 20 endpoints, observations at most 30 days older than the build). It lowers cost only where the route publishes a cache-read price below its input price; with no qualifying sample no discount is credited. The baseline is listed under the dialog's Sources. |
 | Cache read price | Exact offer's rate; missing/invalid → regular input rate, so no unsupported discount. |
-| Additional write volume | Not published in the collected data → **0 additional tokens**, explicitly excluding additional write charges. The pure engine supports an explicit nonnegative quantity. |
+| Additional write volume | CR-65.9 (2026-09-17): when a cache-hit rate is applied and the offer publishes a cache-write price above its input price, `lib/cost.ts` passes `input × (1 − hit)` write tokens with only the surcharge (`write − input`) as the engine's write price — every uncached input token written once, an upper bound. Otherwise **0 additional tokens**. |
 | Cache write price | Exact offer's rate; missing/invalid → regular input rate, charged only when additional write tokens are supplied. |
 | Overflow | Return unavailable and flag it. No Infinity/NaN bargain. |
 
@@ -70,3 +70,14 @@ Exact variants; default exclusion of Chinese inference providers, all regions. I
 5. **Sonnet:** max effort's 117.8k output measurement and 54.9:1 ratio imply 6.47M aggregate input tokens/task. At $2/$10 with no observed cache hits this explains the large estimate; the source and decimal units agree. The official table supports $0.20 cache reads, but a zero-hit fallback means we cannot credit them. Lower efforts have separate, much smaller measured token totals. This is a workload/coverage limitation, not a universal claim about Sonnet's economics.
 
 None of these five uses the 1,000-output-token fallback. The unmeasured-token fallback is an illustrative scenario and is unsuitable as evidence of superiority over a model with measured long reasoning tasks. Every use remains labelled `est.` with its assumptions.
+
+## CR-65.9 (2026-09-17): baseline scope and the read-price check
+
+- The typical cache-hit baseline (median of fresh measured OpenRouter endpoints that publish a cache-read price) applies to
+  every route without its own measurement **that publishes a cache-read price**, on OpenRouter or direct. Routes without a
+  cache-read price get no rate (`cache.kind = "none"`), never a borrowed one. A measured endpoint rate is never borrowed
+  by another endpoint or route.
+- `build_diagnostics.cache_read_price_outliers` lists discounted cache-read prices outside ×/÷ 4 of the same provider's
+  median read/input ratio (one entry per family; read = input is a no-discount listing and not banded). Source-confirmed
+  exceptions carry their citation in `CACHE_READ_RATIO_EXCEPTIONS` — Claude Fable 5.1 and Mythos 5.1 at 0.025× input
+  (Anthropic pricing page, read 2026-09-17).

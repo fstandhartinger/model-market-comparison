@@ -254,7 +254,8 @@ test('CR-65.4: ranked by the Composite, a thin row never sorts above a row with 
   assert.ok(rows.slice(firstThin).every((x) => client.isThinComposite(x.m)));
 });
 test('adjusted "as used on OpenRouter" uses per-model OR ratio before global or AA proxy',()=>{
-  assert.equal(cost.modelCost(model,telemetryData,null,adjusted),0.023);
+  // CR-65.9: 0.023 before, plus the write surcharge — 25 % of 20,000 input tokens written at $2.50 vs $2 input.
+  assert.ok(Math.abs(cost.modelCost(model,telemetryData,null,adjusted)-(0.023+5000*0.5/1e6))<1e-12);
   const p=cost.modelPrice(model,telemetryData,null,adjusted);
   assert.equal(p.unit,'$/task');assert.equal(p.effective.inputs.input_output_ratio,20);
   assert.equal(p.effective.inputs.output_tokens_per_task,1000);
@@ -382,6 +383,34 @@ test('2026-09-15 typical cache-hit baseline replaces 0 % only where no endpoint 
   assert.equal(plain.value, cost.offerPrice(noReadPrice, cost.priceContext(model, { ...data, efficiency: { ...data.efficiency, openrouter_endpoints: {} } }, adjusted)).value, 'no cache-read price: the baseline changes nothing');
   // Deterministic for a dataset.
   assert.equal(cost.offerPrice(route, cost.priceContext(model, data, adjusted)).value, withBaseline.value);
+});
+
+test('CR-65.9: the typical cache baseline applies to any route with a cache-read price (documented), never to a route without one', () => {
+  const endpoints = Object.fromEntries(Array.from({ length: 21 }, (_, i) => [`other/fast-${i}`, { cache_hit_rate: observation(i / 20), cache_read_per_1m: observation(0.1) }]));
+  const data = { ...structuredClone(telemetryData), generated_at: '2026-09-15T00:00:00Z' };
+  data.efficiency.openrouter_endpoints = { 'other/model': endpoints };
+  const direct = { ...route, key: 'Anthropic::Anthropic', platform: 'Anthropic', provider: 'Anthropic', or_model_id: undefined, endpoint_tag: undefined };
+  const viaOr = cost.offerPrice(route, cost.priceContext(model, data, adjusted)), p = cost.offerPrice(direct, cost.priceContext(model, data, adjusted));
+  assert.deepEqual(p.cache, { kind: 'baseline', rate: 0.5, discounted: true });
+  assert.equal(p.value, viaOr.value, 'the same prices cost the same caching share on a direct route and on OpenRouter');
+  const bedrock = cost.offerPrice({ ...direct, platform: 'AWS Bedrock', provider: 'AWS Bedrock', cache_read_per_1m: null, cache_write_per_1m: null }, cost.priceContext(model, data, adjusted));
+  assert.deepEqual(bedrock.cache, { kind: 'none', rate: 0, discounted: false });
+  assert.match(bedrock.assumptions.join(' '), /publishes no cache-read price: no cache-hit rate applied/);
+  assert.equal(bedrock.effective.terms.cache_write, 0);
+});
+
+test('CR-65.9: a published write price above input adds the write surcharge on the uncached share, only when reads are credited', () => {
+  const endpoints = Object.fromEntries(Array.from({ length: 21 }, (_, i) => [`other/fast-${i}`, { cache_hit_rate: observation(i / 20), cache_read_per_1m: observation(0.1) }]));
+  const data = { ...structuredClone(telemetryData), generated_at: '2026-09-15T00:00:00Z' };
+  data.efficiency.openrouter_endpoints = { 'other/model': endpoints };
+  const ctx = cost.priceContext(model, data, adjusted);
+  const premium = cost.offerPrice(route, ctx), none = cost.offerPrice({ ...route, cache_write_per_1m: null }, ctx), cheap = cost.offerPrice({ ...route, cache_write_per_1m: 2 }, ctx);
+  const input = premium.effective.inputs.input_tokens_per_task;
+  assert.equal(premium.effective.inputs.cache_write_per_1m, 2.5, 'the published write price is what the modal shows');
+  assert.ok(Math.abs(premium.effective.terms.cache_write - input * 0.5 * 0.5 / 1e6) < 1e-12, 'uncached 50 % × $0.50 surcharge');
+  assert.ok(Math.abs(premium.value - none.value - premium.effective.terms.cache_write) < 1e-12);
+  assert.equal(cheap.value, none.value, 'a write price not above input adds nothing');
+  assert.match(premium.assumptions.join(' '), /assumed written once at the published write price/);
 });
 
 test("CR-25.4: the positive regional lists give exactly the former switches' results on the real providers", () => {
