@@ -15,9 +15,10 @@ read by `ops/daily/profile-run.mjs` (unit tests: `test/cr-73-profile-run.test.mj
 * **Worker time** = the receipts' `started_at` → `finished_at`, i.e. what the pipeline waited for,
   not what a provider billed. *Serial* is the sum of the calls, *elapsed* the union of their
   spans; `serial / elapsed` is the concurrency the run actually achieved.
-* **Attribution** puts a call in the stage that was running when it started. Runs from 18 Sep on
-  record a start and end per step (`daily.mjs`); before that the profiler lays the durations end to
-  end from the run's start and marks those steps `reconstructed`.
+* **Attribution** puts a call in the stage that was running when it started. Runs from `d35fb97`
+  (17 Sep, 18:45 UTC) on record a start and end per step (`daily.mjs`); earlier runs, and the gate
+  stages that report only a duration, are laid end to end from the run's start and marked
+  `reconstructed`, so a reconstructed attribution is never read as a measurement.
 * Every run now writes `reports/profile.json` and a short `profile` block in its run report, so the
   next change to the pipeline can be compared against the run before it (CR-73 verbatim: "Record
   per-stage and per-source timing, cache hit/miss, retry, model/cost and critical-path data in
@@ -79,7 +80,7 @@ Derived from the baseline, not from a wish:
 | Path | Target | Rationale |
 |---|---|---|
 | **Full run** | **p50 ≤ 45 min, p95 ≤ 60 min** (from 113 min) | The 46 calls fall into independent units (7 live contracts, ~10 benchmark sources, 7 score batches). At bounded concurrency 4 the 96.7 min of model time becomes ≈ 25 min of clock; plus 5 min of non-worker steps, 3 min unaccounted and headroom for retries ≈ 33 min measured-best-case. 45 min p50 keeps a wide margin for provider latency, 60 min p95 keeps the run inside the morning window even on a bad day. |
-| **Per worker call** | **≤ 6 min, retries included in the unit's budget** | Today two calls hit the 10-min ceiling and returned nothing. A tighter per-call budget with an immediate switch to the next healthy route cuts the 21.8 min of dead time without lowering the evidence bar — a unit that cannot be reviewed stays *withheld*, exactly as now. |
+| **Per worker call** | **≤ 6 min — but only together with an immediate switch to another healthy critic** | Two calls hit the 10-min ceiling and returned nothing. A bare cap would be worse than the delay: the slowest *successful* call of this run took 8.3 min, and 180 s was already tried and reverted on 15 Sep because it aborted reviews that complete at 600 s (`ops/daily/gauntlet.mjs`). The budget only becomes safe when the unit can hand a timed-out call to the next healthy route inside its own retry budget (CR-73.3/73.4); a unit that still cannot be reviewed stays *withheld*, exactly as now. |
 | **Retry waste** | **≤ 5 min per run** (from 21.8) | Follows from the per-call budget plus route health. |
 | **Prices-only run** | **≤ 15 min** | The CR-66.7 scope skips both long stages; it must stay observably fast and is timed separately. First measurement: see below. |
 | **Cache hit** | reported per source unit, never assumed | CR-73.2. A hit is only legitimate when the capture hash, the parser version and the contract version are all identical; anything else re-parses and re-reviews. |
@@ -100,10 +101,25 @@ publication gate (CR-66.2) and the independent-critic rule are unchanged.
 4. **CR-73.5** — two consecutive unattended full runs and one changed-source run against the target,
    compared with an uncached baseline, verified by an engine that did not implement it.
 
-## Prices-only path
+## Prices-only path — measured
 
-First measurement is recorded in
-`/opt/benchmarkheaven/state/ux-evidence/cr73/prices-dryrun-20260917.md` (command, wall clock and
-the profile of that run). The prices scope (CR-66.7) refreshes OpenRouter and the provider catalogs
-and runs build, tests, typecheck, prerender and the gate — it makes no worker calls, so its time is
-the pipeline's own overhead and the closest thing to a fixed cost the full run also carries.
+    bash ops/daily/run.sh --dry-run --scope prices     # 17 Sep 2026, 18:46 UTC, rc 0
+
+**2.4 min wall clock, 0 worker calls** — far inside the 15-minute budget
+(`/opt/benchmarkheaven/state/ux-evidence/cr73/prices-dryrun-20260917.{json,md}`, run
+`2026-09-17T18-46-25-382Z-3113883`, the first run whose steps carry their own clock: 0 reconstructed
+steps, 1.9 % outside any step). The heaviest stages are `npm-build` 0.9 min, `typecheck` 0.3 min,
+`fetch-or` 0.2 min, `npm-test` 0.2 min; `fetch-mistral-catalog` failed and kept its previous
+snapshot, as it does in the full run. So the pipeline's own overhead — clone, install, fetch, build,
+test, typecheck, prerender, gate — is about **2.5 minutes**. Everything above that in a full run is
+model work.
+
+### What the first attempt found instead
+
+The prices dry run at 18:37 failed at `npm test` — and not because of the prices scope: a fresh
+dataset build on main renamed `deepseek-v4-pro`, `deepseek-v4-flash`, `deepseek-v4-flash-vision`
+and `k-exaone-2.0` to Artificial Analysis' new dated ids, which breaks seven tests. The 17 Sep
+freeze of those ids held for exactly one build (`96745c3` explains and fixes it). Without that
+find, the scheduled 05:17 run would have died at `npm test` and published nothing. A prices dry run
+costs 2.5 minutes and exercises build + tests + typecheck + gate against the real captures — worth
+running after any change that can affect identity or the dataset shape.
