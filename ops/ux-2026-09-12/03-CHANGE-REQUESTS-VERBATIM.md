@@ -806,3 +806,38 @@ Florian, Claude Code chat, 17 Sep 2026 ~13:20 UTC, verbatim:
 > - Let's use feature models as the default that opens when the page is opened.
 > - Let's define a signal of more than +5 as a weak benchmarking warning, and +10 or higher as the strong type of warning.
 > - Let's allow opening more than only one row with the expand and collapse feature. I think it is valuable if the user can see two different radar diagrams at once and compare them right in the table.
+
+
+## CR-20260917f — Mobile hero typography: no orphaned final word → CR-72
+Florian, Hermes chat, 17 Sep 2026, verbatim:
+
+> Can we make the font size if these two header sentences adjust in mobile portrait so that it doesn't wrap for 1 word? Looks weird.
+
+The two hero sentences are the live landing copy: “The most detailed cost–capability analysis in AI.” and “Every model. Every Benchmark. Actual Costs.” On mobile portrait, neither sentence may leave a single final word stranded on its own line. Use responsive typography/layout that remains readable rather than a fixed desktop-sized headline or a manual breakpoint-specific line break. Preserve the exact approved copy, semantic heading structure, desktop/tablet layout, zoom/reflow, and accessibility.
+
+
+## CR-20260917g — Make the data-update mechanism substantially more efficient without weakening it → CR-73
+Florian, Hermes chat, 17 Sep 2026, verbatim:
+
+> Kann man den Mechanismus effizienter machen?
+
+Measured baseline: the successful 17 Sep run took 113 minutes. The two dominant stages were `review-live` (34.6 min) and `refresh-benchmarks` (71.1 min); the remainder, including build, tests and the hash-bound publication gate, was comparatively small. It made 46 LLM worker calls, including several malformed/timeout retries and paid fallbacks. The improvement must be based on a profiler and preserve the same or stronger source, parser, blast-radius, independent-critic and hash-bound publication guarantees. Do not make a run look faster by skipping changed data, treating failed reviews as passes, lowering source evidence requirements, or publishing an unreviewed candidate.
+
+Aim for an incremental pipeline: unchanged, hash-identical source captures reuse their prior verified decision; only changed source units and their dependent derived rows are rebuilt and independently checked. Parallelise independent fetch/parse/review work only where it cannot race the staging checkout or change the deterministic published result. Keep bounded retries and quarantine unproven rows, but prevent one slow/malformed worker from serially stalling unrelated verified units. Prefer the approved free producer/critic routes; paid fallback remains only when the existing qualification/health rules require it, and receipts must show actual calls and cost.
+
+Record per-stage and per-source timing, cache hit/miss, retry, model/cost and critical-path data in every run report. Define a realistic target from the profiler, then prove it with two consecutive unattended full runs plus a changed-source run; compare output and gate decisions against an uncached baseline. Keep the current prices-only fast path and make its time budget observable too. A second engine must independently verify both correctness and the measured speedup live.
+
+
+## CR-20260917h — Launch sprint: 3 Benchmaxxing tag levels, Top 50 mode, composite with marginal Benchmaxxing component, advanced-mode fixes → CR-74
+(Filed as CR-20260917h/CR-74 because CR-20260917f/g and CR-72/73 were already used by the supervisor's hero-typography and daily-efficiency requests.)
+Florian, 17 Sep 2026 ~17:30 UTC, verbatim (German):
+
+> lass uns die schwellen für die Benchmaxxing tags noch mal ändern: ab +3 das leichte tag, ab +6 ein mittelstarkes und ab +12 ein sehr starkes benchmaxxing warnungs tag.
+> und lass uns in der "Featured models" ansicht (die ja jetzt dann der neue default wird) per default alle anzeigen (also das was bisher passiert, wenn man auf "Show all 17 in this list" klickt). Lass uns neben "Featured models" und "All scored" auch noch einen dritten modus (zwischen den beiden) einführen: "Top 50" (und zwar sind das die top 50 Modelle nach "(Benchmark Heaven Main Composite Score", wie wir ihn auf der Overview seite verwenden).
+> Noch was zum "Benchmark Heaven Main Composite Score": Lass uns hier ganz leicht auch noch das Benchmaxxing signal bercksichtigen, aber nur marginal - gerade so viel, dass eventuell sich der Spitzenplatz im Ranking von aktuell Fable 5.1 auf Platz 1 und GPT-6 Astra auf Platz 2 um dreht, sodass GPT-6 Astra auf Platz 1 kommt und Fable 5.1 auf Platz 2. Aber nicht noch stärker berücksichtigen. Gib in den Options eine Checkbox, ob der Benchmaxxing Anteil in den score einfließen soll oder nicht (per default: ja).
+> Mir sind noch kleine Sachen aufgefallen: in benchmaxxing die checkbox wo man die 238 achen einblenden kann, sollte weg - die charts in diesem modus sehen sehr komisch aus weil selbst bei sehr bekannten Modellen dann der großteil der achsen leer ist.
+> In der overview bei advanced mode, wenn man einen der dropdowns "Better than a model ▾" oder "Evidence ▾" öffnet (also das popup öffnet), dann verschiebt sich die ganze Zeile. Außerdem, zeige bei diesem Advanced mode außerdem bitte die ganzen options, also alles was in dem popup kommt, wenn man in der Headerleiste auf "Options" klickt.
+> Können wir auch schauen, ob das Entfernen der Trennung der Modelle in der Haupt model capability/cost Tabelle zwischen denen im Abschnitts "Insufficient evidence" und den restlichen Modellen ein hoch priorisiertes Thema ist? Ich hätte das gerne noch drin, bevor wir ausliefern.
+> ... wir müssen jetzt auf jeden Fall noch ein paar Themen fertig bekommen, mindestens das mit den Änderungen bei Benchmaxxing und den "Insufficient evidence" Modellen (nicht mehr in eigenem Abschnitt).
+> Eventuell kannst du Dinge auch effizient in mehrere Subagenten aufteilen und parallel erledigen lassen, z.b. je Thema ein Subagent, dann der Subagent (Opus 5) ggf noch beliebig viele Subagenten mit kostenlosen oder günstigen opencode Modellen, damit wir da möglichst schnell voran kommen.
+> Vielleicht können wir für die Beschleunigung auch noch den Gauntlet Loop vorübergehend (für die nächsten paar Stunden) etwas weniger streng gestalten.
