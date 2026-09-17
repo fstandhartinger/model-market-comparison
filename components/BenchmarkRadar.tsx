@@ -93,12 +93,14 @@ export function BenchmarkRadar({ view, axes, picks, axesPicker, axesPickerLabel 
       <div role="group" aria-label="Radar type" className="inline-flex rounded-lg border border-line p-0.5 text-sm">
         {(['simple', 'detailed'] as const).map((m) => <button key={m} type="button" aria-pressed={mode === m} onClick={() => setMode(m)} className={`min-h-9 rounded-md px-3 ${mode === m ? 'bg-accent/15 font-semibold text-accent' : 'bh-muted'}`}>{m === 'simple' ? `Simple · ${axes.length} axes` : `Detailed · ${detailedAxes.length} benchmarks`}</button>)}
       </div>
+      {/* F-115 (Fable pass 21): the zoom control belongs with the other chart controls, not on a lone
+          right-aligned row above the chart. It only governs the simple radar, so it appears with it. */}
+      {mode === 'simple' && <label className="inline-flex min-h-9 items-center gap-2 rounded-lg border border-line px-3 text-sm"><input type="checkbox" checked={!zoom} onChange={(e) => setZoom(!e.target.checked)} data-radar-fullscale />Full scale</label>}
       </div>
     </div>
     {mode === 'simple' && axes.length < 3 ? <div className="bh-empty min-h-80">Choose 3–8 axes to draw a radar. The full comparison table stays available below.</div> : !picks.length ? <div className="bh-empty min-h-80">Choose up to four model configurations to see their profiles.</div> : mode === 'detailed' && shown.length < 3 ? <div className="bh-empty min-h-80">Too few measured benchmarks for a detailed radar.</div> : <>
       <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm" aria-label="Chart legend">{series.map((s, i) => <li key={s.id} className="flex items-center gap-2"><svg width="28" height="12" aria-hidden="true"><line x1="0" y1="6" x2="28" y2="6" stroke={s.color} strokeWidth="3" strokeDasharray={s.dash} /></svg><span>{String.fromCharCode(65 + i)} · {s.name}</span></li>)}</ul>
       {mode === 'simple' ? <div className="mt-2">
-        <label className="mb-1 flex items-center justify-end gap-2 text-xs"><input type="checkbox" checked={!zoom} onChange={(e) => setZoom(!e.target.checked)} data-radar-fullscale />Full scale</label>
         <SimpleRadar axes={shown} series={series} variant="desktop" label={ariaLabel} zoom={zoom} convention={convention} />
         <SimpleRadar axes={shown} series={series} variant="mobile" label={ariaLabel} zoom={zoom} convention={convention} />
         {zoom && (() => { const f = radarWindow(series.flatMap((s) => s.points.map((p) => p.value))).floor; return f > 0 ? <p className="bh-muted text-center text-xs" data-radar-zoom-note>{percentile ? <>Zoomed to these models: the centre is the {f}th percentile, not the bottom.</> : <>Zoomed to these models: the centre is {f} on each axis&apos;s 0–100 position, not zero.</>}</p> : null; })()}
