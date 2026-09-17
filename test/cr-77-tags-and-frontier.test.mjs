@@ -77,12 +77,31 @@ test('CR-77.1/77.2 on the real dataset: DeepSeek V4.1 Flash carries the medium t
     assert.ok(id, `${other} is scored`);
     assert.equal(fam.familyLevels.get(other) ?? null, benchmaxxingLevelFor(report.score), other);
   }
-  // Every tagged id has a level, and no unscored model is tagged.
-  const scored = new Set(fam.reports.map(([id]) => id));
-  for (const id of fam.tagged) assert.ok(fam.levels.get(id), id);
-  for (const [id] of fam.reports) assert.ok(scored.has(id));
+  // CR-77.1 + CR-21.1: nothing is tagged without a score behind it. Per model (benchmaxxingSignals) that is the
+  // model's own scored report; per family (benchmaxxingFamilySignals) it is the family's scored representative, whose
+  // score is the number every variant row shows — a variant must never show a tag its own row's score contradicts.
   const signals = benchmaxxingSignals(view);
-  for (const id of signals.tagged) assert.ok(signals.reports.some(([rid]) => rid === id), `${id} is scored`);
+  const scoredIds = new Set(signals.reports.map(([id]) => id));
+  for (const id of signals.tagged) {
+    assert.ok(scoredIds.has(id), `${id} is scored`);
+    assert.equal(signals.levels.get(id), benchmaxxingLevelFor(scoreBenchmaxxing(view, id).score), id);
+  }
+  const familyOf = new Map(view.models.map((m) => [m.id, m.family ?? m.id]));
+  for (const id of fam.tagged) {
+    const family = familyOf.get(id);
+    const representative = fam.representatives.get(family);
+    assert.ok(representative, `${id}: its family has a representative`);
+    const report = scoreBenchmaxxing(view, representative);
+    assert.equal(report.status, 'scored', `${id}: the representative ${representative} is scored`);
+    assert.equal(fam.levels.get(id), benchmaxxingLevelFor(report.score), `${id} shows its family's level`);
+    assert.equal(fam.uncertain.has(id), fam.familyUncertain.has(family), `${id} shares the family's uncertainty`);
+  }
+  // banded[].passes still records whether the old guards would have let the tag through.
+  for (const entry of fam.banded) {
+    const r = fam.reports.find(([rid]) => rid === entry.id)[1];
+    assert.equal(entry.passes, r.comparisons >= BENCHMAXX_TAG_MIN_COMPARISONS && Boolean(r.interval && r.interval.lower > 0), entry.id);
+    assert.equal(entry.band, benchmaxxingLevelFor(r.score), entry.id);
+  }
 });
 
 test('CR-77.2: no surface still claims a tag needs ten comparisons and an interval above zero', () => {
@@ -138,11 +157,15 @@ test('CR-77.3: both green lines use the band — the value map and the wizard ch
   assert.match(scatter, /paretoFrontier\(passing, \{ grace \}\)/);
   assert.match(scatter, /frontierGrace\(passing\.map\(\(p\) => p\.y\), \{ elo: score\.startsWith\("designarena"\) \}\)/);
   assert.match(src('lib/pick-chart.mjs'), /paretoFrontier\(passing, \{ grace: frontierGrace\(/);
+  // The halo carries the model id, so line membership is readable at 390 px, where most point labels do not fit.
+  assert.match(scatter, /data-frontier-id=\{payload\?\.id\}/);
   // The homepage caption keeps Florian's sentence and names the tolerance in its tooltip; /about explains it.
   assert.match(scatter, /Models on the green line are the most capable in their price range\./);
   assert.match(scatter, /title=\{FRONTIER_GRACE_NOTE\}/);
   assert.match(src('app/about/page.tsx'), /id="value-map"/);
-  assert.match(src('app/about/page.tsx'), /half a point of capability/);
+  assert.match(src('app/about/page.tsx'), /half a point\s+of capability or more/);
+  // The tolerance is described with the same edge the code uses (drop at >= the band) and names the Elo case.
+  assert.match(src('lib/value-map.mjs'), /ahead of by half a point of capability or more[\s\S]{0,140}Elo boards/);
 });
 
 test('CR-77.3: the wizard chart keeps a monotone, readable line with the band applied', () => {

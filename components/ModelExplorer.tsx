@@ -329,7 +329,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
     <dl className="mt-2 grid grid-cols-[auto_1fr] items-center gap-x-3 gap-y-1.5">
       {/* CR-74.3: thin rows sort in place; the badge (and the hatched bar) mark the uncertain rank. */}
       {showThin && <><dt data-bh-tag-legend="thin"><span className="bh-thin-tag"><span aria-hidden="true">◔</span>&nbsp;Thin data</span> <span className="bh-legend-stripe" aria-label="Striped score bar" role="img" /></dt><dd>Score built on fewer than 3 of 7 Composite inputs (◔ 2/7 = 2 of 7); ranked with everyone else, but its position is uncertain</dd></>}
-      {/* CR-74.1: one legend line per Benchmaxxing level, strongest first, with its threshold and the guards. */}
+      {/* CR-74.1 / CR-77.1: one legend line per Benchmaxxing level, strongest first, with the threshold that decides it. */}
       {showBmx && <>{[...BENCHMAXX_LEVELS].reverse().map((x, k) => <Fragment key={x.level}><dt data-bh-tag-legend={k === 0 ? "benchmaxxing" : undefined}><span className="bh-bmx-tag" data-level={x.level}><BenchmaxxingTagFace level={x.level} /></span></dt><dd>{x.title}: signal ≥ +{x.min}{k === 0 ? "; ranks higher on famous public benchmarks than on held-out ones; opens the model's radar" : ""}</dd></Fragment>)}
         {/* CR-77.2: the old guards are information now — the marker, never a suppressed tag. */}
         <dt data-bh-tag-legend="benchmaxxing-uncertain"><span className="bh-bmx-tag" data-level="medium"><BenchmaxxingTagFace level="medium" uncertain /></span></dt><dd>{BENCHMAXX_UNCERTAIN_TEXT.replace(`${BENCHMAXX_UNCERTAIN_MARK} marks`, "Marks")}; the level still follows the score</dd>

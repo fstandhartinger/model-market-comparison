@@ -45,11 +45,13 @@ function PointShape(props: { cx?: number; cy?: number; fill?: string; payload?: 
   return <circle cx={cx} cy={cy} r={5} fill={fill} stroke="#0e1116" strokeWidth={0.5} />;
 }
 
-// Halo ring drawn under Pareto-frontier members (the colored point sits on top).
-function ParetoHalo(props: { cx?: number; cy?: number }) {
-  const { cx, cy } = props;
+// Halo ring drawn under Pareto-frontier members (the colored point sits on top). CR-77.3: the ring carries the
+// model id, so which models are on the green line can be read off the chart at any width — at 390 px most point
+// labels do not fit, and a name is not proof of membership.
+function ParetoHalo(props: { cx?: number; cy?: number; payload?: { id?: string } }) {
+  const { cx, cy, payload } = props;
   if (cx == null || cy == null) return <g />;
-  return <circle cx={cx} cy={cy} r={9} fill="none" stroke="#7ee0c0" strokeWidth={1.5} opacity={0.7} />;
+  return <circle cx={cx} cy={cy} r={9} fill="none" stroke="#7ee0c0" strokeWidth={1.5} opacity={0.7} data-frontier-id={payload?.id} />;
 }
 
 // F-17: dots only — names are placed by <PointLabels>, which can see every label at once.
@@ -327,8 +329,9 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
       </div>
       <p className="mt-3 text-xs text-gray-500">
         Up is more capability; toward the <b>right</b> is cheaper, so the shaded top-right quadrant holds the most attractive models. The
-        <span className="text-accent2"> green Pareto frontier</span> marks and connects the best-value models —
-        those no other model beats on both price and capability. Click any point to open the model detail.
+        <span className="text-accent2" title={FRONTIER_GRACE_NOTE}> green Pareto frontier</span> marks and connects the best-value models —
+        those no cheaper model is ahead of by more than the small tolerance the line allows (half a point of capability,
+        0.5 % of the score scale; on Elo boards 0.5 % of the plotted range). Click any point to open the model detail.
       </p>
       <PriceAssumptions />
 

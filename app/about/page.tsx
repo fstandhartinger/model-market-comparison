@@ -197,8 +197,8 @@ export default async function AboutPage() {
         The value map plots each model&apos;s capability score against its adjusted cost per task; cheaper models sit to
         the right, so the most attractive models are in the top-right corner. The green line joins the models that no
         cheaper model beats on capability &mdash; the Pareto frontier &mdash; with one small tolerance (Florian,
-        17 Sep 2026): a model stays on the line unless a model at the same price or cheaper is ahead of it by more than
-        half a point of capability, that is 0.5 % of the score scale (on Elo boards, which have no fixed scale, 0.5 % of
+        17 Sep 2026): a model stays on the line unless a model at the same price or cheaper is ahead of it by half a point
+        of capability or more, that is 0.5 % of the score scale (on Elo boards, which have no fixed scale, 0.5 % of
         the plotted range). Without it, two models that are a tenth of a point apart &mdash; a difference no benchmark
         resolves and nobody can see on the chart &mdash; would look like a clear win for one of them.
       </p>

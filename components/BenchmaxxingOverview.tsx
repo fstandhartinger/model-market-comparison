@@ -126,7 +126,7 @@ export function BenchmaxxingOverview({ rows, preset, onPreset, selected, onSelec
   // CR-21.2 → CR-63.5: the bar spans 0 → the highest signal of every scored model, one scale for all tabs, so a
   // model's bar keeps its length when the list changes.
   const maxScore = Math.max(1e-9, ...rows.map((row) => row.score));
-  // CR-69.3: tags are no longer a contiguous score band; the InfoTip names the rule (interval above zero).
+  // CR-77.1: the tag level follows the published score alone; the InfoTip names that rule and the uncertainty marker.
   const heading = BENCHMAXXING_PRESETS.find((p) => p.key === preset)!.heading;
   return <section className="bh-panel p-5" aria-label="Benchmaxxing overview">
     <div className="grid gap-5 md:grid-cols-[1fr_auto] md:items-start">

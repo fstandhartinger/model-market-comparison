@@ -18,7 +18,7 @@ export function BenchmaxxingWorkbench({ rows, models, initial, levelCounts, unce
   levelCounts: Record<BenchmaxxingLevel, number>;
   /** CR-77.2: tagged families whose tag rests on thin evidence. */
   uncertainCount?: number;
-  /** CR-65.6: catalog average of the signal; a tag needs its interval above it. */
+  /** CR-65.6: catalog average of the signal (0). CR-77.1: a tag no longer needs its interval above it. */
   tagAverage: number | null;
   minComparisons: number;
   tagMinComparisons: number;
