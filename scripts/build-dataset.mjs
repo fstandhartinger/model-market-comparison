@@ -2,7 +2,7 @@
 // Merge all raw data sources into a single normalized dataset.json.
 // Output shape is documented in data/SCHEMA.md and consumed by the DB seeder
 // (scripts/seed-db.mjs) and as the app's bundled fallback dataset.
-import { stickyAaFamilyKey } from "../lib/aa-identity.mjs";
+import { aaKeyFrozen, stickyAaFamilyKey } from "../lib/aa-identity.mjs";
 import { readFile, writeFile } from "node:fs/promises";
 import { cacheReadPriceOutliers } from "../lib/effective-cost.mjs";
 import { createHash } from "node:crypto";
@@ -516,13 +516,18 @@ async function build() {
     return routed && /(?:^|-)(?:thinking|instruct)(?:-|$)/.test(routed.familyKey) ? routed.familyKey : named.familyKey;
   };
   const publishedAa = new Map(); // AA UUID → { family_key, display_name } as last published
+  const publishedFreezes = new Map(); // AA UUID → the recorded freeze of a renamed model's key
+  let knownFreezes = false;
   try {
     const published = JSON.parse(await readFile(OUT, "utf8"));
     for (const row of published.models || []) if (row.aa_model_id && row.family_key) publishedAa.set(row.aa_model_id, { family_key: row.family_key, display_name: row.display_name });
+    knownFreezes = Array.isArray(published.aa_key_freezes);
+    for (const freeze of published.aa_key_freezes || []) publishedFreezes.set(freeze.aa_model_id, freeze);
   } catch { /* first build: nothing published yet */ }
   const stickyRowIds = new Set();
   const naturalRowIds = new Map(aa.models.map((m) => [`${aaNaturalKey(m)}::${detectVariant(m.name)}`, m.id]));
   const aaRenames = [];
+  const aaKeyFreezes = [];
   for (const m of aa.models) {
     const meta = m.metadata || {};
     const hfCorrection = AA_HF_URL_CORRECTIONS[m.id] || null;
@@ -539,9 +544,19 @@ async function build() {
     // Only a rename by AA sticks: the published name differs. Our own normalization/alias changes and a route-defined
     // Thinking/Instruct product still take effect; an id already taken this build falls back to the natural key.
     const published = publishedAa.get(m.id);
-    if (published && published.display_name !== m.name && !routeDefinesProduct && !stickyRowIds.has(`${published.family_key}::${variant}`)) {
+    const frozen = aaKeyFrozen({ publishedKey: published?.family_key, publishedName: published?.display_name, currentName: m.name,
+      publishedNaturalKey: published ? normalizeFamily(published.display_name, m.model_creator?.name).familyKey : null,
+      publishedFreeze: publishedFreezes.get(m.id), knownFreezes });
+    if (frozen && !routeDefinesProduct && !stickyRowIds.has(`${published.family_key}::${variant}`)) {
       const stickyKey = stickyAaFamilyKey({ aaId: m.id, naturalKey: familyKey, variant, publishedKey: published.family_key, naturalRowIds });
-      if (stickyKey !== familyKey) { aaRenames.push(`${m.name}: ${familyKey} → ${stickyKey}`); familyKey = stickyKey; stickyRowIds.add(`${stickyKey}::${variant}`); }
+      if (stickyKey !== familyKey) {
+        aaRenames.push(`${m.name}: ${familyKey} → ${stickyKey}`); 
+        // The freeze is recorded, not re-inferred next time: once AA's name and the key agree again
+        // (the name is published as it now reads), nothing in the data would show the rename.
+        aaKeyFreezes.push({ aa_model_id: m.id, family_key: stickyKey, natural_key: familyKey, aa_name: m.name,
+          frozen_since: publishedFreezes.get(m.id)?.frozen_since ?? new Date().toISOString().slice(0, 10) });
+        familyKey = stickyKey; stickyRowIds.add(`${stickyKey}::${variant}`);
+      }
     }
     const rowId = `${familyKey}::${variant}`;
     const ev = m.evaluations || {};
@@ -1297,6 +1312,8 @@ async function build() {
   benchmark_results.judged_benchmarks = Object.keys((await readData("benchmark-caveats.json")).judged).sort();
   const dataset = {
     benchmark_results,
+    // AA UUIDs whose published family key is kept although AA renamed the model (lib/aa-identity.mjs).
+    aa_key_freezes: aaKeyFreezes.sort((a, b) => a.family_key.localeCompare(b.family_key)),
     generated_at,
     efficiency,
     counts: { models: modelRows.length, families: new Set(modelRows.map((row) => row.family_key)).size, providers: providers.length,
