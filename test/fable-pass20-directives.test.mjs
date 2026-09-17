@@ -21,6 +21,20 @@ test('F-108 (a–c): zero ring, ring labels and a dashed average ring in TopicRa
   assert.match(radar, /data-radar-average=/);
 });
 
+test('F-113: ring labels leave the 12-o\'clock spoke and the unit word leaves the SVG', async () => {
+  const radar = await src('components/TopicRadar.tsx');
+  // Half a step to either side of the top spoke: numbers on one side, the average label on the other.
+  assert.match(radar, /const labelAngle = \(side: 1 \| -1\) => -Math\.PI \/ 2 \+ side \* Math\.PI \/ Math\.max\(1, axes\.length\)/);
+  assert.match(radar, /polar\(labelAngle\(1\), radius\(n\) - 10\)/);
+  assert.match(radar, /polar\(labelAngle\(-1\), radius\(means\[0\]!\) - 10\)/);
+  assert.match(radar, /paintOrder: 'stroke'/, 'the F-70 halo keeps the numbers readable over rings and arcs');
+  assert.match(radar, /dominantBaseline="hanging"/, 'the glyphs hang inward, so "100" stays inside the rim');
+  assert.doesNotMatch(radar, /'percentile' : 'position'\}<\/text>/, 'no unit word inside the chart');
+  // It moved into the captions instead.
+  assert.match(await src('components/BenchmaxxingReport.tsx'), /Rings: 0 · 50 · 100 percentile\./);
+  assert.match(await src('components/BenchmarkRadar.tsx'), /Rings: 0 · 50 · 100 \{percentile \? 'percentile' : 'position'\}\./);
+});
+
 test('F-109: the Overview legend is a collapsed disclosure with one row per mark', async () => {
   const explorer = await src('components/ModelExplorer.tsx');
   assert.match(explorer, /<details className="bh-legend mt-1" data-bh-legend>/);

@@ -88,7 +88,7 @@ export function BenchmaxxingReport({ models, ids, initial, compare, onToggleComp
         </div>
         <p className="mb-2 text-sm font-medium" data-jagged-note>The score compares headline boards (● filled) with held-out boards (○ hollow) of the same topic; greyed points are boards the score does not use. A jagged shape between topics is specialisation, not a flag — a flag is a screen, not proof.</p>
         <TopicRadar markSides axes={radarAxes} series={series} label="Many-axis radar, ordered clockwise by related benchmark topic; gaps indicate missing measured scores. Each point is focusable and announces its value." />
-        <p className="bh-muted text-xs" data-radar-axes-note>Axes: the {radarAxes.length} benchmarks {compare ? 'either model has' : 'this model has'} results for, grouped clockwise by topic. Dashed ring = {compare ? "each model's" : "this model's"} average percentile.</p>
+        <p className="bh-muted text-xs" data-radar-axes-note>Axes: the {radarAxes.length} benchmarks {compare ? 'either model has' : 'this model has'} results for, grouped clockwise by topic. Rings: 0 · 50 · 100 percentile. Dashed ring = {compare ? "each model's" : "this model's"} average percentile.</p>
       </div>
       <div className={compare ? 'grid gap-4 md:grid-cols-2' : 'space-y-5 lg:flex lg:h-full lg:flex-col lg:gap-5 lg:space-y-0'}>
         {shown.map((s, k) => <SignalCard key={s.id} name={s.name} slot={k} compare={compare} report={s.report!} level={models.find((m) => m.id === s.id)?.level ?? null} />)}

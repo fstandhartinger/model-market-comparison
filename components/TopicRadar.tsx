@@ -65,6 +65,8 @@ export function TopicRadar({ axes: givenAxes, series: givenSeries, label, compac
   const radius = (v: number) => inner + (r - inner) * Math.max(0, Math.min(100, v)) / 100;
   const polar = (angle: number, radius: number) => [c + Math.cos(angle) * radius, c + Math.sin(angle) * radius] as const;
   const angleOf = (i: number) => -Math.PI / 2 + (i / Math.max(1, axes.length)) * Math.PI * 2;
+  // F-113: half a step to either side of the 12-o'clock spoke — the only place no axis occupies.
+  const labelAngle = (side: 1 | -1) => -Math.PI / 2 + side * Math.PI / Math.max(1, axes.length);
   const at = (s: number, i: number) => polar(angleOf(i), radius(series[s]?.points[i]?.value ?? 0));
   const topicIndices = new Map<string, number[]>();
   axes.forEach((axis, index) => topicIndices.set(axis.category, [...(topicIndices.get(axis.category) ?? []), index]));
@@ -112,14 +114,22 @@ export function TopicRadar({ axes: givenAxes, series: givenSeries, label, compac
         return <line key={axis.id} x1={tx} y1={ty} x2={x} y2={y} stroke="currentColor" strokeWidth="1" opacity={missing ? '.06' : '.14'} />;
       })}
       {averages && means.map((m, k) => m == null ? null : <circle key={`avg-${k}`} cx={c} cy={c} r={radius(m)} fill="none" stroke={series[k].color} strokeWidth="1" strokeDasharray="4 4" opacity=".55" data-radar-average={Math.round(m)} />)}
-      {!compact && <g fontSize="10" fill="currentColor" data-radar-ring-labels>
-        {[0, 50, 100].map((n) => <text key={n} x={c - 5} y={c - radius(n) - 3} textAnchor="end" opacity=".6">{n}</text>)}
-        <text x={c - 5} y={c - radius(100) + 2} dy="0.9em" textAnchor="end" opacity=".6">{rings === 'percentile' ? 'percentile' : 'position'}</text>
-        {averages && series.length === 1 && avgText[0] && <text x={c + 5} y={c - radius(means[0]!) - 3} fill={series[0].color} data-radar-average-label>{avgText[0]}</text>}
-      </g>}
       {series.map((s) => runs(s).map((points, k) => <polyline key={`${s.id}-${k}`} points={points.join(' ')} fill="none" stroke={s.color} strokeWidth="2" strokeDasharray={s.dash} strokeLinejoin="round" />))}
       {series.map((s, si) => s.points.map((p, i) => { if (p?.value == null) return null; const [x, y] = at(si, i); const side = markSides ? axes[i].side ?? null : undefined; const hollow = side === 'heldout';
         return <circle key={`${s.id}-${i}`} cx={x} cy={y} r={active?.s === si && active?.i === i ? 7 : 5} fill={hollow ? 'var(--surface, #161b22)' : s.color} stroke={hollow ? s.color : 'var(--surface, #161b22)'} strokeWidth={hollow ? 2 : 1.5} opacity={side === null ? 0.35 : undefined} data-radar-side={markSides ? side ?? 'unused' : undefined} pointerEvents="none" />; }))}
+      {/* F-113 (Fable pass 21): ring numbers sat on the 12-o'clock spoke, where they collided with that
+          axis' own point and with the sector arc. They now sit at the half-step angle between the first
+          two spokes, inside their ring, and the series average goes to the half-step on the other side —
+          so the two label groups can never share a pixel. The unit word moved into the caption. */}
+      {!compact && <g fontSize="10" fill="currentColor" style={{ paintOrder: 'stroke', stroke: 'var(--surface, #161b22)', strokeWidth: '3px', strokeLinejoin: 'round' }} data-radar-ring-labels>
+        {/* Near 12 o'clock "inside the ring" means below the anchor, so the glyph hangs from it — with
+            text-after-edge the "100" poked into the sector band (measured 243 px against a 234 px rim); 10 user units of inset
+            keep it inside at phone scale too. */}
+        {[0, 50, 100].map((n) => { const [x, y] = polar(labelAngle(1), radius(n) - 10);
+          return <text key={n} x={x} y={y} textAnchor="start" dominantBaseline="hanging" opacity=".6">{n}</text>; })}
+        {averages && series.length === 1 && avgText[0] && (() => { const [x, y] = polar(labelAngle(-1), radius(means[0]!) - 10);
+          return <text x={x} y={y} textAnchor="end" dominantBaseline="hanging" fill={series[0].color} data-radar-average-label>{avgText[0]}</text>; })()}
+      </g>}
       {!compact && series.map((s, si) => s.points.map((p, i) => { if (p?.value == null) return null; const [x, y] = at(si, i); return <RadarHit key={`hit-${s.id}-${i}`} cx={x} cy={y} s={si} i={i} active={active} setActive={setActive} label={`${s.name}, ${axes[i].name}: ${p.label}`} />; }))}
     </svg>
     {/* F-108 (d): a label anchors on its own side and may use only the room between its anchor and that edge, so it wraps instead of leaving the wrapper. */}

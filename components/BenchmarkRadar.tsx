@@ -107,7 +107,7 @@ export function BenchmarkRadar({ view, axes, picks, axesPicker, axesPickerLabel 
         <ol className="md:hidden mt-2 space-y-0.5 text-xs">{shown.map((axis, i) => { const short = shortName(axis.name), suffix = versionSuffix(short, axis.version); return <li key={axis.id}>{i + 1}. {short}{suffix && <span className="bh-muted"> {suffix}</span>}</li>; })}</ol>
       </div> : <div className="mt-2">
         <TopicRadar axes={shown} series={series} label={ariaLabel} rings={percentile ? 'percentile' : 'position'} averages={percentile} />
-        <p className="bh-muted mt-2 text-xs">Every benchmark on which at least one selected model has a result ({shown.length}), grouped clockwise by topic{percentile ? ', on the same percentile scale as the Benchmaxxing radar' : ''}. Lines join neighbours within one topic only, so an uneven topic shows as a jagged line.</p>
+        <p className="bh-muted mt-2 text-xs">Every benchmark on which at least one selected model has a result ({shown.length}), grouped clockwise by topic{percentile ? ', on the same percentile scale as the Benchmaxxing radar' : ''}. Rings: 0 · 50 · 100 {percentile ? 'percentile' : 'position'}. Lines join neighbours within one topic only, so an uneven topic shows as a jagged line.</p>
       </div>}
       <p className="mt-2 text-xs" data-radar-scale-sentence>{percentile ? 'Each axis: percentile among the models measured on that benchmark (p100 = best measured); hover for the published number.' : 'Each axis on its published scale; open-ended axes (Elo, ECI) span the measured range.'}</p>
       <p className="bh-muted mt-1 text-xs">Hover, tap or focus a point for its exact score. <AaCredit /> · <EpochCredit /> · DesignArena</p>
