@@ -172,7 +172,8 @@ export default async function AboutPage() {
         comparisons are pulled towards the catalog average. Among models with at least 10 related comparisons, the top
         10 % can carry the strong ⚠ tag and the next 10 % the weak △ tag — but only when the model&apos;s 80 % bootstrap
         interval (its benchmarks resampled within each topic, 400 times) lies above the catalog average. Neighbouring
-        signals near the top differ by less than their own uncertainty, so a high but uncertain signal stays untagged. It is a screening flag that invites a closer look at
+        signals near the top differ by less than their own uncertainty, so a high but uncertain signal stays untagged. On the radar, mid-table models jump more often and models at the rim
+        look smooth, which is why the signal is adjusted for level and a flag is a screen, not proof. It is a screening flag that invites a closer look at
         the sources, not proof of contamination or intent.{" "}
         <a href="/benchmaxxing" className="text-accent">See the flagged models and their radars</a>.
       </p>

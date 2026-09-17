@@ -68,7 +68,7 @@ export function BenchmaxxingReport({ models, ids, initial, compare, onToggleComp
         </div>
         <p className="mb-2 text-sm font-medium" data-jagged-note>Jumps between neighbouring benchmarks of one topic are what the signal measures. Mid-table models jump more often, and models at the rim look smooth — a flag is a screen, not proof.</p>
         <TopicRadar axes={radarAxes} series={series} label="Many-axis radar, ordered clockwise by related benchmark topic; gaps indicate missing measured scores. Each point is focusable and announces its value." />
-        <p className="bh-muted text-xs">Axes are the {radarAxes.length} benchmarks {compare ? 'either model has' : 'this model has'} results for, grouped clockwise by topic; a jagged outline inside one topic is the Benchmaxxing pattern.</p>
+        <p className="bh-muted text-xs" data-radar-axes-note>Axes: the {radarAxes.length} benchmarks {compare ? 'either model has' : 'this model has'} results for, grouped clockwise by topic. Dashed ring = {compare ? "each model's" : "this model's"} average percentile.</p>
       </div>
       <div className={compare ? 'grid gap-4 md:grid-cols-2' : 'space-y-5 lg:flex lg:h-full lg:flex-col lg:gap-5 lg:space-y-0'}>
         {shown.map((s, k) => <SignalCard key={s.id} name={s.name} slot={k} compare={compare} report={s.report!} level={models.find((m) => m.id === s.id)?.level ?? null} />)}

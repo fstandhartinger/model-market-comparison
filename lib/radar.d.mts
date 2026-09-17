@@ -1,5 +1,10 @@
 import type { BenchmarkView, ViewAxis } from './benchmark-view.mjs';
-export interface RadarScaled { value: number; scale: 'fixed' | 'peer'; range: [number, number] }
+export interface RadarScaled { value: number; scale: 'fixed' | 'peer' | 'percentile'; range?: [number, number]; n?: number }
+export type RadarConvention = 'percentile' | 'native';
+export const RADAR_CONVENTIONS: readonly RadarConvention[];
+export function radarPercentile(axis: ViewAxis, modelId: string): RadarScaled | null;
+export function withRadarPercentiles<T extends BenchmarkView>(selected: T, full: BenchmarkView): T;
+export function radarPosition(axis: ViewAxis, modelId: string, value: number | null | undefined, convention?: RadarConvention): RadarScaled | null;
 export const FIXED_RANGES: Readonly<Record<string, [number, number]>>;
 export function axisRange(axis: ViewAxis): [number, number] | null;
 export function radarScale(value: number | null | undefined, axis: ViewAxis): RadarScaled | null;
@@ -7,7 +12,7 @@ export function formatRadarValue(value: number | null | undefined, unit: string 
 export function scaleNote(scaled: RadarScaled | null, unit: string | null): string;
 export const DEFAULT_RADAR_FAMILIES: readonly string[];
 export function defaultRadarAxes(axes: ViewAxis[], families?: readonly string[]): string[];
-export function detailedRadarAxes(axes: ViewAxis[], picks: string[]): ViewAxis[];
+export function detailedRadarAxes(axes: ViewAxis[], picks: string[], convention?: RadarConvention): ViewAxis[];
 export function defaultComparePicks(view: BenchmarkView, n?: number): string[];
 export declare const RADAR_WINDOW_MARGIN: number;
 export declare const RADAR_WINDOW_MAX_FLOOR: number;

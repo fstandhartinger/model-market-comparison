@@ -6,7 +6,7 @@ import { buildBenchmarkComparison } from "./benchmark-comparison.mjs";
 import { getBenchmarkMatrixPage } from "./benchmark-matrix-data";
 import { importantMatrix } from "./benchmark-matrix.mjs";
 import { selectBenchmarkView, selectFamilyBenchmarkView } from "./benchmark-view.mjs";
-import { defaultComparePicks } from "./radar.mjs";
+import { defaultComparePicks, withRadarPercentiles } from "./radar.mjs";
 import { DEFAULT_BENCHMAXXING_PRESET, presetRows, type BenchmaxxingOverviewRow } from "./benchmaxxing-presets";
 
 /**
@@ -61,7 +61,7 @@ async function build(key: PageDataKey): Promise<unknown> {
   }
   if (key === "compare") {
     // CR-14.1: the two most capable current model families, from the data (not a fixed pair).
-    const initialView = selectFamilyBenchmarkView(view, defaultComparePicks(view));
+    const initialView = withRadarPercentiles(selectFamilyBenchmarkView(view, defaultComparePicks(view)), view);
     return { initialView, initialPicks: initialView.picks ?? [] };
   }
   // benchmaxxing
