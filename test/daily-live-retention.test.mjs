@@ -71,7 +71,12 @@ test('CR-67.1/67.2: the dispute still rejects the contract, and the run withhold
 });
 
 test('CR-67.2: core contracts and a second dispute still fail the run closed', () => {
-  for (const core of ['aa', 'da', 'or', 'aa_efficiency', 'or_efficiency', 'chutes_efficiency', 'unknown']) assert.equal(planRejectedContract(core).action, 'fail', core);
+  for (const core of ['aa', 'da', 'or', 'unknown']) assert.equal(planRejectedContract(core).action, 'fail', core);
+  // 17 Sep 05:49 run: the or_efficiency critic asked for cache prices the source does not publish (it read the prompt/completion
+  // prices as cache prices). Efficiency datasets are retainable like aa_coding_v15 — withheld, never accepted.
+  for (const [dataset, source] of [['or_efficiency', 'openrouter_efficiency'], ['aa_efficiency', 'aa_efficiency'], ['chutes_efficiency', 'chutes_efficiency']]) {
+    assert.deepEqual([planRejectedContract(dataset).action, planRejectedContract(dataset).source], ['retain', source]);
+  }
   assert.equal(MAX_RETAINED_CONTRACTS, 1);
   assert.equal(planRejectedContract('aa_coding_v15', [{ dataset: 'aa_coding_v15' }]).action, 'fail');
 });

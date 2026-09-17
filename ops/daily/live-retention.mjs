@@ -10,8 +10,13 @@ import { createHash } from 'node:crypto';
 
 export const MAX_RETAINED_CONTRACTS = 1;
 /** Retainable live contracts: raw files the dataset owns and the `sources` key it dates in the dataset. */
+// Headline and price sources (AA, DesignArena, OpenRouter models/endpoints) are never retainable. The token-efficiency
+// datasets are: a day-old cache-hit rate or usage ratio keeps its own date, like the rotated pages they already retain.
 export const RETAINABLE_CONTRACTS = {
   aa_coding_v15: { files: ['aa-coding-agents-v1.5.json'], source: 'aa_coding_agents_v1_5' },
+  aa_efficiency: { files: ['aa-efficiency.json'], source: 'aa_efficiency' },
+  or_efficiency: { files: ['openrouter-efficiency.json'], source: 'openrouter_efficiency' },
+  chutes_efficiency: { files: ['chutes-efficiency.json'], source: 'chutes_efficiency' },
 };
 
 /** What to do with a rejected contract, given the ones already retained this run. */
