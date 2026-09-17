@@ -70,10 +70,13 @@ export function ShortlistColumns({ data, ids, tableIds, names, onToggle, full = 
   return <figure className="card mt-4 p-3 sm:p-4" aria-labelledby="bh-shortlist-cols-title" data-shortlist-columns>
     <div className="flex flex-wrap items-center justify-between gap-2">
       <figcaption id="bh-shortlist-cols-title" className="text-sm font-semibold">{label}<span className="bh-muted ml-2 text-xs font-normal">{measured} of {columns.length} models{kind === "position" ? " · Elo, drawn between the lowest and highest rating" : ""} · <AaCredit /> · <EpochCredit bare /></span></figcaption>
-      <div className="relative flex items-center gap-1">
-        <label className="text-xs">
+      {/* CR-79 (found while verifying): the picker's widest option set its intrinsic width, so at the phone's
+          larger-text setting this row was 372 px wide inside a 390 px viewport and pushed the whole page sideways.
+          min-w-0 lets it shrink; the select keeps its own width but never wider than the card. */}
+      <div className="relative flex min-w-0 max-w-full items-center gap-1">
+        <label className="min-w-0 text-xs">
           <span className="sr-only">Score shown in the chart</span>
-          <select className="bh-input py-1 text-xs" value={score} onChange={(e) => setScore(e.target.value as ScoreKey)} data-shortlist-score>
+          <select className="bh-input max-w-full py-1 text-xs" value={score} onChange={(e) => setScore(e.target.value as ScoreKey)} data-shortlist-score>
             {CHART_SCORES.map((k) => <option key={k} value={k}>{k === "composite" ? "Benchmark Heaven Score" : SCORE_PICKER_LABELS[k]}</option>)}
           </select>
         </label>

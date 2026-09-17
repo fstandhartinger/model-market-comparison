@@ -28,3 +28,14 @@ test('CR-79.2: the header is never hidden as a workaround, and sorting stays key
   // Only the three phone columns exist below md; Org / #benchmarks / #providers stay md-only (F-14), not the rest.
   assert.equal((th.match(/hidden md:table-cell/g) || []).length, 1, 'one hideBelowMd branch, unchanged');
 });
+
+test('CR-79 follow-up: nothing forces the page sideways at a large text setting', () => {
+  // Found while verifying CR-79 and fixed in the same iteration: at the phone's larger-text setting the page
+  // overflowed ~61 px. Two causes, both "an intrinsic width that cannot shrink".
+  const nav = readFileSync(new URL('../components/Nav.tsx', import.meta.url), 'utf8');
+  assert.match(nav, /flex min-h-\[58px\] max-w-\[1400px\] flex-wrap items-center/,
+    'the header row may wrap instead of overflowing, and is no longer pinned to a fixed height');
+  const cols = readFileSync(new URL('../components/ShortlistColumns.tsx', import.meta.url), 'utf8');
+  assert.match(cols, /<div className="relative flex min-w-0 max-w-full items-center gap-1">/, 'the chart-score row may shrink');
+  assert.match(cols, /<select className="bh-input max-w-full py-1 text-xs"/, 'and its picker never exceeds the card');
+});

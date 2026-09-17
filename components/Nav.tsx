@@ -100,7 +100,11 @@ export function Nav() {
   const { filtersOpen } = useSettings();
   return (
     <header className={`relative border-b border-line bg-panel ${filtersOpen ? "z-50" : ""}`}>
-      <div className="mx-auto flex h-[58px] max-w-[1400px] items-center gap-1.5 px-2 sm:gap-2 sm:px-3 md:px-4">
+      {/* CR-79 (found while verifying): a phone at the larger-text setting made this row wider than the viewport, so
+          the whole page scrolled sideways. The row may wrap when that happens — every label stays visible (CR-6.1
+          keeps Benchmarks beside More) and the header simply becomes two lines on those devices; at the default text
+          size nothing wraps and the height is the same 58 px. */}
+      <div className="mx-auto flex min-h-[58px] max-w-[1400px] flex-wrap items-center gap-1.5 px-2 sm:gap-2 sm:px-3 md:px-4">
         <Link href="/" aria-label="Benchmark Heaven home" className="bh-brand-link flex min-h-10 shrink-0 items-center gap-2.5"><BrandMark className="h-8 w-8 shrink-0" /><span className="bh-wordmark hidden md:inline">Benchmark <span className="bh-wordmark-accent">Heaven</span></span></Link>
         <BetaTag />
         {/* The full primary nav fits the viewport from 1280 px up; 1024–1279 keeps the compact cluster (measured: the desktop bar needs ~1120 px). */}
