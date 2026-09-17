@@ -7,6 +7,7 @@ import { createHash } from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { aaSpeed } from "../lib/aa-speed.mjs";
+import { collapseDuplicateEndpoints } from "../lib/openrouter-endpoints.mjs";
 import { deterministicFamilyRepresentative } from "../lib/family-representative.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -695,7 +696,7 @@ async function build() {
       contextLength: num(m.context_length),
     });
 
-    for (const e of pricedEndpoints) {
+    for (const { endpoint: e, physical_endpoints: physicalEndpoints, alternates } of collapseDuplicateEndpoints(pricedEndpoints)) {
       const inP = num(e.pricing?.prompt);
       const outP = num(e.pricing?.completion);
       const tag = String(e.tag || "");
@@ -729,6 +730,13 @@ async function build() {
         status: e.status ?? null,
         eu_hosted: euRoute || undefined,
         tee: TEE_OR_PROVIDERS.has(e.provider_name) || undefined,
+        // CR-66.5: several physical endpoints behind this provider tag; the cheapest is published.
+        ...(physicalEndpoints > 1 ? { physical_endpoints: physicalEndpoints } : {}),
+        ...(alternates.length ? { alternate_prices: alternates.map((a) => ({
+          input_per_1m: num(a.pricing?.prompt) != null ? num(a.pricing.prompt) * 1e6 : null,
+          output_per_1m: num(a.pricing?.completion) != null ? num(a.pricing.completion) * 1e6 : null,
+          cache_read_per_1m: num(a.pricing?.input_cache_read) != null ? num(a.pricing.input_cache_read) * 1e6 : null,
+        })) } : {}),
       });
     }
   }
