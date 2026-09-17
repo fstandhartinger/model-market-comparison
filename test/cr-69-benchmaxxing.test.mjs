@@ -107,8 +107,8 @@ const HIGH = ['glm-5.2::max', 'minimax-m3::default', 'mimo-v2.5::default', 'ling
 test('CR-69.3 regression (17 Sep view): expected tags; frontier models named by Florian stay untagged', () => {
   const fam = benchmaxxingFamilySignals(fixtureView);
   const familyOf = (id) => id.split('::')[0];
-  assert.deepEqual([...fam.taggedFamilies].sort(), ['mimo-v2.5-pro', 'minimax-m2.7', 'nemotron-3-ultra-550b-a55b', 'qwen3-coder-next', 'qwen3.5-122b-a10b', 'qwen3.5-397b-a17b', 'qwen3.6-27b', 'qwen3.6-35b-a3b'].sort());
-  assert.deepEqual([...fam.weakFamilies].sort(), ['gemini-3.1-pro-preview', 'kimi-k2.6', 'mistral-medium-3.5', 'qwen3.7-max'].sort());
+  assert.deepEqual([...fam.taggedFamilies].sort(), ['minimax-m2.7', 'nemotron-3-ultra-550b-a55b', 'qwen3.5-122b-a10b', 'qwen3.5-397b-a17b', 'qwen3.6-27b', 'qwen3.6-35b-a3b'].sort());
+  assert.deepEqual([...fam.weakFamilies].sort(), ['gemini-3.1-pro-preview', 'kimi-k2.6', 'mimo-v2.5-pro', 'mistral-medium-3.5', 'qwen3-coder-next', 'qwen3.7-max'].sort());
   for (const id of ['gpt-6-astra::max', 'claude-opus-5::max', 'gpt-5.6-sol::max', 'claude-fable-5.1::max', 'kimi-k3::max']) {
     assert.ok(!fam.taggedFamilies.has(familyOf(id)) && !fam.weakFamilies.has(familyOf(id)), `${id} untagged`);
   }

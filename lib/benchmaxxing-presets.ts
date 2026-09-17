@@ -20,28 +20,23 @@ export type BenchmaxxingOverviewRow = {
   interval?: { lower: number; upper: number } | null;
 };
 
-export type BenchmaxxingPreset = "featured" | "signals" | "all";
+export type BenchmaxxingPreset = "featured" | "all";
 
-// CR-63.4 (2026-09-16): Strongest signals is the default and comes first, so a first visit opens on flagged models.
-export const DEFAULT_BENCHMAXXING_PRESET: BenchmaxxingPreset = "signals";
+export const DEFAULT_BENCHMAXXING_PRESET: BenchmaxxingPreset = "featured";
 export const BENCHMAXXING_PRESETS: { key: BenchmaxxingPreset; label: string; heading: string }[] = [
-  { key: "signals", label: "Strongest signals", heading: "The strongest headline-over-held-out signals" },
   { key: "featured", label: "Featured models", heading: "Today’s featured models" },
   { key: "all", label: "All scored", heading: "Every scored model" },
 ];
 
-/** Strongest signals (default): tagged models by signal. Featured: current top models by Composite. All: every scored model by signal. */
 export function presetRows(rows: BenchmaxxingOverviewRow[], preset: BenchmaxxingPreset): BenchmaxxingOverviewRow[] {
-  const bySignal = (a: BenchmaxxingOverviewRow, b: BenchmaxxingOverviewRow) => b.score - a.score || b.comparisons - a.comparisons || a.name.localeCompare(b.name);
-  if (preset === "featured") return rows.filter((r) => r.featured).sort((a, b) => (b.composite ?? -Infinity) - (a.composite ?? -Infinity) || a.name.localeCompare(b.name));
-  if (preset === "signals") return rows.filter((r) => r.tagged).sort(bySignal);
-  return [...rows].sort(bySignal);
+  const listed = preset === "all" ? [...rows] : rows.filter((r) => r.featured);
+  return listed.sort((a, b) => (b.composite ?? -Infinity) - (a.composite ?? -Infinity) || a.name.localeCompare(b.name));
 }
 
 /** F-104: a deep link must land with its model visible and selected in the master list. Keep the default preset when
  *  the model is in it, else the narrowest preset that lists it; expand the 10-row list only when the row sits below it. */
 export function presetShowing(rows: BenchmaxxingOverviewRow[], id: string, current: BenchmaxxingPreset = "featured", limit = 10): { preset: BenchmaxxingPreset; showAll: boolean } | null {
-  const order: BenchmaxxingPreset[] = [current, ...(["featured", "signals", "all"] as BenchmaxxingPreset[]).filter((p) => p !== current)];
+  const order: BenchmaxxingPreset[] = [current, ...(["featured", "all"] as BenchmaxxingPreset[]).filter((p) => p !== current)];
   for (const preset of order) {
     const index = presetRows(rows, preset).findIndex((r) => r.id === id);
     if (index >= 0) return { preset, showAll: index >= limit };

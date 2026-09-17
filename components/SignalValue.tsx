@@ -8,7 +8,7 @@ export function SignalValue({ score, level, large = false }: { score: number; le
   if (level !== "strong" && level !== "weak") return <span className={`font-semibold tabular ${large ? "text-5xl font-bold" : ""}`}>{text}</span>;
   const strong = level === "strong";
   return <span className="bh-signal-pill" data-level={level} data-large={large || undefined}
-    title={`${strong ? "Strong" : "Weak"} Benchmaxxing tag (${strong ? "top 10 %" : "next 10 %"} of scored models with n ≥ 10): ranks higher on famous public benchmarks than on held-out ones of the same topic, and the gap stays above zero when its benchmarks are resampled. A screening flag, not proof of leakage or intent.`}>
+    title={`${strong ? "Strong" : "Weak"} Benchmaxxing tag (strong: score of +10 or more, weak: above +5, on models with n ≥ 10): ranks higher on famous public benchmarks than on held-out ones of the same topic, and the gap stays above zero when its benchmarks are resampled. A screening flag, not proof of leakage or intent.`}>
     <span aria-hidden="true">{strong ? "⚠" : "△"}</span><span className="tabular">{text}</span><span className="sr-only">, {level} Benchmaxxing tag</span>
   </span>;
 }

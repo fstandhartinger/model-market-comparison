@@ -53,18 +53,18 @@ function QuickLook({ row, onOpenReport }: { row: BenchmaxxingOverviewRow; onOpen
 function baseName(name: string) { const i = name.indexOf(" ("); return i > 0 && name.endsWith(")") ? name.slice(0, i) : name; }
 function variantOf(name: string) { const i = name.indexOf(" ("); return i > 0 && name.endsWith(")") ? name.slice(i + 2, -1).split(", ").join(" · ") : ""; }
 
-function Rows({ rows, maxScore, selected, onSelect, expanded, onExpand, onOpenReport }: { rows: BenchmaxxingOverviewRow[]; maxScore: number; selected: string[]; onSelect: (id: string) => void; expanded: string | null; onExpand: (id: string | null) => void; onOpenReport: (id: string) => void }) {
+function Rows({ rows, maxScore, selected, onSelect, expanded, onExpand, onOpenReport }: { rows: BenchmaxxingOverviewRow[]; maxScore: number; selected: string[]; onSelect: (id: string) => void; expanded: Set<string>; onExpand: (id: string, open: boolean) => void; onOpenReport: (id: string) => void }) {
   return <>
     {rows.map((row) => {
       const slot = selected.indexOf(row.id);
-      const open = expanded === row.id;
+      const open = expanded.has(row.id);
       const panelId = `bmx-quick-${row.id.replace(/[^a-zA-Z0-9_-]/g, "_")}`;
       return <Fragment key={row.id}><tr className={`cursor-pointer ${slot >= 0 ? "bg-accent/10" : "hover:bg-accent/5"}`} onClick={() => onSelect(row.id)} data-row-id={row.id}>
         <th scope="row" className="!py-2 text-left align-middle font-medium">
           <span className="flex items-start gap-1">
           <button type="button" className="bh-bmx-expand -ml-1 mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded text-gray-400 hover:text-accent" aria-expanded={open} aria-controls={panelId}
             aria-label={`${open ? "Hide" : "Show"} quick look for ${row.name}`} title={open ? "Hide quick look" : "Quick look: compact radar and reading"}
-            onClick={(e) => { e.stopPropagation(); onExpand(open ? null : row.id); }}>
+            onClick={(e) => { e.stopPropagation(); onExpand(row.id, !open); }}>
             <span aria-hidden="true" className={`inline-block transition-transform ${open ? "rotate-90" : ""}`}>▸</span>
           </button>
           <button type="button" className="block min-w-0 flex-1 text-left" aria-pressed={slot >= 0} onClick={(e) => { e.stopPropagation(); onSelect(row.id); }}>
@@ -113,7 +113,9 @@ export function BenchmaxxingOverview({ rows, preset, onPreset, selected, onSelec
   minTopics: number;
 }) {
   const listed = presetRows(rows, preset);
-  const [expanded, setExpanded] = useState<string | null>(null);
+  // CR-71.4: several rows can be open at once (each keeps its own quick look), not an accordion.
+  const [expanded, setExpanded] = useState<Set<string>>(new Set());
+  const toggleExpanded = (id: string, open: boolean) => setExpanded((old) => { const next = new Set(old); if (open) next.add(id); else next.delete(id); return next; });
   const visible = showAll ? listed : listed.slice(0, 10);
   // CR-21.2 → CR-63.5: the bar spans 0 → the highest signal of every scored model, one scale for all tabs, so a
   // model's bar keeps its length when the list changes.
@@ -138,15 +140,15 @@ export function BenchmaxxingOverview({ rows, preset, onPreset, selected, onSelec
         <colgroup><col className="w-[44%] md:w-[28%]" /><col className="w-[22%] md:w-[14%]" /><col className="hidden md:table-column md:w-[20%]" /><col className="w-[34%] md:w-[18%]" /><col className="hidden md:table-column md:w-[20%]" /></colgroup>
         <thead><tr>
           <th scope="col" className="text-left">Model</th>
-          <th scope="col" className="text-left">Signal <InfoTip title="Benchmaxxing signal" label="the Signal column">Average signed gap, in percentile points, between public headline benchmarks and held-out benchmarks of the same topic (each pair ranked among the models both cover), pulled toward zero when few boards are compared. Plus = better on famous public tests than on tests nobody can train for. The tags are ranks among models with n ≥ 10 — the top 10 % can carry the strong ⚠ tag, the next 10 % the weak △ tag — and a model is tagged only when its 80 % bootstrap interval (its headline and held-out boards resampled) stays above zero, so a high but uncertain signal stays untagged — the same tags as on the Overview table. It is a screening flag, not proof of leakage or intent. <span data-signal-max>Bars run from 0 to {maxScore.toFixed(1)}, the highest signal of any scored model, in every list; a score at or below zero has no bar.</span> <a href="/about#benchmaxxing" className="text-accent underline">How the signal works</a></InfoTip></th>
+          <th scope="col" className="text-left">Signal <InfoTip title="Benchmaxxing signal" label="the Signal column">Average signed gap, in percentile points, between public headline benchmarks and held-out benchmarks of the same topic (each pair ranked among the models both cover), pulled toward zero when few boards are compared. Plus = better on famous public tests than on tests nobody can train for. The tags are absolute thresholds among models with n ≥ 10 — a score above +5 can carry the weak △ tag, one of +10 or more the strong ⚠ tag — and a model is tagged only when its 80 % bootstrap interval (its headline and held-out boards resampled) stays above zero, so a high but uncertain signal stays untagged — the same tags as on the Overview table. It is a screening flag, not proof of leakage or intent. <span data-signal-max>Bars run from 0 to {maxScore.toFixed(1)}, the highest signal of any scored model, in every list; a score at or below zero has no bar.</span> <a href="/about#benchmaxxing" className="text-accent underline">How the signal works</a></InfoTip></th>
           <th scope="col" className="hidden text-left md:table-cell">Boards compared (n)</th>
           <th scope="col" className="text-left">Measured</th>
           <th scope="col" className="hidden text-left md:table-cell">Domain specialization <InfoTip title="Domain specialization" label="the Domain specialization column">Disclosed for context and deliberately not added to the Benchmaxxing signal. Consistently strong coding and weak writing is specialisation, not a headline-over-held-out gap.</InfoTip></th>
         </tr></thead>
-        <tbody><Rows rows={visible} maxScore={maxScore} selected={selected} onSelect={onSelect} expanded={expanded} onExpand={setExpanded} onOpenReport={onOpenReport} /></tbody>
+        <tbody><Rows rows={visible} maxScore={maxScore} selected={selected} onSelect={onSelect} expanded={expanded} onExpand={toggleExpanded} onOpenReport={onOpenReport} /></tbody>
       </table>
     </div>
-    {!listed.length ? <p className="bh-empty mt-4">{preset === "signals" ? (weakCount ? "No model carries the strong tag; see All scored for the weak △ tags." : "No model is credibly flagged: no score in the top band stays above zero when its benchmarks are resampled.") : "No scored model in this preset."}</p> : null}
+    {!listed.length ? <p className="bh-empty mt-4">No scored model in this preset.</p> : null}
     {listed.length > 10 ? <button type="button" className="bh-button mt-4" onClick={() => onShowAll(!showAll)} aria-expanded={showAll}>{showAll ? "Show first 10" : `Show all ${listed.length} in this list`}</button> : null}
   </section>;
 }
