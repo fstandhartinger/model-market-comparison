@@ -328,6 +328,21 @@ details[open] > .bh-collapsible-grid { display: grid; }
 .bh-range:focus-visible { outline: none; }
 .bh-range:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px rgb(var(--accent) / .45); }
 
+/* CR-74.5: an open toolbar popover must not grow its <details> (the global open-summary margin moved the row 8 px). */
+.bh-advanced-toolbar details[open] > summary { margin-bottom: 0; }
+/* CR-74.5: the inline Options panel in Advanced uses the toolbar's 36 px control geometry from md up, and flows its
+   sections into two balanced columns from xl so it stays compact. */
+@media (min-width: 768px) {
+  .bh-options-inline .bh-options-body :is(input:not([type="checkbox"]):not([type="radio"]), select, button:not([data-bh-infotip-trigger]), details > summary) { min-height: 36px; }
+  .bh-options-inline .bh-options-body :is(input:not([type="checkbox"]):not([type="radio"]), select) { height: 36px; padding-top: 4px; padding-bottom: 4px; }
+  .bh-options-inline .bh-options-body button:not([data-bh-infotip-trigger]) { padding-top: 4px; padding-bottom: 4px; }
+  .bh-options-inline .bh-options-body details > summary { padding-top: 2px; padding-bottom: 2px; }
+}
+@media (min-width: 1280px) {
+  .bh-options-inline .bh-options-body { column-count: 2; column-gap: 40px; }
+  .bh-options-inline .bh-options-body > * { break-inside: avoid; margin-top: 0 !important; margin-bottom: 14px !important; }
+  .bh-options-inline .bh-options-body > .grid { grid-template-columns: minmax(0, 1fr); }
+}
 /* F-45: the desktop Advanced toolbar is one visual row. The shared global control
    minimum remains generous for standalone/mobile controls; this compact toolbar has
    enough surrounding spacing and uses the directive's 36px geometry instead. */

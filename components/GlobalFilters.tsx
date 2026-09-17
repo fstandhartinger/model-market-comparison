@@ -34,7 +34,7 @@ const EU_DEFINITION_ID = "bh-eu-hosted-definition";
 
 /** F-94 / CR-25.4: one regional axis — a label and four toggle chips, all pressed by default. The last pressed
  *  chip cannot be released (a row with nothing in it would empty every view without saying why). */
-function RegionRow({ label, value, set }: { label: string; value: string[]; set: (v: string[]) => void }) {
+function RegionRow({ label, value, set, euDefinitionId = EU_DEFINITION_ID }: { label: string; value: string[]; set: (v: string[]) => void; euDefinitionId?: string }) {
   return (
     <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
       <span className="w-full text-sm text-gray-400 sm:w-48">{label}</span>
@@ -43,7 +43,7 @@ function RegionRow({ label, value, set }: { label: string; value: string[]; set:
           const on = value.includes(b), last = on && value.length === 1;
           return (
             <button key={b} type="button" aria-pressed={on} aria-label={`${label} ${b}`}
-              aria-describedby={label === "Hosted in" && b === "EU" ? EU_DEFINITION_ID : undefined}
+              aria-describedby={label === "Hosted in" && b === "EU" ? euDefinitionId : undefined}
               title={last ? "At least one stays selected" : undefined}
               onClick={() => { if (!last) set(on ? value.filter((x) => x !== b) : [...value, b]); }}
               className={`min-h-8 rounded-md border px-3 text-sm ${on ? "border-accent/60 bg-accent/15 text-accent" : "border-line text-gray-400"}`}>
@@ -78,21 +78,51 @@ const countLabel = (n: number, total: number) => (n === total ? "All" : `${n} of
 // sheet's pickers are empty, and they are only reachable once the sheet is opened.
 const EMPTY: { providers: ProviderInfo[]; families: FamilyOption[] } = { providers: [], families: [] };
 let filterLists: Promise<typeof EMPTY> | null = null;
-export function GlobalFilters({ version }: { version: string }) {
+// CR-74.5: the inline Options panel has no page-data version of its own; it waits for the one the layout's sheet passes.
+let listsVersion: string | null = null;
+const versionWaiters = new Set<() => void>();
+function useFilterLists(version?: string) {
   const [lists, setLists] = useState(EMPTY);
   useEffect(() => {
     let live = true;
-    filterLists ??= fetch(`/api/page-data/filters?v=${encodeURIComponent(version)}`).then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); });
-    filterLists.then((value) => { if (live) setLists(value); }, () => { filterLists = null; });
-    return () => { live = false; };
+    const load = () => {
+      if (!listsVersion) return;
+      filterLists ??= fetch(`/api/page-data/filters?v=${encodeURIComponent(listsVersion)}`).then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); });
+      filterLists.then((value) => { if (live) setLists(value); }, () => { filterLists = null; });
+    };
+    if (version && version !== listsVersion) { listsVersion = version; versionWaiters.forEach((w) => w()); }
+    if (listsVersion) load(); else versionWaiters.add(load);
+    return () => { live = false; versionWaiters.delete(load); };
   }, [version]);
+  return lists;
+}
+export function GlobalFilters({ version }: { version: string }) {
+  const lists = useFilterLists(version);
   return <FiltersSheet providers={lists.providers} families={lists.families} />;
+}
+
+/** CR-74.5 (Florian 2026-09-17): Advanced Overview shows every Options control inline — the same component and the
+ *  same settings as the header popup, so a change in either place shows in both. */
+export function OptionsInline({ className = "" }: { className?: string }) {
+  const lists = useFilterLists();
+  // Open from md up; on phones it starts folded so the ranking stays near the top (the Refine sheet covers the rest).
+  const box = useRef<HTMLDetailsElement>(null);
+  useEffect(() => { if (box.current && window.matchMedia("(min-width: 768px)").matches) box.current.open = true; }, []);
+  return <details ref={box} data-bh-options-inline className={`bh-options-inline card group ${className}`}>
+    <summary className="!mb-0 flex min-h-10 list-none flex-wrap items-baseline gap-x-2 px-3 !py-2 md:px-4 [&::-webkit-details-marker]:hidden">
+      <span className="text-sm font-semibold">Options</span>
+      <span className="text-[11px] font-normal text-gray-500">the same settings as Options in the header</span>
+      <span aria-hidden="true" className="ml-auto text-xs text-gray-400 transition-transform group-open:rotate-180">▾</span>
+    </summary>
+    <div className="border-t border-line">
+      <OptionsBody providers={lists.providers} families={lists.families} inline />
+    </div>
+  </details>;
 }
 
 function FiltersSheet({ providers, families }: { providers: ProviderInfo[]; families: FamilyOption[] }) {
   const s = useSettings();
   const path = usePathname();
-  const adjusted = s.priceMode === "adjusted";
   const panel = useRef<HTMLDivElement>(null);
   const { filtersOpen, closeFilters } = s;
   // F-18: an overlay, not a page push. Escape and a click outside close it; focus moves into
@@ -117,6 +147,30 @@ function FiltersSheet({ providers, families }: { providers: ProviderInfo[]; fami
     };
   }, [filtersOpen, closeFilters]);
 
+  if (path === "/benchmarks" || path === "/radar") return null;
+  return (
+    // F-18: zero-height anchor under the header. Desktop: a right-aligned popover over the
+    // page. Phones: a bottom sheet over a dimmed page, with a sticky footer.
+    <div className="relative z-40" hidden={!filtersOpen}>
+      <div className="fixed inset-0 bg-black/40 lg:hidden" aria-hidden="true" />
+      <div ref={panel} id="global-filters" role="dialog" aria-label="Options" tabIndex={-1}
+        className="fixed inset-x-0 bottom-0 flex max-h-[85vh] flex-col rounded-t-2xl border-t border-line bg-panel shadow-xl outline-none lg:absolute lg:inset-x-auto lg:bottom-auto lg:right-[max(1rem,calc((100vw-1400px)/2+1rem))] lg:top-2 lg:max-h-[calc(100vh-90px)] lg:w-[min(960px,calc(100vw-2rem))] lg:rounded-xl lg:border">
+      <OptionsBody providers={providers} families={families} />
+      </div>
+    </div>
+  );
+}
+
+/** CR-74.5: the Options content, shared by the header popup and the inline Advanced panel (`inline`: no
+ *  "Show results" close button, and element ids of its own so both can be in the page at once). */
+function OptionsBody({ providers, families, inline }: { providers: ProviderInfo[]; families: FamilyOption[]; inline?: boolean }) {
+  const s = useSettings();
+  const path = usePathname();
+  const adjusted = s.priceMode === "adjusted";
+  const { closeFilters } = s;
+  const euDefinitionId = inline ? `${EU_DEFINITION_ID}-inline` : EU_DEFINITION_ID;
+  const ioBasisId = inline ? "bh-io-basis-inline" : "bh-io-basis";
+
   const familyKeys = useMemo(() => families.map((f) => f.key), [families]);
   const familyItems = useMemo<ComboItem[]>(() => families.map((f) => ({ key: f.key, label: f.name, sub: f.org })), [families]);
   const providerKeys = useMemo(() => providers.map((p) => p.key), [providers]);
@@ -126,7 +180,6 @@ function FiltersSheet({ providers, families }: { providers: ProviderInfo[]; fami
   const labs = useMemo(() => [...new Set(families.map((f) => f.org))].sort((a, b) => a.localeCompare(b)), [families]);
   const labItems = useMemo<ComboItem[]>(() => labs.map((org) => ({ key: org, label: org, sub: labBucket(org) })), [labs]);
 
-  if (path === "/benchmarks" || path === "/radar") return null;
   const active = s.userFiltersActive;
   // F-16: on the Advanced home view the toggle shows what that view applies (off until set).
   const featuredShown = path === "/" && s.advancedView ? s.featuredAdvanced : s.featured;
@@ -147,14 +200,8 @@ function FiltersSheet({ providers, families }: { providers: ProviderInfo[]; fami
   const excluded = s.providersExcluded;
 
   return (
-    // F-18: zero-height anchor under the header. Desktop: a right-aligned popover over the
-    // page. Phones: a bottom sheet over a dimmed page, with a sticky footer.
-    <div className="relative z-40" hidden={!filtersOpen}>
-      <div className="fixed inset-0 bg-black/40 lg:hidden" aria-hidden="true" />
-      <div ref={panel} id="global-filters" role="dialog" aria-label="Options" tabIndex={-1}
-        className="fixed inset-x-0 bottom-0 flex max-h-[85vh] flex-col rounded-t-2xl border-t border-line bg-panel shadow-xl outline-none lg:absolute lg:inset-x-auto lg:bottom-auto lg:right-[max(1rem,calc((100vw-1400px)/2+1rem))] lg:top-2 lg:max-h-[calc(100vh-90px)] lg:w-[min(960px,calc(100vw-2rem))] lg:rounded-xl lg:border">
-
-      <div className="min-h-0 space-y-3 overflow-y-auto px-4 pb-3 pt-3">
+    <>
+      <div className={inline ? "bh-options-body space-y-3 px-3 pb-3 pt-3 md:px-4" : "min-h-0 space-y-3 overflow-y-auto px-4 pb-3 pt-3"}>
         <Section title="Ranking">
           <ScoreSelect value={s.score} onChange={s.setScore} />
           <NumFilter label="Min score" value={minScoreField} onChange={onMinScore} placeholder="any" />
@@ -184,8 +231,8 @@ function FiltersSheet({ providers, families }: { providers: ProviderInfo[]; fami
           </span>
           {/* CR-65.8: adjusted costs compare models on one common workload unless the reader asks for each model's own usage mix. */}
           <span className="inline-flex items-center gap-1.5">
-            <label htmlFor="bh-io-basis" className="text-sm text-gray-400">Task workload</label>
-            <select id="bh-io-basis" value={s.ioBasis} disabled={!adjusted}
+            <label htmlFor={ioBasisId} className="text-sm text-gray-400">Task workload</label>
+            <select id={ioBasisId} value={s.ioBasis} disabled={!adjusted}
               onChange={(e) => s.setIoBasis(e.target.value === "usage" ? "usage" : "common")}
               className="rounded-md border border-line bg-ink px-2 py-1.5 text-sm disabled:opacity-50">
               <option value="common">Same for every model</option>
@@ -237,12 +284,12 @@ function FiltersSheet({ providers, families }: { providers: ProviderInfo[]; fami
 
         {/* CR-25.4 (F-94): positively worded, the same shape for all three axes, no (i). */}
         <Section title="Regional" stack>
-          <RegionRow label="Hosted in" value={s.hostedIn} set={s.setHostedIn} />
+          <RegionRow label="Hosted in" value={s.hostedIn} set={s.setHostedIn} euDefinitionId={euDefinitionId} />
           <RegionRow label="Provider company based in" value={s.providerBasedIn} set={s.setProviderBasedIn} />
           <RegionRow label="Model lab based in" value={s.labBasedIn} set={s.setLabBasedIn} />
           <p className="text-[11px] text-gray-600">Hosting = where inference runs; company = where the provider or lab is registered.</p>
           {/* CR-17.3: the plain EU definition stays available to assistive tech on the EU hosting chip. */}
-          <p id={EU_DEFINITION_ID} className="sr-only">
+          <p id={euDefinitionId} className="sr-only">
             EU hosting means the route&apos;s inference runs inside the EU: an EU region, AWS Bedrock&apos;s EU cross-region
             (geo) profiles, Azure&apos;s Europe Data Zone, or a provider whose entire public fleet is documented as EU-hosted,
             each checked per model against the provider&apos;s documentation. Global deployments do not count, and neither
@@ -279,15 +326,14 @@ function FiltersSheet({ providers, families }: { providers: ProviderInfo[]; fami
 
         <p className="text-[11px] text-gray-600">Applies to price views &amp; model offers; benchmark evidence stays unfiltered.</p>
       </div>
-      <div className="flex shrink-0 items-center gap-3 border-t border-line bg-panel px-4 py-3">
-        <button type="button" onClick={closeFilters} className="inline-flex min-h-10 items-center rounded-md bg-accent px-4 text-sm font-semibold text-ink">
+      <div className={`flex shrink-0 items-center gap-3 border-t border-line px-4 ${inline ? "py-2" : "bg-panel py-3"}`}>
+        {!inline && <button type="button" onClick={closeFilters} className="inline-flex min-h-10 items-center rounded-md bg-accent px-4 text-sm font-semibold text-ink">
           {s.resultCount != null ? `Show ${s.resultCount} models` : "Show results"}
-        </button>
+        </button>}
         {active && <button type="button" onClick={reset} className="inline-flex min-h-10 items-center rounded-md border border-line px-3 text-sm text-gray-400 hover:text-gray-200">Reset</button>}
         {/* CR-4.1: filter presets — ours and yours — in the same control as model and row presets (CR-4.2). */}
         <div className="ml-auto"><FilterPresets /></div>
       </div>
-      </div>
-    </div>
+    </>
   );
 }

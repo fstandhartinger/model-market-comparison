@@ -13,6 +13,8 @@ import { ADJUSTED_COST_TIP, scoreTip } from "./methodology";
 import { PriceValue, PriceAssumptions } from "./PriceValue";
 import { useSettings } from "./SettingsContext";
 import { ShortlistControls } from "./ShortlistControls";
+import { MenuDetails } from "./Nav";
+import { OptionsInline } from "./GlobalFilters";
 import { CostCapabilityScatter } from "./CostCapabilityScatter";
 import { SubscriptionsPanel } from "./SubscriptionsPanel";
 import { preferredVariantIds, collapsedName, selectableModels } from "../lib/variants";
@@ -371,27 +373,29 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
         <NumFilter label={s.priceMode === "adjusted" ? "Max $/task" : "Max $/1M"} value={maxCost == null ? "" : String(maxCost)}
           onChange={(v) => { const n = parseFloat(v); setMaxCost(Number.isFinite(n) ? n : null); }} placeholder="e.g. 5" />
         {/* F-16: the H3 comparison is a popover like "Evidence", so the toolbar stays one row. */}
-        {data.comparison && <details className="relative">
+        {/* CR-74.5: the popovers are out of flow (top-full under their summary) and the toolbar's open summary keeps
+            its margin (globals.css), so opening one no longer moves the row or the table; Escape / outside click close it. */}
+        {data.comparison && <MenuDetails className="relative" summary={
           <summary className={`cursor-pointer list-none rounded-md border px-3 py-1.5 text-sm ${chosenComparisonMetric && comparisonReference ? "border-accent/60 bg-accent/15 text-accent" : "border-line text-gray-400"}`}>
             {chosenComparisonMetric && comparisonReference
               ? `Better than ${candidates.find((m) => m.id === comparisonTarget)?.display_name ?? "a model"} · ${chosenComparisonMetric.label.split(" · ")[0]}`
               : "Better than a model"} ▾
-          </summary>
-          <div className="absolute left-0 z-20 mt-1 w-[min(28rem,calc(100vw-3rem))] rounded-lg border border-line bg-panel p-3 shadow-xl">
+          </summary>}>
+          <div className="bh-toolbar-popover absolute left-0 top-full z-20 mt-1 w-[min(28rem,calc(100vw-3rem))] rounded-lg border border-line bg-panel p-3 shadow-xl">
           {comparisonPanel}
           </div>
-        </details>}
+        </MenuDetails>}
         {/* R4.11: the three evidence requirements are defaults almost nobody changes.
             They stay with the table they govern, but folded away so the toolbar reads as
             "search, org, budget" rather than as six competing switches. */}
-        <details className="relative">
+        <MenuDetails className="relative" summary={
           <summary className={`cursor-pointer list-none rounded-md border px-3 py-1.5 text-sm ${evidenceChanged ? "border-accent/60 bg-accent/15 text-accent" : "border-line text-gray-400"}`}>
             Evidence ▾
-          </summary>
-          <div className="absolute left-0 z-20 mt-1 flex w-[min(20rem,calc(100vw-3rem))] flex-col gap-2 rounded-lg border border-line bg-panel p-3 shadow-xl">
+          </summary>}>
+          <div className="bh-toolbar-popover absolute left-0 top-full z-20 mt-1 flex w-[min(20rem,calc(100vw-3rem))] flex-col gap-2 rounded-lg border border-line bg-panel p-3 shadow-xl">
             {evidencePanel}
           </div>
-        </details>
+        </MenuDetails>
         <span className="ml-auto inline-flex flex-wrap items-center gap-2 text-xs text-gray-500">{floorChipList}{countLabel}</span>
         </div>
         {/* F-23: phones get one Refine button instead of four controls. */}
@@ -401,6 +405,8 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
         </button>
       </div>
       {!simple && <p className="-mt-3 mb-3 flex flex-wrap items-center gap-2 px-1 text-xs text-gray-500 md:hidden">{floorChipList}{countLabel}</p>}
+      {/* CR-74.5 (Florian 2026-09-17): Advanced shows every header Options control inline, bound to the same settings. */}
+      {!simple && <OptionsInline className="mb-4" />}
       {!simple && refineOpen && (
         <div className="fixed inset-0 z-50 md:hidden">
           <div className="absolute inset-0 bg-black/40" aria-hidden="true" onClick={() => setRefineOpen(false)} />
