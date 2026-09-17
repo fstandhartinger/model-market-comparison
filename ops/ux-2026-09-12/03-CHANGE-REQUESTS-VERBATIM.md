@@ -828,6 +828,16 @@ Aim for an incremental pipeline: unchanged, hash-identical source captures reuse
 Record per-stage and per-source timing, cache hit/miss, retry, model/cost and critical-path data in every run report. Define a realistic target from the profiler, then prove it with two consecutive unattended full runs plus a changed-source run; compare output and gate decisions against an uncached baseline. Keep the current prices-only fast path and make its time budget observable too. A second engine must independently verify both correctness and the measured speedup live.
 
 
+## CR-20260917i — Fix missing/clipped model-table headers on phone → CR-79
+Florian, Hermes chat, 17 Sep 2026, verbatim:
+
+> Fix the headers
+
+The attached 390 px phone screenshot shows the card below “Most capable models and what they really cost” with its column-header row visually broken: the Model column is blank, and the score/cost labels are clipped so only fragments of their explanatory text are visible. This is not an intentional compact layout. Restore a clear, visible, correctly aligned header for every displayed column: Model (including the provider context), Benchmark Heaven Score / main composite score, and adjusted cost per task / its modelling basis. The labels may be compact on a phone, but their primary names must not be hidden, white-on-white, overlapped, clipped, or reduced to an unexplained fragment. Preserve the actual table semantics, sort controls, screen-reader labels, desktop/tablet layout, horizontal overflow handling and row alignment; do not hide the header as a workaround.
+
+Acceptance: independent fresh live inspection on both public hosts at 360, 390 and 430 px portrait in light and dark themes. Capture browser geometry or screenshots demonstrating each visible header has a non-zero rendered box, non-empty visible text, sufficient contrast, no overlap/cropping and alignment with its data column; test sort by keyboard and touch. Add a regression test that would fail if a phone header becomes clipped/empty again.
+
+
 ## CR-20260917h — Launch sprint: 3 Benchmaxxing tag levels, Top 50 mode, composite with marginal Benchmaxxing component, advanced-mode fixes → CR-74
 (Filed as CR-20260917h/CR-74 because CR-20260917f/g and CR-72/73 were already used by the supervisor's hero-typography and daily-efficiency requests.)
 Florian, 17 Sep 2026 ~17:30 UTC, verbatim (German):
