@@ -4166,8 +4166,18 @@ the CR-77 priority job at 19:54 with finished CR-73.3 work uncommitted.
   `BH_DAILY_CONCURRENCY=1` on the same captures accepted that contract and six others, which rules the failure out as
   a packet defect or a concurrency artefact. Full analysis and a proposal on the CR-67.3 row; logs
   `/tmp/iter100-dryrun.log`, `/tmp/iter100-dryrun-seq.log`, runs under `/opt/benchmarkheaven-daily/runs/`.
-  The sequential run was still in its benchmark step when this iteration ended — it publishes nothing (dry run,
-  isolated clone, no `run.lock`), so it is safe to leave to itself.
+  The sequential run's live gauntlet passed in full (`OK review-live`, all seven contracts) — the A/B's second half;
+  it was still in its benchmark step when this iteration ended and publishes nothing (dry run, isolated clone, no
+  `run.lock`), so it is safe to leave to itself.
+- **CR-79** `f71f9fd` (the supervisor appended it mid-iteration; seeded docs-only first in `56ac2f4`): Florian's
+  "Fix the headers". The phone header cell is ~100 px and "CAPABILITY SCORE" in uppercase is wider — 4 px outside its
+  column at 360 px, **30–38 px and missing letters at the 1.3× larger-text setting**, where the cell cannot grow
+  because its width is a percentage of the viewport. Below md the labels drop the uppercasing and the padding tightens,
+  and `break-words` + `min-w-0` make it impossible for a label to paint outside its cell at any text size; md and up
+  are untouched. Live **166/166 per host** over 3 widths × 2 themes × 2 text sizes, with tap and keyboard sorting.
+  While verifying, an **adjacent pre-existing defect**: at 1.3× text the page overflows ~61 px sideways on a phone,
+  identically on the pre-fix deployed build — the header nav row and the "Score shown in the chart" row. Recorded on
+  the CR-79.1 row and as an ungraded observation in the verifier; it wants a design decision, not a quick patch.
 - **Handoff:** (1) CR-73.3, CR-76.1/76.2 and CR-78.1–78.3 are implementer-verified only — a non-implementer can re-run
   `node ops/ux-2026-09-12/bin/verify-cr78.mjs <base> <out>` on both hosts and read the two CR-73.3 fixtures.
   (2) Next CR-73 step is 73.4, then 73.2, then 73.5 (PROFILE-CR73.md keeps the order). (3) Fable's F-112/F-114 still
@@ -4176,4 +4186,6 @@ the CR-77 priority job at 19:54 with finished CR-73.3 work uncommitted.
   (5) **Before the 05:17 run:** nothing in this iteration changed the gate, so today's flake can recur — if the run
   fails again on a single core contract in round 1, the CR-67.3 proposal above is the item to take next, with a
   different engine reviewing it. (6) CR-65.14 now carries a design note explaining why iteration 94's "new dated
-  identity per refresh" cannot be implemented as written, and what to do instead.
+  identity per refresh" cannot be implemented as written, and what to do instead. (7) CR-79 needs its
+  non-implementer live pass, and the large-text page overflow it uncovered needs an owner — the header nav row is
+  design-authority territory.
