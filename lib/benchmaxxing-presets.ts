@@ -15,6 +15,8 @@ export type BenchmaxxingOverviewRow = {
   /** CR-74.2: the family's Main Composite as the collapsed Overview shows it; null without composite inputs. */
   composite: number | null;
   featured: boolean;
+  /** CR-74.2: false for deprecated families the Overview hides by default; Top 50 skips them. */
+  alive?: boolean;
   tagged: boolean;
   /** CR-74.1: the published tag level (light ≥ +3, medium ≥ +6, strong ≥ +12; n ≥ 10 and interval above zero). */
   level: BenchmaxxingLevel | null;
@@ -48,7 +50,7 @@ export function presetRows(rows: BenchmaxxingOverviewRow[], preset: Benchmaxxing
   const value = (row: BenchmaxxingOverviewRow) => { const v = compositeOf(row); return typeof v === "number" && Number.isFinite(v) ? v : null; };
   const byComposite = (a: BenchmaxxingOverviewRow, b: BenchmaxxingOverviewRow) => (value(b) ?? -Infinity) - (value(a) ?? -Infinity) || a.name.localeCompare(b.name);
   if (preset === "featured") return rows.filter((r) => r.featured).sort(byComposite);
-  if (preset === "top50") return rows.filter((r) => value(r) != null).sort(byComposite).slice(0, BENCHMAXXING_TOP_N);
+  if (preset === "top50") return rows.filter((r) => r.alive !== false && value(r) != null).sort(byComposite).slice(0, BENCHMAXXING_TOP_N);
   return [...rows].sort(byComposite);
 }
 

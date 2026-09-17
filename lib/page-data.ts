@@ -10,7 +10,7 @@ import { selectBenchmarkView, selectFamilyBenchmarkView } from "./benchmark-view
 import { defaultComparePicks, withRadarPercentiles } from "./radar.mjs";
 import { DEFAULT_BENCHMAXXING_PRESET, presetRows, type BenchmaxxingOverviewRow } from "./benchmaxxing-presets";
 import { benchmaxxingCompositeOf } from "./composite-setting";
-import { preferredVariantIds } from "./variants";
+import { preferredVariantIds, selectableModels } from "./variants";
 import { BENCHMAXX_LEVELS, type BenchmaxxingLevel } from "./benchmaxxing-levels.mjs";
 
 /**
@@ -20,6 +20,7 @@ import { BENCHMAXX_LEVELS, type BenchmaxxingLevel } from "./benchmaxxing-levels.
  * `/api/page-data/<key>?v=<dataset version>`; the pages keep their server-rendered head and hero.
  * The payloads are exactly the props the pages used to pass, built by the same functions.
  */
+export const PAGE_DATA_SHAPE = "cr74";
 export const PAGE_DATA_KEYS = ["home", "catalog", "benchmarks", "ranking", "compare", "benchmaxxing", "filters"] as const;
 export type PageDataKey = (typeof PAGE_DATA_KEYS)[number];
 export const isPageDataKey = (key: string): key is PageDataKey => (PAGE_DATA_KEYS as readonly string[]).includes(key);
@@ -27,7 +28,9 @@ export const isPageDataKey = (key: string): key is PageDataKey => (PAGE_DATA_KEY
 /** Changes whenever the dataset does, so the versioned URL can be cached by browsers. */
 export async function pageDataVersion(): Promise<string> {
   const ds = await getDataset();
-  return String(ds.generated_at ?? "unknown");
+  // CR-74 (launch sprint): the payload shape changed without a dataset change (three Benchmaxxing levels, composite_raw);
+  // bump PAGE_DATA_SHAPE on every such change so browsers never pair cached old JSON with new code.
+  return `${String(ds.generated_at ?? "unknown")}:${PAGE_DATA_SHAPE}`;
 }
 
 async function build(key: PageDataKey): Promise<unknown> {
@@ -76,6 +79,8 @@ async function build(key: PageDataKey): Promise<unknown> {
   // preferred variant for the composite); null when that variant has no composite input, so Top 50 skips it.
   const preferred = preferredVariantIds(clientModels, "composite");
   const clientById = new Map(clientModels.map((m) => [m.id, m]));
+  // CR-74.2: Top 50 matches the Overview default, which hides deprecated families.
+  const aliveIds = new Set(selectableModels(clientModels, true).map((m) => m.id));
   const familyComposite = (id: string) => {
     const m = clientById.get(id);
     const shown = m ? clientById.get(preferred.get(m.family_key) ?? m.id) : undefined;
@@ -98,7 +103,7 @@ async function build(key: PageDataKey): Promise<unknown> {
   const rows: BenchmaxxingOverviewRow[] = scored.map(({ model, report }) => ({
     id: model.id, name: model.name, org: model.org, score: report.score!, comparisons: report.comparisons, topics: report.topics,
     measured: report.profile.measured, total: report.profile.total, domainSpecialization: report.domainSpecialization,
-    composite: familyComposite(model.id), featured: featuredFamilies.has(view.models.find((m) => m.id === model.id)?.family ?? ""), tagged: levels.has(model.id),
+    composite: familyComposite(model.id), featured: featuredFamilies.has(view.models.find((m) => m.id === model.id)?.family ?? ""), alive: aliveIds.has(model.id), tagged: levels.has(model.id),
     level: levels.get(model.id) ?? null,
     interval: report.interval ? { lower: report.interval.lower, upper: report.interval.upper } : null,
   }));
