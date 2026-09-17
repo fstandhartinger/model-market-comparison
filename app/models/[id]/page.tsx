@@ -84,7 +84,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
   const daPcts = [pctOf("designarena_frontend"), pctOf("designarena_fullstack")].filter((v): v is number => v != null);
   const radarAxes = [
     { label: "AA Coding", value: pctOf("aa_coding_index"), native: num(clientModel.scores.aa_coding_index), note: clientModel.composite_attachments.aa_coding_index?.note ?? null },
-    { label: "Coding Agent", value: pctOf("aa_coding_agent"), native: num(clientModel.scores.aa_coding_agent), note: clientModel.composite_attachments.aa_coding_agent?.note ?? null },
+    { label: "Coding Agent v1.4", value: pctOf("aa_coding_agent"), native: num(clientModel.scores.aa_coding_agent), note: clientModel.composite_attachments.aa_coding_agent?.note ?? null },
     { label: "AA Intelligence", value: pctOf("aa_intelligence_index"), native: num(clientModel.scores.aa_intelligence_index), note: clientModel.composite_attachments.aa_intelligence_index?.note ?? null },
     { label: "Epoch ECI", value: pctOf("epoch_eci"), native: num(clientModel.scores.epoch_eci), note: model.epoch_eci_attachment_note ?? null },
     { label: "Software ECI", value: pctOf("epoch_eci_software"), native: num(clientModel.scores.epoch_eci_software), note: model.epoch_eci_attachment_note ?? null },

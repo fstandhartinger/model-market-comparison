@@ -266,7 +266,7 @@ export type ScoreKey =
 export const SCORE_SHORT_LABELS: Record<ScoreKey, string> = {
   composite: "Composite",
   aa_coding_index: "AA Coding",
-  aa_coding_agent: "AA Coding Agent",
+  aa_coding_agent: "AA Coding Agent v1.4",
   aa_intelligence_index: "AA Intelligence",
   epoch_eci: "Epoch ECI",
   epoch_eci_software: "Epoch Software ECI",
@@ -284,7 +284,7 @@ export const SCORE_PICKER_LABELS: Record<ScoreKey, string> = {
   composite: "Benchmark Heaven Score (Main Composite)",
   aa_intelligence_index: "AA Intelligence Index",
   aa_coding_index: "AA Coding Index",
-  aa_coding_agent: "AA Coding Agent Index v1.4",
+  aa_coding_agent: "AA Coding Agent Index v1.4 (pinned snapshot)",
   epoch_eci: "Epoch ECI",
   epoch_eci_software: "Epoch Software ECI",
   designarena_fullstack: "DesignArena Full-Stack (Elo)",
@@ -298,7 +298,7 @@ export const SCORE_PICKER_LABELS: Record<ScoreKey, string> = {
 export const SCORE_LABELS: Record<ScoreKey, string> = {
   composite: "Composite (coverage-neutral, dominance-safe percentiles, 0–100)",
   aa_coding_index: "ArtificialAnalysis — Coding Index",
-  aa_coding_agent: "ArtificialAnalysis — Coding Agent Index v1.4 (median harness)",
+  aa_coding_agent: "ArtificialAnalysis — Coding Agent Index v1.4 (median harness; pinned snapshot, AA now publishes v1.5)",
   aa_intelligence_index: "ArtificialAnalysis — Intelligence Index",
   epoch_eci: "Epoch AI — Capabilities Index (ECI)",
   epoch_eci_software: "Epoch AI — Software Engineering ECI",

@@ -289,7 +289,7 @@ export function clientData(ds: Dataset, benchmaxxing: Record<string, ClientBench
   };
   const slotLabels: Record<CompositeSlot, string> = {
     aa_coding_index: "AA Coding",
-    aa_coding_agent: "Coding Agent",
+    aa_coding_agent: "Coding Agent v1.4",
     aa_intelligence_index: "AA Intelligence",
     epoch_eci: "Epoch ECI",
     epoch_eci_software: "Software ECI",

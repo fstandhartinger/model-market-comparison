@@ -2,7 +2,8 @@ import { SCORE_LABELS, type ScoreKey } from './types';
 export function scoreVersion(key: ScoreKey, dates?: Record<string, string>) {
   if (key === 'composite') return `7 fixed inputs; Epoch ECI ${dates?.epoch_eci?.slice(0, 10) || 'date unavailable'}; Coding Agent v1.4`;
   if (key === 'epoch_eci' || key === 'epoch_eci_software') return `Epoch source ${dates?.epoch_eci?.slice(0, 10) || 'date unavailable'}`;
-  if (key === 'aa_coding_agent') return `v1.4 · ${dates?.aa_coding_agents || 'date unavailable'}`;
+  // CR-65.11: the pinned value is the retained v1.4 snapshot; AA itself now publishes v1.5.
+  if (key === 'aa_coding_agent') return `v1.4 snapshot ${dates?.aa_coding_agents || 'date unavailable'} (AA now publishes v1.5)`;
   // CR-25.6: a category composite is versioned by its anchor set, recorded in data/category-score-anchors.json.
   if (key.startsWith('cat_')) return 'category composite · fixed anchor benchmarks';
   return `unversioned snapshot ${dates?.[key.startsWith('designarena') ? 'designarena' : 'artificialanalysis'] || 'date unavailable'}`;
