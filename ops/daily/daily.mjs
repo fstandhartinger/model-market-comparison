@@ -10,6 +10,7 @@ import { writeJSONAtomic } from '../../lib/snapshot.mjs';
 import { COMMIT_TRAILER, assessCommitScope, parseStatusPorcelain, selectProducerCritic } from './policy.mjs';
 import { executeNotifications } from './notify.mjs';
 import { compactPublishedRun } from './compact-run.mjs';
+import { GATE_TIMEOUT_MS, gatedPublish } from './publish-gate.mjs';
 const exec = promisify(execFile);
 // How long publication waits for the other writer's checkout to become clean before it gives up for the day.
 // Overridable for tests; the shell entry point allows 3 h in total, so 30 min is affordable.
@@ -65,7 +66,10 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
       throw new Error(`${name} FAILED: ${detail.slice(-1800)}`);
     }
   };
-  const git = (name, args, cwd = repo) => command(name, 'git', args, cwd, 120_000);
+  // Hooks reuse the explicit gate result, but a hook that must re-run a stage needs the gate's timeout.
+  const git = (name, args, cwd = repo) => command(name, 'git', args, cwd, ['commit-data', 'push-data'].includes(name) ? GATE_TIMEOUT_MS : 120_000);
+  const gateEnvironment = { ...environment };
+  for (const key of ['BH_EVIDENCE_DIR', 'BH_STATE']) delete gateEnvironment[key];
   const status = async (name, cwd) => parseStatusPorcelain(await git(name, ['status', '--porcelain=v1', '--untracked-files=all'], cwd));
   console.log(`Benchmark Heaven daily ${started}: ${runDir}${dryRun ? ' (dry run)' : ''}`);
   try {
@@ -310,12 +314,25 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
       await git('stage-data', ['add', '--', ...scope.allowed], work);
       const userName = await git('git-name', ['config', 'user.name']);
       const userEmail = await git('git-email', ['config', 'user.email']);
-      await git('commit-data', ['-c', `user.name=${userName}`, '-c', `user.email=${userEmail}`, 'commit', '-m', `Refresh Benchmark Heaven data ${day}\n\nSource-backed daily gauntlet and build/tests/typecheck passed.\n\n${COMMIT_TRAILER}`], work);
-      const sha = await git('candidate-commit', ['rev-parse', 'HEAD'], work);
-      if (await git('recheck-head', ['rev-parse', 'HEAD']) !== base || (await status('recheck-status', repo)).length) throw new Error('Main changed during collection; candidate remains isolated');
-      const remoteUrl = await git('remote-url', ['remote', 'get-url', 'origin']);
-      // Push from staging first: a rejected push leaves the primary checkout untouched.
-      await git('push-data', ['push', remoteUrl, 'HEAD:refs/heads/main'], work);
+      // CR-66.2: the publish gate runs explicitly around commit and push; only a PASS bound to this
+      // commit's dataset publishes. The git hooks stay as a second line (and reuse this result).
+      const gated = await gatedPublish({
+        home, work, runDir, env: gateEnvironment,
+        commit: async () => {
+          await git('commit-data', ['-c', `user.name=${userName}`, '-c', `user.email=${userEmail}`, 'commit', '-m', `Refresh Benchmark Heaven data ${day}\n\nSource-backed daily gauntlet and build/tests/typecheck passed.\n\n${COMMIT_TRAILER}`], work);
+          return git('candidate-commit', ['rev-parse', 'HEAD'], work);
+        },
+        push: async () => {
+          if (await git('recheck-head', ['rev-parse', 'HEAD']) !== base || (await status('recheck-status', repo)).length) throw new Error('Main changed during collection; candidate remains isolated');
+          const remoteUrl = await git('remote-url', ['remote', 'get-url', 'origin']);
+          // Push from staging first: a rejected push leaves the primary checkout untouched.
+          await git('push-data', ['push', remoteUrl, 'HEAD:refs/heads/main'], work);
+        },
+      });
+      report.gate = { ...gated.gate, verdict: gated.gate.verdict ? { verdict: gated.gate.verdict.verdict, dataset_sha256: gated.gate.verdict.dataset_sha256, commit: gated.gate.verdict.commit ?? null, reasons: (gated.gate.verdict.reasons || []).slice(0, 5), decided_at: gated.gate.verdict.decided_at ?? null } : null };
+      for (const stage of gated.gate.stages) report.steps.push({ name: `gate-${stage.stage}`, ok: stage.ok, duration_ms: stage.duration_ms, ...(stage.ok ? {} : { error: redact(stage.log) }) });
+      if (!gated.published) throw new Error(gated.error);
+      const sha = gated.commit;
       report.published = true; report.commit = sha;
       if (await git('post-push-head', ['rev-parse', 'HEAD']) !== base || (await status('post-push-status', repo)).length) throw new Error('Main changed after push; published revision is green, local edits were preserved');
       await git('fetch-published', ['fetch', 'origin', 'main']);

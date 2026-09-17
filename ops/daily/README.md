@@ -9,6 +9,12 @@ state; it does not create another recurring agent session.
 bash ops/daily/run.sh --dry-run
 ```
 
+Publication goes through the out-of-repo publish gate (`$BH_DAILY_HOME/gate/gate.mjs`, CR-66.2): stage 1 before the commit,
+the critic stage before the push, each with its own 7 min timeout; only a PASS bound to the committed dataset hash and commit
+publishes, and the verdict is stored in `run-report.json` (`gate`). OpenRouter ids or endpoints that are still absent after a
+60 s re-check are recorded as dated withdrawals in `data/raw/openrouter.json` (`withdrawals`, never priced) and listed in the
+summary; only more than max(10 models, 2 %) or 5 % of endpoints fails the run (CR-66.1).
+
 A dry run performs collection, source review, dataset generation, production build,
 unit tests, typecheck and prerender checks in an isolated work directory. It suppresses
 Git publication and Telegram sends. Inspect the printed run directory and summary.
