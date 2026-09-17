@@ -875,3 +875,17 @@ Florian, Claude Code chat, 17 Sep 2026 ~21:40 UTC, verbatim:
 > Erledige das sofort, informiere mich vie /notify-telegram wenn es live ist.
 
 (English: the Benchmaxxing tag must follow the score alone — DeepSeek V4.1 Flash at +6.4 must carry the medium tag, and the same for Gemini 3.7 Flash, Muse Spark 1.1/1.2 and the other models in Top 50 that reach a threshold but are held back by the "≥ 10 comparisons and an interval above zero" guards. And: the homepage Pareto line must accept a grace delta on the capability axis so Claude Fable 5.1, which is only 0.13 points behind GPT-6 Astra, is part of the green line.)
+
+
+## CR-20260917j — Mix the old within-topic jaggedness back into the Benchmaxxing score → CR-78
+Florian, Claude Code chat, 17 Sep 2026 ~22:20 UTC, verbatim:
+
+> how would the benchmaxxing score list look, if we'd mix that jaggedness of scores within one benchmark category into the final score a little bit again? Wich models from the top 50 would be shown as light/medium/severely benchmexxed by the signal?
+> [after seeing the simulation] yes, mix that jaggedness back into the score
+
+Simulation by Claude Code (17 Sep, live view, 171 scored models): jaggedness = the pre-CR-69 measure (mean absolute
+within-topic common-cohort percentile difference over all comparable pairs, weighted by each topic's degrees of freedom);
+catalog mean 13.1, sd 4.5. Blended = signal + 0.3 × (jaggedness − 13.1). Top-50 tag counts: light 8, medium 8, severe 1
+(today: 8 / 8 / 0). Only three level changes, all upward: Muse Spark 1.1 medium → severe (11.7 → 13.8),
+Qwen3.7 Max light → medium (5.8 → 7.7), Gemini 3.6 Flash untagged → light (2.4 → 3.2); Hy3 moves down (5.8 → 4.3).
+No frontier model (GPT-6 Astra, Opus 5, Fable 5.1, GPT-5.6 Sol, Kimi K3) is tagged at this weight.

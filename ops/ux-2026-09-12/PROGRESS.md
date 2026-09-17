@@ -456,6 +456,9 @@ The laptop supervisor appended CR-20260917 (verbatim in `03-CHANGE-REQUESTS-VERB
 | CR-77.1 | Benchmaxxing tag level follows the published score alone (light ≥ +3, medium ≥ +6, very strong ≥ +12) on every surface; only scored models are tagged | open | | | Filed 2026-09-17 ~21:40 UTC by Florian (PRIORITY); job bh-tag-and-pareto-fix-20260917 |
 | CR-77.2 | The old guards become information: "◔ uncertain" marker + reason in tooltip/report; legend, summary, methodology and /about rewritten | open | | | Filed 2026-09-17 ~21:40 UTC by Florian (PRIORITY); job bh-tag-and-pareto-fix-20260917 |
 | CR-77.3 | Value map green line with a documented grace band on the capability axis; Claude Fable 5.1 on the line | open | | | Filed 2026-09-17 ~21:40 UTC by Florian (PRIORITY); job bh-tag-and-pareto-fix-20260917 |
+| CR-78.1 | Benchmaxxing score blends in within-topic jaggedness at weight 0.3 (+ null simulation at that weight) | open | | | Filed 2026-09-17 ~22:25 UTC by Claude Code (Florian chat, simulation attached); high priority |
+| CR-78.2 | Per-model report and /about explain both parts of the blended signal | open | | | Filed 2026-09-17 ~22:25 UTC by Claude Code (Florian chat, simulation attached); high priority |
+| CR-78.3 | Tests + ledger evidence: blend arithmetic, the three expected level changes, no frontier model tagged | open | | | Filed 2026-09-17 ~22:25 UTC by Claude Code (Florian chat, simulation attached); high priority |
 - **2026-09-13 · iteration 22 · codex-luna · review gate** — reviewed all changes after
   `REVIEW-20260913T085002Z.md` through `c88e83b`, against the verbatim requirements, brief,
   Hermes addendum and design directives.
