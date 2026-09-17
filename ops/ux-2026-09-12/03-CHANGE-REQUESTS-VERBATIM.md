@@ -788,3 +788,21 @@ Florian, 17 Sep 2026, verbatim:
 Calibration by Claude Code, job `~/jobs/bh-benchmaxxing-calibration-20260917/` (RESULT.md, EXPERIMENTS.md, benchmark-tiers.json, final.json), 17 Sep ~11:10 UTC:
 - ~30 variants compared on the live view. Every tweak of the current *unevenness* measure (domain topics, no aggregates, RMS, z-scores, no level adjustment) orders only 20–64 % of Florian's (LOW, HIGH) pairs correctly — unevenness cannot tell benchmaxxing from specialisation. A **signed direction** (rank on public headline boards minus rank on held-out boards, same topic) orders 91 % (calibration half 83 %, held-out half 100 %); random tier labels give 47 % (max 0.83 over 60 shuffles). No lab, country, openness, price or name is an input.
 - Three sentences for the site: (1) Benchmarks are split into public "headline" tests labs quote in launch posts and "held-out" tests whose questions are private, brand-new or newer than the models; indexes, judge-graded boards and legal/finance/medical specialist boards are left out. (2) For every headline/held-out pair in the same topic, the model is ranked among the models that took both tests, and the score is the average of how much higher it ranks on the headline test. (3) With few pairs the score is pulled toward zero, and the ⚠ tag needs the top tenth (fifth for the light tag), at least ten comparisons, and a gap that stays above zero when its benchmarks are resampled.
+
+
+## CR-20260917d — Thinly evidenced models: sort them in place, marked, not in a separate section → CR-70
+Florian, Claude Code chat, 17 Sep 2026 ~12:40 UTC, verbatim (with a screenshot of the video/ledger item "Dünne Datenlage nicht mehr oben — eigene Gruppe „zu wenig Belege“"):
+
+> Zu Benchmark Heaven: lass uns die dünn belegten Modelle nicht in einem seperaten Abschnitt der Tabelle ablagern, sondern direkt unter den anderen modellen in der sortierung - sie müssen halt irgendwie markiert sein, damit man die hoche unsicherheit durch bisher geringe vorliegende benchmarkdaten irgendwie erkennen kann
+
+(English: don't park thinly evidenced models in a separate table section; sort them directly among the other models by their score, but mark them clearly so the high uncertainty from little benchmark data is visible.)
+
+
+## CR-20260917e — Benchmaxxing tab: no "strongest signals" mode, Featured default, absolute thresholds, several rows open → CR-71
+Florian, Claude Code chat, 17 Sep 2026 ~13:20 UTC, verbatim:
+
+> Regarding the benchmarking tab in Benchmark Heaven:
+> - Let's remove the strongest signals mode. It looks a bit like calling out these labs. I don't want to have that.
+> - Let's use feature models as the default that opens when the page is opened.
+> - Let's define a signal of more than +5 as a weak benchmarking warning, and +10 or higher as the strong type of warning.
+> - Let's allow opening more than only one row with the expand and collapse feature. I think it is valuable if the user can see two different radar diagrams at once and compare them right in the table.
