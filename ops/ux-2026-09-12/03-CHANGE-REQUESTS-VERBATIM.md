@@ -758,3 +758,33 @@ Add visitor measurement, choosing the most privacy-preserving practical design: 
 A cookie banner is required if the chosen analytics accesses or stores non-essential information on a visitor's device, or otherwise needs consent. Do not rely on the label "cookieless": assess unique identifiers, local/browser storage, fingerprinting and any third-party transfer. If, after the audit, the chosen implementation genuinely needs no consent, do not add a nuisance banner; document the technical/legal basis and verify that the implementation has no non-essential device access. If consent is required, add an accessible equal-choice consent banner before analytics loads, with Reject as easy as Accept, granular information, withdrawal and proof of the choice; analytics stays off until opt-in.
 
 Use the existing Benchmark Heaven work loop and independent live verification. Do not expose analytics credentials or visitor data in git, evidence, prompts or logs.
+
+
+## CR-20260917b — Benchmaxxing tag doubt: GPT-6 Astra tagged, GLM-5.2 not, DeepSeek V4 Pro looks more jagged → CR-68
+Florian, Claude Code chat, 17 Sep 2026 ~10:15 UTC, verbatim:
+
+> also doublecheck for me why GPT-6 Astra gets a benchmaxxing tag in benchmark heaven and open source models like GLM-5.2 don't? I think something's wrong here. The Benchmaxxing radar chart doesn't look particularly jagged for GPT-6 Astra, in comparison to DeepSeek-V4-Pro for example, which ends up with a lower Benchmaxxing score. I think it can't be quite right. Explain this to me
+
+Analysis by Claude Code (17 Sep 10:40 UTC, recomputed with the site's own `lib/benchmax.mjs` on the live view):
+- The code does what it is written to do; no arithmetic bug. The flag comes from *within-topic* disagreement only.
+- GPT-6 Astra: raw spread 17.2 (catalog mean 13.0), level 91 → ×1.15 → 19.7 → shrunk (k = 50, the cap) → 15.1.
+  DeepSeek V4 Pro 0813: raw 21.2, level 64 → ×0.90 → 19.0 → 14.8. GLM-5.2: raw 11.9 → 12.3 (rank 125/133).
+  Astra and DeepSeek are equal within noise; the level correction flips their order.
+- Astra's whole signal comes from three **vertical-domain boards from Vals** sitting inside general topics:
+  Finance Agent v2 (p40) and HLAB legal agent (p47) inside "Agentic" next to Terminal-Bench (p96–100);
+  Legal Research Bench (p56) inside "Knowledge" next to HLE/Omniscience/SimpleQA (p99–100).
+  Being average at legal/finance work is domain specialisation, not benchmaxxing.
+- "Vals Index v2" is paired against its own components (Terminal-Bench 2.1 (Vals), Finance Agent v2, …) — double counting.
+- DeepSeek's radar looks jagged mainly *between* topics (domain specialization 57 vs 20.6), which by design is not counted — the radar
+  invites the wrong reading. Its strongest real evidence is a same-benchmark runner disagreement: Terminal-Bench 2.1 p14 (Vals) vs p79 (AA).
+- Shrinkage sits at its cap (k = 50): across the catalog, differences in unevenness are barely distinguishable from coverage noise.
+  The top 20 scores span 15.5–13.8 while intervals are ±1.5–2.
+
+## CR-20260917c — Benchmaxxing score recalibrated: public headline boards vs held-out boards → CR-69 (supersedes CR-68.1, 68.2, 68.4)
+Florian, 17 Sep 2026, verbatim:
+
+> regarding the Benchmaxxing score: I don't know what exactly needs to be changed, but I can tell you from my experience with all the models: If the calculation mechanism manages to score Models like GPT-6 Astra and Fable 5.1 or Opus 5 or GPT-5.6-Sol rather low in the Benchmaxxing score and typical chinese open models (Except Kimi K3 which is sound) like GLM-5.2 or DeepSeek-V4.1-Flash or MiniMax-M3 or especially all the second tier chinese open models (like Nex-N2.5-Pro or Ling and Ring and Hy3 models by tencent or xiaomi models like MiMo-2.5) rather high in the scrore, then the score looks a lot more correct to me. I don't know what needs to be changed, but there a re a number of reasonable things I could imagine, e.g. we maybe shouldn't treat every benchmark with the same weight in the benchmaxxing radar, e.g. some are "headline" benchmarks, others are secondary/less trusted ones. Also maybe some of the agentic type of benchmarks should rather be counted not into the agentic category, e.g. Harveys Legal Agent benchmark maybe should rather go into Konwledge because Legal is more like a Knowledge topic. Also maybe some benchmarks should be excluded there, I am unsure. In general including more benchmarks seems great, but if some make the numer look unreasonable, let's experiment with excluding some second or third tier benchmarks from the calculation. also it's questionable how to compute the extent of this "jaggedness" that we think is the best indicator for benchmaxxing. I guess percentiles of benchmarkscores within the comparison group of other models are great, but maybe direct numeric result value comparison or mean quadratic distsances or something else are better. experiment until you found a combination that results more in what I expect and then give me a very simple, brief 3 sentence explanation on how that algorithm would look.
+
+Calibration by Claude Code, job `~/jobs/bh-benchmaxxing-calibration-20260917/` (RESULT.md, EXPERIMENTS.md, benchmark-tiers.json, final.json), 17 Sep ~11:10 UTC:
+- ~30 variants compared on the live view. Every tweak of the current *unevenness* measure (domain topics, no aggregates, RMS, z-scores, no level adjustment) orders only 20–64 % of Florian's (LOW, HIGH) pairs correctly — unevenness cannot tell benchmaxxing from specialisation. A **signed direction** (rank on public headline boards minus rank on held-out boards, same topic) orders 91 % (calibration half 83 %, held-out half 100 %); random tier labels give 47 % (max 0.83 over 60 shuffles). No lab, country, openness, price or name is an input.
+- Three sentences for the site: (1) Benchmarks are split into public "headline" tests labs quote in launch posts and "held-out" tests whose questions are private, brand-new or newer than the models; indexes, judge-graded boards and legal/finance/medical specialist boards are left out. (2) For every headline/held-out pair in the same topic, the model is ranked among the models that took both tests, and the score is the average of how much higher it ranks on the headline test. (3) With few pairs the score is pulled toward zero, and the ⚠ tag needs the top tenth (fifth for the light tag), at least ten comparisons, and a gap that stays above zero when its benchmarks are resampled.
