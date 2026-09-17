@@ -167,7 +167,9 @@ export default async function AboutPage() {
       <p className="text-sm text-gray-400">
         A model that was tuned for particular benchmarks tends to score very differently on benchmarks that test the same
         skill. We compare each model&apos;s results between related benchmarks (coding with coding, maths with maths): the more
-        they jump within a topic, the higher its signal. Being consistently strong in one field and weak in another is
+        they jump within a topic, the higher its signal. Each pair of related benchmarks is compared among the models both
+        benchmarks have results for, so a board that only tests frontier models and one that tests every model are put on
+        the same footing. Being consistently strong in one field and weak in another is
         specialisation and does not count. Only benchmarks with a verifiable score count: boards decided by a vote or a judge
         model (writing, roleplay, some arena and rubric boards) and willingness-to-answer boards are left out, and cost
         boards were never in. Percentiles are bounded, so a model in the middle of the field jumps more by chance than one

@@ -76,6 +76,7 @@ export interface BenchmaxxingReport {
 export const BENCHMAXX_MIN_COMPARISONS: number;
 export const BENCHMAXX_TAG_MIN_COMPARISONS: number;
 export const BENCHMAXX_LEVEL_MIN_MODELS: number;
+export const BENCHMAXX_PAIR_MIN_MODELS: number;
 export const BENCHMAXX_LEVEL_FLOOR: number;
 export const BENCHMAXX_MIN_TOPICS: number;
 export const BENCHMAXX_MIN_SHRINK: number;

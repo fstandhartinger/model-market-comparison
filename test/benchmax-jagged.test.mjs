@@ -59,8 +59,9 @@ const catalogAxis = (id, category, entries) => axis(id, category, Object.fromEnt
 
 test('scoreBenchmaxxing refuses a score below the comparison and topic floor', () => {
   // 5 measured axes in one topic: 4 comparisons, 1 topic -> not scored.
-  // A third family keeps each axis a real cohort (CR-22.1: percentiles need >= 3 model families).
-  const axes = Array.from({ length: 5 }, (_, i) => axis(`code-${i}`, 'Coding', { smooth: 50 + i, jagged: i % 2 ? 10 : 90, peer: 40 + i }));
+  // Peers keep each axis and each pair a real cohort (CR-22.1: >= 3 model families; CR-65.7: >= 10 models on both boards).
+  const peers = (i) => Object.fromEntries(Array.from({ length: 8 }, (_, k) => [`peer${k}`, 20 + k * 8 + i]));
+  const axes = Array.from({ length: 5 }, (_, i) => axis(`code-${i}`, 'Coding', { smooth: 50 + i, jagged: i % 2 ? 10 : 90, ...peers(i) }));
   const out = scoreBenchmaxxing(view(axes), 'jagged');
   assert.equal(out.status, 'insufficient-coverage');
   assert.equal(out.score, null);
@@ -222,4 +223,48 @@ test('CR-65.6: a bootstrap interval gates the tag — deterministic, and a noisy
   for (const id of [...tagged, ...weak]) assert.ok(reports.find(([x]) => x === id)[1].interval.lower > average);
   const p0 = reports.find(([x]) => x === 'p0')[1];
   assert.ok(p0.interval.upper - p0.interval.lower > a.upper - a.lower, 'one wild benchmark per topic gives a wider interval');
+});
+
+// CR-65.7 (data & math gauntlet B5): a frontier-only board and an all-comers board rank different fields. The signal
+// compares each pair of boards among the models measured on both, so identical orders give identical percentiles.
+test('CR-65.7: two boards with the same order but different cohorts give a zero gap and no signal', async () => {
+  const { pairDistances, BENCHMAXX_PAIR_MIN_MODELS } = await import('../lib/benchmax.mjs');
+  const all = Array.from({ length: 40 }, (_, i) => [`f${i}::v`, i]);
+  const frontier = all.slice(28); // the top 12 only, same order
+  const open = catalogAxis('open', 'Coding', all), top = catalogAxis('top', 'Coding', frontier.map(([id, v]) => [id, v * 3 + 7]));
+  const v = { models: all.map(([id]) => ({ id })), axes: [open, top] };
+  const gaps = pairDistances(v, open, top);
+  assert.equal(gaps.size, 12);
+  for (const gap of gaps.values()) assert.equal(gap, 0, 'same order → same common-cohort percentile');
+  // A pair whose common cohort is too small says nothing.
+  const tiny = catalogAxis('tiny', 'Coding', frontier.slice(0, BENCHMAXX_PAIR_MIN_MODELS - 1));
+  assert.equal(pairDistances({ ...v, axes: [open, tiny] }, open, tiny), null);
+});
+
+test('CR-65.7: without benchmaxxing, frontier-only boards do not make the signal track model strength (null simulation)', () => {
+  const spearman = (xs, ys) => {
+    const rank = (a) => { const r = new Array(a.length); a.map((x, i) => [x, i]).sort((p, q) => p[0] - q[0]).forEach(([, i], k) => { r[i] = k; }); return r; };
+    const rx = rank(xs), ry = rank(ys), m = (xs.length - 1) / 2;
+    let sxy = 0, sxx = 0; rx.forEach((x, i) => { sxy += (x - m) * (ry[i] - m); sxx += (x - m) ** 2; });
+    return sxy / sxx;
+  };
+  for (const seed0 of [7, 11, 23]) {
+    let seed = seed0;
+    const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+    const gauss = () => Math.sqrt(-2 * Math.log(rnd())) * Math.cos(2 * Math.PI * rnd());
+    const models = Array.from({ length: 300 }, (_, i) => ({ id: `f${i}::v`, skill: gauss() }));
+    const top = new Set([...models].sort((a, b) => b.skill - a.skill).slice(0, 90).map((m) => m.id));
+    const axes = [];
+    for (const topic of ['Coding', 'Math', 'Agentic']) for (let k = 0; k < 6; k += 1) {
+      // Every other board tests (almost) only the strongest 30 % of models.
+      const members = models.filter((m) => k % 2 === 0 || top.has(m.id) || rnd() < 0.05);
+      axes.push({ ...axis(`${topic}-${k}`, topic, {}), scores: members.map((m) => ({ modelId: m.id, value: m.skill + 0.45 * gauss(), basis: 'measured', lowSample: false })) });
+    }
+    const { reports } = benchmaxxingSignals({ models, axes });
+    const skill = new Map(models.map((m) => [m.id, m.skill]));
+    const pool = reports.filter(([, r]) => r.comparisons >= 10);
+    const rho = spearman(pool.map(([, r]) => r.score), pool.map(([id]) => skill.get(id)));
+    // Global percentiles gave rho ≈ −0.65 here (strong models on frontier boards read as uneven, the rest smooth).
+    assert.ok(Math.abs(rho) <= 0.35, `seed ${seed0}: signal vs strength rank correlation ${rho.toFixed(2)}`);
+  }
 });
