@@ -53,8 +53,8 @@ const PRIMARY = [LINKS[0], LINKS[4], LINKS[1], LINKS[2], LINKS[3]];
 const MORE = [LINKS[6], LINKS[7], LINKS[8], LINKS[9], LINKS[10], LINKS[11]];
 const PHONE_MORE = [LINKS[0], LINKS[4], LINKS[2], LINKS[3], ...MORE];
 
-/** CR-63.3: a header <details> menu closes on a click outside, on Escape (focus back on its summary) and on a route change. */
-function MenuDetails({ className, summary, children }: { className?: string; summary: React.ReactNode; children: React.ReactNode }) {
+/** CR-63.3: a header <details> menu (CR-74.5: and the Advanced toolbar popovers) closes on a click outside, on Escape (focus back on its summary) and on a route change. */
+export function MenuDetails({ className, summary, children }: { className?: string; summary: React.ReactNode; children: React.ReactNode }) {
   const ref = useRef<HTMLDetailsElement>(null);
   const path = usePathname();
   const [open, setOpen] = useState(false);
