@@ -60,7 +60,7 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
   await mkdir(home, { recursive: true });
   const report = { started_at: started, run_dir: runDir, dry_run: dryRun, scope, steps: [], published: false, exit_code: 1 };
   let before, after, top5 = null;
-  const environment = { ...process.env, BH_EVIDENCE_DIR: join(runDir, 'sources'), BH_STATE: join(runDir, 'workers'), BH_WORKER_MAX_PRICE_PER_1M: '4', BH_WORKER_REASONING_EFFORT: 'low', BH_WORKER_DISABLE_OPTIONAL_REASONING: '0' };
+  const environment = { ...process.env, BH_EVIDENCE_DIR: join(runDir, 'sources'), BH_STATE: join(runDir, 'workers'), BH_WORKER_MAX_PRICE_PER_1M: '4', BH_WORKER_REASONING_EFFORT: 'low', BH_WORKER_DISABLE_OPTIONAL_REASONING: '0', BH_WORKER_FREE_ROUTER: '1' };
   for (const key of ['OPENAI_API_KEY', 'OPENAI_BASE_URL', 'OPENAI_API_BASE', 'CODEX_API_KEY']) delete environment[key];
   const command = async (name, file, args, cwd = work, timeout = 600_000, env = environment) => {
     const begin = Date.now();

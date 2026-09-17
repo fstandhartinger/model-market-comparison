@@ -224,14 +224,16 @@ export function planNotifications({
 export function selectProducerCritic(catalog, { maxUsdPerMtok = MAX_WORKER_USD_PER_MTOK, minAa = MIN_WORKER_AA_INDEX } = {}) {
   if (!Number.isFinite(minAa) || minAa < 34 || !Number.isFinite(maxUsdPerMtok) || maxUsdPerMtok <= 0 || maxUsdPerMtok > MAX_WORKER_USD_PER_MTOK) throw new Error('Invalid daily worker qualification/cost limits');
   if (!catalog || typeof catalog !== 'object') throw new Error('worker catalog missing');
-  const pool = [...(catalog.free_verified ?? []), ...(catalog.cheap_verified ?? [])];
+  // CR-66.3: qualified free router workers (health order) come before the OpenRouter pool; paid models stay the fallback.
+  const free = catalog.free_router ?? [];
+  const pool = [...free, ...(catalog.free_verified ?? []), ...(catalog.cheap_verified ?? [])];
   const viable = pool.filter((m) => m && typeof m.id === 'string'
     && Number.isFinite(m.aa_intelligence_index) && m.aa_intelligence_index >= minAa
     && Number.isFinite(m.input_per_1m) && Number.isFinite(m.output_per_1m)
     && m.input_per_1m >= 0 && m.output_per_1m >= 0
     && m.input_per_1m <= maxUsdPerMtok && m.output_per_1m <= maxUsdPerMtok
     && typeof m.family === 'string' && m.family)
-    .sort((a, b) => (a.input_per_1m + a.output_per_1m) - (b.input_per_1m + b.output_per_1m));
+    .sort((a, b) => (a.input_per_1m + a.output_per_1m) - (b.input_per_1m + b.output_per_1m) || (free.includes(b) - free.includes(a)));
   if (!viable.length) throw new Error(`no viable daily worker (AA >= ${minAa}, <= $${maxUsdPerMtok}/Mtok prompt+completion)`);
   const producer = viable[0];
   const critic = viable.find((m) => m.family !== producer.family);
