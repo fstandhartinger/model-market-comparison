@@ -118,3 +118,15 @@ test('CR-66.2: daily.mjs publishes only through gatedPublish', async () => {
   assert.equal(src.match(/git\('push-data'/g).length, 1);
   assert.match(src, /if \(!gated\.published\) throw new Error\(gated\.error\)/);
 });
+
+test('CR-66.4: build, test, typecheck and prerender steps run without the production evidence/state directories', async () => {
+  const { isolatedStepEnvironment } = await import('../ops/daily/daily.mjs');
+  const env = isolatedStepEnvironment({ PATH: '/bin', BH_EVIDENCE_DIR: '/run/sources', BH_STATE: '/run/workers', BH_WORKER_REASONING_EFFORT: 'low' });
+  assert.deepEqual(env, { PATH: '/bin', BH_WORKER_REASONING_EFFORT: 'low' });
+  const src = await readFile(new URL('../ops/daily/daily.mjs', import.meta.url), 'utf8');
+  for (const step of ['npm-build', 'npm-test', 'typecheck', 'prerender']) {
+    const line = src.split('\n').find((l) => l.includes(`command('${step}'`));
+    assert.ok(line?.trimEnd().endsWith('isolatedEnvironment);'), `${step} uses the isolated environment`);
+  }
+  assert.match(src, /env: isolatedEnvironment,/, 'the publish gate runs isolated too');
+});

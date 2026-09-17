@@ -39,6 +39,13 @@ export async function linkDryRunDependencies(repo, work) {
   await appendFile(join(work, '.git/info/exclude'), '\n/node_modules\n');
 }
 
+export const ISOLATED_STEP_UNSET = ['BH_EVIDENCE_DIR', 'BH_STATE'];
+export function isolatedStepEnvironment(environment) {
+  const env = { ...environment };
+  for (const key of ISOLATED_STEP_UNSET) delete env[key];
+  return env;
+}
+
 export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily', runDir, dryRun = false } = {}) {
   repo = resolve(repo); home = resolve(home);
   const started = new Date().toISOString(), day = started.slice(0, 10);
@@ -51,10 +58,10 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
   let before, after, top5 = null;
   const environment = { ...process.env, BH_EVIDENCE_DIR: join(runDir, 'sources'), BH_STATE: join(runDir, 'workers'), BH_WORKER_MAX_PRICE_PER_1M: '4', BH_WORKER_REASONING_EFFORT: 'low', BH_WORKER_DISABLE_OPTIONAL_REASONING: '0' };
   for (const key of ['OPENAI_API_KEY', 'OPENAI_BASE_URL', 'OPENAI_API_BASE', 'CODEX_API_KEY']) delete environment[key];
-  const command = async (name, file, args, cwd = work, timeout = 600_000) => {
+  const command = async (name, file, args, cwd = work, timeout = 600_000, env = environment) => {
     const begin = Date.now();
     try {
-      const { stdout, stderr } = await exec(file, args, { cwd, env: environment, timeout, killSignal: 'SIGTERM', maxBuffer: 32_000_000 });
+      const { stdout, stderr } = await exec(file, args, { cwd, env, timeout, killSignal: 'SIGTERM', maxBuffer: 32_000_000 });
       await writeFile(join(reports, `${name.replace(/[^a-z0-9-]/gi, '-')}.log`), redact(stdout + stderr));
       report.steps.push({ name, ok: true, duration_ms: Date.now() - begin });
       console.log(`OK ${name}`);
@@ -68,8 +75,9 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
   };
   // Hooks reuse the explicit gate result, but a hook that must re-run a stage needs the gate's timeout.
   const git = (name, args, cwd = repo) => command(name, 'git', args, cwd, ['commit-data', 'push-data'].includes(name) ? GATE_TIMEOUT_MS : 120_000);
-  const gateEnvironment = { ...environment };
-  for (const key of ['BH_EVIDENCE_DIR', 'BH_STATE']) delete gateEnvironment[key];
+  // CR-66.4: build, tests, typecheck, prerender and the gate must not write into this run's production
+  // evidence (tests used to append /fixture/ captures to sources/live-manifest.jsonl).
+  const isolatedEnvironment = isolatedStepEnvironment(environment);
   const status = async (name, cwd) => parseStatusPorcelain(await git(name, ['status', '--porcelain=v1', '--untracked-files=all'], cwd));
   console.log(`Benchmark Heaven daily ${started}: ${runDir}${dryRun ? ' (dry run)' : ''}`);
   try {
@@ -288,10 +296,10 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     await command('refresh-benchmarks', process.execPath, ['ops/daily/phase-step.mjs', 'benchmarks', runDir], work, 3_600_000);
     if (hash(await readFile(join(work, 'data/raw/aa-coding-agents.json'))) !== legacy) throw new Error('Legacy Coding Agent v1.4 changed: refusing publication');
     await command('build-dataset', process.execPath, ['scripts/build-dataset.mjs']);
-    await command('npm-build', 'npm', ['run', 'build'], work, 1_200_000);
-    await command('npm-test', 'npm', ['test'], work, 900_000);
-    await command('typecheck', 'npx', ['tsc', '--noEmit', '-p', '.']);
-    await command('prerender', process.execPath, ['--test', 'test/production/prerender.mjs']);
+    await command('npm-build', 'npm', ['run', 'build'], work, 1_200_000, isolatedEnvironment);
+    await command('npm-test', 'npm', ['test'], work, 900_000, isolatedEnvironment);
+    await command('typecheck', 'npx', ['tsc', '--noEmit', '-p', '.'], work, 600_000, isolatedEnvironment);
+    await command('prerender', process.execPath, ['--test', 'test/production/prerender.mjs'], work, 600_000, isolatedEnvironment);
     after = await readJSON(join(work, 'data/dataset.json'));
     for (const key of ['artificialanalysis', 'designarena', 'openrouter', 'aa_coding_agents_v1_5', 'aa_efficiency', 'openrouter_efficiency', 'chutes_efficiency', 'epoch_eci']) {
       if (after.sources[key]?.slice(0, 10) !== day) throw new Error(`Source ${key} is not today's collector run (${after.sources[key]})`);
@@ -317,7 +325,7 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
       // CR-66.2: the publish gate runs explicitly around commit and push; only a PASS bound to this
       // commit's dataset publishes. The git hooks stay as a second line (and reuse this result).
       const gated = await gatedPublish({
-        home, work, runDir, env: gateEnvironment,
+        home, work, runDir, env: isolatedEnvironment,
         commit: async () => {
           await git('commit-data', ['-c', `user.name=${userName}`, '-c', `user.email=${userEmail}`, 'commit', '-m', `Refresh Benchmark Heaven data ${day}\n\nSource-backed daily gauntlet and build/tests/typecheck passed.\n\n${COMMIT_TRAILER}`], work);
           return git('candidate-commit', ['rev-parse', 'HEAD'], work);
