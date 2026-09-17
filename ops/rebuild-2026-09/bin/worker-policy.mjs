@@ -85,7 +85,43 @@ export function composeFlorianGate({ agent = false } = {}) {
   };
 }
 
-export function selectModel(catalog, dataset, { model, critic = false, producers = [], smokeTest = false, maxPricePer1M = Infinity, excludeModels = [], scheduled = false } = {}) {
+// CR-66.3 (2026-09-17): free workers behind the local LiteLLM router (127.0.0.1:4010), tried before the paid
+// OpenRouter pool. Qualification is the AA Intelligence Index of the exact variant the call runs — never the family
+// minimum — and the router route must be healthy in ~/.llm-health.json. Kimi K3: Moonshot's model card documents
+// `reasoning_effort` low/high/max with default "max", and the call sends "max", so it runs kimi-k3::max whether Chutes
+// forwards the field or applies the template default. Qwen3.8 27B (best variant xhigh, AA 33.9) and Union Alpha (no
+// AA index) are listed so the rule, not an omission, keeps them out; they qualify automatically once AA measures them
+// at >= 34. `allowed_as` is the whitelist entry (Florian 2026-09-11: "Kimi K3 over Chutes is the normal path").
+export const FREE_ROUTER_WORKERS = [
+  { id: 'chutes/moonshotai/Kimi-K3-TEE', router_model: 'fw-kimi-k3', provider_model: 'moonshotai/Kimi-K3-TEE', health: ['models', 'kimi-k3'], variant_model_id: 'kimi-k3::max', reasoning_effort: 'max', allowed_as: 'moonshotai/kimi-k3' },
+  { id: 'chutes/Qwen/Qwen3.8-27B-TEE', router_model: 'fw-qwen3.8-27b', provider_model: 'Qwen/Qwen3.8-27B-TEE', health: ['models', 'qwen3.8-27b'], variant_model_id: 'qwen3.8-27b::xhigh', reasoning_effort: 'xhigh', allowed_as: null },
+  { id: 'openrouter/stealth/union-alpha', router_model: 'ua-openrouter', provider_model: 'stealth/union-alpha', health: ['union_alpha', 'ua-openrouter'], variant_model_id: 'union-alpha::default', reasoning_effort: null, allowed_as: null },
+];
+
+/** Health of one router route from ~/.llm-health.json: models.<key>.usable, or a union_alpha ranked_api entry marked healthy. */
+export function routerRouteHealthy(health, [block, key]) {
+  if (!health || typeof health !== 'object') return false;
+  if (block === 'models') return health.models?.[key]?.usable === true;
+  return health.union_alpha?.available === true && (health.union_alpha.ranked_api ?? []).some((r) => r?.key === key && r.health === 'healthy');
+}
+
+/** CR-66.3: qualified, healthy free router workers in health order; each shaped like an OpenRouter candidate plus `transport`. */
+export function freeRouterCandidates(dataset, health, { workers = FREE_ROUTER_WORKERS, minimum = MIN_INDEX } = {}) {
+  const models = new Map((dataset?.models ?? []).map((m) => [m.id, m]));
+  const rank = (w) => (w.health[0] === 'models' ? health?.models?.[w.health[1]]?.rank ?? 99 : -1);
+  return workers.map((w) => {
+    const index = models.get(w.variant_model_id)?.benchmarks?.aa_intelligence_index;
+    return { id: w.id, family: vendorFamily(w.id), free: true, input_per_1m: 0, output_per_1m: 0, context: null,
+      aa_intelligence_index: typeof index === 'number' && Number.isFinite(index) ? index : null, aa_source: 'exact_variant',
+      matched_model_ids: [w.variant_model_id], aa_variant_scores: [{ id: w.variant_model_id, index: index ?? null }],
+      transport: 'router', router_model: w.router_model, provider_model: w.provider_model, reasoning_effort: w.reasoning_effort, allowed_as: w.allowed_as,
+      healthy: routerRouteHealthy(health, w.health), _rank: rank(w) };
+  }).filter((c) => c.healthy && c.allowed_as && FLORIAN_ALLOWED_SCHEDULED_WORKERS.includes(c.allowed_as) && c.aa_intelligence_index !== null && c.aa_intelligence_index >= minimum)
+    .sort((a, b) => a._rank - b._rank || a.id.localeCompare(b.id))
+    .map(({ _rank, ...c }) => c);
+}
+
+export function selectModel(catalog, dataset, { model, critic = false, producers = [], smokeTest = false, maxPricePer1M = Infinity, excludeModels = [], scheduled = false, freeRouter = [] } = {}) {
   if (typeof maxPricePer1M !== 'number' || maxPricePer1M <= 0 || Number.isNaN(maxPricePer1M)) throw new Error('Invalid worker price ceiling');
   if (!Array.isArray(excludeModels) || excludeModels.some((m) => typeof m !== 'string' || !m.includes('/'))) throw new Error('Invalid excluded worker model IDs');
   const excluded = new Set(excludeModels);
@@ -95,8 +131,9 @@ export function selectModel(catalog, dataset, { model, critic = false, producers
   if (critic && smokeTest) throw new Error('Smoke tests cannot certify a critic round');
   if (smokeTest && !model) throw new Error('Smoke tests require an explicitly pinned model');
   const candidates = candidateList(catalog, dataset, MIN_INDEX, catalog.length);
-  const rankedCandidates = [...candidates.free_verified, ...candidates.cheap_verified]
-    .filter((m) => !scheduled || FLORIAN_ALLOWED_SCHEDULED_WORKERS.includes(modelBase(m.id)));
+  // CR-66.3: qualified free router workers first (only offered to scheduled calls), then the OpenRouter pool.
+  const rankedCandidates = [...(scheduled && !model ? freeRouter : []), ...candidates.free_verified, ...candidates.cheap_verified]
+    .filter((m) => !scheduled || m.transport === 'router' || FLORIAN_ALLOWED_SCHEDULED_WORKERS.includes(modelBase(m.id)));
   const candidate = model ? assessModel(catalog.find((m) => m.id === model) || {}, dataset)
     : rankedCandidates.find((m) => !excluded.has(m.id) && m.input_per_1m <= maxPricePer1M && m.output_per_1m <= maxPricePer1M && (!critic || !avoid.has(m.family)));
   if (!candidate) throw new Error('No supported viable worker model found');
@@ -105,7 +142,7 @@ export function selectModel(catalog, dataset, { model, critic = false, producers
   if (candidate.aa_intelligence_index !== null && candidate.aa_intelligence_index < MIN_INDEX) throw new Error(`Model is below AA ${MIN_INDEX}`);
   if (candidate.aa_intelligence_index === null && !smokeTest) throw new Error('Unscored model: only the fixed known-answer --smoke-test is allowed');
   if (smokeTest && (candidate.input_per_1m > 2 || candidate.output_per_1m > 2)) throw new Error('Smoke-test price exceeds the $2 per million token ceiling');
-  if (scheduled && !FLORIAN_ALLOWED_SCHEDULED_WORKERS.includes(modelBase(candidate.id))) {
+  if (scheduled && !FLORIAN_ALLOWED_SCHEDULED_WORKERS.includes(candidate.transport === 'router' ? candidate.allowed_as : modelBase(candidate.id))) {
     throw new Error(`Scheduled model ${candidate.id} not in Florian's authorized scheduled-worker set`);
   }
   return candidate;
