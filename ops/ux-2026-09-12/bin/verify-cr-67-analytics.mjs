@@ -85,7 +85,7 @@ if (TOKEN && before?.body) {
   const refs = after.body?.top_referrers ?? [];
   const hit = refs.find((r) => r.referrer_host === marker);
   check('real page loads are counted with the referrer host only', hit?.visits === 3, JSON.stringify(hit ?? null));
-  check('rows below 3 are folded in the report', (after.body?.top_referrers ?? []).every((r) => r.visits >= 3 || r.referrer_host.startsWith('(other')));
+  check('rows below 3 are folded in the report', (after.body?.top_referrers ?? []).every((r) => r.visits >= 3 || r.referrer_host === '(other)'));
   check('GPC and bot loads are not counted', !refs.some((r) => r.referrer_host.includes(`-${marker}`)));
   check('total views grew', (after.body?.totals.views ?? 0) > before.body.totals.views, `${before.body.totals.views} → ${after.body?.totals.views}`);
 }

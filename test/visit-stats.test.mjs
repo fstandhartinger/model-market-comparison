@@ -65,6 +65,10 @@ test('CR-67.4: the accumulator keeps daily totals only and restores a failed flu
   acc.add({ path: '/', referrerHost: '', visit: true }, t, 1);
   acc.add({ path: '/about', referrerHost: '', visit: true }, t, 1);
   assert.deepEqual(acc.take().map((r) => [r.path, r.views]), [['/', 2]]);
+  // A failed flush cannot push the map past the cap either (new rows collected meanwhile keep their place).
+  acc.add({ path: '/new', referrerHost: '', visit: true }, t, 1);
+  acc.restore([{ day: '2026-09-17', path: '/old', referrerHost: '', views: 4, visits: 4 }], t, 1);
+  assert.deepEqual(acc.take().map((r) => r.path), ['/new']);
 });
 
 test('CR-67.4: stored schema and flush carry no identifier, IP or user agent', async () => {
@@ -90,9 +94,14 @@ test('CR-67.4: the operator report returns aggregates, folds rows below 3 and ha
   assert.equal(report.days, 7);
   assert.equal(report.unique_visitors, null);
   assert.deepEqual(report.totals, { views: 9, visits: 6 });
-  assert.deepEqual(report.top_pages, [{ path: '/', views: 7, visits: 5 }, { path: '(other, each below 3)', views: 2, visits: 1 }]);
-  assert.deepEqual(report.top_referrers, [{ referrer_host: 'x.com', visits: 3 }, { referrer_host: '(other, each below 3)', visits: 3 }]);
+  assert.deepEqual(report.top_pages, [{ path: '/', views: 7, visits: 5 }, { path: '(other)', views: 2, visits: 1 }]);
+  assert.deepEqual(report.top_referrers, [{ referrer_host: 'x.com', visits: 3 }, { referrer_host: '(other)', visits: 3 }]);
   assert.ok(!JSON.stringify(report).includes('private.example'));
+  // Beyond 25 named rows everything else lands in "(other)" too, whatever its size.
+  const many = await visitReport(async (sql) => ({ rows: sql.includes('GROUP BY path')
+    ? Array.from({ length: 27 }, (_, i) => ({ path: `/p${i}`, views: 100 - i, visits: 1 })) : [] }), 7);
+  assert.equal(many.top_pages.length, 26);
+  assert.deepEqual(many.top_pages.at(-1), { path: '(other)', views: 75 + 74, visits: 2 });
 });
 
 test('CR-67.4/67.6: the site ships no client analytics, so no consent banner is needed', () => {

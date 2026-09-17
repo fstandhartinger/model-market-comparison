@@ -26,7 +26,7 @@ function pool(): Pool | null {
       connectionTimeoutMillis: 5_000,
       statement_timeout: 10_000,
     });
-    // An idle-connection error must never take the page server down; the next flush reconnects.
+    // An idle-connection error must never take the page server down; pg drops that client and the next query opens a new one.
     state.pool.on("error", (e) => console.warn("[visit-stats] pool error:", e.message));
   }
   return state.pool;
@@ -45,7 +45,7 @@ const RETENTION_EVERY_MS = 60 * 60_000;
 async function flushOnce() {
   const rows = state.acc.take();
   try { await flushRows(query, rows); } catch (e) {
-    state.acc.restore(rows);
+    state.acc.restore(rows, Date.now(), MAX_KEYS);
     console.warn("[visit-stats] flush failed:", (e as Error).message);
   }
   // Retention runs at least hourly while the process lives, with or without new page loads.
