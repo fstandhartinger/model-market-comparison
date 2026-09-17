@@ -744,3 +744,17 @@ OpenRouter price and AA score row from the captured source bodies, apply blast-r
 Kimi K3 on Chutes) and a different-family free critic (Union Alpha) review 8 sampled rows, and block the push unless PASS; a diff
 digest per run; `notify now` on the second failure in a row; a no-LLM 6-hourly price watch. The rows below are the repo parts.
 Checklist: `04-CR-BRIEF.md` → "CR-20260916t".
+
+
+## CR-20260917 — Repair today's failed data update; add visitor analytics
+Florian, Hermes chat, 17 Sep 2026, verbatim:
+
+> Fix it please. Also integrate some Analytics stuff into the page, I want to Count visitors. And: do we need a cookie banner?
+
+Context: the scheduled 05:17 UTC daily refresh and its earlier retry both failed. The most recent failure says the live source contract rejected `aa_coding_v15`: one disputed row was quarantined; the critic could not overrule producer uncertainty; nothing became eligible to publish. The public site is therefore still showing the 16 Sep data. Do not weaken the evidence, critic, or publication gate merely to make a run pass. Trace the contested source row to its primary capture; correct it if the source is clear, otherwise withhold only the unproven value with a recorded reason. Then produce a fresh accepted, published daily dataset and independently verify it live. Include a regression fixture for this exact disagreement class and ensure a transient one-row dispute cannot prevent unrelated, fully sourced updates from publishing safely.
+
+Add visitor measurement, choosing the most privacy-preserving practical design: no advertising, cross-site tracking, fingerprinting, user profiles, or reuse of the Google sign-in identity. Prefer first-party, aggregate/cookieless measurement with EU processing and a minimal retention period. It must show useful aggregate visitor counts (at minimum visits, unique visits if lawfully measured, top pages and referrers) to the operator without exposing visitor-level data. Before deployment, audit the selected implementation against current German/EU rules, especially TDDDG §25 and GDPR. Update the live privacy policy to say exactly what is collected, why, where it is processed, retention and how to object/contact.
+
+A cookie banner is required if the chosen analytics accesses or stores non-essential information on a visitor's device, or otherwise needs consent. Do not rely on the label "cookieless": assess unique identifiers, local/browser storage, fingerprinting and any third-party transfer. If, after the audit, the chosen implementation genuinely needs no consent, do not add a nuisance banner; document the technical/legal basis and verify that the implementation has no non-essential device access. If consent is required, add an accessible equal-choice consent banner before analytics loads, with Reject as easy as Accept, granular information, withdrawal and proof of the choice; analytics stays off until opt-in.
+
+Use the existing Benchmark Heaven work loop and independent live verification. Do not expose analytics credentials or visitor data in git, evidence, prompts or logs.

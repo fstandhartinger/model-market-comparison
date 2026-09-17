@@ -53,6 +53,20 @@ credited below, the rest is marked open.
 | CR-66.8 | Retry unbound critic PASS with another critic | implemented | `78cb999`; `test/daily-gauntlet-gate.test.mjs` (CR-66.8 test) | Claude Opus 5, iteration 92. A critic `pass` without a bounded row-level revision records that critic as unavailable and hands the round to the next critic (within maxRounds); a non-pass without bounded rows still stops. Fixture: unbound PASS → round 2 with another critic → accepted; unbound PASS from every critic → refused after maxRounds. |
 | CR-66.9 | Stale secondary sources in summary and run report | implemented | `67f6ee4`; `test/source-health.test.mjs` (CR-66.9 tests); `/opt/benchmarkheaven-daily/state/collector-health.json` (seeded from 33 retained run reports) | Claude Opus 5, iteration 92. daily.mjs keeps each collector's last good day (`state/collector-health.json`) and lists collectors and failing benchmark sources whose last good data is ≥ 3 days old in run-report `stale_sources` and summary.txt ('Veraltete Quellen'). Seed: no collector currently ≥ 3 days stale. |
 
+## Seeding note — CR-20260917 (iteration 94, 2026-09-17 05:46 UTC, claude-opus)
+
+The laptop supervisor appended CR-20260917 (verbatim in `03-CHANGE-REQUESTS-VERBATIM.md`, checklist CR-67 in `04-CR-BRIEF.md`) during iteration 94. Seeded as open; priority CR-67.1–67.3.
+
+| ID | Requirement (short) | Status | Evidence | Notes |
+|---|---|---|---|---|
+| CR-67.1 | Diagnose the aa_coding_v15 producer/critic disagreement from the retained capture; correct a wrong parser/value or quarantine the sole unproven row; regression fixture | open | — | Seeded 2026-09-17 05:46 UTC by iteration 94 from CR-20260917. |
+| CR-67.2 | One disputed row must not block otherwise source-verified independent updates (bounded quarantine; unbounded disputes still fail closed) | open | — | Seeded 2026-09-17 05:46 UTC by iteration 94 from CR-20260917. |
+| CR-67.3 | Publish a fresh daily dataset through the normal gate; verify date/commit and the corrected/withheld record live on both hosts | open | — | Seeded 2026-09-17 05:46 UTC by iteration 94 from CR-20260917. |
+| CR-67.4 | Privacy-preserving visitor analytics (visits, lawful uniques, top pages, referrers; first-party/EU, no tracking/fingerprinting/identity reuse; minimal retention) | open | — | Seeded 2026-09-17 05:46 UTC by iteration 94 from CR-20260917. |
+| CR-67.5 | Consent decision from the actual implementation (TDDDG §25 / GDPR audit), cited decision record, independent review | open | — | Seeded 2026-09-17 05:46 UTC by iteration 94 from CR-20260917. |
+| CR-67.6 | Only if consent is required: accessible prior-consent flow (Accept/Reject equal, withdrawal, no analytics before opt-in); otherwise no banner | open | — | Seeded 2026-09-17 05:46 UTC by iteration 94 from CR-20260917. |
+| CR-67.7 | Replace the "no analytics" privacy statement with an exact disclosure matching the deployed configuration | open | — | Seeded 2026-09-17 05:46 UTC by iteration 94 from CR-20260917. |
+
 ## Ledger
 
 | ID | Requirement (short) | Status | Evidence | Notes |
