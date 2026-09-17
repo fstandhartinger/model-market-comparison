@@ -151,6 +151,7 @@ export default async function BenchmarkResultPage({ searchParams }: { searchPara
         {/* F-100: the eyebrow already says "published <date>" for a snapshot board — the list repeats it only when there is more to say. */}
         {versionLine(matrixRow) && !/^Published \d{4}-\d{2}-\d{2}$/.test(versionLine(matrixRow)) && <li>{versionLine(matrixRow)}</li>}
         {matrixRow.saturation?.saturated && <li><b>Saturated.</b> {matrix.tags.saturated?.tip} Measured here: the {matrixRow.saturation.topN} best of {matrixRow.saturation.models} independently measured models average {Math.round(matrixRow.saturation.share * 1000) / 10}&nbsp;% of this benchmark&apos;s ceiling.</li>}
+        {matrixRow.sourceChange && <li data-bh-source-change><b>{matrix.tags.source_changed?.label ?? 'Changed at source'}.</b> {matrixRow.sourceChange.note}</li>}
         {matrixRow.judged && <li><b>Judged.</b> {matrix.tags.judged?.tip} {caveats.judged[matrixRow.key as keyof typeof caveats.judged]?.why}</li>}
         {matrixRow.freshness?.contamination
           ? <li>{matrixRow.freshness.contamination} <span className="opacity-70">(source: &ldquo;{matrixRow.freshness.source?.quote}&rdquo;)</span></li>

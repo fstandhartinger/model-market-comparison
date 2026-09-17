@@ -4,7 +4,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import {
-  saturationOf, scaleCeiling, isJudged, freshnessOf, freshnessDefaults, versionLine, rowTags, categoryComposite,
+  saturationOf, scaleCeiling, isJudged, freshnessOf, sourceChangeOf, caveatTip, freshnessDefaults, versionLine, rowTags, categoryComposite,
   SATURATION_MIN_MODELS, SATURATION_THRESHOLD, SATURATED_WEIGHT, CAVEAT_TAGS, buildBenchmarkMatrix,
 } from '../lib/benchmark-matrix.mjs';
 import { computeCategoryScores, resolveAnchors, assertNoJudgedAnchors } from '../lib/category-scores.mjs';
@@ -107,9 +107,9 @@ test('F-98: the two caveat tags join the existing tag set, last, and both are de
 
 test('F-98: the (i) second line names the version, the read date and a known task window', () => {
   assert.equal(versionLine({ version: '2025', asOf: '2026-09-11', freshness: freshnessOf('aa-aime', caveats) }),
-    'Version 2025 · results as of 2026-09-11 · tasks from 2025');
+    'Version 2025 · values as published on 2026-09-11 · tasks from 2025');
   assert.equal(versionLine({ version: '1.1', asOf: '2026-09-13', freshness: freshnessOf('otis-mock-aime', caveats) }),
-    'Version 1.1 · results as of 2026-09-13 · tasks from 2024 to 2025');
+    'Version 1.1 · values as published on 2026-09-13 · tasks from 2024 to 2025');
   assert.equal(versionLine({ version: 'snapshot-2026-09-15', asOf: null, freshness: freshnessOf('nothing-known', caveats) }),
     'Published 2026-09-15');
   assert.equal(versionLine({ version: '', asOf: null, freshness: null }), '');
@@ -215,4 +215,23 @@ test('CR-38.2: category scores weigh a saturated anchor half', () => {
   const expected = science.rows.reduce((sum, r) => sum + weight(r) * asPercent(byIndex.get(r.index), r.unit), 0)
     / science.rows.reduce((sum, r) => sum + weight(r), 0);
   assert.equal(row.cat_science, Number(expected.toFixed(1)));
+});
+
+// CR-65.15 D9: boards whose source changed a published table in place, or stopped showing it, say so.
+test('CR-65.15 D9: source-change notes reach the row tag, its hover text and the version line', () => {
+  for (const [key, e] of Object.entries(caveats.source_changes)) {
+    assert.ok(['rescored', 'no_longer_shown', 'removed'].includes(e.kind) && e.note && /^\d{4}-\d{2}-\d{2}$/.test(e.checked_at), `${key}: kind, note and checked_at are required`);
+  }
+  assert.equal(sourceChangeOf('a-benchmark-nobody-curated', caveats), null);
+  const ds = read('../data/dataset.json');
+  const matrix = buildBenchmarkMatrix(buildBenchmarkView(ds), ds, taxonomy, caveats);
+  const live = matrix.rows.find((r) => r.key === 'livebench');
+  assert.ok(live.tags.includes('source_changed') && live.tags.at(-1) === 'source_changed');
+  assert.match(caveatTip('source_changed', live, matrix.tags), /LiveBench re-scored this table/);
+  assert.match(versionLine(live), /values as published on \d{4}-\d{2}-\d{2}/);
+  assert.equal(caveatTip('judged', live, matrix.tags), matrix.tags.judged.tip);
+  assert.ok(CAVEAT_TAGS.includes('source_changed'));
+  assert.ok(matrix.rows.find((r) => r.key === 'aa_coding_index').tags.includes('source_changed'));
+  // A board without an entry carries no such tag.
+  assert.ok(!matrix.rows.find((r) => r.key === 'aa-aime')?.tags.includes('source_changed'));
 });

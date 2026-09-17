@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useSettings } from "./SettingsContext";
 import { SCORE_SHORT_LABELS } from "../lib/types";
 import type { ClientModel } from "../lib/client-model";
-import { rowBars, rowWinners, formatValue, cellHref, chartRows, categoryComposite, versionLine, countBoards, variantLabel, type BenchmarkMatrix as Matrix, type MatrixRow } from "../lib/benchmark-matrix.mjs";
+import { rowBars, rowWinners, formatValue, cellHref, chartRows, categoryComposite, versionLine, countBoards, variantLabel, caveatTip, type BenchmarkMatrix as Matrix, type MatrixRow } from "../lib/benchmark-matrix.mjs";
 import { versionSuffix } from "../lib/version-label";
 import { ScoreRowPair, CategoryHeader } from "./ScoreRows";
 import { MODEL_PRESETS, ROW_PRESETS, decodeFilters, encodeFilters, modelsForPreset, pickFilters, rowFilter } from "../lib/presets.mjs";
@@ -22,10 +22,11 @@ const MIN_MODELS = 2, MAX_MODELS = 10;
 const ROW_IDS = new Set(ROW_PRESETS.map((p) => p.id));
 const MODEL_IDS = new Set(MODEL_PRESETS.map((p) => p.id));
 
-function Tag({ id, tags }: { id: string; tags: Matrix["tags"] }) {
+function Tag({ id, tags, row }: { id: string; tags: Matrix["tags"]; row: MatrixRow }) {
   const t = tags[id];
   if (!t) return null;
-  return <span className="bh-matrix-tag" data-tag={id} title={t.tip}>{t.label}<span className="sr-only">: {t.tip}</span></span>;
+  const tip = caveatTip(id, row, tags);
+  return <span className="bh-matrix-tag" data-tag={id} title={tip}>{t.label}<span className="sr-only">: {tip}</span></span>;
 }
 
 /** CR-3.1: the custom row checklist — one toggle per category, and the benchmarks inside it. */
@@ -238,14 +239,14 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
               return <tr key={row.id}>
                 <th scope="row" className="bh-matrix-stub">
                   {/* F-100 (pass 18): the harness sits on the name line, so two rows of one benchmark read apart at a glance. */}
-                  <span className="bh-matrix-bench">{row.name}{row.cohort && <span className="bh-matrix-cohort">{row.cohort}</span>}{row.tags.map((t) => <Tag key={t} id={t} tags={matrix.tags} />)}</span>
+                  <span className="bh-matrix-bench">{row.name}{row.cohort && <span className="bh-matrix-cohort">{row.cohort}</span>}{row.tags.map((t) => <Tag key={t} id={t} tags={matrix.tags} row={row} />)}</span>
                   {/* F-98 / CR-38.2 + F-100: a stated task window is the one line worth a row of its own; the version and the
                       date the results were read are on hover here, on the (i) of the Simple table and on the result page. */}
                   {/* F-105 (pass 19): a best-of row's name-line tag already names its versions and agents, so the "Version …"
                       sub-line is skipped there; the sentence saying what "best of" means lives in the footnote, on the
                       hover and on each value's result page, not as a third line under the name. */}
                   {(() => { const suffix = row.bestOf ? "" : versionSuffix(row.name, String(row.version ?? "")), w = row.freshness?.taskWindow; const sub = [suffix ? `Version ${suffix.replace(/^v/i, "")}` : null, w?.from ? (w.to && w.to !== w.from ? `tasks from ${w.from} to ${w.to}` : `tasks from ${w.from}`) : null].filter(Boolean).join(" · "); return sub ? <span className="bh-matrix-sub">{sub}</span> : null; })()}
-                  <span className="bh-matrix-desc" title={[row.bestOf ? BEST_OF_NOTE : null, row.description, versionLine(row)].filter(Boolean).join(" — ")} data-best-of-note={row.bestOf ? "hover" : undefined}>{row.higherBetter === false ? "Lower is better. " : ""}{row.description}</span>
+                  <span className="bh-matrix-desc" title={[row.bestOf ? BEST_OF_NOTE : null, row.description, versionLine(row), row.sourceChange?.note].filter(Boolean).join(" — ")} data-best-of-note={row.bestOf ? "hover" : undefined}>{row.higherBetter === false ? "Lower is better. " : ""}{row.description}</span>
                 </th>
                 {vals.map((v, j) => <td key={ids[j]} className={`bh-matrix-cell ${j === 0 ? "bh-matrix-lead" : ""}`}>
                   {v == null

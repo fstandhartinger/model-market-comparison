@@ -27,7 +27,12 @@ export interface MatrixRow {
   freshness?: Freshness | null;
   /** The date the benchmark's results were last verified from its source (YYYY-MM-DD). */
   asOf?: string | null;
+  /** CR-65.15 D9: the source re-scored or stopped showing these results after our capture. */
+  sourceChange?: SourceChange | null;
 }
+export interface SourceChange { kind: string; note: string; checkedAt: string | null }
+export function sourceChangeOf(key: string, caveats: unknown): SourceChange | null;
+export function caveatTip(tag: string, row: Pick<MatrixRow, "sourceChange">, tags: Record<string, { label: string; tip: string }>): string;
 export interface Saturation { saturated: boolean; topMean: number; ceiling: number; share: number; models: number; topN: number }
 export interface Freshness {
   taskWindow: { from: string; to?: string; label?: string } | null;

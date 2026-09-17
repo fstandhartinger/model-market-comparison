@@ -241,5 +241,18 @@
   "freshness_default": {
     "task_window_note": "The verified source does not state a task or question date window.",
     "contamination_note": "The verified source states no contamination control for this benchmark."
+  },
+  "source_changes_note": "CR-65.15 D9 (data & math gauntlet, 16 Sep 2026): boards whose source changed or stopped showing results after we captured them. Each entry was re-checked against the live source on the date given; the retained captures stay the published values. Evidence: /opt/benchmarkheaven/state/ux-evidence/iter94-cr65.15-d9/. The gauntlet's third case (Cursor removed the GPT-5.6 Terra point from CursorBench) is not listed: on 17 Sep 2026 the live CursorBench page still lists all five GPT-5.6 Terra settings, unchanged from our 13 Sep capture.",
+  "source_changes": {
+    "livebench": {
+      "kind": "rescored",
+      "checked_at": "2026-09-17",
+      "note": "LiveBench re-scored this table after we captured it on 10 Sep 2026 (GLM-5.3 Flash: 71.59 then, 71.14 in the live table on 17 Sep 2026). The values shown are as published on the capture date."
+    },
+    "aa_coding_index": {
+      "kind": "no_longer_shown",
+      "checked_at": "2026-09-17",
+      "note": "Artificial Analysis no longer shows the Coding Index on its website (its home and models pages did not mention it on 17 Sep 2026). The values come from its data API, which still publishes the index."
+    }
   }
 }

@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { ClientData } from "../lib/client-model";
 import { useSettings } from "./SettingsContext";
 import { collapsedName, preferredVariantIds } from "../lib/variants";
-import { formatValue, cellHref, rowBars, rowWinners, rowOutliers, scoreTypeText, categoryComposite, versionLine, countBoards, boardId, variantLabel, CAVEAT_TAGS, OUTLIER_MIN_VALUES, type BenchmarkMatrix as Matrix } from "../lib/benchmark-matrix.mjs";
+import { formatValue, cellHref, rowBars, rowWinners, rowOutliers, scoreTypeText, categoryComposite, versionLine, countBoards, boardId, variantLabel, CAVEAT_TAGS, caveatTip, OUTLIER_MIN_VALUES, type BenchmarkMatrix as Matrix } from "../lib/benchmark-matrix.mjs";
 import { InfoTip } from "./InfoTip";
 import { hasScoreEvidence } from "../lib/client-model";
 import { ScoreRowPair, CategoryHeader } from "./ScoreRows";
@@ -157,13 +157,13 @@ export function SimpleBenchmarks({ matrix: headline, data, ids: listIds }: { mat
             return <tr key={row.id} data-board={boardId(row)} data-boards={row.boards ? JSON.stringify(row.boards) : undefined} data-best-of={row.bestOf ? "1" : undefined}>
               <th scope="row" className="bh-matrix-stub"><span className="bh-matrix-bench bh-matrix-bench-inline">{row.name}{row.cohort && <span className="bh-matrix-cohort">{row.cohort}</span>}
                 {/* F-98: the two caveat tags a reader needs to read the number right; the editorial tier tags stay in the full comparison. */}
-                {row.tags.filter((t) => CAVEAT_TAGS.includes(t)).map((t) => matrix.tags[t] && <span key={t} className="bh-matrix-tag" data-tag={t} title={matrix.tags[t].tip}>{matrix.tags[t].label}<span className="sr-only">: {matrix.tags[t].tip}</span></span>)}
+                {row.tags.filter((t) => CAVEAT_TAGS.includes(t)).map((t) => matrix.tags[t] && <span key={t} className="bh-matrix-tag" data-tag={t} title={caveatTip(t, row, matrix.tags)}>{matrix.tags[t].label}<span className="sr-only">: {caveatTip(t, row, matrix.tags)}</span></span>)}
                 <InfoTip title={row.name} label={`the ${row.name} benchmark`}>{row.description || "What this benchmark measures is not described by its publisher yet."}
                   <span className="mt-2 block">{scoreTypeText(row)}</span>
                   {row.bestOf && <span className="mt-2 block" data-best-of-note>{BEST_OF_NOTE}</span>}
                   {versionLine(row) && <span className="bh-muted mt-2 block">{versionLine(row)}</span>}
                   {row.freshness?.contamination && <span className="bh-muted mt-2 block">{row.freshness.contamination}</span>}
-                  {row.tags.filter((t) => CAVEAT_TAGS.includes(t)).map((t) => matrix.tags[t] && <span key={t} className="mt-2 block"><b>{matrix.tags[t].label}:</b> {matrix.tags[t].tip}</span>)}
+                  {row.tags.filter((t) => CAVEAT_TAGS.includes(t)).map((t) => matrix.tags[t] && <span key={t} className="mt-2 block"><b>{matrix.tags[t].label}:</b> {caveatTip(t, row, matrix.tags)}</span>)}
                 </InfoTip></span></th>
               {vals.map((v, j) => <td key={ids[j]} className={`bh-matrix-cell ${j === 0 ? "bh-matrix-lead" : ""}`}>
                 {v == null
