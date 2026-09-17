@@ -4,9 +4,9 @@
 import { mkdir, readFile } from 'node:fs/promises';
 import { resolve, join, dirname } from 'node:path';
 import { writeJSONAtomic } from '../../lib/snapshot.mjs';
-import { reviewLive, RULES } from './review-live.mjs';
-import { reviewArtifact, sha256 } from './gauntlet.mjs';
-import { planRejectedContract, retainPriorSnapshot, reviewerUnavailable } from './live-retention.mjs';
+import { reviewLive } from './review-live.mjs';
+import { buildLiveContractUnits, reviewLiveContracts } from './live-contracts.mjs';
+import { dailyConcurrency } from './concurrency.mjs';
 
 const [step, directory] = process.argv.slice(2);
 if (!directory || !['live', 'benchmarks'].includes(step)) throw new Error('Usage: node ops/daily/phase-step.mjs live|benchmarks RUN_DIR');
@@ -27,69 +27,18 @@ try {
     const manifest = verified.evidence.manifest;
     const verifier = await readFile('ops/daily/review-live.mjs', 'utf8');
     const aaEfficiencyParser = await readFile('lib/aa-efficiency.mjs', 'utf8');
-    const reviewed = [];
-    const retained = []; // CR-67.2: withheld secondary contracts (prior snapshot kept)
-    const deterministic = []; // contracts whose model review was unavailable (format/transport only)
-    // All numeric records were compared against complete, hash-verified source
-    // bodies above. LLM review covers the adapter contract and explicit examples,
-    // not a false claim that a model manually inspected thousands of numbers.
-    for (const dataset of manifest.datasets) {
-      const packets = verified.evidence.packets.filter((p) => p.dataset === dataset.dataset);
-      const allRows = packets.flatMap((p) => p.rows);
-      const examples = [allRows[0], allRows.at(-1)].filter((r, i, a) => a.findIndex((x) => x.row_id === r.row_id) === i);
-      const row = { id: dataset.dataset, mapping: RULES[dataset.dataset],
-        required_rows: dataset.rows, programmatically_verified_rows: allRows.length,
-        model_review_scope: 'extraction contract, failure/retention rules and explicitly supplied example rows',
-        example_row_ids: examples.map((r) => r.row_id) };
-      const functions = {
-        aa: ['async function verifyAa(', 'async function verifyDa('],
-        da: ['async function verifyDa(', 'async function verifyOr('],
-        or: ['async function verifyOr(', 'async function verifyAaEfficiency('],
-        aa_efficiency: ['function aaCarrierExtracts(', 'async function verifyOrEfficiency('],
-        or_efficiency: ['async function verifyOrEfficiency(', 'async function verifyChutes('],
-        chutes_efficiency: ['async function verifyChutes(', '// Raw benchmarkRows'],
-        aa_coding_v15: ['function codingSourceRows(', '// --- evidence packets'],
-      };
-      const [start, end] = functions[dataset.dataset];
-      const begin = verifier.indexOf(start), finish = verifier.indexOf(end, begin + start.length);
-      if (begin < 0 || finish < 0) throw new Error(`Missing reviewed verifier section: ${dataset.dataset}`);
-      const sources = [
-        { url: 'repo:ops/daily/review-live.mjs', locator: `${start} through ${end}`, content: verifier.slice(verifier.indexOf('const RAW_DEFAULT'), verifier.indexOf('async function verifyAa(')) + '\n' + verifier.slice(begin, finish), sha256: sha256(verifier), retrieved_at: new Date().toISOString(), note: 'Exact local verifier code; hash binds its full file' },
-        { url: 'execution:review-live', sha256: sha256(JSON.stringify(verified.report)), retrieved_at: new Date().toISOString(), locator: dataset.dataset, content: JSON.stringify({ run_started_at: verified.report.run?.first_receipt, dataset, execution_report: verified.report, complete_coverage: manifest.coverage }) },
-        ...examples.map((r) => ({ ...r.source, locator: r.pointer, content: JSON.stringify({ row_id: r.row_id, staged: r.staged, primary: r.extract }) })),
-      ];
-      if (dataset.dataset === 'aa_efficiency') sources.splice(1, 0, {
-        url: 'repo:lib/aa-efficiency.mjs', locator: 'complete file', content: aaEfficiencyParser,
-        sha256: sha256(aaEfficiencyParser), retrieved_at: new Date().toISOString(), note: 'Complete local AA-efficiency parser used by the deterministic verifier',
-      });
-      const review = await reviewArtifact({ runDir, artifactId: `live-contract-${dataset.dataset}`, rows: [row], sources,
-        criteria: [
-          { id: 'mapping', text: 'Review this source adapter contract using the actual supplied native primary examples, verifier code, and successful execution report. The programmatic verifier compared EVERY numeric row against complete hash-verified primary bodies. LLM inspection is explicitly limited to the contract and listed examples, not manual full-row numeric coverage. Does the mapping preserve native units, identities, zero/null distinctions and required version boundaries?' },
-          { id: 'safety', text: 'Trace missing/partial source, retained metadata and numeric equality checks in the supplied verifier. Retained values must equal prior accepted values and keep their original dates. Unreachable measurements cannot become fresh values. Hash checking and execution are performed by the owner program; inability to execute those yourself is not missing evidence. Raise actual unsupported claimed mapping or missing relevant evidence, without demanding unrelated fields or benchmarks on raw API data.' },
-        ] });
-      reviewed.push({ dataset: dataset.dataset, programmatic_rows: allRows.length, example_rows: examples.map((r) => r.row_id), ...review });
-      await writeJSONAtomic(join(runDir, 'reports', 'live-gauntlet-progress.json'), { total_contracts: manifest.datasets.length, reviewed });
-      if (reviewerUnavailable(review)) {
-        // 17 Sep 2026: never block a day on a reviewer format error. The deterministic verifier above already matched every row.
-        deterministic.push({ dataset: dataset.dataset, decision: 'model review unavailable after all retries; accepted on the deterministic full-row verification', reasons: review.errors.slice(0, 5) });
-        await writeJSONAtomic(join(runDir, 'reports', 'live-gauntlet-progress.json'), { total_contracts: manifest.datasets.length, reviewed, retained, deterministic });
-        console.warn(`live gauntlet ${dataset.dataset}: model review unavailable (${review.errors.join('; ').slice(0, 300)}) — accepted on the deterministic verification of ${allRows.length} rows`);
-        continue;
-      }
-      if (!review.accepted || review.fingerprints.length !== 1 || review.quarantined.length) {
-        const plan = planRejectedContract(dataset.dataset, retained);
-        if (plan.action !== 'retain') throw new Error(`Live source contract rejected ${dataset.dataset}: ${review.errors.join('; ')} (${plan.reason})`);
-        // CR-67.2: never overrule the review — withhold this dataset's fresh capture and keep the published snapshot.
-        retained.push(await retainPriorSnapshot({ runDir, rawDir: resolve('data/raw'), dataset: dataset.dataset, errors: review.errors }));
-        await writeJSONAtomic(join(runDir, 'reports', 'live-gauntlet-progress.json'), { total_contracts: manifest.datasets.length, reviewed, retained });
-        console.warn(`live gauntlet ${dataset.dataset}: contract NOT accepted — previous snapshot retained (${review.errors.join('; ').slice(0, 300)})`);
-        continue;
-      }
-      console.log(`live gauntlet ${dataset.dataset}: contract accepted; ${allRows.length} rows verified against primary bodies; ${examples.length} explicit model examples`);
-    }
+    const limit = dailyConcurrency();
+    const units = buildLiveContractUnits({ manifest, verified, verifier, aaEfficiencyParser });
+    // CR-73.3: the seven contract reviews are independent and each writes only its own
+    // gauntlet directory, so they share the waiting; every decision below stays in
+    // manifest order (see ops/daily/live-contracts.mjs).
+    console.log(`live gauntlet: reviewing ${units.length} source contracts with concurrency ${limit}`);
+    const { reviewed, retained, deterministic } = await reviewLiveContracts({
+      runDir, rawDir: resolve('data/raw'), units, limit,
+    });
     const covered = reviewed.reduce((n, r) => n + r.programmatic_rows, 0);
     if (covered !== manifest.coverage.required_rows) throw new Error('Live verification did not cover every source row');
-    result = { ok: true, deterministic: verified.report, gauntlet: { contracts: reviewed.length, programmatically_verified_rows: covered,
+    result = { ok: true, deterministic: verified.report, gauntlet: { contracts: reviewed.length, concurrency: limit, programmatically_verified_rows: covered,
       model_reviewed_examples: reviewed.flatMap((r) => r.example_rows), complete: true, retained_contracts: retained, deterministic_fallback_contracts: deterministic,
       coverage_note: 'All rows verified programmatically against complete captured primary bodies. Different-model gauntlet verifies adapter contracts and explicit examples. No claim of full manual LLM numeric inspection.',
       reviews: reviewed.map((r) => ({ dataset: r.dataset, manifest: r.manifest })) } };

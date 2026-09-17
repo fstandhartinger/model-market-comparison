@@ -13,6 +13,7 @@ import { compactPublishedRun } from './compact-run.mjs';
 import { GATE_TIMEOUT_MS, gatedPublish } from './publish-gate.mjs';
 import { staleSources, updateCollectorHealth } from './source-health.mjs';
 import { profileRunDir } from './profile-run.mjs';
+import { dailyConcurrency } from './concurrency.mjs';
 const exec = promisify(execFile);
 // How long publication waits for the other writer's checkout to become clean before it gives up for the day.
 // Overridable for tests; the shell entry point allows 3 h in total, so 30 min is affordable.
@@ -454,7 +455,7 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     const timing = await profileRunDir(runDir, report);
     await writeJSONAtomic(join(reports, 'profile.json'), timing);
     report.profile = { wall_min: timing.run.wall_min, worker_calls: timing.workers.calls, worker_min: timing.workers.serial_min,
-      worker_share_of_wall: timing.workers.share_of_wall, worker_concurrency: timing.workers.concurrency,
+      worker_share_of_wall: timing.workers.share_of_wall, worker_concurrency: timing.workers.concurrency, configured_concurrency: dailyConcurrency(),
       failed_worker_min: timing.workers.failed_min, top_stages: timing.critical_path.slice(0, 5) };
   } catch (error) { report.profile = { error: redact(String(error.message)) }; }
   await writeJSONAtomic(join(reports, 'run-report.json'), report);

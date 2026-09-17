@@ -22,6 +22,16 @@ must keep the date it had (`sourceFreshnessErrors`); a commit that touches a ben
 (`pricesScopeViolations`). The price watch starts it as `gated-run.sh --price-drift --scope prices` (`run.sh` passes the
 flag through).
 
+**Concurrency (CR-73.3).** The independent review units of a run — the seven live source contracts, the
+score batches, the vendor sources and the AA field chunks — run with at most `BH_DAILY_CONCURRENCY`
+worker calls in flight (default **4**, range 1–8; `1` is the old strictly sequential behaviour).
+Each unit owns its packet, its gauntlet directory and its retry budget, so a slow, timed-out or
+malformed worker delays nothing but itself. Every decision — acceptance, withheld snapshots, the
+deterministic fallback, a stage failure — is applied afterwards in manifest/batch order, so the
+published candidate and the run report do not depend on which call returned first. The run report
+records both the configured limit (`profile.configured_concurrency`) and the concurrency the run
+actually achieved (`profile.worker_concurrency`).
+
 A dry run performs collection, source review, dataset generation, production build,
 unit tests, typecheck and prerender checks in an isolated work directory. It suppresses
 Git publication and Telegram sends. Inspect the printed run directory and summary.

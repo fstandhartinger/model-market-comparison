@@ -101,6 +101,48 @@ publication gate (CR-66.2) and the independent-critic rule are unchanged.
 4. **CR-73.5** — two consecutive unattended full runs and one changed-source run against the target,
    compared with an uncached baseline, verified by an engine that did not implement it.
 
+## CR-73.3 — what was parallelised, and what stayed sequential (17 Sep 2026, iteration 99)
+
+`ops/daily/concurrency.mjs` runs independent units with at most `BH_DAILY_CONCURRENCY` in flight
+(default 4, range 1–8; `1` reproduces the previous strictly sequential run). It returns **one settled
+result per input, indexed by input position**, so every decision the pipeline makes is taken afterwards,
+in the original order. Nothing about *what* is reviewed changed.
+
+| Unit | Where | Independent because |
+|---|---|---|
+| 7 live source contracts | `ops/daily/live-contracts.mjs` (extracted from `phase-step.mjs`) | one frozen packet and one `gauntlet/live-contract-<dataset>/` directory each; no unit reads another's files and none writes the staged checkout |
+| score batches | `refresh-benchmarks.mjs` | disjoint row sets, one `gauntlet/scores-<n>/` directory each |
+| vendor sources | `refresh-benchmarks.mjs` | one primary source, one packet file and one producer call each |
+| AA field chunks | `refresh-benchmarks.mjs` | disjoint discovery rows, one artifact each |
+
+Sequential on purpose: the public-recipe loop (its `python3 public-candidate.py` parses are local and
+cheap, and each may trigger a protocol review that mutates the shared registry/protocol cache), the
+protocol reviews themselves, the ingestion draft, build/test/typecheck/prerender and the publication gate.
+
+**Guarantees kept, and how they are tested** (`test/cr-73-concurrency.test.mjs`, `test/cr-73-live-contracts.test.mjs`):
+
+* *Deterministic aggregation.* The live-contract fixture makes the contracts finish in reverse manifest
+  order; the aggregate at concurrency 4 is `JSON.stringify`-identical to the same run at concurrency 1,
+  and the two withheld contracts are retained in manifest order — which matters, because
+  `planRejectedContract` counts the retentions before it (CR-67.2, max 4).
+* *Failure isolation.* A unit that throws (timeout, malformed packet) is recorded in place; siblings run
+  to completion. The stage then fails on the **first** rejection in unit order, exactly where the
+  sequential loop would have failed — never on whichever call happened to fail first.
+* *Bounded queue.* At most `limit` lanes, pulled from an index cursor; the fixture asserts the peak.
+* *No concurrent writes.* `onSettled` callbacks (the live gauntlet progress file) are chained, so two
+  units can never write the same file at once, and the final file lists the contracts in manifest order.
+* Everything a run withholds stays visibly withheld; the retention, deterministic-fallback and
+  core-source-fails-closed paths are all exercised by the fixtures.
+
+**Known trade-off, deliberately accepted:** worker-model exclusions (`unavailable-models.jsonl`) are
+read when a call starts. Serially, a model that answers malformed twice is excluded before the next
+call; with four lanes, up to four calls can still pick it before the exclusion lands. Each unit keeps
+its own bounded retry budget and re-reads the exclusions on its next round, so this costs at most a
+little extra retry time on a bad route — it can never accept an unreviewed row.
+
+Expected effect on the baseline: 96.7 min of model time at concurrency 1.00 becomes ≈ 25 min of clock at
+4 lanes. The measured result of the first run on this code is recorded below.
+
 ## Prices-only path — measured
 
     bash ops/daily/run.sh --dry-run --scope prices     # 17 Sep 2026, 18:46 UTC, rc 0
