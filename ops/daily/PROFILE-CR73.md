@@ -287,6 +287,48 @@ for them, which is CR-73.2's "and their dependent derived rows" clause.
   reused by a publishing run. Build, tests, typecheck, prerender and the gate get no reuse
   environment at all (`ISOLATED_STEP_UNSET`, CR-66.4's rule one entry wider).
 
+### Measured: how often does a live contract actually repeat?
+
+A reuse cache is only worth its risk if the units repeat, so this was measured before any claim was
+made about it. `ops/daily/reuse-hitrate.mjs` recomputes the data half of the live-contract key from
+the packets every run already stores (`review/packets/*.txt` carry the exact row objects) and
+compares consecutive runs. Over the **nine consecutive run pairs** stored on 17–18 Sep
+(`/opt/benchmarkheaven/state/ux-evidence/cr73-2/hitrate-20260918.json`):
+
+| Contract | rows | byte-identical to the run before | why |
+|---|---:|---:|---|
+| `aa_coding_v15` | 15 | **4/9** | a board that only moves when AA publishes a new run |
+| `aa_efficiency` | 156 | **4/9** | token counts per model; changes with an AA refresh |
+| `chutes_efficiency` | 693 | **4/9** | daily aggregates; stable within a day |
+| `aa` | 652 | **3/9** | the AA v2 API body; stable for hours at a time |
+| `da` | 142 | **0/9** | DesignArena Elo — every duel moves it |
+| `or` | 445 | **0/9** | OpenRouter catalog + endpoints: `uptime_last_30m` moves continuously |
+| `or_efficiency` | 24 | **0/9** | `cacheHitRate` moves continuously |
+| **total** | | **15/63 (24 %)** | |
+
+Two things follow, and both are worth stating plainly rather than being discovered later:
+
+1. **Three of the seven contracts will never be reusable, and should not be.** `da`, `or` and
+   `or_efficiency` carry live telemetry — an Elo board, a 30-minute uptime figure, a rolling
+   cache-hit rate. Two runs ten minutes apart differ in the captured bytes (`uptime_last_30m`
+   99.828 → 99.818, `cacheHitRate` 0.5629 → 0.5624). That is a genuinely different body and a
+   correct miss; no key design can or should change it.
+2. **`aa` only became reusable at all once our own capture stamps left the key.** Before that fix
+   it matched itself **0/9** times: every row embeds `source.fetched_at` and
+   `extract.leaderboard_source.fetched_at`, which move on every fetch, while both `sha256` values
+   were identical. `withoutCaptureStamps` drops exactly those three keys (`fetched_at`,
+   `retrieved_at`, `collected_at`) and only inside an object that also carries a `sha256` — so a
+   changed body is still a changed hash and still a miss, while "when we fetched" stops counting as
+   "what we got". That one change took the largest contract from 0/9 to 3/9.
+
+**So the honest expectation for CR-73.5 is a partial saving, not the disappearance of the stage:**
+on a quiet stretch up to four of the seven contract reviews are skipped; on a busy one, none. The
+prediction that belongs in the ledger is "0–4 of 7 contracts, typically 1–2", not "the live gauntlet
+becomes free". The vendor half is expected to be the steadier of the two, because a vendor source is
+a published paper or model card that changes rarely — but it has no equivalent measurement yet,
+because the receipts do not retain a per-source capture-hash history, and inventing one is CR-73.5's
+job, not this section's.
+
 ### Status
 
 **Off by default.** `BH_DAILY_REUSE=1` turns it on; unset, `0` or `false` reviews everything, and

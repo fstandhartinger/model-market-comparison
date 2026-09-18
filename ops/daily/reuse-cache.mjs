@@ -52,6 +52,33 @@ function canonical(value) {
 }
 
 /**
+ * Our own capture stamps — the wall-clock time at which the pipeline fetched a body, not anything
+ * the source said. They sit inside capture receipts, and every such receipt carries the `sha256`
+ * of the bytes right next to them, so dropping the stamp cannot hide a changed body: a different
+ * capture is still a different hash and still a miss.
+ *
+ * Measured, not assumed (18 Sep, `ops/daily/reuse-hitrate.mjs` over eight stored runs): without
+ * this, the `aa` contract — 652 rows, the largest of the seven — never matched itself, because
+ * every row embeds `source.fetched_at` and `extract.leaderboard_source.fetched_at` while both
+ * `sha256` values were identical. With it, `aa` matches on 2 of 7 consecutive run pairs.
+ *
+ * The rule is deliberately narrow: only these three keys, and only inside an object that also
+ * carries a `sha256`. A date a *source* publishes never sits next to our hash of the body.
+ */
+const CAPTURE_STAMPS = new Set(['fetched_at', 'retrieved_at', 'collected_at']);
+
+export function withoutCaptureStamps(value) {
+  if (Array.isArray(value)) return value.map(withoutCaptureStamps);
+  if (value && typeof value === 'object') {
+    const isReceipt = Object.hasOwn(value, 'sha256');
+    return Object.fromEntries(Object.entries(value)
+      .filter(([key]) => !(isReceipt && CAPTURE_STAMPS.has(key)))
+      .map(([key, inner]) => [key, withoutCaptureStamps(inner)]));
+  }
+  return value;
+}
+
+/**
  * The fingerprint of one reviewable source unit. `kind` and `id` name the unit, `inputs` is
  * everything the review reads: the rows, the contract, the criteria and the code versions.
  * Callers must leave run-varying metadata (timestamps, receipt paths, run ids) out of `inputs`

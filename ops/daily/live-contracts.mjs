@@ -17,7 +17,7 @@ import { writeJSONAtomic } from '../../lib/snapshot.mjs';
 import { reviewArtifact, sha256 } from './gauntlet.mjs';
 import { planRejectedContract, retainPriorSnapshot, reviewerUnavailable } from './live-retention.mjs';
 import { mapWithConcurrency, dailyConcurrency } from './concurrency.mjs';
-import { openReuseCache, unitFingerprint, reuseProvenance } from './reuse-cache.mjs';
+import { openReuseCache, unitFingerprint, reuseProvenance, withoutCaptureStamps } from './reuse-cache.mjs';
 import { RULES } from './review-live.mjs';
 
 export const LIVE_CONTRACT_CRITERIA = [
@@ -85,7 +85,10 @@ export function buildLiveContractUnits({ manifest, verified, verifier, aaEfficie
         captures,
         // The rows themselves, not a count: a changed staged value or primary extract must be a miss
         // even when the capture it came from is served under the same hash by a different pointer.
-        rows_sha256: sha256(JSON.stringify(allRows.map((r) => [r.row_id, r.pointer, r.source?.url ?? null, r.source?.sha256 ?? null, r.staged, r.extract]))),
+        // Our own capture stamps are dropped (see withoutCaptureStamps): they record when we
+        // fetched, never what we got, and the hash of the bytes sits right beside each of them.
+        rows_sha256: sha256(JSON.stringify(allRows.map((r) => [r.row_id, r.pointer, r.source?.url ?? null, r.source?.sha256 ?? null,
+          withoutCaptureStamps(r.staged), withoutCaptureStamps(r.extract)]))),
       },
     });
     return { dataset: dataset.dataset, rows: allRows.length, examples: examples.map((r) => r.row_id), row, sources, fingerprint, captures };

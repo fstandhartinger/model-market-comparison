@@ -12,7 +12,7 @@ import { mkdtemp, mkdir, readFile, writeFile, appendFile } from 'node:fs/promise
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
-  openReuseCache, unitFingerprint, reuseEnabled, reuseProvenance, REUSE_CACHE_VERSION, DEFAULT_MAX_AGE_DAYS,
+  openReuseCache, unitFingerprint, reuseEnabled, reuseProvenance, withoutCaptureStamps, REUSE_CACHE_VERSION, DEFAULT_MAX_AGE_DAYS,
 } from '../ops/daily/reuse-cache.mjs';
 import { buildLiveContractUnits, reviewLiveContracts, LIVE_CONTRACT_CRITERIA } from '../ops/daily/live-contracts.mjs';
 import { vendorUnitFingerprint, vendorReusable } from '../ops/daily/refresh-benchmarks.mjs';
@@ -328,4 +328,28 @@ test('CR-73.2 vendor: a cached extraction is only reusable while its numbers are
   assert.equal(vendorReusable(cached, SLOTS.slice(0, 1)), false, 'a dropped slot re-extracts');
   assert.equal(vendorReusable(null, SLOTS), false);
   assert.equal(vendorReusable({ outcome: {} }, SLOTS), false);
+});
+
+// --- capture stamps are not data -------------------------------------------
+
+test('CR-73.2: our own capture stamps drop out of the key, the hash beside them does not', () => {
+  const row = {
+    source: { url: 'https://aa/api', sha256: 'a'.repeat(64), fetched_at: '2026-09-17T20:41:01.174Z' },
+    staged: { name: 'Model', metadata: { leaderboard_source: { sha256: 'b'.repeat(64), fetched_at: '2026-09-17T20:41:01.449Z', retrieved_at: 'x', collected_at: 'y' } } },
+    // A date the *source* publishes never sits next to our hash of the body, so it survives.
+    published: { collected_at: '2026-09-10', value: 91.2 },
+  };
+  const stripped = withoutCaptureStamps(row);
+  assert.equal(stripped.source.sha256, 'a'.repeat(64));
+  assert.equal(stripped.source.fetched_at, undefined);
+  assert.equal(stripped.staged.metadata.leaderboard_source.sha256, 'b'.repeat(64));
+  assert.deepEqual(Object.keys(stripped.staged.metadata.leaderboard_source), ['sha256']);
+  assert.equal(stripped.published.collected_at, '2026-09-10', 'a published date without a sibling hash is data');
+
+  // A changed body still changes the key, because its hash is what identifies it.
+  const moved = structuredClone(row);
+  moved.source.sha256 = 'c'.repeat(64);
+  assert.notEqual(JSON.stringify(withoutCaptureStamps(moved)), JSON.stringify(stripped));
+  // Arrays and primitives pass through untouched.
+  assert.deepEqual(withoutCaptureStamps([{ sha256: 'z', fetched_at: 't' }, 1, 'x', null]), [{ sha256: 'z' }, 1, 'x', null]);
 });
