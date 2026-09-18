@@ -369,7 +369,7 @@ The laptop supervisor appended CR-20260917 (verbatim in `03-CHANGE-REQUESTS-VERB
 | CR-59.1 | Add an MIT `LICENSE` (copyright productivity-boost.com Betriebs UG (haftungsbeschränkt) & Co. KG / Florian Standhartinge | verified | see CR-51.1 (duplicate) | Duplicate of CR-51.1, which review gate 20260916T193002Z (opencode-kimi) re-verified independently: GitHub `spdx_id: MIT`, package.json licence, holder consistent with the Impressum. Supervisor: "live already → verify and mark". Iteration 89 (claude-opus) records the mapping only. |
 | CR-59.2 | Site footer and /about: 'Open source (MIT) · hobby project' with a link to the GitHub repository | verified | see CR-51.2 (duplicate) | Duplicate of CR-51.2 (open-source/hobby copy + repo link live on both hosts, re-verified by review gate 20260916T193002Z, opencode-kimi). Mapping recorded by iteration 89 (claude-opus). |
 | CR-60.1 | Add Union Alpha to the model catalog (org Union Alpha / stealth, closed weights, 256K context, released 2026-09-16) with | verified | `/opt/benchmarkheaven/state/ux-evidence/iter89-final2/{canonical,legacy}/…/verification.json` (at `1a0c256`) | **Iteration 89 (claude-opus, implementer):** Union Alpha added through `data/raw/manual.json` (closed weights, released 2026-09-16) with the OpenRouter route `stealth/union-alpha` at $0 from OpenRouter's endpoint listing; provider-meta `Stealth` (undisclosed operator, not EU/non-US). The live OpenRouter refresh (`fetch-live.mjs or`) is held by its own removal guard (an unrelated vanished NextBit route on gryphe/mythomax needs review), so the route is manual until the daily run carries it; a simulated build with the live route merged into the same family (one offer, no duplicate). Not featured (no AA data yet). `test/union-alpha.test.mjs`. Live check `verify-cr-63-batch2.mjs` (Union Alpha page). **Verified REVIEW-20260918T024002Z (opencode-kimi gate):** live on both hosts at `a1a5d79`, verifier suites green (1231/1231 checks per lane, 24 suites). |
-| CR-60.2 | Ingest the announced scores with provenance and a 'preliminary / chart-read / anticipated pricing' label: DeepSWE 73 % ( | open | — | **Iteration 89 (claude-opus, implementer):** not done. No exact source yet: OpenRouter's Benchmarks API has only its own GPQA Diamond run for Union Alpha (0.909, collected automatically by the existing collector once the permaslug maps to this catalog family); AA's API has no Union Alpha row; DeepSWE (Epoch archive) not yet. The two announced numbers exist only in X posts (Cline/Alex Atallah DeepSWE 73 %, @opencode AA chart ≈52 %). Plan: capture the posts through the x-bittensor-reader route (hashed evidence), add a `preliminary` basis (chart-read / announced) that the UI labels and that never enters composites, critic approval per score-approvals.json. Expected cost is never shown as adjusted cost. |
+| CR-60.2 | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter106-cr60/` | — **Iteration 106 (claude-opus, implementer):** done. Both announced values ingested as `basis: "preliminary"` with hash-bound image evidence in `data/raw/benchmarks/daily-evidence/2026-09-18-union-alpha/`. **Values verified by reading the committed chart images directly, not from the OCR transcripts:** DeepSWE 73 % is a printed data label on the bar (unambiguous); Terminal-Bench v4.0 has no printed number, so the value is the star marker's y position interpolated linearly between the 0 % and 100 % gridlines = 51.9 %, committed as 0.52 with a documented +/-3 pp chart-read uncertainty. The OCR pass that the first draft cited as a second opinion read 50 % and was the sloppier read (its cost column is a monotone fabrication); the protocol now records the direct measurement instead. **Three defects in the inherited draft were fixed before shipping — see the iteration entry:** the rows were parked in `public-observations.json`, which the daily refresh rebuilds per benchmark_id, so they would have been deleted silently by the 19 Sep run; the DeepSWE row claimed `harness: "mini-swe-agent"` while its own protocol text said the harness was undisclosed; and a stray `verified_at` key was appended to the collector's output file. Rows now live in a new curated file `data/raw/benchmarks/manual-observations.json` that `scripts/ingest-benchmark-scores.mjs` also reads; `test/coding-sources.test.mjs` is back at its unweakened HEAD form. The DeepSWE row carries the cohort 'OpenRouter run, harness not stated' and therefore stands in its own display row instead of merging into Epoch's measured mini-SWE-agent cohort (69 rows, untouched); the Terminal-Bench row merges into the AA board row it was plotted from (150 models). No cost observation entered from either chart; both anticipated prices stay out of the adjusted-cost model. `test/cr-60-union-alpha-preliminary.test.mjs` 11/11, including a simulation of the daily refresh's per-benchmark_id rebuild proving the curated rows survive it. Gates: `npm test` 830 (829 pass, 1 skipped), `tsc` clean, `build-dataset` green. | | **Iteration 89 (claude-opus, implementer):** not done. No exact source yet: OpenRouter's Benchmarks API has only its own GPQA Diamond run for Union Alpha (0.909, collected automatically by the existing collector once the permaslug maps to this catalog family); AA's API has no Union Alpha row; DeepSWE (Epoch archive) not yet. The two announced numbers exist only in X posts (Cline/Alex Atallah DeepSWE 73 %, @opencode AA chart ≈52 %). Plan: capture the posts through the x-bittensor-reader route (hashed evidence), add a `preliminary` basis (chart-read / announced) that the UI labels and that never enters composites, critic approval per score-approvals.json. Expected cost is never shown as adjusted cost. |
 | CR-60.3 | Price 0 on OpenRouter: show 'free (stealth preview)'; $0 must not break the value map/Pareto (pin as free per the existi | verified | `/opt/benchmarkheaven/state/ux-evidence/iter89-final2/{canonical,legacy}/…/verification.json` (at `1a0c256`) | **Iteration 89 (claude-opus, implementer):** a $0 stealth route reads "free (stealth preview)" in the route lists, the Advanced cost cell and the model page top section; it is never a paid price (CR-50.1), so value map/Pareto/rankings are unaffected. `lib/free-route.mjs` `isStealthPreview`/`freeRouteLabel`, tests. **Verified REVIEW-20260918T024002Z (opencode-kimi gate):** live on both hosts at `a1a5d79`, verifier suites green (1231/1231 checks per lane, 24 suites). |
 | CR-61.1 | 'Data sources & removal on request' note on /about (short section) and one footer line linking to it: "Benchmark Heaven  | verified | `/opt/benchmarkheaven/state/ux-evidence/iter89-final2/{canonical,legacy}/…/verification.json` (at `1a0c256`) | **Iteration 89 (claude-opus, implementer):** /about `#removal` section with Florian's wording and the mailto link; one footer line on every page linking to it. `verify-cr-63-batch2.mjs` CR-61.1 checks. **Verified REVIEW-20260918T024002Z (opencode-kimi gate):** live on both hosts at `a1a5d79`, verifier suites green (1231/1231 checks per lane, 24 suites). |
 | CR-62.1 | Make the homepage (and every public page) small enough for link-preview crawlers: initial HTML ≤ 300 KB. Move the inline | verified | `/opt/benchmarkheaven/state/ux-evidence/iter89-final/{canonical,legacy}/…/verification.json` (at `cfff751`); `/opt/benchmarkheaven/state/ux-evidence/iter89-final2/{canonical,legacy}/…/verification.json` (at `1a0c256`) | **Iteration 89 (claude-opus, implementer):** the catalog pages' client props moved from the server-rendered flight payload to `/api/page-data/<key>?v=<dataset version>` (memoised per dataset, browser-cacheable) via `components/deferred/*`; the layout no longer inlines the Options lists; model pages ship only their own efficiency endpoints (+ precomputed cache baseline) and render benchmark rows from compact props with evidence/missing coverage loading on open; `instrumentation.ts` pre-builds the JSON after start. Live sizes (Twitterbot/WhatsApp/TelegramBot/facebookexternalhit): / 39 KB (was 8.25 MB), /charts /eu /providers ~70–130 KB (were ~6.5 MB), heaviest model pages 215–275 KB (were 1.85 MB); every public page ≤ 300 KB. `verify-cr-62.mjs` 155/155 on both hosts. Lighthouse not run (box shared); the deferred placeholder reserves 85vh so the content arriving is not a layout shift. **Verified REVIEW-20260918T024002Z (opencode-kimi gate):** live on both hosts at `a1a5d79`, verifier suites green (1231/1231 checks per lane, 24 suites). |
@@ -4458,3 +4458,102 @@ reports published so they cannot hold `state/run.lock` at 05:17 UTC; day two exp
 largest open data defect: iteration 100's two-part design (bounded coverage-drop rule + documented snapshot-identity
 semantics) is on its row; land it only after a scheduled run, never in the hours before one. (4) CR-60.2
 (preliminary DeepSWE 73 % for Union Alpha via x-bittensor-reader capture) and CR-54.2/54.3 (Epoch boards) stay open.
+
+## Iteration 106 — 2026-09-18 07:40 → ~09:00 UTC (claude-opus, work): CR-60.2 shipped, after repairing the draft it inherited
+
+One-writer check at start: no foreign process with cwd in the repo, no upstream commits, the daily `state/run.lock`
+free. Today's 05:17 run **published** (`PASS`, `published: true` at 06:18, commit `08573e1`) — handoff item (1) of
+iteration 105 is closed; the glm-5.2 and CR-78.3 fixes held.
+
+The tree was **not** clean: iteration 105b (opencode-kimi, 04:30) was killed by its own timeout (`rc=124`, ~07:30)
+part-way through CR-60.2 and left the work uncommitted. This iteration inherited it, verified it, found three defects,
+and shipped the repaired version.
+
+### The two numbers, verified from the images rather than from the OCR
+
+Both values were re-read directly from the committed chart images, because the draft's provenance rested on OCR
+transcripts of them:
+
+* **DeepSWE 73 %** — a *printed data label* on the Union Alpha bar in Cline's "DeepSWE score and cost" chart
+  (subtitle: "Source: OpenRouter"). Nothing is interpolated; the bar is labelled. Confirmed.
+* **Terminal-Bench v4.0 ≈ 52 %** — *not* printed. The opencode chart plots a star with no number, so the value has to
+  come from the marker's position: read linearly between the 0 % and 100 % gridlines it sits at **51.9 %**. Committed
+  as 0.52 with a documented ±3 pp chart-read uncertainty. The draft's protocol cited a second OCR pass reading "about
+  0.50" as corroboration; that transcript is the *less* reliable of the two (its cost column is a monotone sorted list
+  that the chart does not show — fabricated), so the protocol now records the direct measurement and names the OCR
+  disagreement instead of leaning on it.
+
+Florian's CR text says "≈ 52 %", which the measurement independently reproduces.
+
+### Three defects in the inherited draft
+
+1. **The rows would have been deleted by tomorrow's daily run.** The draft appended both observations to
+   `data/raw/benchmarks/public-observations.json`. That file is the *collector's output*:
+   `ops/daily/refresh-benchmarks.mjs` rebuilds it per benchmark_id —
+   `publicRows.filter(r => r.benchmark_id !== spec.benchmark_id).concat(collector rows)` (line ~261) — and
+   `deepswe::snapshot-2026-09-15` is a collection-plan entry. The 19 Sep 05:17 run would have dropped the DeepSWE row
+   without a word. It also forced `test/coding-sources.test.mjs` to be weakened (its "the collector reproduces the
+   committed observations" assertion had to start excluding preliminary rows) — a test weakened to fit a product
+   defect, which is the keystone rule backwards. Fix: a new curated file
+   `data/raw/benchmarks/manual-observations.json`, read by `scripts/ingest-benchmark-scores.mjs` alongside the three
+   existing observation files; `test/coding-sources.test.mjs` restored to its unweakened HEAD form. A regression test
+   replays the refresh's per-benchmark_id rebuild and asserts the curated rows survive it.
+2. **The DeepSWE row claimed a harness its own protocol called undisclosed.** The subject carried
+   `harness: "mini-swe-agent"` while the protocol text said "the harness … of the DeepSWE run are undisclosed". The
+   harness is load-bearing: it is the matrix **cohort**, so that value was being merged into the same display row as
+   Epoch AI's 69 measured mini-swe-agent runs and compared like-for-like with them. But the chart credits an
+   *OpenRouter* run and names no harness. Fix: the cohort is now the literal
+   `"OpenRouter run, harness not stated"` (`cohortLabel` shows an unlisted cohort verbatim by design, F-100), so the
+   value stands in its own row and Epoch's measured cohort keeps all 69 rows and its ranking untouched. A plain
+   `null` harness was rejected as the fix: it renders as the cohort "Published board", which would have implied the
+   number *is* the board's published figure — the opposite of the truth.
+3. **A stray `verified_at` key** had been appended to `public-observations.json`. Nothing reads it there
+   (`verified_at` belongs to `registry.json`, where `lib/benchmark-registry.mjs` validates it), and
+   `build-benchmark-history.mjs` line 82 treats a `verified_at` on a snapshot as a collection timestamp — a key that
+   can only ever be read by accident. Removed.
+
+No critic approval was added to `score-approvals.json`: `verifyScoreEvidence` requires that chain for `self_reported`
+rows only, and a `preliminary` row is display-only by construction. The independent check these rows did get is the
+one recorded above — the producer was opencode-kimi, the verifier read the primary images.
+
+### Published-number diff (complete, and larger than CR-60.2 alone)
+
+`data/dataset.json` HEAD → this commit, whole-file, nothing else changed:
+
+* **+2 rows** — the two preliminary Union Alpha values.
+* **8 rows re-attached**, and these are **not** from CR-60.2. They reproduce from a pristine HEAD worktree with no
+  changes at all: re-running `scripts/ingest-benchmark-scores.mjs` on the committed inputs moves eight OpenRouter
+  observations (GPQA Diamond and τ²-bench airline, score and cost) from `model_id: null` ("Not attached") onto
+  `glm-5.2::max` and `qwen3.5-35b-a3b::reasoning`. Cause: both families became **fully deprecated** in today's
+  refresh (yesterday each still had a live non-reasoning configuration). The join in
+  `lib/openrouter-benchmark-scores.mjs` refuses to put a possibly-reasoning run on a non-reasoning configuration; once
+  the whole family is deprecated the deterministic family representative is the reasoning one, and the run attaches
+  with the "does not assert that OpenRouter tested this exact effort setting" wording. Both families are deprecated,
+  so the values sit behind the default "Hide deprecated".
+* **0 rows removed.** Historical estimates **unchanged**: 105 estimated / 492 not comparable / 597 total, before and
+  after — the re-attachment hazard (moving an observation to another variant spawning bogus dated estimates) was
+  checked explicitly and did not fire. History states 21 → 22 (one new snapshot, 17792 → 17794 rows). An intermediate
+  state file from a discarded build was rebuilt away, not committed.
+
+### F-120 (new, not fixed here): the committed `scores.json` is one catalog generation behind
+
+The eight re-attachments above are a symptom worth naming. `ops/daily/daily.mjs` runs `refresh-benchmarks` (which
+calls the ingest, line 389) at step 322 and `build-dataset` at step 325 — the ingest joins against **yesterday's**
+`data/dataset.json`, and the catalog it should have joined against is written three steps later. So a catalog change
+lands in `dataset.json` on day N but in `scores.json` only on day N+1, and **the committed `scores.json` is not a
+fixed point of its own pipeline**: anyone re-running the ingest on green main gets a different file, as measured here.
+It is self-healing (the next day catches up) and no value was ever wrong, but it means a data diff can appear in an
+unrelated commit, exactly as it did in this one. The fix is not a one-liner — the dependency is circular
+(ingest needs the catalog, `build-dataset` needs `scores.json`), so it wants either a second ingest+build pass to a
+fixed point or a catalog source for the ingest that does not come from `dataset.json`. It must be designed, measured
+with a `--dry-run`, and landed well clear of a scheduled run. Not attempted today.
+
+Gates at the final tree: `npm test` **830 (829 pass, 1 skipped, 0 fail)**, `npx tsc --noEmit -p .` clean,
+`node scripts/build-dataset.mjs` green (841 models, 519 scored rows). `test/cr-60-union-alpha-preliminary.test.mjs`
+11/11.
+
+**Handoff / watch:** (1) F-120 above — the largest structural finding of this iteration, unfixed by design.
+(2) CR-60.2 is implementer-verified only; a non-implementer should re-read the two chart images against the committed
+values and the cohort decision in defect 2. (3) CR-73.5's dry-run pair, CR-65.14 and CR-54.2/54.3 remain as iteration
+105 left them; CR-79.1/79.2 and F-113/F-115 still need a verifier that is not claude-opus. (4) Anything hand-curated
+from now on belongs in `data/raw/benchmarks/manual-observations.json`; its header says why.

@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "note": "Hand-curated observations that no collector can reproduce: values a source publishes only inside a picture, read off that picture by a human or an agent. They live here and never in public-observations.json, because ops/daily/refresh-benchmarks.mjs rebuilds that file per benchmark_id from the collector's output and would delete them on the next daily run. Every row here carries basis 'preliminary' (CR-65.10): display only, never part of a score, a ranking, a percentile, a saturation judgement, a Benchmaxxing figure or a value tag. Each row states its own model_id, because the display-name bridge in scripts/ingest-benchmark-scores.mjs deliberately applies to collector rows only; a hand-curated row names its subject openly instead. A row is retired from this file the moment the same result becomes measurable from a primary API.",
+  "observations": [
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Union Alpha",
+        "name": "Union Alpha",
+        "model_id": "union-alpha::default",
+        "variant": null,
+        "harness": "OpenRouter run, harness not stated"
+      },
+      "value": 0.73,
+      "unit": "fraction",
+      "basis": "preliminary",
+      "source": {
+        "url": "https://x.com/cline/status/2100265266026590322",
+        "retrieved_at": "2026-09-18T04:39:00Z",
+        "published_at": "2026-09-16",
+        "sha256": "7a75dfedcf6e3f91e4c3dcedc8e26668f121816a403c0d0f888bce7ea40a6e28",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-union-alpha/cline-deepswe-chart.jpg",
+        "locator": "Post image: bar chart 'DeepSWE score and cost', subtitle 'Source: OpenRouter'; the Union Alpha bar carries the printed data label 73%."
+      },
+      "supporting_sources": [
+        {
+          "url": "https://x.com/alexatallah/status/2100243109401469062",
+          "retrieved_at": "2026-09-18T04:39:00Z",
+          "published_at": "2026-09-16",
+          "sha256": "7726c385449cfdb0c5d17b8e6cf2f74ff8d05080b370d59443fdf569f95b36d8",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-union-alpha/atallah-deepswe.jpg",
+          "locator": "Post by OpenRouter co-founder Alex Atallah announcing the DeepSWE result for Union Alpha with a score/cost chart."
+        },
+        {
+          "url": "https://x.com/cline/status/2100265266026590322",
+          "retrieved_at": "2026-09-18T04:39:00Z",
+          "published_at": "2026-09-16",
+          "sha256": "775ed7ae1a666439126adeabc8c622ba364688ef5bdcb61a79f33f8c098f389d",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-union-alpha/cline-post-syndication.json",
+          "locator": "Public tweet-result payload: post text and capture metadata."
+        }
+      ],
+      "protocol": "Chart-read, announced. The value is printed on the bar as a data label, so it is read, not interpolated: the Union Alpha bar in Cline's chart 'DeepSWE score and cost' is labelled 73%, and the chart's own subtitle credits OpenRouter as the source; OpenRouter co-founder Alex Atallah announced the same result the same day. Harness deliberately not claimed: this board's 69 measured rows are Epoch AI's DeepSWE runs under mini-swe-agent, but the chart credits an OpenRouter run and names no harness, so the two must not be assumed to be the same setup. The row therefore carries the cohort 'OpenRouter run, harness not stated' and lands in its own display row instead of merging into the mini-SWE-agent cohort — a value that is not like-for-like must not sit in the same line as one that is. Not reproducible from the OpenRouter Benchmarks API, which as of 2026-09-18 lists Union Alpha only for OpenRouter's own GPQA Diamond run. The same chart's ~$0.65 per task is the post's own anticipated pricing, not a measured cost, and is never ingested or shown as an adjusted cost. Preliminary: shown in tables only, never part of a score, a ranking or an aggregate.",
+      "comparison_key": null,
+      "join_note": "Hand-curated identity: the chart plots the stealth model announced by OpenRouter on 2026-09-16, which is the single OpenRouter route stealth/union-alpha behind the catalog family union-alpha::default (its only configuration). No effort variant is inferred.",
+      "id": "public:8a97201d12e564f32e51aef1"
+    },
+    {
+      "benchmark_id": "aa-terminal-bench::4.0",
+      "subject": {
+        "source_id": "Union-Alpha",
+        "name": "Union Alpha",
+        "model_id": "union-alpha::default",
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.52,
+      "unit": "fraction",
+      "basis": "preliminary",
+      "source": {
+        "url": "https://x.com/opencode/status/2100237891263668418",
+        "retrieved_at": "2026-09-18T04:41:00Z",
+        "published_at": "2026-09-16",
+        "sha256": "5af4dd19461b1889839ff5a21b9307157b1ca1fccced3096a91090de8ac6b586",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-union-alpha/opencode-tbench-chart.jpg",
+        "locator": "Post image: scatter chart 'Internal-Terminal-Benchmark', subtitle 'Terminal-Bench v4.0 score vs. average cost per task (USD)', Artificial Analysis credited in the plot area; the point labelled 'Union-Alpha (anticipated pricing)' is the yellow star."
+      },
+      "supporting_sources": [
+        {
+          "url": "https://x.com/opencode/status/2100237891263668418",
+          "retrieved_at": "2026-09-18T04:41:00Z",
+          "published_at": "2026-09-16",
+          "sha256": "a431feb69e35eeb45e213fef2693d51f6dc22cf3329590b7b9fc8582fd706bba",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-union-alpha/opencode-post-syndication.json",
+          "locator": "Public tweet-result payload: post text and capture metadata."
+        }
+      ],
+      "protocol": "Chart-read, announced, and interpolated rather than labelled: the chart prints no number for this point, so the value comes from the star marker's position on the y-axis, read linearly between the 0% and 100% gridlines, which places it at about 52% (verification iteration 106, claude-opus, reading the committed image directly; an earlier OCR pass over the same image reported about 50%). Chart-read uncertainty is therefore roughly plus or minus 3 percentage points and the value must never be treated as an exact figure. Harness and reasoning setting are undisclosed: every other plotted point names its effort in brackets and this one does not. Not reproducible from the Artificial Analysis API, which as of 2026-09-18 publishes no Union Alpha row. The point's x position is the post's own anticipated pricing, labelled as such in the chart, and is never ingested or shown as a cost. Preliminary: shown in tables only, never part of a score, a ranking or an aggregate.",
+      "comparison_key": null,
+      "join_note": "Hand-curated identity: the plotted label 'Union-Alpha' is the stealth model announced on 2026-09-16, which is the single OpenRouter route stealth/union-alpha behind the catalog family union-alpha::default (its only configuration). No effort variant is inferred.",
+      "id": "public:5559812676c45459e0b73666"
+    }
+  ]
+}

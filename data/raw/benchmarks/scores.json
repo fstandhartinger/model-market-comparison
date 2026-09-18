@@ -160809,8 +160809,8 @@
       "subject": {
         "source_id": "qwen/qwen3.5-35b-a3b-20260224|gpqa_diamond",
         "name": "Qwen: Qwen3.5-35B-A3B",
-        "model_id": null,
-        "variant": null,
+        "model_id": "qwen3.5-35b-a3b::reasoning",
+        "variant": "reasoning",
         "harness": null
       },
       "basis": "measured",
@@ -160828,14 +160828,14 @@
       "value": 0.018308193779904305,
       "unit": "USD",
       "sample_size": 3762,
-      "protocol": "Mean USD spent per task by OpenRouter's own run of this configuration, measured on 3762 tasks; last run 2026-08-29T19:18:38.408Z. Measured cost of that specific run, not Benchmark Heaven's adjusted cost model. Not attached: OpenRouter's qwen/qwen3.5-35b-a3b-20260224 can reason and does not publish whether this run did, and a reasoning run never joins the non-reasoning configuration of qwen3.5-35b-a3b.; source row: {\"configuration\":\"\",\"permaslug\":\"qwen/qwen3.5-35b-a3b-20260224\",\"total_tasks\":3762,\"accuracy_stddev\":0.03759420939202785,\"primary_metric\":null,\"search_engine\":null,\"search_surface\":null,\"run_config\":null,\"last_run\":\"2026-08-29T19:18:38.408Z\",\"avg_cost_per_task_usd\":0.018308193779904305,\"avg_latency_per_task_ms\":null}"
+      "protocol": "Mean USD spent per task by OpenRouter's own run of this configuration, measured on 3762 tasks; last run 2026-08-29T19:18:38.408Z. Measured cost of that specific run, not Benchmark Heaven's adjusted cost model. OpenRouter publishes this run at model scope (permaslug qwen/qwen3.5-35b-a3b-20260224) without a reasoning effort. It is attached once to qwen3.5-35b-a3b::reasoning, the deterministic family representative used by collapsed comparisons; this does not assert that OpenRouter tested this exact effort setting.; source row: {\"configuration\":\"\",\"permaslug\":\"qwen/qwen3.5-35b-a3b-20260224\",\"total_tasks\":3762,\"accuracy_stddev\":0.03759420939202785,\"primary_metric\":null,\"search_engine\":null,\"search_surface\":null,\"run_config\":null,\"last_run\":\"2026-08-29T19:18:38.408Z\",\"avg_cost_per_task_usd\":0.018308193779904305,\"avg_latency_per_task_ms\":null}"
     },
     {
       "subject": {
         "source_id": "qwen/qwen3.5-35b-a3b-20260224|tau_bench_verified_airline",
         "name": "Qwen: Qwen3.5-35B-A3B",
-        "model_id": null,
-        "variant": null,
+        "model_id": "qwen3.5-35b-a3b::reasoning",
+        "variant": "reasoning",
         "harness": null
       },
       "basis": "measured",
@@ -160853,7 +160853,7 @@
       "value": 0.05528514190317194,
       "unit": "USD",
       "sample_size": 1198,
-      "protocol": "Mean USD spent per task by OpenRouter's own run of this configuration, measured on 1198 tasks; last run 2026-08-29T16:07:02.358Z. Measured cost of that specific run, not Benchmark Heaven's adjusted cost model. Not attached: OpenRouter's qwen/qwen3.5-35b-a3b-20260224 can reason and does not publish whether this run did, and a reasoning run never joins the non-reasoning configuration of qwen3.5-35b-a3b.; source row: {\"configuration\":\"\",\"permaslug\":\"qwen/qwen3.5-35b-a3b-20260224\",\"total_tasks\":1198,\"accuracy_stddev\":0.08235625560821445,\"primary_metric\":null,\"search_engine\":null,\"search_surface\":null,\"run_config\":null,\"last_run\":\"2026-08-29T16:07:02.358Z\",\"avg_cost_per_task_usd\":0.05528514190317194,\"avg_latency_per_task_ms\":null}"
+      "protocol": "Mean USD spent per task by OpenRouter's own run of this configuration, measured on 1198 tasks; last run 2026-08-29T16:07:02.358Z. Measured cost of that specific run, not Benchmark Heaven's adjusted cost model. OpenRouter publishes this run at model scope (permaslug qwen/qwen3.5-35b-a3b-20260224) without a reasoning effort. It is attached once to qwen3.5-35b-a3b::reasoning, the deterministic family representative used by collapsed comparisons; this does not assert that OpenRouter tested this exact effort setting.; source row: {\"configuration\":\"\",\"permaslug\":\"qwen/qwen3.5-35b-a3b-20260224\",\"total_tasks\":1198,\"accuracy_stddev\":0.08235625560821445,\"primary_metric\":null,\"search_engine\":null,\"search_surface\":null,\"run_config\":null,\"last_run\":\"2026-08-29T16:07:02.358Z\",\"avg_cost_per_task_usd\":0.05528514190317194,\"avg_latency_per_task_ms\":null}"
     },
     {
       "subject": {
@@ -161809,8 +161809,8 @@
       "subject": {
         "source_id": "z-ai/glm-5.2-20260616|gpqa_diamond",
         "name": "Z.ai: GLM 5.2",
-        "model_id": null,
-        "variant": null,
+        "model_id": "glm-5.2::max",
+        "variant": "max",
         "harness": null
       },
       "basis": "measured",
@@ -161828,14 +161828,14 @@
       "value": 0.07435770403397028,
       "unit": "USD",
       "sample_size": 2355,
-      "protocol": "Mean USD spent per task by OpenRouter's own run of this configuration, measured on 2355 tasks; last run 2026-09-12T08:51:40.647Z. Measured cost of that specific run, not Benchmark Heaven's adjusted cost model. Not attached: OpenRouter's z-ai/glm-5.2-20260616 runs at reasoning effort \"high\" by default, and a reasoning run never joins the non-reasoning configuration of glm-5.2.; source row: {\"configuration\":\"\",\"permaslug\":\"z-ai/glm-5.2-20260616\",\"total_tasks\":2355,\"accuracy_stddev\":0.02660930031062136,\"primary_metric\":null,\"search_engine\":null,\"search_surface\":null,\"run_config\":null,\"last_run\":\"2026-09-12T08:51:40.647Z\",\"avg_cost_per_task_usd\":0.07435770403397028,\"avg_latency_per_task_ms\":null}"
+      "protocol": "Mean USD spent per task by OpenRouter's own run of this configuration, measured on 2355 tasks; last run 2026-09-12T08:51:40.647Z. Measured cost of that specific run, not Benchmark Heaven's adjusted cost model. OpenRouter publishes this run at model scope (permaslug z-ai/glm-5.2-20260616) without a reasoning effort. It is attached once to glm-5.2::max, the deterministic family representative used by collapsed comparisons; this does not assert that OpenRouter tested this exact effort setting.; source row: {\"configuration\":\"\",\"permaslug\":\"z-ai/glm-5.2-20260616\",\"total_tasks\":2355,\"accuracy_stddev\":0.02660930031062136,\"primary_metric\":null,\"search_engine\":null,\"search_surface\":null,\"run_config\":null,\"last_run\":\"2026-09-12T08:51:40.647Z\",\"avg_cost_per_task_usd\":0.07435770403397028,\"avg_latency_per_task_ms\":null}"
     },
     {
       "subject": {
         "source_id": "z-ai/glm-5.2-20260616|tau_bench_verified_airline",
         "name": "Z.ai: GLM 5.2",
-        "model_id": null,
-        "variant": null,
+        "model_id": "glm-5.2::max",
+        "variant": "max",
         "harness": null
       },
       "basis": "measured",
@@ -161853,7 +161853,7 @@
       "value": 0.037571085766423366,
       "unit": "USD",
       "sample_size": 548,
-      "protocol": "Mean USD spent per task by OpenRouter's own run of this configuration, measured on 548 tasks; last run 2026-09-12T08:04:48.780Z. Measured cost of that specific run, not Benchmark Heaven's adjusted cost model. Not attached: OpenRouter's z-ai/glm-5.2-20260616 runs at reasoning effort \"high\" by default, and a reasoning run never joins the non-reasoning configuration of glm-5.2.; source row: {\"configuration\":\"\",\"permaslug\":\"z-ai/glm-5.2-20260616\",\"total_tasks\":548,\"accuracy_stddev\":0.02712862984784687,\"primary_metric\":null,\"search_engine\":null,\"search_surface\":null,\"run_config\":null,\"last_run\":\"2026-09-12T08:04:48.780Z\",\"avg_cost_per_task_usd\":0.037571085766423366,\"avg_latency_per_task_ms\":null}"
+      "protocol": "Mean USD spent per task by OpenRouter's own run of this configuration, measured on 548 tasks; last run 2026-09-12T08:04:48.780Z. Measured cost of that specific run, not Benchmark Heaven's adjusted cost model. OpenRouter publishes this run at model scope (permaslug z-ai/glm-5.2-20260616) without a reasoning effort. It is attached once to glm-5.2::max, the deterministic family representative used by collapsed comparisons; this does not assert that OpenRouter tested this exact effort setting.; source row: {\"configuration\":\"\",\"permaslug\":\"z-ai/glm-5.2-20260616\",\"total_tasks\":548,\"accuracy_stddev\":0.02712862984784687,\"primary_metric\":null,\"search_engine\":null,\"search_surface\":null,\"run_config\":null,\"last_run\":\"2026-09-12T08:04:48.780Z\",\"avg_cost_per_task_usd\":0.037571085766423366,\"avg_latency_per_task_ms\":null}"
     },
     {
       "subject": {
@@ -167428,8 +167428,8 @@
       "subject": {
         "source_id": "qwen/qwen3.5-35b-a3b-20260224|gpqa_diamond",
         "name": "Qwen: Qwen3.5-35B-A3B",
-        "model_id": null,
-        "variant": null,
+        "model_id": "qwen3.5-35b-a3b::reasoning",
+        "variant": "reasoning",
         "harness": null
       },
       "basis": "measured",
@@ -167446,7 +167446,7 @@
       "benchmark_id": "openrouter-gpqa-diamond::snapshot-2026-09-15",
       "value": 0.8172956315789474,
       "unit": "fraction",
-      "protocol": "OpenRouter's own reproducible run over 3762 tasks, published standard deviation 0.03759420939202785; last run 2026-08-29T19:18:38.408Z. Not attached: OpenRouter's qwen/qwen3.5-35b-a3b-20260224 can reason and does not publish whether this run did, and a reasoning run never joins the non-reasoning configuration of qwen3.5-35b-a3b.; source row: {\"configuration\":\"\",\"permaslug\":\"qwen/qwen3.5-35b-a3b-20260224\",\"total_tasks\":3762,\"accuracy_stddev\":0.03759420939202785,\"primary_metric\":null,\"search_engine\":null,\"search_surface\":null,\"run_config\":null,\"last_run\":\"2026-08-29T19:18:38.408Z\",\"avg_cost_per_task_usd\":0.018308193779904305,\"avg_latency_per_task_ms\":null}",
+      "protocol": "OpenRouter's own reproducible run over 3762 tasks, published standard deviation 0.03759420939202785; last run 2026-08-29T19:18:38.408Z. OpenRouter publishes this run at model scope (permaslug qwen/qwen3.5-35b-a3b-20260224) without a reasoning effort. It is attached once to qwen3.5-35b-a3b::reasoning, the deterministic family representative used by collapsed comparisons; this does not assert that OpenRouter tested this exact effort setting.; source row: {\"configuration\":\"\",\"permaslug\":\"qwen/qwen3.5-35b-a3b-20260224\",\"total_tasks\":3762,\"accuracy_stddev\":0.03759420939202785,\"primary_metric\":null,\"search_engine\":null,\"search_surface\":null,\"run_config\":null,\"last_run\":\"2026-08-29T19:18:38.408Z\",\"avg_cost_per_task_usd\":0.018308193779904305,\"avg_latency_per_task_ms\":null}",
       "published_stddev": 0.03759420939202785,
       "sample_size": 3762
     },
@@ -167454,8 +167454,8 @@
       "subject": {
         "source_id": "qwen/qwen3.5-35b-a3b-20260224|tau_bench_verified_airline",
         "name": "Qwen: Qwen3.5-35B-A3B",
-        "model_id": null,
-        "variant": null,
+        "model_id": "qwen3.5-35b-a3b::reasoning",
+        "variant": "reasoning",
         "harness": null
       },
       "basis": "measured",
@@ -167472,7 +167472,7 @@
       "benchmark_id": "openrouter-tau2-bench-airline::snapshot-2026-09-15",
       "value": 0.7320534407345576,
       "unit": "fraction",
-      "protocol": "OpenRouter's own reproducible run over 1198 tasks, published standard deviation 0.08235625560821445; last run 2026-08-29T16:07:02.358Z. Not attached: OpenRouter's qwen/qwen3.5-35b-a3b-20260224 can reason and does not publish whether this run did, and a reasoning run never joins the non-reasoning configuration of qwen3.5-35b-a3b.; source row: {\"configuration\":\"\",\"permaslug\":\"qwen/qwen3.5-35b-a3b-20260224\",\"total_tasks\":1198,\"accuracy_stddev\":0.08235625560821445,\"primary_metric\":null,\"search_engine\":null,\"search_surface\":null,\"run_config\":null,\"last_run\":\"2026-08-29T16:07:02.358Z\",\"avg_cost_per_task_usd\":0.05528514190317194,\"avg_latency_per_task_ms\":null}",
+      "protocol": "OpenRouter's own reproducible run over 1198 tasks, published standard deviation 0.08235625560821445; last run 2026-08-29T16:07:02.358Z. OpenRouter publishes this run at model scope (permaslug qwen/qwen3.5-35b-a3b-20260224) without a reasoning effort. It is attached once to qwen3.5-35b-a3b::reasoning, the deterministic family representative used by collapsed comparisons; this does not assert that OpenRouter tested this exact effort setting.; source row: {\"configuration\":\"\",\"permaslug\":\"qwen/qwen3.5-35b-a3b-20260224\",\"total_tasks\":1198,\"accuracy_stddev\":0.08235625560821445,\"primary_metric\":null,\"search_engine\":null,\"search_surface\":null,\"run_config\":null,\"last_run\":\"2026-08-29T16:07:02.358Z\",\"avg_cost_per_task_usd\":0.05528514190317194,\"avg_latency_per_task_ms\":null}",
       "published_stddev": 0.08235625560821445,
       "sample_size": 1198
     },
@@ -168463,8 +168463,8 @@
       "subject": {
         "source_id": "z-ai/glm-5.2-20260616|gpqa_diamond",
         "name": "Z.ai: GLM 5.2",
-        "model_id": null,
-        "variant": null,
+        "model_id": "glm-5.2::max",
+        "variant": "max",
         "harness": null
       },
       "basis": "measured",
@@ -168481,7 +168481,7 @@
       "benchmark_id": "openrouter-gpqa-diamond::snapshot-2026-09-15",
       "value": 0.8564754649681527,
       "unit": "fraction",
-      "protocol": "OpenRouter's own reproducible run over 2355 tasks, published standard deviation 0.02660930031062136; last run 2026-09-12T08:51:40.647Z. Not attached: OpenRouter's z-ai/glm-5.2-20260616 runs at reasoning effort \"high\" by default, and a reasoning run never joins the non-reasoning configuration of glm-5.2.; source row: {\"configuration\":\"\",\"permaslug\":\"z-ai/glm-5.2-20260616\",\"total_tasks\":2355,\"accuracy_stddev\":0.02660930031062136,\"primary_metric\":null,\"search_engine\":null,\"search_surface\":null,\"run_config\":null,\"last_run\":\"2026-09-12T08:51:40.647Z\",\"avg_cost_per_task_usd\":0.07435770403397028,\"avg_latency_per_task_ms\":null}",
+      "protocol": "OpenRouter's own reproducible run over 2355 tasks, published standard deviation 0.02660930031062136; last run 2026-09-12T08:51:40.647Z. OpenRouter publishes this run at model scope (permaslug z-ai/glm-5.2-20260616) without a reasoning effort. It is attached once to glm-5.2::max, the deterministic family representative used by collapsed comparisons; this does not assert that OpenRouter tested this exact effort setting.; source row: {\"configuration\":\"\",\"permaslug\":\"z-ai/glm-5.2-20260616\",\"total_tasks\":2355,\"accuracy_stddev\":0.02660930031062136,\"primary_metric\":null,\"search_engine\":null,\"search_surface\":null,\"run_config\":null,\"last_run\":\"2026-09-12T08:51:40.647Z\",\"avg_cost_per_task_usd\":0.07435770403397028,\"avg_latency_per_task_ms\":null}",
       "published_stddev": 0.02660930031062136,
       "sample_size": 2355
     },
@@ -168489,8 +168489,8 @@
       "subject": {
         "source_id": "z-ai/glm-5.2-20260616|tau_bench_verified_airline",
         "name": "Z.ai: GLM 5.2",
-        "model_id": null,
-        "variant": null,
+        "model_id": "glm-5.2::max",
+        "variant": "max",
         "harness": null
       },
       "basis": "measured",
@@ -168507,7 +168507,7 @@
       "benchmark_id": "openrouter-tau2-bench-airline::snapshot-2026-09-15",
       "value": 0.7487834854014599,
       "unit": "fraction",
-      "protocol": "OpenRouter's own reproducible run over 548 tasks, published standard deviation 0.02712862984784687; last run 2026-09-12T08:04:48.780Z. Not attached: OpenRouter's z-ai/glm-5.2-20260616 runs at reasoning effort \"high\" by default, and a reasoning run never joins the non-reasoning configuration of glm-5.2.; source row: {\"configuration\":\"\",\"permaslug\":\"z-ai/glm-5.2-20260616\",\"total_tasks\":548,\"accuracy_stddev\":0.02712862984784687,\"primary_metric\":null,\"search_engine\":null,\"search_surface\":null,\"run_config\":null,\"last_run\":\"2026-09-12T08:04:48.780Z\",\"avg_cost_per_task_usd\":0.037571085766423366,\"avg_latency_per_task_ms\":null}",
+      "protocol": "OpenRouter's own reproducible run over 548 tasks, published standard deviation 0.02712862984784687; last run 2026-09-12T08:04:48.780Z. OpenRouter publishes this run at model scope (permaslug z-ai/glm-5.2-20260616) without a reasoning effort. It is attached once to glm-5.2::max, the deterministic family representative used by collapsed comparisons; this does not assert that OpenRouter tested this exact effort setting.; source row: {\"configuration\":\"\",\"permaslug\":\"z-ai/glm-5.2-20260616\",\"total_tasks\":548,\"accuracy_stddev\":0.02712862984784687,\"primary_metric\":null,\"search_engine\":null,\"search_surface\":null,\"run_config\":null,\"last_run\":\"2026-09-12T08:04:48.780Z\",\"avg_cost_per_task_usd\":0.037571085766423366,\"avg_latency_per_task_ms\":null}",
       "published_stddev": 0.02712862984784687,
       "sample_size": 548
     },
@@ -412373,6 +412373,84 @@
       },
       "protocol": "% Resolved: percentage of task instances solved; self-reported by Xiaomi MiMo for its own model, printed as \"SWE-Bench Verified\" Verified; configuration: other post-trained model; re-verified against our own capture: the published row with this value and all 5 comparison values the extraction read from it, and column \"MiMo-V2 Flash\" of the header 16 line(s) above, matched by cell position, page 1 (the extraction cited ### Post-training Model Evaluation table)",
       "comparison_key": null
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Union Alpha",
+        "name": "Union Alpha",
+        "model_id": "union-alpha::default",
+        "variant": null,
+        "harness": "OpenRouter run, harness not stated"
+      },
+      "value": 0.73,
+      "unit": "fraction",
+      "basis": "preliminary",
+      "source": {
+        "url": "https://x.com/cline/status/2100265266026590322",
+        "retrieved_at": "2026-09-18T04:39:00Z",
+        "published_at": "2026-09-16",
+        "sha256": "7a75dfedcf6e3f91e4c3dcedc8e26668f121816a403c0d0f888bce7ea40a6e28",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-union-alpha/cline-deepswe-chart.jpg",
+        "locator": "Post image: bar chart 'DeepSWE score and cost', subtitle 'Source: OpenRouter'; the Union Alpha bar carries the printed data label 73%."
+      },
+      "supporting_sources": [
+        {
+          "url": "https://x.com/alexatallah/status/2100243109401469062",
+          "retrieved_at": "2026-09-18T04:39:00Z",
+          "published_at": "2026-09-16",
+          "sha256": "7726c385449cfdb0c5d17b8e6cf2f74ff8d05080b370d59443fdf569f95b36d8",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-union-alpha/atallah-deepswe.jpg",
+          "locator": "Post by OpenRouter co-founder Alex Atallah announcing the DeepSWE result for Union Alpha with a score/cost chart."
+        },
+        {
+          "url": "https://x.com/cline/status/2100265266026590322",
+          "retrieved_at": "2026-09-18T04:39:00Z",
+          "published_at": "2026-09-16",
+          "sha256": "775ed7ae1a666439126adeabc8c622ba364688ef5bdcb61a79f33f8c098f389d",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-union-alpha/cline-post-syndication.json",
+          "locator": "Public tweet-result payload: post text and capture metadata."
+        }
+      ],
+      "protocol": "Chart-read, announced. The value is printed on the bar as a data label, so it is read, not interpolated: the Union Alpha bar in Cline's chart 'DeepSWE score and cost' is labelled 73%, and the chart's own subtitle credits OpenRouter as the source; OpenRouter co-founder Alex Atallah announced the same result the same day. Harness deliberately not claimed: this board's 69 measured rows are Epoch AI's DeepSWE runs under mini-swe-agent, but the chart credits an OpenRouter run and names no harness, so the two must not be assumed to be the same setup. The row therefore carries the cohort 'OpenRouter run, harness not stated' and lands in its own display row instead of merging into the mini-SWE-agent cohort — a value that is not like-for-like must not sit in the same line as one that is. Not reproducible from the OpenRouter Benchmarks API, which as of 2026-09-18 lists Union Alpha only for OpenRouter's own GPQA Diamond run. The same chart's ~$0.65 per task is the post's own anticipated pricing, not a measured cost, and is never ingested or shown as an adjusted cost. Preliminary: shown in tables only, never part of a score, a ranking or an aggregate.",
+      "comparison_key": null,
+      "join_note": "Hand-curated identity: the chart plots the stealth model announced by OpenRouter on 2026-09-16, which is the single OpenRouter route stealth/union-alpha behind the catalog family union-alpha::default (its only configuration). No effort variant is inferred.",
+      "id": "public:8a97201d12e564f32e51aef1"
+    },
+    {
+      "benchmark_id": "aa-terminal-bench::4.0",
+      "subject": {
+        "source_id": "Union-Alpha",
+        "name": "Union Alpha",
+        "model_id": "union-alpha::default",
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.52,
+      "unit": "fraction",
+      "basis": "preliminary",
+      "source": {
+        "url": "https://x.com/opencode/status/2100237891263668418",
+        "retrieved_at": "2026-09-18T04:41:00Z",
+        "published_at": "2026-09-16",
+        "sha256": "5af4dd19461b1889839ff5a21b9307157b1ca1fccced3096a91090de8ac6b586",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-union-alpha/opencode-tbench-chart.jpg",
+        "locator": "Post image: scatter chart 'Internal-Terminal-Benchmark', subtitle 'Terminal-Bench v4.0 score vs. average cost per task (USD)', Artificial Analysis credited in the plot area; the point labelled 'Union-Alpha (anticipated pricing)' is the yellow star."
+      },
+      "supporting_sources": [
+        {
+          "url": "https://x.com/opencode/status/2100237891263668418",
+          "retrieved_at": "2026-09-18T04:41:00Z",
+          "published_at": "2026-09-16",
+          "sha256": "a431feb69e35eeb45e213fef2693d51f6dc22cf3329590b7b9fc8582fd706bba",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-union-alpha/opencode-post-syndication.json",
+          "locator": "Public tweet-result payload: post text and capture metadata."
+        }
+      ],
+      "protocol": "Chart-read, announced, and interpolated rather than labelled: the chart prints no number for this point, so the value comes from the star marker's position on the y-axis, read linearly between the 0% and 100% gridlines, which places it at about 52% (verification iteration 106, claude-opus, reading the committed image directly; an earlier OCR pass over the same image reported about 50%). Chart-read uncertainty is therefore roughly plus or minus 3 percentage points and the value must never be treated as an exact figure. Harness and reasoning setting are undisclosed: every other plotted point names its effort in brackets and this one does not. Not reproducible from the Artificial Analysis API, which as of 2026-09-18 publishes no Union Alpha row. The point's x position is the post's own anticipated pricing, labelled as such in the chart, and is never ingested or shown as a cost. Preliminary: shown in tables only, never part of a score, a ranking or an aggregate.",
+      "comparison_key": null,
+      "join_note": "Hand-curated identity: the plotted label 'Union-Alpha' is the stealth model announced on 2026-09-16, which is the single OpenRouter route stealth/union-alpha behind the catalog family union-alpha::default (its only configuration). No effort variant is inferred.",
+      "id": "public:5559812676c45459e0b73666"
     }
   ],
   "missing": [

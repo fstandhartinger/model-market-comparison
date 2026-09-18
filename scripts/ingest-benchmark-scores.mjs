@@ -153,7 +153,11 @@ for (const version of ['1.4', '1.5']) {
 for (const path of ['data/raw/benchmarks/public-observations.json', 'data/raw/benchmarks/vendor-candidates.json',
   // Self-reported release-document claims, rebuilt by scripts/collect-self-reported-scores.mjs from
   // our own captures; each row still needs its own critic approval in score-approvals.json.
-  'data/raw/benchmarks/self-reported-candidates.json']) {
+  'data/raw/benchmarks/self-reported-candidates.json',
+  // CR-60.2: hand-curated preliminary rows — values a source publishes only inside a picture. They
+  // are kept out of public-observations.json because the daily refresh rebuilds that file per
+  // benchmark_id from the collector and would delete them; each row names its own model_id.
+  'data/raw/benchmarks/manual-observations.json']) {
   let raw;
   try { raw = await read(path); } catch (e) { if (e.code === 'ENOENT' && process.argv.includes('--draft')) continue; throw e; }
   for (const observation of raw.observations) {

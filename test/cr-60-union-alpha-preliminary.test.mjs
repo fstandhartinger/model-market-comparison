@@ -1,0 +1,197 @@
+// CR-60.2 (Florian 2026-09-16): Union Alpha's announced scores enter as preliminary, chart-read,
+// display-only rows with hashed evidence. A preliminary value is shown with ‡ and never enters a
+// score, a ranking, a winner/outlier computation or any aggregate (CR-65.10).
+//
+// Iteration 106 moved these rows out of public-observations.json into their own curated file. That
+// is the point of most of this suite: the daily refresh rebuilds public-observations.json per
+// benchmark_id from the collector's output, so a hand-curated row parked there is deleted by the
+// next scheduled run — silently, because nothing re-reads a number that has vanished.
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { gunzipSync } from 'node:zlib';
+import { buildBenchmarkMatrix, rowWinners, rowOutliers } from '../lib/benchmark-matrix.mjs';
+import { buildBenchmarkView } from '../lib/benchmark-view.mjs';
+
+const MODEL = 'union-alpha::default';
+const MANUAL_FILE = 'data/raw/benchmarks/manual-observations.json';
+const ROWS = [
+  // DeepSWE: the number is printed on the bar. The chart credits an OpenRouter run and names no
+  // harness, so the row keeps its own cohort and must not join Epoch's mini-SWE-agent cohort.
+  { id: 'public:8a97201d12e564f32e51aef1', benchmark_id: 'deepswe::snapshot-2026-09-15', value: 0.73,
+    harness: 'OpenRouter run, harness not stated', ownRow: true },
+  // Terminal-Bench v4.0: no printed number; read off the star's y position. The chart credits
+  // Artificial Analysis, i.e. the same board our measured rows come from, so it merges into it.
+  { id: 'public:5559812676c45459e0b73666', benchmark_id: 'aa-terminal-bench::4.0', value: 0.52,
+    harness: null, ownRow: false },
+];
+const json = (p) => JSON.parse(readFileSync(new URL(p, import.meta.url), 'utf8'));
+const sha256File = (rel) => {
+  const bytes = readFileSync(new URL(`../${rel}`, import.meta.url));
+  return createHash('sha256').update(rel.endsWith('.gz') ? gunzipSync(bytes) : bytes).digest('hex');
+};
+
+const ds = json('../data/dataset.json');
+const scores = json('../data/raw/benchmarks/scores.json');
+const manual = json(`../${MANUAL_FILE}`);
+const matrix = buildBenchmarkMatrix(buildBenchmarkView(ds), ds, json('../data/benchmark-taxonomy.json'), json('../data/benchmark-caveats.json'));
+const cells = matrix.values[MODEL] || [];
+/** The transform both table components apply before ranking a row (BenchmarkMatrix/SimpleBenchmarks). */
+const ranked = (values, basis) => values.map((v, j) => (basis[j] === 3 ? null : v));
+
+test('both announced Union Alpha rows are committed as preliminary observations', () => {
+  for (const spec of ROWS) {
+    const o = scores.observations.find((x) => x.id === spec.id);
+    assert.ok(o, `${spec.id} is present in the merged snapshot`);
+    assert.equal(o.benchmark_id, spec.benchmark_id);
+    assert.equal(o.basis, 'preliminary');
+    assert.equal(o.value, spec.value);
+    assert.equal(o.unit, 'fraction');
+    assert.equal(o.subject.model_id, MODEL);
+    assert.equal(o.subject.harness ?? null, spec.harness);
+    assert.match(o.protocol, /[Cc]hart-read/);
+    assert.match(o.join_note, /Hand-curated identity/);
+  }
+});
+
+test('the rows live in the curated file and never in the collector\'s output', () => {
+  // public-observations.json is written by scripts/collect-public-benchmarks.py and asserted
+  // byte-for-byte by test/coding-sources.test.mjs — a hand-read chart value has no business there.
+  const collected = json('../data/raw/benchmarks/public-observations.json').observations;
+  assert.equal(collected.filter((o) => o.basis === 'preliminary').length, 0, 'no preliminary row in the collector output');
+  for (const spec of ROWS) {
+    assert.ok(!collected.some((o) => o.id === spec.id), `${spec.id} is not a collector row`);
+    assert.ok(manual.observations.some((o) => o.id === spec.id), `${spec.id} is curated in ${MANUAL_FILE}`);
+  }
+  assert.ok(manual.observations.every((o) => o.basis === 'preliminary'), 'the curated file carries preliminary rows only');
+  assert.ok(manual.observations.every((o) => o.subject.model_id), 'a hand-curated row names its own subject');
+});
+
+test('the daily refresh cannot delete the curated rows', () => {
+  // ops/daily/refresh-benchmarks.mjs line ~261, verbatim in shape: for every collected benchmark it
+  // drops the existing rows of that benchmark_id and concatenates the collector's fresh ones. Had
+  // these rows stayed in public-observations.json, this step would have removed them on 19 Sep.
+  const plan = json('../data/raw/benchmarks/collection-plan.json');
+  const collected = json('../data/raw/benchmarks/public-observations.json').observations;
+  const planned = new Set(plan.entries.map((e) => e.benchmark_id));
+  assert.ok(planned.has('deepswe::snapshot-2026-09-15'), 'DeepSWE really is rebuilt by the daily collector');
+  let publicRows = [...collected];
+  for (const spec of plan.entries) publicRows = publicRows.filter((r) => r.benchmark_id !== spec.benchmark_id);
+  for (const spec of ROWS) {
+    assert.ok(!publicRows.some((r) => r.id === spec.id), 'sanity: the simulation drops rows of a collected benchmark');
+    assert.ok(manual.observations.some((o) => o.id === spec.id), `${spec.id} survives the refresh because it is not in that file`);
+  }
+});
+
+test('the ingestion reads the curated file', () => {
+  const src = readFileSync(new URL('../scripts/ingest-benchmark-scores.mjs', import.meta.url), 'utf8');
+  assert.match(src, new RegExp(MANUAL_FILE.replace(/[/.]/g, '\\$&')), 'ingest still merges the curated observations');
+});
+
+test('every source a preliminary row cites hash-binds to committed evidence', () => {
+  for (const spec of ROWS) {
+    const o = scores.observations.find((x) => x.id === spec.id);
+    const sources = [o.source, ...(o.supporting_sources || [])];
+    assert.ok(sources.length >= 2, 'an announced value carries more than one capture');
+    for (const source of sources) {
+      assert.match(source.url, /^https:\/\/x\.com\//, 'the announcement is the primary public source');
+      assert.equal(sha256File(source.file), source.sha256, `${source.file} content changed`);
+      assert.match(source.published_at, /^2026-09-16/);
+      assert.match(source.locator, /\S/);
+    }
+  }
+});
+
+test('the announcement posts carry the announced dates and claims (syndication payload evidence)', () => {
+  const cline = json('../data/raw/benchmarks/daily-evidence/2026-09-18-union-alpha/cline-post-syndication.json');
+  assert.match(cline.created_at, /^2026-09-16/);
+  assert.match(cline.text, /Union Alpha/);
+  assert.match(cline.text, /~18x lower expected cost/);
+  const oc = json('../data/raw/benchmarks/daily-evidence/2026-09-18-union-alpha/opencode-post-syndication.json');
+  assert.match(oc.created_at, /^2026-09-16/);
+});
+
+test('no measured or self-reported observation exists for Union Alpha — aggregates have only honest inputs', () => {
+  const mine = ds.benchmark_results.observations.filter((o) => o.subject.model_id === MODEL);
+  assert.deepEqual(mine.map((o) => o.basis).sort(), ['preliminary', 'preliminary']);
+  const ua = ds.models.find((m) => m.id === MODEL);
+  assert.ok(ua, 'the catalog family exists');
+  assert.ok(!ua.scores || ua.scores.composite == null, 'no composite is built from preliminary figures');
+  assert.ok(!(ds.category_scores?.[MODEL] && Object.values(ds.category_scores[MODEL]).some((v) => v != null)),
+    'no category score is built from preliminary figures');
+});
+
+test('the comparison matrix shows both values as preliminary cells, in the right row', () => {
+  assert.equal(cells.length, 2, 'Union Alpha has exactly the two announced cells');
+  for (const spec of ROWS) {
+    const rowsOfBenchmark = matrix.rows.map((r, i) => [r, i]).filter(([r]) => r.benchmarkId === spec.benchmark_id);
+    const withCell = rowsOfBenchmark.filter(([, i]) => cells.some(([rowIndex]) => rowIndex === i));
+    assert.equal(withCell.length, 1, `exactly one ${spec.benchmark_id} row holds the Union Alpha value`);
+    const [row, i] = withCell[0];
+    const cell = cells.find(([rowIndex]) => rowIndex === i);
+    assert.deepEqual([cell[1], cell[2]], [spec.value, 3], 'displayed value with the preliminary basis code');
+    assert.equal(row.cohort, spec.harness, 'the cohort is exactly what the source lets us claim');
+    const population = Object.values(matrix.values).filter((cs) => cs.some(([r]) => r === i)).length;
+    if (spec.ownRow) {
+      // A value whose harness the source never stated must not share a line with measured runs of a
+      // known harness: it sits alone, and the mini-SWE-agent cohort keeps its measured population.
+      assert.equal(population, 1, 'the not-like-for-like value stands in its own row');
+      const measured = rowsOfBenchmark.find(([r]) => r.cohort === 'mini-SWE-agent');
+      assert.ok(measured, 'the measured DeepSWE cohort still exists');
+      const measuredPopulation = Object.values(matrix.values).filter((cs) => cs.some(([r]) => r === measured[1])).length;
+      assert.ok(measuredPopulation >= 60, `the measured cohort is untouched (${measuredPopulation} models)`);
+      assert.ok(!Object.entries(matrix.values).some(([id, cs]) => id === MODEL && cs.some(([r]) => r === measured[1])),
+        'Union Alpha never appears in the measured cohort');
+    } else {
+      assert.ok(population > 100, `the AA board row keeps its population (${population})`);
+    }
+  }
+});
+
+test('a preliminary value never wins its row or takes an outlier tag', () => {
+  for (const spec of ROWS) {
+    const i = cells.find(([rowIndex]) => matrix.rows[rowIndex].benchmarkId === spec.benchmark_id)[0];
+    const row = matrix.rows[i];
+    const ids = Object.keys(matrix.values).filter((id) => matrix.values[id].some(([r]) => r === i));
+    const at = (id) => matrix.values[id].find(([r]) => r === i);
+    const values = ids.map((id) => at(id)[1]);
+    const basis = ids.map((id) => at(id)[2]);
+    const mine = ids.indexOf(MODEL);
+    assert.ok(mine >= 0 && basis[mine] === 3);
+
+    // As published: no bold, no tag on our cell.
+    assert.equal(rowWinners(ranked(values, basis), row.higherBetter)[mine], false, 'not bold in the real row');
+    assert.ok(!rowOutliers(ranked(values, basis), row.higherBetter)[mine], 'no outlier tag in the real row');
+
+    // And if the announcement had claimed the best number in the row, it still would not win: the
+    // guard is the basis, not the size of the value.
+    const best = Math.max(...values.filter((v, j) => basis[j] !== 3));
+    const boosted = values.map((v, j) => (j === mine ? best + 0.1 : v));
+    const winners = rowWinners(ranked(boosted, basis), row.higherBetter);
+    assert.equal(winners[mine], false, 'a chart-read claim never becomes best in row');
+    if (ids.length > 1) assert.ok(winners.some(Boolean), 'the best measured value still wins the row');
+  }
+});
+
+test('both benchmark tables explain the ‡ mark in their legend', () => {
+  for (const file of ['components/BenchmarkMatrix.tsx', 'components/SimpleBenchmarks.tsx']) {
+    const src = readFileSync(new URL(`../${file}`, import.meta.url), 'utf8');
+    assert.match(src, /‡ marks a preliminary, announced value/, file);
+    assert.match(src, /never enters a score or a ranking/, file);
+    // The cell itself must carry the mark and its explanation, not just the legend.
+    assert.match(src, /basis\[j\] === 3 && <sup/, `${file}: the ‡ is rendered on the cell`);
+  }
+});
+
+test('the anticipated prices on both charts are never ingested as costs', () => {
+  // Both posts show a price next to the score; both are the poster's expectation for a stealth
+  // model that is free on OpenRouter today. CR-60.2: never shown as a measured adjusted cost.
+  const costRows = scores.observations.filter((o) => o.subject.model_id === MODEL && /cost|price/i.test(o.benchmark_id));
+  assert.equal(costRows.length, 0, 'no cost observation entered from a chart');
+  for (const spec of ROWS) {
+    const o = scores.observations.find((x) => x.id === spec.id);
+    assert.match(o.protocol, /anticipated pricing|never ingested or shown as (?:a )?(?:an )?(?:adjusted )?cost/,
+      'the protocol says the plotted price is not a measured cost');
+  }
+});
