@@ -918,3 +918,73 @@ Florian, Claude Code chat, 18 Sep 2026 ~14:50 UTC, verbatim:
 The post (Håvard Ihle @htihle, 18 Sep 10:20 UTC, thread 1/8): "Introducing WeirdML v3, a fully agentic benchmark featuring 11 complex hand-made
 tasks. Models must explore and understand unfamiliar data, develop ML and data analysis pipelines and produce results despite limited data,
 unspecified goals and/or very limited feedback." Results image in the post; the thread continues 2/8–8/8 (quotes WeirdML v2: 19 tasks, API costs tracked).
+
+
+## CR-20260918c — New benchmarks from Florian's X bookmark folder "evals" (BrokenArXiv, ArXivMath and 2 more) → CR-82
+Filed automatically by the bookmark intake (`/opt/benchmarkheaven/bin/bookmarks_intake.py`), 18 Sep 2026 15:24 UTC. Standing rule, Florian 18 Sep 2026, verbatim:
+
+> new rule for benchmark heaven: it should look into https://x.com/i/history/bookmarks/2098158441952907558 once a day and check if there are new evals/benchmarks it doesn't have in its list yet, and then add them
+
+Source folder: (from seen.jsonl)
+
+### BrokenArXiv — https://x.com/j_dekoninck/status/2100180792601420138
+Bookmarked post by Jasper Dekoninck (@j_dekoninck), posted Wed Sep 16 11:11:35 +0000 2026. Post text, verbatim:
+
+> We are releasing the latest version of BrokenArXiv and ArXivMath! These benchmarks now focus on conjectures that were refuted in the last month on ArXiv, and models are executed within a harness instead of directly via API.
+>
+> Performance remains impressive, with GPT-6 Astra on top https://t.co/UCJHeE1Szl
+
+Media in the post: `https://pbs.twimg.com/media/HSVXTRJbIAAmU_j.jpg` (results are often only in the image — read it).
+Registry check: family registered (matharena-brokenarxiv::2026-06); the post states no version; the post (2026-09-16) announces a release newer than the pinned version (2026-06-01), so the version has to be read off the primary source.
+
+### ArXivMath — https://x.com/j_dekoninck/status/2100180792601420138
+Bookmarked post by Jasper Dekoninck (@j_dekoninck), posted Wed Sep 16 11:11:35 +0000 2026. Post text, verbatim:
+
+> We are releasing the latest version of BrokenArXiv and ArXivMath! These benchmarks now focus on conjectures that were refuted in the last month on ArXiv, and models are executed within a harness instead of directly via API.
+>
+> Performance remains impressive, with GPT-6 Astra on top https://t.co/UCJHeE1Szl
+
+Media in the post: `https://pbs.twimg.com/media/HSVXTRJbIAAmU_j.jpg` (results are often only in the image — read it).
+Registry check: family registered (matharena-arxivmath::2026-06); the post states no version; the post (2026-09-16) announces a release newer than the pinned version (2026-06-01), so the version has to be read off the primary source.
+
+### VulcanBench-SWE v4 — https://x.com/morganlinton/status/2098909653149401222
+Bookmarked post by Morgan (@morganlinton), posted Sat Sep 12 23:00:31 +0000 2026. Post text, verbatim:
+
+> Muse Spark 1.3 is the slowest model I've benchmarked on VulcanBench so far. I don't quite know what is going on, but it took 51.3 hours, on it's lowest effort level, to complete the 23 tasks in VulcanBench-SWE v4.
+>
+> For comparison, it took Astra 1.6 hours on Low Effort to complete the same 23 tasks.
+>
+> Also only 10/23 full passes so pretty disappointing on the accuracy side. Not sure what's going on with Muse, going through the traces to try to understand this better.
+>
+> I can't continue running the benchmark until the Sept 14th as I hit a usage limit on my $50 Muse Code plan.
+>
+> For comparison, I was able to run every effort level, with Astra, on my $100 plan and still have room to spare.
+>
+> If anyone from Meta wants to look at the traces with me you're welcome to, this is a weird one.
+>
+> At this rate, it might take me a month or longer to benchmark this model. For comparison, exact same full effort sweep took ~12 hours with Astra.
+>
+> For some reason I thought Muse Spark would be faster/more token efficient than Astra...but it's not remotely close.
+
+Media in the post: `https://pbs.twimg.com/media/HSDSIVobYAAq99G.jpg` (results are often only in the image — read it).
+Registry check: not in the registry and not in any change request.
+
+### KernelBench-CUDA — https://x.com/elliotarledge/status/2098577337407484408
+Bookmarked post by Elliot Arledge (@elliotarledge), posted Sat Sep 12 01:00:01 +0000 2026. Post text, verbatim:
+
+> DeepSeek V4.1 Flash on KernelBench-CUDA. DeepSeek Native Sparse Attention for RTX PRO 6000 at 0.50 of the dense-equivalent roofline, fourth on the board. Fable 5.1 is 1.06, Opus 5 is 1.04, Fable 5 is 0.73. The ceiling bills dense attention, so the honest unit is time: 0.059 to 0.736 ms across the six shapes.
+>
+> Inline PTX on SM120: `mma.sync` bf16, `ldmatrix`, xor-swizzled `cp.async`, and an fp32 block-scoring top-8 prologue fused into the attention kernel with the reference's exact tie-break. Then it leaves the sparsity on the table: at 8K context the semantics need about 14% of the causal block triangle and this kernel executes 78% of it. That over-compute is the whole gap to the top three.
+>
+> Rest of this deck:
+> GLM-5.2 Fused MoE: 9.5% of roofline, Opus 5 is 10.7%
+> MegaQwen Decode: 5.4% of roofline, Opus 5 is 6.6%
+> Grid + MinGRU: 29% of roofline, Opus 5 is 196%
+>
+> For this model for DeepSeek, I have not used it much, so I figure I'll at least test it before using it, but it's been a decent general task delegator for now. I haven't really pushed the limits of the model except for this benchmark.
+>
+> https://t.co/BiHtR9p04C
+
+Links in the post: `https://kernelbench.com/cuda`
+Media in the post: `https://pbs.twimg.com/media/HR-NoEobsAAm-Fl.png` (results are often only in the image — read it).
+Registry check: not in the registry and not in any change request.
