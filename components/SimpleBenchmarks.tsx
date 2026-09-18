@@ -152,7 +152,9 @@ export function SimpleBenchmarks({ matrix: headline, data, ids: listIds }: { mat
         {groups.map((g) => <tbody key={g.id}>
           <CategoryHeader label={<span className="inline-flex min-h-8 items-center">{g.label}</span>} composite={categoryComposite(g.rows, ids.length)} columns={ids.length} />
           {g.rows.map(({ row, vals, basis }) => {
-            const bars = rowBars(vals, row.higherBetter, row.unit), win = rowWinners(vals.map((v, j) => (basis[j] === 3 ? null : v)), row.higherBetter), odd = rowOutliers(vals.map((v, j) => (basis[j] === 3 ? null : v)), row.higherBetter);
+            // F-123 (pass 23): a preliminary (‡, chart-read) value is display-only — no bar, no bold, no tag, exactly as Compare (F-121).
+            const ranked = vals.map((v, j) => (basis[j] === 3 ? null : v));
+            const bars = rowBars(ranked, row.higherBetter, row.unit), win = rowWinners(ranked, row.higherBetter), odd = rowOutliers(ranked, row.higherBetter);
             // F-102: the board a row belongs to, so the published count can be checked against the table itself.
             return <tr key={row.id} data-board={boardId(row)} data-boards={row.boards ? JSON.stringify(row.boards) : undefined} data-best-of={row.bestOf ? "1" : undefined}>
               <th scope="row" className="bh-matrix-stub"><span className="bh-matrix-bench bh-matrix-bench-inline">{row.name}{row.cohort && <span className="bh-matrix-cohort">{row.cohort}</span>}

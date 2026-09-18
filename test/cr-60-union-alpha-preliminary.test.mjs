@@ -11,7 +11,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { gunzipSync } from 'node:zlib';
-import { buildBenchmarkMatrix, rowWinners, rowOutliers } from '../lib/benchmark-matrix.mjs';
+import { buildBenchmarkMatrix, rowWinners, rowOutliers, rowBars } from '../lib/benchmark-matrix.mjs';
 import { buildBenchmarkView } from '../lib/benchmark-view.mjs';
 
 const MODEL = 'union-alpha::default';
@@ -223,4 +223,31 @@ test('every surface that shows a preliminary value also marks it', () => {
   const evidence = readFileSync(new URL('../components/BenchmarkEvidence.tsx', import.meta.url), 'utf8');
   assert.match(evidence, /row\.basis === 'preliminary'/, 'the evidence panel special-cases preliminary');
   assert.match(evidence, /Chart-read: announced in a launch post/, 'the evidence panel spells out chart-read');
+});
+
+// F-123 (Fable pass 23, found live): /benchmarks and the Simple Benchmarks section drew a data bar behind
+// Union Alpha's 52.0%‡ (bars ["100%", "99.96%"] on the Terminal-Bench v4.0 row) while /compare drew none.
+// A bar is a ranking cue; a chart-read value gets none — the same masked array feeds bars, bold and tags.
+test('a preliminary value never gets a data bar, and both tables pass the masked row to rowBars', () => {
+  for (const spec of ROWS) {
+    const i = cells.find(([rowIndex]) => matrix.rows[rowIndex].benchmarkId === spec.benchmark_id)[0];
+    const row = matrix.rows[i];
+    const ids = Object.keys(matrix.values).filter((id) => matrix.values[id].some(([r]) => r === i));
+    const at = (id) => matrix.values[id].find(([r]) => r === i);
+    const values = ids.map((id) => at(id)[1]);
+    const basis = ids.map((id) => at(id)[2]);
+    const mine = ids.indexOf(MODEL);
+    const bars = rowBars(ranked(values, basis), row.higherBetter, row.unit);
+    assert.equal(bars[mine], null, `${spec.benchmark_id}: no bar behind a chart-read value`);
+    // With one measured value left, F-84 gives the row no bar at all; with two or more the measured ones keep theirs.
+    const measured = values.filter((v, j) => basis[j] !== 3 && v != null).length;
+    assert.equal(bars.some((b) => b != null), measured >= 2, `${spec.benchmark_id}: measured bars follow F-84`);
+  }
+  for (const file of ['components/BenchmarkMatrix.tsx', 'components/SimpleBenchmarks.tsx']) {
+    const src = readFileSync(new URL(`../${file}`, import.meta.url), 'utf8');
+    assert.match(src, /const ranked = vals\.map\(\(v, j\) => \(basis\[j\] === 3 \? null : v\)\);/, `${file}: the masked row exists`);
+    assert.match(src, /rowBars\(ranked, /, `${file}: bars come from the masked row`);
+    assert.match(src, /rowWinners\(ranked, /, `${file}: bold comes from the masked row`);
+    assert.doesNotMatch(src, /rowBars\(vals, /, `${file}: no bar is computed from the unmasked row`);
+  }
 });

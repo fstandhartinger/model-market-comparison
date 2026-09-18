@@ -235,7 +235,9 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
                 <span>{g.label}</span><span className="bh-cat-count bh-muted tabular text-xs font-normal">{g.rows.length} benchmarks</span>
               </button>} />
             {open && g.rows.map(({ row, vals, basis }) => {
-              const bars = rowBars(vals, row.higherBetter, row.unit), win = rowWinners(vals.map((v, j) => (basis[j] === 3 ? null : v)), row.higherBetter);
+              // F-123 (pass 23): a preliminary (‡, chart-read) value is display-only — no bar, no bold, exactly as Compare (F-121).
+              const ranked = vals.map((v, j) => (basis[j] === 3 ? null : v));
+              const bars = rowBars(ranked, row.higherBetter, row.unit), win = rowWinners(ranked, row.higherBetter);
               return <tr key={row.id}>
                 <th scope="row" className="bh-matrix-stub">
                   {/* F-100 (pass 18): the harness sits on the name line, so two rows of one benchmark read apart at a glance. */}

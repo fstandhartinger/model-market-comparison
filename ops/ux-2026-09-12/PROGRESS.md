@@ -4775,3 +4775,37 @@ Re-run the verifier with HEAD's sha to confirm rather than taking that on trust.
    number depends on the answer; the identity string does. **Nothing was changed for it here.**
 5. **F-120 is untouched** and still open by design.
 6. Anything hand-curated still belongs in `data/raw/benchmarks/manual-observations.json`.
+
+## Iteration 108 — 2026-09-18 09:40 → ~10:30 UTC (claude-fable, design pass 23): what changed since pass 22
+
+One-writer check: only this iteration (`iterate.sh claude-fable design`); tree clean at start, no upstream commits, `run.lock` free; the
+05:17 daily had finished. Live `c885fbe` on both hosts. Server calm (`sandy-watchdog --status`: nothing critical, load 0.34/CPU).
+
+**Pass 23 (design authority), kept to what iterations 102–107 changed on the Benchmarks page (Florian: Fable sparingly):** 83 shots on the
+canonical host and 59 on the legacy host (changed pages only), 1440/390 × light/dark, `ux-evidence/fable-20260918-pass23/{canonical,legacy}/`,
+`bin/shoot-fable-pass23.mjs`; 0 page errors in all eight contexts. Judged: CR-65.14's **Retired** tag (muted pill, last in the row, on exactly the
+registry's rows, best-of Coding Agent Index untagged), CR-60.2/F-121's **‡** mark (10.5 px superscript on all three tables; Compare gives it no
+bar/tint/percentile; the detail page states "Chart-read: …" in a sentence), and the quick views (Simple, Advanced, Guided, Benchmaxxing, model
+page — unchanged since pass 22). Verdict in `DESIGN-DIRECTIVES.md`: **the cells are at the bar, the footnotes under them are not.**
+
+**Four findings.** (1) **F-122** — the `/benchmarks` footnote is 196 words / 10 sentences / **18 lines on a phone**; the Simple Benchmarks
+footnote 218 words / 7 sentences / 20 lines; the Compare caption 66 words / 4 sentences / 200 px at 390 — every recent CR added a sentence to the
+same paragraph, and it explains Saturated and Judged but **not Retired or Changed at source**, while a tag's `title` is unreachable on a phone
+(a tap shows nothing). Spec: two visible sentences + a collapsed Legend generated from the tag set (one line per mark and per tag). For the work
+engine. (2) **F-123** — `/benchmarks` and the Simple section drew a **data bar behind Union Alpha's 52.0%‡** (`bars ["100%","99.96%"]`) while
+Compare drew none and the row's bold already excluded it. **Fixed by Fable in this pass**: the masked row that fed `rowWinners` now feeds `rowBars`
+and `rowOutliers` too (`components/BenchmarkMatrix.tsx`, `components/SimpleBenchmarks.tsx`); with one measured value left F-84 gives the row no bar.
+Regression test added to `test/cr-60-union-alpha-preliminary.test.mjs` (pins the masked call in both files and the absence of a bar on both Union
+Alpha rows). (3) **F-124** — "Version 74221fb" under Terminal-Bench Hard (AA): a registry pin printed as a version. (4) **F-125** — "Union Alpha ·
+Union Alpha" on the result detail card (org equals name). Three design-system rules added (legend from the tag set; a pin is not a version; a
+display-only value gets no ranking cue anywhere).
+
+**Gates at the final tree:** `node scripts/build-dataset.mjs` ✓ (841 models, 519 scored rows; only `generated_at` moved, reverted), `npm test`
+**840 (839 pass, 1 skipped, 0 fail)**, `npx tsc --noEmit -p .` clean. New verifier `bin/verify-fable-pass23.mjs` (8 checks: no bar and no bold on
+the chart-read row, 1440/390 × light/dark): **live before-state 4/8** on canonical at `c885fbe` — the four bar checks fail as expected, the four
+bold checks pass (`ux-evidence/fable-20260918-pass23/verify-before-canonical/verification.json`).
+
+**Handoff:** (1) F-123 needs a non-implementer live pass on both hosts: `node ops/ux-2026-09-12/bin/verify-fable-pass23.mjs <base> <out>` (expect
+8/8), then move its done-log row to verified. (2) F-122 → F-124 → F-125 wait for the work engine (specs in `DESIGN-DIRECTIVES.md`; F-122 first).
+(3) CR-65.14 stays `implemented` until a non-implementer runs `verify-cr-65-14.mjs`; this pass's screenshots are design evidence, not that run.
+(4) X4 still met at pass 23.

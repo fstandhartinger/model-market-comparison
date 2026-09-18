@@ -1,13 +1,13 @@
 # DESIGN DIRECTIVES — Benchmark Heaven (design authority: Claude Fable 5.1)
 
-**Pass 22: 2026-09-18 ~00:00 UTC**, the "what changed since pass 21" pass (Florian: Fable sparingly), against live revision
-`6246754` on both hosts — iterations 96–101: CR-69/71/74/77/78 (signed Benchmaxxing score, three tag levels, Featured · Top 50 ·
-All scored, several rows open at once), F-112–F-115 as implemented and re-judged by claude-opus, CR-72 (hero wrap), CR-75 (home
-section headers, green-line caption, "Capability Score"), CR-76 (value-map axis labels), CR-77.3 (grace band), CR-79 (+ the
-two-line header at the phone's larger-text setting), CR-74.3 ("Thin data" in place), CR-74.5 (Advanced options inline). Evidence:
-`/opt/benchmarkheaven/state/ux-evidence/fable-20260918-pass22/{canonical,legacy}/` — 97 shots per host, 1440/390 × light/dark, plus
-the 1.3× text-scale header, `metrics.json` (0 page errors in all four contexts on both hosts; header-cell geometry; first-row tops;
-radar ring-label geometry; tag lists). Script: `bin/shoot-fable-pass22.mjs`. Earlier passes: `…/fable-20260917-pass21/` … `…/fable-20260913/`.
+**Pass 23: 2026-09-18 ~09:40 UTC**, the "what changed since pass 22" pass (Florian: Fable sparingly; the one targeted pass on the
+Benchmarks page happened in pass 15, so this pass judged only what iterations 102–107 changed there), against live revision `c885fbe` on both
+hosts — CR-65.14 (the **Retired** caveat tag on `/benchmarks` and the Simple Benchmarks section, the read-date version line), CR-60.2 + F-121
+(‡ preliminary chart-read values on `/benchmarks`, `/compare` and the Simple section; the Compare caption; the evidence-panel sentence), plus
+the standard quick views. Evidence: `/opt/benchmarkheaven/state/ux-evidence/fable-20260918-pass23/{canonical,legacy}/` — 83 shots on the
+canonical host, 59 on the legacy host (changed pages only), 1440/390 × light/dark, `metrics.json` (0 page errors in all four contexts on both
+hosts; footnote geometry — words, sentences, rendered lines; tag counts; ‡/† marks and their titles; bar widths on the chart-read row; the
+detail page's chart-read sentence). Script: `bin/shoot-fable-pass23.mjs`. Earlier passes: `…/fable-20260918-pass22/` … `…/fable-20260913/`.
 
 **The bar (Florian):** minimalistic and simple, very expressive, not overloaded, key messages
 first, graphical with many charts.
@@ -26,67 +26,61 @@ the reviewing engine directly.
 
 ---
 
-## Verdict on the live site — pass 22 (2026-09-18), what changed since pass 21
+## Verdict on the live site — pass 23 (2026-09-18), what changed since pass 22
 
-**Iterations 96–101 are at the bar; F-112 to F-115 are verified, with claude-opus's re-judgements accepted.** The Benchmaxxing
-Signal column now diverges around a shared zero line on one catalog-wide scale (−13.2 … +20.6): Claude Fable 5.1 at −0.1 is a
-2 px stub left of zero, Opus 5 at −7.3 a clear grey band, Kimi K3 at +2.3 a short orange one — the column varies in its most
-common state, which is what F-112 was for; the catalog-average tick I asked for would have named a reference that a signed score
-no longer needs (`desktop_light-benchmaxxing.png`). The status line is one line at 1440 ("Tagged: ⚠⚠ 5 very strong ≥ +12 · ⚠ 22
-medium ≥ +6 · ? 17 light ≥ +3 · ◔ 30 marked uncertain — the level follows the score alone") and the first table row sits at
-686 px on a 390×844 phone (F-83: ≤ 780). Several rows open at once and each carries its own compact radar and reading
-(`*-bmx-two-open.png`, both widths). The Benchmaxxing radar's ring numbers sit at the half-step inside their rings with the halo
-and "avg pNN" on the other side; at 300 px the "100" and "avg p95" boxes touch a point but stay legible over the halo
-(`mobile_light-bmx-radar-tagged.png`) — accepted as the re-judged F-113. "Full scale" is on the Compare control row at 1440 and
-the last control at 390 (F-115). The home page reads top-down now: hero (two whole lines at 390, CR-72), "The most capable model
-at every price" with its one-line caption, the value map with "↑ Capability" and "→ Adjusted cost per task" as quiet axis words
-and Claude Fable 5.1 on the green line (CR-77.3), "Models on the green line are the most capable in their price range", then
-"Most capable models and what they really cost" — CR-75 did what Florian's friend needed. "Thin data · 2/7" rows sort in place with
-a hatched bar and a title (39 of 100 Advanced rows; `desktop_light-advanced-thin.png`). Dark mirrors light everywhere. 0 page
-errors in 97 shots per host.
+**The changed pages are honest and, in the cells, at the bar; the footnotes under them are not.** The **Retired** tag reads like the other caveat
+tags (muted pill, last in the row: "AA · Headline · Retired", `desktop_light-benchmarks-retired-row.png`), it sits on exactly the rows the
+registry says (2 in the default top-5 view, 3 on the CR-65.14 pair, 2 in the Simple section) and the Coding Agent Index best-of row is not among
+them. A chart-read value is `52.0%‡` with a 10.5 px superscript in every table, the Compare row gives it no bar, no tint and no percentile
+(`bars: ["92%", "0%"]`, `tinted: [true, false]`, `desktop_light-compare-prelim-row.png`), and the detail page says in one sentence how it was
+obtained ("Chart-read: announced in a launch post and read off the published chart …", `desktop_light-benchmarks-prelim-detail.png`). Dark mirrors
+light everywhere; 0 page errors in all eight contexts, both hosts; the Simple, Advanced, Guided, Benchmaxxing and model pages are unchanged since
+pass 22.
 
-**What is not at the bar — four small things, all fixed by Fable in this pass (surgical; see F-116–F-119).**
+**What is not at the bar — four things.**
 
-1. **The (i) has a line of its own in the table header.** "CAPABILITY SCORE ▼" / "(i)" / "(Main Composite Score)" — the header
-   row is 95 px tall at 1440 and 107 px at 390 (121 px at 1.3× text) because the header's flex container wraps the (i) below the
-   label (`desktop_light-simple-table-head.png`, `mobile_light-simple-table-head.png`). F-92 says an (i) hugs its word. The same
-   pattern puts "Signal" over a lone (i) on the Benchmaxxing table at 390. → **F-116**.
-2. **The Compare radar's ring labels still sit on the 12-o'clock spoke** — "p100" is struck through by the top axis' own point
-   (`desktop_light-compare-radar.png`, `mobile_light-compare-radar.png`); F-113 covered the topic radar only. → **F-117**.
-3. **The Signal (i) is a 170-word paragraph** that runs off the bottom of a phone screen before its link
-   (`*-bmx-signal-info.png`); CR-32.3 set the (i) standard at 2–4 short lines. → **F-118**.
-4. **The quick-look button repeats the row's name** ("Open the full report for Claude Fable 5.1 (Adaptive Reasoning, Max Effort,
-   Default Fallback) ↓" is three lines at 390), and the variant sub-line under a name takes five lines in the phone table
-   (`mobile_light-benchmaxxing.png`). → **F-119**.
+1. **The footnote under `/benchmarks` is 196 words in 10 sentences — 18 lines on a phone**, 5 at 1440 (`mobile_light-benchmarks-footnote.png`,
+   `metrics.json` `bm-footnotes`). The Simple Benchmarks footnote is 218 words in 7 sentences (20 lines at 390), the Compare caption 66 words in
+   4 sentences (200 px tall at 390). Every recent change request added a sentence to the same paragraph (best of, †, ‡, Saturated, Judged, category
+   rows); the pass-20 rule caps a visible footnote at two sentences and puts the rest in a collapsed Legend. Worse, the paragraph explains
+   Saturated and Judged but **not Retired or Changed at source**, and on a phone a tag's `title` is unreachable (`mobile_light-benchmarks-retired-tap.png`
+   shows nothing after a tap) — so the newest tag is the one a phone reader cannot decode. → **F-122** (implementer).
+2. **`/benchmarks` and the Simple section still draw a data bar behind a chart-read value** (`bm-prelim-row.bars: ["100%", "99.96%"]` on
+   Union Alpha's Terminal-Bench v4.0 row, `desktop_light-benchmarks-prelim-row.png`), while Compare draws none and the same row's bold already
+   excludes it. A bar is a ranking cue; F-121's own words are "no percentile, no bar, no tint". → **F-123, fixed by Fable in this pass** (the
+   masked row that already feeds `rowWinners` now feeds `rowBars` and `rowOutliers` too; with one measured value left, F-84 gives the row no bar).
+3. **"Version 74221fb"** under Terminal-Bench Hard (AA) — the registry's identity for that board is a seven-hex pin, and `versionLine` prints any
+   version string as "Version …". A reader sees a hash where every other row says "Version 4.0" or "values as published on …". Only one board
+   is affected today; the rule is what matters. → **F-124**.
+4. **"Union Alpha · Union Alpha"** on the result detail card and in its compared-models table (`desktop_light-benchmarks-prelim-detail.png`): a
+   stealth model's org is its own name, and the org line repeats it. → **F-125**.
 
-**Judged, not a directive — the two-line header at the phone's larger-text setting (CR-79 follow-up `c7c3d22`).** At 1.3× text the
-logo and BETA pill sit on line 1 and the nav on line 2, right-aligned (`mobile_light-simple-largetext-header.png`); nothing changes
-at the default size. Accepted as the right trade: two lines beat a 61 px sideways scroll, and beat dropping "Benchmarks" into More
-or a smaller type ramp, both of which would penalise readers who chose larger text. No change.
+Checked, not findings: the ‡ and † `title` texts are the same 10.5 px superscript convention on all three tables; the "Retired" tip text
+("The maintainer stopped reporting this benchmark …") is right, just unreachable on a phone until F-122; the evidence line "0.52 fraction"
+next to the headline "52.0%" is the long-standing evidence-panel convention (native unit beside the formatted value), not a regression.
 
-**Recorded for Florian (X7), not a directive:** CR-74.4 asked for the smallest penalty weight that puts GPT-6 Astra above Claude
-Fable 5.1, and iteration 97's verification saw Astra #1. After CR-77/CR-78 Astra's signal is −5.8 and Fable 5.1's −0.1, so the
-penalty (which applies to positive signals only) is zero for both and Fable 5.1 is #1 again (99.0 vs 97.9, `desktop_light-simple.png`).
-The composite does what CR-74.4 specifies; the flip Florian wanted no longer follows from his own later change requests. If he
-still wants Astra first, that is a data/method decision (CR-74.4's weight or the signal's sign convention), not a design one.
+## Decisions in pass 23
 
-Checked, not findings: the "Skip to main content" box in the phone radar shots is the known screenshot artefact (pass 20
-`check.json`); the CR-75 value-map caption and axis words are at the bar in both themes; Guided and the model page are unchanged
-apart from the tag levels.
+1. **CR-65.14's tag and CR-60.2/F-121's mark are at the bar as rendered**; their live verification stays with a non-implementer engine
+   (`verify-cr-65-14.mjs`; the review gate already flipped CR-60.2).
+2. **A legend covers every tag the table can show, generated from the tag set** (rule added): a hand-written footnote is how Retired went
+   missing; the legend lists `matrix.tags` (label + one-line tip) so a new tag can never be absent.
+3. **A pin is not a version** (rule added): a hash-like identity is never printed as "Version …"; the row shows the read date, the detail page
+   the pin.
+4. **Fable shipped F-123 itself** (two one-line edits plus a regression test; the record says Kimi stalls on TSX) — it needs a non-implementer
+   live pass. F-122, F-124 and F-125 go to the work engine: F-122 touches three components and the Compare caption and deserves one coherent
+   `TableLegend`, not a surgical patch.
+5. **X4 (UI meets the design bar): still met at pass 23** — the four findings are footnote and label hygiene, none changes what a reader
+   concludes from a number.
 
-## Decisions in pass 22
+## Verdict on the live site — pass 22 (2026-09-18), condensed
 
-1. **F-112 to F-115 verified** by the design authority as a non-implementer (claude-opus implemented them), both hosts, 1440/390,
-   light/dark; the two re-judgements (zero line instead of a catalog-average tick; ring labels inside the rim with the collision
-   rule relaxed at 30+ axes) are accepted and the design-system notes updated accordingly.
-2. **A header cell's (i) sits on the label's last line, never on its own** (extends F-92 to wrapped headers): the label wraps
-   inside its own control; the (i) is a non-shrinking sibling aligned to the last line (rule added).
-3. **An (i) is at most four short lines** (~70 words); the method lives behind its link (extends CR-32.3 to every (i); rule added).
-4. **Ring labels never sit on a spoke — on every radar** (F-113's rule now names both radar components).
-5. **The two-line large-text header stands** (see above).
-6. **Fable made four surgical fixes in this pass** (F-116–F-119, one commit) rather than delegating: each is a one-line JSX
-   change, and the record says Kimi stalls on TSX; they need a non-implementer live pass.
-7. **X4 (UI meets the design bar): still met at pass 22.**
+Iterations 96–101 judged at the bar; F-112–F-115 verified by Fable as a non-implementer with claude-opus's two re-judgements accepted (zero-line
+divergence; ring labels inside the rim, collision rule relaxed at 30+ axes); the two-line header at the phone's larger-text setting accepted;
+F-116–F-119 (header (i) on the label's last line, Compare ring labels off the spoke, four-line Signal (i), "Open the full report ↓") shipped by
+Fable in `61c5fcd` and verified by claude-opus in iteration 103 (62/62 both hosts). Recorded for Florian (X7): after CR-77/CR-78 the CR-74.4 penalty
+is zero for both GPT-6 Astra (−5.8) and Claude Fable 5.1 (−0.1), so Fable 5.1 is #1 again (99.0 vs 97.9); if he still wants Astra first that is a
+data/method decision, not a design one. Full text: `git show 7914c52:ops/ux-2026-09-12/DESIGN-DIRECTIVES.md`.
 
 ## R3.1 / CR-10.1 — Hero claim (Florian's own copy since 2026-09-15; earlier Fable wording retired)
 
@@ -105,68 +99,77 @@ and the counts line under it keeps the page honest (P4).
 
 ## Directives (open)
 
-> **Status 2026-09-18 ~01:40 UTC (iteration 103):** F-116–F-119 are **verified** by claude-opus as a non-implementer —
-> `bin/verify-fable-pass22.mjs` **62/62 on both hosts** at live `7914c52`, and `bin/verify-cr79.mjs` stayed green there (**172/172 per host**),
-> so the pass-22 header change did not regress CR-79. Evidence: `/opt/benchmarkheaven/state/ux-evidence/iter103-nonimpl/`.
->
-> **Status 2026-09-18 ~01:00 UTC (pass 22):** no directive is waiting for an implementer. F-116–F-119 are **implemented by Fable in
-> this pass** (commit `61c5fcd`) and need a **non-implementer live pass** on both hosts, 1440/390, light/dark: run
-> `node ops/ux-2026-09-12/bin/verify-fable-pass22.mjs <base> <out>` and read its `verification.json`.
+> **Status 2026-09-18 ~10:10 UTC (pass 23):** F-116–F-119 are verified (done log). **F-123 is shipped by Fable in this pass** and needs a
+> non-implementer live pass on both hosts: `node ops/ux-2026-09-12/bin/verify-fable-pass23.mjs <base> <out>` (expect 8/8 per host). **F-122,
+> F-124 and F-125 wait for an implementer**, in that order — F-122 first, it is the one a phone reader feels.
 
-### F-116 [mechanical, shipped by Fable] — Table headers: the (i) and the sort caret never take a line of their own
+### F-122 [judgment] — Three table footnotes become two sentences plus a collapsed Legend that lists every tag
 
-*Where:* `components/ModelExplorer.tsx` (`Th`), `components/BenchmaxxingOverview.tsx` (the "Signal" `<th>`), `test/cr-79-phone-headers.test.mjs`.
+*Where:* `components/BenchmarkMatrix.tsx` (the closing `<p className="bh-muted text-xs">`), `components/SimpleBenchmarks.tsx` (same),
+`components/BenchmarkCompare.tsx` (the caption under "Full benchmark comparison"); the `bh-legend` `<details>` pattern already in
+`components/ModelExplorer.tsx` (`tagLegend`, `data-bh-legend`) — extract it into one `TableLegend` component used by all three.
 
-*What:* the header's flex container is `flex-nowrap items-end`; the sort button keeps `min-w-0 break-words` (CR-79's shrink
-guarantee) and drops the global 44 px button minimum (`min-h-0`, so the (i) can align with the text) and the label wraps *inside* the button; the (i) is a `shrink-0` sibling aligned to the label's last line; the caret is
-glued to the last word with a non-breaking space. The Benchmaxxing "Signal (i)" is one `whitespace-nowrap` span. The sub-line
-"(Main Composite Score)" is unchanged (CR-75.3).
+*What:* the visible footnote is at most **two sentences**: `<AaCredit /> · Bold is best in row; bars compare within a row only. Open a value for
+its source.` (Simple: `… Open a value for its source; the full comparison adds every other benchmark.` with the existing link). Below it a
+collapsed `<details className="bh-legend">` with the summary "Legend: marks and tags" and **one line per entry**, in this order: `best of`,
+`†`, `‡`, `—`, `top / low` (Simple only), then **every tag in `matrix.tags`** rendered from the data (label in the pill style + its one-line
+tip — this is how Retired and Changed at source get their line without anyone remembering to write it), then one line for the category row
+("Category rows average the shown 0–100 results every compared model has — at least two; saturated benchmarks weigh half; judged, Elo, native
+index and cost rows are left out."), then the "How the tags are decided" link. Compare: caption "Native units; versions and evaluation groups
+remain separate. A tinted cell marks the best measured relative position in that row." + a legend with `best of variants`, `‡`, the percentile
+bar, and the "small differences are not evidence of significance" line. The strings `test/cr-60-union-alpha-preliminary.test.mjs` pins
+("‡ marks a preliminary, announced value", "never enters a score or a ranking") stay verbatim inside the legend.
 
-*Accept:* on `/` the header row is "CAPABILITY" / "SCORE ▼ (i)" + sub-line at 1440 (≤ 68 px tall, was 95) and "Capability" / "Score ▼ (i)" +
-sub-line at 390 (≤ 80 px, was 107); no `<th>` contains an (i) whose top is below the label's last line; at 1.3× text
-(`html { font-size: 20.8px }`) `scrollWidth == clientWidth` at 360/390 and every phone header label is visible (CR-79 verifier
-`bin/verify-cr79.mjs` stays 166/166); on `/benchmaxxing` at 390 "Signal" and its (i) share a line; `npm test`, `tsc` green.
+*Accept:* at 390 the visible footnote under each of the three tables is ≤ 2 sentences and ≤ 3 lines (≤ 48 px); the legend is collapsed on load,
+opens with one click, has one line per entry, and contains "Retired", "Changed at source", "Saturated", "Judged", "‡" and "†" wherever the
+table can show them; a test asserts every key of the tag set has a legend line; `verify-cr-1.mjs`, `verify-cr-65-14.mjs` and `npm test` stay
+green; light/dark, both hosts.
 
-### F-117 [mechanical, shipped by Fable] — Compare radar: ring labels off the 12-o'clock spoke (F-113 for `BenchmarkRadar`)
+### F-123 [mechanical, shipped by Fable] — No data bar behind a chart-read value, in every table
 
-*Where:* `components/BenchmarkRadar.tsx` (`SimpleRadar`, the `data-radar-ring` text per ring).
+*Where:* `components/BenchmarkMatrix.tsx`, `components/SimpleBenchmarks.tsx` (the `bars`/`win`/`odd` line per row);
+`test/cr-60-union-alpha-preliminary.test.mjs`.
 
-*What:* each ring label sits at the half-step angle between spoke 0 and spoke 1 (`position(cx, cy, 0.5, n, r − 3)`), anchor
-start, baseline hanging, 10 px, 70 % opacity, with the F-70 halo (`paint-order: stroke`, `var(--surface)`, 3 px). The floor label
-at the centre and the topic radar (`TopicRadar.tsx`, already F-113) are unchanged; `data-radar-ring` and its numeric text stay for
-`verify-cr-19-2-21-1.mjs` and `verify-iter93-fable20.mjs`.
+*What:* one masked row `ranked = vals.map((v, j) => basis[j] === 3 ? null : v)` feeds `rowBars`, `rowWinners` and `rowOutliers` alike, so a
+preliminary value has no bar, no bold and no tag — as Compare already does (F-121). With one measured value left in the row, F-84 applies
+and no cell has a bar. The regression test pins the masked call and the absence of a bar on Union Alpha's rows.
 
-*Accept:* on `/compare` (Simple 7 axes and Detailed) at 1440 and 390, Percentile and Native: no `[data-radar-ring]` bounding box
-intersects a data-point circle or the 12-o'clock spoke line; the labels read p50 … p100 (Percentile) / 0 … 100 (Native);
-light/dark screenshots.
+*Accept:* on `/benchmarks?rows=all&models=claude-fable-5.1::high,gpt-6-astra::default,union-alpha::default` at 1440 and 390, light and dark,
+the Terminal-Bench v4.0 (AA) row has **no** `.bh-matrix-bar` (was two, `100%`/`99.96%`) and the ‡ cell is not bold; on the DeepSWE row the
+same; `/compare` unchanged; `npm test` green.
 
-### F-118 [copy, shipped by Fable] — The Signal (i) is four short lines
+### F-124 [mechanical] — A pin is not a version
 
-*Where:* `components/BenchmaxxingOverview.tsx` (the "Signal" `InfoTip`).
+*Where:* `lib/benchmark-matrix.mjs` (`versionLine`), `app/benchmarks/result/page.tsx` (the eyebrow and the card's version line),
+`lib/version-label.ts` if `humanVersion` is the right home; a unit test beside `test/best-of-rows.test.mjs`.
 
-*What:* four `block` lines — (1) what the number is, incl. "A model is scored once it has at least ⟨n⟩ comparisons in ⟨t⟩
-topics." (the `fable-pass21-f112-f114` test pins that sentence); (2) "Tags follow the score alone (light ≥ +3, medium ≥ +6, very
-strong ≥ +12), as on the Overview."; (3) "◔ = fewer than 10 comparisons, or an 80 % interval reaching below zero: treat the tag as
-uncertain." (the "screening flag" sentence stays in the page intro only — one explainer per page); (4) the `data-signal-max` bar
-sentence "Bars: one catalog-wide scale in every list (⟨min⟩ to +⟨max⟩), diverging around zero." (kept for `verify-cr-19-25`); then
-the "How the signal works" link on its own line. ≤ 90 words of body copy (tokens with two letters), was ~170.
+*What:* a version string matching `/^[0-9a-f]{6,40}$/` is a pin: the table row prints **no** "Version …" for it (the "values as published on …"
+part stays), the eyebrow prints the category only (no "V74221FB"), and the detail card prints "Pinned revision 74221fb" where it would print
+"Version 4.0". Nothing changes for numeric or semantic versions.
 
-*Accept:* the tooltip's body (title and close control excluded) is ≤ 90 words in four block lines plus the link; on a 390×844 phone the opened popover's
-link is inside the viewport; the strings "scored once it has at least", "follow the score alone", "uncertain", "catalog-wide scale" and
-"How the signal works" are all present; `npm test` green.
+*Accept:* on `/benchmarks?rows=all&models=claude-fable-5::max,gpt-5.2::xhigh` the Terminal-Bench Hard (AA) stub has no "74221fb" at 1440/390;
+its detail page shows "Pinned revision 74221fb" once; the unit test covers a hash, `4.0`, `1.0.1` and a `snapshot-` identity.
 
-### F-119 [mechanical, shipped by Fable] — Quick look: "Open the full report ↓"; the variant sub-line is one line
+### F-125 [mechanical] — The org line is dropped when it repeats the model name
 
-*Where:* `components/BenchmaxxingOverview.tsx` (the `data-quick-report` link and the org · variant sub-line under a model name).
+*Where:* `app/benchmarks/result/page.tsx` (lines with `{model.org} · ` and the compared-models table's sub-line), and any shared
+name-with-org renderer it uses.
 
-*What:* the link text is "Open the full report ↓" with `aria-label="Open the full report for ⟨name⟩"` (the row above shows the
-name); the sub-line is `truncate` with the full text in `title` (secondary text may ellipsise, names never do — F-14).
+*What:* when `org` equals `display_name` (case-insensitive, trimmed), render the name once; the compared-models table shows no sub-line for
+such a row.
 
-*Accept:* at 390 the quick-look link is one line and its accessible name still contains the model name; no `tbody` name cell is
-taller than three lines (name ≤ 2 + sub-line 1) on Featured; 1440 unchanged; light/dark.
+*Accept:* the Union Alpha detail card reads "Union Alpha" once above the value; a named-org model (Claude Fable 5.1 · Anthropic) is unchanged;
+1440/390, light/dark.
 
 ## Design system notes (apply while touching any file above)
 
+- **A legend covers every tag the table can show, generated from the tag set (pass 23):** the visible footnote is two sentences; the
+  collapsed Legend lists marks first, then every entry of the tag set with its one-line tip. A hand-written tag sentence is a defect waiting
+  for the next tag.
+- **A pin is not a version (pass 23):** a hash-like identity is never printed as "Version …"; the row shows the read date, the detail page
+  "Pinned revision ⟨hash⟩".
+- **A display-only value gets no ranking cue (pass 23, F-121 + F-123):** no bar, no bold, no tag, no percentile, no tint — in every table that
+  shows it, from one masked row.
 - **A header cell's (i) sits on the label's last line (pass 22):** the label wraps inside its own control; the (i) is a
   non-shrinking sibling aligned to that last line and the sort caret is glued to the last word. An (i) or a caret on a line of its
   own is a defect (extends F-92).
@@ -454,3 +457,4 @@ taller than three lines (name ≤ 2 + sub-line 1) on Featured; 1440 unchanged; l
 | F-91 desktop compare radar at chart size (R 205, 900×600) | `cadbe88` (Fable, pass 17) | same | same |
 | F-92 Simple table: (i) after the last word; footnote without the repeated intro | `cadbe88` (Fable, pass 17) | same | same |
 | F-93 shortlist chart: bar rows below md, bottom-to-top names at md+ | `cadbe88` (Fable, pass 17) | same | same |
+| F-123 no data bar behind a chart-read value in `/benchmarks` and the Simple section (`rowBars`/`rowOutliers` get the masked row that `rowWinners` already had) | pass 23 (Fable, surgical) + `test/cr-60-union-alpha-preliminary.test.mjs` | `/opt/benchmarkheaven/state/ux-evidence/fable-20260918-pass23/` (before-state: `bm-prelim-row.bars: ["100%","99.96%"]`), `bin/verify-fable-pass23.mjs` output once live | needs a non-Fable verifier (expect 8/8 per host) |
