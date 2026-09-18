@@ -353,3 +353,9 @@ test('CR-73.2: our own capture stamps drop out of the key, the hash beside them 
   // Arrays and primitives pass through untouched.
   assert.deepEqual(withoutCaptureStamps([{ sha256: 'z', fetched_at: 't' }, 1, 'x', null]), [{ sha256: 'z' }, 1, 'x', null]);
 });
+
+test('CR-73.2 vendor: an unbound input yields no key at all', () => {
+  assert.equal(vendorKey({ reviewerSource: null }), null, 'no reviewer version, no reuse');
+  assert.equal(vendorKey({ extractionParserSha256: null }), null, 'no extraction parser version, no reuse');
+  assert.equal(vendorKey({ extractionParserSha256: '' }), null);
+});
