@@ -23,7 +23,7 @@ for (const e of registry.entries) if (!byFamily.has(e.family)) byFamily.set(e.fa
 /** The text of one cited field, flattened the way the file's `quote_rule` describes. */
 function fieldText(key, field) {
   if (field.startsWith('taxonomy.')) return JSON.stringify(taxonomy[field.split('.')[1]] ?? null);
-  const entries = registry.entries.filter((e) => e.family === key);
+  const entries = registry.entries.filter((e) => e.family === key || `${e.family}@${e.version}` === key);
   if (!entries.length) return '';
   if (field === 'evidence.excerpt') return JSON.stringify(entries.map((e) => e.evidence)).replaceAll('\\n', ' ');
   return JSON.stringify(entries.map((e) => {
@@ -59,6 +59,18 @@ test('CR-38.2: the freshness fields exist for every benchmark, stating the unkno
   const defaults = freshnessDefaults(caveats);
   assert.match(defaults.taskWindowNote, /does not state/);
   assert.match(defaults.contaminationNote, /no contamination control/);
+});
+
+test("CR-38.2: a versioned edition keeps its own task window, never another edition's", () => {
+  // The August editions must not inherit June's window: the family entry describes the June
+  // edition and each `family@version` entry overrides it when a curated edition exists.
+  assert.equal(freshnessOf('matharena-arxivmath', caveats, null).taskWindow.from, '2026-06');
+  assert.equal(freshnessOf('matharena-arxivmath', caveats, '2026-06').taskWindow.from, '2026-06');
+  assert.equal(freshnessOf('matharena-arxivmath', caveats, '2026-08').taskWindow.from, '2026-08');
+  assert.match(freshnessOf('matharena-arxivmath', caveats, '2026-08').taskWindow.label, /August 2026/);
+  assert.match(freshnessOf('matharena-brokenarxiv', caveats, '2026-08').taskWindow.label, /August 2026/);
+  // An edition without a curated entry falls back to the family entry, as before.
+  assert.equal(freshnessOf('aa-aime', caveats, '1.0').taskWindow.from, '2025');
 });
 
 test('CR-38.2: scaleCeiling only accepts bounded, higher-is-better scales', () => {
