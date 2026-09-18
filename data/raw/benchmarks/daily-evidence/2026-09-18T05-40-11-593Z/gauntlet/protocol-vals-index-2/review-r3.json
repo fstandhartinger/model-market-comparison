@@ -1,0 +1,30 @@
+{
+  "artifact_id": "protocol-vals-index-2",
+  "artifact_sha256": "20eaa57033560d2cde34e51fc00179da0aaecc57712510332a3ef0b1ed7a3143",
+  "round": 3,
+  "verdict": "pass",
+  "coverage_checked": ["vals-index::2", "c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row notes assert 'independent evaluator, secondary benchmark, not a Composite input' (VTC-Heaven classification basis); SOURCE 1 neither states nor contradicts this characterization. Criterion c1 scope covers registry version, identity, metric, units, and description, all of which are verified, so this out-of-scope classification note is recorded as an uncertainty rather than an error.",
+    "Primary evidence is a bounded exact excerpt of the page; hash computation, transport, and owner qualification checks are executed separately by the owner and were not independently executable in this read-only review. Producer receipt confirms identity for deepseek/deepseek-v4-flash-0731 only.",
+    "Row hash 386dc9491659990d5d6398dd9142775df4c69f0801e8bd4851b55ea32cd87993 for vals-index::2 is owner-computed and accepted as binding; not recomputable here.",
+    "Page shows 'Updated 9/15/2026 / Version 2' while Updates log lists v2 release on 8/13/2026; the row version '2' matches the page's stated Version 2, and the later Updated date is consistent with page maintenance, not a version change."
+  ],
+  "missing_evidence": []
+}
+
+**Verification detail (for the record, not part of the JSON):**
+
+Row vals-index::2 vs SOURCE 1 (vals.ai/benchmarks/vals_index):
+- **Version**: row `"version":"2"` matches page "Version 2" — PASS
+- **Identity**: `version_guard` requires metadata.benchmark "Vals Index" and version "2"; page title "Vals Index", "Version 2" — PASS
+- **Metric**: "Vals Index accuracy" matches page "ACCURACY" — PASS
+- **Units**: "percent", range [0,100], higher_better true; page reports scores like 68.83% — consistent — PASS
+- **Description**: "GDP-weighted average of agentic model performance across finance, coding and legal tasks" matches page: "agentic model performance across finance, coding, and legal tasks, weighted by each sector's share of U.S. GDP" — PASS
+- **Formula in notes**: "(8.0 × Finance + 5.6 × Coding + 1.2 × Legal) / 14.8; each sector averages its component benchmarks" matches page: Finance = AVG(FinanceAgentV2, EMB); Coding = AVG(TBench, VibeCodeBench, CodeMigration); Legal = AVG(LegalResearch, HLAB); Vals_Index = (8.0 * Finance + 5.6 * Coding + 1.2 * Legal) / 14.8 — PASS
+- **Maintainer**: "Vals AI" matches page copyright/branding — PASS
+
+SOURCE 2 (robots.txt) merely confirms site accessibility; no benchmark fields to compare. No errors found; missing_evidence is empty; verdict **pass**.

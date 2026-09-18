@@ -1,0 +1,155 @@
+{
+  "artifact_id": "protocol-aa-aime-2025",
+  "rounds_used": 1,
+  "rows": {
+    "total": 1,
+    "accepted": [],
+    "quarantined": [
+      "aa-aime::2025"
+    ]
+  },
+  "producer_flagged": [
+    "aa-aime::2025"
+  ],
+  "criteria": [
+    "c1"
+  ],
+  "coverage": {
+    "producer": {
+      "complete": true,
+      "model": "deepseek/deepseek-v4-flash-0731",
+      "rows_covered": 1
+    },
+    "critic": [
+      {
+        "round": 1,
+        "verdict": "pass",
+        "coverage_complete": true,
+        "missing_rows": [],
+        "missing_criteria": []
+      }
+    ],
+    "final": {
+      "rows_covered": 1,
+      "criteria_covered": 1,
+      "complete": true
+    }
+  },
+  "receipts": [
+    {
+      "round": 1,
+      "role": "producer",
+      "reused_from_round": null,
+      "requested_model": "deepseek/deepseek-v4-flash-0731",
+      "model": "deepseek/deepseek-v4-flash-0731",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0.00050823272808,
+      "out": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/gauntlet/protocol-aa-aime-2025/producer-r1.json",
+      "output_sha256": "b50fd15e383b4988339488c5fa2481f54f5c4cfa53d711f85c1332abfb66637f",
+      "qualification": {
+        "id": "deepseek/deepseek-v4-flash-0731",
+        "family": "deepseek",
+        "free": false,
+        "input_per_1m": 0.06,
+        "output_per_1m": 0.12,
+        "context": 1310720,
+        "aa_intelligence_index": 34.5,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "deepseek-v4-flash-0731::max"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "deepseek-v4-flash-0731::max",
+            "index": 34.5
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 1255,
+        "completion_tokens": 2454,
+        "total_tokens": 3709,
+        "cost": 0.00050823272808,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.000513366392,
+          "upstream_inference_prompt_cost": 0.00007476788,
+          "upstream_inference_completions_cost": 0.000438598512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 2379,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    },
+    {
+      "round": 1,
+      "role": "critic",
+      "requested_model": "z-ai/glm-5.3-flash",
+      "model": "z-ai/glm-5.3-flash",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0.000473121,
+      "out": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/gauntlet/protocol-aa-aime-2025/review-r1.json",
+      "output_sha256": "de5b9c9dc5208ccc6701a02a0f5e35f765c0fff0aeacb26d831453d671411543",
+      "qualification": {
+        "id": "z-ai/glm-5.3-flash",
+        "family": "z-ai",
+        "free": false,
+        "input_per_1m": 0.09,
+        "output_per_1m": 0.3,
+        "context": 1310720,
+        "aa_intelligence_index": 41.9,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "glm-5.3-flash::default"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "glm-5.3-flash::default",
+            "index": 41.9
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 1676,
+        "completion_tokens": 453,
+        "total_tokens": 2129,
+        "cost": 0.000473121,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.0004779,
+          "upstream_inference_prompt_cost": 0.0002514,
+          "upstream_inference_completions_cost": 0.0002265
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 142,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    }
+  ]
+}

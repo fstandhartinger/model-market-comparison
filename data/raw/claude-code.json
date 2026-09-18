@@ -1,7 +1,7 @@
 {
   "source": "Anthropic Claude API and Claude Code Enterprise",
-  "collected_at": "2026-09-17",
-  "method": "scripts/fetch-claude-api-catalog.mjs (2026-09-17): models[] from the server-rendered model and batch price tables on https://platform.claude.com/docs/en/about-claude/pricing; rows labelled retired there, or Retired in the lifecycle table on https://platform.claude.com/docs/en/about-claude/model-deprecations, are excluded; lifecycle_status and tentative retirement dates come from that table by API model id. pricing_modifiers: cache-write multipliers derived from the table (must be uniform), cache-hit default/exception, batch discount and US-only inference multiplier read from the page text. claude_code_enterprise: the seat price is re-read from the Enterprise line on https://claude.com/pricing (\"Seat price + usage at API rates\"); minimum-seat, sales-assisted and legacy-seat terms are not on that page and keep other_terms_checked_at. See claude-code.method.md.",
+  "collected_at": "2026-09-18",
+  "method": "scripts/fetch-claude-api-catalog.mjs (2026-09-18): models[] from the server-rendered model and batch price tables on https://platform.claude.com/docs/en/about-claude/pricing; rows labelled retired there, or Retired in the lifecycle table on https://platform.claude.com/docs/en/about-claude/model-deprecations, are excluded; lifecycle_status and tentative retirement dates come from that table by API model id. pricing_modifiers: cache-write multipliers derived from the table (must be uniform), cache-hit default/exception, batch discount and US-only inference multiplier read from the page text. claude_code_enterprise: the seat price is re-read from the Enterprise line on https://claude.com/pricing (\"Seat price + usage at API rates\"); minimum-seat, sales-assisted and legacy-seat terms are not on that page and keep other_terms_checked_at. See claude-code.method.md.",
   "models": [
     {
       "model_name": "Claude Fable 5.1",
@@ -245,9 +245,9 @@
     "Claude Haiku 3.5 (retired, except on Bedrock and Google Cloud)"
   ],
   "response_sha256": {
-    "pricing": "4900c18db910947bd7c7800dfa301442accf30d464a56287c336d5e7dd99fcbf",
-    "deprecations": "a7973fdeec63d6a6046dec7e30274f127a948893b5556a0fe92e747e6fd95316",
-    "enterprise": "d47a19be74bff7852a8b67e16d23cfaa4e6ad5f1f060f489708718bbcaa25636"
+    "pricing": "1711a942d498e0c8250e3ebac68aba7bcd1d2fe35bcc4b465c1deb53dd49223b",
+    "deprecations": "01bf30a4f7dbae756a0ce319decf8990bcff6d6c9c193184b1ed4d7c537f23d5",
+    "enterprise": "35860d530930f64412a5efd62d6cbacbaac53d9a8145808733742c597602a136"
   },
   "diff": {
     "added": [],

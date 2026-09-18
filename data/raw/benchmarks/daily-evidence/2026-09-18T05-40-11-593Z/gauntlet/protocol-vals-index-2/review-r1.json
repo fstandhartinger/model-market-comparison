@@ -1,0 +1,34 @@
+```json
+{
+  "artifact_id": "protocol-vals-index-2",
+  "artifact_sha256": "20eaa57033560d2cde34e51fc00179da0aaecc57712510332a3ef0b1ed7a3143",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["vals-index::2", "c1"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "minor",
+      "location": "row vals-index::2 scoring.notes",
+      "evidence": "Notes claim 'Vals AI publishes accuracy with a standard error per model'; the SOURCE 1 excerpt (published protocol text) contains no mention of standard errors or per-model error bars.",
+      "repair": "Remove the standard-error clause or obtain an exact excerpt from the primary page confirming it before retaining it in the row notes."
+    },
+    {
+      "id": "f2",
+      "severity": "minor",
+      "location": "row vals-index::2 scoring.notes",
+      "evidence": "Notes claim the index is 'not a Composite input'; neither SOURCE 1 nor SOURCE 2 addresses whether Vals Index feeds any external composite index.",
+      "repair": "Drop this clause from the row or supply packet evidence establishing the claim; as written it is not supported by the supplied primary sources."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Hash verification (artifact SHA-256 and per-row SHA-256) and transport/qualification checks are executed by the owner; I cannot recompute or execute them.",
+    "SOURCE 1 is described as a bounded exact excerpt; fields present in the row (identity 'Vals Index', version '2', accuracy metric, percent unit, GDP-weighted description, formula (8.0*Finance + 5.6*Coding + 1.2*Legal)/14.8, per-sector averaging, sectors finance/coding/legal, maintainer Vals AI) all match the excerpt exactly. Version continuity for criterion c1 is established: page shows 'Version 2' and update log 'Released Vals Index v2' on 8/13/2026, matching row version '2' and version_guard.",
+    "Page 'Updated 9/15/2026' vs retrieval 2026-09-18 suggests currency; no newer version announced in the excerpt.",
+    "The two minor note findings do not affect the core registry identity/version/metric/units/description required by c1; verdict remains pass, but the unsupported clauses should be cleaned up in a future round."
+  ],
+  "missing_evidence": []
+}
+```

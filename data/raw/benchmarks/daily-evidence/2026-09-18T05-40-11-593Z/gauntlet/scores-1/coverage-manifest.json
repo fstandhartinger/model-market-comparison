@@ -1,0 +1,157 @@
+{
+  "artifact_id": "scores-1",
+  "rounds_used": 3,
+  "rows": {
+    "total": 2,
+    "accepted": [],
+    "quarantined": [
+      "public:a4d518d1a0f67b5ebd830fbe",
+      "public:789060bcf61a3609b75e4707"
+    ]
+  },
+  "producer_flagged": [],
+  "criteria": [
+    "c1"
+  ],
+  "coverage": {
+    "producer": null,
+    "critic": [],
+    "final": {
+      "rows_covered": 0,
+      "criteria_covered": 0,
+      "complete": false
+    }
+  },
+  "receipts": [
+    {
+      "round": 1,
+      "role": "producer",
+      "reused_from_round": null,
+      "requested_model": "deepseek/deepseek-v4-flash-0731",
+      "model": "deepseek/deepseek-v4-flash-0731",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0.00121747011408,
+      "out": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/gauntlet/scores-1/producer-r1.json",
+      "output_sha256": "d65fd0aee0e4684b3f29f83a134c161422c98b1d6b620cde8667b50f9222df0c",
+      "qualification": {
+        "id": "deepseek/deepseek-v4-flash-0731",
+        "family": "deepseek",
+        "free": false,
+        "input_per_1m": 0.06,
+        "output_per_1m": 0.12,
+        "context": 1310720,
+        "aa_intelligence_index": 34.5,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "deepseek-v4-flash-0731::max"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "deepseek-v4-flash-0731::max",
+            "index": 34.5
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 4412,
+        "completion_tokens": 5410,
+        "total_tokens": 9822,
+        "cost": 0.00121747011408,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.001229767792,
+          "upstream_inference_prompt_cost": 0.000262849312,
+          "upstream_inference_completions_cost": 0.00096691848
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 5262,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    },
+    {
+      "round": 2,
+      "role": "producer",
+      "reused_from_round": 1,
+      "requested_model": "deepseek/deepseek-v4-flash-0731",
+      "model": "deepseek/deepseek-v4-flash-0731",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0,
+      "out": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/gauntlet/scores-1/producer-r1.json",
+      "output_sha256": "d65fd0aee0e4684b3f29f83a134c161422c98b1d6b620cde8667b50f9222df0c",
+      "qualification": {
+        "id": "deepseek/deepseek-v4-flash-0731",
+        "family": "deepseek",
+        "free": false,
+        "input_per_1m": 0.06,
+        "output_per_1m": 0.12,
+        "context": 1310720,
+        "aa_intelligence_index": 34.5,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "deepseek-v4-flash-0731::max"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "deepseek-v4-flash-0731::max",
+            "index": 34.5
+          }
+        ]
+      },
+      "usage": null,
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    },
+    {
+      "round": 3,
+      "role": "producer",
+      "reused_from_round": 1,
+      "requested_model": "deepseek/deepseek-v4-flash-0731",
+      "model": "deepseek/deepseek-v4-flash-0731",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0,
+      "out": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/gauntlet/scores-1/producer-r1.json",
+      "output_sha256": "d65fd0aee0e4684b3f29f83a134c161422c98b1d6b620cde8667b50f9222df0c",
+      "qualification": {
+        "id": "deepseek/deepseek-v4-flash-0731",
+        "family": "deepseek",
+        "free": false,
+        "input_per_1m": 0.06,
+        "output_per_1m": 0.12,
+        "context": 1310720,
+        "aa_intelligence_index": 34.5,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "deepseek-v4-flash-0731::max"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "deepseek-v4-flash-0731::max",
+            "index": 34.5
+          }
+        ]
+      },
+      "usage": null,
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    }
+  ]
+}

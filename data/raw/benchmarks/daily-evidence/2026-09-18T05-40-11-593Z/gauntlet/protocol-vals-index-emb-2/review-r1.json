@@ -1,0 +1,18 @@
+{
+  "artifact_id": "protocol-vals-index-emb-2",
+  "artifact_sha256": "0e089384dde2a7ef228e6b009792dcedf97f7e8297370b1ed41ac901cd4e7ad9",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["vals-index-emb::2", "c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row hash 818e9dc052a81b0a85a98a29c8d2c6e632af25557b675f1ab0fa8264471c5912 is owner-computed and could not be independently recomputed in this read-only review.",
+    "SOURCE 1 is a bounded excerpt of the full page; hash and transport/qualification checks (owner receipt) were not executed by this reviewer, per scope.",
+    "The row's notes claim Vals AI publishes accuracy with a standard error per model; the excerpt shows percent accuracy scores but the excerpt does not explicitly display per-model standard errors, so that claim rests on the notes and is not contradicted by the excerpt.",
+    "Row description says 'spreadsheets' while the primary page says 'Excel'; treated as equivalent wording, not a discrepancy.",
+    "Version '2' for vals-index-emb is corroborated by the page's 'Version 2' label and the 8/13/2026 update adding EMB in Vals Index v2; the excerpt does not expose a separate standalone EMB version number, so identity continuity is established via the index page as the primary protocol."
+  ],
+  "missing_evidence": []
+}

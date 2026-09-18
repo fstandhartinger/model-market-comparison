@@ -1,0 +1,18 @@
+{
+  "artifact_id": "protocol-vals-index-vibe-code-bench-2",
+  "artifact_sha256": "e0aec714774adff4d640632d77eea2ee41b13de700b705286eab7889704f8ee5",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["vals-index-vibe-code-bench::2", "c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row notes claim VCB results are published 'with a standard error per model'; the SOURCE 1 excerpt does not show any standard-error figures, so this claim is unverified against primary evidence (not a c1-required field).",
+    "Row notes characterize Vibe Code Bench as a 'private benchmark'. SOURCE 1 states Vals AI benchmarks are a mix of private and public and explicitly labels EMB, Code Migration, and Legal Research Bench as private, but does not explicitly label Vibe Code Bench as private in the excerpt; the claim is plausible but not directly confirmed.",
+    "Row notes state VCB is 'not a Composite input'; this refers to an internal Benchmark Heaven classification and cannot be checked against SOURCE 1.",
+    "Version continuity rests on SOURCE 1 showing 'Version 2' (updated 9/15/2026) and the update log (v2 release 8/13/2026 retaining Vibe Code Bench in the coding bucket, and 5/4/2026 entry adding VCB with the 22-task subset description). I cannot execute hash or transport checks; owner handles those.",
+    "Page text uses 'ACCURACY' with percentage-style scores (e.g., 68.83%), supporting unit=percent and higher-is-better, but no explicit 0-100 range declaration appears in the excerpt."
+  ],
+  "missing_evidence": []
+}

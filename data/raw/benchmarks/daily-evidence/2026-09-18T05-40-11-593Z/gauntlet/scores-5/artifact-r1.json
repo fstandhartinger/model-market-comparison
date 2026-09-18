@@ -1,0 +1,50 @@
+[
+  {
+    "id": "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "benchmark_id": "swe-bench-verified::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "mistralai/Devstral-2-123B-Instruct-2512",
+      "name": "Devstral 2",
+      "model_id": "devstral-2-123b::default",
+      "variant": "default",
+      "harness": null
+    },
+    "value": 72.2,
+    "unit": "percent",
+    "basis": "self_reported",
+    "source": {
+      "url": "https://mistral.ai/news/devstral-2-vibe-cli/",
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/9e7230acc9114f14e64a.gz",
+      "sha256": "9e7230acc9114f14e64a94b284ecbfbd1b8d7c3dfabee6b051761a9add2a0529",
+      "retrieved_at": "2026-09-18T05:44:49.343811+00:00",
+      "published_at": null,
+      "locator": "It reaches 72.2% on SWE-bench Verified"
+    },
+    "protocol": "overall; Self-reported vendor headline figure; evaluation harness for the SWE-bench Verified number not specified in source (Cline scaffolding used only for separate human evaluations)",
+    "comparison_key": null
+  },
+  {
+    "id": "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+    "benchmark_id": "swe-bench-verified::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "mistralai/Devstral-Small-2-24B-Instruct-2512",
+      "name": "Devstral Small 2",
+      "model_id": "devstral-small-2::default",
+      "variant": "default",
+      "harness": null
+    },
+    "value": 68,
+    "unit": "percent",
+    "basis": "self_reported",
+    "source": {
+      "url": "https://mistral.ai/news/devstral-2-vibe-cli/",
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/9e7230acc9114f14e64a.gz",
+      "sha256": "9e7230acc9114f14e64a94b284ecbfbd1b8d7c3dfabee6b051761a9add2a0529",
+      "retrieved_at": "2026-09-18T05:44:49.343811+00:00",
+      "published_at": null,
+      "locator": "Devstral Small 2 scores 68.0% on SWE-bench Verified"
+    },
+    "protocol": "overall; Self-reported vendor headline figure; evaluation harness not specified in source",
+    "comparison_key": null
+  }
+]

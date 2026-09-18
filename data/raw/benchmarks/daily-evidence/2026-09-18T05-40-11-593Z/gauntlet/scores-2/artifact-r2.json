@@ -1,0 +1,74 @@
+[
+  {
+    "id": "public:17a83944e876e5d5dd19589d",
+    "benchmark_id": "vals-index-terminal-bench-2.1::2",
+    "subject": {
+      "source_id": "anthropic/claude-fable-5",
+      "name": "anthropic/claude-fable-5",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 80.524,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-18T05:42:32.348365+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/558f8306d2b1cf1a1874.gz",
+      "sha256": "558f8306d2b1cf1a1874ebee5c907d17b0776ccc1f9e70fbb764af4470bb7bbb",
+      "locator": "astro_props; source row 6; anthropic/claude-fable-5; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component terminal_bench_2_1; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"terminal_bench_2_1\",\"accuracy\":80.524,\"stderr\":1.35,\"cost_per_test\":1.429025,\"latency\":504.537,\"compute_effort\":\"max\",\"reasoning_effort\":null,\"max_output_tokens\":128000,\"provider\":\"Anthropic\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:17d5502bd07b4baf5a0e4e6a",
+    "benchmark_id": "vals-index-terminal-bench-2.1::2",
+    "subject": {
+      "source_id": "tencent/hy4-preview",
+      "name": "tencent/hy4-preview",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 55.056,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-18T05:42:32.348365+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/558f8306d2b1cf1a1874.gz",
+      "sha256": "558f8306d2b1cf1a1874ebee5c907d17b0776ccc1f9e70fbb764af4470bb7bbb",
+      "locator": "astro_props; source row 35; tencent/hy4-preview; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component terminal_bench_2_1; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"terminal_bench_2_1\",\"accuracy\":55.056,\"stderr\":3.433,\"cost_per_test\":0.140288,\"latency\":1109.129,\"compute_effort\":null,\"reasoning_effort\":null,\"max_output_tokens\":64000,\"provider\":\"Tencent\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:3fc65e2a70007acea87bb5cb",
+    "benchmark_id": "vals-index-terminal-bench-2.1::2",
+    "subject": {
+      "source_id": "inception/mercury-2.5",
+      "name": "inception/mercury-2.5",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 34.082,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-18T05:42:32.348365+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/558f8306d2b1cf1a1874.gz",
+      "sha256": "558f8306d2b1cf1a1874ebee5c907d17b0776ccc1f9e70fbb764af4470bb7bbb",
+      "locator": "astro_props; source row 56; inception/mercury-2.5; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component terminal_bench_2_1; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"terminal_bench_2_1\",\"accuracy\":34.082,\"stderr\":0.991,\"cost_per_test\":0.2108,\"latency\":678.28,\"compute_effort\":null,\"reasoning_effort\":\"high\",\"max_output_tokens\":65536,\"provider\":\"Inception\"}",
+    "comparison_key": null
+  }
+]

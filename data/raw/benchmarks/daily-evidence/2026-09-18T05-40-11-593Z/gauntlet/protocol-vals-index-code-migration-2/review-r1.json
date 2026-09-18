@@ -1,0 +1,17 @@
+{
+  "artifact_id": "protocol-vals-index-code-migration-2",
+  "artifact_sha256": "0101a7a7d017efde5d7fb19a1d643eb9b8de1a420f69b2d787b681bbe28f2741",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["vals-index-code-migration::2", "c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row hash c514be...e4d45 is owner-computed; I cannot recompute it, and I cannot verify the artifact file SHA-256 or transport/qualification checks; those are owner-executed.",
+    "SOURCE 1 is an excerpt of the Vals Index page; the Code Migration component detail (subset 50/120 CLI + 10 COBOL, 75/25 weighting, Monte Carlo selection) is transcribed exactly from the published methodology text, so the excerpt is sufficient to establish continuity for this component row.",
+    "The page's 'Version 2' refers to the Vals Index release; the row's version '2' with guard requiring metadata benchmark 'Vals Index' and version '2' is consistent with the 8/13/2026 v2 release entry that added Code Migration to the coding bucket.",
+    "'higher_better: true' and percent units are supported by the page's ACCURACY metric and percentage leaderboard values; no explicit unit statement beyond 'accuracy' exists, treated as consistent rather than proven verbatim."
+  ],
+  "missing_evidence": []
+}

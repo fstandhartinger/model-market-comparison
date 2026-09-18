@@ -1,0 +1,16 @@
+{
+  "artifact_id": "protocol-vals-index-terminal-bench-2.1-2",
+  "artifact_sha256": "5c5278f85340fbe040cdf6923e5ca455b28de3fd5603919fd896b78e39f8e79f",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["vals-index-terminal-bench-2.1::2", "c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row hash d54e52048690975a789481d7c484ef6a2fc7362dcd6fba80bc793d813883caa7 and artifact hash 5c5278f85340fbe040cdf6923e5ca455b28de3fd5603919fd896b78e39f8e79f are owner-computed; I cannot recompute them.",
+    "Transport/qualification checks are executed by the owner; I could only inspect the receipt's identity fields (deepseek/deepseek-v4-flash-0731), which are consistent with PRODUCERS.",
+    "SOURCE 1 excerpt is bounded and does not show a per-component Terminal-Bench 2.1 score table or units legend directly; the 'ACCURACY' column label, percent-formatted results (e.g., 68.83%) and the accuracy-with-standard-error claim in the row's notes are consistent with the excerpt but the standard-error detail itself is not verbatim in the supplied excerpt."
+  ],
+  "missing_evidence": []
+}

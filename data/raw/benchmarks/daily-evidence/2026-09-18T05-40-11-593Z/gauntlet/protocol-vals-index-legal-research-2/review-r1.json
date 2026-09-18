@@ -1,0 +1,18 @@
+```json
+{
+  "artifact_id": "protocol-vals-index-legal-research-2",
+  "artifact_sha256": "539ac30c480ca6202f17514663060f5badc7ef3e188856af3b3c1c4bcc79d409",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["vals-index-legal-research::2", "c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-computed row and artifact SHA-256 bindings and transport/qualification checks could not be executed by this reviewer; treated as owner-executed per packet design.",
+    "SOURCE 1 excerpt establishes the page as Vals Index Version 2 with an updates log confirming Legal Research Bench was added in v2 (8/13/2026); the excerpt does not restate a separate standalone Legal Research Bench protocol page, so continuity rests on this page's own identity and methodology text, which is sufficient here but was verified only against this bounded excerpt.",
+    "Metric name 'Legal Research Bench accuracy' is a faithful descriptive label; the source labels scores as ACCURACY percent for this component, though the source page does not itself print the string 'Legal Research Bench accuracy' verbatim."
+  ],
+  "missing_evidence": []
+}
+```

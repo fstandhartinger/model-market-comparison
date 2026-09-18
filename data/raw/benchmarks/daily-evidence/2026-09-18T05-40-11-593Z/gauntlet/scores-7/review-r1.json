@@ -1,0 +1,19 @@
+{
+  "artifact_id": "scores-7",
+  "artifact_sha256": "d22f2557be8290b5242dfff1ef716071064b18f148673ce4b3b11fdcaa22832a",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10", "c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row sha256 6e7d83bba318f7bb18682bc88027a51e93aa93ab2c738b1526000283c9c8e14b is owner-computed and could not be independently recomputed; binding relies on the supplied receipt.",
+    "Owner-side hash and transport/qualification checks (producer receipt) were not executable by this reviewer; receipt shows identity and qualification only and is not itself benchmark evidence.",
+    "benchmark_id suffix 'snapshot-2026-09-10' is an internal version label not present in the primary source; primary evidence verifies the benchmark as the Aider-Polyglot accuracy entry in Table 6 of arXiv 2412.19437v2, which the row correctly transcribes (49.6). The label was treated as internal versioning, not a claim requiring source verification.",
+    "published_at is null; source date verification relies on retrieved_at (2026-09-18T05:44:52.111828+00:00) and the explicitly cited arXiv v2 identifier, which the subject source_id also references.",
+    "published_at transcription of the full locator string matches the primary table row exactly (18.2 7.6 5.8 45.3 16.0 49.6); only the final DeepSeek-V3 column value (49.6) is claimed and it matches.",
+    "Protocol fields ('diff' edit format, 8K output limit, chat-model Table 6 evaluation) match the primary text; self_reported basis is appropriate for a vendor paper."
+  ],
+  "missing_evidence": []
+}

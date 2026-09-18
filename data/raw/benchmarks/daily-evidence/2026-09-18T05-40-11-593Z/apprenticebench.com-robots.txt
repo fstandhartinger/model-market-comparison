@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ApprenticeBench</title>
+    <meta name="description" content="The first end-to-end benchmark of computer use, continual learning, and long-horizon agentic capabilities, set in a real job." />
+    <link rel="canonical" href="https://apprenticebench.com/" />
+
+    <!-- Social cards (X, Slack, LinkedIn, iMessage). Scrapers read the HTML as
+         served and never run the app, so the tags live here; the image is the
+         site's own card (the apprentice at its desk), at 1200x675. Cloudflare
+         Pages serves this document for every route, so one set covers the
+         site; the URLs are absolute because scrapers require them. -->
+    <meta property="og:title" content="ApprenticeBench" />
+    <meta property="og:description" content="The first end-to-end benchmark of computer use, continual learning, and long-horizon agentic capabilities, set in a real job." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://apprenticebench.com/" />
+    <meta property="og:site_name" content="ApprenticeBench" />
+    <meta property="og:image" content="https://apprenticebench.com/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="675" />
+    <meta property="og:image:type" content="image/png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@neocognition" />
+    <meta name="twitter:title" content="ApprenticeBench" />
+    <meta name="twitter:description" content="The first end-to-end benchmark of computer use, continual learning, and long-horizon agentic capabilities, set in a real job." />
+    <meta name="twitter:image" content="https://apprenticebench.com/og-image.png" />
+
+    <!-- The same NeoCognition mark neocognition.io serves, byte-for-byte. -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <!-- Classify the host into an analytics environment. GA4 fires only on
+         'prod'; PostHog fires on 'prod' and 'dev', tagging every event with
+         an `environment` super property so insights can filter dev traffic.
+         Unlisted hosts (localhost, bare apprentice-benchmark.pages.dev, hash
+         previews) get no analytics at all -- the bare pages.dev domain serves
+         the production branch, and counting it as 'dev' would miscount any
+         real visitor who lands there. -->
+    <script>
+      window.__analyticsEnv = (function () {
+        var h = window.location.hostname;
+        // Port guard: an internal test instance once served this hostname on
+        // :8931 and its events landed in prod data. Real prod is only :443.
+        if (h === 'apprenticebench.com' && window.location.port === '') return 'prod';
+        if (h === 'dev.apprentice-benchmark.pages.dev') return 'dev';
+        if (h === 'agent-mvp-test.app' || h.endsWith('.agent-mvp-test.app')) return 'dev';
+        return null;
+      })();
+    </script>
+
+    <!-- Honor Do Not Track and Global Privacy Control signals.
+         If set, we skip analytics entirely (no GA4 config, no PostHog init)
+         and the cookie banner is suppressed (CookieConsent.tsx reads the flag). -->
+    <script>
+      window.__privacyOptOut = (function () {
+        try {
+          return (
+            navigator.doNotTrack === '1' ||
+            navigator.doNotTrack === 'yes' ||
+            navigator.globalPrivacyControl === true ||
+            window.doNotTrack === '1'
+          );
+        } catch (e) { return false; }
+      })();
+    </script>
+    <!-- Google tag (gtag.js) with consent mode (GDPR). Same GA4 property as
+         neocognition.io (G-6LR5X0PB3T), sharing the one web data stream via
+         cross-domain measurement -- see Admin > Data Streams > Configure
+         your domains. Under DNT/GPC, or off the production domain, we skip
+         both the gtag.js network request and any config. -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      // Default: deny everything until user consents.
+      gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'analytics_storage': 'denied',
+        'wait_for_update': 500
+      });
+      if (!window.__privacyOptOut && window.__analyticsEnv === 'prod') {
+        var gtagScript = document.createElement('script');
+        gtagScript.async = true;
+        gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-6LR5X0PB3T';
+        document.head.appendChild(gtagScript);
+        gtag('config', 'G-6LR5X0PB3T', {
+          'allow_google_signals': false,
+          'allow_ad_personalization_signals': false,
+          'send_page_view': false
+        });
+        // If user previously consented, grant immediately.
+        // Storage key must stay in sync with STORAGE_KEY in src/components/CookieConsent.tsx.
+        try {
+          if (localStorage.getItem('cookie_consent_v1') === 'granted') {
+            gtag('consent', 'update', { 'analytics_storage': 'granted' });
+          }
+        } catch (e) {}
+      }
+    </script>
+    <!-- PostHog (EU Cloud). Same project/key as neocognition.io -- PostHog
+         doesn't gate ingestion by domain, so no separate project is needed;
+         events carry $host and can be filtered per-domain in insights.
+         Skipped entirely under DNT/GPC or on hosts with no analytics
+         environment. Every event carries an `environment` super property
+         ('prod' or 'dev') for filtering in insights.
+         Capture starts opted OUT (opt_out_capturing_by_default) -- this is
+         the real capture gate; `persistence` alone does not block sending
+         events, it only chooses where the distinct_id is stored. Opts back
+         in immediately if the user already consented on a prior visit.
+         CookieConsent.tsx drives opt_in_capturing()/opt_out_capturing() on
+         the banner's Accept/Decline. -->
+    <script>
+      if (!window.__privacyOptOut && window.__analyticsEnv) {
+        !function(t,e){var o,n,p,r;e.__SV||(window.posthog && window.posthog.__loaded)||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}p||((p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",p.onerror=function(){p=null},(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r));var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],Object.defineProperty(u,"toString",{configurable:!0,enumerable:!0,writable:!0,value:function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e}}),Object.defineProperty(u.people,"toString",{configurable:!0,enumerable:!0,writable:!0,value:function(){return u.toString(1)+".people (stub)"}}),o="init capture register register_once register_for_session unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group identify setPersonProperties setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags resetGroups onFeatureFlags addFeatureFlagsHandler onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+        posthog.init('phc_uW96BNHBxvfQsDBUXPUPSL7gDvgVSW3RXkyDuErgkwvF', {
+          api_host: 'https://eu.i.posthog.com',
+          opt_out_capturing_by_default: true,
+          autocapture: true,
+          capture_pageview: false,
+          capture_pageleave: true,
+        });
+        posthog.register({ environment: window.__analyticsEnv });
+        // Storage key must stay in sync with STORAGE_KEY in src/components/CookieConsent.tsx.
+        try {
+          if (localStorage.getItem('cookie_consent_v1') === 'granted') {
+            posthog.opt_in_capturing();
+          }
+        } catch (e) {}
+      }
+    </script>
+    <script type="module" crossorigin src="/assets/index-D78RXqBf.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-CMp-EcNh.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

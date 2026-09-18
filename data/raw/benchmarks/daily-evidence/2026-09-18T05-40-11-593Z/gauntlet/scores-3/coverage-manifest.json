@@ -1,0 +1,85 @@
+{
+  "artifact_id": "scores-3",
+  "rounds_used": 3,
+  "rows": {
+    "total": 2,
+    "accepted": [],
+    "quarantined": [
+      "public:96e3b27303121779f0f55f3f",
+      "public:929eca9872fb3912031d96a2"
+    ]
+  },
+  "producer_flagged": [],
+  "criteria": [
+    "c1"
+  ],
+  "coverage": {
+    "producer": null,
+    "critic": [],
+    "final": {
+      "rows_covered": 0,
+      "criteria_covered": 0,
+      "complete": false
+    }
+  },
+  "receipts": [
+    {
+      "round": 1,
+      "role": "producer",
+      "reused_from_round": null,
+      "requested_model": "deepseek/deepseek-v4-flash-0731",
+      "model": "deepseek/deepseek-v4-flash-0731",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0.00106335474696,
+      "out": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/gauntlet/scores-3/producer-r1.json",
+      "output_sha256": "4c67783b7acd6aae9ed42eab7a6a6400877bf7ef8fce1d9b6506fc3cf8667e49",
+      "qualification": {
+        "id": "deepseek/deepseek-v4-flash-0731",
+        "family": "deepseek",
+        "free": false,
+        "input_per_1m": 0.06,
+        "output_per_1m": 0.12,
+        "context": 1310720,
+        "aa_intelligence_index": 34.5,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "deepseek-v4-flash-0731::max"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "deepseek-v4-flash-0731::max",
+            "index": 34.5
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 4388,
+        "completion_tokens": 4547,
+        "total_tokens": 8935,
+        "cost": 0.00106335474696,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.001074095704,
+          "upstream_inference_prompt_cost": 0.000261419488,
+          "upstream_inference_completions_cost": 0.000812676216
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 4379,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    }
+  ]
+}

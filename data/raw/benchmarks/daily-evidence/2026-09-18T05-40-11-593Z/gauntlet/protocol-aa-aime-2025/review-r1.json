@@ -1,0 +1,19 @@
+```json
+{
+  "artifact_id": "protocol-aa-aime-2025",
+  "artifact_sha256": "ab2aaab46bff8407690a013cc67b95c13ec653f27dc67a24212b9ff96a4e0fb3",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["aa-aime::2025", "c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-side hash verification of the artifact and SOURCE 1 sha256 values could not be executed by this reviewer; treated as limitation, not missing evidence.",
+    "Source excerpt notes AIME 2025 is retired from active reporting and excluded from Intelligence Index v4.3; the artifact makes no active-status claim, so no contradiction, but consumers should be aware the protocol is retired.",
+    "Row hash 78588bdf7c86dbfb53db143b0808efeb9bab11e9185b5e3c8db9d017a4a665cb was taken as binding and not recomputed.",
+    "Artifact field 'aa_source: aime25' could not be cross-checked against a raw catalog entry in the packet; accepted as a transcription label consistent with the protocol excerpt."
+  ],
+  "missing_evidence": []
+}
+```

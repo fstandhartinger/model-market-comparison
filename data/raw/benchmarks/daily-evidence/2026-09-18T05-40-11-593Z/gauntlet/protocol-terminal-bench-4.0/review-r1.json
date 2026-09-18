@@ -1,0 +1,16 @@
+{
+  "artifact_id": "protocol-terminal-bench-4.0",
+  "artifact_sha256": "35d8a9d053a7e37395f80883cd20099f4e4864216c174149b0af31f2e79947b9",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["terminal-bench::4.0", "c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Unit 'percent' for resolution rate is a reasonable mapping of 'Resolution rate ... 95% confidence interval' but the source excerpt does not literally print the unit token 'percent'; treated as an acceptable transcription of the leaderboard's stated convention.",
+    "Could not execute SHA-256 verification of SOURCE 1, the artifact, or the producer receipt output_sha256; per instructions this is a limitation, not missing numeric source evidence, and the owner executes these checks.",
+    "Retrieved_at 2026-09-18 establishes currency of the excerpt; continuity beyond that capture cannot be independently confirmed from the packet alone."
+  ],
+  "missing_evidence": []
+}

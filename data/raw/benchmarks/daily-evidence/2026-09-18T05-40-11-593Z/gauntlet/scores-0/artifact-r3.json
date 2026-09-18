@@ -1,0 +1,50 @@
+[
+  {
+    "id": "public:96c48942c3c91c71e48f4440",
+    "benchmark_id": "vals-index-finance-agent::2",
+    "subject": {
+      "source_id": "tencent/hy4-preview",
+      "name": "tencent/hy4-preview",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 55.063,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-18T05:42:32.348365+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/558f8306d2b1cf1a1874.gz",
+      "sha256": "558f8306d2b1cf1a1874ebee5c907d17b0776ccc1f9e70fbb764af4470bb7bbb",
+      "locator": "astro_props; source row 13; tencent/hy4-preview; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component finance_agent; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"finance_agent\",\"accuracy\":55.063,\"stderr\":0.308,\"cost_per_test\":0.5903,\"latency\":1424.632,\"compute_effort\":null,\"reasoning_effort\":null,\"max_output_tokens\":64000,\"provider\":\"Tencent\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:79c4f65523e64bb532f40003",
+    "benchmark_id": "vals-index-finance-agent::2",
+    "subject": {
+      "source_id": "inception/mercury-2.5",
+      "name": "inception/mercury-2.5",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 18.556,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-18T05:42:32.348365+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/558f8306d2b1cf1a1874.gz",
+      "sha256": "558f8306d2b1cf1a1874ebee5c907d17b0776ccc1f9e70fbb764af4470bb7bbb",
+      "locator": "astro_props; source row 56; inception/mercury-2.5; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component finance_agent; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"finance_agent\",\"accuracy\":18.556,\"stderr\":0.255,\"cost_per_test\":0.106441,\"latency\":95.056,\"compute_effort\":null,\"reasoning_effort\":\"high\",\"max_output_tokens\":65536,\"provider\":\"Inception\"}",
+    "comparison_key": null
+  }
+]

@@ -3,7 +3,7 @@
   "role": "Discovery and provenance feed only (CR-37.2, CR-38.4). No score from this file reaches the dataset; values come from the primary evaluator's own collector.",
   "terms": "robots.txt: Allow /. No site-wide data licence published; Lumina's own /terms calls its terms placeholders. Per-source licence and redistribution status are Lumina's own fields and mostly unrecorded.",
   "method": "scripts/fetch-lumina-ledger.mjs: manifest daily; on a sourceDataHash change the benchmark-definitions, benchmark-results and sources tables, each verified against the manifest sha256, column list and record count. Result counts by the role of the cited URL host (data/lumina-feed-policy.json → host_roles); no values kept.",
-  "checked_at": "2026-09-17T13:38:25.385Z",
+  "checked_at": "2026-09-18T05:32:43.408Z",
   "changed_at": "2026-09-16T10:45:09.264Z",
   "ledger": {
     "generated_at": "2026-09-01",
