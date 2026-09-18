@@ -21,11 +21,21 @@ test('CR-66.3: a free router worker qualifies by the AA score of the variant it 
   assert.deepEqual(freeRouterCandidates(dataset, null), []);
 });
 
-test('CR-66.3: scheduled selection takes the free producer first; the critic comes from a different family; unhealthy free → paid pair', () => {
+test('CR-66.3 + CR-73.4: the free route is spent on the critic; the producer stays paid while one is viable; unhealthy free → paid pair', () => {
   const freeRouter = freeRouterCandidates(dataset, healthy);
+  // CR-73.4 (supersedes CR-66.3's producer-first order): the one qualifying free route saves ~4.6 min on a critic
+  // call and ~0.1 min on a producer call, and the different-family rule lets it serve only one role per packet.
   const producer = selectModel(catalog, dataset, { scheduled: true, freeRouter });
-  assert.equal(producer.id, 'chutes/moonshotai/Kimi-K3-TEE');
-  assert.equal(producer.transport, 'router');
+  assert.equal(producer.id, 'z-ai/glm-5.3-flash');
+  const freeCriticNow = selectModel(catalog, dataset, { scheduled: true, freeRouter, critic: true, producers: ['z-ai/glm-5.3-flash'] });
+  assert.equal(freeCriticNow.id, 'chutes/moonshotai/Kimi-K3-TEE');
+  assert.equal(freeCriticNow.transport, 'router');
+  assert.equal(freeCriticNow.input_per_1m + freeCriticNow.output_per_1m, 0);
+  // `any` restores the CR-66.3 order for a run that asks for it.
+  assert.equal(selectModel(catalog, dataset, { scheduled: true, freeRouter, freeRouteRole: 'any' }).id, 'chutes/moonshotai/Kimi-K3-TEE');
+  assert.throws(() => selectModel(catalog, dataset, { scheduled: true, freeRouter, freeRouteRole: 'cheapest' }), /Unsupported free-route role/);
+  // The route is only ordered last for a producer, never removed: with no viable paid candidate it is still taken.
+  assert.equal(selectModel(catalog, dataset, { scheduled: true, freeRouter, maxPricePer1M: 0.0001 }).id, 'chutes/moonshotai/Kimi-K3-TEE');
   const critic = selectModel(catalog, dataset, { scheduled: true, freeRouter, critic: true, producers: ['moonshotai/Kimi-K3-TEE'] });
   assert.equal(critic.id, 'z-ai/glm-5.3-flash');
   // With a second qualified free worker of another family, both roles are free.
@@ -41,11 +51,16 @@ test('CR-66.3: scheduled selection takes the free producer first; the critic com
   assert.equal(selectModel(catalog, dataset, { scheduled: false, freeRouter }).id, 'z-ai/glm-5.3-flash');
 });
 
-test('CR-66.3: the daily run report pairs the free producer with a different-family critic', () => {
+test('CR-66.3 + CR-73.4: the daily run report pairs a paid producer with the free different-family critic', () => {
   const free_router = freeRouterCandidates(dataset, healthy);
   const paid = [{ id: 'deepseek/deepseek-v4-flash-0731', family: 'deepseek', aa_intelligence_index: 34.5, input_per_1m: 0.06, output_per_1m: 0.12 }];
   const pair = selectProducerCritic({ free_router, free_verified: [], cheap_verified: paid });
-  assert.deepEqual([pair.producer.id, pair.critic.id], ['chutes/moonshotai/Kimi-K3-TEE', 'deepseek/deepseek-v4-flash-0731']);
+  // The report must name the pair the selector takes (CR-73.4), not the one CR-66.3 took.
+  assert.deepEqual([pair.producer.id, pair.critic.id], ['deepseek/deepseek-v4-flash-0731', 'chutes/moonshotai/Kimi-K3-TEE']);
+  assert.deepEqual(Object.entries(selectProducerCritic({ free_router, free_verified: [], cheap_verified: paid }, { freeRouteRole: 'any' })).map(([, m]) => m.id),
+    ['chutes/moonshotai/Kimi-K3-TEE', 'deepseek/deepseek-v4-flash-0731']);
+  // Only the free route is viable at all: it produces, and there is no different-family critic — fail closed.
+  assert.throws(() => selectProducerCritic({ free_router, free_verified: [], cheap_verified: [] }), /no different-family critic/);
   assert.equal(selectProducerCritic({ free_router: [], free_verified: [], cheap_verified: [...paid, { id: 'z-ai/glm-5.3-flash', family: 'z-ai', aa_intelligence_index: 41.9, input_per_1m: 0.09, output_per_1m: 0.3 }] }).producer.id, 'deepseek/deepseek-v4-flash-0731');
 });
 

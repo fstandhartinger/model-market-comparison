@@ -121,7 +121,29 @@ export function freeRouterCandidates(dataset, health, { workers = FREE_ROUTER_WO
     .map(({ _rank, ...c }) => c);
 }
 
-export function selectModel(catalog, dataset, { model, critic = false, producers = [], smokeTest = false, maxPricePer1M = Infinity, excludeModels = [], scheduled = false, freeRouter = [] } = {}) {
+// CR-73.4 (2026-09-18): which role a free route is spent on.
+// Measured on the 17 Sep 13:36 baseline (`ops/daily/PROFILE-CR73.md`): 24 critic calls took 90.9 min and $0.041,
+// 22 producer calls 5.8 min and $0.019. Only one free route qualifies (Kimi K3, AA 43.8), and the different-family
+// critic rule means it can serve only one of the two roles per packet. Spent on the producer it saves ~0.1 min a
+// call; spent on the critic it saves ~4.6 min a call and removes the run's whole paid critic chain. So a producer
+// takes the free route only when the paid pool has nothing viable — the route is never lost, only ordered last.
+// `any` restores the CR-66.3 order (free first for both roles) for a run that wants it.
+export const FREE_ROUTE_ROLES = ['critic', 'any'];
+export function freeRouteRole(value = process.env.BH_WORKER_FREE_ROUTE_ROLE) {
+  if (value === undefined || value === null || value === '') return 'critic';
+  if (!FREE_ROUTE_ROLES.includes(value)) throw new Error(`Unsupported free-route role ${value}`);
+  return value;
+}
+
+/** A receipt-legible route label: the transport plus the exact route the call went out on (CR-73.4). */
+export function routeLabel(candidate) {
+  if (!candidate || typeof candidate !== 'object') return null;
+  if (candidate.transport === 'router') return `router:${candidate.router_model ?? 'unknown'}`;
+  if (candidate.transport === 'opencode') return 'opencode:chutes';
+  return 'openrouter';
+}
+
+export function selectModel(catalog, dataset, { model, critic = false, producers = [], smokeTest = false, maxPricePer1M = Infinity, excludeModels = [], scheduled = false, freeRouter = [], freeRouteRole: role = 'critic' } = {}) {
   if (typeof maxPricePer1M !== 'number' || maxPricePer1M <= 0 || Number.isNaN(maxPricePer1M)) throw new Error('Invalid worker price ceiling');
   if (!Array.isArray(excludeModels) || excludeModels.some((m) => typeof m !== 'string' || !m.includes('/'))) throw new Error('Invalid excluded worker model IDs');
   const excluded = new Set(excludeModels);
@@ -131,8 +153,13 @@ export function selectModel(catalog, dataset, { model, critic = false, producers
   if (critic && smokeTest) throw new Error('Smoke tests cannot certify a critic round');
   if (smokeTest && !model) throw new Error('Smoke tests require an explicitly pinned model');
   const candidates = candidateList(catalog, dataset, MIN_INDEX, catalog.length);
-  // CR-66.3: qualified free router workers first (only offered to scheduled calls), then the OpenRouter pool.
-  const rankedCandidates = [...(scheduled && !model ? freeRouter : []), ...candidates.free_verified, ...candidates.cheap_verified]
+  // CR-66.3: qualified free router workers are offered only to scheduled calls with no pinned model.
+  // CR-73.4: with `freeRouteRole: 'critic'` (the default) a producer sees them last instead of first, so the one
+  // qualifying free route stays available to the critic it saves 40x more time on. Nothing is removed from the pool.
+  if (!FREE_ROUTE_ROLES.includes(role)) throw new Error(`Unsupported free-route role ${role}`);
+  const offeredFree = scheduled && !model ? freeRouter : [];
+  const freeFirst = role === 'any' || critic;
+  const rankedCandidates = [...(freeFirst ? offeredFree : []), ...candidates.free_verified, ...candidates.cheap_verified, ...(freeFirst ? [] : offeredFree)]
     .filter((m) => !scheduled || m.transport === 'router' || FLORIAN_ALLOWED_SCHEDULED_WORKERS.includes(modelBase(m.id)));
   const candidate = model ? assessModel(catalog.find((m) => m.id === model) || {}, dataset)
     : rankedCandidates.find((m) => !excluded.has(m.id) && m.input_per_1m <= maxPricePer1M && m.output_per_1m <= maxPricePer1M && (!critic || !avoid.has(m.family)));

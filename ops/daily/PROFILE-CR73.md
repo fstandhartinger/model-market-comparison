@@ -165,3 +165,59 @@ freeze of those ids held for exactly one build (`96745c3` explains and fixes it)
 find, the scheduled 05:17 run would have died at `npm test` and published nothing. A prices dry run
 costs 2.5 minutes and exercises build + tests + typecheck + gate against the real captures — worth
 running after any change that can affect identity or the dataset shape.
+
+## CR-73.4 — which role the free route is spent on (18 Sep 2026, iteration 103)
+
+The baseline above says the free route was barely used: 4 of 46 calls. The receipts say why, and the reason is not
+availability.
+
+| | calls | worker min | $ |
+|---|---:|---:|---:|
+| producer (`oneshot`) on paid `z-ai/glm-5.3-flash` | 18 | 1.9 | 0.0183 |
+| producer on the free route `chutes/moonshotai/Kimi-K3-TEE` | 4 | 4.1 | 0 |
+| critic on paid `deepseek/deepseek-v4-flash-0731` | 18 | 82.8 | 0.0140 |
+| critic on paid `deepseek/deepseek-v4.1-flash` | 3 | 7.5 | 0.0271 |
+| critic on paid `z-ai/glm-5.3-flash` | 3 | 0.5 | — |
+
+**Not one critic call ran free**, and two independent mechanisms caused that:
+
+1. **The free route was spent on the wrong role.** Kimi K3 (AA 43.8) is the only route that qualifies — Qwen3.8 27B
+   tops out at 33.9 and Union Alpha has no AA index — and a critic must be a different vendor family than *every*
+   producer. So the route can serve one role per packet, and CR-66.3 offered it to the producer first. A producer call
+   costs ~0.1 min; a critic call on the paid chain costs ~4.6 min.
+2. **One content failure in one role killed it for both.** `unavailable-models.jsonl` records the route excluded at
+   13:47:22 with `Malformed producer audit row`. Every critic call after that timestamp — 20 of the 24 — went to the
+   paid chain, because the exclusion list is keyed by model id alone.
+
+### What changed
+
+* **The free route is reserved for the critic** (`freeRouteRole`, default `critic`, in `worker-policy.mjs`;
+  `selectProducerCritic` in `ops/daily/policy.mjs` names the same pair in the run report). A producer now sees the
+  free routes **last** instead of first — ordered last, never removed: with no viable paid candidate a producer still
+  takes the free route, so nothing the pipeline could do before is lost. `BH_WORKER_FREE_ROUTE_ROLE=any` restores the
+  CR-66.3 order.
+* **A content failure is scoped to the role that produced it**; a transport or health failure still excludes the route
+  everywhere (`excludedWorkerModels(records, { role })` in `ops/daily/gauntlet.mjs`). A malformed producer audit is no
+  evidence that a route cannot review. The three 300 s router timeouts that motivated CR-67.3 are transport failures
+  and stay global, as do records with no role recorded (an older or truncated log never widens what is offered).
+  CR-67.3's single strike for a free route and one retry for a paid one are unchanged *within* a role.
+* **Receipts state route, attempt and cost.** Every worker receipt now carries `route`
+  (`router:fw-kimi-k3` / `openrouter` / `opencode:chutes`), `attempt`, `free_route_role`, `free_routes_offered` and
+  `excluded_models` next to `requested_model`, `actual_model` and `usage.cost`; the gauntlet receipts carry
+  `requested_model`, `route`, `attempt` and `cost_usd` per round. A reader can now tell a free route that was **not
+  offered** (unhealthy, unqualified, excluded) from one that was offered and **not taken** (reserved for the critic).
+
+**Nothing about what is reviewed changed.** The different-family critic rule, the AA ≥ 34 qualification on the exact
+variant, the health gate, the whitelist, the price ceiling and the fail-closed retry budget are untouched; a unit that
+cannot be reviewed stays withheld.
+
+**Expected effect, stated as a prediction and not as a result:** on the baseline's call mix the 24 critic calls move
+from the paid chain (90.9 min, $0.041) to a route that answered 4 producer calls in 4.1 min, and the 22 producer calls
+move to the paid pool (1.9 min for 18 calls, ~$0.02). Paid calls 42 → 22. The honest measurement of this is CR-73.5's
+job — two consecutive unattended full runs and one changed-source run — not this section's.
+
+**Fixtures** (`test/cr-73-free-routes.test.mjs`, 4 tests): role preference and the `any` override; the free route still
+taken by a producer when no paid candidate is viable; role-scoped content failures vs global transport failures;
+unhealthy, unqualified and unscored routes never treated as valid; and the real CLI against a mocked router plus
+OpenRouter, asserting that the producer call goes to OpenRouter, the critic call to the router, and that both receipts
+carry route, attempt and cost.

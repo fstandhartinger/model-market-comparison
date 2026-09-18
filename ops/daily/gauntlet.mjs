@@ -95,12 +95,25 @@ function validateRows(rows) {
 // A malformed answer from a paid OpenRouter worker is rejected locally and costs seconds, so it earns exactly one retry
 // per run; a second malformed answer, any other failure (timeouts, transport) and every failed free router route
 // (`chutes/…`, slow max-effort calls — see 1c394a3) stay excluded for the rest of the run.
+// CR-73.4 (2026-09-18): a *content* failure is scoped to the role that produced it; a *transport or health* failure
+// still excludes the route for every role, as CR-67.3 requires. Evidence for the split: in the 17 Sep 13:36 baseline
+// the only free route was excluded at 13:47 by "Malformed producer audit row" — a producer-schema failure — and all
+// 20 critic calls after it went to the paid chain (82.8 min). A malformed producer audit is no evidence that a route
+// cannot review; three 300 s router timeouts (the 06:07 run that motivated CR-67.3) are evidence that it is unwell,
+// and those stay global. A record without a `role` is treated as global, so an older or truncated log never widens
+// what a route is offered.
 const MALFORMED_OUTPUT = /malformed/i;
-export function excludedWorkerModels(records) {
+export const WORKER_ROLES = ['producer', 'critic'];
+export function excludedWorkerModels(records, { role = null } = {}) {
+  if (role !== null && !WORKER_ROLES.includes(role)) throw new Error(`Unknown worker role ${role}`);
   const malformed = new Map();
   const excluded = new Set();
   for (const record of records) {
     if (typeof record?.model !== 'string') continue;
+    // Content failure: only the same role (or an unattributed record) counts against this call.
+    const contentOnly = MALFORMED_OUTPUT.test(record.reason ?? '')
+      && WORKER_ROLES.includes(record.role) && role !== null && record.role !== role;
+    if (contentOnly) continue;
     if (!MALFORMED_OUTPUT.test(record.reason ?? '') || record.model.startsWith('chutes/')) { excluded.add(record.model); continue; }
     malformed.set(record.model, (malformed.get(record.model) ?? 0) + 1);
     if (malformed.get(record.model) >= 2) excluded.add(record.model);
@@ -108,8 +121,9 @@ export function excludedWorkerModels(records) {
   return [...excluded];
 }
 
-export async function defaultRunner(args) {
+export async function defaultRunner(args, { attempt = 1 } = {}) {
   const state = process.env.BH_STATE;
+  const role = args.includes('--critic') ? 'critic' : 'producer';
   const failedFile = state ? join(state, 'unavailable-models.jsonl') : null;
   // 2026-09-15: 180 s was never exercised unattended (the passing 09-14 runs used 600); DeepSeek critics
   // reason for 120–310 s, so the scheduled run aborted a review that completes in ~121 s at 600.
@@ -119,7 +133,7 @@ export async function defaultRunner(args) {
   }
   let failed = [];
   if (failedFile) {
-    try { failed = excludedWorkerModels((await readFile(failedFile, 'utf8')).trim().split('\n').filter(Boolean).map(JSON.parse)); }
+    try { failed = excludedWorkerModels((await readFile(failedFile, 'utf8')).trim().split('\n').filter(Boolean).map(JSON.parse), { role }); }
     catch (error) { if (error.code !== 'ENOENT') throw error; }
   }
   try {
@@ -129,6 +143,8 @@ export async function defaultRunner(args) {
     // 120–160 s (2026-09-14/15), which is why the unattended default is DEFAULT_WORKER_TIMEOUT_SECONDS (600 s).
     const { stdout, stderr } = await exec('bash', [WORKER_SH, '--max-tokens', '16384', '--timeout', String(workerTimeout), ...args], {
       cwd: REPO, env: { ...process.env, BH_WORKER_REASONING_EFFORT: 'low', BH_WORKER_DISABLE_OPTIONAL_REASONING: '0', BH_WORKER_MAX_PRICE_PER_1M: '4',
+        // CR-73.4: the attempt index rides along so the receipt can state which try it was.
+        BH_WORKER_ATTEMPT: String(Number.isInteger(attempt) && attempt > 0 ? attempt : 1),
         BH_WORKER_EXCLUDE_MODELS: [...new Set([...failed, ...(process.env.BH_WORKER_EXCLUDE_MODELS || '').split(',').filter(Boolean)])].join(',') },
       maxBuffer: 4 * 1024 * 1024, timeout: (workerTimeout + 60) * 1000,
     });
@@ -138,7 +154,7 @@ export async function defaultRunner(args) {
     const reason = error.stderr?.match(/^WORKER_ERROR: (.*)/m)?.[1] ?? 'Worker process failed';
     if (model && failedFile && !/HTTP (401|403|429)/.test(reason)) {
       await mkdir(state, { recursive: true });
-      await appendFile(failedFile, JSON.stringify({ model, at: new Date().toISOString(), reason, role: args.includes('--critic') ? 'critic' : 'producer' }) + '\n');
+      await appendFile(failedFile, JSON.stringify({ model, at: new Date().toISOString(), reason, role }) + '\n');
     }
     throw new Error(`${model ?? 'worker'}: ${reason}`);
   }
@@ -393,7 +409,7 @@ export async function reviewArtifact({
         producerOut = join(dir, `producer-r${round}.json`);
         const producerSchema = join(dir, `producer-schema-r${round}.json`);
         await writeJSONAtomic(producerSchema, producerResponseSchema([...rowIds]));
-        await runner(['--json', '--file', packetPath, '--out', producerOut, PRODUCER_TASK]);
+        await runner(['--json', '--file', packetPath, '--out', producerOut, PRODUCER_TASK], { attempt: round });
         producer = await readWorkerReceipt(producerOut);
         try { auditFlagged = parseProducerAudit(producer.text, rowIds); }
         catch (error) { if (objectionSignal(producer.text)) objections++; await recordInvalidModel(producer.meta, 'producer', error.message, runner); throw error; }
@@ -404,7 +420,8 @@ export async function reviewArtifact({
       }
       for (const rowId of auditFlagged.keys()) producerDisputed.add(rowId);
       if (!producers.includes(producer.meta.actual_model)) producers.push(producer.meta.actual_model);
-      receipts.push({ round, role: 'producer', reused_from_round: reusedFrom, model: producer.meta.actual_model, out: repoRelative(producerOut), output_sha256: producer.meta.output_sha256, qualification: producer.meta.qualification, usage: reusedFrom ? null : producer.meta.usage, reasoning: producer.meta.reasoning });
+      // CR-73.4: requested/actual model, route, attempt and cost are all on the receipt, not only in the qualification blob.
+      receipts.push({ round, role: 'producer', reused_from_round: reusedFrom, requested_model: producer.meta.requested_model ?? null, model: producer.meta.actual_model, route: producer.meta.route ?? null, attempt: producer.meta.attempt ?? round, cost_usd: reusedFrom ? 0 : (producer.meta.usage?.cost ?? null), out: repoRelative(producerOut), output_sha256: producer.meta.output_sha256, qualification: producer.meta.qualification, usage: reusedFrom ? null : producer.meta.usage, reasoning: producer.meta.reasoning });
 
       // 4. Read-only critic from a different vendor family than ALL producers.
       const criticOut = join(dir, `review-r${round}.json`);
@@ -412,7 +429,7 @@ export async function reviewArtifact({
       await writeFile(criticPacketPath, buildPacket({ artifactId: id, artifactSha256, round, producers, criteria: criteriaNorm, rows: current, sources: sourceList, limits, layout }) + '\nExecuted producer receipt (identity and qualification only): ' + JSON.stringify({ actual_model: producer.meta.actual_model, qualification: producer.meta.qualification, output_sha256: producer.meta.output_sha256 }) + '\n');
       const criticSchema = join(dir, `critic-schema-r${round}.json`);
       await writeJSONAtomic(criticSchema, criticResponseSchema(id, artifactSha256, round, [...rowIds, ...criteriaNorm.map((c) => c.id)]));
-      await runner(['--critic', '--producer', producers.join(','), '--file', criticPacketPath, '--out', criticOut, CRITIC_TASK]);
+      await runner(['--critic', '--producer', producers.join(','), '--file', criticPacketPath, '--out', criticOut, CRITIC_TASK], { attempt: round });
       const critic = await readWorkerReceipt(criticOut);
       if (producers.some((m) => vendorFamily(m) === vendorFamily(critic.meta.actual_model)) || vendorFamily(critic.meta.actual_model) === vendorFamily(producer.meta.actual_model)) {
         throw new Error(`Critic ${critic.meta.actual_model} is not from a different vendor family than every producer`);
@@ -420,7 +437,7 @@ export async function reviewArtifact({
       let review;
       try { review = parseReview(critic.text, { artifactId: id, artifactSha256, round }); }
       catch (error) { if (objectionSignal(critic.text)) objections++; await recordInvalidModel(critic.meta, 'critic', error.message, runner); throw error; }
-      receipts.push({ round, role: 'critic', model: critic.meta.actual_model, out: repoRelative(criticOut), output_sha256: critic.meta.output_sha256, qualification: critic.meta.qualification, usage: critic.meta.usage, reasoning: critic.meta.reasoning });
+      receipts.push({ round, role: 'critic', requested_model: critic.meta.requested_model ?? null, model: critic.meta.actual_model, route: critic.meta.route ?? null, attempt: critic.meta.attempt ?? round, cost_usd: critic.meta.usage?.cost ?? null, out: repoRelative(criticOut), output_sha256: critic.meta.output_sha256, qualification: critic.meta.qualification, usage: critic.meta.usage, reasoning: critic.meta.reasoning });
 
       // 5. Strict coverage: every row id and every criterion id must be checked.
       const requiredCoverage = new Set([...rowIds, ...criteriaNorm.map((c) => c.id)]);

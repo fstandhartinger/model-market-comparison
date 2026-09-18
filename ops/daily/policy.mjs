@@ -221,7 +221,7 @@ export function planNotifications({
 // defensively re-check the gate and additionally cap cost at <= $4 per million
 // prompt AND completion tokens. The critic must come from a different vendor
 // family than the producer. Astra (Codex) is never a daily worker.
-export function selectProducerCritic(catalog, { maxUsdPerMtok = MAX_WORKER_USD_PER_MTOK, minAa = MIN_WORKER_AA_INDEX } = {}) {
+export function selectProducerCritic(catalog, { maxUsdPerMtok = MAX_WORKER_USD_PER_MTOK, minAa = MIN_WORKER_AA_INDEX, freeRouteRole = 'critic' } = {}) {
   if (!Number.isFinite(minAa) || minAa < 34 || !Number.isFinite(maxUsdPerMtok) || maxUsdPerMtok <= 0 || maxUsdPerMtok > MAX_WORKER_USD_PER_MTOK) throw new Error('Invalid daily worker qualification/cost limits');
   if (!catalog || typeof catalog !== 'object') throw new Error('worker catalog missing');
   // CR-66.3: qualified free router workers (health order) come before the OpenRouter pool; paid models stay the fallback.
@@ -235,7 +235,15 @@ export function selectProducerCritic(catalog, { maxUsdPerMtok = MAX_WORKER_USD_P
     && typeof m.family === 'string' && m.family)
     .sort((a, b) => (a.input_per_1m + a.output_per_1m) - (b.input_per_1m + b.output_per_1m) || (free.includes(b) - free.includes(a)));
   if (!viable.length) throw new Error(`no viable daily worker (AA >= ${minAa}, <= $${maxUsdPerMtok}/Mtok prompt+completion)`);
-  const producer = viable[0];
+  // CR-73.4: the run report must name the pair the selector will actually take. A free route is spent on the critic
+  // (90.9 min and every paid critic call in the 17 Sep baseline) rather than on the producer (5.8 min), so the
+  // producer is the cheapest *non-free-route* model whenever one is viable and leaves a different-family critic.
+  // With no free route, or with nothing else viable, this is exactly the old order.
+  const isFree = (m) => free.includes(m);
+  const producer = (freeRouteRole === 'critic'
+    ? viable.find((m) => !isFree(m) && viable.some((c) => isFree(c) && c.family !== m.family))
+      ?? viable.find((m) => !isFree(m) && viable.some((c) => c.family !== m.family))
+    : null) ?? viable[0];
   const critic = viable.find((m) => m.family !== producer.family);
   if (!critic) throw new Error(`no different-family critic available (producer family: ${producer.family})`);
   return { producer, critic };

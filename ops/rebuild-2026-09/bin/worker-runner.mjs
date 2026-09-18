@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { spawn, execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { createHash } from 'node:crypto';
-import { freeRouterCandidates, selectModel, selectModelForWorker, validateCompletion, SMOKE_TASK } from './worker-policy.mjs';
+import { freeRouterCandidates, selectModel, selectModelForWorker, validateCompletion, freeRouteRole, routeLabel, SMOKE_TASK } from './worker-policy.mjs';
 import { writeJSONAtomic } from '../../../lib/snapshot.mjs';
 import { writeFile, rename, rm } from 'node:fs/promises';
 import { imageEvidence } from './worker-images.mjs';
@@ -164,9 +164,12 @@ try {
     const health = await readFile(process.env.BH_LLM_HEALTH || `${process.env.HOME}/.llm-health.json`, 'utf8').then(JSON.parse).catch(() => null);
     freeRouter = freeRouterCandidates(dataset, health);
   }
+  // CR-73.4: a producer sees the free routes last so the one qualifying route stays free for the critic it saves the
+  // most time on; BH_WORKER_FREE_ROUTE_ROLE=any restores the CR-66.3 order.
+  const role = freeRouteRole();
   const chosen = options.agent
     ? selectModel(catalog, dataset, { model: 'moonshotai/kimi-k3' })
-    : selectModelForWorker(catalog, dataset, { ...options, scheduled: true, freeRouter });
+    : selectModelForWorker(catalog, dataset, { ...options, scheduled: true, freeRouter, freeRouteRole: role });
   const requestedEffort = process.env.BH_WORKER_REASONING_EFFORT;
   let reasoning;
   if (!options.agent && chosen.transport === 'router') {
@@ -182,7 +185,13 @@ try {
   }
   const screenshots = await imageEvidence(options.images, catalog.find((m) => m.id === chosen.id));
   if (screenshots.manifest.length) task += `\n\nAttached screenshot manifest, in image order:\n${JSON.stringify(screenshots.manifest)}`;
-  const metadata = { started_at: new Date().toISOString(), mode: options.agent ? 'agent' : options.critic ? 'critic' : options.smokeTest ? 'smoke_test' : 'oneshot', requested_model: options.agent ? 'chutes/moonshotai/Kimi-K3-TEE' : chosen.id, producers: options.producers, qualification: chosen, input_sha256: createHash('sha256').update(task).digest('hex') };
+  // CR-73.4: every receipt states the requested model, the route it went out on, which attempt it was, what was
+  // excluded when it was chosen and (below) the actual model and cost — so a reader can tell a free route that was
+  // not offered from one that was not available.
+  const attempt = Number.parseInt(process.env.BH_WORKER_ATTEMPT ?? '1', 10);
+  const metadata = { started_at: new Date().toISOString(), mode: options.agent ? 'agent' : options.critic ? 'critic' : options.smokeTest ? 'smoke_test' : 'oneshot', requested_model: options.agent ? 'chutes/moonshotai/Kimi-K3-TEE' : chosen.id, producers: options.producers, qualification: chosen, input_sha256: createHash('sha256').update(task).digest('hex'),
+    route: options.agent ? 'opencode:chutes' : routeLabel(chosen), attempt: Number.isInteger(attempt) && attempt > 0 ? attempt : 1,
+    free_route_role: options.agent ? null : role, free_routes_offered: freeRouter.map((c) => c.id), excluded_models: [...options.excludeModels] };
   attemptMetadata = metadata;
   if (!options.agent && chosen.transport !== 'router' && process.env.BH_WORKER_DISABLE_OPTIONAL_REASONING === '1' && catalog.find((m) => m.id === chosen.id)?.reasoning?.mandatory === false) reasoning = { enabled: false, exclude: true };
   metadata.reasoning = reasoning ?? null;

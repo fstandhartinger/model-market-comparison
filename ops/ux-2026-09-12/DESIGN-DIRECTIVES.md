@@ -105,6 +105,10 @@ and the counts line under it keeps the page honest (P4).
 
 ## Directives (open)
 
+> **Status 2026-09-18 ~01:40 UTC (iteration 103):** F-116–F-119 are **verified** by claude-opus as a non-implementer —
+> `bin/verify-fable-pass22.mjs` **62/62 on both hosts** at live `7914c52`, and `bin/verify-cr79.mjs` stayed green there (**172/172 per host**),
+> so the pass-22 header change did not regress CR-79. Evidence: `/opt/benchmarkheaven/state/ux-evidence/iter103-nonimpl/`.
+>
 > **Status 2026-09-18 ~01:00 UTC (pass 22):** no directive is waiting for an implementer. F-116–F-119 are **implemented by Fable in
 > this pass** (commit `61c5fcd`) and need a **non-implementer live pass** on both hosts, 1440/390, light/dark: run
 > `node ops/ux-2026-09-12/bin/verify-fable-pass22.mjs <base> <out>` and read its `verification.json`.
@@ -323,10 +327,10 @@ taller than three lines (name ≤ 2 + sub-line 1) on Featured; 1440 unchanged; l
 
 | Directive | Commit | Evidence | Verified by |
 |---|---|---|---|
-| F-116 Table headers: the (i) and the sort caret never take a line of their own | `61c5fcd` (Fable, pass 22) | `/opt/benchmarkheaven/state/ux-evidence/fable-20260918-pass22/after/` (local build 1440/390 × light/dark, header geometry) | **open** — needs a non-implementer live pass (`bin/verify-fable-pass22.mjs`) |
-| F-117 Compare radar: ring labels off the 12-o'clock spoke | `61c5fcd` (Fable, pass 22) | same (`*-compare-radar*.png`, ring geometry) | **open** — needs a non-implementer live pass |
-| F-118 The Signal (i) is four short lines | `61c5fcd` (Fable, pass 22) | same (`*-bmx-signal-info.png`, word count) | **open** — needs a non-implementer live pass |
-| F-119 Quick look: "Open the full report ↓"; one-line variant sub-line | `61c5fcd` (Fable, pass 22) | same (`mobile_*-bmx-two-open.png`) | **open** — needs a non-implementer live pass |
+| F-116 Table headers: the (i) and the sort caret never take a line of their own | `61c5fcd` (Fable, pass 22) | `/opt/benchmarkheaven/state/ux-evidence/iter103-nonimpl/pass22-{canonical,legacy}/` + `pass22-*.log` | **verified** by claude-opus (iteration 103, non-implementer) at live `7914c52` on **both hosts**: `bin/verify-fable-pass22.mjs` **62/62 each**, no header (i) on a line of its own, every (i) on its label's last line, caret glued, header row ≤ 68/80 px at 1440/390, light and dark |
+| F-117 Compare radar: ring labels off the 12-o'clock spoke | `61c5fcd` (Fable, pass 22) | same | **verified** by claude-opus (iteration 103, non-implementer), both hosts: ring labels off the spoke, touching no point, halo present, on both the Percentile and the Native scale |
+| F-118 The Signal (i) is four short lines | `61c5fcd` (Fable, pass 22) | same | **verified** by claude-opus (iteration 103, non-implementer), both hosts: the (i) panel is within the word budget and fits the phone viewport with its link |
+| F-119 Quick look: "Open the full report ↓"; one-line variant sub-line | `61c5fcd` (Fable, pass 22) | same | **verified** by claude-opus (iteration 103, non-implementer), both hosts: the link no longer repeats the row name (name in `aria-label`), the variant sub-line is one line with a title |
 | **F-112 re-judged** (claude-opus, iteration 101) — Signal bars: one catalog-wide scale with a visible reference mark, but the mark is the **zero line**, not the catalog average, and the bar **diverges** around it | `d1023a0` (claude-opus, iteration 101) | `/opt/benchmarkheaven/state/ux-evidence/f112-f114/` (`bin/verify-f112-f114.mjs`, 1440/390 × light/dark, both hosts) | **verified by Fable (pass 22, non-implementer):** the bar diverges around a shared zero line on one catalog-wide scale on Featured, Top 50 and All scored, both hosts, 1440/390, light/dark (`fable-20260918-pass22/*/desktop_light-benchmaxxing.png`, `*-bmx-top50.png`, `*-bmx-allscored.png`); the re-judgement (zero line, no catalog-average tick) is accepted and written into the design-system notes |
 | **F-114 re-judged** (claude-opus, iteration 101) — one explainer above the table, one status line in the reader's order, table pills like the Overview | `d1023a0` (claude-opus, iteration 101) | same | **verified by Fable (pass 22):** one instruction line under the card title, one status line in the reader's order, first table row 686 px at 390×844 (≤ 780), pills in the Overview's vocabulary; both hosts, light/dark. Residual: the Signal (i) grew into a 170-word paragraph → F-118 (fixed in pass 22) |
 | **For the design authority — two-line header at large text** (CR-79 follow-up, not a Fable directive) | `c7c3d22` | `/opt/benchmarkheaven/state/ux-evidence/cr79/live/{canonical,legacy}/` (360/390/430 px × light/dark × 1.0×/1.3× text) | **judged by Fable (pass 22): accepted, no change** — two lines beat a sideways scroll and beat hiding "Benchmarks" or shrinking the nav type for readers who chose larger text; `scrollWidth == clientWidth` at 390 × 1.3× on both hosts (`mobile_*-simple-largetext-header.png`) |
