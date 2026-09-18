@@ -4378,3 +4378,18 @@ The practical consequence is a correction to the expectation, not to the design:
 should use that number and not the stage's full 34.6 minutes. The vendor half may well be steadier
 — a vendor source is usually a published paper or model card — but it has no measurement yet,
 because the run receipts keep no per-source capture-hash history; building one is part of CR-73.5.
+
+**Vendor half, measured the same way (`afe3deb`).** The committed history of
+`data/raw/benchmarks/vendor-candidates.json` is the only place a vendor capture hash survives across
+days: **6/6** consecutive per-URL comparisons kept the same hash — the three vendor sources are a
+Hugging Face model card, a Mistral release post and an arXiv PDF, documents rather than telemetry
+(small sample, stated as such). Their cost is not the extraction: in the 17 Sep 13:36 baseline **3 of
+the 7 score candidates were vendor rows and the run accepted 0 changed rows**, so the whole
+producer → batch → different-family-critic chain ran to confirm numbers that had not moved; in the
+18 Sep 00:40 run it was **8 of 17 candidates over 3 of the 9 batches**. A vendor hit removes the
+producer call *and* keeps those rows out of `changedIds`, so their score batches never form — of the
+order of **10–15 min** at the baseline's 4.6 min critic latency, from three sources rather than
+seven. **So the vendor half is expected to be the larger saving of the two, which is the opposite of
+what the stage timings alone would suggest.** Both figures are estimates from stored reports; CR-73.5
+turns them into a measurement.
+
