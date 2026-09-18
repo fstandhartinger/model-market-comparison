@@ -29,9 +29,12 @@ try {
     const tag = `${w}px ${scheme}`;
 
     await page.goto(`${BASE}/`, { waitUntil: 'domcontentloaded', timeout: 90000 }); await settle(page);
-    const legends = await page.locator('[data-bh-tag-legend]').allInnerTexts();
+    // F-109 repinned the legend behind a collapsed disclosure: open it like a user would before reading,
+    // otherwise the legend rows have no rendered text and the check measures the disclosure, not the content.
+    await page.locator('[data-bh-legend] summary').first().click().catch(() => {});
+    const legendText = await page.locator('[data-bh-legend]').innerText().catch(() => '');
     const tip = await page.locator('.bh-value-tag').first().getAttribute('title').catch(() => null);
-    check(`CR-63.7/63.8 ${tag}: tag legend under the table; badge tooltip names its reference set`, legends.some((t) => /Benchmaxxing/.test(t)) && legends.some((t) => /cheaper/.test(t) && /Simple and Advanced/.test(t)) && /priced models in this (Simple|Advanced) view/.test(tip || ''), { legends: legends.map((t) => t.slice(0, 60)), tip });
+    check(`CR-63.7/63.8 ${tag}: tag legend under the table; badge tooltip names its reference set`, /Benchmaxxing/.test(legendText) && /cheaper/.test(legendText) && /pricier/.test(legendText) && /Simple and Advanced/.test(legendText) && /priced models in this (Simple|Advanced) view/.test(tip || ''), { legend: legendText.slice(0, 320), tip });
     const labels = await page.evaluate(() => {
       const texts = [...document.querySelectorAll('.recharts-wrapper svg text')].filter((t) => !t.closest('.recharts-cartesian-axis')).map((t) => ({ t: t.textContent, r: t.getBoundingClientRect() })).filter((x) => x.r.width > 0 && x.t.trim());
       const ov = []; for (let i = 0; i < texts.length; i++) for (let j = i + 1; j < texts.length; j++) { const a = texts[i].r, c = texts[j].r; if (a.left < c.right - 1 && c.left < a.right - 1 && a.top < c.bottom - 1 && c.top < a.bottom - 1) ov.push([texts[i].t, texts[j].t]); }
@@ -39,12 +42,20 @@ try {
     });
     check(`CR-63.18 ${tag}: value-map labels do not overlap`, labels.n >= 3 && labels.ov.length === 0, labels);
 
-    await page.goto(`${BASE}/models/glm-5.2`, { waitUntil: 'domcontentloaded' }); await settle(page);
+    // The original example (a flagged GLM) left the flagged set after the CR-69/74 recalibration and was
+    // later deprecated upstream; resolve the currently flagged set from the live /benchmaxxing table instead.
+    await page.goto(`${BASE}/benchmaxxing`, { waitUntil: 'domcontentloaded', timeout: 90000 }); await settle(page);
+    const flaggedId = await page.locator('tr[data-row-id]:has(.bh-signal-pill)').first().getAttribute('data-row-id').catch(() => null);
+    const flaggedFamily = flaggedId ? flaggedId.split('::')[0] : null;
+    await page.goto(`${BASE}/models/${flaggedFamily || 'muse-spark-1.1'}`, { waitUntil: 'domcontentloaded', timeout: 90000 }); await settle(page);
     const bmx = await page.locator('[data-bh-model-benchmaxxing]').innerText().catch(() => '');
     const card = await page.locator('section[aria-label="Composite and its inputs"]').innerText();
     const hint = await page.getByText('The same list price can give a different adjusted $/task').count();
     const reportHref = await page.locator('[data-bh-model-benchmaxxing] a').getAttribute('href').catch(() => null);
-    check(`CR-63.14 ${tag}: model page Benchmaxxing line, radar-axes note, price hint`, /Benchmaxxing signal/.test(bmx) && /report/.test(bmx) && /\/benchmaxxing\?model=.*#radar/.test(reportHref || '') && /6 radar axes/.test(card) && hint === 1, { bmx, reportHref, hint });
+    // The other half of the requirement: an untagged family shows no line (Claude Fable 5.1's report score is negative).
+    await page.goto(`${BASE}/models/claude-fable-5.1`, { waitUntil: 'domcontentloaded', timeout: 90000 }); await settle(page);
+    const bmxUntagged = await page.locator('[data-bh-model-benchmaxxing]').count();
+    check(`CR-63.14 ${tag}: model page Benchmaxxing line, radar-axes note, price hint`, !!flaggedFamily && /Benchmaxxing signal/.test(bmx) && /report/.test(bmx) && /\/benchmaxxing\?model=.*#radar/.test(reportHref || '') && /6 radar axes/.test(card) && hint === 1 && bmxUntagged === 0, { flaggedId, flaggedFamily, bmx, reportHref, hint, bmxUntagged });
 
     await page.goto(`${BASE}/eu`, { waitUntil: 'domcontentloaded' }); await settle(page);
     const eu = await page.locator('main').innerText();
@@ -58,7 +69,10 @@ try {
     const groupLine = await page.locator('.bh-cat-basis').first().innerText().catch(() => '');
     const groupHead = await page.locator('.bh-matrix-group button').first().innerText().catch(() => '');
     const mask = await page.locator('.bh-matrix-bar').first().evaluate((el) => getComputedStyle(el).maskImage || getComputedStyle(el).webkitMaskImage).catch(() => '');
-    check(`CR-63.16 ${tag}: ECI chips, group wording, fading bar ends`, eciTags >= 1 && /feed the group score|no group score/.test(groupLine) && /benchmarks/i.test(groupHead) && /gradient/.test(mask || ''), { eciTags, groupLine, groupHead, mask });
+    // CR-63.16's requirement is the "N benchmarks · M feed the group score" wording (the group basis line);
+    // below 640 px F-110 stacks the group header and carries the benchmark count in that basis line, so check
+    // the two together rather than pinning the count to the headline only.
+    check(`CR-63.16 ${tag}: ECI chips, group wording, fading bar ends`, eciTags >= 1 && /feed the group score|no group score/.test(groupLine) && /benchmarks/i.test(`${groupHead} ${groupLine}`) && /gradient/.test(mask || ''), { eciTags, groupLine, groupHead, mask });
 
     await page.goto(`${BASE}/compare`, { waitUntil: 'domcontentloaded' }); await settle(page);
     const colours = await page.locator('article .h-full.rounded-full').evaluateAll((els) => [...new Set(els.map((e) => e.style.background))]);
@@ -66,7 +80,18 @@ try {
     check(`CR-63.17 ${tag}: strength bars in per-model colours; axes wording`, colours.length >= 2 && axesLabel >= 1, { colours, axesLabel });
 
     await page.goto(`${BASE}/about#benchmaxxing`, { waitUntil: 'domcontentloaded' }); await page.waitForTimeout(600);
-    check(`CR-63.19 ${tag}: /about#benchmaxxing section`, (await page.locator('#benchmaxxing').count()) === 1 && /screening flag/.test(await page.locator('#benchmaxxing + p').innerText()), '');
+    // The section is one h3 plus several paragraphs (CR-78 expanded the copy); the screening wording lands
+    // in the later paragraphs, so read everything up to the next heading instead of only the adjacent <p>.
+    const aboutBmx = await page.evaluate(() => {
+      const h = document.querySelector('#benchmaxxing');
+      if (!h) return '';
+      let t = ` ${h.textContent || ''}`;
+      let n = h.nextElementSibling;
+      while (n && !/^H[1-4]$/.test(n.tagName)) { t += ' ' + (n.textContent || ''); n = n.nextElementSibling; }
+      return t;
+    });
+    const aboutBmxLink = await page.locator('#benchmaxxing ~ * a[href="/benchmaxxing"]').count();
+    check(`CR-63.19 ${tag}: /about#benchmaxxing section`, /Benchmaxxing signal/.test(aboutBmx) && /screen, not proof|screening flag/i.test(aboutBmx) && aboutBmxLink >= 1, { text: aboutBmx.slice(0, 220), link: aboutBmxLink });
 
     await page.goto(`${BASE}/benchmaxxing`, { waitUntil: 'domcontentloaded' }); await settle(page);
     check(`CR-64.2 ${tag}: /benchmaxxing states the exclusion`, /cost, token and speed metrics are left out by design/.test(await page.locator('[data-bh-capability-only]').innerText().catch(() => '')), '');

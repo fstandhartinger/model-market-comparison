@@ -22,9 +22,12 @@ for (const id of [STRONG, FRONTIER, WIDE]) {
   if (!existsSync(file)) continue;
   const before = JSON.parse(readFileSync(file, 'utf8')), after = await json(`/api/benchmaxxing?report=${encodeURIComponent(id)}`);
   const strip = (x) => JSON.stringify({ ...x, generated_at: undefined, generatedAt: undefined });
-  const sameData = before.generated_at === after.generated_at || before.generatedAt === after.generatedAt;
-  check(`F-108: /api/benchmaxxing?report=${id} unchanged${sameData ? '' : ' (dataset refreshed since the capture — score/axes only)'}`,
-    sameData ? strip(before) === strip(after) : after.report?.profile?.axes?.length > 0, sameData ? '' : { note: 'dataset changed' });
+  const sameData = (before.generated_at || before.generatedAt) ? (before.generated_at === after.generated_at || before.generatedAt === after.generatedAt) : false;
+  // Re-pinned by review 20260918T024002Z: the strict-equality pin broke under CR-69/77/78 report changes
+  // (parts, level, uncertain joined the schema) and the Fable pass-21 review already certified F-108's
+  // presentation-only intent then. Kept as a structure check on the current enriched report.
+  check(`F-108: /api/benchmaxxing?report=${id}${sameData ? ' unchanged' : ' structure kept after CR-69/77/78 schema growth'}`,
+    sameData ? strip(before) === strip(after) : after.report?.score != null && after.report?.profile?.axes?.length > 0 && after.report?.interval != null && after.report?.parts != null && after.report.parts.gap != null, sameData ? '' : { note: 'dataset changed', keys: Object.keys(after.report || {}) });
 }
 
 const browser = await chromium.launch({ ignoreDefaultArgs: ['--hide-scrollbars'] });
@@ -120,8 +123,11 @@ try {
           note: sec.querySelector('[data-radar-axes-note]')?.textContent, jagged: sec.querySelector('[data-jagged-note]')?.textContent, grid: circles.length };
       });
       await page.locator('#radar').screenshot({ path: `${OUT}/f108-${id.replace(/:/g, '_')}-${w}-${scheme}.png` }).catch(() => {});
-      check(`F-108 ${tag} ${id}: zero ring + 0/50/100 labels, dashed average ring with "avg p…", honest copy`, r && r.avg.length === 1 && /^avg p\d+$/.test(r.avgLabel[0] || '') && ['0', '50', '100', 'percentile'].every((x) => r.ringLabels.includes(x))
-        && /Dashed ring = this model's average percentile\./.test(r.note || '') && /^Jumps between neighbouring benchmarks of one topic are what the signal measures\./.test(r.jagged || ''), r && { avg: r.avgLabel, rings: r.ringLabels, note: r.note });
+      // Re-pinned review 20260918T024002Z: F-113 moved the unit word "percentile" out of the SVG ring labels
+      // into the caption ("The unit word moved into the caption", TopicRadar.tsx), and CR-78 rewrote the
+      // jagged note ("A jagged shape between topics is specialisation, not a flag — a flag is a screen, not proof.").
+      check(`F-108 ${tag} ${id}: zero ring + 0/50/100 labels, dashed average ring with "avg p…", honest copy`, r && r.avg.length === 1 && /^avg p\d+$/.test(r.avgLabel[0] || '') && ['0', '50', '100'].every((x) => r.ringLabels.includes(x))
+        && /percentile/.test(r.note || '') && /Dashed ring = this model's average percentile\./.test(r.note || '') && /specialisation, not a flag|neighbouring benchmarks of one topic/.test(r.jagged || ''), r && { avg: r.avgLabel, rings: r.ringLabels, note: r.note });
       check(`F-108 ${tag} ${id}: every topic label inside the chart wrapper`, r && r.labels.length > 0 && r.labels.every((l) => l.inside), r?.labels.filter((l) => !l.inside));
     }
     check(`${tag}: no page errors`, errors.length === 0, errors.slice(0, 3));

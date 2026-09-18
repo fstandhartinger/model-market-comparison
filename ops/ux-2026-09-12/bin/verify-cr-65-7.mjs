@@ -21,8 +21,10 @@ const ds = JSON.parse(readFileSync(new URL('../../../data/dataset.json', import.
 const view = buildBenchmarkView(ds);
 const sameData = ds.generated_at === meta.generated_at;
 check('live dataset is the committed dataset (score comparison is exact)', sameData, { live: meta.generated_at, local: ds.generated_at });
-const { taggedFamilies, weakFamilies, representatives } = benchmaxxingFamilySignals(view);
-const strongNames = [...taggedFamilies].map((f) => view.models.find((m) => m.id === representatives.get(f))?.name ?? f);
+// Re-pinned review 20260918T024002Z: CR-74.1 gave the pills three levels (light/medium/very strong);
+// taggedFamilies is the committed-code ground truth for which families carry a pill.
+const { taggedFamilies, representatives } = benchmaxxingFamilySignals(view);
+const taggedNames = [...taggedFamilies].map((f) => view.models.find((m) => m.id === representatives.get(f))?.name ?? f);
 for (const id of ['glm-5.3::max', 'gpt-6-astra::max', 'qwen3.6-plus::default', 'grok-4.3::high']) {
   const r = (await json(`/api/benchmaxxing?report=${encodeURIComponent(id)}`)).report;
   const local = scoreBenchmaxxing(view, id);
@@ -43,18 +45,23 @@ try {
     await page.screenshot({ path: `${OUT}/benchmaxxing-${w}-${scheme}.png` });
     const pills = await page.locator('table .bh-signal-pill').evaluateAll((els) => els.map((e) => ({ level: e.getAttribute('data-level'), row: (e.closest('tr')?.innerText ?? '').replace(/\s+/g, ' ').slice(0, 120) })));
     const text = squash(await page.locator('main').evaluate((el) => el.textContent));
-    check(`CR-65.7 ${tag}: /benchmaxxing pills are strong only and name today's strong families`, pills.length > 0 && pills.every((p) => p.level === 'strong') && weakFamilies.size === 0
-      && pills.length === strongNames.length && pills.every((p) => strongNames.some((n) => p.row.includes(n.replace(/ \(.*$/, '')))), { pills, strongNames });
-    check(`CR-65.7 ${tag}: /benchmaxxing method note explains the common cohort and the shrink floor`, /ranked on both boards among the models measured on both \(at least 10\)/.test(text) && /never below 6\)/.test(text) && !/never below 2\)/.test(text), '');
+    // Re-pinned review 20260918T024002Z: the table is paginated ("Show all"), so only the visible pill rows
+    // are name-compared; the complete-set/level assertions run API-side in verify-cr-65-iter91.
+    check(`CR-65.7 ${tag}: visible pills carry the CR-74 levels and name committed tagged families only`, pills.length > 0 && pills.every((p) => ['light', 'medium', 'strong'].includes(p.level))
+      && pills.length <= taggedNames.length && pills.every((p) => taggedNames.some((n) => p.row.includes(n.replace(/ \(.*$/, '')))), { pills, visible: pills.length, taggedTotal: taggedNames.length });
+    // F-118 (Fable pass 22) replaced the long page intro with the four-line Signal InfoTip below; the
+    // shrink details live on /about (asserted at the end of this block).
+    check(`CR-65.7 ${tag}: /benchmaxxing states the screening, capability-only premise`, /screening flag, not proof of leakage/.test(text) && /Only verifiable capability results count/.test(text), '');
     await page.getByRole('button', { name: 'About the Signal column' }).first().click().catch(() => {});
     await page.waitForTimeout(600);
     const tip = squash(await page.evaluate(() => [...document.querySelectorAll('[role="tooltip"], [role="dialog"], dialog[open]')].map((el) => el.textContent).join(' ')));
     await page.screenshot({ path: `${OUT}/signal-info-${w}-${scheme}.png` });
-    check(`CR-65.7 ${tag}: Signal (i) names the pairwise ranking`, /each pair of related benchmarks ranked among the models both cover/.test(tip), tip.slice(0, 200));
+    // F-118 rewrote the tooltip as four short lines; pairwise-percentile wording now sits on /about.
+    check(`CR-65.7 ${tag}: Signal (i) names the headline/held-out percentile gap and shrinkage`, /Signed gap, in percentile points/.test(tip) && /pulled toward zero/.test(tip) && /held-out/.test(tip), tip.slice(0, 220));
     await page.keyboard.press('Escape').catch(() => {});
     await page.goto(`${BASE}/about`, { waitUntil: 'domcontentloaded' }); await settle(page);
     const about = squash(await page.locator('main').evaluate((el) => el.textContent));
-    check(`CR-65.7 ${tag}: /about says related benchmarks are compared among the models both have results for`, /Each pair of related benchmarks is compared among the models both benchmarks have results for, so a board that only tests frontier models and one that tests every model are put on the same footing/.test(about), '');
+    check(`CR-65.7 ${tag}: /about states the common-cohort comparison and the k-clamped shrinkage`, /ranked among the models that took both tests/.test(about) && /clamped to 6.{0,3}50/.test(about), '');
     check(`${tag}: no page errors`, errors.length === 0, errors.slice(0, 3));
     await ctx.close();
   }

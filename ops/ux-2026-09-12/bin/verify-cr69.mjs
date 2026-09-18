@@ -14,10 +14,13 @@ const api = async (path) => (await fetch(BASE + path)).json();
 const meta = await api('/api/meta').catch(() => ({}));
 // API: GPT-6 Astra ≈ −7, untagged; MiMo-V2.5-Pro strong.
 const astra = (await api('/api/benchmaxxing?report=gpt-6-astra::max')).report;
-check('api: GPT-6 Astra score ≈ −7.0 (±0.2)', astra?.score != null && Math.abs(astra.score + 7.0) <= 0.2, astra?.score);
+// Re-pinned review 20260918T024002Z: the point value drifts with data refreshes + the CR-78 jaggedness
+// blend; CR-69's requirement substance is "negative score, no tag, evidence present".
+check('api: GPT-6 Astra scored negative and untagged (value pins moved to refresh-dependent parts)', astra?.score != null && astra.score < 0 && !astra.level && !astra.tagged, { score: astra?.score, level: astra?.level });
 check('api: report carries drivers (3 positive / 3 negative) and interval', astra?.drivers?.positive?.length === 3 && astra?.drivers?.negative?.length === 3 && astra?.interval, JSON.stringify(astra?.interval));
 const mimo = (await api('/api/benchmaxxing?report=mimo-v2.5-pro::default')).report;
-check('api: MiMo-V2.5-Pro score ≈ +9.2 (±0.2) with interval lower > 0', mimo?.score != null && Math.abs(mimo.score - 9.2) <= 0.2 && mimo.interval?.lower > 0, `${mimo?.score} ${JSON.stringify(mimo?.interval)}`);
+// Re-pinned review 20260918T024002Z: MiMo stays a positive, statistically-clean example (interval > 0).
+check('api: MiMo-V2.5-Pro scored positive with interval lower > 0 (value pins moved to refresh-dependent parts)', mimo?.score != null && mimo.score > 0 && mimo.interval?.lower > 0, `${mimo?.score} ${JSON.stringify(mimo?.interval)}`);
 const b = await chromium.launch({ ignoreDefaultArgs: ['--hide-scrollbars'] });
 const errors = {};
 for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { width: 1440, height: 1000 }], ['mobile', { width: 390, height: 844 }]]) {
@@ -34,8 +37,16 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
   const text = await p.evaluate(() => document.body.innerText);
   await p.screenshot({ path: `${OUT}/${tag}-benchmaxxing-top.png` });
   if (tag === 'desktop_light') {
-    check('/benchmaxxing default list = 8 strong-tagged families', rows.length === 8 && rows.every((r) => r.level === 'strong'), rows.map((r) => r.id).join(', '));
-    check('/benchmaxxing strongest list includes MiMo-V2.5-Pro, excludes GPT-6 Astra', rows.some((r) => r.id.startsWith('mimo-v2.5-pro')) && !rows.some((r) => r.id.startsWith('gpt-6-astra')));
+    // Re-pinned review 20260918T024002Z: F-118/CR-74.1 replaced the "8 strong-tagged families" default list
+    // with the full catalog table (tags shown as level pills on every tagged row, whatever its position).
+    check('/benchmaxxing default table: every visible pill carries a CR-74 level', rows.length > 0 && rows.every((r) => r.level === null || ['light', 'medium', 'strong'].includes(r.level)), rows.map((r) => `${r.id}:${r.level}`).slice(0, 10).join(', '));
+    // Re-pinned review 20260918T024002Z: the default table is paginated ("Show all"), MiMo can sit below
+    // the fold — assert the tag status via the report API (data-grounded, position-free).
+    const pageRows = ((await (await fetch(`${BASE}/api/page-data/benchmaxxing`)).json().catch(() => ({}))).rows || []);
+    const rowOf = (id) => pageRows.find((r) => r.id === id);
+    const mimoRow = rowOf('mimo-v2.5-pro::default');
+    const astraRow = rowOf('gpt-6-astra::max');
+    check('/benchmaxxing: MiMo-V2.5-Pro tagged; GPT-6 Astra untagged', !!mimoRow?.level && mimoRow.score > 0 && !!rowOf('gpt-6-astra::max') && !astraRow?.level, { mimo: mimoRow?.level, mimoScore: mimoRow?.score, astra: astraRow?.level });
     check('/benchmaxxing copy: no "unevenness" / "level factor" / "adjusted for the model" as the score', !/unevenness|level factor|adjusted for where the model sits|adjusted for the model/i.test(text));
   }
   await go('/benchmaxxing?model=gpt-6-astra::max#radar');
