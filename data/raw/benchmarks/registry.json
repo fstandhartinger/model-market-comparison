@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "verified_at": "2026-09-15",
+  "verified_at": "2026-09-18",
   "entries": [
     {
       "id": "aa-aime::2025",
@@ -8246,6 +8246,511 @@
           "sha256": "958e947ecfdce585e7388ffa685d11fc04541df3903e92b6fd9dbd530fb2c7f7",
           "fetched_at": "2026-09-18T17:52:39.145370+00:00",
           "excerpt": "In the Tokens view above, each model’s line shows its average best-so-far effective score across all 11 tasks. That model’s official score is 80% normalized area under its line on a logarithmic token axis, plus 20% of its final value."
+        }
+      ]
+    },
+    {
+      "id": "vulcanbench-frontier::4",
+      "name": "VulcanBench Frontier v4",
+      "version": "4",
+      "version_status": "published",
+      "family": "vulcanbench-frontier",
+      "category": "Coding",
+      "one_sentence_description": "23 behavioural-reconstruction tasks: the model must repair a replacement implementation of a legacy program until hidden tests confirm it reproduces the program’s real drift from its written spec; the combined score weights functional correctness 50%, lint/complexity 8.5%, security 8.5% and judged Code quality 33%.",
+      "scoring": {
+        "metric": "Combined score across the 23 tasks, one column per model × reasoning-effort level: 100 × (0.50 × partial-credit functional hidden-test score + 0.085 × lint/complexity (ruff, radon) + 0.085 × security static analysis + 0.33 × judged Code quality), averaged over the runs of that column",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Published and maintained by Morgan Linton on vulcanbench.com; the leaderboard renders assets/data/swe-v4-board.csv (18 columns, n=23 per row, one row per model × effort). Each column aggregates every run of that model at that effort level in its own agent harness (Codex on a ChatGPT subscription, or Claude Code); Fable 5.1’s runs include 11 disclosed Opus 4.8 fallback cells that the operator keeps in the population (source footnote). Code quality is judged for a human reader by Muse Spark 1.3 and Grok 4.6 under one frozen protocol family (code-quality-maintenance-v3.4–v3.6). The retired v3 suite is a different task set and scale, never comparable. The suite was renamed VulcanBench Frontier v4 (formerly VulcanBench-SWE v4, September 2026) with task set and report URLs unchanged. Community benchmark (single operator), never a Composite input; the judged 33% component makes the combined score a judged score for category composites (CR-38.3)."
+      },
+      "maintainer": "Morgan Linton (VulcanBench)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://vulcanbench.com/leaderboard.html",
+      "publication_urls": [
+        {
+          "url": "https://vulcanbench.com/leaderboard.html",
+          "type": "official_leaderboard",
+          "role": "Primary results publication (chart + full table)"
+        },
+        {
+          "url": "https://vulcanbench.com/methodology.html",
+          "type": "official_leaderboard",
+          "role": "Score weights, graded factors and the frozen judged protocol"
+        },
+        {
+          "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+          "type": "official_leaderboard",
+          "role": "Board CSV the leaderboard renders (the collector’s source)"
+        },
+        {
+          "url": "https://vulcanbench.com/",
+          "type": "official_leaderboard",
+          "role": "Suite index and task-suite links"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "CSV",
+        "identity_policy": "source_label",
+        "locator": "GET /assets/data/swe-v4-board.csv → one row per model × effort; value = combined_33 (the Combined score column leaderboard.html renders).",
+        "version_guard": "Exact 18-column header (rank … protocol); every row must state n=23, a harness in {Codex, Claude Code}, an effort in {low, medium, high, extra-high, max} and a protocol starting code-quality-maintenance-v3. A different task count, column set, protocol family or renamed suite is a different identity and fails closed.",
+        "notes": "robots.txt of vulcanbench.com explicitly welcomes every crawler and AI answer engine (“everything here is meant to be read, indexed, and cited”); the task repos are open-source (v4-suite GitHub organisation, Apache-2.0). Flagged for ingestion by Florian’s X bookmark intake (CR-82.3; post 2098909653149401222)."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; the operator extends the board as models and effort sweeps complete and suites are versioned and frozen.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-18",
+      "last_verified": "2026-09-18",
+      "evidence": [
+        {
+          "url": "https://vulcanbench.com/robots.txt",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/vulcanbench.com-robots.txt",
+          "sha256": "617a7b8e26cc7bdf505881ba9ccafbb24f7fe12ca1cb82f6b615e4b9d8daad29",
+          "fetched_at": "2026-09-18T20:46:40.000000+00:00",
+          "excerpt": "User-agent: *\nAllow: /\n# VulcanBench: everything here is meant to be read, indexed, and cited."
+        },
+        {
+          "url": "https://vulcanbench.com/leaderboard.html",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/226ca51d82d603dc83f0.gz",
+          "sha256": "9ef3077c68ca8ebc4d86e25490810c9fe303504ea720da9ed53bd59ca24715aa",
+          "fetched_at": "2026-09-18T20:46:34.760503+00:00",
+          "excerpt": "VulcanBench Frontier v4 · current suite Leaderboard Every model measured on VulcanBench Frontier v4 (formerly VulcanBench-SWE v4; the suite and its report URLs are unchanged), at every reasoning-effort level it ran. Twenty-three behavioural-reconstruction tasks … † Fable 5.1 runs include 11 disclosed Opus 4.8 fallbacks across the sweep; they stay in the population."
+        },
+        {
+          "url": "https://vulcanbench.com/methodology.html",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/993b82ab4fa73979772f.gz",
+          "sha256": "0713466c01ef099537193bbae9dd8e27c43062b99cc2ed8f56370ad99d84f9de",
+          "fetched_at": "2026-09-18T20:46:37.424462+00:00",
+          "excerpt": "For each run, the combined score is 100 × (0.50F + 0.085Q + 0.085S + 0.33C), with each factor on a 0 to 1 scale. F is the partial-credit functional score, not the binary solved indicator used by pass@1."
+        },
+        {
+          "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/81d184fca0535d344be8.gz",
+          "sha256": "0e4a6e1db552adf9c2ca417ab5e76a3b8787f4bdc71e2b61318d3a31b3acabac",
+          "fetched_at": "2026-09-18T20:46:32.035922+00:00",
+          "excerpt": "rank,model,lab,harness,effort,best_effort,n,combined_33,combined_33_se,code_quality,passed,mean_minutes,mean_usd,mean_raw_tokens,median_output_tokens,mean_output_tokens,report,protocol\n1,Fable 5.1,Anthropic,Claude Code,max,True,23,91.8365,0.4651,82.4337,23,27.0964,9.058763,3823313.3,91462.0,101244.1,benchmarks/swe-v4-astra-fable51-v34.html,code-quality-maintenance-v3.4"
+        },
+        {
+          "url": "https://vulcanbench.com/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/73f3beff085b459efda4.gz",
+          "sha256": "9ee80f3c13471bea7767343f96ec74304b3c9acb2414b611c9f5a03cab99c818",
+          "fetched_at": "2026-09-18T20:55:46.795204+00:00",
+          "excerpt": "VulcanBench | an open-source coding benchmark for frontier models { \"@context\": \"https://schema.org\", \"@graph\": [ { \"@type\": \"Organization\", \"@id\": \"https://vulcanbench.com/#org\", \"name\": \"VulcanBench\", \"url\": \"https://v"
+        }
+      ]
+    },
+    {
+      "id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+      "name": "KernelBench-CUDA: GLM-5.2 Fused MoE (RTX PRO 6000)",
+      "version": "rtx-pro-6000",
+      "version_status": "published",
+      "family": "kernelbench-cuda-glm52-fused-moe",
+      "category": "Coding",
+      "one_sentence_description": "Fuse GLM-5.2’s MoE forward pass (256+shared experts, top-8 routing) as one CUDA kernel over a frozen shape sweep; Triton, vLLM and other DSLs are banned — CUDA/PTX/CUTLASS only.",
+      "scoring": {
+        "metric": "Peak fraction of the problem’s hardware roofline, geomean over the frozen shape sweep (dense-equivalent FLOPs where relevant), achieved by one audited agent session; rendered by the site as “% of roofline”",
+        "unit": "percent of roofline",
+        "range": [
+          0,
+          null
+        ],
+        "higher_better": true,
+        "notes": "Published by Elliot Arledge’s kernelbench.com (independent site, not the Stanford KernelBench); values are baked from the maintainer’s benchmarks/cuda/results/leaderboard.json (schema_version 1, environment v2_containerized, hardware RTX PRO 6000 Blackwell Workstation, sm_120a, 96 GB VRAM). A cell is scored only under the site’s own validity rule: correct and audited (“clean” or “interesting”); flagged, suspect, “bug” (published by the maintainer as unreliable) and unaudited cells are never scored, and the published per_problem ranked list is the cross-check — it still holds the two rejected cells the rule excludes, so the validity rule wins. Published values are roofline fractions rendered by the site as “% of roofline”: they are relative to the problem’s dense-equivalent roofline, not latencies (the SPEC’s latency-anchored rule makes milliseconds the honest headline for the decode and NSA problems; elapsed_seconds stays in each observation’s protocol), and values above 100% mean the measured kernel beat the conservative roofline (Opus 5 reaches 196.10% on 04). One unlimited agent session per cell; the agent harness (codex, claude, grok, kinetic-claude, deepseek-claude, muse, or-fable, or-opus, zai-claude, agy) stays in each observation’s protocol. Community benchmark, never a Composite input."
+      },
+      "maintainer": "Elliot Arledge (kernelbench.com)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://kernelbench.com/cuda",
+      "publication_urls": [
+        {
+          "url": "https://kernelbench.com/cuda",
+          "type": "official_leaderboard",
+          "role": "Primary results publication (board pages per problem)"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+          "type": "github",
+          "role": "Baked leaderboard data (the collector’s source)"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/SPEC.md",
+          "type": "github",
+          "role": "Problem deck, language gate, metric and scoring rules"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/published_runs.json",
+          "type": "github",
+          "role": "Curation allowlist of the run ids the site publishes"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JSON",
+        "identity_policy": "source_label",
+        "locator": "GET benchmarks/cuda/results/leaderboard.json → one row per stated model identity whose 01_glm52_fused_moe cell passes the site validity rule; value = peak_fraction × 100 (percent of roofline).",
+        "version_guard": "schema_version must stay 1, hardware.name must contain “RTX PRO 6000”, and the problem must stay in the stated four-problem deck. A scored cell must be correct, audited (clean/interesting) and appear in the published per_problem ranked list with the same value. Another hardware board (e.g. H100/B200) is a different identity.",
+        "notes": "robots.txt of kernelbench.com applies; the values come from the maintainer’s own baked data, which the site renders identically. Flagged for ingestion by Florian’s X bookmark intake (CR-82.4; post 2098577337407484408)."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; the site re-bakes leaderboard.json as audited runs complete.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-18",
+      "last_verified": "2026-09-18",
+      "evidence": [
+        {
+          "url": "https://kernelbench.com/robots.txt",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/50c352bc9cf3f4a12dc6.gz",
+          "sha256": "f655ec0282151b87636d7dba817fa9c3981aae5113bf81a8e40a99ed65dc7cd8",
+          "fetched_at": "2026-09-18T20:55:41.152241+00:00",
+          "excerpt": "User-Agent: *\nAllow: /\n\nSitemap: https://kernelbench.com/sitemap.xml\n"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+          "sha256": "961247cd6b756958a1cfec6158d55f90a3f67dda2ef2d2098eb9dedc99bcbc8c",
+          "fetched_at": "2026-09-18T20:46:23.832372+00:00",
+          "excerpt": "{\n  \"schema_version\": 1,\n  \"environment\": \"v2_containerized\",\n  \"hardware\": {\n    \"name\": \"RTX PRO 6000 Blackwell Workstation\",\n    \"sm\": \"sm_120a\",\n    \"vram_gb\": 96,\n    \"peak_bandwidth_gb_s\": 1800.0\n  },\n  \"problems\": [\n    \"01_glm52_fused_moe\",\n    \"02_deepseek_nsa\",\n    \"03_megaqwen_decode\",\n    \"04_grid_mingru_sps\"\n  ]"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/SPEC.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/dc8ee9fadbbdc5584821.gz",
+          "sha256": "6f9560580c44c71e6a08237be3a9b040c70ff2489d00876d3baa45b51a9f4e95",
+          "fetched_at": "2026-09-18T20:46:26.670549+00:00",
+          "excerpt": "# KernelBench-CUDA: Design Specification\n\nLast updated: 2026-07-16.\n\n## Purpose\n\nFour hard **CUDA-only** problems. Hard/Mega stay frozen. Language gate fails\nTriton/DSL and pure PyTorch without a kernel."
+        },
+        {
+          "url": "https://kernelbench.com/cuda",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/f62099ec51be85ea022a.gz",
+          "sha256": "e0e7dc4fca81a43324bf7891d47c02f600a062bff486192425d67700f0f6ec49",
+          "fetched_at": "2026-09-18T20:55:44.131853+00:00",
+          "excerpt": "KernelBench CUDA board page (renders the leaderboard’s ranked table)"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/published_runs.json",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/cb9f6cf77fe40e612105.gz",
+          "sha256": "0268196461aeef895488a2d5a1c7a1ee379df6bd62ff889dbc187a726e5a7381",
+          "fetched_at": "2026-09-18T20:46:29.366992+00:00",
+          "excerpt": "published_runs.json (maintainer curation allowlist): {\n  \"_comment\": \"Curation allowlist for the published RTX_PRO_6000 CUDA board. build_v2_leaderboard.py restricts candidate runs to these run"
+        }
+      ]
+    },
+    {
+      "id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+      "name": "KernelBench-CUDA: DeepSeek NSA (RTX PRO 6000)",
+      "version": "rtx-pro-6000",
+      "version_status": "published",
+      "family": "kernelbench-cuda-deepseek-nsa",
+      "category": "Coding",
+      "one_sentence_description": "Implement DeepSeek’s Native Sparse Attention block (block top-n routing + sparse attention) as a CUDA kernel over a frozen shape sweep.",
+      "scoring": {
+        "metric": "Peak fraction of the problem’s hardware roofline, geomean over the frozen shape sweep (dense-equivalent FLOPs where relevant), achieved by one audited agent session; rendered by the site as “% of roofline”",
+        "unit": "percent of roofline",
+        "range": [
+          0,
+          null
+        ],
+        "higher_better": true,
+        "notes": "Published by Elliot Arledge’s kernelbench.com (independent site, not the Stanford KernelBench); values are baked from the maintainer’s benchmarks/cuda/results/leaderboard.json (schema_version 1, environment v2_containerized, hardware RTX PRO 6000 Blackwell Workstation, sm_120a, 96 GB VRAM). A cell is scored only under the site’s own validity rule: correct and audited (“clean” or “interesting”); flagged, suspect, “bug” (published by the maintainer as unreliable) and unaudited cells are never scored, and the published per_problem ranked list is the cross-check — it still holds the two rejected cells the rule excludes, so the validity rule wins. Published values are roofline fractions rendered by the site as “% of roofline”: they are relative to the problem’s dense-equivalent roofline, not latencies (the SPEC’s latency-anchored rule makes milliseconds the honest headline for the decode and NSA problems; elapsed_seconds stays in each observation’s protocol), and values above 100% mean the measured kernel beat the conservative roofline (Opus 5 reaches 196.10% on 04). One unlimited agent session per cell; the agent harness (codex, claude, grok, kinetic-claude, deepseek-claude, muse, or-fable, or-opus, zai-claude, agy) stays in each observation’s protocol. Community benchmark, never a Composite input."
+      },
+      "maintainer": "Elliot Arledge (kernelbench.com)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://kernelbench.com/cuda",
+      "publication_urls": [
+        {
+          "url": "https://kernelbench.com/cuda",
+          "type": "official_leaderboard",
+          "role": "Primary results publication (board pages per problem)"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+          "type": "github",
+          "role": "Baked leaderboard data (the collector’s source)"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/SPEC.md",
+          "type": "github",
+          "role": "Problem deck, language gate, metric and scoring rules"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/published_runs.json",
+          "type": "github",
+          "role": "Curation allowlist of the run ids the site publishes"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JSON",
+        "identity_policy": "source_label",
+        "locator": "GET benchmarks/cuda/results/leaderboard.json → one row per stated model identity whose 02_deepseek_nsa cell passes the site validity rule; value = peak_fraction × 100 (percent of roofline).",
+        "version_guard": "schema_version must stay 1, hardware.name must contain “RTX PRO 6000”, and the problem must stay in the stated four-problem deck. A scored cell must be correct, audited (clean/interesting) and appear in the published per_problem ranked list with the same value. Another hardware board (e.g. H100/B200) is a different identity.",
+        "notes": "robots.txt of kernelbench.com applies; the values come from the maintainer’s own baked data, which the site renders identically. Flagged for ingestion by Florian’s X bookmark intake (CR-82.4; post 2098577337407484408)."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; the site re-bakes leaderboard.json as audited runs complete.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-18",
+      "last_verified": "2026-09-18",
+      "evidence": [
+        {
+          "url": "https://kernelbench.com/robots.txt",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/50c352bc9cf3f4a12dc6.gz",
+          "sha256": "f655ec0282151b87636d7dba817fa9c3981aae5113bf81a8e40a99ed65dc7cd8",
+          "fetched_at": "2026-09-18T20:55:41.152241+00:00",
+          "excerpt": "User-Agent: *\nAllow: /\n\nSitemap: https://kernelbench.com/sitemap.xml\n"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+          "sha256": "961247cd6b756958a1cfec6158d55f90a3f67dda2ef2d2098eb9dedc99bcbc8c",
+          "fetched_at": "2026-09-18T20:46:23.832372+00:00",
+          "excerpt": "{\n  \"schema_version\": 1,\n  \"environment\": \"v2_containerized\",\n  \"hardware\": {\n    \"name\": \"RTX PRO 6000 Blackwell Workstation\",\n    \"sm\": \"sm_120a\",\n    \"vram_gb\": 96,\n    \"peak_bandwidth_gb_s\": 1800.0\n  },\n  \"problems\": [\n    \"01_glm52_fused_moe\",\n    \"02_deepseek_nsa\",\n    \"03_megaqwen_decode\",\n    \"04_grid_mingru_sps\"\n  ]"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/SPEC.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/dc8ee9fadbbdc5584821.gz",
+          "sha256": "6f9560580c44c71e6a08237be3a9b040c70ff2489d00876d3baa45b51a9f4e95",
+          "fetched_at": "2026-09-18T20:46:26.670549+00:00",
+          "excerpt": "# KernelBench-CUDA: Design Specification\n\nLast updated: 2026-07-16.\n\n## Purpose\n\nFour hard **CUDA-only** problems. Hard/Mega stay frozen. Language gate fails\nTriton/DSL and pure PyTorch without a kernel."
+        },
+        {
+          "url": "https://kernelbench.com/cuda",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/f62099ec51be85ea022a.gz",
+          "sha256": "e0e7dc4fca81a43324bf7891d47c02f600a062bff486192425d67700f0f6ec49",
+          "fetched_at": "2026-09-18T20:55:44.131853+00:00",
+          "excerpt": "KernelBench CUDA board page (renders the leaderboard’s ranked table)"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/published_runs.json",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/cb9f6cf77fe40e612105.gz",
+          "sha256": "0268196461aeef895488a2d5a1c7a1ee379df6bd62ff889dbc187a726e5a7381",
+          "fetched_at": "2026-09-18T20:46:29.366992+00:00",
+          "excerpt": "published_runs.json (maintainer curation allowlist): {\n  \"_comment\": \"Curation allowlist for the published RTX_PRO_6000 CUDA board. build_v2_leaderboard.py restricts candidate runs to these run"
+        }
+      ]
+    },
+    {
+      "id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "name": "KernelBench-CUDA: MegaQwen Decode (RTX PRO 6000)",
+      "version": "rtx-pro-6000",
+      "version_status": "published",
+      "family": "kernelbench-cuda-megaqwen-decode",
+      "category": "Coding",
+      "one_sentence_description": "Improve the known MegaQwen CUDA megakernel geometry for decode-only token throughput at context lengths 2k–128k; prefill is untimed.",
+      "scoring": {
+        "metric": "Peak fraction of the problem’s hardware roofline, geomean over the frozen shape sweep (dense-equivalent FLOPs where relevant), achieved by one audited agent session; rendered by the site as “% of roofline”",
+        "unit": "percent of roofline",
+        "range": [
+          0,
+          null
+        ],
+        "higher_better": true,
+        "notes": "Published by Elliot Arledge’s kernelbench.com (independent site, not the Stanford KernelBench); values are baked from the maintainer’s benchmarks/cuda/results/leaderboard.json (schema_version 1, environment v2_containerized, hardware RTX PRO 6000 Blackwell Workstation, sm_120a, 96 GB VRAM). A cell is scored only under the site’s own validity rule: correct and audited (“clean” or “interesting”); flagged, suspect, “bug” (published by the maintainer as unreliable) and unaudited cells are never scored, and the published per_problem ranked list is the cross-check — it still holds the two rejected cells the rule excludes, so the validity rule wins. Published values are roofline fractions rendered by the site as “% of roofline”: they are relative to the problem’s dense-equivalent roofline, not latencies (the SPEC’s latency-anchored rule makes milliseconds the honest headline for the decode and NSA problems; elapsed_seconds stays in each observation’s protocol), and values above 100% mean the measured kernel beat the conservative roofline (Opus 5 reaches 196.10% on 04). One unlimited agent session per cell; the agent harness (codex, claude, grok, kinetic-claude, deepseek-claude, muse, or-fable, or-opus, zai-claude, agy) stays in each observation’s protocol. Community benchmark, never a Composite input."
+      },
+      "maintainer": "Elliot Arledge (kernelbench.com)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://kernelbench.com/cuda",
+      "publication_urls": [
+        {
+          "url": "https://kernelbench.com/cuda",
+          "type": "official_leaderboard",
+          "role": "Primary results publication (board pages per problem)"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+          "type": "github",
+          "role": "Baked leaderboard data (the collector’s source)"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/SPEC.md",
+          "type": "github",
+          "role": "Problem deck, language gate, metric and scoring rules"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/published_runs.json",
+          "type": "github",
+          "role": "Curation allowlist of the run ids the site publishes"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JSON",
+        "identity_policy": "source_label",
+        "locator": "GET benchmarks/cuda/results/leaderboard.json → one row per stated model identity whose 03_megaqwen_decode cell passes the site validity rule; value = peak_fraction × 100 (percent of roofline).",
+        "version_guard": "schema_version must stay 1, hardware.name must contain “RTX PRO 6000”, and the problem must stay in the stated four-problem deck. A scored cell must be correct, audited (clean/interesting) and appear in the published per_problem ranked list with the same value. Another hardware board (e.g. H100/B200) is a different identity.",
+        "notes": "robots.txt of kernelbench.com applies; the values come from the maintainer’s own baked data, which the site renders identically. Flagged for ingestion by Florian’s X bookmark intake (CR-82.4; post 2098577337407484408)."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; the site re-bakes leaderboard.json as audited runs complete.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-18",
+      "last_verified": "2026-09-18",
+      "evidence": [
+        {
+          "url": "https://kernelbench.com/robots.txt",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/50c352bc9cf3f4a12dc6.gz",
+          "sha256": "f655ec0282151b87636d7dba817fa9c3981aae5113bf81a8e40a99ed65dc7cd8",
+          "fetched_at": "2026-09-18T20:55:41.152241+00:00",
+          "excerpt": "User-Agent: *\nAllow: /\n\nSitemap: https://kernelbench.com/sitemap.xml\n"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+          "sha256": "961247cd6b756958a1cfec6158d55f90a3f67dda2ef2d2098eb9dedc99bcbc8c",
+          "fetched_at": "2026-09-18T20:46:23.832372+00:00",
+          "excerpt": "{\n  \"schema_version\": 1,\n  \"environment\": \"v2_containerized\",\n  \"hardware\": {\n    \"name\": \"RTX PRO 6000 Blackwell Workstation\",\n    \"sm\": \"sm_120a\",\n    \"vram_gb\": 96,\n    \"peak_bandwidth_gb_s\": 1800.0\n  },\n  \"problems\": [\n    \"01_glm52_fused_moe\",\n    \"02_deepseek_nsa\",\n    \"03_megaqwen_decode\",\n    \"04_grid_mingru_sps\"\n  ]"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/SPEC.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/dc8ee9fadbbdc5584821.gz",
+          "sha256": "6f9560580c44c71e6a08237be3a9b040c70ff2489d00876d3baa45b51a9f4e95",
+          "fetched_at": "2026-09-18T20:46:26.670549+00:00",
+          "excerpt": "# KernelBench-CUDA: Design Specification\n\nLast updated: 2026-07-16.\n\n## Purpose\n\nFour hard **CUDA-only** problems. Hard/Mega stay frozen. Language gate fails\nTriton/DSL and pure PyTorch without a kernel."
+        },
+        {
+          "url": "https://kernelbench.com/cuda",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/f62099ec51be85ea022a.gz",
+          "sha256": "e0e7dc4fca81a43324bf7891d47c02f600a062bff486192425d67700f0f6ec49",
+          "fetched_at": "2026-09-18T20:55:44.131853+00:00",
+          "excerpt": "KernelBench CUDA board page (renders the leaderboard’s ranked table)"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/published_runs.json",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/cb9f6cf77fe40e612105.gz",
+          "sha256": "0268196461aeef895488a2d5a1c7a1ee379df6bd62ff889dbc187a726e5a7381",
+          "fetched_at": "2026-09-18T20:46:29.366992+00:00",
+          "excerpt": "published_runs.json (maintainer curation allowlist): {\n  \"_comment\": \"Curation allowlist for the published RTX_PRO_6000 CUDA board. build_v2_leaderboard.py restricts candidate runs to these run"
+        }
+      ]
+    },
+    {
+      "id": "kernelbench-cuda-grid-mingru-sps::rtx-pro-6000",
+      "name": "KernelBench-CUDA: Grid MinGRU SPS (RTX PRO 6000)",
+      "version": "rtx-pro-6000",
+      "version_status": "published",
+      "family": "kernelbench-cuda-grid-mingru-sps",
+      "category": "Coding",
+      "one_sentence_description": "Non-LLM RL simulation: maximise simulation steps per second for a grid world with a MinGRU agent (roofline anchored at 150M peak SPS); fusion optional.",
+      "scoring": {
+        "metric": "Peak fraction of the problem’s hardware roofline, geomean over the frozen shape sweep (dense-equivalent FLOPs where relevant), achieved by one audited agent session; rendered by the site as “% of roofline”",
+        "unit": "percent of roofline",
+        "range": [
+          0,
+          null
+        ],
+        "higher_better": true,
+        "notes": "Published by Elliot Arledge’s kernelbench.com (independent site, not the Stanford KernelBench); values are baked from the maintainer’s benchmarks/cuda/results/leaderboard.json (schema_version 1, environment v2_containerized, hardware RTX PRO 6000 Blackwell Workstation, sm_120a, 96 GB VRAM). A cell is scored only under the site’s own validity rule: correct and audited (“clean” or “interesting”); flagged, suspect, “bug” (published by the maintainer as unreliable) and unaudited cells are never scored, and the published per_problem ranked list is the cross-check — it still holds the two rejected cells the rule excludes, so the validity rule wins. Published values are roofline fractions rendered by the site as “% of roofline”: they are relative to the problem’s dense-equivalent roofline, not latencies (the SPEC’s latency-anchored rule makes milliseconds the honest headline for the decode and NSA problems; elapsed_seconds stays in each observation’s protocol), and values above 100% mean the measured kernel beat the conservative roofline (Opus 5 reaches 196.10% on 04). One unlimited agent session per cell; the agent harness (codex, claude, grok, kinetic-claude, deepseek-claude, muse, or-fable, or-opus, zai-claude, agy) stays in each observation’s protocol. Community benchmark, never a Composite input."
+      },
+      "maintainer": "Elliot Arledge (kernelbench.com)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://kernelbench.com/cuda",
+      "publication_urls": [
+        {
+          "url": "https://kernelbench.com/cuda",
+          "type": "official_leaderboard",
+          "role": "Primary results publication (board pages per problem)"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+          "type": "github",
+          "role": "Baked leaderboard data (the collector’s source)"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/SPEC.md",
+          "type": "github",
+          "role": "Problem deck, language gate, metric and scoring rules"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/published_runs.json",
+          "type": "github",
+          "role": "Curation allowlist of the run ids the site publishes"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JSON",
+        "identity_policy": "source_label",
+        "locator": "GET benchmarks/cuda/results/leaderboard.json → one row per stated model identity whose 04_grid_mingru_sps cell passes the site validity rule; value = peak_fraction × 100 (percent of roofline).",
+        "version_guard": "schema_version must stay 1, hardware.name must contain “RTX PRO 6000”, and the problem must stay in the stated four-problem deck. A scored cell must be correct, audited (clean/interesting) and appear in the published per_problem ranked list with the same value. Another hardware board (e.g. H100/B200) is a different identity.",
+        "notes": "robots.txt of kernelbench.com applies; the values come from the maintainer’s own baked data, which the site renders identically. Flagged for ingestion by Florian’s X bookmark intake (CR-82.4; post 2098577337407484408)."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; the site re-bakes leaderboard.json as audited runs complete.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-18",
+      "last_verified": "2026-09-18",
+      "evidence": [
+        {
+          "url": "https://kernelbench.com/robots.txt",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/50c352bc9cf3f4a12dc6.gz",
+          "sha256": "f655ec0282151b87636d7dba817fa9c3981aae5113bf81a8e40a99ed65dc7cd8",
+          "fetched_at": "2026-09-18T20:55:41.152241+00:00",
+          "excerpt": "User-Agent: *\nAllow: /\n\nSitemap: https://kernelbench.com/sitemap.xml\n"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+          "sha256": "961247cd6b756958a1cfec6158d55f90a3f67dda2ef2d2098eb9dedc99bcbc8c",
+          "fetched_at": "2026-09-18T20:46:23.832372+00:00",
+          "excerpt": "{\n  \"schema_version\": 1,\n  \"environment\": \"v2_containerized\",\n  \"hardware\": {\n    \"name\": \"RTX PRO 6000 Blackwell Workstation\",\n    \"sm\": \"sm_120a\",\n    \"vram_gb\": 96,\n    \"peak_bandwidth_gb_s\": 1800.0\n  },\n  \"problems\": [\n    \"01_glm52_fused_moe\",\n    \"02_deepseek_nsa\",\n    \"03_megaqwen_decode\",\n    \"04_grid_mingru_sps\"\n  ]"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/SPEC.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/dc8ee9fadbbdc5584821.gz",
+          "sha256": "6f9560580c44c71e6a08237be3a9b040c70ff2489d00876d3baa45b51a9f4e95",
+          "fetched_at": "2026-09-18T20:46:26.670549+00:00",
+          "excerpt": "# KernelBench-CUDA: Design Specification\n\nLast updated: 2026-07-16.\n\n## Purpose\n\nFour hard **CUDA-only** problems. Hard/Mega stay frozen. Language gate fails\nTriton/DSL and pure PyTorch without a kernel."
+        },
+        {
+          "url": "https://kernelbench.com/cuda",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/f62099ec51be85ea022a.gz",
+          "sha256": "e0e7dc4fca81a43324bf7891d47c02f600a062bff486192425d67700f0f6ec49",
+          "fetched_at": "2026-09-18T20:55:44.131853+00:00",
+          "excerpt": "KernelBench CUDA board page (renders the leaderboard’s ranked table)"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/published_runs.json",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/cb9f6cf77fe40e612105.gz",
+          "sha256": "0268196461aeef895488a2d5a1c7a1ee379df6bd62ff889dbc187a726e5a7381",
+          "fetched_at": "2026-09-18T20:46:29.366992+00:00",
+          "excerpt": "published_runs.json (maintainer curation allowlist): {\n  \"_comment\": \"Curation allowlist for the published RTX_PRO_6000 CUDA board. build_v2_leaderboard.py restricts candidate runs to these run"
         }
       ]
     }

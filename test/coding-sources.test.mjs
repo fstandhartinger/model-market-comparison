@@ -14,7 +14,11 @@ const IDS = ['deepswe::snapshot-2026-09-15', 'swe-atlas-qna::snapshot-2026-09-15
 const SLUG_BOARDS = ['osworld-2', 'swe-rebench', 'gso', 'hyper-tau-bench', 'lisanbench', 'matharena-arxivmath', 'matharena-brokenarxiv', 'weirdml', 'bullshitbench-v1', 'bullshitbench-v2', 'apprenticebench-api', 'apprenticebench-api-cost',
   'apprenticebench-cua', 'apprenticebench-cua-cost', 'vals-index', 'vals-index-cost', 'vals-index-emb',
   'vals-index-finance-agent', 'vals-index-hlab', 'vals-index-legal-research', 'vals-index-terminal-bench-2.1',
-  'vals-index-vibe-code-bench', 'vals-index-code-migration'];
+  'vals-index-vibe-code-bench', 'vals-index-code-migration',
+  // 2026-09-18 (iteration 114, CR-82.3/82.4): VulcanBench Frontier v4 (product-name labels with the effort tier in
+  // brackets) and KernelBench-CUDA (run-identity labels; one reviewed identity per problem, hardware is the version).
+  'vulcanbench-frontier', 'kernelbench-cuda-glm52-fused-moe', 'kernelbench-cuda-deepseek-nsa',
+  'kernelbench-cuda-megaqwen-decode', 'kernelbench-cuda-grid-mingru-sps'];
 const MIN = { 'deepswe::snapshot-2026-09-15': 60, 'swe-atlas-qna::snapshot-2026-09-15': 20, 'swe-atlas-test-writing::snapshot-2026-09-15': 20, 'swe-atlas-refactoring::snapshot-2026-09-15': 15 };
 
 test('the collector reproduces the committed observations from the committed evidence alone', () => {

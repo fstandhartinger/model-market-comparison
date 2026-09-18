@@ -4,7 +4,7 @@
 // ops/benchmark-table-2026-09-15/identity-map-review.json. Review the diff of both files before committing.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { identityJoins, parseDeepSweId, parseScaleLabel, parseFrontierCodeId, parseCursorBenchLabel, parseSweBenchProLabel } from '../../lib/coding-identity.mjs';
-import { boardJoins, parseBullshitBenchId, parseApprenticeBenchId, parseValsIndexId, parseOsworld2Id, parseMathArenaLabel, parseWeirdmlV3Label, parseSweRebenchLabel, parseGsoId, parseHyperTauId, parseLisanBenchId } from '../../lib/board-identity.mjs';
+import { boardJoins, parseBullshitBenchId, parseApprenticeBenchId, parseValsIndexId, parseOsworld2Id, parseMathArenaLabel, parseWeirdmlV3Label, parseSweRebenchLabel, parseGsoId, parseHyperTauId, parseLisanBenchId, parseVulcanbenchFrontierLabel, parseKernelbenchCudaLabel } from '../../lib/board-identity.mjs';
 
 const BOARDS = [
   { prefix: 'deepswe::', parse: parseDeepSweId, basis: 'measured' },
@@ -47,6 +47,10 @@ const BOARDS = [
   // 2026-09-16 (iteration 88, CR-52): LisanBench, maintainer slugs with a `:thinking-<setting>` suffix or a label setting.
   { prefix: 'lisanbench::', parse: parseLisanBenchId, join: boardJoins, basis: 'measured' },
   { prefix: 'hyper-tau-bench::', parse: parseHyperTauId, join: boardJoins, basis: 'measured' },
+  // 2026-09-18 (iteration 114, CR-82.3/CR-82.4): VulcanBench Frontier v4 product-name labels with the effort in
+  // brackets; KernelBench-CUDA run labels `<harness>/<vendor>/<slug> [<effort>]` (one identity per problem).
+  { prefix: 'vulcanbench-frontier::', parse: parseVulcanbenchFrontierLabel, join: boardJoins, basis: 'measured' },
+  { prefix: 'kernelbench-cuda-', parse: parseKernelbenchCudaLabel, join: boardJoins, basis: 'measured' },
 ];
 const observations = JSON.parse(readFileSync('data/raw/benchmarks/public-observations.json')).observations;
 const catalog = JSON.parse(readFileSync('data/dataset.json')).models.map(({ id, family_key, variant }) => ({ id, family_key, variant }));

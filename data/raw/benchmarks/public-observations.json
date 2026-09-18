@@ -239518,6 +239518,2256 @@
           0.06053809090909091
         ]
       }
+    },
+    {
+      "id": "public:6359de36bd05d2ac5f6c639c",
+      "benchmark_id": "vulcanbench-frontier::4",
+      "subject": {
+        "source_id": "Fable 5.1 [max]",
+        "name": "Fable 5.1 [max]",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 91.8365,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+        "retrieved_at": "2026-09-18T20:46:32.035922+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/81d184fca0535d344be8.gz",
+        "sha256": "81d184fca0535d344be85ed8195e6ff294e7295b2f85decae924f6e402aa7f08",
+        "locator": "vulcanbench_frontier_csv; source row 0; Fable 5.1 [max]; field combined_33"
+      },
+      "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family code-quality-maintenance-v3.4–v3.6); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input.; source row: {\"model\":\"Fable 5.1\",\"lab\":\"Anthropic\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n_tasks\":23,\"tasks_passed\":23,\"combined_33_se\":0.4651,\"code_quality\":82.4337,\"mean_minutes\":27.0964,\"mean_usd\":9.058763,\"protocol\":\"code-quality-maintenance-v3.4\",\"report\":\"benchmarks/swe-v4-astra-fable51-v34.html\",\"best_effort\":true}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:29402166d276db3e187b4ca9",
+      "benchmark_id": "vulcanbench-frontier::4",
+      "subject": {
+        "source_id": "Fable 5.1 [extra-high]",
+        "name": "Fable 5.1 [extra-high]",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 90.7543,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+        "retrieved_at": "2026-09-18T20:46:32.035922+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/81d184fca0535d344be8.gz",
+        "sha256": "81d184fca0535d344be85ed8195e6ff294e7295b2f85decae924f6e402aa7f08",
+        "locator": "vulcanbench_frontier_csv; source row 1; Fable 5.1 [extra-high]; field combined_33"
+      },
+      "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family code-quality-maintenance-v3.4–v3.6); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input.; source row: {\"model\":\"Fable 5.1\",\"lab\":\"Anthropic\",\"harness\":\"Claude Code\",\"effort\":\"extra-high\",\"n_tasks\":23,\"tasks_passed\":22,\"combined_33_se\":0.821,\"code_quality\":81.9336,\"mean_minutes\":38.7732,\"mean_usd\":14.485635,\"protocol\":\"code-quality-maintenance-v3.4\",\"report\":\"benchmarks/swe-v4-astra-fable51-v34.html\",\"best_effort\":false}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:a24ad87d5d8970fc86fb2029",
+      "benchmark_id": "vulcanbench-frontier::4",
+      "subject": {
+        "source_id": "Fable 5.1 [medium]",
+        "name": "Fable 5.1 [medium]",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 90.1293,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+        "retrieved_at": "2026-09-18T20:46:32.035922+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/81d184fca0535d344be8.gz",
+        "sha256": "81d184fca0535d344be85ed8195e6ff294e7295b2f85decae924f6e402aa7f08",
+        "locator": "vulcanbench_frontier_csv; source row 2; Fable 5.1 [medium]; field combined_33"
+      },
+      "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family code-quality-maintenance-v3.4–v3.6); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input.; source row: {\"model\":\"Fable 5.1\",\"lab\":\"Anthropic\",\"harness\":\"Claude Code\",\"effort\":\"medium\",\"n_tasks\":23,\"tasks_passed\":20,\"combined_33_se\":0.9394,\"code_quality\":80.1382,\"mean_minutes\":31.7213,\"mean_usd\":9.18601,\"protocol\":\"code-quality-maintenance-v3.4\",\"report\":\"benchmarks/swe-v4-astra-fable51-v34.html\",\"best_effort\":false}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:a7c8ef38d95b4b541ad067c8",
+      "benchmark_id": "vulcanbench-frontier::4",
+      "subject": {
+        "source_id": "Fable 5.1 [high]",
+        "name": "Fable 5.1 [high]",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 90.0689,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+        "retrieved_at": "2026-09-18T20:46:32.035922+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/81d184fca0535d344be8.gz",
+        "sha256": "81d184fca0535d344be85ed8195e6ff294e7295b2f85decae924f6e402aa7f08",
+        "locator": "vulcanbench_frontier_csv; source row 3; Fable 5.1 [high]; field combined_33"
+      },
+      "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family code-quality-maintenance-v3.4–v3.6); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input.; source row: {\"model\":\"Fable 5.1\",\"lab\":\"Anthropic\",\"harness\":\"Claude Code\",\"effort\":\"high\",\"n_tasks\":23,\"tasks_passed\":20,\"combined_33_se\":0.7822,\"code_quality\":80.861,\"mean_minutes\":28.7614,\"mean_usd\":9.701575,\"protocol\":\"code-quality-maintenance-v3.4\",\"report\":\"benchmarks/swe-v4-astra-fable51-v34.html\",\"best_effort\":false}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:3a4a2c48a2fcaa9f3eb3ed41",
+      "benchmark_id": "vulcanbench-frontier::4",
+      "subject": {
+        "source_id": "GPT-6 Astra [max]",
+        "name": "GPT-6 Astra [max]",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 89.3033,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+        "retrieved_at": "2026-09-18T20:46:32.035922+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/81d184fca0535d344be8.gz",
+        "sha256": "81d184fca0535d344be85ed8195e6ff294e7295b2f85decae924f6e402aa7f08",
+        "locator": "vulcanbench_frontier_csv; source row 4; GPT-6 Astra [max]; field combined_33"
+      },
+      "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family code-quality-maintenance-v3.4–v3.6); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input.; source row: {\"model\":\"GPT-6 Astra\",\"lab\":\"OpenAI\",\"harness\":\"Codex\",\"effort\":\"max\",\"n_tasks\":23,\"tasks_passed\":23,\"combined_33_se\":0.3663,\"code_quality\":76.2645,\"mean_minutes\":10.2805,\"mean_usd\":2.568128,\"protocol\":\"code-quality-maintenance-v3.4\",\"report\":\"benchmarks/swe-v4-astra-fable51-v34.html\",\"best_effort\":true}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:8baec4ba235405bccfbd40d0",
+      "benchmark_id": "vulcanbench-frontier::4",
+      "subject": {
+        "source_id": "GPT-6 Astra [extra-high]",
+        "name": "GPT-6 Astra [extra-high]",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 89.1616,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+        "retrieved_at": "2026-09-18T20:46:32.035922+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/81d184fca0535d344be8.gz",
+        "sha256": "81d184fca0535d344be85ed8195e6ff294e7295b2f85decae924f6e402aa7f08",
+        "locator": "vulcanbench_frontier_csv; source row 5; GPT-6 Astra [extra-high]; field combined_33"
+      },
+      "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family code-quality-maintenance-v3.4–v3.6); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input.; source row: {\"model\":\"GPT-6 Astra\",\"lab\":\"OpenAI\",\"harness\":\"Codex\",\"effort\":\"extra-high\",\"n_tasks\":23,\"tasks_passed\":23,\"combined_33_se\":0.2971,\"code_quality\":75.4749,\"mean_minutes\":8.0905,\"mean_usd\":2.302022,\"protocol\":\"code-quality-maintenance-v3.4\",\"report\":\"benchmarks/swe-v4-astra-fable51-v34.html\",\"best_effort\":false}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:252f3c7025779fe5623e3d69",
+      "benchmark_id": "vulcanbench-frontier::4",
+      "subject": {
+        "source_id": "Fable 5.1 [low]",
+        "name": "Fable 5.1 [low]",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 89.1225,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+        "retrieved_at": "2026-09-18T20:46:32.035922+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/81d184fca0535d344be8.gz",
+        "sha256": "81d184fca0535d344be85ed8195e6ff294e7295b2f85decae924f6e402aa7f08",
+        "locator": "vulcanbench_frontier_csv; source row 6; Fable 5.1 [low]; field combined_33"
+      },
+      "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family code-quality-maintenance-v3.4–v3.6); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input.; source row: {\"model\":\"Fable 5.1\",\"lab\":\"Anthropic\",\"harness\":\"Claude Code\",\"effort\":\"low\",\"n_tasks\":23,\"tasks_passed\":19,\"combined_33_se\":1.1538,\"code_quality\":78.3565,\"mean_minutes\":26.897,\"mean_usd\":7.963719,\"protocol\":\"code-quality-maintenance-v3.4\",\"report\":\"benchmarks/swe-v4-astra-fable51-v34.html\",\"best_effort\":false}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:f42df0dd6cacef362bba68ac",
+      "benchmark_id": "vulcanbench-frontier::4",
+      "subject": {
+        "source_id": "GPT-5.6 Terra [max]",
+        "name": "GPT-5.6 Terra [max]",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 89.0535,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+        "retrieved_at": "2026-09-18T20:46:32.035922+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/81d184fca0535d344be8.gz",
+        "sha256": "81d184fca0535d344be85ed8195e6ff294e7295b2f85decae924f6e402aa7f08",
+        "locator": "vulcanbench_frontier_csv; source row 7; GPT-5.6 Terra [max]; field combined_33"
+      },
+      "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family code-quality-maintenance-v3.4–v3.6); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input.; source row: {\"model\":\"GPT-5.6 Terra\",\"lab\":\"OpenAI\",\"harness\":\"Codex\",\"effort\":\"max\",\"n_tasks\":23,\"tasks_passed\":23,\"combined_33_se\":0.7139,\"code_quality\":72.5197,\"mean_minutes\":19.7351,\"mean_usd\":1.8822,\"protocol\":\"code-quality-maintenance-v3.6\",\"report\":\"benchmarks/swe-v4-terra-v36.html\",\"best_effort\":true}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:7dfc48db13203dbd5608353c",
+      "benchmark_id": "vulcanbench-frontier::4",
+      "subject": {
+        "source_id": "GPT-6 Astra [high]",
+        "name": "GPT-6 Astra [high]",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 88.158,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+        "retrieved_at": "2026-09-18T20:46:32.035922+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/81d184fca0535d344be8.gz",
+        "sha256": "81d184fca0535d344be85ed8195e6ff294e7295b2f85decae924f6e402aa7f08",
+        "locator": "vulcanbench_frontier_csv; source row 8; GPT-6 Astra [high]; field combined_33"
+      },
+      "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family code-quality-maintenance-v3.4–v3.6); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input.; source row: {\"model\":\"GPT-6 Astra\",\"lab\":\"OpenAI\",\"harness\":\"Codex\",\"effort\":\"high\",\"n_tasks\":23,\"tasks_passed\":23,\"combined_33_se\":0.4248,\"code_quality\":73.4751,\"mean_minutes\":4.8999,\"mean_usd\":1.711065,\"protocol\":\"code-quality-maintenance-v3.4\",\"report\":\"benchmarks/swe-v4-astra-fable51-v34.html\",\"best_effort\":false}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:28a7b03c4a3399656dd0a276",
+      "benchmark_id": "vulcanbench-frontier::4",
+      "subject": {
+        "source_id": "GPT-6 Astra [medium]",
+        "name": "GPT-6 Astra [medium]",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 87.7262,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+        "retrieved_at": "2026-09-18T20:46:32.035922+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/81d184fca0535d344be8.gz",
+        "sha256": "81d184fca0535d344be85ed8195e6ff294e7295b2f85decae924f6e402aa7f08",
+        "locator": "vulcanbench_frontier_csv; source row 9; GPT-6 Astra [medium]; field combined_33"
+      },
+      "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family code-quality-maintenance-v3.4–v3.6); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input.; source row: {\"model\":\"GPT-6 Astra\",\"lab\":\"OpenAI\",\"harness\":\"Codex\",\"effort\":\"medium\",\"n_tasks\":23,\"tasks_passed\":23,\"combined_33_se\":0.3185,\"code_quality\":71.1864,\"mean_minutes\":3.8226,\"mean_usd\":1.481347,\"protocol\":\"code-quality-maintenance-v3.4\",\"report\":\"benchmarks/swe-v4-astra-fable51-v34.html\",\"best_effort\":false}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:8f64e0d6207573279310f4db",
+      "benchmark_id": "vulcanbench-frontier::4",
+      "subject": {
+        "source_id": "GPT-6 Astra [low]",
+        "name": "GPT-6 Astra [low]",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 87.4325,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+        "retrieved_at": "2026-09-18T20:46:32.035922+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/81d184fca0535d344be8.gz",
+        "sha256": "81d184fca0535d344be85ed8195e6ff294e7295b2f85decae924f6e402aa7f08",
+        "locator": "vulcanbench_frontier_csv; source row 10; GPT-6 Astra [low]; field combined_33"
+      },
+      "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family code-quality-maintenance-v3.4–v3.6); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input.; source row: {\"model\":\"GPT-6 Astra\",\"lab\":\"OpenAI\",\"harness\":\"Codex\",\"effort\":\"low\",\"n_tasks\":23,\"tasks_passed\":22,\"combined_33_se\":0.5104,\"code_quality\":70.3092,\"mean_minutes\":4.2187,\"mean_usd\":1.721698,\"protocol\":\"code-quality-maintenance-v3.4\",\"report\":\"benchmarks/swe-v4-astra-fable51-v34.html\",\"best_effort\":false}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:64da456029104be74a28d22d",
+      "benchmark_id": "vulcanbench-frontier::4",
+      "subject": {
+        "source_id": "GPT-5.6 Luna [max]",
+        "name": "GPT-5.6 Luna [max]",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 84.1469,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+        "retrieved_at": "2026-09-18T20:46:32.035922+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/81d184fca0535d344be8.gz",
+        "sha256": "81d184fca0535d344be85ed8195e6ff294e7295b2f85decae924f6e402aa7f08",
+        "locator": "vulcanbench_frontier_csv; source row 11; GPT-5.6 Luna [max]; field combined_33"
+      },
+      "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family code-quality-maintenance-v3.4–v3.6); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input.; source row: {\"model\":\"GPT-5.6 Luna\",\"lab\":\"OpenAI\",\"harness\":\"Codex\",\"effort\":\"max\",\"n_tasks\":23,\"tasks_passed\":19,\"combined_33_se\":1.3494,\"code_quality\":65.3505,\"mean_minutes\":44.0992,\"mean_usd\":0.448386,\"protocol\":\"code-quality-maintenance-v3.5\",\"report\":\"benchmarks/swe-v4-gpt55-luna-v35.html\",\"best_effort\":true}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:a1bce0289c1d5b45301c1448",
+      "benchmark_id": "vulcanbench-frontier::4",
+      "subject": {
+        "source_id": "GPT-5.6 Terra [extra-high]",
+        "name": "GPT-5.6 Terra [extra-high]",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 83.4578,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+        "retrieved_at": "2026-09-18T20:46:32.035922+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/81d184fca0535d344be8.gz",
+        "sha256": "81d184fca0535d344be85ed8195e6ff294e7295b2f85decae924f6e402aa7f08",
+        "locator": "vulcanbench_frontier_csv; source row 12; GPT-5.6 Terra [extra-high]; field combined_33"
+      },
+      "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family code-quality-maintenance-v3.4–v3.6); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input.; source row: {\"model\":\"GPT-5.6 Terra\",\"lab\":\"OpenAI\",\"harness\":\"Codex\",\"effort\":\"extra-high\",\"n_tasks\":23,\"tasks_passed\":14,\"combined_33_se\":2.7227,\"code_quality\":73.1344,\"mean_minutes\":19.2392,\"mean_usd\":2.117749,\"protocol\":\"code-quality-maintenance-v3.6\",\"report\":\"benchmarks/swe-v4-terra-v36.html\",\"best_effort\":false}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:2d98542a779da9b68910fab5",
+      "benchmark_id": "vulcanbench-frontier::4",
+      "subject": {
+        "source_id": "GPT-5.6 Luna [extra-high]",
+        "name": "GPT-5.6 Luna [extra-high]",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 79.1139,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+        "retrieved_at": "2026-09-18T20:46:32.035922+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/81d184fca0535d344be8.gz",
+        "sha256": "81d184fca0535d344be85ed8195e6ff294e7295b2f85decae924f6e402aa7f08",
+        "locator": "vulcanbench_frontier_csv; source row 13; GPT-5.6 Luna [extra-high]; field combined_33"
+      },
+      "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family code-quality-maintenance-v3.4–v3.6); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input.; source row: {\"model\":\"GPT-5.6 Luna\",\"lab\":\"OpenAI\",\"harness\":\"Codex\",\"effort\":\"extra-high\",\"n_tasks\":23,\"tasks_passed\":13,\"combined_33_se\":3.0681,\"code_quality\":68.0512,\"mean_minutes\":25.4294,\"mean_usd\":0.274706,\"protocol\":\"code-quality-maintenance-v3.5\",\"report\":\"benchmarks/swe-v4-gpt55-luna-v35.html\",\"best_effort\":false}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:a921036bc43aec4048e5a0c4",
+      "benchmark_id": "vulcanbench-frontier::4",
+      "subject": {
+        "source_id": "GPT-5.5 [extra-high]",
+        "name": "GPT-5.5 [extra-high]",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 78.4562,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+        "retrieved_at": "2026-09-18T20:46:32.035922+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/81d184fca0535d344be8.gz",
+        "sha256": "81d184fca0535d344be85ed8195e6ff294e7295b2f85decae924f6e402aa7f08",
+        "locator": "vulcanbench_frontier_csv; source row 14; GPT-5.5 [extra-high]; field combined_33"
+      },
+      "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family code-quality-maintenance-v3.4–v3.6); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input.; source row: {\"model\":\"GPT-5.5\",\"lab\":\"OpenAI\",\"harness\":\"Codex\",\"effort\":\"extra-high\",\"n_tasks\":23,\"tasks_passed\":11,\"combined_33_se\":2.5078,\"code_quality\":67.6666,\"mean_minutes\":20.7838,\"mean_usd\":4.56257,\"protocol\":\"code-quality-maintenance-v3.5\",\"report\":\"benchmarks/swe-v4-gpt55-luna-v35.html\",\"best_effort\":true}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:782c02c217742186e2172e8d",
+      "benchmark_id": "vulcanbench-frontier::4",
+      "subject": {
+        "source_id": "GPT-5.6 Terra [high]",
+        "name": "GPT-5.6 Terra [high]",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 76.6793,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+        "retrieved_at": "2026-09-18T20:46:32.035922+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/81d184fca0535d344be8.gz",
+        "sha256": "81d184fca0535d344be85ed8195e6ff294e7295b2f85decae924f6e402aa7f08",
+        "locator": "vulcanbench_frontier_csv; source row 15; GPT-5.6 Terra [high]; field combined_33"
+      },
+      "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family code-quality-maintenance-v3.4–v3.6); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input.; source row: {\"model\":\"GPT-5.6 Terra\",\"lab\":\"OpenAI\",\"harness\":\"Codex\",\"effort\":\"high\",\"n_tasks\":23,\"tasks_passed\":11,\"combined_33_se\":3.4669,\"code_quality\":73.8953,\"mean_minutes\":12.5891,\"mean_usd\":1.183321,\"protocol\":\"code-quality-maintenance-v3.6\",\"report\":\"benchmarks/swe-v4-terra-v36.html\",\"best_effort\":false}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:e9cc482c6d95449b1f6a6008",
+      "benchmark_id": "vulcanbench-frontier::4",
+      "subject": {
+        "source_id": "GPT-5.6 Luna [high]",
+        "name": "GPT-5.6 Luna [high]",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 71.216,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+        "retrieved_at": "2026-09-18T20:46:32.035922+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/81d184fca0535d344be8.gz",
+        "sha256": "81d184fca0535d344be85ed8195e6ff294e7295b2f85decae924f6e402aa7f08",
+        "locator": "vulcanbench_frontier_csv; source row 16; GPT-5.6 Luna [high]; field combined_33"
+      },
+      "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family code-quality-maintenance-v3.4–v3.6); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input.; source row: {\"model\":\"GPT-5.6 Luna\",\"lab\":\"OpenAI\",\"harness\":\"Codex\",\"effort\":\"high\",\"n_tasks\":23,\"tasks_passed\":9,\"combined_33_se\":3.714,\"code_quality\":65.7877,\"mean_minutes\":20.9951,\"mean_usd\":0.216769,\"protocol\":\"code-quality-maintenance-v3.5\",\"report\":\"benchmarks/swe-v4-gpt55-luna-v35.html\",\"best_effort\":false}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:411f80f135cde98edc5cecc8",
+      "benchmark_id": "vulcanbench-frontier::4",
+      "subject": {
+        "source_id": "GPT-5.5 [high]",
+        "name": "GPT-5.5 [high]",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 69.9215,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+        "retrieved_at": "2026-09-18T20:46:32.035922+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/81d184fca0535d344be8.gz",
+        "sha256": "81d184fca0535d344be85ed8195e6ff294e7295b2f85decae924f6e402aa7f08",
+        "locator": "vulcanbench_frontier_csv; source row 17; GPT-5.5 [high]; field combined_33"
+      },
+      "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family code-quality-maintenance-v3.4–v3.6); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input.; source row: {\"model\":\"GPT-5.5\",\"lab\":\"OpenAI\",\"harness\":\"Codex\",\"effort\":\"high\",\"n_tasks\":23,\"tasks_passed\":7,\"combined_33_se\":3.8102,\"code_quality\":62.9335,\"mean_minutes\":18.2456,\"mean_usd\":4.197308,\"protocol\":\"code-quality-maintenance-v3.5\",\"report\":\"benchmarks/swe-v4-gpt55-luna-v35.html\",\"best_effort\":false}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:9ef1d73a4d76a610f525419e",
+      "benchmark_id": "vulcanbench-frontier::4",
+      "subject": {
+        "source_id": "GPT-5.6 Terra [medium]",
+        "name": "GPT-5.6 Terra [medium]",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 66.348,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+        "retrieved_at": "2026-09-18T20:46:32.035922+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/81d184fca0535d344be8.gz",
+        "sha256": "81d184fca0535d344be85ed8195e6ff294e7295b2f85decae924f6e402aa7f08",
+        "locator": "vulcanbench_frontier_csv; source row 18; GPT-5.6 Terra [medium]; field combined_33"
+      },
+      "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family code-quality-maintenance-v3.4–v3.6); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input.; source row: {\"model\":\"GPT-5.6 Terra\",\"lab\":\"OpenAI\",\"harness\":\"Codex\",\"effort\":\"medium\",\"n_tasks\":23,\"tasks_passed\":5,\"combined_33_se\":3.8156,\"code_quality\":70.9261,\"mean_minutes\":7.8757,\"mean_usd\":0.686316,\"protocol\":\"code-quality-maintenance-v3.6\",\"report\":\"benchmarks/swe-v4-terra-v36.html\",\"best_effort\":false}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:7d387e4dda33804c8ddf5177",
+      "benchmark_id": "vulcanbench-frontier::4",
+      "subject": {
+        "source_id": "GPT-5.5 [medium]",
+        "name": "GPT-5.5 [medium]",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 63.5399,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+        "retrieved_at": "2026-09-18T20:46:32.035922+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/81d184fca0535d344be8.gz",
+        "sha256": "81d184fca0535d344be85ed8195e6ff294e7295b2f85decae924f6e402aa7f08",
+        "locator": "vulcanbench_frontier_csv; source row 19; GPT-5.5 [medium]; field combined_33"
+      },
+      "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family code-quality-maintenance-v3.4–v3.6); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input.; source row: {\"model\":\"GPT-5.5\",\"lab\":\"OpenAI\",\"harness\":\"Codex\",\"effort\":\"medium\",\"n_tasks\":23,\"tasks_passed\":3,\"combined_33_se\":3.8413,\"code_quality\":64.6546,\"mean_minutes\":12.4031,\"mean_usd\":2.708066,\"protocol\":\"code-quality-maintenance-v3.5\",\"report\":\"benchmarks/swe-v4-gpt55-luna-v35.html\",\"best_effort\":false}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:c51a473f2e47a625febda83e",
+      "benchmark_id": "vulcanbench-frontier::4",
+      "subject": {
+        "source_id": "GPT-5.6 Terra [low]",
+        "name": "GPT-5.6 Terra [low]",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 59.6999,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+        "retrieved_at": "2026-09-18T20:46:32.035922+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/81d184fca0535d344be8.gz",
+        "sha256": "81d184fca0535d344be85ed8195e6ff294e7295b2f85decae924f6e402aa7f08",
+        "locator": "vulcanbench_frontier_csv; source row 20; GPT-5.6 Terra [low]; field combined_33"
+      },
+      "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family code-quality-maintenance-v3.4–v3.6); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input.; source row: {\"model\":\"GPT-5.6 Terra\",\"lab\":\"OpenAI\",\"harness\":\"Codex\",\"effort\":\"low\",\"n_tasks\":23,\"tasks_passed\":2,\"combined_33_se\":3.4294,\"code_quality\":72.315,\"mean_minutes\":6.6732,\"mean_usd\":0.576358,\"protocol\":\"code-quality-maintenance-v3.6\",\"report\":\"benchmarks/swe-v4-terra-v36.html\",\"best_effort\":false}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:241bcf04d8e24c1300054dad",
+      "benchmark_id": "vulcanbench-frontier::4",
+      "subject": {
+        "source_id": "GPT-5.6 Luna [medium]",
+        "name": "GPT-5.6 Luna [medium]",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 53.2781,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+        "retrieved_at": "2026-09-18T20:46:32.035922+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/81d184fca0535d344be8.gz",
+        "sha256": "81d184fca0535d344be85ed8195e6ff294e7295b2f85decae924f6e402aa7f08",
+        "locator": "vulcanbench_frontier_csv; source row 21; GPT-5.6 Luna [medium]; field combined_33"
+      },
+      "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family code-quality-maintenance-v3.4–v3.6); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input.; source row: {\"model\":\"GPT-5.6 Luna\",\"lab\":\"OpenAI\",\"harness\":\"Codex\",\"effort\":\"medium\",\"n_tasks\":23,\"tasks_passed\":1,\"combined_33_se\":2.9402,\"code_quality\":65.5829,\"mean_minutes\":7.3971,\"mean_usd\":0.066398,\"protocol\":\"code-quality-maintenance-v3.5\",\"report\":\"benchmarks/swe-v4-gpt55-luna-v35.html\",\"best_effort\":false}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:800f8ed3c6fb1f7f3767b530",
+      "benchmark_id": "vulcanbench-frontier::4",
+      "subject": {
+        "source_id": "GPT-5.5 [low]",
+        "name": "GPT-5.5 [low]",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 49.8034,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+        "retrieved_at": "2026-09-18T20:46:32.035922+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/81d184fca0535d344be8.gz",
+        "sha256": "81d184fca0535d344be85ed8195e6ff294e7295b2f85decae924f6e402aa7f08",
+        "locator": "vulcanbench_frontier_csv; source row 22; GPT-5.5 [low]; field combined_33"
+      },
+      "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family code-quality-maintenance-v3.4–v3.6); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input.; source row: {\"model\":\"GPT-5.5\",\"lab\":\"OpenAI\",\"harness\":\"Codex\",\"effort\":\"low\",\"n_tasks\":23,\"tasks_passed\":1,\"combined_33_se\":2.9303,\"code_quality\":61.7538,\"mean_minutes\":8.2103,\"mean_usd\":1.794708,\"protocol\":\"code-quality-maintenance-v3.5\",\"report\":\"benchmarks/swe-v4-gpt55-luna-v35.html\",\"best_effort\":false}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:2ad00dd7caac013b4ca27afc",
+      "benchmark_id": "vulcanbench-frontier::4",
+      "subject": {
+        "source_id": "GPT-5.6 Luna [low]",
+        "name": "GPT-5.6 Luna [low]",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 41.2869,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+        "retrieved_at": "2026-09-18T20:46:32.035922+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/81d184fca0535d344be8.gz",
+        "sha256": "81d184fca0535d344be85ed8195e6ff294e7295b2f85decae924f6e402aa7f08",
+        "locator": "vulcanbench_frontier_csv; source row 23; GPT-5.6 Luna [low]; field combined_33"
+      },
+      "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family code-quality-maintenance-v3.4–v3.6); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input.; source row: {\"model\":\"GPT-5.6 Luna\",\"lab\":\"OpenAI\",\"harness\":\"Codex\",\"effort\":\"low\",\"n_tasks\":23,\"tasks_passed\":0,\"combined_33_se\":0.9566,\"code_quality\":71.7276,\"mean_minutes\":2.6625,\"mean_usd\":0.023996,\"protocol\":\"code-quality-maintenance-v3.5\",\"report\":\"benchmarks/swe-v4-gpt55-luna-v35.html\",\"best_effort\":false}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:6974a7eb89d0fdf8355ef012",
+      "benchmark_id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+      "subject": {
+        "source_id": "claude/claude-opus-4-8 [max]",
+        "name": "claude/claude-opus-4-8 [max]",
+        "model_id": null,
+        "variant": null,
+        "harness": "claude"
+      },
+      "value": 6.529999999999999,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 0; claude/claude-opus-4-8 [max]; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 01_glm52_fused_moe (RTX PRO 6000 Blackwell, environment v2_containerized): GLM-5.2 MoE (256+shared experts, top-8) fused forward, CUDA/PTX/CUTLASS only (Triton/vLLM banned); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"claude/claude-opus-4-8 [max]\",\"harness\":\"claude\",\"stated_effort\":\"max\",\"stated_model\":\"claude-opus-4-8\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260716_140633_claude_claude-opus-4-8_01_glm52_fused_moe\",\"elapsed_seconds\":4333,\"problem\":\"01_glm52_fused_moe\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0653,\"percent_of_roofline\":6.529999999999999}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.0653
+        ]
+      }
+    },
+    {
+      "id": "public:d3e4437f70ecb4fd9dcfd881",
+      "benchmark_id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+      "subject": {
+        "source_id": "codex/openai/gpt-6-astra-pro [xhigh]",
+        "name": "codex/openai/gpt-6-astra-pro [xhigh]",
+        "model_id": null,
+        "variant": null,
+        "harness": "codex"
+      },
+      "value": 9.45,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 1; codex/openai/gpt-6-astra-pro [xhigh]; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 01_glm52_fused_moe (RTX PRO 6000 Blackwell, environment v2_containerized): GLM-5.2 MoE (256+shared experts, top-8) fused forward, CUDA/PTX/CUTLASS only (Triton/vLLM banned); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"codex/openai/gpt-6-astra-pro [xhigh]\",\"harness\":\"codex\",\"stated_effort\":\"xhigh\",\"stated_model\":\"openai/gpt-6-astra-pro\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260906_203648_codex_openai_gpt-6-astra-pro_01_glm52_fused_moe\",\"elapsed_seconds\":6243,\"problem\":\"01_glm52_fused_moe\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0945,\"percent_of_roofline\":9.45}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.0945
+        ]
+      }
+    },
+    {
+      "id": "public:7668941c5513d5f51895fa03",
+      "benchmark_id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+      "subject": {
+        "source_id": "deepseek-claude/deepseek-flash",
+        "name": "deepseek-claude/deepseek-flash",
+        "model_id": null,
+        "variant": null,
+        "harness": "deepseek-claude"
+      },
+      "value": 9.46,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 2; deepseek-claude/deepseek-flash; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 01_glm52_fused_moe (RTX PRO 6000 Blackwell, environment v2_containerized): GLM-5.2 MoE (256+shared experts, top-8) fused forward, CUDA/PTX/CUTLASS only (Triton/vLLM banned); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"deepseek-claude/deepseek-flash\",\"harness\":\"deepseek-claude\",\"stated_effort\":\"not stated\",\"stated_model\":\"deepseek-flash\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260910_115701_deepseek-claude_deepseek-flash_01_glm52_fused_moe\",\"elapsed_seconds\":11134,\"problem\":\"01_glm52_fused_moe\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0946,\"percent_of_roofline\":9.46}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.0946
+        ]
+      }
+    },
+    {
+      "id": "public:7422f7950988263b2332fd33",
+      "benchmark_id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+      "subject": {
+        "source_id": "grok/grok-4.5",
+        "name": "grok/grok-4.5",
+        "model_id": null,
+        "variant": null,
+        "harness": "grok"
+      },
+      "value": 8.44,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 3; grok/grok-4.5; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 01_glm52_fused_moe (RTX PRO 6000 Blackwell, environment v2_containerized): GLM-5.2 MoE (256+shared experts, top-8) fused forward, CUDA/PTX/CUTLASS only (Triton/vLLM banned); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"grok/grok-4.5\",\"harness\":\"grok\",\"stated_effort\":\"not stated\",\"stated_model\":\"grok-4.5\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260715_212751_grok_grok-4.5_01_glm52_fused_moe\",\"elapsed_seconds\":7746,\"problem\":\"01_glm52_fused_moe\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0844,\"percent_of_roofline\":8.44}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.0844
+        ]
+      }
+    },
+    {
+      "id": "public:035681066aebd6b4ba7de390",
+      "benchmark_id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+      "subject": {
+        "source_id": "kinetic-claude/kinetic-0715[1m]",
+        "name": "kinetic-claude/kinetic-0715[1m]",
+        "model_id": null,
+        "variant": null,
+        "harness": "kinetic-claude"
+      },
+      "value": 8.1,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 4; kinetic-claude/kinetic-0715[1m]; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 01_glm52_fused_moe (RTX PRO 6000 Blackwell, environment v2_containerized): GLM-5.2 MoE (256+shared experts, top-8) fused forward, CUDA/PTX/CUTLASS only (Triton/vLLM banned); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"kinetic-claude/kinetic-0715[1m]\",\"harness\":\"kinetic-claude\",\"stated_effort\":\"not stated\",\"stated_model\":\"kinetic-0715[1m]\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260716_150051_kinetic-claude_kinetic-0715_1m__01_glm52_fused_moe\",\"elapsed_seconds\":43824,\"problem\":\"01_glm52_fused_moe\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.081,\"percent_of_roofline\":8.1}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.081
+        ]
+      }
+    },
+    {
+      "id": "public:ea17be01ac3726bd5a0fcda1",
+      "benchmark_id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+      "subject": {
+        "source_id": "muse/muse-spark-1.3 [ultra]",
+        "name": "muse/muse-spark-1.3 [ultra]",
+        "model_id": null,
+        "variant": null,
+        "harness": "muse"
+      },
+      "value": 8.790000000000001,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 5; muse/muse-spark-1.3 [ultra]; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 01_glm52_fused_moe (RTX PRO 6000 Blackwell, environment v2_containerized): GLM-5.2 MoE (256+shared experts, top-8) fused forward, CUDA/PTX/CUTLASS only (Triton/vLLM banned); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"muse/muse-spark-1.3 [ultra]\",\"harness\":\"muse\",\"stated_effort\":\"ultra\",\"stated_model\":\"muse-spark-1.3\",\"annotation_verdict\":\"interesting\",\"run_id\":\"20260903_000635_muse_muse-spark-1.3_01_glm52_fused_moe\",\"elapsed_seconds\":4029,\"problem\":\"01_glm52_fused_moe\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0879,\"percent_of_roofline\":8.790000000000001}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.0879
+        ]
+      }
+    },
+    {
+      "id": "public:fd8b1cc253974f3a8c092b8e",
+      "benchmark_id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+      "subject": {
+        "source_id": "or-fable/anthropic/claude-fable-5",
+        "name": "or-fable/anthropic/claude-fable-5",
+        "model_id": null,
+        "variant": null,
+        "harness": "or-fable"
+      },
+      "value": 8.04,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 6; or-fable/anthropic/claude-fable-5; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 01_glm52_fused_moe (RTX PRO 6000 Blackwell, environment v2_containerized): GLM-5.2 MoE (256+shared experts, top-8) fused forward, CUDA/PTX/CUTLASS only (Triton/vLLM banned); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"or-fable/anthropic/claude-fable-5\",\"harness\":\"or-fable\",\"stated_effort\":\"not stated\",\"stated_model\":\"anthropic/claude-fable-5\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260719_081348_or-fable_anthropic_claude-fable-5_01_glm52_fused_moe\",\"elapsed_seconds\":17739,\"problem\":\"01_glm52_fused_moe\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0804,\"percent_of_roofline\":8.04}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.0804
+        ]
+      }
+    },
+    {
+      "id": "public:0cd6feed470c2158e23c4d19",
+      "benchmark_id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+      "subject": {
+        "source_id": "or-fable/anthropic/claude-fable-5-1 [max]",
+        "name": "or-fable/anthropic/claude-fable-5-1 [max]",
+        "model_id": null,
+        "variant": null,
+        "harness": "or-fable"
+      },
+      "value": 10.17,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 7; or-fable/anthropic/claude-fable-5-1 [max]; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 01_glm52_fused_moe (RTX PRO 6000 Blackwell, environment v2_containerized): GLM-5.2 MoE (256+shared experts, top-8) fused forward, CUDA/PTX/CUTLASS only (Triton/vLLM banned); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"or-fable/anthropic/claude-fable-5-1 [max]\",\"harness\":\"or-fable\",\"stated_effort\":\"max\",\"stated_model\":\"anthropic/claude-fable-5-1\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260904_000346_or-fable_anthropic_claude-fable-5-1_01_glm52_fused_moe\",\"elapsed_seconds\":15061,\"problem\":\"01_glm52_fused_moe\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.1017,\"percent_of_roofline\":10.17}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.1017
+        ]
+      }
+    },
+    {
+      "id": "public:49ac615ffd9933e45866b0d1",
+      "benchmark_id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+      "subject": {
+        "source_id": "or-fable/deepseek/deepseek-v4-flash-0731",
+        "name": "or-fable/deepseek/deepseek-v4-flash-0731",
+        "model_id": null,
+        "variant": null,
+        "harness": "or-fable"
+      },
+      "value": 4.109999999999999,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 8; or-fable/deepseek/deepseek-v4-flash-0731; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 01_glm52_fused_moe (RTX PRO 6000 Blackwell, environment v2_containerized): GLM-5.2 MoE (256+shared experts, top-8) fused forward, CUDA/PTX/CUTLASS only (Triton/vLLM banned); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"or-fable/deepseek/deepseek-v4-flash-0731\",\"harness\":\"or-fable\",\"stated_effort\":\"not stated\",\"stated_model\":\"deepseek/deepseek-v4-flash-0731\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260802_203348_or-fable_deepseek_deepseek-v4-flash-0731_01_glm52_fused_moe\",\"elapsed_seconds\":23081,\"problem\":\"01_glm52_fused_moe\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0411,\"percent_of_roofline\":4.109999999999999}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.0411
+        ]
+      }
+    },
+    {
+      "id": "public:5289a09aa820aec8aeabf0b2",
+      "benchmark_id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+      "subject": {
+        "source_id": "or-opus/anthropic/claude-opus-5 [max]",
+        "name": "or-opus/anthropic/claude-opus-5 [max]",
+        "model_id": null,
+        "variant": null,
+        "harness": "or-opus"
+      },
+      "value": 10.72,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 9; or-opus/anthropic/claude-opus-5 [max]; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 01_glm52_fused_moe (RTX PRO 6000 Blackwell, environment v2_containerized): GLM-5.2 MoE (256+shared experts, top-8) fused forward, CUDA/PTX/CUTLASS only (Triton/vLLM banned); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"or-opus/anthropic/claude-opus-5 [max]\",\"harness\":\"or-opus\",\"stated_effort\":\"max\",\"stated_model\":\"anthropic/claude-opus-5\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260725_023403_or-opus_anthropic_claude-opus-5_01_glm52_fused_moe\",\"elapsed_seconds\":8302,\"problem\":\"01_glm52_fused_moe\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.1072,\"percent_of_roofline\":10.72}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.1072
+        ]
+      }
+    },
+    {
+      "id": "public:5977c2015dc607ab80f117cc",
+      "benchmark_id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+      "subject": {
+        "source_id": "deepseek-claude/deepseek-v4-pro",
+        "name": "deepseek-claude/deepseek-v4-pro",
+        "model_id": null,
+        "variant": null,
+        "harness": "deepseek-claude"
+      },
+      "value": 9.68,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 11; deepseek-claude/deepseek-v4-pro; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 01_glm52_fused_moe (RTX PRO 6000 Blackwell, environment v2_containerized): GLM-5.2 MoE (256+shared experts, top-8) fused forward, CUDA/PTX/CUTLASS only (Triton/vLLM banned); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"deepseek-claude/deepseek-v4-pro\",\"harness\":\"deepseek-claude\",\"stated_effort\":\"not stated\",\"stated_model\":\"deepseek-v4-pro\",\"annotation_verdict\":\"interesting\",\"run_id\":\"20260814_000257_deepseek-claude_deepseek-v4-pro_01_glm52_fused_moe\",\"elapsed_seconds\":17638,\"problem\":\"01_glm52_fused_moe\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0968,\"percent_of_roofline\":9.68}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.0968
+        ]
+      }
+    },
+    {
+      "id": "public:b64c2357c817cfa3bdbee67e",
+      "benchmark_id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+      "subject": {
+        "source_id": "grok/grok-4.6 [xhigh]",
+        "name": "grok/grok-4.6 [xhigh]",
+        "model_id": null,
+        "variant": null,
+        "harness": "grok"
+      },
+      "value": 9.39,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 12; grok/grok-4.6 [xhigh]; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 01_glm52_fused_moe (RTX PRO 6000 Blackwell, environment v2_containerized): GLM-5.2 MoE (256+shared experts, top-8) fused forward, CUDA/PTX/CUTLASS only (Triton/vLLM banned); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"grok/grok-4.6 [xhigh]\",\"harness\":\"grok\",\"stated_effort\":\"xhigh\",\"stated_model\":\"grok-4.6\",\"annotation_verdict\":\"interesting\",\"run_id\":\"20260814_000242_grok_grok-4.6_01_glm52_fused_moe\",\"elapsed_seconds\":3332,\"problem\":\"01_glm52_fused_moe\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0939,\"percent_of_roofline\":9.39}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.0939
+        ]
+      }
+    },
+    {
+      "id": "public:a00285d6790901cd7fa4f2b8",
+      "benchmark_id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+      "subject": {
+        "source_id": "kinetic-claude/kinetic-0715",
+        "name": "kinetic-claude/kinetic-0715",
+        "model_id": null,
+        "variant": null,
+        "harness": "kinetic-claude"
+      },
+      "value": 5.949999999999999,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 13; kinetic-claude/kinetic-0715; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 01_glm52_fused_moe (RTX PRO 6000 Blackwell, environment v2_containerized): GLM-5.2 MoE (256+shared experts, top-8) fused forward, CUDA/PTX/CUTLASS only (Triton/vLLM banned); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"kinetic-claude/kinetic-0715\",\"harness\":\"kinetic-claude\",\"stated_effort\":\"not stated\",\"stated_model\":\"kinetic-0715\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260716_090533_kinetic-claude_kinetic-0715_01_glm52_fused_moe\",\"elapsed_seconds\":10100,\"problem\":\"01_glm52_fused_moe\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0595,\"percent_of_roofline\":5.949999999999999}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.0595
+        ]
+      }
+    },
+    {
+      "id": "public:bb8e7bc10b8f496925418009",
+      "benchmark_id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+      "subject": {
+        "source_id": "or-fable/qwen/qwen3.8-max [xhigh]",
+        "name": "or-fable/qwen/qwen3.8-max [xhigh]",
+        "model_id": null,
+        "variant": null,
+        "harness": "or-fable"
+      },
+      "value": 10.059999999999999,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 14; or-fable/qwen/qwen3.8-max [xhigh]; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 01_glm52_fused_moe (RTX PRO 6000 Blackwell, environment v2_containerized): GLM-5.2 MoE (256+shared experts, top-8) fused forward, CUDA/PTX/CUTLASS only (Triton/vLLM banned); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"or-fable/qwen/qwen3.8-max [xhigh]\",\"harness\":\"or-fable\",\"stated_effort\":\"xhigh\",\"stated_model\":\"qwen/qwen3.8-max\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260805_045817_or-fable_qwen_qwen3.8-max_01_glm52_fused_moe\",\"elapsed_seconds\":21391,\"problem\":\"01_glm52_fused_moe\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.1006,\"percent_of_roofline\":10.059999999999999}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.1006
+        ]
+      }
+    },
+    {
+      "id": "public:d19bfe47e68f257c59b9cf82",
+      "benchmark_id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+      "subject": {
+        "source_id": "zai-claude/glm-5.3",
+        "name": "zai-claude/glm-5.3",
+        "model_id": null,
+        "variant": null,
+        "harness": "zai-claude"
+      },
+      "value": 9.969999999999999,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 16; zai-claude/glm-5.3; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 01_glm52_fused_moe (RTX PRO 6000 Blackwell, environment v2_containerized): GLM-5.2 MoE (256+shared experts, top-8) fused forward, CUDA/PTX/CUTLASS only (Triton/vLLM banned); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"zai-claude/glm-5.3\",\"harness\":\"zai-claude\",\"stated_effort\":\"not stated\",\"stated_model\":\"glm-5.3\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260822_085227_zai-claude_glm-5.3_01_glm52_fused_moe\",\"elapsed_seconds\":6506,\"problem\":\"01_glm52_fused_moe\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0997,\"percent_of_roofline\":9.969999999999999}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.0997
+        ]
+      }
+    },
+    {
+      "id": "public:437ce59baf029e76fbaf5bd2",
+      "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+      "subject": {
+        "source_id": "claude/claude-opus-4-8 [max]",
+        "name": "claude/claude-opus-4-8 [max]",
+        "model_id": null,
+        "variant": null,
+        "harness": "claude"
+      },
+      "value": 17.84,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 0; claude/claude-opus-4-8 [max]; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 02_deepseek_nsa (RTX PRO 6000 Blackwell, environment v2_containerized): DeepSeek Native Sparse Attention block (block top-n + sparse attention); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"claude/claude-opus-4-8 [max]\",\"harness\":\"claude\",\"stated_effort\":\"max\",\"stated_model\":\"claude-opus-4-8\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260716_140658_claude_claude-opus-4-8_02_deepseek_nsa\",\"elapsed_seconds\":19010,\"problem\":\"02_deepseek_nsa\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.1784,\"percent_of_roofline\":17.84}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.1784
+        ]
+      }
+    },
+    {
+      "id": "public:b4d9054698928aaf0ad96f8e",
+      "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+      "subject": {
+        "source_id": "codex/openai/gpt-6-astra-pro [xhigh]",
+        "name": "codex/openai/gpt-6-astra-pro [xhigh]",
+        "model_id": null,
+        "variant": null,
+        "harness": "codex"
+      },
+      "value": 39.46,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 1; codex/openai/gpt-6-astra-pro [xhigh]; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 02_deepseek_nsa (RTX PRO 6000 Blackwell, environment v2_containerized): DeepSeek Native Sparse Attention block (block top-n + sparse attention); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"codex/openai/gpt-6-astra-pro [xhigh]\",\"harness\":\"codex\",\"stated_effort\":\"xhigh\",\"stated_model\":\"openai/gpt-6-astra-pro\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260906_222051_codex_openai_gpt-6-astra-pro_02_deepseek_nsa\",\"elapsed_seconds\":8549,\"problem\":\"02_deepseek_nsa\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.3946,\"percent_of_roofline\":39.46}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.3946
+        ]
+      }
+    },
+    {
+      "id": "public:b674f58f45cc16751579c9f7",
+      "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+      "subject": {
+        "source_id": "deepseek-claude/deepseek-flash",
+        "name": "deepseek-claude/deepseek-flash",
+        "model_id": null,
+        "variant": null,
+        "harness": "deepseek-claude"
+      },
+      "value": 50.19,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 2; deepseek-claude/deepseek-flash; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 02_deepseek_nsa (RTX PRO 6000 Blackwell, environment v2_containerized): DeepSeek Native Sparse Attention block (block top-n + sparse attention); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"deepseek-claude/deepseek-flash\",\"harness\":\"deepseek-claude\",\"stated_effort\":\"not stated\",\"stated_model\":\"deepseek-flash\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260910_150236_deepseek-claude_deepseek-flash_02_deepseek_nsa\",\"elapsed_seconds\":32219,\"problem\":\"02_deepseek_nsa\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.5019,\"percent_of_roofline\":50.19}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.5019
+        ]
+      }
+    },
+    {
+      "id": "public:3739cb9beba32d4a6817a984",
+      "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+      "subject": {
+        "source_id": "grok/grok-4.5",
+        "name": "grok/grok-4.5",
+        "model_id": null,
+        "variant": null,
+        "harness": "grok"
+      },
+      "value": 1.77,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 3; grok/grok-4.5; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 02_deepseek_nsa (RTX PRO 6000 Blackwell, environment v2_containerized): DeepSeek Native Sparse Attention block (block top-n + sparse attention); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"grok/grok-4.5\",\"harness\":\"grok\",\"stated_effort\":\"not stated\",\"stated_model\":\"grok-4.5\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260715_212751_grok_grok-4.5_02_deepseek_nsa\",\"elapsed_seconds\":4222,\"problem\":\"02_deepseek_nsa\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0177,\"percent_of_roofline\":1.77}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.0177
+        ]
+      }
+    },
+    {
+      "id": "public:19b33f3b0c1c3a89d72054b4",
+      "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+      "subject": {
+        "source_id": "kinetic-claude/kinetic-0715[1m]",
+        "name": "kinetic-claude/kinetic-0715[1m]",
+        "model_id": null,
+        "variant": null,
+        "harness": "kinetic-claude"
+      },
+      "value": 5.84,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 4; kinetic-claude/kinetic-0715[1m]; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 02_deepseek_nsa (RTX PRO 6000 Blackwell, environment v2_containerized): DeepSeek Native Sparse Attention block (block top-n + sparse attention); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"kinetic-claude/kinetic-0715[1m]\",\"harness\":\"kinetic-claude\",\"stated_effort\":\"not stated\",\"stated_model\":\"kinetic-0715[1m]\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260716_150116_kinetic-claude_kinetic-0715_1m__02_deepseek_nsa\",\"elapsed_seconds\":38929,\"problem\":\"02_deepseek_nsa\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0584,\"percent_of_roofline\":5.84}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.0584
+        ]
+      }
+    },
+    {
+      "id": "public:cd74f863265b07218f8c3423",
+      "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+      "subject": {
+        "source_id": "muse/muse-spark-1.3 [ultra]",
+        "name": "muse/muse-spark-1.3 [ultra]",
+        "model_id": null,
+        "variant": null,
+        "harness": "muse"
+      },
+      "value": 2.5100000000000002,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 5; muse/muse-spark-1.3 [ultra]; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 02_deepseek_nsa (RTX PRO 6000 Blackwell, environment v2_containerized): DeepSeek Native Sparse Attention block (block top-n + sparse attention); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"muse/muse-spark-1.3 [ultra]\",\"harness\":\"muse\",\"stated_effort\":\"ultra\",\"stated_model\":\"muse-spark-1.3\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260903_133417_muse_muse-spark-1.3_02_deepseek_nsa\",\"elapsed_seconds\":1525,\"problem\":\"02_deepseek_nsa\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0251,\"percent_of_roofline\":2.5100000000000002}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.0251
+        ]
+      }
+    },
+    {
+      "id": "public:b3fe5e8e6d3eec69ecf5ef30",
+      "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+      "subject": {
+        "source_id": "or-fable/anthropic/claude-fable-5",
+        "name": "or-fable/anthropic/claude-fable-5",
+        "model_id": null,
+        "variant": null,
+        "harness": "or-fable"
+      },
+      "value": 72.66,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 6; or-fable/anthropic/claude-fable-5; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 02_deepseek_nsa (RTX PRO 6000 Blackwell, environment v2_containerized): DeepSeek Native Sparse Attention block (block top-n + sparse attention); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"or-fable/anthropic/claude-fable-5\",\"harness\":\"or-fable\",\"stated_effort\":\"not stated\",\"stated_model\":\"anthropic/claude-fable-5\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260721_153000_or-fable_anthropic_claude-fable-5_02_deepseek_nsa\",\"elapsed_seconds\":8390,\"problem\":\"02_deepseek_nsa\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.7266,\"percent_of_roofline\":72.66}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.7266
+        ]
+      }
+    },
+    {
+      "id": "public:aba5f85faa10e47ee1ff293f",
+      "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+      "subject": {
+        "source_id": "or-fable/anthropic/claude-fable-5-1 [max]",
+        "name": "or-fable/anthropic/claude-fable-5-1 [max]",
+        "model_id": null,
+        "variant": null,
+        "harness": "or-fable"
+      },
+      "value": 106.27,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 7; or-fable/anthropic/claude-fable-5-1 [max]; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 02_deepseek_nsa (RTX PRO 6000 Blackwell, environment v2_containerized): DeepSeek Native Sparse Attention block (block top-n + sparse attention); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"or-fable/anthropic/claude-fable-5-1 [max]\",\"harness\":\"or-fable\",\"stated_effort\":\"max\",\"stated_model\":\"anthropic/claude-fable-5-1\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260904_041452_or-fable_anthropic_claude-fable-5-1_02_deepseek_nsa\",\"elapsed_seconds\":11230,\"problem\":\"02_deepseek_nsa\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":1.0627,\"percent_of_roofline\":106.27}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          1.0627
+        ]
+      }
+    },
+    {
+      "id": "public:e32a6e42a9e1beef6a940cec",
+      "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+      "subject": {
+        "source_id": "or-opus/anthropic/claude-opus-5 [max]",
+        "name": "or-opus/anthropic/claude-opus-5 [max]",
+        "model_id": null,
+        "variant": null,
+        "harness": "or-opus"
+      },
+      "value": 103.67,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 9; or-opus/anthropic/claude-opus-5 [max]; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 02_deepseek_nsa (RTX PRO 6000 Blackwell, environment v2_containerized): DeepSeek Native Sparse Attention block (block top-n + sparse attention); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"or-opus/anthropic/claude-opus-5 [max]\",\"harness\":\"or-opus\",\"stated_effort\":\"max\",\"stated_model\":\"anthropic/claude-opus-5\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260725_023423_or-opus_anthropic_claude-opus-5_02_deepseek_nsa\",\"elapsed_seconds\":49430,\"problem\":\"02_deepseek_nsa\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":1.0367,\"percent_of_roofline\":103.67}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          1.0367
+        ]
+      }
+    },
+    {
+      "id": "public:1eeeb8b7ae6fa99a845de792",
+      "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+      "subject": {
+        "source_id": "agy/gemini-3.8-flash-high",
+        "name": "agy/gemini-3.8-flash-high",
+        "model_id": null,
+        "variant": null,
+        "harness": "agy"
+      },
+      "value": 9.58,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 10; agy/gemini-3.8-flash-high; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 02_deepseek_nsa (RTX PRO 6000 Blackwell, environment v2_containerized): DeepSeek Native Sparse Attention block (block top-n + sparse attention); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"agy/gemini-3.8-flash-high\",\"harness\":\"agy\",\"stated_effort\":\"not stated\",\"stated_model\":\"gemini-3.8-flash-high\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260902_220128_agy_gemini-3.8-flash-high_02_deepseek_nsa\",\"elapsed_seconds\":1089,\"problem\":\"02_deepseek_nsa\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0958,\"percent_of_roofline\":9.58}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.0958
+        ]
+      }
+    },
+    {
+      "id": "public:65bfbeac77b7dea195c6a4d7",
+      "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+      "subject": {
+        "source_id": "deepseek-claude/deepseek-v4-pro",
+        "name": "deepseek-claude/deepseek-v4-pro",
+        "model_id": null,
+        "variant": null,
+        "harness": "deepseek-claude"
+      },
+      "value": 9.45,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 11; deepseek-claude/deepseek-v4-pro; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 02_deepseek_nsa (RTX PRO 6000 Blackwell, environment v2_containerized): DeepSeek Native Sparse Attention block (block top-n + sparse attention); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"deepseek-claude/deepseek-v4-pro\",\"harness\":\"deepseek-claude\",\"stated_effort\":\"not stated\",\"stated_model\":\"deepseek-v4-pro\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260814_000322_deepseek-claude_deepseek-v4-pro_02_deepseek_nsa\",\"elapsed_seconds\":17726,\"problem\":\"02_deepseek_nsa\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0945,\"percent_of_roofline\":9.45}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.0945
+        ]
+      }
+    },
+    {
+      "id": "public:f77333580f42675f2967cb48",
+      "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+      "subject": {
+        "source_id": "grok/grok-4.6 [xhigh]",
+        "name": "grok/grok-4.6 [xhigh]",
+        "model_id": null,
+        "variant": null,
+        "harness": "grok"
+      },
+      "value": 7.960000000000001,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 12; grok/grok-4.6 [xhigh]; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 02_deepseek_nsa (RTX PRO 6000 Blackwell, environment v2_containerized): DeepSeek Native Sparse Attention block (block top-n + sparse attention); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"grok/grok-4.6 [xhigh]\",\"harness\":\"grok\",\"stated_effort\":\"xhigh\",\"stated_model\":\"grok-4.6\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260814_000307_grok_grok-4.6_02_deepseek_nsa\",\"elapsed_seconds\":3012,\"problem\":\"02_deepseek_nsa\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0796,\"percent_of_roofline\":7.960000000000001}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.0796
+        ]
+      }
+    },
+    {
+      "id": "public:ed92b9205a0273d4832cd383",
+      "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+      "subject": {
+        "source_id": "or-fable/stealth/ox-alpha",
+        "name": "or-fable/stealth/ox-alpha",
+        "model_id": null,
+        "variant": null,
+        "harness": "or-fable"
+      },
+      "value": 4.45,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 15; or-fable/stealth/ox-alpha; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 02_deepseek_nsa (RTX PRO 6000 Blackwell, environment v2_containerized): DeepSeek Native Sparse Attention block (block top-n + sparse attention); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"or-fable/stealth/ox-alpha\",\"harness\":\"or-fable\",\"stated_effort\":\"not stated\",\"stated_model\":\"stealth/ox-alpha\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260822_102122_or-fable_stealth_ox-alpha_02_deepseek_nsa\",\"elapsed_seconds\":12685,\"problem\":\"02_deepseek_nsa\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0445,\"percent_of_roofline\":4.45}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.0445
+        ]
+      }
+    },
+    {
+      "id": "public:66a6761269d6365cdcebe624",
+      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "subject": {
+        "source_id": "claude/claude-opus-4-8 [max]",
+        "name": "claude/claude-opus-4-8 [max]",
+        "model_id": null,
+        "variant": null,
+        "harness": "claude"
+      },
+      "value": 0.97,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 0; claude/claude-opus-4-8 [max]; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 03_megaqwen_decode (RTX PRO 6000 Blackwell, environment v2_containerized): MegaQwen CUDA megakernel geometry, decode-only tok/s at ctx 2k–128k; value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"claude/claude-opus-4-8 [max]\",\"harness\":\"claude\",\"stated_effort\":\"max\",\"stated_model\":\"claude-opus-4-8\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260716_140723_claude_claude-opus-4-8_03_megaqwen_decode\",\"elapsed_seconds\":null,\"problem\":\"03_megaqwen_decode\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0097,\"percent_of_roofline\":0.97}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.0097
+        ]
+      }
+    },
+    {
+      "id": "public:9667d0d0f5dff5194fb43d63",
+      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "subject": {
+        "source_id": "codex/openai/gpt-6-astra-pro [xhigh]",
+        "name": "codex/openai/gpt-6-astra-pro [xhigh]",
+        "model_id": null,
+        "variant": null,
+        "harness": "codex"
+      },
+      "value": 4.9,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 1; codex/openai/gpt-6-astra-pro [xhigh]; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 03_megaqwen_decode (RTX PRO 6000 Blackwell, environment v2_containerized): MegaQwen CUDA megakernel geometry, decode-only tok/s at ctx 2k–128k; value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"codex/openai/gpt-6-astra-pro [xhigh]\",\"harness\":\"codex\",\"stated_effort\":\"xhigh\",\"stated_model\":\"openai/gpt-6-astra-pro\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260907_004320_codex_openai_gpt-6-astra-pro_03_megaqwen_decode\",\"elapsed_seconds\":7691,\"problem\":\"03_megaqwen_decode\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.049,\"percent_of_roofline\":4.9}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.049
+        ]
+      }
+    },
+    {
+      "id": "public:5b555beb24e8e0cd7a1f8eb3",
+      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "subject": {
+        "source_id": "deepseek-claude/deepseek-flash",
+        "name": "deepseek-claude/deepseek-flash",
+        "model_id": null,
+        "variant": null,
+        "harness": "deepseek-claude"
+      },
+      "value": 5.390000000000001,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 2; deepseek-claude/deepseek-flash; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 03_megaqwen_decode (RTX PRO 6000 Blackwell, environment v2_containerized): MegaQwen CUDA megakernel geometry, decode-only tok/s at ctx 2k–128k; value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"deepseek-claude/deepseek-flash\",\"harness\":\"deepseek-claude\",\"stated_effort\":\"not stated\",\"stated_model\":\"deepseek-flash\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260910_202104_deepseek-claude_deepseek-flash_03_megaqwen_decode\",\"elapsed_seconds\":20196,\"problem\":\"03_megaqwen_decode\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0539,\"percent_of_roofline\":5.390000000000001}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.0539
+        ]
+      }
+    },
+    {
+      "id": "public:193b2859307b69a14cc224b6",
+      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "subject": {
+        "source_id": "grok/grok-4.5",
+        "name": "grok/grok-4.5",
+        "model_id": null,
+        "variant": null,
+        "harness": "grok"
+      },
+      "value": 3.45,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 3; grok/grok-4.5; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 03_megaqwen_decode (RTX PRO 6000 Blackwell, environment v2_containerized): MegaQwen CUDA megakernel geometry, decode-only tok/s at ctx 2k–128k; value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"grok/grok-4.5\",\"harness\":\"grok\",\"stated_effort\":\"not stated\",\"stated_model\":\"grok-4.5\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260715_212751_grok_grok-4.5_03_megaqwen_decode\",\"elapsed_seconds\":9151,\"problem\":\"03_megaqwen_decode\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0345,\"percent_of_roofline\":3.45}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.0345
+        ]
+      }
+    },
+    {
+      "id": "public:0626a4020b1a867dcc997956",
+      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "subject": {
+        "source_id": "muse/muse-spark-1.3 [ultra]",
+        "name": "muse/muse-spark-1.3 [ultra]",
+        "model_id": null,
+        "variant": null,
+        "harness": "muse"
+      },
+      "value": 3.3300000000000005,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 5; muse/muse-spark-1.3 [ultra]; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 03_megaqwen_decode (RTX PRO 6000 Blackwell, environment v2_containerized): MegaQwen CUDA megakernel geometry, decode-only tok/s at ctx 2k–128k; value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"muse/muse-spark-1.3 [ultra]\",\"harness\":\"muse\",\"stated_effort\":\"ultra\",\"stated_model\":\"muse-spark-1.3\",\"annotation_verdict\":\"interesting\",\"run_id\":\"20260903_044407_muse_muse-spark-1.3_03_megaqwen_decode\",\"elapsed_seconds\":14740,\"problem\":\"03_megaqwen_decode\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0333,\"percent_of_roofline\":3.3300000000000005}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.0333
+        ]
+      }
+    },
+    {
+      "id": "public:87ff520b6bef3a4cd72dd546",
+      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "subject": {
+        "source_id": "or-fable/anthropic/claude-fable-5",
+        "name": "or-fable/anthropic/claude-fable-5",
+        "model_id": null,
+        "variant": null,
+        "harness": "or-fable"
+      },
+      "value": 5.779999999999999,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 6; or-fable/anthropic/claude-fable-5; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 03_megaqwen_decode (RTX PRO 6000 Blackwell, environment v2_containerized): MegaQwen CUDA megakernel geometry, decode-only tok/s at ctx 2k–128k; value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"or-fable/anthropic/claude-fable-5\",\"harness\":\"or-fable\",\"stated_effort\":\"not stated\",\"stated_model\":\"anthropic/claude-fable-5\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260719_190250_or-fable_anthropic_claude-fable-5_03_megaqwen_decode\",\"elapsed_seconds\":7357,\"problem\":\"03_megaqwen_decode\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0578,\"percent_of_roofline\":5.779999999999999}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.0578
+        ]
+      }
+    },
+    {
+      "id": "public:747bf8ca5c6ad3aa6d441211",
+      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "subject": {
+        "source_id": "or-fable/anthropic/claude-fable-5-1 [max]",
+        "name": "or-fable/anthropic/claude-fable-5-1 [max]",
+        "model_id": null,
+        "variant": null,
+        "harness": "or-fable"
+      },
+      "value": 6.43,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 7; or-fable/anthropic/claude-fable-5-1 [max]; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 03_megaqwen_decode (RTX PRO 6000 Blackwell, environment v2_containerized): MegaQwen CUDA megakernel geometry, decode-only tok/s at ctx 2k–128k; value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"or-fable/anthropic/claude-fable-5-1 [max]\",\"harness\":\"or-fable\",\"stated_effort\":\"max\",\"stated_model\":\"anthropic/claude-fable-5-1\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260904_072208_or-fable_anthropic_claude-fable-5-1_03_megaqwen_decode\",\"elapsed_seconds\":13693,\"problem\":\"03_megaqwen_decode\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0643,\"percent_of_roofline\":6.43}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.0643
+        ]
+      }
+    },
+    {
+      "id": "public:c48ad4eb8165cfce31acb341",
+      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "subject": {
+        "source_id": "or-fable/deepseek/deepseek-v4-flash-0731",
+        "name": "or-fable/deepseek/deepseek-v4-flash-0731",
+        "model_id": null,
+        "variant": null,
+        "harness": "or-fable"
+      },
+      "value": 2.81,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 8; or-fable/deepseek/deepseek-v4-flash-0731; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 03_megaqwen_decode (RTX PRO 6000 Blackwell, environment v2_containerized): MegaQwen CUDA megakernel geometry, decode-only tok/s at ctx 2k–128k; value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"or-fable/deepseek/deepseek-v4-flash-0731\",\"harness\":\"or-fable\",\"stated_effort\":\"not stated\",\"stated_model\":\"deepseek/deepseek-v4-flash-0731\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260802_203916_or-fable_deepseek_deepseek-v4-flash-0731_03_megaqwen_decode\",\"elapsed_seconds\":14211,\"problem\":\"03_megaqwen_decode\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0281,\"percent_of_roofline\":2.81}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.0281
+        ]
+      }
+    },
+    {
+      "id": "public:2de3df3f8c266cfa81ac563e",
+      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "subject": {
+        "source_id": "or-opus/anthropic/claude-opus-5 [max]",
+        "name": "or-opus/anthropic/claude-opus-5 [max]",
+        "model_id": null,
+        "variant": null,
+        "harness": "or-opus"
+      },
+      "value": 6.550000000000001,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 9; or-opus/anthropic/claude-opus-5 [max]; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 03_megaqwen_decode (RTX PRO 6000 Blackwell, environment v2_containerized): MegaQwen CUDA megakernel geometry, decode-only tok/s at ctx 2k–128k; value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"or-opus/anthropic/claude-opus-5 [max]\",\"harness\":\"or-opus\",\"stated_effort\":\"max\",\"stated_model\":\"anthropic/claude-opus-5\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260725_023443_or-opus_anthropic_claude-opus-5_03_megaqwen_decode\",\"elapsed_seconds\":21582,\"problem\":\"03_megaqwen_decode\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0655,\"percent_of_roofline\":6.550000000000001}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.0655
+        ]
+      }
+    },
+    {
+      "id": "public:bd24304944769e14d595b7d7",
+      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "subject": {
+        "source_id": "agy/gemini-3.8-flash-high",
+        "name": "agy/gemini-3.8-flash-high",
+        "model_id": null,
+        "variant": null,
+        "harness": "agy"
+      },
+      "value": 4.26,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 10; agy/gemini-3.8-flash-high; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 03_megaqwen_decode (RTX PRO 6000 Blackwell, environment v2_containerized): MegaQwen CUDA megakernel geometry, decode-only tok/s at ctx 2k–128k; value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"agy/gemini-3.8-flash-high\",\"harness\":\"agy\",\"stated_effort\":\"not stated\",\"stated_model\":\"gemini-3.8-flash-high\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260902_221937_agy_gemini-3.8-flash-high_03_megaqwen_decode\",\"elapsed_seconds\":2130,\"problem\":\"03_megaqwen_decode\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0426,\"percent_of_roofline\":4.26}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.0426
+        ]
+      }
+    },
+    {
+      "id": "public:82fbd2052da8233e1b806bbd",
+      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "subject": {
+        "source_id": "deepseek-claude/deepseek-v4-pro",
+        "name": "deepseek-claude/deepseek-v4-pro",
+        "model_id": null,
+        "variant": null,
+        "harness": "deepseek-claude"
+      },
+      "value": 6.02,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 11; deepseek-claude/deepseek-v4-pro; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 03_megaqwen_decode (RTX PRO 6000 Blackwell, environment v2_containerized): MegaQwen CUDA megakernel geometry, decode-only tok/s at ctx 2k–128k; value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"deepseek-claude/deepseek-v4-pro\",\"harness\":\"deepseek-claude\",\"stated_effort\":\"not stated\",\"stated_model\":\"deepseek-v4-pro\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260814_000347_deepseek-claude_deepseek-v4-pro_03_megaqwen_decode\",\"elapsed_seconds\":32437,\"problem\":\"03_megaqwen_decode\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0602,\"percent_of_roofline\":6.02}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.0602
+        ]
+      }
+    },
+    {
+      "id": "public:e7cbd7403d164a84248d3a42",
+      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "subject": {
+        "source_id": "grok/grok-4.6 [xhigh]",
+        "name": "grok/grok-4.6 [xhigh]",
+        "model_id": null,
+        "variant": null,
+        "harness": "grok"
+      },
+      "value": 5.42,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 12; grok/grok-4.6 [xhigh]; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 03_megaqwen_decode (RTX PRO 6000 Blackwell, environment v2_containerized): MegaQwen CUDA megakernel geometry, decode-only tok/s at ctx 2k–128k; value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"grok/grok-4.6 [xhigh]\",\"harness\":\"grok\",\"stated_effort\":\"xhigh\",\"stated_model\":\"grok-4.6\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260814_000332_grok_grok-4.6_03_megaqwen_decode\",\"elapsed_seconds\":4134,\"problem\":\"03_megaqwen_decode\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0542,\"percent_of_roofline\":5.42}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.0542
+        ]
+      }
+    },
+    {
+      "id": "public:a5bf5772f1505444a9390155",
+      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "subject": {
+        "source_id": "kinetic-claude/kinetic-0715",
+        "name": "kinetic-claude/kinetic-0715",
+        "model_id": null,
+        "variant": null,
+        "harness": "kinetic-claude"
+      },
+      "value": 4.7,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 13; kinetic-claude/kinetic-0715; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 03_megaqwen_decode (RTX PRO 6000 Blackwell, environment v2_containerized): MegaQwen CUDA megakernel geometry, decode-only tok/s at ctx 2k–128k; value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"kinetic-claude/kinetic-0715\",\"harness\":\"kinetic-claude\",\"stated_effort\":\"not stated\",\"stated_model\":\"kinetic-0715\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260716_112923_kinetic-claude_kinetic-0715_03_megaqwen_decode\",\"elapsed_seconds\":45408,\"problem\":\"03_megaqwen_decode\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.047,\"percent_of_roofline\":4.7}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.047
+        ]
+      }
+    },
+    {
+      "id": "public:50dabd4f0dae852718311400",
+      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "subject": {
+        "source_id": "or-fable/stealth/ox-alpha",
+        "name": "or-fable/stealth/ox-alpha",
+        "model_id": null,
+        "variant": null,
+        "harness": "or-fable"
+      },
+      "value": 3.92,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 15; or-fable/stealth/ox-alpha; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 03_megaqwen_decode (RTX PRO 6000 Blackwell, environment v2_containerized): MegaQwen CUDA megakernel geometry, decode-only tok/s at ctx 2k–128k; value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"or-fable/stealth/ox-alpha\",\"harness\":\"or-fable\",\"stated_effort\":\"not stated\",\"stated_model\":\"stealth/ox-alpha\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260822_105443_or-fable_stealth_ox-alpha_03_megaqwen_decode\",\"elapsed_seconds\":8145,\"problem\":\"03_megaqwen_decode\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0392,\"percent_of_roofline\":3.92}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.0392
+        ]
+      }
+    },
+    {
+      "id": "public:78e345a8d78aa3d48a7dcd22",
+      "benchmark_id": "kernelbench-cuda-grid-mingru-sps::rtx-pro-6000",
+      "subject": {
+        "source_id": "claude/claude-opus-4-8 [max]",
+        "name": "claude/claude-opus-4-8 [max]",
+        "model_id": null,
+        "variant": null,
+        "harness": "claude"
+      },
+      "value": 32.690000000000005,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 0; claude/claude-opus-4-8 [max]; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 04_grid_mingru_sps (RTX PRO 6000 Blackwell, environment v2_containerized): Non-LLM RL sim steps-per-second for a grid world with a MinGRU agent; value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"claude/claude-opus-4-8 [max]\",\"harness\":\"claude\",\"stated_effort\":\"max\",\"stated_model\":\"claude-opus-4-8\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260716_140748_claude_claude-opus-4-8_04_grid_mingru_sps\",\"elapsed_seconds\":8459,\"problem\":\"04_grid_mingru_sps\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.3269,\"percent_of_roofline\":32.690000000000005}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.3269
+        ]
+      }
+    },
+    {
+      "id": "public:a9b8525097ebc94b70aa4bf4",
+      "benchmark_id": "kernelbench-cuda-grid-mingru-sps::rtx-pro-6000",
+      "subject": {
+        "source_id": "codex/openai/gpt-6-astra-pro [xhigh]",
+        "name": "codex/openai/gpt-6-astra-pro [xhigh]",
+        "model_id": null,
+        "variant": null,
+        "harness": "codex"
+      },
+      "value": 68.37,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 1; codex/openai/gpt-6-astra-pro [xhigh]; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 04_grid_mingru_sps (RTX PRO 6000 Blackwell, environment v2_containerized): Non-LLM RL sim steps-per-second for a grid world with a MinGRU agent; value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"codex/openai/gpt-6-astra-pro [xhigh]\",\"harness\":\"codex\",\"stated_effort\":\"xhigh\",\"stated_model\":\"openai/gpt-6-astra-pro\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260907_025132_codex_openai_gpt-6-astra-pro_04_grid_mingru_sps\",\"elapsed_seconds\":7281,\"problem\":\"04_grid_mingru_sps\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.6837,\"percent_of_roofline\":68.37}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.6837
+        ]
+      }
+    },
+    {
+      "id": "public:39d20e8b49d21f9d78d0cb9e",
+      "benchmark_id": "kernelbench-cuda-grid-mingru-sps::rtx-pro-6000",
+      "subject": {
+        "source_id": "deepseek-claude/deepseek-flash",
+        "name": "deepseek-claude/deepseek-flash",
+        "model_id": null,
+        "variant": null,
+        "harness": "deepseek-claude"
+      },
+      "value": 28.560000000000002,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 2; deepseek-claude/deepseek-flash; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 04_grid_mingru_sps (RTX PRO 6000 Blackwell, environment v2_containerized): Non-LLM RL sim steps-per-second for a grid world with a MinGRU agent; value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"deepseek-claude/deepseek-flash\",\"harness\":\"deepseek-claude\",\"stated_effort\":\"not stated\",\"stated_model\":\"deepseek-flash\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260910_202109_deepseek-claude_deepseek-flash_04_grid_mingru_sps\",\"elapsed_seconds\":13919,\"problem\":\"04_grid_mingru_sps\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.2856,\"percent_of_roofline\":28.560000000000002}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.2856
+        ]
+      }
+    },
+    {
+      "id": "public:57bf70bd491b3492f189d767",
+      "benchmark_id": "kernelbench-cuda-grid-mingru-sps::rtx-pro-6000",
+      "subject": {
+        "source_id": "grok/grok-4.5",
+        "name": "grok/grok-4.5",
+        "model_id": null,
+        "variant": null,
+        "harness": "grok"
+      },
+      "value": 0.2,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 3; grok/grok-4.5; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 04_grid_mingru_sps (RTX PRO 6000 Blackwell, environment v2_containerized): Non-LLM RL sim steps-per-second for a grid world with a MinGRU agent; value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"grok/grok-4.5\",\"harness\":\"grok\",\"stated_effort\":\"not stated\",\"stated_model\":\"grok-4.5\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260716_011941_grok_grok-4.5_04_grid_mingru_sps\",\"elapsed_seconds\":450,\"problem\":\"04_grid_mingru_sps\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.002,\"percent_of_roofline\":0.2}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.002
+        ]
+      }
+    },
+    {
+      "id": "public:2c912237fa8b933981b04820",
+      "benchmark_id": "kernelbench-cuda-grid-mingru-sps::rtx-pro-6000",
+      "subject": {
+        "source_id": "kinetic-claude/kinetic-0715[1m]",
+        "name": "kinetic-claude/kinetic-0715[1m]",
+        "model_id": null,
+        "variant": null,
+        "harness": "kinetic-claude"
+      },
+      "value": 22.38,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 4; kinetic-claude/kinetic-0715[1m]; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 04_grid_mingru_sps (RTX PRO 6000 Blackwell, environment v2_containerized): Non-LLM RL sim steps-per-second for a grid world with a MinGRU agent; value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"kinetic-claude/kinetic-0715[1m]\",\"harness\":\"kinetic-claude\",\"stated_effort\":\"not stated\",\"stated_model\":\"kinetic-0715[1m]\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260716_150206_kinetic-claude_kinetic-0715_1m__04_grid_mingru_sps\",\"elapsed_seconds\":34581,\"problem\":\"04_grid_mingru_sps\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.2238,\"percent_of_roofline\":22.38}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.2238
+        ]
+      }
+    },
+    {
+      "id": "public:4ccf29da156b3c060665e28a",
+      "benchmark_id": "kernelbench-cuda-grid-mingru-sps::rtx-pro-6000",
+      "subject": {
+        "source_id": "or-fable/anthropic/claude-fable-5",
+        "name": "or-fable/anthropic/claude-fable-5",
+        "model_id": null,
+        "variant": null,
+        "harness": "or-fable"
+      },
+      "value": 19.09,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 6; or-fable/anthropic/claude-fable-5; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 04_grid_mingru_sps (RTX PRO 6000 Blackwell, environment v2_containerized): Non-LLM RL sim steps-per-second for a grid world with a MinGRU agent; value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"or-fable/anthropic/claude-fable-5\",\"harness\":\"or-fable\",\"stated_effort\":\"not stated\",\"stated_model\":\"anthropic/claude-fable-5\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260719_102947_or-fable_anthropic_claude-fable-5_04_grid_mingru_sps\",\"elapsed_seconds\":6473,\"problem\":\"04_grid_mingru_sps\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.1909,\"percent_of_roofline\":19.09}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.1909
+        ]
+      }
+    },
+    {
+      "id": "public:380756b93b7736c4bbe94472",
+      "benchmark_id": "kernelbench-cuda-grid-mingru-sps::rtx-pro-6000",
+      "subject": {
+        "source_id": "or-fable/anthropic/claude-fable-5-1 [max]",
+        "name": "or-fable/anthropic/claude-fable-5-1 [max]",
+        "model_id": null,
+        "variant": null,
+        "harness": "or-fable"
+      },
+      "value": 70.93,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 7; or-fable/anthropic/claude-fable-5-1 [max]; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 04_grid_mingru_sps (RTX PRO 6000 Blackwell, environment v2_containerized): Non-LLM RL sim steps-per-second for a grid world with a MinGRU agent; value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"or-fable/anthropic/claude-fable-5-1 [max]\",\"harness\":\"or-fable\",\"stated_effort\":\"max\",\"stated_model\":\"anthropic/claude-fable-5-1\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260904_111027_or-fable_anthropic_claude-fable-5-1_04_grid_mingru_sps\",\"elapsed_seconds\":9073,\"problem\":\"04_grid_mingru_sps\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.7093,\"percent_of_roofline\":70.93}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.7093
+        ]
+      }
+    },
+    {
+      "id": "public:9d52acb0d9017b8a375d50e7",
+      "benchmark_id": "kernelbench-cuda-grid-mingru-sps::rtx-pro-6000",
+      "subject": {
+        "source_id": "or-fable/deepseek/deepseek-v4-flash-0731",
+        "name": "or-fable/deepseek/deepseek-v4-flash-0731",
+        "model_id": null,
+        "variant": null,
+        "harness": "or-fable"
+      },
+      "value": 14.530000000000001,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 8; or-fable/deepseek/deepseek-v4-flash-0731; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 04_grid_mingru_sps (RTX PRO 6000 Blackwell, environment v2_containerized): Non-LLM RL sim steps-per-second for a grid world with a MinGRU agent; value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"or-fable/deepseek/deepseek-v4-flash-0731\",\"harness\":\"or-fable\",\"stated_effort\":\"not stated\",\"stated_model\":\"deepseek/deepseek-v4-flash-0731\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260802_203919_or-fable_deepseek_deepseek-v4-flash-0731_04_grid_mingru_sps\",\"elapsed_seconds\":6482,\"problem\":\"04_grid_mingru_sps\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.1453,\"percent_of_roofline\":14.530000000000001}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.1453
+        ]
+      }
+    },
+    {
+      "id": "public:7d8c70cb48bb46a5d7aca6cf",
+      "benchmark_id": "kernelbench-cuda-grid-mingru-sps::rtx-pro-6000",
+      "subject": {
+        "source_id": "or-opus/anthropic/claude-opus-5 [max]",
+        "name": "or-opus/anthropic/claude-opus-5 [max]",
+        "model_id": null,
+        "variant": null,
+        "harness": "or-opus"
+      },
+      "value": 196.1,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 9; or-opus/anthropic/claude-opus-5 [max]; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 04_grid_mingru_sps (RTX PRO 6000 Blackwell, environment v2_containerized): Non-LLM RL sim steps-per-second for a grid world with a MinGRU agent; value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"or-opus/anthropic/claude-opus-5 [max]\",\"harness\":\"or-opus\",\"stated_effort\":\"max\",\"stated_model\":\"anthropic/claude-opus-5\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260725_023503_or-opus_anthropic_claude-opus-5_04_grid_mingru_sps\",\"elapsed_seconds\":43317,\"problem\":\"04_grid_mingru_sps\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":1.961,\"percent_of_roofline\":196.1}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          1.961
+        ]
+      }
+    },
+    {
+      "id": "public:6f628106260ed9b663bbd57b",
+      "benchmark_id": "kernelbench-cuda-grid-mingru-sps::rtx-pro-6000",
+      "subject": {
+        "source_id": "agy/gemini-3.8-flash-high",
+        "name": "agy/gemini-3.8-flash-high",
+        "model_id": null,
+        "variant": null,
+        "harness": "agy"
+      },
+      "value": 36.370000000000005,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 10; agy/gemini-3.8-flash-high; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 04_grid_mingru_sps (RTX PRO 6000 Blackwell, environment v2_containerized): Non-LLM RL sim steps-per-second for a grid world with a MinGRU agent; value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"agy/gemini-3.8-flash-high\",\"harness\":\"agy\",\"stated_effort\":\"not stated\",\"stated_model\":\"gemini-3.8-flash-high\",\"annotation_verdict\":\"interesting\",\"run_id\":\"20260902_225508_agy_gemini-3.8-flash-high_04_grid_mingru_sps\",\"elapsed_seconds\":1364,\"problem\":\"04_grid_mingru_sps\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.3637,\"percent_of_roofline\":36.370000000000005}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.3637
+        ]
+      }
+    },
+    {
+      "id": "public:680a435cfb34a5f78681055e",
+      "benchmark_id": "kernelbench-cuda-grid-mingru-sps::rtx-pro-6000",
+      "subject": {
+        "source_id": "kinetic-claude/kinetic-0715",
+        "name": "kinetic-claude/kinetic-0715",
+        "model_id": null,
+        "variant": null,
+        "harness": "kinetic-claude"
+      },
+      "value": 17.380000000000003,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 13; kinetic-claude/kinetic-0715; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 04_grid_mingru_sps (RTX PRO 6000 Blackwell, environment v2_containerized): Non-LLM RL sim steps-per-second for a grid world with a MinGRU agent; value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"kinetic-claude/kinetic-0715\",\"harness\":\"kinetic-claude\",\"stated_effort\":\"not stated\",\"stated_model\":\"kinetic-0715\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260716_090648_kinetic-claude_kinetic-0715_04_grid_mingru_sps\",\"elapsed_seconds\":11828,\"problem\":\"04_grid_mingru_sps\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.1738,\"percent_of_roofline\":17.380000000000003}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.1738
+        ]
+      }
+    },
+    {
+      "id": "public:8f8d4f411138dcd7f4875a51",
+      "benchmark_id": "kernelbench-cuda-grid-mingru-sps::rtx-pro-6000",
+      "subject": {
+        "source_id": "or-fable/qwen/qwen3.8-max [xhigh]",
+        "name": "or-fable/qwen/qwen3.8-max [xhigh]",
+        "model_id": null,
+        "variant": null,
+        "harness": "or-fable"
+      },
+      "value": 28.48,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 14; or-fable/qwen/qwen3.8-max [xhigh]; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 04_grid_mingru_sps (RTX PRO 6000 Blackwell, environment v2_containerized): Non-LLM RL sim steps-per-second for a grid world with a MinGRU agent; value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"or-fable/qwen/qwen3.8-max [xhigh]\",\"harness\":\"or-fable\",\"stated_effort\":\"xhigh\",\"stated_model\":\"qwen/qwen3.8-max\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260803_194356_or-fable_qwen_qwen3.8-max_04_grid_mingru_sps\",\"elapsed_seconds\":6240,\"problem\":\"04_grid_mingru_sps\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.2848,\"percent_of_roofline\":28.48}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.2848
+        ]
+      }
     }
   ],
   "collections": [
@@ -240024,6 +242274,36 @@
       "status": "collected",
       "source_url": "https://htihle.github.io/assets/data/weirdml_v3.json",
       "reason": "5 source results parsed; configurations remain separate; unmatched model identities are retained."
+    },
+    {
+      "benchmark_id": "vulcanbench-frontier::4",
+      "status": "collected",
+      "source_url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+      "reason": "24 source results parsed; configurations remain separate; unmatched model identities are retained."
+    },
+    {
+      "benchmark_id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+      "status": "collected",
+      "source_url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+      "reason": "15 source results parsed; configurations remain separate; unmatched model identities are retained."
+    },
+    {
+      "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+      "status": "collected",
+      "source_url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+      "reason": "13 source results parsed; configurations remain separate; unmatched model identities are retained."
+    },
+    {
+      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "status": "collected",
+      "source_url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+      "reason": "14 source results parsed; configurations remain separate; unmatched model identities are retained."
+    },
+    {
+      "benchmark_id": "kernelbench-cuda-grid-mingru-sps::rtx-pro-6000",
+      "status": "collected",
+      "source_url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+      "reason": "12 source results parsed; configurations remain separate; unmatched model identities are retained."
     }
   ],
   "rejected": [

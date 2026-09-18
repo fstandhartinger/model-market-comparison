@@ -108,8 +108,9 @@ test('actual source adapter keeps all version identities, values and dated legac
   // Guards against shipping the whole matrix instead of the selected model's rows (that is megabytes).
   // The ceiling tracks the registry: 2026-09-16 raised from 500 KB with CR-34.2's twelve OpenRouter boards, to
   // 560 KB in iteration 81 (SWE-rebench, GSO and τ^τ-bench's six harness axes add ~1 KB of axis metadata each), and
-  // to 575 KB in iteration 113 (CR-81/82: ArXivMath/BrokenArXiv 08/2026 and WeirdML v3 join as their own axes).
-  assert.ok(JSON.stringify(selected).length < 575_000, 'initial benchmark payload bounded to selected models');
+  // to 575 KB in iteration 113 (CR-81/82: ArXivMath/BrokenArXiv 08/2026 and WeirdML v3 join as their own axes), and
+  // to 625 KB in iteration 114 (CR-82.3/82.4: VulcanBench Frontier v4 and four KernelBench-CUDA problem axes).
+  assert.ok(JSON.stringify(selected).length < 625_000, 'initial benchmark payload bounded to selected models');
   assert.equal(JSON.stringify(ds), before);
 });
 

@@ -3677,6 +3677,200 @@
       "source_urls": [
         "https://htihle.github.io/weirdml.html"
       ]
+    },
+    {
+      "benchmark_id": "vulcanbench-frontier::4",
+      "parser": {
+        "kind": "vulcanbench_frontier_csv",
+        "name_field": "name",
+        "id_field": "id",
+        "value_field": "combined_33",
+        "harness_field": "harness",
+        "plain_text_names": true
+      },
+      "status": "collected",
+      "reason": "The maintainer publishes the board as CSV (the same table leaderboard.html renders); one row per model × effort column.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "CSV",
+        "locator": "GET /assets/data/swe-v4-board.csv → one row per model × effort; value = combined_33 (the Combined score column leaderboard.html renders).",
+        "version_guard": "Exact 18-column header (rank … protocol); every row must state n=23, a harness in {Codex, Claude Code}, an effort in {low, medium, high, extra-high, max} and a protocol starting code-quality-maintenance-v3. A different task count, column set, protocol family or renamed suite is a different identity and fails closed.",
+        "notes": "The v3 suite is a different task set and scale and stays a separate (absent) identity; rows are never merged across suites."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Exact 18-column header (rank … protocol); every row must state n=23, a harness in {Codex, Claude Code}, an effort in {low, medium, high, extra-high, max} and a protocol starting code-quality-maintenance-v3. A different task count, column set, protocol family or renamed suite is a different identity and fails closed.",
+      "source": {
+        "url": "https://vulcanbench.com/assets/data/swe-v4-board.csv",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/81d184fca0535d344be8.gz",
+        "sha256": "81d184fca0535d344be85ed8195e6ff294e7295b2f85decae924f6e402aa7f08",
+        "retrieved_at": "2026-09-18T20:46:32.035922+00:00"
+      },
+      "protocol": "VulcanBench Frontier v4 (formerly VulcanBench-SWE v4): 23 behavioural-reconstruction tasks; combined score = 100 × (0.50 functional hidden tests + 0.085 lint/complexity + 0.085 security + 0.33 judged Code quality, judged for a human reader by Muse Spark 1.3 and Grok 4.6 under the frozen protocol family code-quality-maintenance-v3.4–v3.6); one column per model × effort in its own agent harness (Codex or Claude Code); Fable 5.1’s columns include 11 disclosed Opus 4.8 fallback cells the operator keeps in the population; not a Composite input.",
+      "basis": "measured",
+      "minimum_rows": 24,
+      "source_urls": [
+        "https://vulcanbench.com/"
+      ]
+    },
+    {
+      "benchmark_id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+      "parser": {
+        "kind": "kernelbench_cuda_board",
+        "name_field": "name",
+        "id_field": "id",
+        "value_field": "peak_fraction",
+        "harness_field": "harness",
+        "scale": 100,
+        "plain_text_names": true,
+        "problem": "01_glm52_fused_moe",
+        "require": {
+          "schema_version": 1,
+          "hardware": "RTX PRO 6000"
+        }
+      },
+      "status": "collected",
+      "reason": "The maintainer bakes the board as leaderboard.json (the artifact kernelbench.com renders); one row per stated model identity whose cell passes the site validity rule.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JSON",
+        "locator": "GET benchmarks/cuda/results/leaderboard.json → one row per stated model identity whose 01_glm52_fused_moe cell passes the site validity rule; value = peak_fraction × 100 (percent of roofline).",
+        "version_guard": "schema_version must stay 1, hardware.name must contain “RTX PRO 6000”, and the problem must stay in the stated four-problem deck. A scored cell must be correct, audited (clean/interesting) and appear in the published per_problem ranked list with the same value. Another hardware board (e.g. H100/B200) is a different identity.",
+        "notes": "01_glm52_fused_moe — GLM-5.2 MoE (256+shared experts, top-8) fused forward, CUDA/PTX/CUTLASS only (Triton/vLLM banned)."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "schema_version must stay 1, hardware.name must contain “RTX PRO 6000”, and the problem must stay in the stated four-problem deck. A scored cell must be correct, audited (clean/interesting) and appear in the published per_problem ranked list with the same value. Another hardware board (e.g. H100/B200) is a different identity.",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00"
+      },
+      "protocol": "KernelBench-CUDA 01_glm52_fused_moe (RTX PRO 6000 Blackwell, environment v2_containerized): GLM-5.2 MoE (256+shared experts, top-8) fused forward, CUDA/PTX/CUTLASS only (Triton/vLLM banned); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.",
+      "basis": "measured",
+      "minimum_rows": 15,
+      "source_urls": [
+        "https://kernelbench.com/cuda"
+      ]
+    },
+    {
+      "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+      "parser": {
+        "kind": "kernelbench_cuda_board",
+        "name_field": "name",
+        "id_field": "id",
+        "value_field": "peak_fraction",
+        "harness_field": "harness",
+        "scale": 100,
+        "plain_text_names": true,
+        "problem": "02_deepseek_nsa",
+        "require": {
+          "schema_version": 1,
+          "hardware": "RTX PRO 6000"
+        }
+      },
+      "status": "collected",
+      "reason": "The maintainer bakes the board as leaderboard.json (the artifact kernelbench.com renders); one row per stated model identity whose cell passes the site validity rule.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JSON",
+        "locator": "GET benchmarks/cuda/results/leaderboard.json → one row per stated model identity whose 02_deepseek_nsa cell passes the site validity rule; value = peak_fraction × 100 (percent of roofline).",
+        "version_guard": "schema_version must stay 1, hardware.name must contain “RTX PRO 6000”, and the problem must stay in the stated four-problem deck. A scored cell must be correct, audited (clean/interesting) and appear in the published per_problem ranked list with the same value. Another hardware board (e.g. H100/B200) is a different identity.",
+        "notes": "02_deepseek_nsa — DeepSeek Native Sparse Attention block (block top-n + sparse attention)."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "schema_version must stay 1, hardware.name must contain “RTX PRO 6000”, and the problem must stay in the stated four-problem deck. A scored cell must be correct, audited (clean/interesting) and appear in the published per_problem ranked list with the same value. Another hardware board (e.g. H100/B200) is a different identity.",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00"
+      },
+      "protocol": "KernelBench-CUDA 02_deepseek_nsa (RTX PRO 6000 Blackwell, environment v2_containerized): DeepSeek Native Sparse Attention block (block top-n + sparse attention); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.",
+      "basis": "measured",
+      "minimum_rows": 13,
+      "source_urls": [
+        "https://kernelbench.com/cuda"
+      ]
+    },
+    {
+      "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
+      "parser": {
+        "kind": "kernelbench_cuda_board",
+        "name_field": "name",
+        "id_field": "id",
+        "value_field": "peak_fraction",
+        "harness_field": "harness",
+        "scale": 100,
+        "plain_text_names": true,
+        "problem": "03_megaqwen_decode",
+        "require": {
+          "schema_version": 1,
+          "hardware": "RTX PRO 6000"
+        }
+      },
+      "status": "collected",
+      "reason": "The maintainer bakes the board as leaderboard.json (the artifact kernelbench.com renders); one row per stated model identity whose cell passes the site validity rule.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JSON",
+        "locator": "GET benchmarks/cuda/results/leaderboard.json → one row per stated model identity whose 03_megaqwen_decode cell passes the site validity rule; value = peak_fraction × 100 (percent of roofline).",
+        "version_guard": "schema_version must stay 1, hardware.name must contain “RTX PRO 6000”, and the problem must stay in the stated four-problem deck. A scored cell must be correct, audited (clean/interesting) and appear in the published per_problem ranked list with the same value. Another hardware board (e.g. H100/B200) is a different identity.",
+        "notes": "03_megaqwen_decode — MegaQwen CUDA megakernel geometry, decode-only tok/s at ctx 2k–128k."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "schema_version must stay 1, hardware.name must contain “RTX PRO 6000”, and the problem must stay in the stated four-problem deck. A scored cell must be correct, audited (clean/interesting) and appear in the published per_problem ranked list with the same value. Another hardware board (e.g. H100/B200) is a different identity.",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00"
+      },
+      "protocol": "KernelBench-CUDA 03_megaqwen_decode (RTX PRO 6000 Blackwell, environment v2_containerized): MegaQwen CUDA megakernel geometry, decode-only tok/s at ctx 2k–128k; value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.",
+      "basis": "measured",
+      "minimum_rows": 14,
+      "source_urls": [
+        "https://kernelbench.com/cuda"
+      ]
+    },
+    {
+      "benchmark_id": "kernelbench-cuda-grid-mingru-sps::rtx-pro-6000",
+      "parser": {
+        "kind": "kernelbench_cuda_board",
+        "name_field": "name",
+        "id_field": "id",
+        "value_field": "peak_fraction",
+        "harness_field": "harness",
+        "scale": 100,
+        "plain_text_names": true,
+        "problem": "04_grid_mingru_sps",
+        "require": {
+          "schema_version": 1,
+          "hardware": "RTX PRO 6000"
+        }
+      },
+      "status": "collected",
+      "reason": "The maintainer bakes the board as leaderboard.json (the artifact kernelbench.com renders); one row per stated model identity whose cell passes the site validity rule.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JSON",
+        "locator": "GET benchmarks/cuda/results/leaderboard.json → one row per stated model identity whose 04_grid_mingru_sps cell passes the site validity rule; value = peak_fraction × 100 (percent of roofline).",
+        "version_guard": "schema_version must stay 1, hardware.name must contain “RTX PRO 6000”, and the problem must stay in the stated four-problem deck. A scored cell must be correct, audited (clean/interesting) and appear in the published per_problem ranked list with the same value. Another hardware board (e.g. H100/B200) is a different identity.",
+        "notes": "04_grid_mingru_sps — Non-LLM RL sim steps-per-second for a grid world with a MinGRU agent."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "schema_version must stay 1, hardware.name must contain “RTX PRO 6000”, and the problem must stay in the stated four-problem deck. A scored cell must be correct, audited (clean/interesting) and appear in the published per_problem ranked list with the same value. Another hardware board (e.g. H100/B200) is a different identity.",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00"
+      },
+      "protocol": "KernelBench-CUDA 04_grid_mingru_sps (RTX PRO 6000 Blackwell, environment v2_containerized): Non-LLM RL sim steps-per-second for a grid world with a MinGRU agent; value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.",
+      "basis": "measured",
+      "minimum_rows": 12,
+      "source_urls": [
+        "https://kernelbench.com/cuda"
+      ]
     }
   ]
 }

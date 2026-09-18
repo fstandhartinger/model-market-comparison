@@ -458,6 +458,53 @@ def parse(source,spec,load_source):
                 'context':{'agent':r.get('agent'),'harness':r.get('harnesses'),'reasoning_effort':r.get('reasoning_effort'),'open_weights':r.get('open_weights'),
                     'runs':r.get('runs'),'interval_95':[interval[0],interval[1]],'mean_api_cost_usd':r.get('mean_api_cost_usd'),
                     'mean_output_tokens':r.get('mean_output_tokens'),'mean_final_best':r.get('mean_final_best')}})
+    elif kind=='vulcanbench_frontier_csv':
+        # VulcanBench Frontier v4 (Morgan Linton): the published board CSV (assets/data/swe-v4-board.csv) is the
+        # same table leaderboard.html renders — one row per model x effort column. Guards: the exact 18-column
+        # header, 23 tasks in every row, the stated harness/effort enums and one frozen protocol family. A
+        # renamed/renumbered suite or another protocol family is a different identity and fails closed.
+        parsed=csvrows(source)
+        header=['rank','model','lab','harness','effort','best_effort','n','combined_33','combined_33_se','code_quality','passed','mean_minutes','mean_usd','mean_raw_tokens','median_output_tokens','mean_output_tokens','report','protocol']
+        if list(parsed[0].keys() if parsed else [])!=header:raise ValueError('VulcanBench Frontier CSV header changed')
+        for index,r in enumerate(parsed):
+            if r.get('n')!='23':raise ValueError(f"VulcanBench Frontier row {index}: task count changed ({r.get('n')!r})")
+            if r.get('harness') not in ('Codex','Claude Code'):raise ValueError(f"VulcanBench Frontier row {index}: harness {r.get('harness')!r} is not a stated harness")
+            if r.get('effort') not in ('low','medium','high','extra-high','max'):raise ValueError(f"VulcanBench Frontier row {index}: effort {r.get('effort')!r} not stated")
+            if not r.get('protocol','').startswith('code-quality-maintenance-v3'):raise ValueError(f"VulcanBench Frontier row {index}: protocol family changed ({r.get('protocol')!r})")
+            rows.append({'name':f"{r['model']} [{r['effort']}]",'id':f"{r['model']} [{r['effort']}]",'combined_33':r['combined_33'],'source_row':index,'harness':r['harness'],
+                'context':{'model':r['model'],'lab':r['lab'],'harness':r['harness'],'effort':r['effort'],'n_tasks':int(r['n']),'tasks_passed':int(r['passed']),
+                    'combined_33_se':float(r['combined_33_se']),'code_quality':float(r['code_quality']),'mean_minutes':float(r['mean_minutes']),'mean_usd':float(r['mean_usd']),
+                    'protocol':r['protocol'],'report':r['report'],'best_effort':r['best_effort']=='True'}})
+    elif kind=='kernelbench_cuda_board':
+        # KernelBench-CUDA (Elliot Arledge, kernelbench.com): the published per-hardware leaderboard JSON
+        # (benchmarks/cuda/results/leaderboard.json) is the artifact the site bakes and renders. One row per
+        # stated model identity; the value is the problem's ranked peak_fraction. A cell counts only under the
+        # site's own validity rule (correct, audited clean/interesting); flagged, suspect, bug and unaudited
+        # cells keep their verdict in the review file and are never scored. The published ranked_passes list is
+        # the cross-check: every scored cell must appear there with the same value. Guards: schema_version 1,
+        # the stated hardware string, the exact problem in the stated deck.
+        data=json.loads(source);req=spec['require']
+        if data.get('schema_version')!=req['schema_version']:raise ValueError(f"KernelBench-CUDA schema_version changed: {data.get('schema_version')!r}")
+        hardware=str((data.get('hardware') or {}).get('name',''))
+        if req['hardware'] not in hardware:raise ValueError('KernelBench-CUDA hardware changed: '+hardware)
+        problem=spec['problem']
+        if problem not in (data.get('problems') or []):raise ValueError('KernelBench-CUDA problem missing from deck: '+problem)
+        ranked={e.get('model'):e.get('peak_fraction') for e in ((data.get('per_problem') or {}).get(problem) or {}).get('ranked_passes',[])}
+        if not ranked:raise ValueError('KernelBench-CUDA ranked passes missing: '+problem)
+        for index,m in enumerate(data.get('models') or []):
+            if not isinstance(m,dict) or not isinstance(m.get('label'),str) or not m['label'].strip():raise ValueError(f'KernelBench-CUDA row {index}: label missing')
+            cell=(m.get('results') or {}).get(problem)
+            if cell is None:continue
+            verdict=cell.get('annotation_verdict') or 'unaudited'
+            value=cell.get('peak_fraction')
+            if not cell.get('correct') or not isinstance(value,(int,float)) or isinstance(value,bool) or not math.isfinite(value):continue
+            if verdict not in ('clean','interesting'):continue
+            if m['label'] not in ranked:raise ValueError(f"KernelBench-CUDA {m['label']!r}/{problem}: audited cell missing from published ranked list")
+            if abs(ranked[m['label']]-value)>1e-12:raise ValueError(f"KernelBench-CUDA {m['label']!r}/{problem}: published ranked value differs from the cell")
+            rows.append({'name':m['label'],'id':m['label'],'peak_fraction':value,'source_row':index,'harness':m.get('harness'),
+                'context':{'label':m['label'],'harness':m.get('harness'),'stated_effort':m.get('effort') or 'not stated','stated_model':m.get('model'),
+                    'annotation_verdict':verdict,'run_id':cell.get('run_id'),'elapsed_seconds':cell.get('elapsed_seconds'),'problem':problem,
+                    'hardware':hardware,'peak_fraction':value,'percent_of_roofline':value*100}})
     else:raise ValueError('Unknown parser kind '+kind)
     if not isinstance(rows,list) or not rows:raise ValueError('No source result rows')
     return rows

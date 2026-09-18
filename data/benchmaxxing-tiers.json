@@ -1,5 +1,5 @@
 {
-  "version": "2026-09-17",
+  "version": "2026-09-18",
   "note": "Benchmaxxing calibration tier table (job bh-benchmaxxing-calibration-20260917). Keyed by benchmark family (registry id before '::'). Tiers: headline = public question set that labs quote in release posts, so it is the board most exposed to targeted tuning and contamination; heldout = private/unpublished questions, tasks created after most training cutoffs, or a held-out split, which a lab cannot tune toward; domain = a vertical professional domain (legal, finance, spreadsheet, medical) whose gaps mostly show specialisation; secondary = public but rarely quoted, or measures a trait rather than task skill; aggregate = an index built from other boards (never compared); judged = graded by votes or a judge model (already outside the signal). Only benchmark facts decide a tier, never who scores well on it.",
   "tiers": {
     "aa-aime": {
@@ -239,6 +239,26 @@
     "weirdml": {
       "tier": "heldout",
       "reason": "Hand-made, newly published tasks (WeirdML v3, September 2026), not part of any public training-ready question set."
+    },
+    "vulcanbench-frontier": {
+      "tier": "secondary",
+      "reason": "Public open-source task suites (v4-suite GitHub org) behind hidden tests; rarely quoted in launch posts; 33% of the combined score is judge-graded code quality."
+    },
+    "kernelbench-cuda-glm52-fused-moe": {
+      "tier": "secondary",
+      "reason": "Public CUDA problems with public reference solutions in the maintainer’s GitHub monorepo; rarely quoted in launch posts."
+    },
+    "kernelbench-cuda-deepseek-nsa": {
+      "tier": "secondary",
+      "reason": "Public CUDA problems with public reference solutions in the maintainer’s GitHub monorepo; rarely quoted in launch posts."
+    },
+    "kernelbench-cuda-megaqwen-decode": {
+      "tier": "secondary",
+      "reason": "Public CUDA problems with public reference solutions in the maintainer’s GitHub monorepo; rarely quoted in launch posts."
+    },
+    "kernelbench-cuda-grid-mingru-sps": {
+      "tier": "secondary",
+      "reason": "Public CUDA problems with public reference solutions in the maintainer’s GitHub monorepo; rarely quoted in launch posts."
     }
   }
 }

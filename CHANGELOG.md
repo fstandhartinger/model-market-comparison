@@ -4,6 +4,25 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-18 — Five new benchmark identities: VulcanBench Frontier v4 and four KernelBench-CUDA problem boards
+
+**New versioned benchmark identities, same file locations and API shape.** VulcanBench's current suite joins as
+`vulcanbench-frontier::4` (23 behavioural-reconstruction tasks; combined score 50% functional hidden tests /
+8.5% lint-complexity / 8.5% security / 33% judged Code quality; renamed from "VulcanBench-SWE v4", task set and
+URLs unchanged) from the maintainer's own board CSV — one row per model × reasoning-effort column, Claude
+Fable 5.1 (max) on top at 91.84%. KernelBench-CUDA joins as one identity per problem
+(`kernelbench-cuda-glm52-fused-moe::rtx-pro-6000`, `-deepseek-nsa::rtx-pro-6000`, `-megaqwen-decode::rtx-pro-6000`,
+`-grid-mingru-sps::rtx-pro-6000`); the version is the hardware (scores are fractions of that card's roofline —
+unbounded, Claude Opus 5 reaches 196.10% of roofline on the MinGRU sim). Only cells the site itself counts
+(correct and audited) score; flagged, suspect, `bug` and unaudited cells, and any cell absent from the published
+ranked list, never enter (the ranked list still holds the rejected cells — the site's own validity rule wins).
+All 24 VulcanBench columns join exact catalog configurations (its "extra-high" tier is the catalog's xhigh);
+20 KernelBench cells join (Claude Opus 5/4.8 max, Claude Fable 5.1 max, Grok 4.6 xhigh, Gemini 3.8 Flash high,
+GLM-5.3 Flash), the remaining 34 rows — bare names of multi-configuration families, a `ultra` tier that exists
+nowhere in the catalog, kinetic-0715 — stay visible as unmatched source identities, never estimated. Attribution
+unchanged: VulcanBench by Morgan Linton (robots.txt explicitly welcomes crawlers and AI answer engines), and
+KernelBench-CUDA by Elliot Arledge (values from the maintainer's own repository, which the site renders).
+
 ## 2026-09-18 — Three new benchmark identities: ArXivMath & BrokenArXiv 08/2026 (MathArena), WeirdML v3
 
 **New versioned benchmark identities, same file locations and API shape.** MathArena's August 2026
