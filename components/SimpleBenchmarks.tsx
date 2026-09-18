@@ -168,17 +168,26 @@ export function SimpleBenchmarks({ matrix: headline, data, ids: listIds }: { mat
                   {row.freshness?.contamination && <span className="bh-muted mt-2 block">{row.freshness.contamination}</span>}
                   {row.tags.filter((t) => CAVEAT_TAGS.includes(t)).map((t) => matrix.tags[t] && <span key={t} className="mt-2 block"><b>{matrix.tags[t].label}:</b> {caveatTip(t, row, matrix.tags)}</span>)}
                 </InfoTip></span></th>
-              {vals.map((v, j) => <td key={ids[j]} className={`bh-matrix-cell ${j === 0 ? "bh-matrix-lead" : ""}`}>
-                {v == null
-                  ? <span className="bh-matrix-missing"><span aria-hidden="true">—</span><span className="sr-only">No result</span></span>
-                  : <Link href={cellHref(row, ids[j], ids, true)} className="bh-matrix-link" title={row.bestOf ? `Best recorded result: ${variantLabel(row, ids[j])}` : undefined} data-variant={row.bestOf ? variantLabel(row, ids[j]) : undefined}>
-                    {bars[j] != null && <span aria-hidden="true" className={`bh-matrix-bar ${win[j] ? "is-best" : ""}`} style={{ width: `${Math.max(3, bars[j]! * 100)}%` }} />}
-                    <span className={`relative tabular ${win[j] ? "font-bold" : ""}`}>{formatValue(v, row.unit)}{basis[j] === 1 && <sup className="bh-muted" title="Self-reported by the developer">†</sup>}{basis[j] === 3 && <sup className="bh-muted" title="Preliminary: announced, not yet independently measured. Shown only; never enters a score or a ranking">‡</sup>}</span>
-                    {win[j] && <span className="sr-only"> (best in row)</span>}
-                    {row.bestOf && <span className="sr-only"> (best recorded result: {variantLabel(row, ids[j])})</span>}
-                    {odd[j] && <span className="bh-outlier-tag" data-kind={odd[j]} title={odd[j] === "top" ? "Clearly ahead: its lead over the next model is at least twice the spread of the models in between" : "Clearly behind: its gap to the next model is at least twice the spread of the models in between"}>{odd[j]}<span className="sr-only">{odd[j] === "top" ? ": clearly ahead of the other models in this row" : ": clearly behind the other models in this row"}</span></span>}
-                  </Link>}
-              </td>)}
+              {vals.map((v, j) => {
+                // Family-scope board (ECI, AA Agentic, DesignArena): the source measured one
+                // configuration of the family; the cell shows it and says which one it was.
+                const donorId = row.familyScope?.fill?.[ids[j]] ?? null;
+                const donorName = donorId ? byId.get(donorId)?.display_name ?? donorId : null;
+                const familyNote = donorId ? `Measured once for the whole model family, on ${donorName}; shown for every configuration of the family.` : null;
+                const title = [row.bestOf ? `Best recorded result: ${variantLabel(row, ids[j])}` : null, familyNote].filter(Boolean).join(' — ') || undefined;
+                return <td key={ids[j]} className={`bh-matrix-cell ${j === 0 ? "bh-matrix-lead" : ""}`}>
+                  {v == null
+                    ? <span className="bh-matrix-missing"><span aria-hidden="true">—</span><span className="sr-only">No result</span></span>
+                    : <Link href={cellHref(row, donorId ?? ids[j], ids, true)} className="bh-matrix-link" title={title} data-variant={row.bestOf ? variantLabel(row, ids[j]) : undefined} data-family-src={donorId ?? undefined}>
+                      {bars[j] != null && <span aria-hidden="true" className={`bh-matrix-bar ${win[j] ? "is-best" : ""}`} style={{ width: `${Math.max(3, bars[j]! * 100)}%` }} />}
+                      <span className={`relative tabular ${win[j] ? "font-bold" : ""}`}>{formatValue(v, row.unit)}{basis[j] === 1 && <sup className="bh-muted" title="Self-reported by the developer">†</sup>}{basis[j] === 3 && <sup className="bh-muted" title="Preliminary: announced, not yet independently measured. Shown only; never enters a score or a ranking">‡</sup>}</span>
+                      {win[j] && <span className="sr-only"> (best in row)</span>}
+                      {row.bestOf && <span className="sr-only"> (best recorded result: {variantLabel(row, ids[j])})</span>}
+                      {familyNote && <span className="sr-only"> ({familyNote})</span>}
+                      {odd[j] && <span className="bh-outlier-tag" data-kind={odd[j]} title={odd[j] === "top" ? "Clearly ahead: its lead over the next model is at least twice the spread of the models in between" : "Clearly behind: its gap to the next model is at least twice the spread of the models in between"}>{odd[j]}<span className="sr-only">{odd[j] === "top" ? ": clearly ahead of the other models in this row" : ": clearly behind the other models in this row"}</span></span>}
+                    </Link>}
+                </td>;
+              })}
             </tr>;
           })}
         </tbody>)}

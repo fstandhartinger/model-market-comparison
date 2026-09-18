@@ -32,6 +32,10 @@ export interface MatrixRow {
   /** CR-65.14: the maintainer no longer reports this board (registry `status: "retained"`). A best-of
    *  row is retired only when every version it merges is. */
   retired?: boolean;
+  /** Family-scope board (Epoch ECI, AA Agentic Index, DesignArena Elo): the source measured one
+   *  configuration per model family; the row's value is shared with every sibling configuration of
+   *  the family, and `fill` records which sibling column displays which measured donor row. */
+  familyScope?: { fill: Record<string, string> };
 }
 export interface SourceChange { kind: string; note: string; checkedAt: string | null }
 export function sourceChangeOf(key: string, caveats: unknown): SourceChange | null;
@@ -76,6 +80,8 @@ export function countBoards(rows: Pick<MatrixRow, "key" | "version" | "boards">[
 export function cellVariant(row: Pick<MatrixRow, "bestOf">, modelId: string): { id: string; benchmarkId: string | null; cohort: string | null; version: string } | null;
 export function cellAxisId(row: Pick<MatrixRow, "id" | "bestOf">, modelId: string): string;
 export function variantLabel(row: Pick<MatrixRow, "bestOf">, modelId: string): string;
+export const FAMILY_SCOPE_AXIS_KEYS: Set<string>;
+export function familyScopeDonorOf(row: Pick<MatrixRow, "familyScope">, modelId: string): string | null;
 export function baseKey(id: string): string;
 export function rowBars(values: (number | null)[], higherBetter: boolean | null, unit: string): (number | null)[];
 export function rowWinners(values: (number | null)[], higherBetter: boolean | null): boolean[];

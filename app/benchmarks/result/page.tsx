@@ -7,7 +7,7 @@ import { getDataset } from '../../../lib/data';
 import { getBenchmarkView } from '../../../lib/benchmark-data';
 import { getBenchmarkMatrixPage } from '../../../lib/benchmark-matrix-data';
 import { latestScores } from '../../../lib/benchmark-view.mjs';
-import { formatValue, cellHref, cellAxisId, resultHref, rowWinners, versionLine, cohortLabel, variantLabel } from '../../../lib/benchmark-matrix.mjs';
+import { formatValue, cellHref, cellAxisId, resultHref, rowWinners, versionLine, cohortLabel, variantLabel, familyScopeDonorOf } from '../../../lib/benchmark-matrix.mjs';
 import caveats from '../../../data/benchmark-caveats.json';
 import { SourceScore } from '../../../components/BenchmarkEvidence';
 import { humanVersion, isPin } from '../../../lib/version-label';
@@ -62,7 +62,15 @@ export default async function BenchmarkResultPage({ searchParams }: { searchPara
     // published per-benchmark results with Epoch's public method. Both are attached once per family.
     const ds = await getDataset();
     const rows = new Map(ds.models.map((m) => [m.id, m as unknown as { benchmarks?: Record<string, unknown>; epoch_eci_attachment_note?: string }]));
-    const valueOf = (id: string) => { const v = rows.get(id)?.benchmarks?.[field.field]; return finite(v) ? v : null; };
+    const ownValueOf = (id: string) => { const v = rows.get(id)?.benchmarks?.[field.field]; return finite(v) ? v : null; };
+    // Family-scope: a sibling column displays the family's value, measured on its donor row.
+    const donorOf = (id: string) => familyScopeDonorOf(fieldRow, id);
+    const valueOf = (id: string) => {
+      const own = ownValueOf(id);
+      if (own != null) return own;
+      const donor = donorOf(id);
+      return donor ? ownValueOf(donor) : null;
+    };
     const value = valueOf(modelId);
     if (value == null) notFound();
     const targets = ((ds as unknown as { build_diagnostics?: { epoch_eci_attachment?: { targets?: { source_model_name: string; target_id: string }[] } } })
@@ -98,6 +106,7 @@ export default async function BenchmarkResultPage({ searchParams }: { searchPara
           <dt className="bh-muted">Collected</dt><dd>{collected} · definition {epochEci.definition_version} · licence {epochEci.source.license}</dd>
           <dt className="bh-muted">Source</dt><dd><a href={sourceUrl} target="_blank" rel="noreferrer" className="text-accent underline break-all">{sourceUrl} ↗</a></dd>
           {rows.get(modelId)?.epoch_eci_attachment_note && <><dt className="bh-muted">Scope</dt><dd className="bh-muted">{rows.get(modelId)!.epoch_eci_attachment_note}</dd></>}
+          {!rows.get(modelId)?.epoch_eci_attachment_note && donorOf(modelId) && <><dt className="bh-muted">Scope</dt><dd className="bh-muted">Measured once for the whole model family, on <Link href={`/models/${encodeURIComponent(donorOf(modelId)!)}`} className="text-accent hover:underline">{models.get(donorOf(modelId)!)?.display_name ?? donorOf(modelId)}</Link>; shown for every configuration of the family, this one included. {rows.get(donorOf(modelId)!)?.epoch_eci_attachment_note ?? ''}</dd></>}
         </dl>
         <p className="mt-4 text-sm"><a href={fieldRow.url} target="_blank" rel="noreferrer" className="text-accent underline">Benchmark&apos;s primary source ↗</a></p>
       </section>
@@ -108,11 +117,11 @@ export default async function BenchmarkResultPage({ searchParams }: { searchPara
           <table className="bh-table w-full text-sm">
             <thead><tr><th scope="col">Model</th><th scope="col" className="text-right">Result</th><th scope="col">Basis · observed · source</th></tr></thead>
             <tbody>{compared.map((id, j) => {
-              const v = valueOf(id), m = models.get(id)!;
+              const v = valueOf(id), m = models.get(id)!, donor = donorOf(id);
               return <tr key={id} aria-current={id === modelId ? 'true' : undefined} className={id === modelId ? 'bg-accent/5' : ''}>
                 <th scope="row" className="text-left font-medium">{v != null && id !== modelId ? <Link href={cellHref(fieldRow, id, compared, pinned)} className="hover:underline">{m.display_name}</Link> : m.display_name}{!sameAsName(m) && <span className="bh-muted block text-xs font-normal">{m.org}</span>}</th>
                 <td className={`text-right tabular ${win[j] ? 'font-bold' : ''}`}>{v != null ? formatValue(v, fieldRow.unit) : '—'}</td>
-                <td className="bh-muted text-xs">{v != null ? <>{basis} · {collected} · <a href={sourceUrl} target="_blank" rel="noreferrer" className="text-accent underline">{host(sourceUrl)} ↗</a></> : 'No published result — never a zero'}</td>
+                <td className="bh-muted text-xs">{v != null ? <>{basis}{donor ? <> · family value, measured on {models.get(donor)?.display_name ?? donor}</> : null} · {collected} · <a href={sourceUrl} target="_blank" rel="noreferrer" className="text-accent underline">{host(sourceUrl)} ↗</a></> : 'No published result — never a zero'}</td>
               </tr>;
             })}</tbody>
           </table>
@@ -124,9 +133,21 @@ export default async function BenchmarkResultPage({ searchParams }: { searchPara
 
   const ax = axis!;
   const latest = new Map(latestScores(ax.scores, 'all').filter((r) => r.modelId).map((r) => [r.modelId as string, r]));
-  const row = latest.get(modelId);
+  // Family-scope board (AA Agentic, DesignArena): the source measured one configuration per family;
+  // a sibling column shows the family's value, measured on its donor row.
+  const familyRow = matrix.rows.find((r) => r.id === axisId && r.familyScope) ?? null;
+  const scopeDonorOf = (id: string) => (familyRow ? familyScopeDonorOf(familyRow, id) : null);
+  const scopeDonor = scopeDonorOf(modelId);
+  const ownRow = latest.get(modelId);
+  const row = ownRow ?? (scopeDonor ? latest.get(scopeDonor)! : undefined);
   if (!row) notFound();
-  const win = rowWinners(compared.map((id) => latest.get(id)?.value ?? null), ax.higherBetter ?? null);
+  // The scope sentence for a family board: the dataset row's own attachment note where it exists.
+  const scopedDs = familyRow ? await getDataset() : null;
+  const scopedRow = familyRow ? scopeDonorOf(modelId) ?? modelId : null;
+  const scopedModel = scopedDs && scopedRow ? scopedDs.models.find((m) => m.id === scopedRow) as
+    { designarena_attachment_note?: string; aa_agentic_attachment_note?: string } | undefined : undefined;
+  const scopeNote = scopedModel?.designarena_attachment_note ?? scopedModel?.aa_agentic_attachment_note ?? null;
+  const win = rowWinners(compared.map((id) => latest.get(id)?.value ?? (scopeDonorOf(id) ? latest.get(scopeDonorOf(id)!)?.value ?? null : null)), ax.higherBetter ?? null);
   const variant = mergedInto?.bestOf?.variants.find((x) => x.id === axisId);
   // CR-41.2: a run merged into a best-of row keeps its own version on this page.
   const matrixRow = matrix.rows.find((r) => r.id === axisId) ?? (mergedInto && variant ? { ...mergedInto, version: variant.version } : null);
@@ -156,6 +177,9 @@ export default async function BenchmarkResultPage({ searchParams }: { searchPara
       {matrixRow && <ul className="bh-muted mt-3 space-y-1 border-t border-line pt-3 text-sm" data-bh-result-caveats>
         {/* F-100: the eyebrow already says "published <date>" for a snapshot board — the list repeats it only when there is more to say. */}
         {versionLine(matrixRow, true) && !/^Published \d{4}-\d{2}-\d{2}$/.test(versionLine(matrixRow, true)) && <li>{versionLine(matrixRow, true)}</li>}
+        {familyRow && <li data-bh-result-scope><b>One value per model family.</b> {scopeDonor
+          ? <>Measured once for this family, on <Link href={`/models/${encodeURIComponent(scopeDonor)}`} className="text-accent hover:underline">{models.get(scopeDonor)?.display_name ?? scopeDonor}</Link>; shown for every configuration of the family, this one included.</>
+          : <>This configuration is the one the family's value was measured on; every other configuration of the family shows the same value.</>} {scopeNote}</li>}
         {matrixRow.saturation?.saturated && <li><b>Saturated.</b> {matrix.tags.saturated?.tip} Measured here: the {matrixRow.saturation.topN} best of {matrixRow.saturation.models} independently measured models average {Math.round(matrixRow.saturation.share * 1000) / 10}&nbsp;% of this benchmark&apos;s ceiling.</li>}
         {matrixRow.sourceChange && <li data-bh-source-change><b>{matrix.tags.source_changed?.label ?? 'Changed at source'}.</b> {matrixRow.sourceChange.note}</li>}
         {matrixRow.judged && <li><b>Judged.</b> {matrix.tags.judged?.tip} {caveats.judged[matrixRow.key as keyof typeof caveats.judged]?.why}</li>}
@@ -180,11 +204,14 @@ export default async function BenchmarkResultPage({ searchParams }: { searchPara
         <table className="bh-table w-full text-sm">
           <thead><tr><th scope="col">Model</th><th scope="col" className="text-right">Result</th><th scope="col">Basis · observed · source</th></tr></thead>
           <tbody>{compared.map((id, j) => {
-            const r = latest.get(id), m = models.get(id)!, src = r ? view.sources[r.source] : null;
+            const donor = scopeDonorOf(id);
+            const own = latest.get(id);
+            const r = own ?? (donor ? latest.get(donor) : undefined);
+            const m = models.get(id)!, src = r ? view.sources[r.source] : null;
             return <tr key={id} aria-current={id === modelId ? 'true' : undefined} className={id === modelId ? 'bg-accent/5' : ''}>
               <th scope="row" className="text-left font-medium">{r && id !== modelId ? <Link href={resultHref(axisId, id, compared, pinned)} className="hover:underline">{m.display_name}</Link> : m.display_name}{!sameAsName(m) && <span className="bh-muted block text-xs font-normal">{m.org}</span>}</th>
               <td className={`text-right tabular ${win[j] ? 'font-bold' : ''}`}>{r ? formatValue(r.value, ax.unit) : '—'}</td>
-              <td className="bh-muted text-xs">{r ? <>{r.basis.replaceAll('_', ' ')} · {r.date?.slice(0, 10) ?? 'date unavailable'}{src ? <> · <a href={src.url} target="_blank" rel="noreferrer" className="text-accent underline">{host(src.url)} ↗</a></> : null}</> : 'No published result — never a zero'}</td>
+              <td className="bh-muted text-xs">{r ? <>{r.basis.replaceAll('_', ' ')}{donor && !own ? <> · family value, measured on {models.get(donor)?.display_name ?? donor}</> : null} · {r.date?.slice(0, 10) ?? 'date unavailable'}{src ? <> · <a href={src.url} target="_blank" rel="noreferrer" className="text-accent underline">{host(src.url)} ↗</a></> : null}</> : 'No published result — never a zero'}</td>
             </tr>;
           })}</tbody>
         </table>
