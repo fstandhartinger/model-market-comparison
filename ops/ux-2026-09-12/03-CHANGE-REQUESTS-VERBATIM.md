@@ -899,3 +899,22 @@ catalog mean 13.1, sd 4.5. Blended = signal + 0.3 × (jaggedness − 13.1). Top-
 (today: 8 / 8 / 0). Only three level changes, all upward: Muse Spark 1.1 medium → severe (11.7 → 13.8),
 Qwen3.7 Max light → medium (5.8 → 7.7), Gemini 3.6 Flash untagged → light (2.4 → 3.2); Hy3 moves down (5.8 → 4.3).
 No frontier model (GPT-6 Astra, Opus 5, Fable 5.1, GPT-5.6 Sol, Kimi K3) is tagged at this weight.
+
+
+## CR-20260918a — Muse Spark 1.3 missing from the homepage leaderboard → CR-80
+Florian, Claude Code chat, 18 Sep 2026 ~14:40 UTC, verbatim:
+
+> Why isn't Muse Spark 1.3 showing up in the leaderboard on the benchmarkheaven.com startpage? Make sure it is
+
+Diagnosis (Claude Code, live /api/page-data/home): `muse-spark-1.3::max` has composite 95.08 (xhigh 94.78) but `offer_count` 0 — no priced offer
+in the catalog — so the homepage table/value map (which need a cost) drop it. Same for all Muse Spark versions (Meta).
+
+
+## CR-20260918b — Add WeirdML v3 → CR-81
+Florian, Claude Code chat, 18 Sep 2026 ~14:50 UTC, verbatim:
+
+> when done: add this to benchmark heaven. https://x.com/htihle/status/2100892831187443782
+
+The post (Håvard Ihle @htihle, 18 Sep 10:20 UTC, thread 1/8): "Introducing WeirdML v3, a fully agentic benchmark featuring 11 complex hand-made
+tasks. Models must explore and understand unfamiliar data, develop ML and data analysis pipelines and produce results despite limited data,
+unspecified goals and/or very limited feedback." Results image in the post; the thread continues 2/8–8/8 (quotes WeirdML v2: 19 tasks, API costs tracked).
