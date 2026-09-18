@@ -195,3 +195,32 @@ test('the anticipated prices on both charts are never ingested as costs', () => 
       'the protocol says the plotted price is not a measured cost');
   }
 });
+
+// F-121 (iteration 106, found live): before this fix the Compare table gave the chart-read
+// Terminal-Bench value a "Catalog percentile 87" and let it compete for the "best measured relative
+// position" tint. Both came from one expression, and CR-65.10 forbids both.
+test('the Compare table denies a preliminary value a percentile, a bar and the best-in-row tint', () => {
+  const src = readFileSync(new URL('../components/BenchmarkCompare.tsx', import.meta.url), 'utf8');
+  const line = src.split('\n').find((l) => l.includes('const normalized = row'));
+  assert.ok(line, 'the normalized expression still exists');
+  assert.match(line, /row\.basis !== 'preliminary'/, 'preliminary is excluded from `normalized`');
+  // `normalized` is the single source of all three: percentile text, bar width and `best`.
+  assert.match(src, /normalized != null && <span className="sr-only">Catalog percentile/, 'percentile still derives from normalized');
+  assert.match(src, /const best = cells\.reduce<number \| null>\(\(max, cell\) => cell\.normalized == null/, 'the tint still derives from normalized');
+});
+
+test('every surface that shows a preliminary value also marks it', () => {
+  // Three components render benchmark values; all three must carry the ‡ and say what it means.
+  for (const file of ['components/BenchmarkMatrix.tsx', 'components/SimpleBenchmarks.tsx', 'components/BenchmarkCompare.tsx']) {
+    const src = readFileSync(new URL(`../${file}`, import.meta.url), 'utf8');
+    assert.match(src, /‡/, `${file} renders the preliminary mark`);
+    assert.match(src, /preliminary/, `${file} explains the mark`);
+  }
+  const compare = readFileSync(new URL('../components/BenchmarkCompare.tsx', import.meta.url), 'utf8');
+  assert.match(compare, /row\.basis === 'preliminary' && <sup/, 'the Compare cell carries the mark');
+  // CR-60.2 asks for a tooltip that says chart-read.
+  assert.match(compare, /title="Preliminary: chart-read\./, 'the Compare tooltip says chart-read');
+  const evidence = readFileSync(new URL('../components/BenchmarkEvidence.tsx', import.meta.url), 'utf8');
+  assert.match(evidence, /row\.basis === 'preliminary'/, 'the evidence panel special-cases preliminary');
+  assert.match(evidence, /Chart-read: announced in a launch post/, 'the evidence panel spells out chart-read');
+});

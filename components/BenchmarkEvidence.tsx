@@ -20,6 +20,9 @@ export function SourceScore({ view, axis, row }: { view: BenchmarkView; axis: Vi
     <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1 text-sm">
       <span className="font-semibold tabular-nums">{fmt(row.value)} {axis.unit}</span>
       <span className={flagClass}>{flag}</span>
+      {/* CR-60.2: a reader who opens the evidence for a preliminary value must be told, in words, how it
+          was obtained — the full protocol sits behind the API link below, which nobody reads first. */}
+      {row.basis === 'preliminary' ? <span className="bh-muted w-full text-xs">Chart-read: announced in a launch post and read off the published chart, not independently measured — shown only, never part of a score, a ranking or a percentile.</span> : null}
       {row.confidenceInterval ? <span className="bh-muted">{Math.round(row.confidenceInterval.level * 100)}% CI {fmt(row.confidenceInterval.lower, 1)}–{fmt(row.confidenceInterval.upper, 1)} {axis.unit}</span> : null}
       {row.publishedStddev != null ? <span className="bh-muted">± {fmt(row.publishedStddev, 3)} sd</span> : null}
       {row.sampleSize != null ? <span className="bh-muted">· {row.sampleSize} tasks</span> : null}

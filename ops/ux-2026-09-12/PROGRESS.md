@@ -4552,6 +4552,34 @@ Gates at the final tree: `npm test` **830 (829 pass, 1 skipped, 0 fail)**, `npx 
 `node scripts/build-dataset.mjs` green (841 models, 519 scored rows). `test/cr-60-union-alpha-preliminary.test.mjs`
 11/11.
 
+### F-121, found live after the push: the Compare table ranked a chart-read value
+
+The API checks all passed, so the page was opened as well — and the rendered Compare table showed
+Union Alpha's Terminal-Bench cell as **"52.0% · Catalog percentile 87"**, with the value also
+eligible for the row's "best measured relative position" tint. CR-65.10 forbids exactly that
+("percentiles … use measured values only"); the rule had simply never been exercised, because until
+this commit no preliminary row existed and iteration 91 could record the matrix as "byte-identical".
+
+All three came from one expression in `components/BenchmarkCompare.tsx` —
+`const normalized = row && !row.lowSample ? normalize(…) : null` — which feeds the percentile text,
+the distribution bar and the `best` reduction alike. `row.basis !== 'preliminary'` was added there,
+at the single source, rather than at the three use sites.
+
+Two further gaps the same live pass exposed, both now closed:
+
+* The ‡ mark existed only in `BenchmarkMatrix` and `SimpleBenchmarks`. `/compare` renders values
+  through a third component and showed 73.0 % and 52.0 % with **no marker at all** — the basis was
+  only reachable by expanding the row. The Compare cell now carries the ‡ with a tooltip, and the
+  table caption explains it.
+* CR-60.2 asks that the "tooltip says chart-read", and no surface said it: the protocol text lives
+  behind an API link in the evidence panel. The ‡ tooltip now names chart-read, and the evidence
+  panel spells it out in a sentence for any preliminary row.
+
+A regression test pins the basis filter to the `normalized` expression *and* pins that the
+percentile and the tint still derive from it, so moving the derivation cannot silently unpin the
+guard; a second test requires every component that renders a value to render the mark.
+Gates after the fix: `npm test` **832 (831 pass, 1 skipped)**, `tsc` clean.
+
 **Handoff / watch:** (1) F-120 above — the largest structural finding of this iteration, unfixed by design.
 (2) CR-60.2 is implementer-verified only; a non-implementer should re-read the two chart images against the committed
 values and the cohort decision in defect 2. (3) CR-73.5's dry-run pair, CR-65.14 and CR-54.2/54.3 remain as iteration
