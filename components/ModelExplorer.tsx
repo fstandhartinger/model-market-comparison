@@ -318,9 +318,11 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
   // needs `min-w-0` on the flex chain to apply), so text can never leave its own cell at any text scale.
   const Th = ({ label, k, right, sub, info, hideBelowMd }: { label: string; k: SortKey; right?: boolean; sub?: string; info?: React.ReactNode; hideBelowMd?: boolean }) => (
     <th aria-sort={sort === k ? (asc ? "ascending" : "descending") : "none"} className={`${hideBelowMd ? "hidden md:table-cell " : ""}px-2 py-2 md:px-3 text-xs font-semibold normal-case md:uppercase tracking-normal md:tracking-wide ${right ? "text-right" : "text-left"} ${sort === k ? "text-accent" : "text-gray-400"}`}>
-      <span className={`flex min-w-0 flex-wrap items-center gap-0.5 ${right ? "justify-end" : ""}`}>
-        <button type="button" onClick={() => onSort(k)} className="min-w-0 break-words text-inherit normal-case md:uppercase tracking-normal md:tracking-wide focus-visible:outline focus-visible:outline-accent">{label}{sort === k ? (asc ? " ▲" : " ▼") : ""}</button>
-        {info}
+      {/* F-116 (Fable pass 22): the label wraps inside its button; the (i) is a non-shrinking sibling on the last
+          line, so neither the caret nor the (i) can ever take a line of its own (F-92). */}
+      <span className={`flex min-w-0 flex-nowrap items-end gap-0.5 ${right ? "justify-end" : ""}`}>
+        <button type="button" onClick={() => onSort(k)} className="min-h-0 min-w-0 break-words text-inherit normal-case md:uppercase tracking-normal md:tracking-wide focus-visible:outline focus-visible:outline-accent">{label}{sort === k ? (asc ? "\u00a0▲" : "\u00a0▼") : ""}</button>
+        {info && <span className="shrink-0">{info}</span>}
       </span>
       {/* R1.2: the active score name rides along underneath, so the header follows the selector. */}
       {sub && <span className="block break-words text-[10px] font-normal normal-case tracking-normal text-gray-500">({sub})</span>}

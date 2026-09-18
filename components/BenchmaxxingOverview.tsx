@@ -43,9 +43,10 @@ function QuickLook({ row, onOpenReport }: { row: BenchmaxxingOverviewRow; onOpen
       <p className="font-medium" data-quick-reading>{reading.headline}</p>
       {reading.detail && <p className="bh-muted" data-quick-detail>{reading.detail}</p>}
       <p className="bh-muted text-xs">{reading.caveat}</p>
-      <a href={`?model=${encodeURIComponent(row.id)}#radar`} className="bh-button inline-flex min-h-9 items-center px-3" data-quick-report
+      {/* F-119 (Fable pass 22): the row above names the model; on a phone the full name made this a three-line button. */}
+      <a href={`?model=${encodeURIComponent(row.id)}#radar`} className="bh-button inline-flex min-h-9 items-center px-3" data-quick-report aria-label={`Open the full report for ${row.name}`}
         onClick={(e) => { if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return; e.preventDefault(); onOpenReport(row.id); }}>
-        Open the full report for {row.name} ↓
+        Open the full report ↓
       </a>
     </div>
   </div>;
@@ -74,7 +75,7 @@ function Rows({ rows, domain, selected, onSelect, expanded, onExpand, onOpenRepo
             {/* F-67: phones wrap the name (two Qwen rows differed only in the truncated part); md:truncate keeps the desktop single line. */}
             <span className="block leading-5 md:truncate">{selected.length > 1 && slot >= 0 && <span className="mr-1 text-[10px] font-bold text-accent" title={`Model ${String.fromCharCode(65 + slot)} of the side-by-side report`}>{String.fromCharCode(65 + slot)}</span>}{baseName(row.name)}</span>
             {/* CR-63.5: base name first; the reasoning configuration in muted small text instead of a six-line name. */}
-            <span className="bh-muted block text-[11px] font-normal leading-4">{row.org}{variantOf(row.name) ? ` · ${variantOf(row.name)}` : ""}</span>
+            <span className="bh-muted block truncate text-[11px] font-normal leading-4" title={`${row.org}${variantOf(row.name) ? ` · ${variantOf(row.name)}` : ""}`}>{row.org}{variantOf(row.name) ? ` · ${variantOf(row.name)}` : ""}</span>
           </button>
           </span>
         </th>
@@ -163,7 +164,13 @@ export function BenchmaxxingOverview({ rows, preset, onPreset, selected, onSelec
         <colgroup><col className="w-[44%] md:w-[28%]" /><col className="w-[22%] md:w-[14%]" /><col className="hidden md:table-column md:w-[20%]" /><col className="w-[34%] md:w-[18%]" /><col className="hidden md:table-column md:w-[20%]" /></colgroup>
         <thead><tr>
           <th scope="col" className="text-left">Model</th>
-          <th scope="col" className="text-left">Signal <InfoTip title="Benchmaxxing signal" label="the Signal column">Average signed gap, in percentile points, between public headline benchmarks and held-out benchmarks of the same topic (each pair ranked among the models both cover), pulled toward zero when few boards are compared. Plus = better on famous public tests than on tests nobody can train for. Tags have three levels on the score shown ({benchmaxxingThresholdText()}) and follow that score alone — the same tags as on the Overview table. A tag built on fewer than {BENCHMAXX_TAG_MIN_COMPARISONS} comparisons, or whose 80 % bootstrap interval (its headline and held-out boards resampled) reaches below zero, is still shown but marked {BENCHMAXX_UNCERTAIN_MARK} uncertain, with the reason in its tooltip. It is a screening flag, not proof of leakage or intent. A model is scored once it has at least {minComparisons} comparisons in {minTopics} topics. <span data-signal-max>Bars share one catalog-wide scale in every list, from {domain.min.toFixed(1)} to +{domain.max.toFixed(1)}, and diverge around the zero line: plus grows to the right, minus to the left.</span> <a href="/about#benchmaxxing" className="text-accent underline">How the signal works</a></InfoTip></th>
+          <th scope="col" className="text-left"><span className="whitespace-nowrap">Signal <InfoTip title="Benchmaxxing signal" label="the Signal column">
+            {/* F-118 (Fable pass 22): four short lines, not one 170-word paragraph; the method lives behind the link. */}
+            <span className="block">Signed gap, in percentile points, between a model&apos;s rank on public headline benchmarks and on held-out ones of the same topic; plus = better on the famous tests, pulled toward zero with few boards. A model is scored once it has at least {minComparisons} comparisons in {minTopics} topics.</span>
+            <span className="mt-1.5 block">Tags follow the score alone ({benchmaxxingThresholdText()}), as on the Overview.</span>
+            <span className="mt-1.5 block">{BENCHMAXX_UNCERTAIN_MARK} = fewer than {BENCHMAXX_TAG_MIN_COMPARISONS} comparisons, or an 80 % interval reaching below zero: treat the tag as uncertain.</span>
+            <span className="mt-1.5 block" data-signal-max>Bars: one catalog-wide scale in every list ({domain.min.toFixed(1)} to +{domain.max.toFixed(1)}), diverging around zero.</span>
+            <a href="/about#benchmaxxing" className="mt-1.5 block text-accent underline">How the signal works</a></InfoTip></span></th>
           <th scope="col" className="hidden text-left md:table-cell">Boards compared (n)</th>
           <th scope="col" className="text-left">Measured</th>
           <th scope="col" className="hidden text-left md:table-cell">Domain specialization <InfoTip title="Domain specialization" label="the Domain specialization column">Disclosed for context and deliberately not added to the Benchmaxxing signal. Consistently strong coding and weak writing is specialisation, not a headline-over-held-out gap.</InfoTip></th>

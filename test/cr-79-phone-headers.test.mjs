@@ -10,8 +10,11 @@ const src = readFileSync(new URL('../components/ModelExplorer.tsx', import.meta.
 const th = src.slice(src.indexOf('const Th = ({ label, k, right, sub, info, hideBelowMd }'), src.indexOf('// CR-63.7: one legend'));
 
 test('CR-79.1: the phone header label can shrink and, as a last resort, break inside a word', () => {
-  assert.match(th, /className="min-w-0 break-words text-inherit/, 'the sort button may shrink and break');
-  assert.match(th, /<span className=\{`flex min-w-0 flex-wrap items-center/, 'its flex parent allows the shrink (min-w-0) and wraps the (i)');
+  assert.match(th, /className="min-h-0 min-w-0 break-words text-inherit/, 'the sort button may shrink and break (F-116: no 44 px minimum, so the (i) aligns with its last line)');
+  // F-116 (Fable pass 22): the parent no longer wraps — the label breaks inside its own button and the (i) is a
+  // non-shrinking sibling on the last line, so it can never take a line of its own (F-92); the shrink guarantee holds.
+  assert.match(th, /<span className=\{`flex min-w-0 flex-nowrap items-end/, 'its flex parent allows the shrink (min-w-0); the (i) stays beside the last line');
+  assert.match(th, /\{info && <span className="shrink-0">\{info\}<\/span>\}/, 'the (i) never shrinks or wraps');
   assert.match(th, /\{sub && <span className="block break-words/, 'the sub-label breaks too');
 });
 
