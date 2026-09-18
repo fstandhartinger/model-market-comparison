@@ -4750,6 +4750,10 @@ flag and the `retired` tag agree on every row; AIME 2025 (AA) **is** tagged; **T
 (`tags: aa, aa_input, headline, saturated`) and neither is the Coding Agent Index best-of row; the tag renders
 as "Retired" with its tooltip in all four contexts; no horizontal overflow, no page error.
 
+The two commits after `1411aa9` do not touch a rendering path — one is this ledger plus the verifier's model
+selection, the other a criterion string used only by the daily — so the live result above still describes HEAD.
+Re-run the verifier with HEAD's sha to confirm rather than taking that on trust.
+
 ### Handoff / watch
 
 1. **The refresh receipt is the next ordinary run.** This iteration proved the individual rounds offline; only a
