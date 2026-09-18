@@ -321,13 +321,31 @@ Two things follow, and both are worth stating plainly rather than being discover
    changed body is still a changed hash and still a miss, while "when we fetched" stops counting as
    "what we got". That one change took the largest contract from 0/9 to 3/9.
 
-**So the honest expectation for CR-73.5 is a partial saving, not the disappearance of the stage:**
-on a quiet stretch up to four of the seven contract reviews are skipped; on a busy one, none. The
-prediction that belongs in the ledger is "0–4 of 7 contracts, typically 1–2", not "the live gauntlet
-becomes free". The vendor half is expected to be the steadier of the two, because a vendor source is
-a published paper or model card that changes rarely — but it has no equivalent measurement yet,
-because the receipts do not retain a per-source capture-hash history, and inventing one is CR-73.5's
-job, not this section's.
+**So the honest expectation for the live-contract half is a partial saving, not the disappearance of
+the stage:** on a quiet stretch up to four of the seven contract reviews are skipped; on a busy one,
+none. The prediction that belongs in the ledger is "0–4 of 7 contracts, typically 1–2", not "the live
+gauntlet becomes free".
+
+### The vendor half looks like the better of the two
+
+Measured from the committed history of `data/raw/benchmarks/vendor-candidates.json` (the only place
+a vendor capture hash is retained across days) and from the stored run reports:
+
+* Across the published snapshots since 10 Sep, **6/6** consecutive per-URL comparisons kept the same
+  capture hash. The three vendor sources are a Hugging Face model card, a Mistral release post and an
+  arXiv PDF — documents, not telemetry. Small sample, stated as such, but the direction is what the
+  nature of these sources predicts.
+* The cost they carry is not the extraction. In the 17 Sep 13:36 baseline **3 of the 7 score
+  candidates were vendor rows**, and the run accepted **0** changed rows — i.e. the whole chain of
+  producer, batch and different-family critic ran to confirm numbers that had not moved. In the
+  18 Sep 00:40 run **8 of 17 candidates** were vendor rows, over 3 of the 9 score batches.
+* A vendor hit removes the producer call *and* keeps those rows out of `changedIds`, so their score
+  batches never form. On the 18 Sep call mix that is roughly 3 producer and 3 critic calls; at the
+  baseline's 4.6 min average critic latency, of the order of **10–15 minutes** — larger than the
+  live-contract half, from three sources rather than seven.
+
+Both figures are estimates from stored reports and are labelled as such. CR-73.5's two consecutive
+unattended runs are what turns them into a measurement.
 
 ### Status
 
