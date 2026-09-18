@@ -16,6 +16,7 @@ import {
 } from '../ops/daily/reuse-cache.mjs';
 import { buildLiveContractUnits, reviewLiveContracts, LIVE_CONTRACT_CRITERIA } from '../ops/daily/live-contracts.mjs';
 import { vendorUnitFingerprint, vendorReusable } from '../ops/daily/refresh-benchmarks.mjs';
+import { compareRuns, runRows, datasetDigest } from '../ops/daily/reuse-hitrate.mjs';
 
 const silent = { log() {}, warn() {} };
 
@@ -358,4 +359,37 @@ test('CR-73.2 vendor: an unbound input yields no key at all', () => {
   assert.equal(vendorKey({ reviewerSource: null }), null, 'no reviewer version, no reuse');
   assert.equal(vendorKey({ extractionParserSha256: null }), null, 'no extraction parser version, no reuse');
   assert.equal(vendorKey({ extractionParserSha256: '' }), null);
+});
+
+// --- the offline hit-rate tool ----------------------------------------------
+
+test('CR-73.2: the hit-rate tool reads stored packets and agrees with the shipped digest', async () => {
+  const runsDir = await mkdtemp(join(tmpdir(), 'cr73-hitrate-'));
+  const row = (id, sha, value) => JSON.stringify({ row_id: id, pointer: `$.data[${id.split('#')[1]}]`,
+    source: { url: 'https://aa/api', sha256: sha, fetched_at: new Date().toISOString() },
+    staged: { value }, extract: { value } });
+  const writeRun = async (name, sha, value) => {
+    const dir = join(runsDir, name, 'review', 'packets');
+    await mkdir(dir, { recursive: true });
+    await writeFile(join(dir, 'aa-001.txt'), `# live-evidence packet aa-001\ndataset: aa\n${row('aa#00001', sha, value)}\n${row('aa#00002', sha, value)}\n`);
+    await writeFile(join(dir, 'da-001.txt'), `# live-evidence packet da-001\ndataset: da\n${row('da#00001', sha, value)}\n`);
+  };
+  // Same bytes, fetched at different times → identical; then a changed body → not.
+  await writeRun('2026-09-17T01-00-00-000Z-1', 'a'.repeat(64), 1);
+  await writeRun('2026-09-17T02-00-00-000Z-2', 'a'.repeat(64), 1);
+  await writeRun('2026-09-17T03-00-00-000Z-3', 'b'.repeat(64), 2);
+
+  const result = await compareRuns(runsDir, { limit: 10 });
+  assert.equal(result.runs.length, 3);
+  assert.deepEqual(result.pairs.map((p) => p.identical), [2, 0], 'both datasets repeat, then neither does');
+
+  // The tool's digest is the same function the shipped key uses.
+  const rows = await runRows(join(runsDir, '2026-09-17T01-00-00-000Z-1'));
+  const digest = datasetDigest(rows.get('aa'));
+  assert.equal(digest.rows, 2);
+  assert.deepEqual(digest.captures, ['a'.repeat(64)]);
+  assert.equal(digest.rows_sha256, datasetDigest(rows.get('aa')).rows_sha256);
+  // A run with no packets is skipped rather than counted as a match.
+  await mkdir(join(runsDir, '2026-09-17T04-00-00-000Z-4'), { recursive: true });
+  assert.equal(await runRows(join(runsDir, '2026-09-17T04-00-00-000Z-4')), null);
 });
