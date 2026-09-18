@@ -15,6 +15,23 @@ const exec = promisify(execFile);
 const root = 'data/raw/benchmarks';
 const json = async (p) => JSON.parse(await readFile(p, 'utf8'));
 const put = (p, v) => writeJSONAtomic(p, v);
+// CR-65.14: the row a protocol review compares against the source must carry what the registry
+// claims about the board's lifecycle. Artificial Analysis retires boards and keeps publishing
+// their last values (AIME 2025, LiveCodeBench, Terminal-Bench 2.1, tau2 Telecom, Terminal-Bench
+// Hard); `status: "retained"` is how the registry records that. While these fields were missing
+// from the packet, the reviewer read the omission as a claim that the board is still actively
+// reported, disputed every retired board, and the whole AA arm failed closed from 2026-09-11 on.
+export function protocolReviewRow(entry) {
+  return { id: entry.id, version: entry.version, version_guard: entry.how_to_collect.version_guard,
+    status: entry.status, version_status: entry.version_status, superseded_by: entry.superseded_by ?? null,
+    scoring: entry.scoring, description: entry.one_sentence_description, maintainer: entry.maintainer };
+}
+
+export const PROTOCOL_REVIEW_CRITERIA = [
+  'Check the registry version, benchmark identity, metric, units and description against the actual current primary protocol. If the excerpt cannot establish continuity, report missing evidence. A changed task set, harness, judges, configuration or release version cannot silently reuse the existing identity.',
+  'Check the lifecycle fields (status, version_status, superseded_by) against the same protocol text. `status` records whether the maintainer still reports results for this board: `"active"` means it still publishes them; `"retained"` means the protocol shows the board retired, removed, or replaced going forward, and we keep the values already collected without claiming they are current. `superseded_by` names the successor the protocol names, if any. Read the two independently: a board can be superseded in one index and still be reported in another, and a supersession note alone is not a retirement. Report a mismatch when the protocol text contradicts one of these fields, and missing evidence when the excerpt cannot settle it. These fields are the row\'s only statement about whether the board is still live; judge them, and judge nothing else as such a statement.',
+];
+
 const textSource = async (source, recipe) => {
   const { stdout } = await exec('python3', ['ops/daily/public-candidate.py', 'text', source.file, ...(recipe ? [recipe] : [])], { maxBuffer: 16_000_000, timeout: 30_000 });
   return stdout;
@@ -148,10 +165,8 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
       }
       sources.push({ ...receipt, content: bounded(content, entry.id), locator: reference.excerpt ? 'Published protocol text; exact excerpt when the full page exceeds the bound' : 'full visible primary text' });
     }
-    const row = { id: entry.id, version: entry.version, version_guard: entry.how_to_collect.version_guard,
-      scoring: entry.scoring, description: entry.one_sentence_description, maintainer: entry.maintainer };
-    const reviewed = await review({ runDir: evidenceDir, artifactId: `protocol-${entry.id}`, rows: [row], sources,
-      criteria: ['Check the registry version, benchmark identity, metric, units and description against the actual current primary protocol. If the excerpt cannot establish continuity, report missing evidence. A changed task set, harness, judges, configuration or release version cannot silently reuse the existing identity.'] });
+    const reviewed = await review({ runDir: evidenceDir, artifactId: `protocol-${entry.id}`, rows: [protocolReviewRow(entry)],
+      sources, criteria: PROTOCOL_REVIEW_CRITERIA });
     reviews.push({ scope: entry.id, type: 'protocol', ...reviewed.manifest });
     if (!reviewed.accepted || reviewed.fingerprints.length !== 1) throw new Error(`${entry.id}: protocol not approved: ${reviewed.errors.join('; ')}`);
     protocolCache.set(entry.id, sources);
@@ -165,7 +180,8 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
     const html = gunzipSync(await readFile(receipt.file)).toString();
     const next = parseAaBenchmarkFields(html, { source_url: receipt.url, collected_at: receipt.fetched_at,
       source_sha256: receipt.sha256, minimumRows: oldAa.count });
-    assertAaBenchmarkContinuity(oldAa, next);
+    // CR-65.14: bounded attrition is recorded, not fatal; anything larger still fails closed.
+    const coverageDrops = assertAaBenchmarkContinuity(oldAa, next);
     const old = new Map(oldAa.rows.map((r) => [r.source_id, r]));
     const changed = next.rows.filter((r) => !equal(r, old.get(r.source_id)));
     if (changed.length) {
@@ -193,7 +209,8 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
       lock.aa = { ...lock.aa, source_sha256: receipt.sha256, observations_sha256: sha256(await readFile(join(root, 'aa-observed-fields.json'))), source_file: receipt.file,
         protocol_review: join(evidenceDir, 'checks.json') };
     }
-    checks.push({ id: 'aa-benchmark-fields', status: changed.length ? 'updated' : 'checked_unchanged', rows: next.count, changed_rows: changed.length, source: sourceRef(receipt, 'All explicit model-page benchmark fields') });
+    checks.push({ id: 'aa-benchmark-fields', status: changed.length ? 'updated' : 'checked_unchanged', rows: next.count, changed_rows: changed.length,
+      ...(coverageDrops.length ? { coverage_drops: coverageDrops } : {}), source: sourceRef(receipt, 'All explicit model-page benchmark fields') });
   } catch (error) { fail('aa-benchmark-fields', error); }
   // Coding v1.5 has already passed complete primary-source review in the live
   // stage. Preserve the v1.4 lock and snapshot without changing their dates.

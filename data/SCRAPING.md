@@ -107,6 +107,38 @@ provided by the source retain previous values only for the same UUID and slug, w
 original per-field provenance in `metadata.retained_fields`. Explicit current nulls
 clear values; absent fields do not acquire a new observation date.
 
+## Benchmark lifecycle and AA component identities (CR-65.14, 2026-09-18)
+
+**One place says whether a board is still reported: `status` in `data/raw/benchmarks/registry.json`.**
+`active` means the maintainer still publishes results for it; `retained` means it stopped and we keep the
+values it published before, without claiming they are current. Nothing else in the repo carries that fact —
+`lib/benchmark-matrix.mjs` reads it for the `Retired` row tag, and `ops/daily/refresh-benchmarks.mjs` puts it
+into the protocol review packet (`protocolReviewRow`), so the reviewer compares our claim with the
+maintainer's own protocol text on every refresh instead of inferring it from an omission.
+
+`superseded_by` is read **independently** of `status`: a board can be superseded in one index and still be
+actively reported elsewhere. Artificial Analysis' Terminal-Bench 2.1 is the worked example — "Superseded by
+Terminal-Bench 4.0 in Intelligence Index v4.3 … It remains part of the Coding Index" — and AA scored six new
+models on it in the 2026-09-18 capture. It is `active` with `superseded_by: aa-terminal-bench::4.0`.
+Boards AA states it retired (AIME 2025, LiveCodeBench) or replaced going forward (τ²-Bench Telecom,
+Terminal-Bench Hard) are `retained`.
+
+**AA component identities do not get a new date per refresh.** Sixteen of the 27 AA registry entries carry a
+`snapshot-2026-09-10` version, and `aa_field_map` allows exactly one entry per source field, so minting a
+dated identity per refresh would supersede sixteen entries and re-key every stored row every day. An
+unversioned AA component board therefore **keeps one identity across refreshes** and carries its dates on the
+observations; the `snapshot-<date>` suffix means *first pinned on*, not *collected on*. A new identity is
+minted only when the protocol review's `version_guard` sees the board itself change. Re-basable AA
+composites are unaffected — they are collected through the headline path.
+
+**Bounded attrition, not a full stop.** `assertAaBenchmarkContinuity` used to fail the whole AA arm on any
+fall in any field's count, which is why the component boards stood still from 11 Sep 2026 on while the
+headline indices moved. A fall up to `AA_COVERAGE_DROP` (5 % of the field's prior count, floor 3 results) is
+ordinary attrition — AA deprecates individual models and results — and is recorded as `coverage_drops` in
+the run report. A field emptied, a field that disappears, or a larger fall is a retirement (the way
+τ³-Banking left Intelligence Index v4.3) and still fails closed for a manual source review. The bound is our
+own policy, not a promise Artificial Analysis made.
+
 ## Epoch ECI refresh details
 
 The collector makes one request per official export at each run:

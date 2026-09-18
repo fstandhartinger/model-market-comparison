@@ -181,6 +181,10 @@
       "label": "AA index input",
       "tip": "A benchmark Artificial Analysis averages into its Coding Index (Terminal-Bench, SciCode) or Coding Agent Index v1.5 (DeepSWE, Terminal-Bench 4.0, SWE-Atlas-QnA). The row shows this source’s own published results."
     },
+    "retired": {
+      "label": "Retired",
+      "tip": "The maintainer stopped reporting this benchmark: new models are no longer scored on it, so the values here are the ones it published before. Recorded as status \"retained\" in our benchmark registry and re-checked against the maintainer's own protocol text on every refresh."
+    },
     "saturated": {
       "label": "Saturated",
       "tip": "Top models sit near this benchmark's ceiling; it separates weaker models, not the best."

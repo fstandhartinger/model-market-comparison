@@ -29,6 +29,9 @@ export interface MatrixRow {
   asOf?: string | null;
   /** CR-65.15 D9: the source re-scored or stopped showing these results after our capture. */
   sourceChange?: SourceChange | null;
+  /** CR-65.14: the maintainer no longer reports this board (registry `status: "retained"`). A best-of
+   *  row is retired only when every version it merges is. */
+  retired?: boolean;
 }
 export interface SourceChange { kind: string; note: string; checkedAt: string | null }
 export function sourceChangeOf(key: string, caveats: unknown): SourceChange | null;
@@ -81,7 +84,8 @@ export function formatNative(value: number | null, unit: string | null): string;
 export function resultHref(axisId: string, modelId: string, models: string[], pinned: boolean): string;
 export function cellHref(row: MatrixRow, modelId: string, models: string[], pinned: boolean): string;
 export function groupOf(key: string, category: string | null, taxonomy: unknown): string;
-export function rowTags(key: string, maintainer: string | null, taxonomy: unknown, caveats?: unknown, saturation?: Saturation | null): string[];
+export function rowTags(key: string, maintainer: string | null, taxonomy: unknown, caveats?: unknown, saturation?: Saturation | null, status?: string | null): string[];
+export function isRetired(status: string | null | undefined): boolean;
 export interface ChartScale { kind: 'bar' | 'log' | 'position'; domain: [number, number]; positions: (number | null)[] }
 export function chartScale(values: (number | null)[], unit: string): ChartScale | null;
 export function chartRows(rows: MatrixRow[], columns: Map<number, number | null>[]): { row: MatrixRow; vals: (number | null)[] }[];

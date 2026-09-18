@@ -1473,10 +1473,10 @@
         "value": false,
         "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
       },
-      "superseded_by": null,
+      "superseded_by": "aa-tau3-banking::1.0.1",
       "status": "retained",
       "first_seen": "2026-09-10",
-      "last_verified": "2026-09-10",
+      "last_verified": "2026-09-18",
       "evidence": [
         {
           "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
@@ -1492,6 +1492,13 @@
           "source_sha256": "d921f7b255347b1091c5595adbbb5170ed6e9fe62250967a8586eb303ee99d2d",
           "fetched_at": "2026-09-10T21:47:16.627Z",
           "excerpt": "\"tau2\" (literal field in the captured Flight model rows; gzip source retained)"
+        },
+        {
+          "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/8a81f2fe28305bd1f9a6.gz",
+          "sha256": "a3068fcc4b11a5da810788f1c0b5ef56ccbbfb3405061e442935fb422dc37246",
+          "fetched_at": "2026-09-18T05:40:11.736Z",
+          "excerpt": "𝜏³-Banking Status: Removed from the Artificial Analysis Intelligence Index in v4.3, having been a constituent up to and including v4.2. We still run it on new model releases and report it as a standalone evaluation. Description: Fintech customer-support domain of the 𝜏-Knowledge framework developed by Sierra, evaluating agents that must coordinate retrieval from a large unstructured knowledge base with multi-step tool-mediated account changes Paper: https://arxiv.org/abs/2603.04370 Blog: sierra.ai/blog/bench-advancing-agent-benchmarking-to-knowledge-and-voice Dataset: https://github.com/sierra-research/tau2-bench Implementation: Agents handle ~700 interconnected policy documents (≈195K tokens, 21 product categories) and must locate the relevant policy, reason over it, and execute a multi-step sequence of tool calls — including tools referenced only in documentation rather than explicitly listed We evaluate the full 𝜏³-Banking task suite (97 tasks) with 5 repeats per task and report pass@1 averaged across the repeats, running the upstream tau2-bench v1.0.1 dataset and grader"
         }
       ]
     },
@@ -1606,14 +1613,14 @@
       "superseded_by": "aa-terminal-bench::2.1",
       "status": "retained",
       "first_seen": "2026-09-10",
-      "last_verified": "2026-09-10",
+      "last_verified": "2026-09-18",
       "evidence": [
         {
           "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
-          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-1ea3e75f96c3.txt",
-          "sha256": "767bce5f921c5987907766015e69fdc66bffd355e7096f9e002237ca252c0bee",
-          "fetched_at": "2026-09-10T21:47:46.639Z",
-          "excerpt": "Terminal-Bench Hard\nNote:\nSuperseded by Terminal-Bench v2.1, which we use going forward. Terminal-Bench Hard was a constituent of the Artificial Analysis Intelligence Index prior to v4.1\nDescription:\nAn agentic benchmark developed by Stanford University researchers, the Laude Institute, and the open source community, released in 2025. Terminal-Bench evaluates the ability of agents and models to solve a wide variety of tasks (including software engineering, system administration, and game-playing scenarios) using a terminal interface\nPage:\nhttps://www.tbench.ai/\nDataset registry:\nhttps://www.tbench.ai/registry\nImplementation:\nWe implement the 'hard' subset of the terminal-bench-core dataset, with the latest dataset version as of 14 August 2025 (commit 74221fb); we evaluate 44 tasks from this subset (a small number of tasks are excluded due to external dependency issues in the original dataset)\nWe evaluate this 'hard' subset using the Terminus 2 agent harness for consistency between models, and score models based on pass@1 scoring with the overall average over 3 repeats for each task\nIn the Terminal-Bench framework, each task has a specific suite of tests applied, and are considered successful if all tests pass, or unsuccessful otherwise\nWe apply the following constraints on evaluations for the agent:\nMaximum 'episodes' (where the model reviews current state and plans a series of next actions at the terminal) are limited to 100\nWe set a global per-task timeout of two hours (7,200 seconds); in practice the 100-episode limit is the binding constraint\nModels are limited to a max"
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/8a81f2fe28305bd1f9a6.gz",
+          "sha256": "a3068fcc4b11a5da810788f1c0b5ef56ccbbfb3405061e442935fb422dc37246",
+          "fetched_at": "2026-09-18T05:40:11.736Z",
+          "excerpt": "Terminal-Bench Hard\nNote:\nSuperseded by Terminal-Bench 2.1, which we use going forward. Terminal-Bench Hard was a constituent of the Artificial Analysis Intelligence Index prior to v4.1\nDescription:\nAn agentic benchmark developed by Stanford University researchers, the Laude Institute, and the open source community, released in 2025. Terminal-Bench evaluates the ability of agents and models to solve a wide variety of tasks (including software engineering, system administration, and game-playing scenarios) using a terminal interface\nPage:\nhttps://www.tbench.ai/\nDataset registry:\nhttps://www.tbench.ai/registry\nImplementation:\nWe implement the 'hard' subset of the terminal-bench-core dataset, with the latest dataset version as of 14 August 2025 (commit 74221fb); we evaluate 44 tasks from this subset (a small number of tasks are excluded due to external dependency issues in the original dataset)\nWe evaluate this 'hard' subset using the Terminus 2 agent harness for consistency between models, and score models based on pass@1 scoring with the overall average over 3 repeats for each task\nIn the Terminal-Bench framework, each task has a specific suite of tests applied, and are considered successful if all tests pass, or unsuccessful otherwise\nWe apply the following constraints on evaluations for the agent:\nMaximum 'episodes' (where the model reviews current state and plans a series of next actions at the terminal) are limited to 100\nWe set a global per-task timeout of two hours (7,200 seconds); in practice the 100-episode limit is the binding constraint\nModels are limited to a max"
         },
         {
           "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
@@ -1669,16 +1676,16 @@
         "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
       },
       "superseded_by": "aa-terminal-bench::4.0",
-      "status": "retained",
+      "status": "active",
       "first_seen": "2026-09-10",
-      "last_verified": "2026-09-10",
+      "last_verified": "2026-09-18",
       "evidence": [
         {
           "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
-          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-1ea3e75f96c3.txt",
-          "sha256": "767bce5f921c5987907766015e69fdc66bffd355e7096f9e002237ca252c0bee",
-          "fetched_at": "2026-09-10T21:47:46.639Z",
-          "excerpt": "Terminal-Bench v2.1\nStatus:\nSuperseded by Terminal-Bench v4.0 in Intelligence Index v4.3, having been a constituent up to and including v4.2. It remains part of the Coding Index.\nDescription:\nA verified refresh of Terminal-Bench, developed by Stanford University researchers, the Laude Institute, and the open source community. Keeps the same 89 curated tasks across software engineering, system administration, data processing, model training, and security, with environment and instruction fixes that make scores reflect agent capability rather than environment gaps\nPaper:\nhttps://arxiv.org/abs/2601.11868\nLeaderboard:\ntbench.ai/leaderboard/terminal-bench/2.1\nImplementation:\nWe evaluate the full Terminal-Bench v2.1 dataset (89 tasks) using the Terminus 2 agent harness in an E2B sandbox environment, with pass@1 scoring averaged over 3 repeats per task\nEach task ships with a verification suite that the agent must satisfy by interacting with the terminal — tasks are considered successful only if every test passes\nWe apply the following constraints on evaluations for the agent:\nMaximum 'episodes' (where the model reviews current state and plans a series of next actions at the terminal) are limited to 250\nPer-task agent timeout is set to two hours (7,200 seconds), or the task's own specified timeout where that is longer, well above typical task durations\nIn our testing these constraints predominantly limit cases where models are stuck in an unsuccessful loop, and we see no consistent differences in performance due to these constraints\nTerminal-Bench Hard\nNote:\nSuperseded by Terminal-"
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/8a81f2fe28305bd1f9a6.gz",
+          "sha256": "a3068fcc4b11a5da810788f1c0b5ef56ccbbfb3405061e442935fb422dc37246",
+          "fetched_at": "2026-09-18T05:40:11.736Z",
+          "excerpt": "Terminal-Bench 2.1\nStatus:\nSuperseded by Terminal-Bench 4.0 in Intelligence Index v4.3, having been a constituent up to and including v4.2. It remains part of the Coding Index.\nDescription:\nA verified refresh of Terminal-Bench, developed by Stanford University researchers, the Laude Institute, and the open source community. Keeps the same 89 curated tasks across software engineering, system administration, data processing, model training, and security, with environment and instruction fixes that make scores reflect agent capability rather than environment gaps\nPaper:\nhttps://arxiv.org/abs/2601.11868\nLeaderboard:\ntbench.ai/leaderboard/terminal-bench/2.1\nImplementation:\nWe evaluate the full Terminal-Bench 2.1 dataset (89 tasks) using the Terminus 2 agent harness in an E2B sandbox environment, with pass@1 scoring averaged over 3 repeats per task\nEach task ships with a verification suite that the agent must satisfy by interacting with the terminal — tasks are considered successful only if every test passes\nWe apply the following constraints on evaluations for the agent:\nMaximum 'episodes' (where the model reviews current state and plans a series of next actions at the terminal) are limited to 250\nPer-task agent timeout is set to two hours (7,200 seconds), or the task's own specified timeout where that is longer, well above typical task durations\nIn our testing these constraints predominantly limit cases where models are stuck in an unsuccessful loop, and we see no consistent differences in performance due to these constraints\nTerminal-Bench Hard\nNote:\nSuperseded by Terminal-"
         },
         {
           "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
@@ -1736,14 +1743,14 @@
       "superseded_by": null,
       "status": "active",
       "first_seen": "2026-09-10",
-      "last_verified": "2026-09-10",
+      "last_verified": "2026-09-18",
       "evidence": [
         {
           "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
-          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-1ea3e75f96c3.txt",
-          "sha256": "767bce5f921c5987907766015e69fdc66bffd355e7096f9e002237ca252c0bee",
-          "fetched_at": "2026-09-10T21:47:46.639Z",
-          "excerpt": "Terminal-Bench v4.0\nDescription:\nThe 4.0 release of Terminal-Bench, developed by Stanford University researchers, the Laude Institute, and the open source community. Covers software engineering, system administration, data processing, model training, and security, with each task graded by its own verification suite\nLeaderboard:\nhttps://www.tbench.ai/?version=4\nDataset:\nhttps://github.com/harbor-framework/terminal-bench\nImplementation:\nWe evaluate the full Terminal-Bench 4.0 dataset (66 tasks) using the mini-SWE-agent v2.4.6 harness, with pass@1 scoring averaged over 3 repeats per task\nEach task ships with a verification suite that the agent must satisfy by interacting with the terminal. We follow the Terminal-Bench methodology: a task passes only if every test passes, grading runs in each task's own separate verifier container isolated from the agent's environment, and a verifier that exceeds its timeout counts as a failure\nWe apply the following constraints on evaluations for the agent:\nMaximum agent steps are limited to 500\nEach command runs under a 30 second timeout; a command that exceeds it returns its partial output and the agent continues\nThe per-task run timeout is the task's own, up to eight hours\nAll other agent configuration follows mini-SWE-agent defaults, including the interactive mini config and prompts, the native bash tool, and no context compaction or summarization: the agent always sees its full transcript\nSciCode\nDescription:\nPython programming to solve scientific computing tasks\nPaper:\nhttps://arxiv.org/abs/2407.13168\nDataset:\nhttps://scicode-bench.githu"
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/8a81f2fe28305bd1f9a6.gz",
+          "sha256": "a3068fcc4b11a5da810788f1c0b5ef56ccbbfb3405061e442935fb422dc37246",
+          "fetched_at": "2026-09-18T05:40:11.736Z",
+          "excerpt": "Terminal-Bench 4.0\nDescription:\nThe 4.0 release of Terminal-Bench, developed by Stanford University researchers, the Laude Institute, and the open source community. Covers software engineering, system administration, data processing, model training, and security, with each task graded by its own verification suite\nLeaderboard:\nhttps://www.tbench.ai/?version=4\nDataset:\nhttps://github.com/harbor-framework/terminal-bench\nImplementation:\nWe evaluate the full Terminal-Bench 4.0 dataset (66 tasks) using the mini-SWE-agent v2.4.6 harness, with pass@1 scoring averaged over 3 repeats per task\nEach task ships with a verification suite that the agent must satisfy by interacting with the terminal. We follow the Terminal-Bench methodology: a task passes only if every test passes, grading runs in each task's own separate verifier container isolated from the agent's environment, and a verifier that exceeds its timeout counts as a failure\nWe apply the following constraints on evaluations for the agent:\nMaximum agent steps are limited to 500\nEach command runs under a 30 second timeout; a command that exceeds it returns its partial output and the agent continues\nThe per-task run timeout is the task's own, up to eight hours\nAll other agent configuration follows mini-SWE-agent defaults, including the interactive mini config and prompts, the native bash tool, and no context compaction or summarization: the agent always sees its full transcript\nSciCode\nDescription:\nPython programming to solve scientific computing tasks\nPaper:\nhttps://arxiv.org/abs/2407.13168\nDataset:\nhttps://scicode-bench.githu"
         },
         {
           "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
