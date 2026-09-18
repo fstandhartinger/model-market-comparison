@@ -4,6 +4,17 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-18 — Three new benchmark identities: ArXivMath & BrokenArXiv 08/2026 (MathArena), WeirdML v3
+
+**New versioned benchmark identities, same file locations and API shape.** MathArena's August 2026
+editions join as their own identities (monthly editions are never averaged): `matharena-arxivmath::2026-08`
+(57 problems, 7 model rows) and `matharena-brokenarxiv::2026-08` (56 problems, 7 model rows, graded 0–3 per
+the edition's own description, so judged separately from June's 0–2). WeirdML's third version joins as
+`weirdml::3` from the maintainer's own prepared data (5 published configurations; effective score, not
+comparable with v2's Average Max Accuracy). Attribution unchanged: CC-BY-SA-4.0 with credit to MathArena
+(SRI Lab, ETH Zurich; INSAIT), and WeirdML by Håvard Tveit Ihle. Isolated unjoined rows stay visible as
+unmatched source identities, never estimated (data honesty rules).
+
 ## 2026-09-16 — MIT licence (code only)
 
 **No data change.** The repository now carries an [MIT licence](LICENSE) (`license` field

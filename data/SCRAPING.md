@@ -208,7 +208,7 @@ same result is never counted twice.
 | EuroEval | planned | Official CSV downloads, attribution OK |
 | Arena (LMArena) | planned | CC BY 4.0 daily parquet dump (site terms forbid scraping; the dump is the permitted route); human preference, kept apart from task accuracy (CR-38.3) |
 | Hugging Face Find a Leaderboard | not collected | Directory with no scores of its own; backing dataset gated, no licence |
-| MathArena | **live (2026-09-16)** | `matharena-arxivmath::2026-06`, `matharena-brokenarxiv::2026-06` (parser `matharena_table`); CC-BY-SA-4.0 data, attribute MathArena. **Planned:** further editions and families (ArXivLean, USAMO/IMO proofs, Project Euler) |
+| MathArena | **live (2026-09-16, editions 2026-06 + 2026-08)** | `matharena-arxivmath::2026-06`/`2026-08`, `matharena-brokenarxiv::2026-06`/`2026-08` (parser `matharena_table`); CC-BY-SA-4.0 data, attribute MathArena. **Planned:** further editions and families (ArXivLean, USAMO/IMO proofs, Project Euler) |
 | ARC Prize | live | `arc-agi::1/2/3` |
 | Humanity's Last Exam | live / planned | `hle` from the GitHub README; **planned:** HLE-Rolling once a stable public results location exists (none found on 15 Sep) |
 | CritPt | live | `critpt` |

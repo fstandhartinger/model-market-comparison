@@ -7981,6 +7981,273 @@
           "excerpt": "The main score is the **sum of valid transitions in the longest valid chain prefix** across all starting words."
         }
       ]
+    },
+    {
+      "id": "matharena-arxivmath::2026-08",
+      "name": "ArXivMath 08/2026 (MathArena)",
+      "version": "2026-08",
+      "version_status": "published",
+      "family": "matharena-arxivmath",
+      "category": "Math",
+      "one_sentence_description": "Research-level math problems with a checkable final answer, drawn from arXiv papers submitted in August 2026, so they postdate most training data.",
+      "scoring": {
+        "metric": "Accuracy (share of problems solved, averaged over runs) with a 95% confidence interval",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Run by MathArena (SRI Lab, ETH Zurich, with INSAIT) on the August 2026 edition (57 problems). The 95% interval, cost, token counts and the source's own \"released after competition release\" flag stay in each observation's protocol. A model released after the problems were published may have seen them; the flag says so, it is not a correction. Monthly editions are separate identities and editions are never averaged. Secondary benchmark, never a Composite input."
+      },
+      "maintainer": "MathArena (SRI Lab, ETH Zurich; INSAIT)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://matharena.ai/",
+      "publication_urls": [
+        {
+          "url": "https://matharena.ai/",
+          "type": "official_leaderboard",
+          "role": "MathArena leaderboard (competition arxiv--august)"
+        },
+        {
+          "url": "https://matharena.ai/competition_tables/arxiv--august",
+          "type": "official_leaderboard",
+          "role": "The leaderboard page's own table endpoint for this edition"
+        },
+        {
+          "url": "https://matharena.ai/competitions",
+          "type": "official_leaderboard",
+          "role": "Edition list with problem counts, model counts and the edition description"
+        },
+        {
+          "url": "https://huggingface.co/datasets/MathArena/arxivmath-0826",
+          "type": "huggingface",
+          "role": "Problems and model outputs, CC-BY-SA-4.0"
+        },
+        {
+          "url": "https://github.com/eth-sri/matharena",
+          "type": "github",
+          "role": "Evaluation code, MIT"
+        },
+        {
+          "url": "https://matharena.ai/arxivmath",
+          "type": "official_leaderboard",
+          "role": "ArXivMath methodology"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JSON with a rendered HTML table",
+        "identity_policy": "source_label",
+        "locator": "GET /competition_tables/arxiv--august → JSON field \"table\" (rendered leaderboard): one row per model; value = the \"Accuracy (± 95% CI)\" point estimate in percent; the warning sign after a name is MathArena's \"Model was released after competition release\" flag, kept per row.",
+        "version_guard": "The competition table must keep exactly the twelve published leaderboard columns (Rank, Model Name, Provider, Accuracy (± 95% CI), Cost, Output Tokens, Input Tokens, Average Retries, Average Time, Open, Parameters, Active Parameters) and exactly 57 problems in its per-problem grid (MathArena lists \"08/2026 · 57 problems\"). A different problem count or another monthly edition is a different identity; editions are never averaged.",
+        "notes": "robots.txt redirects (308) to a 404, so no rules are published; the site has no terms page. Data is CC-BY-SA-4.0 on Hugging Face and MathArena asks to be cited (arXiv 2605.00674): attribute MathArena and link the leaderboard. Model labels are product names with the setting in parentheses; exact joins come from data/raw/benchmarks/identity-map.json (lib/board-identity.mjs, parseMathArenaLabel). Announced in the linked X post of 16 Sep 2026 (Florian's bookmark folder)."
+      },
+      "update_cadence": {
+        "source_schedule": "A new edition per month for the ArXiv families; an edition is frozen once MathArena marks it deprecated. Models are added to the current edition as they are released.",
+        "check_recommendation": "Daily, at most one capture per source; stop on access restrictions."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Computed saturation (CR-38.2) applies on build; no saturation claim is recorded here."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-18",
+      "last_verified": "2026-09-18",
+      "evidence": [
+        {
+          "url": "https://matharena.ai/competitions",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82/b61109fc7ef4443e4b3b.gz",
+          "sha256": "3e7d2f4c1a5e1ec1b5abd83c8b0df1f339e96ca426b495b3a32e6b1fc0932364",
+          "fetched_at": "2026-09-18T17:35:39.674832+00:00",
+          "excerpt": "ArXivMath contains research-level math problems sourced from arXiv papers submitted in August 2026. Models are scored on the correctness of their final answers."
+        },
+        {
+          "url": "https://matharena.ai/competition_tables/arxiv--august",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82/2e43e533053d8d7bca16.gz",
+          "sha256": "30cac66847993a939e12beb37ec1146fd03c403facf94d675f9c13a54fc7d959",
+          "fetched_at": "2026-09-18T17:35:28.685648+00:00",
+          "excerpt": "Leaderboard columns: Rank | Model Name | Provider | Accuracy (± 95% CI) | Cost | Output Tokens | Input Tokens | Average Retries | Average Time | Open | Parameters | Active Parameters; 7 model rows; 57 problem columns."
+        }
+      ]
+    },
+    {
+      "id": "matharena-brokenarxiv::2026-08",
+      "name": "BrokenArXiv 08/2026 (MathArena)",
+      "version": "2026-08",
+      "version_status": "published",
+      "family": "matharena-brokenarxiv",
+      "category": "Math",
+      "one_sentence_description": "Plausible but false statements taken from August 2026 arXiv papers; a model scores by refusing to prove them and saying the statement is false as written.",
+      "scoring": {
+        "metric": "Accuracy (share of problems solved, averaged over runs) with a 95% confidence interval",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Run by MathArena (SRI Lab, ETH Zurich, with INSAIT) on the August 2026 edition (56 problems). The 95% interval, cost, token counts and the source's own \"released after competition release\" flag stay in each observation's protocol. A model released after the problems were published may have seen them; the flag says so, it is not a correction. Monthly editions are separate identities and editions are never averaged. Secondary benchmark, never a Composite input. A judged score (CR-38.3): the August edition's own description states grading on a 0–3 scale per response (the June edition used 0–2), so editions are judged separately, never mixed."
+      },
+      "maintainer": "MathArena (SRI Lab, ETH Zurich; INSAIT)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://matharena.ai/",
+      "publication_urls": [
+        {
+          "url": "https://matharena.ai/",
+          "type": "official_leaderboard",
+          "role": "MathArena leaderboard (competition arxiv_false--august)"
+        },
+        {
+          "url": "https://matharena.ai/competition_tables/arxiv_false--august",
+          "type": "official_leaderboard",
+          "role": "The leaderboard page's own table endpoint for this edition"
+        },
+        {
+          "url": "https://matharena.ai/competitions",
+          "type": "official_leaderboard",
+          "role": "Edition list with problem counts, model counts and the edition description"
+        },
+        {
+          "url": "https://huggingface.co/datasets/MathArena/brokenarxiv-0826",
+          "type": "huggingface",
+          "role": "Problems and model outputs, CC-BY-SA-4.0"
+        },
+        {
+          "url": "https://github.com/eth-sri/matharena",
+          "type": "github",
+          "role": "Evaluation code, MIT"
+        },
+        {
+          "url": "https://matharena.ai/brokenarxiv",
+          "type": "official_leaderboard",
+          "role": "BrokenArXiv methodology (evaluation and grading design)"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JSON with a rendered HTML table",
+        "identity_policy": "source_label",
+        "locator": "GET /competition_tables/arxiv_false--august → JSON field \"table\" (rendered leaderboard): one row per model; value = the \"Accuracy (± 95% CI)\" point estimate in percent; the warning sign after a name is MathArena's \"Model was released after competition release\" flag, kept per row.",
+        "version_guard": "The competition table must keep exactly the twelve published leaderboard columns (Rank, Model Name, Provider, Accuracy (± 95% CI), Cost, Output Tokens, Input Tokens, Average Retries, Average Time, Open, Parameters, Active Parameters) and exactly 56 problems in its per-problem grid (MathArena lists \"08/2026 · 56 problems\"). A different problem count or another monthly edition is a different identity; editions are never averaged.",
+        "notes": "robots.txt redirects (308) to a 404, so no rules are published; the site has no terms page. Data is CC-BY-SA-4.0 on Hugging Face and MathArena asks to be cited (arXiv 2605.00674): attribute MathArena and link the leaderboard. Model labels are product names with the setting in parentheses; exact joins come from data/raw/benchmarks/identity-map.json (lib/board-identity.mjs, parseMathArenaLabel). Announced in the linked X post of 16 Sep 2026 (Florian's bookmark folder)."
+      },
+      "update_cadence": {
+        "source_schedule": "A new edition per month for the ArXiv families; an edition is frozen once MathArena marks it deprecated. Models are added to the current edition as they are released.",
+        "check_recommendation": "Daily, at most one capture per source; stop on access restrictions."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Computed saturation (CR-38.2) applies on build; no saturation claim is recorded here."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-18",
+      "last_verified": "2026-09-18",
+      "evidence": [
+        {
+          "url": "https://matharena.ai/competitions",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82/b61109fc7ef4443e4b3b.gz",
+          "sha256": "3e7d2f4c1a5e1ec1b5abd83c8b0df1f339e96ca426b495b3a32e6b1fc0932364",
+          "fetched_at": "2026-09-18T17:35:39.674832+00:00",
+          "excerpt": "BrokenArXiv contains plausible but false mathematical statements sourced from arXiv papers submitted in August 2026, including disproven conjectures. Responses are graded on a 0–3 scale, with full credit for recognizing that the statement is false."
+        },
+        {
+          "url": "https://matharena.ai/competition_tables/arxiv_false--august",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82/91374ee251a4c81bec0a.gz",
+          "sha256": "8fb82900a0689d1b8549397799f27893be7bd0eede71669e4b4a60ebe07d2745",
+          "fetched_at": "2026-09-18T17:35:31.624127+00:00",
+          "excerpt": "Leaderboard columns: Rank | Model Name | Provider | Accuracy (± 95% CI) | Cost | Output Tokens | Input Tokens | Average Retries | Average Time | Open | Parameters | Active Parameters; 7 model rows; 56 problem columns."
+        },
+        {
+          "url": "https://matharena.ai/brokenarxiv",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-16-matharena-method/9767a51944f8761adfe8.gz",
+          "sha256": "f1c3e6e6dee0f76ef82ed6b5a2fc8bb6da35ef8cecf01fdd7ab15655945dffd8",
+          "fetched_at": "2026-09-16T09:46:23.933574+00:00",
+          "excerpt": "Unlike our other benchmarks, BrokenArXiv does not admit rule-based verification. As a result, evaluation necessarily relies on an LLM judge."
+        }
+      ]
+    },
+    {
+      "id": "weirdml::3",
+      "name": "WeirdML v3",
+      "version": "3",
+      "version_status": "published",
+      "family": "weirdml",
+      "category": "Coding",
+      "one_sentence_description": "Agentic benchmark with 11 hand-made machine-learning tasks: a model must explore unfamiliar data, build and run analysis pipelines and produce results despite limited data, unspecified goals or very limited feedback.",
+      "scoring": {
+        "metric": "Effective score across the 11 tasks: 80% normalized area under the average best-so-far effective-score line on a logarithmic token axis (500k–50M) plus 20% of its final value, runs averaged per configuration and the 11 tasks weighted equally (hinted and hintless twins each get half a task's weight)",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Published and maintained by Håvard Tveit Ihle (Norwegian Defence Research Establishment) on htihle.github.io; the site's own model-summary table renders the same value under \"Average Score Across 11 Tasks\". Effective scores include normalization and hint penalties; they are not raw accuracy and are not comparable with WeirdML v2's \"Average Max Accuracy\" convention. Configurations the author excluded for incomplete task coverage stay excluded, never estimated from covered tasks (excluded_models). One configuration per row; the agent harness (codex_cli, claude_code, gemini_cli, opencode), runs, cost and the 95% interval stay in each observation's protocol. Community benchmark, never a Composite input."
+      },
+      "maintainer": "Håvard Tveit Ihle (Norwegian Defence Research Establishment)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://htihle.github.io/weirdml.html",
+      "publication_urls": [
+        {
+          "url": "https://htihle.github.io/weirdml.html",
+          "type": "official_leaderboard",
+          "role": "Primary results publication (v3 section)"
+        },
+        {
+          "url": "https://htihle.github.io/weirdml_v3_summary.html",
+          "type": "official_leaderboard",
+          "role": "Model summary table (renders the same prepared data)"
+        },
+        {
+          "url": "https://htihle.github.io/assets/data/weirdml_v3.json",
+          "type": "official_leaderboard",
+          "role": "Prepared data JSON (the collector's source)"
+        },
+        {
+          "url": "https://htihle.github.io/data/weirdml_v3_results.json",
+          "type": "official_leaderboard",
+          "role": "Full raw run data"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JSON",
+        "identity_policy": "source_label",
+        "locator": "GET /assets/data/weirdml_v3.json → models[]: one row per published model configuration; value = \"score\" (the same effective score the site's summary table shows under \"Average Score Across 11 Tasks\").",
+        "version_guard": "schema_version must stay 1, mode must be \"real\", exactly 11 tasks, and every row needs a finite score and a two-value interval. The author's excluded_models list is never read. A changed schema, another task set or synthetic rows fail closed.",
+        "notes": "robots.txt of htihle.github.io applies; GitHub Pages allows crawlers. Values are taken from the maintainer's own prepared data, which the summary page renders identically (weirdml_v3_summary.html maps model.score → the \"Average Score Across 11 Tasks\" column). Announced in the linked X post of 18 Sep 2026 (Florian, CR-81)."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; the author updates results as runs complete (v3 data generated 2026-09-18).",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-18",
+      "last_verified": "2026-09-18",
+      "evidence": [
+        {
+          "url": "https://htihle.github.io/weirdml_v3_summary.html",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82/f8fc6c588657b41b313f.gz",
+          "sha256": "7682f80e3e321e36545ae2afa710916d562a4ad71652465a0cab22f13fd8386b",
+          "fetched_at": "2026-09-18T17:35:37.160240+00:00",
+          "excerpt": "WeirdML Model Summary — table columns: # | Model | Average Score Across 11 Tasks | Cost / Run (USD) | Final Best Score | Harness; rows are rendered from assets/data/weirdml_v3.json (avg_acc = model.score)."
+        },
+        {
+          "url": "https://htihle.github.io/weirdml.html",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82/9ce7000c9326ae237028.gz",
+          "sha256": "958e947ecfdce585e7388ffa685d11fc04541df3903e92b6fd9dbd530fb2c7f7",
+          "fetched_at": "2026-09-18T17:52:39.145370+00:00",
+          "excerpt": "In the Tokens view above, each model’s line shows its average best-so-far effective score across all 11 tasks. That model’s official score is 80% normalized area under its line on a logarithmic token axis, plus 20% of its final value."
+        }
+      ]
     }
   ],
   "aa_field_map": [

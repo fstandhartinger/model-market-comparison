@@ -434,6 +434,30 @@ def parse(source,spec,load_source):
                     'trials_total':sum(trials),'trials_per_word':[min(trials),max(trials)],'difficulty_weighted_score':a.get('sum_sparse_chain_avg'),
                     'best_trial_sum':a.get('sum_chain_max'),'average_validity':a.get('avg_validity'),'output_tokens':a.get('output_tokens'),
                     'estimated_run_cost_usd':a.get('estimated_cost_usd'),'model_release_date':(data.get('release_dates') or {}).get(mid)}})
+    elif kind=='weirdml_v3_json':
+        # WeirdML v3 (Håvard Tveit Ihle): the published prepared-data JSON is the same file the site's own
+        # model-summary table renders (weirdml_v3_summary.html maps model.score → "Average Score Across 11
+        # Tasks"). Version guard: the pinned schema_version, real mode (synthetic fixtures never score),
+        # the exact task count, and one valid per-model interval per row. The author excludes configurations
+        # with incomplete task coverage into `excluded_models`; they are never read here, so a partially
+        # measured model stays missing instead of being estimated from its covered tasks.
+        data=json.loads(source);req=spec['require']
+        if data.get('schema_version')!=req['schema_version']:raise ValueError(f"WeirdML v3 schema_version changed: {data.get('schema_version')!r}")
+        if data.get('mode')!='real':raise ValueError('WeirdML v3 mode changed: '+str(data.get('mode')))
+        if data.get('task_count')!=req['task_count']:raise ValueError(f"WeirdML v3 task count changed: {data.get('task_count')!r}")
+        if not isinstance(data.get('models'),list):raise ValueError('WeirdML v3 models missing')
+        for index,r in enumerate(data['models']):
+            if not isinstance(r,dict) or not isinstance(r.get('id'),str) or not isinstance(r.get('name'),str) or not r['name'].strip():raise ValueError(f'WeirdML v3 row {index} schema changed')
+            if r.get('synthetic') is not False:raise ValueError(f"WeirdML v3 row {index}: synthetic model {r.get('id')!r}")
+            score=r.get('score')
+            if not isinstance(score,(int,float)) or isinstance(score,bool) or not math.isfinite(score):raise ValueError(f"WeirdML v3 {r.get('id')}: score missing")
+            interval=r.get('interval')
+            if not (isinstance(interval,list) and len(interval)==2 and all(isinstance(x,(int,float)) and not isinstance(x,bool) and math.isfinite(x) for x in interval)):raise ValueError(f"WeirdML v3 {r.get('id')}: interval missing")
+            if r.get('runs') is not None and (not isinstance(r.get('runs'),int) or r['runs']<1):raise ValueError(f"WeirdML v3 {r.get('id')}: run count invalid")
+            rows.append({'name':r['name'],'id':r['id'],'score':score,'source_row':index,
+                'context':{'agent':r.get('agent'),'harness':r.get('harnesses'),'reasoning_effort':r.get('reasoning_effort'),'open_weights':r.get('open_weights'),
+                    'runs':r.get('runs'),'interval_95':[interval[0],interval[1]],'mean_api_cost_usd':r.get('mean_api_cost_usd'),
+                    'mean_output_tokens':r.get('mean_output_tokens'),'mean_final_best':r.get('mean_final_best')}})
     else:raise ValueError('Unknown parser kind '+kind)
     if not isinstance(rows,list) or not rows:raise ValueError('No source result rows')
     return rows

@@ -239027,6 +239027,497 @@
       },
       "protocol": "Vals Index v2 (updated 2026-09-10), overall; published cost per test in USD per model slug; accuracy and latency retained as context, not converted.; source row: {\"task\":\"overall\",\"accuracy\":11.494,\"stderr\":0.61,\"cost_per_test\":0.09345,\"latency\":1345.167,\"compute_effort\":null,\"reasoning_effort\":null,\"max_output_tokens\":131072,\"provider\":\"Fireworks AI\"}",
       "comparison_key": null
+    },
+    {
+      "id": "public:1302f57dc49bc37e2c23febb",
+      "benchmark_id": "matharena-arxivmath::2026-08",
+      "subject": {
+        "source_id": "GPT-6 Astra (max)",
+        "name": "GPT-6 Astra (max)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 88.6,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/arxiv--august",
+        "retrieved_at": "2026-09-18T17:35:28.685648+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82/2e43e533053d8d7bca16.gz",
+        "sha256": "2e43e533053d8d7bca16722ee75cd9a9e9b9e6816a305e80e3bb2457c2f749f2",
+        "locator": "matharena_table; source row 1; GPT-6 Astra (max); field accuracy"
+      },
+      "protocol": "ArXivMath 08/2026 (MathArena): 57 problems from arXiv papers submitted in August 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; not a Composite input.; source row: {\"rank\":\"1\",\"model\":\"GPT-6 Astra (max)\",\"provider\":\"OpenAI\",\"accuracy\":\"88.60% ± 5.83%\",\"cost\":\"$3.63\",\"output_tokens\":\"27180\",\"released_after_competition\":true,\"open_weights\":\"❌\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:f3aad27ec4c03ab0b8ed2cf2",
+      "benchmark_id": "matharena-arxivmath::2026-08",
+      "subject": {
+        "source_id": "Claude-Fable-5.1 (high)",
+        "name": "Claude-Fable-5.1 (high)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 87.72,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/arxiv--august",
+        "retrieved_at": "2026-09-18T17:35:28.685648+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82/2e43e533053d8d7bca16.gz",
+        "sha256": "2e43e533053d8d7bca16722ee75cd9a9e9b9e6816a305e80e3bb2457c2f749f2",
+        "locator": "matharena_table; source row 2; Claude-Fable-5.1 (high); field accuracy"
+      },
+      "protocol": "ArXivMath 08/2026 (MathArena): 57 problems from arXiv papers submitted in August 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; not a Composite input.; source row: {\"rank\":\"2\",\"model\":\"Claude-Fable-5.1 (high)\",\"provider\":\"Anthropic\",\"accuracy\":\"87.72% ± 6.03%\",\"cost\":\"$12.77\",\"output_tokens\":\"146134\",\"released_after_competition\":true,\"open_weights\":\"❌\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:caefc0c99d62cb176fcff489",
+      "benchmark_id": "matharena-arxivmath::2026-08",
+      "subject": {
+        "source_id": "Qwen3.8-Max",
+        "name": "Qwen3.8-Max",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 57.89,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/arxiv--august",
+        "retrieved_at": "2026-09-18T17:35:28.685648+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82/2e43e533053d8d7bca16.gz",
+        "sha256": "2e43e533053d8d7bca16722ee75cd9a9e9b9e6816a305e80e3bb2457c2f749f2",
+        "locator": "matharena_table; source row 3; Qwen3.8-Max; field accuracy"
+      },
+      "protocol": "ArXivMath 08/2026 (MathArena): 57 problems from arXiv papers submitted in August 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; not a Composite input.; source row: {\"rank\":\"3\",\"model\":\"Qwen3.8-Max\",\"provider\":\"Qwen\",\"accuracy\":\"57.89% ± 12.82%\",\"cost\":\"$5.76\",\"output_tokens\":\"297226\",\"released_after_competition\":true,\"open_weights\":\"✔️\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:f0e2663745f4a46cace82e58",
+      "benchmark_id": "matharena-arxivmath::2026-08",
+      "subject": {
+        "source_id": "Muse Spark 1.3",
+        "name": "Muse Spark 1.3",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 45.61,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/arxiv--august",
+        "retrieved_at": "2026-09-18T17:35:28.685648+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82/2e43e533053d8d7bca16.gz",
+        "sha256": "2e43e533053d8d7bca16722ee75cd9a9e9b9e6816a305e80e3bb2457c2f749f2",
+        "locator": "matharena_table; source row 4; Muse Spark 1.3; field accuracy"
+      },
+      "protocol": "ArXivMath 08/2026 (MathArena): 57 problems from arXiv papers submitted in August 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; not a Composite input.; source row: {\"rank\":\"4\",\"model\":\"Muse Spark 1.3\",\"provider\":\"Meta AI\",\"accuracy\":\"45.61% ± 9.91%\",\"cost\":\"$1.15\",\"output_tokens\":\"129636\",\"released_after_competition\":true,\"open_weights\":\"❌\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:a06e951ec88c8a593bd81718",
+      "benchmark_id": "matharena-arxivmath::2026-08",
+      "subject": {
+        "source_id": "DeepSeek-V4.1-Flash (Max)",
+        "name": "DeepSeek-V4.1-Flash (Max)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 43.86,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/arxiv--august",
+        "retrieved_at": "2026-09-18T17:35:28.685648+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82/2e43e533053d8d7bca16.gz",
+        "sha256": "2e43e533053d8d7bca16722ee75cd9a9e9b9e6816a305e80e3bb2457c2f749f2",
+        "locator": "matharena_table; source row 5; DeepSeek-V4.1-Flash (Max); field accuracy"
+      },
+      "protocol": "ArXivMath 08/2026 (MathArena): 57 problems from arXiv papers submitted in August 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; not a Composite input.; source row: {\"rank\":\"5\",\"model\":\"DeepSeek-V4.1-Flash (Max)\",\"provider\":\"DeepSeek\",\"accuracy\":\"43.86% ± 9.11%\",\"cost\":\"$0.43\",\"output_tokens\":\"466786\",\"released_after_competition\":true,\"open_weights\":\"✔️\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:41ab205415ef05b5236025c4",
+      "benchmark_id": "matharena-arxivmath::2026-08",
+      "subject": {
+        "source_id": "Gemini 3.8 Flash",
+        "name": "Gemini 3.8 Flash",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 40.35,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/arxiv--august",
+        "retrieved_at": "2026-09-18T17:35:28.685648+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82/2e43e533053d8d7bca16.gz",
+        "sha256": "2e43e533053d8d7bca16722ee75cd9a9e9b9e6816a305e80e3bb2457c2f749f2",
+        "locator": "matharena_table; source row 6; Gemini 3.8 Flash; field accuracy"
+      },
+      "protocol": "ArXivMath 08/2026 (MathArena): 57 problems from arXiv papers submitted in August 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; not a Composite input.; source row: {\"rank\":\"6\",\"model\":\"Gemini 3.8 Flash\",\"provider\":\"Google\",\"accuracy\":\"40.35% ± 9.05%\",\"cost\":\"$0.92\",\"output_tokens\":\"95160\",\"released_after_competition\":true,\"open_weights\":\"❌\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:6705e67a9c432e3f10a5700f",
+      "benchmark_id": "matharena-arxivmath::2026-08",
+      "subject": {
+        "source_id": "Kimi K3 (Think)",
+        "name": "Kimi K3 (Think)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 38.6,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/arxiv--august",
+        "retrieved_at": "2026-09-18T17:35:28.685648+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82/2e43e533053d8d7bca16.gz",
+        "sha256": "2e43e533053d8d7bca16722ee75cd9a9e9b9e6816a305e80e3bb2457c2f749f2",
+        "locator": "matharena_table; source row 7; Kimi K3 (Think); field accuracy"
+      },
+      "protocol": "ArXivMath 08/2026 (MathArena): 57 problems from arXiv papers submitted in August 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; not a Composite input.; source row: {\"rank\":\"7\",\"model\":\"Kimi K3 (Think)\",\"provider\":\"Moonshot AI\",\"accuracy\":\"38.60% ± 12.64%\",\"cost\":\"$5.77\",\"output_tokens\":\"332043\",\"released_after_competition\":false,\"open_weights\":\"✔️\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:446bfa4f9383ea3ab2ee23fc",
+      "benchmark_id": "matharena-brokenarxiv::2026-08",
+      "subject": {
+        "source_id": "GPT-6 Astra (max)",
+        "name": "GPT-6 Astra (max)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 81.94,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/arxiv_false--august",
+        "retrieved_at": "2026-09-18T17:35:31.624127+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82/91374ee251a4c81bec0a.gz",
+        "sha256": "91374ee251a4c81bec0a36c29e22c436d85568723daca787cea2014f738b6b0d",
+        "locator": "matharena_table; source row 1; GPT-6 Astra (max); field accuracy"
+      },
+      "protocol": "BrokenArXiv 08/2026 (MathArena): 56 problems from arXiv papers submitted in August 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; graded on a 0–3 scale by MathArena's judge; not a Composite input.; source row: {\"rank\":\"1\",\"model\":\"GPT-6 Astra (max)\",\"provider\":\"OpenAI\",\"accuracy\":\"81.94% ± 5.82%\",\"cost\":\"$2.26\",\"output_tokens\":\"34039\",\"released_after_competition\":true,\"open_weights\":\"❌\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:95a96d1dff8f791acf4e99d0",
+      "benchmark_id": "matharena-brokenarxiv::2026-08",
+      "subject": {
+        "source_id": "Claude-Fable-5.1 (high)",
+        "name": "Claude-Fable-5.1 (high)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 79.76,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/arxiv_false--august",
+        "retrieved_at": "2026-09-18T17:35:31.624127+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82/91374ee251a4c81bec0a.gz",
+        "sha256": "91374ee251a4c81bec0a36c29e22c436d85568723daca787cea2014f738b6b0d",
+        "locator": "matharena_table; source row 2; Claude-Fable-5.1 (high); field accuracy"
+      },
+      "protocol": "BrokenArXiv 08/2026 (MathArena): 56 problems from arXiv papers submitted in August 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; graded on a 0–3 scale by MathArena's judge; not a Composite input.; source row: {\"rank\":\"2\",\"model\":\"Claude-Fable-5.1 (high)\",\"provider\":\"Anthropic\",\"accuracy\":\"79.76% ± 10.52%\",\"cost\":\"$19.57\",\"output_tokens\":\"251054\",\"released_after_competition\":true,\"open_weights\":\"❌\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:09884fe43f0c4dabbd78f95c",
+      "benchmark_id": "matharena-brokenarxiv::2026-08",
+      "subject": {
+        "source_id": "Qwen3.8-Max",
+        "name": "Qwen3.8-Max",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 69.64,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/arxiv_false--august",
+        "retrieved_at": "2026-09-18T17:35:31.624127+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82/91374ee251a4c81bec0a.gz",
+        "sha256": "91374ee251a4c81bec0a36c29e22c436d85568723daca787cea2014f738b6b0d",
+        "locator": "matharena_table; source row 3; Qwen3.8-Max; field accuracy"
+      },
+      "protocol": "BrokenArXiv 08/2026 (MathArena): 56 problems from arXiv papers submitted in August 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; graded on a 0–3 scale by MathArena's judge; not a Composite input.; source row: {\"rank\":\"3\",\"model\":\"Qwen3.8-Max\",\"provider\":\"Qwen\",\"accuracy\":\"69.64% ± 12.04%\",\"cost\":\"$3.64\",\"output_tokens\":\"298279\",\"released_after_competition\":true,\"open_weights\":\"✔️\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:d28ea86c9aa9200933c22f38",
+      "benchmark_id": "matharena-brokenarxiv::2026-08",
+      "subject": {
+        "source_id": "Kimi K3 (Think)",
+        "name": "Kimi K3 (Think)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 61.9,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/arxiv_false--august",
+        "retrieved_at": "2026-09-18T17:35:31.624127+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82/91374ee251a4c81bec0a.gz",
+        "sha256": "91374ee251a4c81bec0a36c29e22c436d85568723daca787cea2014f738b6b0d",
+        "locator": "matharena_table; source row 4; Kimi K3 (Think); field accuracy"
+      },
+      "protocol": "BrokenArXiv 08/2026 (MathArena): 56 problems from arXiv papers submitted in August 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; graded on a 0–3 scale by MathArena's judge; not a Composite input.; source row: {\"rank\":\"4\",\"model\":\"Kimi K3 (Think)\",\"provider\":\"Moonshot AI\",\"accuracy\":\"61.90% ± 12.72%\",\"cost\":\"$5.18\",\"output_tokens\":\"305368\",\"released_after_competition\":false,\"open_weights\":\"✔️\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:0b50aee3fd1edd9f5d2b0e8c",
+      "benchmark_id": "matharena-brokenarxiv::2026-08",
+      "subject": {
+        "source_id": "DeepSeek-V4.1-Flash (Max)",
+        "name": "DeepSeek-V4.1-Flash (Max)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 54.76,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/arxiv_false--august",
+        "retrieved_at": "2026-09-18T17:35:31.624127+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82/91374ee251a4c81bec0a.gz",
+        "sha256": "91374ee251a4c81bec0a36c29e22c436d85568723daca787cea2014f738b6b0d",
+        "locator": "matharena_table; source row 5; DeepSeek-V4.1-Flash (Max); field accuracy"
+      },
+      "protocol": "BrokenArXiv 08/2026 (MathArena): 56 problems from arXiv papers submitted in August 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; graded on a 0–3 scale by MathArena's judge; not a Composite input.; source row: {\"rank\":\"5\",\"model\":\"DeepSeek-V4.1-Flash (Max)\",\"provider\":\"DeepSeek\",\"accuracy\":\"54.76% ± 9.43%\",\"cost\":\"$0.27\",\"output_tokens\":\"313410\",\"released_after_competition\":true,\"open_weights\":\"✔️\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:430bbd316a22df4068cbffb7",
+      "benchmark_id": "matharena-brokenarxiv::2026-08",
+      "subject": {
+        "source_id": "Gemini 3.8 Flash",
+        "name": "Gemini 3.8 Flash",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 27.38,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/arxiv_false--august",
+        "retrieved_at": "2026-09-18T17:35:31.624127+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82/91374ee251a4c81bec0a.gz",
+        "sha256": "91374ee251a4c81bec0a36c29e22c436d85568723daca787cea2014f738b6b0d",
+        "locator": "matharena_table; source row 6; Gemini 3.8 Flash; field accuracy"
+      },
+      "protocol": "BrokenArXiv 08/2026 (MathArena): 56 problems from arXiv papers submitted in August 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; graded on a 0–3 scale by MathArena's judge; not a Composite input.; source row: {\"rank\":\"6\",\"model\":\"Gemini 3.8 Flash\",\"provider\":\"Google\",\"accuracy\":\"27.38% ± 6.74%\",\"cost\":\"$0.60\",\"output_tokens\":\"78325\",\"released_after_competition\":true,\"open_weights\":\"❌\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:c5a7f7d6432745ea755f807b",
+      "benchmark_id": "matharena-brokenarxiv::2026-08",
+      "subject": {
+        "source_id": "Muse Spark 1.3",
+        "name": "Muse Spark 1.3",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 20.24,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/arxiv_false--august",
+        "retrieved_at": "2026-09-18T17:35:31.624127+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82/91374ee251a4c81bec0a.gz",
+        "sha256": "91374ee251a4c81bec0a36c29e22c436d85568723daca787cea2014f738b6b0d",
+        "locator": "matharena_table; source row 7; Muse Spark 1.3; field accuracy"
+      },
+      "protocol": "BrokenArXiv 08/2026 (MathArena): 56 problems from arXiv papers submitted in August 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; graded on a 0–3 scale by MathArena's judge; not a Composite input.; source row: {\"rank\":\"7\",\"model\":\"Muse Spark 1.3\",\"provider\":\"Meta AI\",\"accuracy\":\"20.24% ± 10.52%\",\"cost\":\"$3.29\",\"output_tokens\":\"488835\",\"released_after_competition\":true,\"open_weights\":\"❌\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:360b3861f3aacca62916757c",
+      "benchmark_id": "weirdml::3",
+      "subject": {
+        "source_id": "gpt-6-astra-xhigh-openrouter",
+        "name": "GPT-6 Astra (xhigh)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 42.220231363636366,
+      "unit": "percent",
+      "basis": "derived",
+      "source": {
+        "url": "https://htihle.github.io/assets/data/weirdml_v3.json",
+        "retrieved_at": "2026-09-18T17:35:34.340768+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82/6a1c42d60692f79e26aa.gz",
+        "sha256": "6a1c42d60692f79e26aa7c38cb7a0c9d1c33dba1f2102cfdf1e3502eb573f7cb",
+        "locator": "weirdml_v3_json; source row 0; gpt-6-astra-xhigh-openrouter; field score"
+      },
+      "protocol": "Effective score across the 11 tasks: 80% normalized area under the average best-so-far effective-score line on a log token axis (500k–50M) plus 20% of its final value; runs averaged per configuration, tasks weighted equally (hinted/hintless twins half weight each); effective scores include normalization and hint penalties, they are not raw accuracy.; source row: {\"agent\":\"codex_cli\",\"harness\":[{\"name\":\"codex_cli\",\"version\":\"0.154.0\"}],\"reasoning_effort\":\"xhigh\",\"open_weights\":false,\"runs\":76,\"interval_95\":[0.4012831683425971,0.44229678858747623],\"mean_api_cost_usd\":27.85400378787879,\"mean_output_tokens\":153241.35606060605,\"mean_final_best\":0.5404530212121212}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.4222023136363636
+        ]
+      }
+    },
+    {
+      "id": "public:f7da903ca4c4fb58d9b78c66",
+      "benchmark_id": "weirdml::3",
+      "subject": {
+        "source_id": "fable-5.1",
+        "name": "Claude Fable 5.1 (xhigh)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 25.917088181818183,
+      "unit": "percent",
+      "basis": "derived",
+      "source": {
+        "url": "https://htihle.github.io/assets/data/weirdml_v3.json",
+        "retrieved_at": "2026-09-18T17:35:34.340768+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82/6a1c42d60692f79e26aa.gz",
+        "sha256": "6a1c42d60692f79e26aa7c38cb7a0c9d1c33dba1f2102cfdf1e3502eb573f7cb",
+        "locator": "weirdml_v3_json; source row 1; fable-5.1; field score"
+      },
+      "protocol": "Effective score across the 11 tasks: 80% normalized area under the average best-so-far effective-score line on a log token axis (500k–50M) plus 20% of its final value; runs averaged per configuration, tasks weighted equally (hinted/hintless twins half weight each); effective scores include normalization and hint penalties, they are not raw accuracy.; source row: {\"agent\":\"claude_code\",\"harness\":[{\"name\":\"claude_code\",\"version\":\"2.1.270\"}],\"reasoning_effort\":\"xhigh\",\"open_weights\":false,\"runs\":74,\"interval_95\":[0.24392353962905422,0.27416878662121336],\"mean_api_cost_usd\":31.939607272727272,\"mean_output_tokens\":250801.7590909091,\"mean_final_best\":0.43840939545454544}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.2591708818181818
+        ]
+      }
+    },
+    {
+      "id": "public:918369c55fa95df6179444a1",
+      "benchmark_id": "weirdml::3",
+      "subject": {
+        "source_id": "gpt-5.6-sol-xhigh-openrouter",
+        "name": "GPT-5.6 Sol (xhigh)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 15.564545454545456,
+      "unit": "percent",
+      "basis": "derived",
+      "source": {
+        "url": "https://htihle.github.io/assets/data/weirdml_v3.json",
+        "retrieved_at": "2026-09-18T17:35:34.340768+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82/6a1c42d60692f79e26aa.gz",
+        "sha256": "6a1c42d60692f79e26aa7c38cb7a0c9d1c33dba1f2102cfdf1e3502eb573f7cb",
+        "locator": "weirdml_v3_json; source row 2; gpt-5.6-sol-xhigh-openrouter; field score"
+      },
+      "protocol": "Effective score across the 11 tasks: 80% normalized area under the average best-so-far effective-score line on a log token axis (500k–50M) plus 20% of its final value; runs averaged per configuration, tasks weighted equally (hinted/hintless twins half weight each); effective scores include normalization and hint penalties, they are not raw accuracy.; source row: {\"agent\":\"codex_cli\",\"harness\":[{\"name\":\"codex_cli\",\"version\":\"0.154.0\"}],\"reasoning_effort\":\"xhigh\",\"open_weights\":false,\"runs\":29,\"interval_95\":[0.13059582295424094,0.18128603188730805],\"mean_api_cost_usd\":6.81775,\"mean_output_tokens\":141882.25,\"mean_final_best\":0.22155102272727273}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.15564545454545456
+        ]
+      }
+    },
+    {
+      "id": "public:754e1de67ad82d27cac8eb50",
+      "benchmark_id": "weirdml::3",
+      "subject": {
+        "source_id": "gemini-3.8-flash-aistudio-high",
+        "name": "Gemini 3.8 Flash (high)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 7.378749090909091,
+      "unit": "percent",
+      "basis": "derived",
+      "source": {
+        "url": "https://htihle.github.io/assets/data/weirdml_v3.json",
+        "retrieved_at": "2026-09-18T17:35:34.340768+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82/6a1c42d60692f79e26aa.gz",
+        "sha256": "6a1c42d60692f79e26aa7c38cb7a0c9d1c33dba1f2102cfdf1e3502eb573f7cb",
+        "locator": "weirdml_v3_json; source row 3; gemini-3.8-flash-aistudio-high; field score"
+      },
+      "protocol": "Effective score across the 11 tasks: 80% normalized area under the average best-so-far effective-score line on a log token axis (500k–50M) plus 20% of its final value; runs averaged per configuration, tasks weighted equally (hinted/hintless twins half weight each); effective scores include normalization and hint penalties, they are not raw accuracy.; source row: {\"agent\":\"gemini_cli\",\"harness\":[{\"name\":\"gemini_cli\",\"version\":\"0.59.0\"}],\"reasoning_effort\":\"high\",\"open_weights\":false,\"runs\":75,\"interval_95\":[0.061672300620050295,0.08542282049213956],\"mean_api_cost_usd\":3.9440827272727272,\"mean_output_tokens\":156102.65454545454,\"mean_final_best\":0.14574070909090908}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.07378749090909091
+        ]
+      }
+    },
+    {
+      "id": "public:f229865e0717b7ae749c0989",
+      "benchmark_id": "weirdml::3",
+      "subject": {
+        "source_id": "deepseek-v4.1-flash-novita-high-opencode",
+        "name": "DeepSeek V4.1 Flash (high, Novita)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 6.053809090909091,
+      "unit": "percent",
+      "basis": "derived",
+      "source": {
+        "url": "https://htihle.github.io/assets/data/weirdml_v3.json",
+        "retrieved_at": "2026-09-18T17:35:34.340768+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82/6a1c42d60692f79e26aa.gz",
+        "sha256": "6a1c42d60692f79e26aa7c38cb7a0c9d1c33dba1f2102cfdf1e3502eb573f7cb",
+        "locator": "weirdml_v3_json; source row 4; deepseek-v4.1-flash-novita-high-opencode; field score"
+      },
+      "protocol": "Effective score across the 11 tasks: 80% normalized area under the average best-so-far effective-score line on a log token axis (500k–50M) plus 20% of its final value; runs averaged per configuration, tasks weighted equally (hinted/hintless twins half weight each); effective scores include normalization and hint penalties, they are not raw accuracy.; source row: {\"agent\":\"opencode\",\"harness\":[{\"name\":\"opencode\",\"version\":\"1.18.30\"}],\"reasoning_effort\":\"high\",\"open_weights\":true,\"runs\":27,\"interval_95\":[0.03397682540043834,0.08697072399053635],\"mean_api_cost_usd\":0.7113613636363636,\"mean_output_tokens\":339615.0681818182,\"mean_final_best\":0.10933175}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.06053809090909091
+        ]
+      }
     }
   ],
   "collections": [
@@ -239515,6 +240006,24 @@
       "status": "collected",
       "source_url": "https://lisanbench.com/data/core.json",
       "reason": "154 source results parsed; configurations remain separate; unmatched model identities are retained."
+    },
+    {
+      "benchmark_id": "matharena-arxivmath::2026-08",
+      "status": "collected",
+      "source_url": "https://matharena.ai/competition_tables/arxiv--august",
+      "reason": "7 source results parsed; configurations remain separate; unmatched model identities are retained."
+    },
+    {
+      "benchmark_id": "matharena-brokenarxiv::2026-08",
+      "status": "collected",
+      "source_url": "https://matharena.ai/competition_tables/arxiv_false--august",
+      "reason": "7 source results parsed; configurations remain separate; unmatched model identities are retained."
+    },
+    {
+      "benchmark_id": "weirdml::3",
+      "status": "collected",
+      "source_url": "https://htihle.github.io/assets/data/weirdml_v3.json",
+      "reason": "5 source results parsed; configurations remain separate; unmatched model identities are retained."
     }
   ],
   "rejected": [

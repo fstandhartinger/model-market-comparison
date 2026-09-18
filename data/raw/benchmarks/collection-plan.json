@@ -237,11 +237,11 @@
         "value_field": "value"
       },
       "status": "collected",
-      "reason": "No safely attributable current result parsed from captured evidence. README '## Leaderboard' table: extract the 'Challenge Accuracy\u00b9' column per model; footnote 1 defines the metric as average accuracy over 5 runs \u00d7 70 test challenges.",
+      "reason": "No safely attributable current result parsed from captured evidence. README '## Leaderboard' table: extract the 'Challenge Accuracy¹' column per model; footnote 1 defines the metric as average accuracy over 5 runs × 70 test challenges.",
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
         "format": "Markdown",
-        "locator": "README '## Leaderboard' table: extract the 'Challenge Accuracy\u00b9' column per model; footnote 1 defines the metric as average accuracy over 5 runs \u00d7 70 test challenges.",
+        "locator": "README '## Leaderboard' table: extract the 'Challenge Accuracy¹' column per model; footnote 1 defines the metric as average accuracy over 5 runs × 70 test challenges.",
         "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
         "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
       },
@@ -287,7 +287,7 @@
         "sha256": "188d8ea4a393978063a6c24dff6c92ce185169827038bfa558091212a68c29d8",
         "retrieved_at": "2026-09-10T23:12:08.627024+00:00"
       },
-      "protocol": "Ranked Elo score from blind, bidirectional pairwise judging of multi-turn persona-chat transcripts by a three-judge LLM panel (soft Bradley\u2013Terry fit, normalised against anchor models)",
+      "protocol": "Ranked Elo score from blind, bidirectional pairwise judging of multi-turn persona-chat transcripts by a three-judge LLM panel (soft Bradley–Terry fit, normalised against anchor models)",
       "basis": "measured",
       "minimum_rows": 1,
       "source_urls": [
@@ -498,11 +498,11 @@
         "value_field": "value"
       },
       "status": "collected",
-      "reason": "No safely attributable current result parsed from captured evidence. README \u8a55\u4fa1\u7d50\u679c table; column 'Overall Average' per target_model_name (average of the 4 judge models' evaluation values across criteria)",
+      "reason": "No safely attributable current result parsed from captured evidence. README 評価結果 table; column 'Overall Average' per target_model_name (average of the 4 judge models' evaluation values across criteria)",
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
         "format": "Markdown",
-        "locator": "README \u8a55\u4fa1\u7d50\u679c table; column 'Overall Average' per target_model_name (average of the 4 judge models' evaluation values across criteria)",
+        "locator": "README 評価結果 table; column 'Overall Average' per target_model_name (average of the 4 judge models' evaluation values across criteria)",
         "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
         "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
       },
@@ -532,11 +532,11 @@
         "value_field": "value"
       },
       "status": "collected",
-      "reason": "No safely attributable current result parsed from captured evidence. README \u6700\u65b0\u306e\u53cd\u5fa9\u8a55\u4fa1\u7d50\u679c table; columns \u9806\u4f4d, \u30e2\u30c7\u30eb, Major-free\u7387, Major\u7387, RP Summary (95% CI), 1\u4f4d\u78ba\u7387 per model",
+      "reason": "No safely attributable current result parsed from captured evidence. README 最新の反復評価結果 table; columns 順位, モデル, Major-free率, Major率, RP Summary (95% CI), 1位確率 per model",
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
         "format": "Markdown",
-        "locator": "README \u6700\u65b0\u306e\u53cd\u5fa9\u8a55\u4fa1\u7d50\u679c table; columns \u9806\u4f4d, \u30e2\u30c7\u30eb, Major-free\u7387, Major\u7387, RP Summary (95% CI), 1\u4f4d\u78ba\u7387 per model",
+        "locator": "README 最新の反復評価結果 table; columns 順位, モデル, Major-free率, Major率, RP Summary (95% CI), 1位確率 per model",
         "version_guard": "Verify the published version 2 before reading results.",
         "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
       },
@@ -742,7 +742,7 @@
         "sha256": "788ec3eb6fa034a82b22760f95eb04a514aa0c15e1c15d134fc350a59d1696f0",
         "fetched_at": "2026-09-10T21:53:04Z"
       },
-      "protocol": "TrueSkill mean (\u03bc), with \u03c3 uncertainty reported separately",
+      "protocol": "TrueSkill mean (μ), with σ uncertainty reported separately",
       "basis": "measured",
       "minimum_rows": 1,
       "source_urls": [
@@ -1263,11 +1263,11 @@
         "header_rows": 1
       },
       "status": "collected",
-      "reason": "No safely attributable current result parsed from captured evidence. Select the \u03c4\u00b2-bench board and follow its full leaderboard link; preserve domain, text/voice mode, simulator, retrieval pipeline and task release. Never combine the three displayed boards.",
+      "reason": "No safely attributable current result parsed from captured evidence. Select the τ²-bench board and follow its full leaderboard link; preserve domain, text/voice mode, simulator, retrieval pipeline and task release. Never combine the three displayed boards.",
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
         "format": "HTML/embedded data",
-        "locator": "Select the \u03c4\u00b2-bench board and follow its full leaderboard link; preserve domain, text/voice mode, simulator, retrieval pipeline and task release. Never combine the three displayed boards.",
+        "locator": "Select the τ²-bench board and follow its full leaderboard link; preserve domain, text/voice mode, simulator, retrieval pipeline and task release. Never combine the three displayed boards.",
         "version_guard": "Verify the published version 2 before reading results.",
         "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
       },
@@ -1303,11 +1303,11 @@
         "header_rows": 1
       },
       "status": "collected",
-      "reason": "No safely attributable current result parsed from captured evidence. Select the \u03c4\u00b3-Banking board and follow its full leaderboard link; preserve domain, text/voice mode, simulator, retrieval pipeline and task release. Never combine the three displayed boards.",
+      "reason": "No safely attributable current result parsed from captured evidence. Select the τ³-Banking board and follow its full leaderboard link; preserve domain, text/voice mode, simulator, retrieval pipeline and task release. Never combine the three displayed boards.",
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
         "format": "HTML/embedded data",
-        "locator": "Select the \u03c4\u00b3-Banking board and follow its full leaderboard link; preserve domain, text/voice mode, simulator, retrieval pipeline and task release. Never combine the three displayed boards.",
+        "locator": "Select the τ³-Banking board and follow its full leaderboard link; preserve domain, text/voice mode, simulator, retrieval pipeline and task release. Never combine the three displayed boards.",
         "version_guard": "Require tau2-bench package >=1.0.1 with the verified 1.0.1 banking task corrections; a later grading/task change needs a new identity. Do not import pre-fix scores.",
         "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
       },
@@ -1343,11 +1343,11 @@
         "header_rows": 1
       },
       "status": "collected",
-      "reason": "No safely attributable current result parsed from captured evidence. Select the \u03c4\u00b3-Voice board and follow its full leaderboard link; preserve domain, text/voice mode, simulator, retrieval pipeline and task release. Never combine the three displayed boards.",
+      "reason": "No safely attributable current result parsed from captured evidence. Select the τ³-Voice board and follow its full leaderboard link; preserve domain, text/voice mode, simulator, retrieval pipeline and task release. Never combine the three displayed boards.",
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
         "format": "HTML/embedded data",
-        "locator": "Select the \u03c4\u00b3-Voice board and follow its full leaderboard link; preserve domain, text/voice mode, simulator, retrieval pipeline and task release. Never combine the three displayed boards.",
+        "locator": "Select the τ³-Voice board and follow its full leaderboard link; preserve domain, text/voice mode, simulator, retrieval pipeline and task release. Never combine the three displayed boards.",
         "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
         "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
       },
@@ -1428,7 +1428,7 @@
         "kind": "csv",
         "name_field": "author/model_name",
         "plain_text_names": true,
-        "value_field": "NatInt \ud83d\udca1",
+        "value_field": "NatInt 💡",
         "context_fields": [
           "Prompt Template",
           "Test Date",
@@ -1437,11 +1437,11 @@
         ]
       },
       "status": "collected",
-      "reason": "No safely attributable current result parsed from captured evidence. GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'NatInt \ud83d\udca1'. Preserve model identity and do not substitute its subordinate columns.",
+      "reason": "No safely attributable current result parsed from captured evidence. GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'NatInt 💡'. Preserve model identity and do not substitute its subordinate columns.",
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
         "format": "CSV",
-        "locator": "GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'NatInt \ud83d\udca1'. Preserve model identity and do not substitute its subordinate columns.",
+        "locator": "GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'NatInt 💡'. Preserve model identity and do not substitute its subordinate columns.",
         "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
         "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
       },
@@ -1453,7 +1453,7 @@
         "sha256": "4154635c4557af4b4eebbeaab6970bdf8296aef44e46f6193fdb4976cd8fe7f2",
         "fetched_at": "2026-09-10T22:04:13Z"
       },
-      "protocol": "NatInt \ud83d\udca1 published composite",
+      "protocol": "NatInt 💡 published composite",
       "basis": "measured",
       "minimum_rows": 1,
       "source_urls": [
@@ -1466,7 +1466,7 @@
         "kind": "csv",
         "name_field": "author/model_name",
         "plain_text_names": true,
-        "value_field": "W/10 \ud83d\udc4d",
+        "value_field": "W/10 👍",
         "context_fields": [
           "Prompt Template",
           "Test Date",
@@ -1475,11 +1475,11 @@
         ]
       },
       "status": "collected",
-      "reason": "No safely attributable current result parsed from captured evidence. GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'W/10 \ud83d\udc4d'. Preserve model identity and do not substitute its subordinate columns.",
+      "reason": "No safely attributable current result parsed from captured evidence. GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'W/10 👍'. Preserve model identity and do not substitute its subordinate columns.",
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
         "format": "CSV",
-        "locator": "GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'W/10 \ud83d\udc4d'. Preserve model identity and do not substitute its subordinate columns.",
+        "locator": "GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'W/10 👍'. Preserve model identity and do not substitute its subordinate columns.",
         "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
         "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
       },
@@ -1491,7 +1491,7 @@
         "sha256": "4154635c4557af4b4eebbeaab6970bdf8296aef44e46f6193fdb4976cd8fe7f2",
         "fetched_at": "2026-09-10T22:04:13Z"
       },
-      "protocol": "W/10 \ud83d\udc4d published composite",
+      "protocol": "W/10 👍 published composite",
       "basis": "measured",
       "minimum_rows": 1,
       "source_urls": [
@@ -1504,7 +1504,7 @@
         "kind": "csv",
         "name_field": "author/model_name",
         "plain_text_names": true,
-        "value_field": "Writing \u270d\ufe0f",
+        "value_field": "Writing ✍️",
         "context_fields": [
           "Prompt Template",
           "Test Date",
@@ -1513,11 +1513,11 @@
         ]
       },
       "status": "collected",
-      "reason": "No safely attributable current result parsed from captured evidence. GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'Writing \u270d\ufe0f'. Preserve model identity and do not substitute its subordinate columns.",
+      "reason": "No safely attributable current result parsed from captured evidence. GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'Writing ✍️'. Preserve model identity and do not substitute its subordinate columns.",
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
         "format": "CSV",
-        "locator": "GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'Writing \u270d\ufe0f'. Preserve model identity and do not substitute its subordinate columns.",
+        "locator": "GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'Writing ✍️'. Preserve model identity and do not substitute its subordinate columns.",
         "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
         "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
       },
@@ -1529,7 +1529,7 @@
         "sha256": "4154635c4557af4b4eebbeaab6970bdf8296aef44e46f6193fdb4976cd8fe7f2",
         "fetched_at": "2026-09-10T22:04:13Z"
       },
-      "protocol": "Writing \u270d\ufe0f published composite",
+      "protocol": "Writing ✍️ published composite",
       "basis": "measured",
       "minimum_rows": 1,
       "source_urls": [
@@ -1542,7 +1542,7 @@
         "kind": "csv",
         "name_field": "author/model_name",
         "plain_text_names": true,
-        "value_field": "UGI \ud83c\udfc6",
+        "value_field": "UGI 🏆",
         "context_fields": [
           "Prompt Template",
           "Test Date",
@@ -1551,11 +1551,11 @@
         ]
       },
       "status": "collected",
-      "reason": "No safely attributable current result parsed from captured evidence. GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'UGI \ud83c\udfc6'. Preserve model identity and do not substitute its subordinate columns.",
+      "reason": "No safely attributable current result parsed from captured evidence. GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'UGI 🏆'. Preserve model identity and do not substitute its subordinate columns.",
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
         "format": "CSV",
-        "locator": "GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'UGI \ud83c\udfc6'. Preserve model identity and do not substitute its subordinate columns.",
+        "locator": "GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'UGI 🏆'. Preserve model identity and do not substitute its subordinate columns.",
         "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
         "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
       },
@@ -1567,7 +1567,7 @@
         "sha256": "4154635c4557af4b4eebbeaab6970bdf8296aef44e46f6193fdb4976cd8fe7f2",
         "fetched_at": "2026-09-10T22:04:13Z"
       },
-      "protocol": "UGI \ud83c\udfc6 published composite",
+      "protocol": "UGI 🏆 published composite",
       "basis": "measured",
       "minimum_rows": 1,
       "source_urls": [
@@ -2230,9 +2230,9 @@
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/frontiercode-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
         "format": "JSON data file requested by the leaderboard page",
-        "locator": "v1_1.data[model][effort].main.new_score (fraction; the rendered leaderboard shows it \u00d7100 as \"Score\")",
+        "locator": "v1_1.data[model][effort].main.new_score (fraction; the rendered leaderboard shows it ×100 as \"Score\")",
         "version_guard": "Require data.json key v1_1 with subsets.main == 100 and the page text \"FrontierCode 1.1\". FrontierCode 1.0 (before unfair-internet-use zeroing) and the Extended subset are different identities.",
-        "notes": "The leaderboard page loads its own https://cognition.com/data/frontiercode-leaderboard/data.json (E3 step 4: the page's own request, fetched directly once); robots.txt allows everything except /downloads/. Rows are model \u00d7 published reasoning effort; the harness is the source's per-model harness. Cognition runs the board and ships its own SWE models, so every row is self_reported and needs a different-family critic review."
+        "notes": "The leaderboard page loads its own https://cognition.com/data/frontiercode-leaderboard/data.json (E3 step 4: the page's own request, fetched directly once); robots.txt allows everything except /downloads/. Rows are model × published reasoning effort; the harness is the source's per-model harness. Cognition runs the board and ships its own SWE models, so every row is self_reported and needs a different-family critic review."
       },
       "cadence": "daily, at most one capture per source; stop on access restrictions",
       "version_guard": "Require data.json key v1_1 with subsets.main == 100 and the page text \"FrontierCode 1.1\". FrontierCode 1.0 (before unfair-internet-use zeroing) and the Extended subset are different identities.",
@@ -2285,7 +2285,7 @@
         "format": "JSON data file requested by the leaderboard page",
         "locator": "v1_1.data[model][effort].main.cost (the rendered leaderboard: \"Cost ($): the mean USD spend per rollout\")",
         "version_guard": "Require data.json key v1_1 with subsets.main == 100 and the page text \"FrontierCode 1.1\". FrontierCode 1.0 (before unfair-internet-use zeroing) and the Extended subset are different identities.",
-        "notes": "The leaderboard page loads its own https://cognition.com/data/frontiercode-leaderboard/data.json (E3 step 4: the page's own request, fetched directly once); robots.txt allows everything except /downloads/. Rows are model \u00d7 published reasoning effort; the harness is the source's per-model harness. Cognition runs the board and ships its own SWE models, so every row is self_reported and needs a different-family critic review."
+        "notes": "The leaderboard page loads its own https://cognition.com/data/frontiercode-leaderboard/data.json (E3 step 4: the page's own request, fetched directly once); robots.txt allows everything except /downloads/. Rows are model × published reasoning effort; the harness is the source's per-model harness. Cognition runs the board and ships its own SWE models, so every row is self_reported and needs a different-family critic review."
       },
       "cadence": "daily, at most one capture per source; stop on access restrictions",
       "version_guard": "Require data.json key v1_1 with subsets.main == 100 and the page text \"FrontierCode 1.1\". FrontierCode 1.0 (before unfair-internet-use zeroing) and the Extended subset are different identities.",
@@ -2539,11 +2539,11 @@
         "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/bullshitbench-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
         "format": "CSV",
         "locator": "GET data/latest/leaderboard.csv at a pinned repository commit; one row per model@reasoning label; value = column green_rate (clear pushback over all 55 attempts).",
-        "version_guard": "Require the 15-column header (rank,model,org,reasoning,avg_score,green_rate,\u2026,nonsense_count,error_count) and nonsense_count == 55 on every row; a different question count, question set or judge panel is a new identity.",
+        "version_guard": "Require the 15-column header (rank,model,org,reasoning,avg_score,green_rate,…,nonsense_count,error_count) and nonsense_count == 55 on every row; a different question count, question set or judge panel is a new identity.",
         "notes": "Whether a model rejects the broken premise of 55 deliberately nonsensical prompts (V1 question set) instead of answering them confidently."
       },
       "cadence": "daily, at most one capture per source; stop on access restrictions",
-      "version_guard": "Require the 15-column header (rank,model,org,reasoning,avg_score,green_rate,\u2026,nonsense_count,error_count) and nonsense_count == 55 on every row; a different question count, question set or judge panel is a new identity.",
+      "version_guard": "Require the 15-column header (rank,model,org,reasoning,avg_score,green_rate,…,nonsense_count,error_count) and nonsense_count == 55 on every row; a different question count, question set or judge panel is a new identity.",
       "source": {
         "url": "https://raw.githubusercontent.com/petergpt/bullshit-benchmark/2678ac296fe6e234d391e0f4ab339f6a777ba2a3/data/latest/leaderboard.csv",
         "file": "data/raw/benchmarks/daily-evidence/2026-09-15-bullshitbench/2605907319773e0e5858.gz",
@@ -2602,11 +2602,11 @@
         "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/bullshitbench-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
         "format": "CSV",
         "locator": "GET data/v2/latest/leaderboard.csv at a pinned repository commit; one row per model@reasoning label; value = column green_rate (clear pushback over all 100 attempts).",
-        "version_guard": "Require the 15-column header (rank,model,org,reasoning,avg_score,green_rate,\u2026,nonsense_count,error_count) and nonsense_count == 100 on every row; a different question count, question set or judge panel is a new identity.",
+        "version_guard": "Require the 15-column header (rank,model,org,reasoning,avg_score,green_rate,…,nonsense_count,error_count) and nonsense_count == 100 on every row; a different question count, question set or judge panel is a new identity.",
         "notes": "Whether a model rejects the broken premise of 100 deliberately nonsensical prompts (V2 question set) instead of answering them confidently."
       },
       "cadence": "daily, at most one capture per source; stop on access restrictions",
-      "version_guard": "Require the 15-column header (rank,model,org,reasoning,avg_score,green_rate,\u2026,nonsense_count,error_count) and nonsense_count == 100 on every row; a different question count, question set or judge panel is a new identity.",
+      "version_guard": "Require the 15-column header (rank,model,org,reasoning,avg_score,green_rate,…,nonsense_count,error_count) and nonsense_count == 100 on every row; a different question count, question set or judge panel is a new identity.",
       "source": {
         "url": "https://raw.githubusercontent.com/petergpt/bullshit-benchmark/2678ac296fe6e234d391e0f4ab339f6a777ba2a3/data/v2/latest/leaderboard.csv",
         "file": "data/raw/benchmarks/daily-evidence/2026-09-15-bullshitbench/0c866538642eab944f67.gz",
@@ -2754,7 +2754,7 @@
         ]
       },
       "status": "collected",
-      "reason": "Datacurve runs DeepSWE itself (measured); Epoch AI republishes the rows under CC-BY 4.0. Rows are model \u00d7 published reasoning effort.",
+      "reason": "Datacurve runs DeepSWE itself (measured); Epoch AI republishes the rows under CC-BY 4.0. Rows are model × published reasoning effort.",
       "recipe": {
         "command": "curl --fail -A 'BenchmarkHeavenResearch/1.0' https://epoch.ai/data/benchmark_data.zip -o benchmark_data.zip && unzip -p benchmark_data.zip deepswe_external.csv | gzip -n > data/raw/benchmarks/daily-evidence/<ISO-date>-coding/epoch-deepswe_external.csv.gz; python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-coding; review protocol; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
         "format": "CSV member of a ZIP archive",
@@ -2795,12 +2795,12 @@
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-coding; review protocol; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
         "format": "HTML with embedded Next.js flight data",
-        "locator": "entries[] (model, score, confidenceInterval_upper, createdAt, contaminationMessage) \u2014 the \"Performance Comparison\" table",
-        "version_guard": "Page title \"Scale Labs Leaderboard: SWE Atlas - Codebase QnA\" and exactly one embedded entries array with model and score. No public version: this identity freezes the 2026-09-15 snapshot (page note \"Update July 28, 2026\": mini-swe-agent step limit 250 \u2192 500 for newer models). A changed task set, judge or metric needs a new identity.",
+        "locator": "entries[] (model, score, confidenceInterval_upper, createdAt, contaminationMessage) — the \"Performance Comparison\" table",
+        "version_guard": "Page title \"Scale Labs Leaderboard: SWE Atlas - Codebase QnA\" and exactly one embedded entries array with model and score. No public version: this identity freezes the 2026-09-15 snapshot (page note \"Update July 28, 2026\": mini-swe-agent step limit 250 → 500 for newer models). A changed task set, judge or metric needs a new identity.",
         "notes": "Scale states \"We ran a suite of frontier closed and open coding models\" (measured). The harness is part of each model label; rows marked * had refusals scored as 0 by Scale. Scale publishes no data licence: only scores with attribution are stored. Exact joins come from data/raw/benchmarks/identity-map.json."
       },
       "cadence": "daily, at most one capture per source; stop on access restrictions",
-      "version_guard": "Page title \"Scale Labs Leaderboard: SWE Atlas - Codebase QnA\" and exactly one embedded entries array with model and score. No public version: this identity freezes the 2026-09-15 snapshot (page note \"Update July 28, 2026\": mini-swe-agent step limit 250 \u2192 500 for newer models). A changed task set, judge or metric needs a new identity.",
+      "version_guard": "Page title \"Scale Labs Leaderboard: SWE Atlas - Codebase QnA\" and exactly one embedded entries array with model and score. No public version: this identity freezes the 2026-09-15 snapshot (page note \"Update July 28, 2026\": mini-swe-agent step limit 250 → 500 for newer models). A changed task set, judge or metric needs a new identity.",
       "source": {
         "url": "https://labs.scale.com/leaderboard/sweatlas-qna",
         "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-qna.html.gz",
@@ -2832,12 +2832,12 @@
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-coding; review protocol; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
         "format": "HTML with embedded Next.js flight data",
-        "locator": "entries[] (model, score, confidenceInterval_upper, createdAt, contaminationMessage) \u2014 the \"Performance Comparison\" table",
-        "version_guard": "Page title \"SWE Atlas - Test Writing\" and exactly one embedded entries array with model and score. No public version: this identity freezes the 2026-09-15 snapshot (page note \"Update July 28, 2026\": mini-swe-agent step limit 250 \u2192 500 for newer models). A changed task set, judge or metric needs a new identity.",
+        "locator": "entries[] (model, score, confidenceInterval_upper, createdAt, contaminationMessage) — the \"Performance Comparison\" table",
+        "version_guard": "Page title \"SWE Atlas - Test Writing\" and exactly one embedded entries array with model and score. No public version: this identity freezes the 2026-09-15 snapshot (page note \"Update July 28, 2026\": mini-swe-agent step limit 250 → 500 for newer models). A changed task set, judge or metric needs a new identity.",
         "notes": "Scale states \"We ran a suite of frontier closed and open coding models\" (measured). The harness is part of each model label; rows marked * had refusals scored as 0 by Scale. Scale publishes no data licence: only scores with attribution are stored. Exact joins come from data/raw/benchmarks/identity-map.json."
       },
       "cadence": "daily, at most one capture per source; stop on access restrictions",
-      "version_guard": "Page title \"SWE Atlas - Test Writing\" and exactly one embedded entries array with model and score. No public version: this identity freezes the 2026-09-15 snapshot (page note \"Update July 28, 2026\": mini-swe-agent step limit 250 \u2192 500 for newer models). A changed task set, judge or metric needs a new identity.",
+      "version_guard": "Page title \"SWE Atlas - Test Writing\" and exactly one embedded entries array with model and score. No public version: this identity freezes the 2026-09-15 snapshot (page note \"Update July 28, 2026\": mini-swe-agent step limit 250 → 500 for newer models). A changed task set, judge or metric needs a new identity.",
       "source": {
         "url": "https://labs.scale.com/leaderboard/sweatlas-tw",
         "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-tw.html.gz",
@@ -2869,12 +2869,12 @@
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-coding; review protocol; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
         "format": "HTML with embedded Next.js flight data",
-        "locator": "entries[] (model, score, confidenceInterval_upper, createdAt, contaminationMessage) \u2014 the \"Performance Comparison\" table",
-        "version_guard": "Page title \"SWE Atlas - Refactoring\" and exactly one embedded entries array with model and score. No public version: this identity freezes the 2026-09-15 snapshot (page note \"Update July 28, 2026\": mini-swe-agent step limit 250 \u2192 500 for newer models). A changed task set, judge or metric needs a new identity.",
+        "locator": "entries[] (model, score, confidenceInterval_upper, createdAt, contaminationMessage) — the \"Performance Comparison\" table",
+        "version_guard": "Page title \"SWE Atlas - Refactoring\" and exactly one embedded entries array with model and score. No public version: this identity freezes the 2026-09-15 snapshot (page note \"Update July 28, 2026\": mini-swe-agent step limit 250 → 500 for newer models). A changed task set, judge or metric needs a new identity.",
         "notes": "Scale states \"We ran a suite of frontier closed and open coding models\" (measured). The harness is part of each model label; rows marked * had refusals scored as 0 by Scale. Scale publishes no data licence: only scores with attribution are stored. Exact joins come from data/raw/benchmarks/identity-map.json."
       },
       "cadence": "daily, at most one capture per source; stop on access restrictions",
-      "version_guard": "Page title \"SWE Atlas - Refactoring\" and exactly one embedded entries array with model and score. No public version: this identity freezes the 2026-09-15 snapshot (page note \"Update July 28, 2026\": mini-swe-agent step limit 250 \u2192 500 for newer models). A changed task set, judge or metric needs a new identity.",
+      "version_guard": "Page title \"SWE Atlas - Refactoring\" and exactly one embedded entries array with model and score. No public version: this identity freezes the 2026-09-15 snapshot (page note \"Update July 28, 2026\": mini-swe-agent step limit 250 → 500 for newer models). A changed task set, judge or metric needs a new identity.",
       "source": {
         "url": "https://labs.scale.com/leaderboard/sweatlas-refactoring",
         "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-refactoring.html.gz",
@@ -2986,7 +2986,7 @@
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
         "format": "JSON file",
-        "locator": "official-results.json \u2192 results[] with releaseVersion v2026.06.24 (rows without one inherit the file's defaultResultReleaseVersion v2026.06.24): one object per model x reasoning x toolSetting x stepBudget x datasetScope; value = binaryAccuracy (percent).",
+        "locator": "official-results.json → results[] with releaseVersion v2026.06.24 (rows without one inherit the file's defaultResultReleaseVersion v2026.06.24): one object per model x reasoning x toolSetting x stepBudget x datasetScope; value = binaryAccuracy (percent).",
         "version_guard": "official-results.json must still state benchmarkVersion \"OSWorld 2.0\", taskVersion \"v2026.06.24\", datasetSize 108, defaultStepBudget 500, defaultMetric binaryAccuracy and default result release v2026.06.24 / scope full, and must still list release v2026.06.24 in releaseVersions. Only official full-set rows of release v2026.06.24 at the default 500-step budget are this identity. Each release is a task release with different task files (Anthropic's Claude Fable 5.1 page: \"Because the task files differ from earlier releases, these numbers aren't directly comparable to previously published OSWorld 2.0 results\"), so releases are separate identities and never compared directly; the offline subset and the 150/300-step budgets are different protocols and are not ingested.",
         "notes": "Measured by the benchmark maintainers. The release version, partial score and estimated cost are kept in each observation's protocol, never as separate scores."
       },
@@ -3031,7 +3031,7 @@
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
         "format": "JSON file",
-        "locator": "official-results.json \u2192 results[] with releaseVersion v2026.08.08: one object per model x reasoning x toolSetting x stepBudget x datasetScope; value = binaryAccuracy (percent).",
+        "locator": "official-results.json → results[] with releaseVersion v2026.08.08: one object per model x reasoning x toolSetting x stepBudget x datasetScope; value = binaryAccuracy (percent).",
         "version_guard": "official-results.json must still state benchmarkVersion \"OSWorld 2.0\", taskVersion \"v2026.06.24\", datasetSize 108, defaultStepBudget 500, defaultMetric binaryAccuracy and default result release v2026.06.24 / scope full, and must still list release v2026.08.08 in releaseVersions. Only official full-set rows of release v2026.08.08 at the default 500-step budget are this identity. Each release is a task release with different task files (Anthropic's Claude Fable 5.1 page: \"Because the task files differ from earlier releases, these numbers aren't directly comparable to previously published OSWorld 2.0 results\"), so releases are separate identities and never compared directly; the offline subset and the 150/300-step budgets are different protocols and are not ingested.",
         "notes": "Measured by the benchmark maintainers. The release version, partial score and estimated cost are kept in each observation's protocol, never as separate scores."
       },
@@ -3062,7 +3062,7 @@
           "Rank",
           "Model Name",
           "Provider",
-          "Accuracy (\u00b1 95% CI)",
+          "Accuracy (± 95% CI)",
           "Cost",
           "Output Tokens",
           "Input Tokens",
@@ -3073,19 +3073,19 @@
           "Active Parameters"
         ],
         "require_problems": 48,
-        "post_release_flag": "\u26a0\ufe0f"
+        "post_release_flag": "⚠️"
       },
       "status": "collected",
       "reason": "MathArena serves the ArXivMath 06/2026 (MathArena) leaderboard as JSON; one row per model, the setting stays part of the label.",
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
         "format": "JSON with a rendered HTML table",
-        "locator": "GET /competition_tables/arxiv--june \u2192 JSON field \"table\" (rendered leaderboard): one row per model; value = the \"Accuracy (\u00b1 95% CI)\" point estimate in percent; the warning sign after a name is MathArena's \"Model was released after competition release\" flag, kept per row.",
-        "version_guard": "The competition table must keep exactly the twelve published leaderboard columns (Rank, Model Name, Provider, Accuracy (\u00b1 95% CI), Cost, Output Tokens, Input Tokens, Average Retries, Average Time, Open, Parameters, Active Parameters) and exactly 48 problems in its per-problem grid (MathArena lists \"06/2026 \u00b7 48 problems\"). A different problem count or another monthly edition is a different identity; editions are never averaged.",
+        "locator": "GET /competition_tables/arxiv--june → JSON field \"table\" (rendered leaderboard): one row per model; value = the \"Accuracy (± 95% CI)\" point estimate in percent; the warning sign after a name is MathArena's \"Model was released after competition release\" flag, kept per row.",
+        "version_guard": "The competition table must keep exactly the twelve published leaderboard columns (Rank, Model Name, Provider, Accuracy (± 95% CI), Cost, Output Tokens, Input Tokens, Average Retries, Average Time, Open, Parameters, Active Parameters) and exactly 48 problems in its per-problem grid (MathArena lists \"06/2026 · 48 problems\"). A different problem count or another monthly edition is a different identity; editions are never averaged.",
         "notes": "Measured by MathArena. The confidence interval, cost, tokens and the released-after-competition flag are kept in each observation's protocol, never as separate scores."
       },
       "cadence": "daily, at most one capture per source; stop on access restrictions",
-      "version_guard": "The competition table must keep exactly the twelve published leaderboard columns (Rank, Model Name, Provider, Accuracy (\u00b1 95% CI), Cost, Output Tokens, Input Tokens, Average Retries, Average Time, Open, Parameters, Active Parameters) and exactly 48 problems in its per-problem grid (MathArena lists \"06/2026 \u00b7 48 problems\"). A different problem count or another monthly edition is a different identity; editions are never averaged.",
+      "version_guard": "The competition table must keep exactly the twelve published leaderboard columns (Rank, Model Name, Provider, Accuracy (± 95% CI), Cost, Output Tokens, Input Tokens, Average Retries, Average Time, Open, Parameters, Active Parameters) and exactly 48 problems in its per-problem grid (MathArena lists \"06/2026 · 48 problems\"). A different problem count or another monthly edition is a different identity; editions are never averaged.",
       "source": {
         "url": "https://matharena.ai/competition_tables/arxiv--june",
         "file": "data/raw/benchmarks/daily-evidence/2026-09-16-matharena/91786c48faa4e8a66e0b.gz",
@@ -3111,7 +3111,7 @@
           "Rank",
           "Model Name",
           "Provider",
-          "Accuracy (\u00b1 95% CI)",
+          "Accuracy (± 95% CI)",
           "Cost",
           "Output Tokens",
           "Input Tokens",
@@ -3122,19 +3122,19 @@
           "Active Parameters"
         ],
         "require_problems": 54,
-        "post_release_flag": "\u26a0\ufe0f"
+        "post_release_flag": "⚠️"
       },
       "status": "collected",
       "reason": "MathArena serves the BrokenArXiv 06/2026 (MathArena) leaderboard as JSON; one row per model, the setting stays part of the label.",
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
         "format": "JSON with a rendered HTML table",
-        "locator": "GET /competition_tables/arxiv_false--june \u2192 JSON field \"table\" (rendered leaderboard): one row per model; value = the \"Accuracy (\u00b1 95% CI)\" point estimate in percent; the warning sign after a name is MathArena's \"Model was released after competition release\" flag, kept per row.",
-        "version_guard": "The competition table must keep exactly the twelve published leaderboard columns (Rank, Model Name, Provider, Accuracy (\u00b1 95% CI), Cost, Output Tokens, Input Tokens, Average Retries, Average Time, Open, Parameters, Active Parameters) and exactly 54 problems in its per-problem grid (MathArena lists \"06/2026 \u00b7 54 problems\"). A different problem count or another monthly edition is a different identity; editions are never averaged.",
+        "locator": "GET /competition_tables/arxiv_false--june → JSON field \"table\" (rendered leaderboard): one row per model; value = the \"Accuracy (± 95% CI)\" point estimate in percent; the warning sign after a name is MathArena's \"Model was released after competition release\" flag, kept per row.",
+        "version_guard": "The competition table must keep exactly the twelve published leaderboard columns (Rank, Model Name, Provider, Accuracy (± 95% CI), Cost, Output Tokens, Input Tokens, Average Retries, Average Time, Open, Parameters, Active Parameters) and exactly 54 problems in its per-problem grid (MathArena lists \"06/2026 · 54 problems\"). A different problem count or another monthly edition is a different identity; editions are never averaged.",
         "notes": "Measured by MathArena. The confidence interval, cost, tokens and the released-after-competition flag are kept in each observation's protocol, never as separate scores."
       },
       "cadence": "daily, at most one capture per source; stop on access restrictions",
-      "version_guard": "The competition table must keep exactly the twelve published leaderboard columns (Rank, Model Name, Provider, Accuracy (\u00b1 95% CI), Cost, Output Tokens, Input Tokens, Average Retries, Average Time, Open, Parameters, Active Parameters) and exactly 54 problems in its per-problem grid (MathArena lists \"06/2026 \u00b7 54 problems\"). A different problem count or another monthly edition is a different identity; editions are never averaged.",
+      "version_guard": "The competition table must keep exactly the twelve published leaderboard columns (Rank, Model Name, Provider, Accuracy (± 95% CI), Cost, Output Tokens, Input Tokens, Average Retries, Average Time, Open, Parameters, Active Parameters) and exactly 54 problems in its per-problem grid (MathArena lists \"06/2026 · 54 problems\"). A different problem count or another monthly edition is a different identity; editions are never averaged.",
       "source": {
         "url": "https://matharena.ai/competition_tables/arxiv_false--june",
         "file": "data/raw/benchmarks/daily-evidence/2026-09-16-matharena/ba1db28a84d33e1dbd14.gz",
@@ -3196,7 +3196,7 @@
         "sha256": "9694a4425d1f9f1df13544dcd14a19e3bd55cd387a9269f76f8d6c4cb1013393",
         "retrieved_at": "2026-09-16T09:43:00Z"
       },
-      "protocol": "FrontierMath Tiers 1\u20133 v2 (Epoch AI) as published in Epoch AI's Benchmarking Hub (frontiermath_tiers_1_3_v2.csv); value = Best score (across scorers), a fraction; one row per Epoch model version; not a Composite input.",
+      "protocol": "FrontierMath Tiers 1–3 v2 (Epoch AI) as published in Epoch AI's Benchmarking Hub (frontiermath_tiers_1_3_v2.csv); value = Best score (across scorers), a fraction; one row per Epoch model version; not a Composite input.",
       "basis": "measured",
       "minimum_rows": 100,
       "source_urls": [
@@ -3333,7 +3333,7 @@
         }
       },
       "status": "collected",
-      "reason": "SWE-rebench publishes every task window in one server-rendered page; this identity is the 15 May \u2013 1 Jul 2026 window, the page's default at capture. Models only; agent products are external systems.",
+      "reason": "SWE-rebench publishes every task window in one server-rendered page; this identity is the 15 May – 1 Jul 2026 window, the page's default at capture. Models only; agent products are external systems.",
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json <tmp capture dir>; python3 scripts/extract-swe-rebench-window.py <captured page .gz> <from_ms> <to_ms> https://swe-rebench.com/ <retrieved_at> <window.json>; gzip -n -9 <window.json> into data/raw/benchmarks/daily-evidence/<ISO-date>-swe-rebench/; python3 scripts/collect-public-benchmarks.py; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
         "format": "One-window extraction (JSON) of the page's Flight payload",
@@ -3379,7 +3379,7 @@
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
         "format": "JSON file",
-        "locator": "assets/leaderboard.json \u2192 models[]: one object per model x reasoning_effort x scaffold x setting x run date; value = score (Opt@1, percent); score_hack_control (the page's Hack-Adjusted column) kept in the protocol.",
+        "locator": "assets/leaderboard.json → models[]: one object per model x reasoning_effort x scaffold x setting x run date; value = score (Opt@1, percent); score_hack_control (the page's Hack-Adjusted column) kept in the protocol.",
         "version_guard": "leaderboard.json must still state metadata.total_tasks 102, and every row must name a model, scaffold, setting and run date with a setting in the known set (Opt@1, Opt@10). Only Opt@1 rows are this identity; Opt@10 is another protocol and is not ingested. A new task count is a new identity.",
         "notes": "Measured by the benchmark maintainers. The hack-adjusted score and the run date are kept in each observation's protocol, never as separate scores."
       },
@@ -3391,7 +3391,7 @@
         "sha256": "177bdc84b9d862c8113f2a87b285d7c410806fbb5765684e14dcbc5a1d94474b",
         "retrieved_at": "2026-09-16T10:12:55.435717+00:00"
       },
-      "protocol": "GSO, 102 tasks; Opt@1 (single attempt reaches \u226595 % of the human speedup and passes correctness tests) as published, OpenHands scaffold unless the row names another; run date and hack-adjusted score recorded per row; not a Composite input.",
+      "protocol": "GSO, 102 tasks; Opt@1 (single attempt reaches ≥95 % of the human speedup and passes correctness tests) as published, OpenHands scaffold unless the row names another; run date and hack-adjusted score recorded per row; not a Composite input.",
       "basis": "measured",
       "minimum_rows": 20,
       "source_urls": [
@@ -3452,7 +3452,7 @@
           }
         ],
         "require": {
-          "board_version": "release-v1 \u00b7 53 tasks",
+          "board_version": "release-v1 · 53 tasks",
           "readme_text": "`overall` the mean across all 53 tasks",
           "domain_tasks": {
             "airline": 6,
@@ -3463,23 +3463,23 @@
         }
       },
       "status": "collected",
-      "reason": "\u03c4^\u03c4-bench publishes each harness x Developer model run as its own submission.json listed in manifest.json; each row cites its submission file.",
+      "reason": "τ^τ-bench publishes each harness x Developer model run as its own submission.json listed in manifest.json; each row cites its submission file.",
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
         "format": "JSON files",
-        "locator": "hyper-submissions/<harness>_<model>/submission.json \u2192 scores.overall (percent); domain scores, build time/cost, serve-credit ratio, submission date and the maintainer-baseline flag kept in the protocol.",
-        "version_guard": "hyper-submissions/manifest.json must state board_version \"release-v1 \u00b7 53 tasks\" and list exactly the six reviewed submissions in order; README.md must still define `overall` as the mean across all 53 tasks; every submission names harness, Developer model, reasoning effort, date and all five scores, and its overall must equal the task-weighted mean of its domain scores (6 airline_plus, 6 retail_plus, 6 telecom, 35 banking_knowledge) within 0.06. A new release or task set is a new identity; a new submission needs a reviewed plan change.",
-        "notes": "Measured under the maintainers' sealed runner (the current rows are the \u03c4-bench team's baselines). Every submission file is the primary source of its own row."
+        "locator": "hyper-submissions/<harness>_<model>/submission.json → scores.overall (percent); domain scores, build time/cost, serve-credit ratio, submission date and the maintainer-baseline flag kept in the protocol.",
+        "version_guard": "hyper-submissions/manifest.json must state board_version \"release-v1 · 53 tasks\" and list exactly the six reviewed submissions in order; README.md must still define `overall` as the mean across all 53 tasks; every submission names harness, Developer model, reasoning effort, date and all five scores, and its overall must equal the task-weighted mean of its domain scores (6 airline_plus, 6 retail_plus, 6 telecom, 35 banking_knowledge) within 0.06. A new release or task set is a new identity; a new submission needs a reviewed plan change.",
+        "notes": "Measured under the maintainers' sealed runner (the current rows are the τ-bench team's baselines). Every submission file is the primary source of its own row."
       },
       "cadence": "daily, at most one capture per source; stop on access restrictions",
-      "version_guard": "hyper-submissions/manifest.json must state board_version \"release-v1 \u00b7 53 tasks\" and list exactly the six reviewed submissions in order; README.md must still define `overall` as the mean across all 53 tasks; every submission names harness, Developer model, reasoning effort, date and all five scores, and its overall must equal the task-weighted mean of its domain scores (6 airline_plus, 6 retail_plus, 6 telecom, 35 banking_knowledge) within 0.06. A new release or task set is a new identity; a new submission needs a reviewed plan change.",
+      "version_guard": "hyper-submissions/manifest.json must state board_version \"release-v1 · 53 tasks\" and list exactly the six reviewed submissions in order; README.md must still define `overall` as the mean across all 53 tasks; every submission names harness, Developer model, reasoning effort, date and all five scores, and its overall must equal the task-weighted mean of its domain scores (6 airline_plus, 6 retail_plus, 6 telecom, 35 banking_knowledge) within 0.06. A new release or task set is a new identity; a new submission needs a reviewed plan change.",
       "source": {
         "url": "https://raw.githubusercontent.com/sierra-research/hyper-tau-bench/main/web/leaderboard/public/hyper-submissions/manifest.json",
         "file": "data/raw/benchmarks/daily-evidence/2026-09-16-hyper-tau-bench/b5a2065690e1c06c6f23.gz",
         "sha256": "b5a2065690e1c06c6f235931709cba3595da593734783a1ff30fa2cf785f8a74",
         "retrieved_at": "2026-09-16T10:22:07.902960+00:00"
       },
-      "protocol": "\u03c4^\u03c4-bench (Hyper-\u03c4) release v1, 53 tasks (6 airline_plus, 6 retail_plus, 6 telecom, 35 banking_knowledge); overall = mean reward across all 53 tasks of the agent the Developer built, sealed runner; one row per coding harness x Developer model x reasoning effort as published; not a Composite input.",
+      "protocol": "τ^τ-bench (Hyper-τ) release v1, 53 tasks (6 airline_plus, 6 retail_plus, 6 telecom, 35 banking_knowledge); overall = mean reward across all 53 tasks of the agent the Developer built, sealed runner; one row per coding harness x Developer model x reasoning effort as published; not a Composite input.",
       "basis": "measured",
       "minimum_rows": 6,
       "source_urls": [
@@ -3523,12 +3523,12 @@
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
         "format": "JSON files",
-        "locator": "data/core.json \u2192 aggregated[]: one object per model configuration; value = sum_chain_avg (the page's default 'Path Length' ranking); models[] gives the label and route; data/rankings.json \u2192 per_word[] (average chain per model x starting word) and stop_reasons[word][model] (one entry per trial) cross-check the sum and give the trial count.",
-        "version_guard": "core.json must state num_words 50 with the pinned 50 starting words (sha256 of the newline-joined list 4f62ea68\u2026) and the pinned dictionary dictionaries/scowl/scowl_2026_02_25_huge_us_gb_ca_au_ascii.txt; the README must still state the 50-word, 3-trial default, the Levenshtein-1 no-repeat rule and the 'sum of valid transitions in the longest valid chain prefix' score; every model must have 50 per-word results whose averages sum to its score (\u00b10.3, rounding) and at least one listed trial per word. Another word list or dictionary is another identity (the earlier 10-word runs are not comparable).",
+        "locator": "data/core.json → aggregated[]: one object per model configuration; value = sum_chain_avg (the page's default 'Path Length' ranking); models[] gives the label and route; data/rankings.json → per_word[] (average chain per model x starting word) and stop_reasons[word][model] (one entry per trial) cross-check the sum and give the trial count.",
+        "version_guard": "core.json must state num_words 50 with the pinned 50 starting words (sha256 of the newline-joined list 4f62ea68…) and the pinned dictionary dictionaries/scowl/scowl_2026_02_25_huge_us_gb_ca_au_ascii.txt; the README must still state the 50-word, 3-trial default, the Levenshtein-1 no-repeat rule and the 'sum of valid transitions in the longest valid chain prefix' score; every model must have 50 per-word results whose averages sum to its score (±0.3, rounding) and at least one listed trial per word. Another word list or dictionary is another identity (the earlier 10-word runs are not comparable).",
         "notes": "Measured by the maintainer. Credit @scaling01 and link the repository wherever the results are shown (README Usage Terms)."
       },
       "cadence": "daily, at most one capture per source; stop on access restrictions",
-      "version_guard": "core.json must state num_words 50 with the pinned 50 starting words (sha256 of the newline-joined list 4f62ea68\u2026) and the pinned dictionary dictionaries/scowl/scowl_2026_02_25_huge_us_gb_ca_au_ascii.txt; the README must still state the 50-word, 3-trial default, the Levenshtein-1 no-repeat rule and the 'sum of valid transitions in the longest valid chain prefix' score; every model must have 50 per-word results whose averages sum to its score (\u00b10.3, rounding) and at least one listed trial per word. Another word list or dictionary is another identity (the earlier 10-word runs are not comparable).",
+      "version_guard": "core.json must state num_words 50 with the pinned 50 starting words (sha256 of the newline-joined list 4f62ea68…) and the pinned dictionary dictionaries/scowl/scowl_2026_02_25_huge_us_gb_ca_au_ascii.txt; the README must still state the 50-word, 3-trial default, the Levenshtein-1 no-repeat rule and the 'sum of valid transitions in the longest valid chain prefix' score; every model must have 50 per-word results whose averages sum to its score (±0.3, rounding) and at least one listed trial per word. Another word list or dictionary is another identity (the earlier 10-word runs are not comparable).",
       "source": {
         "url": "https://lisanbench.com/data/core.json",
         "file": "data/raw/benchmarks/daily-evidence/2026-09-16-lisanbench/09ce01d262ad08e01228.gz",
@@ -3540,6 +3540,142 @@
       "minimum_rows": 100,
       "source_urls": [
         "https://lisanbench.com/"
+      ]
+    },
+    {
+      "benchmark_id": "matharena-arxivmath::2026-08",
+      "parser": {
+        "kind": "matharena_table",
+        "name_field": "name",
+        "id_field": "id",
+        "value_field": "accuracy",
+        "plain_text_names": true,
+        "require_header": [
+          "Rank",
+          "Model Name",
+          "Provider",
+          "Accuracy (± 95% CI)",
+          "Cost",
+          "Output Tokens",
+          "Input Tokens",
+          "Average Retries",
+          "Average Time",
+          "Open",
+          "Parameters",
+          "Active Parameters"
+        ],
+        "require_problems": 57,
+        "post_release_flag": "⚠️"
+      },
+      "status": "collected",
+      "reason": "MathArena serves the ArXivMath 08/2026 (MathArena) leaderboard as JSON; one row per model, the setting stays part of the label.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JSON with a rendered HTML table",
+        "locator": "GET https://matharena.ai/competition_tables/arxiv--august → JSON field \"table\" (rendered leaderboard): one row per model; value = the \"Accuracy (± 95% CI)\" point estimate in percent; the warning sign after a name is MathArena's \"Model was released after competition release\" flag, kept per row.",
+        "version_guard": "The competition table must keep exactly the twelve published leaderboard columns (Rank, Model Name, Provider, Accuracy (± 95% CI), Cost, Output Tokens, Input Tokens, Average Retries, Average Time, Open, Parameters, Active Parameters) and exactly 57 problems in its per-problem grid (MathArena lists \"2026/08 · 57 problems\"). A different problem count or another monthly edition is a different identity; editions are never averaged.",
+        "notes": "Measured by MathArena. The confidence interval, cost, tokens and the released-after-competition flag are kept in each observation's protocol, never as separate scores."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "The competition table must keep exactly the twelve published leaderboard columns (Rank, Model Name, Provider, Accuracy (± 95% CI), Cost, Output Tokens, Input Tokens, Average Retries, Average Time, Open, Parameters, Active Parameters) and exactly 57 problems in its per-problem grid. A different problem count or another monthly edition is a different identity; editions are never averaged.",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/arxiv--august",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82/2e43e533053d8d7bca16.gz",
+        "sha256": "2e43e533053d8d7bca16722ee75cd9a9e9b9e6816a305e80e3bb2457c2f749f2",
+        "retrieved_at": "2026-09-18T17:35:28.685648+00:00"
+      },
+      "protocol": "ArXivMath 08/2026 (MathArena): 57 problems from arXiv papers submitted in August 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; not a Composite input.",
+      "basis": "measured",
+      "minimum_rows": 5,
+      "source_urls": [
+        "https://matharena.ai/"
+      ]
+    },
+    {
+      "benchmark_id": "matharena-brokenarxiv::2026-08",
+      "parser": {
+        "kind": "matharena_table",
+        "name_field": "name",
+        "id_field": "id",
+        "value_field": "accuracy",
+        "plain_text_names": true,
+        "require_header": [
+          "Rank",
+          "Model Name",
+          "Provider",
+          "Accuracy (± 95% CI)",
+          "Cost",
+          "Output Tokens",
+          "Input Tokens",
+          "Average Retries",
+          "Average Time",
+          "Open",
+          "Parameters",
+          "Active Parameters"
+        ],
+        "require_problems": 56,
+        "post_release_flag": "⚠️"
+      },
+      "status": "collected",
+      "reason": "MathArena serves the BrokenArXiv 08/2026 (MathArena) leaderboard as JSON; one row per model, the setting stays part of the label.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JSON with a rendered HTML table",
+        "locator": "GET https://matharena.ai/competition_tables/arxiv_false--august → JSON field \"table\" (rendered leaderboard): one row per model; value = the \"Accuracy (± 95% CI)\" point estimate in percent; the warning sign after a name is MathArena's \"Model was released after competition release\" flag, kept per row.",
+        "version_guard": "The competition table must keep exactly the twelve published leaderboard columns (Rank, Model Name, Provider, Accuracy (± 95% CI), Cost, Output Tokens, Input Tokens, Average Retries, Average Time, Open, Parameters, Active Parameters) and exactly 56 problems in its per-problem grid (MathArena lists \"2026/08 · 56 problems\"). A different problem count or another monthly edition is a different identity; editions are never averaged.",
+        "notes": "Measured by MathArena. The confidence interval, cost, tokens and the released-after-competition flag are kept in each observation's protocol, never as separate scores."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "The competition table must keep exactly the twelve published leaderboard columns (Rank, Model Name, Provider, Accuracy (± 95% CI), Cost, Output Tokens, Input Tokens, Average Retries, Average Time, Open, Parameters, Active Parameters) and exactly 56 problems in its per-problem grid. A different problem count or another monthly edition is a different identity; editions are never averaged.",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/arxiv_false--august",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82/91374ee251a4c81bec0a.gz",
+        "sha256": "91374ee251a4c81bec0a36c29e22c436d85568723daca787cea2014f738b6b0d",
+        "retrieved_at": "2026-09-18T17:35:31.624127+00:00"
+      },
+      "protocol": "BrokenArXiv 08/2026 (MathArena): 56 problems from arXiv papers submitted in August 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; graded on a 0–3 scale by MathArena's judge; not a Composite input.",
+      "basis": "measured",
+      "minimum_rows": 5,
+      "source_urls": [
+        "https://matharena.ai/"
+      ]
+    },
+    {
+      "benchmark_id": "weirdml::3",
+      "parser": {
+        "kind": "weirdml_v3_json",
+        "name_field": "name",
+        "id_field": "id",
+        "value_field": "score",
+        "scale": 100,
+        "plain_text_names": true,
+        "require": {
+          "schema_version": 1,
+          "task_count": 11
+        }
+      },
+      "status": "collected",
+      "reason": "The maintainer publishes WeirdML v3's prepared data as JSON (the same file his summary table renders); one row per published model configuration.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JSON",
+        "locator": "GET /assets/data/weirdml_v3.json → models[]: one row per published model configuration; value = \"score\" (the effective score the summary table shows under \"Average Score Across 11 Tasks\").",
+        "version_guard": "schema_version 1, mode \"real\", exactly 11 tasks, finite score and a two-value interval per row; excluded_models is never read. A changed schema or task set fails closed.",
+        "notes": "The v2 CSV source and this JSON are different scoring conventions and remain separate identities."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "schema_version 1, mode \"real\", exactly 11 tasks, finite score and a two-value interval per row; excluded_models is never read. A changed schema or task set fails closed.",
+      "source": {
+        "url": "https://htihle.github.io/assets/data/weirdml_v3.json",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82/6a1c42d60692f79e26aa.gz",
+        "sha256": "6a1c42d60692f79e26aa7c38cb7a0c9d1c33dba1f2102cfdf1e3502eb573f7cb",
+        "retrieved_at": "2026-09-18T17:35:34.340768+00:00"
+      },
+      "protocol": "Effective score across the 11 tasks: 80% normalized area under the average best-so-far effective-score line on a log token axis (500k–50M) plus 20% of its final value; runs averaged per configuration, tasks weighted equally (hinted/hintless twins half weight each); effective scores include normalization and hint penalties, they are not raw accuracy.",
+      "basis": "measured",
+      "minimum_rows": 3,
+      "source_urls": [
+        "https://htihle.github.io/weirdml.html"
       ]
     }
   ]
