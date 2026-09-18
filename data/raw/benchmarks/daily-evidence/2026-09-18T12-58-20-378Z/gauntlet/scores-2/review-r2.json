@@ -1,0 +1,19 @@
+```json
+{
+  "artifact_id": "scores-2",
+  "artifact_sha256": "5f754aeaffeb8e973a27518e6a25fc547995b2cf60f523b9615bfcb40e1d93e0",
+  "round": 2,
+  "verdict": "pass",
+  "coverage_checked": ["public:17a83944e876e5d5dd19589d", "public:17d5502bd07b4baf5a0e4e6a", "public:3fc65e2a70007acea87bb5cb", "c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "SOURCE 2 page text shows 'Updated 9/15/2026' while the captured astro_props protocol field (SOURCE 1/4/5) and the artifact protocol say 'updated 2026-09-10'; the artifact transcribes the captured protocol field verbatim, but the page-level update date discrepancy could not be resolved from the packet alone.",
+    "I could not recompute row SHA-256 hashes, file hashes, or transport/qualification checks; the owner-executed hash bindings and receipt were accepted as-is per packet scope.",
+    "Artifact protocol/context strings embed the source 'context' projection (a subset of source_row fields); per packet rules this is an acceptable exact projection, but the full response was not independently verifiable beyond the supplied excerpts.",
+    "published_at is null in all rows; the page excerpt does not provide a per-observation publish timestamp, so no comparison was possible."
+  ],
+  "missing_evidence": []
+}
+```

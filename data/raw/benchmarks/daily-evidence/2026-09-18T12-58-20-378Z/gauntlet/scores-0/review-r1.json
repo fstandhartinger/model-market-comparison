@@ -1,0 +1,35 @@
+```json
+{
+  "artifact_id": "scores-0",
+  "artifact_sha256": "3773ebdbf1c1a41923a58878fc88675c3392fdf69af09993ab8f817940f1684f",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["public:bcd438da3f8a8083aff6c718", "public:a90b927d9e777f21f2fabecf", "c1"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "row public:bcd438da3f8a8083aff6c718, field protocol",
+      "evidence": "Row protocol states 'Vals Index v2 (updated 2026-09-10)', but SOURCE 2 (published page, same sha256 558f8306...) shows 'Updated 9/15/2026' with 'Version 2'. Criterion c1 requires protocol verified against current primary evidence; the update date in the row conflicts with the current published page text.",
+      "repair": "Update the protocol string to reflect the published page update date 2026-09-15 (or document why the captured parser protocol date 2026-09-10 is authoritative, e.g. page last-updated header vs protocol-text capture), so protocol matches current primary evidence."
+    },
+    {
+      "id": "F2",
+      "severity": "major",
+      "location": "row public:a90b927d9e777f21f2fabecf, field protocol",
+      "evidence": "Same discrepancy as F1: row says 'updated 2026-09-10' while SOURCE 2 page shows 'Updated 9/15/2026, Version 2'. All other claimed fields (value 12.952, unit percent, basis measured, name inception/mercury-2.5, sha256, retrieved_at, locator source row 56) match SOURCE 4 exactly, including the embedded source-row context with reasoning_effort 'high'.",
+      "repair": "Align the protocol update date with the current published page (2026-09-15) or justify the 2026-09-10 capture date; do not change values, which verify exactly."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Artifact SHA-256 and per-row canonical SHA-256 could not be recomputed; owner executes hash binding per instructions, and this limitation is not missing evidence.",
+    "The row protocol strings embed the captured parser protocol text verbatim (also present in SOURCE 1/SOURCE 4 with the 2026-09-10 date); whether the page 'Updated 9/15/2026' line supersedes that captured protocol date is a wording/precedence question, hence major rather than blocker.",
+    "Published reasoning/compute effort is explicitly null in the Tencent source row and 'high' for mercury-2.5; the latter is retained verbatim inside the row's protocol context. There is no dedicated effort field in the artifact schema shown, so absence of a top-level effort field is treated as schema design, not omission.",
+    "comparison_key is null for both rows, consistent with the criterion that unknown configurations must not create comparison_key values; no comparison is claimed.",
+    "SOURCE 2 is a bounded excerpt; the exact projection rows in SOURCE 1/SOURCE 4 from the hash-verified response were used for field comparison per the packet rules."
+  ],
+  "missing_evidence": []
+}
+```

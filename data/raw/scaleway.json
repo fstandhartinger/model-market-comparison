@@ -10,12 +10,11 @@
       "provider_org": "Z.ai",
       "input_per_1m_usd": 2.07,
       "output_per_1m_usd": 6.31,
-      "cache_read_per_1m_usd": 0.41,
       "region": "eu",
       "api_model_id": "glm-5.2",
       "context_length": 256000,
       "status": "preview",
-      "notes": "€1.80/€5.50 (cached €0.36); glm-5.2; status preview"
+      "notes": "€1.80/€5.50; glm-5.2; status preview"
     },
     {
       "model_name": "DeepSeek V4 Flash 0731",
@@ -39,8 +38,7 @@
       "api_model_id": "qwen3.8-27b",
       "context_length": 256000,
       "status": "preview",
-      "notes": "€0.60/€3.30 (cached €0.12); qwen3.8-27b; vision+text; status preview",
-      "mapping": "derived"
+      "notes": "€0.60/€3.30 (cached €0.12); qwen3.8-27b; vision+text; status preview"
     },
     {
       "model_name": "Gemma 4 26B",
@@ -154,16 +152,14 @@
     }
   ],
   "fx_eur_usd": 1.1481,
-  "response_sha256": "8ee11b373269754d2c90fd2d8bc1bca14453682e0963a6300fff898cf69aee65",
+  "response_sha256": "4e70df4c7c30378f265f6c3afb38ea5a043516682808c445df66adbc6c2b6511",
   "skipped": [
     "whisper-large-v3",
     "qwen3-embedding-8b",
     "bge-multilingual-gemma2"
   ],
   "diff": {
-    "added": [
-      "qwen3.8-27b"
-    ],
+    "added": [],
     "removed": [],
     "eur_price_changed": []
   }

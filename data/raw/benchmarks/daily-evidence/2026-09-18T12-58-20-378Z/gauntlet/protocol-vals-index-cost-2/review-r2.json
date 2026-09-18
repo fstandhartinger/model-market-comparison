@@ -1,0 +1,19 @@
+```json
+{
+  "artifact_id": "protocol-vals-index-cost-2",
+  "artifact_sha256": "8ff8e1ec96f89212be5927e21c2b5867299df744bc3834dc1a34b5062fbeffb1",
+  "round": 2,
+  "verdict": "pass",
+  "coverage_checked": ["vals-index-cost::2", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Owner hash binding of the row (38f141bf...) and the artifact-level SHA-256 are accepted as supplied; I cannot recompute hashes.",
+    "SOURCE 1 is a bounded excerpt of the page; the 'Cost per test' column values and 'not a Composite input' claim are supported by visible text ($0.77 per test; separate Cost column) but per-model values are not part of this row's claims, so no numeric comparison was required.",
+    "Higher_better=false and range=[0,null] are consistent with cost semantics in the excerpt; the excerpt does not explicitly state a range, but no contrary evidence exists.",
+    "status='active' is judged from the page still publishing results (Updated 9/15/2026, current leaderboard); the excerpt cannot prove future reporting, which is inherent to the excerpt-based check."
+  ],
+  "missing_evidence": []
+}
+```

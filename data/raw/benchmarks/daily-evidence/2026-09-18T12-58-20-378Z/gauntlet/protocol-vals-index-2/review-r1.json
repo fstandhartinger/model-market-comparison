@@ -1,0 +1,19 @@
+{
+  "artifact_id": "protocol-vals-index-2",
+  "artifact_sha256": "a1d39fff071d33c216d8dd9104f25314424cb58d6af55ba83c8383ebf825d8a2",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["vals-index::2", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row and artifact SHA-256 values, plus transport and qualification checks, were executed by the owner; I bind rows via the supplied owner-computed hashes but cannot recompute or independently verify them.",
+    "scoring.notes asserts 'Vals AI publishes accuracy with a standard error per model'. The supplied excerpt contains no model-level results table (only chart titles and takeaways), so this clause is unverified from the packet; it is not contradicted, and the bounded excerpt may simply omit the model table where such presentation would appear. Treated as an unverified peripheral annotation, not a failure of the c1-enumerated checks.",
+    "scoring.range [0,100] is not stated as an explicit range in the protocol text; it follows from the percent semantics of the published accuracy values (e.g., 68.83%, 67.21%, 59.88%), which are consistent with that range and with higher_better=true ('leads the Vals Index at 68.83%').",
+    "notes phrases 'independent evaluator' and 'secondary benchmark, not a Composite input' are registry-internal classifications with no corresponding protocol field to compare against; consistent with the source ('benchmarks that no other party has full access to') and judged outside c1/c2 scope.",
+    "Historical Updates entries from 5/4/2026 and 5/27/2026 describe the pre-v2 configuration (0.25 coding weight, denominator 3.7 to 3.4, SWE-Bench Verified). The current Methodology section and 'Version 2' label (Updated 9/15/2026; v2 released 8/13/2026) govern, and the row's formula, sector-averaging, weights (8.0/5.6/1.2 over 14.8), identity, and description match that current v2 text exactly, so c1 continuity is established and there is no silent reuse of identity across the changed task set.",
+    "c2 read independently: the page shows a live board still publishing results (22 models, updated 9/15/2026) supporting status='active' and version_status='published'; the protocol names no successor board (no v3), so superseded_by=null is correct and no successor-version evidence is required for a null value."
+  ],
+  "missing_evidence": []
+}

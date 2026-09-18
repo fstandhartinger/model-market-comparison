@@ -1,0 +1,34 @@
+```json
+{
+  "artifact_id": "protocol-vals-index-hlab-2",
+  "artifact_sha256": "1062e782aea7d50b407782bb3b1fde3df6957718635744c563a8a8bcfa20a893",
+  "round": 2,
+  "verdict": "revise",
+  "coverage_checked": ["vals-index-hlab::2", "c1", "c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "row vals-index-hlab::2 scoring.notes",
+      "evidence": "Notes claim HLAB is 'not a Composite input', but SOURCE 1 (locator Methodology) shows HLAB is a component of the Vals Index composite: 'Legal = AVG(LegalResearch, HLAB)' and 'Added HLAB to the returning Legal sector.' The notes also assert 'independent evaluator' and that Vals AI 'publishes accuracy with a standard error per model'; the supplied SOURCE 1 excerpt contains no statement of an independent evaluator or per-model standard errors.",
+      "repair": "Remove or correct the 'not a Composite input' claim (HLAB is a Legal-sector component of the Vals Index composite), and either supply primary evidence for the independent-evaluator and standard-error claims or drop them from notes."
+    },
+    {
+      "id": "F2",
+      "severity": "minor",
+      "location": "row vals-index-hlab::2 description",
+      "evidence": "Description reads 'Long-horizon legal work product creation. Vals AI's run of Harvey's Legal Agent Benchmark, reported as accuracy'. SOURCE 1 corroborates identity ('HLAB: Harvey's Legal Agent Benchmark, long-horizon legal work product creation') and 'ACCURACY' as the displayed metric; wording is consistent. However, the contrastive note distinguishing it from 'Artificial Analysis' Harvey LAB-AA row' is not established by the supplied excerpt, though it is a registry-side clarification rather than a source claim.",
+      "repair": "No change strictly required by the excerpt; optionally trim the cross-index comparison note since the packet does not contain the AA row's protocol text."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-executed hash verification of SOURCE 1 (558f8306...), SOURCE 2, row hash cda37005..., and transport/qualification checks were not executed by this reviewer; per packet these are owner-side checks and their non-execution here is a limitation, not missing evidence.",
+    "SOURCE 1 is an exact excerpt of a page exceeding the capture bound; fields absent from the excerpt (e.g., standard-error reporting) cannot be confirmed or refuted from the packet alone.",
+    "The 'standard error per model' and 'independent evaluator' notes may be supported by un-captured page sections; treated as unsupported in the packet rather than as false.",
+    "SOURCE 2 (robots.txt) corroborates nothing about criteria c1/c2; it appears to be a crawl-permission artifact only."
+  ],
+  "missing_evidence": []
+}
+```

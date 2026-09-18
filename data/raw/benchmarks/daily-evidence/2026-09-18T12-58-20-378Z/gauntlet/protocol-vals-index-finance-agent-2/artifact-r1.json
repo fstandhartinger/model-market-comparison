@@ -1,0 +1,22 @@
+[
+  {
+    "id": "vals-index-finance-agent::2",
+    "version": "2",
+    "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Finance Agent v2 accuracy",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Finance sector component; the index uses the Finance Agent v2 index subset, averaging three runs per model. Vals AI publishes accuracy with a standard error per model; independent evaluator, secondary benchmark, not a Composite input."
+    },
+    "description": "Multi-step financial reasoning tasks.",
+    "maintainer": "Vals AI"
+  }
+]

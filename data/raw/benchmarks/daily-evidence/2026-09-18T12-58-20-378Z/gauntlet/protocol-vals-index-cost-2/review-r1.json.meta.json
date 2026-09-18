@@ -1,0 +1,74 @@
+{
+  "started_at": "2026-09-18T14:01:44.808Z",
+  "mode": "critic",
+  "requested_model": "z-ai/glm-5.3-flash",
+  "producers": [
+    "deepseek/deepseek-v4-flash-0731:free"
+  ],
+  "qualification": {
+    "id": "z-ai/glm-5.3-flash",
+    "family": "z-ai",
+    "free": false,
+    "input_per_1m": 0.09,
+    "output_per_1m": 0.3,
+    "context": 1310720,
+    "aa_intelligence_index": 41.9,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "glm-5.3-flash::default"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "glm-5.3-flash::default",
+        "index": 41.9
+      }
+    ]
+  },
+  "input_sha256": "1fde4414ad9198cc7f984f6047f5fdfb317bd723917443a150cd61b8e3c52a1e",
+  "route": "openrouter",
+  "attempt": 1,
+  "free_route_role": "critic",
+  "free_routes_offered": [
+    "chutes/moonshotai/Kimi-K3-TEE"
+  ],
+  "excluded_models": [
+    "chutes/moonshotai/Kimi-K3-TEE"
+  ],
+  "reasoning": {
+    "effort": "low",
+    "exclude": true
+  },
+  "response_format_mode": null,
+  "response_schema_sha256": null,
+  "images": [],
+  "actual_model": "z-ai/glm-5.3-flash",
+  "usage": {
+    "prompt_tokens": 3278,
+    "completion_tokens": 486,
+    "total_tokens": 3764,
+    "cost": 0.000727353,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0007347,
+      "upstream_inference_prompt_cost": 0.0004917,
+      "upstream_inference_completions_cost": 0.000243
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 165,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "finish_reason": "stop",
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "provider": "Z.AI",
+  "session_id": null,
+  "finished_at": "2026-09-18T14:01:52.883Z",
+  "output_sha256": "f62001c6de02be1383641eea2774929b94fcb298e07d3d4f5a8f2f029e478e46"
+}

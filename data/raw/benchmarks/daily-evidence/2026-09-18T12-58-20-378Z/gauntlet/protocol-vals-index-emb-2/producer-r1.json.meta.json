@@ -1,0 +1,70 @@
+{
+  "started_at": "2026-09-18T13:27:37.079Z",
+  "mode": "oneshot",
+  "requested_model": "deepseek/deepseek-v4-flash-0731:free",
+  "producers": [],
+  "qualification": {
+    "id": "deepseek/deepseek-v4-flash-0731:free",
+    "family": "deepseek",
+    "free": true,
+    "input_per_1m": 0,
+    "output_per_1m": 0,
+    "context": 1048576,
+    "aa_intelligence_index": 34.5,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "deepseek-v4-flash-0731::max"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "deepseek-v4-flash-0731::max",
+        "index": 34.5
+      }
+    ]
+  },
+  "input_sha256": "548f21b851cd63044d363a5a1a9bccef6af636d0110ff920fc35b54da3f9d1fa",
+  "route": "openrouter",
+  "attempt": 1,
+  "free_route_role": "critic",
+  "free_routes_offered": [
+    "chutes/moonshotai/Kimi-K3-TEE"
+  ],
+  "excluded_models": [],
+  "reasoning": {
+    "effort": "low",
+    "exclude": true
+  },
+  "response_format_mode": "json_object",
+  "response_schema_sha256": "376bde7986cc2f8fd182f04e745c607933760bea7c306ea6e8e992b7f70be25a",
+  "images": [],
+  "actual_model": "deepseek/deepseek-v4-flash-0731:free",
+  "usage": {
+    "prompt_tokens": 2848,
+    "completion_tokens": 4137,
+    "total_tokens": 6985,
+    "cost": 0,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 2393,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0,
+      "upstream_inference_prompt_cost": 0,
+      "upstream_inference_completions_cost": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 4070,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "finish_reason": "stop",
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "provider": "OpenInference",
+  "session_id": null,
+  "finished_at": "2026-09-18T13:29:48.450Z",
+  "output_sha256": "5db66c7994f0485d32a562adb692518963eb49212ed1372089d97f0df446ce27"
+}

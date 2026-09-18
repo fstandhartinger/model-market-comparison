@@ -1,0 +1,21 @@
+```json
+{
+  "artifact_id": "protocol-vals-index-terminal-bench-2.1-2",
+  "artifact_sha256": "39199261cbdd51675e4e950a89260dbfd074621cc57730d5f9952ce7aaec6a4a",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["vals-index-terminal-bench-2.1::2", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Per-row and artifact SHA-256 values were taken as owner-computed bindings; I cannot recompute hashes or execute transport/qualification checks, which the owner performs separately.",
+    "The supplied excerpt is bounded by design ('exact excerpt when the full page exceeds the bound'); fields required by c1 and c2 are all present in it, but content outside the excerpt was not examined.",
+    "The scoring.notes statement that 'Vals AI publishes accuracy with a standard error per model' is neither confirmed nor contradicted by the supplied excerpt; it lies outside the fields c1 enumerates and was treated as non-determinative.",
+    "The metric/unit mapping (Terminal-Bench 2.1 reported as an accuracy in percent, range [0,100]) is inferred from the index's headline ACCURACY metric, its percentage-formatted scores (e.g., 68.83%), and the methodology stating each benchmark column is that benchmark's own standalone score; the excerpt does not spell out Terminal-Bench 2.1's metric type in isolation.",
+    "c1 checks: version '2' matches the protocol header 'Version 2' (updated 9/15/2026); identity 'Terminal-Bench 2.1' and description 'Command-line interface problem solving' match the methodology listing verbatim ('Terminal-Bench 2.1: Command-line interface problem solving') as a coding-sector component; maintainer 'Vals AI' matches the site identity; the Updates log (5/27/2026 adoption, retained in 8/13/2026 v2) shows the release version continuity required for this identity.",
+    "c2 checks: status 'active' is supported because the current Version 2 protocol still lists Terminal-Bench 2.1 as a coding component with reported results; superseded_by null is correct because the protocol names no successor to this board (it names only its predecessor Terminal-Bench 2.0 and unrelated removals); version_status 'published' matches the released v2 state."
+  ],
+  "missing_evidence": []
+}
+```

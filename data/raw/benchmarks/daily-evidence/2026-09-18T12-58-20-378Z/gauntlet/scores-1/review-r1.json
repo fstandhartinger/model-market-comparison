@@ -1,0 +1,18 @@
+```json
+{
+  "artifact_id": "scores-1",
+  "artifact_sha256": "911707f0ed1338c4b49336c55519653227703136d6fb4285d7ba54f6890f5a6e",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["public:a4d518d1a0f67b5ebd830fbe", "public:789060bcf61a3609b75e4707", "c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row public:a4d518d1a0f67b5ebd830fbe and public:789060bcf61a3609b75e4707: the protocol string states 'updated 2026-09-10' while the page-level excerpt (SOURCE 2) shows 'Updated 9/15/2026'. The artifact transcribes the captured protocol field from SOURCE 1/SOURCE 4 exactly, so this is not a transcription error, but the date discrepancy between the captured protocol metadata and the page display date could not be resolved from the packet.",
+    "I cannot recompute the row SHA-256 bindings or the artifact SHA-256; per packet design those are owner-executed checks and their absence here is a limitation, not missing evidence.",
+    "Subject.model_id, variant and harness are null in both rows; the primary evidence shows harness:null and no model_id/variant fields, so nulls are consistent with the source rather than omitted values. Reasoning effort is preserved via the embedded source row (row 1: null; row 2: 'high')."
+  ],
+  "missing_evidence": []
+}
+```

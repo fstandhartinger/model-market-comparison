@@ -1,0 +1,17 @@
+{
+  "artifact_id": "scores-4",
+  "artifact_sha256": "e496e856cd4dfe567a6dde0d7cfe2deb374a8d8cc68b8a5508e589d7c8503e1b",
+  "round": 2,
+  "verdict": "pass",
+  "coverage_checked": ["vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom", "c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row hash 9c7c940a...43287 and artifact-level transport/qualification checks are owner-executed; I cannot recompute them, so binding relies on the supplied owner-computed hash.",
+    "The protocol string (temperature 0.6, TopP 0.95, TopK 20, MinP 0; output length 32,768 / 81,920) matches the README's Best Practices and footnote text; the README does not state that these exact settings were used for the TAU2 rows, only recommended, so the protocol wording is a faithful transcription of recommendations rather than a confirmed per-run configuration.",
+    "published_at is null because the README carries no explicit publication date; retrieved_at (2026-09-18T13:03:01.865485+00:00) is the only available date.",
+    "benchmark_id 'tau2-bench::2' encodes the TAU2 prefix from the table row label 'TAU2-Telecom'; the source does not use the literal string 'tau2-bench' as a version identifier."
+  ],
+  "missing_evidence": []
+}
