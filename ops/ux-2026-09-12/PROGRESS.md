@@ -467,6 +467,11 @@ The laptop supervisor appended CR-20260917 (verbatim in `03-CHANGE-REQUESTS-VERB
 | CR-81.1 | WeirdML v3: read thread + primary results source, per-model scores with provenance | open | | | Filed 2026-09-18 ~14:50 UTC by Claude Code (Florian chat); after CR-80 |
 | CR-81.2 | Register WeirdML v3 as its own versioned benchmark (tier, taxonomy, v2 kept/superseded) | open | | | Filed 2026-09-18 ~14:50 UTC by Claude Code (Florian chat); after CR-80 |
 | CR-81.3 | Ingest through the gauntlet; benchmarks page + model pages live check | open | | | Filed 2026-09-18 ~14:50 UTC by Claude Code (Florian chat); after CR-80 |
+| CR-82.1 | Ingest BrokenArXiv from the bookmark folder (new version of a registered family): primary source, versioned registry entry, gauntlet, live check | open | | | Filed 2026-09-18 15:24 UTC by the daily X bookmark intake; source https://x.com/j_dekoninck/status/2100180792601420138 |
+| CR-82.2 | Ingest ArXivMath from the bookmark folder (new version of a registered family): primary source, versioned registry entry, gauntlet, live check | open | | | Filed 2026-09-18 15:24 UTC by the daily X bookmark intake; source https://x.com/j_dekoninck/status/2100180792601420138 |
+| CR-82.3 | Ingest VulcanBench-SWE v4 from the bookmark folder (not in the registry): primary source, versioned registry entry, gauntlet, live check | open | | | Filed 2026-09-18 15:24 UTC by the daily X bookmark intake; source https://x.com/morganlinton/status/2098909653149401222 |
+| CR-82.4 | Ingest KernelBench-CUDA from the bookmark folder (not in the registry): primary source, versioned registry entry, gauntlet, live check | open | | | Filed 2026-09-18 15:24 UTC by the daily X bookmark intake; source https://x.com/elliotarledge/status/2098577337407484408 |
+| CR-82.5 | Any candidate that turns out to be an already-carried benchmark under another name: close the row and add the alias to the registry entry | open | | | Filed 2026-09-18 15:24 UTC by the daily X bookmark intake |
 - **2026-09-17 · priority job bh-tag-and-pareto-fix-20260917 · claude-opus** — Florian's CR-77 (tags follow the
   score, Pareto grace band), implemented outside the loop with the UX loop paused. Independent review by codex-luna
   (gpt-5.6-luna, xhigh) on `d5e541c`: `/opt/benchmarkheaven/state/ux-evidence/cr77-review/codex-review-20260917.md` —
@@ -4995,3 +5000,62 @@ non-verified — CR-30.2, CR-30.3 (in-progress), CR-34.4 (implemented, needs non
 blocked on Florian's DesignArena phone-alarm answer), CR-37.1 (in-progress), CR-37.3 (open), CR-38.1 (in-progress),
 CR-43.1 (open), CR-50.2 (open), CR-54.2, CR-54.3 (open), CR-62.4 (in-progress), CR-63.21, CR-63.22 (open, optional),
 CR-68.5 (open), CR-73.5 (open) — plus F-120 (open, structural) in DESIGN-DIRECTIVES. **No ALL-ACCEPTED appended.**
+
+## Iteration 111 — 2026-09-18 ~14:30 → ~15:30 UTC (opencode-kimi, work): family-scope boards fill every sibling column, honestly labelled (REVIEW-20260918T115003Z adjudication note b)
+
+The most user-visible open polish item from the last review gate is closed: on /benchmarks' **default
+collapsed columns** the family-scope board rows showed "No result" for four of the top five columns —
+Epoch ECI, Software ECI, the AA Agentic Index and both DesignArena boards all publish one measured
+value per model family, and the dataset attaches it to exactly one catalog row (the deterministic
+family representative, e.g. `claude-fable-5.1::high`), while the displayed default columns are other
+configurations of the same family (`::max`). Values now flow — display-only — to every compared
+sibling column, each honestly attributed.
+
+- **Donor rule** mirrors `lib/client-model.ts::familyDonor`: the representative's own value wins;
+  otherwise a value is shared only when every holder agrees (GPT-5.6 Sol's DesignArena-only
+  disagreement stays unfilled); a current sibling never displays a deprecated sibling's measurement.
+  Fills are recorded per sibling in `row.familyScope.fill` (sibling → donor), new in
+  `lib/benchmark-matrix.mjs::attachFamilyScope`.
+- **Display-only, never a fake measurement.** Saturation and row ordering use the pre-fill
+  `ownCount`; the filled cells carry the donor's own basis codes (including †/‡ markers); scoring
+  modules never read matrix values. Covered by `test/family-scope-matrix.test.mjs` (6 tests:
+  fill, disagreement blocking, deprecated-donor blocking, ECI model-field fill,
+  saturation/ordering unaffected, the axis-key set).
+- **Honesty on the page.** Every filled cell says "Measured once for the whole model family, on
+  ⟨configuration⟩; shown for every configuration of the family." (title + sr-only copy), carries
+  `data-family-src`, and links to the *measured* row's result page; both the full and Simple
+  `BenchmarksTable` tag the rows with a new `family` tag ("The source measures one configuration
+  per model family … a cell names the exact configuration it was measured on."). The result page
+  fills its compared table the same way and opens a sibling URL in family scope
+  (`data-bh-result-scope`: "One value per model family. Every configuration shares it and Method
+  says which one it was measured on."), with the compared table marking each fill "family value,
+  measured on ⟨configuration⟩ (the configuration this benchmark was run on)".
+- **Scope.** Axis keys discovered data-driven from `view.axes` (`aa_agentic_index`, `frontend`,
+  `fullstack`) plus the two family-scoped `model_field_rows` (Epoch ECI pair). The scope-key list
+  is exported with a comment pointing to the double-loader (`lib/benchmark-views.mjs` + the
+  taxonomy) rule, whose tests guard alignment.
+
+**Gates:** `node scripts/build-dataset.mjs` rc=0 (timestamps-only diff discarded and tree restored);
+`npm test` **854 pass / 0 fail / 1 skipped** (848 + the 6 new); `npx tsc --noEmit -p .` clean.
+Shipped at `8ccd964` (plus ledger-seed `acb2dc6` for the supervisor-appended CR-80/CR-81 — verbatim in
+`03-CHANGE-REQUESTS-VERBATIM.md`, rows seeded open in the table, HIGH PRIORITY per Florian's chat).
+
+**Live evidence (non-reversible, this engine = implementer):** `bin/verify-family-scope.mjs`
+**71/71 per host, both hosts** at `8ccd96`, 1440/390 px × light/dark, canonical and legacy —
+`/opt/benchmarkheaven/state/ux-evidence/family-scope/{canonical,legacy}/verification.json` +
+9 screenshots each: the three family-scope index rows are present with the family tag and a
+non-empty fill; filled sibling values equal the donor's own value on the API (`fable-5.1::max` =
+`fable-5.1::high` on all three axes); the per-configuration AA Intelligence row gets no fill; the
+ECI/Software-ECI/Agentic rows in the default-column table have **zero "No result" cells**, the
+family tag, and ≥ 3 cells linking to the measured configuration (`data-family-src`); a filled
+cell's title names the measured configuration; the sibling result page shows the scope note with
+the donor configuration and the compared table marks the fill; the homepage Simple shortlist table
+shows the same fills with no missing cells; no horizontal overflow and no page errors anywhere.
+
+**NOT flipped by this engine** (I implemented it; non-implementer rule — the next claude/fable/codex/nex
+gate re-runs `node ops/ux-2026-09-12/bin/verify-family-scope.mjs <host> <outdir>`).
+
+**Handle note:** `chutes/moonshotai/Kimi-K3-TEE` (the env's recorded `providerID`/`modelID`),
+engine recorded `opencode-kimi` per the handle rule. **Cosmetic glitch:** the `8ccd964` commit
+message contains literal `\n` escape sequences (shell quoting) — content correct, formatting
+unpretty; noted, no rebase done on a published commit.
