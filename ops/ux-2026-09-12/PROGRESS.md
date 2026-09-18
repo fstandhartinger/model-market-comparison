@@ -4809,3 +4809,9 @@ bold checks pass (`ux-evidence/fable-20260918-pass23/verify-before-canonical/ver
 8/8), then move its done-log row to verified. (2) F-122 → F-124 → F-125 wait for the work engine (specs in `DESIGN-DIRECTIVES.md`; F-122 first).
 (3) CR-65.14 stays `implemented` until a non-implementer runs `verify-cr-65-14.mjs`; this pass's screenshots are design evidence, not that run.
 (4) X4 still met at pass 23.
+
+**Live, both hosts, at `26acb99` (pushed 10:00 UTC, both hosts flipped 10:02:44 UTC):** `verify-fable-pass23.mjs` **8/8 on
+https://benchmarkheaven.com and 8/8 on the legacy host** at 1440/390 × light/dark — Union Alpha's Terminal-Bench v4.0 row has no
+`.bh-matrix-bar` (was `100%`/`99.96%`) and the ‡ cell is not bold (`ux-evidence/fable-20260918-pass23/verify-{canonical,legacy}/verification.json`,
+`deploy-verify.log`). The first canonical attempt timed out on `page.goto` 60 s after the switchover (cold container) and was re-run; the
+legacy host passed on the first attempt. F-123 is implementer-checked only — handoff (1) stands.

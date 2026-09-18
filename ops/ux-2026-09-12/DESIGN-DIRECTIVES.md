@@ -100,7 +100,8 @@ and the counts line under it keeps the page honest (P4).
 ## Directives (open)
 
 > **Status 2026-09-18 ~10:10 UTC (pass 23):** F-116–F-119 are verified (done log). **F-123 is shipped by Fable in this pass** and needs a
-> non-implementer live pass on both hosts: `node ops/ux-2026-09-12/bin/verify-fable-pass23.mjs <base> <out>` (expect 8/8 per host). **F-122,
+> non-implementer live pass on both hosts: `node ops/ux-2026-09-12/bin/verify-fable-pass23.mjs <base> <out>` (expect 8/8 per host; Fable's own
+> run at live `26acb99` was 8/8 on both hosts, before-state 4/8). **F-122,
 > F-124 and F-125 wait for an implementer**, in that order — F-122 first, it is the one a phone reader feels.
 
 ### F-122 [judgment] — Three table footnotes become two sentences plus a collapsed Legend that lists every tag
@@ -457,4 +458,4 @@ such a row.
 | F-91 desktop compare radar at chart size (R 205, 900×600) | `cadbe88` (Fable, pass 17) | same | same |
 | F-92 Simple table: (i) after the last word; footnote without the repeated intro | `cadbe88` (Fable, pass 17) | same | same |
 | F-93 shortlist chart: bar rows below md, bottom-to-top names at md+ | `cadbe88` (Fable, pass 17) | same | same |
-| F-123 no data bar behind a chart-read value in `/benchmarks` and the Simple section (`rowBars`/`rowOutliers` get the masked row that `rowWinners` already had) | pass 23 (Fable, surgical) + `test/cr-60-union-alpha-preliminary.test.mjs` | `/opt/benchmarkheaven/state/ux-evidence/fable-20260918-pass23/` (before-state: `bm-prelim-row.bars: ["100%","99.96%"]`), `bin/verify-fable-pass23.mjs` output once live | needs a non-Fable verifier (expect 8/8 per host) |
+| F-123 no data bar behind a chart-read value in `/benchmarks` and the Simple section (`rowBars`/`rowOutliers` get the masked row that `rowWinners` already had) | pass 23 (Fable, surgical) + `test/cr-60-union-alpha-preliminary.test.mjs` | `/opt/benchmarkheaven/state/ux-evidence/fable-20260918-pass23/` (before-state: `bm-prelim-row.bars: ["100%","99.96%"]`), `ux-evidence/fable-20260918-pass23/verify-{canonical,legacy}/verification.json` (`bin/verify-fable-pass23.mjs`) | live-checked by Fable at `26acb99`: **8/8 on both hosts**, 1440/390 × light/dark — the chart-read row has no bar and no bold; needs a non-Fable verifier |
