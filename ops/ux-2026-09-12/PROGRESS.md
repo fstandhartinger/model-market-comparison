@@ -4393,3 +4393,11 @@ seven. **So the vendor half is expected to be the larger saving of the two, whic
 what the stage timings alone would suggest.** Both figures are estimates from stored reports; CR-73.5
 turns them into a measurement.
 
+
+**One operational note worth carrying (not a CR).** `ops/daily/run.sh` takes `flock -n 9` on
+`/opt/benchmarkheaven-daily/state/run.lock` and the wrapper allows the run 3 h. A dry run started
+after ~02:00 UTC can therefore still hold that lock at 05:17, and the scheduled run then prints
+`DAILY SKIPPED: another daily transaction owns the lock` and **exits 0** — a silently lost day
+rather than a visible failure. That is why this iteration did **not** validate CR-73.2 with a dry
+run and measured it offline from stored evidence instead. The next iteration should start the two
+CR-73.2 dry runs immediately after the 05:17 run reports published, not before it.
