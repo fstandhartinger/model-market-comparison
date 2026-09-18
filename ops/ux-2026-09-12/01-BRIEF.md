@@ -269,3 +269,45 @@ Every ID becomes a row in `PROGRESS.md`.
    mobile width; save evidence.
 5. Update `PROGRESS.md` (status + evidence path), commit and push that too.
 6. Exit cleanly. The next tick continues. A single iteration should stay under ~3 hours.
+
+---
+
+## 4. Standing sources — Florian's X bookmark folder "evals" (added 2026-09-18)
+
+**New rule, Florian, 18 Sep 2026, verbatim:**
+
+> new rule for benchmark heaven: it should look into
+> https://x.com/i/history/bookmarks/2098158441952907558 once a day and check if there are new
+> evals/benchmarks it doesn't have in its list yet, and then add them
+
+That bookmark folder (@airesearch12, named **"evals"**) is now a **standing source** of
+benchmark candidates, on the same footing as the leaderboards in
+`data/raw/benchmarks/collection-plan.json`. Nobody has to ask for those benchmarks again:
+a post in that folder is Florian asking for it.
+
+**The intake is automated and does not belong to this loop.**
+`/opt/benchmarkheaven/bin/bookmarks_intake.py` runs daily at 06:40 UTC
+(`systemctl --user status bh-bookmark-intake.timer`): it reads the folder in the agent
+Chrome (read-only, behind the shared `~/.locks/chrome-9333.lock`, @airesearch12 stays the
+active account), triages each new post with a small model, checks the benchmark **and its
+version** against `data/raw/benchmarks/registry.json` and against the open CRs in
+`03-CHANGE-REQUESTS-VERBATIM.md` / `04-CR-BRIEF.md` / `PROGRESS.md`, and appends a CR here
+for whatever is genuinely missing. State lives in `/opt/benchmarkheaven/state/bookmarks/`
+(`seen.jsonl`, `triage.jsonl`, `queued.jsonl`, `last-run.json`), tests in
+`/opt/benchmarkheaven/bin/test_bookmarks_intake.py`.
+
+**What the loop does with it:**
+
+1. A CR headed "new benchmarks from Florian's X bookmark folder" is an ordinary CR — work it
+   in priority order like any other. The first one is CR-82 (18 Sep 2026).
+2. **The X post is a pointer, never a measurement.** Read the whole thread and the author's
+   primary source before any number enters the dataset; the usual provenance rules
+   (`maintain-benchmarkheaven-registry`) and the gauntlet apply unchanged.
+3. **A candidate may be wrong.** The name is read off a post by a small model. If it turns
+   out to be something already carried under another name, close the row with that finding
+   and add the alias to the registry entry — that stops the intake re-filing it. If the
+   primary source does not hold up, close the row saying so and ingest nothing.
+4. **Never edit the intake's state files to silence it.** Filing a benchmark twice is a bug
+   in the matcher; fix the matcher or add the alias.
+5. The loop stays the single writer of the repository. The intake only appends to these
+   three ops files and never commits — the loop commits them with its own work.

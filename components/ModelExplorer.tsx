@@ -6,7 +6,7 @@ import { SCORE_PICKER_LABELS, SCORE_LABELS, SCORE_SHORT_LABELS, type ScoreKey } 
 import { scoreLabel, scoreVersion } from "../lib/score-label";
 import { usdPerM, num, orgColor } from "../lib/format";
 import { modelPrice, rankedOffers, scopedCatalogOffers, scopedCatalogRoutes, scopeFromSettings, offerPrice, priceContext, priceLabel, type PriceSettings } from "../lib/cost";
-import { FREE_ROUTE_NOTE, freeRouteLabel, isFreeRoute, isStealthPreview } from "../lib/free-route.mjs";
+import { FREE_ROUTE_NOTE, NO_PUBLIC_PRICE_NOTE, freeRouteLabel, isFreeRoute, isStealthPreview } from "../lib/free-route.mjs";
 import { Toggle, NumFilter } from "./ui";
 import { InfoTip } from "./InfoTip";
 import { ADJUSTED_COST_TIP, scoreTip } from "./methodology";
@@ -69,7 +69,10 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
   const [asc, setAsc] = useState(defaultSort === "cost" ? defaultAsc ?? true : false);
   const [q, setQ] = useState("");
   const [withScoreOnly, setWithScoreOnly] = useState(true);
-  const [hasProviderOnly, setHasProviderOnly] = useState(true);
+  // CR-80.2 (Florian 2026-09-18): a model with a score but no priced public API offer is shown by
+  // default, sorted by score like everyone else, its cost cell reading "No public API price" — never
+  // silently hidden. "Has provider" stays available as an opt-in evidence filter.
+  const [hasProviderOnly, setHasProviderOnly] = useState(false);
   // F-06: measured task tokens are required in Simple (a quoted cost must be measured) but
   // not in Advanced, which must be able to show every priced model.
   const [measuredTasksOnly, setMeasuredTasksOnly] = useState(!!simple);
@@ -147,8 +150,12 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
       const tokens = x.m.token_efficiency?.aa.tokens_per_task;
       return tokens && !tokens.stale && Number.isFinite(tokens.value.output) && tokens.value.output > 0;
     });
-    // "Has provider": keep only models offered by ≥1 provider within the active filters.
-    if (hasProviderOnly || offerScope.restricted) r = r.filter((x) => x.ncheap > 0);
+    // "Has provider": keep only models offered by ≥1 provider within the active filters. Opt-in
+    // only (CR-80.2): the default scope is already `restricted` (allowDataTraining off ⇒
+    // privateDataOnly), so filtering on the scope alone removed every scored-but-unpriced model —
+    // and every model whose only provider is unscoped — for every default visitor. An unpriced
+    // scored row must be visible by default and may only be dropped by an explicit toggle or cost cap.
+    if (hasProviderOnly) r = r.filter((x) => x.ncheap > 0);
     return r;
   }, [data, candidates, score, offerScope, priceSettings, s.collapse, featuredOnly, s.familySet, s.openOnly, s.labAllowed, s.priceMode, withScoreOnly, hasProviderOnly, measuredTasksOnly, preferredId]);
   // CR-46.1: the population the cheaper/pricier tags are judged against — the settings' models before
@@ -185,6 +192,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
     // score — it must not satisfy a positive min-score filter. For the other
     // scores hasEvidence === score != null, so existing policy is unchanged.
     if (minScore > 0) r = r.filter((x) => x.hasEvidence && x.sc != null && x.sc >= minScore);
+    // CR-80.2: an unpriced model is dropped only once the user sets a cost limit — never by default.
     if (maxCost != null) r = r.filter((x) => x.price.value != null && x.price.value <= maxCost);
     // R5.6: the wizard's separate intelligence and coding floors. A model with no result on
     // that index cannot satisfy a floor on it, so it drops out rather than being assumed good.
@@ -226,7 +234,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
 
   // F-28: the Evidence button is highlighted only when a toggle differs from this mode's default
   // (Advanced's default already leaves task tokens unmeasured, so that is not a user filter).
-  const evidenceChanged = !withScoreOnly || !hasProviderOnly || (s.priceMode === "adjusted" && measuredTasksOnly !== !!simple);
+  const evidenceChanged = !withScoreOnly || hasProviderOnly || (s.priceMode === "adjusted" && measuredTasksOnly !== !!simple);
 
   // F-23: on phones the org, budget, comparison and evidence controls live in one Refine sheet.
   const [refineOpen, setRefineOpen] = useState(false);
@@ -242,7 +250,18 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
     setOrg(""); setMaxCost(null); setComparisonTarget(""); setComparisonMetric("");
     setWithScoreOnly(true); setHasProviderOnly(true); setMeasuredTasksOnly(!!simple);
   };
+  // CR-80.2: while a cost limit is set, the models it hides are named next to the count — the
+  // rows that pass every other filter and would be listed if they had a public price.
+  const unpricedDropped = useMemo(() => maxCost == null ? 0
+    : pool.filter((x) => x.hasEvidence && x.sc != null && x.price.value == null
+      && (minScore <= 0 || (x.sc as number) >= minScore)
+      && (minIntelligence == null || (x.m.scores.aa_intelligence_index != null && x.m.scores.aa_intelligence_index >= minIntelligence))
+      && (minCoding == null || (x.m.scores.aa_coding_index != null && x.m.scores.aa_coding_index >= minCoding))).length,
+  [pool, maxCost, minScore, minIntelligence, minCoding]);
   const countLabel = `${rows.length} models${s.advancedFiltersActive || q.trim() || org || comparisonActive ? " · filtered" : ""}`;
+  const unpricedNote = unpricedDropped > 0
+    ? <span data-bh-unpriced-excluded title={NO_PUBLIC_PRICE_NOTE}> · {unpricedDropped} without a public price excluded</span>
+    : null;
   // F-40: a floor Advanced applies is never invisible — each one is a removable chip by the count.
   const floorChips = simple ? [] : [
     ...(minScore > 0 ? [{ key: "score", label: `Score ≥ ${minScore}`, clear: () => s.setAdvancedMinScore(0) }] : []),
@@ -410,7 +429,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
             {evidencePanel}
           </div>
         </MenuDetails>
-        <span className="ml-auto inline-flex flex-wrap items-center gap-2 text-xs text-gray-500">{floorChipList}{countLabel}</span>
+        <span className="ml-auto inline-flex flex-wrap items-center gap-2 text-xs text-gray-500">{floorChipList}{countLabel}{unpricedNote}</span>
         </div>
         {/* F-23: phones get one Refine button instead of four controls. */}
         <button type="button" onClick={() => setRefineOpen(true)} aria-haspopup="dialog" aria-expanded={refineOpen}
@@ -418,7 +437,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
           Refine{refineChanged ? ` · ${refineChanged}` : ""} ▾
         </button>
       </div>
-      {!simple && <p className="-mt-3 mb-3 flex flex-wrap items-center gap-2 px-1 text-xs text-gray-500 md:hidden">{floorChipList}{countLabel}</p>}
+      {!simple && <p className="-mt-3 mb-3 flex flex-wrap items-center gap-2 px-1 text-xs text-gray-500 md:hidden">{floorChipList}{countLabel}{unpricedNote}</p>}
       {/* CR-74.5 (Florian 2026-09-17): Advanced shows every header Options control inline, bound to the same settings. */}
       {!simple && <OptionsInline className="mb-4" />}
       {!simple && refineOpen && (
@@ -557,7 +576,10 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                 })()}<PriceValue price={price} compact showEstimate={false} context={{ cheapest: cheap.length > 0, strongest: s.collapse && preferredId.get(m.family_key) === m.id }} /></span></MagnitudeBar> : (data.offersByModel[m.id] ?? []).some(isStealthPreview)
                   // CR-60.3: a stealth model with only its $0 preview route has no paid price; say why the cell is empty.
                   ? <span className="block whitespace-nowrap text-right text-xs text-gray-500" title={FREE_ROUTE_NOTE}>free (stealth preview)</span>
-                  : <span className="block text-right text-gray-600">—</span>}</td>
+                  : (data.offersByModel[m.id] ?? []).length === 0 && (data.offersByFamily?.[m.family_key] ?? []).length === 0
+                    // CR-80.2: no provider publishes a price for this model — say so plainly instead of a bare dash.
+                    ? <span className="block whitespace-nowrap text-right text-xs text-gray-500" title={NO_PUBLIC_PRICE_NOTE} data-bh-no-public-price={m.id}>No public API price<span className="sr-only"> — {NO_PUBLIC_PRICE_NOTE}</span></span>
+                    : <span className="block text-right text-gray-600">—</span>}</td>
                 <td className="hidden px-3 py-2 text-right tabular text-gray-400 md:table-cell">{m.benchmark_count || "—"}</td>
                 <td className="hidden px-3 py-2 text-right tabular text-gray-400 md:table-cell">{ncheap || "—"}</td>
               </tr>

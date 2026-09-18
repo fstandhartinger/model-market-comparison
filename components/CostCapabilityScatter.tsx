@@ -167,7 +167,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
   const preferredId = useMemo(() => preferredVariantIds(candidates, score), [candidates, score]);
 
   const idKey = ids?.join(",");
-  const allPoints = useMemo(() => {
+  const evaluated = useMemo(() => {
     let pool = candidates;
     const only = idKey != null ? new Set(idKey ? idKey.split(",") : []) : null;
     if (only) pool = pool.filter((m) => only.has(m.id));
@@ -182,10 +182,17 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
     });
     return pool
       .map((m: ClientModel) => ({ m, price: modelPrice(m, data, offerScope, priceSettings), sc: m.scores[score], hasEvidence: hasScoreEvidence(m, score) }))
-      .filter((x) => x.hasEvidence && x.sc != null && x.price.value != null && (x.price.value as number) >= 0)
-      .map((x) => ({ x: x.price.value as number, y: x.sc as number, price: x.price, name: collapsedName(x.m, s.collapse, preferredId), org: x.m.org, id: x.m.id, open: x.m.open_weights, z: 100,
-        pass: (x.sc as number) >= minScore && (maxCost == null || (x.price.value as number) <= maxCost) }));
-  }, [data, candidates, score, offerScope, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, s.labAllowed, minScore, maxCost, preferredId, measuredOnly, s.priceMode, idKey]);
+      .filter((x) => x.hasEvidence && x.sc != null);
+  }, [data, candidates, score, offerScope, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, s.labAllowed, preferredId, measuredOnly, s.priceMode, idKey]);
+  const allPoints = useMemo(() => evaluated
+    .filter((x) => x.price.value != null && (x.price.value as number) >= 0)
+    .map((x) => ({ x: x.price.value as number, y: x.sc as number, price: x.price, name: collapsedName(x.m, s.collapse, preferredId), org: x.m.org, id: x.m.id, open: x.m.open_weights, z: 100,
+      pass: (x.sc as number) >= minScore && (maxCost == null || (x.price.value as number) <= maxCost) })),
+  [evaluated, minScore, maxCost, s.collapse, preferredId]);
+  // CR-80.2 (Florian 2026-09-18): a model with a score but no public API price is listed in the table,
+  // but it cannot be plotted on a cost chart — say how many are missing instead of staying silent.
+  const unpricedCount = useMemo(() => evaluated.filter((x) => x.price.value == null || (x.price.value as number) < 0).length, [evaluated]);
+  const unpricedNames = useMemo(() => evaluated.filter((x) => x.price.value == null || (x.price.value as number) < 0).map((x) => x.m.display_name).join(", "), [evaluated]);
 
   const points = useMemo(() => allPoints.filter((p) => (compact || p.pass) && (!logCostAxis || p.x > 0)), [allPoints, logCostAxis, compact]);
   const zeroCount = allPoints.filter((p) => p.x === 0).length;
@@ -281,6 +288,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
       {/* CR-75.2: the home page says what the green line means, in words, right under the chart. */}
       {/* CR-77.3: the sentence stays as Florian phrased it; the small tolerance is named in its tooltip and on /about. */}
       {!advanced && mapPrefs.pareto && pareto.length > 0 && <p className="mt-1 text-xs text-gray-400" data-bh-pareto-caption title={FRONTIER_GRACE_NOTE}>Models on the green line are the most capable in their price range.</p>}
+      {unpricedCount > 0 && <p className="mt-1 text-[11px] text-gray-500" data-bh-unpriced-note title={unpricedNames}>{unpricedCount} models without a public price not plotted.</p>}
     </div>;
   }
 
@@ -296,6 +304,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
       </div>
 
       {logX && zeroCount > 0 && <p className="mb-2 text-xs text-amber-300">{zeroCount} zero-cost models cannot appear on a logarithmic axis; switch to linear or open the model price table. Frontier calculations include these models.</p>}
+      {unpricedCount > 0 && <p className="mb-2 text-xs text-gray-400" data-bh-unpriced-note title={unpricedNames}>{unpricedCount} models without a public price not plotted.</p>}
       <div aria-hidden="true" className="card p-4" style={{ height: 580 }}>
         <ResponsiveContainer width="100%" height="100%">
           <ScatterChart accessibilityLayer={false} margin={{ top: 20, right: 40, bottom: 64, left: 30 }}>
