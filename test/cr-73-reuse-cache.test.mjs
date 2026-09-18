@@ -248,7 +248,7 @@ const VERIFIER = [
   'function codingSourceRows(', '// --- evidence packets',
 ].join('\n');
 
-function buildUnits({ verifier = VERIFIER, parser = 'parser v1', extract = 1 } = {}) {
+function buildUnits({ verifier = VERIFIER, parser = 'parser v1', extract = 1, reviewerSource = 'gauntlet v1' } = {}) {
   const rows = [
     { row_id: 'aa#00001', pointer: '/models/0', staged: { a: 1 }, extract: { a: extract }, source: { url: 'https://aa/api', sha256: '1'.repeat(64), retrieved_at: new Date().toISOString() } },
     { row_id: 'aa#00002', pointer: '/models/1', staged: { a: 2 }, extract: { a: 2 }, source: { url: 'https://aa/api', sha256: '1'.repeat(64), retrieved_at: new Date().toISOString() } },
@@ -256,7 +256,7 @@ function buildUnits({ verifier = VERIFIER, parser = 'parser v1', extract = 1 } =
   return buildLiveContractUnits({
     manifest: { datasets: [{ dataset: 'aa', rows: rows.length }], coverage: { required_rows: rows.length, complete: true } },
     verified: { evidence: { packets: [{ dataset: 'aa', rows }] }, report: { run: { first_receipt: new Date().toISOString() } } },
-    verifier, aaEfficiencyParser: parser,
+    verifier, aaEfficiencyParser: parser, reviewerSource,
   });
 }
 
@@ -270,6 +270,15 @@ test('CR-73.2: the built fingerprint ignores run-varying metadata and binds the 
   assert.notEqual(changedCode.fingerprint, a.fingerprint, 'a change to the reviewed verifier invalidates the reuse');
   const [changedData] = buildUnits({ extract: 99 });
   assert.notEqual(changedData.fingerprint, a.fingerprint, 'a changed primary extract invalidates the reuse');
+  const [changedReviewer] = buildUnits({ reviewerSource: 'gauntlet v2' });
+  assert.notEqual(changedReviewer.fingerprint, a.fingerprint, 'a change to the code that asks the question invalidates the reuse');
+});
+
+test('CR-73.2: without the reviewer code version there is no fingerprint, so nothing is reused', () => {
+  const [unit] = buildUnits({ reviewerSource: null });
+  assert.equal(unit.fingerprint, null);
+  assert.equal(vendorUnitFingerprint({ url: 'https://vendor.example/report', captureSha256: '9'.repeat(64),
+    extractionParserSha256: 'p'.repeat(64), rows: SLOTS }), null);
 });
 
 test('CR-73.2: the criteria are part of the question being reused', () => {
@@ -290,7 +299,7 @@ const SLOTS = [
 ];
 const vendorKey = (over = {}) => vendorUnitFingerprint({
   url: 'https://vendor.example/report', captureSha256: '9'.repeat(64), recipe: null,
-  extractionParserSha256: 'p'.repeat(64), rows: SLOTS, ...over,
+  extractionParserSha256: 'p'.repeat(64), reviewerSource: 'gauntlet v1', rows: SLOTS, ...over,
 });
 
 test('CR-73.2 vendor: the key binds the capture, the local parser, the slots and the task', () => {
@@ -300,6 +309,7 @@ test('CR-73.2 vendor: the key binds the capture, the local parser, the slots and
   assert.notEqual(vendorKey({ extractionParserSha256: 'q'.repeat(64) }), key, 'a changed extraction parser re-extracts');
   assert.notEqual(vendorKey({ recipe: 'deepseek-v3-table6' }), key, 'a changed recipe re-extracts');
   assert.notEqual(vendorKey({ url: 'https://vendor.example/other' }), key);
+  assert.notEqual(vendorKey({ reviewerSource: 'gauntlet v2' }), key, 'a changed worker/policy code path re-extracts');
   assert.notEqual(vendorKey({ rows: [{ ...SLOTS[0], protocol: 'pass@5' }, SLOTS[1]] }), key, 'a changed slot protocol re-extracts');
   assert.notEqual(vendorKey({ rows: [SLOTS[0]] }), key, 'a dropped slot re-extracts');
 });

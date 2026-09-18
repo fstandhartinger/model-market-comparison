@@ -257,8 +257,13 @@ A unit is reused only when **all** of this is true:
 
 | Unit | Fingerprint binds | Invalidated by |
 |---|---|---|
-| live contract | the extraction contract (`RULES[dataset]`), the review criteria, the required row count, `sha256(ops/daily/review-live.mjs)`, the reviewed verifier section markers, `sha256(lib/aa-efficiency.mjs)` for `aa_efficiency`, the sorted capture hashes, and a hash over **every** row's `(row_id, pointer, source url, source sha256, staged, extract)` | one byte of any capture, any staged value or primary extract, the contract, the criteria, the verifier or the parser |
-| vendor source | the capture sha256, the recipe name, `sha256(ops/daily/public-candidate.py)`, `sha256(VENDOR_EXTRACTION_TASK)` and the locked slot identities (`id`, `benchmark_id`, `subject`, `unit`, `protocol`) | a changed capture, recipe, local extraction parser or task text, a changed/added/dropped slot — **and**, at hit time, any difference between the cached numbers and the published ones |
+| live contract | the extraction contract (`RULES[dataset]`), the review criteria, the required row count, `sha256(ops/daily/review-live.mjs)`, the reviewed verifier section markers, `sha256(lib/aa-efficiency.mjs)` for `aa_efficiency`, the sorted capture hashes, a hash over **every** row's `(row_id, pointer, source url, source sha256, staged, extract)`, and the **reviewer code** — `gauntlet.mjs` + `live-contracts.mjs` + `worker-policy.mjs` | one byte of any capture, any staged value or primary extract, the contract, the criteria, the verifier, the parser, or the code that builds the packet, sets the round budget or picks the critic |
+| vendor source | the capture sha256, the recipe name, `sha256(ops/daily/public-candidate.py)`, `sha256(VENDOR_EXTRACTION_TASK)`, the locked slot identities (`id`, `benchmark_id`, `subject`, `unit`, `protocol`) and the **reviewer code** (`gauntlet.mjs` + `worker-policy.mjs`) | a changed capture, recipe, local extraction parser, task text or worker/policy code, a changed/added/dropped slot — **and**, at hit time, any difference between the cached numbers and the published ones |
+
+The reviewer code is in both keys because the answer is only as reusable as the question: the
+packet builder, the round budget and the different-family rule all shape what a critic is shown and
+by whom. Without it (`reviewerSource: null`) a unit gets **no fingerprint at all** and is always
+reviewed fresh — not knowing which code asked must never mean reusing the answer.
 
 The vendor `locator` is deliberately *not* in the key: it is written by the extraction, so it is an
 output, not part of the question. A vendor hit writes nothing at all — the published rows keep

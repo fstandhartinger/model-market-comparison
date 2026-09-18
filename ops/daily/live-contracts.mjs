@@ -39,7 +39,7 @@ const VERIFIER_SECTIONS = {
 /**
  * Build one review unit per dataset — pure, in manifest order, no worker call.
  */
-export function buildLiveContractUnits({ manifest, verified, verifier, aaEfficiencyParser, now = () => new Date().toISOString() }) {
+export function buildLiveContractUnits({ manifest, verified, verifier, aaEfficiencyParser, reviewerSource = null, now = () => new Date().toISOString() }) {
   return manifest.datasets.map((dataset) => {
     const packets = verified.evidence.packets.filter((p) => p.dataset === dataset.dataset);
     const allRows = packets.flatMap((p) => p.rows);
@@ -68,13 +68,18 @@ export function buildLiveContractUnits({ manifest, verified, verifier, aaEfficie
     // the complete row set (identity, pointer, staged value, primary extract and the capture
     // hash behind each row), the extraction contract, the criteria, and the reviewed code.
     const captures = [...new Set(allRows.map((r) => r.source?.sha256).filter(Boolean))].sort();
-    const fingerprint = unitFingerprint({
+    const fingerprint = reviewerSource === null ? null : unitFingerprint({
       kind: 'live-contract', id: dataset.dataset,
       inputs: {
         contract: RULES[dataset.dataset] ?? null,
         criteria: LIVE_CONTRACT_CRITERIA.map((c) => ({ id: c.id, text: c.text })),
         required_rows: dataset.rows,
         verifier_sha256: sha256(verifier),
+        // The code that *asks* the question, not only the code that produced the answer: the packet
+        // builder, the round budget, the family-separation rule and the unit builder all shape what
+        // a critic is shown. Without it (`reviewerSource: null`) a unit gets no fingerprint at all
+        // and is always reviewed fresh — not knowing the reviewer version must never mean reusing.
+        reviewer_sha256: sha256(reviewerSource),
         verifier_section: `${start} through ${end}`,
         aa_efficiency_parser_sha256: dataset.dataset === 'aa_efficiency' ? sha256(aaEfficiencyParser) : null,
         captures,

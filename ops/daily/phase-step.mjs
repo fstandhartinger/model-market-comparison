@@ -35,7 +35,13 @@ try {
     const verifier = await readFile('ops/daily/review-live.mjs', 'utf8');
     const aaEfficiencyParser = await readFile('lib/aa-efficiency.mjs', 'utf8');
     const limit = dailyConcurrency();
-    const units = buildLiveContractUnits({ manifest, verified, verifier, aaEfficiencyParser });
+    // CR-73.2: the reviewer's own code is part of the reuse key — the packet builder and round
+    // budget (gauntlet.mjs), the unit builder (live-contracts.mjs) and the family/price policy
+    // (worker-policy.mjs) all shape what a critic is asked and by whom.
+    const reviewerSource = (await readFile('ops/daily/gauntlet.mjs', 'utf8'))
+      + (await readFile('ops/daily/live-contracts.mjs', 'utf8'))
+      + (await readFile('ops/rebuild-2026-09/bin/worker-policy.mjs', 'utf8'));
+    const units = buildLiveContractUnits({ manifest, verified, verifier, aaEfficiencyParser, reviewerSource });
     // CR-73.3: the seven contract reviews are independent and each writes only its own
     // gauntlet directory, so they share the waiting; every decision below stays in
     // manifest order (see ops/daily/live-contracts.mjs).
