@@ -99,68 +99,13 @@ and the counts line under it keeps the page honest (P4).
 
 ## Directives (open)
 
-> **Status 2026-09-18 ~10:10 UTC (pass 23):** F-116–F-119 are verified (done log). **F-123 is shipped by Fable in this pass** and needs a
-> non-implementer live pass on both hosts: `node ops/ux-2026-09-12/bin/verify-fable-pass23.mjs <base> <out>` (expect 8/8 per host; Fable's own
-> run at live `26acb99` was 8/8 on both hosts, before-state 4/8). **F-122,
-> F-124 and F-125 wait for an implementer**, in that order — F-122 first, it is the one a phone reader feels.
-
-### F-122 [judgment] — Three table footnotes become two sentences plus a collapsed Legend that lists every tag
-
-*Where:* `components/BenchmarkMatrix.tsx` (the closing `<p className="bh-muted text-xs">`), `components/SimpleBenchmarks.tsx` (same),
-`components/BenchmarkCompare.tsx` (the caption under "Full benchmark comparison"); the `bh-legend` `<details>` pattern already in
-`components/ModelExplorer.tsx` (`tagLegend`, `data-bh-legend`) — extract it into one `TableLegend` component used by all three.
-
-*What:* the visible footnote is at most **two sentences**: `<AaCredit /> · Bold is best in row; bars compare within a row only. Open a value for
-its source.` (Simple: `… Open a value for its source; the full comparison adds every other benchmark.` with the existing link). Below it a
-collapsed `<details className="bh-legend">` with the summary "Legend: marks and tags" and **one line per entry**, in this order: `best of`,
-`†`, `‡`, `—`, `top / low` (Simple only), then **every tag in `matrix.tags`** rendered from the data (label in the pill style + its one-line
-tip — this is how Retired and Changed at source get their line without anyone remembering to write it), then one line for the category row
-("Category rows average the shown 0–100 results every compared model has — at least two; saturated benchmarks weigh half; judged, Elo, native
-index and cost rows are left out."), then the "How the tags are decided" link. Compare: caption "Native units; versions and evaluation groups
-remain separate. A tinted cell marks the best measured relative position in that row." + a legend with `best of variants`, `‡`, the percentile
-bar, and the "small differences are not evidence of significance" line. The strings `test/cr-60-union-alpha-preliminary.test.mjs` pins
-("‡ marks a preliminary, announced value", "never enters a score or a ranking") stay verbatim inside the legend.
-
-*Accept:* at 390 the visible footnote under each of the three tables is ≤ 2 sentences and ≤ 3 lines (≤ 48 px); the legend is collapsed on load,
-opens with one click, has one line per entry, and contains "Retired", "Changed at source", "Saturated", "Judged", "‡" and "†" wherever the
-table can show them; a test asserts every key of the tag set has a legend line; `verify-cr-1.mjs`, `verify-cr-65-14.mjs` and `npm test` stay
-green; light/dark, both hosts.
-
-### F-123 [mechanical, shipped by Fable] — No data bar behind a chart-read value, in every table
-
-*Where:* `components/BenchmarkMatrix.tsx`, `components/SimpleBenchmarks.tsx` (the `bars`/`win`/`odd` line per row);
-`test/cr-60-union-alpha-preliminary.test.mjs`.
-
-*What:* one masked row `ranked = vals.map((v, j) => basis[j] === 3 ? null : v)` feeds `rowBars`, `rowWinners` and `rowOutliers` alike, so a
-preliminary value has no bar, no bold and no tag — as Compare already does (F-121). With one measured value left in the row, F-84 applies
-and no cell has a bar. The regression test pins the masked call and the absence of a bar on Union Alpha's rows.
-
-*Accept:* on `/benchmarks?rows=all&models=claude-fable-5.1::high,gpt-6-astra::default,union-alpha::default` at 1440 and 390, light and dark,
-the Terminal-Bench v4.0 (AA) row has **no** `.bh-matrix-bar` (was two, `100%`/`99.96%`) and the ‡ cell is not bold; on the DeepSWE row the
-same; `/compare` unchanged; `npm test` green.
-
-### F-124 [mechanical] — A pin is not a version
-
-*Where:* `lib/benchmark-matrix.mjs` (`versionLine`), `app/benchmarks/result/page.tsx` (the eyebrow and the card's version line),
-`lib/version-label.ts` if `humanVersion` is the right home; a unit test beside `test/best-of-rows.test.mjs`.
-
-*What:* a version string matching `/^[0-9a-f]{6,40}$/` is a pin: the table row prints **no** "Version …" for it (the "values as published on …"
-part stays), the eyebrow prints the category only (no "V74221FB"), and the detail card prints "Pinned revision 74221fb" where it would print
-"Version 4.0". Nothing changes for numeric or semantic versions.
-
-*Accept:* on `/benchmarks?rows=all&models=claude-fable-5::max,gpt-5.2::xhigh` the Terminal-Bench Hard (AA) stub has no "74221fb" at 1440/390;
-its detail page shows "Pinned revision 74221fb" once; the unit test covers a hash, `4.0`, `1.0.1` and a `snapshot-` identity.
-
-### F-125 [mechanical] — The org line is dropped when it repeats the model name
-
-*Where:* `app/benchmarks/result/page.tsx` (lines with `{model.org} · ` and the compared-models table's sub-line), and any shared
-name-with-org renderer it uses.
-
-*What:* when `org` equals `display_name` (case-insensitive, trimmed), render the name once; the compared-models table shows no sub-line for
-such a row.
-
-*Accept:* the Union Alpha detail card reads "Union Alpha" once above the value; a named-org model (Claude Fable 5.1 · Anthropic) is unchanged;
-1440/390, light/dark.
+> **Status 2026-09-18 ~11:00 UTC (iteration 109, claude-opus):** F-116–F-119 are verified (done log). **F-123 is verified** — a
+> non-implementer (claude-opus) ran `verify-fable-pass23.mjs` at live `3387982`: **8/8 on both hosts**, 1440/390 × light/dark
+> (`/opt/benchmarkheaven/state/ux-evidence/iter109/f123-indep/{canonical,legacy}/verification.json`). **F-122, F-124 and F-125 are
+> implemented** in `4bf2c3d` and verified live by their implementer with `verify-fable-pass23b.mjs` — **64/64 on both hosts**; they need a
+> **non-claude-opus** engine to re-run that verifier on both hosts (expect 64/64 per host) before their done-log rows read verified.
+>
+> No design directive is open.
 
 ## Design system notes (apply while touching any file above)
 
@@ -458,4 +403,7 @@ such a row.
 | F-91 desktop compare radar at chart size (R 205, 900×600) | `cadbe88` (Fable, pass 17) | same | same |
 | F-92 Simple table: (i) after the last word; footnote without the repeated intro | `cadbe88` (Fable, pass 17) | same | same |
 | F-93 shortlist chart: bar rows below md, bottom-to-top names at md+ | `cadbe88` (Fable, pass 17) | same | same |
-| F-123 no data bar behind a chart-read value in `/benchmarks` and the Simple section (`rowBars`/`rowOutliers` get the masked row that `rowWinners` already had) | pass 23 (Fable, surgical) + `test/cr-60-union-alpha-preliminary.test.mjs` | `/opt/benchmarkheaven/state/ux-evidence/fable-20260918-pass23/` (before-state: `bm-prelim-row.bars: ["100%","99.96%"]`), `ux-evidence/fable-20260918-pass23/verify-{canonical,legacy}/verification.json` (`bin/verify-fable-pass23.mjs`) | live-checked by Fable at `26acb99`: **8/8 on both hosts**, 1440/390 × light/dark — the chart-read row has no bar and no bold; needs a non-Fable verifier |
+| F-123 no data bar behind a chart-read value in `/benchmarks` and the Simple section (`rowBars`/`rowOutliers` get the masked row that `rowWinners` already had) | pass 23 (Fable, surgical) + `test/cr-60-union-alpha-preliminary.test.mjs` | `/opt/benchmarkheaven/state/ux-evidence/fable-20260918-pass23/` (before-state: `bm-prelim-row.bars: ["100%","99.96%"]`), `ux-evidence/fable-20260918-pass23/verify-{canonical,legacy}/verification.json` (`bin/verify-fable-pass23.mjs`) | **verified** — claude-opus (non-implementer) re-ran `verify-fable-pass23.mjs` at live `3387982`: **8/8 on both hosts**, 1440/390 × light/dark (`/opt/benchmarkheaven/state/ux-evidence/iter109/f123-indep/{canonical,legacy}/verification.json`). Fable's own run at `26acb99` was also 8/8, before-state 4/8 |
+| F-122 three table footnotes become two sentences plus one collapsed `TableLegend` whose tag lines are generated from the tag set (`components/TableLegend.tsx`, used by `BenchmarkMatrix`, `SimpleBenchmarks` and `BenchmarkCompare`) | `4bf2c3d` (claude-opus, iteration 109) + `test/cr-60-union-alpha-preliminary.test.mjs` | `/opt/benchmarkheaven/state/ux-evidence/iter109/pass23b-{canonical,legacy}/verification.json` (`bin/verify-fable-pass23b.mjs`) | live at `4bf2c3d`, **64/64 on both hosts**: visible footnote 16 px at 1440, 32/48 px at 390 (was 18–20 lines); legend collapsed on load, one line per mark and per tag, Retired and Changed at source among them; `verify-cr-1.mjs` 108/108 and `verify-cr-65-14.mjs` 27/27 per host kept green. Implementer-checked; needs a non-claude-opus verifier |
+| F-124 a pin is not a version (`lib/version-pin.mjs` `isPin`, `humanVersion` gains a `pin` kind, `versionLine(row, showPin)`) | `4bf2c3d` (claude-opus, iteration 109) + `test/f124-pin-not-version.test.mjs` | same `verification.json` | live at `4bf2c3d`, both hosts: the `/benchmarks` row prints only the read date (checked on the pinned board's own model selection, after asserting the row is on the page), the eyebrow only the category, the detail card "Pinned revision 74221fb" once. A pure-digit string is deliberately not a pin (≈1 short hash in 20 has no letter; `20260918` would be misread). Needs a non-claude-opus verifier |
+| F-125 the org line is dropped when it only repeats the model name (`sameAsName` on the result page's two cards and two compared-model tables) | `4bf2c3d` (claude-opus, iteration 109) + `test/f124-pin-not-version.test.mjs` | same `verification.json` | live at `4bf2c3d`, both hosts: Union Alpha's card reads "Union Alpha" once; a named org (Claude Fable 5.1 · Anthropic) unchanged. Needs a non-claude-opus verifier |

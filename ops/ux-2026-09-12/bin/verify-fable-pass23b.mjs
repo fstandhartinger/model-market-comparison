@@ -18,6 +18,8 @@ const BASE = (process.argv[2] || 'https://benchmarkheaven.com').replace(/\/$/, '
 const OUT = process.argv[3] || '/opt/benchmarkheaven/state/ux-evidence/iter109/verify';
 await fs.mkdir(OUT, { recursive: true });
 const SEL = 'claude-fable-5.1::high,gpt-6-astra::default,union-alpha::default';
+// The pinned board has no Union Alpha value — F-124's row needs models that are scored on it.
+const PIN_SEL = 'glm-4.5v::non-reasoning,gemini-3.5-flash::high,mimo-v2.5-pro::default';
 // The tag keys the full comparison must explain; read from the taxonomy so a new tag fails this too.
 const taxonomy = JSON.parse(await fs.readFile(new URL('../../../data/benchmark-taxonomy.json', import.meta.url), 'utf8'));
 const TAG_KEYS = Object.keys(taxonomy.tags);
@@ -81,11 +83,26 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
   const words = ['Retired', 'Changed at source', 'Saturated', 'Judged', '‡', '†'];
   const absent = words.filter((w) => !opened.text.includes(w));
   check(`${tag}: /benchmarks legend opens and explains every mark`, opened.open === true && absent.length === 0, { open: opened.open, absent });
-  // F-124 on the table: a pin is never printed as a version.
-  const body = await p.evaluate(() => document.querySelector('main')?.innerText.replace(/\s+/g, ' ') ?? '');
-  check(`${tag}: /benchmarks prints no pin as a version`, !/74221fb/i.test(body), { hit: (body.match(/.{0,30}74221fb.{0,20}/i) ?? [])[0] ?? null });
   check(`${tag}: /benchmarks has no page error`, errors.length === 0, errors);
   await p.screenshot({ path: `${OUT}/${tag}-benchmarks-legend.png`, fullPage: false }).catch(() => {});
+
+  // ---- F-124 on the table. The pinned board (aa-terminal-bench-hard::74221fb) has no Union Alpha
+  // value, so it needs its own model selection — checking the previous page would have passed
+  // vacuously, on a row that was never rendered.
+  await p.goto(`${BASE}/benchmarks?rows=all&models=${encodeURIComponent(PIN_SEL)}`, { waitUntil: 'domcontentloaded', timeout: 90000 });
+  await settle();
+  const pinRow = await p.evaluate(() => {
+    const th = [...document.querySelectorAll('main table th')].find((x) => /Terminal-Bench Hard/.test(x.textContent ?? ''));
+    if (!th) return null;
+    const titles = [...th.querySelectorAll('[title]')].map((x) => x.getAttribute('title') ?? '');
+    return { text: (th.textContent ?? '').replace(/\s+/g, ' ').trim(), titles, sub: th.querySelector('.bh-matrix-sub')?.textContent ?? null };
+  });
+  const pinBody = await p.evaluate(() => document.querySelector('main')?.innerText.replace(/\s+/g, ' ') ?? '');
+  check(`${tag}: the pinned board is actually on the page`, !!pinRow, { found: !!pinRow });
+  check(`${tag}: /benchmarks prints no pin as a version`,
+    !!pinRow && !/74221fb/i.test(pinRow.text) && !pinRow.titles.some((t) => /74221fb/i.test(t)) && !/74221fb/i.test(pinBody),
+    { sub: pinRow?.sub, hit: (pinBody.match(/.{0,30}74221fb.{0,20}/i) ?? [])[0] ?? null,
+      titleHit: pinRow?.titles.find((t) => /74221fb/i.test(t)) ?? null });
 
   // ---- / (Simple): the same footnote treatment, plus the top/low line
   await p.goto(`${BASE}/`, { waitUntil: 'domcontentloaded', timeout: 90000 });

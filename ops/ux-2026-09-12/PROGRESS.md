@@ -4815,3 +4815,66 @@ https://benchmarkheaven.com and 8/8 on the legacy host** at 1440/390 × light/da
 `.bh-matrix-bar` (was `100%`/`99.96%`) and the ‡ cell is not bold (`ux-evidence/fable-20260918-pass23/verify-{canonical,legacy}/verification.json`,
 `deploy-verify.log`). The first canonical attempt timed out on `page.goto` 60 s after the switchover (cold container) and was re-run; the
 legacy host passed on the first attempt. F-123 is implementer-checked only — handoff (1) stands.
+
+## Iteration 109 — 2026-09-18 10:10 → ~11:20 UTC (claude-opus, work): Fable pass 23's three open findings, and F-123 verified by a second engine
+
+One-writer check: only this iteration (`iterate.sh claude-opus work`); tree clean at start, no upstream commits, `03-CHANGE-REQUESTS-VERBATIM.md`
+unmodified (no supervisor CR landed mid-iteration), the 05:17 daily long finished. Live `3387982` on both hosts at the start.
+
+**F-123 is verified.** Fable shipped it in pass 23 and could not verify its own work. `bin/verify-fable-pass23.mjs` re-run here by claude-opus
+(non-implementer) at live `3387982`: **8/8 on https://benchmarkheaven.com and 8/8 on the legacy host**, 1440/390 × light/dark — Union Alpha's
+Terminal-Bench v4.0 row carries no `.bh-matrix-bar` and its ‡ cell is not bold (`/opt/benchmarkheaven/state/ux-evidence/iter109/f123-indep/`).
+Its done-log row now reads verified.
+
+**F-122 — the footnote a phone reader could not use.** The three footnotes had reached 196, 218 and 66 words (18 and 20 lines at 390 px) because
+every change request since CR-38 appended a sentence to the same paragraph. The real defect was not the length: the paragraph explained Saturated
+and Judged but **not Retired or Changed at source**, and a tag pill's `title` shows nothing to a tap — so CR-65.14's newest tag was the one a phone
+reader had no way to decode. One `components/TableLegend.tsx` now serves `/benchmarks`, the Simple Benchmarks section and Compare. Visible
+footnote: two sentences. Below it a collapsed **Legend: marks and tags** with one line for `best of`, †, ‡, —, Simple's top/low, then **every key
+of `matrix.tags` rendered from the data** (label in the pill style + its one-line tip), the score-row and category-row rules, and the "How the tags
+are decided" link. Compare's legend speaks its own units: best of variants, ‡, the percentile bar, the significance caveat, which value a cell
+picks. Generating the tag lines is the point — the next tag arrives with its explanation instead of waiting for someone to remember the paragraph.
+
+**F-124 — a pin is not a version.** `aa-terminal-bench-hard::74221fb` is a pinned revision of the benchmark's own repository; the row printed
+"Version 74221fb" and the eyebrow "V74221FB". `lib/version-pin.mjs` holds the single rule the table (`.mjs`) and the copy helpers (`.ts`) share.
+`humanVersion` gains a `pin` kind, `versionSuffix` returns nothing for one, `versionLine(row, showPin)` gives the row only the read date, and the
+detail card names it once as "Pinned revision 74221fb". **A pure-digit string is deliberately not treated as a pin** — about one short git hash in
+twenty has no letter, and a version like `20260918` would otherwise be misread as one; the rule fails closed towards "version". One board is
+affected today (`74221fb` is the only hash-like version among the dataset's 35).
+
+**F-125 — the doubled name.** Union Alpha's org is its own name, so the result card read "Union Alpha · Union Alpha" and the compared-models table
+repeated the name beneath itself. `sameAsName` drops the org where it only echoes the display name, on both cards and both compared-model tables;
+a named org (Claude Fable 5.1 · Anthropic) is untouched.
+
+**A verifier fix, recorded rather than hidden.** `verify-cr-65-14.mjs` searched the whole document for `.bh-matrix-tag[data-tag="retired"]` and
+now also found the legend's **sample** pill, whose tip sits beside it in the list rather than in a `title` — 19/27 locally. Scoped to `main table`,
+which is what "a retired row" always meant; the sample pill carries `data-bh-legend-sample` and loses the help cursor. **27/27** again locally.
+That is a scoping correction to a check, not a relaxation of it: the tags on the rows are still required to carry their tip.
+
+**New verifier `ops/ux-2026-09-12/bin/verify-fable-pass23b.mjs`** — 15 checks per context, 1440/390 × light/dark: footnote sentence count, height
+and line count on all three tables; the legend collapsed on load, then opened with a line per mark and per tag and the words *Retired*, *Changed at
+source*, *Saturated*, *Judged*, *‡*, *†* present; no pin printed as a version anywhere on `/benchmarks`; "Pinned revision 74221fb" exactly once on
+the detail page with no hit in the eyebrow; "Union Alpha" once above the value. **60/60 against a local production build** before the push.
+
+**Gates at the pushed tree (`4bf2c3d`):** `node scripts/build-dataset.mjs` ✓ (841 models, 519 scored rows; only `generated_at` moved, reverted),
+`npm test` **844 (843 pass, 1 skipped, 0 fail)**, `npx tsc --noEmit -p .` clean. `verify-cr-1.mjs` 108/108 and `verify-fable-pass23.mjs` 8/8 locally
+alongside.
+
+**Live, both hosts, at `4bf2c3d`** (pushed 10:26 UTC, both hosts flipped by 10:28:58 UTC):
+`verify-fable-pass23b.mjs` **64/64 on https://benchmarkheaven.com and 64/64 on the legacy host**, 1440/390 × light/dark
+(`/opt/benchmarkheaven/state/ux-evidence/iter109/pass23b-{canonical,legacy}/verification.json`). Alongside, unchanged by this work:
+`verify-cr-1.mjs` **108/108** per host, `verify-cr-65-14.mjs` **27/27** per host, `verify-fable-pass23.mjs` **8/8** per host
+(`ux-evidence/iter109/{cr1,cr6514,p23}-{canonical,legacy}/`).
+
+**One check was vacuous and was fixed before the live run.** The first draft of `verify-fable-pass23b.mjs` looked for the pin string on the same
+`/benchmarks` page as the footnote checks — but `aa-terminal-bench-hard::74221fb` has no Union Alpha value, so that row was never rendered and
+"no pin printed as a version" passed on an empty page. The verifier now loads the pinned board's own model selection
+(`glm-4.5v::non-reasoning,gemini-3.5-flash::high,mimo-v2.5-pro::default`), **asserts the row is present first**, and only then asserts that neither
+its header text, nor any of its `title` attributes, nor the page body contains `74221fb`. 60 checks became 64.
+
+**Handoff.** (1) F-122/F-124/F-125 are implementer-checked live; they need a **non-claude-opus** engine to re-run
+`node ops/ux-2026-09-12/bin/verify-fable-pass23b.mjs <base> <out>` on both hosts (expect 60/60 per host) before their done-log rows read verified.
+(2) CR-65.14 still waits for a non-implementer run of `verify-cr-65-14.mjs` — iteration 107 implemented it, this iteration only re-scoped one of its
+selectors, so a third engine is the cleanest verifier. (3) No design directive is open; the next Fable pass is due after the sixth work iteration
+since pass 23. (4) The highest-value open ledger rows are unchanged: CR-43.1 (full independent revalidation), CR-34.4 (AA Agentic Index),
+CR-73.5 (prove the pipeline speed-up), CR-54.2/54.3 (further Epoch boards).
