@@ -17,6 +17,7 @@ const METRICS: { key: ScoreKey | "cost"; label: string; lowerBetter?: boolean; d
   { key: "aa_coding_index", label: "AA Coding Index", digits: 1 },
   { key: "aa_coding_agent", label: "AA Coding Agent Index v1.4", digits: 1 },
   { key: "aa_intelligence_index", label: "AA Intelligence Index", digits: 1 },
+  { key: "aa_agentic_index", label: "AA Agentic Index", digits: 1 },
   { key: "epoch_eci_software", label: "Epoch Software Engineering ECI", digits: 1 },
   { key: "epoch_eci", label: "Epoch General ECI", digits: 1 },
   { key: "cost", label: "Cheapest price", lowerBetter: true },

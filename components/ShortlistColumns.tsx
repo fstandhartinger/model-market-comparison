@@ -12,7 +12,7 @@ import { GearIcon } from "./GearIcon";
 
 /** CR-33.2: the scores the chart can show. The Main Composite is the default; category composites join
  *  this list too (CR-25.6). */
-const CHART_SCORES: ScoreKey[] = ["composite", "aa_intelligence_index", "aa_coding_index", "aa_coding_agent", "epoch_eci", "epoch_eci_software", "designarena_fullstack", "designarena_frontend", "cat_coding", "cat_agentic", "cat_science", "cat_long_context"];
+const CHART_SCORES: ScoreKey[] = ["composite", "aa_intelligence_index", "aa_coding_index", "aa_coding_agent", "aa_agentic_index", "epoch_eci", "epoch_eci_software", "designarena_fullstack", "designarena_frontend", "cat_coding", "cat_agentic", "cat_science", "cat_long_context"];
 
 /** CR-33.1 (Florian 2026-09-15): a column chart above the shortlist table — every shortlisted model's score,
  *  high → low, values on the columns. The table's five columns keep their colours here. */

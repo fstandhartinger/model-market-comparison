@@ -17,11 +17,14 @@ const history = await readHistory();
 const artificialanalysis = await read('data/raw/artificialanalysis.json');
 const designarena = await read('data/raw/designarena.json');
 const epochEci = await read('data/raw/epoch-eci.json');
+const { agenticAttachmentFromFiles } = await import('../lib/aa-agentic-index.mjs');
+const aaAgentic = await agenticAttachmentFromFiles({ rawDir: 'data/raw', aaModels: artificialanalysis.models, modelRows: dataset.models });
 const headlineObservations = buildHeadlineObservations({
   artificialanalysis: { ...artificialanalysis, sha256: await sha256('data/raw/artificialanalysis.json') },
   designarena: { ...designarena, sha256: await sha256('data/raw/designarena.json') },
   epochEci,
   modelRows: dataset.models,
+  agentic: aaAgentic,
 });
 // CR-64: the per-benchmark kind map is copied from the taxonomy by build-dataset, not derived from scores; check it on its own.
 // CR-65.7: likewise the judged-benchmark list, copied from data/benchmark-caveats.json.

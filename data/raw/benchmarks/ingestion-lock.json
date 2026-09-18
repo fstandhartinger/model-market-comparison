@@ -36,5 +36,14 @@
     "source_file": "data/raw/benchmarks/daily-evidence/2026-09-15-openrouter-benchmarks/4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641.gz",
     "source_sha256": "4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641",
     "note": "Hash of the decompressed source=openrouter&include_run_config=true response; ingestion refuses the rows when data/raw/openrouter-benchmarks.json no longer carries exactly this capture."
+  },
+  "openrouter_aa_relay": {
+    "source_url": "https://openrouter.ai/benchmarks",
+    "api_url": "https://openrouter.ai/api/v1/benchmarks",
+    "snapshot_date": "2026-09-18",
+    "retrieved_at": "2026-09-18T11:09:37.540Z",
+    "source_file": "data/raw/benchmarks/daily-evidence/2026-09-18-openrouter-aa-relay/d05928a5c8a059f5db394d7170a69be01e08b4b9a46d4bf84a8ebce3d0b3ec06.gz",
+    "source_sha256": "d05928a5c8a059f5db394d7170a69be01e08b4b9a46d4bf84a8ebce3d0b3ec06",
+    "note": "Hash of the decompressed unfiltered /api/v1/benchmarks response; ingestion refuses the AA agentic rows when the capture no longer matches. Use: CR-34.4 (AA Agentic Index, relayed from Artificial Analysis; AA attribution, relay named). Rotate by re-running scripts/lock-openrouter-aa-relay.mjs and reviewing the diff."
   }
 }

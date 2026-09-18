@@ -92,11 +92,14 @@ export async function appendState({ root = ROOT, from = null, source = null, col
     load("artificialanalysis.json"), load("designarena.json"), load("epoch-eci.json"), load("../dataset.json"),
   ]);
   const withHash = async (payload, name) => payload ? { ...payload, sha256: await fileSha256(join(rawDir, name)) } : null;
+  const { agenticAttachmentFromFiles } = await import("../lib/aa-agentic-index.mjs");
+  const aaAgentic = artificialanalysis && dataset ? await agenticAttachmentFromFiles({ rawDir, aaModels: artificialanalysis.models, modelRows: dataset.models }) : null;
   const headlineObservations = buildHeadlineObservations({
     artificialanalysis: await withHash(artificialanalysis, "artificialanalysis.json"),
     designarena: await withHash(designarena, "designarena.json"),
     epochEci,
     modelRows: dataset?.models || [],
+    agentic: aaAgentic,
   });
   const provisional = buildState([...snapshot.observations ?? [], ...headlineObservations], { state_id: "pending", source: label, collected_at: when });
   const existing = (await readIndex(dir)).states.find((s) => s.content_sha256 === provisional.content_sha256);

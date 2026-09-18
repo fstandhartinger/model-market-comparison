@@ -83,6 +83,7 @@ export interface ClientModel {
     aa_coding_index: number | null;
     aa_coding_agent: number | null;
     aa_intelligence_index: number | null;
+    aa_agentic_index: number | null;
     epoch_eci: number | null;
     epoch_eci_software: number | null;
     designarena_frontend: number | null;
@@ -240,6 +241,7 @@ export function clientData(ds: Dataset, benchmaxxing: Record<string, ClientBench
         aa_coding_index: m.benchmarks?.aa_coding_index ?? null,
         aa_coding_agent: m.benchmarks?.aa_coding_agent_index ?? null,
         aa_intelligence_index: m.benchmarks?.aa_intelligence_index ?? null,
+        aa_agentic_index: m.benchmarks?.aa_agentic_index ?? null,
         epoch_eci: m.benchmarks?.epoch_eci ?? null,
         epoch_eci_software: m.benchmarks?.epoch_eci_software ?? null,
         designarena_frontend: m.designarena?.frontend?.elo ?? null,

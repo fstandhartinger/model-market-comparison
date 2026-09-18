@@ -26,7 +26,7 @@ test('headline source snapshots become stable, provenance-bearing history observ
     },
     modelRows: [{ id: 'model-a::default', aa_model_id: 'aa-a', display_name: 'Model A', benchmarks: { epoch_eci: 150, epoch_eci_software: 160 }, designarena: { frontend: { modelId: 'da_a' } } }],
   });
-  assert.equal(HEADLINE_REGISTRY.length, 6);
+  assert.equal(HEADLINE_REGISTRY.length, 7);
   assert.equal(observations.length, 6);
   assert.deepEqual([...new Set(observations.map((row) => row.benchmark_id))].sort(), [
     'aa-coding-index::snapshot', 'aa-intelligence-index::snapshot', 'designarena-frontend::snapshot', 'epoch-eci::general', 'epoch-eci::software',

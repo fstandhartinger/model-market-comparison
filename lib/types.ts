@@ -1,6 +1,7 @@
 import type { BenchmarkResults } from "./benchmark-scores.mjs";
 export interface Benchmarks {
   aa_intelligence_index?: number | null;
+  aa_agentic_index?: number | null;
   aa_coding_index?: number | null;
   aa_coding_agent_index?: number | null;
   epoch_eci?: number | null;
@@ -215,6 +216,7 @@ export interface ModelRow {
   benchmark_override_note?: string;
   designarena_attachment_note?: string;
   epoch_eci_attachment_note?: string;
+  aa_agentic_attachment_note?: string;
   token_efficiency?: TokenEfficiency;
 }
 
@@ -251,6 +253,7 @@ export type ScoreKey =
   | "aa_coding_index"
   | "aa_coding_agent"
   | "aa_intelligence_index"
+  | "aa_agentic_index"
   | "epoch_eci"
   | "epoch_eci_software"
   | "designarena_frontend"
@@ -268,6 +271,7 @@ export const SCORE_SHORT_LABELS: Record<ScoreKey, string> = {
   aa_coding_index: "AA Coding",
   aa_coding_agent: "AA Coding Agent v1.4",
   aa_intelligence_index: "AA Intelligence",
+  aa_agentic_index: "AA Agentic",
   epoch_eci: "Epoch ECI",
   epoch_eci_software: "Epoch Software ECI",
   designarena_frontend: "DesignArena Web Apps (agentic) Elo",
@@ -285,6 +289,7 @@ export const SCORE_PICKER_LABELS: Record<ScoreKey, string> = {
   aa_intelligence_index: "AA Intelligence Index",
   aa_coding_index: "AA Coding Index",
   aa_coding_agent: "AA Coding Agent Index v1.4 (pinned snapshot)",
+  aa_agentic_index: "AA Agentic Index",
   epoch_eci: "Epoch ECI",
   epoch_eci_software: "Epoch Software ECI",
   designarena_fullstack: "DesignArena Full-Stack (Elo)",
@@ -300,6 +305,7 @@ export const SCORE_LABELS: Record<ScoreKey, string> = {
   aa_coding_index: "ArtificialAnalysis — Coding Index",
   aa_coding_agent: "ArtificialAnalysis — Coding Agent Index v1.4 (median harness; pinned snapshot, AA now publishes v1.5)",
   aa_intelligence_index: "ArtificialAnalysis — Intelligence Index",
+  aa_agentic_index: "ArtificialAnalysis — Agentic Index (relayed via OpenRouter)",
   epoch_eci: "Epoch AI — Capabilities Index (ECI)",
   epoch_eci_software: "Epoch AI — Software Engineering ECI",
   designarena_frontend: "DesignArena — Web Apps (agentic) Elo",

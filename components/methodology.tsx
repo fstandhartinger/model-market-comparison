@@ -48,6 +48,9 @@ export function scoreTip(score: ScoreKey): React.ReactNode {
       has its own anchors, so a 60 in Coding and a 60 in Science are not the same level. <a className="text-accent underline" href="/about#category-scores">How we calculate</a>
       <AaCredit className="mt-1 block text-gray-400" /> <EpochCredit className="block text-gray-400" /></>;
   }
+  if (score === "aa_agentic_index") {
+    return <>The Artificial Analysis Agentic Index: a composite of agentic evaluations, published as one value per model, measured on that model&apos;s primary configuration. Artificial Analysis does not expose it in its free API; we read it from OpenRouter&apos;s Benchmarks API, which relays Artificial Analysis rows (the relay is named as the source), and attach it to the model family&apos;s representative. Shown on Artificial Analysis&apos; scale exactly as reported. <AaCredit className="mt-1 block text-gray-400" /></>;
+  }
   if (score === "epoch_eci" || score === "epoch_eci_software") {
     return <>An Epoch AI Capabilities Index. General ECI is copied from Epoch’s published model scores; Software Engineering ECI is refit from Epoch’s published software-benchmark performance and difficulty exports, requiring at least two benchmarks. Epoch publishes the index on a 100–170-ish capability scale; the Composite percentile-normalizes it. Source and date are shown below the table. <EpochCredit className="mt-1 block text-gray-400" /></>;
   }

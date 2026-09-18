@@ -2,61 +2,239 @@
   "version": "2026-09-17",
   "note": "Benchmaxxing calibration tier table (job bh-benchmaxxing-calibration-20260917). Keyed by benchmark family (registry id before '::'). Tiers: headline = public question set that labs quote in release posts, so it is the board most exposed to targeted tuning and contamination; heldout = private/unpublished questions, tasks created after most training cutoffs, or a held-out split, which a lab cannot tune toward; domain = a vertical professional domain (legal, finance, spreadsheet, medical) whose gaps mostly show specialisation; secondary = public but rarely quoted, or measures a trait rather than task skill; aggregate = an index built from other boards (never compared); judged = graded by votes or a judge model (already outside the signal). Only benchmark facts decide a tier, never who scores well on it.",
   "tiers": {
-    "aa-aime": { "tier": "headline", "reason": "AIME 2025 problems are public and quoted in nearly every reasoning-model release post." },
-    "aa-gpqa-diamond": { "tier": "headline", "reason": "Public 198-question set, the most-quoted science number in release posts." },
-    "openrouter-gpqa-diamond": { "tier": "headline", "reason": "Same public GPQA Diamond questions, re-run by OpenRouter." },
-    "aa-hle": { "tier": "headline", "reason": "Humanity's Last Exam questions are public and a standard release-post headline." },
-    "aa-scicode": { "tier": "headline", "reason": "Public SciCode problems, long part of the widely quoted AA index." },
-    "aa-ifbench": { "tier": "headline", "reason": "Public IFBench prompts and checkers, quoted in open-model cards." },
-    "aa-tau2-telecom": { "tier": "headline", "reason": "tau2-bench is public and one of the most-quoted agent numbers in release posts." },
-    "openrouter-tau2-bench-airline": { "tier": "headline", "reason": "Public tau2-bench airline domain, re-run by OpenRouter." },
-    "aa-terminal-bench": { "tier": "headline", "reason": "Terminal-Bench 2.x tasks are public and quoted in nearly every coding/agent release post." },
-    "vals-index-terminal-bench-2.1": { "tier": "headline", "reason": "Same public Terminal-Bench 2.1 tasks, run by Vals." },
-    "aa-terminal-bench-hard": { "tier": "headline", "reason": "Pinned subset of the public Terminal-Bench tasks." },
-    "aa-mmmu-pro": { "tier": "headline", "reason": "Public MMMU-Pro questions, the standard vision headline." },
-    "aa-lcr": { "tier": "headline", "reason": "AA-LCR dataset is published and quoted in open-model cards." },
-    "simpleqa-verified": { "tier": "headline", "reason": "Public SimpleQA Verified questions, quoted in release posts." },
-    "aa-omniscience": { "tier": "heldout", "reason": "Private AA question set; also penalises confident wrong answers, which tuning on public sets does not help." },
-    "aa-critpt": { "tier": "heldout", "reason": "Research-level physics with answers kept private by the authors." },
-    "aa-gdp-pdf": { "tier": "heldout", "reason": "AA's own unpublished long-PDF tasks (2026)." },
-    "aa-tau3-banking": { "tier": "heldout", "reason": "New tau3 banking domain, not yet a release-post number." },
-    "aa-automationbench": { "tier": "heldout", "reason": "AA runs a held-out split of AutomationBench." },
-    "aa-enterpriseops-gym": { "tier": "heldout", "reason": "New enterprise MCP environments, not a release-post number." },
-    "aa-analystagent": { "tier": "heldout", "reason": "AA's own unpublished analyst tasks." },
-    "aa-itbench": { "tier": "heldout", "reason": "AA's offline incident snapshots, not quoted by labs." },
-    "aa-terminal-bench@4.0": { "tier": "heldout", "reason": "Terminal-Bench v4.0 is a fresh task set released after most current models were trained; applies to version 4.0 only." },
-    "apprenticebench-api": { "tier": "heldout", "reason": "New third-party ERP environment (Sep 2026)." },
-    "apprenticebench-cua": { "tier": "heldout", "reason": "New third-party ERP computer-use environment (Sep 2026)." },
-    "deepswe": { "tier": "heldout", "reason": "Original long-horizon tasks written by Datacurve, not public repos' history." },
-    "swe-atlas-qna": { "tier": "heldout", "reason": "Scale AI private rubric set." },
-    "frontiermath-tiers-1-3": { "tier": "heldout", "reason": "Unpublished problems, run only by Epoch AI." },
-    "frontiermath-tier-4": { "tier": "heldout", "reason": "Unpublished research-level problems, run only by Epoch AI." },
-    "matharena-arxivmath": { "tier": "heldout", "reason": "Problems from June 2026 arXiv papers, newer than training data." },
-    "simple-bench": { "tier": "heldout", "reason": "Private question set." },
-    "ugi-natint": { "tier": "heldout", "reason": "Private question set." },
-    "vals-index-code-migration": { "tier": "heldout", "reason": "Vals private task set (general coding, not a vertical domain)." },
-    "vals-index-vibe-code-bench": { "tier": "heldout", "reason": "Vals private app-building tasks (general coding)." },
-    "vals-index-finance-agent": { "tier": "domain", "domain": "Finance", "reason": "Vertical finance work; a gap shows specialisation." },
-    "vals-index-emb": { "tier": "domain", "domain": "Finance", "reason": "Financial models in spreadsheets." },
-    "vals-index-hlab": { "tier": "domain", "domain": "Legal", "reason": "Vertical legal work product." },
-    "vals-index-legal-research": { "tier": "domain", "domain": "Legal", "reason": "Case and statute research." },
-    "aa-mlcr": { "tier": "domain", "domain": "Medical", "reason": "Medical-record synthesis." },
-    "gso": { "tier": "secondary", "reason": "Public repos, rarely quoted; tiny cohort (10)." },
-    "lisanbench": { "tier": "secondary", "reason": "Procedural word-chain game, niche." },
-    "bullshitbench-v1": { "tier": "secondary", "reason": "Measures a trait (premise pushback), not task skill." },
-    "bullshitbench-v2": { "tier": "secondary", "reason": "Measures a trait (premise pushback), not task skill." },
-    "aa_intelligence_index": { "tier": "aggregate", "reason": "Average of AA component boards." },
-    "aa_coding_index": { "tier": "aggregate", "reason": "Average of AA coding component boards." },
-    "aa-coding-agent-index": { "tier": "aggregate", "reason": "Index of AA coding-agent components." },
-    "vals-index": { "tier": "aggregate", "reason": "GDP-weighted average of its Vals component boards." },
-    "aa-apex-agents": { "tier": "judged", "reason": "Graded deliverables (judge); already outside the signal." },
-    "aa-briefcase": { "tier": "judged", "reason": "Elo from judged comparisons." },
-    "aa-gdpval": { "tier": "judged", "reason": "Elo from judged deliverables." },
-    "aa-harvey-lab": { "tier": "judged", "domain": "Legal", "reason": "One LLM judge against rubrics." },
-    "frontend": { "tier": "judged", "reason": "Human-vote arena Elo." },
-    "fullstack": { "tier": "judged", "reason": "Human-vote arena Elo." },
-    "swe-atlas-test-writing": { "tier": "judged", "reason": "Rubrics and LLM judges." },
-    "matharena-brokenarxiv": { "tier": "judged", "reason": "Judged refusal of false statements." },
-    "mazur-elimination-game": { "tier": "judged", "reason": "Social game TrueSkill." }
+    "aa-aime": {
+      "tier": "headline",
+      "reason": "AIME 2025 problems are public and quoted in nearly every reasoning-model release post."
+    },
+    "aa-gpqa-diamond": {
+      "tier": "headline",
+      "reason": "Public 198-question set, the most-quoted science number in release posts."
+    },
+    "openrouter-gpqa-diamond": {
+      "tier": "headline",
+      "reason": "Same public GPQA Diamond questions, re-run by OpenRouter."
+    },
+    "aa-hle": {
+      "tier": "headline",
+      "reason": "Humanity's Last Exam questions are public and a standard release-post headline."
+    },
+    "aa-scicode": {
+      "tier": "headline",
+      "reason": "Public SciCode problems, long part of the widely quoted AA index."
+    },
+    "aa-ifbench": {
+      "tier": "headline",
+      "reason": "Public IFBench prompts and checkers, quoted in open-model cards."
+    },
+    "aa-tau2-telecom": {
+      "tier": "headline",
+      "reason": "tau2-bench is public and one of the most-quoted agent numbers in release posts."
+    },
+    "openrouter-tau2-bench-airline": {
+      "tier": "headline",
+      "reason": "Public tau2-bench airline domain, re-run by OpenRouter."
+    },
+    "aa-terminal-bench": {
+      "tier": "headline",
+      "reason": "Terminal-Bench 2.x tasks are public and quoted in nearly every coding/agent release post."
+    },
+    "vals-index-terminal-bench-2.1": {
+      "tier": "headline",
+      "reason": "Same public Terminal-Bench 2.1 tasks, run by Vals."
+    },
+    "aa-terminal-bench-hard": {
+      "tier": "headline",
+      "reason": "Pinned subset of the public Terminal-Bench tasks."
+    },
+    "aa-mmmu-pro": {
+      "tier": "headline",
+      "reason": "Public MMMU-Pro questions, the standard vision headline."
+    },
+    "aa-lcr": {
+      "tier": "headline",
+      "reason": "AA-LCR dataset is published and quoted in open-model cards."
+    },
+    "simpleqa-verified": {
+      "tier": "headline",
+      "reason": "Public SimpleQA Verified questions, quoted in release posts."
+    },
+    "aa-omniscience": {
+      "tier": "heldout",
+      "reason": "Private AA question set; also penalises confident wrong answers, which tuning on public sets does not help."
+    },
+    "aa-critpt": {
+      "tier": "heldout",
+      "reason": "Research-level physics with answers kept private by the authors."
+    },
+    "aa-gdp-pdf": {
+      "tier": "heldout",
+      "reason": "AA's own unpublished long-PDF tasks (2026)."
+    },
+    "aa-tau3-banking": {
+      "tier": "heldout",
+      "reason": "New tau3 banking domain, not yet a release-post number."
+    },
+    "aa-automationbench": {
+      "tier": "heldout",
+      "reason": "AA runs a held-out split of AutomationBench."
+    },
+    "aa-enterpriseops-gym": {
+      "tier": "heldout",
+      "reason": "New enterprise MCP environments, not a release-post number."
+    },
+    "aa-analystagent": {
+      "tier": "heldout",
+      "reason": "AA's own unpublished analyst tasks."
+    },
+    "aa-itbench": {
+      "tier": "heldout",
+      "reason": "AA's offline incident snapshots, not quoted by labs."
+    },
+    "aa-terminal-bench@4.0": {
+      "tier": "heldout",
+      "reason": "Terminal-Bench v4.0 is a fresh task set released after most current models were trained; applies to version 4.0 only."
+    },
+    "apprenticebench-api": {
+      "tier": "heldout",
+      "reason": "New third-party ERP environment (Sep 2026)."
+    },
+    "apprenticebench-cua": {
+      "tier": "heldout",
+      "reason": "New third-party ERP computer-use environment (Sep 2026)."
+    },
+    "deepswe": {
+      "tier": "heldout",
+      "reason": "Original long-horizon tasks written by Datacurve, not public repos' history."
+    },
+    "swe-atlas-qna": {
+      "tier": "heldout",
+      "reason": "Scale AI private rubric set."
+    },
+    "frontiermath-tiers-1-3": {
+      "tier": "heldout",
+      "reason": "Unpublished problems, run only by Epoch AI."
+    },
+    "frontiermath-tier-4": {
+      "tier": "heldout",
+      "reason": "Unpublished research-level problems, run only by Epoch AI."
+    },
+    "matharena-arxivmath": {
+      "tier": "heldout",
+      "reason": "Problems from June 2026 arXiv papers, newer than training data."
+    },
+    "simple-bench": {
+      "tier": "heldout",
+      "reason": "Private question set."
+    },
+    "ugi-natint": {
+      "tier": "heldout",
+      "reason": "Private question set."
+    },
+    "vals-index-code-migration": {
+      "tier": "heldout",
+      "reason": "Vals private task set (general coding, not a vertical domain)."
+    },
+    "vals-index-vibe-code-bench": {
+      "tier": "heldout",
+      "reason": "Vals private app-building tasks (general coding)."
+    },
+    "vals-index-finance-agent": {
+      "tier": "domain",
+      "domain": "Finance",
+      "reason": "Vertical finance work; a gap shows specialisation."
+    },
+    "vals-index-emb": {
+      "tier": "domain",
+      "domain": "Finance",
+      "reason": "Financial models in spreadsheets."
+    },
+    "vals-index-hlab": {
+      "tier": "domain",
+      "domain": "Legal",
+      "reason": "Vertical legal work product."
+    },
+    "vals-index-legal-research": {
+      "tier": "domain",
+      "domain": "Legal",
+      "reason": "Case and statute research."
+    },
+    "aa-mlcr": {
+      "tier": "domain",
+      "domain": "Medical",
+      "reason": "Medical-record synthesis."
+    },
+    "gso": {
+      "tier": "secondary",
+      "reason": "Public repos, rarely quoted; tiny cohort (10)."
+    },
+    "lisanbench": {
+      "tier": "secondary",
+      "reason": "Procedural word-chain game, niche."
+    },
+    "bullshitbench-v1": {
+      "tier": "secondary",
+      "reason": "Measures a trait (premise pushback), not task skill."
+    },
+    "bullshitbench-v2": {
+      "tier": "secondary",
+      "reason": "Measures a trait (premise pushback), not task skill."
+    },
+    "aa_intelligence_index": {
+      "tier": "aggregate",
+      "reason": "Average of AA component boards."
+    },
+    "aa_coding_index": {
+      "tier": "aggregate",
+      "reason": "Average of AA coding component boards."
+    },
+    "aa-coding-agent-index": {
+      "tier": "aggregate",
+      "reason": "Index of AA coding-agent components."
+    },
+    "vals-index": {
+      "tier": "aggregate",
+      "reason": "GDP-weighted average of its Vals component boards."
+    },
+    "aa-apex-agents": {
+      "tier": "judged",
+      "reason": "Graded deliverables (judge); already outside the signal."
+    },
+    "aa-briefcase": {
+      "tier": "judged",
+      "reason": "Elo from judged comparisons."
+    },
+    "aa-gdpval": {
+      "tier": "judged",
+      "reason": "Elo from judged deliverables."
+    },
+    "aa-harvey-lab": {
+      "tier": "judged",
+      "domain": "Legal",
+      "reason": "One LLM judge against rubrics."
+    },
+    "frontend": {
+      "tier": "judged",
+      "reason": "Human-vote arena Elo."
+    },
+    "fullstack": {
+      "tier": "judged",
+      "reason": "Human-vote arena Elo."
+    },
+    "swe-atlas-test-writing": {
+      "tier": "judged",
+      "reason": "Rubrics and LLM judges."
+    },
+    "matharena-brokenarxiv": {
+      "tier": "judged",
+      "reason": "Judged refusal of false statements."
+    },
+    "mazur-elimination-game": {
+      "tier": "judged",
+      "reason": "Social game TrueSkill."
+    },
+    "aa_agentic_index": {
+      "tier": "aggregate",
+      "reason": "Average of AA agentic component boards (Tau-Bench, Terminal-Bench Hard, MLE-Bench), relayed by OpenRouter."
+    }
   }
 }

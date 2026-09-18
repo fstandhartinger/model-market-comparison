@@ -1189,6 +1189,44 @@ async function build() {
   }
   modelRows = [...models.values()];
   const epochEciAttachment = attachEpochEci(modelRows, epochEci);
+  // CR-34.4: AA Agentic Index, relayed by OpenRouter's Benchmarks API (AA's own free API has
+  // no agentic field). One value per model, measured by AA on its primary configuration;
+  // attached once per family to the deterministic representative row (Epoch-ECI discipline).
+  const aaAgentic = await (async () => {
+    const { loadLockedAgenticRelay, buildAgenticAttachment } = await import("../lib/aa-agentic-index.mjs");
+    const { familyIndex } = await import("../lib/openrouter-benchmark-scores.mjs");
+    const lock = await readJSON("benchmarks/ingestion-lock.json");
+    const { relay, sha256 } = loadLockedAgenticRelay(lock.openrouter_aa_relay);
+    const familyByAaId = new Map();
+    for (const r of modelRows) {
+      if (!r.aa_model_id) continue;
+      const prev = familyByAaId.get(r.aa_model_id);
+      if (prev && prev !== r.family_key) throw new Error(`AA model ${r.aa_model_id} spans two catalog families (${prev}, ${r.family_key})`);
+      familyByAaId.set(r.aa_model_id, r.family_key);
+    }
+    const rowsByFamily = new Map();
+    for (const r of modelRows) {
+      if (!rowsByFamily.has(r.family_key)) rowsByFamily.set(r.family_key, []);
+      rowsByFamily.get(r.family_key).push(r);
+    }
+    const slugFamilies = familyIndex(modelRows);
+    const attachment = buildAgenticAttachment({
+      relay, aaModels: aa.models,
+      familyOfAaId: (id) => familyByAaId.get(id) ?? null,
+      familyRows: (familyKey) => rowsByFamily.get(familyKey) ?? [],
+      aaFamilyOfSlug: (slug) => slugFamilies.get(slug) ?? null,
+    });
+    for (const [rowId, hit] of attachment.byRepRowId) {
+      const row = modelRows.find((r) => r.id === rowId);
+      if (row.benchmarks.aa_agentic_index != null && row.benchmarks.aa_agentic_index !== hit.value) {
+        throw new Error(`AA Agentic Index attachment collision on ${rowId}`);
+      }
+      row.benchmarks.aa_agentic_index = hit.value;
+      row.aa_agentic_attachment_note = hit.note;
+    }
+    return { ...attachment, retrieved_at: lock.openrouter_aa_relay.retrieved_at, snapshot_date: lock.openrouter_aa_relay.snapshot_date, sha256 };
+  })();
+  if (aaAgentic.byRepRowId.size < 90) throw new Error(`AA Agentic Index joined only ${aaAgentic.byRepRowId.size} families (expected >= 90); refusing to publish a partial attachment`);
   const featuredSelection = selectFeaturedFamilies(modelRows);
   // CR-65.9: a cache-read price far outside its provider's usual read/input band is flagged (documented exceptions are listed, not warned).
   const cacheReadOutliers = cacheReadPriceOutliers(modelRows);
@@ -1295,7 +1333,9 @@ async function build() {
     designarena: { ...da, sha256: await rawFileSha256("designarena.json") },
     epochEci,
     modelRows,
+    agentic: { ...aaAgentic, source_file: (await readJSON("benchmarks/ingestion-lock.json")).openrouter_aa_relay.source_file },
   });
+  console.log(`AA Agentic Index (CR-34.4): ${aaAgentic.byRepRowId.size} values attached at family scope (${aaAgentic.measured.length} measured AA configurations, ${aaAgentic.rejected.length} rejected), relay ${aaAgentic.snapshot_date}`);
   // 17 Sep 2026: AA renamed "DeepSeek V4 Pro" to "DeepSeek V4 Pro 0424" (new slug, same AA UUID), so stored score rows named
   // a catalog id this build no longer has and the whole day's build threw. Score rows are keyed to the catalog id of the
   // build that ingested them; after the evidence check above, re-key them through the stable AA UUID, and withhold (with a
@@ -1333,6 +1373,7 @@ async function build() {
       openrouter_efficiency: openrouterEfficiency.collected_at,
       chutes_efficiency: chutesEfficiency.collected_at,
       epoch_eci: epochEci.collected_at,
+      openrouter_aa_relay: aaAgentic.snapshot_date,
     },
     source_status: {
       aa_coding_agents: {

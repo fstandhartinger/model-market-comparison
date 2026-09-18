@@ -83,6 +83,7 @@ export function scoreOf(model: ModelRow, key: ScoreKey): number | null {
     case "aa_coding_index": return model.benchmarks?.aa_coding_index ?? null;
     case "aa_coding_agent": return model.benchmarks?.aa_coding_agent_index ?? null;
     case "aa_intelligence_index": return model.benchmarks?.aa_intelligence_index ?? null;
+    case "aa_agentic_index": return model.benchmarks?.aa_agentic_index ?? null;
     case "epoch_eci": return model.benchmarks?.epoch_eci ?? null;
     case "epoch_eci_software": return model.benchmarks?.epoch_eci_software ?? null;
     case "designarena_frontend": return model.designarena?.frontend?.elo ?? null;

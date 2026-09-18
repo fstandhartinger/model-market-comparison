@@ -122,7 +122,8 @@
   ],
   "aa_keys": [
     "aa_intelligence_index",
-    "aa_coding_index"
+    "aa_coding_index",
+    "aa_agentic_index"
   ],
   "descriptions": {
     "aa_intelligence_index": "Artificial Analysis' headline aggregate of its independent evaluations.",
@@ -132,7 +133,8 @@
     "deepswe": "Pass rate on original, long-horizon engineering tasks, run by Datacurve with the mini-swe-agent harness.",
     "swe-atlas-qna": "How well an agent answers deep questions about a real codebase, graded against rubrics by Scale AI.",
     "swe-atlas-test-writing": "Whether an agent writes production-grade tests for real repositories, graded by Scale AI.",
-    "swe-atlas-refactoring": "Whether an agent restructures production code while preserving its behaviour, graded by Scale AI."
+    "swe-atlas-refactoring": "Whether an agent restructures production code while preserving its behaviour, graded by Scale AI.",
+    "aa_agentic_index": "Artificial Analysis' aggregate of its agentic evaluations (one configuration measured per model), relayed by OpenRouter's Benchmarks API."
   },
   "model_field_rows": [
     {
@@ -321,7 +323,8 @@
     "swe-rebench": "niche",
     "gso": "niche",
     "hyper-tau-bench": "niche",
-    "lisanbench": "community"
+    "lisanbench": "community",
+    "aa_agentic_index": "headline"
   },
   "aa_input_keys": [
     "deepswe",
@@ -473,6 +476,7 @@
     "vals-index-terminal-bench-2.1": "capability",
     "vals-index-vibe-code-bench": "capability",
     "vending-bench": "capability",
-    "weirdml": "capability"
+    "weirdml": "capability",
+    "aa_agentic_index": "capability"
   }
 }
