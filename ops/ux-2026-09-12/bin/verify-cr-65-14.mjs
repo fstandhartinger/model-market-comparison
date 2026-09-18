@@ -23,8 +23,13 @@ const checks = []; const check = (name, ok, detail) => checks.push({ name, ok: !
 const meta = await (await fetch(`${BASE}/api/meta`)).json().catch(() => ({}));
 check('deployed revision matches the expected commit', !REV || String(meta.revision || '').startsWith(REV), { revision: meta.revision, expected: REV });
 
+// Two catalog models chosen so every row this file judges exists in the matrix the page and the API build
+// (both keep only rows the compared models have a value for): the three retired AA boards, Terminal-Bench 2.1
+// (which must NOT be tagged) and the Coding Agent Index best-of row (which must not be either).
+const MODELS = 'claude-fable-5::max,gpt-5.2::xhigh';
+
 // --- the API half: every row's `retired` flag against the registry it came from -----------------------------
-const matrix = await (await fetch(`${BASE}/api/benchmark-matrix`)).json().catch(() => null);
+const matrix = (await (await fetch(`${BASE}/api/benchmark-matrix?models=${encodeURIComponent(MODELS)}`)).json().catch(() => null))?.matrix ?? null;
 if (!matrix?.rows?.length) check('api: /api/benchmark-matrix returns rows', false, String(matrix).slice(0, 200));
 else {
   const tagged = matrix.rows.filter((r) => r.retired === true);
@@ -52,7 +57,7 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
   await c.addInitScript((t) => { try { localStorage.setItem('theme', t); localStorage.setItem('bh-theme', t); } catch {} }, theme);
   const page = await c.newPage(); const tag = `${kind}_${theme}`; const errors = [];
   page.on('pageerror', (e) => errors.push(String(e.message).slice(0, 200)));
-  await goto(page, `${BASE}/benchmarks?rows=all`);
+  await goto(page, `${BASE}/benchmarks?rows=all&models=${encodeURIComponent(MODELS)}`);
   await page.evaluate((t) => document.documentElement.setAttribute('data-theme', t), theme);
   await page.waitForLoadState('networkidle').catch(() => {}); await page.waitForTimeout(2000);
   const seen = await page.evaluate(() => ({
