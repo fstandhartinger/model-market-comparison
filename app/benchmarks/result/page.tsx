@@ -10,7 +10,7 @@ import { latestScores } from '../../../lib/benchmark-view.mjs';
 import { formatValue, cellHref, cellAxisId, resultHref, rowWinners, versionLine, cohortLabel, variantLabel } from '../../../lib/benchmark-matrix.mjs';
 import caveats from '../../../data/benchmark-caveats.json';
 import { SourceScore } from '../../../components/BenchmarkEvidence';
-import { humanVersion } from '../../../lib/version-label';
+import { humanVersion, isPin } from '../../../lib/version-label';
 
 export const metadata: Metadata = { title: 'Benchmark result' };
 
@@ -19,6 +19,11 @@ const host = (url: string) => { try { return new URL(url).hostname.replace(/^www
 type EciRecord = { source_model_name: string; organization: string | null; general: number; general_ci_low: number; general_ci_high: number; date: string | null; software: number | null; software_benchmarks: string[] };
 const epochEci = epochEciRaw as unknown as { collected_at: string; definition_version: string; source: { license: string; urls: Record<string, string> }; models: EciRecord[] };
 const finite = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v);
+
+/** F-125 (Fable pass 23): a stealth model's org is its own name ("Union Alpha · Union Alpha").
+ *  Where the two are the same string, the name is rendered once. */
+const sameAsName = (m: { org?: string | null; display_name?: string | null }) =>
+  (m.org ?? '').trim().toLowerCase() === (m.display_name ?? '').trim().toLowerCase();
 
 // CR-1.8: one comparison-table cell, with where the number comes from, the same benchmark for the
 // other compared models, and the model's other results. Every value here is a dataset value.
@@ -81,7 +86,7 @@ export default async function BenchmarkResultPage({ searchParams }: { searchPara
       </header>
 
       <section className="bh-panel p-5" aria-labelledby="bh-result-model">
-        <h2 id="bh-result-model" className="bh-muted text-sm">{model.org} · <Link href={`/models/${encodeURIComponent(modelId)}`} className="text-accent hover:underline">{model.display_name}</Link></h2>
+        <h2 id="bh-result-model" className="bh-muted text-sm">{sameAsName(model) ? '' : `${model.org} · `}<Link href={`/models/${encodeURIComponent(modelId)}`} className="text-accent hover:underline">{model.display_name}</Link></h2>
         <p className="mt-1 text-4xl font-bold tabular" data-bh-result-value>{formatValue(value, fieldRow.unit)}</p>
         <p className="bh-muted mt-1 text-sm">Unit: {fieldRow.unit} · higher is better</p>
         <dl className="mt-4 grid gap-x-6 gap-y-2 border-t border-line pt-4 text-sm sm:grid-cols-[auto_1fr]">
@@ -105,7 +110,7 @@ export default async function BenchmarkResultPage({ searchParams }: { searchPara
             <tbody>{compared.map((id, j) => {
               const v = valueOf(id), m = models.get(id)!;
               return <tr key={id} aria-current={id === modelId ? 'true' : undefined} className={id === modelId ? 'bg-accent/5' : ''}>
-                <th scope="row" className="text-left font-medium">{v != null && id !== modelId ? <Link href={cellHref(fieldRow, id, compared, pinned)} className="hover:underline">{m.display_name}</Link> : m.display_name}<span className="bh-muted block text-xs font-normal">{m.org}</span></th>
+                <th scope="row" className="text-left font-medium">{v != null && id !== modelId ? <Link href={cellHref(fieldRow, id, compared, pinned)} className="hover:underline">{m.display_name}</Link> : m.display_name}{!sameAsName(m) && <span className="bh-muted block text-xs font-normal">{m.org}</span>}</th>
                 <td className={`text-right tabular ${win[j] ? 'font-bold' : ''}`}>{v != null ? formatValue(v, fieldRow.unit) : '—'}</td>
                 <td className="bh-muted text-xs">{v != null ? <>{basis} · {collected} · <a href={sourceUrl} target="_blank" rel="noreferrer" className="text-accent underline">{host(sourceUrl)} ↗</a></> : 'No published result — never a zero'}</td>
               </tr>;
@@ -131,13 +136,14 @@ export default async function BenchmarkResultPage({ searchParams }: { searchPara
   return <div className="max-w-4xl">
     {backLink}
     <header className="bh-page-head mt-3">
-      <p className="bh-eyebrow">{ax.category} · {humanVersion(ax.version).label}{ax.cohort !== 'Published board' ? ` · ${cohortLabel(ax.cohort)}` : ''}</p>
+      {/* F-124: a pinned revision is not something to headline — the card below names it once. */}
+      <p className="bh-eyebrow">{ax.category}{isPin(ax.version) ? '' : ` · ${humanVersion(ax.version).label}`}{ax.cohort !== 'Published board' ? ` · ${cohortLabel(ax.cohort)}` : ''}</p>
       <h1 className="text-3xl font-bold tracking-tight">{ax.name}</h1>
       {ax.description && <p className="bh-muted mt-2 max-w-2xl">{ax.description}</p>}
     </header>
 
     <section className="bh-panel p-5" aria-labelledby="bh-result-model">
-      <h2 id="bh-result-model" className="bh-muted text-sm">{model.org} · <Link href={`/models/${encodeURIComponent(modelId)}`} className="text-accent hover:underline">{model.display_name}</Link></h2>
+      <h2 id="bh-result-model" className="bh-muted text-sm">{sameAsName(model) ? '' : `${model.org} · `}<Link href={`/models/${encodeURIComponent(modelId)}`} className="text-accent hover:underline">{model.display_name}</Link></h2>
       <p className="mt-1 text-4xl font-bold tabular" data-bh-result-value>{formatValue(row.value, ax.unit)}</p>
       <p className="bh-muted mt-1 text-sm">Unit: {ax.unit} · {direction}</p>
       {mergedInto && <p className="mt-3 border-t border-line pt-3 text-sm" data-bh-result-best-of>
@@ -149,7 +155,7 @@ export default async function BenchmarkResultPage({ searchParams }: { searchPara
           sentence, this page has room for all of it. Every line is either measured or quoted from the source. */}
       {matrixRow && <ul className="bh-muted mt-3 space-y-1 border-t border-line pt-3 text-sm" data-bh-result-caveats>
         {/* F-100: the eyebrow already says "published <date>" for a snapshot board — the list repeats it only when there is more to say. */}
-        {versionLine(matrixRow) && !/^Published \d{4}-\d{2}-\d{2}$/.test(versionLine(matrixRow)) && <li>{versionLine(matrixRow)}</li>}
+        {versionLine(matrixRow, true) && !/^Published \d{4}-\d{2}-\d{2}$/.test(versionLine(matrixRow, true)) && <li>{versionLine(matrixRow, true)}</li>}
         {matrixRow.saturation?.saturated && <li><b>Saturated.</b> {matrix.tags.saturated?.tip} Measured here: the {matrixRow.saturation.topN} best of {matrixRow.saturation.models} independently measured models average {Math.round(matrixRow.saturation.share * 1000) / 10}&nbsp;% of this benchmark&apos;s ceiling.</li>}
         {matrixRow.sourceChange && <li data-bh-source-change><b>{matrix.tags.source_changed?.label ?? 'Changed at source'}.</b> {matrixRow.sourceChange.note}</li>}
         {matrixRow.judged && <li><b>Judged.</b> {matrix.tags.judged?.tip} {caveats.judged[matrixRow.key as keyof typeof caveats.judged]?.why}</li>}
@@ -176,7 +182,7 @@ export default async function BenchmarkResultPage({ searchParams }: { searchPara
           <tbody>{compared.map((id, j) => {
             const r = latest.get(id), m = models.get(id)!, src = r ? view.sources[r.source] : null;
             return <tr key={id} aria-current={id === modelId ? 'true' : undefined} className={id === modelId ? 'bg-accent/5' : ''}>
-              <th scope="row" className="text-left font-medium">{r && id !== modelId ? <Link href={resultHref(axisId, id, compared, pinned)} className="hover:underline">{m.display_name}</Link> : m.display_name}<span className="bh-muted block text-xs font-normal">{m.org}</span></th>
+              <th scope="row" className="text-left font-medium">{r && id !== modelId ? <Link href={resultHref(axisId, id, compared, pinned)} className="hover:underline">{m.display_name}</Link> : m.display_name}{!sameAsName(m) && <span className="bh-muted block text-xs font-normal">{m.org}</span>}</th>
               <td className={`text-right tabular ${win[j] ? 'font-bold' : ''}`}>{r ? formatValue(r.value, ax.unit) : '—'}</td>
               <td className="bh-muted text-xs">{r ? <>{r.basis.replaceAll('_', ' ')} · {r.date?.slice(0, 10) ?? 'date unavailable'}{src ? <> · <a href={src.url} target="_blank" rel="noreferrer" className="text-accent underline">{host(src.url)} ↗</a></> : null}</> : 'No published result — never a zero'}</td>
             </tr>;

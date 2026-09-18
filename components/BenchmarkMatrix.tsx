@@ -17,6 +17,7 @@ import { PickFromChart } from "./PickFromChart";
 import { toggleColumn } from "../lib/pick-chart.mjs";
 import { AaCredit } from "./AaCredit";
 import { BEST_OF_NOTE } from "./BestOf";
+import { TableLegend } from "./TableLegend";
 
 const MIN_MODELS = 2, MAX_MODELS = 10;
 const ROW_IDS = new Set(ROW_PRESETS.map((p) => p.id));
@@ -266,6 +267,11 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
         </table>
       </div>}
     {ids.length > 1 && <BenchmarkBars rows={chart} ids={ids} names={names} />}
-    <p className="bh-muted text-xs"><AaCredit /> · Each value is the latest published result for that exact configuration, measured results preferred; a row marked <b>best of</b> holds each model's best recorded result across agents (Claude Code, Codex) and, for the AA Coding Agent Index, versions. † marks a developer's own report. ‡ marks a preliminary, announced value (for example read from a chart in a launch post): it is shown only and never enters a score or a ranking. A dash means no published result — never a zero. Bold is best in row; bars compare within a row only. Open a value for its source. The first row is the Benchmark Heaven score your settings select. A <b>Saturated</b> tag means the best models already sit near that benchmark&apos;s ceiling; a <b>Judged</b> tag means the number is a preference or judge score, not task accuracy. Each category row averages that category&apos;s shown results on a 0–100 scale (higher is better) that every compared model has — at least two, otherwise a dash; a saturated benchmark weighs half, judged scores never average with task accuracy, and Elo, native index scales and costs are left out. <Link href="/about#benchmark-tags" className="underline">How the tags are decided</Link>.</p>
+    {/* F-122: two sentences stay visible; every mark and every tag gets its line in the collapsed
+        legend below, generated from the tag set. */}
+    <div className="bh-muted text-xs">
+      <p><AaCredit /> · Bold is best in row; bars compare within a row only. Open a value for its source.</p>
+      <TableLegend tags={matrix.tags} tagKeys={Object.keys(matrix.tags)} scoreRow="The first row is the Benchmark Heaven score your settings select." />
+    </div>
   </section>;
 }

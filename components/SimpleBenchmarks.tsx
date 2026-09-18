@@ -12,6 +12,7 @@ import { seriesColor, seriesLetter } from "./BenchmarkBars";
 import { ShortlistColumns } from "./ShortlistColumns";
 import { AaCredit } from "./AaCredit";
 import { BEST_OF_NOTE } from "./BestOf";
+import { TableLegend } from "./TableLegend";
 import { ComparePicker } from "./ComparePicker";
 import { SHORTLIST_CAP, SHORTLIST_STORAGE_KEY, addToSelection, moveInSelection, parseStoredSelection, removeFromSelection, resolveSelection, toggleInSelection } from "../lib/shortlist.mjs";
 import { SCORE_SHORT_LABELS } from "../lib/types";
@@ -183,6 +184,10 @@ export function SimpleBenchmarks({ matrix: headline, data, ids: listIds }: { mat
         </tbody>)}
       </table>
     </div>}
-    <p className="bh-muted mt-2 text-xs">Bold is best in row; a <b>top</b> or <b>low</b> tag marks a result whose gap to the next model is at least twice the spread of the models in between (rows with at least {OUTLIER_MIN_VALUES} results); † marks a developer&apos;s own report; ‡ marks a preliminary, announced value (for example read from a chart in a launch post): it is shown only and never enters a score or a ranking; a dash means no published result. A row marked <b>best of</b> holds each model&apos;s best recorded result across agents (Claude Code, Codex) and, for the AA Coding Agent Index, versions. A <b>Saturated</b> tag means the best models already sit near that benchmark&apos;s ceiling; a <b>Judged</b> tag means the number is a preference or judge score, not task accuracy. The first row is always the Benchmark Heaven Main Composite Score; a score you select in Options follows right below it. A category row averages that category&apos;s results shown here on a 0–100 scale (higher is better) that every model in the table has — at least two, otherwise a dash; a saturated benchmark weighs half, judged scores never average with task accuracy, and Elo, native index scales and costs are left out. <Link href={fullHref} className="underline">The full comparison</Link> adds every other benchmark, a chart, and model and row presets. <AaCredit />.</p>
+    {/* F-122: two sentences visible, everything else in the collapsed legend below. */}
+    <div className="bh-muted mt-2 text-xs">
+      <p><AaCredit /> · Bold is best in row; bars compare within a row only. Open a value for its source; <Link href={fullHref} className="underline">the full comparison</Link> adds every other benchmark.</p>
+      <TableLegend tags={matrix.tags} tagKeys={CAVEAT_TAGS} outliers scoreRow="The first row is always the Benchmark Heaven Main Composite Score; a score you select in Options follows right below it." />
+    </div>
   </section>;
 }

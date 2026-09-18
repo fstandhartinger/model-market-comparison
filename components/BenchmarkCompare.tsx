@@ -9,6 +9,7 @@ import { humanVersion, versionHeading, versionSuffix } from '../lib/version-labe
 import { SpeedTable } from './SpeedContext';
 import { ComparePicker } from './ComparePicker';
 import { formatNative } from '../lib/benchmark-matrix.mjs';
+import { CompareLegend } from './TableLegend';
 
 // CR-63.6: the same formatting as the Benchmarks page (fractions as %, USD with $, Elo named).
 const nativeValue = (value: number, unit: string | null) => formatNative(value, unit);
@@ -107,7 +108,11 @@ export function BenchmarkCompare({ initialView, initialPicks, standalone = false
     <SpeedTable date={view.speedDate} rows={displayPicks.map((id, slot) => { const m = view.models.find((model) => model.id === id); return { id, name: m?.name || id, color: SERIES_COLORS[slot], facts: { outputTps: m?.outputTps, ttftS: m?.ttftS, contextTokens: m?.contextTokens } }; })} />
     <section className="bh-panel p-5" id="full-comparison" aria-busy={busy} aria-label="Full benchmark comparison">
       <p className="bh-eyebrow">EVERY COLLECTED BENCHMARK</p><h2 className="text-xl font-semibold">{standalone ? 'The numbers behind the profile' : 'Full benchmark comparison'}</h2>
-      <p className="bh-muted mt-2 text-sm">Native units; versions and evaluation groups remain separate. Measured results take priority over vendor claims, then the latest observation. A tinted cell marks the best measured relative position in that row; small differences are not evidence of significance. ‡ marks a preliminary, chart-read value: announced in a launch post rather than independently measured, shown only, and never part of a score, a ranking or a percentile.</p>
+      {/* F-122: two sentences visible; the marks and the percentile bar are explained in the legend. */}
+      <div className="bh-muted mt-2 text-sm">
+        <p>Native units; versions and evaluation groups remain separate. A tinted cell marks the best measured relative position in that row.</p>
+        <CompareLegend />
+      </div>
       <div className="my-4 flex flex-wrap items-end gap-4"><label className="text-sm">Find a benchmark<input type="search" className="bh-input mt-1 block" value={axisSearch} onChange={(e) => setAxisSearch(e.target.value)} placeholder="Name, version, harness…" /></label><label className="text-sm">Category<select className="bh-input mt-1 block" value={category} onChange={(e) => setCategory(e.target.value)}><option value="">All categories</option>{categories.map((c) => <option key={c}>{c}</option>)}</select></label><label className="flex min-h-11 items-center gap-2 text-sm"><input type="checkbox" checked={showEmpty} onChange={(e) => setShowEmpty(e.target.checked)} />Include rows without selected-model results</label></div>
       {!displayPicks.length ? <div className="bh-empty">Select a model to explore all benchmark results.</div> : !visibleAxes.length ? <div className="bh-empty">No benchmark rows match. Clear filters or include missing results.</div> : <div className="bh-table-wrap bh-bounded-table overflow-auto" tabIndex={0} role="region" aria-label="Full comparison table"><table className="bh-table w-full table-fixed text-sm" style={{ minWidth: `${14 + displayPicks.length * 10}rem` }} data-equal-columns><caption className="sr-only">All matching benchmark versions and model scores with evidence</caption><colgroup><col style={{ width: '14rem' }} />{displayPicks.map((id) => <col key={id} />)}</colgroup><thead><tr><th scope="col">Benchmark / version</th>{displayPicks.map((id, i) => <th key={id} scope="col">{String.fromCharCode(65 + i)} · {view.models.find((m) => m.id === id)?.name}</th>)}</tr></thead>{categories.map((c) => {
         const rows = visibleAxes.filter((a) => a.category === c); if (!rows.length) return null;

@@ -1,9 +1,13 @@
 // F-54: registry versions are identities (`family::snapshot-2026-09-13 (unversioned)`), not copy.
 // Data and ids keep the raw string; everything a reader sees goes through these helpers.
 
-export type HumanVersion = { kind: "snapshot" | "semantic"; label: string; date?: string };
+import { isPin } from "./version-pin.mjs";
+export { isPin };
+
+export type HumanVersion = { kind: "snapshot" | "semantic" | "pin"; label: string; date?: string };
 
 export function humanVersion(version: string): HumanVersion {
+  if (isPin(version)) return { kind: "pin", label: `pinned revision ${version.toLowerCase()}` };
   const snapshot = /^snapshot-(\d{4}-\d{2}-\d{2})/.exec(version);
   if (snapshot) return { kind: "snapshot", date: snapshot[1], label: `published ${snapshot[1]}` };
   // A date-only release name (LiveBench `2026-06-25`) reads as the date, never `v2026-06-25`.
@@ -14,6 +18,7 @@ export function humanVersion(version: string): HumanVersion {
 /** Sentence-start form for "Version …" positions: "Published 2026-09-13" or "Version 2". */
 export function versionHeading(version: string): string {
   const v = humanVersion(version);
+  if (v.kind === "pin") return `Pinned revision ${version.toLowerCase()}`;
   return v.kind === "snapshot" ? `Published ${v.date}` : `Version ${version.replace(/^v/i, "")}`;
 }
 
@@ -22,7 +27,7 @@ export function versionHeading(version: string): string {
  *  retention snapshot (the date column says that). Word-bounded so "v2" does not hide inside "v2.1". */
 export function versionSuffix(name: string, version: string): string | null {
   const v = humanVersion(version);
-  if (v.kind === "snapshot") return null;
+  if (v.kind === "snapshot" || v.kind === "pin") return null;
   const escaped = v.label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   return new RegExp(`(^|[\\s(])${escaped}(?=$|[\\s)])`, "i").test(name) ? null : v.label;
 }

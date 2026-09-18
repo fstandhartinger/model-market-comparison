@@ -61,7 +61,10 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
   await page.evaluate((t) => document.documentElement.setAttribute('data-theme', t), theme);
   await page.waitForLoadState('networkidle').catch(() => {}); await page.waitForTimeout(2000);
   const seen = await page.evaluate(() => ({
-    retired: [...document.querySelectorAll('.bh-matrix-tag[data-tag="retired"]')].map((el) => ({
+    // F-122 (pass 23 follow-up): the collapsed Legend now prints a sample pill per tag, whose tip sits
+    // beside it in the list instead of in a `title`. This check is about the tags on the rows — scoped
+    // to the table so the sample is not mistaken for one.
+    retired: [...document.querySelectorAll('main table .bh-matrix-tag[data-tag="retired"]')].map((el) => ({
       label: el.textContent?.replace(/:.*$/, '').trim(), tip: el.getAttribute('title') ?? '',
       row: el.closest('th,td,tr')?.textContent?.trim().slice(0, 70) ?? null })),
     overflow: document.documentElement.scrollWidth - innerWidth,

@@ -175,13 +175,38 @@ test('a preliminary value never wins its row or takes an outlier tag', () => {
 });
 
 test('both benchmark tables explain the ‡ mark in their legend', () => {
+  // F-122: the wording now lives once, in the shared legend both tables (and Compare) render.
+  const legend = readFileSync(new URL('../components/TableLegend.tsx', import.meta.url), 'utf8');
+  assert.match(legend, /‡ marks a preliminary, announced value/, 'TableLegend');
+  assert.match(legend, /never enters a score or a ranking/, 'TableLegend');
+  for (const file of ['components/BenchmarkMatrix.tsx', 'components/SimpleBenchmarks.tsx', 'components/BenchmarkCompare.tsx']) {
+    const src = readFileSync(new URL(`../${file}`, import.meta.url), 'utf8');
+    assert.match(src, /<(Table|Compare)Legend/, `${file}: renders the shared legend`);
+  }
   for (const file of ['components/BenchmarkMatrix.tsx', 'components/SimpleBenchmarks.tsx']) {
     const src = readFileSync(new URL(`../${file}`, import.meta.url), 'utf8');
-    assert.match(src, /‡ marks a preliminary, announced value/, file);
-    assert.match(src, /never enters a score or a ranking/, file);
     // The cell itself must carry the mark and its explanation, not just the legend.
     assert.match(src, /basis\[j\] === 3 && <sup/, `${file}: the ‡ is rendered on the cell`);
   }
+});
+
+test('F-122: the legend has a line for every tag the tag set defines', () => {
+  const legend = readFileSync(new URL('../components/TableLegend.tsx', import.meta.url), 'utf8');
+  // The tag lines are generated from the data, never hand-written — that is what keeps a new tag
+  // (Retired, Changed at source) from arriving without an explanation a phone reader can reach.
+  assert.match(legend, /tagKeys\.map\(/, 'the tag lines come from the tag set');
+  const taxonomy = JSON.parse(readFileSync(new URL('../data/benchmark-taxonomy.json', import.meta.url), 'utf8'));
+  const keys = Object.keys(taxonomy.tags);
+  assert.ok(keys.includes('retired') && keys.includes('source_changed'), 'the caveat tags are in the tag set');
+  for (const k of keys) {
+    assert.ok(typeof taxonomy.tags[k].label === 'string' && taxonomy.tags[k].label.length, `${k}: label`);
+    assert.ok(typeof taxonomy.tags[k].tip === 'string' && taxonomy.tags[k].tip.length, `${k}: tip`);
+  }
+  // Simple shows the caveat tags; the full comparison shows all of them.
+  const simple = readFileSync(new URL('../components/SimpleBenchmarks.tsx', import.meta.url), 'utf8');
+  assert.match(simple, /tagKeys=\{CAVEAT_TAGS\}/, 'Simple lists the caveat tags it can show');
+  const matrix = readFileSync(new URL('../components/BenchmarkMatrix.tsx', import.meta.url), 'utf8');
+  assert.match(matrix, /tagKeys=\{Object\.keys\(matrix\.tags\)\}/, 'the full comparison lists every tag');
 });
 
 test('the anticipated prices on both charts are never ingested as costs', () => {
