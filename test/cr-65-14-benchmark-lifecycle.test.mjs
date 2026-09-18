@@ -40,6 +40,9 @@ test('the review asks about the lifecycle, and says a supersession alone is not 
   // Terminal-Bench 2.1 is superseded in the Intelligence Index and still reported in the Coding
   // Index. A criterion that equated supersession with retirement would have mislabelled it.
   assert.match(lifecycle, /supersession note alone is not a retirement/);
+  // `superseded_by` holds our registry id for the successor. A critic that read it as a quotation
+  // rejected τ²-Bench Telecom because AA's supersession sentence names τ³-Banking without a version.
+  assert.match(lifecycle, /our registry id for the successor board/);
 });
 
 test('a retired board is tagged on the page, from the registry and nowhere else', () => {

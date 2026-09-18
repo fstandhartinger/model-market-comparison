@@ -4670,6 +4670,19 @@ that was made — a second evidence reference on the same page and capture, carr
 "running the upstream tau2-bench **v1.0.1** dataset and grader", which is where our version came from in the first
 place. That is the guard doing the job it exists for: it would not let us assert a version we had not shown it.
 
+The round after *that* is the one worth reading, because the critic was sharper than the repair it had asked for:
+AA's τ³-Banking section says "running the upstream **tau2-bench v1.0.1** dataset and grader", and the critic
+pointed out that this attributes 1.0.1 to the tau2-bench codebase, **not to the τ³-Banking board**. It is right,
+and it exposes a framing error in the packet rather than a defect in the data: `superseded_by` holds *our
+registry id* for the successor, and that id's version is settled by the successor's own entry and its own
+evidence — not by the superseded board's protocol passage. The criterion now says so. The producer read the row
+as a `match` in the same round.
+
+It also leaves a question this iteration did not answer and did not quietly decide: **`aa-tau3-banking::1.0.1`
+carries the same version suffix, and its own evidence is the same sentence.** If 1.0.1 describes the upstream
+dataset rather than AA's board, that identity's version may rest on the same conflation. Nothing was changed —
+the entry is long-standing and published — but it wants a round of its own. Recorded as handoff 6.
+
 ### Proof, with the real gauntlet rather than a claim
 
 `ops/ux-2026-09-12/bin/replay-protocol-review.mjs` replays one entry's protocol review offline against a capture the
@@ -4685,7 +4698,7 @@ daily already took, with the production `reviewArtifact` and real paid workers (
 | `aa-terminal-bench-hard::74221fb` | retained | **accepted** |
 | `aa-terminal-bench::4.0` | active | **accepted** |
 | `aa-terminal-bench::2.1` after the correction | active | **accepted** — "lifecycle fields supported (active remains in Coding Index; superseded_by 4.0 in Intelligence Index)" |
-| `aa-tau2-telecom::snapshot-2026-09-10` | retained | **unproven** — the producer did not answer inside the harness timeout on either attempt (see handoff 3) |
+| `aa-tau2-telecom::snapshot-2026-09-10` | retained | producer **match**, critic **revise** — see below; the criterion was clarified after the round, so the entry is unproven |
 
 The fail-closed row is the one that matters: the criterion is not a way to wave a board through, it is a check that
 now has something to check.
@@ -4746,11 +4759,15 @@ as "Retired" with its tooltip in all four contexts; no horizontal overflow, no p
    `node ops/ux-2026-09-12/bin/verify-cr-65-14.mjs <host> <out> <sha>` against both hosts.
 3. **The gauntlet is noisy at this price point, and that noise is itself a blocker.** `aa-livecodebench` was
    rejected once on a critic's objection to a *description* paraphrase and accepted on the next run;
-   `aa-terminal-bench::2.1` failed once on a worker timeout and passed on the retry; the τ²-Telecom round with the
-   added successor evidence **never returned** — two attempts, no producer answer inside the harness timeout, so
-   that one entry's round is unproven (its data is validated locally and its evidence is committed; only the
-   free-model round is missing). None of these is a data defect, but a single unlucky round still stops the whole
+   `aa-terminal-bench::2.1` failed once on a worker timeout and passed on the retry; one τ²-Telecom attempt produced
+   no answer at all inside the harness timeout (the retry did answer — see handoff 4). Rounds ran between about
+   one and twenty minutes each. None of this is a data defect, but a single unlucky round still stops the whole
    AA arm for a day. Worth deciding whether a transport failure should cost a round at all, and whether a
    paraphrased `one_sentence_description` should be able to fail a protocol review.
-4. **F-120 is untouched** and still open by design.
-5. Anything hand-curated still belongs in `data/raw/benchmarks/manual-observations.json`.
+4. **Is `aa-tau3-banking::1.0.1`'s version suffix established by its own evidence?** Its only protocol evidence is
+   AA's τ³-Banking section, whose sole "1.0.1" describes "the upstream tau2-bench v1.0.1 dataset and grader". A
+   free critic spotted the conflation from the outside. Either the entry has other evidence for the board's own
+   version, or the identity should be unversioned/snapshot-dated — a reviewed change, not a rename in passing. No
+   number depends on the answer; the identity string does. **Nothing was changed for it here.**
+5. **F-120 is untouched** and still open by design.
+6. Anything hand-curated still belongs in `data/raw/benchmarks/manual-observations.json`.
