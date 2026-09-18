@@ -17,6 +17,7 @@ import { writeJSONAtomic } from '../../lib/snapshot.mjs';
 import { reviewArtifact, sha256 } from './gauntlet.mjs';
 import { planRejectedContract, retainPriorSnapshot, reviewerUnavailable } from './live-retention.mjs';
 import { mapWithConcurrency, dailyConcurrency } from './concurrency.mjs';
+import { openReuseCache, unitFingerprint, reuseProvenance } from './reuse-cache.mjs';
 import { RULES } from './review-live.mjs';
 
 export const LIVE_CONTRACT_CRITERIA = [
@@ -60,7 +61,29 @@ export function buildLiveContractUnits({ manifest, verified, verifier, aaEfficie
       url: 'repo:lib/aa-efficiency.mjs', locator: 'complete file', content: aaEfficiencyParser,
       sha256: sha256(aaEfficiencyParser), retrieved_at: now(), note: 'Complete local AA-efficiency parser used by the deterministic verifier',
     });
-    return { dataset: dataset.dataset, rows: allRows.length, examples: examples.map((r) => r.row_id), row, sources };
+    // CR-73.2: what this unit's review actually depends on, with every run-varying field left
+    // out. The packet also carries timestamps, receipt file paths and the execution report's
+    // run window — all of which differ on every run while saying nothing new about the data —
+    // so the fingerprint is built from the semantics instead of from the packet bytes:
+    // the complete row set (identity, pointer, staged value, primary extract and the capture
+    // hash behind each row), the extraction contract, the criteria, and the reviewed code.
+    const captures = [...new Set(allRows.map((r) => r.source?.sha256).filter(Boolean))].sort();
+    const fingerprint = unitFingerprint({
+      kind: 'live-contract', id: dataset.dataset,
+      inputs: {
+        contract: RULES[dataset.dataset] ?? null,
+        criteria: LIVE_CONTRACT_CRITERIA.map((c) => ({ id: c.id, text: c.text })),
+        required_rows: dataset.rows,
+        verifier_sha256: sha256(verifier),
+        verifier_section: `${start} through ${end}`,
+        aa_efficiency_parser_sha256: dataset.dataset === 'aa_efficiency' ? sha256(aaEfficiencyParser) : null,
+        captures,
+        // The rows themselves, not a count: a changed staged value or primary extract must be a miss
+        // even when the capture it came from is served under the same hash by a different pointer.
+        rows_sha256: sha256(JSON.stringify(allRows.map((r) => [r.row_id, r.pointer, r.source?.url ?? null, r.source?.sha256 ?? null, r.staged, r.extract]))),
+      },
+    });
+    return { dataset: dataset.dataset, rows: allRows.length, examples: examples.map((r) => r.row_id), row, sources, fingerprint, captures };
   });
 }
 
@@ -70,14 +93,29 @@ export function buildLiveContractUnits({ manifest, verified, verifier, aaEfficie
  */
 export async function reviewLiveContracts({
   runDir, rawDir, units, review = reviewArtifact, retain = retainPriorSnapshot,
-  limit = dailyConcurrency(), log = console,
+  limit = dailyConcurrency(), log = console, cache = null, runId = null,
 } = {}) {
   if (!runDir) throw new Error('reviewLiveContracts requires runDir');
   const progressFile = join(runDir, 'reports', 'live-gauntlet-progress.json');
   const done = new Set();
-  const settled = await mapWithConcurrency(units, (unit) => review({
-    runDir, artifactId: `live-contract-${unit.dataset}`, rows: [unit.row], sources: unit.sources, criteria: LIVE_CONTRACT_CRITERIA,
-  }), {
+  // CR-73.2: a disabled cache is a real object that misses on everything, so there is exactly
+  // one code path here whether reuse is on or off.
+  const reuse = cache ?? await openReuseCache({ enabled: false });
+  const reused = [];
+  const settled = await mapWithConcurrency(units, (unit) => {
+    const entry = unit.fingerprint ? reuse.get(unit.fingerprint) : null;
+    if (entry) {
+      const provenance = reuseProvenance(entry);
+      log.log?.(`live gauntlet ${unit.dataset}: inputs byte-identical to the accepted review of ${provenance.accepted_run_id ?? provenance.accepted_at} — reusing that verified outcome (CR-73.2, fingerprint ${unit.fingerprint.slice(0, 12)})`);
+      return Promise.resolve({
+        ...entry.outcome, reviews: [], reuse: provenance,
+        manifest: { ...entry.outcome.manifest, reused: provenance },
+      });
+    }
+    return review({
+      runDir, artifactId: `live-contract-${unit.dataset}`, rows: [unit.row], sources: unit.sources, criteria: LIVE_CONTRACT_CRITERIA,
+    });
+  }, {
     limit,
     // Serialised by mapWithConcurrency; the content is the sorted set of finished
     // units, so the file never depends on which lane won a race.
@@ -113,7 +151,17 @@ export async function reviewLiveContracts({
       log.warn(`live gauntlet ${unit.dataset}: contract NOT accepted — previous snapshot retained (${result.errors.join('; ').slice(0, 300)})`);
       continue;
     }
+    // CR-73.2: an outcome a different-family critic accepted, over inputs whose fingerprint is
+    // recorded with it. Only this branch stores — a retention, a rejection and the deterministic
+    // fallback above all `continue` before it, so none of them can ever become a reusable pass.
+    if (result.reuse) reused.push({ dataset: unit.dataset, ...result.reuse });
+    else if (unit.fingerprint) await reuse.put({
+      fingerprint: unit.fingerprint, kind: 'live-contract', id: unit.dataset, decision: 'accepted', run_id: runId,
+      captures: unit.captures ?? [],
+      note: `${unit.rows} rows verified against primary bodies; ${unit.examples.length} explicit model examples`,
+      outcome: { accepted: true, fingerprints: result.fingerprints, quarantined: [], errors: [], manifest: result.manifest },
+    });
     log.log(`live gauntlet ${unit.dataset}: contract accepted; ${unit.rows} rows verified against primary bodies; ${unit.examples.length} explicit model examples`);
   }
-  return { reviewed, retained, deterministic };
+  return { reviewed, retained, deterministic, reused, reuse_stats: reuse.stats() };
 }

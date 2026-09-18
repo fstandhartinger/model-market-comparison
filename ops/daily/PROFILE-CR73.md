@@ -221,3 +221,80 @@ taken by a producer when no paid candidate is viable; role-scoped content failur
 unhealthy, unqualified and unscored routes never treated as valid; and the real CLI against a mocked router plus
 OpenRouter, asserting that the producer call goes to OpenRouter, the critic call to the router, and that both receipts
 carry route, attempt and cost.
+
+## CR-73.2 — what may be reused, and what may never be (18 Sep 2026, iteration 104)
+
+Finding 4 of the baseline: *"Most model work re-checked unchanged data."* `refresh-benchmarks` ran
+134 checks and accepted 0 of 7 changed score rows; `review-live` accepted 6 contracts and retained
+1 — and the sources that produced no change still cost 28 of the run's 46 worker calls. Two paths
+in the pipeline re-ask a question they have already had answered:
+
+* the **seven live source contracts** are reviewed every day, whether or not a byte of the
+  captured primary bodies moved (34.6 min of the baseline, 30.5 % of its wall clock);
+* every **vendor source** is re-extracted by a producer even when its capture hash is yesterday's,
+  and each extracted row then enters the score gauntlet as a "changed" row.
+
+The public-recipe path has always done the opposite: an unchanged candidate is reported
+`checked_unchanged` and its rows keep their values, dates and approvals. CR-73.2 gives the other
+two paths the same discipline, with the evidence to back it.
+
+### The rule
+
+`ops/daily/reuse-cache.mjs` keeps an append-only log of **accepted** outcomes at
+`<home>/state/reuse/reuse-cache.jsonl`, keyed by a fingerprint of everything the review reads.
+A unit is reused only when **all** of this is true:
+
+1. the fingerprint matches, and the fingerprint binds the *semantics*, not the packet bytes —
+   the packet also carries timestamps, receipt paths and the execution report's run window, which
+   differ on every run while saying nothing about the data;
+2. the stored decision is `accepted` — a rejection, a withheld contract and an acceptance on the
+   deterministic fallback (a reviewer that never answered) are **never** stored, so they are always
+   asked again;
+3. the entry carries this module's `REUSE_CACHE_VERSION` and is younger than 30 days, because code
+   the fingerprint does not bind (the gauntlet, the worker policy) does drift;
+4. for a vendor source, the cached numbers are still **exactly** the ones the site publishes for
+   those slots.
+
+| Unit | Fingerprint binds | Invalidated by |
+|---|---|---|
+| live contract | the extraction contract (`RULES[dataset]`), the review criteria, the required row count, `sha256(ops/daily/review-live.mjs)`, the reviewed verifier section markers, `sha256(lib/aa-efficiency.mjs)` for `aa_efficiency`, the sorted capture hashes, and a hash over **every** row's `(row_id, pointer, source url, source sha256, staged, extract)` | one byte of any capture, any staged value or primary extract, the contract, the criteria, the verifier or the parser |
+| vendor source | the capture sha256, the recipe name, `sha256(ops/daily/public-candidate.py)`, `sha256(VENDOR_EXTRACTION_TASK)` and the locked slot identities (`id`, `benchmark_id`, `subject`, `unit`, `protocol`) | a changed capture, recipe, local extraction parser or task text, a changed/added/dropped slot — **and**, at hit time, any difference between the cached numbers and the published ones |
+
+The vendor `locator` is deliberately *not* in the key: it is written by the extraction, so it is an
+output, not part of the question. A vendor hit writes nothing at all — the published rows keep
+their values, sources, dates and approvals, and no derived score row enters the run's review set
+for them, which is CR-73.2's "and their dependent derived rows" clause.
+
+### What a reuse may never do
+
+* **Never turn a withheld source into a fresh one.** Only the branch that follows a clean
+  acceptance stores; retention, rejection and the deterministic fallback all leave before it.
+* **Never store an unreviewed extraction.** A vendor unit is written to the log only after the
+  score gauntlet has accepted **every** slot it produced. One quarantined row and the unit stores
+  nothing, so the next run extracts it again.
+* **Never treat a failure as a hit.** A missing, unreadable, corrupt, truncated, foreign-version or
+  expired entry is a miss, counted in `reuse` in the run report.
+* **Never hide.** Every hit appears in the run report (`reuse.reused_units`) and in the unit's own
+  manifest with its fingerprint, the run and day the acceptance came from, and the capture hashes
+  it was taken over. A reader can re-derive the fingerprint from the same inputs.
+* **Never leak across a dry run.** A dry run may be running over an overlay of uncommitted work, so
+  it reads and writes `<home>/state/reuse-dry` — an outcome accepted over an overlay can never be
+  reused by a publishing run. Build, tests, typecheck, prerender and the gate get no reuse
+  environment at all (`ISOLATED_STEP_UNSET`, CR-66.4's rule one entry wider).
+
+### Status
+
+**Off by default.** `BH_DAILY_REUSE=1` turns it on; unset, `0` or `false` reviews everything, and
+an unusable value fails rather than guesses. The 18 Sep scheduled run is therefore byte-for-byte
+the run it would have been without this change. Flipping the default belongs to CR-73.5, which is
+the honest measurement: two consecutive unattended full runs and one changed-source run, compared
+against the uncached baseline, verified by an engine that did not implement it. The first step is
+one `bash ops/daily/run.sh --dry-run` with `BH_DAILY_REUSE=1` on two consecutive days (day one
+fills the log, day two should report seven live-contract hits and no producer call for an unchanged
+vendor source) — a dry run must not be started where it could still hold `state/run.lock` at
+05:17 UTC.
+
+Fixtures: `test/cr-73-reuse-cache.test.mjs` (18 tests) — key stability and every invalidation, the
+opt-in flag, corrupt/unreadable/expired logs, "unchanged unit, same decision, no worker call",
+"changed capture re-reviews exactly that unit", withheld and fallback contracts never becoming
+reusable, and the vendor key/reusability rules.

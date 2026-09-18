@@ -7,6 +7,7 @@ import { writeJSONAtomic } from '../../lib/snapshot.mjs';
 import { reviewLive } from './review-live.mjs';
 import { buildLiveContractUnits, reviewLiveContracts } from './live-contracts.mjs';
 import { dailyConcurrency } from './concurrency.mjs';
+import { openReuseCache, reuseEnabled } from './reuse-cache.mjs';
 
 const [step, directory] = process.argv.slice(2);
 if (!directory || !['live', 'benchmarks'].includes(step)) throw new Error('Usage: node ops/daily/phase-step.mjs live|benchmarks RUN_DIR');
@@ -15,11 +16,17 @@ process.env.BH_WORKER_MAX_PRICE_PER_1M = '4';
 process.env.BH_WORKER_REASONING_EFFORT = 'low';
 process.env.BH_STATE = join(runDir, 'workers');
 await mkdir(process.env.BH_STATE, { recursive: true });
+// CR-73.2: the reuse log lives beside the runs, not inside one, so a run can recognise a unit
+// whose inputs have not moved since the run before it. Off unless `BH_DAILY_REUSE=1`; with no
+// directory it stays off, because a cache that cannot be read is never a hit.
+const runId = runDir.split('/').filter(Boolean).at(-1) ?? null;
 try {
+  // An unusable BH_DAILY_REUSE fails the step with a step result, rather than guessing.
+  const reuse = await openReuseCache({ dir: process.env.BH_DAILY_REUSE_DIR || null, enabled: reuseEnabled() && !!process.env.BH_DAILY_REUSE_DIR });
   let result;
   if (step === 'benchmarks') {
     const { refreshBenchmarks } = await import('./refresh-benchmarks.mjs');
-    result = await refreshBenchmarks({ runDir });
+    result = await refreshBenchmarks({ runDir, cache: reuse, runId });
     if (result?.ok !== true) throw new Error('Benchmark refresh reported failure');
   } else {
     const verified = await reviewLive({ runDir, rawDir: resolve('data/raw'), batchSize: 10, maxPacketBytes: 50000 });
@@ -32,13 +39,13 @@ try {
     // CR-73.3: the seven contract reviews are independent and each writes only its own
     // gauntlet directory, so they share the waiting; every decision below stays in
     // manifest order (see ops/daily/live-contracts.mjs).
-    console.log(`live gauntlet: reviewing ${units.length} source contracts with concurrency ${limit}`);
-    const { reviewed, retained, deterministic } = await reviewLiveContracts({
-      runDir, rawDir: resolve('data/raw'), units, limit,
+    console.log(`live gauntlet: reviewing ${units.length} source contracts with concurrency ${limit}${reuse.stats().enabled ? ` (reuse of unchanged units on, ${reuse.stats().entries_loaded} prior decisions)` : ''}`);
+    const { reviewed, retained, deterministic, reused, reuse_stats } = await reviewLiveContracts({
+      runDir, rawDir: resolve('data/raw'), units, limit, cache: reuse, runId,
     });
     const covered = reviewed.reduce((n, r) => n + r.programmatic_rows, 0);
     if (covered !== manifest.coverage.required_rows) throw new Error('Live verification did not cover every source row');
-    result = { ok: true, deterministic: verified.report, gauntlet: { contracts: reviewed.length, concurrency: limit, programmatically_verified_rows: covered,
+    result = { ok: true, deterministic: verified.report, gauntlet: { contracts: reviewed.length, concurrency: limit, reuse: reuse_stats, reused_contracts: reused, programmatically_verified_rows: covered,
       model_reviewed_examples: reviewed.flatMap((r) => r.example_rows), complete: true, retained_contracts: retained, deterministic_fallback_contracts: deterministic,
       coverage_note: 'All rows verified programmatically against complete captured primary bodies. Different-model gauntlet verifies adapter contracts and explicit examples. No claim of full manual LLM numeric inspection.',
       reviews: reviewed.map((r) => ({ dataset: r.dataset, manifest: r.manifest })) } };

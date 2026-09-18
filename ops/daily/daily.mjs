@@ -42,7 +42,9 @@ export async function linkDryRunDependencies(repo, work) {
   await appendFile(join(work, '.git/info/exclude'), '\n/node_modules\n');
 }
 
-export const ISOLATED_STEP_UNSET = ['BH_EVIDENCE_DIR', 'BH_STATE'];
+// CR-73.2: the reuse log is production evidence like the capture directory — build, tests,
+// typecheck, prerender and the gate must never read or write it (CR-66.4's rule, one entry wider).
+export const ISOLATED_STEP_UNSET = ['BH_EVIDENCE_DIR', 'BH_STATE', 'BH_DAILY_REUSE', 'BH_DAILY_REUSE_DIR'];
 export function isolatedStepEnvironment(environment) {
   const env = { ...environment };
   for (const key of ISOLATED_STEP_UNSET) delete env[key];
@@ -62,7 +64,11 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
   await mkdir(home, { recursive: true });
   const report = { started_at: started, run_dir: runDir, dry_run: dryRun, scope, steps: [], published: false, exit_code: 1 };
   let before, after, top5 = null;
-  const environment = { ...process.env, BH_EVIDENCE_DIR: join(runDir, 'sources'), BH_STATE: join(runDir, 'workers'), BH_WORKER_MAX_PRICE_PER_1M: '4', BH_WORKER_REASONING_EFFORT: 'low', BH_WORKER_DISABLE_OPTIONAL_REASONING: '0', BH_WORKER_FREE_ROUTER: '1' };
+  // CR-73.2: the reuse log lives beside the runs so a run can recognise a unit whose inputs have
+  // not moved. A dry run reads and writes its own log — it may be running over an overlay of
+  // uncommitted work, and an outcome accepted over that must never be reused by a publishing run.
+  const reuseDir = join(home, 'state', dryRun ? 'reuse-dry' : 'reuse');
+  const environment = { ...process.env, BH_EVIDENCE_DIR: join(runDir, 'sources'), BH_STATE: join(runDir, 'workers'), BH_DAILY_REUSE_DIR: reuseDir, BH_WORKER_MAX_PRICE_PER_1M: '4', BH_WORKER_REASONING_EFFORT: 'low', BH_WORKER_DISABLE_OPTIONAL_REASONING: '0', BH_WORKER_FREE_ROUTER: '1' };
   for (const key of ['OPENAI_API_KEY', 'OPENAI_BASE_URL', 'OPENAI_API_BASE', 'CODEX_API_KEY']) delete environment[key];
   const command = async (name, file, args, cwd = work, timeout = 600_000, env = environment) => {
     const begin = Date.now();
@@ -458,6 +464,17 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
       worker_share_of_wall: timing.workers.share_of_wall, worker_concurrency: timing.workers.concurrency, configured_concurrency: dailyConcurrency(),
       failed_worker_min: timing.workers.failed_min, top_stages: timing.critical_path.slice(0, 5) };
   } catch (error) { report.profile = { error: redact(String(error.message)) }; }
+  // CR-73.2: every reuse is visible in the run report with its provenance, so a reader can tell a
+  // fresh review from a reused decision without opening a step result.
+  try {
+    const liveStep = await readJSON(join(reports, 'live-step-result.json')).catch(() => null);
+    const benchStep = await readJSON(join(reports, 'benchmarks-step-result.json')).catch(() => null);
+    const units = [...(liveStep?.gauntlet?.reused_contracts ?? []).map((r) => ({ kind: 'live-contract', id: r.dataset, ...r })),
+      ...(benchStep?.reused_units ?? []).map((r) => ({ kind: 'vendor-source', id: r.url, ...r }))];
+    report.reuse = { dir: reuseDir, enabled: liveStep?.gauntlet?.reuse?.enabled ?? benchStep?.reuse?.enabled ?? false,
+      live_contracts: liveStep?.gauntlet?.reuse ?? null, benchmarks: benchStep?.reuse ?? null,
+      reused_units: units.map((u) => ({ kind: u.kind, id: u.id, fingerprint: u.fingerprint, accepted_run_id: u.accepted_run_id, accepted_at: u.accepted_at, captures: u.captures })) };
+  } catch (error) { report.reuse = { error: redact(String(error.message)) }; }
   await writeJSONAtomic(join(reports, 'run-report.json'), report);
   const context = { status_ok: report.exit_code === 0, rc: report.exit_code, top5: top5 ? { current: top5 } : null, datasets: { before: slim(before), after: slim(after) } };
   await writeJSONAtomic(join(reports, 'notify-context.json'), context);
