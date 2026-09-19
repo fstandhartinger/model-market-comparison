@@ -59,3 +59,9 @@ test('presets recompute to the published views; URL weights round-trip; the defa
   assert.ok(!describe(acc).official);
   assert.ok(isDefault(parseParams('w=-10-20-20-20')) && isDefault(parseParams('w=10-20-20')));
 });
+
+test('Jev chart names wrap on phones and only truncate at the desktop breakpoint', async () => {
+  const source = await readFile(new URL('../components/JevModelsV12.tsx', import.meta.url), 'utf8');
+  assert.match(source, /min-w-0 md:truncate sm:col-start-2/);
+  assert.doesNotMatch(source, /min-w-0 truncate sm:col-start-2/);
+});
