@@ -5219,3 +5219,15 @@ The bookmark intake's registry matcher learned the `aliases` field (`bookmarks_r
 "VulcanBench-SWE" post is recognized as already-carried instead of re-filed. The rebuilt dataset
 carries the alias field for downstream consumers; registry validator, build-dataset, npm test
 (872/0) and `npx tsc --noEmit` all green at this commit.
+
+### Iteration 116 (close-out) — regression check after the alias change
+
+`verify-cr-82-3-4.mjs` re-run at `6e0f385`: **23/23 canonical, 23/23 legacy**
+(`/opt/benchmarkheaven/state/ux-evidence/work-20260919-cr82-regression/{canonical,legacy}/`),
+so the registry `aliases` addition left the CR-82.3/82.4 surfaces untouched. Both hosts serve
+`6e0f385` (`/api/meta` revision readback). Next iteration candidates, in review-gate order:
+CR-30.2/30.3 (remaining tier-A candidates — MCP Atlas/Scale terms needs Florian's answer,
+FrontierSWE, PostTrainBench), CR-37.3, CR-43.1, CR-68.5, CR-73.5. Parked for a non-kimi gate
+to flip: CR-54.2/54.3 (evidence `work-20260919-cr54-2`), CR-82.3/82.4, CR-81.x, CR-80.x,
+CR-34.4, iteration 111's fill, iteration 105's /eu claims, and now CR-82.5 (matcher-test only,
+not a product surface — a code review suffices).
