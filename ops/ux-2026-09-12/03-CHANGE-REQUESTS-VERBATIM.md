@@ -1183,3 +1183,12 @@ Supervisor notes (not Florian's words), filed by ~/jobs/support-links-20260919:
 - Wording: **"Support"** ("Support Benchmark Heaven", "Support this project"), never "donation"/"donate"/"Spende" — payments go to a company and are not tax-deductible donations. Where there is room, one short line: "Payments go to productivity-boost.com Betriebs UG (haftungsbeschränkt) & Co. KG, the one-person company behind these projects."
 - Same link is already live on whichmodel.app.mintapis.com and bonsai-swarm.app.mintapis.com (footer + page paragraph) and in FUNDING.yml of bonsai-swarm, auto-router-demo, jevbench, auto-model-router.
 
+
+
+## CR-20260919c — /jev-models: difficulty filter, per-task view, topic radar → CR-90
+Florian, Claude Code chat, 19 Sep 2026 ~12:00 UTC, verbatim:
+
+> two more ideas for the Jev benchmark result page: we could also add a trackbar for easy/medium/hard tasks - or maybe it would be better some other user interface widget than a trackbar - that allows the user to configure if they want to see the normal benchmark results (where all tasks are included, easy+medium+hard) or only the results of where easy or easy+medium are included, so that people can wonder if their own usecase they want to make an informed decision for (based on our evaluation results) is maybe easy enough to go for one of the open Jev alternatives that may be cheaper+faster but just don't score as well for the harder tasks.
+> We should maybe somewhere further down in the page also show a nice scatterplot (or something else apropriate) that explains which tasks of the easy/medium/hard category each of the models managed to get right.
+> Just like with changed weighting we should show a warning then, so that it's clear that these changed settings make the results be "not the default setting" of the benchmark results.
+> And second thought, but if not easy, we don't have to do it: if our tasks can easily be categorized into different topics (e.g. math, coding, reasoning, science, etc) we could even show nice radar charts that let the users know which jev like model is good in which category of tasks.
