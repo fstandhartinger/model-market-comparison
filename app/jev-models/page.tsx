@@ -25,13 +25,13 @@ export default async function JevModelsPage() {
   const measuredKeys = new Set([...view.ranked, ...view.partial].map((r) => short(r.display).toLowerCase()));
   // Candidates v1.1 now measures (Needle 3) leave the not-measured ledger; the rest still applies to this run.
   const notMeasured = (v1.availability.not_measured as { candidate: string; author: string; reason: string }[]).filter((n) => !measuredKeys.has(n.candidate.toLowerCase()));
-  const credits = [...view.ranked, ...view.partial].filter((r) => r.cls !== 'llm-baseline' && !r.key.endsWith('-tools')).sort((a, b) => a.display.localeCompare(b.display));
+  const credits = [...view.ranked, ...view.partial].filter((r) => !r.key.endsWith('-tools')).sort((a, b) => a.display.localeCompare(b.display));
   return <>
     <header className="bh-page-head">
       <p className="bh-eyebrow">JevBench v1.1 · our own benchmark{view.pilot ? ' · pilot' : ''}</p>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">Jev-class models</h1>
       <p className="mt-3 max-w-3xl text-lg" data-bh-jev-own>JevBench is <b>Benchmark Heaven&apos;s own benchmark</b> for Jev-class decision models: state and a bounded rubric in, a typed answer out.</p>
-      <p className="bh-muted mt-2 max-w-3xl">Version 1.1 measures {view.ranked.length + view.partial.length} systems on {view.decisions} decisions and scores three things — <b className="text-gray-200">Capability</b>, <b className="text-gray-200">Speed</b> and <b className="text-gray-200">Cost</b> — which combine into one <b className="text-gray-200">JevBench Main Score</b>. Built and run by us, not collected from someone else&apos;s leaderboard; the results describe the tested configurations, not every application.</p>
+      <p className="bh-muted mt-2 max-w-3xl">Version 1.1 measures {view.ranked.length + view.partial.length} systems on {view.decisions} decisions and scores three things — <b className="text-gray-200">Capability</b>, <b className="text-gray-200">Speed</b> and <b className="text-gray-200">Cost</b> — which combine into one <b className="text-gray-200">JevBench Main Composite Score</b> (officially 60 : 20 : 20 — you can re-weight it below). Built and run by us, not collected from someone else&apos;s leaderboard; the results describe the tested configurations, not every application.</p>
       <p className="bh-muted mt-3 max-w-3xl text-xs leading-relaxed" data-bh-jev-meta>
         Measured {day(view.generated)} · protocol <code>{view.protocol}</code> · {view.tierCounts.easy} easy + {view.tierCounts.standard} standard + {view.tierCounts.judge} judge decisions · one request at a time from a {view.hardwareOrigin || 'server'} in Germany ·{' '}
         <a className="text-accent underline" href={JEVBENCH_REPO}>harness, public tasks &amp; scoring rules (MIT)</a> ·{' '}
@@ -40,17 +40,18 @@ export default async function JevModelsPage() {
       </p>
     </header>
 
-    {lead && <section className="mt-6 max-w-4xl" aria-labelledby="jev11-headline">
-      <h2 id="jev11-headline" className="text-xl font-semibold">What the run says</h2>
+    <JevModelsV11Board view={view}>
+    {lead && <section className="mt-8 max-w-4xl" aria-labelledby="jev11-headline">
+      <h2 id="jev11-headline" className="text-xl font-semibold">What the run says (official weights)</h2>
       <ul className="mt-2 list-disc space-y-1.5 pl-5 text-[15px]" data-bh-jev11-findings>
-        <li><b>{lead.display}</b> leads with a Main Score of {one(lead.main)}: capability {one(lead.capability)}, {lead.p50?.toFixed(2)} s median, <CostValue r={lead} /> per 1,000 decisions.</li>
-        {bestOpen && <li>The best open rebuild, <b>{bestOpen.display}</b>, is #{leadRank(bestOpen.key)} at {one(bestOpen.main)} with capability {one(bestOpen.capability)}.</li>}
+        <li><b>{lead.display}</b> leads with a Main Composite Score of {one(lead.main)}: capability {one(lead.capability)}, {lead.p50?.toFixed(2)} s median, <CostValue r={lead} /> per 1,000 decisions.</li>
+        {bestOpen && <li>Open lookalikes of Jev appeared within days; the best of them, <b>{bestOpen.display}</b>, is #{leadRank(bestOpen.key)} at {one(bestOpen.main)} with capability {one(bestOpen.capability)} — {one((lead.main ?? 0) - (bestOpen.main ?? 0))} points behind.</li>}
         {topCap && topCap.key !== lead.key && <li><b>{topCap.display}</b> has the highest capability ({one(topCap.capability)}) but places #{leadRank(topCap.key)}: {topCap.p50?.toFixed(2)} s median and <CostValue r={topCap} /> per 1,000 decisions.</li>}
         {needle && <li><b>{short(needle.display)}</b> returns a tool call, not a probability distribution, so it has no calibration score — &ldquo;no calibrated distribution&rdquo;, not zero. It gets {Math.round((needle.tiers.easy ?? 0) * 100)}% of the easy tier right and falls off on the harder tiers: Main Score {one(needle.main)}.</li>}
       </ul>
     </section>}
 
-    <JevModelsV11Board view={view} />
+    </JevModelsV11Board>
 
     <section className="mt-10 max-w-4xl space-y-3" aria-labelledby="jev-not-measured">
       <h2 id="jev-not-measured" className="text-xl font-semibold">Who could not be measured, and why</h2>
@@ -84,9 +85,9 @@ export default async function JevModelsPage() {
     <details id="credit" className="bh-panel mt-3 max-w-4xl scroll-mt-6 p-5">
       <summary className="cursor-pointer text-sm font-semibold">Credit</summary>
       <div className="bh-muted mt-4 space-y-3 text-sm">
-        <p>Harness, public tasks and every scoring rule: <a className="text-accent underline" href={JEVBENCH_REPO}>github.com/fstandhartinger/jevbench</a> (MIT). Each rebuild links its author&apos;s repository.</p>
+        <p>Harness, public tasks and every scoring rule: <a className="text-accent underline" href={JEVBENCH_REPO}>github.com/fstandhartinger/jevbench</a> (MIT). Each project links its author&apos;s repository or vendor page.</p>
         <ul className="list-disc space-y-1.5 pl-5" data-bh-jev-credits>
-          {credits.map((r) => <li key={r.key}><b className="text-gray-200">{r.display}</b> — {r.author}, {r.licence}{r.repo && <> — <a className="text-accent underline" href={r.repo}>{r.repo.replace(/^https:\/\//, '')}</a></>}</li>)}
+          {credits.map((r) => <li key={r.key}><b className="text-gray-200">{r.display}</b> — {r.author}, {r.licence}{r.link && <> — <a className="text-accent underline" href={r.link} target="_blank" rel="noopener noreferrer">{r.link.replace(/^https:\/\//, '')}</a></>}</li>)}
         </ul>
         <p>Authors: if we tested the wrong configuration, tell us and we will rerun it. New entrants become a new version rather than silently changing this one.</p>
       </div>

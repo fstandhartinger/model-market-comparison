@@ -1,9 +1,10 @@
 export const JEVBENCH_V11_ARTIFACT: string;
 export const JEVBENCH_V11_SHA256: string;
+export const VENDOR_LINKS: Record<string, string>;
 export const TIERS: ('easy' | 'standard' | 'judge')[];
 export type JevTier = 'easy' | 'standard' | 'judge';
 export type JevV11Row = {
-  key: string; display: string; author: string; cls: string; repo: string | null; licence: string; open: 'yes' | 'weights' | 'no'; note: string | null;
+  key: string; display: string; author: string; cls: string; repo: string | null; link: string | null; licence: string; open: 'yes' | 'weights' | 'no'; note: string | null;
   ranked: boolean; main: number | null; capability: number | null; speed: number | null; cost: number | null;
   tiers: Record<JevTier, number | null>; coverage: Record<JevTier, number | null>; decisions: number | null;
   p50: number | null; p95: number | null; usd: number | null; costKind: 'measured' | 'estimate' | 'unknown'; costBasis: string;

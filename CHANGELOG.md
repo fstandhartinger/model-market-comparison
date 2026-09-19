@@ -4,6 +4,15 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-19 — /jev-models: the Main Composite Score chart first, with adjustable weights
+
+`/jev-models` now opens with the JevBench Main Composite Score as a native bar chart (bars coloured by system type,
+Capability / Speed / Cost beside each bar, formula and footnotes) and four named weightings — Emphasis on Accuracy
+60:20:20 (the default and the official score), Emphasis on Speed 20:60:20, Emphasis on Cost 20:20:60, Balanced
+33:33:33 — plus custom sliders. Other weights re-score and re-rank in the browser from the published sub-scores and are
+labelled "not the official score" (chart title, badge, table header, reset). `?w=20-20-60` shares a weighting. Every
+system links to its repository or vendor page. The published numbers and the API are unchanged.
+
 ## 2026-09-19 — JevBench v1.1: one Main Score; v1.0 moves to /jev-models/v1
 
 `/jev-models` now shows JevBench v1.1 (314 decisions in easy / standard / judge tiers, 11 systems incl. Needle 3):

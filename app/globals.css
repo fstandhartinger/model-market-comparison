@@ -439,3 +439,18 @@ details[open] > .bh-collapsible-grid { display: grid; }
 /* CR-86: v1.1 partial runs are shown but greyed and hatched, never ranked. */
 .bh-jev11-hatched { background-image: repeating-linear-gradient(135deg, rgb(var(--line) / .6) 0 2px, transparent 2px 7px); }
 .bh-jev11-partial > * { opacity: .62; }
+/* CR-87 (2026-09-19): JevBench Main Composite Score chart — colour by system type (as the launch chart), live weights. */
+:root, [data-theme="dark"] { --jev-t-jev: 74 149 234; --jev-t-rebuild: 240 122 74; --jev-t-llm: 47 192 141; --jev-t-tool: 146 128 232; }
+[data-theme="light"] { --jev-t-jev: 42 122 213; --jev-t-rebuild: 224 97 45; --jev-t-llm: 22 163 116; --jev-t-tool: 75 58 166; }
+.bh-jevc-bar { height: 100%; border-radius: 0 4px 4px 0; background: rgb(var(--jev-t)); transition: width .35s ease; }
+.bh-jevc-bar.is-partial { background: repeating-linear-gradient(135deg, rgb(var(--jev-t) / .85) 0 2px, transparent 2px 7px); box-shadow: inset 0 0 0 1.5px rgb(var(--jev-t)); }
+.bh-jevc-swatch { display: inline-block; width: 22px; height: 10px; border-radius: 2px; vertical-align: middle; background: rgb(var(--jev-t)); }
+.bh-jevc-swatch.is-partial { background: repeating-linear-gradient(135deg, var(--muted) 0 2px, transparent 2px 6px); box-shadow: inset 0 0 0 1px var(--muted); }
+.bh-jevc-grid { background-image: linear-gradient(90deg, rgb(var(--line) / .45) 1px, transparent 1px); background-size: 20% 100%; }
+.bh-jevc-preset { border: 1px solid rgb(var(--line)); border-radius: 10px; padding: 7px 10px; text-align: left; line-height: 1.25; min-height: 44px; }
+.bh-jevc-preset:hover { background: rgb(var(--accent) / .07); }
+.bh-jevc-preset[aria-pressed="true"] { border-color: rgb(var(--accent)); background: rgb(var(--accent) / .12); box-shadow: inset 0 0 0 1px rgb(var(--accent)); }
+.bh-jevc-notdefault { display: inline-flex; align-items: center; gap: 4px; border-radius: 999px; padding: 2px 9px; font-size: 12px; font-weight: 700; color: rgb(var(--warn)); border: 1.5px solid rgb(var(--warn)); background: rgb(var(--warn) / .1); }
+.bh-jevc-official { display: inline-flex; align-items: center; border-radius: 999px; padding: 2px 9px; font-size: 12px; font-weight: 700; color: rgb(var(--accent2)); border: 1.5px solid rgb(var(--accent2) / .7); background: rgb(var(--accent2) / .08); }
+.bh-jevc-custom figure, figure.bh-jevc-custom { box-shadow: 0 0 0 2px rgb(var(--warn) / .7); }
+.bh-jevc-slider { width: 100%; min-height: 32px; }
