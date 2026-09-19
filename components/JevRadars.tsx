@@ -8,8 +8,8 @@ import type { JevTopicsView } from "../lib/jevbench-v12-topics.mjs";
 // Colours follow the page's system types; if both picks share a type, B is dashed, darker/lighter and square-marked.
 const AXES: JevAxis[] = ["intelligence", "calibration", "speed", "cost"];
 const AXIS_LABEL: Record<JevAxis, string> = { intelligence: "Intelligence", calibration: "Calibration", speed: "Speed", cost: "Cost" };
-const TYPE_VAR: Record<string, string> = { jev: "--jev-t-jev", "jev-rebuild": "--jev-t-rebuild", "llm-baseline": "--jev-t-llm", "small-tool-model": "--jev-t-tool" };
-const TYPE_LABEL: Record<string, string> = { jev: "Jev", "jev-rebuild": "Jev rebuild", "llm-baseline": "instruction model", "small-tool-model": "small tool-calling model" };
+const TYPE_VAR: Record<string, string> = { jev: "--jev-t-jev", "jev-rebuild": "--jev-t-rebuild", "llm-baseline": "--jev-t-llm", "small-tool-model": "--jev-t-tool", "jev-service": "--jev-t-service", classifier: "--jev-t-classifier" };
+const TYPE_LABEL: Record<string, string> = { jev: "Jev", "jev-rebuild": "Jev rebuild", "llm-baseline": "instruction model", "small-tool-model": "small tool-calling model", "jev-service": "service built on Jev", classifier: "zero-shot classifier" };
 const colour = (cls: string) => `rgb(var(${TYPE_VAR[cls] ?? TYPE_VAR["llm-baseline"]}))`;
 const one = (v: number | null) => (v === null ? "—" : v.toFixed(1));
 const pct = (v: number | null) => (v === null ? "—" : `${(v * 100).toFixed(1)}%`);

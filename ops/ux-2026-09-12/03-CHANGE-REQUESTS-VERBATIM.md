@@ -1262,3 +1262,18 @@ Florian, 19 Sep 2026 ~17:30 UTC, verbatim:
 
 Supervisor notes (not Florian's words): implemented by ~/jobs/jev-models-radar-20260919 with the loop paused. Checklist in 04 (CR-94).
 Completes CR-90.3 (topic radar): topic labels now exist (jevbench repo `datasets/topics.json`, method `datasets/TOPICS.md`).
+
+## CR-20260919j (JevBench page) → CR-95 — JevBench v1.2.2: the five systems readers asked for
+
+Florian, 19 Sep 2026 ~17:10 UTC, addendum to the job that let Harold answer the replies under the JevBench posts, verbatim:
+> For requests to add you can also just agree and try to include the model yourself
+
+Supervisor notes (not Florian's words): implemented by ~/jobs/jevbench-add-requests-20260919 with the loop paused. Details and
+verification: `ops/ux-2026-09-12/jevbench/v1.2.2/CR-95.md`.
+- **CR-95.1** Artifact = jevbench repo `results/v1.2/` at tag `v1.2.2`; five new rows — classifier.dev (fast tier) #1 with 84.8,
+  Laya #5 with 70.1, jeff #9 with 66.9, openJev Verdict #11 with 66.1, GLiNER2 #18 with 52.9. No earlier row's score changed.
+- **CR-95.2** Two new system types with their own colour and legend: "Service built on Jev" (classifier.dev) and "Zero-shot
+  classifier (not a Jev rebuild)" (GLiNER2). † footnote on each new row.
+- **CR-95.3** Because a service built on Jev now leads, the headline says why in one line: same Intelligence, a flat plan price
+  instead of a per-token tariff, faster from our server, lower Calibration.
+- **CR-95.4** Revision v1.2.2 on the page; topic radars cover the new rows (topics artifact re-pinned).

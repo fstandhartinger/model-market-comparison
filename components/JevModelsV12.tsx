@@ -27,10 +27,14 @@ const TYPE: Record<string, { label: string; v: string }> = {
   "jev-rebuild": { label: "Jev rebuild (open, or open source planned)", v: "--jev-t-rebuild" },
   "llm-baseline": { label: "Instruction model, JSON schema", v: "--jev-t-llm" },
   "small-tool-model": { label: "Small tool-calling model", v: "--jev-t-tool" },
+  // CR-95 (v1.2.2): readers asked for these; neither is a Jev rebuild, so they get their own colour.
+  "jev-service": { label: "Service built on Jev", v: "--jev-t-service" },
+  classifier: { label: "Zero-shot classifier (not a Jev rebuild)", v: "--jev-t-classifier" },
 };
 const typeVar = (cls: string) => ({ ["--jev-t" as string]: `var(${(TYPE[cls] ?? TYPE["llm-baseline"]).v})` });
 const chartName = (r: JevV12Row) => r.key === "gpt-5.6-luna" ? "GPT-5.6 Luna (low)" : r.key.endsWith("-tools") ? "Needle 3, options as tools"
-  : r.key === "openjev-razorback16" ? "OpenJev (razorback16)" : r.key === "open-alternative-jev" ? "open-alternative-jev (Qwen3.5-4B)" : r.key === "semif-qwen3.5-4b" ? "SemIf (Qwen3.5-4B)" : r.key === "djev" ? "djev (Maisa, diffusion-gemma)" : short(r.display);
+  : r.key === "openjev-razorback16" ? "OpenJev (razorback16)" : r.key === "open-alternative-jev" ? "open-alternative-jev (Qwen3.5-4B)" : r.key === "semif-qwen3.5-4b" ? "SemIf (Qwen3.5-4B)" : r.key === "djev" ? "djev (Maisa, diffusion-gemma)"
+  : r.key === "classifier-dev-fast" ? "classifier.dev (fast tier)" : r.key === "programasweights" ? "ProgramAsWeights" : short(r.display);
 
 /** $ per 1,000 decisions: four decimals below one cent so e.g. $0.0045 and $0.0092 stay distinguishable. */
 export const usdText = (x: number) => `$${x.toFixed(x < 0.01 ? 4 : 3)}`;
