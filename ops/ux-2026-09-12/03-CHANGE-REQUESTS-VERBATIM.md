@@ -1172,3 +1172,14 @@ Supervisor notes (not Florian's words): implemented by the supervisor job ~/jobs
 - CR-88.1: remove "Jev-class models" from the header menu (desktop More + phone menu) and `/jev-models`, `/jev-models/v1` from the sitemap.
 - CR-88.2: a big "Work in progress — results are preliminary, please don't share or cite them yet" banner at the top of `/jev-models` and `/jev-models/v1`, plus `robots: noindex, nofollow`. The pages stay reachable by URL.
 - Reverse both only when Florian says JevBench v1.2 is final (the same job files the reversal). Iterations: do not remove the banner or re-add the menu link on your own.
+
+## CR-20260919d (Support link) → CR-89 — "Support Benchmark Heaven" link: footer, About page, FUNDING.yml, README
+
+Florian, Claude Code chat, 19 Sep 2026 ~10:15 UTC, verbatim, German:
+> und noch was, können wir auf dem Repo von benchmarkheaven und vom jevbench und auch auf dem autorouter repo und auch auf der benchmarkheaven seite eine Spenden-Möglichkeit einbauen? Ich bin eine 1-Personen Hobby Person, die Kosten sind nicht ohne für mich.
+
+Supervisor notes (not Florian's words), filed by ~/jobs/support-links-20260919:
+- The payment link already exists (pay-what-you-want Stripe link on Florian's company account, EUR, preset 5 €, 1–500 €): **https://donate.stripe.com/fZu00i9ro0wmdF88sg1Jm01**. Use exactly this URL; do not create another one.
+- Wording: **"Support"** ("Support Benchmark Heaven", "Support this project"), never "donation"/"donate"/"Spende" — payments go to a company and are not tax-deductible donations. Where there is room, one short line: "Payments go to productivity-boost.com Betriebs UG (haftungsbeschränkt) & Co. KG, the one-person company behind these projects."
+- Same link is already live on whichmodel.app.mintapis.com and bonsai-swarm.app.mintapis.com (footer + page paragraph) and in FUNDING.yml of bonsai-swarm, auto-router-demo, jevbench, auto-model-router.
+
