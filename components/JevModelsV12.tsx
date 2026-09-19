@@ -145,8 +145,15 @@ function ScoreChart({ rows, partial, w, view }: { rows: Row[]; partial: Row[]; w
     </ul>
     <figcaption className="bh-muted mt-3 space-y-1 text-[11.5px] leading-snug" data-bh-jevc-footnotes>
       <SpeedNote view={view} className="text-[11.5px]" />
-      <span className="block">I = Intelligence, C = Calibration, S = Speed, K = Cost. {view.decisions} typed decisions per system ({view.tierCounts.easy} easy / {view.tierCounts.standard} standard / {view.tierCounts.judge} judge / {view.tierCounts.hard} hard). est. = no tariff for us, so priced like a large inference provider hosting a model of that size (<a href="#jev-costs" className="text-accent underline">how costs are estimated</a>). A label-only system has no calibration (–, counted as 0). Names link to each project.</span>
-      {all.filter((r) => r.footnote).map((r) => <span key={r.key} className="block" data-bh-jev12-footnote={r.key}>{chartName(r)}: {r.footnote}</span>)}
+      <span className="block" data-bh-jev12-oneliner>I, C, S, K = Intelligence, Calibration, Speed, Cost; ~ est. = priced like a large inference provider (<a href="#jev-costs" className="text-accent underline">how costs are estimated</a>); † = see note.</span>
+      <details className="mt-2" data-bh-jev12-notes>
+        <summary className="cursor-pointer text-accent">Legend and notes</summary>
+        <ul className="mt-2 space-y-1">
+          <li>Names link to each project.</li>
+          <li data-bh-jev12-label-note>A label-only system has no calibration (–, counted as 0).</li>
+          {all.filter((r) => r.footnote).map((r) => <li key={r.key} data-bh-jev12-footnote={r.key}>{chartName(r)}: {r.footnote}</li>)}
+        </ul>
+      </details>
     </figcaption>
   </figure>;
 }

@@ -3,6 +3,7 @@ import { readJevbenchV12, jevbenchV12View } from '../../lib/jevbench-v12.mjs';
 import { readJevbenchV11, jevbenchV11View } from '../../lib/jevbench-v11.mjs';
 import { readJevbench, JEVBENCH_REPO } from '../../lib/jevbench.mjs';
 import { JevModelsV12Board, CostValue } from '../../components/JevModelsV12';
+import { JevCostsDisclosure } from '../../components/JevCostsDisclosure';
 import { previewMetadata } from '../../lib/seo';
 
 // CR-92 (Florian 2026-09-19 ~13:20 UTC): JevBench v1.2 final — the JevBench Score (Intelligence, Calibration, Speed, Cost,
@@ -60,17 +61,19 @@ export default async function JevModelsPage() {
     </section>}
     </JevModelsV12Board>
 
-    <section id="jev-costs" className="bh-panel mt-8 max-w-4xl scroll-mt-6 p-5 text-sm" aria-labelledby="jev-costs-h" data-bh-jev-costs>
-      <h2 id="jev-costs-h" className="text-xl font-semibold">How costs are estimated</h2>
-      <p className="bh-muted mt-2">Systems with a public tariff (per token or per request) are priced at that tariff times the tokens we measured. Systems without one — open weights, author demos, models we ran locally — are priced as if a <b className="text-gray-200">large inference provider</b> hosted them: the OpenRouter list price of the same weights; if OpenRouter does not list them, the nearest larger sibling; if no model of that size class is on OpenRouter, the DeepInfra list price of the same weights or of the nearest larger model of the same class. We do not use per-minute GPU rental or our own CPU time — providers buy capacity in bulk or own the hardware, and price accordingly. Price × tokens per decision = $ per 1,000 decisions, marked &ldquo;est.&rdquo;.</p>
-      <ul className="mt-3 space-y-1.5" data-bh-jev-cost-rows>
-        {estimated.map((r) => <li key={r.key}><b>{short(r.display)}</b> — <CostValue r={r} /> per 1,000: <span className="bh-muted">{r.costBasis.replace(/^ESTIMATE: (hosted-provider price, )?/, '')}</span></li>)}
-      </ul>
-      {prices.size_classes && <details className="mt-3"><summary className="cursor-pointer text-accent">Reference prices by size class ($ per million input / output tokens)</summary>
-        <ul className="bh-muted mt-2 space-y-1" data-bh-jev-cost-classes>
-          {Object.entries(prices.size_classes as Record<string, { reference_models: Record<string, number | number[]> }>).map(([k, c]) => <li key={k}><b className="text-gray-200">{k.replace(/_/g, ' ')}</b>: {Object.entries(c.reference_models).map(([m, v]) => `${m} ${Array.isArray(v) ? v.map((x) => `$${x}`).join(' / ') : `$${v}`}`).join('; ')}</li>)}
+    <section className="mt-8 max-w-4xl text-sm" data-bh-jev-costs>
+      <p className="bh-muted mb-2">Systems with a public tariff use that tariff and measured tokens. For systems without one, we use a clearly marked estimate based on a large inference provider&apos;s list price for the same weights or size class.</p>
+      <JevCostsDisclosure>
+        <p className="bh-muted mt-2">Systems with a public tariff (per token or per request) are priced at that tariff times the tokens we measured. Systems without one — open weights, author demos, models we ran locally — are priced as if a <b className="text-gray-200">large inference provider</b> hosted them: the OpenRouter list price of the same weights; if OpenRouter does not list them, the nearest larger sibling; if no model of that size class is on OpenRouter, the DeepInfra list price of the same weights or of the nearest larger model of the same class. We do not use per-minute GPU rental or our own CPU time — providers buy capacity in bulk or own the hardware, and price accordingly. Price × tokens per decision = $ per 1,000 decisions, marked &ldquo;est.&rdquo;.</p>
+        <ul className="mt-3 space-y-1.5" data-bh-jev-cost-rows>
+          {estimated.map((r) => <li key={r.key}><b>{short(r.display)}</b> — <CostValue r={r} /> per 1,000: <span className="bh-muted">{r.costBasis.replace(/^ESTIMATE: (hosted-provider price, )?/, '')}</span></li>)}
         </ul>
-        <p className="bh-muted mt-2">Sources: {String(prices.token_source ?? '')}.</p></details>}
+        {prices.size_classes && <details className="mt-3"><summary className="cursor-pointer text-accent">Reference prices by size class ($ per million input / output tokens)</summary>
+          <ul className="bh-muted mt-2 space-y-1" data-bh-jev-cost-classes>
+            {Object.entries(prices.size_classes as Record<string, { reference_models: Record<string, number | number[]> }>).map(([k, c]) => <li key={k}><b className="text-gray-200">{k.replace(/_/g, ' ')}</b>: {Object.entries(c.reference_models).map(([m, v]) => `${m} ${Array.isArray(v) ? v.map((x) => `$${x}`).join(' / ') : `$${v}`}`).join('; ')}</li>)}
+          </ul>
+          <p className="bh-muted mt-2">Sources: {String(prices.token_source ?? '')}.</p></details>}
+      </JevCostsDisclosure>
     </section>
 
     <section className="mt-10 max-w-4xl space-y-3" aria-labelledby="jev-not-measured">

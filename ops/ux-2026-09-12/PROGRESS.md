@@ -5349,3 +5349,12 @@ Scope: everything after `REVIEW-20260919T032002Z.md` (`c476e26..a012816`), the c
   the committed CR-91 (v1.2 page data); both are superseded by CR-92, whose v1.2 artifact carries five of the six GPU-round rows (the reversed
   option-order row was dropped by CR-92.3). No new ledger rows; a numbering note sits under the heading in the verbatim file.
 - Not touched: `components/JevModelsV11.tsx` is no longer imported by any page (v1.1 superseded); noted for the next refactor.
+
+## Iteration 119 — 2026-09-19 16:12 → 16:20 UTC (codex-luna, work)
+
+- **Scope:** F-134 and F-135, the two implementer-open follow-ups from Fable pass 24.
+- **F-134 implemented:** the JevBench v1.2 chart now keeps the mandatory speed note and one short visible I/C/S/K legend sentence; the tier counts, label-only note, project-link note and per-system footnotes are behind a collapsed, addressable “Legend and notes” disclosure. Existing `data-bh-jev12-footnote` selectors remain on every system note.
+- **F-135 implemented:** “How costs are estimated” is now a closed disclosure with a short visible summary. A shared client helper opens it and scrolls it into view for direct `#jev-costs` loads and every in-page `#jev-costs` link, respecting reduced motion; cost rows and reference-price evidence stay inside.
+- **Regression coverage:** `test/jevbench-v12.test.mjs` adds source-level checks for the compact visible note, collapsed legend, retained footnote selectors, hash ownership and link handling.
+- **Gates:** `node scripts/build-dataset.mjs` passed (140 registry entries / 136 evidence files; timestamp-only dataset diff), `npm test` **906 pass / 0 fail / 1 skipped**, `npx tsc --noEmit -p .` passed, `npm run build` passed, and `git diff --check` passed.
+- **Status:** F-134/F-135 are **implemented**, not yet `verified`; a non-implementing engine must run the live desktop/mobile, light/dark checks and record evidence under `/opt/benchmarkheaven/state/ux-evidence/iter119-f134-f135/`. `ALL-ACCEPTED` remains forbidden because the X6 audit and other CR rows remain open.

@@ -83,3 +83,23 @@ test('Jev page pass-24 rules: no stretched presets, wrapping I/C/S/K line on pho
   assert.doesNotMatch(page, /' \(options as tools\)'/, 'F-131');
   assert.match(css, /\.bh-jev11-partial > \.bh-jev-sticky \{ opacity: 1;/, 'F-128');
 });
+
+test('Jev pass-24 follow-up: the chart keeps one short visible note and moves details into a legend', async () => {
+  const cmp = await readFile(new URL('../components/JevModelsV12.tsx', import.meta.url), 'utf8');
+  assert.match(cmp, /data-bh-jev12-oneliner/, 'F-134: the visible chart note has a stable selector');
+  assert.match(cmp, /Legend and notes/, 'F-134: secondary notes are collapsed');
+  assert.match(cmp, /data-bh-jev12-label-note/, 'F-134: the label-only note is retained in the legend');
+  assert.match(cmp, /data-bh-jev12-footnote=\{r\.key\}/, 'F-134: every system footnote remains addressable');
+  assert.match(cmp, /I, C, S, K = Intelligence, Calibration, Speed, Cost; ~ est\./, 'F-134: visible note is concise');
+});
+
+test('Jev pass-24 follow-up: cost disclosure has a hash-open client helper', async () => {
+  const page = await readFile(new URL('../app/jev-models/page.tsx', import.meta.url), 'utf8');
+  const helper = await readFile(new URL('../components/JevCostsDisclosure.tsx', import.meta.url), 'utf8');
+  assert.match(page, /JevCostsDisclosure/, 'F-135: page uses the disclosure helper');
+  assert.match(helper, /id="jev-costs"/, 'F-135: the disclosure owns the anchor');
+  assert.match(helper, /window\.location\.hash !== TARGET/, 'F-135: direct hash loads are handled');
+  assert.match(helper, /closest<HTMLAnchorElement>\(`a\[href=\"\$\{TARGET\}\"\]`\)/, 'F-135: in-page links open the disclosure');
+  assert.match(helper, /details\.open = true/, 'F-135: hash navigation opens the panel');
+  assert.match(page, /data-bh-jev-cost-rows/, 'F-135: cost rows remain inside the disclosure');
+});
