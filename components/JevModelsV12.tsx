@@ -265,11 +265,14 @@ const TASK_STATUS: Record<string, { symbol: string; label: string; className: st
 function TaskGrid({ view, tasks, scope }: { view: JevV12View; tasks: JevTasksView; scope: JevTaskScope }) {
   const visibleTasks = tasksForScope(tasks.tasks, scope);
   const systems = [...view.ranked, ...view.partial];
+  // Review gate 20260919T233002Z: name whichever systems the pinned capture is missing instead of one hard-coded key,
+  // so a later row added to the score artifact can never be silently blank here.
+  const uncovered = systems.filter((r) => !tasks.systems[r.key]).map((r) => short(r.display));
   const groups = ["easy", "standard", "judge", "hard"] as const;
   const groupLabel = { easy: "Easy", standard: "Medium (standard)", judge: "Judge", hard: "Hard" };
   return <section className="mt-8" aria-labelledby="jev12-tasks">
     <h2 id="jev12-tasks" className="text-xl font-semibold">Which public tasks did each system get right?</h2>
-    <p className="bh-muted mt-1 max-w-4xl text-sm">This view shows public task outcomes only: {visibleTasks.length} of {tasks.tasks.length} public tasks in the selected scope. Held-out and imported task text is not shipped. The pinned artifact has no public-task outcomes for djev yet, so its cells remain unavailable.</p>
+    <p className="bh-muted mt-1 max-w-4xl text-sm">This view shows public task outcomes only: {visibleTasks.length} of {tasks.tasks.length} public tasks in the selected scope. Held-out and imported task text is not shipped.{uncovered.length > 0 && <span data-bh-jev12-task-uncovered> The pinned artifact has no public-task outcomes for {uncovered.join(', ')} yet, so {uncovered.length === 1 ? 'its cells remain' : 'their cells remain'} unavailable.</span>}</p>
     <details className="bh-panel mt-3 p-4" data-bh-jev12-task-grid>
       <summary className="cursor-pointer font-semibold">Show {visibleTasks.length} public task outcomes across {systems.length} systems</summary>
       <div className="bh-table-wrap mt-3 max-h-[38rem] overflow-auto">

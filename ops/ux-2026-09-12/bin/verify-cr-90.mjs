@@ -37,12 +37,16 @@ try {
         const heads = [...table.querySelectorAll('thead th')].map((node) => node.textContent?.replace(/\s+/g, ' ').trim());
         const taskRows = table.querySelectorAll('tbody tr[data-bh-jev12-task]').length;
         const first = table.querySelector('tbody tr[data-bh-jev12-task]');
+        // Review gate 20260919T233002Z: the v1.2.2 capture covers every scored system, so no column may be unavailable.
+        const blank = [...table.querySelectorAll('tbody tr[data-bh-jev12-task] td')].filter((node) => /no public outcome/.test(node.getAttribute('title') || ''));
         const djevIndex = heads.findIndex((head) => head === 'djev');
         const djevCell = djevIndex >= 0 ? first?.children[djevIndex] : null;
-        return { heads, taskRows, djevIndex, djevText: djevCell?.textContent?.trim(), djevTitle: djevCell?.getAttribute('title') };
+        return { heads, taskRows, djevIndex, blank: blank.length, djevText: djevCell?.textContent?.trim(), djevTitle: djevCell?.getAttribute('title') };
       });
       check(`${tag}: grid exposes all 231 public tasks grouped by tier`, gridData.taskRows === 231, gridData.taskRows);
-      check(`${tag}: djev has an explicit unavailable column`, gridData.djevIndex >= 0 && gridData.djevText === '—' && /no public outcome/.test(gridData.djevTitle || ''), gridData);
+      check(`${tag}: every scored system has a column, djev included`, gridData.heads.length === 22 && gridData.djevIndex >= 0 && /correct|wrong|failed|not attempted/.test(gridData.djevTitle || ''), gridData);
+      check(`${tag}: no column is left unavailable`, gridData.blank === 0, gridData.blank);
+      check(`${tag}: the unavailable-systems sentence is gone while every system is covered`, await page.locator('[data-bh-jev12-task-uncovered]').count() === 0);
       check(`${tag}: task grid contains no hidden question/answer payload`, !/question|expected|prediction/i.test(await grid.locator('table').innerText()));
       if (kind === 'mobile') check(`${tag}: no page horizontal overflow`, await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth) <= 1);
       check(`${tag}: no page or console errors`, errors.length === 0, errors);
