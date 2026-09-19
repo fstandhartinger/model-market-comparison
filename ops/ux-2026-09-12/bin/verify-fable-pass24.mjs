@@ -7,16 +7,26 @@ const fs = await import('node:fs/promises');
 const BASE = (process.argv[2] || 'https://benchmarkheaven.com').replace(/\/$/, '');
 const OUT = process.argv[3] || '/opt/benchmarkheaven/state/ux-evidence/fable-20260919-pass24/verify-canonical';
 await fs.mkdir(OUT, { recursive: true });
-const b = await chromium.launch({ ignoreDefaultArgs: ['--hide-scrollbars'] });
+const sharedCdp = process.env.BH_SHARED_CDP === '1';
+const b = sharedCdp
+  ? await chromium.connectOverCDP('http://127.0.0.1:9333')
+  : await chromium.launch({ ignoreDefaultArgs: ['--hide-scrollbars'] });
+const sharedContext = sharedCdp ? b.contexts()[0] : null;
+if (sharedCdp && !sharedContext) throw new Error('shared Chrome has no browser context');
 const checks = []; const check = (name, ok, detail) => checks.push({ name, ok: !!ok, detail });
 const revision = await fetch(`${BASE}/api/meta`).then((r) => r.json()).then((m) => m.revision).catch(() => null);
 for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { width: 1440, height: 1000 }], ['mobile', { width: 390, height: 844 }]]) {
   const mobile = kind === 'mobile'; const tag = `${kind}_${theme}`;
-  const c = await b.newContext({ viewport: vp, isMobile: mobile, hasTouch: mobile, colorScheme: theme, deviceScaleFactor: mobile ? 2 : 1 });
-  await c.addInitScript((t) => { try { localStorage.setItem('theme', t); localStorage.setItem('bh-theme', t); } catch {} }, theme);
+  const c = sharedContext || await b.newContext({ viewport: vp, isMobile: mobile, hasTouch: mobile, colorScheme: theme, deviceScaleFactor: mobile ? 2 : 1 });
+  if (sharedCdp) await c.setViewportSize(vp);
+  if (!sharedCdp) await c.addInitScript((t) => { try { localStorage.setItem('theme', t); localStorage.setItem('bh-theme', t); } catch {} }, theme);
   const p = await c.newPage(); const errors = [];
   p.on('pageerror', (e) => errors.push(String(e.message).slice(0, 200)));
   await p.goto(`${BASE}/jev-models`, { waitUntil: 'domcontentloaded', timeout: 60000 });
+  if (sharedCdp) {
+    await p.evaluate((t) => { localStorage.setItem('theme', t); localStorage.setItem('bh-theme', t); }, theme);
+    await p.reload({ waitUntil: 'domcontentloaded', timeout: 60000 });
+  }
   await p.evaluate((t) => document.documentElement.setAttribute('data-theme', t), theme);
   await p.waitForLoadState('networkidle').catch(() => {}); await p.waitForTimeout(800);
   const g = await p.evaluate(() => {
@@ -49,7 +59,8 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
   check(`${tag}: partial row's pinned name cell is opaque`, st.opacity === '1' && st.bg !== 'rgba(0, 0, 0, 0)' && st.pos === 'sticky', JSON.stringify(st));
   await p.screenshot({ path: `${OUT}/${tag}-jev-custom-open.png` });
   check(`${tag}: no page errors`, errors.length === 0, errors.join(' | '));
-  await c.close();
+  await p.close();
+  if (!sharedCdp) await c.close();
 }
 await b.close();
 const passed = checks.filter((c) => c.ok).length;

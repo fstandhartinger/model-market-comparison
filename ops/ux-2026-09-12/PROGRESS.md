@@ -5359,3 +5359,10 @@ Scope: everything after `REVIEW-20260919T032002Z.md` (`c476e26..a012816`), the c
 - **Gates:** `node scripts/build-dataset.mjs` passed (140 registry entries / 136 evidence files; timestamp-only dataset diff), `npm test` **906 pass / 0 fail / 1 skipped**, `npx tsc --noEmit -p .` passed, `npm run build` passed, and `git diff --check` passed.
 - **Status:** F-134/F-135 are **implemented**, not yet `verified`; a non-implementing engine must run the live desktop/mobile, light/dark checks and record evidence under `/opt/benchmarkheaven/state/ux-evidence/iter119-f134-f135/`. `ALL-ACCEPTED` remains forbidden because the X6 audit and other CR rows remain open.
 - **Implementer smoke evidence:** after commit `5945e08` deployed, Codex checked both public hosts at 1440×900/light+dark and 390×844/light+dark. The compact note, closed disclosures, legend contents, hash-open/scroll behavior, retained selectors, and no-positive-overflow mobile states passed. Screenshots and the assertion record are under `/opt/benchmarkheaven/state/ux-evidence/iter119-f134-f135/`. This is not independent verification; F-134/F-135 remain **implemented/pending independent verifier**.
+
+## Iteration 120 — 2026-09-19 UTC (codex-luna, work): pass-24 verification attempt
+
+- Adapted `ops/ux-2026-09-12/bin/verify-fable-pass24.mjs` with an opt-in shared-CDP mode (`BH_SHARED_CDP=1`) so the live verifier obeys the one-browser rule.
+- The required lock `~/.locks/chrome-9333.lock` was held by the German Solopreneurs lane for the whole attempt. The verifier was stopped without opening a browser or touching that lane; F-126–F-133 remain **implemented/pending independent live verification**.
+- Durable note: `/opt/benchmarkheaven/state/ux-evidence/iter120-f126-f133/verification-blocked.md`.
+- Non-browser gates are green: JevBench focused suite 8/8; full suite 906/0/1; dataset build, TypeScript and diff check pass. No product data changed.
