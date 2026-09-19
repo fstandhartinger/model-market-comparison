@@ -1144,3 +1144,21 @@ Supervisor notes (not Florian's words):
 > We should also add links to the benchmarked projects on the page.
 
 (The bracketed description of the Telegram chart was added by the supervisor. Florian confirms the default is 60:20:20 — the "60:40:40" above was a slip; the official weights stay as published. His four named presets replace the preset list in CR-87.2.)
+
+### CR-87 addendum 2 (Florian, Claude Code chat, 19 Sep 2026 ~09:10 UTC, verbatim, German)
+> Zur Kostenspalte auf der Seite: Wir müssen natürlich für jedes der Modelle den Preis wissen. Wenn wir ihn nicht öffentlich nachschlagen können, setze realistische Preise an, so wie üblicherweise Modelle bepreist werden, die eine dementsprechende Hardware brauchen und bei einem größeren Inference Provider gehostet werden (Inference Provider können billiger anbieten als es kostet wenn man auf Minutenbasis bei runpod hardware mietet, weil die mieten ja größere Kontingente von GPUs und auf längere Zeiträume, oder sie besitzen die Hardware gar).
+> Die Namen würde ich auch gerne noch mal anpassen:
+> JevBench Main Composite Score – (Emphasis on Accuracy 60:20:20)
+> JevBench Composite Score - Emphasis on Speed (20:60:20)
+> JevBench Composite Score – Emphasis on Cost (20:20:60)
+> JevBench Composite Score – Balanced (33:33:33)
+> sende mir eine Telegram Message wenn diese Änderungen alle durch sind.
+> ich will dann gerne auch noch mal vergleichsweise sehen, wie Jev im Vergleich zum Feld abschneidet, wenn wir JevBench Composite Score – Balanced (33:33:33) zum Main-Score machen würden
+
+### CR-87 addendum 3 (Florian, Claude Code chat, 19 Sep 2026 ~09:20 UTC, verbatim, German)
+> Ja, dann lass uns zum Balanced Score als Main Score wechseln.
+> Und dann mach natürlich auch noch mal eine Version von dem neuen Harold Video - mit den aktualisierten Ergebnissen.
+> Die Kostenbewertung darf nicht bei DeBERTa und Needle auf dem gleichen Wert von 100.0 stehen, wenn deren realistische Preise nicht identisch sind.
+> Auch das Explainer Video müssen wir dann natürlich noch mal anpassen, damit es zu den neuen Ergebnissen passt.
+
+(Supervisor: addendum 3 supersedes the default in addendum 2 — the Main Score is now "JevBench Main Composite Score – (Balanced 33:33:33)"; the others are "JevBench Composite Score – Emphasis on Accuracy (60:20:20)", "– Emphasis on Speed (20:60:20)", "– Emphasis on Cost (20:20:60)". Scoring change published as JevBench v1.1.1 (hosted-provider prices) and v1.1.2 (Balanced weights, Cost scale $0.001–$10) in github.com/fstandhartinger/jevbench.)

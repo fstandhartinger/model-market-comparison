@@ -209,7 +209,7 @@ button:disabled, select:disabled { cursor: not-allowed; opacity: .55; }
   .bh-cost-cell { padding-left: 0; padding-right: 6px; }
   .bh-cost-line { gap: 2px; }
 }
-.bh-table-wrap { max-width: 100%; overflow-x: auto; border: 1px solid rgb(var(--line)); border-radius: 10px; }
+.bh-table-wrap { position: relative; max-width: 100%; overflow-x: auto; /* relative: absolutely positioned sr-only spans stay clipped instead of widening the page on mobile */ border: 1px solid rgb(var(--line)); border-radius: 10px; }
 .bh-bounded-table { height: 1100px; max-height: 1100px; contain: layout paint; }
 .bh-table { width: 100%; border-collapse: collapse; font-size: 14px; }
 .bh-table th, .bh-table td { padding: 14px 16px; border-bottom: 1px solid rgb(var(--line)); }

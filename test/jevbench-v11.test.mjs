@@ -16,7 +16,8 @@ test('the committed v1.1 artifact is the tagged public one and validates', async
 test('a Main Score that does not recompute, a zero unknown cost or an unlabelled estimate fails', async () => {
   let a = await clone(); a.systems[0].main_score += 0.5;
   assert.throws(() => validateJevbenchV11(a), /does not recompute/);
-  a = await clone(); const u = a.systems.find((s) => s.cost.kind === 'unknown'); u.cost.usd_per_1000 = 0;
+  // v1.1.1+ prices every system, so no row is 'unknown' any more: make one to test the rule.
+  a = await clone(); const u = a.systems.find((s) => !s.ranked) ?? a.systems[0]; u.cost.kind = 'unknown'; u.cost.usd_per_1000 = 0;
   assert.throws(() => validateJevbenchV11(a), /cost must be null/);
   a = await clone(); const e = a.systems.find((s) => s.cost.kind === 'estimate'); e.cost.basis = 'reference deployment';
   assert.throws(() => validateJevbenchV11(a), /must say so/);
@@ -25,7 +26,7 @@ test('a Main Score that does not recompute, a zero unknown cost or an unlabelled
 test('a label-only system needs a null calibration with a note; ranks must follow scores; no item-level keys', async () => {
   let a = await clone(); const n = a.systems.find((s) => s.has_distribution === false); n.calibration.brier_standard_judge = 0;
   assert.throws(() => validateJevbenchV11(a), /null calibration/);
-  a = await clone(); const [x, y] = a.systems.filter((s) => s.ranked); [x.rank_under['80/10/10'], y.rank_under['80/10/10']] = [y.rank_under['80/10/10'], x.rank_under['80/10/10']];
+  a = await clone(); const [x, y] = a.systems.filter((s) => s.ranked); const k = a.sensitivity_order[1]; [x.rank_under[k], y.rank_under[k]] = [y.rank_under[k], x.rank_under[k]];
   assert.throws(() => validateJevbenchV11(a), /rank_under/);
   a = await clone(); a.systems[0].predictions = [];
   assert.throws(() => validateJevbenchV11(a), /item-level/);

@@ -495,6 +495,9 @@ The laptop supervisor appended CR-20260917 (verbatim in `03-CHANGE-REQUESTS-VERB
 | CR-87.10 | /jev-models: clear "not the default" state (title/header switch to preset name or "Custom … not the official", badge, reset) | implemented | supervisor (claude-opus-5) | Addendum 2026-09-19 — HIGH PRIORITY — implemented in e280358 (local prod build: verify-cr-87 92/92, verify-cr-86 58/58, npm test 895 pass); needs a non-implementer review. |
 | CR-87.11 | /jev-models: links to every benchmarked project (repo/HF/vendor) with author credit | implemented | supervisor (claude-opus-5) | Addendum 2026-09-19 — implemented in e280358 (local prod build: verify-cr-87 92/92, verify-cr-86 58/58, npm test 895 pass); needs a non-implementer review. |
 | CR-87.12 | /jev-models: URL parameter covers named presets | implemented | supervisor (claude-opus-5) | Addendum 2026-09-19 — implemented in e280358 (local prod build: verify-cr-87 92/92, verify-cr-86 58/58, npm test 895 pass); needs a non-implementer review. |
+| CR-87.13 | /jev-models: hosted-provider cost for every system + "How costs are estimated" (addendum 2) | implemented | supervisor (claude-opus-5) | Addendum 2 2026-09-19 ~09:10 UTC |
+| CR-87.14 | /jev-models: Balanced 33:33:33 is the Main Score; preset names per addendum 3; non-default = ≠ 33:33:33 | implemented | supervisor (claude-opus-5) | Addendum 3 2026-09-19 ~09:20 UTC |
+| CR-87.15 | /jev-models: non-saturating Cost score ($0.001–$10) + $ per 1,000 beside every chart score | implemented | supervisor (claude-opus-5) | Addendum 3 2026-09-19 ~09:20 UTC |
 - **2026-09-17 · priority job bh-tag-and-pareto-fix-20260917 · claude-opus** — Florian's CR-77 (tags follow the
   score, Pareto grace band), implemented outside the loop with the UX loop paused. Independent review by codex-luna
   (gpt-5.6-luna, xhigh) on `d5e541c`: `/opt/benchmarkheaven/state/ux-evidence/cr77-review/codex-review-20260917.md` —

@@ -15,7 +15,7 @@ export type JevV11View = {
   sha256: string; protocol: string; benchmark: string; generated: string; decisions: number; pilot: boolean;
   weights: { capability: number; speed: number; cost: number }; scoring: Record<string, string>; tierCounts: Record<JevTier, number>;
   tierNotes: Record<string, string>; notComparableWith: string | null; sensitivityOrder: string[]; hardwareOrigin: string;
-  referencePrices: any; ranked: JevV11Row[]; partial: JevV11Row[];
+  referencePrices: any; revision: string | null; revisionNote: string | null; ranked: JevV11Row[]; partial: JevV11Row[];
 };
 export function mainScore(system: any, weights: { capability: number; speed: number; cost: number }): number | null;
 export function validateJevbenchV11(artifact: any): any;

@@ -27,18 +27,19 @@ test('every arithmetic sensitivity weighting reproduces the published rank_under
   }
 });
 
-test('the four named presets: Accuracy is the default and official; the others say they are not', () => {
-  assert.deepEqual(PRESETS.map((p) => [p.name, p.ratio]), [['Emphasis on Accuracy', '60:20:20'], ['Emphasis on Speed', '20:60:20'], ['Emphasis on Cost', '20:20:60'], ['Balanced', '33:33:33']]);
-  assert.equal(describe(DEFAULT_WEIGHTS).title, 'JevBench Main Composite Score – Emphasis on Accuracy (60:20:20)');
+test('the four named presets: Balanced is the default and official; the others say they are not', () => {
+  assert.deepEqual(PRESETS.map((p) => [p.name, p.ratio]), [['Balanced', '33:33:33'], ['Emphasis on Accuracy', '60:20:20'], ['Emphasis on Speed', '20:60:20'], ['Emphasis on Cost', '20:20:60']]);
+  assert.deepEqual(PRESETS.map((p) => describe(p.w).title), ['JevBench Main Composite Score – (Balanced 33:33:33)', 'JevBench Composite Score – Emphasis on Accuracy (60:20:20)',
+    'JevBench Composite Score – Emphasis on Speed (20:60:20)', 'JevBench Composite Score – Emphasis on Cost (20:20:60)']);
   assert.equal(describe(DEFAULT_WEIGHTS).official, true);
-  for (const p of PRESETS.slice(1)) { const d = describe(p.w); assert.equal(d.official, false); assert.equal(d.title, `JevBench Main Composite Score – ${p.name} (${p.ratio})`); }
+  for (const p of PRESETS.slice(1)) { const d = describe(p.w); assert.equal(d.official, false); assert.equal(d.title, `JevBench Composite Score – ${p.name} (${p.ratio})`); }
   const c = describe({ capability: 0.5, speed: 0.1, cost: 0.4 });
   assert.equal(c.title, 'Custom weights (50:10:40) — not the official JevBench Main Composite Score');
   assert.equal(c.preset, null);
 });
 
 test('cost emphasis re-ranks (the ranking really moves) and deltas are consistent', () => {
-  const { ranked } = rerank(view.ranked, view.partial, PRESETS[2].w);
+  const { ranked } = rerank(view.ranked, view.partial, PRESETS.find((p) => p.id === 'cost').w);
   assert.ok(ranked.some((r) => r.delta !== 0));
   assert.equal(ranked.reduce((a, r) => a + r.delta, 0), 0);
   for (let i = 1; i < ranked.length; i++) assert.ok(ranked[i - 1].score >= ranked[i].score);
@@ -47,11 +48,11 @@ test('cost emphasis re-ranks (the ranking really moves) and deltas are consisten
 test('URL parsing: presets, custom, normalisation, clamping, junk falls back to the default', () => {
   const sp = (q) => parseParams(q);
   assert.ok(isDefault(sp('')));
-  assert.ok(isDefault(sp('?w=60-20-20')));
+  assert.ok(isDefault(sp('?w=33-33-33')));
+  assert.ok(isDefault(sp('?w=1-1-1')));
+  assert.equal(presetFor(sp('?w=60-20-20')).id, 'accuracy');
   assert.equal(presetFor(sp('?w=20-20-60')).id, 'cost');
   assert.equal(presetFor(sp('?w=20:60:20')).id, 'speed');
-  assert.equal(presetFor(sp('?w=33-33-33')).id, 'balanced');
-  assert.equal(presetFor(sp('?w=1-1-1')).id, 'balanced');
   assert.equal(presetFor(sp('?preset=cost')).id, 'cost');
   assert.equal(presetFor(sp('?w=3-1-1')).id, 'accuracy');
   assert.equal(ratioText(sp('?w=50-10-40')), '50:10:40');

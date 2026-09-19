@@ -1,5 +1,5 @@
 export type JevWeights = { capability: number; speed: number; cost: number };
-export type JevPreset = { id: 'accuracy' | 'speed' | 'cost' | 'balanced'; name: string; ratio: string; w: JevWeights };
+export type JevPreset = { id: 'balanced' | 'accuracy' | 'speed' | 'cost'; label: string; name: string; ratio: string; title: string; w: JevWeights };
 export const SCORE_NAME: string;
 export const PRESETS: JevPreset[];
 export const DEFAULT_PRESET: JevPreset;

@@ -73,96 +73,691 @@
     "v1_0_frozen_at": "2026-09-18T21:20:30.887054+00:00",
     "v1_0_items_unchanged": true
   },
-  "generated_utc": "2026-09-19T08:32:23.733757+00:00",
+  "generated_utc": "2026-09-19T09:19:17.591000+00:00",
   "n_decisions_per_system": 314,
   "not_comparable_with": "JevBench v1.0 headline numbers (242 decisions, one pooled accuracy). v1.1 adds the easy tier and scores tiers separately.",
   "owner": "Benchmark Heaven (benchmarkheaven.com) - our own independent benchmark",
   "protocol": "jevbench::v1.1",
   "reference_prices": {
-    "cpu": {
-      "name": "Hetzner Cloud CX22 (2 vCPU, 4 GB)",
-      "source": "https://www.hetzner.com/pressroom/new-cx-plans/",
-      "usd_per_hour": 0.007019999999999999
+    "rule": "A system with a public per-call or per-token tariff is priced at that tariff x measured tokens. A system without one (open weights, author demos, local CPU runs) is priced as if a large inference provider hosted it: the OpenRouter list price of the same weights; if OpenRouter does not list them, the nearest LARGER sibling on OpenRouter; if no sibling of the size class is on OpenRouter, the DeepInfra list price of the same weights or the nearest larger model of the same class. Never RunPod/per-minute GPU rental and never our own CPU time: providers buy capacity in bulk or own the GPUs. Price x tokens per decision (measured where the run reports usage, else the input tokens of the gemini-3.1-flash-lite run on the same prompts, which is how the other systems see the same state and rubric) = $ per 1,000 decisions, marked est.",
+    "size_classes": {
+      "dense_2-4B": {
+        "reference_models": {
+          "deepinfra Qwen/Qwen3.5-4B": [
+            0.03,
+            0.15
+          ],
+          "deepinfra google/gemma-4-E4B-it": [
+            0.02,
+            0.1
+          ],
+          "openrouter google/gemma-3-4b-it": [
+            0.05,
+            0.1
+          ],
+          "openrouter meta-llama/llama-3.2-3b-instruct": [
+            0.05,
+            0.33
+          ]
+        }
+      },
+      "dense_27B": {
+        "reference_models": {
+          "openrouter qwen/qwen3.5-27b": [
+            0.195,
+            1.56
+          ],
+          "openrouter qwen/qwen3.6-27b": [
+            0.3,
+            2.0
+          ],
+          "openrouter qwen/qwen3.8-27b": [
+            0.214,
+            2.55
+          ]
+        }
+      },
+      "dense_9B": {
+        "reference_models": {
+          "openrouter qwen/qwen3.5-9b": [
+            0.1,
+            0.15
+          ]
+        }
+      },
+      "encoder_classifier_<=0.6B": {
+        "in_per_m": 0.01,
+        "note": "encoders are billed per input token only; nothing is generated",
+        "out_per_m": 0.0,
+        "reference_models": {
+          "BAAI/bge-large-en-v1.5 (335M)": 0.01,
+          "Qwen/Qwen3-Embedding-0.6B": 0.01,
+          "intfloat/e5-large-v2 (335M)": 0.01,
+          "intfloat/multilingual-e5-large (560M)": 0.01,
+          "thenlper/gte-base (110M)": 0.005
+        },
+        "source": "deepinfra"
+      },
+      "generative_<=1B": {
+        "in_per_m": 0.027,
+        "model": "meta-llama/llama-3.2-1b-instruct",
+        "note": "smallest generative model with an OpenRouter list price; DeepInfra is 5-20x cheaper, so this errs high",
+        "out_per_m": 0.201,
+        "reference_models": {
+          "deepinfra meta-llama/Llama-3.2-1B-Instruct": [
+            0.005,
+            0.01
+          ],
+          "openrouter meta-llama/llama-3.2-1b-instruct": [
+            0.027,
+            0.201
+          ]
+        },
+        "source": "openrouter"
+      },
+      "moe_26B-A4B": {
+        "reference_models": {
+          "deepinfra google/gemma-4-26B-A4B-it": [
+            0.07,
+            0.34
+          ],
+          "openrouter google/gemma-4-26b-a4b-it": [
+            0.09,
+            0.3
+          ]
+        }
+      },
+      "moe_35B-A3B": {
+        "reference_models": {
+          "deepinfra Qwen/Qwen3.6-35B-A3B": [
+            0.1,
+            0.95
+          ],
+          "openrouter qwen/qwen3.5-35b-a3b": [
+            0.1625,
+            1.3
+          ],
+          "openrouter qwen/qwen3.6-35b-a3b": [
+            0.1,
+            0.9
+          ]
+        }
+      }
     },
     "token": {
+      "needle-3": {
+        "in_per_m": 0.027,
+        "model": "openrouter meta-llama/llama-3.2-1b-instruct",
+        "out_per_m": 0.201,
+        "out_tokens": 20,
+        "tokens_from": "gemini-3.1-flash-lite",
+        "weights": "Needle 3 (121M, generative tool-calling)",
+        "why": "no generative model under 1B is listed; the smallest listed one (1B) errs high; about 20 generated tokens for one tool call"
+      },
+      "needle-3-tools": {
+        "in_per_m": 0.027,
+        "model": "openrouter meta-llama/llama-3.2-1b-instruct",
+        "out_per_m": 0.201,
+        "out_tokens": 20,
+        "tokens_from": "gemini-3.1-flash-lite",
+        "weights": "Needle 3 (121M, generative tool-calling)",
+        "why": "as needle-3"
+      },
+      "open-alternative-jev": {
+        "in_per_m": 0.03,
+        "model": "deepinfra Qwen/Qwen3.5-4B",
+        "out_per_m": 0.15,
+        "out_tokens": 1,
+        "tokens_from": "gemini-3.1-flash-lite",
+        "weights": "Qwen3.5-4B",
+        "why": "same weights (not on OpenRouter); one forward pass, nothing generated"
+      },
+      "open-jev-deberta-v3-large": {
+        "in_per_m": 0.01,
+        "model": "deepinfra encoders of the same size (bge-large, e5-large, Qwen3-Embedding-0.6B)",
+        "out_per_m": 0.0,
+        "out_tokens": 0,
+        "tokens_from": "gemini-3.1-flash-lite",
+        "weights": "DeBERTa-v3-large encoder (435M)",
+        "why": "an encoder of the same size class; one forward pass, nothing generated"
+      },
       "openjev-sglang": {
         "in_per_m": 0.1,
-        "model": "qwen/qwen3.6-35b-a3b",
+        "model": "openrouter qwen/qwen3.6-35b-a3b",
         "out_per_m": 0.9,
-        "why": "same base weights (Qwen3.6-35B-A3B)"
+        "weights": "Qwen3.6-35B-A3B",
+        "why": "same base weights"
       },
       "qwen3.8-27b": {
         "in_per_m": 0.214,
-        "model": "qwen/qwen3.8-27b",
+        "model": "openrouter qwen/qwen3.8-27b",
         "out_per_m": 2.55,
+        "weights": "Qwen3.8-27B",
         "why": "same weights; our run used a flat-rate Chutes subscription"
       },
       "system-one-open": {
-        "in_per_m": 0.09,
-        "model": "google/gemma-4-26b-a4b-it",
-        "out_per_m": 0.3,
+        "in_per_m": 0.02,
+        "model": "deepinfra google/gemma-4-E4B-it",
+        "out_per_m": 0.1,
         "out_tokens": 2,
         "tokens_from": "gemini-3.1-flash-lite",
-        "why": "Gemma 4 E2B is not listed; the smallest listed Gemma 4 is larger, so this errs high"
+        "weights": "Gemma 4 E2B",
+        "why": "Gemma 4 E2B is not listed; the nearest larger sibling, Gemma 4 E4B, is listed only on DeepInfra"
       }
     },
-    "token_source": "https://openrouter.ai/api/v1/models (read 2026-09-19)"
+    "token_source": "OpenRouter https://openrouter.ai/api/v1/models and DeepInfra https://api.deepinfra.com/models/list (both read 2026-09-19)"
   },
+  "revision": "v1.1.2",
+  "revision_history": [
+    {
+      "date": "2026-09-19",
+      "note": "Main Score weights changed to Balanced 33:33:33 (Florian, 19 Sep 2026); the previous default 60:20:20 is kept as the preset 'Emphasis on Accuracy'. The Cost scale now spans $0.001-$10 per 1,000 decisions (was $0.01-$10), so no system sits at the 100 cap. Items, answers, prices, Capability and Speed are unchanged.",
+      "revision": "v1.1.2"
+    },
+    {
+      "date": "2026-09-19",
+      "note": "Cost re-priced at hosted-provider prices for every system without a tariff.",
+      "revision": "v1.1.1"
+    },
+    {
+      "date": "2026-09-19",
+      "note": "Main Score from Capability, Speed and Cost; easy tier; Needle 3.",
+      "revision": "v1.1"
+    }
+  ],
+  "revision_note": "19 Sep 2026 (v1.1.2): the Main Score is now Balanced 33:33:33 (Capability, Speed and Cost weighted equally); the old 60:20:20 default is kept as the preset 'Emphasis on Accuracy'. The Cost scale is widened to $0.001-$10 per 1,000 decisions so it no longer saturates. Earlier the same day (v1.1.1): the Cost sub-benchmark was re-priced. Systems without a tariff are now priced as if a large inference provider hosted them (OpenRouter/DeepInfra list prices for the same weights or the model's size class) instead of our own CPU time or the nearest larger model family; Main Scores and ranks are recomputed. Items, answers, Capability and Speed are unchanged. The v1.1 numbers stay at tag v1.1, v1.1.1 at tag v1.1.1.",
   "scoring": {
     "calibration": "Reported, not scored. Brier and ECE are published for every system that returns a distribution. They are not part of Capability or the Main Score, because label-only systems (Needle 3) have no distribution and any penalty we invented for that would be our choice, not a measurement; and verbalised LLM probabilities and native model distributions are different things.",
     "capability": "Mean of the three tier accuracies (easy, standard, judge), each weighted 1/3, times 100. Frozen with the v1.1 dataset before any v1.1 inference. Pooled accuracy over all 314 decisions is published beside it.",
-    "cost": "Dollars per 1,000 decisions over all attempted decisions. Metered APIs: the provider's public tariff times measured tokens. No tariff for us (author endpoints, our CPU, a flat-rate plan): an ESTIMATE, labelled as such, from a stated reference deployment: open weights on a GPU = OpenRouter list price of the same weights (or of the nearest larger sibling) times measured tokens; CPU models = a 2-vCPU Hetzner Cloud CX22 billed for the measured median latency per decision, one decision at a time. Each cost c maps to 100 * (log10($10) - log10(c)) / 3, clipped to 0..100: $0.01 per 1,000 = 100, $0.10 = 67, $1 = 33, $10 = 0.",
-    "main": "JevBench Main Score = 0.6 * Capability + 0.2 * Speed + 0.2 * Cost. Capability carries most of the weight because a fast, cheap wrong decision is still wrong. The sensitivity table shows the ranking under five other weightings.",
+    "cost": "Dollars per 1,000 decisions over all attempted decisions. Metered APIs: the provider's public tariff times measured tokens. No tariff for us (open weights, author demos, local runs): an ESTIMATE, labelled as such, priced as if a large inference provider hosted the model - the OpenRouter list price of the same weights (else the nearest larger sibling; else the DeepInfra list price of the same weights or of the nearest larger model of the same size class, e.g. same-size encoders for an encoder) times the tokens per decision (measured, or the input tokens of the gemini-3.1-flash-lite run on the same prompts). Not GPU rental by the minute and not our own CPU time: providers buy capacity in bulk or own the hardware. Each cost c maps to 100 * (log10($10) - log10(c)) / 4, clipped to 0..100: $0.001 per 1,000 = 100, $0.01 = 75, $0.10 = 50, $1 = 25, $10 = 0. Log scale over four decades, so every benchmarked system lands inside the scale and real price differences (e.g. an encoder vs a tiny generator) show up as different scores.",
+    "main": "JevBench Main Composite Score = (Capability + Speed + Cost) / 3, 'Balanced 33:33:33'. Since v1.1.2 (19 Sep 2026); v1.1 and v1.1.1 used 0.6 * Capability + 0.2 * Speed + 0.2 * Cost, which is kept as the named weighting 'Emphasis on Accuracy (60:20:20)'. The sensitivity table shows the ranking under five other weightings.",
     "ranked": "Ranked: every tier attempted in full or nearly (>= 95% of decisions). Partial runs are shown, marked, and not ranked.",
     "speed": "Median (p50) and 95th-percentile latency of successful requests in the system's serial run of the 242 standard+judge decisions (one request at a time, from a Hetzner server in Germany, network included; local models on 2 CPU threads of a Ryzen 5 3600). Each latency t maps to 100 * (log10(10 s) - log10(t)) / 2, clipped to 0..100: 0.1 s = 100, 1 s = 50, 10 s = 0. Speed = mean of the p50 and p95 scores. Log scale because 0.2 s vs 0.4 s matters as much as 2 s vs 4 s."
   },
   "sensitivity_order": [
-    "60/20/20 (headline)",
+    "33/33/33 balanced (headline)",
+    "60/20/20 accuracy emphasis",
+    "20/60/20 speed emphasis",
+    "20/20/60 cost emphasis",
     "capability only",
-    "80/10/10",
-    "50/25/25",
-    "equal thirds",
-    "60/20/20 geometric"
+    "33/33/33 geometric"
   ],
   "sensitivity_weightings": {
-    "50/25/25": {
-      "capability": 0.5,
+    "20/20/60 cost emphasis": {
+      "capability": 0.2,
       "combine": "arith",
-      "cost": 0.25,
-      "speed": 0.25
-    },
-    "60/20/20 (headline)": {
-      "capability": 0.6,
-      "combine": "arith",
-      "cost": 0.2,
+      "cost": 0.6,
       "speed": 0.2
     },
-    "60/20/20 geometric": {
-      "capability": 0.6,
+    "20/60/20 speed emphasis": {
+      "capability": 0.2,
+      "combine": "arith",
+      "cost": 0.2,
+      "speed": 0.6
+    },
+    "33/33/33 balanced (headline)": {
+      "capability": 0.3333333333333333,
+      "combine": "arith",
+      "cost": 0.3333333333333333,
+      "speed": 0.3333333333333333
+    },
+    "33/33/33 geometric": {
+      "capability": 0.3333333333333333,
       "combine": "geo",
+      "cost": 0.3333333333333333,
+      "speed": 0.3333333333333333
+    },
+    "60/20/20 accuracy emphasis": {
+      "capability": 0.6,
+      "combine": "arith",
       "cost": 0.2,
       "speed": 0.2
-    },
-    "80/10/10": {
-      "capability": 0.8,
-      "combine": "arith",
-      "cost": 0.1,
-      "speed": 0.1
     },
     "capability only": {
       "capability": 1.0,
       "combine": "arith",
       "cost": 0.0,
       "speed": 0.0
-    },
-    "equal thirds": {
-      "capability": 0.3333333333333333,
-      "combine": "arith",
-      "cost": 0.3333333333333333,
-      "speed": 0.3333333333333333
     }
   },
   "systems": [
+    {
+      "author": "mithalouni",
+      "calibration": {
+        "brier_standard_judge": 0.13816078684373112,
+        "note": null
+      },
+      "capability": {
+        "n_decisions": 314,
+        "pooled_accuracy": 1.6178343949044587,
+        "score": 93.80707762557078,
+        "tier_accuracy": {
+          "easy": 1.0,
+          "judge": 0.8767123287671232,
+          "standard": 0.9375
+        }
+      },
+      "class": "jev-rebuild",
+      "cost": {
+        "basis": "ESTIMATE: hosted-provider price, deepinfra google/gemma-4-E4B-it list price $0.02/M in, $0.1/M out (Gemma 4 E2B is not listed; the nearest larger sibling, Gemma 4 E4B, is listed only on DeepInfra) x 452 input and 2 output tokens per decision (input tokens counted from the gemini-3.1-flash-lite run, same prompts)",
+        "kind": "estimate",
+        "score": 75.86208584157686,
+        "usd_per_1000": 0.009236694214876034
+      },
+      "coverage": {
+        "easy": 1.0,
+        "judge": 1.0,
+        "standard": 1.0
+      },
+      "display": "system-one-open (Gemma 4 E2B LoRA on an L4)",
+      "has_distribution": true,
+      "key": "system-one-open",
+      "licence": "MIT (repository LICENSE; Gemma weights keep Google\u2019s terms)",
+      "main_score": 75.70699192288397,
+      "note": null,
+      "open": "yes",
+      "partial": false,
+      "probability_source": [
+        "native"
+      ],
+      "rank_under": {
+        "20/20/60 cost emphasis": 1,
+        "20/60/20 speed emphasis": 1,
+        "33/33/33 balanced (headline)": 1,
+        "33/33/33 geometric": 1,
+        "60/20/20 accuracy emphasis": 2,
+        "capability only": 6
+      },
+      "ranked": true,
+      "repo": "https://github.com/mithalouni/system-one-open",
+      "sensitivity": {
+        "20/20/60 cost emphasis": 75.76902949036112,
+        "20/60/20 speed emphasis": 68.4049200743321,
+        "33/33/33 balanced (headline)": 75.70699192288397,
+        "33/33/33 geometric": 74.2200722910829,
+        "60/20/20 accuracy emphasis": 82.9470262039587,
+        "capability only": 93.80707762557078
+      },
+      "speed": {
+        "n": 242,
+        "p50_s": 0.6517308317124844,
+        "p95_s": 0.7724301926791667,
+        "run": "serial 242-decision standard+judge run",
+        "score": 57.451812301504276,
+        "score_p50": 59.29658665807101,
+        "score_p95": 55.607037944937545
+      },
+      "standard_judge_source": "v1.0 run (items unchanged)",
+      "tiers": {
+        "easy": {
+          "accuracy": 1.0,
+          "accuracy_ci": {
+            "hi95": 1.0,
+            "lo95": 1.0,
+            "n_decisions": 72,
+            "n_scenarios": 72,
+            "point": 1.0
+          },
+          "brier_mean": 0.00021475467150696854,
+          "calibration_n": 72,
+          "cost_basis": [
+            "no_billable_account_public_endpoint"
+          ],
+          "cost_per_1000_usd": null,
+          "ece": {
+            "bins": [
+              {
+                "accuracy": null,
+                "hi": 0.1,
+                "lo": 0.0,
+                "mean_confidence": null,
+                "n": 0
+              },
+              {
+                "accuracy": null,
+                "hi": 0.2,
+                "lo": 0.1,
+                "mean_confidence": null,
+                "n": 0
+              },
+              {
+                "accuracy": null,
+                "hi": 0.3,
+                "lo": 0.2,
+                "mean_confidence": null,
+                "n": 0
+              },
+              {
+                "accuracy": null,
+                "hi": 0.4,
+                "lo": 0.3,
+                "mean_confidence": null,
+                "n": 0
+              },
+              {
+                "accuracy": null,
+                "hi": 0.5,
+                "lo": 0.4,
+                "mean_confidence": null,
+                "n": 0
+              },
+              {
+                "accuracy": null,
+                "hi": 0.6,
+                "lo": 0.5,
+                "mean_confidence": null,
+                "n": 0
+              },
+              {
+                "accuracy": null,
+                "hi": 0.7,
+                "lo": 0.6,
+                "mean_confidence": null,
+                "n": 0
+              },
+              {
+                "accuracy": null,
+                "hi": 0.8,
+                "lo": 0.7,
+                "mean_confidence": null,
+                "n": 0
+              },
+              {
+                "accuracy": null,
+                "hi": 0.9,
+                "lo": 0.8,
+                "mean_confidence": null,
+                "n": 0
+              },
+              {
+                "accuracy": 1.0,
+                "hi": 1.0,
+                "lo": 0.9,
+                "mean_confidence": 0.9949772681967362,
+                "n": 72
+              }
+            ],
+            "ece": 0.005022731803263847,
+            "n": 72
+          },
+          "first_request_s": 29.642283394932747,
+          "latency_failed_s": {
+            "n": 0,
+            "p50_s": null,
+            "p95_s": null
+          },
+          "latency_max_s": 29.642283394932747,
+          "latency_ok_excl_first_s": {
+            "n": 71,
+            "p50_s": 0.5154296457767487,
+            "p95_s": 0.6179008558392525
+          },
+          "latency_ok_s": {
+            "n": 72,
+            "p50_s": 0.5154547318816185,
+            "p95_s": 0.619822283834219
+          },
+          "majority_class_accuracy": 0.125,
+          "mean_input_tokens": null,
+          "mean_output_tokens": null,
+          "n_attempted": 72,
+          "n_cost_known": 0,
+          "n_planned": 72,
+          "n_renormalized": 0,
+          "n_scorable": 72,
+          "n_state_truncated": 0,
+          "operational_success": 1.0,
+          "ordinal_mae": null,
+          "schema_validity": 1.0,
+          "schema_validity_strict": 1.0
+        },
+        "judge": {
+          "accuracy": 0.8767123287671232,
+          "accuracy_ci": {
+            "hi95": 0.9246575342465754,
+            "lo95": 0.821917808219178,
+            "n_decisions": 146,
+            "n_scenarios": 146,
+            "point": 0.8767123287671232
+          },
+          "brier_mean": 0.16311421497942305,
+          "calibration_n": 146,
+          "cost_basis": [
+            "no_billable_account_public_endpoint"
+          ],
+          "cost_per_1000_usd": null,
+          "ece": {
+            "bins": [
+              {
+                "accuracy": null,
+                "hi": 0.1,
+                "lo": 0.0,
+                "mean_confidence": null,
+                "n": 0
+              },
+              {
+                "accuracy": null,
+                "hi": 0.2,
+                "lo": 0.1,
+                "mean_confidence": null,
+                "n": 0
+              },
+              {
+                "accuracy": null,
+                "hi": 0.3,
+                "lo": 0.2,
+                "mean_confidence": null,
+                "n": 0
+              },
+              {
+                "accuracy": 0.0,
+                "hi": 0.4,
+                "lo": 0.3,
+                "mean_confidence": 0.3694673180580139,
+                "n": 1
+              },
+              {
+                "accuracy": 0.3333333333333333,
+                "hi": 0.5,
+                "lo": 0.4,
+                "mean_confidence": 0.47420785824457806,
+                "n": 3
+              },
+              {
+                "accuracy": 0.6666666666666666,
+                "hi": 0.6,
+                "lo": 0.5,
+                "mean_confidence": 0.5378236174583435,
+                "n": 15
+              },
+              {
+                "accuracy": 0.5263157894736842,
+                "hi": 0.7,
+                "lo": 0.6,
+                "mean_confidence": 0.6462128632947018,
+                "n": 19
+              },
+              {
+                "accuracy": 1.0,
+                "hi": 0.8,
+                "lo": 0.7,
+                "mean_confidence": 0.7471469101451692,
+                "n": 21
+              },
+              {
+                "accuracy": 0.9333333333333333,
+                "hi": 0.9,
+                "lo": 0.8,
+                "mean_confidence": 0.8594711105028788,
+                "n": 15
+              },
+              {
+                "accuracy": 1.0,
+                "hi": 1.0,
+                "lo": 0.9,
+                "mean_confidence": 0.9629874360851116,
+                "n": 72
+              }
+            ],
+            "ece": 0.0964762593479189,
+            "n": 146
+          },
+          "first_request_s": 0.6564928069710732,
+          "latency_failed_s": {
+            "n": 0,
+            "p50_s": null,
+            "p95_s": null
+          },
+          "latency_max_s": 1.0980295613408089,
+          "latency_ok_excl_first_s": {
+            "n": 145,
+            "p50_s": 0.661714680492878,
+            "p95_s": 0.7769349798560142
+          },
+          "latency_ok_s": {
+            "n": 146,
+            "p50_s": 0.6606850996613503,
+            "p95_s": 0.7768471296876669
+          },
+          "majority_class_accuracy": 0.4178082191780822,
+          "mean_input_tokens": null,
+          "mean_output_tokens": null,
+          "n_attempted": 146,
+          "n_cost_known": 0,
+          "n_planned": 146,
+          "n_renormalized": 0,
+          "n_scorable": 146,
+          "n_state_truncated": 0,
+          "operational_success": 1.0,
+          "ordinal_mae": null,
+          "schema_validity": 1.0,
+          "schema_validity_strict": 1.0
+        },
+        "standard": {
+          "accuracy": 0.9375,
+          "accuracy_ci": {
+            "hi95": 0.9795918367346939,
+            "lo95": 0.8913043478260869,
+            "n_decisions": 96,
+            "n_scenarios": 60,
+            "point": 0.9375
+          },
+          "brier_mean": 0.10021078155403294,
+          "calibration_n": 96,
+          "cost_basis": [
+            "no_billable_account_public_endpoint"
+          ],
+          "cost_per_1000_usd": null,
+          "ece": {
+            "bins": [
+              {
+                "accuracy": null,
+                "hi": 0.1,
+                "lo": 0.0,
+                "mean_confidence": null,
+                "n": 0
+              },
+              {
+                "accuracy": null,
+                "hi": 0.2,
+                "lo": 0.1,
+                "mean_confidence": null,
+                "n": 0
+              },
+              {
+                "accuracy": null,
+                "hi": 0.3,
+                "lo": 0.2,
+                "mean_confidence": null,
+                "n": 0
+              },
+              {
+                "accuracy": null,
+                "hi": 0.4,
+                "lo": 0.3,
+                "mean_confidence": null,
+                "n": 0
+              },
+              {
+                "accuracy": 1.0,
+                "hi": 0.5,
+                "lo": 0.4,
+                "mean_confidence": 0.451519250869751,
+                "n": 1
+              },
+              {
+                "accuracy": 0.5,
+                "hi": 0.6,
+                "lo": 0.5,
+                "mean_confidence": 0.5522664884726206,
+                "n": 6
+              },
+              {
+                "accuracy": 1.0,
+                "hi": 0.7,
+                "lo": 0.6,
+                "mean_confidence": 0.6562116146087646,
+                "n": 2
+              },
+              {
+                "accuracy": 0.9,
+                "hi": 0.8,
+                "lo": 0.7,
+                "mean_confidence": 0.7614146158099174,
+                "n": 10
+              },
+              {
+                "accuracy": 0.8947368421052632,
+                "hi": 0.9,
+                "lo": 0.8,
+                "mean_confidence": 0.8537311906877317,
+                "n": 19
+              },
+              {
+                "accuracy": 1.0,
+                "hi": 1.0,
+                "lo": 0.9,
+                "mean_confidence": 0.9740595296301261,
+                "n": 58
+              }
+            ],
+            "ece": 0.0543663015732818,
+            "n": 96
+          },
+          "first_request_s": 29.40474732220173,
+          "latency_failed_s": {
+            "n": 0,
+            "p50_s": null,
+            "p95_s": null
+          },
+          "latency_max_s": 29.40474732220173,
+          "latency_ok_excl_first_s": {
+            "n": 95,
+            "p50_s": 0.6454168483614922,
+            "p95_s": 0.7393416427075862
+          },
+          "latency_ok_s": {
+            "n": 96,
+            "p50_s": 0.6454480849206448,
+            "p95_s": 0.7460501007735729
+          },
+          "majority_class_accuracy": 0.16666666666666666,
+          "mean_input_tokens": null,
+          "mean_output_tokens": null,
+          "n_attempted": 96,
+          "n_cost_known": 0,
+          "n_planned": 96,
+          "n_renormalized": 0,
+          "n_scorable": 96,
+          "n_state_truncated": 0,
+          "operational_success": 1.0,
+          "ordinal_mae": 0.0744889490724745,
+          "schema_validity": 1.0,
+          "schema_validity_strict": 1.0
+        }
+      },
+      "underlying": "google/gemma-4-E2B-it + LoRA"
+    },
     {
       "author": "TypeSafe AI",
       "calibration": {
@@ -183,7 +778,7 @@
       "cost": {
         "basis": "public tariff x measured tokens (https://docs.typesafe.ai/models (output tokens not billed))",
         "kind": "measured",
-        "score": 86.22983075056048,
+        "score": 64.67237306292036,
         "usd_per_1000": 0.025888392086330935
       },
       "coverage": {
@@ -195,7 +790,7 @@
       "has_distribution": true,
       "key": "jev-1.13.0",
       "licence": "proprietary API",
-      "main_score": 87.57580203632074,
+      "main_score": 73.55632165831256,
       "note": null,
       "open": "no",
       "partial": false,
@@ -203,22 +798,22 @@
         "native"
       ],
       "rank_under": {
-        "50/25/25": 1,
-        "60/20/20 (headline)": 1,
-        "60/20/20 geometric": 1,
-        "80/10/10": 1,
-        "capability only": 2,
-        "equal thirds": 1
+        "20/20/60 cost emphasis": 2,
+        "20/60/20 speed emphasis": 2,
+        "33/33/33 balanced (headline)": 2,
+        "33/33/33 geometric": 2,
+        "60/20/20 accuracy emphasis": 1,
+        "capability only": 2
       },
       "ranked": true,
       "repo": "https://docs.typesafe.ai",
       "sensitivity": {
-        "50/25/25": 85.01317910552268,
-        "60/20/20 (headline)": 87.57580203632074,
-        "60/20/20 geometric": 85.96964330208921,
-        "80/10/10": 92.70104789791685,
-        "capability only": 97.82629375951295,
-        "equal thirds": 80.74214088752592
+        "20/20/60 cost emphasis": 70.00274222015568,
+        "20/60/20 speed emphasis": 67.40191225598927,
+        "33/33/33 balanced (headline)": 73.55632165831256,
+        "33/33/33 geometric": 71.66249024768004,
+        "60/20/20 accuracy emphasis": 83.26431049879271,
+        "capability only": 97.82629375951295
       },
       "speed": {
         "n": 242,
@@ -618,9 +1213,9 @@
       },
       "class": "jev-rebuild",
       "cost": {
-        "basis": "ESTIMATE: qwen/qwen3.6-35b-a3b list price $0.1/M in, $0.9/M out (same base weights (Qwen3.6-35B-A3B)) x 667 input and 2 output tokens per decision",
+        "basis": "ESTIMATE: hosted-provider price, openrouter qwen/qwen3.6-35b-a3b list price $0.1/M in, $0.9/M out (same base weights) x 667 input and 2 output tokens per decision",
         "kind": "estimate",
-        "score": 72.14155721870041,
+        "score": 54.10616791402531,
         "usd_per_1000": 0.06850989208633093
       },
       "coverage": {
@@ -632,7 +1227,7 @@
       "has_distribution": true,
       "key": "openjev-sglang",
       "licence": "no licence file in the repository as of 2026-09-19; Qwen3.6 weights keep their own terms",
-      "main_score": 84.17627371423453,
+      "main_score": 69.60670135874625,
       "note": null,
       "open": "yes",
       "partial": false,
@@ -640,22 +1235,22 @@
         "native"
       ],
       "rank_under": {
-        "50/25/25": 3,
-        "60/20/20 (headline)": 2,
-        "60/20/20 geometric": 2,
-        "80/10/10": 2,
-        "capability only": 4,
-        "equal thirds": 3
+        "20/20/60 cost emphasis": 4,
+        "20/60/20 speed emphasis": 3,
+        "33/33/33 balanced (headline)": 3,
+        "33/33/33 geometric": 3,
+        "60/20/20 accuracy emphasis": 3,
+        "capability only": 4
       },
       "ranked": true,
       "repo": "https://github.com/ekzhang/openjev-sglang",
       "sensitivity": {
-        "50/25/25": 80.9671077440108,
-        "60/20/20 (headline)": 84.17627371423453,
-        "60/20/20 geometric": 82.40841506689225,
-        "80/10/10": 90.59460565468194,
-        "capability only": 97.01293759512937,
-        "equal thirds": 75.61849779363794
+        "20/20/60 cost emphasis": 63.406487980857875,
+        "20/60/20 speed emphasis": 64.84442024208137,
+        "33/33/33 balanced (headline)": 69.60670135874625,
+        "33/33/33 geometric": 67.15627314112147,
+        "60/20/20 accuracy emphasis": 80.5691958532995,
+        "capability only": 97.01293759512937
       },
       "speed": {
         "n": 242,
@@ -1038,443 +1633,6 @@
       "underlying": "Qwen3.6-35B-A3B"
     },
     {
-      "author": "mithalouni",
-      "calibration": {
-        "brier_standard_judge": 0.13816078684373112,
-        "note": null
-      },
-      "capability": {
-        "n_decisions": 314,
-        "pooled_accuracy": 1.6178343949044587,
-        "score": 93.80707762557078,
-        "tier_accuracy": {
-          "easy": 1.0,
-          "judge": 0.8767123287671232,
-          "standard": 0.9375
-        }
-      },
-      "class": "jev-rebuild",
-      "cost": {
-        "basis": "ESTIMATE: google/gemma-4-26b-a4b-it list price $0.09/M in, $0.3/M out (Gemma 4 E2B is not listed; the smallest listed Gemma 4 is larger, so this errs high) x 452 input and 2 output tokens per decision (input tokens counted from the gemini-3.1-flash-lite run, same prompts)",
-        "kind": "estimate",
-        "score": 79.48056152878466,
-        "usd_per_1000": 0.041265123966942145
-      },
-      "coverage": {
-        "easy": 1.0,
-        "judge": 1.0,
-        "standard": 1.0
-      },
-      "display": "system-one-open (Gemma 4 E2B LoRA on an L4)",
-      "has_distribution": true,
-      "key": "system-one-open",
-      "licence": "MIT (repository LICENSE; Gemma weights keep Google\u2019s terms)",
-      "main_score": 83.67072134140025,
-      "note": null,
-      "open": "yes",
-      "partial": false,
-      "probability_source": [
-        "native"
-      ],
-      "rank_under": {
-        "50/25/25": 2,
-        "60/20/20 (headline)": 3,
-        "60/20/20 geometric": 3,
-        "80/10/10": 5,
-        "capability only": 6,
-        "equal thirds": 2
-      },
-      "ranked": true,
-      "repo": "https://github.com/mithalouni/system-one-open",
-      "sensitivity": {
-        "50/25/25": 81.13663227035762,
-        "60/20/20 (headline)": 83.67072134140025,
-        "60/20/20 geometric": 82.2724245176578,
-        "80/10/10": 88.73889948348551,
-        "capability only": 93.80707762557078,
-        "equal thirds": 76.91315048528656
-      },
-      "speed": {
-        "n": 242,
-        "p50_s": 0.6517308317124844,
-        "p95_s": 0.7724301926791667,
-        "run": "serial 242-decision standard+judge run",
-        "score": 57.451812301504276,
-        "score_p50": 59.29658665807101,
-        "score_p95": 55.607037944937545
-      },
-      "standard_judge_source": "v1.0 run (items unchanged)",
-      "tiers": {
-        "easy": {
-          "accuracy": 1.0,
-          "accuracy_ci": {
-            "hi95": 1.0,
-            "lo95": 1.0,
-            "n_decisions": 72,
-            "n_scenarios": 72,
-            "point": 1.0
-          },
-          "brier_mean": 0.00021475467150696854,
-          "calibration_n": 72,
-          "cost_basis": [
-            "no_billable_account_public_endpoint"
-          ],
-          "cost_per_1000_usd": null,
-          "ece": {
-            "bins": [
-              {
-                "accuracy": null,
-                "hi": 0.1,
-                "lo": 0.0,
-                "mean_confidence": null,
-                "n": 0
-              },
-              {
-                "accuracy": null,
-                "hi": 0.2,
-                "lo": 0.1,
-                "mean_confidence": null,
-                "n": 0
-              },
-              {
-                "accuracy": null,
-                "hi": 0.3,
-                "lo": 0.2,
-                "mean_confidence": null,
-                "n": 0
-              },
-              {
-                "accuracy": null,
-                "hi": 0.4,
-                "lo": 0.3,
-                "mean_confidence": null,
-                "n": 0
-              },
-              {
-                "accuracy": null,
-                "hi": 0.5,
-                "lo": 0.4,
-                "mean_confidence": null,
-                "n": 0
-              },
-              {
-                "accuracy": null,
-                "hi": 0.6,
-                "lo": 0.5,
-                "mean_confidence": null,
-                "n": 0
-              },
-              {
-                "accuracy": null,
-                "hi": 0.7,
-                "lo": 0.6,
-                "mean_confidence": null,
-                "n": 0
-              },
-              {
-                "accuracy": null,
-                "hi": 0.8,
-                "lo": 0.7,
-                "mean_confidence": null,
-                "n": 0
-              },
-              {
-                "accuracy": null,
-                "hi": 0.9,
-                "lo": 0.8,
-                "mean_confidence": null,
-                "n": 0
-              },
-              {
-                "accuracy": 1.0,
-                "hi": 1.0,
-                "lo": 0.9,
-                "mean_confidence": 0.9949772681967362,
-                "n": 72
-              }
-            ],
-            "ece": 0.005022731803263847,
-            "n": 72
-          },
-          "first_request_s": 29.642283394932747,
-          "latency_failed_s": {
-            "n": 0,
-            "p50_s": null,
-            "p95_s": null
-          },
-          "latency_max_s": 29.642283394932747,
-          "latency_ok_excl_first_s": {
-            "n": 71,
-            "p50_s": 0.5154296457767487,
-            "p95_s": 0.6179008558392525
-          },
-          "latency_ok_s": {
-            "n": 72,
-            "p50_s": 0.5154547318816185,
-            "p95_s": 0.619822283834219
-          },
-          "majority_class_accuracy": 0.125,
-          "mean_input_tokens": null,
-          "mean_output_tokens": null,
-          "n_attempted": 72,
-          "n_cost_known": 0,
-          "n_planned": 72,
-          "n_renormalized": 0,
-          "n_scorable": 72,
-          "n_state_truncated": 0,
-          "operational_success": 1.0,
-          "ordinal_mae": null,
-          "schema_validity": 1.0,
-          "schema_validity_strict": 1.0
-        },
-        "judge": {
-          "accuracy": 0.8767123287671232,
-          "accuracy_ci": {
-            "hi95": 0.9246575342465754,
-            "lo95": 0.821917808219178,
-            "n_decisions": 146,
-            "n_scenarios": 146,
-            "point": 0.8767123287671232
-          },
-          "brier_mean": 0.16311421497942305,
-          "calibration_n": 146,
-          "cost_basis": [
-            "no_billable_account_public_endpoint"
-          ],
-          "cost_per_1000_usd": null,
-          "ece": {
-            "bins": [
-              {
-                "accuracy": null,
-                "hi": 0.1,
-                "lo": 0.0,
-                "mean_confidence": null,
-                "n": 0
-              },
-              {
-                "accuracy": null,
-                "hi": 0.2,
-                "lo": 0.1,
-                "mean_confidence": null,
-                "n": 0
-              },
-              {
-                "accuracy": null,
-                "hi": 0.3,
-                "lo": 0.2,
-                "mean_confidence": null,
-                "n": 0
-              },
-              {
-                "accuracy": 0.0,
-                "hi": 0.4,
-                "lo": 0.3,
-                "mean_confidence": 0.3694673180580139,
-                "n": 1
-              },
-              {
-                "accuracy": 0.3333333333333333,
-                "hi": 0.5,
-                "lo": 0.4,
-                "mean_confidence": 0.47420785824457806,
-                "n": 3
-              },
-              {
-                "accuracy": 0.6666666666666666,
-                "hi": 0.6,
-                "lo": 0.5,
-                "mean_confidence": 0.5378236174583435,
-                "n": 15
-              },
-              {
-                "accuracy": 0.5263157894736842,
-                "hi": 0.7,
-                "lo": 0.6,
-                "mean_confidence": 0.6462128632947018,
-                "n": 19
-              },
-              {
-                "accuracy": 1.0,
-                "hi": 0.8,
-                "lo": 0.7,
-                "mean_confidence": 0.7471469101451692,
-                "n": 21
-              },
-              {
-                "accuracy": 0.9333333333333333,
-                "hi": 0.9,
-                "lo": 0.8,
-                "mean_confidence": 0.8594711105028788,
-                "n": 15
-              },
-              {
-                "accuracy": 1.0,
-                "hi": 1.0,
-                "lo": 0.9,
-                "mean_confidence": 0.9629874360851116,
-                "n": 72
-              }
-            ],
-            "ece": 0.0964762593479189,
-            "n": 146
-          },
-          "first_request_s": 0.6564928069710732,
-          "latency_failed_s": {
-            "n": 0,
-            "p50_s": null,
-            "p95_s": null
-          },
-          "latency_max_s": 1.0980295613408089,
-          "latency_ok_excl_first_s": {
-            "n": 145,
-            "p50_s": 0.661714680492878,
-            "p95_s": 0.7769349798560142
-          },
-          "latency_ok_s": {
-            "n": 146,
-            "p50_s": 0.6606850996613503,
-            "p95_s": 0.7768471296876669
-          },
-          "majority_class_accuracy": 0.4178082191780822,
-          "mean_input_tokens": null,
-          "mean_output_tokens": null,
-          "n_attempted": 146,
-          "n_cost_known": 0,
-          "n_planned": 146,
-          "n_renormalized": 0,
-          "n_scorable": 146,
-          "n_state_truncated": 0,
-          "operational_success": 1.0,
-          "ordinal_mae": null,
-          "schema_validity": 1.0,
-          "schema_validity_strict": 1.0
-        },
-        "standard": {
-          "accuracy": 0.9375,
-          "accuracy_ci": {
-            "hi95": 0.9795918367346939,
-            "lo95": 0.8913043478260869,
-            "n_decisions": 96,
-            "n_scenarios": 60,
-            "point": 0.9375
-          },
-          "brier_mean": 0.10021078155403294,
-          "calibration_n": 96,
-          "cost_basis": [
-            "no_billable_account_public_endpoint"
-          ],
-          "cost_per_1000_usd": null,
-          "ece": {
-            "bins": [
-              {
-                "accuracy": null,
-                "hi": 0.1,
-                "lo": 0.0,
-                "mean_confidence": null,
-                "n": 0
-              },
-              {
-                "accuracy": null,
-                "hi": 0.2,
-                "lo": 0.1,
-                "mean_confidence": null,
-                "n": 0
-              },
-              {
-                "accuracy": null,
-                "hi": 0.3,
-                "lo": 0.2,
-                "mean_confidence": null,
-                "n": 0
-              },
-              {
-                "accuracy": null,
-                "hi": 0.4,
-                "lo": 0.3,
-                "mean_confidence": null,
-                "n": 0
-              },
-              {
-                "accuracy": 1.0,
-                "hi": 0.5,
-                "lo": 0.4,
-                "mean_confidence": 0.451519250869751,
-                "n": 1
-              },
-              {
-                "accuracy": 0.5,
-                "hi": 0.6,
-                "lo": 0.5,
-                "mean_confidence": 0.5522664884726206,
-                "n": 6
-              },
-              {
-                "accuracy": 1.0,
-                "hi": 0.7,
-                "lo": 0.6,
-                "mean_confidence": 0.6562116146087646,
-                "n": 2
-              },
-              {
-                "accuracy": 0.9,
-                "hi": 0.8,
-                "lo": 0.7,
-                "mean_confidence": 0.7614146158099174,
-                "n": 10
-              },
-              {
-                "accuracy": 0.8947368421052632,
-                "hi": 0.9,
-                "lo": 0.8,
-                "mean_confidence": 0.8537311906877317,
-                "n": 19
-              },
-              {
-                "accuracy": 1.0,
-                "hi": 1.0,
-                "lo": 0.9,
-                "mean_confidence": 0.9740595296301261,
-                "n": 58
-              }
-            ],
-            "ece": 0.0543663015732818,
-            "n": 96
-          },
-          "first_request_s": 29.40474732220173,
-          "latency_failed_s": {
-            "n": 0,
-            "p50_s": null,
-            "p95_s": null
-          },
-          "latency_max_s": 29.40474732220173,
-          "latency_ok_excl_first_s": {
-            "n": 95,
-            "p50_s": 0.6454168483614922,
-            "p95_s": 0.7393416427075862
-          },
-          "latency_ok_s": {
-            "n": 96,
-            "p50_s": 0.6454480849206448,
-            "p95_s": 0.7460501007735729
-          },
-          "majority_class_accuracy": 0.16666666666666666,
-          "mean_input_tokens": null,
-          "mean_output_tokens": null,
-          "n_attempted": 96,
-          "n_cost_known": 0,
-          "n_planned": 96,
-          "n_renormalized": 0,
-          "n_scorable": 96,
-          "n_state_truncated": 0,
-          "operational_success": 1.0,
-          "ordinal_mae": 0.0744889490724745,
-          "schema_validity": 1.0,
-          "schema_validity_strict": 1.0
-        }
-      },
-      "underlying": "google/gemma-4-E2B-it + LoRA"
-    },
-    {
       "author": "Google",
       "calibration": {
         "brier_standard_judge": 0.09465247933884294,
@@ -1494,7 +1652,7 @@
       "cost": {
         "basis": "public tariff x measured tokens (https://ai.google.dev/gemini-api/docs/pricing (paid tier, read 2026-09-19))",
         "kind": "measured",
-        "score": 57.716536825114815,
+        "score": 43.28740261883611,
         "usd_per_1000": 0.18556834532374103
       },
       "coverage": {
@@ -1506,7 +1664,7 @@
       "has_distribution": true,
       "key": "gemini-3.1-flash-lite",
       "licence": "proprietary API",
-      "main_score": 80.85892392685216,
+      "main_score": 65.04204663936285,
       "note": null,
       "open": "no",
       "partial": false,
@@ -1514,22 +1672,22 @@
         "verbalized"
       ],
       "rank_under": {
-        "50/25/25": 4,
-        "60/20/20 (headline)": 4,
-        "60/20/20 geometric": 4,
-        "80/10/10": 3,
-        "capability only": 3,
-        "equal thirds": 4
+        "20/20/60 cost emphasis": 5,
+        "20/60/20 speed emphasis": 4,
+        "33/33/33 balanced (headline)": 4,
+        "33/33/33 geometric": 4,
+        "60/20/20 accuracy emphasis": 4,
+        "capability only": 3
       },
       "ranked": true,
       "repo": null,
       "sensitivity": {
-        "50/25/25": 76.7312367198285,
-        "60/20/20 (headline)": 80.85892392685216,
-        "60/20/20 geometric": 78.08080144721075,
-        "80/10/10": 89.11429834089945,
-        "capability only": 97.36967275494673,
-        "equal thirds": 69.85175804145575
+        "20/20/60 cost emphasis": 56.34018903115216,
+        "20/60/20 speed emphasis": 60.81285380134,
+        "33/33/33 balanced (headline)": 65.04204663936285,
+        "33/33/33 geometric": 61.231991542907885,
+        "60/20/20 accuracy emphasis": 77.97309708559641,
+        "capability only": 97.36967275494673
       },
       "speed": {
         "n": 242,
@@ -1931,7 +2089,7 @@
       "cost": {
         "basis": "public tariff x measured tokens (https://platform.openai.com/docs/pricing (standard tier, read 2026-09-19))",
         "kind": "measured",
-        "score": 59.49149459055408,
+        "score": 44.61862094291556,
         "usd_per_1000": 0.16415539568345325
       },
       "coverage": {
@@ -1943,7 +2101,7 @@
       "has_distribution": true,
       "key": "gpt-5.6-luna",
       "licence": "proprietary API",
-      "main_score": 79.56991807690272,
+      "main_score": 62.216236882865026,
       "note": null,
       "open": "no",
       "partial": false,
@@ -1951,22 +2109,22 @@
         "verbalized"
       ],
       "rank_under": {
-        "50/25/25": 5,
-        "60/20/20 (headline)": 5,
-        "60/20/20 geometric": 5,
-        "80/10/10": 4,
-        "capability only": 1,
-        "equal thirds": 5
+        "20/20/60 cost emphasis": 6,
+        "20/60/20 speed emphasis": 5,
+        "33/33/33 balanced (headline)": 5,
+        "33/33/33 geometric": 5,
+        "60/20/20 accuracy emphasis": 5,
+        "capability only": 1
       },
       "ranked": true,
       "repo": null,
       "sensitivity": {
-        "50/25/25": 74.92139683509342,
-        "60/20/20 (headline)": 79.56991807690272,
-        "60/20/20 geometric": 75.59413650422222,
-        "80/10/10": 88.86696056052138,
-        "capability only": 98.16400304414003,
-        "equal thirds": 67.17386143207787
+        "20/20/60 cost emphasis": 55.17719050688524,
+        "20/60/20 speed emphasis": 54.87617679433482,
+        "33/33/33 balanced (headline)": 62.216236882865026,
+        "33/33/33 geometric": 57.70309376066943,
+        "60/20/20 accuracy emphasis": 76.59534334737502,
+        "capability only": 98.16400304414003
       },
       "speed": {
         "n": 242,
@@ -2349,6 +2507,443 @@
       "underlying": "closed"
     },
     {
+      "author": "Kotoba Labs",
+      "calibration": {
+        "brier_standard_judge": 0.6512140520637422,
+        "note": null
+      },
+      "capability": {
+        "n_decisions": 314,
+        "pooled_accuracy": 1.0254777070063694,
+        "score": 67.46099695585997,
+        "tier_accuracy": {
+          "easy": 1.0,
+          "judge": 0.5342465753424658,
+          "standard": 0.4895833333333333
+        }
+      },
+      "class": "jev-rebuild",
+      "cost": {
+        "basis": "ESTIMATE: hosted-provider price, deepinfra encoders of the same size (bge-large, e5-large, Qwen3-Embedding-0.6B) list price $0.01/M in, $0.0/M out (an encoder of the same size class; one forward pass, nothing generated) x 452 input and 0 output tokens per decision (input tokens counted from the gemini-3.1-flash-lite run, same prompts)",
+        "kind": "estimate",
+        "score": 83.62551022154406,
+        "usd_per_1000": 0.004518347107438017
+      },
+      "coverage": {
+        "easy": 1.0,
+        "judge": 1.0,
+        "standard": 1.0
+      },
+      "display": "open-jev-deberta-v3-large (local CPU)",
+      "has_distribution": true,
+      "key": "open-jev-deberta-v3-large",
+      "licence": "Apache-2.0 (model card); DeBERTa-v3 keeps its own terms",
+      "main_score": 60.59254770586332,
+      "note": null,
+      "open": "yes",
+      "partial": false,
+      "probability_source": [
+        "native"
+      ],
+      "rank_under": {
+        "20/20/60 cost emphasis": 3,
+        "20/60/20 speed emphasis": 6,
+        "33/33/33 balanced (headline)": 6,
+        "33/33/33 geometric": 6,
+        "60/20/20 accuracy emphasis": 7,
+        "capability only": 7
+      },
+      "ranked": true,
+      "repo": "https://github.com/kotoba-lang/typed-decisions",
+      "sensitivity": {
+        "20/20/60 cost emphasis": 69.80573271213561,
+        "20/60/20 speed emphasis": 48.63198299959237,
+        "33/33/33 balanced (headline)": 60.59254770586332,
+        "33/33/33 geometric": 55.7358761893163,
+        "60/20/20 accuracy emphasis": 63.33992740586198,
+        "capability only": 67.46099695585997
+      },
+      "speed": {
+        "n": 242,
+        "p50_s": 1.767673410475254,
+        "p95_s": 3.349288306012749,
+        "run": "serial 242-decision standard+judge run",
+        "score": 30.69113594018593,
+        "score_p50": 37.62989853657197,
+        "score_p95": 23.75237334379989
+      },
+      "standard_judge_source": "v1.0 run (items unchanged)",
+      "tiers": {
+        "easy": {
+          "accuracy": 1.0,
+          "accuracy_ci": {
+            "hi95": 1.0,
+            "lo95": 1.0,
+            "n_decisions": 72,
+            "n_scenarios": 72,
+            "point": 1.0
+          },
+          "brier_mean": 0.060070893625594285,
+          "calibration_n": 72,
+          "cost_basis": [
+            "local_cpu_no_provider_tariff"
+          ],
+          "cost_per_1000_usd": null,
+          "ece": {
+            "bins": [
+              {
+                "accuracy": null,
+                "hi": 0.1,
+                "lo": 0.0,
+                "mean_confidence": null,
+                "n": 0
+              },
+              {
+                "accuracy": null,
+                "hi": 0.2,
+                "lo": 0.1,
+                "mean_confidence": null,
+                "n": 0
+              },
+              {
+                "accuracy": null,
+                "hi": 0.3,
+                "lo": 0.2,
+                "mean_confidence": null,
+                "n": 0
+              },
+              {
+                "accuracy": null,
+                "hi": 0.4,
+                "lo": 0.3,
+                "mean_confidence": null,
+                "n": 0
+              },
+              {
+                "accuracy": null,
+                "hi": 0.5,
+                "lo": 0.4,
+                "mean_confidence": null,
+                "n": 0
+              },
+              {
+                "accuracy": 1.0,
+                "hi": 0.6,
+                "lo": 0.5,
+                "mean_confidence": 0.5310026605923971,
+                "n": 3
+              },
+              {
+                "accuracy": 1.0,
+                "hi": 0.7,
+                "lo": 0.6,
+                "mean_confidence": 0.6724341064691544,
+                "n": 8
+              },
+              {
+                "accuracy": 1.0,
+                "hi": 0.8,
+                "lo": 0.7,
+                "mean_confidence": 0.7504676026957375,
+                "n": 14
+              },
+              {
+                "accuracy": 1.0,
+                "hi": 0.9,
+                "lo": 0.8,
+                "mean_confidence": 0.8556724325926216,
+                "n": 27
+              },
+              {
+                "accuracy": 1.0,
+                "hi": 1.0,
+                "lo": 0.9,
+                "mean_confidence": 0.9367572457529605,
+                "n": 20
+              }
+            ],
+            "ece": 0.17614822407873965,
+            "n": 72
+          },
+          "first_request_s": 8.053531378507614,
+          "latency_failed_s": {
+            "n": 0,
+            "p50_s": null,
+            "p95_s": null
+          },
+          "latency_max_s": 8.053531378507614,
+          "latency_ok_excl_first_s": {
+            "n": 71,
+            "p50_s": 1.1074866726994514,
+            "p95_s": 1.417677540332079
+          },
+          "latency_ok_s": {
+            "n": 72,
+            "p50_s": 1.1079005151987076,
+            "p95_s": 1.4251890927553177
+          },
+          "majority_class_accuracy": 0.125,
+          "mean_input_tokens": null,
+          "mean_output_tokens": null,
+          "n_attempted": 72,
+          "n_cost_known": 0,
+          "n_planned": 72,
+          "n_renormalized": 0,
+          "n_scorable": 72,
+          "n_state_truncated": 0,
+          "operational_success": 1.0,
+          "ordinal_mae": null,
+          "schema_validity": 1.0,
+          "schema_validity_strict": 1.0
+        },
+        "judge": {
+          "accuracy": 0.5342465753424658,
+          "accuracy_ci": {
+            "hi95": 0.6164383561643836,
+            "lo95": 0.4589041095890411,
+            "n_decisions": 146,
+            "n_scenarios": 146,
+            "point": 0.5342465753424658
+          },
+          "brier_mean": 0.7022386001356168,
+          "calibration_n": 146,
+          "cost_basis": [
+            "local_cpu_no_provider_tariff"
+          ],
+          "cost_per_1000_usd": null,
+          "ece": {
+            "bins": [
+              {
+                "accuracy": null,
+                "hi": 0.1,
+                "lo": 0.0,
+                "mean_confidence": null,
+                "n": 0
+              },
+              {
+                "accuracy": null,
+                "hi": 0.2,
+                "lo": 0.1,
+                "mean_confidence": null,
+                "n": 0
+              },
+              {
+                "accuracy": null,
+                "hi": 0.3,
+                "lo": 0.2,
+                "mean_confidence": null,
+                "n": 0
+              },
+              {
+                "accuracy": 0.0,
+                "hi": 0.4,
+                "lo": 0.3,
+                "mean_confidence": 0.3776950389146805,
+                "n": 2
+              },
+              {
+                "accuracy": 0.0,
+                "hi": 0.5,
+                "lo": 0.4,
+                "mean_confidence": 0.4665033183991909,
+                "n": 24
+              },
+              {
+                "accuracy": 0.46808510638297873,
+                "hi": 0.6,
+                "lo": 0.5,
+                "mean_confidence": 0.5661645595063555,
+                "n": 47
+              },
+              {
+                "accuracy": 0.8461538461538461,
+                "hi": 0.7,
+                "lo": 0.6,
+                "mean_confidence": 0.6442159521274078,
+                "n": 39
+              },
+              {
+                "accuracy": 0.5454545454545454,
+                "hi": 0.8,
+                "lo": 0.7,
+                "mean_confidence": 0.7588141885670748,
+                "n": 11
+              },
+              {
+                "accuracy": 0.7142857142857143,
+                "hi": 0.9,
+                "lo": 0.8,
+                "mean_confidence": 0.8566364049911499,
+                "n": 21
+              },
+              {
+                "accuracy": 1.0,
+                "hi": 1.0,
+                "lo": 0.9,
+                "mean_confidence": 0.9011107087135315,
+                "n": 2
+              }
+            ],
+            "ece": 0.2052800071566072,
+            "n": 146
+          },
+          "first_request_s": 3.487430118024349,
+          "latency_failed_s": {
+            "n": 0,
+            "p50_s": null,
+            "p95_s": null
+          },
+          "latency_max_s": 3.590568356215954,
+          "latency_ok_excl_first_s": {
+            "n": 145,
+            "p50_s": 2.0872722193598747,
+            "p95_s": 3.3964938983321193
+          },
+          "latency_ok_s": {
+            "n": 146,
+            "p50_s": 2.0961069390177727,
+            "p95_s": 3.414716958999634
+          },
+          "majority_class_accuracy": 0.4178082191780822,
+          "mean_input_tokens": null,
+          "mean_output_tokens": null,
+          "n_attempted": 146,
+          "n_cost_known": 0,
+          "n_planned": 146,
+          "n_renormalized": 0,
+          "n_scorable": 146,
+          "n_state_truncated": 80,
+          "operational_success": 1.0,
+          "ordinal_mae": null,
+          "schema_validity": 1.0,
+          "schema_validity_strict": 1.0
+        },
+        "standard": {
+          "accuracy": 0.4895833333333333,
+          "accuracy_ci": {
+            "hi95": 0.6185567010309279,
+            "lo95": 0.3684210526315789,
+            "n_decisions": 96,
+            "n_scenarios": 60,
+            "point": 0.4895833333333333
+          },
+          "brier_mean": 0.5736142185377661,
+          "calibration_n": 96,
+          "cost_basis": [
+            "local_cpu_no_provider_tariff"
+          ],
+          "cost_per_1000_usd": null,
+          "ece": {
+            "bins": [
+              {
+                "accuracy": null,
+                "hi": 0.1,
+                "lo": 0.0,
+                "mean_confidence": null,
+                "n": 0
+              },
+              {
+                "accuracy": null,
+                "hi": 0.2,
+                "lo": 0.1,
+                "mean_confidence": null,
+                "n": 0
+              },
+              {
+                "accuracy": null,
+                "hi": 0.3,
+                "lo": 0.2,
+                "mean_confidence": null,
+                "n": 0
+              },
+              {
+                "accuracy": 0.2727272727272727,
+                "hi": 0.4,
+                "lo": 0.3,
+                "mean_confidence": 0.363307077776302,
+                "n": 11
+              },
+              {
+                "accuracy": 0.2857142857142857,
+                "hi": 0.5,
+                "lo": 0.4,
+                "mean_confidence": 0.4389940819569996,
+                "n": 14
+              },
+              {
+                "accuracy": 0.46875,
+                "hi": 0.6,
+                "lo": 0.5,
+                "mean_confidence": 0.5395110482349992,
+                "n": 32
+              },
+              {
+                "accuracy": 0.5294117647058824,
+                "hi": 0.7,
+                "lo": 0.6,
+                "mean_confidence": 0.6472638950628393,
+                "n": 17
+              },
+              {
+                "accuracy": 0.5,
+                "hi": 0.8,
+                "lo": 0.7,
+                "mean_confidence": 0.7590070540706316,
+                "n": 12
+              },
+              {
+                "accuracy": 1.0,
+                "hi": 0.9,
+                "lo": 0.8,
+                "mean_confidence": 0.8581757502896445,
+                "n": 7
+              },
+              {
+                "accuracy": 1.0,
+                "hi": 1.0,
+                "lo": 0.9,
+                "mean_confidence": 0.9346884588400522,
+                "n": 3
+              }
+            ],
+            "ece": 0.12194712273776533,
+            "n": 96
+          },
+          "first_request_s": 5.622470483183861,
+          "latency_failed_s": {
+            "n": 0,
+            "p50_s": null,
+            "p95_s": null
+          },
+          "latency_max_s": 5.622470483183861,
+          "latency_ok_excl_first_s": {
+            "n": 95,
+            "p50_s": 0.9880294501781464,
+            "p95_s": 1.302870538085699
+          },
+          "latency_ok_s": {
+            "n": 96,
+            "p50_s": 0.988157719373703,
+            "p95_s": 1.3355629947036505
+          },
+          "majority_class_accuracy": 0.16666666666666666,
+          "mean_input_tokens": null,
+          "mean_output_tokens": null,
+          "n_attempted": 96,
+          "n_cost_known": 0,
+          "n_planned": 96,
+          "n_renormalized": 0,
+          "n_scorable": 96,
+          "n_state_truncated": 0,
+          "operational_success": 1.0,
+          "ordinal_mae": 0.8161814389750361,
+          "schema_validity": 1.0,
+          "schema_validity_strict": 1.0
+        }
+      },
+      "underlying": "microsoft/deberta-v3-large"
+    },
+    {
       "author": "DeepSeek",
       "calibration": {
         "brier_standard_judge": 0.02778397179722692,
@@ -2368,7 +2963,7 @@
       "cost": {
         "basis": "public tariff x measured tokens (https://api-docs.deepseek.com/quick_start/pricing (cache-miss off-peak; the run is on a Saturday, off-peak all day))",
         "kind": "measured",
-        "score": 54.91221670259012,
+        "score": 41.18416252694259,
         "usd_per_1000": 0.2252337662337665
       },
       "coverage": {
@@ -2380,7 +2975,7 @@
       "has_distribution": true,
       "key": "deepseek-flash",
       "licence": "open weights, proprietary API route",
-      "main_score": 74.9255845693825,
+      "main_score": 55.69548302909913,
       "note": null,
       "open": "weights",
       "partial": false,
@@ -2388,22 +2983,22 @@
         "verbalized"
       ],
       "rank_under": {
-        "50/25/25": 6,
-        "60/20/20 (headline)": 6,
-        "60/20/20 geometric": 6,
-        "80/10/10": 6,
-        "capability only": 5,
-        "equal thirds": 7
+        "20/20/60 cost emphasis": 9,
+        "20/60/20 speed emphasis": 7,
+        "33/33/33 balanced (headline)": 7,
+        "33/33/33 geometric": 7,
+        "60/20/20 accuracy emphasis": 6,
+        "capability only": 5
       },
       "ranked": true,
       "repo": null,
       "sensitivity": {
-        "50/25/25": 69.43030326373218,
-        "60/20/20 (headline)": 74.9255845693825,
-        "60/20/20 geometric": 67.95359768562179,
-        "80/10/10": 85.91614718068314,
-        "capability only": 96.90670979198377,
-        "equal thirds": 60.2715010876483
+        "20/20/60 cost emphasis": 49.890954828236524,
+        "20/60/20 speed emphasis": 45.01552052480791,
+        "33/33/33 balanced (headline)": 55.69548302909913,
+        "33/33/33 geometric": 48.73099509827341,
+        "60/20/20 accuracy emphasis": 72.17997373425298,
+        "capability only": 96.90670979198377
       },
       "speed": {
         "n": 234,
@@ -2789,443 +3384,6 @@
       "underlying": "DeepSeek-V4.1-Flash"
     },
     {
-      "author": "Kotoba Labs",
-      "calibration": {
-        "brier_standard_judge": 0.6512140520637422,
-        "note": null
-      },
-      "capability": {
-        "n_decisions": 314,
-        "pooled_accuracy": 1.0254777070063694,
-        "score": 67.46099695585997,
-        "tier_accuracy": {
-          "easy": 1.0,
-          "judge": 0.5342465753424658,
-          "standard": 0.4895833333333333
-        }
-      },
-      "class": "jev-rebuild",
-      "cost": {
-        "basis": "ESTIMATE: Hetzner Cloud CX22 (2 vCPU, 4 GB) at $0.0070/h x 1.55 s median per decision, one decision at a time",
-        "kind": "estimate",
-        "score": 100.0,
-        "usd_per_1000": 0.003022215458191931
-      },
-      "coverage": {
-        "easy": 1.0,
-        "judge": 1.0,
-        "standard": 1.0
-      },
-      "display": "open-jev-deberta-v3-large (local CPU)",
-      "has_distribution": true,
-      "key": "open-jev-deberta-v3-large",
-      "licence": "Apache-2.0 (model card); DeBERTa-v3 keeps its own terms",
-      "main_score": 66.61482536155316,
-      "note": null,
-      "open": "yes",
-      "partial": false,
-      "probability_source": [
-        "native"
-      ],
-      "rank_under": {
-        "50/25/25": 7,
-        "60/20/20 (headline)": 7,
-        "60/20/20 geometric": 7,
-        "80/10/10": 7,
-        "capability only": 7,
-        "equal thirds": 6
-      },
-      "ranked": true,
-      "repo": "https://github.com/kotoba-lang/typed-decisions",
-      "sensitivity": {
-        "50/25/25": 66.40328246297646,
-        "60/20/20 (headline)": 66.61482536155316,
-        "60/20/20 geometric": 62.3496823982024,
-        "80/10/10": 67.03791115870658,
-        "capability only": 67.46099695585997,
-        "equal thirds": 66.05071096534863
-      },
-      "speed": {
-        "n": 242,
-        "p50_s": 1.767673410475254,
-        "p95_s": 3.349288306012749,
-        "run": "serial 242-decision standard+judge run",
-        "score": 30.69113594018593,
-        "score_p50": 37.62989853657197,
-        "score_p95": 23.75237334379989
-      },
-      "standard_judge_source": "v1.0 run (items unchanged)",
-      "tiers": {
-        "easy": {
-          "accuracy": 1.0,
-          "accuracy_ci": {
-            "hi95": 1.0,
-            "lo95": 1.0,
-            "n_decisions": 72,
-            "n_scenarios": 72,
-            "point": 1.0
-          },
-          "brier_mean": 0.060070893625594285,
-          "calibration_n": 72,
-          "cost_basis": [
-            "local_cpu_no_provider_tariff"
-          ],
-          "cost_per_1000_usd": null,
-          "ece": {
-            "bins": [
-              {
-                "accuracy": null,
-                "hi": 0.1,
-                "lo": 0.0,
-                "mean_confidence": null,
-                "n": 0
-              },
-              {
-                "accuracy": null,
-                "hi": 0.2,
-                "lo": 0.1,
-                "mean_confidence": null,
-                "n": 0
-              },
-              {
-                "accuracy": null,
-                "hi": 0.3,
-                "lo": 0.2,
-                "mean_confidence": null,
-                "n": 0
-              },
-              {
-                "accuracy": null,
-                "hi": 0.4,
-                "lo": 0.3,
-                "mean_confidence": null,
-                "n": 0
-              },
-              {
-                "accuracy": null,
-                "hi": 0.5,
-                "lo": 0.4,
-                "mean_confidence": null,
-                "n": 0
-              },
-              {
-                "accuracy": 1.0,
-                "hi": 0.6,
-                "lo": 0.5,
-                "mean_confidence": 0.5310026605923971,
-                "n": 3
-              },
-              {
-                "accuracy": 1.0,
-                "hi": 0.7,
-                "lo": 0.6,
-                "mean_confidence": 0.6724341064691544,
-                "n": 8
-              },
-              {
-                "accuracy": 1.0,
-                "hi": 0.8,
-                "lo": 0.7,
-                "mean_confidence": 0.7504676026957375,
-                "n": 14
-              },
-              {
-                "accuracy": 1.0,
-                "hi": 0.9,
-                "lo": 0.8,
-                "mean_confidence": 0.8556724325926216,
-                "n": 27
-              },
-              {
-                "accuracy": 1.0,
-                "hi": 1.0,
-                "lo": 0.9,
-                "mean_confidence": 0.9367572457529605,
-                "n": 20
-              }
-            ],
-            "ece": 0.17614822407873965,
-            "n": 72
-          },
-          "first_request_s": 8.053531378507614,
-          "latency_failed_s": {
-            "n": 0,
-            "p50_s": null,
-            "p95_s": null
-          },
-          "latency_max_s": 8.053531378507614,
-          "latency_ok_excl_first_s": {
-            "n": 71,
-            "p50_s": 1.1074866726994514,
-            "p95_s": 1.417677540332079
-          },
-          "latency_ok_s": {
-            "n": 72,
-            "p50_s": 1.1079005151987076,
-            "p95_s": 1.4251890927553177
-          },
-          "majority_class_accuracy": 0.125,
-          "mean_input_tokens": null,
-          "mean_output_tokens": null,
-          "n_attempted": 72,
-          "n_cost_known": 0,
-          "n_planned": 72,
-          "n_renormalized": 0,
-          "n_scorable": 72,
-          "n_state_truncated": 0,
-          "operational_success": 1.0,
-          "ordinal_mae": null,
-          "schema_validity": 1.0,
-          "schema_validity_strict": 1.0
-        },
-        "judge": {
-          "accuracy": 0.5342465753424658,
-          "accuracy_ci": {
-            "hi95": 0.6164383561643836,
-            "lo95": 0.4589041095890411,
-            "n_decisions": 146,
-            "n_scenarios": 146,
-            "point": 0.5342465753424658
-          },
-          "brier_mean": 0.7022386001356168,
-          "calibration_n": 146,
-          "cost_basis": [
-            "local_cpu_no_provider_tariff"
-          ],
-          "cost_per_1000_usd": null,
-          "ece": {
-            "bins": [
-              {
-                "accuracy": null,
-                "hi": 0.1,
-                "lo": 0.0,
-                "mean_confidence": null,
-                "n": 0
-              },
-              {
-                "accuracy": null,
-                "hi": 0.2,
-                "lo": 0.1,
-                "mean_confidence": null,
-                "n": 0
-              },
-              {
-                "accuracy": null,
-                "hi": 0.3,
-                "lo": 0.2,
-                "mean_confidence": null,
-                "n": 0
-              },
-              {
-                "accuracy": 0.0,
-                "hi": 0.4,
-                "lo": 0.3,
-                "mean_confidence": 0.3776950389146805,
-                "n": 2
-              },
-              {
-                "accuracy": 0.0,
-                "hi": 0.5,
-                "lo": 0.4,
-                "mean_confidence": 0.4665033183991909,
-                "n": 24
-              },
-              {
-                "accuracy": 0.46808510638297873,
-                "hi": 0.6,
-                "lo": 0.5,
-                "mean_confidence": 0.5661645595063555,
-                "n": 47
-              },
-              {
-                "accuracy": 0.8461538461538461,
-                "hi": 0.7,
-                "lo": 0.6,
-                "mean_confidence": 0.6442159521274078,
-                "n": 39
-              },
-              {
-                "accuracy": 0.5454545454545454,
-                "hi": 0.8,
-                "lo": 0.7,
-                "mean_confidence": 0.7588141885670748,
-                "n": 11
-              },
-              {
-                "accuracy": 0.7142857142857143,
-                "hi": 0.9,
-                "lo": 0.8,
-                "mean_confidence": 0.8566364049911499,
-                "n": 21
-              },
-              {
-                "accuracy": 1.0,
-                "hi": 1.0,
-                "lo": 0.9,
-                "mean_confidence": 0.9011107087135315,
-                "n": 2
-              }
-            ],
-            "ece": 0.2052800071566072,
-            "n": 146
-          },
-          "first_request_s": 3.487430118024349,
-          "latency_failed_s": {
-            "n": 0,
-            "p50_s": null,
-            "p95_s": null
-          },
-          "latency_max_s": 3.590568356215954,
-          "latency_ok_excl_first_s": {
-            "n": 145,
-            "p50_s": 2.0872722193598747,
-            "p95_s": 3.3964938983321193
-          },
-          "latency_ok_s": {
-            "n": 146,
-            "p50_s": 2.0961069390177727,
-            "p95_s": 3.414716958999634
-          },
-          "majority_class_accuracy": 0.4178082191780822,
-          "mean_input_tokens": null,
-          "mean_output_tokens": null,
-          "n_attempted": 146,
-          "n_cost_known": 0,
-          "n_planned": 146,
-          "n_renormalized": 0,
-          "n_scorable": 146,
-          "n_state_truncated": 80,
-          "operational_success": 1.0,
-          "ordinal_mae": null,
-          "schema_validity": 1.0,
-          "schema_validity_strict": 1.0
-        },
-        "standard": {
-          "accuracy": 0.4895833333333333,
-          "accuracy_ci": {
-            "hi95": 0.6185567010309279,
-            "lo95": 0.3684210526315789,
-            "n_decisions": 96,
-            "n_scenarios": 60,
-            "point": 0.4895833333333333
-          },
-          "brier_mean": 0.5736142185377661,
-          "calibration_n": 96,
-          "cost_basis": [
-            "local_cpu_no_provider_tariff"
-          ],
-          "cost_per_1000_usd": null,
-          "ece": {
-            "bins": [
-              {
-                "accuracy": null,
-                "hi": 0.1,
-                "lo": 0.0,
-                "mean_confidence": null,
-                "n": 0
-              },
-              {
-                "accuracy": null,
-                "hi": 0.2,
-                "lo": 0.1,
-                "mean_confidence": null,
-                "n": 0
-              },
-              {
-                "accuracy": null,
-                "hi": 0.3,
-                "lo": 0.2,
-                "mean_confidence": null,
-                "n": 0
-              },
-              {
-                "accuracy": 0.2727272727272727,
-                "hi": 0.4,
-                "lo": 0.3,
-                "mean_confidence": 0.363307077776302,
-                "n": 11
-              },
-              {
-                "accuracy": 0.2857142857142857,
-                "hi": 0.5,
-                "lo": 0.4,
-                "mean_confidence": 0.4389940819569996,
-                "n": 14
-              },
-              {
-                "accuracy": 0.46875,
-                "hi": 0.6,
-                "lo": 0.5,
-                "mean_confidence": 0.5395110482349992,
-                "n": 32
-              },
-              {
-                "accuracy": 0.5294117647058824,
-                "hi": 0.7,
-                "lo": 0.6,
-                "mean_confidence": 0.6472638950628393,
-                "n": 17
-              },
-              {
-                "accuracy": 0.5,
-                "hi": 0.8,
-                "lo": 0.7,
-                "mean_confidence": 0.7590070540706316,
-                "n": 12
-              },
-              {
-                "accuracy": 1.0,
-                "hi": 0.9,
-                "lo": 0.8,
-                "mean_confidence": 0.8581757502896445,
-                "n": 7
-              },
-              {
-                "accuracy": 1.0,
-                "hi": 1.0,
-                "lo": 0.9,
-                "mean_confidence": 0.9346884588400522,
-                "n": 3
-              }
-            ],
-            "ece": 0.12194712273776533,
-            "n": 96
-          },
-          "first_request_s": 5.622470483183861,
-          "latency_failed_s": {
-            "n": 0,
-            "p50_s": null,
-            "p95_s": null
-          },
-          "latency_max_s": 5.622470483183861,
-          "latency_ok_excl_first_s": {
-            "n": 95,
-            "p50_s": 0.9880294501781464,
-            "p95_s": 1.302870538085699
-          },
-          "latency_ok_s": {
-            "n": 96,
-            "p50_s": 0.988157719373703,
-            "p95_s": 1.3355629947036505
-          },
-          "majority_class_accuracy": 0.16666666666666666,
-          "mean_input_tokens": null,
-          "mean_output_tokens": null,
-          "n_attempted": 96,
-          "n_cost_known": 0,
-          "n_planned": 96,
-          "n_renormalized": 0,
-          "n_scorable": 96,
-          "n_state_truncated": 0,
-          "operational_success": 1.0,
-          "ordinal_mae": 0.8161814389750361,
-          "schema_validity": 1.0,
-          "schema_validity_strict": 1.0
-        }
-      },
-      "underlying": "microsoft/deberta-v3-large"
-    },
-    {
       "author": "Cactus Compute",
       "calibration": {
         "brier_standard_judge": null,
@@ -3243,10 +3401,10 @@
       },
       "class": "small-tool-model",
       "cost": {
-        "basis": "ESTIMATE: Hetzner Cloud CX22 (2 vCPU, 4 GB) at $0.0070/h x 3.12 s median per decision, one decision at a time",
+        "basis": "ESTIMATE: hosted-provider price, openrouter meta-llama/llama-3.2-1b-instruct list price $0.027/M in, $0.201/M out (as needle-3) x 452 input and 20 output tokens per decision (input tokens counted from the gemini-3.1-flash-lite run, same prompts)",
         "kind": "estimate",
-        "score": 100.0,
-        "usd_per_1000": 0.0060747001737356185
+        "score": 69.74903855377026,
+        "usd_per_1000": 0.016219537190082647
       },
       "coverage": {
         "easy": 1.0,
@@ -3257,7 +3415,7 @@
       "has_distribution": false,
       "key": "needle-3-tools",
       "licence": "Apache-2.0 (model and package)",
-      "main_score": 48.54582095433483,
+      "main_score": 41.45643843978537,
       "note": "Choice questions: every option is offered as its own tool and the called tool is the answer. Added after the frozen easy-tier run; reported beside the frozen mode, never instead of it.",
       "open": "yes",
       "partial": false,
@@ -3265,22 +3423,22 @@
         "label_only_no_calibrated_distribution"
       ],
       "rank_under": {
-        "50/25/25": 8,
-        "60/20/20 (headline)": 8,
-        "60/20/20 geometric": 8,
-        "80/10/10": 8,
-        "capability only": 8,
-        "equal thirds": 8
+        "20/20/60 cost emphasis": 7,
+        "20/60/20 speed emphasis": 9,
+        "33/33/33 balanced (headline)": 8,
+        "33/33/33 geometric": 9,
+        "60/20/20 accuracy emphasis": 8,
+        "capability only": 8
       },
       "ranked": true,
       "repo": "https://github.com/cactus-compute/needle",
       "sensitivity": {
-        "50/25/25": 49.6686726921575,
-        "60/20/20 (headline)": 48.54582095433483,
-        "60/20/20 geometric": 39.00988323306194,
-        "80/10/10": 46.30011747868949,
-        "capability only": 44.05441400304414,
-        "equal thirds": 51.54009225519528
+        "20/20/60 cost emphasis": 52.77347848537933,
+        "20/60/20 speed emphasis": 29.100208168887917,
+        "33/33/33 balanced (headline)": 41.45643843978537,
+        "33/33/33 geometric": 31.90148305345115,
+        "60/20/20 accuracy emphasis": 42.49562866508888,
+        "capability only": 44.05441400304414
       },
       "speed": {
         "n": 242,
@@ -3455,10 +3613,10 @@
       },
       "class": "small-tool-model",
       "cost": {
-        "basis": "ESTIMATE: Hetzner Cloud CX22 (2 vCPU, 4 GB) at $0.0070/h x 1.67 s median per decision, one decision at a time",
+        "basis": "ESTIMATE: hosted-provider price, openrouter meta-llama/llama-3.2-1b-instruct list price $0.027/M in, $0.201/M out (no generative model under 1B is listed; the smallest listed one (1B) errs high; about 20 generated tokens for one tool call) x 452 input and 20 output tokens per decision (input tokens counted from the gemini-3.1-flash-lite run, same prompts)",
         "kind": "estimate",
-        "score": 100.0,
-        "usd_per_1000": 0.003248993516899645
+        "score": 69.74903855377026,
+        "usd_per_1000": 0.016219537190082647
       },
       "coverage": {
         "easy": 1.0,
@@ -3469,7 +3627,7 @@
       "has_distribution": false,
       "key": "needle-3",
       "licence": "Apache-2.0 (model and package)",
-      "main_score": 42.943494659901745,
+      "main_score": 40.28978435021358,
       "note": "Label-only: one tool call per decision, boolean for yes/no, enum for choices, integer enum for levels. No calibrated distribution, so no Brier/ECE.",
       "open": "yes",
       "partial": false,
@@ -3477,22 +3635,22 @@
         "label_only_no_calibrated_distribution"
       ],
       "rank_under": {
-        "50/25/25": 9,
-        "60/20/20 (headline)": 9,
-        "60/20/20 geometric": 9,
-        "80/10/10": 9,
-        "capability only": 9,
-        "equal thirds": 9
+        "20/20/60 cost emphasis": 8,
+        "20/60/20 speed emphasis": 8,
+        "33/33/33 balanced (headline)": 9,
+        "33/33/33 geometric": 8,
+        "60/20/20 accuracy emphasis": 9,
+        "capability only": 9
       },
       "ranked": true,
       "repo": "https://github.com/cactus-compute/needle",
       "sensitivity": {
-        "50/25/25": 45.7297234745474,
-        "60/20/20 (headline)": 42.943494659901745,
-        "60/20/20 geometric": 36.195439611895,
-        "80/10/10": 37.37103703061043,
-        "capability only": 31.79857940131912,
-        "equal thirds": 50.37343816562348
+        "20/20/60 cost emphasis": 52.07348603163625,
+        "20/60/20 speed emphasis": 31.902564648348694,
+        "33/33/33 balanced (headline)": 40.28978435021358,
+        "33/33/33 geometric": 34.994303640147365,
+        "60/20/20 accuracy emphasis": 36.893302370655796,
+        "capability only": 31.79857940131912
       },
       "speed": {
         "n": 242,
@@ -3667,9 +3825,9 @@
       },
       "class": "llm-baseline",
       "cost": {
-        "basis": "ESTIMATE: qwen/qwen3.8-27b list price $0.214/M in, $2.55/M out (same weights; our run used a flat-rate Chutes subscription) x 445 input and 393 output tokens per decision",
+        "basis": "ESTIMATE: hosted-provider price, openrouter qwen/qwen3.8-27b list price $0.214/M in, $2.55/M out (same weights; our run used a flat-rate Chutes subscription) x 445 input and 393 output tokens per decision",
         "kind": "estimate",
-        "score": 32.00187780374242,
+        "score": 24.001408352806813,
         "usd_per_1000": 1.096335976699029
       },
       "coverage": {
@@ -3681,7 +3839,7 @@
       "has_distribution": true,
       "key": "qwen3.8-27b",
       "licence": "open weights",
-      "main_score": 66.16956870564354,
+      "main_score": 42.5391169156217,
       "note": null,
       "open": "weights",
       "partial": true,
@@ -3691,12 +3849,12 @@
       "ranked": false,
       "repo": null,
       "sensitivity": {
-        "50/25/25": 58.3082079657523,
-        "60/20/20 (headline)": 66.16956870564354,
-        "60/20/20 geometric": 44.70836434854381,
-        "80/10/10": 81.89229018542602,
-        "capability only": 97.61501166520851,
-        "equal thirds": 45.20594006593356
+        "20/20/60 cost emphasis": 35.12403349049574,
+        "20/60/20 speed emphasis": 27.92384244091292,
+        "33/33/33 balanced (headline)": 42.5391169156217,
+        "33/33/33 geometric": 24.135556486834794,
+        "60/20/20 accuracy emphasis": 64.56947481545643,
+        "capability only": 97.61501166520851
       },
       "speed": {
         "n": 218,
@@ -4096,10 +4254,10 @@
       },
       "class": "jev-rebuild",
       "cost": {
-        "basis": "no tariff and no reference deployment we could state honestly",
-        "kind": "unknown",
-        "score": null,
-        "usd_per_1000": null
+        "basis": "ESTIMATE: hosted-provider price, deepinfra Qwen/Qwen3.5-4B list price $0.03/M in, $0.15/M out (same weights (not on OpenRouter); one forward pass, nothing generated) x 452 input and 1 output tokens per decision (input tokens counted from the gemini-3.1-flash-lite run, same prompts)",
+        "kind": "estimate",
+        "score": 71.57799126683713,
+        "usd_per_1000": 0.013705041322314052
       },
       "coverage": {
         "easy": 0.0,
@@ -4120,12 +4278,12 @@
       "ranked": false,
       "repo": "https://github.com/ikermoel/open-alternative-jev",
       "sensitivity": {
-        "50/25/25": null,
-        "60/20/20 (headline)": null,
-        "60/20/20 geometric": null,
-        "80/10/10": null,
-        "capability only": null,
-        "equal thirds": null
+        "20/20/60 cost emphasis": null,
+        "20/60/20 speed emphasis": null,
+        "33/33/33 balanced (headline)": null,
+        "33/33/33 geometric": null,
+        "60/20/20 accuracy emphasis": null,
+        "capability only": null
       },
       "speed": {
         "n": 5,
@@ -4280,8 +4438,8 @@
     "standard": 96
   },
   "weights": {
-    "capability": 0.6,
-    "cost": 0.2,
-    "speed": 0.2
+    "capability": 0.3333333333333333,
+    "cost": 0.3333333333333333,
+    "speed": 0.3333333333333333
   }
 }

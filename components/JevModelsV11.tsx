@@ -1,13 +1,13 @@
 "use client";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import type { JevTier, JevV11Row, JevV11View } from "../lib/jevbench-v11.mjs";
-import { DEFAULT_WEIGHTS, PRESETS, SCORE_NAME, describe, isDefault, normalise, parseParams, percents, rerank, sameWeights, toParam, type JevWeights } from "../lib/jevbench-weights.mjs";
+import { DEFAULT_PRESET, DEFAULT_WEIGHTS, PRESETS, SCORE_NAME, describe, isDefault, normalise, parseParams, percents, ratioText, rerank, sameWeights, toParam, type JevWeights } from "../lib/jevbench-weights.mjs";
 
 // CR-86 (Florian 2026-09-19): one JevBench Main Score = 0.6 × Capability + 0.2 × Speed + 0.2 × Cost, the sub-scores and
 // tiers beside it, all sortable (nulls last both ways); partial runs below, greyed, unranked. Every value is the artifact's.
 // CR-87 (Florian 2026-09-19): the Main Composite Score is the hero — the launch chart (bars coloured by system type) rendered
 // natively, four named weight presets + custom sliders that re-score and re-rank live in the browser, an unmissable
-// "not the default" state whenever the weights differ from the official 60:20:20, a shareable ?w= URL, and every
+// "not the default" state whenever the weights differ from the official Balanced 33:33:33 (v1.1.2; 60:20:20 before), a shareable ?w= URL, and every
 // project linked. The official numbers never change; other weights are recomputed from the published sub-scores.
 const TIER_ORDER: JevTier[] = ["easy", "standard", "judge"];
 const TIER_LABEL: Record<JevTier, string> = { easy: "Easy", standard: "Standard", judge: "Judge" };
@@ -31,9 +31,12 @@ const typeVar = (cls: string) => ({ ["--jev-t" as string]: `var(${(TYPE[cls] ?? 
 // Chart labels: the short name, plus the one qualifier the launch chart kept (the GPT effort level, the adapter mode).
 const chartName = (r: JevV11Row) => r.key === "gpt-5.6-luna" ? "GPT-5.6 Luna (low)" : r.key.endsWith("-tools") ? "Needle 3, options as tools" : short(r.display);
 
+/** $ per 1,000 decisions: four decimals below one cent so e.g. $0.0045 and $0.0092 stay distinguishable. */
+export const usdText = (x: number) => `$${x.toFixed(x < 0.01 ? 4 : 3)}`;
+
 export function CostValue({ r }: { r: JevV11Row }) {
   if (r.costKind === "unknown" || r.usd === null) return <span className="bh-muted" title={r.costBasis}>no tariff</span>;
-  const v = `$${r.usd.toFixed(3)}`;
+  const v = usdText(r.usd);
   return r.costKind === "estimate"
     ? <span title={r.costBasis} data-bh-jev11-cost-kind="estimate">~{v} <span className="bh-thin-tag">est.</span></span>
     : <span title={r.costBasis} data-bh-jev11-cost-kind="measured">{v}</span>;
@@ -61,10 +64,11 @@ function Controls({ w, raw, setPreset, setRaw, reset, view }: { w: JevWeights; r
       {d.official
         ? <span className="bh-jevc-official" data-bh-jevc-badge="official">Official default</span>
         : <span className="flex flex-wrap items-center gap-2"><span className="bh-jevc-notdefault" role="status" data-bh-jevc-badge="not-default">⚠ Not the default weighting</span>
-            <button type="button" className="bh-button min-h-9 text-sm font-semibold" onClick={reset} data-bh-jevc-reset>Reset to default (60:20:20)</button></span>}
+            <button type="button" className="bh-button min-h-9 text-sm font-semibold" onClick={reset} data-bh-jevc-reset>Reset to default (33:33:33)</button></span>}
     </div>
     <div className="mt-3 grid grid-cols-2 gap-2 lg:grid-cols-5" role="group" aria-label="Weighting presets">
-      {PRESETS.map((p) => <button key={p.id} type="button" className="bh-jevc-preset" aria-pressed={sameWeights(p.w, w)} onClick={() => setPreset(p.w)} data-bh-jevc-preset={p.id}>
+      {PRESETS.map((p) => <button key={p.id} type="button" className="bh-jevc-preset" aria-pressed={sameWeights(p.w, w)} aria-label={p.title} onClick={() => setPreset(p.w)} data-bh-jevc-preset={p.id}>
+        <span className="bh-muted block text-[11px] leading-tight">{p.label}</span>
         <span className="block text-[13px] font-semibold">{p.name}</span>
         <span className="bh-muted block text-[12px] tabular">{p.ratio}{p === PRESETS[0] ? " · default, official" : ""}</span></button>)}
       <details className="bh-jevc-preset col-span-2 lg:col-span-1" open={d.preset === null ? true : undefined} data-bh-jevc-custom-panel>
@@ -80,7 +84,7 @@ function Controls({ w, raw, setPreset, setRaw, reset, view }: { w: JevWeights; r
       </details>
     </div>
     <p className="bh-muted mt-3 text-[13px]" data-bh-jevc-note>
-      The official {SCORE_NAME} uses <b className="text-gray-200">{Math.round(view.weights.capability * 100)} % Capability, {Math.round(view.weights.speed * 100)} % Speed, {Math.round(view.weights.cost * 100)} % Cost</b> (Emphasis on Accuracy).
+      The official {SCORE_NAME} uses <b className="text-gray-200">{Math.round(view.weights.capability * 100)} % Capability, {Math.round(view.weights.speed * 100)} % Speed, {Math.round(view.weights.cost * 100)} % Cost</b> (Balanced — the Main Score since JevBench v1.1.2; the earlier default 60:20:20 is the preset &ldquo;Emphasis on Accuracy&rdquo;).
       Any other weighting is your view, recomputed in your browser from the published sub-scores — not the published score.{" "}
       {!d.official && <button type="button" className="text-accent underline" onClick={copy} data-bh-jevc-copy>{copied ? "Link copied" : "Copy a link to this weighting"}</button>}
     </p>
@@ -101,15 +105,15 @@ function ScoreChart({ rows, partial, w, view }: { rows: Row[]; partial: Row[]; w
         ? <><span className="bh-jevc-official">Official</span><span className="bh-muted">The published ranking. <a href="#jevc-weights" className="text-accent underline">Change the weighting ↓</a></span></>
         : <><span className="bh-jevc-notdefault">⚠ Not the default weighting</span><span className="bh-muted">Ranks and scores below are recomputed with {d.ratio}; ▲▼ = change vs. the official ranking. <a href="#jevc-weights" className="text-accent underline">Weighting ↓</a></span></>}
     </p>
-    <div className="mt-4 hidden grid-cols-[1.6rem_13.5rem_1fr_3.2rem_13.5rem] gap-x-2 text-[11px] sm:grid" aria-hidden="true">
+    <div className="mt-4 hidden grid-cols-[1.6rem_13.5rem_1fr_3.2rem_18.5rem] gap-x-2 text-[11px] sm:grid" aria-hidden="true">
       <span /><span /><span /><span />
-      <span className="bh-muted grid grid-cols-[1fr_1fr_1.7fr] text-right font-mono"><span>Capab.</span><span>Speed</span><span className="pr-[2.4em]">Cost</span></span>
+      <span className="bh-muted grid grid-cols-[1fr_1fr_1.7fr_1.9fr] text-right font-mono"><span>Capab.</span><span>Speed</span><span className="pr-[2.4em]">Cost</span><span>$/1k dec.</span></span>
     </div>
     <ol className="mt-2 space-y-2.5 sm:mt-1" data-bh-jevc-bars>
       {all.map((r) => {
         const s = r.score;
         const label = s === null ? `${r.display}: not scored (partial run)` : `${r.display}: ${one(s)}${r.rank ? `, rank ${r.rank}` : ", partial run, not ranked"}. Capability ${one(r.capability)}, speed ${one(r.speed)}, cost ${one(r.cost)}${r.costKind === "estimate" ? " (estimated)" : ""}.`;
-        return <li key={r.key} style={typeVar(r.cls)} className="grid grid-cols-[1.4rem_1fr_2.9rem] items-center gap-x-2 text-sm sm:grid-cols-[1.6rem_13.5rem_1fr_3.2rem_13.5rem]"
+        return <li key={r.key} style={typeVar(r.cls)} className="grid grid-cols-[1.4rem_1fr_2.9rem] items-center gap-x-2 text-sm sm:grid-cols-[1.6rem_13.5rem_1fr_3.2rem_18.5rem]"
           data-bh-jev11-bar={r.key} data-bh-jevc-score={s === null ? "" : s.toFixed(3)} aria-label={label}>
           <span className="bh-muted tabular col-start-1 row-start-1 text-right text-xs" data-bh-jevc-rank={r.rank ?? ""}>{r.rank ?? ""}</span>
           <span className="col-start-2 row-start-1 min-w-0 truncate sm:col-start-2 sm:text-right" title={r.display}>
@@ -119,26 +123,27 @@ function ScoreChart({ rows, partial, w, view }: { rows: Row[]; partial: Row[]; w
             {s !== null && <span className={`bh-jevc-bar ${r.ranked ? "" : "is-partial"}`} style={{ width: `${Math.max(0, Math.min(100, s))}%` }} />}
           </span>
           <b className="tabular col-start-3 row-span-2 row-start-1 self-center text-right text-base sm:col-start-4 sm:row-span-1 sm:text-lg" data-bh-jev11-main={s === null ? "" : s.toFixed(3)}>{s === null ? <span className="bh-muted text-xs font-normal">n/a</span> : one(s)}</b>
-          <span className="bh-muted col-start-2 row-start-3 mt-0.5 whitespace-nowrap font-mono text-[10.5px] sm:col-start-5 sm:row-start-1 sm:mt-0 sm:grid sm:grid-cols-[1fr_1fr_1.7fr] sm:text-right sm:text-[12px]" data-bh-jevc-subs>
+          <span className="bh-muted col-start-2 row-start-3 mt-0.5 whitespace-nowrap font-mono text-[10.5px] sm:col-start-5 sm:row-start-1 sm:mt-0 sm:grid sm:grid-cols-[1fr_1fr_1.7fr_1.9fr] sm:text-right sm:text-[12px]" data-bh-jevc-subs>
             <span className="sm:hidden">Cap </span><span>{one(r.capability)}</span><span className="sm:hidden"> · Speed </span><span>{one(r.speed)}</span><span className="sm:hidden"> · Cost </span>
             <span>{one(r.cost)}<span className="inline-block sm:w-[2.4em] sm:text-left" title={r.costBasis}>{r.costKind === "estimate" ? "\u00a0est." : ""}</span></span>
+            <br className="sm:hidden" /><span title={r.costBasis} data-bh-jevc-usd>{r.usd === null ? "no tariff" : `${r.costKind === "estimate" ? "~" : ""}${usdText(r.usd)}`}<span className="sm:hidden"> per 1,000 decisions</span></span>
           </span>
         </li>;
       })}
     </ol>
-    <div className="mt-2 hidden grid-cols-[1.6rem_13.5rem_1fr_3.2rem_13.5rem] gap-x-2 text-[11px] sm:grid" aria-hidden="true">
+    <div className="mt-2 hidden grid-cols-[1.6rem_13.5rem_1fr_3.2rem_18.5rem] gap-x-2 text-[11px] sm:grid" aria-hidden="true">
       <span /><span /><span className="bh-muted flex justify-between tabular"><span>0</span><span>20</span><span>40</span><span>60</span><span>80</span><span>100</span></span>
     </div>
     <p className="mt-3 text-center text-[13px] sm:text-sm" data-bh-jevc-formula>
-      Score = <b>{(eff.capability / 100).toFixed(2)}</b> × Capability + <b>{(eff.speed / 100).toFixed(2)}</b> × Speed + <b>{(eff.cost / 100).toFixed(2)}</b> × Cost <span className="bh-muted">(each 0–100)</span>
-      {!d.official && <span className="bh-muted block text-[12px]">Official: {view.weights.capability} × Capability + {view.weights.speed} × Speed + {view.weights.cost} × Cost</span>}
+      Score = <b>{w.capability.toFixed(2)}</b> × Capability + <b>{w.speed.toFixed(2)}</b> × Speed + <b>{w.cost.toFixed(2)}</b> × Cost <span className="bh-muted">(each 0–100)</span>
+      {!d.official && <span className="bh-muted block text-[12px]">Official ({DEFAULT_PRESET.name} {DEFAULT_PRESET.ratio}): {ratioText(view.weights) === "33:33:33" ? "(Capability + Speed + Cost) / 3" : `${view.weights.capability} × Capability + ${view.weights.speed} × Speed + ${view.weights.cost} × Cost`}</span>}
     </p>
     <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px]" aria-label="Legend" data-bh-jevc-legend>
       {types.map((t) => <li key={t} style={typeVar(t)}><span className="bh-jevc-swatch mr-1.5" />{TYPE[t].label}</li>)}
       {partial.length > 0 && <li><span className="bh-jevc-swatch is-partial mr-1.5" />Partial run — shown, not ranked</li>}
     </ul>
     <figcaption className="bh-muted mt-3 space-y-1 text-[11.5px] leading-snug" data-bh-jevc-footnotes>
-      <span className="block">{view.decisions} typed decisions per system ({view.tierCounts.easy} easy / {view.tierCounts.standard} standard / {view.tierCounts.judge} judge). est. = cost estimated from a stated reference deployment (no tariff for us). Names link to each project.</span>
+      <span className="block">{view.decisions} typed decisions per system ({view.tierCounts.easy} easy / {view.tierCounts.standard} standard / {view.tierCounts.judge} judge). est. = no tariff for us, so priced like a large inference provider hosting a model of that size (<a href="#jev-costs" className="text-accent underline">how costs are estimated</a>). Names link to each project.</span>
       {all.filter((r) => star(r)).map((r) => <span key={r.key} className="block">* {chartName(r)}: {r.note}</span>)}
     </figcaption>
   </figure>;
@@ -188,9 +193,9 @@ function Table({ view, rows, partialRows, w }: { view: JevV11View; rows: Row[]; 
           <th scope="col"><span className="sr-only">Rank</span>#</th>
           <th scope="col" className="bh-jev-sticky">System</th>
           {d.official
-            ? <H c="main" label="Main Composite Score" sub="official · 60:20:20" hero />
+            ? <H c="main" label="Main Composite Score" sub="official · Balanced 33:33:33" hero />
             : <H c="main" label={d.preset ? d.short : `Custom ${d.ratio}`} sub={d.preset ? `${d.ratio} · not the official score` : "not the official score"} hero />}
-          <H c="capability" label="Capability" sub={`× ${(eff.capability / 100).toFixed(2)}`} /><H c="speed" label="Speed" sub={`× ${(eff.speed / 100).toFixed(2)}`} /><H c="cost" label="Cost" sub={`× ${(eff.cost / 100).toFixed(2)}`} />
+          <H c="capability" label="Capability" sub={`× ${w.capability.toFixed(2)}`} /><H c="speed" label="Speed" sub={`× ${w.speed.toFixed(2)}`} /><H c="cost" label="Cost" sub={`× ${w.cost.toFixed(2)}`} />
           {TIER_ORDER.map((t) => <H key={t} c={t} label={TIER_LABEL[t]} sub={`${view.tierCounts[t]} decisions`} />)}
           <H c="p50" label="Latency" sub="p50 · p95" /><H c="usd" label="$ per 1,000" sub="decisions" /><H c="brier" label="Calibration" sub="Brier (not scored)" />
         </tr></thead>
@@ -248,12 +253,12 @@ export function JevModelsV11Board({ view, children }: { view: JevV11View; childr
     <Table view={view} rows={ranked} partialRows={partial} w={w} />
     <section className="bh-panel mt-8 max-w-4xl p-4 text-sm" aria-labelledby="jev11-how" data-bh-jev11-formula>
       <h2 id="jev11-how" className="font-semibold">How the Main Composite Score works</h2>
-      <p className="mt-2 text-base"><b>Main = {view.weights.capability} × Capability + {view.weights.speed} × Speed + {view.weights.cost} × Cost</b>, each on 0–100 (the official default, &ldquo;Emphasis on Accuracy&rdquo;).</p>
+      <p className="mt-2 text-base"><b>Main = (Capability + Speed + Cost) / 3</b>, each on 0–100 (the official default, &ldquo;Balanced 33:33:33&rdquo;, since JevBench v1.1.2; until v1.1.1 it was 0.6 × Capability + 0.2 × Speed + 0.2 × Cost, now the preset &ldquo;Emphasis on Accuracy&rdquo;).</p>
       {/* PAGE-COPY-v1.1's one-line normalisations; the artifact's full scoring rules sit in the disclosure below. */}
       <ul className="bh-muted mt-3 space-y-1.5">
         <li><b className="text-gray-200">Capability</b> — accuracy in three tiers (easy {view.tierCounts.easy}, standard {view.tierCounts.standard}, judge {view.tierCounts.judge}), averaged so no tier dominates.</li>
         <li><b className="text-gray-200">Speed</b> — median and 95th-percentile latency, one request at a time: 0.1 s scores 100, 1 s scores 50, 10 s scores 0.</li>
-        <li><b className="text-gray-200">Cost</b> — dollars per 1,000 decisions; self- and author-hosted models use a stated reference deployment, marked &ldquo;est.&rdquo;: $0.01 scores 100, $1 scores 33, $10 scores 0.</li>
+        <li><b className="text-gray-200">Cost</b> — dollars per 1,000 decisions; models without a tariff are priced at hosted-provider prices for the same weights or size class, marked &ldquo;est.&rdquo; (<a href="#jev-costs" className="text-accent underline">how</a>): log scale, $0.001 scores 100, $0.01 scores 75, $0.10 scores 50, $1 scores 25, $10 scores 0, so every real price difference shows.</li>
         <li><b className="text-gray-200">Calibration</b> is shown, not scored — some systems return only a label.</li>
       </ul>
       <details className="mt-3"><summary className="cursor-pointer text-accent">Full scoring rules</summary>
