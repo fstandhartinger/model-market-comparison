@@ -94,7 +94,7 @@ function Row({ r, view, open, toggle, partial }: { r: JevRow; view: JevView; ope
         <button type="button" className="flex min-h-11 w-full items-start gap-2 text-left" aria-expanded={open} aria-controls={id} onClick={toggle}>
           <span aria-hidden="true" className={`bh-row-chevron mt-1 inline-block transition-transform ${open ? "rotate-90" : ""}`}>›</span>
           <span className="min-w-0"><span className="bh-muted block text-[11px] leading-tight">{r.author}</span><span className="block font-semibold leading-snug">{short(r.display)}</span>
-            {r.display !== short(r.display) && <span className="bh-muted block text-[11px] leading-tight">{r.display.slice(short(r.display).length + 2, -1)}</span>}
+            {r.display !== short(r.display) && r.display.slice(short(r.display).length + 2, -1) !== r.author && <span className="bh-muted block text-[11px] leading-tight">{r.display.slice(short(r.display).length + 2, -1)}</span>}
             {partial && <span className="bh-thin-tag mt-1 inline-block">stopped early · {r.nAttempted}/{r.nPlanned}</span>}</span>
         </button>
       </th>
@@ -144,7 +144,7 @@ function Table({ view }: { view: JevView }) {
         </tr></thead>
         <tbody>
           {rows.map((r) => <Row key={r.key} r={r} view={view} open={open.has(r.key)} toggle={() => toggle(r.key)} />)}
-          {view.partial.length > 0 && <tr><td colSpan={8} className="bh-muted text-[12px]">Stopped early — shown with its own denominator, not ranked against complete runs:</td></tr>}
+          {view.partial.length > 0 && <tr><td colSpan={8} className="bh-muted text-[12px]"><span className="sticky left-3 inline-block max-w-[330px] whitespace-normal">Stopped early — shown with its own denominator, not ranked against complete runs:</span></td></tr>}
           {view.partial.map((r) => <Row key={r.key} r={r} view={view} open={open.has(r.key)} toggle={() => toggle(r.key)} partial />)}
         </tbody>
       </table>
