@@ -86,7 +86,10 @@ test('Jev page pass-24 rules: no stretched presets, wrapping I/C/S/K line on pho
 
 test('Jev pass-24 follow-up: the chart keeps one short visible note and moves details into a legend', async () => {
   const cmp = await readFile(new URL('../components/JevModelsV12.tsx', import.meta.url), 'utf8');
-  assert.match(cmp, /data-bh-jev12-oneliner/, 'F-134: the visible chart note has a stable selector');
+  assert.match(cmp, /data-bh-jev12-legend-line>I, C, S, K/, 'F-134: the visible chart note has its own selector');
+  assert.match(cmp, /<details className="mt-2" data-bh-jev12-legend>/, 'F-134: the legend disclosure has its own selector');
+  assert.equal((cmp.match(/data-bh-jev12-oneliner/g) || []).length, 1, 'review 20260919T165003Z: the score one-liner selector is unique');
+  assert.equal((cmp.match(/data-bh-jev12-notes/g) || []).length, 1, 'review 20260919T165003Z: the table notes selector is unique');
   assert.match(cmp, /Legend and notes/, 'F-134: secondary notes are collapsed');
   assert.match(cmp, /data-bh-jev12-label-note/, 'F-134: the label-only note is retained in the legend');
   assert.match(cmp, /data-bh-jev12-footnote=\{r\.key\}/, 'F-134: every system footnote remains addressable');

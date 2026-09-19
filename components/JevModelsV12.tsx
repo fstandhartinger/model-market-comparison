@@ -145,8 +145,8 @@ function ScoreChart({ rows, partial, w, view }: { rows: Row[]; partial: Row[]; w
     </ul>
     <figcaption className="bh-muted mt-3 space-y-1 text-[11.5px] leading-snug" data-bh-jevc-footnotes>
       <SpeedNote view={view} className="text-[11.5px]" />
-      <span className="block" data-bh-jev12-oneliner>I, C, S, K = Intelligence, Calibration, Speed, Cost; ~ est. = priced like a large inference provider (<a href="#jev-costs" className="text-accent underline">how costs are estimated</a>); † = see note.</span>
-      <details className="mt-2" data-bh-jev12-notes>
+      <span className="block" data-bh-jev12-legend-line>I, C, S, K = Intelligence, Calibration, Speed, Cost; ~ est. = priced like a large inference provider (<a href="#jev-costs" className="text-accent underline">how costs are estimated</a>); † = see note.</span>
+      <details className="mt-2" data-bh-jev12-legend>
         <summary className="cursor-pointer text-accent">Legend and notes</summary>
         <ul className="mt-2 space-y-1">
           <li>Names link to each project.</li>
