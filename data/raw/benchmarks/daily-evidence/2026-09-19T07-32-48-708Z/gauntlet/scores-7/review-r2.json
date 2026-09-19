@@ -1,0 +1,32 @@
+{
+  "artifact_id": "scores-7",
+  "artifact_sha256": "21b4354a7dfec7b852167d344e237deba2df9f7c6c8ac9b3e1870f8f18bf7b97",
+  "round": 2,
+  "verdict": "pass",
+  "coverage_checked": ["vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail","vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline","vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom","c1"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "minor",
+      "location": "All 3 rows, protocol field (vendor:.../retail, /airline, /telecom)",
+      "evidence": "Protocol states 'output length 32,768 tokens (81,920 for highly challenging tasks)'. Source footnote: '\\& For highly challenging tasks (including PolyMATH and all reasoning and coding tasks), we use an output length of 81,920 tokens. For all other tasks, we set the output length to 32,768.' TAU2 rows fall under Agent tasks, which are not in the 81,920-token category, so the parenthetical does not apply to these rows and slightly overstates the source.",
+      "repair": "Reword protocol to 'output length 32,768 tokens' (or cite the footnote's actual scope of 81,920 as reasoning/coding/PolyMATH only) for these three rows."
+    },
+    {
+      "id": "f2",
+      "severity": "minor",
+      "location": "All 3 rows, protocol field (temperature/TopP/TopK/MinP)",
+      "evidence": "Protocol presents 'temperature 0.6, TopP 0.95, TopK 20, MinP 0' as part of the evaluation protocol. The source lists these under 'Best Practices' as suggested sampling parameters ('We suggest using Temperature=0.6...'), not explicitly as the settings used for the TAU2 evaluations in the Performance table.",
+      "repair": "Qualify these values as vendor-recommended sampling parameters rather than confirmed TAU2 evaluation settings, or drop them if the protocol field is limited to explicitly published evaluation settings for this benchmark."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Values, units, locators, model/checkpoint identity, sha256 of evidence file, and self_reported basis were verified by exact comparison against the supplied README content; the owner separately executes hash and transport checks, which I cannot run myself.",
+    "The source does not state the tau2-bench version explicitly beyond the 'TAU2-' row labels; the benchmark_id 'tau2-bench::2' is a consistent transcription of those labels, treated as specified mapping.",
+    "Row sha256 bindings are taken as owner-computed; not recomputable here.",
+    "published_at is null because the source page carries no explicit publication date; retrieved_at (2026-09-19) serves as the source date."
+  ],
+  "missing_evidence": []
+}

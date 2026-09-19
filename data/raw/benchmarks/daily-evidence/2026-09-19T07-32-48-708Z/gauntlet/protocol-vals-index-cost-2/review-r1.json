@@ -1,0 +1,17 @@
+{
+  "artifact_id": "protocol-vals-index-cost-2",
+  "artifact_sha256": "8ff8e1ec96f89212be5927e21c2b5867299df744bc3834dc1a34b5062fbeffb1",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["vals-index-cost::2", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-computed row SHA-256 (38f141bf...) and artifact SHA-256 could not be independently recomputed; binding relies on the supplied hashes.",
+    "The excerpt shows cost figures in USD per test (e.g., '$0.77 per test') but does not restate a formal metric/unit definition for a 'Cost per test' column; the row's metric/unit naming was judged consistent with the page's cost reporting and the Cost column toggle rather than an exact field transcription.",
+    "Continuity under c1 is established from a single page snapshot (retrieved 2026-09-19, 'Updated 9/15/2026, Version 2'); the page confirms current version 2 and the v2 task set (EMB, Terminal-Bench 2.1, Vibe Code Bench, Code Migration, Legal Research Bench, HLAB), matching the update notes for v2.",
+    "c2: the excerpt shows no supersession or retirement notice for the Vals Index board, consistent with status='active' and superseded_by=null; absence of contrary evidence is not proof, but the protocol text does not contradict the lifecycle fields."
+  ],
+  "missing_evidence": []
+}

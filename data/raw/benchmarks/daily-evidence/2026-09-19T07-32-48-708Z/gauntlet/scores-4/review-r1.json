@@ -1,0 +1,26 @@
+```json
+{
+  "artifact_id": "scores-4",
+  "artifact_sha256": "8bfe1d14cc2a738713ad3eb452f0db19488e92c38165a05ba7d89d78c165b2d0",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["public:d1dbbe116747f4d960f560b7", "public:1c464697ae307145111b99ec", "c1"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "both rows public:d1dbbe116747f4d960f560b7 and public:1c464697ae307145111b99ec, field protocol",
+      "evidence": "Artifact protocol states 'Vals Index v2 (updated 2026-09-10)'. Current primary evidence (SOURCE 2, exact page excerpt) shows the Vals Index header 'Updated 9/15/2026' and 'Version 2'; its Updates log lists no 2026-09-10 entry. The embedded per-row source-row JSON, values (45.192 and 4.327, unit percent), provider, effort fields (row 1: compute_effort/reasoning_effort null; row 2: reasoning_effort 'high'), stderr, cost_per_test, latency, max_output_tokens, model slugs, source row indexes (9 and 54), file/sha256, url and retrieved_at all match SOURCE 1 and SOURCE 4 exactly; only the protocol update date conflicts with the page.",
+      "repair": "Correct the protocol string to the date shown in current primary evidence (updated 9/15/2026) or justify the 2026-09-10 date from a primary source; then re-verify c1."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Owner separately executes hash and transport/qualification checks; reviewer cannot recompute row or file sha256, only binds rows via owner-provided canonical hashes.",
+    "SOURCE 2 is an excerpt of the full page; the per-model legal_research table values themselves come from SOURCE 1/SOURCE 4 (exact projections), so no conflict there.",
+    "Artifact rows do not carry separate effort/harness fields; row 2's 'high' reasoning_effort is verified only via its transcription inside the protocol string and SOURCE 4; 'high' as a comparison-key-eligible configuration was not claimed (comparison_key is null), so no alias inference was required."
+  ],
+  "missing_evidence": []
+}
+```

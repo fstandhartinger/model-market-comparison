@@ -1,12 +1,12 @@
 {
   "source": "Epoch AI benchmark_metadata.csv (Epoch's hub licence note: Epoch-run data CC-BY; externally sourced rows retain their original project licensing)",
-  "evidence_file": "data/raw/benchmarks/daily-evidence/2026-09-16-epoch-hub/epoch-benchmark_metadata.csv.gz",
-  "collected_at": "2026-09-18",
+  "evidence_file": "data/raw/benchmarks/daily-evidence/2026-09-18-epoch-hub/epoch-benchmark_metadata.csv.gz",
+  "collected_at": "2026-09-19",
   "method": "scripts/build-epoch-provenance.mjs: rows_origin from Epoch's _external.csv file naming; original_project only from evidence already in this repo (registry primary_urls / CR-20260915n source table); unclear rows are flagged, never silently shown.",
   "counts": {
-    "hub_benchmarks": 81,
+    "hub_benchmarks": 86,
     "external": 46,
-    "epoch_run": 35,
+    "epoch_run": 40,
     "consumed_external": 10,
     "consumed_unclear": 4
   },
@@ -779,6 +779,51 @@
       "epoch_hub_file": null,
       "in_eci": false,
       "release_date": "2025-11-18",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "TextQuests",
+      "epoch_hub_file": null,
+      "in_eci": false,
+      "release_date": "2025-07-31",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "SWE-bench Pro",
+      "epoch_hub_file": null,
+      "in_eci": false,
+      "release_date": "2025-09-21",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "GraphWalks",
+      "epoch_hub_file": null,
+      "in_eci": false,
+      "release_date": "2025-04-14",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "Berkeley Function Calling Leaderboard",
+      "epoch_hub_file": null,
+      "in_eci": false,
+      "release_date": "2024-02-27",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "HealthBench Professional",
+      "epoch_hub_file": null,
+      "in_eci": false,
+      "release_date": "2026-04-30",
       "rows_origin": "epoch_run",
       "original_project": null,
       "licence_status": "cc-by-epoch"

@@ -1,0 +1,18 @@
+{
+  "artifact_id": "protocol-vals-index-emb-2",
+  "artifact_sha256": "d8060eb505c1b9df61e48ef020a4ef65afe38eec002238d7be40246489b94280",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["vals-index-emb::2", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "The row's scoring.notes state 'Vals AI publishes accuracy with a standard error per model'; the SOURCE 1 excerpt does not mention standard errors, so this supporting note could not be verified from the packet. It is not one of the c1-mandated fields (identity, version, metric, units, description) and does not contradict the protocol text.",
+    "Hash verification of the artifact and source files (ARTIFACT_SHA256, row sha256, source sha256s) and transport/qualification checks are owner-executed; I cannot recompute them, per packet design.",
+    "SOURCE 1 is a bounded excerpt of the live page (retrieved 2026-09-19); continuity of identity rests on the excerpt explicitly showing 'Vals Index', 'Version 2', 'Updated 9/15/2026', and the EMB description, which it does."
+  ],
+  "missing_evidence": []
+}
+
+Row-level check detail (for the record, not part of the JSON payload): id/guard align with metadata.benchmark "Vals Index" and metadata.version "2" per SOURCE 1; version "2" matches "Version 2"; status "active" is supported by the page's current leaderboard and results section; version_status "published" and superseded_by null are consistent (EMB was added in v2 and remains in the Finance formula: Finance = AVG(FinanceAgentV2, EMB)); metric "Excel Modeling Benchmark accuracy" and description "Building and editing financial models in spreadsheets" are transcribed exactly from the protocol text; unit "percent", range [0,100], higher_better true match the ACCURACY percentages shown (e.g., 68.83%). No benchmark-observation values are claimed in this row, so no per-observation identity/value checks apply.

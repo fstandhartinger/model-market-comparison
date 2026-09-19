@@ -1,0 +1,73 @@
+{
+  "started_at": "2026-09-19T07:56:15.717Z",
+  "mode": "oneshot",
+  "requested_model": "deepseek/deepseek-v4-flash-0731",
+  "producers": [],
+  "qualification": {
+    "id": "deepseek/deepseek-v4-flash-0731",
+    "family": "deepseek",
+    "free": false,
+    "input_per_1m": 0.04,
+    "output_per_1m": 0.08,
+    "context": 1310720,
+    "aa_intelligence_index": 34.5,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "deepseek-v4-flash-0731::max"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "deepseek-v4-flash-0731::max",
+        "index": 34.5
+      }
+    ]
+  },
+  "input_sha256": "1404c241919a61932a43ba1d59c1835e916b4f91d0fe2365cf5c18adeda32895",
+  "route": "openrouter",
+  "attempt": 1,
+  "free_route_role": "critic",
+  "free_routes_offered": [
+    "chutes/moonshotai/Kimi-K3-TEE"
+  ],
+  "excluded_models": [
+    "deepseek/deepseek-v4-flash-0731:free",
+    "chutes/moonshotai/Kimi-K3-TEE"
+  ],
+  "reasoning": {
+    "effort": "low",
+    "exclude": true
+  },
+  "response_format_mode": "json_object",
+  "response_schema_sha256": "376bde7986cc2f8fd182f04e745c607933760bea7c306ea6e8e992b7f70be25a",
+  "images": [],
+  "actual_model": "deepseek/deepseek-v4-flash-0731",
+  "usage": {
+    "prompt_tokens": 4412,
+    "completion_tokens": 6584,
+    "total_tokens": 10996,
+    "cost": 0.00105258384,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.001063216,
+      "upstream_inference_prompt_cost": 0.000194128,
+      "upstream_inference_completions_cost": 0.000869088
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 6393,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "finish_reason": "stop",
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "provider": "StreamLake",
+  "session_id": null,
+  "finished_at": "2026-09-19T07:58:19.789Z",
+  "output_sha256": "d4dd6b77d904c8bb8dac0e61df2ed82582b3c069d1e69a58a114728d9e431641"
+}

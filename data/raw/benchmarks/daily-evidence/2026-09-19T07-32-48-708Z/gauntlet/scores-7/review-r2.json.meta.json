@@ -1,0 +1,74 @@
+{
+  "started_at": "2026-09-19T07:58:31.292Z",
+  "mode": "critic",
+  "requested_model": "z-ai/glm-5.3-flash",
+  "producers": [
+    "deepseek/deepseek-v4-flash-0731"
+  ],
+  "qualification": {
+    "id": "z-ai/glm-5.3-flash",
+    "family": "z-ai",
+    "free": false,
+    "input_per_1m": 0.09,
+    "output_per_1m": 0.3,
+    "context": 1310720,
+    "aa_intelligence_index": 41.9,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "glm-5.3-flash::default"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "glm-5.3-flash::default",
+        "index": 41.9
+      }
+    ]
+  },
+  "input_sha256": "38f29751c8d5a66070bfbd584c5270d640eaafa42af0f19bbd737e572ab11101",
+  "route": "openrouter",
+  "attempt": 2,
+  "free_route_role": "critic",
+  "free_routes_offered": [
+    "chutes/moonshotai/Kimi-K3-TEE"
+  ],
+  "excluded_models": [
+    "chutes/moonshotai/Kimi-K3-TEE"
+  ],
+  "reasoning": {
+    "effort": "low",
+    "exclude": true
+  },
+  "response_format_mode": null,
+  "response_schema_sha256": null,
+  "images": [],
+  "actual_model": "z-ai/glm-5.3-flash",
+  "usage": {
+    "prompt_tokens": 19501,
+    "completion_tokens": 1140,
+    "total_tokens": 20641,
+    "cost": 0.0020761191,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.00209709,
+      "upstream_inference_prompt_cost": 0.00175509,
+      "upstream_inference_completions_cost": 0.000342
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 419,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "finish_reason": "stop",
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "provider": "Relace",
+  "session_id": null,
+  "finished_at": "2026-09-19T07:58:51.518Z",
+  "output_sha256": "e66fb9302ed6c5ccce284d52360a14a7d861fb79b051a1d86a2394299e96efef"
+}

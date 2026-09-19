@@ -1,0 +1,50 @@
+[
+  {
+    "id": "public:2ce31a5df767dc9854344267",
+    "benchmark_id": "vals-index-vibe-code-bench::2",
+    "subject": {
+      "source_id": "tencent/hy4-preview",
+      "name": "tencent/hy4-preview",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 77.478,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-19T07:35:11.145297+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/7f5618385b63e8701fb4.gz",
+      "sha256": "7f5618385b63e8701fb4d277d3bfe07421b0b5ee3595456af277fb9f7700385f",
+      "locator": "astro_props; source row 15; tencent/hy4-preview; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component vibe_code_bench; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"vibe_code_bench\",\"accuracy\":77.478,\"stderr\":4.035,\"cost_per_test\":2.181516,\"latency\":2493.104,\"compute_effort\":null,\"reasoning_effort\":null,\"max_output_tokens\":64000,\"provider\":\"Tencent\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:5ee4f19f3e12ec5824e2f981",
+    "benchmark_id": "vals-index-vibe-code-bench::2",
+    "subject": {
+      "source_id": "inception/mercury-2.5",
+      "name": "inception/mercury-2.5",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 3.683,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-19T07:35:11.145297+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/7f5618385b63e8701fb4.gz",
+      "sha256": "7f5618385b63e8701fb4d277d3bfe07421b0b5ee3595456af277fb9f7700385f",
+      "locator": "astro_props; source row 53; inception/mercury-2.5; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component vibe_code_bench; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"vibe_code_bench\",\"accuracy\":3.683,\"stderr\":1.407,\"cost_per_test\":0.378016,\"latency\":193.041,\"compute_effort\":null,\"reasoning_effort\":\"high\",\"max_output_tokens\":65536,\"provider\":\"Inception\"}",
+    "comparison_key": null
+  }
+]

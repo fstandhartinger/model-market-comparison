@@ -1,0 +1,19 @@
+```json
+{
+  "artifact_id": "protocol-vals-index-vibe-code-bench-2",
+  "artifact_sha256": "6454cf99059ad8414187061c54540eb9222e52e13ff65e8243d3448821b424b1",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["vals-index-vibe-code-bench::2", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-side hash verification of the artifact and rows, and transport/qualification checks, could not be executed by this reviewer; treated as owner-executed limitations, not missing evidence.",
+    "SOURCE 1 is a bounded exact excerpt of the Vals Index page; it establishes registry version (Version 2, updated 9/15/2026) and includes Vibe Code Bench as 'End-to-end app-building tasks' in the v2 coding bucket, matching the row's description and version_guard. The row's notes claim Vals AI publishes accuracy with a standard error per model and describe it as an independent evaluator secondary benchmark; the excerpt neither shows nor contradicts these contextual notes, and they are not metric/identity/version fields under c1, so no numeric claim was accepted on their basis.",
+    "The excerpt shows percentage accuracy values on the page (e.g., 68.83%), supporting unit 'percent', range [0,100], higher_better, and metric 'Vibe Code Bench accuracy'.",
+    "Lifecycle (c2): the current protocol lists Vibe Code Bench in the v2 coding bucket with no retirement or replacement note, supporting status 'active', version_status 'published', superseded_by null. The page's 'Version 2' is the Vals Index release version, consistent with the row's registry version '2'."
+  ],
+  "missing_evidence": []
+}
+```

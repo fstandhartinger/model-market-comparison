@@ -1,0 +1,73 @@
+{
+  "started_at": "2026-09-19T07:55:13.159Z",
+  "mode": "oneshot",
+  "requested_model": "deepseek/deepseek-v4-flash-0731",
+  "producers": [],
+  "qualification": {
+    "id": "deepseek/deepseek-v4-flash-0731",
+    "family": "deepseek",
+    "free": false,
+    "input_per_1m": 0.04,
+    "output_per_1m": 0.08,
+    "context": 1310720,
+    "aa_intelligence_index": 34.5,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "deepseek-v4-flash-0731::max"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "deepseek-v4-flash-0731::max",
+        "index": 34.5
+      }
+    ]
+  },
+  "input_sha256": "d346f0737732cec83fe96629e45514d2533294d9bfb99af1e383453c30994f0f",
+  "route": "openrouter",
+  "attempt": 1,
+  "free_route_role": "critic",
+  "free_routes_offered": [
+    "chutes/moonshotai/Kimi-K3-TEE"
+  ],
+  "excluded_models": [
+    "deepseek/deepseek-v4-flash-0731:free",
+    "chutes/moonshotai/Kimi-K3-TEE"
+  ],
+  "reasoning": {
+    "effort": "low",
+    "exclude": true
+  },
+  "response_format_mode": "json_object",
+  "response_schema_sha256": "376bde7986cc2f8fd182f04e745c607933760bea7c306ea6e8e992b7f70be25a",
+  "images": [],
+  "actual_model": "deepseek/deepseek-v4-flash-0731",
+  "usage": {
+    "prompt_tokens": 3495,
+    "completion_tokens": 3875,
+    "total_tokens": 7370,
+    "cost": 0.0006586272,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.00066528,
+      "upstream_inference_prompt_cost": 0.00015378,
+      "upstream_inference_completions_cost": 0.0005115
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 3722,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "finish_reason": "stop",
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "provider": "StreamLake",
+  "session_id": null,
+  "finished_at": "2026-09-19T07:56:12.159Z",
+  "output_sha256": "adfc5e913da6bfa3a917f7e1160e359cfdb46b25e42b8e01377e74c7c01e7e97"
+}

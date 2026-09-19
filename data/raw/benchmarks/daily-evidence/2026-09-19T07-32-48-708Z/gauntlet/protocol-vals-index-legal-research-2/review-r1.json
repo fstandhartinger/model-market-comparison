@@ -1,0 +1,19 @@
+```json
+{
+  "artifact_id": "protocol-vals-index-legal-research-2",
+  "artifact_sha256": "5b1c86bbd235db84aa9b1b2c4161b92050bc0d2553e9cc04490b66fc68f50923",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["vals-index-legal-research::2", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row scoring.notes claims Vals AI publishes accuracy with a standard error per model; SOURCE 1 excerpt shows accuracy figures but does not visibly display standard errors, so this claim could not be confirmed from the excerpt (not an acceptance-criteria field).",
+    "The artifact_sha256 of the overall artifact could not be independently recomputed; only owner-provided row hash 0d40db2b82314fab0447316bddf02ee46835340aecf62abcb50058e00e773c67 was available for binding.",
+    "SOURCE 1 excerpt does not reproduce the per-model accuracy table values for the Legal Research Bench component; only the headline Vals Index percentages appear. This does not affect c1/c2 fields claimed in the row.",
+    "Units 'percent' and range [0,100] are consistent with accuracy percentages shown (e.g., 68.83%) but the excerpt does not state explicit unit labels."
+  ],
+  "missing_evidence": []
+}
+```

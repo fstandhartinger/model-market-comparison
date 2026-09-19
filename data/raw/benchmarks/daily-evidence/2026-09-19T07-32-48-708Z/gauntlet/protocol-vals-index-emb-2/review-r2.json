@@ -1,0 +1,27 @@
+```json
+{
+  "artifact_id": "protocol-vals-index-emb-2",
+  "artifact_sha256": "d8060eb505c1b9df61e48ef020a4ef65afe38eec002238d7be40246489b94280",
+  "round": 2,
+  "verdict": "revise",
+  "coverage_checked": ["vals-index-emb::2", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "major",
+      "location": "row vals-index-emb::2, scoring.notes",
+      "evidence": "Notes assert: 'Vals AI publishes accuracy with a standard error per model; independent evaluator, secondary benchmark, not a Composite input.' SOURCE 1 (vals_index page, Version 2, updated 9/15/2026) lists EMB as a private Finance component ('Excel Modeling Benchmark: Building and editing financial models in spreadsheets', added 8/13/2026 in place of CorpFin) and shows ACCURACY columns, but the excerpt contains no statement about standard errors per model, an independent evaluator, secondary-benchmark status, or Composite (non-)inclusion. These claims are unsubstantiated by the supplied primary evidence.",
+      "repair": "Remove or rewrite the unsupported note clauses so the notes state only what SOURCE 1 establishes: Finance sector component, private benchmark, accuracy in percent, component of the GDP-weighted Vals Index. Do not retain claims the excerpt cannot settle."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Row binds to the EMB board via the Vals Index page; version_guard (metadata.benchmark 'Vals Index', metadata.version '2') matches SOURCE 1 ('Version 2'), and the page was updated 9/15/2026, so identity/version continuity for EMB within Vals Index v2 is established by the excerpt.",
+    "Owner-executed SHA-256 and transport/qualification checks (row hash 1ee2fd35..., source hashes) could not be executed by this critic; per packet policy this is a limitation, not missing evidence.",
+    "Exact percent range [0,100] and higher_better=true are consistent with the page's ACCURACY percentages (e.g., 68.83%) but the page does not print an explicit metric definition for EMB alone; treated as consistent rather than proven.",
+    "status='active' is supported by the live leaderboard (22 models shown, updated 9/15/2026); version_status='published' and superseded_by=null have no contradicting text in the excerpt."
+  ],
+  "missing_evidence": []
+}
+```

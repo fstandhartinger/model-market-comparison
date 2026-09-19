@@ -1,7 +1,7 @@
 {
   "source": "Anthropic Claude API and Claude Code Enterprise",
-  "collected_at": "2026-09-18",
-  "method": "scripts/fetch-claude-api-catalog.mjs (2026-09-18): models[] from the server-rendered model and batch price tables on https://platform.claude.com/docs/en/about-claude/pricing; rows labelled retired there, or Retired in the lifecycle table on https://platform.claude.com/docs/en/about-claude/model-deprecations, are excluded; lifecycle_status and tentative retirement dates come from that table by API model id. pricing_modifiers: cache-write multipliers derived from the table (must be uniform), cache-hit default/exception, batch discount and US-only inference multiplier read from the page text. claude_code_enterprise: the seat price is re-read from the Enterprise line on https://claude.com/pricing (\"Seat price + usage at API rates\"); minimum-seat, sales-assisted and legacy-seat terms are not on that page and keep other_terms_checked_at. See claude-code.method.md.",
+  "collected_at": "2026-09-19",
+  "method": "scripts/fetch-claude-api-catalog.mjs (2026-09-19): models[] from the server-rendered model and batch price tables on https://platform.claude.com/docs/en/about-claude/pricing; rows labelled retired there, or Retired in the lifecycle table on https://platform.claude.com/docs/en/about-claude/model-deprecations, are excluded; lifecycle_status and tentative retirement dates come from that table by API model id. pricing_modifiers: cache-write multipliers derived from the table (must be uniform), cache-hit default/exception, batch discount and US-only inference multiplier read from the page text. claude_code_enterprise: the seat price is re-read from the Enterprise line on https://claude.com/pricing (\"Seat price + usage at API rates\"); minimum-seat, sales-assisted and legacy-seat terms are not on that page and keep other_terms_checked_at. See claude-code.method.md.",
   "models": [
     {
       "model_name": "Claude Fable 5.1",
@@ -32,7 +32,8 @@
       "output_per_1m_usd": 50,
       "batch_input_per_1m_usd": 5,
       "batch_output_per_1m_usd": 25,
-      "notes": "Official pricing: cache hits are 0.025x base input ($0.25/MTok); 5m/1h writes $12.50/$20. Mythos remains limited availability."
+      "notes": "Official pricing: cache hits are 0.025x base input ($0.25/MTok); 5m/1h writes $12.50/$20. Mythos remains limited availability.",
+      "tentative_retirement": "Not sooner than September 1, 2027"
     },
     {
       "model_name": "Claude Fable 5",
@@ -63,7 +64,8 @@
       "cache_read_per_1m_usd": 1,
       "batch_input_per_1m_usd": 5,
       "batch_output_per_1m_usd": 25,
-      "notes": "Limited availability to approved Project Glasswing customers; no self-serve signup. Same specs and prices as Fable 5, without Fable's safety classifiers. 1M context, always-on adaptive thinking, mandatory 30-day retention, and no zero-data-retention eligibility. Successor to the retired Claude Mythos Preview."
+      "notes": "Limited availability to approved Project Glasswing customers; no self-serve signup. Same specs and prices as Fable 5, without Fable's safety classifiers. 1M context, always-on adaptive thinking, mandatory 30-day retention, and no zero-data-retention eligibility. Successor to the retired Claude Mythos Preview.",
+      "tentative_retirement": "Not sooner than June 9, 2027"
     },
     {
       "model_name": "Claude Opus 5",
@@ -245,9 +247,9 @@
     "Claude Haiku 3.5 (retired, except on Bedrock and Google Cloud)"
   ],
   "response_sha256": {
-    "pricing": "64ad8b258c9722d5fb69996cbb6cf298e21432e9df71b5eee56852563006e931",
-    "deprecations": "1c8f2a1cc629becf539e602f190e83f00f723f501ca9483771528dd708987ac0",
-    "enterprise": "cc767adad5ecb3a103c5145d8c3e5bdf69c630ee62c5da38820b1b31e29b55d4"
+    "pricing": "8af4f1978b3077dfcdafe65247d2c1ee97f8aca898bb9ef380bfd2e156780470",
+    "deprecations": "9bfa9181f979e2973e79b3d6ad7d71a9fbd3e79a0864562bf4f05e2f15bf0ecd",
+    "enterprise": "80baa03fd24ed556c65dec69d4909e24cc48bfe8922edad5c1567d53216988d6"
   },
   "diff": {
     "added": [],

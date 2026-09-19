@@ -1,0 +1,17 @@
+{
+  "artifact_id": "protocol-vals-index-code-migration-2",
+  "artifact_sha256": "e3f40700a1ece2363890ef029a7615ba5ef0ee0da15414280d84e2ffc286c92f",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["vals-index-code-migration::2", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Could not recompute row or artifact hashes; relied on owner-provided canonical SHA-256 values to bind rows.",
+    "SOURCE 1 is an excerpt, not the complete page; identity, metric, version, methodology subset description, and lifecycle were all verifiable within the excerpt, but hash/transport/qualification checks were executed by the owner, not by this reviewer.",
+    "SOURCE 2 (robots.txt) is not relevant protocol evidence for this row; it was reviewed and carries no fields bearing on c1 or c2.",
+    "The source page displays aggregate and component accuracy percentages but does not restate 'Code Migration accuracy' verbatim as a metric name; 'ACCURACY' plus percent formatting supports the row's metric/unit as a faithful mapping rather than exact verbatim transcription."
+  ],
+  "missing_evidence": []
+}

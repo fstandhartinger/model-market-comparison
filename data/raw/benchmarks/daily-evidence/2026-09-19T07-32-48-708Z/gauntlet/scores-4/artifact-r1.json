@@ -1,0 +1,50 @@
+[
+  {
+    "id": "public:d1dbbe116747f4d960f560b7",
+    "benchmark_id": "vals-index-legal-research::2",
+    "subject": {
+      "source_id": "tencent/hy4-preview",
+      "name": "tencent/hy4-preview",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 45.192,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-19T07:35:11.145297+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/7f5618385b63e8701fb4.gz",
+      "sha256": "7f5618385b63e8701fb4d277d3bfe07421b0b5ee3595456af277fb9f7700385f",
+      "locator": "astro_props; source row 9; tencent/hy4-preview; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component legal_research; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"legal_research\",\"accuracy\":45.192,\"stderr\":3.459,\"cost_per_test\":0.846372,\"latency\":3839.511,\"compute_effort\":null,\"reasoning_effort\":null,\"max_output_tokens\":64000,\"provider\":\"Tencent\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:1c464697ae307145111b99ec",
+    "benchmark_id": "vals-index-legal-research::2",
+    "subject": {
+      "source_id": "inception/mercury-2.5",
+      "name": "inception/mercury-2.5",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 4.327,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-19T07:35:11.145297+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/7f5618385b63e8701fb4.gz",
+      "sha256": "7f5618385b63e8701fb4d277d3bfe07421b0b5ee3595456af277fb9f7700385f",
+      "locator": "astro_props; source row 54; inception/mercury-2.5; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component legal_research; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"legal_research\",\"accuracy\":4.327,\"stderr\":1.414,\"cost_per_test\":0.058112,\"latency\":45.996,\"compute_effort\":null,\"reasoning_effort\":\"high\",\"max_output_tokens\":65536,\"provider\":\"Inception\"}",
+    "comparison_key": null
+  }
+]

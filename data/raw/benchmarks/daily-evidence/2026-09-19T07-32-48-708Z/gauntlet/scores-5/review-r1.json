@@ -1,0 +1,27 @@
+```json
+{
+  "artifact_id": "scores-5",
+  "artifact_sha256": "e98e5086cdd50ad56674f4ed0a7e0846b508a2e4e89708c2c905add787982513",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["public:589ad8682a613ad573fa7bd6", "public:948b81a84169f939ec155871", "c1"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "minor",
+      "location": "both rows, field protocol; SOURCE 2 page header",
+      "evidence": "Artifact protocol (and SOURCE 1/SOURCE 4 registry protocol) state 'Vals Index v2 (updated 2026-09-10)', but SOURCE 2 page shows 'Updated 9/15/2026'. The version-2 identification is corroborated by the parser require (benchmark 'Vals Index', version '2'), so identity/version stands; only the embedded update date disagrees with the currently displayed page date.",
+      "repair": "Correct the update date in the protocol string to the page-published 9/15/2026 (2026-09-15), or annotate the discrepancy, regenerating the dependent row hashes."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Read-only review: could not recompute row SHA-256 bindings or the artifact file hash; relied on owner-supplied canonical per-row hashes.",
+    "SOURCE 2 is a bounded excerpt; the full page including the HLAB component leaderboard table was not visible, so per-model values rest on SOURCE 1/SOURCE 4 astro_props projections, which do transcribe accuracy values (9.167, 0), names, provider, max_output_tokens and provider effort fields matching the artifact rows exactly.",
+    "Both rows leave comparison_key null; per criterion, unknown compute/reasoning effort (row 1 has both null) correctly cannot create a comparison_key value. Row 2 has reasoning_effort 'high' but a harness absent, so null remains the safe value.",
+    "Retrieved_at/published_at: published_at is null in both rows; the page 'Updated' date exists but the artifact does not claim a published_at, so no contradiction in claimed fields."
+  ],
+  "missing_evidence": []
+}
+```

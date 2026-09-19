@@ -1,0 +1,19 @@
+```json
+{
+  "artifact_id": "protocol-vals-index-2",
+  "artifact_sha256": "a1d39fff071d33c216d8dd9104f25314424cb58d6af55ba83c8383ebf825d8a2",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["vals-index::2", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row notes claim 'Vals AI publishes accuracy with a standard error per model' and 'independent evaluator, secondary benchmark, not a Composite input'; the bounded SOURCE 1 excerpt shows ACCURACY as the metric but does not explicitly show standard-error publication or composite-input status. These note fields are outside the c1/c2 required field set (identity, version, metric, units, description, lifecycle) and no contradiction is visible; treated as unverifiable-by-excerpt rather than a failure.",
+    "The excerpt shows the current formula with equal sector-internal averaging (AVG) while the row notes summarize 'each sector averages its component benchmarks'; consistent with the current Methodology section, though historical update entries reference earlier weighted schemes — the row reflects the current version-2 protocol as of Updated 9/15/2026.",
+    "Owner-side hash verification (row sha ea02d4ac... and artifact sha a1d39fff...) and transport/qualification checks were not executed by this reviewer; per packet design those are owner-executed.",
+    "Component-task subset details for Code Migration (50/120 CLI + 10 COBOL) are not reflected in the row but the row makes no claim about them, so no comparison was required."
+  ],
+  "missing_evidence": []
+}
+```

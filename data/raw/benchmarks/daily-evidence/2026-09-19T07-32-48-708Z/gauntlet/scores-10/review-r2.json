@@ -1,0 +1,17 @@
+{
+  "artifact_id": "scores-10",
+  "artifact_sha256": "9207a76be255e032b211b7db130add8776607ace8770c16ec504674dfa3cdb55",
+  "round": 2,
+  "verdict": "pass",
+  "coverage_checked": ["vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10", "c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "published_at is null in the row; the packet provides retrieved_at (2026-09-19) and the arXiv identifier 2412.19437v2 but no explicit publication date value to cross-check, so I relied on the retrieved_at field as the source date per the row.",
+    "Owner-side row sha256 binding (eee201f6...) and transport/qualification checks (deepseek/deepseek-v4.1-flash receipt) were not executed by me; the receipt covers identity/qualification only and does not bear on the observation fields.",
+    "'overall' in protocol is an interpretation of the table's Accuracy metric; the primary evidence confirms the metric is (Acc.) with the 'diff' format and 8192-token limit (paper says 8192 tokens, row says '8K tokens', consistent with the table caption).",
+    "Row sha256 and artifact sha256 could not be recomputed by me (read-only limitation, not missing source evidence)."
+  ],
+  "missing_evidence": []
+}
