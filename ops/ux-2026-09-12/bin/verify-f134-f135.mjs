@@ -34,7 +34,7 @@ try {
         visLines, legendLine, sentences: legendLine.split(/[.;]\s+(?=[A-Z])/).length,
         speedFirst: !!vis[0] && vis[0].hasAttribute('data-bh-jev12-speed-note'), lines,
         detClosed: !!det && !det.open, detSummary: det?.querySelector('summary')?.innerText.trim(),
-        labelNote: !!cap.querySelector('[data-bh-jev12-label-note]'), namesNote: /Names link to each project/.test(det?.innerText || ''),
+        labelNote: !!cap.querySelector('[data-bh-jev12-label-note]'), namesNote: /Names link to each project/.test(det?.textContent || ''),
         daggers, notes, notesAfterGeneral: det ? [...det.querySelectorAll('li')].slice(0, 2).every((li) => !li.hasAttribute('data-bh-jev12-footnote')) : false,
         oneliners: document.querySelectorAll('[data-bh-jev12-oneliner]').length,
         costsTag: costs?.tagName, costsClosed: costs && !costs.open, costsH: Math.round(costs?.getBoundingClientRect().height || 0),
