@@ -88,6 +88,7 @@ test('Jev pass-24 follow-up: the chart keeps one short visible note and moves de
   const cmp = await readFile(new URL('../components/JevModelsV12.tsx', import.meta.url), 'utf8');
   assert.match(cmp, /data-bh-jev12-legend-line>I, C, S, K/, 'F-134: the visible chart note has its own selector');
   assert.match(cmp, /<details className="mt-2" data-bh-jev12-legend>/, 'F-134: the legend disclosure has its own selector');
+  assert.match(cmp, /\{chartName\(r\)\}<\/ProjectLink>\{r\.footnote \? <sup data-bh-jev12-dagger>†<\/sup>/, 'review 20260919T165003Z: the chart marks noted systems with the † the legend line promises');
   assert.equal((cmp.match(/data-bh-jev12-oneliner/g) || []).length, 1, 'review 20260919T165003Z: the score one-liner selector is unique');
   assert.equal((cmp.match(/data-bh-jev12-notes/g) || []).length, 1, 'review 20260919T165003Z: the table notes selector is unique');
   assert.match(cmp, /Legend and notes/, 'F-134: secondary notes are collapsed');

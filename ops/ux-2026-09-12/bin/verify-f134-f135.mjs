@@ -23,16 +23,16 @@ try {
       const cap = document.querySelector('[data-bh-jevc-footnotes]');
       const det = cap.querySelector('details');
       const vis = [...cap.children].filter((el) => el !== det);
-      const lh = parseFloat(getComputedStyle(cap).lineHeight) || 14;
-      const visLines = vis.reduce((n, el) => n + Math.round(el.getBoundingClientRect().height / lh), 0);
+      const lines = vis.map((el) => { const r = document.createRange(); r.selectNodeContents(el); const tops = new Set([...r.getClientRects()].filter((x) => x.width > 1).map((x) => Math.round(x.bottom))); return tops.size; });
+      const visLines = lines.reduce((a, b) => a + b, 0);
       const legendLine = (cap.querySelector('[data-bh-jev12-legend-line]') || {}).innerText || '';
-      const daggers = document.querySelectorAll('[data-bh-jev12-main-chart] sup').length;
+      const daggers = [...document.querySelectorAll('[data-bh-jev12-main-chart] sup')].filter((x) => x.textContent.trim() === '†').length;
       const notes = [...cap.querySelectorAll('[data-bh-jev12-footnote]')].map((li) => li.textContent.trim());
       const costs = document.getElementById('jev-costs');
       const outside = costs?.parentElement?.querySelector(':scope > p')?.innerText || '';
       return {
         visLines, legendLine, sentences: legendLine.split(/[.;]\s+(?=[A-Z])/).length,
-        speedFirst: !!vis[0] && /speed/i.test(vis[0].innerText),
+        speedFirst: !!vis[0] && vis[0].hasAttribute('data-bh-jev12-speed-note'), lines,
         detClosed: !!det && !det.open, detSummary: det?.querySelector('summary')?.innerText.trim(),
         labelNote: !!cap.querySelector('[data-bh-jev12-label-note]'), namesNote: /Names link to each project/.test(det?.innerText || ''),
         daggers, notes, notesAfterGeneral: det ? [...det.querySelectorAll('li')].slice(0, 2).every((li) => !li.hasAttribute('data-bh-jev12-footnote')) : false,
@@ -43,7 +43,7 @@ try {
       };
     });
     check(`${tag}: F-134 speed note first, then one legend sentence`, g.speedFirst && g.legendLine.startsWith('I, C, S, K = Intelligence, Calibration, Speed, Cost') && g.sentences <= 2, g.legendLine);
-    if (mobile) check(`${tag}: F-134 visible caption ≤ 6 lines at 390`, g.visLines <= 6, g.visLines);
+    if (mobile) check(`${tag}: F-134 visible caption ≤ 6 lines at 390`, g.visLines <= 6, JSON.stringify(g.lines));
     check(`${tag}: F-134 "Legend and notes" closed on load`, g.detClosed && g.detSummary === 'Legend and notes', g.detSummary);
     check(`${tag}: F-134 legend holds label-only + names notes and one note per † system`, g.labelNote && g.namesNote && g.notes.length > 0 && g.notes.length === g.daggers && g.notesAfterGeneral, `${g.notes.length} notes / ${g.daggers} daggers`);
     check(`${tag}: score one-liner selector unique`, g.oneliners === 1, g.oneliners);

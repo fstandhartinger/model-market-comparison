@@ -118,7 +118,7 @@ function ScoreChart({ rows, partial, w, view }: { rows: Row[]; partial: Row[]; w
           data-bh-jev12-bar={r.key} data-bh-jevc-score={s === null ? "" : s.toFixed(3)} aria-label={label}>
           <span className="bh-muted tabular col-start-1 row-start-1 text-right text-xs" data-bh-jevc-rank={r.rank ?? ""}>{r.rank ?? ""}</span>
           <span className="col-start-2 row-start-1 min-w-0 md:truncate sm:col-start-2 sm:text-right" title={r.display}>
-            <ProjectLink r={r}>{chartName(r)}</ProjectLink>{!r.ranked && <span className="bh-muted"> (partial run)</span>}{!d.official && r.rank !== null && <Delta d={r.delta} />}
+            <ProjectLink r={r}>{chartName(r)}</ProjectLink>{r.footnote ? <sup data-bh-jev12-dagger>†</sup> : null}{!r.ranked && <span className="bh-muted"> (partial run)</span>}{!d.official && r.rank !== null && <Delta d={r.delta} />}
           </span>
           <span className="bh-jevc-grid col-start-2 row-start-2 mt-1 flex h-4 sm:col-start-3 sm:row-start-1 sm:mt-0 sm:h-6" aria-hidden="true">
             {s !== null && <span className={`bh-jevc-bar ${r.ranked ? "" : "is-partial"}`} style={{ width: `${Math.max(0, Math.min(100, s))}%` }} />}
