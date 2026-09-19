@@ -98,12 +98,36 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
       overflow: document.documentElement.scrollWidth - innerWidth,
     };
   });
-  for (const [key, label] of [['chess', 'Chess Puzzles'], ['mystery', 'Mystery Game Puzzles'], ['ebr', 'EBR-bench'], ['mirror', 'MirrorCode'], ['gpqa', 'GPQA Diamond'], ['swe', 'SWE-bench Verified']]) {
-    check(`${tag} /benchmarks: ${label} row renders with a value`, !!ui[key] && /%/.test(ui[key] ?? ''), (ui[key] ?? '').slice(0, 240));
+  // Default columns render the four boards with values on frontier top-5 models. MirrorCode's
+  // values join to ::high configurations and Epoch's SWE-bench run joins to non-top-5 models, so
+  // CR-1.4 (rows need a value among the selected columns) legitimately hides them by default —
+  // they are asserted in the selected-columns phase below instead.
+  for (const [key, label] of [['chess', 'Chess Puzzles'], ['mystery', 'Mystery Game Puzzles'], ['ebr', 'EBR-bench'], ['gpqa', 'GPQA Diamond']]) {
+    check(`${tag} /benchmarks: ${label} row renders with a value (default columns)`, !!ui[key] && /%/.test(ui[key] ?? ''), (ui[key] ?? '').slice(0, 240));
   }
   check(`${tag} /benchmarks: excluded boards never render`, !ui.excluded, ui.excluded);
   check(`${tag} /benchmarks: no horizontal overflow`, ui.overflow <= 1, ui.overflow);
   await page.screenshot({ path: `${OUT}/benchmarks-${tag}.png`, fullPage: false });
+  // Selected-columns phase: deep-link value-carrying columns so MirrorCode and SWE-bench Verified
+  // (Epoch AI run) carry at least one value among the selected models (CR-1.4), then render.
+  await goto(page, `${BASE}/benchmarks?models=${encodeURIComponent('claude-fable-5.1::high,gpt-6-astra::high,glm-5.2::max,claude-opus-4.7::max,gemini-3.5-flash::high')}`);
+  await page.waitForLoadState('networkidle').catch(() => {}); await page.waitForTimeout(2500);
+  await page.locator('button', { hasText: 'Show all' }).last().click().catch(() => {});
+  await page.waitForTimeout(800);
+  const sel = await page.evaluate(() => {
+    const row = (re) => [...document.querySelectorAll('tr')].find((r) => re.test(r.innerText));
+    return {
+      mirror: row(/MirrorCode/)?.innerText?.replace(/\s+/g, ' ') ?? null,
+      swe: row(/SWE-bench Verified \(Epoch AI run\)/)?.innerText?.replace(/\s+/g, ' ') ?? null,
+      overflow: document.documentElement.scrollWidth - innerWidth,
+    };
+  });
+  check(`${tag} /benchmarks (value-carrying columns): MirrorCode row renders with Fable 5.1 (high) 73.3%`,
+    !!sel.mirror && /73\.3/.test(sel.mirror ?? ''), (sel.mirror ?? '').slice(0, 260));
+  check(`${tag} /benchmarks (value-carrying columns): SWE-bench Verified (Epoch run) renders with Opus 4.7 (max) 83.5%`,
+    !!sel.swe && /83\.5/.test(sel.swe ?? ''), (sel.swe ?? '').slice(0, 260));
+  check(`${tag} /benchmarks (value-carrying columns): no horizontal overflow`, sel.overflow <= 1, sel.overflow);
+  await page.screenshot({ path: `${OUT}/benchmarks-selected-${tag}.png`, fullPage: false });
   if (!mobile) {
     await goto(page, `${BASE}/models/claude-fable-5.1::max`); await page.waitForLoadState('networkidle').catch(() => {}); await page.waitForTimeout(2000);
     const model = await page.evaluate(() => {
