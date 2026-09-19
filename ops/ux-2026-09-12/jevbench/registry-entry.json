@@ -1,0 +1,49 @@
+{
+  "_note": "Proposed entry for /opt/model-market-comparison/data/raw/benchmarks/registry.json. JevBench is Benchmark Heaven's own measurement, so its observations carry basis=measured with our run artifact as the source, not a third-party leaderboard. Delivered as a change request; the loop stays the sole writer of that repository.",
+  "entry": {
+    "id": "jevbench::v1",
+    "name": "JevBench v1",
+    "version": "v1",
+    "version_status": "published",
+    "family": "jevbench",
+    "category": "Other",
+    "one_sentence_description": "Measures typed decision models - state plus a bounded rubric in, a calibrated typed answer out - on accuracy, calibration, schema validity, paraphrase consistency, latency and price over 242 fixed decisions in six families.",
+    "scoring": {
+      "metric": "Argmax accuracy over the exact label set, across all 242 decisions",
+      "unit": "percent",
+      "range": [0, 100],
+      "higher_better": true,
+      "notes": "One headline number does not describe this benchmark. Every row also carries multi-class Brier (sum over the exact label set), top-label ECE in 10 equal-width bins, schema validity, operational success, paraphrase same-answer and both-correct rates, p50/p95 end-to-end latency at concurrency 1, and USD per 1,000 decisions. Native distributions and probabilities an instruction model writes out under a JSON schema are separate probability sources and are labelled as such; they are never pooled into one calibration claim. A changed task set, prompt, adapter or scoring rule is a new identity, not a v1 update."
+    },
+    "maintainer": "Benchmark Heaven",
+    "source_type": "own_measurement",
+    "primary_url": "https://github.com/fstandhartinger/jevbench",
+    "publication_urls": [
+      {
+        "url": "https://github.com/fstandhartinger/jevbench",
+        "type": "harness_and_public_split",
+        "role": "MIT harness, the 72 published decisions, the frozen dataset manifest and the results artifact"
+      },
+      {
+        "url": "https://benchmarkheaven.com/jev-models",
+        "type": "own_page",
+        "role": "Published results page for this benchmark"
+      }
+    ],
+    "how_to_collect": {
+      "command": "git clone https://github.com/fstandhartinger/jevbench && cd jevbench && python -m jevbench.cli run --tasks datasets/public/original.jsonl --adapter typesafe --model jev-latest --key-env TYPESAFE_API_KEY --price-in-per-m 0.042 --price-out-per-m 0 --results RUN/results.jsonl --raw-dir RUN/raw --ledger RUN/ledger.jsonl --cap-usd 15 --manifest RUN/manifest.json",
+      "format": "JSONL per-decision records aggregated into results/jevbench-v1-results.json",
+      "locator": "results/jevbench-v1-results.json -> systems[].overall.accuracy for the headline; systems[].by_cohort and systems[].by_family for the breakdowns; every value carries its own denominator.",
+      "version_guard": "The dataset manifest pins a SHA-256 per split. A run whose dataset_hash does not match the v1 manifest is not a v1 result. The 24 held-out decisions are not in the public repository, so a third party reproducing from the public split alone measures the 72-decision public cohort, which is reported separately for exactly that reason.",
+      "notes": "Serial, one request at a time, no retries, from a Hetzner server in Germany, so latency includes the network. Runs stop on 401/403/429 or three consecutive infrastructure errors and the partial run is kept as partial. Never rank an incomplete run against a complete one."
+    },
+    "update_cadence": "On demand, when a new Jev-class system becomes runnable. New entrants become v1.1 rather than changing v1's cohort.",
+    "saturated": false,
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-19",
+    "last_verified": "2026-09-19",
+    "evidence": "Our own run of 2026-09-19. Per-decision records, raw request/response hashes, the shared budget ledger and the private held-out split stay outside the public repository; the published artifact contains aggregates only. Prices are each provider's own published tariff read on 2026-09-19 (TypeSafe, OpenAI, Google, DeepSeek), multiplied by measured token usage; routes with no billable account report a null price, never zero."
+  },
+  "category_note": "The registry has no decision-model category today, so this entry uses 'Other'. If the loop prefers a new category, 'Decision models' is the accurate label and would also fit Needle 3 and later entrants; that is a UI decision we leave to the repository's owner."
+}

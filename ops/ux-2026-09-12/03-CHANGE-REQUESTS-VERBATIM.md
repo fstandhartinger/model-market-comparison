@@ -988,3 +988,71 @@ Bookmarked post by Elliot Arledge (@elliotarledge), posted Sat Sep 12 01:00:01 +
 Links in the post: `https://kernelbench.com/cuda`
 Media in the post: `https://pbs.twimg.com/media/HR-NoEobsAAm-Fl.png` (results are often only in the image — read it).
 Registry check: not in the registry and not in any change request.
+
+
+## CR-20260919a — New benchmarks from Florian's X bookmark folder "evals" (RSI-Exam) → CR-83
+Filed automatically by the bookmark intake (`/opt/benchmarkheaven/bin/bookmarks_intake.py`), 19 Sep 2026 06:45 UTC. Standing rule, Florian 18 Sep 2026, verbatim:
+
+> new rule for benchmark heaven: it should look into https://x.com/i/history/bookmarks/2098158441952907558 once a day and check if there are new evals/benchmarks it doesn't have in its list yet, and then add them
+
+Source folder: https://x.com/i/history/bookmarks/2098158441952907558
+
+### RSI-Exam — https://x.com/HuaxiuYaoML/status/2100959310624825688
+Bookmarked post by Huaxiu Yao (@HuaxiuYaoML), posted Fri Sep 18 14:45:08 +0000 2026. Post text, verbatim:
+
+> 📊 RSI-Exam now has more frontier models on the board: Fable 5.1 @AnthropicAI, Muse Spark @AIatMeta, and Seed-Evolving-0909 @ByteDanceSeed_.
+>
+> 🥇 GPT-6-astra still #1 at 0.5126
+> 🆕 Fable 5.1 lands straight at #2 (0.4813)
+>
+> As of this release, still nobody has reached the frontier-calibrated reference.
+>
+>  🔗 https://t.co/8uvx0jMr0K
+
+Links in the post: `http://rsi-exam.ai`
+Media in the post: `https://pbs.twimg.com/media/HSgZxCpWYAA3Q0P.jpg` (results are often only in the image — read it).
+Registry check: not in the registry and not in any change request.
+
+
+<!-- Seeded 2026-09-19 07:15 UTC by the work iteration (claude-opus) from ops/ux-2026-09-12/jevbench/CR-20260919a.md, delivered by the supervisor as an untracked folder. Its heading said "→ CR-83", but the bookmark intake had already taken CR-20260919a / CR-83 for RSI-Exam an hour earlier; this one is numbered CR-84. Text below is the file verbatim. -->
+## CR-20260919a (JevBench, second file of that date) — "Jev-class models": our own benchmark gets its own section → CR-84 (file said CR-83; renumbered, see note)
+
+Florian, X post 18 Sep 2026, verbatim (quoting @stochasticchasm, "all these open jev recreations
+remind me of people chaining 5 web search tool calls together and calling it open deep research"):
+
+> we need a Jev benchmark - to see which of the Jevs is actually good => smart + cheap + fast + reliable + ideally open
+
+Florian to Claude Code, same day, verbatim:
+
+> Wenn das Ergebnis gut wird, kannst du gerne einen starken launch post machen. Und eventuell gleich noch recherchieren wer die Marktmitbewerber sind und einen Benchmark implementieren und umsetzen und auf Benchmark Heaven eine eigene Sektion Jev Models hinzufügen und dann kann BenchmarkHeaven darüber posten.
+
+**The benchmark exists and has been run.** JevBench v1: 9 systems x 242 typed decisions, measured
+on 19 Sep 2026 from this server. This CR is the page, the data and the registry entry - the
+measurement work is done and is not asking anything of this loop.
+
+Delivered next to this file, all self-contained:
+
+| File | What it is |
+|---|---|
+| `jevbench/SPEC.md` | The complete page, data-contract and acceptance specification |
+| `jevbench/jevbench-v1-results.json` | The publication-safe results artifact (aggregates only; no item text, no label, no per-item prediction) |
+| `jevbench/registry-entry.json` | The proposed `jevbench::v1` registry entry, every field populated |
+| `jevbench/charts/` | Reference renderings of the three charts, for layout only - the page should draw its own from the JSON |
+| `jevbench/PAGE-COPY.md` | Ready English copy: lead, method, limits, per-row credits and links |
+
+Route `/jev-models`, nav label **Jev-class models**. Suggested data home:
+`data/raw/benchmarks/jevbench/v1/jevbench-v1-results.json`.
+
+Three things that matter more than the layout:
+
+1. **It is our own benchmark, and the page has to say so in the lead**, not in a footnote.
+   Benchmark Heaven is measuring here, not aggregating someone else's leaderboard.
+2. **Five axes, five sortable columns, no combined winner.** Smart, cheap, fast, reliable, open.
+   The whole point of Florian's brief is the trade-off between them; a single composite would
+   delete it.
+3. **Nothing on the page may invent a number.** A route with no billable account carries a null
+   price and the page must render "no per-token tariff", never `$0.00`. Systems we could not run
+   get an availability row with the concrete reason, outside the ranking.
+
+Registry: category `Other` for now - there is no decision-model category. If a new category is
+worth the UI work, "Decision models" is the accurate label and would also fit later entrants.
