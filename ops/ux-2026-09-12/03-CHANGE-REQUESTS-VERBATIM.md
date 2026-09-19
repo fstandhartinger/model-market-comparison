@@ -1056,3 +1056,9 @@ Three things that matter more than the layout:
 
 Registry: category `Other` for now - there is no decision-model category. If a new category is
 worth the UI work, "Decision models" is the accurate label and would also fit later entrants.
+
+
+## CR-20260919a — DeepSeek V4.1 Flash has almost no scores → CR-85
+Florian, Claude Code chat, 19 Sep 2026 ~09:00 UTC, verbatim: "wieso hat DeepSeek V4.1 Flash keine scores auf benchmark heaven"
+
+Diagnosis (Claude Code): live row `deepseek-v4.1-flash::max` shows only composite 71.3 from ONE input (AA Intelligence Index 39.5, coverage 1/7, 0 attached), no coding/agentic/category scores, although it has 16 benchmark results. Cause at the source: in `data/raw/artificialanalysis.json` (AA API) the model (released 2026-09-10) has intelligence_index 39.5, hle 0.392, scicode 0.519, lcr 0.84 and **null** for coding_index, livecodebench, terminalbench, tau2 etc. The older DeepSeek V4 Flash 0731 has a full set (coding index 69.1, coding agent 49.8, agentic 41.7, Epoch ECI). The composite and the Benchmaxxing tag (medium) of V4.1 Flash therefore rest on very thin evidence.

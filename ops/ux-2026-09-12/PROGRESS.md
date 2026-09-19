@@ -477,6 +477,9 @@ The laptop supervisor appended CR-20260917 (verbatim in `03-CHANGE-REQUESTS-VERB
 | CR-84.1 | JevBench v1: commit the publication-safe results artifact under data/raw/benchmarks/jevbench/v1/, schema test, registry entry `jevbench::v1` | open | | | Seeded 2026-09-19 07:15 UTC from the supervisor's `jevbench/` folder (file said CR-83; renumbered, CR-83 is RSI-Exam) |
 | CR-84.2 | JevBench v1: page `/jev-models` ("Jev-class models" nav), five sortable axes, no composite, scatter + calibration from the JSON, method/limits copy | open | | | Seeded 2026-09-19 07:15 UTC |
 | CR-84.3 | JevBench v1: live check both hosts 1440/390 light/dark, keyboard access, number parity against the artifact hash; launch post stays gated on Florian | open | | | Seeded 2026-09-19 07:15 UTC |
+| CR-85.1 | DeepSeek V4.1 Flash: AA web page values + daily check for models with ≤1 composite input | open | | | Filed 2026-09-19 ~09:00 UTC by Claude Code (Florian chat); high priority |
+| CR-85.2 | DeepSeek V4.1 Flash: other primary sources (vendor card, OpenRouter, Epoch, leaderboards) with provenance → category scores | open | | | Filed 2026-09-19 ~09:00 UTC by Claude Code (Florian chat); high priority |
+| CR-85.3 | Thin-data marker + uncertain Benchmaxxing wording verified live for V4.1 Flash | open | | | Filed 2026-09-19 ~09:00 UTC by Claude Code (Florian chat); high priority |
 - **2026-09-17 · priority job bh-tag-and-pareto-fix-20260917 · claude-opus** — Florian's CR-77 (tags follow the
   score, Pareto grace band), implemented outside the loop with the UX loop paused. Independent review by codex-luna
   (gpt-5.6-luna, xhigh) on `d5e541c`: `/opt/benchmarkheaven/state/ux-evidence/cr77-review/codex-review-20260917.md` —
