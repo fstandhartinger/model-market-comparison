@@ -505,6 +505,156 @@ def parse(source,spec,load_source):
                 'context':{'label':m['label'],'harness':m.get('harness'),'stated_effort':m.get('effort') or 'not stated','stated_model':m.get('model'),
                     'annotation_verdict':verdict,'run_id':cell.get('run_id'),'elapsed_seconds':cell.get('elapsed_seconds'),'problem':problem,
                     'hardware':hardware,'peak_fraction':value,'percent_of_roofline':value*100}})
+    elif kind=='frontierswe_v2_board':
+        # FrontierSWE v2 (Proximal team, frontierswe.com): the leaderboard page embeds its rows in the
+        # app's own Next.js flight payload ("entries":{"abs":{"best":…,"mean":…,"worst":…}}). The
+        # published score is the site's own headline mean@5 in percent across the 34 tasks (5 trials
+        # per task, 20-hour budget, per-trial cost/time averages); best@5/worst@5, the three category
+        # sub-scores and the generation label stay in the protocol. Epoch AI's FrontierSWE relay CSV
+        # (method_source; Source column = this site) restates rows of the same board with each model's
+        # reasoning effort; it is the reviewed effort evidence for the identity joins and a byte-exact
+        # cross-check of every relayed mean. Guards: V2 page identity phrases, uniform proximus harness,
+        # identical model sets across the three views, best>=mean>=worst per model, the exact relay
+        # header and relay/site agreement per relayed row; a row the relay does not cover carries no
+        # effort and joins nothing.
+        req=spec['require']
+        for phrase in req['text']:
+            if phrase not in source:raise ValueError('FrontierSWE v2 page identity changed: missing '+phrase)
+        chunks=[]
+        for raw in re.findall(r'<script[^>]*>self\.__next_f\.push\(\[1,"((?:\\.|[^"\\])*)"\]\)</script>',source,re.S):
+            chunks.append(raw.encode('utf-8').decode('unicode_escape'))
+        flight=''.join(chunks)
+        marker='"entries":{'
+        if flight.count(marker)!=1:raise ValueError('FrontierSWE v2 entries payload missing or duplicated')
+        start=flight.find(marker)+len(marker)-1;depth=0;end=None
+        for j in range(start,len(flight)):
+            if flight[j]=='{':depth+=1
+            elif flight[j]=='}':
+                depth-=1
+                if depth==0:end=j+1;break
+        if not end:raise ValueError('FrontierSWE v2 entries payload truncated')
+        views=json.loads(flight[start:end]).get(req.get('entries_key','abs'))
+        if not isinstance(views,dict) or sorted(views.keys())!=['best','mean','worst']:raise ValueError('FrontierSWE v2 view set changed')
+        mean=views['mean'];best={r.get('model'):r for r in views['best']};worst={r.get('model'):r for r in views['worst']}
+        if not isinstance(mean,list) or len(mean)<8 or len(mean)!=len(best) or len(mean)!=len(worst) or len({r.get('model') for r in mean})!=len(mean):
+            raise ValueError('FrontierSWE v2 row set changed')
+        required={'model','harness','vendor','generation','overall','implementation','performance','research','avgCostUsd','avgDurationSeconds'}
+        for index,r in enumerate(mean):
+            if not required <= set(r.keys()):raise ValueError(f'FrontierSWE v2 row {index}: fields changed ({sorted(required-set(r.keys()))})')
+            if r['harness']!='proximus':raise ValueError(f"FrontierSWE v2 row {index}: harness {r['harness']!r} is not proximus")
+            if r['generation'] not in (1,2):raise ValueError(f"FrontierSWE v2 row {index}: generation {r['generation']!r} not stated")
+            if r['model'] not in best or r['model'] not in worst:raise ValueError(f"FrontierSWE v2 row {index}: {r['model']!r} missing from best/worst views")
+            for field in ('overall','implementation','performance','research'):
+                value=r[field]
+                if not isinstance(value,(int,float)) or isinstance(value,bool) or not math.isfinite(value) or not 0<=value<=100:
+                    raise ValueError(f'FrontierSWE v2 row {index}: {field} out of range')
+            if not best[r['model']]['overall']+1e-9>=r['overall']>=worst[r['model']]['overall']-1e-9:
+                raise ValueError(f"FrontierSWE v2 row {index}: best/mean/worst ordering violated for {r['model']!r}")
+        relay=csvrows(load_source(spec['method_source']))
+        relay_header=req['relay_header']
+        if list(relay[0].keys() if relay else [])!=relay_header:raise ValueError('FrontierSWE relay CSV header changed')
+        relayed={r['Name']:r for r in relay}
+        if len(relayed)!=len(relay):raise ValueError('FrontierSWE relay CSV repeats a model name')
+        for name,r in relayed.items():
+            site=next((x for x in mean if x['model']==name),None)
+            if site is None:raise ValueError(f'FrontierSWE relay row {name!r} is not on the board')
+            if abs(float(r['Score'])*100-site['overall'])>1e-6:raise ValueError(f'FrontierSWE relay/site mean diverges for {name!r}')
+            if r['Source']!=req['relay_source']:raise ValueError(f'FrontierSWE relay row {name!r}: Source column changed')
+        for index,r in enumerate(mean):
+            rel=relayed.get(r['model'])
+            rows.append({'name':r['model'],'id':r['model'],'mean_at_5':r['overall'],'source_row':index,'harness':r['harness'],
+                'context':{'vendor':r['vendor'],'generation':r['generation'],'best_at_5':best[r['model']]['overall'],'worst_at_5':worst[r['model']]['overall'],
+                    'implementation':r['implementation'],'performance':r['performance'],'research':r['research'],
+                    'avg_cost_usd':r['avgCostUsd'],'avg_duration_seconds':r['avgDurationSeconds'],'tasks':req['tasks'],'trials_per_task':req['trials_per_task'],
+                    'epoch_relay_id':rel['Model version'] if rel else None,'epoch_relay_effort':(rel['Model version'].rsplit('_',1)[1] if rel and '_' in rel['Model version'] else None),
+                    'epoch_relay_aggregation':rel['Aggregation'] if rel else None}})
+    elif kind=='posttrainbench_js':
+        # PostTrainBench v1.1 (aisa-group / Ben Rank et al., posttrainbench.com): scores.js is the
+        # artifact the leaderboard renders (window.SCORES_DATA: per-cell values, the published
+        # benchmark weights and the per-agent aggregated leaderboard averages with their run counts);
+        # config.js (config_source) states each agent's display name, CLI scaffold, reasoning effort
+        # and footnote markers. One row per aggregated agent on the current board; the baseline rows
+        # (official instruct models, base models) are references, never observations. Guards: the
+        # exact benchmark-weight map, the four production base models, 0<=values<=100, integer run
+        # counts >=1, every aggregated agent present in config, and the page's stated enums for
+        # scaffolds and reasoning efforts.
+        req=spec['require']
+        match=re.search(r'\bwindow\.SCORES_DATA\s*=\s*',source)
+        if not match:raise ValueError('PostTrainBench scores assignment missing')
+        scores=static_json(source,match.end())
+        weights=scores.get('benchmarkWeights')
+        if not isinstance(weights,dict) or sorted(weights.keys())!=sorted(req['benchmark_weights']):raise ValueError('PostTrainBench benchmark weights changed')
+        if abs(sum(float(v) for v in weights.values())-1.0)>1e-6:raise ValueError('PostTrainBench benchmark weights no longer sum to 1')
+        cells=scores.get('modelBenchmarkData')
+        if not isinstance(cells,dict):raise ValueError('PostTrainBench cell map changed')
+        for base in req['required_rows']:
+            if base not in cells:raise ValueError('PostTrainBench baseline row missing: '+base)
+        config=load_source(spec['config_source'])
+        info_match=re.search(r'const\s+agentInfo\s*=\s*\{',config)
+        if not info_match:raise ValueError('PostTrainBench agentInfo missing')
+        depth=0;end=None
+        for j in range(config.find('{',info_match.start()),len(config)):
+            if config[j]=='{':depth+=1
+            elif config[j]=='}':
+                depth-=1
+                if depth==0:end=j+1;break
+        if not end:raise ValueError('PostTrainBench agentInfo truncated')
+        block=config[config.find('{',info_match.start()):end]
+        agents={}
+        for key_match in re.finditer(r'"([^"]+)":\s*\{',block):
+            key=key_match.group(1)
+            bdepth=0;bend=None
+            for j in range(key_match.end()-1,len(block)):
+                if block[j]=='{':bdepth+=1
+                elif block[j]=='}':
+                    bdepth-=1
+                    if bdepth==0:bend=j+1;break
+            if not bend:raise ValueError('PostTrainBench agentInfo entry truncated: '+key)
+            entry=block[key_match.end()-1:bend]
+            fields={}
+            for field in ('name','scaffold','reasoningEffort','footnoteMarker','verificationNote'):
+                fm=re.search(r'\b'+field+r':\s*"((?:\\.|[^"\\])*)"',entry)
+                if fm:fields[field]=fm.group(1)
+            fields['isBaseline']=bool(re.search(r'\bisBaseline:\s*true\b',entry))
+            fields['isExternal']=bool(re.search(r'\bisExternal:\s*true\b',entry))
+            agents[key]=fields
+        if len(agents)<req['minimum_agents']:raise ValueError('PostTrainBench agentInfo shrank')
+        effort_vocab=req['effort_vocab'];scaffold_vocab=req['scaffold_vocab']
+        agg=scores.get('aggregatedScores')
+        if not isinstance(agg,dict) or not agg:raise ValueError('PostTrainBench aggregated scores missing')
+        for index,(key,entry) in enumerate(sorted(agg.items())):
+            if key not in agents:raise ValueError(f'PostTrainBench agent {key!r} missing from agentInfo')
+            info=agents[key]
+            if info['isBaseline']:continue
+            if not isinstance(entry,dict) or not all(isinstance(entry.get(f),(int,float)) or isinstance(entry.get(f),dict) for f in ('avg','std')):
+                raise ValueError(f'PostTrainBench agent {key!r}: aggregated shape changed')
+            avg, std = entry.get('avg'), entry.get('std')
+            n_runs=entry.get('n')
+            if not isinstance(avg,(int,float)) or isinstance(avg,bool) or not 0<=avg<=100:raise ValueError(f'PostTrainBench agent {key!r}: avg out of range')
+            if not isinstance(std,(int,float)) or isinstance(std,bool) or not 0<=std<=100:raise ValueError(f'PostTrainBench agent {key!r}: std out of range')
+            if not isinstance(n_runs,int) or isinstance(n_runs,bool) or n_runs<1:raise ValueError(f'PostTrainBench agent {key!r}: run count invalid')
+            agent_cells=cells.get(key)
+            if not isinstance(agent_cells,dict):raise ValueError(f'PostTrainBench agent {key!r}: no per-cell data')
+            for base in req['base_models']:
+                if base not in agent_cells:raise ValueError(f'PostTrainBench agent {key!r}: base model {base!r} missing')
+                per=agent_cells[base]
+                for bench in req['benchmark_weights']:
+                    if bench not in per:raise ValueError(f'PostTrainBench agent {key!r}/{base}: benchmark {bench!r} missing')
+                    cell=per[bench]
+                    if not isinstance(cell,dict) or not isinstance(cell.get('fallbackType'),bool):raise ValueError(f'PostTrainBench agent {key!r}/{base}/{bench}: cell shape changed')
+                    value=cell.get('value')
+                    if not isinstance(value,(int,float)) or isinstance(value,bool) or not math.isfinite(value) or not 0<=value<=100:
+                        raise ValueError(f'PostTrainBench agent {key!r}/{base}/{bench}: cell value out of range')
+            effort=info.get('reasoningEffort') or ''
+            if effort and effort.split(',')[0].strip() not in effort_vocab:raise ValueError(f'PostTrainBench agent {key!r}: unlisted reasoning effort {effort!r}')
+            scaffold=info.get('scaffold') or ''
+            if not scaffold or scaffold not in scaffold_vocab:raise ValueError(f'PostTrainBench agent {key!r}: unlisted scaffold {scaffold!r}')
+            reprompted=', Reprompted' in effort
+            rows.append({'name':info.get('name') or key,'id':key,'average_score':avg,'source_row':index,'harness':scaffold,
+                'context':{'scaffold':scaffold,'reasoning_effort':effort or 'not stated','reprompted':reprompted,
+                    'n_runs':n_runs,'std':std,'base_models':req['base_models'],'benchmarks':req['benchmark_weights'],
+                    'is_external':info['isExternal'],'footnote_marker':info.get('footnoteMarker') or None,
+                    'verification_note':info.get('verificationNote') or None}})
     else:raise ValueError('Unknown parser kind '+kind)
     if not isinstance(rows,list) or not rows:raise ValueError('No source result rows')
     return rows
@@ -548,7 +698,7 @@ def collect(plan,registry,root=Path('.'),evidence=None):
                 'protocol':protocol,'comparison_key':None}
             if scale!=1 or 'derivation' in row:
                 o.update(basis='derived',source_basis=basis,derivation=row.get('derivation',{'formula':f'Source value × {scale} to registry units','inputs':[raw_value]}))
-            supporting=[(k,rule[k]) for k in ['method_source','categories_source','frontend_source','detail_source'] if k in rule]
+            supporting=[(k,rule[k]) for k in ['method_source','categories_source','frontend_source','detail_source','config_source'] if k in rule]
             if supporting:
                 o['supporting_sources']=[{'url':s['url'],'file':s['file'],'sha256':s['sha256'],'retrieved_at':s.get('retrieved_at',s.get('fetched_at')),'published_at':None,'locator':k} for k,s in supporting]
             if evidence is not None:evidence[o['id']]={'source_row':row,'parser':rule,'source_index':index}

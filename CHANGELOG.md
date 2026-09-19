@@ -4,6 +4,26 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-19 — Two new benchmark identities: FrontierSWE v2 and PostTrainBench v1.1
+
+**New versioned benchmark identities, same file locations and API shape.** FrontierSWE v2 joins as
+`frontierswe::2` (34 hand-written real-world software tasks; mean@5 in percent with best@5/worst@5 bounds,
+5 trials per task under a 20-hour budget, published by the Proximal team with open task repos) from the
+leaderboard front page's own Next.js flight payload; Epoch AI's FrontierSWE relay CSV restates 12 overlapping
+rows byte-exactly and is the only stated effort evidence, so 8 of the 14 rows join exact catalog
+configurations (Claude Fable 5.1 max, GPT-5.6 Sol max, GLM-5.3 max, Kimi K3 max, Grok 4.6 xhigh, Gemini 3.7
+Flash high, Muse Spark 1.2 xhigh, Inkling xhigh) and the five later additions without any stated setting
+(GPT-6 Astra at the top, four more) stay visible as unmatched source identities. PostTrainBench joins as
+`posttrainbench::1.1` (agents retrain four small base models for 7 benchmark families; the leaderboard
+average is the published weighted mean) from the site's own `scores.js` + `config.js` (the config states each
+agent's scaffold and reasoning effort, which lands in every row's protocol and the join reads it live); 7 of
+13 rows join exact catalog configurations (Fable 5 max, GPT-5.6 Sol max, Claude Opus 4.8 high and max, GLM
+5.2 max, GPT-5.5 xhigh, Grok 4.5 high) and the rest refuse honestly (unstated effort for Kimi K3, Opus 5 and
+the OpenCode Gemini run; no catalog configuration for Opus 4.7 xHigh and GPT 5.4 High; Locus is an external
+system, not a model). Attribution unchanged: FrontierSWE by the Proximal team (robots.txt allows our
+identity; relay by Epoch AI), PostTrainBench by aisa-group (Ben Rank et al.; MIT harness; the site's footer
+states "Verified by Epoch AI").
+
 ## 2026-09-18 — Five new benchmark identities: VulcanBench Frontier v4 and four KernelBench-CUDA problem boards
 
 **New versioned benchmark identities, same file locations and API shape.** VulcanBench's current suite joins as

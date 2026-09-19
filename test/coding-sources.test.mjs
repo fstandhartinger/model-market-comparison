@@ -19,6 +19,8 @@ const SLUG_BOARDS = ['osworld-2', 'swe-rebench', 'gso', 'hyper-tau-bench', 'lisa
   // brackets) and KernelBench-CUDA (run-identity labels; one reviewed identity per problem, hardware is the version).
   'vulcanbench-frontier', 'kernelbench-cuda-glm52-fused-moe', 'kernelbench-cuda-deepseek-nsa',
   'kernelbench-cuda-megaqwen-decode', 'kernelbench-cuda-grid-mingru-sps',
+  // 2026-09-19 (iteration 117, CR-30.2): two product-name boards from their own primary sites.
+  'frontierswe', 'posttrainbench',
   // 2026-09-19 (iteration 115, CR-54.2): six boards from Epoch AI's Benchmarking Hub ZIP, slug labels joined by
   // the same lib/coding-identity.mjs parseDeepSweId rule as DeepSWE/SimpleQA Verified. math_level_5 and
   // frontiermath_erdos stay excluded; recorded in data/raw/benchmarks/epoch-hub-decisions.json.

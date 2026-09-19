@@ -4,7 +4,7 @@
 // ops/benchmark-table-2026-09-15/identity-map-review.json. Review the diff of both files before committing.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { identityJoins, parseDeepSweId, parseScaleLabel, parseFrontierCodeId, parseCursorBenchLabel, parseSweBenchProLabel } from '../../lib/coding-identity.mjs';
-import { boardJoins, parseBullshitBenchId, parseApprenticeBenchId, parseValsIndexId, parseOsworld2Id, parseMathArenaLabel, parseWeirdmlV3Label, parseSweRebenchLabel, parseGsoId, parseHyperTauId, parseLisanBenchId, parseVulcanbenchFrontierLabel, parseKernelbenchCudaLabel } from '../../lib/board-identity.mjs';
+import { boardJoins, parseBullshitBenchId, parseApprenticeBenchId, parseValsIndexId, parseOsworld2Id, parseMathArenaLabel, parseWeirdmlV3Label, parseSweRebenchLabel, parseGsoId, parseHyperTauId, parseLisanBenchId, parseVulcanbenchFrontierLabel, parseKernelbenchCudaLabel, parseFrontiersweV2Label, parsePosttrainbenchLabel } from '../../lib/board-identity.mjs';
 
 const BOARDS = [
   { prefix: 'deepswe::', parse: parseDeepSweId, basis: 'measured' },
@@ -59,6 +59,14 @@ const BOARDS = [
   // brackets; KernelBench-CUDA run labels `<harness>/<vendor>/<slug> [<effort>]` (one identity per problem).
   { prefix: 'vulcanbench-frontier::', parse: parseVulcanbenchFrontierLabel, join: boardJoins, basis: 'measured' },
   { prefix: 'kernelbench-cuda-', parse: parseKernelbenchCudaLabel, join: boardJoins, basis: 'measured' },
+  // 2026-09-19 (iteration 117, CR-30.2): FrontierSWE v2 (Proximal team) and PostTrainBench v1.1
+  // (aisa-group), both from their own primary sites. FrontierSWE states no effort on the site; the
+  // effort comes live from Epoch AI's relay statement in the protocol and only relay-covered labels
+  // are reviewed (the five later additions incl. GPT-6 Astra are honestly refused). PostTrainBench's
+  // config.js states name/scaffold/effort per agent; effort is read live from the protocol and a
+  // stated effort with no catalog configuration (Opus 4.7 xHigh, GPT 5.4 High) is refused.
+  { prefix: 'frontierswe::', parse: parseFrontiersweV2Label, join: boardJoins, basis: 'measured' },
+  { prefix: 'posttrainbench::', parse: parsePosttrainbenchLabel, join: boardJoins, basis: 'measured' },
 ];
 const observations = JSON.parse(readFileSync('data/raw/benchmarks/public-observations.json')).observations;
 const catalog = JSON.parse(readFileSync('data/dataset.json')).models.map(({ id, family_key, variant }) => ({ id, family_key, variant }));

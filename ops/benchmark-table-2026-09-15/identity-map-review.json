@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-19T00:09:45.391Z",
-  "joined": 1273,
+  "generated_at": "2026-09-19T04:59:01.960Z",
+  "joined": 1288,
   "unmatched": [
     {
       "benchmark_id": "deepswe::snapshot-2026-09-15",
@@ -7636,6 +7636,66 @@
       "benchmark_id": "kernelbench-cuda-grid-mingru-sps::rtx-pro-6000",
       "source_id": "or-fable/qwen/qwen3.8-max [xhigh]",
       "reason": "no catalog configuration for qwen3.8-max with setting xhigh"
+    },
+    {
+      "benchmark_id": "frontierswe::2",
+      "source_id": "GPT-6 Astra",
+      "reason": "label is not a catalog model slug"
+    },
+    {
+      "benchmark_id": "frontierswe::2",
+      "source_id": "Claude Opus 5",
+      "reason": "label is not a catalog model slug"
+    },
+    {
+      "benchmark_id": "frontierswe::2",
+      "source_id": "Claude Fable 5",
+      "reason": "label is not a catalog model slug"
+    },
+    {
+      "benchmark_id": "frontierswe::2",
+      "source_id": "Gemini 3.8 Flash",
+      "reason": "label is not a catalog model slug"
+    },
+    {
+      "benchmark_id": "frontierswe::2",
+      "source_id": "Qwen3.8-Max",
+      "reason": "no catalog configuration for qwen3.8-max with setting xhigh"
+    },
+    {
+      "benchmark_id": "frontierswe::2",
+      "source_id": "DeepSeek V4 Flash Vision Exp",
+      "reason": "label is not a catalog model slug"
+    },
+    {
+      "benchmark_id": "posttrainbench::1.1",
+      "source_id": "gemini-3.1-pro",
+      "reason": "setting not stated and gemini-3.1-pro has 1 catalog configurations"
+    },
+    {
+      "benchmark_id": "posttrainbench::1.1",
+      "source_id": "gpt-5.4-high",
+      "reason": "no catalog configuration for gpt-5.4 with setting high"
+    },
+    {
+      "benchmark_id": "posttrainbench::1.1",
+      "source_id": "kimi-k3",
+      "reason": "setting not stated and kimi-k3 has 3 catalog configurations"
+    },
+    {
+      "benchmark_id": "posttrainbench::1.1",
+      "source_id": "locus",
+      "reason": "label is not a catalog model slug"
+    },
+    {
+      "benchmark_id": "posttrainbench::1.1",
+      "source_id": "opus-4.7",
+      "reason": "no catalog configuration for claude-opus-4.7 with setting xhigh"
+    },
+    {
+      "benchmark_id": "posttrainbench::1.1",
+      "source_id": "opus-5",
+      "reason": "setting not stated and claude-opus-5 has 6 catalog configurations"
     }
   ]
 }

@@ -1,497 +1,499 @@
 {
-  "version": "2026-09-16",
-  "note": "CR-1.3 / CR-1.7: presentation metadata for the Benchmarks comparison table. Groups map registry categories to display groups; overrides are keyed by the benchmark id before '::' (or the snapshot key). Tiers are editorial tags, drafted by one engine and reviewed by another. Nothing here changes a score. 2026-09-15: aa_input_keys marks Coding Agent Index constituents; Terminal-Bench rows display under Coding. score_ranges: the published 0–100 scale of unregistered snapshot index axes, used only to decide whether a row may enter a category composite. 2026-09-16: OpenRouter's own reproducible runs (CR-34.2) enter as their own registry families; their -cost families are the measured spend of the same run and sit under Cost & efficiency. All of them are tier 'niche': release posts cite Artificial Analysis' GPQA Diamond and tau2-Bench, not OpenRouter's own re-runs, and the Simple table must not show two different GPQA numbers side by side. 2026-09-16 (CR-38.2/38.3, F-98): the tags 'saturated' and 'judged' are not editorial — 'saturated' is computed from the results we hold (saturationOf in lib/benchmark-matrix.mjs) and 'judged' comes from data/benchmark-caveats.json, where every classification quotes its own source. Both affect category composites: a judged row never averages with task accuracy, a saturated row weighs half.",
-  "groups": [
-    {
-      "id": "indices",
-      "label": "Composite indices",
-      "categories": []
-    },
-    {
-      "id": "coding",
-      "label": "Coding",
-      "categories": [
-        "Coding"
-      ]
-    },
-    {
-      "id": "agentic",
-      "label": "Agentic & tool use",
-      "categories": [
-        "Agentic",
-        "Tool-use"
-      ]
-    },
-    {
-      "id": "reasoning",
-      "label": "General reasoning & knowledge",
-      "categories": [
-        "Reasoning",
-        "Knowledge"
-      ]
-    },
-    {
-      "id": "math",
-      "label": "Math",
-      "categories": [
-        "Math"
-      ]
-    },
-    {
-      "id": "science",
-      "label": "Science",
-      "categories": [
-        "Science"
-      ]
-    },
-    {
-      "id": "long-context",
-      "label": "Long context",
-      "categories": [
-        "Long-context"
-      ]
-    },
-    {
-      "id": "instruction",
-      "label": "Instruction following",
-      "categories": [
-        "Instruction-following"
-      ]
-    },
-    {
-      "id": "vision",
-      "label": "Multimodal & vision",
-      "categories": [
-        "Vision"
-      ]
-    },
-    {
-      "id": "design",
-      "label": "Design & UI",
-      "categories": []
-    },
-    {
-      "id": "writing",
-      "label": "Writing & roleplay",
-      "categories": [
-        "Writing",
-        "Roleplay"
-      ]
-    },
-    {
-      "id": "safety",
-      "label": "Safety & refusals",
-      "categories": [
-        "Safety/Alignment",
-        "Uncensored"
-      ]
-    },
-    {
-      "id": "efficiency",
-      "label": "Cost & efficiency",
-      "categories": [
-        "Efficiency"
-      ]
-    },
-    {
-      "id": "other",
-      "label": "Other",
-      "categories": [
-        "Other"
-      ]
-    }
-  ],
-  "group_overrides": {
-    "aa_intelligence_index": "indices",
-    "aa_coding_index": "indices",
-    "aa-coding-agent-index": "indices",
-    "aa-omniscience": "indices",
-    "vals-index": "indices",
-    "epoch_eci": "indices",
-    "epoch_eci_software": "indices",
-    "frontend": "design",
-    "fullstack": "design",
-    "aa-terminal-bench": "coding",
-    "aa-terminal-bench-hard": "coding",
-    "terminal-bench": "coding",
-    "vals-index-terminal-bench-2.1": "coding"
-  },
-  "arena_keys": [
-    "frontend",
-    "fullstack"
-  ],
-  "aa_keys": [
-    "aa_intelligence_index",
-    "aa_coding_index",
-    "aa_agentic_index"
-  ],
-  "descriptions": {
-    "aa_intelligence_index": "Artificial Analysis' headline aggregate of its independent evaluations.",
-    "aa_coding_index": "Artificial Analysis' aggregate of its coding evaluations.",
-    "frontend": "Human head-to-head votes on generated front-end designs (Elo).",
-    "fullstack": "Human head-to-head votes on generated full-stack apps (Elo).",
-    "deepswe": "Pass rate on original, long-horizon engineering tasks, run by Datacurve with the mini-swe-agent harness.",
-    "swe-atlas-qna": "How well an agent answers deep questions about a real codebase, graded against rubrics by Scale AI.",
-    "swe-atlas-test-writing": "Whether an agent writes production-grade tests for real repositories, graded by Scale AI.",
-    "swe-atlas-refactoring": "Whether an agent restructures production code while preserving its behaviour, graded by Scale AI.",
-    "aa_agentic_index": "Artificial Analysis' aggregate of its agentic evaluations (one configuration measured per model), relayed by OpenRouter's Benchmarks API."
-  },
-  "model_field_rows": [
-    {
-      "key": "epoch_eci",
-      "field": "epoch_eci",
-      "name": "Epoch Capabilities Index (ECI)",
-      "maintainer": "Epoch AI",
-      "source": "epoch_eci",
-      "unit": "points",
-      "url": "https://epoch.ai/eci",
-      "description": "Epoch AI's index that places many benchmarks on one capability scale."
-    },
-    {
-      "key": "epoch_eci_software",
-      "field": "epoch_eci_software",
-      "name": "Epoch Software ECI",
-      "maintainer": "Epoch AI",
-      "source": "epoch_eci",
-      "unit": "points",
-      "url": "https://epoch.ai/eci",
-      "description": "Epoch AI's capability scale, refit by us over its published software-engineering results."
-    }
-  ],
-  "tags": {
-    "aa": {
-      "label": "AA",
-      "tip": "Measured by Artificial Analysis, the independent lab behind the AA Intelligence Index."
-    },
-    "arena": {
-      "label": "Arena",
-      "tip": "Human head-to-head votes, scored as Elo."
-    },
-    "headline": {
-      "label": "Headline",
-      "tip": "Widely cited in model release posts and technical reports."
-    },
-    "niche": {
-      "label": "Niche",
-      "tip": "A specialised benchmark from a company or research lab, rarely cited in release posts."
-    },
-    "community": {
-      "label": "Community",
-      "tip": "Run by an independent individual or community project."
-    },
-    "aa_input": {
-      "label": "AA index input",
-      "tip": "A benchmark Artificial Analysis averages into its Coding Index (Terminal-Bench, SciCode) or Coding Agent Index v1.5 (DeepSWE, Terminal-Bench 4.0, SWE-Atlas-QnA). The row shows this source’s own published results."
-    },
-    "retired": {
-      "label": "Retired",
-      "tip": "The maintainer stopped reporting this benchmark: new models are no longer scored on it, so the values here are the ones it published before. Recorded as status \"retained\" in our benchmark registry and re-checked against the maintainer's own protocol text on every refresh."
-    },
-    "saturated": {
-      "label": "Saturated",
-      "tip": "Top models sit near this benchmark's ceiling; it separates weaker models, not the best."
-    },
-    "judged": {
-      "label": "Judged",
-      "tip": "A preference or judge score, not task accuracy."
-    },
-    "source_changed": {
-      "label": "Changed at source",
-      "tip": "The source changed or stopped showing these results after we captured them; the values are as published on the capture date."
-    },
-    "family_scope": {
-      "label": "family",
-      "tip": "The source measures one configuration per model family (not every reasoning setting), so the same value is shown for every configuration of that family; a cell names the exact configuration it was measured on."
-    }
-  },
-  "tiers": {
-    "epoch_eci": "headline",
-    "epoch_eci_software": "headline",
-    "aa-aime": "headline",
-    "aa-analystagent": "niche",
-    "aa-apex-agents": "niche",
-    "aa-automationbench": "niche",
-    "aa-briefcase": "niche",
-    "aa-coding-agent-index": "headline",
-    "aa-critpt": "niche",
-    "aa-enterpriseops-gym": "niche",
-    "aa-gdp-pdf": "niche",
-    "aa-gdpval": "niche",
-    "aa-gpqa-diamond": "headline",
-    "aa-harvey-lab": "niche",
-    "aa-hle": "headline",
-    "aa-ifbench": "headline",
-    "aa-itbench": "niche",
-    "aa-lcr": "headline",
-    "aa-livecodebench": "headline",
-    "aa-mlcr": "niche",
-    "aa-mmmu-pro": "headline",
-    "aa-omniscience": "niche",
-    "aa-scicode": "niche",
-    "aa-tau2-telecom": "headline",
-    "aa-tau3-banking": "headline",
-    "aa-terminal-bench": "headline",
-    "aa-terminal-bench-hard": "headline",
-    "aa_coding_index": "headline",
-    "aa_intelligence_index": "headline",
-    "aider-polyglot": "headline",
-    "apprenticebench-api": "niche",
-    "apprenticebench-api-cost": "niche",
-    "apprenticebench-cua": "niche",
-    "apprenticebench-cua-cost": "niche",
-    "arc-agi": "headline",
-    "bu-bench-v1": "niche",
-    "bullshitbench-v1": "community",
-    "bullshitbench-v2": "community",
-    "buzzbench": "community",
-    "critpt": "niche",
-    "cursorbench": "niche",
-    "cursorbench-cost": "niche",
-    "deepswe": "niche",
-    "eq-bench": "community",
-    "eqbench-creative-writing": "community",
-    "eqbench-judgemark": "community",
-    "eqbench-longform-writing": "community",
-    "eqbench-slop-score": "community",
-    "frontend": "headline",
-    "frontiercode": "niche",
-    "frontiercode-cost": "niche",
-    "fullstack": "headline",
-    "helmet": "niche",
-    "hle": "headline",
-    "ifbench": "headline",
-    "japanese-rp-bench-aratako": "community",
-    "japanese-rp-bench-tegnike": "community",
-    "livebench": "niche",
-    "longbench": "niche",
-    "mazur-creative-story-writing": "community",
-    "mazur-divergent-thinking": "community",
-    "mazur-elimination-game": "community",
-    "mmmu": "headline",
-    "openrouter-gpqa-diamond": "niche",
-    "openrouter-gpqa-diamond-cost": "niche",
-    "openrouter-search-browsecomp": "niche",
-    "openrouter-search-browsecomp-cost": "niche",
-    "openrouter-search-dsqa": "niche",
-    "openrouter-search-dsqa-cost": "niche",
-    "openrouter-search-hle": "niche",
-    "openrouter-search-hle-cost": "niche",
-    "openrouter-search-widesearch": "niche",
-    "openrouter-search-widesearch-cost": "niche",
-    "openrouter-tau2-bench-airline": "niche",
-    "openrouter-tau2-bench-airline-cost": "niche",
-    "otis-mock-aime": "niche",
-    "pingpong-english": "community",
-    "realswe": "niche",
-    "realswe-cost": "niche",
-    "rp-bench-community": "community",
-    "ruler": "niche",
-    "scicode": "niche",
-    "simple-bench": "community",
-    "slop-index": "community",
-    "slopbench": "community",
-    "spiral-bench": "community",
-    "swe-atlas-qna": "niche",
-    "swe-atlas-refactoring": "niche",
-    "swe-atlas-test-writing": "niche",
-    "swe-bench-multilingual": "niche",
-    "swe-bench-multimodal": "niche",
-    "swe-bench-pro-public": "headline",
-    "swe-bench-verified": "headline",
-    "tau2-bench": "headline",
-    "tau3-banking": "headline",
-    "tau3-voice": "headline",
-    "terminal-bench": "headline",
-    "towards-ai-editorial-writing": "community",
-    "ugi": "community",
-    "ugi-natint": "community",
-    "ugi-willingness": "community",
-    "ugi-writing": "community",
-    "vals-index": "niche",
-    "vals-index-code-migration": "niche",
-    "vals-index-cost": "niche",
-    "vals-index-emb": "niche",
-    "vals-index-finance-agent": "niche",
-    "vals-index-hlab": "niche",
-    "vals-index-legal-research": "niche",
-    "vals-index-terminal-bench-2.1": "headline",
-    "vals-index-vibe-code-bench": "niche",
-    "vending-bench": "headline",
-    "weirdml": "community",
-    "osworld-2": "headline",
-    "matharena-arxivmath": "niche",
-    "matharena-brokenarxiv": "niche",
-    "frontiermath-tiers-1-3": "headline",
-    "frontiermath-tier-4": "headline",
-    "simpleqa-verified": "headline",
-    "swe-rebench": "niche",
-    "gso": "niche",
-    "hyper-tau-bench": "niche",
-    "lisanbench": "community",
-    "aa_agentic_index": "headline"
-  },
-  "aa_input_keys": [
-    "deepswe",
-    "swe-atlas-qna",
-    "aa-terminal-bench",
-    "aa-scicode"
-  ],
-  "score_ranges": {
-    "aa_intelligence_index": [
-      0,
-      100
-    ],
-    "aa_coding_index": [
-      0,
-      100
-    ]
-  },
-  "best_of": {
-    "note": "CR-41.1 (Florian 2026-09-16): presentation-level merge. One board run through these agent harnesses reads as one row holding each model's best recorded result; boards listed under across_versions also merge their versions. Every run stays separate in the benchmark view, the API and on the result page each value links to. Only rows with the same key, unit and direction merge.",
-    "harness_cohorts": [
-      "Claude Code",
-      "Codex"
-    ],
-    "across_versions": [
-      "aa-coding-agent-index"
-    ]
-  },
-  "benchmark_kinds_note": "CR-64 (Florian 2026-09-16): what each benchmark measures. capability = a task result; cost = money spent per task/rollout/test for a published run; efficiency = tokens, latency, speed or throughput. Only capability benchmarks enter the Benchmaxxing signal, report and radar; cost and efficiency stay visible in the tables and the cost views. Every benchmark key has an explicit entry (tested).",
-  "benchmark_kinds": {
-    "aa-aime": "capability",
-    "aa-analystagent": "capability",
-    "aa-apex-agents": "capability",
-    "aa-automationbench": "capability",
-    "aa-briefcase": "capability",
-    "aa-coding-agent-index": "capability",
-    "aa-critpt": "capability",
-    "aa-enterpriseops-gym": "capability",
-    "aa-gdp-pdf": "capability",
-    "aa-gdpval": "capability",
-    "aa-gpqa-diamond": "capability",
-    "aa-harvey-lab": "capability",
-    "aa-hle": "capability",
-    "aa-ifbench": "capability",
-    "aa-itbench": "capability",
-    "aa-lcr": "capability",
-    "aa-livecodebench": "capability",
-    "aa-mlcr": "capability",
-    "aa-mmmu-pro": "capability",
-    "aa-omniscience": "capability",
-    "aa-scicode": "capability",
-    "aa-tau2-telecom": "capability",
-    "aa-tau3-banking": "capability",
-    "aa-terminal-bench": "capability",
-    "aa-terminal-bench-hard": "capability",
-    "aa_agentic_index": "capability",
-    "aa_coding_index": "capability",
-    "aa_intelligence_index": "capability",
-    "aider-polyglot": "capability",
-    "apprenticebench-api": "capability",
-    "apprenticebench-api-cost": "cost",
-    "apprenticebench-cua": "capability",
-    "apprenticebench-cua-cost": "cost",
-    "arc-agi": "capability",
-    "bu-bench-v1": "capability",
-    "bullshitbench-v1": "capability",
-    "bullshitbench-v2": "capability",
-    "buzzbench": "capability",
-    "chess-puzzles": "capability",
-    "critpt": "capability",
-    "cursorbench": "capability",
-    "cursorbench-cost": "cost",
-    "deepswe": "capability",
-    "ebr-bench": "capability",
-    "epoch-gpqa-diamond": "capability",
-    "epoch-swe-bench-verified": "capability",
-    "epoch_eci": "capability",
-    "epoch_eci_software": "capability",
-    "eq-bench": "capability",
-    "eqbench-creative-writing": "capability",
-    "eqbench-judgemark": "capability",
-    "eqbench-longform-writing": "capability",
-    "eqbench-slop-score": "capability",
-    "frontend": "capability",
-    "frontiercode": "capability",
-    "frontiercode-cost": "cost",
-    "frontiermath-tier-4": "capability",
-    "frontiermath-tiers-1-3": "capability",
-    "fullstack": "capability",
-    "gso": "capability",
-    "helmet": "capability",
-    "hle": "capability",
-    "hyper-tau-bench": "capability",
-    "ifbench": "capability",
-    "japanese-rp-bench-aratako": "capability",
-    "japanese-rp-bench-tegnike": "capability",
-    "kernelbench-cuda-deepseek-nsa": "capability",
-    "kernelbench-cuda-glm52-fused-moe": "capability",
-    "kernelbench-cuda-grid-mingru-sps": "capability",
-    "kernelbench-cuda-megaqwen-decode": "capability",
-    "lisanbench": "capability",
-    "livebench": "capability",
-    "longbench": "capability",
-    "matharena-arxivmath": "capability",
-    "matharena-brokenarxiv": "capability",
-    "mazur-creative-story-writing": "capability",
-    "mazur-divergent-thinking": "capability",
-    "mazur-elimination-game": "capability",
-    "mirrorcode": "capability",
-    "mmmu": "capability",
-    "mystery-game-puzzles": "capability",
-    "openrouter-gpqa-diamond": "capability",
-    "openrouter-gpqa-diamond-cost": "cost",
-    "openrouter-search-browsecomp": "capability",
-    "openrouter-search-browsecomp-cost": "cost",
-    "openrouter-search-dsqa": "capability",
-    "openrouter-search-dsqa-cost": "cost",
-    "openrouter-search-hle": "capability",
-    "openrouter-search-hle-cost": "cost",
-    "openrouter-search-widesearch": "capability",
-    "openrouter-search-widesearch-cost": "cost",
-    "openrouter-tau2-bench-airline": "capability",
-    "openrouter-tau2-bench-airline-cost": "cost",
-    "osworld-2": "capability",
-    "otis-mock-aime": "capability",
-    "pingpong-english": "capability",
-    "realswe": "capability",
-    "realswe-cost": "cost",
-    "rp-bench-community": "capability",
-    "ruler": "capability",
-    "scicode": "capability",
-    "simple-bench": "capability",
-    "simpleqa-verified": "capability",
-    "slop-index": "capability",
-    "slopbench": "capability",
-    "spiral-bench": "capability",
-    "swe-atlas-qna": "capability",
-    "swe-atlas-refactoring": "capability",
-    "swe-atlas-test-writing": "capability",
-    "swe-bench-multilingual": "capability",
-    "swe-bench-multimodal": "capability",
-    "swe-bench-pro-public": "capability",
-    "swe-bench-verified": "capability",
-    "swe-rebench": "capability",
-    "tau2-bench": "capability",
-    "tau3-banking": "capability",
-    "tau3-voice": "capability",
-    "terminal-bench": "capability",
-    "towards-ai-editorial-writing": "capability",
-    "ugi": "capability",
-    "ugi-natint": "capability",
-    "ugi-willingness": "capability",
-    "ugi-writing": "capability",
-    "vals-index": "capability",
-    "vals-index-code-migration": "capability",
-    "vals-index-cost": "cost",
-    "vals-index-emb": "capability",
-    "vals-index-finance-agent": "capability",
-    "vals-index-hlab": "capability",
-    "vals-index-legal-research": "capability",
-    "vals-index-terminal-bench-2.1": "capability",
-    "vals-index-vibe-code-bench": "capability",
-    "vending-bench": "capability",
-    "vulcanbench-frontier": "capability",
-    "weirdml": "capability"
-  }
+	"version": "2026-09-16",
+	"note": "CR-1.3 / CR-1.7: presentation metadata for the Benchmarks comparison table. Groups map registry categories to display groups; overrides are keyed by the benchmark id before '::' (or the snapshot key). Tiers are editorial tags, drafted by one engine and reviewed by another. Nothing here changes a score. 2026-09-15: aa_input_keys marks Coding Agent Index constituents; Terminal-Bench rows display under Coding. score_ranges: the published 0–100 scale of unregistered snapshot index axes, used only to decide whether a row may enter a category composite. 2026-09-16: OpenRouter's own reproducible runs (CR-34.2) enter as their own registry families; their -cost families are the measured spend of the same run and sit under Cost & efficiency. All of them are tier 'niche': release posts cite Artificial Analysis' GPQA Diamond and tau2-Bench, not OpenRouter's own re-runs, and the Simple table must not show two different GPQA numbers side by side. 2026-09-16 (CR-38.2/38.3, F-98): the tags 'saturated' and 'judged' are not editorial — 'saturated' is computed from the results we hold (saturationOf in lib/benchmark-matrix.mjs) and 'judged' comes from data/benchmark-caveats.json, where every classification quotes its own source. Both affect category composites: a judged row never averages with task accuracy, a saturated row weighs half.",
+	"groups": [
+		{
+			"id": "indices",
+			"label": "Composite indices",
+			"categories": []
+		},
+		{
+			"id": "coding",
+			"label": "Coding",
+			"categories": [
+				"Coding"
+			]
+		},
+		{
+			"id": "agentic",
+			"label": "Agentic & tool use",
+			"categories": [
+				"Agentic",
+				"Tool-use"
+			]
+		},
+		{
+			"id": "reasoning",
+			"label": "General reasoning & knowledge",
+			"categories": [
+				"Reasoning",
+				"Knowledge"
+			]
+		},
+		{
+			"id": "math",
+			"label": "Math",
+			"categories": [
+				"Math"
+			]
+		},
+		{
+			"id": "science",
+			"label": "Science",
+			"categories": [
+				"Science"
+			]
+		},
+		{
+			"id": "long-context",
+			"label": "Long context",
+			"categories": [
+				"Long-context"
+			]
+		},
+		{
+			"id": "instruction",
+			"label": "Instruction following",
+			"categories": [
+				"Instruction-following"
+			]
+		},
+		{
+			"id": "vision",
+			"label": "Multimodal & vision",
+			"categories": [
+				"Vision"
+			]
+		},
+		{
+			"id": "design",
+			"label": "Design & UI",
+			"categories": []
+		},
+		{
+			"id": "writing",
+			"label": "Writing & roleplay",
+			"categories": [
+				"Writing",
+				"Roleplay"
+			]
+		},
+		{
+			"id": "safety",
+			"label": "Safety & refusals",
+			"categories": [
+				"Safety/Alignment",
+				"Uncensored"
+			]
+		},
+		{
+			"id": "efficiency",
+			"label": "Cost & efficiency",
+			"categories": [
+				"Efficiency"
+			]
+		},
+		{
+			"id": "other",
+			"label": "Other",
+			"categories": [
+				"Other"
+			]
+		}
+	],
+	"group_overrides": {
+		"aa_intelligence_index": "indices",
+		"aa_coding_index": "indices",
+		"aa-coding-agent-index": "indices",
+		"aa-omniscience": "indices",
+		"vals-index": "indices",
+		"epoch_eci": "indices",
+		"epoch_eci_software": "indices",
+		"frontend": "design",
+		"fullstack": "design",
+		"aa-terminal-bench": "coding",
+		"aa-terminal-bench-hard": "coding",
+		"terminal-bench": "coding",
+		"vals-index-terminal-bench-2.1": "coding"
+	},
+	"arena_keys": [
+		"frontend",
+		"fullstack"
+	],
+	"aa_keys": [
+		"aa_intelligence_index",
+		"aa_coding_index",
+		"aa_agentic_index"
+	],
+	"descriptions": {
+		"aa_intelligence_index": "Artificial Analysis' headline aggregate of its independent evaluations.",
+		"aa_coding_index": "Artificial Analysis' aggregate of its coding evaluations.",
+		"frontend": "Human head-to-head votes on generated front-end designs (Elo).",
+		"fullstack": "Human head-to-head votes on generated full-stack apps (Elo).",
+		"deepswe": "Pass rate on original, long-horizon engineering tasks, run by Datacurve with the mini-swe-agent harness.",
+		"swe-atlas-qna": "How well an agent answers deep questions about a real codebase, graded against rubrics by Scale AI.",
+		"swe-atlas-test-writing": "Whether an agent writes production-grade tests for real repositories, graded by Scale AI.",
+		"swe-atlas-refactoring": "Whether an agent restructures production code while preserving its behaviour, graded by Scale AI.",
+		"aa_agentic_index": "Artificial Analysis' aggregate of its agentic evaluations (one configuration measured per model), relayed by OpenRouter's Benchmarks API."
+	},
+	"model_field_rows": [
+		{
+			"key": "epoch_eci",
+			"field": "epoch_eci",
+			"name": "Epoch Capabilities Index (ECI)",
+			"maintainer": "Epoch AI",
+			"source": "epoch_eci",
+			"unit": "points",
+			"url": "https://epoch.ai/eci",
+			"description": "Epoch AI's index that places many benchmarks on one capability scale."
+		},
+		{
+			"key": "epoch_eci_software",
+			"field": "epoch_eci_software",
+			"name": "Epoch Software ECI",
+			"maintainer": "Epoch AI",
+			"source": "epoch_eci",
+			"unit": "points",
+			"url": "https://epoch.ai/eci",
+			"description": "Epoch AI's capability scale, refit by us over its published software-engineering results."
+		}
+	],
+	"tags": {
+		"aa": {
+			"label": "AA",
+			"tip": "Measured by Artificial Analysis, the independent lab behind the AA Intelligence Index."
+		},
+		"arena": {
+			"label": "Arena",
+			"tip": "Human head-to-head votes, scored as Elo."
+		},
+		"headline": {
+			"label": "Headline",
+			"tip": "Widely cited in model release posts and technical reports."
+		},
+		"niche": {
+			"label": "Niche",
+			"tip": "A specialised benchmark from a company or research lab, rarely cited in release posts."
+		},
+		"community": {
+			"label": "Community",
+			"tip": "Run by an independent individual or community project."
+		},
+		"aa_input": {
+			"label": "AA index input",
+			"tip": "A benchmark Artificial Analysis averages into its Coding Index (Terminal-Bench, SciCode) or Coding Agent Index v1.5 (DeepSWE, Terminal-Bench 4.0, SWE-Atlas-QnA). The row shows this source’s own published results."
+		},
+		"retired": {
+			"label": "Retired",
+			"tip": "The maintainer stopped reporting this benchmark: new models are no longer scored on it, so the values here are the ones it published before. Recorded as status \"retained\" in our benchmark registry and re-checked against the maintainer's own protocol text on every refresh."
+		},
+		"saturated": {
+			"label": "Saturated",
+			"tip": "Top models sit near this benchmark's ceiling; it separates weaker models, not the best."
+		},
+		"judged": {
+			"label": "Judged",
+			"tip": "A preference or judge score, not task accuracy."
+		},
+		"source_changed": {
+			"label": "Changed at source",
+			"tip": "The source changed or stopped showing these results after we captured them; the values are as published on the capture date."
+		},
+		"family_scope": {
+			"label": "family",
+			"tip": "The source measures one configuration per model family (not every reasoning setting), so the same value is shown for every configuration of that family; a cell names the exact configuration it was measured on."
+		}
+	},
+	"tiers": {
+		"epoch_eci": "headline",
+		"epoch_eci_software": "headline",
+		"aa-aime": "headline",
+		"aa-analystagent": "niche",
+		"aa-apex-agents": "niche",
+		"aa-automationbench": "niche",
+		"aa-briefcase": "niche",
+		"aa-coding-agent-index": "headline",
+		"aa-critpt": "niche",
+		"aa-enterpriseops-gym": "niche",
+		"aa-gdp-pdf": "niche",
+		"aa-gdpval": "niche",
+		"aa-gpqa-diamond": "headline",
+		"aa-harvey-lab": "niche",
+		"aa-hle": "headline",
+		"aa-ifbench": "headline",
+		"aa-itbench": "niche",
+		"aa-lcr": "headline",
+		"aa-livecodebench": "headline",
+		"aa-mlcr": "niche",
+		"aa-mmmu-pro": "headline",
+		"aa-omniscience": "niche",
+		"aa-scicode": "niche",
+		"aa-tau2-telecom": "headline",
+		"aa-tau3-banking": "headline",
+		"aa-terminal-bench": "headline",
+		"aa-terminal-bench-hard": "headline",
+		"aa_coding_index": "headline",
+		"aa_intelligence_index": "headline",
+		"aider-polyglot": "headline",
+		"apprenticebench-api": "niche",
+		"apprenticebench-api-cost": "niche",
+		"apprenticebench-cua": "niche",
+		"apprenticebench-cua-cost": "niche",
+		"arc-agi": "headline",
+		"bu-bench-v1": "niche",
+		"bullshitbench-v1": "community",
+		"bullshitbench-v2": "community",
+		"buzzbench": "community",
+		"critpt": "niche",
+		"cursorbench": "niche",
+		"cursorbench-cost": "niche",
+		"deepswe": "niche",
+		"eq-bench": "community",
+		"eqbench-creative-writing": "community",
+		"eqbench-judgemark": "community",
+		"eqbench-longform-writing": "community",
+		"eqbench-slop-score": "community",
+		"frontend": "headline",
+		"frontiercode": "niche",
+		"frontiercode-cost": "niche",
+		"fullstack": "headline",
+		"helmet": "niche",
+		"hle": "headline",
+		"ifbench": "headline",
+		"japanese-rp-bench-aratako": "community",
+		"japanese-rp-bench-tegnike": "community",
+		"livebench": "niche",
+		"longbench": "niche",
+		"mazur-creative-story-writing": "community",
+		"mazur-divergent-thinking": "community",
+		"mazur-elimination-game": "community",
+		"mmmu": "headline",
+		"openrouter-gpqa-diamond": "niche",
+		"openrouter-gpqa-diamond-cost": "niche",
+		"openrouter-search-browsecomp": "niche",
+		"openrouter-search-browsecomp-cost": "niche",
+		"openrouter-search-dsqa": "niche",
+		"openrouter-search-dsqa-cost": "niche",
+		"openrouter-search-hle": "niche",
+		"openrouter-search-hle-cost": "niche",
+		"openrouter-search-widesearch": "niche",
+		"openrouter-search-widesearch-cost": "niche",
+		"openrouter-tau2-bench-airline": "niche",
+		"openrouter-tau2-bench-airline-cost": "niche",
+		"otis-mock-aime": "niche",
+		"pingpong-english": "community",
+		"realswe": "niche",
+		"realswe-cost": "niche",
+		"rp-bench-community": "community",
+		"ruler": "niche",
+		"scicode": "niche",
+		"simple-bench": "community",
+		"slop-index": "community",
+		"slopbench": "community",
+		"spiral-bench": "community",
+		"swe-atlas-qna": "niche",
+		"swe-atlas-refactoring": "niche",
+		"swe-atlas-test-writing": "niche",
+		"swe-bench-multilingual": "niche",
+		"swe-bench-multimodal": "niche",
+		"swe-bench-pro-public": "headline",
+		"swe-bench-verified": "headline",
+		"tau2-bench": "headline",
+		"tau3-banking": "headline",
+		"tau3-voice": "headline",
+		"terminal-bench": "headline",
+		"towards-ai-editorial-writing": "community",
+		"ugi": "community",
+		"ugi-natint": "community",
+		"ugi-willingness": "community",
+		"ugi-writing": "community",
+		"vals-index": "niche",
+		"vals-index-code-migration": "niche",
+		"vals-index-cost": "niche",
+		"vals-index-emb": "niche",
+		"vals-index-finance-agent": "niche",
+		"vals-index-hlab": "niche",
+		"vals-index-legal-research": "niche",
+		"vals-index-terminal-bench-2.1": "headline",
+		"vals-index-vibe-code-bench": "niche",
+		"vending-bench": "headline",
+		"weirdml": "community",
+		"osworld-2": "headline",
+		"matharena-arxivmath": "niche",
+		"matharena-brokenarxiv": "niche",
+		"frontiermath-tiers-1-3": "headline",
+		"frontiermath-tier-4": "headline",
+		"simpleqa-verified": "headline",
+		"swe-rebench": "niche",
+		"gso": "niche",
+		"hyper-tau-bench": "niche",
+		"lisanbench": "community",
+		"aa_agentic_index": "headline"
+	},
+	"aa_input_keys": [
+		"deepswe",
+		"swe-atlas-qna",
+		"aa-terminal-bench",
+		"aa-scicode"
+	],
+	"score_ranges": {
+		"aa_intelligence_index": [
+			0,
+			100
+		],
+		"aa_coding_index": [
+			0,
+			100
+		]
+	},
+	"best_of": {
+		"note": "CR-41.1 (Florian 2026-09-16): presentation-level merge. One board run through these agent harnesses reads as one row holding each model's best recorded result; boards listed under across_versions also merge their versions. Every run stays separate in the benchmark view, the API and on the result page each value links to. Only rows with the same key, unit and direction merge.",
+		"harness_cohorts": [
+			"Claude Code",
+			"Codex"
+		],
+		"across_versions": [
+			"aa-coding-agent-index"
+		]
+	},
+	"benchmark_kinds_note": "CR-64 (Florian 2026-09-16): what each benchmark measures. capability = a task result; cost = money spent per task/rollout/test for a published run; efficiency = tokens, latency, speed or throughput. Only capability benchmarks enter the Benchmaxxing signal, report and radar; cost and efficiency stay visible in the tables and the cost views. Every benchmark key has an explicit entry (tested).",
+	"benchmark_kinds": {
+		"aa-aime": "capability",
+		"aa-analystagent": "capability",
+		"aa-apex-agents": "capability",
+		"aa-automationbench": "capability",
+		"aa-briefcase": "capability",
+		"aa-coding-agent-index": "capability",
+		"aa-critpt": "capability",
+		"aa-enterpriseops-gym": "capability",
+		"aa-gdp-pdf": "capability",
+		"aa-gdpval": "capability",
+		"aa-gpqa-diamond": "capability",
+		"aa-harvey-lab": "capability",
+		"aa-hle": "capability",
+		"aa-ifbench": "capability",
+		"aa-itbench": "capability",
+		"aa-lcr": "capability",
+		"aa-livecodebench": "capability",
+		"aa-mlcr": "capability",
+		"aa-mmmu-pro": "capability",
+		"aa-omniscience": "capability",
+		"aa-scicode": "capability",
+		"aa-tau2-telecom": "capability",
+		"aa-tau3-banking": "capability",
+		"aa-terminal-bench": "capability",
+		"aa-terminal-bench-hard": "capability",
+		"aa_agentic_index": "capability",
+		"aa_coding_index": "capability",
+		"aa_intelligence_index": "capability",
+		"aider-polyglot": "capability",
+		"apprenticebench-api": "capability",
+		"apprenticebench-api-cost": "cost",
+		"apprenticebench-cua": "capability",
+		"apprenticebench-cua-cost": "cost",
+		"arc-agi": "capability",
+		"bu-bench-v1": "capability",
+		"bullshitbench-v1": "capability",
+		"bullshitbench-v2": "capability",
+		"buzzbench": "capability",
+		"chess-puzzles": "capability",
+		"critpt": "capability",
+		"cursorbench": "capability",
+		"cursorbench-cost": "cost",
+		"deepswe": "capability",
+		"ebr-bench": "capability",
+		"epoch-gpqa-diamond": "capability",
+		"epoch-swe-bench-verified": "capability",
+		"epoch_eci": "capability",
+		"epoch_eci_software": "capability",
+		"eq-bench": "capability",
+		"eqbench-creative-writing": "capability",
+		"eqbench-judgemark": "capability",
+		"eqbench-longform-writing": "capability",
+		"eqbench-slop-score": "capability",
+		"frontend": "capability",
+		"frontiercode": "capability",
+		"frontiercode-cost": "cost",
+		"frontiermath-tier-4": "capability",
+		"frontiermath-tiers-1-3": "capability",
+		"fullstack": "capability",
+		"gso": "capability",
+		"helmet": "capability",
+		"hle": "capability",
+		"hyper-tau-bench": "capability",
+		"ifbench": "capability",
+		"japanese-rp-bench-aratako": "capability",
+		"japanese-rp-bench-tegnike": "capability",
+		"kernelbench-cuda-deepseek-nsa": "capability",
+		"kernelbench-cuda-glm52-fused-moe": "capability",
+		"kernelbench-cuda-grid-mingru-sps": "capability",
+		"kernelbench-cuda-megaqwen-decode": "capability",
+		"lisanbench": "capability",
+		"livebench": "capability",
+		"longbench": "capability",
+		"matharena-arxivmath": "capability",
+		"matharena-brokenarxiv": "capability",
+		"mazur-creative-story-writing": "capability",
+		"mazur-divergent-thinking": "capability",
+		"mazur-elimination-game": "capability",
+		"mirrorcode": "capability",
+		"mmmu": "capability",
+		"mystery-game-puzzles": "capability",
+		"openrouter-gpqa-diamond": "capability",
+		"openrouter-gpqa-diamond-cost": "cost",
+		"openrouter-search-browsecomp": "capability",
+		"openrouter-search-browsecomp-cost": "cost",
+		"openrouter-search-dsqa": "capability",
+		"openrouter-search-dsqa-cost": "cost",
+		"openrouter-search-hle": "capability",
+		"openrouter-search-hle-cost": "cost",
+		"openrouter-search-widesearch": "capability",
+		"openrouter-search-widesearch-cost": "cost",
+		"openrouter-tau2-bench-airline": "capability",
+		"openrouter-tau2-bench-airline-cost": "cost",
+		"osworld-2": "capability",
+		"otis-mock-aime": "capability",
+		"pingpong-english": "capability",
+		"realswe": "capability",
+		"realswe-cost": "cost",
+		"rp-bench-community": "capability",
+		"ruler": "capability",
+		"scicode": "capability",
+		"simple-bench": "capability",
+		"simpleqa-verified": "capability",
+		"slop-index": "capability",
+		"slopbench": "capability",
+		"spiral-bench": "capability",
+		"swe-atlas-qna": "capability",
+		"swe-atlas-refactoring": "capability",
+		"swe-atlas-test-writing": "capability",
+		"swe-bench-multilingual": "capability",
+		"swe-bench-multimodal": "capability",
+		"swe-bench-pro-public": "capability",
+		"swe-bench-verified": "capability",
+		"swe-rebench": "capability",
+		"tau2-bench": "capability",
+		"tau3-banking": "capability",
+		"tau3-voice": "capability",
+		"terminal-bench": "capability",
+		"towards-ai-editorial-writing": "capability",
+		"ugi": "capability",
+		"ugi-natint": "capability",
+		"ugi-willingness": "capability",
+		"ugi-writing": "capability",
+		"vals-index": "capability",
+		"vals-index-code-migration": "capability",
+		"vals-index-cost": "cost",
+		"vals-index-emb": "capability",
+		"vals-index-finance-agent": "capability",
+		"vals-index-hlab": "capability",
+		"vals-index-legal-research": "capability",
+		"vals-index-terminal-bench-2.1": "capability",
+		"vals-index-vibe-code-bench": "capability",
+		"vending-bench": "capability",
+		"vulcanbench-frontier": "capability",
+		"weirdml": "capability",
+		"frontierswe": "capability",
+		"posttrainbench": "capability"
+	}
 }

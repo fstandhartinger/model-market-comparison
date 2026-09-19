@@ -259240,6 +259240,924 @@
       },
       "protocol": "Vals Index v2 (updated 2026-09-10), component terminal_bench_2_1; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"terminal_bench_2_1\",\"accuracy\":34.082,\"stderr\":0.991,\"cost_per_test\":0.2108,\"latency\":678.28,\"compute_effort\":null,\"reasoning_effort\":\"high\",\"max_output_tokens\":65536,\"provider\":\"Inception\"}",
       "comparison_key": null
+    },
+    {
+      "id": "public:ddf9b27058222d071f42f380",
+      "benchmark_id": "frontierswe::2",
+      "subject": {
+        "source_id": "GPT-6 Astra",
+        "name": "GPT-6 Astra",
+        "model_id": null,
+        "variant": null,
+        "harness": "proximus"
+      },
+      "value": 65.50757455882352,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://www.frontierswe.com/",
+        "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/656ad23893a1ef735377.gz",
+        "sha256": "656ad23893a1ef735377696bb8bf3a202036c8b8a3dbb5b5b6c5098cc2feafbe",
+        "locator": "frontierswe_v2_board; source row 0; GPT-6 Astra; field mean_at_5"
+      },
+      "protocol": "FrontierSWE v2 (Proximal team): 34 hand-written real-world software tasks; each model runs 5 trials per task under 5 CLI agent harnesses (proximus uniform on this board; Other Harnesses view shows the per-model harness coverage) with a 20-hour budget per trial; headline score = mean@5 across all tasks in percent, with best@5/worst@5 bounds and Implementation/Performance/Research sub-scores plus average cost and duration per trial; newer generation models are tagged v2. Not a Composite input.; source row: {\"vendor\":\"openai\",\"generation\":2,\"best_at_5\":73.00460588235295,\"worst_at_5\":55.11057647058822,\"implementation\":86.94589999999998,\"performance\":48.312129166666665,\"research\":59.11228285714285,\"avg_cost_usd\":1029.6467589260362,\"avg_duration_seconds\":43562.769230769234,\"tasks\":34,\"trials_per_task\":5,\"epoch_relay_id\":null,\"epoch_relay_effort\":null,\"epoch_relay_aggregation\":null}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://epoch.ai/data-download?search=frontierswe",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/epoch-frontierswe-external.csv.gz",
+          "sha256": "40ce3e3696d98dba81d6617dd8ecff9617a78ee54b7a7c10e80c85573ad9d3d6",
+          "retrieved_at": "2026-09-19T06:10:00.000000+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:733ace089e0075e155e55ba4",
+      "benchmark_id": "frontierswe::2",
+      "subject": {
+        "source_id": "Claude Fable 5.1",
+        "name": "Claude Fable 5.1",
+        "model_id": null,
+        "variant": null,
+        "harness": "proximus"
+      },
+      "value": 56.29078999999999,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://www.frontierswe.com/",
+        "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/656ad23893a1ef735377.gz",
+        "sha256": "656ad23893a1ef735377696bb8bf3a202036c8b8a3dbb5b5b6c5098cc2feafbe",
+        "locator": "frontierswe_v2_board; source row 1; Claude Fable 5.1; field mean_at_5"
+      },
+      "protocol": "FrontierSWE v2 (Proximal team): 34 hand-written real-world software tasks; each model runs 5 trials per task under 5 CLI agent harnesses (proximus uniform on this board; Other Harnesses view shows the per-model harness coverage) with a 20-hour budget per trial; headline score = mean@5 across all tasks in percent, with best@5/worst@5 bounds and Implementation/Performance/Research sub-scores plus average cost and duration per trial; newer generation models are tagged v2. Not a Composite input.; source row: {\"vendor\":\"anthropic\",\"generation\":2,\"best_at_5\":66.65389696969699,\"worst_at_5\":44.46506969696971,\"implementation\":73.22154142857143,\"performance\":43.136626666666665,\"research\":51.350621,\"avg_cost_usd\":138.54701197575758,\"avg_duration_seconds\":41827.854545454546,\"tasks\":34,\"trials_per_task\":5,\"epoch_relay_id\":\"claude-fable-5-1_max\",\"epoch_relay_effort\":\"max\",\"epoch_relay_aggregation\":\"Mean@5\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://epoch.ai/data-download?search=frontierswe",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/epoch-frontierswe-external.csv.gz",
+          "sha256": "40ce3e3696d98dba81d6617dd8ecff9617a78ee54b7a7c10e80c85573ad9d3d6",
+          "retrieved_at": "2026-09-19T06:10:00.000000+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:ea5c01c51c5a48eb75cb5a20",
+      "benchmark_id": "frontierswe::2",
+      "subject": {
+        "source_id": "Claude Opus 5",
+        "name": "Claude Opus 5",
+        "model_id": null,
+        "variant": null,
+        "harness": "proximus"
+      },
+      "value": 52.01176764705882,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://www.frontierswe.com/",
+        "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/656ad23893a1ef735377.gz",
+        "sha256": "656ad23893a1ef735377696bb8bf3a202036c8b8a3dbb5b5b6c5098cc2feafbe",
+        "locator": "frontierswe_v2_board; source row 2; Claude Opus 5; field mean_at_5"
+      },
+      "protocol": "FrontierSWE v2 (Proximal team): 34 hand-written real-world software tasks; each model runs 5 trials per task under 5 CLI agent harnesses (proximus uniform on this board; Other Harnesses view shows the per-model harness coverage) with a 20-hour budget per trial; headline score = mean@5 across all tasks in percent, with best@5/worst@5 bounds and Implementation/Performance/Research sub-scores plus average cost and duration per trial; newer generation models are tagged v2. Not a Composite input.; source row: {\"vendor\":\"anthropic\",\"generation\":1,\"best_at_5\":60.6518411764706,\"worst_at_5\":39.12135000000001,\"implementation\":70.52801000000001,\"performance\":37.79192666666666,\"research\":42.491305714285716,\"avg_cost_usd\":196.71287089705874,\"avg_duration_seconds\":57847.341176470596,\"tasks\":34,\"trials_per_task\":5,\"epoch_relay_id\":null,\"epoch_relay_effort\":null,\"epoch_relay_aggregation\":null}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://epoch.ai/data-download?search=frontierswe",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/epoch-frontierswe-external.csv.gz",
+          "sha256": "40ce3e3696d98dba81d6617dd8ecff9617a78ee54b7a7c10e80c85573ad9d3d6",
+          "retrieved_at": "2026-09-19T06:10:00.000000+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:7fdcecb4f87565843bc7de30",
+      "benchmark_id": "frontierswe::2",
+      "subject": {
+        "source_id": "Claude Fable 5",
+        "name": "Claude Fable 5",
+        "model_id": null,
+        "variant": null,
+        "harness": "proximus"
+      },
+      "value": 46.96449352941177,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://www.frontierswe.com/",
+        "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/656ad23893a1ef735377.gz",
+        "sha256": "656ad23893a1ef735377696bb8bf3a202036c8b8a3dbb5b5b6c5098cc2feafbe",
+        "locator": "frontierswe_v2_board; source row 3; Claude Fable 5; field mean_at_5"
+      },
+      "protocol": "FrontierSWE v2 (Proximal team): 34 hand-written real-world software tasks; each model runs 5 trials per task under 5 CLI agent harnesses (proximus uniform on this board; Other Harnesses view shows the per-model harness coverage) with a 20-hour budget per trial; headline score = mean@5 across all tasks in percent, with best@5/worst@5 bounds and Implementation/Performance/Research sub-scores plus average cost and duration per trial; newer generation models are tagged v2. Not a Composite input.; source row: {\"vendor\":\"anthropic\",\"generation\":1,\"best_at_5\":61.77205454545454,\"worst_at_5\":33.90016060606061,\"implementation\":63.68682285714286,\"performance\":33.69399,\"research\":40.450900000000004,\"avg_cost_usd\":301.27823945454537,\"avg_duration_seconds\":56966.39999999996,\"tasks\":34,\"trials_per_task\":5,\"epoch_relay_id\":null,\"epoch_relay_effort\":null,\"epoch_relay_aggregation\":null}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://epoch.ai/data-download?search=frontierswe",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/epoch-frontierswe-external.csv.gz",
+          "sha256": "40ce3e3696d98dba81d6617dd8ecff9617a78ee54b7a7c10e80c85573ad9d3d6",
+          "retrieved_at": "2026-09-19T06:10:00.000000+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:518bb30a69a4f3543cf4e15c",
+      "benchmark_id": "frontierswe::2",
+      "subject": {
+        "source_id": "GPT-5.6",
+        "name": "GPT-5.6",
+        "model_id": null,
+        "variant": null,
+        "harness": "proximus"
+      },
+      "value": 32.20246705882353,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://www.frontierswe.com/",
+        "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/656ad23893a1ef735377.gz",
+        "sha256": "656ad23893a1ef735377696bb8bf3a202036c8b8a3dbb5b5b6c5098cc2feafbe",
+        "locator": "frontierswe_v2_board; source row 4; GPT-5.6; field mean_at_5"
+      },
+      "protocol": "FrontierSWE v2 (Proximal team): 34 hand-written real-world software tasks; each model runs 5 trials per task under 5 CLI agent harnesses (proximus uniform on this board; Other Harnesses view shows the per-model harness coverage) with a 20-hour budget per trial; headline score = mean@5 across all tasks in percent, with best@5/worst@5 bounds and Implementation/Performance/Research sub-scores plus average cost and duration per trial; newer generation models are tagged v2. Not a Composite input.; source row: {\"vendor\":\"openai\",\"generation\":1,\"best_at_5\":44.173785294117664,\"worst_at_5\":22.200797058823532,\"implementation\":40.38867142857142,\"performance\":22.00731,\"research\":28.195966666666667,\"avg_cost_usd\":179.6399347197058,\"avg_duration_seconds\":30950.258823529402,\"tasks\":34,\"trials_per_task\":5,\"epoch_relay_id\":\"gpt-5.6-sol_max\",\"epoch_relay_effort\":\"max\",\"epoch_relay_aggregation\":\"Mean@5\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://epoch.ai/data-download?search=frontierswe",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/epoch-frontierswe-external.csv.gz",
+          "sha256": "40ce3e3696d98dba81d6617dd8ecff9617a78ee54b7a7c10e80c85573ad9d3d6",
+          "retrieved_at": "2026-09-19T06:10:00.000000+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:2950a6a6d1d457fadeca2187",
+      "benchmark_id": "frontierswe::2",
+      "subject": {
+        "source_id": "GLM-5.3",
+        "name": "GLM-5.3",
+        "model_id": null,
+        "variant": null,
+        "harness": "proximus"
+      },
+      "value": 30.181864117647052,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://www.frontierswe.com/",
+        "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/656ad23893a1ef735377.gz",
+        "sha256": "656ad23893a1ef735377696bb8bf3a202036c8b8a3dbb5b5b6c5098cc2feafbe",
+        "locator": "frontierswe_v2_board; source row 5; GLM-5.3; field mean_at_5"
+      },
+      "protocol": "FrontierSWE v2 (Proximal team): 34 hand-written real-world software tasks; each model runs 5 trials per task under 5 CLI agent harnesses (proximus uniform on this board; Other Harnesses view shows the per-model harness coverage) with a 20-hour budget per trial; headline score = mean@5 across all tasks in percent, with best@5/worst@5 bounds and Implementation/Performance/Research sub-scores plus average cost and duration per trial; newer generation models are tagged v2. Not a Composite input.; source row: {\"vendor\":\"zai\",\"generation\":1,\"best_at_5\":40.64430294117648,\"worst_at_5\":17.71634705882353,\"implementation\":34.648628571428574,\"performance\":20.564106666666667,\"research\":25.56175428571429,\"avg_cost_usd\":97.223322573647,\"avg_duration_seconds\":61327.38461538457,\"tasks\":34,\"trials_per_task\":5,\"epoch_relay_id\":\"glm-5.3_max\",\"epoch_relay_effort\":\"max\",\"epoch_relay_aggregation\":\"Mean@5\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://epoch.ai/data-download?search=frontierswe",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/epoch-frontierswe-external.csv.gz",
+          "sha256": "40ce3e3696d98dba81d6617dd8ecff9617a78ee54b7a7c10e80c85573ad9d3d6",
+          "retrieved_at": "2026-09-19T06:10:00.000000+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:cacf21b0d3d8df4465c931d3",
+      "benchmark_id": "frontierswe::2",
+      "subject": {
+        "source_id": "Kimi K3",
+        "name": "Kimi K3",
+        "model_id": null,
+        "variant": null,
+        "harness": "proximus"
+      },
+      "value": 25.865032058823534,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://www.frontierswe.com/",
+        "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/656ad23893a1ef735377.gz",
+        "sha256": "656ad23893a1ef735377696bb8bf3a202036c8b8a3dbb5b5b6c5098cc2feafbe",
+        "locator": "frontierswe_v2_board; source row 6; Kimi K3; field mean_at_5"
+      },
+      "protocol": "FrontierSWE v2 (Proximal team): 34 hand-written real-world software tasks; each model runs 5 trials per task under 5 CLI agent harnesses (proximus uniform on this board; Other Harnesses view shows the per-model harness coverage) with a 20-hour budget per trial; headline score = mean@5 across all tasks in percent, with best@5/worst@5 bounds and Implementation/Performance/Research sub-scores plus average cost and duration per trial; newer generation models are tagged v2. Not a Composite input.; source row: {\"vendor\":\"moonshot\",\"generation\":1,\"best_at_5\":37.55069705882354,\"worst_at_5\":13.86589117647059,\"implementation\":29.88909642857143,\"performance\":18.823193333333332,\"research\":21.05049142857143,\"avg_cost_usd\":109.71047320181815,\"avg_duration_seconds\":66246.4203821656,\"tasks\":34,\"trials_per_task\":5,\"epoch_relay_id\":\"kimi-k3_max\",\"epoch_relay_effort\":\"max\",\"epoch_relay_aggregation\":\"Mean@5\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://epoch.ai/data-download?search=frontierswe",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/epoch-frontierswe-external.csv.gz",
+          "sha256": "40ce3e3696d98dba81d6617dd8ecff9617a78ee54b7a7c10e80c85573ad9d3d6",
+          "retrieved_at": "2026-09-19T06:10:00.000000+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:742ec76a08c456bf87bf5fd8",
+      "benchmark_id": "frontierswe::2",
+      "subject": {
+        "source_id": "Grok 4.6",
+        "name": "Grok 4.6",
+        "model_id": null,
+        "variant": null,
+        "harness": "proximus"
+      },
+      "value": 25.286195882352946,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://www.frontierswe.com/",
+        "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/656ad23893a1ef735377.gz",
+        "sha256": "656ad23893a1ef735377696bb8bf3a202036c8b8a3dbb5b5b6c5098cc2feafbe",
+        "locator": "frontierswe_v2_board; source row 7; Grok 4.6; field mean_at_5"
+      },
+      "protocol": "FrontierSWE v2 (Proximal team): 34 hand-written real-world software tasks; each model runs 5 trials per task under 5 CLI agent harnesses (proximus uniform on this board; Other Harnesses view shows the per-model harness coverage) with a 20-hour budget per trial; headline score = mean@5 across all tasks in percent, with best@5/worst@5 bounds and Implementation/Performance/Research sub-scores plus average cost and duration per trial; newer generation models are tagged v2. Not a Composite input.; source row: {\"vendor\":\"xai\",\"generation\":1,\"best_at_5\":37.290673529411755,\"worst_at_5\":12.863511764705882,\"implementation\":24.567055714285715,\"performance\":16.381613333333334,\"research\":25.20920095238096,\"avg_cost_usd\":243.42982475294116,\"avg_duration_seconds\":49668.49704142011,\"tasks\":34,\"trials_per_task\":5,\"epoch_relay_id\":\"grok-4.6_xhigh\",\"epoch_relay_effort\":\"xhigh\",\"epoch_relay_aggregation\":\"Mean@5\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://epoch.ai/data-download?search=frontierswe",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/epoch-frontierswe-external.csv.gz",
+          "sha256": "40ce3e3696d98dba81d6617dd8ecff9617a78ee54b7a7c10e80c85573ad9d3d6",
+          "retrieved_at": "2026-09-19T06:10:00.000000+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:74475fd1a8b2af9150922be6",
+      "benchmark_id": "frontierswe::2",
+      "subject": {
+        "source_id": "Gemini 3.7 Flash",
+        "name": "Gemini 3.7 Flash",
+        "model_id": null,
+        "variant": null,
+        "harness": "proximus"
+      },
+      "value": 20.260590588235296,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://www.frontierswe.com/",
+        "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/656ad23893a1ef735377.gz",
+        "sha256": "656ad23893a1ef735377696bb8bf3a202036c8b8a3dbb5b5b6c5098cc2feafbe",
+        "locator": "frontierswe_v2_board; source row 8; Gemini 3.7 Flash; field mean_at_5"
+      },
+      "protocol": "FrontierSWE v2 (Proximal team): 34 hand-written real-world software tasks; each model runs 5 trials per task under 5 CLI agent harnesses (proximus uniform on this board; Other Harnesses view shows the per-model harness coverage) with a 20-hour budget per trial; headline score = mean@5 across all tasks in percent, with best@5/worst@5 bounds and Implementation/Performance/Research sub-scores plus average cost and duration per trial; newer generation models are tagged v2. Not a Composite input.; source row: {\"vendor\":\"google\",\"generation\":1,\"best_at_5\":31.231191176470592,\"worst_at_5\":10.284932352941176,\"implementation\":24.849754285714283,\"performance\":15.021986666666667,\"research\":14.305101904761905,\"avg_cost_usd\":34.137221393382376,\"avg_duration_seconds\":28337.53846153846,\"tasks\":34,\"trials_per_task\":5,\"epoch_relay_id\":\"gemini-3.7-flash_high\",\"epoch_relay_effort\":\"high\",\"epoch_relay_aggregation\":\"Mean@5\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://epoch.ai/data-download?search=frontierswe",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/epoch-frontierswe-external.csv.gz",
+          "sha256": "40ce3e3696d98dba81d6617dd8ecff9617a78ee54b7a7c10e80c85573ad9d3d6",
+          "retrieved_at": "2026-09-19T06:10:00.000000+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:f5e0ba9918d9aa64f603c91b",
+      "benchmark_id": "frontierswe::2",
+      "subject": {
+        "source_id": "Gemini 3.8 Flash",
+        "name": "Gemini 3.8 Flash",
+        "model_id": null,
+        "variant": null,
+        "harness": "proximus"
+      },
+      "value": 19.626902941176464,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://www.frontierswe.com/",
+        "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/656ad23893a1ef735377.gz",
+        "sha256": "656ad23893a1ef735377696bb8bf3a202036c8b8a3dbb5b5b6c5098cc2feafbe",
+        "locator": "frontierswe_v2_board; source row 9; Gemini 3.8 Flash; field mean_at_5"
+      },
+      "protocol": "FrontierSWE v2 (Proximal team): 34 hand-written real-world software tasks; each model runs 5 trials per task under 5 CLI agent harnesses (proximus uniform on this board; Other Harnesses view shows the per-model harness coverage) with a 20-hour budget per trial; headline score = mean@5 across all tasks in percent, with best@5/worst@5 bounds and Implementation/Performance/Research sub-scores plus average cost and duration per trial; newer generation models are tagged v2. Not a Composite input.; source row: {\"vendor\":\"google\",\"generation\":2,\"best_at_5\":31.642826470588243,\"worst_at_5\":9.514232352941177,\"implementation\":23.043864285714285,\"performance\":14.876966666666666,\"research\":16.47233333333334,\"avg_cost_usd\":38.754468494558836,\"avg_duration_seconds\":25854.776470588233,\"tasks\":34,\"trials_per_task\":5,\"epoch_relay_id\":null,\"epoch_relay_effort\":null,\"epoch_relay_aggregation\":null}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://epoch.ai/data-download?search=frontierswe",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/epoch-frontierswe-external.csv.gz",
+          "sha256": "40ce3e3696d98dba81d6617dd8ecff9617a78ee54b7a7c10e80c85573ad9d3d6",
+          "retrieved_at": "2026-09-19T06:10:00.000000+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:b1f8cb46f59e11fe925d51c8",
+      "benchmark_id": "frontierswe::2",
+      "subject": {
+        "source_id": "Qwen3.8-Max",
+        "name": "Qwen3.8-Max",
+        "model_id": null,
+        "variant": null,
+        "harness": "proximus"
+      },
+      "value": 15.809350588235294,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://www.frontierswe.com/",
+        "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/656ad23893a1ef735377.gz",
+        "sha256": "656ad23893a1ef735377696bb8bf3a202036c8b8a3dbb5b5b6c5098cc2feafbe",
+        "locator": "frontierswe_v2_board; source row 10; Qwen3.8-Max; field mean_at_5"
+      },
+      "protocol": "FrontierSWE v2 (Proximal team): 34 hand-written real-world software tasks; each model runs 5 trials per task under 5 CLI agent harnesses (proximus uniform on this board; Other Harnesses view shows the per-model harness coverage) with a 20-hour budget per trial; headline score = mean@5 across all tasks in percent, with best@5/worst@5 bounds and Implementation/Performance/Research sub-scores plus average cost and duration per trial; newer generation models are tagged v2. Not a Composite input.; source row: {\"vendor\":\"qwen\",\"generation\":1,\"best_at_5\":24.265188235294115,\"worst_at_5\":8.701588235294118,\"implementation\":10.942852857142856,\"performance\":11.853946666666666,\"research\":15.473200952380948,\"avg_cost_usd\":55.14091911470589,\"avg_duration_seconds\":66532.05,\"tasks\":34,\"trials_per_task\":5,\"epoch_relay_id\":\"qwen3.8-max_xhigh\",\"epoch_relay_effort\":\"xhigh\",\"epoch_relay_aggregation\":\"Mean@5\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://epoch.ai/data-download?search=frontierswe",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/epoch-frontierswe-external.csv.gz",
+          "sha256": "40ce3e3696d98dba81d6617dd8ecff9617a78ee54b7a7c10e80c85573ad9d3d6",
+          "retrieved_at": "2026-09-19T06:10:00.000000+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:729fdcd949aa33a446d7c437",
+      "benchmark_id": "frontierswe::2",
+      "subject": {
+        "source_id": "DeepSeek V4 Flash Vision Exp",
+        "name": "DeepSeek V4 Flash Vision Exp",
+        "model_id": null,
+        "variant": null,
+        "harness": "proximus"
+      },
+      "value": 14.831252647058824,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://www.frontierswe.com/",
+        "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/656ad23893a1ef735377.gz",
+        "sha256": "656ad23893a1ef735377696bb8bf3a202036c8b8a3dbb5b5b6c5098cc2feafbe",
+        "locator": "frontierswe_v2_board; source row 11; DeepSeek V4 Flash Vision Exp; field mean_at_5"
+      },
+      "protocol": "FrontierSWE v2 (Proximal team): 34 hand-written real-world software tasks; each model runs 5 trials per task under 5 CLI agent harnesses (proximus uniform on this board; Other Harnesses view shows the per-model harness coverage) with a 20-hour budget per trial; headline score = mean@5 across all tasks in percent, with best@5/worst@5 bounds and Implementation/Performance/Research sub-scores plus average cost and duration per trial; newer generation models are tagged v2. Not a Composite input.; source row: {\"vendor\":\"deepseek\",\"generation\":1,\"best_at_5\":26.48615,\"worst_at_5\":7.0131411764705875,\"implementation\":12.513670000000001,\"performance\":13.509466666666667,\"research\":12.63103761904762,\"avg_cost_usd\":8.569284093940116,\"avg_duration_seconds\":53395.760479041914,\"tasks\":34,\"trials_per_task\":5,\"epoch_relay_id\":null,\"epoch_relay_effort\":null,\"epoch_relay_aggregation\":null}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://epoch.ai/data-download?search=frontierswe",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/epoch-frontierswe-external.csv.gz",
+          "sha256": "40ce3e3696d98dba81d6617dd8ecff9617a78ee54b7a7c10e80c85573ad9d3d6",
+          "retrieved_at": "2026-09-19T06:10:00.000000+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:0712da8044e3b3ffc8d2ea91",
+      "benchmark_id": "frontierswe::2",
+      "subject": {
+        "source_id": "Muse Spark 1.2",
+        "name": "Muse Spark 1.2",
+        "model_id": null,
+        "variant": null,
+        "harness": "proximus"
+      },
+      "value": 11.970256470588238,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://www.frontierswe.com/",
+        "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/656ad23893a1ef735377.gz",
+        "sha256": "656ad23893a1ef735377696bb8bf3a202036c8b8a3dbb5b5b6c5098cc2feafbe",
+        "locator": "frontierswe_v2_board; source row 12; Muse Spark 1.2; field mean_at_5"
+      },
+      "protocol": "FrontierSWE v2 (Proximal team): 34 hand-written real-world software tasks; each model runs 5 trials per task under 5 CLI agent harnesses (proximus uniform on this board; Other Harnesses view shows the per-model harness coverage) with a 20-hour budget per trial; headline score = mean@5 across all tasks in percent, with best@5/worst@5 bounds and Implementation/Performance/Research sub-scores plus average cost and duration per trial; newer generation models are tagged v2. Not a Composite input.; source row: {\"vendor\":\"meta\",\"generation\":1,\"best_at_5\":18.359058823529413,\"worst_at_5\":6.8378176470588246,\"implementation\":2.6506914285714287,\"performance\":11.448236666666668,\"research\":14.676828571428574,\"avg_cost_usd\":27.80795590911764,\"avg_duration_seconds\":16517.435294117648,\"tasks\":34,\"trials_per_task\":5,\"epoch_relay_id\":\"muse-spark-1.2_xhigh\",\"epoch_relay_effort\":\"xhigh\",\"epoch_relay_aggregation\":\"Mean@5\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://epoch.ai/data-download?search=frontierswe",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/epoch-frontierswe-external.csv.gz",
+          "sha256": "40ce3e3696d98dba81d6617dd8ecff9617a78ee54b7a7c10e80c85573ad9d3d6",
+          "retrieved_at": "2026-09-19T06:10:00.000000+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:ddc5327cb983bc2faf4ac792",
+      "benchmark_id": "frontierswe::2",
+      "subject": {
+        "source_id": "Inkling",
+        "name": "Inkling",
+        "model_id": null,
+        "variant": null,
+        "harness": "proximus"
+      },
+      "value": 4.118886470588236,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://www.frontierswe.com/",
+        "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/656ad23893a1ef735377.gz",
+        "sha256": "656ad23893a1ef735377696bb8bf3a202036c8b8a3dbb5b5b6c5098cc2feafbe",
+        "locator": "frontierswe_v2_board; source row 13; Inkling; field mean_at_5"
+      },
+      "protocol": "FrontierSWE v2 (Proximal team): 34 hand-written real-world software tasks; each model runs 5 trials per task under 5 CLI agent harnesses (proximus uniform on this board; Other Harnesses view shows the per-model harness coverage) with a 20-hour budget per trial; headline score = mean@5 across all tasks in percent, with best@5/worst@5 bounds and Implementation/Performance/Research sub-scores plus average cost and duration per trial; newer generation models are tagged v2. Not a Composite input.; source row: {\"vendor\":\"thinkingmachines\",\"generation\":1,\"best_at_5\":10.78985588235294,\"worst_at_5\":0.12631764705882353,\"implementation\":0.39783428571428575,\"performance\":3.928213333333334,\"research\":5.421484761904762,\"avg_cost_usd\":9.148095738529413,\"avg_duration_seconds\":4185.741176470586,\"tasks\":34,\"trials_per_task\":5,\"epoch_relay_id\":\"Inkling_xhigh\",\"epoch_relay_effort\":\"xhigh\",\"epoch_relay_aggregation\":\"Mean@5\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://epoch.ai/data-download?search=frontierswe",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/epoch-frontierswe-external.csv.gz",
+          "sha256": "40ce3e3696d98dba81d6617dd8ecff9617a78ee54b7a7c10e80c85573ad9d3d6",
+          "retrieved_at": "2026-09-19T06:10:00.000000+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:f63fd9f16aff718fec19f3ad",
+      "benchmark_id": "posttrainbench::1.1",
+      "subject": {
+        "source_id": "fable-5",
+        "name": "Fable 5",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 41.79,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://posttrainbench.com/scores.js",
+        "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/66a770f299c2910bb8fc.gz",
+        "sha256": "66a770f299c2910bb8fc5068e61d720aac7581cfc666118789ffce54b7c88501",
+        "locator": "posttrainbench_js; source row 0; fable-5; field average_score"
+      },
+      "protocol": "PostTrainBench v1.1 (aisa-group, Ben Rank et al.; verified by Epoch AI): agents retrain four small base models (gemma-3-4b-pt, SmolLM3-3B-Base, Qwen3-1.7B-Base, Qwen3-4B-Base) for each of 7 benchmark families (AIME 2025, Arena-Hard Writing, BFCL, GPQA-Main, GSM8K, HealthBench, HumanEval); the leaderboard average is the weighted mean over base models × benchmarks (published weights, sum 1), aggregated over the 2–3 listed runs per agent; baselines (official instruct, base, human) are references; Fable 5's GPQA cells use an Opus 4.8 Max fallback after refusals (site footnote ‡). Not a Composite input.; source row: {\"scaffold\":\"Claude Code\",\"reasoning_effort\":\"Max\",\"reprompted\":false,\"n_runs\":2,\"std\":1.74,\"base_models\":[\"Qwen3-1.7B-Base\",\"Qwen3-4B-Base\",\"SmolLM3-3B-Base\",\"gemma-3-4b-pt\"],\"benchmarks\":[\"aime2025\",\"arenahardwriting\",\"bfcl\",\"gpqamain\",\"gsm8k\",\"healthbench\",\"humaneval\"],\"is_external\":false,\"footnote_marker\":\"‡\",\"verification_note\":null}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://posttrainbench.com/config.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/fad118679e74439821a1.gz",
+          "sha256": "fad118679e74439821a171fe91970acc0d3a7520911114a7222a2d0f160f4fff",
+          "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+          "published_at": null,
+          "locator": "config_source"
+        }
+      ]
+    },
+    {
+      "id": "public:b61208167093177265df9363",
+      "benchmark_id": "posttrainbench::1.1",
+      "subject": {
+        "source_id": "gemini-3.1-pro",
+        "name": "Gemini 3.1 Pro",
+        "model_id": null,
+        "variant": null,
+        "harness": "OpenCode"
+      },
+      "value": 21.99,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://posttrainbench.com/scores.js",
+        "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/66a770f299c2910bb8fc.gz",
+        "sha256": "66a770f299c2910bb8fc5068e61d720aac7581cfc666118789ffce54b7c88501",
+        "locator": "posttrainbench_js; source row 1; gemini-3.1-pro; field average_score"
+      },
+      "protocol": "PostTrainBench v1.1 (aisa-group, Ben Rank et al.; verified by Epoch AI): agents retrain four small base models (gemma-3-4b-pt, SmolLM3-3B-Base, Qwen3-1.7B-Base, Qwen3-4B-Base) for each of 7 benchmark families (AIME 2025, Arena-Hard Writing, BFCL, GPQA-Main, GSM8K, HealthBench, HumanEval); the leaderboard average is the weighted mean over base models × benchmarks (published weights, sum 1), aggregated over the 2–3 listed runs per agent; baselines (official instruct, base, human) are references; Fable 5's GPQA cells use an Opus 4.8 Max fallback after refusals (site footnote ‡). Not a Composite input.; source row: {\"scaffold\":\"OpenCode\",\"reasoning_effort\":\"not stated\",\"reprompted\":false,\"n_runs\":3,\"std\":1.8,\"base_models\":[\"Qwen3-1.7B-Base\",\"Qwen3-4B-Base\",\"SmolLM3-3B-Base\",\"gemma-3-4b-pt\"],\"benchmarks\":[\"aime2025\",\"arenahardwriting\",\"bfcl\",\"gpqamain\",\"gsm8k\",\"healthbench\",\"humaneval\"],\"is_external\":false,\"footnote_marker\":null,\"verification_note\":null}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://posttrainbench.com/config.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/fad118679e74439821a1.gz",
+          "sha256": "fad118679e74439821a171fe91970acc0d3a7520911114a7222a2d0f160f4fff",
+          "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+          "published_at": null,
+          "locator": "config_source"
+        }
+      ]
+    },
+    {
+      "id": "public:210632dd8004195efe52e45a",
+      "benchmark_id": "posttrainbench::1.1",
+      "subject": {
+        "source_id": "glm-5.2",
+        "name": "GLM 5.2",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 31.7,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://posttrainbench.com/scores.js",
+        "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/66a770f299c2910bb8fc.gz",
+        "sha256": "66a770f299c2910bb8fc5068e61d720aac7581cfc666118789ffce54b7c88501",
+        "locator": "posttrainbench_js; source row 2; glm-5.2; field average_score"
+      },
+      "protocol": "PostTrainBench v1.1 (aisa-group, Ben Rank et al.; verified by Epoch AI): agents retrain four small base models (gemma-3-4b-pt, SmolLM3-3B-Base, Qwen3-1.7B-Base, Qwen3-4B-Base) for each of 7 benchmark families (AIME 2025, Arena-Hard Writing, BFCL, GPQA-Main, GSM8K, HealthBench, HumanEval); the leaderboard average is the weighted mean over base models × benchmarks (published weights, sum 1), aggregated over the 2–3 listed runs per agent; baselines (official instruct, base, human) are references; Fable 5's GPQA cells use an Opus 4.8 Max fallback after refusals (site footnote ‡). Not a Composite input.; source row: {\"scaffold\":\"Claude Code\",\"reasoning_effort\":\"Max\",\"reprompted\":false,\"n_runs\":3,\"std\":2.14,\"base_models\":[\"Qwen3-1.7B-Base\",\"Qwen3-4B-Base\",\"SmolLM3-3B-Base\",\"gemma-3-4b-pt\"],\"benchmarks\":[\"aime2025\",\"arenahardwriting\",\"bfcl\",\"gpqamain\",\"gsm8k\",\"healthbench\",\"humaneval\"],\"is_external\":false,\"footnote_marker\":null,\"verification_note\":null}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://posttrainbench.com/config.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/fad118679e74439821a1.gz",
+          "sha256": "fad118679e74439821a171fe91970acc0d3a7520911114a7222a2d0f160f4fff",
+          "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+          "published_at": null,
+          "locator": "config_source"
+        }
+      ]
+    },
+    {
+      "id": "public:499d77df2307de44156f1612",
+      "benchmark_id": "posttrainbench::1.1",
+      "subject": {
+        "source_id": "gpt-5.4-high",
+        "name": "GPT 5.4",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex CLI"
+      },
+      "value": 19.0,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://posttrainbench.com/scores.js",
+        "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/66a770f299c2910bb8fc.gz",
+        "sha256": "66a770f299c2910bb8fc5068e61d720aac7581cfc666118789ffce54b7c88501",
+        "locator": "posttrainbench_js; source row 3; gpt-5.4-high; field average_score"
+      },
+      "protocol": "PostTrainBench v1.1 (aisa-group, Ben Rank et al.; verified by Epoch AI): agents retrain four small base models (gemma-3-4b-pt, SmolLM3-3B-Base, Qwen3-1.7B-Base, Qwen3-4B-Base) for each of 7 benchmark families (AIME 2025, Arena-Hard Writing, BFCL, GPQA-Main, GSM8K, HealthBench, HumanEval); the leaderboard average is the weighted mean over base models × benchmarks (published weights, sum 1), aggregated over the 2–3 listed runs per agent; baselines (official instruct, base, human) are references; Fable 5's GPQA cells use an Opus 4.8 Max fallback after refusals (site footnote ‡). Not a Composite input.; source row: {\"scaffold\":\"Codex CLI\",\"reasoning_effort\":\"High\",\"reprompted\":false,\"n_runs\":3,\"std\":2.99,\"base_models\":[\"Qwen3-1.7B-Base\",\"Qwen3-4B-Base\",\"SmolLM3-3B-Base\",\"gemma-3-4b-pt\"],\"benchmarks\":[\"aime2025\",\"arenahardwriting\",\"bfcl\",\"gpqamain\",\"gsm8k\",\"healthbench\",\"humaneval\"],\"is_external\":false,\"footnote_marker\":null,\"verification_note\":null}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://posttrainbench.com/config.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/fad118679e74439821a1.gz",
+          "sha256": "fad118679e74439821a171fe91970acc0d3a7520911114a7222a2d0f160f4fff",
+          "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+          "published_at": null,
+          "locator": "config_source"
+        }
+      ]
+    },
+    {
+      "id": "public:75ce4135693ca56482d0e7f6",
+      "benchmark_id": "posttrainbench::1.1",
+      "subject": {
+        "source_id": "gpt-5.5-xhigh",
+        "name": "GPT 5.5",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex CLI"
+      },
+      "value": 27.23,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://posttrainbench.com/scores.js",
+        "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/66a770f299c2910bb8fc.gz",
+        "sha256": "66a770f299c2910bb8fc5068e61d720aac7581cfc666118789ffce54b7c88501",
+        "locator": "posttrainbench_js; source row 4; gpt-5.5-xhigh; field average_score"
+      },
+      "protocol": "PostTrainBench v1.1 (aisa-group, Ben Rank et al.; verified by Epoch AI): agents retrain four small base models (gemma-3-4b-pt, SmolLM3-3B-Base, Qwen3-1.7B-Base, Qwen3-4B-Base) for each of 7 benchmark families (AIME 2025, Arena-Hard Writing, BFCL, GPQA-Main, GSM8K, HealthBench, HumanEval); the leaderboard average is the weighted mean over base models × benchmarks (published weights, sum 1), aggregated over the 2–3 listed runs per agent; baselines (official instruct, base, human) are references; Fable 5's GPQA cells use an Opus 4.8 Max fallback after refusals (site footnote ‡). Not a Composite input.; source row: {\"scaffold\":\"Codex CLI\",\"reasoning_effort\":\"xHigh\",\"reprompted\":false,\"n_runs\":2,\"std\":0.56,\"base_models\":[\"Qwen3-1.7B-Base\",\"Qwen3-4B-Base\",\"SmolLM3-3B-Base\",\"gemma-3-4b-pt\"],\"benchmarks\":[\"aime2025\",\"arenahardwriting\",\"bfcl\",\"gpqamain\",\"gsm8k\",\"healthbench\",\"humaneval\"],\"is_external\":false,\"footnote_marker\":null,\"verification_note\":null}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://posttrainbench.com/config.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/fad118679e74439821a1.gz",
+          "sha256": "fad118679e74439821a171fe91970acc0d3a7520911114a7222a2d0f160f4fff",
+          "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+          "published_at": null,
+          "locator": "config_source"
+        }
+      ]
+    },
+    {
+      "id": "public:84cded352a3f8abdfd854862",
+      "benchmark_id": "posttrainbench::1.1",
+      "subject": {
+        "source_id": "gpt-5.6-sol",
+        "name": "GPT 5.6 (Sol)",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex CLI"
+      },
+      "value": 36.23,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://posttrainbench.com/scores.js",
+        "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/66a770f299c2910bb8fc.gz",
+        "sha256": "66a770f299c2910bb8fc5068e61d720aac7581cfc666118789ffce54b7c88501",
+        "locator": "posttrainbench_js; source row 5; gpt-5.6-sol; field average_score"
+      },
+      "protocol": "PostTrainBench v1.1 (aisa-group, Ben Rank et al.; verified by Epoch AI): agents retrain four small base models (gemma-3-4b-pt, SmolLM3-3B-Base, Qwen3-1.7B-Base, Qwen3-4B-Base) for each of 7 benchmark families (AIME 2025, Arena-Hard Writing, BFCL, GPQA-Main, GSM8K, HealthBench, HumanEval); the leaderboard average is the weighted mean over base models × benchmarks (published weights, sum 1), aggregated over the 2–3 listed runs per agent; baselines (official instruct, base, human) are references; Fable 5's GPQA cells use an Opus 4.8 Max fallback after refusals (site footnote ‡). Not a Composite input.; source row: {\"scaffold\":\"Codex CLI\",\"reasoning_effort\":\"Max\",\"reprompted\":false,\"n_runs\":2,\"std\":0.22,\"base_models\":[\"Qwen3-1.7B-Base\",\"Qwen3-4B-Base\",\"SmolLM3-3B-Base\",\"gemma-3-4b-pt\"],\"benchmarks\":[\"aime2025\",\"arenahardwriting\",\"bfcl\",\"gpqamain\",\"gsm8k\",\"healthbench\",\"humaneval\"],\"is_external\":false,\"footnote_marker\":null,\"verification_note\":null}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://posttrainbench.com/config.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/fad118679e74439821a1.gz",
+          "sha256": "fad118679e74439821a171fe91970acc0d3a7520911114a7222a2d0f160f4fff",
+          "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+          "published_at": null,
+          "locator": "config_source"
+        }
+      ]
+    },
+    {
+      "id": "public:f128438f9f886c4eb794f221",
+      "benchmark_id": "posttrainbench::1.1",
+      "subject": {
+        "source_id": "grok-4.5-high",
+        "name": "Grok 4.5",
+        "model_id": null,
+        "variant": null,
+        "harness": "Cursor CLI"
+      },
+      "value": 23.45,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://posttrainbench.com/scores.js",
+        "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/66a770f299c2910bb8fc.gz",
+        "sha256": "66a770f299c2910bb8fc5068e61d720aac7581cfc666118789ffce54b7c88501",
+        "locator": "posttrainbench_js; source row 6; grok-4.5-high; field average_score"
+      },
+      "protocol": "PostTrainBench v1.1 (aisa-group, Ben Rank et al.; verified by Epoch AI): agents retrain four small base models (gemma-3-4b-pt, SmolLM3-3B-Base, Qwen3-1.7B-Base, Qwen3-4B-Base) for each of 7 benchmark families (AIME 2025, Arena-Hard Writing, BFCL, GPQA-Main, GSM8K, HealthBench, HumanEval); the leaderboard average is the weighted mean over base models × benchmarks (published weights, sum 1), aggregated over the 2–3 listed runs per agent; baselines (official instruct, base, human) are references; Fable 5's GPQA cells use an Opus 4.8 Max fallback after refusals (site footnote ‡). Not a Composite input.; source row: {\"scaffold\":\"Cursor CLI\",\"reasoning_effort\":\"High\",\"reprompted\":false,\"n_runs\":2,\"std\":0.09,\"base_models\":[\"Qwen3-1.7B-Base\",\"Qwen3-4B-Base\",\"SmolLM3-3B-Base\",\"gemma-3-4b-pt\"],\"benchmarks\":[\"aime2025\",\"arenahardwriting\",\"bfcl\",\"gpqamain\",\"gsm8k\",\"healthbench\",\"humaneval\"],\"is_external\":false,\"footnote_marker\":null,\"verification_note\":null}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://posttrainbench.com/config.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/fad118679e74439821a1.gz",
+          "sha256": "fad118679e74439821a171fe91970acc0d3a7520911114a7222a2d0f160f4fff",
+          "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+          "published_at": null,
+          "locator": "config_source"
+        }
+      ]
+    },
+    {
+      "id": "public:5c240514a0346c3c517aa9a7",
+      "benchmark_id": "posttrainbench::1.1",
+      "subject": {
+        "source_id": "kimi-k3",
+        "name": "Kimi K3",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 31.96,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://posttrainbench.com/scores.js",
+        "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/66a770f299c2910bb8fc.gz",
+        "sha256": "66a770f299c2910bb8fc5068e61d720aac7581cfc666118789ffce54b7c88501",
+        "locator": "posttrainbench_js; source row 7; kimi-k3; field average_score"
+      },
+      "protocol": "PostTrainBench v1.1 (aisa-group, Ben Rank et al.; verified by Epoch AI): agents retrain four small base models (gemma-3-4b-pt, SmolLM3-3B-Base, Qwen3-1.7B-Base, Qwen3-4B-Base) for each of 7 benchmark families (AIME 2025, Arena-Hard Writing, BFCL, GPQA-Main, GSM8K, HealthBench, HumanEval); the leaderboard average is the weighted mean over base models × benchmarks (published weights, sum 1), aggregated over the 2–3 listed runs per agent; baselines (official instruct, base, human) are references; Fable 5's GPQA cells use an Opus 4.8 Max fallback after refusals (site footnote ‡). Not a Composite input.; source row: {\"scaffold\":\"Claude Code\",\"reasoning_effort\":\"not stated\",\"reprompted\":false,\"n_runs\":3,\"std\":0.26,\"base_models\":[\"Qwen3-1.7B-Base\",\"Qwen3-4B-Base\",\"SmolLM3-3B-Base\",\"gemma-3-4b-pt\"],\"benchmarks\":[\"aime2025\",\"arenahardwriting\",\"bfcl\",\"gpqamain\",\"gsm8k\",\"healthbench\",\"humaneval\"],\"is_external\":false,\"footnote_marker\":null,\"verification_note\":null}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://posttrainbench.com/config.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/fad118679e74439821a1.gz",
+          "sha256": "fad118679e74439821a171fe91970acc0d3a7520911114a7222a2d0f160f4fff",
+          "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+          "published_at": null,
+          "locator": "config_source"
+        }
+      ]
+    },
+    {
+      "id": "public:f7334e431ee31c118d7ebeb6",
+      "benchmark_id": "posttrainbench::1.1",
+      "subject": {
+        "source_id": "locus",
+        "name": "Locus",
+        "model_id": null,
+        "variant": null,
+        "harness": "Intology · Opus 5"
+      },
+      "value": 45.58,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://posttrainbench.com/scores.js",
+        "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/66a770f299c2910bb8fc.gz",
+        "sha256": "66a770f299c2910bb8fc5068e61d720aac7581cfc666118789ffce54b7c88501",
+        "locator": "posttrainbench_js; source row 8; locus; field average_score"
+      },
+      "protocol": "PostTrainBench v1.1 (aisa-group, Ben Rank et al.; verified by Epoch AI): agents retrain four small base models (gemma-3-4b-pt, SmolLM3-3B-Base, Qwen3-1.7B-Base, Qwen3-4B-Base) for each of 7 benchmark families (AIME 2025, Arena-Hard Writing, BFCL, GPQA-Main, GSM8K, HealthBench, HumanEval); the leaderboard average is the weighted mean over base models × benchmarks (published weights, sum 1), aggregated over the 2–3 listed runs per agent; baselines (official instruct, base, human) are references; Fable 5's GPQA cells use an Opus 4.8 Max fallback after refusals (site footnote ‡). Not a Composite input.; source row: {\"scaffold\":\"Intology · Opus 5\",\"reasoning_effort\":\"not stated\",\"reprompted\":false,\"n_runs\":3,\"std\":0.75,\"base_models\":[\"Qwen3-1.7B-Base\",\"Qwen3-4B-Base\",\"SmolLM3-3B-Base\",\"gemma-3-4b-pt\"],\"benchmarks\":[\"aime2025\",\"arenahardwriting\",\"bfcl\",\"gpqamain\",\"gsm8k\",\"healthbench\",\"humaneval\"],\"is_external\":true,\"footnote_marker\":null,\"verification_note\":\"Run by Intology and reviewed for v1.1 compliance by PostTrainBench.\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://posttrainbench.com/config.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/fad118679e74439821a1.gz",
+          "sha256": "fad118679e74439821a171fe91970acc0d3a7520911114a7222a2d0f160f4fff",
+          "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+          "published_at": null,
+          "locator": "config_source"
+        }
+      ]
+    },
+    {
+      "id": "public:4c4b1ff7c4ba063c5e25cba6",
+      "benchmark_id": "posttrainbench::1.1",
+      "subject": {
+        "source_id": "opus-4.7",
+        "name": "Opus 4.7",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 28.56,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://posttrainbench.com/scores.js",
+        "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/66a770f299c2910bb8fc.gz",
+        "sha256": "66a770f299c2910bb8fc5068e61d720aac7581cfc666118789ffce54b7c88501",
+        "locator": "posttrainbench_js; source row 9; opus-4.7; field average_score"
+      },
+      "protocol": "PostTrainBench v1.1 (aisa-group, Ben Rank et al.; verified by Epoch AI): agents retrain four small base models (gemma-3-4b-pt, SmolLM3-3B-Base, Qwen3-1.7B-Base, Qwen3-4B-Base) for each of 7 benchmark families (AIME 2025, Arena-Hard Writing, BFCL, GPQA-Main, GSM8K, HealthBench, HumanEval); the leaderboard average is the weighted mean over base models × benchmarks (published weights, sum 1), aggregated over the 2–3 listed runs per agent; baselines (official instruct, base, human) are references; Fable 5's GPQA cells use an Opus 4.8 Max fallback after refusals (site footnote ‡). Not a Composite input.; source row: {\"scaffold\":\"Claude Code\",\"reasoning_effort\":\"xHigh\",\"reprompted\":false,\"n_runs\":3,\"std\":1.74,\"base_models\":[\"Qwen3-1.7B-Base\",\"Qwen3-4B-Base\",\"SmolLM3-3B-Base\",\"gemma-3-4b-pt\"],\"benchmarks\":[\"aime2025\",\"arenahardwriting\",\"bfcl\",\"gpqamain\",\"gsm8k\",\"healthbench\",\"humaneval\"],\"is_external\":false,\"footnote_marker\":null,\"verification_note\":null}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://posttrainbench.com/config.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/fad118679e74439821a1.gz",
+          "sha256": "fad118679e74439821a171fe91970acc0d3a7520911114a7222a2d0f160f4fff",
+          "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+          "published_at": null,
+          "locator": "config_source"
+        }
+      ]
+    },
+    {
+      "id": "public:cc8f394d4331680d15923562",
+      "benchmark_id": "posttrainbench::1.1",
+      "subject": {
+        "source_id": "opus-4.8",
+        "name": "Opus 4.8",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 33.84,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://posttrainbench.com/scores.js",
+        "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/66a770f299c2910bb8fc.gz",
+        "sha256": "66a770f299c2910bb8fc5068e61d720aac7581cfc666118789ffce54b7c88501",
+        "locator": "posttrainbench_js; source row 10; opus-4.8; field average_score"
+      },
+      "protocol": "PostTrainBench v1.1 (aisa-group, Ben Rank et al.; verified by Epoch AI): agents retrain four small base models (gemma-3-4b-pt, SmolLM3-3B-Base, Qwen3-1.7B-Base, Qwen3-4B-Base) for each of 7 benchmark families (AIME 2025, Arena-Hard Writing, BFCL, GPQA-Main, GSM8K, HealthBench, HumanEval); the leaderboard average is the weighted mean over base models × benchmarks (published weights, sum 1), aggregated over the 2–3 listed runs per agent; baselines (official instruct, base, human) are references; Fable 5's GPQA cells use an Opus 4.8 Max fallback after refusals (site footnote ‡). Not a Composite input.; source row: {\"scaffold\":\"Claude Code\",\"reasoning_effort\":\"High\",\"reprompted\":false,\"n_runs\":2,\"std\":3.58,\"base_models\":[\"Qwen3-1.7B-Base\",\"Qwen3-4B-Base\",\"SmolLM3-3B-Base\",\"gemma-3-4b-pt\"],\"benchmarks\":[\"aime2025\",\"arenahardwriting\",\"bfcl\",\"gpqamain\",\"gsm8k\",\"healthbench\",\"humaneval\"],\"is_external\":false,\"footnote_marker\":null,\"verification_note\":null}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://posttrainbench.com/config.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/fad118679e74439821a1.gz",
+          "sha256": "fad118679e74439821a171fe91970acc0d3a7520911114a7222a2d0f160f4fff",
+          "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+          "published_at": null,
+          "locator": "config_source"
+        }
+      ]
+    },
+    {
+      "id": "public:81007558d6ead8062ccd1e2e",
+      "benchmark_id": "posttrainbench::1.1",
+      "subject": {
+        "source_id": "opus-4.8-max",
+        "name": "Opus 4.8",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 32.9,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://posttrainbench.com/scores.js",
+        "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/66a770f299c2910bb8fc.gz",
+        "sha256": "66a770f299c2910bb8fc5068e61d720aac7581cfc666118789ffce54b7c88501",
+        "locator": "posttrainbench_js; source row 11; opus-4.8-max; field average_score"
+      },
+      "protocol": "PostTrainBench v1.1 (aisa-group, Ben Rank et al.; verified by Epoch AI): agents retrain four small base models (gemma-3-4b-pt, SmolLM3-3B-Base, Qwen3-1.7B-Base, Qwen3-4B-Base) for each of 7 benchmark families (AIME 2025, Arena-Hard Writing, BFCL, GPQA-Main, GSM8K, HealthBench, HumanEval); the leaderboard average is the weighted mean over base models × benchmarks (published weights, sum 1), aggregated over the 2–3 listed runs per agent; baselines (official instruct, base, human) are references; Fable 5's GPQA cells use an Opus 4.8 Max fallback after refusals (site footnote ‡). Not a Composite input.; source row: {\"scaffold\":\"Claude Code\",\"reasoning_effort\":\"Max\",\"reprompted\":false,\"n_runs\":2,\"std\":5.75,\"base_models\":[\"Qwen3-1.7B-Base\",\"Qwen3-4B-Base\",\"SmolLM3-3B-Base\",\"gemma-3-4b-pt\"],\"benchmarks\":[\"aime2025\",\"arenahardwriting\",\"bfcl\",\"gpqamain\",\"gsm8k\",\"healthbench\",\"humaneval\"],\"is_external\":false,\"footnote_marker\":null,\"verification_note\":null}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://posttrainbench.com/config.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/fad118679e74439821a1.gz",
+          "sha256": "fad118679e74439821a171fe91970acc0d3a7520911114a7222a2d0f160f4fff",
+          "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+          "published_at": null,
+          "locator": "config_source"
+        }
+      ]
+    },
+    {
+      "id": "public:78a513844b3163536d5d5a07",
+      "benchmark_id": "posttrainbench::1.1",
+      "subject": {
+        "source_id": "opus-5",
+        "name": "Opus 5",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 35.04,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://posttrainbench.com/scores.js",
+        "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/66a770f299c2910bb8fc.gz",
+        "sha256": "66a770f299c2910bb8fc5068e61d720aac7581cfc666118789ffce54b7c88501",
+        "locator": "posttrainbench_js; source row 12; opus-5; field average_score"
+      },
+      "protocol": "PostTrainBench v1.1 (aisa-group, Ben Rank et al.; verified by Epoch AI): agents retrain four small base models (gemma-3-4b-pt, SmolLM3-3B-Base, Qwen3-1.7B-Base, Qwen3-4B-Base) for each of 7 benchmark families (AIME 2025, Arena-Hard Writing, BFCL, GPQA-Main, GSM8K, HealthBench, HumanEval); the leaderboard average is the weighted mean over base models × benchmarks (published weights, sum 1), aggregated over the 2–3 listed runs per agent; baselines (official instruct, base, human) are references; Fable 5's GPQA cells use an Opus 4.8 Max fallback after refusals (site footnote ‡). Not a Composite input.; source row: {\"scaffold\":\"Claude Code\",\"reasoning_effort\":\"not stated\",\"reprompted\":false,\"n_runs\":2,\"std\":1.38,\"base_models\":[\"Qwen3-1.7B-Base\",\"Qwen3-4B-Base\",\"SmolLM3-3B-Base\",\"gemma-3-4b-pt\"],\"benchmarks\":[\"aime2025\",\"arenahardwriting\",\"bfcl\",\"gpqamain\",\"gsm8k\",\"healthbench\",\"humaneval\"],\"is_external\":false,\"footnote_marker\":null,\"verification_note\":null}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://posttrainbench.com/config.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/fad118679e74439821a1.gz",
+          "sha256": "fad118679e74439821a171fe91970acc0d3a7520911114a7222a2d0f160f4fff",
+          "retrieved_at": "2026-09-19T04:30:08.820296+00:00",
+          "published_at": null,
+          "locator": "config_source"
+        }
+      ]
     }
   ],
   "collections": [

@@ -112,7 +112,7 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
   for (const entry of registry.entries) { if (manual.has(entry.id)) continue; add({ url: entry.primary_url }); for (const source of entry.evidence ?? []) add(source); }
   for (const spec of plan.entries) {
     if (manual.has(spec.benchmark_id)) continue;
-    add(spec.source); for (const key of ['method_source', 'categories_source', 'frontend_source', 'detail_source']) add(spec.parser?.[key]);
+    add(spec.source); for (const key of ['method_source', 'categories_source', 'frontend_source', 'detail_source', 'config_source']) add(spec.parser?.[key]);
     // One-file-per-run sources (BU Bench): every run file is a primary source of its own row.
     for (const run of spec.parser?.runs ?? []) add(run);
   }
@@ -252,7 +252,7 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
     if (manual.has(spec.benchmark_id)) { checks.push({ id: spec.benchmark_id, status: 'retained_manual_snapshot', rows: priorRows.length, reason: spec.reason }); continue; }
     try {
       const proposed = structuredClone(spec); proposed.source = current(spec.source);
-      for (const key of ['method_source', 'categories_source', 'frontend_source', 'detail_source']) if (spec.parser[key]) proposed.parser[key] = current(spec.parser[key]);
+      for (const key of ['method_source', 'categories_source', 'frontend_source', 'detail_source', 'config_source']) if (spec.parser[key]) proposed.parser[key] = current(spec.parser[key]);
       if (spec.parser.runs) proposed.parser.runs = spec.parser.runs.map(current);
       const onePlan = join(temporary, `plan-${index}.json`), output = join(temporary, `public-${index}.json`);
       await put(onePlan, { schema_version: 1, entries: [proposed] });

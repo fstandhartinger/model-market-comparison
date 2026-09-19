@@ -283,6 +283,14 @@
     "epoch-swe-bench-verified": {
       "tier": "secondary",
       "reason": "Public SWE-bench Verified tasks re-run by Epoch AI; the existing SWE-bench Verified board carries the same default tier, so the duplicate stays out of the headline/heldout pairs."
+    },
+    "frontierswe": {
+      "tier": "secondary",
+      "reason": "Public task suite on GitHub (Proximal-Labs/frontier-swe-v2) behind the site’s own review protocol; rarely quoted in launch posts; the site itself is the only leaderboard for it."
+    },
+    "posttrainbench": {
+      "tier": "secondary",
+      "reason": "Public retraining protocol and harness (aisa-group/PostTrainBench, MIT; arXiv2603.08640, verified by Epoch AI); a base-model retraining eval quoted on posttrainbench.com only."
     }
   }
 }
