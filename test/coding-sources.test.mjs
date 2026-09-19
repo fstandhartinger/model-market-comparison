@@ -18,7 +18,12 @@ const SLUG_BOARDS = ['osworld-2', 'swe-rebench', 'gso', 'hyper-tau-bench', 'lisa
   // 2026-09-18 (iteration 114, CR-82.3/82.4): VulcanBench Frontier v4 (product-name labels with the effort tier in
   // brackets) and KernelBench-CUDA (run-identity labels; one reviewed identity per problem, hardware is the version).
   'vulcanbench-frontier', 'kernelbench-cuda-glm52-fused-moe', 'kernelbench-cuda-deepseek-nsa',
-  'kernelbench-cuda-megaqwen-decode', 'kernelbench-cuda-grid-mingru-sps'];
+  'kernelbench-cuda-megaqwen-decode', 'kernelbench-cuda-grid-mingru-sps',
+  // 2026-09-19 (iteration 115, CR-54.2): six boards from Epoch AI's Benchmarking Hub ZIP, slug labels joined by
+  // the same lib/coding-identity.mjs parseDeepSweId rule as DeepSWE/SimpleQA Verified. math_level_5 and
+  // frontiermath_erdos stay excluded; recorded in data/raw/benchmarks/epoch-hub-decisions.json.
+  'chess-puzzles', 'mystery-game-puzzles', 'ebr-bench', 'mirrorcode', 'epoch-gpqa-diamond',
+  'epoch-swe-bench-verified'];
 const MIN = { 'deepswe::snapshot-2026-09-15': 60, 'swe-atlas-qna::snapshot-2026-09-15': 20, 'swe-atlas-test-writing::snapshot-2026-09-15': 20, 'swe-atlas-refactoring::snapshot-2026-09-15': 15 };
 
 test('the collector reproduces the committed observations from the committed evidence alone', () => {

@@ -161,10 +161,14 @@ for (const path of ['data/raw/benchmarks/public-observations.json', 'data/raw/be
   let raw;
   try { raw = await read(path); } catch (e) { if (e.code === 'ENOENT' && process.argv.includes('--draft')) continue; throw e; }
   for (const observation of raw.observations) {
+    // A reviewed identity-map rule outranks the generic display-name bridge: some sources label
+    // their rows with the exact catalog display name (2026-09-19: Epoch hub slugs seed-oss-36b-instruct
+    // and phi-4 are display names), and those rows must keep the reviewed note and rule.
+    const reviewedFirst = identityJoin.get(`${observation.benchmark_id}\0${observation.subject.source_id}`);
     // Only a unique, exact checkpoint identity may bridge a public source to the catalog.
     // Generic vendor product aliases never choose an effort variant.
     if (path.endsWith('public-observations.json') && observation.subject.model_id === null
-        && !preserveSourceIdentity.has(observation.benchmark_id)) {
+        && !preserveSourceIdentity.has(observation.benchmark_id) && !reviewedFirst) {
       const subject = observation.subject;
       const hf = subject.source_id.startsWith('https://huggingface.co/') ? subject.source_id
         : subject.source_id.includes('/') ? `https://huggingface.co/${subject.source_id}` : null;

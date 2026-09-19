@@ -1,0 +1,75 @@
+{
+  "recorded_at": "2026-09-19T00:02:00Z",
+  "recorded_by": "Iteration 115 (opencode-kimi, CR-54.2)",
+  "source": "https://epoch.ai/data/benchmark_data.zip",
+  "archive_sha256_captured_2026-09-18": "db87a5be1b30915a3c6411acbaa4ccb83b1b759876e3c698df8abb5ffed04f1d",
+  "licence": "Epoch AI Benchmarking Hub archive README: CC BY 4.0 (verified 2026-09-16, CR-54.1). Robots: epoch.ai allows /data/ (verified 2026-09-16).",
+  "decisions": [
+    {
+      "board": "chess_puzzles",
+      "decision": "ingest",
+      "identity": "chess-puzzles::snapshot-2026-09-18",
+      "category": "Reasoning",
+      "benchmaxxing_tier": "heldout",
+      "reason": "Epoch runs it itself (CC BY 4.0); 100 novel programmatic positions not present in any other source; single best move per position judged by Stockfish.",
+      "metadata_row": "Chess Puzzles,True,chess_puzzles.csv,Best score (across scorers),1.0,0.0496,1.0,2025-12-10,"
+    },
+    {
+      "board": "mystery_game_puzzles",
+      "decision": "ingest",
+      "identity": "mystery-game-puzzles::snapshot-2026-09-18",
+      "category": "Reasoning",
+      "benchmaxxing_tier": "heldout",
+      "reason": "Epoch runs it itself; the game's identity is deliberately undisclosed and puzzles are programmatically generated, so benchmark-specific preparation is designed out.",
+      "metadata_row": "Mystery Game Puzzles,True,mystery_game_puzzles.csv,Best score (across scorers),1.0,0.0922,1.0,2026-07-30,"
+    },
+    {
+      "board": "ebr_bench",
+      "decision": "ingest",
+      "identity": "ebr-bench::snapshot-2026-09-18",
+      "category": "Agentic",
+      "benchmaxxing_tier": "heldout",
+      "reason": "Epoch runs it itself; the obscure game was chosen so training-time memorisation is unlikely; measures learning across repeated playthroughs.",
+      "metadata_row": "EBR-bench,True,ebr_bench.csv,Best score (across scorers),1.0,0.0,1.0,2026-07-01,"
+    },
+    {
+      "board": "mirrorcode",
+      "decision": "ingest",
+      "identity": "mirrorcode::snapshot-2026-09-18",
+      "category": "Coding",
+      "benchmaxxing_tier": "secondary",
+      "reason": "Epoch runs it itself (co-developed with METR); leaderboard configuration MirrorCode (ML, +Private, 2L) = 30 tasks; publicly known target programs, held-out tests; rarely quoted in launch posts.",
+      "metadata_row": "MirrorCode,True,mirrorcode.csv,Best score (across scorers),1.0,0.0,1.0,2026-06-26,"
+    },
+    {
+      "board": "gpqa_diamond",
+      "decision": "ingest",
+      "identity": "epoch-gpqa-diamond::snapshot-2026-09-18",
+      "category": "Science",
+      "benchmaxxing_tier": "headline",
+      "reason": "Epoch runs the public GPQA Diamond set itself, like the AA and OpenRouter runs already carried; kept as its own identity, never merged or averaged. Display tier follows the CR-34.2 precedent: the Simple table shows one GPQA (the AA run), the other runs stay in the full table.",
+      "metadata_row": "GPQA diamond,True,gpqa_diamond.csv,Best score (across scorers),1.0,0.25,1.0,2023-11-20,"
+    },
+    {
+      "board": "swe_bench_verified",
+      "decision": "ingest",
+      "identity": "epoch-swe-bench-verified::snapshot-2026-09-18",
+      "category": "Coding",
+      "benchmaxxing_tier": "secondary",
+      "reason": "Epoch runs the public SWE-bench Verified set itself; separate identity from the existing SWE-bench Verified board, never merged or averaged; the existing board carries the same default tier.",
+      "metadata_row": "SWE-Bench verified,True,swe_bench_verified.csv,Best score (across scorers),1.0,0.0,1.0,2024-08-13,"
+    },
+    {
+      "board": "math_level_5",
+      "decision": "exclude",
+      "reason": "Legacy academic benchmark (Epoch metadata release date 2021-03-05). House policy excludes the saturated MATH-500 subset (CR-37.1 decision list); MATH Level 5 is the parent corpus of that subset, so the same saturation judgement applies. Epoch still runs it (in_eci True), and its ECI contribution keeps flowing through the ECI itself, which Benchmark Heaven already carries.",
+      "metadata_row": "MATH level 5,True,math_level_5.csv,Best score (across scorers),1.0,0.0,1.0,2021-03-05,"
+    },
+    {
+      "board": "frontiermath_erdos",
+      "decision": "exclude",
+      "reason": "All five published rows score exactly 0.0 (claude-fable-5-1 max, gpt-5.5 xhigh, ...), so the board carries no discriminative information; Epoch's benchmark_metadata.csv leaves its source_file and score_column blank (in_eci False), i.e. Epoch itself has not classified it. A zero-information board would add a misleading row. Revisit when Epoch publishes non-zero results or completes the metadata.",
+      "metadata_row": "FrontierMath-Erdos,False,,,1.0,0.0,1.0,2026-09-03,"
+    }
+  ]
+}

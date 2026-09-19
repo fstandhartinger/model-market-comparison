@@ -100,12 +100,23 @@ test('CR-78.3: the three level changes from the simulation, and Hy3 moving down'
   // asserted, exactly the "direction over point value" rule the 20260918T024002Z review gate applied to
   // the live verify-cr69 pins for the same reason. Arithmetic coverage is unaffected: score = gap +
   // jagged term and level = level(score) are asserted for every row.
-  // Accepted value on the simulation day → measured in the 18 Sep refreshed data:
+  // Accepted value on the simulation day → measured in the 19 Sep data (CR-54.2, Epoch Benchmarking Hub):
+  //
+  // 2026-09-19 re-pin: CR-54.2 added six Epoch hub boards to the corpus (two heldout Reasoning: Chess
+  // Puzzles, Mystery Game Puzzles; heldout Agentic: EBR-bench; secondary Coding: MirrorCode + the Epoch
+  // SWE-bench Verified run; headline Science: the Epoch GPQA Diamond run). The heldout corpus grew, so the
+  // exact (headline − heldout) gap moved for models the new boards join: Gemini 3.6 Flash gains Chess Puzzles
+  // (0.40) and Mystery Game Puzzles (0.30) as heldout Reasoning axes and its gap moves 2.31 → 5.05, pushing
+  // the blend 3.17 → 6.12 (null → light → medium); it now carries a tag, comfortably inside the medium band
+  // (0.6 over the ±5 light/medium line), so the before/after transitions are hard assertions again.
+  // Qwen3.7 Max's gap relaxes 5.85 → 5.38 (heldout joins Chess 0.19, Mystery 0.32, EBR 0.095) and its blend
+  // 7.71 → 6.78 — both still light → medium. Muse Spark 1.1 (11.69 → 14.03) and Hy3 (5.82 → 4.22) keep
+  // their accepted transitions. Value bands stay ±0.5 per the 2026-09-18 rule.
   const expected = [
-    { id: 'muse-spark-1.1::xhigh', gap: 11.7, score: 13.8, before: 'medium', after: 'strong' },     // 11.69 → 13.84
-    { id: 'qwen3.7-max::default', gap: 5.8, score: 7.7, before: 'light', after: 'medium' },         // 5.85 → 7.71
-    { id: 'gemini-3.6-flash::high', gap: 2.4, score: 3.2, before: null, after: null /* near ±3 threshold; 2.31 → 3.17 */ },
-    { id: 'hy3::default', gap: 5.8, score: 4.3, before: 'light', after: 'light' },                  // 5.82 → 4.27
+    { id: 'muse-spark-1.1::xhigh', gap: 11.7, score: 14.0, before: 'medium', after: 'strong' },     // 11.69 → 14.03
+    { id: 'qwen3.7-max::default', gap: 5.4, score: 6.8, before: 'light', after: 'medium' },         // 5.38 → 6.78
+    { id: 'gemini-3.6-flash::high', gap: 5.1, score: 6.1, before: 'light', after: 'medium' },       // 5.05 → 6.12
+    { id: 'hy3::default', gap: 5.8, score: 4.2, before: 'light', after: 'light' },                  // 5.82 → 4.22
   ];
   for (const row of expected) {
     const report = scoreBenchmaxxing(view, row.id);

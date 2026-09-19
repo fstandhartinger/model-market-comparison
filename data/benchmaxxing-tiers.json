@@ -1,6 +1,6 @@
 {
   "version": "2026-09-18",
-  "note": "Benchmaxxing calibration tier table (job bh-benchmaxxing-calibration-20260917). Keyed by benchmark family (registry id before '::'). Tiers: headline = public question set that labs quote in release posts, so it is the board most exposed to targeted tuning and contamination; heldout = private/unpublished questions, tasks created after most training cutoffs, or a held-out split, which a lab cannot tune toward; domain = a vertical professional domain (legal, finance, spreadsheet, medical) whose gaps mostly show specialisation; secondary = public but rarely quoted, or measures a trait rather than task skill; aggregate = an index built from other boards (never compared); judged = graded by votes or a judge model (already outside the signal). Only benchmark facts decide a tier, never who scores well on it.",
+  "note": "Benchmaxxing calibration tier table (job bh-benchmaxxing-calibration-20260917). Keyed by benchmark family (registry id before '::'). Tiers: headline = public question set that labs quote in release posts, so it is the board most exposed to targeted tuning and contamination; heldout = private/unpublished questions, tasks created after most training cutoffs, or a held-out split, which a lab cannot tune toward; domain = a vertical professional domain (legal, finance, spreadsheet, medical) whose gaps mostly show specialisation; secondary = public but rarely quoted, or measures a trait rather than task skill; aggregate = an index built from other boards (never compared); judged = graded by votes or a judge model (already outside the signal). Only benchmark facts decide a tier, never who scores well on it. 2026-09-19 (CR-54.2): six Epoch AI Benchmarking Hub boards joined with deliberate tiers; math_level_5 (2021 legacy, saturated MATH-500 precedent) and frontiermath_erdos (all five published rows score 0, not in ECI, benchmark_metadata leaves its source file blank) were excluded — see data/raw/benchmarks/epoch-hub-decisions.json.",
   "tiers": {
     "aa-aime": {
       "tier": "headline",
@@ -259,6 +259,30 @@
     "kernelbench-cuda-grid-mingru-sps": {
       "tier": "secondary",
       "reason": "Public CUDA problems with public reference solutions in the maintainer’s GitHub monorepo; rarely quoted in launch posts."
+    },
+    "chess-puzzles": {
+      "tier": "heldout",
+      "reason": "100 novel chess positions generated programmatically by Epoch AI (published 2025-12-10) that “do not appear in any other source”; cannot be trained verbatim."
+    },
+    "mystery-game-puzzles": {
+      "tier": "heldout",
+      "reason": "Epoch keeps the game's identity deliberately undisclosed and generates the puzzles programmatically (published 2026-07-30); benchmark-specific preparation is designed out."
+    },
+    "ebr-bench": {
+      "tier": "heldout",
+      "reason": "Epoch chose the relatively obscure board game Earthborne Rangers precisely so models are unlikely to have memorised it; measures learning across repeated playthroughs (published 2026-07-01)."
+    },
+    "mirrorcode": {
+      "tier": "secondary",
+      "reason": "Whole-program reimplementation from publicly known programs with held-out tests, co-developed with METR (published 2026-06-26); rarely quoted in launch posts."
+    },
+    "epoch-gpqa-diamond": {
+      "tier": "headline",
+      "reason": "The same public GPQA Diamond questions the AA and OpenRouter runs use, re-run by Epoch AI; the most-quoted science number in release posts."
+    },
+    "epoch-swe-bench-verified": {
+      "tier": "secondary",
+      "reason": "Public SWE-bench Verified tasks re-run by Epoch AI; the existing SWE-bench Verified board carries the same default tier, so the duplicate stays out of the headline/heldout pairs."
     }
   }
 }

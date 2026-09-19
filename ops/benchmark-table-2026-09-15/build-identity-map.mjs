@@ -12,6 +12,14 @@ const BOARDS = [
   { prefix: 'frontiermath-tiers-1-3::', parse: parseDeepSweId, basis: 'measured' },
   { prefix: 'frontiermath-tier-4::', parse: parseDeepSweId, basis: 'measured' },
   { prefix: 'simpleqa-verified::', parse: parseDeepSweId, basis: 'measured' },
+  // 2026-09-19 (iteration 115, CR-54.2): six more Epoch-run boards from the same hub archive, same
+  // `<slug>_<effort>` "Model version" labels (decisions incl. two exclusions: data/raw/benchmarks/epoch-hub-decisions.json).
+  { prefix: 'chess-puzzles::', parse: parseDeepSweId, basis: 'measured' },
+  { prefix: 'mystery-game-puzzles::', parse: parseDeepSweId, basis: 'measured' },
+  { prefix: 'ebr-bench::', parse: parseDeepSweId, basis: 'measured' },
+  { prefix: 'mirrorcode::', parse: parseDeepSweId, basis: 'measured' },
+  { prefix: 'epoch-gpqa-diamond::', parse: parseDeepSweId, basis: 'measured' },
+  { prefix: 'epoch-swe-bench-verified::', parse: parseDeepSweId, basis: 'measured' },
   { prefix: 'swe-atlas-qna::', parse: parseScaleLabel, basis: 'measured' },
   { prefix: 'swe-atlas-test-writing::', parse: parseScaleLabel, basis: 'measured' },
   { prefix: 'swe-atlas-refactoring::', parse: parseScaleLabel, basis: 'measured' },

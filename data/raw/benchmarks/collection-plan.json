@@ -3867,6 +3867,354 @@
       "source_urls": [
         "https://kernelbench.com/cuda"
       ]
+    },
+    {
+      "benchmark_id": "chess-puzzles::snapshot-2026-09-18",
+      "refresh": "manual",
+      "parser": {
+        "kind": "csv",
+        "require_header": [
+          "Model version",
+          "mean_score",
+          "Best score (across scorers)",
+          "Release date",
+          "Organization",
+          "Country",
+          "Training compute (FLOP)",
+          "Training compute notes",
+          "stderr",
+          "Log viewer",
+          "Logs",
+          "Started at",
+          "id"
+        ],
+        "name_field": "Model version",
+        "value_field": "Best score (across scorers)",
+        "id_field": "Model version",
+        "plain_text_names": true,
+        "context_fields": [
+          "mean_score",
+          "stderr",
+          "Started at",
+          "id"
+        ]
+      },
+      "status": "collected",
+      "reason": "Epoch AI runs this board itself (measured) and publishes the rows under CC BY 4.0. One row per Epoch model version (CR-54.2, decided 2026-09-19 in data/raw/benchmarks/epoch-hub-decisions.json).",
+      "recipe": {
+        "command": "curl --fail -A 'BenchmarkHeavenResearch/1.0' https://epoch.ai/data/benchmark_data.zip -o benchmark_data.zip && unzip -p benchmark_data.zip chess_puzzles.csv | gzip -n > data/raw/benchmarks/daily-evidence/<ISO-date>-epoch-hub/epoch-chess_puzzles.csv.gz (same for benchmark_metadata.csv); python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "CSV member of a ZIP archive",
+        "locator": "chess_puzzles.csv: one row per Epoch “Model version” (<model>_<effort> or a bare slug); value “Best score (across scorers)” (fraction); mean_score, stderr, Started at and the Epoch run id kept in the protocol.",
+        "version_guard": "Exact 13-column Epoch run header and benchmark_metadata.csv still maps this board to chess_puzzles.csv / “Best score (across scorers)”. A changed problem set or score column is a new identity after review. epoch.ai robots.txt allows /data/ (verified 2026-09-16, CR-54.1); one capture per refresh, no retries against errors.",
+        "notes": "Manual snapshot, not part of the automatic daily refresh (see the registry notes)."
+      },
+      "cadence": "manual snapshot; refresh when the Epoch archive changes",
+      "version_guard": "Exact 13-column Epoch run header and benchmark_metadata.csv still maps this board to chess_puzzles.csv / “Best score (across scorers)”. A changed problem set or score column is a new identity after review.",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-epoch-hub/epoch-chess_puzzles.csv.gz",
+        "sha256": "3e5c43320358dbdb1fbad2d646339dfb56f59ac666409d20d486783cbdf37497",
+        "retrieved_at": "2026-09-18T23:49:00Z"
+      },
+      "protocol": "Chess Puzzles run by Epoch AI (inspect-ai): 100 novel programmatic chess positions, one Stockfish-judged best move each; value = Best score (across scorers). mean_score, stderr, Started at and the Epoch run id stay in the protocol; CC BY 4.0, attribute Epoch AI.",
+      "minimum_rows": 160,
+      "publication_urls": [
+        {
+          "url": "https://epoch.ai/benchmarks/chess-puzzles",
+          "type": "official_leaderboard",
+          "role": "Epoch AI Benchmarking Hub board page (methodology)"
+        }
+      ]
+    },
+    {
+      "benchmark_id": "mystery-game-puzzles::snapshot-2026-09-18",
+      "refresh": "manual",
+      "parser": {
+        "kind": "csv",
+        "require_header": [
+          "Model version",
+          "mean_score",
+          "Best score (across scorers)",
+          "Release date",
+          "Organization",
+          "Country",
+          "Training compute (FLOP)",
+          "Training compute notes",
+          "stderr",
+          "Log viewer",
+          "Logs",
+          "Started at",
+          "id"
+        ],
+        "name_field": "Model version",
+        "value_field": "Best score (across scorers)",
+        "id_field": "Model version",
+        "plain_text_names": true,
+        "context_fields": [
+          "mean_score",
+          "stderr",
+          "Started at",
+          "id"
+        ]
+      },
+      "status": "collected",
+      "reason": "Epoch AI runs this board itself (measured) and publishes the rows under CC BY 4.0. One row per Epoch model version (CR-54.2, decided 2026-09-19 in data/raw/benchmarks/epoch-hub-decisions.json).",
+      "recipe": {
+        "command": "curl --fail -A 'BenchmarkHeavenResearch/1.0' https://epoch.ai/data/benchmark_data.zip -o benchmark_data.zip && unzip -p benchmark_data.zip mystery_game_puzzles.csv | gzip -n > data/raw/benchmarks/daily-evidence/<ISO-date>-epoch-hub/epoch-mystery_game_puzzles.csv.gz (same for benchmark_metadata.csv); python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "CSV member of a ZIP archive",
+        "locator": "mystery_game_puzzles.csv: one row per Epoch “Model version” (<model>_<effort> or a bare slug); value “Best score (across scorers)” (fraction); mean_score, stderr, Started at and the Epoch run id kept in the protocol.",
+        "version_guard": "Exact 13-column Epoch run header and benchmark_metadata.csv still maps this board to mystery_game_puzzles.csv / “Best score (across scorers)”. A changed problem set or score column is a new identity after review. epoch.ai robots.txt allows /data/ (verified 2026-09-16, CR-54.1); one capture per refresh, no retries against errors.",
+        "notes": "Manual snapshot, not part of the automatic daily refresh (see the registry notes)."
+      },
+      "cadence": "manual snapshot; refresh when the Epoch archive changes",
+      "version_guard": "Exact 13-column Epoch run header and benchmark_metadata.csv still maps this board to mystery_game_puzzles.csv / “Best score (across scorers)”. A changed problem set or score column is a new identity after review.",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-epoch-hub/epoch-mystery_game_puzzles.csv.gz",
+        "sha256": "8915ec1884e41ae8b8e677a826d238b61bbada2d3c9e2c8e74f8096260a8f367",
+        "retrieved_at": "2026-09-18T23:49:00Z"
+      },
+      "protocol": "Mystery Game Puzzles run by Epoch AI (inspect-ai): 100 programmatic mid-game positions of an undisclosed game, one best move each; value = Best score (across scorers). mean_score, stderr, Started at and the Epoch run id stay in the protocol; CC BY 4.0, attribute Epoch AI.",
+      "minimum_rows": 80,
+      "publication_urls": [
+        {
+          "url": "https://epoch.ai/benchmarks/mystery-game-puzzles",
+          "type": "official_leaderboard",
+          "role": "Epoch AI Benchmarking Hub board page (methodology)"
+        }
+      ]
+    },
+    {
+      "benchmark_id": "ebr-bench::snapshot-2026-09-18",
+      "refresh": "manual",
+      "parser": {
+        "kind": "csv",
+        "require_header": [
+          "Model version",
+          "mean_score",
+          "Best score (across scorers)",
+          "Release date",
+          "Organization",
+          "Country",
+          "Training compute (FLOP)",
+          "Training compute notes",
+          "stderr",
+          "Log viewer",
+          "Logs",
+          "Started at",
+          "id"
+        ],
+        "name_field": "Model version",
+        "value_field": "Best score (across scorers)",
+        "id_field": "Model version",
+        "plain_text_names": true,
+        "context_fields": [
+          "mean_score",
+          "stderr",
+          "Started at",
+          "id"
+        ]
+      },
+      "status": "collected",
+      "reason": "Epoch AI runs this board itself (measured) and publishes the rows under CC BY 4.0. One row per Epoch model version (CR-54.2, decided 2026-09-19 in data/raw/benchmarks/epoch-hub-decisions.json).",
+      "recipe": {
+        "command": "curl --fail -A 'BenchmarkHeavenResearch/1.0' https://epoch.ai/data/benchmark_data.zip -o benchmark_data.zip && unzip -p benchmark_data.zip ebr_bench.csv | gzip -n > data/raw/benchmarks/daily-evidence/<ISO-date>-epoch-hub/epoch-ebr_bench.csv.gz (same for benchmark_metadata.csv); python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "CSV member of a ZIP archive",
+        "locator": "ebr_bench.csv: one row per Epoch “Model version” (<model>_<effort> or a bare slug); value “Best score (across scorers)” (fraction); mean_score, stderr, Started at and the Epoch run id kept in the protocol.",
+        "version_guard": "Exact 13-column Epoch run header and benchmark_metadata.csv still maps this board to ebr_bench.csv / “Best score (across scorers)”. A changed problem set or score column is a new identity after review. epoch.ai robots.txt allows /data/ (verified 2026-09-16, CR-54.1); one capture per refresh, no retries against errors.",
+        "notes": "Manual snapshot, not part of the automatic daily refresh (see the registry notes)."
+      },
+      "cadence": "manual snapshot; refresh when the Epoch archive changes",
+      "version_guard": "Exact 13-column Epoch run header and benchmark_metadata.csv still maps this board to ebr_bench.csv / “Best score (across scorers)”. A changed problem set or score column is a new identity after review.",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-epoch-hub/epoch-ebr_bench.csv.gz",
+        "sha256": "78bb2cdcdfa51abefd24513acad55be5df36360ce48938d161178a65f2cf3800",
+        "retrieved_at": "2026-09-18T23:49:00Z"
+      },
+      "protocol": "EBR-bench run by Epoch AI (inspect-ai): repeated playthroughs of Earthborne Rangers with note-taking; value = Best score (across scorers). mean_score, stderr, Started at and the Epoch run id stay in the protocol; CC BY 4.0, attribute Epoch AI.",
+      "minimum_rows": 12,
+      "publication_urls": [
+        {
+          "url": "https://epoch.ai/benchmarks/ebr-bench",
+          "type": "official_leaderboard",
+          "role": "Epoch AI Benchmarking Hub board page (methodology)"
+        }
+      ]
+    },
+    {
+      "benchmark_id": "mirrorcode::snapshot-2026-09-18",
+      "refresh": "manual",
+      "parser": {
+        "kind": "csv",
+        "require_header": [
+          "Model version",
+          "mean_score",
+          "Best score (across scorers)",
+          "Release date",
+          "Organization",
+          "Country",
+          "Training compute (FLOP)",
+          "Training compute notes",
+          "stderr",
+          "Log viewer",
+          "Logs",
+          "Started at",
+          "id"
+        ],
+        "name_field": "Model version",
+        "value_field": "Best score (across scorers)",
+        "id_field": "Model version",
+        "plain_text_names": true,
+        "context_fields": [
+          "mean_score",
+          "stderr",
+          "Started at",
+          "id"
+        ]
+      },
+      "status": "collected",
+      "reason": "Epoch AI runs this board itself (measured) and publishes the rows under CC BY 4.0. One row per Epoch model version (CR-54.2, decided 2026-09-19 in data/raw/benchmarks/epoch-hub-decisions.json).",
+      "recipe": {
+        "command": "curl --fail -A 'BenchmarkHeavenResearch/1.0' https://epoch.ai/data/benchmark_data.zip -o benchmark_data.zip && unzip -p benchmark_data.zip mirrorcode.csv | gzip -n > data/raw/benchmarks/daily-evidence/<ISO-date>-epoch-hub/epoch-mirrorcode.csv.gz (same for benchmark_metadata.csv); python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "CSV member of a ZIP archive",
+        "locator": "mirrorcode.csv: one row per Epoch “Model version” (<model>_<effort> or a bare slug); value “Best score (across scorers)” (fraction); mean_score, stderr, Started at and the Epoch run id kept in the protocol.",
+        "version_guard": "Exact 13-column Epoch run header and benchmark_metadata.csv still maps this board to mirrorcode.csv / “Best score (across scorers)”. A changed problem set or score column is a new identity after review. epoch.ai robots.txt allows /data/ (verified 2026-09-16, CR-54.1); one capture per refresh, no retries against errors.",
+        "notes": "Manual snapshot, not part of the automatic daily refresh (see the registry notes)."
+      },
+      "cadence": "manual snapshot; refresh when the Epoch archive changes",
+      "version_guard": "Exact 13-column Epoch run header and benchmark_metadata.csv still maps this board to mirrorcode.csv / “Best score (across scorers)”. A changed problem set or score column is a new identity after review.",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-epoch-hub/epoch-mirrorcode.csv.gz",
+        "sha256": "6794c9f2b4fc346d74281fb07643f92905474bd084465de0db6725304c7bbbe2",
+        "retrieved_at": "2026-09-18T23:49:00Z"
+      },
+      "protocol": "MirrorCode (leaderboard configuration MirrorCode (ML, +Private, 2L), 30 tasks) run by Epoch AI with METR; value = Best score (across scorers). mean_score, stderr, Started at and the Epoch run id stay in the protocol; CC BY 4.0, attribute Epoch AI.",
+      "minimum_rows": 5,
+      "publication_urls": [
+        {
+          "url": "https://epoch.ai/benchmarks/mirrorcode",
+          "type": "official_leaderboard",
+          "role": "Epoch AI Benchmarking Hub board page (methodology)"
+        }
+      ]
+    },
+    {
+      "benchmark_id": "epoch-gpqa-diamond::snapshot-2026-09-18",
+      "refresh": "manual",
+      "parser": {
+        "kind": "csv",
+        "require_header": [
+          "Model version",
+          "mean_score",
+          "Best score (across scorers)",
+          "Release date",
+          "Organization",
+          "Country",
+          "Training compute (FLOP)",
+          "Training compute notes",
+          "stderr",
+          "Log viewer",
+          "Logs",
+          "Started at",
+          "id"
+        ],
+        "name_field": "Model version",
+        "value_field": "Best score (across scorers)",
+        "id_field": "Model version",
+        "plain_text_names": true,
+        "context_fields": [
+          "mean_score",
+          "stderr",
+          "Started at",
+          "id"
+        ]
+      },
+      "status": "collected",
+      "reason": "Epoch AI runs this board itself (measured) and publishes the rows under CC BY 4.0. One row per Epoch model version (CR-54.2, decided 2026-09-19 in data/raw/benchmarks/epoch-hub-decisions.json).",
+      "recipe": {
+        "command": "curl --fail -A 'BenchmarkHeavenResearch/1.0' https://epoch.ai/data/benchmark_data.zip -o benchmark_data.zip && unzip -p benchmark_data.zip gpqa_diamond.csv | gzip -n > data/raw/benchmarks/daily-evidence/<ISO-date>-epoch-hub/epoch-gpqa_diamond.csv.gz (same for benchmark_metadata.csv); python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "CSV member of a ZIP archive",
+        "locator": "gpqa_diamond.csv: one row per Epoch “Model version” (<model>_<effort> or a bare slug); value “Best score (across scorers)” (fraction); mean_score, stderr, Started at and the Epoch run id kept in the protocol.",
+        "version_guard": "Exact 13-column Epoch run header and benchmark_metadata.csv still maps this board to gpqa_diamond.csv / “Best score (across scorers)”. A changed problem set or score column is a new identity after review. epoch.ai robots.txt allows /data/ (verified 2026-09-16, CR-54.1); one capture per refresh, no retries against errors.",
+        "notes": "Manual snapshot, not part of the automatic daily refresh (see the registry notes)."
+      },
+      "cadence": "manual snapshot; refresh when the Epoch archive changes",
+      "version_guard": "Exact 13-column Epoch run header and benchmark_metadata.csv still maps this board to gpqa_diamond.csv / “Best score (across scorers)”. A changed problem set or score column is a new identity after review.",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-epoch-hub/epoch-gpqa_diamond.csv.gz",
+        "sha256": "8fc9a2c260248f1a95b5282d3af733894df6c39ebea9b50528231bfce1000748",
+        "retrieved_at": "2026-09-18T23:49:00Z"
+      },
+      "protocol": "GPQA Diamond run by Epoch AI (inspect-ai), separate identity from the AA and OpenRouter runs; value = Best score (across scorers). mean_score, stderr, Started at and the Epoch run id stay in the protocol; CC BY 4.0, attribute Epoch AI.",
+      "minimum_rows": 270,
+      "publication_urls": [
+        {
+          "url": "https://epoch.ai/benchmarks/gpqa-diamond",
+          "type": "official_leaderboard",
+          "role": "Epoch AI Benchmarking Hub board page (methodology)"
+        }
+      ]
+    },
+    {
+      "benchmark_id": "epoch-swe-bench-verified::snapshot-2026-09-18",
+      "refresh": "manual",
+      "parser": {
+        "kind": "csv",
+        "require_header": [
+          "Model version",
+          "mean_score",
+          "Best score (across scorers)",
+          "Release date",
+          "Organization",
+          "Country",
+          "Training compute (FLOP)",
+          "Training compute notes",
+          "stderr",
+          "Log viewer",
+          "Logs",
+          "Started at",
+          "id"
+        ],
+        "name_field": "Model version",
+        "value_field": "Best score (across scorers)",
+        "id_field": "Model version",
+        "plain_text_names": true,
+        "context_fields": [
+          "mean_score",
+          "stderr",
+          "Started at",
+          "id"
+        ]
+      },
+      "status": "collected",
+      "reason": "Epoch AI runs this board itself (measured) and publishes the rows under CC BY 4.0. One row per Epoch model version (CR-54.2, decided 2026-09-19 in data/raw/benchmarks/epoch-hub-decisions.json).",
+      "recipe": {
+        "command": "curl --fail -A 'BenchmarkHeavenResearch/1.0' https://epoch.ai/data/benchmark_data.zip -o benchmark_data.zip && unzip -p benchmark_data.zip swe_bench_verified.csv | gzip -n > data/raw/benchmarks/daily-evidence/<ISO-date>-epoch-hub/epoch-swe_bench_verified.csv.gz (same for benchmark_metadata.csv); python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "CSV member of a ZIP archive",
+        "locator": "swe_bench_verified.csv: one row per Epoch “Model version” (<model>_<effort> or a bare slug); value “Best score (across scorers)” (fraction); mean_score, stderr, Started at and the Epoch run id kept in the protocol.",
+        "version_guard": "Exact 13-column Epoch run header and benchmark_metadata.csv still maps this board to swe_bench_verified.csv / “Best score (across scorers)”. A changed problem set or score column is a new identity after review. epoch.ai robots.txt allows /data/ (verified 2026-09-16, CR-54.1); one capture per refresh, no retries against errors.",
+        "notes": "Manual snapshot, not part of the automatic daily refresh (see the registry notes)."
+      },
+      "cadence": "manual snapshot; refresh when the Epoch archive changes",
+      "version_guard": "Exact 13-column Epoch run header and benchmark_metadata.csv still maps this board to swe_bench_verified.csv / “Best score (across scorers)”. A changed problem set or score column is a new identity after review.",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-epoch-hub/epoch-swe_bench_verified.csv.gz",
+        "sha256": "6480176a5d9b1573676fcacc5df5e8c58f9e5fce34025600a19b3bf60617561c",
+        "retrieved_at": "2026-09-18T23:49:00Z"
+      },
+      "protocol": "SWE-bench Verified run by Epoch AI (inspect-ai), separate identity from the existing SWE-bench Verified board; value = Best score (across scorers). mean_score, stderr, Started at and the Epoch run id stay in the protocol; CC BY 4.0, attribute Epoch AI.",
+      "minimum_rows": 25,
+      "publication_urls": [
+        {
+          "url": "https://epoch.ai/benchmarks/swe-bench-verified",
+          "type": "official_leaderboard",
+          "role": "Epoch AI Benchmarking Hub board page (methodology)"
+        }
+      ]
     }
   ]
 }
