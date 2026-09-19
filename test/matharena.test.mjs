@@ -44,6 +44,8 @@ print('ok')
 test('MathArena joins: reviewed names only, the parenthesis is the stated setting', () => {
   assert.deepEqual(parseMathArenaLabel('GPT-6 Astra (max)'), { family: 'gpt-6-astra', effort: 'max' });
   assert.deepEqual(parseMathArenaLabel('DeepSeek-v4-Flash (Max)'), { family: 'deepseek-v4-flash', effort: 'max' });
+  // CR-85.2: V4.1 Flash is its own model, never folded into V4 Flash.
+  assert.deepEqual(parseMathArenaLabel('DeepSeek-V4.1-Flash (Max)'), { family: 'deepseek-v4.1-flash', effort: 'max' });
   assert.deepEqual(parseMathArenaLabel('Qwen3.8-Max'), { family: 'qwen3.8-max', effort: null }, 'a name ending in Max is a name, not a setting');
   assert.deepEqual(parseMathArenaLabel('Kimi K3 (Think)'), { family: 'kimi-k3', effort: 'think' });
   assert.deepEqual(parseMathArenaLabel('Qwen3.6-35B'), { family: null, effort: null }, 'not approximated to qwen3.6-35b-a3b');

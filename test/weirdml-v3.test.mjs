@@ -73,7 +73,8 @@ print('ok')
 `]).toString();
   assert.equal(output.trim(), 'ok');
   const map = JSON.parse(readFileSync('data/raw/benchmarks/identity-map.json', 'utf8')).entries;
-  assert.equal(map.filter((e) => e.benchmark_id === 'matharena-arxivmath::2026-08').length, 3);
-  assert.equal(map.filter((e) => e.benchmark_id === 'matharena-brokenarxiv::2026-08').length, 3);
+  // CR-85.2 (2026-09-19): + DeepSeek-V4.1-Flash (Max) → deepseek-v4.1-flash::max on both boards.
+  assert.equal(map.filter((e) => e.benchmark_id === 'matharena-arxivmath::2026-08').length, 4);
+  assert.equal(map.filter((e) => e.benchmark_id === 'matharena-brokenarxiv::2026-08').length, 4);
   assert.ok(!map.some((e) => e.benchmark_id === 'matharena-arxivmath::2026-08' && /Think/.test(e.source_id)), 'unreviewed settings stay unjoined');
 });
