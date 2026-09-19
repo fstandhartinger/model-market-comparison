@@ -22,19 +22,20 @@ const sec = (v: number | null) => (v === null ? "—" : `${v.toFixed(2)} s`);
 const short = (d: string) => d.split(" (")[0].split(", formerly")[0];
 const TYPE: Record<string, { label: string; v: string }> = {
   jev: { label: "Jev (TypeSafe, closed)", v: "--jev-t-jev" },
-  "jev-rebuild": { label: "Open Jev rebuild", v: "--jev-t-rebuild" },
+  "jev-rebuild": { label: "Jev rebuild (open, or open source planned)", v: "--jev-t-rebuild" },
   "llm-baseline": { label: "Instruction model, JSON schema", v: "--jev-t-llm" },
   "small-tool-model": { label: "Small tool-calling model", v: "--jev-t-tool" },
 };
 const typeVar = (cls: string) => ({ ["--jev-t" as string]: `var(${(TYPE[cls] ?? TYPE["llm-baseline"]).v})` });
 const chartName = (r: JevV12Row) => r.key === "gpt-5.6-luna" ? "GPT-5.6 Luna (low)" : r.key.endsWith("-tools") ? "Needle 3, options as tools"
-  : r.key === "openjev-razorback16" ? "OpenJev (razorback16)" : r.key === "open-alternative-jev" ? "open-alternative-jev (Qwen3.5-4B)" : r.key === "semif-qwen3.5-4b" ? "SemIf (Qwen3.5-4B)" : short(r.display);
+  : r.key === "openjev-razorback16" ? "OpenJev (razorback16)" : r.key === "open-alternative-jev" ? "open-alternative-jev (Qwen3.5-4B)" : r.key === "semif-qwen3.5-4b" ? "SemIf (Qwen3.5-4B)" : r.key === "djev" ? "djev (Maisa, diffusion-gemma)" : short(r.display);
 
 /** $ per 1,000 decisions: four decimals below one cent so e.g. $0.0045 and $0.0092 stay distinguishable. */
 export const usdText = (x: number) => `$${x.toFixed(x < 0.01 ? 4 : 3)}`;
 
 export function CostValue({ r }: { r: JevV12Row }) {
   const v = usdText(r.usd);
+  if (r.costKind === "announced") return <span title={r.costBasis} data-bh-jev12-cost-kind="announced">{v} <span className="bh-thin-tag">announced</span></span>;
   return r.costKind === "estimate"
     ? <span title={r.costBasis} data-bh-jev12-cost-kind="estimate">~{v} <span className="bh-thin-tag">est.</span></span>
     : <span title={r.costBasis} data-bh-jev12-cost-kind="measured">{v}</span>;
@@ -99,7 +100,7 @@ function ScoreChart({ rows, partial, w, view }: { rows: Row[]; partial: Row[]; w
   const types = Object.keys(TYPE).filter((t) => all.some((r) => r.cls === t));
   const f0 = (v: number | null) => (v === null ? "–" : v.toFixed(0));
   return <figure className={`bh-panel p-4 sm:p-5 ${d.official ? "" : "bh-jevc-custom"}`} data-bh-jev12-main-chart data-bh-jevc-chart={d.official ? "official" : "custom"} aria-labelledby="jevc-title">
-    <p className="bh-eyebrow">JevBench v1.2 · {view.decisions} decisions per system</p>
+    <p className="bh-eyebrow">JevBench {view.revision} · {view.decisions} decisions per system</p>
     <h2 id="jevc-title" className="mt-1 text-xl font-bold leading-snug sm:text-2xl" data-bh-jevc-title>{d.title}</h2>
     <p className="mt-1 flex flex-wrap items-center gap-2 text-sm" data-bh-jevc-subtitle>
       {d.official
@@ -113,7 +114,7 @@ function ScoreChart({ rows, partial, w, view }: { rows: Row[]; partial: Row[]; w
     <ol className="mt-2 space-y-2.5 sm:mt-1" data-bh-jevc-bars>
       {all.map((r) => {
         const s = r.score;
-        const label = `${r.display}: ${one(s)}${r.rank ? `, rank ${r.rank}` : ", partial run, not ranked"}. Intelligence ${one(r.axes.intelligence)}, calibration ${r.axes.calibration === null ? "none" : one(r.axes.calibration)}, speed ${one(r.axes.speed)}, cost ${one(r.axes.cost)}${r.costKind === "estimate" ? " (estimated)" : ""}.`;
+        const label = `${r.display}: ${one(s)}${r.rank ? `, rank ${r.rank}` : ", partial run, not ranked"}. Intelligence ${one(r.axes.intelligence)}, calibration ${r.axes.calibration === null ? "none" : one(r.axes.calibration)}, speed ${one(r.axes.speed)}, cost ${one(r.axes.cost)}${r.costKind === "estimate" ? " (estimated)" : r.costKind === "announced" ? " (announced price, not yet charged)" : ""}.`;
         return <li key={r.key} style={typeVar(r.cls)} className="grid grid-cols-[1.4rem_1fr_3.3rem] items-center gap-x-2 text-sm sm:grid-cols-[1.6rem_14rem_1fr_3.2rem_19rem]"
           data-bh-jev12-bar={r.key} data-bh-jevc-score={s === null ? "" : s.toFixed(3)} aria-label={label}>
           <span className="bh-muted tabular col-start-1 row-start-1 text-right text-xs" data-bh-jevc-rank={r.rank ?? ""}>{r.rank ?? ""}</span>
@@ -127,7 +128,7 @@ function ScoreChart({ rows, partial, w, view }: { rows: Row[]; partial: Row[]; w
           <span className="bh-muted col-start-2 row-start-3 mt-0.5 min-w-0 font-mono text-[10.5px] sm:whitespace-nowrap sm:col-start-5 sm:row-start-1 sm:mt-0 sm:grid sm:grid-cols-[1fr_1fr_1fr_1fr_2.1fr] sm:text-right sm:text-[12px]" data-bh-jevc-subs>
             <span className="sm:hidden">I </span><span>{f0(r.axes.intelligence)}</span><span className="sm:hidden"> · C </span><span title={r.calibrationNote ?? undefined}>{f0(r.axes.calibration)}</span>
             <span className="sm:hidden"> · S </span><span>{f0(r.axes.speed)}</span><span className="sm:hidden"> · K </span><span>{f0(r.axes.cost)}</span>
-            <span className="sm:hidden"> · </span><span title={r.costBasis} data-bh-jevc-usd>{`${r.costKind === "estimate" ? "~" : ""}${usdText(r.usd)}`}{r.costKind === "estimate" ? " est." : ""}</span>
+            <span className="sm:hidden"> · </span><span title={r.costBasis} data-bh-jevc-usd>{`${r.costKind === "estimate" ? "~" : ""}${usdText(r.usd)}`}{r.costKind === "estimate" ? " est." : r.costKind === "announced" ? " ann." : ""}</span>
           </span>
         </li>;
       })}
@@ -145,7 +146,7 @@ function ScoreChart({ rows, partial, w, view }: { rows: Row[]; partial: Row[]; w
     </ul>
     <figcaption className="bh-muted mt-3 space-y-1 text-[11.5px] leading-snug" data-bh-jevc-footnotes>
       <SpeedNote view={view} className="text-[11.5px]" />
-      <span className="block" data-bh-jev12-legend-line>I, C, S, K = Intelligence, Calibration, Speed, Cost; ~ est. = priced like a large inference provider (<a href="#jev-costs" className="text-accent underline">how costs are estimated</a>); † = see note.</span>
+      <span className="block" data-bh-jev12-legend-line>I, C, S, K = Intelligence, Calibration, Speed, Cost; ~ est. = priced like a large inference provider (<a href="#jev-costs" className="text-accent underline">how costs are estimated</a>); ann. = the provider&rsquo;s announced price, not yet charged; † = see note.</span>
       <details className="mt-2" data-bh-jev12-legend>
         <summary className="cursor-pointer text-accent">Legend and notes</summary>
         <ul className="mt-2 space-y-1">

@@ -1241,3 +1241,15 @@ Supervisor notes (not Florian's words): implemented by ~/jobs/jevbench-final-lau
   both URLs back in the sitemap (Florian approved the result).
 - Supersedes CR-91.1-.5 (v1.2-wip page data). CR-90 (difficulty filter, per-task grid, topic radar) stays open; its data file is now
   `ops/ux-2026-09-12/jevbench/v1.2-final/jevbench-v1.2-per-task.json` (one open-alternative-jev row).
+
+
+## CR-20260919h (JevBench page) → CR-93 — JevBench v1.2.1: djev (Maisa, diffusion-gemma) added
+
+Florian, 19 Sep 2026 ~16:50 UTC, forwarding an X DM from David Villalón (Maisa) about djev (https://djev.dev), verbatim:
+> Add this please
+
+Supervisor notes (not Florian's words): implemented by ~/jobs/djev-jevbench-20260919 with the loop paused. Details and
+verification: `ops/ux-2026-09-12/jevbench/v1.2.1/CR-93.md`.
+- **CR-93.1** Artifact = jevbench repo `results/v1.2/` at tag `v1.2.1`; new row "djev (Maisa, diffusion-gemma)", #3 with 74.3; no other row changed.
+- **CR-93.2** Cost kind "announced" shown with its tag and basis; † footnote (free preview, open-sourcing planned).
+- **CR-93.3** Revision v1.2.1 on the page; legend "Jev rebuild (open, or open source planned)".

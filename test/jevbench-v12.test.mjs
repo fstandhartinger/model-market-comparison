@@ -13,8 +13,13 @@ test('the committed v1.2 artifact is the tagged public one and validates; the Sc
   assert.equal(d.sha256, JEVBENCH_V12_SHA256);
   const v = jevbenchV12View(d);
   const top = v.ranked.slice(0, 12).map((r) => [r.key, Number(r.main.toFixed(1))]);
-  assert.deepEqual(top, [['jev-1.13.0', 75.3], ['semif-qwen3.5-4b', 74.6], ['open-alternative-jev', 69.8], ['system-one-open', 68.7], ['openjev-razorback16', 67.6],
+  // CR-93: v1.2.1 adds djev (#3); every other row is unchanged, ranks below #2 move down one.
+  const all = v.ranked.map((r) => [r.key, Number(r.main.toFixed(1))]);
+  assert.deepEqual(all, [['jev-1.13.0', 75.3], ['semif-qwen3.5-4b', 74.6], ['djev', 74.3], ['open-alternative-jev', 69.8], ['system-one-open', 68.7], ['openjev-razorback16', 67.6],
     ['openjev-sglang', 66.2], ['gpt-5.6-luna', 66.0], ['open-jev-deberta-v3-large', 64.4], ['nimble-9b', 63.5], ['gemini-3.1-flash-lite', 60.8], ['deepseek-flash', 58.1], ['system-one-sg', 56.5]]);
+  assert.equal(v.revision, 'v1.2.1');
+  const dj = v.ranked.find((r) => r.key === 'djev');
+  assert.ok(dj.display === 'djev (Maisa, diffusion-gemma)' && dj.costKind === 'announced' && /announced/i.test(dj.costBasis) && dj.endpointKind === 'api' && dj.p50Adj === dj.p50 && dj.axes.cost < 100 && dj.footnote);
   assert.equal(v.ranked.filter((r) => r.key.startsWith('open-alternative-jev')).length, 1);
   assert.equal(v.ranked.find((r) => r.key === 'open-alternative-jev').display, 'open-alternative-jev (Qwen3.5-4B, IkerMoel)');
   assert.ok(v.partial.length === 3 && v.partial.every((r) => r.rank === null));

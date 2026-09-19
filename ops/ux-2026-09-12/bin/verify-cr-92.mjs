@@ -18,7 +18,7 @@ const geo = (s, w) => { const t = w.reduce((x, y) => x + y, 0); return Math.exp(
 const expectOrder = (w) => ranked.map((s) => ({ k: s.key, v: geo(s, w), o: s.rank })).sort((x, y) => y.v - x.v || x.o - y.o).map((x) => x.k);
 const PRESETS = { score: [[25, 25, 25, 25], 'JevBench Score (Intelligence, Calibration, Speed, Cost — 25 % each)'], balanced: [[1, 0, 1, 1], 'Balanced 33:33:33 (Intelligence, Speed, Cost; no calibration)'],
   accuracy: [[60, 0, 20, 20], 'Emphasis on Accuracy (60:20:20, no calibration)'], speed: [[20, 0, 60, 20], 'Emphasis on Speed (20:60:20, no calibration)'], cost: [[20, 0, 20, 60], 'Emphasis on Cost (20:20:60, no calibration)'] };
-check('artifact: v1.2 final', a.revision === 'v1.2' && a.status === 'final', a.status);
+check('artifact: v1.2 final', ['v1.2', 'v1.2.1'].includes(a.revision) && a.status === 'final', a.status);
 check('artifact: one open-alternative-jev row', a.systems.filter((s) => s.key.startsWith('open-alternative-jev')).length === 1, '');
 const sm = await (await fetch(`${BASE}/sitemap.xml`)).text();
 check('sitemap lists /jev-models and /jev-models/v1', /\/jev-models<\/loc>/.test(sm) && /\/jev-models\/v1<\/loc>/.test(sm), '');

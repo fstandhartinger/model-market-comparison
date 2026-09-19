@@ -88,7 +88,7 @@ export default async function JevModelsPage() {
       <summary className="cursor-pointer text-sm font-semibold">Method and tiers</summary>
       <div className="bh-muted mt-4 space-y-3 text-sm">
         <p>{view.scoring.jevbench_score}</p>
-        <p data-bh-jev-revision><b className="text-gray-200">Revision v1.2.</b> {view.revisionNote}</p>
+        <p data-bh-jev-revision><b className="text-gray-200">Revision {view.revision}.</b> {view.revisionNote}</p>
         <ul className="list-disc space-y-1.5 pl-5">{(['easy', 'standard', 'judge'] as const).map((t) => <li key={t}><b className="text-gray-200">{t}</b>: {v11.tierNotes[t]}</li>)}
           <li><b className="text-gray-200">hard</b>: {view.scoring.hard_tier}</li></ul>
         <p>Every system sees the same state, instructions, rubric and exact label set; only the transport differs. Requests go out one at a time with no retries, so latency includes the network. Estimated costs are hosted-provider prices for the same weights or size class and are marked &ldquo;est.&rdquo; — hover one for its basis, or see <a className="text-accent underline" href="#jev-costs">how costs are estimated</a>. Every system has a price; none gets a free 100.</p>
