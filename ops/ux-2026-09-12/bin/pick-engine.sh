@@ -3,20 +3,20 @@
 #   pick-engine.sh work     -> claude-opus | codex-luna | opencode-kimi | opencode-nex
 #   pick-engine.sh review <implementer-engine>
 #   pick-engine.sh design   -> claude-fable | none
-# Rules: Florian 2026-09-12 plus the stricter shared QUOTA-CONTINUITY.md ("honor stricter gates").
-# Opus 5 while Claude has headroom; then Codex GPT-5.6 Luna while
-# Codex has headroom (never above 80 % of the weekly window); then OpenCode Kimi K3 via
-# Chutes; then OpenCode nex-n2.5-pro:free via OpenRouter. Work must never stop on a quota.
+# Rules: Florian 2026-09-12; weekly pacing since 19 Sep 2026 (Florian: "so it lasts until the end of the 7-day
+# window"): the fixed Claude caps (70 %, temporary 85 %) are replaced by ~/bin/quota-pace, the shared helper every
+# engine picker calls. A subscription may take new WORK while its weekly use is below the pace line (elapsed share of
+# the week + 7 points); above it only judgement units (review, design gate) may use it; at the hard stop (Claude 90 %,
+# Codex 75 %, Claude 5-hour window 90 %) nothing new starts. Order for work: Opus 5, GPT-5.6 Luna, then the free
+# chain (Union Alpha / best healthy free model via llm-health), so work never stops on a quota.
 set -uo pipefail
 MODE="${1:-work}"; AVOID="${2:-}"
 STATE=/opt/benchmarkheaven/state/ux
 mkdir -p "$STATE"
-CLAUDE_MAX=70      # QUOTA-CONTINUITY.md (Florian 2026-09-12): no new Claude unit at >=70% on either window
-# Florian 2026-09-17 ~17:30 UTC: launch focus — allow Claude up to 85% until the weekly reset (19 Sep 05:00 UTC), then back to 70.
-[ "$(date +%s)" -lt "$(date -d "2026-09-19 05:00 UTC" +%s)" ] && CLAUDE_MAX=85
-CODEX_START_MAX=75 # do not START a Codex run above this (a run consumes several %)
+QP="$HOME/bin/quota-pace"
+export QUOTA_PACE_CALLER="bh-pick-engine:$MODE"
 
-J="$(python3 "$HOME/.claude/skills/agent-limits/limits.py" --json 2>/dev/null || echo '{}')"
+J="${QUOTA_PACE_LIMITS_JSON:-$(python3 "$HOME/.claude/skills/agent-limits/limits.py" --json 2>/dev/null || echo "{}")}"  # override: tests only
 read -r C_SESS C_WEEK C_ERR X_WEEK X_AUTH < <(python3 -c '
 import json,sys
 d=json.loads(sys.argv[1] or "{}"); c=d.get("claude") or {}; x=d.get("codex") or {}
@@ -28,14 +28,15 @@ print(f(c.get("session_percent")), f(c.get("week_percent")), "err" if c.get("err
 # A hard "limit reached" in a recent Claude log blocks Claude until its cooldown expires.
 cool="$STATE/claude-cooldown-until"
 now=$(date +%s)
+kind=work; [ "$MODE" = review ] || [ "$MODE" = design ] && kind=judgement
 claude_ok=1
 [ -f "$cool" ] && [ "$now" -lt "$(cat "$cool")" ] && claude_ok=0
-python3 -c "import sys; s,w=float(sys.argv[1]),float(sys.argv[2]); sys.exit(0 if s==s and w==w and s<$CLAUDE_MAX and w<$CLAUDE_MAX else 1)" "$C_SESS" "$C_WEEK" || claude_ok=0
 [ "$C_ERR" = ok ] || claude_ok=0
+"$QP" allow claude --kind "$kind" >/dev/null 2>&1 || claude_ok=0
 
 codex_ok=1
 [ "$X_AUTH" = chatgpt ] || codex_ok=0
-python3 -c "import sys; w=float(sys.argv[1]); sys.exit(0 if w==w and w<$CODEX_START_MAX else 1)" "$X_WEEK" || codex_ok=0
+"$QP" allow codex --kind "$kind" >/dev/null 2>&1 || codex_ok=0
 
 # Free workers (15 Sep 2026): ~/bin/llm-health ranks Chutes Kimi K3, Chutes Qwen3.8 27B, OpenRouter GLM-5.3-Flash,
 # OpenRouter DeepSeek-V4.1-Flash and OpenRouter Nex free (Chutes only below 75% utilization). The engine names stay:
@@ -46,7 +47,7 @@ kimi_ok=1
 if [ "$fw_rc" = 2 ]; then kimi_ok=0   # health file fresh and no free model healthy
 elif [ ! -s "$HOME/.llm-health.json" ] && [ -f "$STATE/kimi-cooldown-until" ] && [ "$now" -lt "$(cat "$STATE/kimi-cooldown-until")" ]; then kimi_ok=0; fi
 
-echo "limits: claude session=$C_SESS week=$C_WEEK ($C_ERR) | codex week=$X_WEEK auth=$X_AUTH | claude_ok=$claude_ok codex_ok=$codex_ok kimi_ok=$kimi_ok" >&2
+echo "limits: claude session=$C_SESS week=$C_WEEK ($C_ERR) | codex week=$X_WEEK auth=$X_AUTH | pace($kind): $("$QP" status 2>/dev/null | cut -d' ' -f1-6 | tr '\n' ' ')| claude_ok=$claude_ok codex_ok=$codex_ok kimi_ok=$kimi_ok" >&2
 
 case "$MODE" in
   design)
