@@ -1,0 +1,2460 @@
+{
+ "benchmark": "JevBench",
+ "revision": "v1.2",
+ "protocol": "jevbench::v1.2",
+ "status": "final",
+ "generated_utc": "2026-09-19T13:25:14+00:00",
+ "measured_in": "v1.2-wip (tag v1.2-wip); no measurement changed for v1.2 final",
+ "revision_note": "v1.2 final: 4 axes (Intelligence, Calibration, Speed, Cost), 25 % each, geometric mean; hard tier 30 % of Intelligence; latency of non-production endpoints adjusted (assumption); one open-alternative-jev row (author's option order); Needle 3 options-as-tools priced.",
+ "score_name": "JevBench Score",
+ "score_one_liner": "Intelligence, Calibration, Speed, Cost — 25 % each, geometric mean: a weak axis pulls the score down hard.",
+ "tiers": {
+  "easy": 72,
+  "judge": 146,
+  "standard": 96,
+  "hard": 220
+ },
+ "tier_weights": {
+  "easy": 0.14,
+  "standard": 0.28,
+  "judge": 0.28,
+  "hard": 0.3
+ },
+ "axis_weights": {
+  "intelligence": 0.25,
+  "calibration": 0.25,
+  "speed": 0.25,
+  "cost": 0.25
+ },
+ "presets": {
+  "JevBench Score (25:25:25:25)": {
+   "intelligence": 0.25,
+   "calibration": 0.25,
+   "speed": 0.25,
+   "cost": 0.25
+  },
+  "Balanced 33:33:33 (no calibration)": {
+   "intelligence": 0.3333333333333333,
+   "calibration": 0.0,
+   "speed": 0.3333333333333333,
+   "cost": 0.3333333333333333
+  },
+  "Emphasis on Accuracy 60:20:20": {
+   "intelligence": 0.6,
+   "calibration": 0.0,
+   "speed": 0.2,
+   "cost": 0.2
+  },
+  "Emphasis on Speed 20:60:20": {
+   "intelligence": 0.2,
+   "calibration": 0.0,
+   "speed": 0.6,
+   "cost": 0.2
+  },
+  "Emphasis on Cost 20:20:60": {
+   "intelligence": 0.2,
+   "calibration": 0.0,
+   "speed": 0.2,
+   "cost": 0.6
+  },
+  "Intelligence only": {
+   "intelligence": 1.0,
+   "calibration": 0.0,
+   "speed": 0.0,
+   "cost": 0.0
+  }
+ },
+ "main": "JevBench Score (25:25:25:25)",
+ "speed_note": "Latency of self-hosted and demo endpoints is adjusted ×2 (+0.15 s on our own servers) to approximate production load — an assumption, not a measurement; raw measurements are in the table and the repo.",
+ "scoring": {
+  "jevbench_score": "exp(sum over the four axes of 0.25 x ln(max(axis, 1))) — the geometric mean of Intelligence, Calibration, Speed and Cost. A weak axis pulls the score down hard; a strong axis cannot buy it back.",
+  "intelligence": "100 x weighted accuracy: hard 30 %, easy 14 %, standard 28 %, judge 28 %. Accuracy = correct / all items; failed, timed-out or unparseable answers count as wrong.",
+  "hard_tier": "220 new decisions (111 public, 109 held out): long multi-condition policy documents (2-6k tokens), priority trade-offs, deliberately ambiguous cases with a 'no clear answer' label, traps, multi-hop lookups, date/number reasoning, adversarial distractors, subtle answer-judging, overlapping routing, and probability items with an exact gold distribution. Half written by Claude Opus 5, half by GPT-5.6 Sol; each item reviewed blind and then against its gold by the other model; one discussion round; frozen and hashed before any benchmarked system saw an item. No item was selected on any system's answers.",
+  "calibration": "Hard tier only, systems that return a probability distribution: mean of (a) 100 x (1 - ECE/0.5), ECE = top-label expected calibration error in 10 bins, and (b) probability fidelity = 100 x (1 - mean total-variation distance) between the returned distribution and the exact gold distribution on the 20 probability items. Label-only systems have none; it counts as 0 in the JevBench Score.",
+  "speed": "Mean of score(p50) and score(p95) of the serial 242-decision standard+judge run; score(s) = 100 - 20 log10(s / 0.1 s), clipped to 0..100 (0.1 s = 100, 1 s = 80, 10 s = 60). Latency of self-hosted and demo endpoints is adjusted ×2 (+0.15 s on our own servers) to approximate production load — an assumption, not a measurement; raw measurements are in the table and the repo. Production APIs (Jev, OpenAI, Google, DeepSeek, Chutes) are not adjusted.",
+  "cost": "Dollars per 1,000 decisions pooled over all 534 v1.2 decisions; score = 100 - 30 log10(usd / 0.001), clipped to 0..100 ($0.001 = 100, $0.01 = 70, $0.10 = 40, $1 = 10). Measured = public tariff x measured tokens. est. = hosted-provider list price of the same weights or size class x tokens.",
+  "ranked": "Ranked: every tier attempted for >= 95 % of its decisions. Partial runs are shown below the ranking, marked, without a rank.",
+  "presets": "Other views reweight the same four axes and combine them the same way (geometric mean). They are not the JevBench Score."
+ },
+ "hard_dataset": {
+  "frozen_utc": "2026-09-19T11:43:54+00:00",
+  "n_items": 220,
+  "n_public": 111,
+  "n_heldout": 109,
+  "families": {
+   "adversarial": 12,
+   "ambiguous": 14,
+   "judge_hard": 33,
+   "long_policy": 38,
+   "multi_hop": 35,
+   "probability": 20,
+   "routing_hard": 10,
+   "temporal_numeric": 30,
+   "tradeoff": 12,
+   "trap": 16
+  },
+  "types": {
+   "choice": 129,
+   "score": 14,
+   "noul": 77
+  },
+  "authors": {
+   "gpt-5.6-sol": 110,
+   "claude-opus-5": 110
+  },
+  "sha256_public_file": "89e9e6becb33ed88c1de7d42dcc87531b2fb64cfaef4e1986faf7c37b3f80ebb",
+  "sha256_heldout_file": "4e8adf72988766534c87c2b83808bde7f0f934f515f8eeb01cc74eb90b8778b1",
+  "dataset_hash_all": "ec200ccd3db28153c93bfeaed55acb18b4909610ba403cf73482abbc4074ef6b",
+  "review": {
+   "opus-a": {
+    "authored": 40,
+    "accepted": 40,
+    "rejected": [],
+    "no_verdict": [],
+    "source_file": "authoring/opus-a.jsonl"
+   },
+   "opus-b": {
+    "authored": 40,
+    "accepted": 40,
+    "rejected": [],
+    "no_verdict": [],
+    "source_file": "authoring/opus-b.jsonl"
+   },
+   "sol-a": {
+    "authored": 40,
+    "accepted": 40,
+    "rejected": [],
+    "no_verdict": [],
+    "source_file": "authoring/sol-a.v2.jsonl"
+   },
+   "sol-b": {
+    "authored": 40,
+    "accepted": 40,
+    "rejected": [],
+    "no_verdict": [],
+    "source_file": "authoring/sol-b.v2.jsonl"
+   },
+   "opus-c": {
+    "authored": 30,
+    "accepted": 30,
+    "rejected": [],
+    "no_verdict": [],
+    "source_file": "authoring/opus-c.jsonl"
+   },
+   "sol-c": {
+    "authored": 30,
+    "accepted": 30,
+    "rejected": [],
+    "no_verdict": [],
+    "source_file": "authoring/sol-c.v3.jsonl"
+   }
+  },
+  "rule": "Items authored by Claude Opus 5 were reviewed by GPT-5.6 Sol and vice versa (blind answer, then gold verdict); one discussion round; anything not accepted afterwards was dropped. No item was selected or dropped on the basis of any benchmarked system's answers. Frozen before any benchmarked system saw an item."
+ },
+ "footnotes": {
+  "open-alternative-jev": "With the options in reverse order (A. no, B. yes) the same model scored 21 % instead of 72 % on yes/no answer-judging items — small models are very sensitive to option order."
+ },
+ "excluded_runs": [
+  {
+   "key": "open-alternative-jev-reversed-order",
+   "run_key": "open-alternative-jev",
+   "why_not_ranked": "Our first adapter put the options in reverse order (A. no, B. yes); the author's yes_no() helper builds A. yes, B. no. An adapter mistake, not a model weakness, so the author-order run is the ranked row. Raw run files are kept.",
+   "tiers": {
+    "easy": 1.0,
+    "standard": 0.8125,
+    "judge": 0.5068493150684932,
+    "hard": 0.55
+   },
+   "footnote": "With the options in reverse order (A. no, B. yes) the same model scored 21 % instead of 72 % on yes/no answer-judging items — small models are very sensitive to option order."
+  }
+ ],
+ "systems": [
+  {
+   "key": "jev-1.13.0",
+   "display": "Jev 1.13.0 (TypeSafe AI)",
+   "class": "jev",
+   "open": "no",
+   "author": "TypeSafe AI",
+   "repo": "https://docs.typesafe.ai",
+   "licence": "proprietary API",
+   "underlying": "closed",
+   "has_distribution": true,
+   "probability_source": [
+    "native"
+   ],
+   "endpoint_condition": "production API (api.typesafe.ai)",
+   "endpoint_kind": "api",
+   "partial": false,
+   "ranked": true,
+   "tiers": {
+    "easy": 1.0,
+    "standard": 0.9895833333333334,
+    "judge": 0.9452054794520548,
+    "hard": 0.740909090909091
+   },
+   "axes": {
+    "intelligence": 90.4013594852636,
+    "calibration": 82.6528888888889,
+    "speed": 83.26811926100174,
+    "cost": 51.7396879482021
+   },
+   "jevbench_score": 75.32408936881852,
+   "speed": {
+    "p50_s_raw": 0.6524335257709026,
+    "p95_s_raw": 0.7221905551850795,
+    "p50_s_adjusted": 0.6524335257709026,
+    "p95_s_adjusted": 0.7221905551850795,
+    "adjustment": "none (production API)",
+    "run": "serial 242-decision standard+judge run",
+    "hardware": null,
+    "measured_where": "from a Hetzner server in Germany, network included",
+    "hard_tier_p50_s": 0.6717139892280102,
+    "hard_tier_p95_s": 0.8295219600200652
+   },
+   "cost": {
+    "kind": "measured",
+    "usd_per_1000": 0.04061412193840432,
+    "basis": "public tariff x measured tokens (https://docs.typesafe.ai/models (output tokens not billed)) | public tariff x measured tokens (hard-tier run)",
+    "usd_per_1000_v11_tiers": 0.025888392086330935,
+    "usd_per_1000_hard": 0.06163175454545452,
+    "self_host_sensitivity": null
+   },
+   "calibration": {
+    "score": 82.6528888888889,
+    "score_label_only_as_onehot": null,
+    "ece_hard": 0.06061111111111118,
+    "probability_fidelity": 77.42800000000001,
+    "brier_hard": 0.339603665766944,
+    "brier_standard_judge_v11": 0.05558677685950414,
+    "note": null
+   },
+   "hard": {
+    "run": "runs/jev-1.13.0--hard",
+    "n_items": 220,
+    "n_ok": 220,
+    "n_attempted": 220,
+    "coverage": 1.0,
+    "success_rate": 1.0,
+    "accuracy": 0.740909090909091,
+    "by_family": {
+     "adversarial": {
+      "correct": 12,
+      "n": 12,
+      "accuracy": 1.0
+     },
+     "ambiguous": {
+      "correct": 11,
+      "n": 14,
+      "accuracy": 0.7857142857142857
+     },
+     "judge_hard": {
+      "correct": 26,
+      "n": 33,
+      "accuracy": 0.7878787878787878
+     },
+     "long_policy": {
+      "correct": 23,
+      "n": 38,
+      "accuracy": 0.6052631578947368
+     },
+     "multi_hop": {
+      "correct": 30,
+      "n": 35,
+      "accuracy": 0.8571428571428571
+     },
+     "probability": {
+      "correct": 16,
+      "n": 20,
+      "accuracy": 0.8
+     },
+     "routing_hard": {
+      "correct": 10,
+      "n": 10,
+      "accuracy": 1.0
+     },
+     "temporal_numeric": {
+      "correct": 8,
+      "n": 30,
+      "accuracy": 0.26666666666666666
+     },
+     "tradeoff": {
+      "correct": 11,
+      "n": 12,
+      "accuracy": 0.9166666666666666
+     },
+     "trap": {
+      "correct": 16,
+      "n": 16,
+      "accuracy": 1.0
+     }
+    },
+    "has_distribution": true,
+    "brier_mean": 0.339603665766944,
+    "ece": 0.06061111111111118,
+    "probability_fidelity": 77.42800000000001,
+    "calibration_score": 82.6528888888889,
+    "onehot": {
+     "ece": 0.25909090909090904,
+     "probability_fidelity": 59.264999999999986,
+     "calibration_score": 53.72340909090909
+    },
+    "latency_p50_s": 0.6717139892280102,
+    "latency_p95_s": 0.8295219600200652,
+    "mean_input_tokens": 1467.4227272727273,
+    "mean_output_tokens": 45.086363636363636,
+    "charged_usd": 0.013558985999999993
+   },
+   "presets": {
+    "JevBench Score (25:25:25:25)": 75.32408936881852,
+    "Balanced 33:33:33 (no calibration)": 73.02852136414201,
+    "Emphasis on Accuracy 60:20:20": 79.53631926295024,
+    "Emphasis on Speed 20:60:20": 76.96388937219076,
+    "Emphasis on Cost 20:20:60": 63.62459435639222,
+    "Intelligence only": 90.40135948526363
+   },
+   "rank": 1,
+   "rank_under": {
+    "JevBench Score (25:25:25:25)": 1,
+    "Balanced 33:33:33 (no calibration)": 3,
+    "Emphasis on Accuracy 60:20:20": 1,
+    "Emphasis on Speed 20:60:20": 2,
+    "Emphasis on Cost 20:20:60": 5,
+    "Intelligence only": 3
+   }
+  },
+  {
+   "key": "semif-qwen3.5-4b",
+   "display": "SemIf, formerly OpenJev (Qwen3.5-4B, TheoLeeCJ)",
+   "class": "jev-rebuild",
+   "open": "yes",
+   "author": "Theodore Lee (TheoLeeCJ)",
+   "repo": "https://github.com/TheoLeeCJ/openjev",
+   "licence": "MIT (code); Qwen3.5 weights Apache-2.0",
+   "underlying": "Qwen/Qwen3.5-4B (frozen, BF16)",
+   "has_distribution": true,
+   "probability_source": [
+    "native"
+   ],
+   "endpoint_condition": "our RunPod GPU (RTX PRO 4500 Blackwell 32 GB (EU-RO-1)), reached over the internet",
+   "endpoint_kind": "gpu",
+   "partial": false,
+   "ranked": true,
+   "tiers": {
+    "easy": 1.0,
+    "standard": 0.9791666666666666,
+    "judge": 0.952054794520548,
+    "hard": 0.5954545454545455
+   },
+   "axes": {
+    "intelligence": 85.93783727687837,
+    "calibration": 72.60139737235289,
+    "speed": 83.70422262345133,
+    "cost": 59.16231136364247
+   },
+   "jevbench_score": 74.55563524981045,
+   "speed": {
+    "p50_s_raw": 0.19796114787459373,
+    "p95_s_raw": 0.3153164997696876,
+    "p50_s_adjusted": 0.5459222957491875,
+    "p95_s_adjusted": 0.7806329995393753,
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "run": "serial 242-decision standard+judge run",
+    "hardware": "RunPod RTX PRO 4500 Blackwell 32 GB (EU-RO-1)",
+    "measured_where": "from a Hetzner server in Germany over the internet to the pod's public TCP port (plain HTTP, one connection per request) through a thin transport around the author's library; model loaded before timing",
+    "hard_tier_p50_s": 0.22315140068531036,
+    "hard_tier_p95_s": 0.6500909611582756
+   },
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.022975040619190038,
+    "basis": "ESTIMATE: hosted-provider price, deepinfra Qwen/Qwen3.5-4B list price $0.03/M in, $0.15/M out (same weights (not on OpenRouter), as open-alternative-jev in v1.1.2) x 426 input and 1 output tokens per decision (input tokens measured) | ESTIMATE: deepinfra Qwen/Qwen3.5-4B $0.03/M in, $0.15/M out x 1244 in / 0 out tokens per hard decision",
+    "usd_per_1000_v11_tiers": 0.012921852517985612,
+    "usd_per_1000_hard": 0.03732368181818181,
+    "self_host_sensitivity": {
+     "usd_per_1000": 0.0347231924417574,
+     "score": 61.4845088183062,
+     "machine": "1x RTX PRO 4500 Blackwell 32 GB (EU-RO-1) (on-demand, RunPod secure)",
+     "usd_per_h": 0.72,
+     "concurrency": 4,
+     "utilisation": 0.3,
+     "p50_s_used": 0.2083391546505444,
+     "decisions_per_hour": 20735.42060418796
+    }
+   },
+   "calibration": {
+    "score": 72.60139737235289,
+    "score_label_only_as_onehot": null,
+    "ece_hard": 0.12080109007622307,
+    "probability_fidelity": 69.36301275995041,
+    "brier_hard": 0.5419578429506192,
+    "brier_standard_judge_v11": 0.06934070252416917,
+    "note": null
+   },
+   "hard": {
+    "run": "runs-gpu/semif-qwen3.5-4b--hard",
+    "n_items": 220,
+    "n_ok": 220,
+    "n_attempted": 220,
+    "coverage": 1.0,
+    "success_rate": 1.0,
+    "accuracy": 0.5954545454545455,
+    "by_family": {
+     "adversarial": {
+      "correct": 10,
+      "n": 12,
+      "accuracy": 0.8333333333333334
+     },
+     "ambiguous": {
+      "correct": 8,
+      "n": 14,
+      "accuracy": 0.5714285714285714
+     },
+     "judge_hard": {
+      "correct": 26,
+      "n": 33,
+      "accuracy": 0.7878787878787878
+     },
+     "long_policy": {
+      "correct": 16,
+      "n": 38,
+      "accuracy": 0.42105263157894735
+     },
+     "multi_hop": {
+      "correct": 22,
+      "n": 35,
+      "accuracy": 0.6285714285714286
+     },
+     "probability": {
+      "correct": 8,
+      "n": 20,
+      "accuracy": 0.4
+     },
+     "routing_hard": {
+      "correct": 10,
+      "n": 10,
+      "accuracy": 1.0
+     },
+     "temporal_numeric": {
+      "correct": 6,
+      "n": 30,
+      "accuracy": 0.2
+     },
+     "tradeoff": {
+      "correct": 9,
+      "n": 12,
+      "accuracy": 0.75
+     },
+     "trap": {
+      "correct": 16,
+      "n": 16,
+      "accuracy": 1.0
+     }
+    },
+    "has_distribution": true,
+    "brier_mean": 0.5419578429506192,
+    "ece": 0.12080109007622307,
+    "probability_fidelity": 69.36301275995041,
+    "calibration_score": 72.60139737235289,
+    "onehot": {
+     "ece": 0.40454545454545454,
+     "probability_fidelity": 42.757,
+     "calibration_score": 30.923954545454546
+    },
+    "latency_p50_s": 0.22315140068531036,
+    "latency_p95_s": 0.6500909611582756,
+    "mean_input_tokens": 1244.1227272727272,
+    "mean_output_tokens": 0.0,
+    "charged_usd": 0.0
+   },
+   "presets": {
+    "JevBench Score (25:25:25:25)": 74.55563524981045,
+    "Balanced 33:33:33 (no calibration)": 75.21866826455926,
+    "Emphasis on Accuracy 60:20:20": 79.33579024666345,
+    "Emphasis on Speed 20:60:20": 78.50446006573023,
+    "Emphasis on Cost 20:20:60": 68.3303172520137,
+    "Intelligence only": 85.93783727687837
+   },
+   "rank": 2,
+   "rank_under": {
+    "JevBench Score (25:25:25:25)": 2,
+    "Balanced 33:33:33 (no calibration)": 1,
+    "Emphasis on Accuracy 60:20:20": 2,
+    "Emphasis on Speed 20:60:20": 1,
+    "Emphasis on Cost 20:20:60": 2,
+    "Intelligence only": 7
+   }
+  },
+  {
+   "key": "open-alternative-jev",
+   "display": "open-alternative-jev (Qwen3.5-4B, IkerMoel)",
+   "class": "jev-rebuild",
+   "open": "yes",
+   "author": "IkerMoel",
+   "repo": "https://github.com/ikermoel/open-alternative-jev",
+   "licence": "Apache-2.0 (code and weights)",
+   "underlying": "Qwen/Qwen3.5-4B (frozen, BF16)",
+   "has_distribution": true,
+   "probability_source": [
+    "native"
+   ],
+   "endpoint_condition": "our RunPod GPU (RTX PRO 4500 Blackwell 32 GB (EU-RO-1)), reached over the internet",
+   "endpoint_kind": "gpu",
+   "partial": false,
+   "ranked": true,
+   "tiers": {
+    "easy": 1.0,
+    "standard": 0.84375,
+    "judge": 0.7465753424657534,
+    "hard": 0.5681818181818182
+   },
+   "axes": {
+    "intelligence": 75.57456413449563,
+    "calibration": 63.16501249259078,
+    "speed": 83.47780372641819,
+    "cost": 59.62620384142349
+   },
+   "jevbench_score": 69.817630118622,
+   "speed": {
+    "p50_s_raw": 0.20686038956046104,
+    "p95_s_raw": 0.32322231084108355,
+    "p50_s_adjusted": 0.5637207791209221,
+    "p95_s_adjusted": 0.7964446216821671,
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "run": "serial 242-decision standard+judge run",
+    "hardware": "RunPod RTX PRO 4500 Blackwell 32 GB (EU-RO-1)",
+    "measured_where": "as open-alternative-jev",
+    "hard_tier_p50_s": 0.2411614954471588,
+    "hard_tier_p95_s": 0.6258101891726254
+   },
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.022171404494382024,
+    "basis": "ESTIMATE: hosted-provider price, deepinfra Qwen/Qwen3.5-4B list price $0.03/M in, $0.15/M out (as open-alternative-jev) x 383 input and 1 output tokens per decision (input tokens counted from the gemini-3.1-flash-lite run, same prompts) | ESTIMATE: deepinfra Qwen/Qwen3.5-4B $0.03/M in, $0.15/M out x 1235 in / 1 out tokens per hard decision",
+    "usd_per_1000_v11_tiers": 0.011652229299363059,
+    "usd_per_1000_hard": 0.03718513636363636,
+    "self_host_sensitivity": {
+     "usd_per_1000": 0.036831988551922504,
+     "score": 60.84437082593016,
+     "machine": "1x RTX PRO 4500 Blackwell 32 GB (EU-RO-1) (on-demand, RunPod secure)",
+     "usd_per_h": 0.72,
+     "concurrency": 4,
+     "utilisation": 0.3,
+     "p50_s_used": 0.22099193131153502,
+     "decisions_per_hour": 19548.22501600768
+    }
+   },
+   "calibration": {
+    "score": 63.16501249259078,
+    "score_label_only_as_onehot": null,
+    "ece_hard": 0.19036693270964333,
+    "probability_fidelity": 64.40341152711024,
+    "brier_hard": 0.6106512084932694,
+    "brier_standard_judge_v11": 0.2681967810959945,
+    "note": null
+   },
+   "hard": {
+    "run": "runs-gpu/open-alternative-jev-yesfirst--hard",
+    "n_items": 220,
+    "n_ok": 220,
+    "n_attempted": 220,
+    "coverage": 1.0,
+    "success_rate": 1.0,
+    "accuracy": 0.5681818181818182,
+    "by_family": {
+     "adversarial": {
+      "correct": 8,
+      "n": 12,
+      "accuracy": 0.6666666666666666
+     },
+     "ambiguous": {
+      "correct": 9,
+      "n": 14,
+      "accuracy": 0.6428571428571429
+     },
+     "judge_hard": {
+      "correct": 23,
+      "n": 33,
+      "accuracy": 0.696969696969697
+     },
+     "long_policy": {
+      "correct": 17,
+      "n": 38,
+      "accuracy": 0.4473684210526316
+     },
+     "multi_hop": {
+      "correct": 19,
+      "n": 35,
+      "accuracy": 0.5428571428571428
+     },
+     "probability": {
+      "correct": 7,
+      "n": 20,
+      "accuracy": 0.35
+     },
+     "routing_hard": {
+      "correct": 10,
+      "n": 10,
+      "accuracy": 1.0
+     },
+     "temporal_numeric": {
+      "correct": 9,
+      "n": 30,
+      "accuracy": 0.3
+     },
+     "tradeoff": {
+      "correct": 7,
+      "n": 12,
+      "accuracy": 0.5833333333333334
+     },
+     "trap": {
+      "correct": 16,
+      "n": 16,
+      "accuracy": 1.0
+     }
+    },
+    "has_distribution": true,
+    "brier_mean": 0.6106512084932694,
+    "ece": 0.19036693270964333,
+    "probability_fidelity": 64.40341152711024,
+    "calibration_score": 63.16501249259078,
+    "onehot": {
+     "ece": 0.43181818181818177,
+     "probability_fidelity": 42.308499999999995,
+     "calibration_score": 27.97243181818182
+    },
+    "latency_p50_s": 0.2411614954471588,
+    "latency_p95_s": 0.6258101891726254,
+    "mean_input_tokens": null,
+    "mean_output_tokens": null,
+    "charged_usd": 0.0
+   },
+   "presets": {
+    "JevBench Score (25:25:25:25)": 69.817630118622,
+    "Balanced 33:33:33 (no calibration)": 72.18737928521858,
+    "Emphasis on Accuracy 60:20:20": 73.52364435671888,
+    "Emphasis on Speed 20:60:20": 76.50770435150234,
+    "Emphasis on Cost 20:20:60": 66.87312669403994,
+    "Intelligence only": 75.57456413449565
+   },
+   "run_key": "open-alternative-jev-yesfirst",
+   "rank": 3,
+   "rank_under": {
+    "JevBench Score (25:25:25:25)": 3,
+    "Balanced 33:33:33 (no calibration)": 4,
+    "Emphasis on Accuracy 60:20:20": 5,
+    "Emphasis on Speed 20:60:20": 3,
+    "Emphasis on Cost 20:20:60": 4,
+    "Intelligence only": 11
+   }
+  },
+  {
+   "key": "system-one-open",
+   "display": "system-one-open (Gemma 4 E2B LoRA on an L4)",
+   "class": "jev-rebuild",
+   "open": "yes",
+   "author": "mithalouni",
+   "repo": "https://github.com/mithalouni/system-one-open",
+   "licence": "MIT (repository LICENSE; Gemma weights keep Google’s terms)",
+   "underlying": "google/gemma-4-E2B-it + LoRA",
+   "has_distribution": true,
+   "probability_source": [
+    "native"
+   ],
+   "endpoint_condition": "author's public demo endpoint (Modal, L4) — not a production service",
+   "endpoint_kind": "demo",
+   "partial": false,
+   "ranked": true,
+   "tiers": {
+    "easy": 1.0,
+    "standard": 0.9375,
+    "judge": 0.8767123287671232,
+    "hard": 0.4909090909090909
+   },
+   "axes": {
+    "intelligence": 79.52521793275218,
+    "calibration": 56.699696211408835,
+    "speed": 76.96012500732209,
+    "cost": 64.1349167978843
+   },
+   "jevbench_score": 68.68493237922856,
+   "speed": {
+    "p50_s_raw": 0.6517308317124844,
+    "p95_s_raw": 0.7724301926791667,
+    "p50_s_adjusted": 1.3034616634249687,
+    "p95_s_adjusted": 1.5448603853583334,
+    "adjustment": "x2 (assumption, not measured)",
+    "run": "serial 242-decision standard+judge run",
+    "hardware": null,
+    "measured_where": "from a Hetzner server in Germany, network included",
+    "hard_tier_p50_s": 0.6776973158121109,
+    "hard_tier_p95_s": 1.1177304897457356
+   },
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.015685659145076917,
+    "basis": "ESTIMATE: hosted-provider price, deepinfra google/gemma-4-E4B-it list price $0.02/M in, $0.1/M out (Gemma 4 E2B is not listed; the nearest larger sibling, Gemma 4 E4B, is listed only on DeepInfra) x 452 input and 2 output tokens per decision (input tokens counted from the gemini-3.1-flash-lite run, same prompts) | ESTIMATE: deepinfra google/gemma-4-E4B-it $0.02/M in, $0.1/M out x 1235 in / 2 out tokens per hard decision",
+    "usd_per_1000_v11_tiers": 0.009236694214876034,
+    "usd_per_1000_hard": 0.024890090909090907,
+    "self_host_sensitivity": {
+     "usd_per_1000": 0.06593618349183544,
+     "score": 54.521904855816615,
+     "machine": "1x L4 24 GB (Gemma 4 E2B + LoRA)",
+     "usd_per_h": 0.43,
+     "concurrency": 4,
+     "utilisation": 0.3,
+     "p50_s_used": 0.6624286341505328,
+     "decisions_per_hour": 6521.45722163681
+    }
+   },
+   "calibration": {
+    "score": 56.699696211408835,
+    "score_label_only_as_onehot": null,
+    "ece_hard": 0.25707820493262257,
+    "probability_fidelity": 64.81503340934218,
+    "brier_hard": 0.7469110891631627,
+    "brier_standard_judge_v11": 0.13816078684373112,
+    "note": null
+   },
+   "hard": {
+    "run": "runs/system-one-open--hard",
+    "n_items": 220,
+    "n_ok": 220,
+    "n_attempted": 220,
+    "coverage": 1.0,
+    "success_rate": 1.0,
+    "accuracy": 0.4909090909090909,
+    "by_family": {
+     "adversarial": {
+      "correct": 9,
+      "n": 12,
+      "accuracy": 0.75
+     },
+     "ambiguous": {
+      "correct": 6,
+      "n": 14,
+      "accuracy": 0.42857142857142855
+     },
+     "judge_hard": {
+      "correct": 25,
+      "n": 33,
+      "accuracy": 0.7575757575757576
+     },
+     "long_policy": {
+      "correct": 10,
+      "n": 38,
+      "accuracy": 0.2631578947368421
+     },
+     "multi_hop": {
+      "correct": 15,
+      "n": 35,
+      "accuracy": 0.42857142857142855
+     },
+     "probability": {
+      "correct": 9,
+      "n": 20,
+      "accuracy": 0.45
+     },
+     "routing_hard": {
+      "correct": 9,
+      "n": 10,
+      "accuracy": 0.9
+     },
+     "temporal_numeric": {
+      "correct": 8,
+      "n": 30,
+      "accuracy": 0.26666666666666666
+     },
+     "tradeoff": {
+      "correct": 3,
+      "n": 12,
+      "accuracy": 0.25
+     },
+     "trap": {
+      "correct": 14,
+      "n": 16,
+      "accuracy": 0.875
+     }
+    },
+    "has_distribution": true,
+    "brier_mean": 0.7469110891631627,
+    "ece": 0.25707820493262257,
+    "probability_fidelity": 64.81503340934218,
+    "calibration_score": 56.699696211408835,
+    "onehot": {
+     "ece": 0.509090909090909,
+     "probability_fidelity": 44.011500000000005,
+     "calibration_score": 22.005750000000003
+    },
+    "latency_p50_s": 0.6776973158121109,
+    "latency_p95_s": 1.1177304897457356,
+    "mean_input_tokens": null,
+    "mean_output_tokens": null,
+    "charged_usd": 0.0
+   },
+   "presets": {
+    "JevBench Score (25:25:25:25)": 68.68493237922856,
+    "Balanced 33:33:33 (no calibration)": 73.21865093666031,
+    "Emphasis on Accuracy 60:20:20": 75.678929598647,
+    "Emphasis on Speed 20:60:20": 74.69290307278011,
+    "Emphasis on Cost 20:20:60": 69.44018159051123,
+    "Intelligence only": 79.52521793275217
+   },
+   "rank": 4,
+   "rank_under": {
+    "JevBench Score (25:25:25:25)": 4,
+    "Balanced 33:33:33 (no calibration)": 2,
+    "Emphasis on Accuracy 60:20:20": 3,
+    "Emphasis on Speed 20:60:20": 4,
+    "Emphasis on Cost 20:20:60": 1,
+    "Intelligence only": 9
+   }
+  },
+  {
+   "key": "openjev-razorback16",
+   "display": "OpenJev (DiffusionGemma 26B-A4B NVFP4, razorback16)",
+   "class": "jev-rebuild",
+   "open": "yes",
+   "author": "razorback16 / Codiv",
+   "repo": "https://github.com/razorback16/openjev",
+   "licence": "Apache-2.0 (repo and weights)",
+   "underlying": "nvidia/diffusiongemma-26B-A4B-it-NVFP4",
+   "has_distribution": true,
+   "probability_source": [
+    "native"
+   ],
+   "endpoint_condition": "our RunPod GPU (RTX PRO 4500 Blackwell 32 GB (EU-RO-1)), reached over the internet",
+   "endpoint_kind": "gpu",
+   "partial": false,
+   "ranked": true,
+   "tiers": {
+    "easy": 1.0,
+    "standard": 0.9583333333333334,
+    "judge": 0.910958904109589,
+    "hard": 0.6545454545454545
+   },
+   "axes": {
+    "intelligence": 85.97654628476548,
+    "calibration": 64.76011611808524,
+    "speed": 83.1778984786352,
+    "cost": 45.18071405399585
+   },
+   "jevbench_score": 67.63354664009132,
+   "speed": {
+    "p50_s_raw": 0.24127069488167763,
+    "p95_s_raw": 0.3052692499011755,
+    "p50_s_adjusted": 0.6325413897633553,
+    "p95_s_adjusted": 0.760538499802351,
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "run": "serial 242-decision standard+judge run",
+    "hardware": "RunPod RTX PRO 4500 Blackwell 32 GB (EU-RO-1)",
+    "measured_where": "from a Hetzner server in Germany over the internet to the pod's public TCP port (plain HTTP, one connection per request); model loaded before timing",
+    "hard_tier_p50_s": 0.2737487629055977,
+    "hard_tier_p95_s": 0.5951106011867523
+   },
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.0671907566081966,
+    "basis": "ESTIMATE: hosted-provider price, openrouter google/gemma-4-26b-a4b-it list price $0.09/M in, $0.3/M out (DiffusionGemma 26B-A4B is not listed; the same-size Gemma 4 26B-A4B MoE sibling is (size class moe_26B-A4B)) x 410 input and 1 output tokens per decision (input tokens measured) | ESTIMATE: openrouter google/gemma-4-26b-a4b-it $0.09/M in, $0.3/M out x 1222 in / 0 out tokens per hard decision",
+    "usd_per_1000_v11_tiers": 0.03718122302158273,
+    "usd_per_1000_hard": 0.11002254545454546,
+    "self_host_sensitivity": {
+     "usd_per_1000": 0.042441862057452644,
+     "score": 59.305139262330144,
+     "machine": "1x RTX PRO 4500 Blackwell 32 GB (EU-RO-1) (on-demand, RunPod secure)",
+     "usd_per_h": 0.72,
+     "concurrency": 4,
+     "utilisation": 0.3,
+     "p50_s_used": 0.25465117234471585,
+     "decisions_per_hour": 16964.38292517306
+    }
+   },
+   "calibration": {
+    "score": 64.76011611808524,
+    "score_label_only_as_onehot": null,
+    "ece_hard": 0.17789083573394485,
+    "probability_fidelity": 65.09839938295943,
+    "brier_hard": 0.48442036776440417,
+    "brier_standard_judge_v11": 0.12110731767657959,
+    "note": null
+   },
+   "hard": {
+    "run": "runs-gpu/openjev-razorback16--hard",
+    "n_items": 220,
+    "n_ok": 220,
+    "n_attempted": 220,
+    "coverage": 1.0,
+    "success_rate": 1.0,
+    "accuracy": 0.6545454545454545,
+    "by_family": {
+     "adversarial": {
+      "correct": 12,
+      "n": 12,
+      "accuracy": 1.0
+     },
+     "ambiguous": {
+      "correct": 10,
+      "n": 14,
+      "accuracy": 0.7142857142857143
+     },
+     "judge_hard": {
+      "correct": 29,
+      "n": 33,
+      "accuracy": 0.8787878787878788
+     },
+     "long_policy": {
+      "correct": 15,
+      "n": 38,
+      "accuracy": 0.39473684210526316
+     },
+     "multi_hop": {
+      "correct": 28,
+      "n": 35,
+      "accuracy": 0.8
+     },
+     "probability": {
+      "correct": 11,
+      "n": 20,
+      "accuracy": 0.55
+     },
+     "routing_hard": {
+      "correct": 10,
+      "n": 10,
+      "accuracy": 1.0
+     },
+     "temporal_numeric": {
+      "correct": 6,
+      "n": 30,
+      "accuracy": 0.2
+     },
+     "tradeoff": {
+      "correct": 8,
+      "n": 12,
+      "accuracy": 0.6666666666666666
+     },
+     "trap": {
+      "correct": 15,
+      "n": 16,
+      "accuracy": 0.9375
+     }
+    },
+    "has_distribution": true,
+    "brier_mean": 0.48442036776440417,
+    "ece": 0.17789083573394485,
+    "probability_fidelity": 65.09839938295943,
+    "calibration_score": 64.76011611808524,
+    "onehot": {
+     "ece": 0.34545454545454546,
+     "probability_fidelity": 48.83850000000001,
+     "calibration_score": 39.87379545454546
+    },
+    "latency_p50_s": 0.2737487629055977,
+    "latency_p95_s": 0.5951106011867523,
+    "mean_input_tokens": 1222.4727272727273,
+    "mean_output_tokens": 0.0,
+    "charged_usd": 0.0
+   },
+   "presets": {
+    "JevBench Score (25:25:25:25)": 67.63354664009132,
+    "Balanced 33:33:33 (no calibration)": 68.61941476457532,
+    "Emphasis on Accuracy 60:20:20": 75.09658776310918,
+    "Emphasis on Speed 20:60:20": 74.1090734076208,
+    "Emphasis on Cost 20:20:60": 58.05631173255278,
+    "Intelligence only": 85.97654628476548
+   },
+   "rank": 5,
+   "rank_under": {
+    "JevBench Score (25:25:25:25)": 5,
+    "Balanced 33:33:33 (no calibration)": 5,
+    "Emphasis on Accuracy 60:20:20": 4,
+    "Emphasis on Speed 20:60:20": 5,
+    "Emphasis on Cost 20:20:60": 6,
+    "Intelligence only": 6
+   }
+  },
+  {
+   "key": "openjev-sglang",
+   "display": "openjev-sglang (Qwen3.6-35B-A3B on SGLang)",
+   "class": "jev-rebuild",
+   "open": "yes",
+   "author": "ekzhang",
+   "repo": "https://github.com/ekzhang/openjev-sglang",
+   "licence": "no licence file in the repository as of 2026-09-19; Qwen3.6 weights keep their own terms",
+   "underlying": "Qwen3.6-35B-A3B",
+   "has_distribution": true,
+   "probability_source": [
+    "native"
+   ],
+   "endpoint_condition": "author's public demo endpoint (Modal) — not a production service",
+   "endpoint_kind": "demo",
+   "partial": false,
+   "ranked": true,
+   "tiers": {
+    "easy": 1.0,
+    "standard": 0.9583333333333334,
+    "judge": 0.952054794520548,
+    "hard": 0.7136363636363636
+   },
+   "axes": {
+    "intelligence": 88.8999584889996,
+    "calibration": 77.41176873901938,
+    "speed": 77.059799513554,
+    "cost": 36.12714266404304
+   },
+   "jevbench_score": 66.15954494186164,
+   "speed": {
+    "p50_s_raw": 0.6776718497276306,
+    "p95_s_raw": 0.7260066717863083,
+    "p50_s_adjusted": 1.3553436994552612,
+    "p95_s_adjusted": 1.4520133435726166,
+    "adjustment": "x2 (assumption, not measured)",
+    "run": "serial 242-decision standard+judge run",
+    "hardware": null,
+    "measured_where": "from a Hetzner server in Germany, network included",
+    "hard_tier_p50_s": 0.6935733407735825,
+    "hard_tier_p95_s": 0.8754492454230784
+   },
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.134615554522674,
+    "basis": "ESTIMATE: hosted-provider price, openrouter qwen/qwen3.6-35b-a3b list price $0.1/M in, $0.9/M out (same base weights) x 667 input and 2 output tokens per decision | ESTIMATE: openrouter qwen/qwen3.6-35b-a3b $0.1/M in, $0.9/M out x 2272 in / 2 out tokens per hard decision",
+    "usd_per_1000_v11_tiers": 0.06850989208633093,
+    "usd_per_1000_hard": 0.22896636363636363,
+    "self_host_sensitivity": {
+     "usd_per_1000": 0.13621106532407892,
+     "score": 46.64469025955533,
+     "machine": "1x L40S 48 GB (Qwen3.6-35B-A3B, SGLang)",
+     "usd_per_h": 0.86,
+     "concurrency": 4,
+     "utilisation": 0.3,
+     "p50_s_used": 0.6842230258139779,
+     "decisions_per_hour": 6313.7308114715415
+    }
+   },
+   "calibration": {
+    "score": 77.41176873901938,
+    "score_label_only_as_onehot": null,
+    "ece_hard": 0.09423841992624496,
+    "probability_fidelity": 73.67122146328776,
+    "brier_hard": 0.4005126115129668,
+    "brier_standard_judge_v11": 0.08533204520463213,
+    "note": null
+   },
+   "hard": {
+    "run": "runs/openjev-sglang--hard",
+    "n_items": 220,
+    "n_ok": 220,
+    "n_attempted": 220,
+    "coverage": 1.0,
+    "success_rate": 1.0,
+    "accuracy": 0.7136363636363636,
+    "by_family": {
+     "adversarial": {
+      "correct": 12,
+      "n": 12,
+      "accuracy": 1.0
+     },
+     "ambiguous": {
+      "correct": 11,
+      "n": 14,
+      "accuracy": 0.7857142857142857
+     },
+     "judge_hard": {
+      "correct": 27,
+      "n": 33,
+      "accuracy": 0.8181818181818182
+     },
+     "long_policy": {
+      "correct": 23,
+      "n": 38,
+      "accuracy": 0.6052631578947368
+     },
+     "multi_hop": {
+      "correct": 28,
+      "n": 35,
+      "accuracy": 0.8
+     },
+     "probability": {
+      "correct": 11,
+      "n": 20,
+      "accuracy": 0.55
+     },
+     "routing_hard": {
+      "correct": 10,
+      "n": 10,
+      "accuracy": 1.0
+     },
+     "temporal_numeric": {
+      "correct": 12,
+      "n": 30,
+      "accuracy": 0.4
+     },
+     "tradeoff": {
+      "correct": 8,
+      "n": 12,
+      "accuracy": 0.6666666666666666
+     },
+     "trap": {
+      "correct": 15,
+      "n": 16,
+      "accuracy": 0.9375
+     }
+    },
+    "has_distribution": true,
+    "brier_mean": 0.4005126115129668,
+    "ece": 0.09423841992624496,
+    "probability_fidelity": 73.67122146328776,
+    "calibration_score": 77.41176873901938,
+    "onehot": {
+     "ece": 0.2863636363636364,
+     "probability_fidelity": 49.77550000000001,
+     "calibration_score": 46.25138636363637
+    },
+    "latency_p50_s": 0.6935733407735825,
+    "latency_p95_s": 0.8754492454230784,
+    "mean_input_tokens": 2271.663636363636,
+    "mean_output_tokens": 2.0,
+    "charged_usd": 0.0
+   },
+   "presets": {
+    "JevBench Score (25:25:25:25)": 66.15954494186164,
+    "Balanced 33:33:33 (no calibration)": 62.78477598208737,
+    "Emphasis on Accuracy 60:20:20": 72.15613005677453,
+    "Emphasis on Speed 20:60:20": 68.14653199669524,
+    "Emphasis on Cost 20:20:60": 50.332216387316564,
+    "Intelligence only": 88.89995848899957
+   },
+   "rank": 6,
+   "rank_under": {
+    "JevBench Score (25:25:25:25)": 6,
+    "Balanced 33:33:33 (no calibration)": 9,
+    "Emphasis on Accuracy 60:20:20": 7,
+    "Emphasis on Speed 20:60:20": 8,
+    "Emphasis on Cost 20:20:60": 9,
+    "Intelligence only": 5
+   }
+  },
+  {
+   "key": "gpt-5.6-luna",
+   "display": "GPT-5.6 Luna (low reasoning effort)",
+   "class": "llm-baseline",
+   "open": "no",
+   "author": "OpenAI",
+   "repo": null,
+   "licence": "proprietary API",
+   "underlying": "closed",
+   "has_distribution": true,
+   "probability_source": [
+    "verbalized"
+   ],
+   "endpoint_condition": "production API (OpenAI), reasoning effort low",
+   "endpoint_kind": "api",
+   "partial": false,
+   "ranked": true,
+   "tiers": {
+    "easy": 1.0,
+    "standard": 0.9791666666666666,
+    "judge": 0.9657534246575342,
+    "hard": 0.9454545454545454
+   },
+   "axes": {
+    "intelligence": 96.821398920714,
+    "calibration": 89.79207658196586,
+    "speed": 77.5464346646158,
+    "cost": 28.204007179931182
+   },
+   "jevbench_score": 66.03444089702963,
+   "speed": {
+    "p50_s_raw": 0.9680032916367054,
+    "p95_s_raw": 1.8175220962613816,
+    "p50_s_adjusted": 0.9680032916367054,
+    "p95_s_adjusted": 1.8175220962613816,
+    "adjustment": "none (production API)",
+    "run": "serial 242-decision standard+judge run",
+    "hardware": null,
+    "measured_where": "from a Hetzner server in Germany, network included",
+    "hard_tier_p50_s": 1.2202091813087463,
+    "hard_tier_p95_s": 3.4094011016190024
+   },
+   "cost": {
+    "kind": "measured",
+    "usd_per_1000": 0.24728613154420276,
+    "basis": "public tariff x measured tokens (https://platform.openai.com/docs/pricing (standard tier, read 2026-09-19)) | public tariff x measured tokens (hard-tier run)",
+    "usd_per_1000_v11_tiers": 0.16415539568345325,
+    "usd_per_1000_hard": 0.3659363636363635,
+    "self_host_sensitivity": null
+   },
+   "calibration": {
+    "score": 89.79207658196586,
+    "score_label_only_as_onehot": null,
+    "ece_hard": 0.07068160957409142,
+    "probability_fidelity": 93.72047507875,
+    "brier_hard": 0.11785378708136751,
+    "brier_standard_judge_v11": 0.05621211608720952,
+    "note": null
+   },
+   "hard": {
+    "run": "runs/gpt-5.6-luna--hard",
+    "n_items": 220,
+    "n_ok": 220,
+    "n_attempted": 220,
+    "coverage": 1.0,
+    "success_rate": 1.0,
+    "accuracy": 0.9454545454545454,
+    "by_family": {
+     "adversarial": {
+      "correct": 12,
+      "n": 12,
+      "accuracy": 1.0
+     },
+     "ambiguous": {
+      "correct": 13,
+      "n": 14,
+      "accuracy": 0.9285714285714286
+     },
+     "judge_hard": {
+      "correct": 30,
+      "n": 33,
+      "accuracy": 0.9090909090909091
+     },
+     "long_policy": {
+      "correct": 36,
+      "n": 38,
+      "accuracy": 0.9473684210526315
+     },
+     "multi_hop": {
+      "correct": 33,
+      "n": 35,
+      "accuracy": 0.9428571428571428
+     },
+     "probability": {
+      "correct": 18,
+      "n": 20,
+      "accuracy": 0.9
+     },
+     "routing_hard": {
+      "correct": 10,
+      "n": 10,
+      "accuracy": 1.0
+     },
+     "temporal_numeric": {
+      "correct": 28,
+      "n": 30,
+      "accuracy": 0.9333333333333333
+     },
+     "tradeoff": {
+      "correct": 12,
+      "n": 12,
+      "accuracy": 1.0
+     },
+     "trap": {
+      "correct": 16,
+      "n": 16,
+      "accuracy": 1.0
+     }
+    },
+    "has_distribution": true,
+    "brier_mean": 0.11785378708136751,
+    "ece": 0.07068160957409142,
+    "probability_fidelity": 93.72047507875,
+    "calibration_score": 89.79207658196586,
+    "onehot": {
+     "ece": 0.054545454545454564,
+     "probability_fidelity": 62.242,
+     "calibration_score": 75.66645454545454
+    },
+    "latency_p50_s": 1.2202091813087463,
+    "latency_p95_s": 3.4094011016190024,
+    "mean_input_tokens": 1185.5545454545454,
+    "mean_output_tokens": 107.35454545454546,
+    "charged_usd": 0.08050599999999997
+   },
+   "presets": {
+    "JevBench Score (25:25:25:25)": 66.03444089702963,
+    "Balanced 33:33:33 (no calibration)": 59.60481371280372,
+    "Emphasis on Accuracy 60:20:20": 72.3697949787392,
+    "Emphasis on Speed 20:60:20": 66.22066459536643,
+    "Emphasis on Cost 20:20:60": 44.186858649444055,
+    "Intelligence only": 96.82139892071399
+   },
+   "rank": 7,
+   "rank_under": {
+    "JevBench Score (25:25:25:25)": 7,
+    "Balanced 33:33:33 (no calibration)": 10,
+    "Emphasis on Accuracy 60:20:20": 6,
+    "Emphasis on Speed 20:60:20": 10,
+    "Emphasis on Cost 20:20:60": 10,
+    "Intelligence only": 1
+   }
+  },
+  {
+   "key": "open-jev-deberta-v3-large",
+   "display": "open-jev-deberta-v3-large (local CPU)",
+   "class": "jev-rebuild",
+   "open": "yes",
+   "author": "Kotoba Labs",
+   "repo": "https://github.com/kotoba-lang/typed-decisions",
+   "licence": "Apache-2.0 (model card); DeBERTa-v3 keeps its own terms",
+   "underlying": "microsoft/deberta-v3-large",
+   "has_distribution": true,
+   "probability_source": [
+    "native"
+   ],
+   "endpoint_condition": "our CPU (2 threads, Ryzen 5 3600)",
+   "endpoint_kind": "cpu",
+   "partial": false,
+   "ranked": true,
+   "tiers": {
+    "easy": 1.0,
+    "standard": 0.4895833333333333,
+    "judge": 0.5342465753424658,
+    "hard": 0.36363636363636365
+   },
+   "axes": {
+    "intelligence": 53.57632835201329,
+    "calibration": 66.3822600310561,
+    "speed": 65.97921316871283,
+    "cost": 73.3330089966802
+   },
+   "jevbench_score": 64.40697539318792,
+   "speed": {
+    "p50_s_raw": 1.767673410475254,
+    "p95_s_raw": 3.349288306012749,
+    "p50_s_adjusted": 3.685346820950508,
+    "p95_s_adjusted": 6.848576612025498,
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "run": "serial 242-decision standard+judge run",
+    "hardware": null,
+    "measured_where": "local, 2 CPU threads of a Ryzen 5 3600",
+    "hard_tier_p50_s": 2.63558766245842,
+    "hard_tier_p95_s": 4.7398640830069665
+   },
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.007742829572538459,
+    "basis": "ESTIMATE: hosted-provider price, deepinfra encoders of the same size (bge-large, e5-large, Qwen3-Embedding-0.6B) list price $0.01/M in, $0.0/M out (an encoder of the same size class; one forward pass, nothing generated) x 452 input and 0 output tokens per decision (input tokens counted from the gemini-3.1-flash-lite run, same prompts) | ESTIMATE: deepinfra encoders of the same size (bge-large, e5-large, Qwen3-Embedding-0.6B) $0.01/M in, $0.0/M out x 1235 in / 0 out tokens per hard decision",
+    "usd_per_1000_v11_tiers": 0.004518347107438017,
+    "usd_per_1000_hard": 0.012345045454545454,
+    "self_host_sensitivity": {
+     "usd_per_1000": 0.014168273865544099,
+     "score": 71.21707642612242,
+     "machine": "Hetzner CX22 (2 vCPU)",
+     "usd_per_h": 0.0072,
+     "concurrency": 1,
+     "utilisation": 0.3,
+     "p50_s_used": 2.1252410798316146,
+     "decisions_per_hour": 508.1776417033919
+    }
+   },
+   "calibration": {
+    "score": 66.3822600310561,
+    "score_label_only_as_onehot": null,
+    "ece_hard": 0.17293095619443358,
+    "probability_fidelity": 67.35071130099892,
+    "brier_hard": 0.7102063910056119,
+    "brier_standard_judge_v11": 0.6512140520637422,
+    "note": null
+   },
+   "hard": {
+    "run": "runs/open-jev-deberta-v3-large--hard",
+    "n_items": 220,
+    "n_ok": 218,
+    "n_attempted": 220,
+    "coverage": 1.0,
+    "success_rate": 0.990909090909091,
+    "accuracy": 0.36363636363636365,
+    "by_family": {
+     "adversarial": {
+      "correct": 8,
+      "n": 12,
+      "accuracy": 0.6666666666666666
+     },
+     "ambiguous": {
+      "correct": 6,
+      "n": 14,
+      "accuracy": 0.42857142857142855
+     },
+     "judge_hard": {
+      "correct": 18,
+      "n": 33,
+      "accuracy": 0.5454545454545454
+     },
+     "long_policy": {
+      "correct": 13,
+      "n": 38,
+      "accuracy": 0.34210526315789475
+     },
+     "multi_hop": {
+      "correct": 13,
+      "n": 35,
+      "accuracy": 0.37142857142857144
+     },
+     "probability": {
+      "correct": 6,
+      "n": 20,
+      "accuracy": 0.3
+     },
+     "routing_hard": {
+      "correct": 2,
+      "n": 10,
+      "accuracy": 0.2
+     },
+     "temporal_numeric": {
+      "correct": 4,
+      "n": 30,
+      "accuracy": 0.13333333333333333
+     },
+     "tradeoff": {
+      "correct": 5,
+      "n": 12,
+      "accuracy": 0.4166666666666667
+     },
+     "trap": {
+      "correct": 5,
+      "n": 16,
+      "accuracy": 0.3125
+     }
+    },
+    "has_distribution": true,
+    "brier_mean": 0.7102063910056119,
+    "ece": 0.17293095619443358,
+    "probability_fidelity": 67.35071130099892,
+    "calibration_score": 66.3822600310561,
+    "onehot": {
+     "ece": 0.6330275229357798,
+     "probability_fidelity": 35.785999999999994,
+     "calibration_score": 17.892999999999997
+    },
+    "latency_p50_s": 2.63558766245842,
+    "latency_p95_s": 4.7398640830069665,
+    "mean_input_tokens": null,
+    "mean_output_tokens": null,
+    "charged_usd": 0.0
+   },
+   "presets": {
+    "JevBench Score (25:25:25:25)": 64.40697539318792,
+    "Balanced 33:33:33 (no calibration)": 63.761696191352485,
+    "Emphasis on Accuracy 60:20:20": 59.47371892582944,
+    "Emphasis on Speed 20:60:20": 64.63961630365256,
+    "Emphasis on Cost 20:20:60": 67.43039738917257,
+    "Intelligence only": 53.57632835201329
+   },
+   "rank": 8,
+   "rank_under": {
+    "JevBench Score (25:25:25:25)": 8,
+    "Balanced 33:33:33 (no calibration)": 7,
+    "Emphasis on Accuracy 60:20:20": 12,
+    "Emphasis on Speed 20:60:20": 11,
+    "Emphasis on Cost 20:20:60": 3,
+    "Intelligence only": 12
+   }
+  },
+  {
+   "key": "nimble-9b",
+   "display": "Bespoke Nimble 9B (Bespoke Labs)",
+   "class": "jev-rebuild",
+   "open": "yes",
+   "author": "Bespoke Labs",
+   "repo": "https://github.com/bespokelabsai/nimble",
+   "licence": "Apache-2.0 (weights); repository without a licence file as of 19 Sep",
+   "underlying": "bespokelabs/Bespoke-Nimble-9B@93ec5d6 (LoRA, merged into Qwen/Qwen3.5-9B@c202236 with the author's PEFT safe-merge)",
+   "has_distribution": true,
+   "probability_source": [
+    "native"
+   ],
+   "endpoint_condition": "our RunPod GPU (A40 48 GB (EU-SE-1)), reached over the internet",
+   "endpoint_kind": "gpu",
+   "partial": false,
+   "ranked": true,
+   "tiers": {
+    "easy": 1.0,
+    "standard": 0.9479166666666666,
+    "judge": 0.8904109589041096,
+    "hard": 0.43636363636363634
+   },
+   "axes": {
+    "intelligence": 78.56408260689082,
+    "calibration": 64.51395363452104,
+    "speed": 82.5436896273356,
+    "cost": 38.93708830042782
+   },
+   "jevbench_score": 63.530352163199524,
+   "speed": {
+    "p50_s_raw": 0.18520960584282875,
+    "p95_s_raw": 0.4598693612962959,
+    "p50_s_adjusted": 0.5204192116856575,
+    "p95_s_adjusted": 1.0697387225925918,
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "run": "serial 242-decision standard+judge run",
+    "hardware": "RunPod A40 48 GB (EU-SE-1)",
+    "measured_where": "from a Hetzner server in Germany over the internet to the pod's public TCP port (plain HTTP, one connection per request); model loaded before timing. An earlier run through an SSH tunnel (RunPod's HTTPS proxy rejected the harness with a Cloudflare bot check) is kept as evidence and superseded.",
+    "hard_tier_p50_s": 0.20103878527879715,
+    "hard_tier_p95_s": 0.33406507857143874
+   },
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.10850016283992836,
+    "basis": "ESTIMATE: hosted-provider price, openrouter qwen/qwen3.5-9b list price $0.1/M in, $0.15/M out (a LoRA merge of Qwen3.5-9B; the base weights are listed on OpenRouter (size class dense_9B)) x 990 input and 1 output tokens per decision (input tokens measured) | ESTIMATE: openrouter qwen/qwen3.5-9b $0.1/M in, $0.15/M out x 1215 in / 2 out tokens per hard decision",
+    "usd_per_1000_v11_tiers": 0.09917246376811595,
+    "usd_per_1000_hard": 0.12181333333333334,
+    "self_host_sensitivity": {
+     "usd_per_1000": 0.021747265140810084,
+     "score": 66.56488376535941,
+     "machine": "1x A40 48 GB (EU-SE-1) (on-demand, RunPod secure)",
+     "usd_per_h": 0.49,
+     "concurrency": 4,
+     "utilisation": 0.3,
+     "p50_s_used": 0.19173099062918278,
+     "decisions_per_hour": 22531.568766340406
+    }
+   },
+   "calibration": {
+    "score": 64.51395363452104,
+    "score_label_only_as_onehot": null,
+    "ece_hard": 0.19628411629730103,
+    "probability_fidelity": 68.28473052850231,
+    "brier_hard": 0.5240251783424846,
+    "brier_standard_judge_v11": 0.14442501005930716,
+    "note": null
+   },
+   "hard": {
+    "run": "runs-gpu/nimble-9b--hard",
+    "n_items": 220,
+    "n_ok": 150,
+    "n_attempted": 220,
+    "coverage": 1.0,
+    "success_rate": 0.6818181818181818,
+    "accuracy": 0.43636363636363634,
+    "by_family": {
+     "adversarial": {
+      "correct": 9,
+      "n": 12,
+      "accuracy": 0.75
+     },
+     "ambiguous": {
+      "correct": 7,
+      "n": 14,
+      "accuracy": 0.5
+     },
+     "judge_hard": {
+      "correct": 25,
+      "n": 33,
+      "accuracy": 0.7575757575757576
+     },
+     "long_policy": {
+      "correct": 0,
+      "n": 38,
+      "accuracy": 0.0
+     },
+     "multi_hop": {
+      "correct": 4,
+      "n": 35,
+      "accuracy": 0.11428571428571428
+     },
+     "probability": {
+      "correct": 11,
+      "n": 20,
+      "accuracy": 0.55
+     },
+     "routing_hard": {
+      "correct": 9,
+      "n": 10,
+      "accuracy": 0.9
+     },
+     "temporal_numeric": {
+      "correct": 9,
+      "n": 30,
+      "accuracy": 0.3
+     },
+     "tradeoff": {
+      "correct": 7,
+      "n": 12,
+      "accuracy": 0.5833333333333334
+     },
+     "trap": {
+      "correct": 15,
+      "n": 16,
+      "accuracy": 0.9375
+     }
+    },
+    "has_distribution": true,
+    "brier_mean": 0.5240251783424846,
+    "ece": 0.19628411629730103,
+    "probability_fidelity": 68.28473052850231,
+    "calibration_score": 64.51395363452104,
+    "onehot": {
+     "ece": 0.36,
+     "probability_fidelity": 51.031052631578945,
+     "calibration_score": 39.51552631578947
+    },
+    "latency_p50_s": 0.20103878527879715,
+    "latency_p95_s": 0.33406507857143874,
+    "mean_input_tokens": 1215.1333333333334,
+    "mean_output_tokens": 2.0,
+    "charged_usd": 0.0
+   },
+   "presets": {
+    "JevBench Score (25:25:25:25)": 63.530352163199524,
+    "Balanced 33:33:33 (no calibration)": 63.20582888464125,
+    "Emphasis on Accuracy 60:20:20": 68.9515282037455,
+    "Emphasis on Speed 20:60:20": 70.32792917035779,
+    "Emphasis on Cost 20:20:60": 52.071449531130746,
+    "Intelligence only": 78.56408260689082
+   },
+   "rank": 9,
+   "rank_under": {
+    "JevBench Score (25:25:25:25)": 9,
+    "Balanced 33:33:33 (no calibration)": 8,
+    "Emphasis on Accuracy 60:20:20": 10,
+    "Emphasis on Speed 20:60:20": 7,
+    "Emphasis on Cost 20:20:60": 8,
+    "Intelligence only": 10
+   }
+  },
+  {
+   "key": "gemini-3.1-flash-lite",
+   "display": "Gemini 3.1 Flash-Lite",
+   "class": "llm-baseline",
+   "open": "no",
+   "author": "Google",
+   "repo": null,
+   "licence": "proprietary API",
+   "underlying": "closed",
+   "has_distribution": true,
+   "probability_source": [
+    "verbalized"
+   ],
+   "endpoint_condition": "production API (Google)",
+   "endpoint_kind": "api",
+   "partial": false,
+   "ranked": true,
+   "tiers": {
+    "easy": 1.0,
+    "standard": 0.9895833333333334,
+    "judge": 0.9315068493150684,
+    "hard": 0.75
+   },
+   "axes": {
+    "intelligence": 90.29052511415526,
+    "calibration": 68.08811278368097,
+    "speed": 81.78762581772229,
+    "cost": 27.14615397142829
+   },
+   "jevbench_score": 60.78233030734062,
+   "speed": {
+    "p50_s_raw": 0.756230715662241,
+    "p95_s_raw": 0.8761593606323003,
+    "p50_s_adjusted": 0.756230715662241,
+    "p95_s_adjusted": 0.8761593606323003,
+    "adjustment": "none (production API)",
+    "run": "serial 242-decision standard+judge run",
+    "hardware": null,
+    "measured_where": "from a Hetzner server in Germany, network included",
+    "hard_tier_p50_s": 0.7880580946803093,
+    "hard_tier_p95_s": 1.4522175978869198
+   },
+   "cost": {
+    "kind": "measured",
+    "usd_per_1000": 0.26820170492819223,
+    "basis": "public tariff x measured tokens (https://ai.google.dev/gemini-api/docs/pricing (paid tier, read 2026-09-19)) | public tariff x measured tokens (hard-tier run)",
+    "usd_per_1000_v11_tiers": 0.18556834532374103,
+    "usd_per_1000_hard": 0.38614204545454534,
+    "self_host_sensitivity": null
+   },
+   "calibration": {
+    "score": 68.08811278368097,
+    "score_label_only_as_onehot": null,
+    "ece_hard": 0.2667577285845467,
+    "probability_fidelity": 89.52777128427128,
+    "brier_hard": 0.5096290133859069,
+    "brier_standard_judge_v11": 0.09465247933884294,
+    "note": null
+   },
+   "hard": {
+    "run": "runs/gemini-3.1-flash-lite--hard",
+    "n_items": 220,
+    "n_ok": 220,
+    "n_attempted": 220,
+    "coverage": 1.0,
+    "success_rate": 1.0,
+    "accuracy": 0.75,
+    "by_family": {
+     "adversarial": {
+      "correct": 12,
+      "n": 12,
+      "accuracy": 1.0
+     },
+     "ambiguous": {
+      "correct": 11,
+      "n": 14,
+      "accuracy": 0.7857142857142857
+     },
+     "judge_hard": {
+      "correct": 29,
+      "n": 33,
+      "accuracy": 0.8787878787878788
+     },
+     "long_policy": {
+      "correct": 25,
+      "n": 38,
+      "accuracy": 0.6578947368421053
+     },
+     "multi_hop": {
+      "correct": 27,
+      "n": 35,
+      "accuracy": 0.7714285714285715
+     },
+     "probability": {
+      "correct": 18,
+      "n": 20,
+      "accuracy": 0.9
+     },
+     "routing_hard": {
+      "correct": 10,
+      "n": 10,
+      "accuracy": 1.0
+     },
+     "temporal_numeric": {
+      "correct": 9,
+      "n": 30,
+      "accuracy": 0.3
+     },
+     "tradeoff": {
+      "correct": 9,
+      "n": 12,
+      "accuracy": 0.75
+     },
+     "trap": {
+      "correct": 15,
+      "n": 16,
+      "accuracy": 0.9375
+     }
+    },
+    "has_distribution": true,
+    "brier_mean": 0.5096290133859069,
+    "ece": 0.2667577285845467,
+    "probability_fidelity": 89.52777128427128,
+    "calibration_score": 68.08811278368097,
+    "onehot": {
+     "ece": 0.25,
+     "probability_fidelity": 63.314499999999995,
+     "calibration_score": 56.65725
+    },
+    "latency_p50_s": 0.7880580946803093,
+    "latency_p95_s": 1.4522175978869198,
+    "mean_input_tokens": 1234.5045454545455,
+    "mean_output_tokens": 51.67727272727273,
+    "charged_usd": 0.08495124999999998
+   },
+   "presets": {
+    "JevBench Score (25:25:25:25)": 60.78233030734062,
+    "Balanced 33:33:33 (no calibration)": 58.52562084452059,
+    "Emphasis on Accuracy 60:20:20": 69.60885485486321,
+    "Emphasis on Speed 20:60:20": 66.90871022390677,
+    "Emphasis on Cost 20:20:60": 43.041851112250264,
+    "Intelligence only": 90.29052511415529
+   },
+   "rank": 10,
+   "rank_under": {
+    "JevBench Score (25:25:25:25)": 10,
+    "Balanced 33:33:33 (no calibration)": 11,
+    "Emphasis on Accuracy 60:20:20": 9,
+    "Emphasis on Speed 20:60:20": 9,
+    "Emphasis on Cost 20:20:60": 11,
+    "Intelligence only": 4
+   }
+  },
+  {
+   "key": "deepseek-flash",
+   "display": "DeepSeek V4.1 Flash (thinking default)",
+   "class": "llm-baseline",
+   "open": "weights",
+   "author": "DeepSeek",
+   "repo": null,
+   "licence": "open weights, proprietary API route",
+   "underlying": "DeepSeek-V4.1-Flash",
+   "has_distribution": true,
+   "probability_source": [
+    "verbalized"
+   ],
+   "endpoint_condition": "production API (DeepSeek)",
+   "endpoint_kind": "api",
+   "partial": false,
+   "ranked": true,
+   "tiers": {
+    "easy": 0.9861111111111112,
+    "standard": 0.9895833333333334,
+    "judge": 0.9315068493150684,
+    "hard": 0.95
+   },
+   "axes": {
+    "intelligence": 96.0960806697108,
+    "calibration": 96.66517503108454,
+    "speed": 71.59823070734842,
+    "cost": 17.123750085891416
+   },
+   "jevbench_score": 58.092387016557666,
+   "speed": {
+    "p50_s_raw": 1.4163860343396664,
+    "p95_s_raw": 4.886470635980367,
+    "p50_s_adjusted": 1.4163860343396664,
+    "p95_s_adjusted": 4.886470635980367,
+    "adjustment": "none (production API)",
+    "run": "serial 242-decision standard+judge run",
+    "hardware": null,
+    "measured_where": "from a Hetzner server in Germany, network included",
+    "hard_tier_p50_s": 3.1479117795825005,
+    "hard_tier_p95_s": 27.954364685714225
+   },
+   "cost": {
+    "kind": "measured",
+    "usd_per_1000": 0.5788175142273461,
+    "basis": "public tariff x measured tokens (https://api-docs.deepseek.com/quick_start/pricing (cache-miss off-peak; the run is on a Saturday, off-peak all day)) | public tariff x measured tokens (hard-tier run)",
+    "usd_per_1000_v11_tiers": 0.2252337662337665,
+    "usd_per_1000_hard": 1.083477954545455,
+    "self_host_sensitivity": null
+   },
+   "calibration": {
+    "score": 96.66517503108454,
+    "score_label_only_as_onehot": null,
+    "ece_hard": 0.03334125816558947,
+    "probability_fidelity": 99.998601695287,
+    "brier_hard": 0.043915329620841076,
+    "brier_standard_judge_v11": 0.02778397179722692,
+    "note": null
+   },
+   "hard": {
+    "run": "runs/deepseek-flash--hard-mt16k",
+    "n_items": 220,
+    "n_ok": 212,
+    "n_attempted": 220,
+    "coverage": 1.0,
+    "success_rate": 0.9636363636363636,
+    "accuracy": 0.95,
+    "by_family": {
+     "adversarial": {
+      "correct": 12,
+      "n": 12,
+      "accuracy": 1.0
+     },
+     "ambiguous": {
+      "correct": 13,
+      "n": 14,
+      "accuracy": 0.9285714285714286
+     },
+     "judge_hard": {
+      "correct": 30,
+      "n": 33,
+      "accuracy": 0.9090909090909091
+     },
+     "long_policy": {
+      "correct": 34,
+      "n": 38,
+      "accuracy": 0.8947368421052632
+     },
+     "multi_hop": {
+      "correct": 35,
+      "n": 35,
+      "accuracy": 1.0
+     },
+     "probability": {
+      "correct": 19,
+      "n": 20,
+      "accuracy": 0.95
+     },
+     "routing_hard": {
+      "correct": 10,
+      "n": 10,
+      "accuracy": 1.0
+     },
+     "temporal_numeric": {
+      "correct": 28,
+      "n": 30,
+      "accuracy": 0.9333333333333333
+     },
+     "tradeoff": {
+      "correct": 12,
+      "n": 12,
+      "accuracy": 1.0
+     },
+     "trap": {
+      "correct": 16,
+      "n": 16,
+      "accuracy": 1.0
+     }
+    },
+    "has_distribution": true,
+    "brier_mean": 0.043915329620841076,
+    "ece": 0.03334125816558947,
+    "probability_fidelity": 99.998601695287,
+    "calibration_score": 96.66517503108454,
+    "onehot": {
+     "ece": 0.014150943396226467,
+     "probability_fidelity": 65.48263157894736,
+     "calibration_score": 81.32622144985103
+    },
+    "latency_p50_s": 3.1479117795825005,
+    "latency_p95_s": 27.954364685714225,
+    "mean_input_tokens": 1189.15,
+    "mean_output_tokens": 1752.8727272727272,
+    "charged_usd": 0.23836515000000008
+   },
+   "presets": {
+    "JevBench Score (25:25:25:25)": 58.092387016557666,
+    "Balanced 33:33:33 (no calibration)": 49.023270619582924,
+    "Emphasis on Accuracy 60:20:20": 64.16875885728389,
+    "Emphasis on Speed 20:60:20": 57.04299049336464,
+    "Emphasis on Cost 20:20:60": 32.1870312466733,
+    "Intelligence only": 96.09608066971082
+   },
+   "rank": 11,
+   "rank_under": {
+    "JevBench Score (25:25:25:25)": 11,
+    "Balanced 33:33:33 (no calibration)": 12,
+    "Emphasis on Accuracy 60:20:20": 11,
+    "Emphasis on Speed 20:60:20": 12,
+    "Emphasis on Cost 20:20:60": 12,
+    "Intelligence only": 2
+   }
+  },
+  {
+   "key": "system-one-sg",
+   "display": "system-one (Qwen3-8B, Sean Goedecke)",
+   "class": "jev-rebuild",
+   "open": "yes",
+   "author": "Sean Goedecke",
+   "repo": "https://github.com/sgoedecke/system-one",
+   "licence": "no licence file in the repository as of 19 Sep; Qwen3 weights Apache-2.0",
+   "underlying": "Qwen/Qwen3-8B (frozen, BF16), the model of the author's demos",
+   "has_distribution": true,
+   "probability_source": [
+    "native"
+   ],
+   "endpoint_condition": "our RunPod GPU (RTX PRO 4500 Blackwell 32 GB (EU-RO-1)), reached over the internet",
+   "endpoint_kind": "gpu",
+   "partial": false,
+   "ranked": true,
+   "tiers": {
+    "easy": 1.0,
+    "standard": 0.90625,
+    "judge": 0.9178082191780822,
+    "hard": 0.5
+   },
+   "axes": {
+    "intelligence": 80.07363013698631,
+    "calibration": 36.764309957143894,
+    "speed": 84.3621367799104,
+    "cost": 41.15248486040298
+   },
+   "jevbench_score": 56.54118326474669,
+   "speed": {
+    "p50_s_raw": 0.1661309413611889,
+    "p95_s_raw": 0.30472867079079147,
+    "p50_s_adjusted": 0.4822618827223778,
+    "p95_s_adjusted": 0.759457341581583,
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "run": "serial 242-decision standard+judge run",
+    "hardware": "RunPod RTX PRO 4500 Blackwell 32 GB (EU-RO-1)",
+    "measured_where": "from a Hetzner server in Germany over the internet to the pod's public TCP port (plain HTTP, one connection per request) through a thin transport around the author's library; model loaded before timing",
+    "hard_tier_p50_s": 0.20696432143449783,
+    "hard_tier_p95_s": 0.65277008600533
+   },
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.09153429437798077,
+    "basis": "ESTIMATE: hosted-provider price, openrouter qwen/qwen3-8b list price $0.117/M in, $0.455/M out (same weights, listed on OpenRouter) x 443 input and 1 output tokens per decision (input tokens measured) | ESTIMATE: openrouter qwen/qwen3-8b $0.117/M in, $0.455/M out x 1258 in / 1 out tokens per hard decision",
+    "usd_per_1000_v11_tiers": 0.0522559082733813,
+    "usd_per_1000_hard": 0.14759526363636366,
+    "self_host_sensitivity": {
+     "usd_per_1000": 0.030492280369226854,
+     "score": 62.895252391243304,
+     "machine": "1x RTX PRO 4500 Blackwell 32 GB (EU-RO-1) (on-demand, RunPod secure)",
+     "usd_per_h": 0.72,
+     "concurrency": 4,
+     "utilisation": 0.3,
+     "p50_s_used": 0.18295368221536112,
+     "decisions_per_hour": 23612.533771879913
+    }
+   },
+   "calibration": {
+    "score": 36.764309957143894,
+    "score_label_only_as_onehot": null,
+    "ece_hard": 0.42428537094007235,
+    "probability_fidelity": 58.38569410230225,
+    "brier_hard": 0.9241372110675431,
+    "brier_standard_judge_v11": 0.1602412905726563,
+    "note": null
+   },
+   "hard": {
+    "run": "runs-gpu/system-one-sg--hard",
+    "n_items": 220,
+    "n_ok": 220,
+    "n_attempted": 220,
+    "coverage": 1.0,
+    "success_rate": 1.0,
+    "accuracy": 0.5,
+    "by_family": {
+     "adversarial": {
+      "correct": 8,
+      "n": 12,
+      "accuracy": 0.6666666666666666
+     },
+     "ambiguous": {
+      "correct": 5,
+      "n": 14,
+      "accuracy": 0.35714285714285715
+     },
+     "judge_hard": {
+      "correct": 20,
+      "n": 33,
+      "accuracy": 0.6060606060606061
+     },
+     "long_policy": {
+      "correct": 12,
+      "n": 38,
+      "accuracy": 0.3157894736842105
+     },
+     "multi_hop": {
+      "correct": 17,
+      "n": 35,
+      "accuracy": 0.4857142857142857
+     },
+     "probability": {
+      "correct": 10,
+      "n": 20,
+      "accuracy": 0.5
+     },
+     "routing_hard": {
+      "correct": 10,
+      "n": 10,
+      "accuracy": 1.0
+     },
+     "temporal_numeric": {
+      "correct": 8,
+      "n": 30,
+      "accuracy": 0.26666666666666666
+     },
+     "tradeoff": {
+      "correct": 5,
+      "n": 12,
+      "accuracy": 0.4166666666666667
+     },
+     "trap": {
+      "correct": 15,
+      "n": 16,
+      "accuracy": 0.9375
+     }
+    },
+    "has_distribution": true,
+    "brier_mean": 0.9241372110675431,
+    "ece": 0.42428537094007235,
+    "probability_fidelity": 58.38569410230225,
+    "calibration_score": 36.764309957143894,
+    "onehot": {
+     "ece": 0.5,
+     "probability_fidelity": 45.96800000000001,
+     "calibration_score": 22.984000000000005
+    },
+    "latency_p50_s": 0.20696432143449783,
+    "latency_p95_s": 0.65277008600533,
+    "mean_input_tokens": 1257.6090909090908,
+    "mean_output_tokens": 1.0,
+    "charged_usd": 0.0
+   },
+   "presets": {
+    "JevBench Score (25:25:25:25)": 56.54118326474669,
+    "Balanced 33:33:33 (no calibration)": 65.26460555906071,
+    "Emphasis on Accuracy 60:20:20": 70.82758559931364,
+    "Emphasis on Speed 20:60:20": 72.32120590531974,
+    "Emphasis on Cost 20:20:60": 54.27065411483852,
+    "Intelligence only": 80.07363013698631
+   },
+   "rank": 12,
+   "rank_under": {
+    "JevBench Score (25:25:25:25)": 12,
+    "Balanced 33:33:33 (no calibration)": 6,
+    "Emphasis on Accuracy 60:20:20": 8,
+    "Emphasis on Speed 20:60:20": 6,
+    "Emphasis on Cost 20:20:60": 7,
+    "Intelligence only": 8
+   }
+  },
+  {
+   "key": "qwen3.8-27b",
+   "display": "Qwen3.8 27B (Chutes TEE)",
+   "class": "llm-baseline",
+   "open": "weights",
+   "author": "Qwen / Chutes",
+   "repo": null,
+   "licence": "open weights",
+   "underlying": "Qwen3.8-27B",
+   "has_distribution": true,
+   "probability_source": [
+    "verbalized"
+   ],
+   "endpoint_condition": "Chutes shared inference (TEE)",
+   "endpoint_kind": "api",
+   "partial": true,
+   "ranked": false,
+   "tiers": {
+    "easy": 0.9861111111111112,
+    "standard": 0.9895833333333334,
+    "judge": 0.952755905511811,
+    "hard": 0.21363636363636362
+   },
+   "axes": {
+    "intelligence": 74.60014515231052,
+    "calibration": 92.09887121241667,
+    "speed": 61.270489995780956,
+    "cost": 0.0
+   },
+   "jevbench_score": 25.47189954757361,
+   "speed": {
+    "p50_s_raw": 5.753906108438969,
+    "p95_s_raw": 12.97144114784895,
+    "p50_s_adjusted": 5.753906108438969,
+    "p95_s_adjusted": 12.97144114784895,
+    "adjustment": "none (production API)",
+    "run": "serial 242-decision standard+judge run",
+    "hardware": null,
+    "measured_where": "from a Hetzner server in Germany, network included",
+    "hard_tier_p50_s": 20.471472900360823,
+    "hard_tier_p95_s": 74.47066541947424
+   },
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 2.7110372815546095,
+    "basis": "ESTIMATE: hosted-provider price, openrouter qwen/qwen3.8-27b list price $0.214/M in, $2.55/M out (same weights; our run used a flat-rate Chutes subscription) x 445 input and 393 output tokens per decision | ESTIMATE: openrouter qwen/qwen3.8-27b $0.214/M in, $2.55/M out x 1592 in / 1833 out tokens per hard decision",
+    "usd_per_1000_v11_tiers": 1.096335976699029,
+    "usd_per_1000_hard": 5.0156564166666655,
+    "self_host_sensitivity": {
+     "usd_per_1000": 3.8023331395736286,
+     "score": 10.498745882580529,
+     "machine": "1x A100 80 GB (Qwen3.8-27B bf16)",
+     "usd_per_h": 1.39,
+     "concurrency": 4,
+     "utilisation": 0.3,
+     "p50_s_used": 11.81732313881876,
+     "decisions_per_hour": 365.5650225734472
+    }
+   },
+   "calibration": {
+    "score": 92.09887121241667,
+    "score_label_only_as_onehot": null,
+    "ece_hard": 0.07900871212083338,
+    "probability_fidelity": 99.999484849,
+    "brier_hard": 0.07885637798841445,
+    "brier_standard_judge_v11": 0.019061104047845712,
+    "note": null
+   },
+   "hard": {
+    "run": "runs/qwen3.8-27b--hard-mt16k",
+    "n_items": 220,
+    "n_ok": 48,
+    "n_attempted": 51,
+    "coverage": 0.2318181818181818,
+    "success_rate": 0.9411764705882353,
+    "accuracy": 0.21363636363636362,
+    "by_family": {
+     "adversarial": {
+      "correct": 0,
+      "n": 12,
+      "accuracy": 0.0
+     },
+     "ambiguous": {
+      "correct": 7,
+      "n": 14,
+      "accuracy": 0.5
+     },
+     "judge_hard": {
+      "correct": 0,
+      "n": 33,
+      "accuracy": 0.0
+     },
+     "long_policy": {
+      "correct": 12,
+      "n": 38,
+      "accuracy": 0.3157894736842105
+     },
+     "multi_hop": {
+      "correct": 5,
+      "n": 35,
+      "accuracy": 0.14285714285714285
+     },
+     "probability": {
+      "correct": 10,
+      "n": 20,
+      "accuracy": 0.5
+     },
+     "routing_hard": {
+      "correct": 0,
+      "n": 10,
+      "accuracy": 0.0
+     },
+     "temporal_numeric": {
+      "correct": 7,
+      "n": 30,
+      "accuracy": 0.23333333333333334
+     },
+     "tradeoff": {
+      "correct": 6,
+      "n": 12,
+      "accuracy": 0.5
+     },
+     "trap": {
+      "correct": 0,
+      "n": 16,
+      "accuracy": 0.0
+     }
+    },
+    "has_distribution": true,
+    "brier_mean": 0.07885637798841445,
+    "ece": 0.07900871212083338,
+    "probability_fidelity": 99.999484849,
+    "calibration_score": 92.09887121241667,
+    "onehot": {
+     "ece": 0.02083333333333337,
+     "probability_fidelity": 66.726,
+     "calibration_score": 81.27966666666666
+    },
+    "latency_p50_s": 20.471472900360823,
+    "latency_p95_s": 74.47066541947424,
+    "mean_input_tokens": 1591.6041666666667,
+    "mean_output_tokens": 1833.3541666666667,
+    "charged_usd": 0.0
+   },
+   "presets": {
+    "JevBench Score (25:25:25:25)": 25.47189954757361,
+    "Balanced 33:33:33 (no calibration)": 16.59575476583285,
+    "Emphasis on Accuracy 60:20:20": 30.275691704927787,
+    "Emphasis on Speed 20:60:20": 27.983288284389506,
+    "Emphasis on Cost 20:20:60": 5.395083928967424,
+    "Intelligence only": 74.60014515231053
+   },
+   "rank": null
+  },
+  {
+   "key": "needle-3-tools",
+   "display": "Needle 3, options as tools (post-hoc adapter mode)",
+   "class": "small-tool-model",
+   "open": "yes",
+   "author": "Cactus Compute",
+   "repo": "https://github.com/cactus-compute/needle",
+   "licence": "Apache-2.0 (model and package)",
+   "underlying": "Needle 3 (121M parameters, 2-bit)",
+   "has_distribution": false,
+   "probability_source": [
+    "label_only_no_calibrated_distribution"
+   ],
+   "endpoint_condition": "our CPU (2 threads, Ryzen 5 3600)",
+   "endpoint_kind": "cpu",
+   "partial": true,
+   "ranked": false,
+   "tiers": {
+    "easy": 0.6666666666666666,
+    "standard": 0.3125,
+    "judge": 0.3424657534246575,
+    "hard": null
+   },
+   "axes": {
+    "intelligence": 39.53196347031963,
+    "calibration": null,
+    "speed": 52.842525649949984,
+    "cost": 63.698846264524306
+   },
+   "jevbench_score": 19.09923092164542,
+   "speed": {
+    "p50_s_raw": 3.778900783509016,
+    "p95_s_raw": 33.63718595951795,
+    "p50_s_adjusted": 7.707801567018032,
+    "p95_s_adjusted": 67.4243719190359,
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "run": "serial 242-decision standard+judge run",
+    "hardware": null,
+    "measured_where": "local, 2 CPU threads of a Ryzen 5 3600",
+    "hard_tier_p50_s": null,
+    "hard_tier_p95_s": null
+   },
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.016219537190082647,
+    "basis": "ESTIMATE: same per-token price as Needle 3 (openrouter meta-llama/llama-3.2-1b-instruct $0.027/M in, $0.201/M out) x 452 input and 20 output tokens per decision, over the 314 easy/standard/judge decisions it ran (no hard-tier run). The v1.2 score lab had no price for this row and scored it 100; fixed.",
+    "usd_per_1000_v11_tiers": 0.016219537190082647,
+    "usd_per_1000_hard": null,
+    "self_host_sensitivity": null
+   },
+   "calibration": {
+    "score": null,
+    "score_label_only_as_onehot": null,
+    "ece_hard": null,
+    "probability_fidelity": null,
+    "brier_hard": null,
+    "brier_standard_judge_v11": null,
+    "note": "returns a label, not a probability distribution: no calibration score (counts as 0 in the JevBench Score)"
+   },
+   "hard": null,
+   "presets": {
+    "JevBench Score (25:25:25:25)": 19.09923092164542,
+    "Balanced 33:33:33 (no calibration)": 51.052988888118854,
+    "Emphasis on Accuracy 60:20:20": 46.0884452510143,
+    "Emphasis on Speed 20:60:20": 51.7614138502899,
+    "Emphasis on Cost 20:20:60": 55.77830725034074,
+    "Intelligence only": 39.53196347031963
+   },
+   "rank": null
+  },
+  {
+   "key": "needle-3",
+   "display": "Needle 3 (Cactus, 2-bit, local CPU)",
+   "class": "small-tool-model",
+   "open": "yes",
+   "author": "Cactus Compute",
+   "repo": "https://github.com/cactus-compute/needle",
+   "licence": "Apache-2.0 (model and package)",
+   "underlying": "Needle 3 (121M parameters, 2-bit)",
+   "has_distribution": false,
+   "probability_source": [
+    "label_only_no_calibrated_distribution"
+   ],
+   "endpoint_condition": "our CPU (2 threads, Ryzen 5 3600)",
+   "endpoint_kind": "cpu",
+   "partial": true,
+   "ranked": false,
+   "tiers": {
+    "easy": 0.4722222222222222,
+    "standard": 0.16666666666666666,
+    "judge": 0.3150684931506849,
+    "hard": 0.07727272727272727
+   },
+   "axes": {
+    "intelligence": 22.417877404178775,
+    "calibration": null,
+    "speed": 59.92368509307548,
+    "cost": 58.10061053357013
+   },
+   "jevbench_score": 16.714501353540964,
+   "speed": {
+    "p50_s_raw": 1.6870602630078793,
+    "p95_s_raw": 14.364453018829225,
+    "p50_s_adjusted": 3.5241205260157584,
+    "p95_s_adjusted": 28.87890603765845,
+    "adjustment": "x2 + 0.15 s (assumption, not measured)",
+    "run": "serial 242-decision standard+judge run",
+    "hardware": null,
+    "measured_where": "local, 2 CPU threads of a Ryzen 5 3600",
+    "hard_tier_p50_s": 19.284176252782345,
+    "hard_tier_p95_s": 155.37855613604194
+   },
+   "cost": {
+    "kind": "estimate",
+    "usd_per_1000": 0.02492563984585384,
+    "basis": "ESTIMATE: hosted-provider price, openrouter meta-llama/llama-3.2-1b-instruct list price $0.027/M in, $0.201/M out (no generative model under 1B is listed; the smallest listed one (1B) errs high; about 20 generated tokens for one tool call) x 452 input and 20 output tokens per decision (input tokens counted from the gemini-3.1-flash-lite run, same prompts) | ESTIMATE: openrouter meta-llama/llama-3.2-1b-instruct $0.027/M in, $0.201/M out x 1235 in / 20 out tokens per hard decision",
+    "usd_per_1000_v11_tiers": 0.016219537190082647,
+    "usd_per_1000_hard": 0.03735162272727273,
+    "self_host_sensitivity": {
+     "usd_per_1000": 0.059578722823927475,
+     "score": 55.62272027242932,
+     "machine": "Hetzner CX22 (2 vCPU)",
+     "usd_per_h": 0.0072,
+     "concurrency": 1,
+     "utilisation": 0.3,
+     "p50_s_used": 8.93680842358912,
+     "decisions_per_hour": 120.84851199778322
+    }
+   },
+   "calibration": {
+    "score": null,
+    "score_label_only_as_onehot": 22.869444444444444,
+    "ece_hard": null,
+    "probability_fidelity": null,
+    "brier_hard": null,
+    "brier_standard_judge_v11": null,
+    "note": "returns a label, not a probability distribution: no calibration score (counts as 0 in the JevBench Score)"
+   },
+   "hard": {
+    "run": "runs/needle-3--hard",
+    "n_items": 220,
+    "n_ok": 44,
+    "n_attempted": 44,
+    "coverage": 0.2,
+    "success_rate": 1.0,
+    "accuracy": 0.07727272727272727,
+    "by_family": {
+     "adversarial": {
+      "correct": 0,
+      "n": 12,
+      "accuracy": 0.0
+     },
+     "ambiguous": {
+      "correct": 3,
+      "n": 14,
+      "accuracy": 0.21428571428571427
+     },
+     "judge_hard": {
+      "correct": 0,
+      "n": 33,
+      "accuracy": 0.0
+     },
+     "long_policy": {
+      "correct": 5,
+      "n": 38,
+      "accuracy": 0.13157894736842105
+     },
+     "multi_hop": {
+      "correct": 0,
+      "n": 35,
+      "accuracy": 0.0
+     },
+     "probability": {
+      "correct": 4,
+      "n": 20,
+      "accuracy": 0.2
+     },
+     "routing_hard": {
+      "correct": 0,
+      "n": 10,
+      "accuracy": 0.0
+     },
+     "temporal_numeric": {
+      "correct": 3,
+      "n": 30,
+      "accuracy": 0.1
+     },
+     "tradeoff": {
+      "correct": 2,
+      "n": 12,
+      "accuracy": 0.16666666666666666
+     },
+     "trap": {
+      "correct": 0,
+      "n": 16,
+      "accuracy": 0.0
+     }
+    },
+    "has_distribution": false,
+    "brier_mean": null,
+    "ece": null,
+    "probability_fidelity": null,
+    "calibration_score": null,
+    "onehot": {
+     "ece": 0.6136363636363636,
+     "probability_fidelity": 45.73888888888889,
+     "calibration_score": 22.869444444444444
+    },
+    "latency_p50_s": 19.284176252782345,
+    "latency_p95_s": 155.37855613604194,
+    "mean_input_tokens": null,
+    "mean_output_tokens": null,
+    "charged_usd": 0.0
+   },
+   "presets": {
+    "JevBench Score (25:25:25:25)": 16.714501353540964,
+    "Balanced 33:33:33 (no calibration)": 42.735740443830075,
+    "Emphasis on Accuracy 60:20:20": 33.01509381741361,
+    "Emphasis on Speed 20:60:20": 48.92311991955101,
+    "Emphasis on Cost 20:20:60": 48.32223557391566,
+    "Intelligence only": 22.41787740417878
+   },
+   "rank": null
+  }
+ ]
+}

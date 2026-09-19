@@ -1,0 +1,21 @@
+import type { JevAxis, JevAxes } from './jevbench-v12.mjs';
+export type JevWeights4 = Record<JevAxis, number>;
+export type JevPreset4 = { id: 'score' | 'balanced' | 'accuracy' | 'speed' | 'cost'; name: string; ratio: string; title: string; artifactKey: string; w: JevWeights4 };
+export const SCORE_NAME: string;
+export const AXES: JevAxis[];
+export const AXIS_LABEL: Record<JevAxis, string>;
+export const PRESETS: JevPreset4[];
+export const DEFAULT_PRESET: JevPreset4;
+export const DEFAULT_WEIGHTS: JevWeights4;
+export function normalise(parts: Partial<JevWeights4>): JevWeights4 | null;
+export function sameWeights(a: JevWeights4, b: JevWeights4): boolean;
+export function presetFor(w: JevWeights4): JevPreset4 | null;
+export function isDefault(w: JevWeights4): boolean;
+export function percents(w: JevWeights4): JevWeights4;
+export function ratioText(w: JevWeights4): string;
+export function describe(w: JevWeights4): { preset: JevPreset4['id'] | null; official: boolean; title: string; short: string; ratio: string };
+export function toParam(w: JevWeights4): string | null;
+export function parseParams(search: string | URLSearchParams | null | undefined): JevWeights4;
+export function scoreUnder(row: { axes: JevAxes }, w: JevWeights4): number | null;
+export function rerank<R extends { key: string; main: number; axes: JevAxes }>(ranked: R[], partial: R[], w: JevWeights4):
+  { ranked: (R & { score: number | null; official: number; rank: number; delta: number })[]; partial: (R & { score: number | null; official: number; rank: null; delta: number })[] };

@@ -1,0 +1,31 @@
+export type JevAxis = 'intelligence' | 'calibration' | 'speed' | 'cost';
+export type JevTier12 = 'easy' | 'standard' | 'judge' | 'hard';
+export type JevAxes = Record<JevAxis, number | null>;
+export const JEVBENCH_V12_ARTIFACT: string;
+export const JEVBENCH_V12_SHA256: string;
+export const TIERS: JevTier12[];
+export const AXES: JevAxis[];
+export const TIER_WEIGHTS: Record<JevTier12, number>;
+export const VENDOR_LINKS: Record<string, string>;
+export const EP_LABEL: Record<string, string>;
+export type JevV12Row = {
+  key: string; display: string; author: string; cls: string; link: string | null; licence: string; open: 'yes' | 'weights' | 'no';
+  ranked: boolean; rank: number | null; main: number; axes: JevAxes; presets: Record<string, number>; rankUnder: Record<string, number> | null;
+  tiers: Record<JevTier12, number | null>; p50: number; p95: number; p50Adj: number; p95Adj: number; adjustment: string;
+  endpointKind: 'api' | 'gpu' | 'demo' | 'cpu'; endpoint: string; usd: number; costKind: 'measured' | 'estimate'; costBasis: string;
+  hasDistribution: boolean; calibrationNote: string | null; footnote: string | null;
+};
+export type JevV12View = {
+  sha256: string; protocol: string; generated: string; revisionNote: string; scoreName: string; oneLiner: string; speedNote: string;
+  scoring: Record<string, string>; presets: Record<string, Record<JevAxis, number>>; main: string; tierCounts: Record<JevTier12, number>;
+  tierWeights: Record<JevTier12, number>; decisions: number; ranked: JevV12Row[]; partial: JevV12Row[];
+};
+export function intelligence(tiers: Partial<Record<JevTier12, number | null>>): number | null;
+export function adjustedLatency(s: number, kind: string): number;
+export function speedPoint(s: number): number;
+export function speedScore(p50: number, p95: number, kind: string): number;
+export function costScore(usd: number): number;
+export function geometric(axes: Partial<JevAxes>, w: Partial<Record<JevAxis, number>>): number | null;
+export function validateJevbenchV12(artifact: any): any;
+export function readJevbenchV12(root?: string): Promise<{ artifact: any; bytes: Buffer; sha256: string }>;
+export function jevbenchV12View(data: { artifact: any; sha256: string }): JevV12View;

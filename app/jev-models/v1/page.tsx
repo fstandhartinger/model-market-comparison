@@ -1,14 +1,13 @@
 import type { Metadata } from 'next';
 import { readJevbench, jevbenchView, JEVBENCH_REPO } from '../../../lib/jevbench.mjs';
 import { JevModelsBoard } from '../../../components/JevModels';
-import { JevWipBanner, JEV_WIP_ROBOTS } from '../../../components/JevWipBanner';
 import { previewMetadata } from '../../../lib/seo';
 
 // CR-84 (Florian 2026-09-18): "we need a Jev benchmark - to see which of the Jevs is actually good => smart + cheap + fast +
 // reliable + ideally open". JevBench v1 is our own measurement; every number here comes from the committed artifact
 // (lib/jevbench.mjs validates it), and the copy is the supervisor's PAGE-COPY.md for this CR.
-export const metadata: Metadata = { ...previewMetadata({ path: '/jev-models/v1', documentTitle: 'Jev-class decision models — JevBench v1.0', title: 'Jev-class models — JevBench v1.0 | Benchmark Heaven',
-  description: 'Our own benchmark of typed-decision models: Jev and its open rebuilds against small instruction models, on accuracy, cost, latency, calibration and openness. No combined winner.' }), robots: JEV_WIP_ROBOTS };
+export const metadata: Metadata = previewMetadata({ path: '/jev-models/v1', documentTitle: 'Jev-class decision models — JevBench v1.0', title: 'Jev-class models — JevBench v1.0 | Benchmark Heaven',
+  description: 'Our own benchmark of typed-decision models: Jev and its open rebuilds against small instruction models, on accuracy, cost, latency, calibration and openness. No combined winner.' });
 
 const day = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
 
@@ -18,10 +17,9 @@ export default async function JevModelsPage() {
   const credits = [...view.ranked, ...view.partial, ...view.unrunnable].filter((r) => r.cls !== 'llm-baseline').sort((a, b) => a.display.localeCompare(b.display));
   const rep = view.repeatability as { accuracy_run_1: number; accuracy_run_2: number; n_different_prediction: number; n_compared: number; families_of_differences: string[] } | null;
   return <>
-    <JevWipBanner />
     <header className="bh-page-head">
       {/* CR-86: v1.1 (Main Score) is the current page at /jev-models; v1.0 stays published here, never mixed with it. */}
-      <p className="mb-3 rounded-md border border-line px-3 py-2 text-sm" data-bh-jev-archive>This is the archived v1.0 run (242 decisions, five axes, calibration plots). <a className="text-accent underline" href="/jev-models">Current results: JevBench v1.1 with the Main Score →</a></p>
+      <p className="mb-3 rounded-md border border-line px-3 py-2 text-sm" data-bh-jev-archive>This is the archived v1.0 run (242 decisions, five axes, calibration plots). <a className="text-accent underline" href="/jev-models">Current results: JevBench v1.2 with the JevBench Score →</a></p>
       <p className="bh-eyebrow">JevBench v1.0 · our own benchmark{view.pilot ? ' · pilot' : ''}</p>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">Jev-class models</h1>
       <p className="mt-3 max-w-3xl text-lg">Typed decisions compared on accuracy, cost, latency, reliability and openness.</p>

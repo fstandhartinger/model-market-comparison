@@ -1192,3 +1192,24 @@ Florian, Claude Code chat, 19 Sep 2026 ~12:00 UTC, verbatim:
 > We should maybe somewhere further down in the page also show a nice scatterplot (or something else apropriate) that explains which tasks of the easy/medium/hard category each of the models managed to get right.
 > Just like with changed weighting we should show a warning then, so that it's clear that these changed settings make the results be "not the default setting" of the benchmark results.
 > And second thought, but if not easy, we don't have to do it: if our tasks can easily be categorized into different topics (e.g. math, coding, reasoning, science, etc) we could even show nice radar charts that let the users know which jev like model is good in which category of tasks.
+
+
+## CR-20260919g (JevBench page) → CR-92 — JevBench v1.2 final: the JevBench Score is the default; WIP banner off, page back in menu + sitemap
+
+Florian, Claude Code chat, 19 Sep 2026 ~13:20 UTC, verbatim, German (after using the JevBench Score Lab):
+> ok, so machen wir es jetzt. So will ich es implementiert haben und dann entfernen wir einen der beiden open-alternative-jev Einträge (du entscheidest welcher) und dann produzierst du auch das Harold video für den launch und das explainer video für den launch und sendest mir dann alles auf meinen /notify-telegram wenn alles bereit ist, sodass ich nur noch antworten muss um den Post live gehen zu lassen
+
+Supervisor notes (not Florian's words): implemented by ~/jobs/jevbench-final-launch-20260919 with the loop paused (paused-until 17:30 UTC).
+- **CR-92.1** Default = "JevBench Score": Intelligence (hard 30 %, easy 14 %, standard 28 %, judge 28 %), Calibration, Speed, Cost —
+  25 % each, geometric mean. One-line explanation under the title. Artifact = jevbench repo `results/v1.2/` at tag `v1.2`
+  (`data/raw/benchmarks/jevbench/v1.2/`, validated by `lib/jevbench-v12.mjs`, which recomputes every axis and score).
+- **CR-92.2** Speed honesty line wherever Speed is shown: latency of self-hosted and demo endpoints is adjusted ×2 (+0.15 s on our own
+  servers) — an assumption, not a measurement; raw p50/p95 in the table. "est." prices stay labelled.
+- **CR-92.3** One open-alternative-jev row (author's option order), named "open-alternative-jev (Qwen3.5-4B, IkerMoel)", with the
+  option-order footnote; the reversed-order row is gone from rankings and charts. Partial runs below the ranking, no rank number.
+- **CR-92.4** Custom weights + the earlier presets (Balanced 33:33:33, Emphasis on Accuracy/Speed/Cost; recomputed as geometric means,
+  Calibration 0) with the "not the default" badge.
+- **CR-92.5** Reverse CR-88: WIP banner and noindex removed from /jev-models and /jev-models/v1; "Jev-class models" back in the menu;
+  both URLs back in the sitemap (Florian approved the result).
+- Supersedes CR-91.1-.5 (v1.2-wip page data). CR-90 (difficulty filter, per-task grid, topic radar) stays open; its data file is now
+  `ops/ux-2026-09-12/jevbench/v1.2-final/jevbench-v1.2-per-task.json` (one open-alternative-jev row).
