@@ -4,6 +4,8 @@ import { readJevbenchV11, jevbenchV11View } from '../../lib/jevbench-v11.mjs';
 import { readJevbench, JEVBENCH_REPO } from '../../lib/jevbench.mjs';
 import { JevModelsV12Board, CostValue } from '../../components/JevModelsV12';
 import { JevCostsDisclosure } from '../../components/JevCostsDisclosure';
+import { JevRadars } from '../../components/JevRadars';
+import { readJevbenchV12Topics, jevbenchV12TopicsView } from '../../lib/jevbench-v12-topics.mjs';
 import { previewMetadata } from '../../lib/seo';
 
 // CR-92 (Florian 2026-09-19 ~13:20 UTC): JevBench v1.2 final — the JevBench Score (Intelligence, Calibration, Speed, Cost,
@@ -20,7 +22,9 @@ const one = (v: number | null) => (v === null ? '—' : v.toFixed(1));
 const gap = (a: number, b: number) => (Math.round(a * 10) - Math.round(b * 10)) / 10;
 
 export default async function JevModelsPage() {
-  const view = jevbenchV12View(await readJevbenchV12());
+  const v12 = await readJevbenchV12();
+  const view = jevbenchV12View(v12);
+  const topics = jevbenchV12TopicsView(await readJevbenchV12Topics(v12.artifact));
   const v11 = jevbenchV11View(await readJevbenchV11());
   const v1 = await readJevbench();
   const [lead] = view.ranked;
@@ -60,6 +64,9 @@ export default async function JevModelsPage() {
       </ul>
     </section>}
     </JevModelsV12Board>
+
+    {/* CR-94: two-system radars — the four score axes and accuracy by subject topic (completes CR-90.3). */}
+    <JevRadars ranked={view.ranked} partial={view.partial} topics={topics} />
 
     <section className="mt-8 max-w-4xl text-sm" data-bh-jev-costs>
       <p className="bh-muted mb-2">Systems with a public tariff use that tariff and measured tokens. For systems without one, we use a clearly marked estimate based on a large inference provider&apos;s list price for the same weights or size class.</p>
@@ -101,7 +108,11 @@ export default async function JevModelsPage() {
       <ul className="bh-muted mt-4 list-disc space-y-2 pl-5 text-sm">
         <li>{view.decisions} decisions is a pilot, not a census, and it is English-only.</li>
         <li>The weights are a choice. The JevBench Score weights the four axes equally and multiplies rather than adds them; if a wrong decision costs you more than a slow or expensive one, pick &ldquo;Emphasis on Accuracy&rdquo; above — the table of views shows what other weightings would do.</li>
-        <li>The latency adjustment for self-hosted and demo endpoints (×2, +0.15 s on our own servers) is an assumption about production load, not a measurement. Raw latencies are in the table and the repo.</li>
+        {/* CR-94.3 (Florian 2026-09-19): why the adjustment exists, what supports it, and that it stays an assumption. */}
+        <li data-bh-jev12-latency-limit><b className="text-gray-200">The latency adjustment (×2, +0.15 s on our own servers) is an assumption, not a measurement.</b> We ran the self-hosted and demo endpoints one request at a time (parallelism 1, no other load), so their latency is likely better than the same model on a busy production server. The official Jev API is presumably under high load, given the public interest.
+          {' '}Serving under load trades per-user speed for throughput: in the NVIDIA chart shown by <a className="text-accent underline" href="https://newsletter.semianalysis.com/p/nvidia-blackwell-perf-tco-analysis" target="_blank" rel="noopener noreferrer">SemiAnalysis</a>, moving to the throughput-maximising setting cuts per-user tokens per second by far more than 2×. That chart is a 1.8T mixture-of-experts model on GPU clusters, not a 4B model on one GPU, so it supports the direction and size of the effect, not our exact factor.
+          {' '}The +0.15 s stands for infrastructure our self-hosted tests lacked: authentication, load balancing, logging, billing and an API gateway.
+          {' '}Both numbers are assumptions; raw p50/p95 latencies are in the table and the <a className="text-accent underline" href={JEVBENCH_REPO}>repo</a>, and a measurement under load is planned.</li>
         <li>Held-out decisions are sent to the evaluated services to get predictions. Not public is not the same as not seen.</li>
         <li>Latency is one origin at one time of day; hosted endpoints, public demos and a local CPU are different kinds of latency. Public demo endpoints are shared with everyone else using them.</li>
         <li>Estimated costs describe what a large inference provider would charge for a model of that size, not what the author pays; a system on a tariff pays its tariff.</li>

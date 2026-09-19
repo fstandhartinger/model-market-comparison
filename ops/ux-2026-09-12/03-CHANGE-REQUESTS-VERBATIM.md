@@ -1253,3 +1253,12 @@ verification: `ops/ux-2026-09-12/jevbench/v1.2.1/CR-93.md`.
 - **CR-93.1** Artifact = jevbench repo `results/v1.2/` at tag `v1.2.1`; new row "djev (Maisa, diffusion-gemma)", #3 with 74.3; no other row changed.
 - **CR-93.2** Cost kind "announced" shown with its tag and basis; † footnote (free preview, open-sourcing planned).
 - **CR-93.3** Revision v1.2.1 on the page; legend "Jev rebuild (open, or open source planned)".
+
+
+## CR-20260919i (JevBench page) → CR-94 — /jev-models: two-system radars (score axes, subject topics) + a clearer latency-adjustment limitation
+
+Florian, 19 Sep 2026 ~17:30 UTC, verbatim:
+> can you add radar charts to https://benchmarkheaven.com/jev-models where two models can be compared by all four axis of our composite score? and maybe also radar charts where two models can be compared regarding the topic area of the tasks it failed/succeeded (e.g. math, coding, science, etc)? And: in the section Limit the sentence "The latency adjustment for self-hosted and demo endpoints (×2, +0.15 s on our own servers) is an assumption about production load, not a measurement. Raw latencies are in the table and the repo." - maybe you can explain a bit better why we did that, e.g. a link to the Semi Analysis post (https://newsletter.semianalysis.com/p/nvidia-blackwell-perf-tco-analysis) to argue that we assume the official Jev endpoints are assumed to be under high load given the public interest, and the self-hosted tests were ran on parallelism=1 and thus likely faster than if would have been on a machine that is under full load. it's a limitation though that this is not an exact number but an assumption, and the +0.15 s, explain them by the infrastructure overhead that our own tests on self-hosted services lacked, e.g. authentication, load balancing, logging.
+
+Supervisor notes (not Florian's words): implemented by ~/jobs/jev-models-radar-20260919 with the loop paused. Checklist in 04 (CR-94).
+Completes CR-90.3 (topic radar): topic labels now exist (jevbench repo `datasets/topics.json`, method `datasets/TOPICS.md`).

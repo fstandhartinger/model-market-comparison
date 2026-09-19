@@ -1,0 +1,868 @@
+{
+ "benchmark": "JevBench",
+ "protocol": "jevbench::v1.2",
+ "revision": "v1.2.1",
+ "status": "final",
+ "note": "Accuracy per subject topic over all four tiers (easy, standard, judge, hard): correct / attempted; failures count as wrong; items a partial run never attempted are left out. Aggregates only; not part of the JevBench Score. Topics differ in their tier mix (n_items_by_tier), so compare systems within a topic, not topics with each other. A topic with fewer than 15 attempted items for a system is too thin to read (partial runs).",
+ "min_attempted": 15,
+ "topics": [
+  {
+   "key": "math",
+   "label": "Math & numbers",
+   "covers": "a calculation decides the answer: arithmetic, word problems, probability, dates, units"
+  },
+  {
+   "key": "coding",
+   "label": "Coding & software",
+   "covers": "code, SQL, repositories, developer tools and IT systems"
+  },
+  {
+   "key": "law_policy",
+   "label": "Rules, policy & law",
+   "covers": "applying written rules: company policies, contracts, regulations, eligibility"
+  },
+  {
+   "key": "finance_commerce",
+   "label": "Finance & commerce",
+   "covers": "money: payments, refunds, invoices, orders, expenses, insurance payouts"
+  },
+  {
+   "key": "support_ops",
+   "label": "Support & operations",
+   "covers": "support tickets, incidents, logistics, scheduling desks and routing work to a team"
+  },
+  {
+   "key": "everyday_language",
+   "label": "Everyday language",
+   "covers": "short everyday messages: intents, assistant requests, reading a detail out of a text"
+  },
+  {
+   "key": "safety_security",
+   "label": "Safety & security",
+   "covers": "untrusted or injected instructions, fraud, moderation, access and security triage"
+  }
+ ],
+ "n_items": {
+  "math": 129,
+  "coding": 56,
+  "law_policy": 67,
+  "finance_commerce": 64,
+  "support_ops": 119,
+  "everyday_language": 79,
+  "safety_security": 20
+ },
+ "n_items_by_tier": {
+  "math": {
+   "easy": 0,
+   "standard": 6,
+   "judge": 86,
+   "hard": 37
+  },
+  "coding": {
+   "easy": 0,
+   "standard": 7,
+   "judge": 30,
+   "hard": 19
+  },
+  "law_policy": {
+   "easy": 0,
+   "standard": 18,
+   "judge": 0,
+   "hard": 49
+  },
+  "finance_commerce": {
+   "easy": 13,
+   "standard": 8,
+   "judge": 0,
+   "hard": 43
+  },
+  "support_ops": {
+   "easy": 9,
+   "standard": 31,
+   "judge": 30,
+   "hard": 49
+  },
+  "everyday_language": {
+   "easy": 48,
+   "standard": 26,
+   "judge": 0,
+   "hard": 5
+  },
+  "safety_security": {
+   "easy": 2,
+   "standard": 0,
+   "judge": 0,
+   "hard": 18
+  }
+ },
+ "systems": {
+  "semif-qwen3.5-4b": {
+   "display": "SemIf, formerly OpenJev (Qwen3.5-4B, TheoLeeCJ)",
+   "partial": false,
+   "topics": {
+    "math": {
+     "n": 129,
+     "attempted": 129,
+     "correct": 102,
+     "accuracy": 0.7907
+    },
+    "coding": {
+     "n": 56,
+     "attempted": 56,
+     "correct": 54,
+     "accuracy": 0.9643
+    },
+    "law_policy": {
+     "n": 67,
+     "attempted": 67,
+     "correct": 43,
+     "accuracy": 0.6418
+    },
+    "finance_commerce": {
+     "n": 64,
+     "attempted": 64,
+     "correct": 39,
+     "accuracy": 0.6094
+    },
+    "support_ops": {
+     "n": 119,
+     "attempted": 119,
+     "correct": 104,
+     "accuracy": 0.8739
+    },
+    "everyday_language": {
+     "n": 79,
+     "attempted": 79,
+     "correct": 79,
+     "accuracy": 1.0
+    },
+    "safety_security": {
+     "n": 20,
+     "attempted": 20,
+     "correct": 15,
+     "accuracy": 0.75
+    }
+   }
+  },
+  "openjev-razorback16": {
+   "display": "OpenJev (DiffusionGemma 26B-A4B NVFP4, razorback16)",
+   "partial": false,
+   "topics": {
+    "math": {
+     "n": 129,
+     "attempted": 129,
+     "correct": 109,
+     "accuracy": 0.845
+    },
+    "coding": {
+     "n": 56,
+     "attempted": 56,
+     "correct": 51,
+     "accuracy": 0.9107
+    },
+    "law_policy": {
+     "n": 67,
+     "attempted": 67,
+     "correct": 44,
+     "accuracy": 0.6567
+    },
+    "finance_commerce": {
+     "n": 64,
+     "attempted": 64,
+     "correct": 41,
+     "accuracy": 0.6406
+    },
+    "support_ops": {
+     "n": 119,
+     "attempted": 119,
+     "correct": 100,
+     "accuracy": 0.8403
+    },
+    "everyday_language": {
+     "n": 79,
+     "attempted": 79,
+     "correct": 78,
+     "accuracy": 0.9873
+    },
+    "safety_security": {
+     "n": 20,
+     "attempted": 20,
+     "correct": 18,
+     "accuracy": 0.9
+    }
+   }
+  },
+  "system-one-sg": {
+   "display": "system-one (Qwen3-8B, Sean Goedecke)",
+   "partial": false,
+   "topics": {
+    "math": {
+     "n": 129,
+     "attempted": 129,
+     "correct": 106,
+     "accuracy": 0.8217
+    },
+    "coding": {
+     "n": 56,
+     "attempted": 56,
+     "correct": 44,
+     "accuracy": 0.7857
+    },
+    "law_policy": {
+     "n": 67,
+     "attempted": 67,
+     "correct": 35,
+     "accuracy": 0.5224
+    },
+    "finance_commerce": {
+     "n": 64,
+     "attempted": 64,
+     "correct": 40,
+     "accuracy": 0.625
+    },
+    "support_ops": {
+     "n": 119,
+     "attempted": 119,
+     "correct": 88,
+     "accuracy": 0.7395
+    },
+    "everyday_language": {
+     "n": 79,
+     "attempted": 79,
+     "correct": 76,
+     "accuracy": 0.962
+    },
+    "safety_security": {
+     "n": 20,
+     "attempted": 20,
+     "correct": 14,
+     "accuracy": 0.7
+    }
+   }
+  },
+  "jev-1.13.0": {
+   "display": "Jev 1.13.0 (TypeSafe AI)",
+   "partial": false,
+   "topics": {
+    "math": {
+     "n": 129,
+     "attempted": 129,
+     "correct": 113,
+     "accuracy": 0.876
+    },
+    "coding": {
+     "n": 56,
+     "attempted": 56,
+     "correct": 47,
+     "accuracy": 0.8393
+    },
+    "law_policy": {
+     "n": 67,
+     "attempted": 67,
+     "correct": 56,
+     "accuracy": 0.8358
+    },
+    "finance_commerce": {
+     "n": 64,
+     "attempted": 64,
+     "correct": 47,
+     "accuracy": 0.7344
+    },
+    "support_ops": {
+     "n": 119,
+     "attempted": 119,
+     "correct": 106,
+     "accuracy": 0.8908
+    },
+    "everyday_language": {
+     "n": 79,
+     "attempted": 79,
+     "correct": 79,
+     "accuracy": 1.0
+    },
+    "safety_security": {
+     "n": 20,
+     "attempted": 20,
+     "correct": 20,
+     "accuracy": 1.0
+    }
+   }
+  },
+  "system-one-open": {
+   "display": "system-one-open (Gemma 4 E2B LoRA on an L4)",
+   "partial": false,
+   "topics": {
+    "math": {
+     "n": 129,
+     "attempted": 129,
+     "correct": 103,
+     "accuracy": 0.7984
+    },
+    "coding": {
+     "n": 56,
+     "attempted": 56,
+     "correct": 45,
+     "accuracy": 0.8036
+    },
+    "law_policy": {
+     "n": 67,
+     "attempted": 67,
+     "correct": 38,
+     "accuracy": 0.5672
+    },
+    "finance_commerce": {
+     "n": 64,
+     "attempted": 64,
+     "correct": 30,
+     "accuracy": 0.4688
+    },
+    "support_ops": {
+     "n": 119,
+     "attempted": 119,
+     "correct": 90,
+     "accuracy": 0.7563
+    },
+    "everyday_language": {
+     "n": 79,
+     "attempted": 79,
+     "correct": 78,
+     "accuracy": 0.9873
+    },
+    "safety_security": {
+     "n": 20,
+     "attempted": 20,
+     "correct": 14,
+     "accuracy": 0.7
+    }
+   }
+  },
+  "nimble-9b": {
+   "display": "Bespoke Nimble 9B (Bespoke Labs)",
+   "partial": false,
+   "topics": {
+    "math": {
+     "n": 129,
+     "attempted": 129,
+     "correct": 108,
+     "accuracy": 0.8372
+    },
+    "coding": {
+     "n": 56,
+     "attempted": 56,
+     "correct": 47,
+     "accuracy": 0.8393
+    },
+    "law_policy": {
+     "n": 67,
+     "attempted": 67,
+     "correct": 34,
+     "accuracy": 0.5075
+    },
+    "finance_commerce": {
+     "n": 64,
+     "attempted": 64,
+     "correct": 32,
+     "accuracy": 0.5
+    },
+    "support_ops": {
+     "n": 119,
+     "attempted": 119,
+     "correct": 78,
+     "accuracy": 0.6555
+    },
+    "everyday_language": {
+     "n": 79,
+     "attempted": 79,
+     "correct": 75,
+     "accuracy": 0.9494
+    },
+    "safety_security": {
+     "n": 20,
+     "attempted": 20,
+     "correct": 15,
+     "accuracy": 0.75
+    }
+   }
+  },
+  "openjev-sglang": {
+   "display": "openjev-sglang (Qwen3.6-35B-A3B on SGLang)",
+   "partial": false,
+   "topics": {
+    "math": {
+     "n": 129,
+     "attempted": 129,
+     "correct": 112,
+     "accuracy": 0.8682
+    },
+    "coding": {
+     "n": 56,
+     "attempted": 56,
+     "correct": 50,
+     "accuracy": 0.8929
+    },
+    "law_policy": {
+     "n": 67,
+     "attempted": 67,
+     "correct": 49,
+     "accuracy": 0.7313
+    },
+    "finance_commerce": {
+     "n": 64,
+     "attempted": 64,
+     "correct": 49,
+     "accuracy": 0.7656
+    },
+    "support_ops": {
+     "n": 119,
+     "attempted": 119,
+     "correct": 104,
+     "accuracy": 0.8739
+    },
+    "everyday_language": {
+     "n": 79,
+     "attempted": 79,
+     "correct": 78,
+     "accuracy": 0.9873
+    },
+    "safety_security": {
+     "n": 20,
+     "attempted": 20,
+     "correct": 18,
+     "accuracy": 0.9
+    }
+   }
+  },
+  "gpt-5.6-luna": {
+   "display": "GPT-5.6 Luna (low reasoning effort)",
+   "partial": false,
+   "topics": {
+    "math": {
+     "n": 129,
+     "attempted": 129,
+     "correct": 120,
+     "accuracy": 0.9302
+    },
+    "coding": {
+     "n": 56,
+     "attempted": 56,
+     "correct": 56,
+     "accuracy": 1.0
+    },
+    "law_policy": {
+     "n": 67,
+     "attempted": 67,
+     "correct": 63,
+     "accuracy": 0.9403
+    },
+    "finance_commerce": {
+     "n": 64,
+     "attempted": 64,
+     "correct": 63,
+     "accuracy": 0.9844
+    },
+    "support_ops": {
+     "n": 119,
+     "attempted": 119,
+     "correct": 115,
+     "accuracy": 0.9664
+    },
+    "everyday_language": {
+     "n": 79,
+     "attempted": 79,
+     "correct": 78,
+     "accuracy": 0.9873
+    },
+    "safety_security": {
+     "n": 20,
+     "attempted": 20,
+     "correct": 20,
+     "accuracy": 1.0
+    }
+   }
+  },
+  "gemini-3.1-flash-lite": {
+   "display": "Gemini 3.1 Flash-Lite",
+   "partial": false,
+   "topics": {
+    "math": {
+     "n": 129,
+     "attempted": 129,
+     "correct": 111,
+     "accuracy": 0.8605
+    },
+    "coding": {
+     "n": 56,
+     "attempted": 56,
+     "correct": 52,
+     "accuracy": 0.9286
+    },
+    "law_policy": {
+     "n": 67,
+     "attempted": 67,
+     "correct": 57,
+     "accuracy": 0.8507
+    },
+    "finance_commerce": {
+     "n": 64,
+     "attempted": 64,
+     "correct": 46,
+     "accuracy": 0.7188
+    },
+    "support_ops": {
+     "n": 119,
+     "attempted": 119,
+     "correct": 104,
+     "accuracy": 0.8739
+    },
+    "everyday_language": {
+     "n": 79,
+     "attempted": 79,
+     "correct": 79,
+     "accuracy": 1.0
+    },
+    "safety_security": {
+     "n": 20,
+     "attempted": 20,
+     "correct": 19,
+     "accuracy": 0.95
+    }
+   }
+  },
+  "open-jev-deberta-v3-large": {
+   "display": "open-jev-deberta-v3-large (local CPU)",
+   "partial": false,
+   "topics": {
+    "math": {
+     "n": 129,
+     "attempted": 129,
+     "correct": 80,
+     "accuracy": 0.6202
+    },
+    "coding": {
+     "n": 56,
+     "attempted": 56,
+     "correct": 26,
+     "accuracy": 0.4643
+    },
+    "law_policy": {
+     "n": 67,
+     "attempted": 67,
+     "correct": 25,
+     "accuracy": 0.3731
+    },
+    "finance_commerce": {
+     "n": 64,
+     "attempted": 64,
+     "correct": 27,
+     "accuracy": 0.4219
+    },
+    "support_ops": {
+     "n": 119,
+     "attempted": 119,
+     "correct": 42,
+     "accuracy": 0.3529
+    },
+    "everyday_language": {
+     "n": 79,
+     "attempted": 79,
+     "correct": 64,
+     "accuracy": 0.8101
+    },
+    "safety_security": {
+     "n": 20,
+     "attempted": 20,
+     "correct": 13,
+     "accuracy": 0.65
+    }
+   }
+  },
+  "deepseek-flash": {
+   "display": "DeepSeek V4.1 Flash (thinking default)",
+   "partial": false,
+   "topics": {
+    "math": {
+     "n": 129,
+     "attempted": 129,
+     "correct": 117,
+     "accuracy": 0.907
+    },
+    "coding": {
+     "n": 56,
+     "attempted": 56,
+     "correct": 55,
+     "accuracy": 0.9821
+    },
+    "law_policy": {
+     "n": 67,
+     "attempted": 67,
+     "correct": 62,
+     "accuracy": 0.9254
+    },
+    "finance_commerce": {
+     "n": 64,
+     "attempted": 64,
+     "correct": 62,
+     "accuracy": 0.9688
+    },
+    "support_ops": {
+     "n": 119,
+     "attempted": 119,
+     "correct": 116,
+     "accuracy": 0.9748
+    },
+    "everyday_language": {
+     "n": 79,
+     "attempted": 79,
+     "correct": 79,
+     "accuracy": 1.0
+    },
+    "safety_security": {
+     "n": 20,
+     "attempted": 20,
+     "correct": 20,
+     "accuracy": 1.0
+    }
+   }
+  },
+  "needle-3": {
+   "display": "Needle 3 (Cactus, 2-bit, local CPU)",
+   "partial": true,
+   "topics": {
+    "math": {
+     "n": 129,
+     "attempted": 97,
+     "correct": 50,
+     "accuracy": 0.5155
+    },
+    "coding": {
+     "n": 56,
+     "attempted": 38,
+     "correct": 1,
+     "accuracy": 0.0263
+    },
+    "law_policy": {
+     "n": 67,
+     "attempted": 26,
+     "correct": 6,
+     "accuracy": 0.2308
+    },
+    "finance_commerce": {
+     "n": 64,
+     "attempted": 37,
+     "correct": 20,
+     "accuracy": 0.5405
+    },
+    "support_ops": {
+     "n": 119,
+     "attempted": 81,
+     "correct": 14,
+     "accuracy": 0.1728
+    },
+    "everyday_language": {
+     "n": 79,
+     "attempted": 75,
+     "correct": 20,
+     "accuracy": 0.2667
+    },
+    "safety_security": {
+     "n": 20,
+     "attempted": 4,
+     "correct": 2,
+     "accuracy": 0.5
+    }
+   }
+  },
+  "qwen3.8-27b": {
+   "display": "Qwen3.8 27B (Chutes TEE)",
+   "partial": true,
+   "topics": {
+    "math": {
+     "n": 129,
+     "attempted": 79,
+     "correct": 73,
+     "accuracy": 0.9241
+    },
+    "coding": {
+     "n": 56,
+     "attempted": 38,
+     "correct": 37,
+     "accuracy": 0.9737
+    },
+    "law_policy": {
+     "n": 67,
+     "attempted": 27,
+     "correct": 26,
+     "accuracy": 0.963
+    },
+    "finance_commerce": {
+     "n": 64,
+     "attempted": 40,
+     "correct": 38,
+     "accuracy": 0.95
+    },
+    "support_ops": {
+     "n": 119,
+     "attempted": 83,
+     "correct": 83,
+     "accuracy": 1.0
+    },
+    "everyday_language": {
+     "n": 79,
+     "attempted": 75,
+     "correct": 73,
+     "accuracy": 0.9733
+    },
+    "safety_security": {
+     "n": 20,
+     "attempted": 4,
+     "correct": 4,
+     "accuracy": 1.0
+    }
+   }
+  },
+  "needle-3-tools": {
+   "display": "Needle 3, options as tools (post-hoc adapter mode)",
+   "partial": true,
+   "topics": {
+    "math": {
+     "n": 129,
+     "attempted": 92,
+     "correct": 54,
+     "accuracy": 0.587
+    },
+    "coding": {
+     "n": 56,
+     "attempted": 37,
+     "correct": 0,
+     "accuracy": 0.0
+    },
+    "law_policy": {
+     "n": 67,
+     "attempted": 18,
+     "correct": 3,
+     "accuracy": 0.1667
+    },
+    "finance_commerce": {
+     "n": 64,
+     "attempted": 21,
+     "correct": 14,
+     "accuracy": 0.6667
+    },
+    "support_ops": {
+     "n": 119,
+     "attempted": 70,
+     "correct": 11,
+     "accuracy": 0.1571
+    },
+    "everyday_language": {
+     "n": 79,
+     "attempted": 74,
+     "correct": 45,
+     "accuracy": 0.6081
+    },
+    "safety_security": {
+     "n": 20,
+     "attempted": 2,
+     "correct": 1,
+     "accuracy": 0.5
+    }
+   }
+  },
+  "open-alternative-jev": {
+   "display": "open-alternative-jev (Qwen3.5-4B, IkerMoel)",
+   "partial": false,
+   "topics": {
+    "math": {
+     "n": 129,
+     "attempted": 129,
+     "correct": 92,
+     "accuracy": 0.7132
+    },
+    "coding": {
+     "n": 56,
+     "attempted": 56,
+     "correct": 49,
+     "accuracy": 0.875
+    },
+    "law_policy": {
+     "n": 67,
+     "attempted": 67,
+     "correct": 40,
+     "accuracy": 0.597
+    },
+    "finance_commerce": {
+     "n": 64,
+     "attempted": 64,
+     "correct": 39,
+     "accuracy": 0.6094
+    },
+    "support_ops": {
+     "n": 119,
+     "attempted": 119,
+     "correct": 82,
+     "accuracy": 0.6891
+    },
+    "everyday_language": {
+     "n": 79,
+     "attempted": 79,
+     "correct": 72,
+     "accuracy": 0.9114
+    },
+    "safety_security": {
+     "n": 20,
+     "attempted": 20,
+     "correct": 13,
+     "accuracy": 0.65
+    }
+   }
+  },
+  "djev": {
+   "display": "djev (Maisa, diffusion-gemma)",
+   "partial": false,
+   "topics": {
+    "math": {
+     "n": 129,
+     "attempted": 129,
+     "correct": 111,
+     "accuracy": 0.8605
+    },
+    "coding": {
+     "n": 56,
+     "attempted": 56,
+     "correct": 53,
+     "accuracy": 0.9464
+    },
+    "law_policy": {
+     "n": 67,
+     "attempted": 67,
+     "correct": 51,
+     "accuracy": 0.7612
+    },
+    "finance_commerce": {
+     "n": 64,
+     "attempted": 64,
+     "correct": 41,
+     "accuracy": 0.6406
+    },
+    "support_ops": {
+     "n": 119,
+     "attempted": 119,
+     "correct": 102,
+     "accuracy": 0.8571
+    },
+    "everyday_language": {
+     "n": 79,
+     "attempted": 79,
+     "correct": 78,
+     "accuracy": 0.9873
+    },
+    "safety_security": {
+     "n": 20,
+     "attempted": 20,
+     "correct": 19,
+     "accuracy": 0.95
+    }
+   }
+  }
+ }
+}
