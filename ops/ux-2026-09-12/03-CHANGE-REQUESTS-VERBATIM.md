@@ -1162,3 +1162,13 @@ Supervisor notes (not Florian's words):
 > Auch das Explainer Video müssen wir dann natürlich noch mal anpassen, damit es zu den neuen Ergebnissen passt.
 
 (Supervisor: addendum 3 supersedes the default in addendum 2 — the Main Score is now "JevBench Main Composite Score – (Balanced 33:33:33)"; the others are "JevBench Composite Score – Emphasis on Accuracy (60:20:20)", "– Emphasis on Speed (20:60:20)", "– Emphasis on Cost (20:20:60)". Scoring change published as JevBench v1.1.1 (hosted-provider prices) and v1.1.2 (Balanced weights, Cost scale $0.001–$10) in github.com/fstandhartinger/jevbench.)
+
+## CR-20260919c (JevBench page) → CR-88 — hide /jev-models while JevBench v1.2 is work in progress — HIGH PRIORITY
+
+Florian, Claude Code chat, 19 Sep 2026 ~10:10 UTC, verbatim, German:
+> Lass uns auch vorerst die Jev Seite aus dem Menü von Benchmark Heaven entfernen und auf der Seite jev-bench einen dicken "work in progress" disclaimer platzieren. das nehmen wir dann weg, wenn wir fertig sind. Ich will nicht dass Leute den unfertigen Stand veröffentlichen.
+
+Supervisor notes (not Florian's words): implemented by the supervisor job ~/jobs/jevbench-v1-2-hard-20260919 while the loop was paused.
+- CR-88.1: remove "Jev-class models" from the header menu (desktop More + phone menu) and `/jev-models`, `/jev-models/v1` from the sitemap.
+- CR-88.2: a big "Work in progress — results are preliminary, please don't share or cite them yet" banner at the top of `/jev-models` and `/jev-models/v1`, plus `robots: noindex, nofollow`. The pages stay reachable by URL.
+- Reverse both only when Florian says JevBench v1.2 is final (the same job files the reversal). Iterations: do not remove the banner or re-add the menu link on your own.

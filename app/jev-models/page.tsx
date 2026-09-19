@@ -2,13 +2,14 @@ import type { Metadata } from 'next';
 import { readJevbenchV11, jevbenchV11View } from '../../lib/jevbench-v11.mjs';
 import { readJevbench, JEVBENCH_REPO } from '../../lib/jevbench.mjs';
 import { JevModelsV11Board, CostValue } from '../../components/JevModelsV11';
+import { JevWipBanner, JEV_WIP_ROBOTS } from '../../components/JevWipBanner';
 import { previewMetadata } from '../../lib/seo';
 
 // CR-86 (Florian 2026-09-19 07:35 UTC): JevBench v1.1 — one Main Score from three sub-benchmarks (capability, speed, cost),
 // an easy tier and Needle 3. Supersedes CR-84's "no combined winner"; v1.0 stays published at /jev-models/v1.
 // Copy: the supervisor's PAGE-COPY-v1.1.md; every number is read from the committed artifact (lib/jevbench-v11.mjs).
-export const metadata: Metadata = previewMetadata({ path: '/jev-models', documentTitle: 'Jev-class decision models — JevBench v1.1', title: 'Jev-class models — JevBench v1.1 | Benchmark Heaven',
-  description: 'Our own benchmark of typed-decision models: Jev, its open rebuilds, small instruction models and Needle 3 on one Main Score from capability, speed and cost — with the sub-scores and the weights in the open.' });
+export const metadata: Metadata = { ...previewMetadata({ path: '/jev-models', documentTitle: 'Jev-class decision models — JevBench v1.1', title: 'Jev-class models — JevBench v1.1 | Benchmark Heaven',
+  description: 'Our own benchmark of typed-decision models: Jev, its open rebuilds, small instruction models and Needle 3 on one Main Score from capability, speed and cost — with the sub-scores and the weights in the open.' }), robots: JEV_WIP_ROBOTS };
 
 const day = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
 const short = (d: string) => d.split(' (')[0];
@@ -30,6 +31,7 @@ export default async function JevModelsPage() {
   const notMeasured = (v1.availability.not_measured as { candidate: string; author: string; reason: string }[]).filter((n) => !measuredKeys.has(n.candidate.toLowerCase()));
   const credits = [...view.ranked, ...view.partial].filter((r) => !r.key.endsWith('-tools')).sort((a, b) => a.display.localeCompare(b.display));
   return <>
+    <JevWipBanner />
     <header className="bh-page-head">
       <p className="bh-eyebrow">JevBench v1.1 · our own benchmark{view.pilot ? ' · pilot' : ''}</p>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">Jev-class models</h1>

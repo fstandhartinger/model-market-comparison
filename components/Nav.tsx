@@ -53,8 +53,9 @@ const LINKS = [
 ];
 // CR-63.1 (Florian 2026-09-16): Benchmaxxing is second, after Overview, on every breakpoint.
 const PRIMARY = [LINKS[0], LINKS[4], LINKS[1], LINKS[2], LINKS[3]];
-// CR-84: our own JevBench page sits in More, before About.
-const MORE = [LINKS[6], LINKS[7], LINKS[8], LINKS[9], LINKS[10], LINKS[12], LINKS[11]];
+// CR-84: our own JevBench page sat in More, before About. CR-88 (Florian 2026-09-19): hidden from the menu while
+// JevBench v1.2 is work in progress — put LINKS[12] back before LINKS[11] when the WIP banner comes off.
+const MORE = [LINKS[6], LINKS[7], LINKS[8], LINKS[9], LINKS[10], LINKS[11]];
 const PHONE_MORE = [LINKS[0], LINKS[4], LINKS[2], LINKS[3], ...MORE];
 
 /** CR-63.3: a header <details> menu (CR-74.5: and the Advanced toolbar popovers) closes on a click outside, on Escape (focus back on its summary) and on a route change. */
