@@ -5421,3 +5421,13 @@ Scope: everything after `REVIEW-20260919T032002Z.md` (`c476e26..a012816`), the c
 - CR-43.1 is now `verified`. No product code or dataset values changed. The stale packet remains in the repo as historical evidence and is explicitly superseded by the refreshed artifacts.
 - Synchronized the ledger with the latest independent review: CR-89.4 is now `verified` as well, including the public GitHub Sponsor button/dialog check; no new product change was needed.
 - Gates still required before this ledger update is pushed: `node scripts/build-dataset.mjs`, `npm test`, `npx tsc --noEmit -p .`, then a clean commit/push. `ALL-ACCEPTED` remains forbidden because other CR rows and X6 are open.
+
+## CR-95 — 2026-09-19 UTC (Claude Opus 5, job jevbench-add-requests-20260919): /jev-models on JevBench v1.2.2
+
+- Five systems readers had asked for under the launch posts were benchmarked and added: classifier.dev (fast tier) #1 with 84.8,
+  Laya #5 70.1, jeff #9 66.9, openJev Verdict #11 66.1, GLiNER2 #18 52.9. Artifact = jevbench tag v1.2.2, both SHAs re-pinned;
+  no earlier row's score changed.
+- New: two system types with their own colour and legend, a footnote per new row, and one headline line explaining why a service
+  built on Jev can outscore Jev's own API (same Intelligence, flat plan price, faster from our server, lower Calibration).
+- Gates: `npm test` 911 pass / 1 skipped / 0 fail, `npx tsc --noEmit -p .` clean, local production build; live on both hosts
+  verify-cr-95 90/90 and verify-cr-92 129/129 (desktop + phone, light + dark). The loop was paused for the change and released after.
