@@ -121,6 +121,11 @@ are third-party data and are **not relicensed**: each source keeps its own terms
 under a documented risk decision; OpenRouter; and the benchmark maintainers and provider
 catalogs named on the site's [Sources & methodology](https://benchmarkheaven.com/about) page).
 
+## Support
+
+If Benchmark Heaven helps you choose a model, you can [Support this project](https://donate.stripe.com/fZu00i9ro0wmdF88sg1Jm01).
+Payments go to productivity-boost.com Betriebs UG (haftungsbeschränkt) & Co. KG, the one-person company behind these projects.
+
 ## Methodology & caveats
 
 10:1 blended cost = `(10·input + 1·output) / 11` per 1M tokens. EU residency is

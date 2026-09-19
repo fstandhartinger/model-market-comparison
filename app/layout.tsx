@@ -11,6 +11,7 @@ import { WebMcpTools } from "../components/WebMcpTools";
 
 const BRAND_CLAIM = "The most detailed cost–capability analysis in AI.";
 const BRAND_LINE = "Every model. Every Benchmark. Actual Costs.";
+const SUPPORT_URL = "https://donate.stripe.com/fZu00i9ro0wmdF88sg1Jm01";
 // CR-62.2: pages without their own preview inherit these; og:url and the canonical are set per page (lib/seo.ts).
 const X_HANDLE = "@benchmarkheaven";
 
@@ -58,6 +59,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             </p>
             <p className="mt-1">
               Benchmark publishers can ask for their numbers to be removed or shown differently — <a href="/about#removal" className="underline decoration-dotted underline-offset-2 hover:text-accent">data sources &amp; removal on request</a>.
+            </p>
+            <p className="mt-1">
+              <a data-bh-support-link href={SUPPORT_URL} className="underline decoration-dotted underline-offset-2 hover:text-accent">Support Benchmark Heaven</a> ·
+              {" "}Payments go to productivity-boost.com Betriebs UG (haftungsbeschränkt) &amp; Co. KG, the one-person company behind this project.
             </p>
           </footer>
           </AccountProvider>

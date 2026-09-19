@@ -63,6 +63,13 @@ export default async function AboutPage() {
         <a href="mailto:info@productivity-boost.com" className="text-accent">info@productivity-boost.com</a> and we will act promptly.
       </p>
 
+      <h2 id="support" className="mt-6 mb-2 font-semibold">Support this project</h2>
+      <p className="text-sm text-gray-400">
+        If Benchmark Heaven helps you choose a model, you can{" "}
+        <a data-bh-support-link href="https://donate.stripe.com/fZu00i9ro0wmdF88sg1Jm01" className="text-accent underline">Support this project</a>.
+        Payments go to productivity-boost.com Betriebs UG (haftungsbeschränkt) &amp; Co. KG, the one-person company behind these projects.
+      </p>
+
       <h2 id="agents" className="mt-6 mb-2 font-semibold">For agents</h2>
       <p className="text-sm text-gray-400">
         Two ways in. <b>Headless or server-side</b>: the public HTTP API — no key, CORS open, documented in{" "}
