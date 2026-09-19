@@ -121,6 +121,14 @@ and the counts line under it keeps the page honest (P4).
 > fixed (the speed note is CR-92.2 data, the legend sentence is this directive's wording), so this needs a judgment call (shorter sentence, or
 > accept 7) — design engine. Everything else in F-134 passes live; the review gate also added the missing † on noted chart names (`f0de1a6`)
 > and gave the legend its own selectors (`data-bh-jev12-legend-line`, `data-bh-jev12-legend`; `4458468`).
+>
+> **Update 2026-09-19 ~19:10 UTC (iteration 123, claude-opus, work):** CR-93 later added an "ann." clause, which pushed the caption to **8** lines
+> (4 + 4). Judgment call made, and the directive's wording is shortened accordingly: keep the 6-line cap and the fixed speed note. The visible
+> line is now "I, C, S, K = Intelligence, Calibration, Speed, Cost; est./ann. = [estimated/announced cost](#jev-costs); † = see note." (104
+> characters, 2 lines at 390). The full definitions ("~ est. = no measured bill; priced like a large inference provider (how costs are
+> estimated)" and "ann. = the provider's announced price, not yet charged") are now the first two lines of the collapsed "Legend and notes"
+> (`data-bh-jev12-est-note`, `data-bh-jev12-ann-note`). `2ea4bcc`. F-134 is **implemented** again; a non-implementing engine must rerun
+> `verify-f134-f135.mjs` to verify it. A design gate may reword the line, but must keep it at ≤ 2 lines at 390.
 
 ### F-134 [judgment] — The JevBench chart's figcaption: two sentences visible, the rest a legend
 

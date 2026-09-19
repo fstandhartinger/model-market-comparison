@@ -33,6 +33,9 @@ export async function GET(req: Request) {
     benchmaxxing_signal: clientById.get(m.id)?.composite_signal ?? null,
     composite_base: clientById.get(m.id)?.composite_base ?? 50,
     composite_coverage: clientById.get(m.id)?.composite_coverage ?? 0,
+    // CR-85.1: attached inputs count toward the thin-data rule (isThinComposite), so the daily digest can list thin rows.
+    composite_attached: clientById.get(m.id)?.composite_attached ?? 0,
+    release_date: m.release_date,
     benchmarks: m.benchmarks,
     designarena: m.designarena,
     cost_blended_10to1: modelCost(m),

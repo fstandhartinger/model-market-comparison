@@ -34,7 +34,9 @@ try {
         visLines, legendLine, sentences: legendLine.split(/[.;]\s+(?=[A-Z])/).length,
         speedFirst: !!vis[0] && vis[0].hasAttribute('data-bh-jev12-speed-note'), lines,
         detClosed: !!det && !det.open, detSummary: det?.querySelector('summary')?.innerText.trim(),
-        labelNote: !!cap.querySelector('[data-bh-jev12-label-note]'), namesNote: /Names link to each project/.test(det?.textContent || ''),
+        labelNote: !!cap.querySelector('[data-bh-jev12-label-note]'),
+        // Iteration 123: the full est./ann. definitions moved from the visible line into the legend.
+        estNote: /^~ est\. = .*how costs are estimated/.test(det?.querySelector('[data-bh-jev12-est-note]')?.textContent || ''), annNote: /^ann\. = the provider.s announced price, not yet charged/.test(det?.querySelector('[data-bh-jev12-ann-note]')?.textContent || ''), namesNote: /Names link to each project/.test(det?.textContent || ''),
         daggers, notes, notesAfterGeneral: det ? [...det.querySelectorAll('li')].slice(0, 2).every((li) => !li.hasAttribute('data-bh-jev12-footnote')) : false,
         oneliners: document.querySelectorAll('[data-bh-jev12-oneliner]').length,
         costsTag: costs?.tagName, costsClosed: costs && !costs.open, costsH: Math.round(costs?.getBoundingClientRect().height || 0),
@@ -45,6 +47,7 @@ try {
     check(`${tag}: F-134 speed note first, then one legend sentence`, g.speedFirst && g.legendLine.startsWith('I, C, S, K = Intelligence, Calibration, Speed, Cost') && g.sentences <= 2, g.legendLine);
     if (mobile) check(`${tag}: F-134 visible caption ≤ 6 lines at 390`, g.visLines <= 6, JSON.stringify(g.lines));
     check(`${tag}: F-134 "Legend and notes" closed on load`, g.detClosed && g.detSummary === 'Legend and notes', g.detSummary);
+    check(`${tag}: F-134 legend opens with the full est. and ann. definitions (iteration 123)`, g.estNote && g.annNote, `${g.estNote}/${g.annNote}`);
     check(`${tag}: F-134 legend holds label-only + names notes and one note per † system`, g.labelNote && g.namesNote && g.notes.length > 0 && g.notes.length === g.daggers && g.notesAfterGeneral, `${g.notes.length} notes / ${g.daggers} daggers`);
     check(`${tag}: score one-liner selector unique`, g.oneliners === 1, g.oneliners);
     check(`${tag}: F-135 costs panel is a closed <details>`, g.costsTag === 'DETAILS' && g.costsClosed, g.costsTag);
@@ -60,7 +63,7 @@ try {
     await p.screenshot({ path: `${OUT}/${tag}-costs-open.png` });
     // A second in-page #jev-costs link (Method text) after closing again.
     await p.evaluate(() => { document.getElementById('jev-costs').open = false; history.replaceState(null, '', location.pathname); });
-    const other = p.locator('a[href="#jev-costs"]:not([data-bh-jev12-legend-line] a)').first();
+    const other = p.locator('a[href="#jev-costs"]:not([data-bh-jev12-legend-line] a):not([data-bh-jev12-legend] a)').first();
     if (await other.count()) {
       await other.scrollIntoViewIfNeeded(); await other.click(); await p.waitForTimeout(1500);
       check(`${tag}: F-135 a second in-page link opens it too`, await p.evaluate(() => document.getElementById('jev-costs').open), '');

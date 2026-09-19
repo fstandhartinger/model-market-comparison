@@ -86,7 +86,9 @@ The **full dataset** in one response — the canonical machine-readable feed: ev
 List of models with a single chosen score, the cheapest 10:1-blended cost, and the top-5 cheapest providers per model.
 Every row also includes `composite_base` (the pre-projection mean-imputed value) and
 `composite_coverage` from 0 to 7 so clients can distinguish the neutral Composite fallback
-50 at 0/7 from a measured score.
+50 at 0/7 from a measured score. `composite_attached` counts the Composite inputs attached from
+another configuration of the family; the site marks a row "Thin data" when coverage + attached < 3.
+`release_date` is the model's release date (ISO day) or `null`.
 
 Query params:
 - `score` — one of `composite` | `aa_coding_index` | `aa_coding_agent` | `aa_intelligence_index` | `epoch_eci` | `epoch_eci_software` | `designarena_frontend` | `designarena_fullstack` (default `aa_coding_index`).
