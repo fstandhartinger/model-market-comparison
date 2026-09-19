@@ -23,7 +23,9 @@ const REV = process.argv[4] || '';
 await fs.mkdir(OUT, { recursive: true });
 const goto = async (page, url) => { for (let a = 1; ; a++) { try { return await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 }); } catch (e) { if (a >= 3) throw e; await new Promise((r) => setTimeout(r, 3000 * a)); } } };
 const checks = []; const check = (name, ok, detail) => checks.push({ name, ok: !!ok, detail: typeof detail === 'string' ? detail : JSON.stringify(detail) });
-const FS_KEYS = ['epoch_eci::snapshot-2026-09-18', 'epoch_eci_software::snapshot-2026-09-18', 'aa_agentic_index::snapshot-2026-09-18'];
+// 2026-09-19 (iteration 117): matched by family — the daily refresh rolls the snapshot date in the id (09-18 → 09-19).
+const FS_KEYS = ['epoch_eci', 'epoch_eci_software', 'aa_agentic_index'];
+const family = (id) => String(id).split('::')[0];
 
 const meta = await (await fetch(`${BASE}/api/meta`)).json().catch(() => ({}));
 check('deployed revision matches the expected commit', !REV || String(meta.revision || '').startsWith(REV), { revision: meta.revision, expected: REV });
@@ -34,7 +36,7 @@ const matrix = (await (await fetch(`${BASE}/api/benchmark-matrix?models=${encode
 if (!matrix?.rows?.length) check('api: /api/benchmark-matrix returns rows', false, String(matrix).slice(0, 200));
 else {
   check('api: the family_scope tag is declared with an explanatory tip', (matrix.tags?.family_scope?.tip || '').length > 40, matrix.tags?.family_scope ?? null);
-  const fsRows = matrix.rows.filter((r) => FS_KEYS.includes(r.id));
+  const fsRows = matrix.rows.filter((r) => FS_KEYS.includes(family(r.id)));
   check('api: all three family-scope index rows are present', fsRows.length === 3, fsRows.map((r) => r.id));
   for (const r of fsRows) {
     const fill = r.familyScope?.fill ?? {};
@@ -49,7 +51,7 @@ else {
       !Object.entries(fill).some(([k, d]) => /non-reasoning|deprecated/i.test(String(k).split('::')[1] || '') && /non-reasoning/i.test(String(d).split('::')[1] || '')),
       Object.entries(fill).filter(([k, d]) => /non-reasoning/i.test(d)).slice(0, 4));
   }
-  const noScope = matrix.rows.filter((r) => r.id === 'aa_intelligence_index::snapshot-2026-09-18');
+  const noScope = matrix.rows.filter((r) => family(r.id) === 'aa_intelligence_index');
   check('api: a per-configuration board (AA Intelligence) is NOT family-filled', noScope.length === 1 && noScope[0].familyScope == null, noScope[0]?.familyScope ?? 'row absent');
 }
 

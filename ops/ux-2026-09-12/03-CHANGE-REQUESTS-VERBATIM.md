@@ -1122,3 +1122,25 @@ Delivered next to this file (`ops/ux-2026-09-12/jevbench/v1.1/`):
 - Mobile: the table scrolls horizontally with the system name column pinned (per the 15 Sep mobile directive).
 
 Registry: `jevbench::v1.1`, category `Other` (same as v1). Source: https://github.com/fstandhartinger/jevbench (tag `v1.1`).
+
+<!-- Filed 2026-09-19 ~08:58 UTC by a Claude Code supervisor job (not the loop). High priority: Florian wants this before the JevBench v1.1 launch tweet, which links this page. -->
+## CR-20260919b (JevBench page) → CR-87 — Main Score is the hero; adjustable Capability:Speed:Cost weights — HIGH PRIORITY
+
+Florian, Claude Code chat, 19 Sep 2026 ~10:40 Berlin (08:40 UTC), verbatim:
+> Also: Can we please have a link to benchmarkheaven.com page (https://benchmarkheaven.com/jev-models) in that post and can we please adjust https://benchmarkheaven.com/jev-models so that the composite score is the main message, not the "Smart" column? also add a way to the page to configure the 60:40:40 mix of Accuracy:Speed:Costs - some uses may regard cost as more important, others speed, others accuracy.
+
+Supervisor notes (not Florian's words):
+- He most likely looked at the page before CR-86 went live at 08:45 UTC (v1.0 had no combined score). CR-86 already sorts by Main Score; this CR makes the Main Score unmistakably the headline and adds the weight controls.
+- "Smart" / "Accuracy" = the benchmark's **Capability** sub-benchmark. Use the benchmark's own names everywhere (Main Score, Capability, Speed, Cost); no "Smart" wording anywhere on the page.
+- "60:40:40": the published JevBench v1.1 weights are **60 : 20 : 20** (Main = 0.6·Capability + 0.2·Speed + 0.2·Cost, `jevbench/composite.py`). The default must stay the published weights; the supervisor asks Florian separately whether he wants the official mix changed. Do not change the official score in this CR.
+
+### CR-87 addendum (Florian, Claude Code chat, 19 Sep 2026 ~08:55 UTC, verbatim)
+> It would be good if that jev-models page could also contain a bar chart like the one you sent me on telegram [the "JevBench v1.1 – Main Score" horizontal bar chart: Main Score bars coloured by type (Jev closed / open rebuild / instruction model / small tool-calling model / partial run hatched), Capab./Speed/Cost columns with "est." marks, formula line and footnotes]. I think people that saw my post on X and then visited the benchmark heaven page would expect to find that diagram there. so please add it. along with the other changes we just discussed.
+> also: once the user changed the weighting of Accuracy/Speed/Price (default: "60:20:20") we need to show pretty clearly in the charts that this is not the default Composite Index config anymore. Let's add some presets and give them names. Let's call them:
+> - JevBench Main Composite Score - Emphasis on Accuracy ("60:20:20") - the default
+> - JevBench Main Composite Score - Emphasis on Speed ("20:60:20")
+> - JevBench Main Composite Score - Emphasis on Cost ("20:20:60")
+> - JevBench Main Composite Score - Balanced ("33:33:33")
+> We should also add links to the benchmarked projects on the page.
+
+(The bracketed description of the Telegram chart was added by the supervisor. Florian confirms the default is 60:20:20 — the "60:40:40" above was a slip; the official weights stay as published. His four named presets replace the preset list in CR-87.2.)
