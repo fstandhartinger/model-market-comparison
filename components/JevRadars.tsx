@@ -9,6 +9,11 @@ import type { JevTopicsView } from "../lib/jevbench-v12-topics.mjs";
 const AXES: JevAxis[] = ["intelligence", "calibration", "speed", "cost"];
 const AXIS_LABEL: Record<JevAxis, string> = { intelligence: "Intelligence", calibration: "Calibration", speed: "Speed", cost: "Cost" };
 const TYPE_VAR: Record<string, string> = { jev: "--jev-t-jev", "jev-rebuild": "--jev-t-rebuild", "llm-baseline": "--jev-t-llm", "small-tool-model": "--jev-t-tool", "jev-service": "--jev-t-service", classifier: "--jev-t-classifier" };
+// Review gate 20260919T233002Z: "Service built on Jev" is a second blue, so a Jev/jev-service pair — the default one —
+// drew two near-identical solid lines (rgb(42,122,213) vs rgb(84,150,214) in light). Pairs from the same colour family get
+// the treatment the page already has for two rows of the same type: B dashed, mixed towards the text colour, square marks.
+const TYPE_FAMILY: Record<string, string> = { jev: "blue", "jev-service": "blue", "jev-rebuild": "orange", "llm-baseline": "green", "small-tool-model": "violet", classifier: "magenta" };
+const family = (cls: string) => TYPE_FAMILY[cls] ?? cls;
 const TYPE_LABEL: Record<string, string> = { jev: "Jev", "jev-rebuild": "Jev rebuild", "llm-baseline": "instruction model", "small-tool-model": "small tool-calling model", "jev-service": "service built on Jev", classifier: "zero-shot classifier" };
 const colour = (cls: string) => `rgb(var(${TYPE_VAR[cls] ?? TYPE_VAR["llm-baseline"]}))`;
 const one = (v: number | null) => (v === null ? "—" : v.toFixed(1));
@@ -55,7 +60,7 @@ export function JevRadars({ ranked, partial, topics }: { ranked: JevV12Row[]; pa
   const [a, setA] = useState(first.key);
   const [b, setB] = useState((ranked.find((r) => r.key !== first.key) ?? ranked[1]).key);
   const A = all.find((r) => r.key === a) ?? first, B = all.find((r) => r.key === b) ?? ranked[1];
-  const same = A.cls === B.cls;
+  const same = family(A.cls) === family(B.cls);
   const series: Series[] = [{ name: short(A.display), stroke: colour(A.cls), dashed: false, square: false }, { name: short(B.display), stroke: same ? `color-mix(in srgb, ${colour(B.cls)} 55%, var(--text))` : colour(B.cls), dashed: same, square: true }];
   const pair = [A, B];
   const min = topics.minAttempted;
