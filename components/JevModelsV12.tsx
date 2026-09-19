@@ -146,10 +146,13 @@ function ScoreChart({ rows, partial, w, view }: { rows: Row[]; partial: Row[]; w
     </ul>
     <figcaption className="bh-muted mt-3 space-y-1 text-[11.5px] leading-snug" data-bh-jevc-footnotes>
       <SpeedNote view={view} className="text-[11.5px]" />
-      <span className="block" data-bh-jev12-legend-line>I, C, S, K = Intelligence, Calibration, Speed, Cost; ~ est. = priced like a large inference provider (<a href="#jev-costs" className="text-accent underline">how costs are estimated</a>); ann. = the provider&rsquo;s announced price, not yet charged; † = see note.</span>
+      {/* F-134 (iteration 123): two lines at 390 so the visible caption stays ≤ 6 with the 4-line speed note; the full est./ann. definitions are the legend's first lines. */}
+      <span className="block" data-bh-jev12-legend-line>I, C, S, K = Intelligence, Calibration, Speed, Cost; est./ann. = <a href="#jev-costs" className="text-accent underline">estimated/announced cost</a>; † = see note.</span>
       <details className="mt-2" data-bh-jev12-legend>
         <summary className="cursor-pointer text-accent">Legend and notes</summary>
         <ul className="mt-2 space-y-1">
+          <li data-bh-jev12-est-note>~ est. = no measured bill; priced like a large inference provider (<a href="#jev-costs" className="text-accent underline">how costs are estimated</a>).</li>
+          <li data-bh-jev12-ann-note>ann. = the provider&rsquo;s announced price, not yet charged.</li>
           <li>Names link to each project.</li>
           <li data-bh-jev12-label-note>A label-only system has no calibration (–, counted as 0).</li>
           {all.filter((r) => r.footnote).map((r) => <li key={r.key} data-bh-jev12-footnote={r.key}>{chartName(r)}: {r.footnote}</li>)}

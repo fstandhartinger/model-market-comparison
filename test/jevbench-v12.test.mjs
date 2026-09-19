@@ -97,9 +97,13 @@ test('Jev pass-24 follow-up: the chart keeps one short visible note and moves de
   assert.equal((cmp.match(/data-bh-jev12-oneliner/g) || []).length, 1, 'review 20260919T165003Z: the score one-liner selector is unique');
   assert.equal((cmp.match(/data-bh-jev12-notes/g) || []).length, 1, 'review 20260919T165003Z: the table notes selector is unique');
   assert.match(cmp, /Legend and notes/, 'F-134: secondary notes are collapsed');
+  const legendLine = cmp.match(/data-bh-jev12-legend-line>(.*?)<\/span>/)[1].replace(/<[^>]+>/g, '');
+  assert.ok(legendLine.length <= 110, `F-134 (iteration 123): the visible legend sentence fits two 390 px lines (${legendLine.length} chars)`);
+  assert.match(cmp, /data-bh-jev12-est-note>~ est\. = .*how costs are estimated/, 'F-134: the full est. definition moved into the legend');
+  assert.match(cmp, /data-bh-jev12-ann-note>ann\. = the provider&rsquo;s announced price, not yet charged/, 'F-134: the full ann. definition moved into the legend');
   assert.match(cmp, /data-bh-jev12-label-note/, 'F-134: the label-only note is retained in the legend');
   assert.match(cmp, /data-bh-jev12-footnote=\{r\.key\}/, 'F-134: every system footnote remains addressable');
-  assert.match(cmp, /I, C, S, K = Intelligence, Calibration, Speed, Cost; ~ est\./, 'F-134: visible note is concise');
+  assert.match(cmp, /I, C, S, K = Intelligence, Calibration, Speed, Cost; est\.\/ann\. = <a href="#jev-costs"/, 'F-134: visible note is concise and still links to the cost method');
 });
 
 test('Jev pass-24 follow-up: cost disclosure has a hash-open client helper', async () => {
