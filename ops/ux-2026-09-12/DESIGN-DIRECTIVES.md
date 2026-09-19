@@ -104,6 +104,9 @@ and the counts line under it keeps the page honest (P4).
 > (`/opt/benchmarkheaven/state/ux-evidence/iter109/f123-indep/{canonical,legacy}/verification.json`). **F-122, F-124 and F-125 are
 > implemented** in `4bf2c3d` and verified live by their implementer with `verify-fable-pass23b.mjs` — **64/64 on both hosts**; they need a
 > **non-claude-opus** engine to re-run that verifier on both hosts (expect 64/64 per host) before their done-log rows read verified.
+> **Status 2026-09-19 ~04:00 UTC (review gate 20260919T032002Z, opencode-kimi):** that non-implementer run already happened in
+> **iteration 110** (opencode-kimi) — `verify-fable-pass23b.mjs` **64/64 per host** at live `b3492e5`, and the done-log rows for
+> F-122/F-124/F-125 read **verified**. The paragraph above this line is the stale iteration-109 status, kept for history.
 >
 > No design directive is open.
 
