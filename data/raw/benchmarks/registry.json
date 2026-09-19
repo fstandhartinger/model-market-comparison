@@ -9449,7 +9449,7 @@
         "value": false,
         "note": "Pilot of 242 decisions: the top complete runs sit at 95-97% with overlapping intervals, so the headline accuracy is close to its ceiling; calibration, cost and latency still separate them. Not declared saturated for v1."
       },
-      "superseded_by": null,
+      "superseded_by": "jevbench::v1.1",
       "status": "active",
       "first_seen": "2026-09-19",
       "last_verified": "2026-09-19",
@@ -9460,6 +9460,73 @@
           "sha256": "38fc5f1d6fd8bda970c6f4a918492d67370e9e764477a302611419a97fb0bd53",
           "fetched_at": "2026-09-19T08:40:00+00:00",
           "excerpt": "\"benchmark\": \"JevBench v1\", \"protocol\": \"jevbench::v1\", \"n_decisions_per_model\": 242, \"owner\": \"Benchmark Heaven (benchmarkheaven.com) - our own independent benchmark\" — the public repo copy and the committed copy have the same sha256."
+        }
+      ]
+    },
+    {
+      "id": "jevbench::v1.1",
+      "name": "JevBench v1.1",
+      "version": "v1.1",
+      "version_status": "published",
+      "family": "jevbench",
+      "category": "Other",
+      "one_sentence_description": "Measures typed decision models - state plus a bounded rubric in, a typed answer out - on three sub-benchmarks (Capability over 314 decisions in easy / standard / judge tiers, Speed, Cost) combined into one documented Main Score.",
+      "scoring": {
+        "metric": "JevBench Main Score = 0.6 x Capability + 0.2 x Speed + 0.2 x Cost",
+        "unit": "points",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Capability = mean of the three tier accuracies x 100. Speed = mean of log-scaled p50 and p95 latency scores (0.1 s = 100, 10 s = 0). Cost = log-scaled $ per 1,000 decisions ($0.01 = 100, $10 = 0); routes with no tariff for us carry a labelled estimate from a stated reference deployment. Calibration is reported, not scored. Rankings under five other weightings are published beside the headline. v1.1 numbers are never merged with v1.0's. The artifact's capability.pooled_accuracy exceeds 1 for every system (a harness defect found on intake, 2026-09-19) and is not published on the page until fixed."
+      },
+      "maintainer": "Benchmark Heaven",
+      "source_type": "github",
+      "primary_url": "https://github.com/fstandhartinger/jevbench",
+      "publication_urls": [
+        {
+          "url": "https://github.com/fstandhartinger/jevbench",
+          "type": "github",
+          "role": "MIT harness, public tasks, every scoring rule; release tag v1.1"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/fstandhartinger/jevbench/v1.1/results/v1.1/jevbench-v1.1-results.json",
+          "type": "github",
+          "role": "Publication-safe v1.1 results artifact (aggregates only), byte-identical to data/raw/benchmarks/jevbench/v1.1/jevbench-v1.1-results.json"
+        },
+        {
+          "url": "https://benchmarkheaven.com/jev-models",
+          "type": "official_leaderboard",
+          "role": "Published results page (our own page; v1.0 at /jev-models/v1)"
+        }
+      ],
+      "how_to_collect": {
+        "command": "git clone https://github.com/fstandhartinger/jevbench && cd jevbench && python -m jevbench.cli run --tasks datasets/public/original.jsonl --adapter typesafe --model jev-latest --key-env TYPESAFE_API_KEY --price-in-per-m 0.042 --price-out-per-m 0 --results RUN/results.jsonl --raw-dir RUN/raw --ledger RUN/ledger.jsonl --cap-usd 15 --manifest RUN/manifest.json",
+        "format": "JSONL per-decision records aggregated into results/v1.1/jevbench-v1.1-results.json",
+        "locator": "results/v1.1/jevbench-v1.1-results.json -> systems[].main_score for the headline; systems[].capability / speed / cost for the sub-benchmarks; systems[].sensitivity and rank_under for the weightings.",
+        "version_guard": "The dataset manifest pins a SHA-256 per split (v1.0 splits unchanged plus easy and easy-heldout). A run whose split hashes differ is not a v1.1 result; v1.1 numbers are never merged with v1.0 columns.",
+        "notes": "Serial, one request at a time, no retries, from a Hetzner server in Germany, so latency includes the network. Runs stop on 401/403/429 or three consecutive infrastructure errors and the partial run is kept as partial. Never rank an incomplete run against a complete one. No collector scrapes this: the artifact is committed under data/raw/benchmarks/jevbench/v1.1/ and validated by lib/jevbench-v11.mjs (every ranked Main Score recomputes from its sub-scores; test/jevbench-v11.test.mjs)."
+      },
+      "update_cadence": {
+        "source_schedule": "On demand, when a new Jev-class system becomes runnable; a changed task set or scoring rule is a new version.",
+        "check_recommendation": "On demand (our own benchmark; no external schedule)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Capability is near its ceiling for the top systems (97-98), which is why speed and cost carry weight in the Main Score; not declared saturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-19",
+      "last_verified": "2026-09-19",
+      "evidence": [
+        {
+          "url": "https://raw.githubusercontent.com/fstandhartinger/jevbench/v1.1/results/v1.1/jevbench-v1.1-results.json",
+          "file": "data/raw/benchmarks/jevbench/v1.1/jevbench-v1.1-results.json",
+          "sha256": "1e280185173f3830a73cf9ebc86c901f82bbc5fe4aec4cb7b4b9fbadcdb6ae3a",
+          "fetched_at": "2026-09-19T08:50:00+00:00",
+          "excerpt": "\"benchmark\": \"JevBench v1.1\", \"protocol\": \"jevbench::v1.1\", \"n_decisions_per_system\": 314, \"weights\": {\"capability\": 0.6, \"cost\": 0.2, \"speed\": 0.2} — the tag v1.1 copy and the committed copy have the same sha256."
         }
       ]
     }

@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { getDataset } from "../lib/data";
 import { SITE_URL } from "../lib/seo";
 
-const PAGES = ["/", "/benchmarks", "/compare", "/benchmaxxing", "/charts", "/scatter", "/eu", "/jev-models", "/providers", "/provider-explorer", "/gateways", "/about", "/privacy", "/terms", "/impressum"];
+const PAGES = ["/", "/benchmarks", "/compare", "/benchmaxxing", "/charts", "/scatter", "/eu", "/jev-models", "/jev-models/v1", "/providers", "/provider-explorer", "/gateways", "/about", "/privacy", "/terms", "/impressum"];
 
 // CR-62.2: the public pages plus one page per model family (the family URL resolves to its model page).
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

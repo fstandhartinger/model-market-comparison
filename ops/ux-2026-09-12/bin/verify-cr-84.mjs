@@ -2,6 +2,7 @@
 // our own benchmark said in the lead, five independently sortable axes with no combined score, null price rendered
 // "no tariff" (never $0), stopped/unrunnable systems outside the ranking, scatter + calibration keyboard access,
 // number parity against the committed artifact hash, no horizontal overflow — 1440/390 px, light/dark.
+// CR-86 (19 Sep): v1.0 moved to /jev-models/v1 when v1.1 became the current page.
 // Usage: node verify-cr-84.mjs <base> <outdir> [expected-revision-prefix]
 import { createRequire } from 'node:module';
 import { createHash } from 'node:crypto';
@@ -34,8 +35,8 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
   await c.addInitScript((t) => { try { localStorage.setItem('bh-theme', t); } catch {} }, theme);
   const page = await c.newPage(); const tag = `${kind}_${theme}`; const errors = [];
   page.on('pageerror', (e) => errors.push(String(e)));
-  const r = await page.goto(`${BASE}/jev-models`, { waitUntil: 'networkidle', timeout: 90000 });
-  check(`${tag}: page 200 and title`, r.status() === 200 && (await page.title()).startsWith('Jev-class decision models — JevBench v1'), await page.title());
+  const r = await page.goto(`${BASE}/jev-models/v1`, { waitUntil: 'networkidle', timeout: 90000 });
+  check(`${tag}: page 200 and title`, r.status() === 200 && (await page.title()).startsWith('Jev-class decision models — JevBench v1.0'), await page.title());
   check(`${tag}: theme applied`, (await page.evaluate(() => document.documentElement.dataset.theme)) === theme, theme);
   check(`${tag}: lead says it is our own benchmark`, /JevBench v1 is our own benchmark/.test(await page.locator('[data-bh-jev-own]').innerText()), 'data-bh-jev-own');
   check(`${tag}: sha256 shown on the page equals the artifact`, (await page.locator('[data-bh-jev-sha]').getAttribute('data-bh-jev-sha')) === ARTIFACT_SHA256, 'data-bh-jev-sha');
@@ -87,9 +88,9 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
   await page.screenshot({ path: `${OUT}/${tag}.png`, fullPage: !mobile });
   if (mobile) await page.screenshot({ path: `${OUT}/${tag}-viewport.png` });
   // Nav: More menu carries the entry.
-  const more = mobile ? page.locator('header summary:has-text("More")').last() : page.locator('nav[aria-label="Primary"] summary:has-text("More")');
+  const more = mobile ? page.locator('header').first().locator('summary:has-text("More")').last() : page.locator('nav[aria-label="Primary"] summary:has-text("More")');
   await more.click();
-  const link = page.locator('header a[href="/jev-models"]:visible');
+  const link = page.locator('header').first().locator('a[href="/jev-models"]:visible');
   check(`${tag}: "Jev-class models" in the More menu`, (await link.count()) === 1 && (await link.innerText()).trim() === 'Jev-class models', await link.count());
   await c.close();
 }

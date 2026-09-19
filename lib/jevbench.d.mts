@@ -31,3 +31,4 @@ export function validateJevbenchArtifact(artifact: any): any;
 export function readJevbench(root?: string): Promise<JevbenchData>;
 export function jevbenchView(data: { artifact: any; availability: any; sha256: string }): JevView;
 export function jevbenchFindings(ranked: JevRow[], partial?: JevRow[]): { id: string; text: string }[];
+export function scanForbidden(value: unknown, path: string, onFail?: (message: string) => never): void;

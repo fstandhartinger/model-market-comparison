@@ -4,6 +4,16 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-19 — JevBench v1.1: one Main Score; v1.0 moves to /jev-models/v1
+
+`/jev-models` now shows JevBench v1.1 (314 decisions in easy / standard / judge tiers, 11 systems incl. Needle 3):
+Main Score = 0.6 × Capability + 0.2 × Speed + 0.2 × Cost with the sub-scores, tiers, latency and cost sortable
+beside it and a sensitivity table under six weightings. The artifact is committed at
+`data/raw/benchmarks/jevbench/v1.1/jevbench-v1.1-results.json` (sha256 `1e280185…`, = `results/v1.1/` at tag
+`v1.1`) and served verbatim at `GET /api/jevbench/v1.1`. Registry gains `jevbench::v1.1`; `jevbench::v1` stays
+published (`GET /api/jevbench`, page `/jev-models/v1`) with `superseded_by` set. The artifact's
+`capability.pooled_accuracy` exceeds 1 and is not shown.
+
 ## 2026-09-19 — JevBench v1: our own benchmark and the "Jev-class models" page
 
 **New page, new registry identity, one new public JSON.** `/jev-models` (nav: More → Jev-class models) shows

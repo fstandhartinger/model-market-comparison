@@ -436,3 +436,6 @@ details[open] > .bh-collapsible-grid { display: grid; }
 .bh-jev-table .bh-jev-sticky { position: sticky; left: 0; z-index: 1; background: var(--surface); min-width: 190px; max-width: 240px; box-shadow: inset 0 -1px 0 rgb(var(--line)), inset -1px 0 0 rgb(var(--line)); }
 .bh-jev-table thead .bh-jev-sticky { background: rgb(var(--ink)); }
 @media (max-width: 639px) { .bh-jev-table .bh-jev-sticky { min-width: 150px; max-width: 170px; } .bh-jev-table th, .bh-jev-table td { padding: 10px; } }
+/* CR-86: v1.1 partial runs are shown but greyed and hatched, never ranked. */
+.bh-jev11-hatched { background-image: repeating-linear-gradient(135deg, rgb(var(--line) / .6) 0 2px, transparent 2px 7px); }
+.bh-jev11-partial > * { opacity: .62; }
