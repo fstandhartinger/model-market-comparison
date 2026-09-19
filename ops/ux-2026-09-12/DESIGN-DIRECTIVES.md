@@ -1,13 +1,13 @@
 # DESIGN DIRECTIVES — Benchmark Heaven (design authority: Claude Fable 5.1)
 
-**Pass 23: 2026-09-18 ~09:40 UTC**, the "what changed since pass 22" pass (Florian: Fable sparingly; the one targeted pass on the
-Benchmarks page happened in pass 15, so this pass judged only what iterations 102–107 changed there), against live revision `c885fbe` on both
-hosts — CR-65.14 (the **Retired** caveat tag on `/benchmarks` and the Simple Benchmarks section, the read-date version line), CR-60.2 + F-121
-(‡ preliminary chart-read values on `/benchmarks`, `/compare` and the Simple section; the Compare caption; the evidence-panel sentence), plus
-the standard quick views. Evidence: `/opt/benchmarkheaven/state/ux-evidence/fable-20260918-pass23/{canonical,legacy}/` — 83 shots on the
-canonical host, 59 on the legacy host (changed pages only), 1440/390 × light/dark, `metrics.json` (0 page errors in all four contexts on both
-hosts; footnote geometry — words, sentences, rendered lines; tag counts; ‡/† marks and their titles; bar widths on the chart-read row; the
-detail page's chart-read sentence). Script: `bin/shoot-fable-pass23.mjs`. Earlier passes: `…/fable-20260918-pass22/` … `…/fable-20260913/`.
+**Pass 24: 2026-09-19 ~15:40 UTC**, the "what changed since pass 23" pass (Florian: Fable sparingly). Since pass 23 the one new surface is
+**`/jev-models`** — JevBench, our own benchmark, from CR-84 through CR-86/CR-87 to the v1.2 final of CR-92 (hero bar chart, weighting presets and
+custom sliders, the axes table, the "how the ranking moves" table, the cost-estimate panel) — plus its archived `/jev-models/v1`. Judged against
+live revision `3910cf3` on the canonical host at 1440/390 × light/dark: 126 shots (`/opt/benchmarkheaven/state/ux-evidence/fable-20260919-pass24/canonical/`),
+`metrics.json` (0 page errors in all four contexts, no horizontal overflow on any page; geometry of the head, chart, controls, table and every
+footnote; the preset, custom and sorted states; the pinned column while scrolled). Script: `bin/shoot-fable-pass24.mjs`; verifier for the fixes
+shipped in this pass: `bin/verify-fable-pass24.mjs`. The Simple, Advanced, Guided, Benchmaxxing, Benchmarks and model pages were re-shot as quick
+views and are unchanged since pass 23. Earlier passes: `…/fable-20260918-pass23/` … `…/fable-20260913/`.
 
 **The bar (Florian):** minimalistic and simple, very expressive, not overloaded, key messages
 first, graphical with many charts.
@@ -26,52 +26,68 @@ the reviewing engine directly.
 
 ---
 
-## Verdict on the live site — pass 23 (2026-09-18), what changed since pass 22
+## Verdict on the live site — pass 24 (2026-09-19), the JevBench page
 
-**The changed pages are honest and, in the cells, at the bar; the footnotes under them are not.** The **Retired** tag reads like the other caveat
-tags (muted pill, last in the row: "AA · Headline · Retired", `desktop_light-benchmarks-retired-row.png`), it sits on exactly the rows the
-registry says (2 in the default top-5 view, 3 on the CR-65.14 pair, 2 in the Simple section) and the Coding Agent Index best-of row is not among
-them. A chart-read value is `52.0%‡` with a 10.5 px superscript in every table, the Compare row gives it no bar, no tint and no percentile
-(`bars: ["92%", "0%"]`, `tinted: [true, false]`, `desktop_light-compare-prelim-row.png`), and the detail page says in one sentence how it was
-obtained ("Chart-read: announced in a launch post and read off the published chart …", `desktop_light-benchmarks-prelim-detail.png`). Dark mirrors
-light everywhere; 0 page errors in all eight contexts, both hosts; the Simple, Advanced, Guided, Benchmaxxing and model pages are unchanged since
-pass 22.
+**The page says the right things in the right order, and the chart is the message.** The lead says in its first sentence that this is our own
+benchmark (CR-84's first rule), the hero is the JevBench Score bar chart Florian saw on Telegram — one bar per system, the score in bold at the
+bar's end, the four axis scores and the $ per 1,000 beside it, type colours with a legend, partial runs hatched and unranked below the ranking —
+and the weighting is a row of named presets with the official one pressed; any other weighting turns the chart's title, badge, table header and
+every rank into the "not the default" state with ▲▼ deltas and a reset (`desktop_light-jev-preset-chart.png`). Estimates carry "~" and "est.",
+the speed line is under every Speed, no `$0.00` and no blank calibration cell anywhere, dark mirrors light, 0 page errors, no overflow.
 
-**What is not at the bar — four things.**
+**What is not at the bar — nine things, eight fixed in this pass, one for the implementer.**
 
-1. **The footnote under `/benchmarks` is 196 words in 10 sentences — 18 lines on a phone**, 5 at 1440 (`mobile_light-benchmarks-footnote.png`,
-   `metrics.json` `bm-footnotes`). The Simple Benchmarks footnote is 218 words in 7 sentences (20 lines at 390), the Compare caption 66 words in
-   4 sentences (200 px tall at 390). Every recent change request added a sentence to the same paragraph (best of, †, ‡, Saturated, Judged, category
-   rows); the pass-20 rule caps a visible footnote at two sentences and puts the rest in a collapsed Legend. Worse, the paragraph explains
-   Saturated and Judged but **not Retired or Changed at source**, and on a phone a tag's `title` is unreachable (`mobile_light-benchmarks-retired-tap.png`
-   shows nothing after a tap) — so the newest tag is the one a phone reader cannot decode. → **F-122** (implementer).
-2. **`/benchmarks` and the Simple section still draw a data bar behind a chart-read value** (`bm-prelim-row.bars: ["100%", "99.96%"]` on
-   Union Alpha's Terminal-Bench v4.0 row, `desktop_light-benchmarks-prelim-row.png`), while Compare draws none and the same row's bold already
-   excludes it. A bar is a ranking cue; F-121's own words are "no percentile, no bar, no tint". → **F-123, fixed by Fable in this pass** (the
-   masked row that already feeds `rowWinners` now feeds `rowBars` and `rowOutliers` too; with one measured value left, F-84 gives the row no bar).
-3. **"Version 74221fb"** under Terminal-Bench Hard (AA) — the registry's identity for that board is a seven-hex pin, and `versionLine` prints any
-   version string as "Version …". A reader sees a hash where every other row says "Version 4.0" or "values as published on …". Only one board
-   is affected today; the rule is what matters. → **F-124**.
-4. **"Union Alpha · Union Alpha"** on the result detail card and in its compared-models table (`desktop_light-benchmarks-prelim-detail.png`): a
-   stealth model's org is its own name, and the org line repeats it. → **F-125**.
+1. **Open the Custom panel at 1440 and the five preset buttons stretch to 345 px tall** (`desktop_light-jev-custom-controls.png`): the grid
+   row takes the open panel's height and stretches its siblings. → **F-126, fixed** (`lg:items-start`).
+2. **On a phone the bold score leaves the panel**: the I/C/S/K line under each bar is `nowrap`, its min-content widens the middle grid column,
+   and the score column is pushed into the panel's padding and beyond (`mobile_light-jev-chart.png`, "74.6" and "64." cut; `metrics.json`
+   name widths 252–258 px in a 235 px column). → **F-127, fixed** (the line wraps below `sm`).
+3. **Scroll the phone table sideways and the partial rows' pinned name cell lets the scrolled cells show through** ("39.5" behind "by Cactus
+   Compute", `mobile_light-jev-table-scrolled.png`): the row is dimmed by `opacity`, which makes the sticky cell's background translucent.
+   → **F-128, fixed** (pinned cell opaque, dimmed by colour).
+4. **`$ per 1,000` and `Endpoint` are off-screen at 1440**: the table is 1561 px in a 1366 px wrap, so the third of Florian's three axes' raw
+   values needs a horizontal scroll on a desktop; and the hero header "JevBench Score / official · 25 % each, geometric" wraps to four lines.
+   → **F-129, fixed** (`$ per 1,000` moves next to the Cost score, before the tiers; the header sub is the one word "official"; Latency and
+   Endpoint may still scroll).
+5. **"by TypeSafe AI / Jev 1.13.0 / TypeSafe AI"**, "by Bespoke Labs / Bespoke Nimble 9B / Bespoke Labs": the config line repeats the author
+   when the display name's parenthesis is only the author (F-125's rule again). → **F-130, fixed**.
+6. **"Needle 3, options as tools (options as tools)"** in the findings list. → **F-131, fixed**.
+7. **The head repeats the chart's one-liner** ("Intelligence, Calibration, Speed, Cost — 25 % each, geometric mean: a weak axis pulls the score
+   down hard") 300 px above the chart that says it again, and the "Revision v1.2." provenance line sits above the hero; on a phone the head is
+   600 px and the chart starts at 707 px. → **F-132, fixed** (the head names the score, the one-liner stays in the chart; the revision note is
+   the second paragraph of "Method and tiers").
+8. **"OpenJev"** as the chart label of the razorback16 DiffusionGemma run, two rows above "openjev-sglang": one word for one of two OpenJevs.
+   → **F-133, fixed** ("OpenJev (razorback16)", as the Telegram chart named it).
+9. **The chart's figcaption is 136 words in 10 sentences — 15 lines on a phone** (`metrics.json` `jev-footnotes`): the speed line (mandatory,
+   CR-92.2), the I/C/S/K key, the tier counts, the est. explanation, the label-only note, "Names link…", and the option-order footnote, all
+   visible. The pass-20 rule caps a visible footnote at two sentences. → **F-134** (implementer).
 
-Checked, not findings: the ‡ and † `title` texts are the same 10.5 px superscript convention on all three tables; the "Retired" tip text
-("The maintainer stopped reporting this benchmark …") is right, just unreachable on a phone until F-122; the evidence line "0.52 fraction"
-next to the headline "52.0%" is the long-standing evidence-panel convention (native unit beside the formatted value), not a regression.
+Also noted, not a defect: "How costs are estimated" is 1,066 px at 1440 and 2,402 px on a phone, open by default, between the views table and
+the availability list. It is an honesty panel Florian asked for (CR-87 addendum 2) and its eleven per-system lines are the evidence; it should
+be a disclosure that opens from its anchor. → **F-135** (implementer, mechanical). `components/JevModelsV11.tsx` is no longer imported by any
+page (v1.1 was superseded by v1.2; v1.0 uses `JevModels.tsx`); the next refactor that touches the folder removes it. A tap on "est." on a phone
+shows nothing (title-only), as on every tag pill on the site (pass 20 record); the "how costs are estimated" link beside it is the phone's path.
 
-## Decisions in pass 23
+## Decisions in pass 24
 
-1. **CR-65.14's tag and CR-60.2/F-121's mark are at the bar as rendered**; their live verification stays with a non-implementer engine
-   (`verify-cr-65-14.mjs`; the review gate already flipped CR-60.2).
-2. **A legend covers every tag the table can show, generated from the tag set** (rule added): a hand-written footnote is how Retired went
-   missing; the legend lists `matrix.tags` (label + one-line tip) so a new tag can never be absent.
-3. **A pin is not a version** (rule added): a hash-like identity is never printed as "Version …"; the row shows the read date, the detail page
-   the pin.
-4. **Fable shipped F-123 itself** (two one-line edits plus a regression test; the record says Kimi stalls on TSX) — it needs a non-implementer
-   live pass. F-122, F-124 and F-125 go to the work engine: F-122 touches three components and the Compare caption and deserves one coherent
-   `TableLegend`, not a surgical patch.
-5. **X4 (UI meets the design bar): still met at pass 23** — the four findings are footnote and label hygiene, none changes what a reader
-   concludes from a number.
+1. **The JevBench page is at the bar in what it says and shows**; the nine findings are layout and copy hygiene, none changes what a reader
+   concludes from a number. X4 (UI meets the design bar) **still met at pass 24**.
+2. **Fable shipped F-126–F-133 itself** (one commit: two `.tsx` files, one CSS rule, one source-level regression test) — the record since pass
+   8 says Kimi stalls on one-file TSX edits, and each fix is a line. They need a **non-implementer live pass**: `bin/verify-fable-pass24.mjs`
+   on both hosts, 1440/390 × light/dark, expect 40/40 per host (mobile contexts carry one extra check each: 11 + 11 + 9 + 9).
+3. **F-134 and F-135 go to the work engine**: F-134 is the pass-23 `TableLegend` pattern applied to a figure, F-135 is one `<details>` with a
+   hash-open handler; neither is a numbers change.
+4. **Column order in a results table is by importance to the headline, not by data type (rule added):** the raw quantity behind a headline axis
+   sits next to that axis; secondary diagnostics (per-tier accuracy, latency detail, endpoint) come after and may scroll.
+5. **One one-liner per page (rule extended from pass 21 "one explainer per page"):** the score's one-sentence definition lives where the score is
+   drawn; the page head names the score and links the eye to the chart.
+
+## Verdict on the live site — pass 23 (2026-09-18), condensed
+
+The changed Benchmarks-page pieces (Retired tag, ‡ chart-read mark) at the bar in the cells; four footnote/label findings: F-122 (three
+footnotes → two sentences + generated `TableLegend`), F-123 (no bar behind a chart-read value; shipped by Fable), F-124 (a pin is not a
+version), F-125 (org line dropped when it repeats the name). All four verified live by non-implementers (iterations 109/110, review gate
+20260919T032002Z). Full text: `git show 3910cf3:ops/ux-2026-09-12/DESIGN-DIRECTIVES.md`.
 
 ## Verdict on the live site — pass 22 (2026-09-18), condensed
 
@@ -99,19 +115,47 @@ and the counts line under it keeps the page honest (P4).
 
 ## Directives (open)
 
-> **Status 2026-09-18 ~11:00 UTC (iteration 109, claude-opus):** F-116–F-119 are verified (done log). **F-123 is verified** — a
-> non-implementer (claude-opus) ran `verify-fable-pass23.mjs` at live `3387982`: **8/8 on both hosts**, 1440/390 × light/dark
-> (`/opt/benchmarkheaven/state/ux-evidence/iter109/f123-indep/{canonical,legacy}/verification.json`). **F-122, F-124 and F-125 are
-> implemented** in `4bf2c3d` and verified live by their implementer with `verify-fable-pass23b.mjs` — **64/64 on both hosts**; they need a
-> **non-claude-opus** engine to re-run that verifier on both hosts (expect 64/64 per host) before their done-log rows read verified.
-> **Status 2026-09-19 ~04:00 UTC (review gate 20260919T032002Z, opencode-kimi):** that non-implementer run already happened in
-> **iteration 110** (opencode-kimi) — `verify-fable-pass23b.mjs` **64/64 per host** at live `b3492e5`, and the done-log rows for
-> F-122/F-124/F-125 read **verified**. The paragraph above this line is the stale iteration-109 status, kept for history.
->
-> No design directive is open.
+> **Status 2026-09-19 ~16:30 UTC (pass 24, claude-fable):** F-126–F-133 are implemented by Fable in this pass (done log) and need a
+> **non-Fable** engine to run `bin/verify-fable-pass24.mjs` on both hosts (expect 40/40 per host) before their rows read verified.
+> F-134 and F-135 below are open for the work engine.
+
+### F-134 [judgment] — The JevBench chart's figcaption: two sentences visible, the rest a legend
+
+*Where:* `components/JevModelsV12.tsx` (`ScoreChart` figcaption, `data-bh-jevc-footnotes`), `components/TableLegend.tsx` (reuse; it takes
+`marks` and `tags` — add a `notes` list or render the figure's lines as marks).
+*What:* Visible under the chart: (1) the speed line (`SpeedNote`, mandatory wherever Speed is shown, CR-92.2) and (2) one sentence:
+"I, C, S, K = Intelligence, Calibration, Speed, Cost; ~ est. = priced like a large inference provider (how costs are estimated); † = see
+note." Everything else — the tier counts (already in the chart's eyebrow and the table header), "A label-only system has no calibration
+(–, counted as 0)", "Names link to each project", and every per-system footnote (`r.footnote`) — goes into one collapsed "Legend and
+notes" disclosure directly under those two lines, one line per item, per-system notes last, each prefixed with the system's chart name.
+The `[data-bh-jev12-footnote=<key>]` attributes stay on the moved lines (verifiers read them). At 390 the visible part is ≤ 6 rendered
+lines; the disclosure is closed on load.
+*Accept:* `metrics.json`-style measure of the figcaption at 390: ≤ 6 lines visible before the disclosure, ≤ 2 sentences besides the speed
+line; the disclosure lists every `r.footnote` and the label-only note; `verify-cr-92.mjs` and `verify-review-20260919.mjs` stay green
+(they read `[data-bh-jev12-speed-note]`, `[data-bh-jev12-oneliner]`, `[data-bh-jev12-footnote]`); both hosts, 1440/390 × light/dark.
+
+### F-135 [mechanical] — "How costs are estimated" is a disclosure that opens from its anchor
+
+*Where:* `app/jev-models/page.tsx` (`#jev-costs` section), a 10-line client helper if none exists (look for an existing hash-open pattern
+first, e.g. how `#method`/`#limits` or the Benchmarks legend handle `location.hash`).
+*What:* The section becomes `<details id="jev-costs" class="bh-panel …">` with the summary "How costs are estimated" and the first sentence
+("Systems with a public tariff … marked "est".") visible outside the disclosure as a one-line muted paragraph; the eleven per-system lines
+and the reference-price table are inside. Closed on load. Every in-page link to `#jev-costs` (chart footnote, method text, formula panel,
+CostValue titles are not links) opens the disclosure and scrolls to it — on click and when the page loads with that hash. Keep
+`data-bh-jev-costs`, `data-bh-jev-cost-rows`, `data-bh-jev-cost-classes` on the same elements.
+*Accept:* at 390 the panel is ≤ 160 px closed; clicking "how costs are estimated" in the chart footnote opens it and the first per-system line
+is in the viewport; loading `/jev-models#jev-costs` opens it; `verify-cr-87.mjs` (cost rows) stays green on both hosts, 1440/390 × light/dark.
 
 ## Design system notes (apply while touching any file above)
 
+- **Column order follows the headline, not the data type (pass 24):** in a results table the raw quantity behind a headline axis ($ per
+  1,000 behind Cost) sits beside that axis; per-tier detail, latency detail and endpoint come after and are the columns allowed to scroll.
+- **One one-liner per page (pass 24, extends "one explainer per page"):** the score's one-sentence definition is printed where the score
+  is drawn (the chart subtitle); the head names the score and stops. Provenance ("Revision …") lives in Method, never above the hero.
+- **A control grid never stretches to a sibling's open panel (pass 24, F-126):** preset/choice buttons in a grid are `items-start`; an
+  open disclosure in the same row keeps its own height.
+- **A dimmed row is dimmed by colour, not opacity, wherever a cell is pinned (pass 24, F-128):** an opacity on a sticky cell makes its
+  background translucent and the scrolled cells show through.
 - **A legend covers every tag the table can show, generated from the tag set (pass 23):** the visible footnote is two sentences; the
   collapsed Legend lists marks first, then every entry of the tag set with its one-line tip. A hand-written tag sentence is a defect waiting
   for the next tag.
@@ -410,3 +454,11 @@ and the counts line under it keeps the page honest (P4).
 | F-122 three table footnotes become two sentences plus one collapsed `TableLegend` whose tag lines are generated from the tag set (`components/TableLegend.tsx`, used by `BenchmarkMatrix`, `SimpleBenchmarks` and `BenchmarkCompare`) | `4bf2c3d` (claude-opus, iteration 109) + `test/cr-60-union-alpha-preliminary.test.mjs` | `/opt/benchmarkheaven/state/ux-evidence/iter109/pass23b-{canonical,legacy}/verification.json` (`bin/verify-fable-pass23b.mjs`) | live at `4bf2c3d`, **64/64 on both hosts**: visible footnote 16 px at 1440, 32/48 px at 390 (was 18–20 lines); legend collapsed on load, one line per mark and per tag, Retired and Changed at source among them; `verify-cr-1.mjs` 108/108 and `verify-cr-65-14.mjs` 27/27 per host kept green. **verified** — opencode-kimi (non-implementer, iteration 110) re-ran `verify-fable-pass23b.mjs` at live `b3492e5`: **64/64 per host**, 1440/390 × light/dark (`/opt/benchmarkheaven/state/ux-evidence/iter110-kimi-verify/pass23b-{canonical,legacy}/verification.json`) |
 | F-124 a pin is not a version (`lib/version-pin.mjs` `isPin`, `humanVersion` gains a `pin` kind, `versionLine(row, showPin)`) | `4bf2c3d` (claude-opus, iteration 109) + `test/f124-pin-not-version.test.mjs` | same `verification.json` | live at `4bf2c3d`, both hosts: the `/benchmarks` row prints only the read date (checked on the pinned board's own model selection, after asserting the row is on the page), the eyebrow only the category, the detail card "Pinned revision 74221fb" once. A pure-digit string is deliberately not a pin (≈1 short hash in 20 has no letter; `20260918` would be misread). **verified** — opencode-kimi (non-implementer, iteration 110), same `verify-fable-pass23b.mjs` run at live `b3492e5`: **64/64 per host** (`/opt/benchmarkheaven/state/ux-evidence/iter110-kimi-verify/pass23b-{canonical,legacy}/verification.json`) |
 | F-125 the org line is dropped when it only repeats the model name (`sameAsName` on the result page's two cards and two compared-model tables) | `4bf2c3d` (claude-opus, iteration 109) + `test/f124-pin-not-version.test.mjs` | same `verification.json` | live at `4bf2c3d`, both hosts: Union Alpha's card reads "Union Alpha" once; a named org (Claude Fable 5.1 · Anthropic) unchanged. **verified** — opencode-kimi (non-implementer, iteration 110), same `verify-fable-pass23b.mjs` run at live `b3492e5`: **64/64 per host** (`/opt/benchmarkheaven/state/ux-evidence/iter110-kimi-verify/pass23b-{canonical,legacy}/verification.json`) |
+| F-126 preset buttons no longer stretch to the open Custom panel (`lg:items-start` on the preset grid) | pass 24 (Fable, surgical) + `test/jevbench-v12.test.mjs` | `/opt/benchmarkheaven/state/ux-evidence/fable-20260919-pass24/canonical/desktop_light-jev-custom-controls.png` (before: 345 px buttons) | needs a non-Fable live pass (`bin/verify-fable-pass24.mjs`) |
+| F-127 phone chart: the I/C/S/K line wraps below `sm` (`min-w-0`, `sm:whitespace-nowrap`) so the bold score stays inside the panel | pass 24 (Fable, surgical) + test | `…/mobile_light-jev-chart.png` (before: "74.6" cut), `metrics.json` name widths 252–258 px in a 235 px column | same |
+| F-128 partial rows' pinned name cell is opaque (dimmed by colour, `app/globals.css`) | pass 24 (Fable, surgical) + test | `…/mobile_light-jev-table-scrolled.png` (before: "39.5" showing through "by Cactus Compute") | same |
+| F-129 `$ per 1,000` moves beside the Cost score, before the tiers; hero header sub is "official" | pass 24 (Fable, surgical) + test | `metrics.json` `tableW 1561 / wrapW 1366` (the column was off-screen at 1440); header wrapped to 4 lines | same |
+| F-130 the config line under a system name is dropped when it only repeats the author | pass 24 (Fable, surgical) + test | `…/desktop_light-jev-table.png` ("by TypeSafe AI / Jev 1.13.0 / TypeSafe AI") | same |
+| F-131 findings: "Needle 3, options as tools (options as tools)" → once | pass 24 (Fable, surgical) + test | `…/desktop_light-jev-findings.png` | same |
+| F-132 the head names the score and stops (one-liner only in the chart); "Revision v1.2." moves into Method and tiers | pass 24 (Fable, surgical) + test | `…/mobile_light-jev.png` (head 600 px, chart at 707 px), `desktop_light-jev.png` (sentence twice within 300 px) | same |
+| F-133 the razorback16 run is "OpenJev (razorback16)" in the chart, not "OpenJev" | pass 24 (Fable, surgical) + test | `…/desktop_light-jev-chart.png` | same |

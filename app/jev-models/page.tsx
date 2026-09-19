@@ -38,14 +38,13 @@ export default async function JevModelsPage() {
       <p className="bh-eyebrow">JevBench v1.2 · our own benchmark</p>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">Jev-class models</h1>
       <p className="mt-3 max-w-3xl text-lg" data-bh-jev-own>JevBench is <b>Benchmark Heaven&apos;s own benchmark</b> for Jev-class decision models: state and a bounded rubric in, a typed answer out.</p>
-      <p className="bh-muted mt-2 max-w-3xl">Version 1.2 measures {all.length} systems on {view.decisions} decisions, including {view.tierCounts.hard} hard ones, and ranks them by the <b className="text-gray-200">JevBench Score</b>: <span data-bh-jev12-score-line>{view.oneLiner}</span> Built and run by us, not collected from someone else&apos;s leaderboard; the results describe the tested configurations, not every application.</p>
+      <p className="bh-muted mt-2 max-w-3xl">Version 1.2 measures {all.length} systems on {view.decisions} decisions, including {view.tierCounts.hard} hard ones, and ranks them by the <b className="text-gray-200">JevBench Score</b>. Built and run by us, not collected from someone else&apos;s leaderboard; the results describe the tested configurations, not every application.</p>
       <p className="bh-muted mt-3 max-w-3xl text-xs leading-relaxed" data-bh-jev-meta>
         Scored {day(view.generated)} · protocol <code>{view.protocol}</code> · {view.tierCounts.easy} easy + {view.tierCounts.standard} standard + {view.tierCounts.judge} judge + {view.tierCounts.hard} hard decisions · one request at a time from a server in Germany ·{' '}
         <a className="text-accent underline" href={JEVBENCH_REPO}>harness, public tasks &amp; scoring rules (MIT)</a> ·{' '}
         <a className="text-accent underline" href="/api/jevbench/v1.2" data-bh-jev-sha={view.sha256}>results JSON</a> <span className="whitespace-nowrap">sha256 <code title={view.sha256}>{view.sha256.slice(0, 12)}…</code></span> ·{' '}
         <a className="text-accent underline" href="/jev-models/v1" data-bh-jev-v1-link>v1.0 results</a>
       </p>
-      <p className="bh-muted mt-2 max-w-3xl text-xs leading-relaxed" data-bh-jev-revision><b className="text-gray-200">Revision v1.2.</b> {view.revisionNote}</p>
     </header>
 
     <JevModelsV12Board view={view}>
@@ -56,7 +55,7 @@ export default async function JevModelsPage() {
         {jev && jev.key !== lead.key && <li><b>{jev.display}</b> is #{rankOf(jev.key)} at {one(jev.main)}, {one(gap(lead.main, jev.main))} points behind.</li>}
         {bestOpen && bestOpen.key !== lead.key && <li>Open rebuilds of Jev appeared within days. The best of them, <b>{bestOpen.display}</b>, is #{rankOf(bestOpen.key)} at {one(bestOpen.main)} — <span data-bh-jev12-gap>{one(gap(lead.main, bestOpen.main))} points behind</span>: more speed and a lower (estimated) price, less intelligence and calibration.</li>}
         {topInt && topInt.key !== lead.key && <li><b>{topInt.display}</b> has the highest Intelligence ({one(topInt.axes.intelligence)}) but places #{rankOf(topInt.key)}: its cost score is {one(topInt.axes.cost)} (<CostValue r={topInt} /> per 1,000 decisions), and the geometric mean does not let accuracy buy that back.</li>}
-        {view.partial.length > 0 && <li>{view.partial.map((r) => short(r.display) + (r.key.endsWith('-tools') ? ' (options as tools)' : '')).join(', ')} did not finish every tier in time; they are shown below the ranking as partial runs, without a rank.</li>}
+        {view.partial.length > 0 && <li>{view.partial.map((r) => short(r.display)).join(', ')} did not finish every tier in time; they are shown below the ranking as partial runs, without a rank.</li>}
       </ul>
     </section>}
     </JevModelsV12Board>
@@ -86,6 +85,7 @@ export default async function JevModelsPage() {
       <summary className="cursor-pointer text-sm font-semibold">Method and tiers</summary>
       <div className="bh-muted mt-4 space-y-3 text-sm">
         <p>{view.scoring.jevbench_score}</p>
+        <p data-bh-jev-revision><b className="text-gray-200">Revision v1.2.</b> {view.revisionNote}</p>
         <ul className="list-disc space-y-1.5 pl-5">{(['easy', 'standard', 'judge'] as const).map((t) => <li key={t}><b className="text-gray-200">{t}</b>: {v11.tierNotes[t]}</li>)}
           <li><b className="text-gray-200">hard</b>: {view.scoring.hard_tier}</li></ul>
         <p>Every system sees the same state, instructions, rubric and exact label set; only the transport differs. Requests go out one at a time with no retries, so latency includes the network. Estimated costs are hosted-provider prices for the same weights or size class and are marked &ldquo;est.&rdquo; — hover one for its basis, or see <a className="text-accent underline" href="#jev-costs">how costs are estimated</a>. Every system has a price; none gets a free 100.</p>

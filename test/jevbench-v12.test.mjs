@@ -65,3 +65,21 @@ test('Jev chart names wrap on phones and only truncate at the desktop breakpoint
   assert.match(source, /min-w-0 md:truncate sm:col-start-2/);
   assert.doesNotMatch(source, /min-w-0 truncate sm:col-start-2/);
 });
+
+// Fable pass 24 (2026-09-19): the Jev page's presentational rules, checked at the source so a refactor cannot undo them silently.
+test('Jev page pass-24 rules: no stretched presets, wrapping I/C/S/K line on phones, $ per 1,000 before the tiers, one one-liner', async () => {
+  const cmp = await readFile(new URL('../components/JevModelsV12.tsx', import.meta.url), 'utf8');
+  const page = await readFile(new URL('../app/jev-models/page.tsx', import.meta.url), 'utf8');
+  const css = await readFile(new URL('../app/globals.css', import.meta.url), 'utf8');
+  assert.match(cmp, /grid-cols-2 gap-2 lg:grid-cols-6 lg:items-start/, 'F-126: preset buttons must not stretch to the open Custom panel');
+  assert.match(cmp, /row-start-3 mt-0\.5 min-w-0 font-mono text-\[10\.5px\] sm:whitespace-nowrap/, 'F-127: the axis line wraps below sm');
+  assert.doesNotMatch(cmp, /row-start-3 mt-0\.5 whitespace-nowrap/, 'F-127');
+  assert.ok(cmp.indexOf('<H c="usd" label="$ per 1,000"') < cmp.indexOf('{TIER_ORDER.map((t) => <H key={t}'), 'F-129: $ per 1,000 sits right after the axes');
+  assert.match(cmp, /sub="official" hero/, 'F-129: a one-word header sub');
+  assert.match(cmp, /cfg !== r\.author/, 'F-130: the config line is not the author repeated');
+  assert.match(cmp, /"openjev-razorback16" \? "OpenJev \(razorback16\)"/, 'F-133');
+  assert.doesNotMatch(page, /data-bh-jev12-score-line/, 'F-132: the one-liner lives in the chart only');
+  assert.ok(page.indexOf('data-bh-jev-revision') > page.indexOf('id="method"'), 'F-132: the revision note sits in Method and tiers');
+  assert.doesNotMatch(page, /' \(options as tools\)'/, 'F-131');
+  assert.match(css, /\.bh-jev11-partial > \.bh-jev-sticky \{ opacity: 1;/, 'F-128');
+});

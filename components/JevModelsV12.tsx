@@ -28,7 +28,7 @@ const TYPE: Record<string, { label: string; v: string }> = {
 };
 const typeVar = (cls: string) => ({ ["--jev-t" as string]: `var(${(TYPE[cls] ?? TYPE["llm-baseline"]).v})` });
 const chartName = (r: JevV12Row) => r.key === "gpt-5.6-luna" ? "GPT-5.6 Luna (low)" : r.key.endsWith("-tools") ? "Needle 3, options as tools"
-  : r.key === "open-alternative-jev" ? "open-alternative-jev (Qwen3.5-4B)" : r.key === "semif-qwen3.5-4b" ? "SemIf (Qwen3.5-4B)" : short(r.display);
+  : r.key === "openjev-razorback16" ? "OpenJev (razorback16)" : r.key === "open-alternative-jev" ? "open-alternative-jev (Qwen3.5-4B)" : r.key === "semif-qwen3.5-4b" ? "SemIf (Qwen3.5-4B)" : short(r.display);
 
 /** $ per 1,000 decisions: four decimals below one cent so e.g. $0.0045 and $0.0092 stay distinguishable. */
 export const usdText = (x: number) => `$${x.toFixed(x < 0.01 ? 4 : 3)}`;
@@ -69,7 +69,7 @@ function Controls({ w, raw, setPreset, setRaw, reset }: { w: JevWeights4; raw: J
         : <span className="flex flex-wrap items-center gap-2"><span className="bh-jevc-notdefault" role="status" data-bh-jevc-badge="not-default">⚠ Not the default — not the {SCORE_NAME}</span>
             <button type="button" className="bh-button min-h-9 text-sm font-semibold" onClick={reset} data-bh-jevc-reset>Reset to the {SCORE_NAME}</button></span>}
     </div>
-    <div className="mt-3 grid grid-cols-2 gap-2 lg:grid-cols-6" role="group" aria-label="Weighting presets">
+    <div className="mt-3 grid grid-cols-2 gap-2 lg:grid-cols-6 lg:items-start" role="group" aria-label="Weighting presets">
       {PRESETS.map((p) => <button key={p.id} type="button" className="bh-jevc-preset" aria-pressed={sameWeights(p.w, w)} aria-label={p.title} onClick={() => setPreset(p.w)} data-bh-jevc-preset={p.id}>
         <span className="block text-[13px] font-semibold">{p.name}</span>
         <span className="bh-muted block text-[12px] tabular">{p.ratio}{p === DEFAULT_PRESET ? " · default" : ""}</span></button>)}
@@ -124,7 +124,7 @@ function ScoreChart({ rows, partial, w, view }: { rows: Row[]; partial: Row[]; w
             {s !== null && <span className={`bh-jevc-bar ${r.ranked ? "" : "is-partial"}`} style={{ width: `${Math.max(0, Math.min(100, s))}%` }} />}
           </span>
           <b className="tabular col-start-3 row-span-2 row-start-1 self-center text-right text-base sm:col-start-4 sm:row-span-1 sm:text-lg" data-bh-jev12-main={s === null ? "" : s.toFixed(3)}>{one(s)}</b>
-          <span className="bh-muted col-start-2 row-start-3 mt-0.5 whitespace-nowrap font-mono text-[10.5px] sm:col-start-5 sm:row-start-1 sm:mt-0 sm:grid sm:grid-cols-[1fr_1fr_1fr_1fr_2.1fr] sm:text-right sm:text-[12px]" data-bh-jevc-subs>
+          <span className="bh-muted col-start-2 row-start-3 mt-0.5 min-w-0 font-mono text-[10.5px] sm:whitespace-nowrap sm:col-start-5 sm:row-start-1 sm:mt-0 sm:grid sm:grid-cols-[1fr_1fr_1fr_1fr_2.1fr] sm:text-right sm:text-[12px]" data-bh-jevc-subs>
             <span className="sm:hidden">I </span><span>{f0(r.axes.intelligence)}</span><span className="sm:hidden"> · C </span><span title={r.calibrationNote ?? undefined}>{f0(r.axes.calibration)}</span>
             <span className="sm:hidden"> · S </span><span>{f0(r.axes.speed)}</span><span className="sm:hidden"> · K </span><span>{f0(r.axes.cost)}</span>
             <span className="sm:hidden"> · </span><span title={r.costBasis} data-bh-jevc-usd>{`${r.costKind === "estimate" ? "~" : ""}${usdText(r.usd)}`}{r.costKind === "estimate" ? " est." : ""}</span>
@@ -176,17 +176,17 @@ function Table({ view, rows, partialRows, w }: { view: JevV12View; rows: Row[]; 
     <td className="bh-muted tabular">{r.rank ?? ""}{!d.official && r.rank !== null && <Delta d={r.delta} />}</td>
     <th scope="row" className="bh-jev-sticky text-left font-normal"><span className="bh-muted block text-[11px] leading-tight">by {r.author}</span>
       <span className="block font-semibold leading-snug"><ProjectLink r={r}>{short(r.display)}</ProjectLink>{r.footnote ? <sup>†</sup> : null}</span>
-      {r.display !== short(r.display) && <span className="bh-muted block text-[11px] leading-tight">{r.display.slice(short(r.display).length).replace(/^[ ,]*\(?|\)$/g, "")}</span>}
+      {(() => { const cfg = r.display.slice(short(r.display).length).replace(/^[ ,]*\(?|\)$/g, ""); return cfg && cfg !== r.author ? <span className="bh-muted block text-[11px] leading-tight">{cfg}</span> : null; })()}
       {!r.ranked && <span className="bh-thin-tag mt-1 inline-block">partial run · not ranked</span>}</th>
     <td className="tabular"><b className="text-lg" data-bh-jevc-cell-score>{one(r.score)}</b>{!d.official && <span className="bh-muted block text-[11px]" data-bh-jevc-cell-official>official {one(r.official)}</span>}</td>
     <td className="tabular text-[13px]">{one(r.axes.intelligence)}</td>
     <td className="tabular text-[13px]">{r.axes.calibration === null ? <span className="bh-muted text-[12px]" title={r.calibrationNote ?? undefined} data-bh-jev12-no-dist>none (label only)</span> : one(r.axes.calibration)}</td>
     <td className="tabular text-[13px]">{one(r.axes.speed)}</td><td className="tabular text-[13px]">{one(r.axes.cost)}</td>
+    <td className="tabular"><CostValue r={r} /></td>
     {TIER_ORDER.map((t) => <td key={t} className="tabular">{pct(r.tiers[t])}</td>)}
     <td className="tabular" title={`${r.endpoint}. Adjustment: ${r.adjustment}.`} data-bh-jev12-latency>
       {sec(r.p50)} <span className="bh-muted">raw</span>{r.p50Adj !== r.p50 && <span className="bh-muted block text-[11px]">→ {sec(r.p50Adj)} adjusted</span>}
       <span className="bh-muted block text-[11px]">p95 {sec(r.p95)} raw{r.p95Adj !== r.p95 ? ` → ${sec(r.p95Adj)}` : ""}</span></td>
-    <td className="tabular"><CostValue r={r} /></td>
     <td className="text-[12px]" title={r.endpoint}>{r.endpointKind === "api" ? "production API" : r.endpointKind === "gpu" ? "our RunPod GPU" : r.endpointKind === "demo" ? "author's demo server" : "our CPU"}</td>
   </tr>;
   const notes = [...view.ranked, ...view.partial].filter((r) => r.footnote);
@@ -200,11 +200,12 @@ function Table({ view, rows, partialRows, w }: { view: JevV12View; rows: Row[]; 
           <th scope="col"><span className="sr-only">Rank</span>#</th>
           <th scope="col" className="bh-jev-sticky">System</th>
           {d.official
-            ? <H c="main" label={SCORE_NAME} sub="official · 25 % each, geometric" hero />
+            ? <H c="main" label={SCORE_NAME} sub="official" hero />
             : <H c="main" label={d.preset ? d.short : `Custom ${d.ratio}`} sub={`${d.ratio} · not the official score`} hero />}
           {AXES.map((k) => <H key={k} c={k} label={AXIS_LABEL[k]} sub={`${eff[k]} %`} />)}
+          <H c="usd" label="$ per 1,000" sub="decisions" />
           {TIER_ORDER.map((t) => <H key={t} c={t} label={TIER_LABEL[t]} sub={`${view.tierCounts[t]} dec. · ${Math.round(view.tierWeights[t] * 100)} %`} />)}
-          <H c="p50" label="Latency" sub="p50 · p95, raw → adjusted" /><H c="usd" label="$ per 1,000" sub="decisions" />
+          <H c="p50" label="Latency" sub="p50 · p95, raw → adjusted" />
           <th scope="col" className="whitespace-nowrap text-[12px]">Endpoint</th>
         </tr></thead>
         <tbody>

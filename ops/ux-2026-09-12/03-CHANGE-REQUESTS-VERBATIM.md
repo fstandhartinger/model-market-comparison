@@ -1194,6 +1194,34 @@ Florian, Claude Code chat, 19 Sep 2026 ~12:00 UTC, verbatim:
 > And second thought, but if not easy, we don't have to do it: if our tasks can easily be categorized into different topics (e.g. math, coding, reasoning, science, etc) we could even show nice radar charts that let the users know which jev like model is good in which category of tasks.
 
 
+## CR-20260919f (JevBench page) → CR-91 — JevBench v1.1.3: the GPU round's rows (data only, page stays WORK IN PROGRESS)
+
+<!-- Numbering note (loop, Fable pass 24, 2026-09-19 ~16:40 UTC): this file's "CR-91" label collides with the committed CR-91 (= JevBench v1.2 page data, 769c214, renumbered from a mis-numbered CR-89). Both are superseded by CR-92: the v1.2 final artifact carries five of these six GPU-round rows (SemIf, open-alternative-jev in the author's order, system-one on Qwen3-8B, Bespoke Nimble 9B, OpenJev razorback16); the reversed-order open-alternative-jev row was dropped by CR-92.3. No ledger rows seeded; the v1.1.3 artifact is kept next to this file for the record. -->
+
+Florian, 19 Sep 2026, verbatim (job brief of `~/jobs/jevbench-gpu-round-20260919`):
+
+> I also think we should then run another round of benchmarks, this time including some of the models we couldn't evaluate yet because they need a GPU. You can use up to 15 € of runpod budget for testing these models via runpod.
+
+Supervisor notes (not Florian's words):
+- **The measurement is done**; nothing here asks the loop to run a model. v1.1.3 = the frozen v1.1 task set (314 decisions) and the
+  v1.1.2 scoring, unchanged, plus six GPU-round rows: OpenJev on DiffusionGemma 26B-A4B (razorback16), SemIf (Qwen3.5-4B),
+  open-alternative-jev (now complete, replacing its 6-decision partial v1.1 row), open-alternative-jev with the author's yes/no order
+  (post-hoc, asterisked like Needle 3's tools mode), system-one on Qwen3-8B (Sean Goedecke), Bespoke Nimble 9B. v1.1.2 rows are byte-identical in
+  content; only `rank_under` changes. Source: github.com/fstandhartinger/jevbench tag `v1.1.3`.
+- `jevbench-v1.1.3-results.json` here keeps `protocol: jevbench::v1.1` and passes `lib/jevbench-v11.mjs` `validateJevbenchV11` unchanged
+  (checked 19 Sep ~12:30 UTC). New optional fields per row: `round`, `posthoc`, `serving`, `repo_commit`, `speed.hardware`,
+  `speed.measured_where`, `speed.gpu_side` (p50/p95 with the client on the GPU, and answer agreement), `gpu_rental_for_this_run`.
+- **CR-91.1** Page data: if the page still shows v1.1.x when the loop gets here, switch `/jev-models` to this artifact (suggested home
+  `data/raw/benchmarks/jevbench/v1.1/jevbench-v1.1.3-results.json`, update `JEVBENCH_V11_ARTIFACT`/`SHA256`). **If JevBench v1.2
+  (job `jevbench-v1-2-hard-20260919`, CR-88 and after) has already landed, skip CR-91.1**: that job carries these rows into v1.2.
+- **CR-91.2** GPU rows get a small "(GPU)" tag and a tooltip with `speed.hardware` + `speed.measured_where`; `posthoc == true` rows get the `*`
+  and their `note`, as Needle 3 tools mode does.
+- **Do not** remove the WORK IN PROGRESS banner or re-add the menu link (CR-88). No posting.
+- Acceptance: every number read from the JSON; a reviewer can recompute any Main Score from the three sub-scores; `validateJevbenchV11` passes.
+
+Files: `ops/ux-2026-09-12/jevbench/v1.1.3/` (artifact, charts, this CR).
+
+
 ## CR-20260919g (JevBench page) → CR-92 — JevBench v1.2 final: the JevBench Score is the default; WIP banner off, page back in menu + sitemap
 
 Florian, Claude Code chat, 19 Sep 2026 ~13:20 UTC, verbatim, German (after using the JevBench Score Lab):
