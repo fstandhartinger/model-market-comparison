@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "verified_at": "2026-09-18",
+  "verified_at": "2026-09-19",
   "entries": [
     {
       "id": "aa-aime::2025",
@@ -9393,6 +9393,73 @@
           "sha256": "913c4fc57aa01dcf10be44564f54d7d90acdbcc4b79ad818762c3365e4f790cb",
           "fetched_at": "2026-09-19T04:30:31.000000+00:00",
           "excerpt": "MIT License — aisa-group/PostTrainBench harness repository."
+        }
+      ]
+    },
+    {
+      "id": "jevbench::v1",
+      "name": "JevBench v1",
+      "version": "v1",
+      "version_status": "published",
+      "family": "jevbench",
+      "category": "Other",
+      "one_sentence_description": "Measures typed decision models - state plus a bounded rubric in, a calibrated typed answer out - on accuracy, calibration, schema validity, paraphrase consistency, latency and price over 242 fixed decisions in six families.",
+      "scoring": {
+        "metric": "Argmax accuracy over the exact label set, across all 242 decisions",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "One headline number does not describe this benchmark. Every row also carries multi-class Brier (sum over the exact label set), top-label ECE in 10 equal-width bins, schema validity, operational success, paraphrase same-answer and both-correct rates, p50/p95 end-to-end latency at concurrency 1, and USD per 1,000 decisions. Native distributions and probabilities an instruction model writes out under a JSON schema are separate probability sources and are labelled as such; they are never pooled into one calibration claim. A changed task set, prompt, adapter or scoring rule is a new identity, not a v1 update. Our own runs are basis=measured; USD per 1,000 decisions is basis=derived (provider-reported token usage × the provider's published tariff read on the run day). The results live on /jev-models from the committed artifact, not in the model-score table: the systems are typed-decision models, mostly outside the model catalog, and v1 is a pilot of 242 decisions."
+      },
+      "maintainer": "Benchmark Heaven",
+      "source_type": "github",
+      "primary_url": "https://github.com/fstandhartinger/jevbench",
+      "publication_urls": [
+        {
+          "url": "https://github.com/fstandhartinger/jevbench",
+          "type": "github",
+          "role": "MIT harness, the 72 published decisions, the frozen dataset manifest and the results artifact (Benchmark Heaven is the maintainer)"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/fstandhartinger/jevbench/main/results/jevbench-v1-results.json",
+          "type": "github",
+          "role": "Publication-safe results artifact (aggregates only), byte-identical to data/raw/benchmarks/jevbench/v1/jevbench-v1-results.json"
+        },
+        {
+          "url": "https://benchmarkheaven.com/jev-models",
+          "type": "official_leaderboard",
+          "role": "Published results page for this benchmark (our own page)"
+        }
+      ],
+      "how_to_collect": {
+        "command": "git clone https://github.com/fstandhartinger/jevbench && cd jevbench && python -m jevbench.cli run --tasks datasets/public/original.jsonl --adapter typesafe --model jev-latest --key-env TYPESAFE_API_KEY --price-in-per-m 0.042 --price-out-per-m 0 --results RUN/results.jsonl --raw-dir RUN/raw --ledger RUN/ledger.jsonl --cap-usd 15 --manifest RUN/manifest.json",
+        "format": "JSONL per-decision records aggregated into results/jevbench-v1-results.json",
+        "locator": "results/jevbench-v1-results.json -> systems[].overall.accuracy for the headline; systems[].by_cohort and systems[].by_family for the breakdowns; every value carries its own denominator.",
+        "version_guard": "The dataset manifest pins a SHA-256 per split. A run whose dataset_hash does not match the v1 manifest is not a v1 result. The 24 held-out decisions are not in the public repository, so a third party reproducing from the public split alone measures the 72-decision public cohort, which is reported separately for exactly that reason.",
+        "notes": "Serial, one request at a time, no retries, from a Hetzner server in Germany, so latency includes the network. Runs stop on 401/403/429 or three consecutive infrastructure errors and the partial run is kept as partial. Never rank an incomplete run against a complete one. No collector scrapes this: a new run produces a new artifact, which is committed under data/raw/benchmarks/jevbench/<version>/ and validated by lib/jevbench.mjs (test/jevbench.test.mjs)."
+      },
+      "update_cadence": {
+        "source_schedule": "On demand, when a new Jev-class system becomes runnable. New entrants become v1.1 rather than changing v1's cohort.",
+        "check_recommendation": "On demand when a Jev-class system becomes runnable or an author asks for a rerun (our own benchmark; no external schedule)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Pilot of 242 decisions: the top complete runs sit at 95-97% with overlapping intervals, so the headline accuracy is close to its ceiling; calibration, cost and latency still separate them. Not declared saturated for v1."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-19",
+      "last_verified": "2026-09-19",
+      "evidence": [
+        {
+          "url": "https://raw.githubusercontent.com/fstandhartinger/jevbench/main/results/jevbench-v1-results.json",
+          "file": "data/raw/benchmarks/jevbench/v1/jevbench-v1-results.json",
+          "sha256": "38fc5f1d6fd8bda970c6f4a918492d67370e9e764477a302611419a97fb0bd53",
+          "fetched_at": "2026-09-19T08:40:00+00:00",
+          "excerpt": "\"benchmark\": \"JevBench v1\", \"protocol\": \"jevbench::v1\", \"n_decisions_per_model\": 242, \"owner\": \"Benchmark Heaven (benchmarkheaven.com) - our own independent benchmark\" — the public repo copy and the committed copy have the same sha256."
         }
       ]
     }

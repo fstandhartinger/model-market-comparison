@@ -430,3 +430,9 @@ details[open] > .bh-collapsible-grid { display: grid; }
    carries a thin halo in the cell colour. */
 .bh-matrix-bar { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 14px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 14px), transparent); }
 .bh-matrix-link .tabular { text-shadow: 0 0 2px var(--surface), 0 0 2px var(--surface); }
+
+/* CR-84: /jev-models table — the system column stays visible while the metrics scroll inside the table's own container. */
+.bh-jev-table th, .bh-jev-table td { vertical-align: top; }
+.bh-jev-table .bh-jev-sticky { position: sticky; left: 0; z-index: 1; background: var(--surface); min-width: 190px; max-width: 240px; }
+.bh-jev-table thead .bh-jev-sticky { background: rgb(var(--ink)); }
+@media (max-width: 639px) { .bh-jev-table .bh-jev-sticky { min-width: 150px; max-width: 170px; } .bh-jev-table th, .bh-jev-table td { padding: 10px; } }

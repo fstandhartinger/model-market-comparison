@@ -1,0 +1,82 @@
+{
+  "_source": "ops/ux-2026-09-12/jevbench/AVAILABILITY.md (supervisor's JevBench job, 2026-09-19), 'Not measured, with the reason' table, text verbatim",
+  "protocol": "jevbench::v1",
+  "note": "An exclusion here is an availability fact about our run, never a quality claim about the project.",
+  "not_measured": [
+    {
+      "candidate": "open-alternative-jev",
+      "author": "IkerMoel",
+      "reason": "Reached, and it answers correctly - but its Hugging Face Space runs on ZeroGPU, whose free quota ran out after a handful of decisions, anonymously and again signed in with our own account. The Space's own message points at a paid Hugging Face PRO subscription; we do not buy one without Florian. Running the Qwen3.5-4B weights ourselves needs about 8 GB, over this job's 4 GB bound. Six answers are kept as evidence of the attempt and are deliberately not in the table."
+    },
+    {
+      "candidate": "Bespoke Nimble 9B",
+      "author": "Bespoke Labs",
+      "reason": "Needs an NVIDIA GPU (~18 GB for the 9B weights, per the README) and there is no public endpoint. Our RunPod API returns HTTP 403 with Cloudflare `error code: 1010`, a bot rejection; we do not change client identity to get past one, so no GPU could be rented."
+    },
+    {
+      "candidate": "SemIf / openjev",
+      "author": "Theodore Lee (TheoLeeCJ)",
+      "reason": "README: \"Python 3.10+, CUDA, and a GPU that can hold a 4B BF16 model\". The alternative is a browser-only WebGPU demo, which is not a programmable endpoint. No GPU available (see above)."
+    },
+    {
+      "candidate": "open-jev",
+      "author": "Dasein Labs",
+      "reason": "MLX on Apple Silicon. The README itself says \"there is no container path because Linux containers cannot reach the Apple GPU\". We have no Apple hardware."
+    },
+    {
+      "candidate": "open-jev",
+      "author": "JoshuaSP",
+      "reason": "DiffusionGemma 26B-A4B measured on an H100 through the author's own Modal account. No public endpoint, no GPU on our side."
+    },
+    {
+      "candidate": "OpenJev",
+      "author": "razorback16 / Codiv",
+      "reason": "README: \"at least 24 GB of memory for the NVFP4 checkpoint\". The hosted route, codiv.ai, returns HTTP 403 to us and we hold no account there."
+    },
+    {
+      "candidate": "mini-jev",
+      "author": "Mikhail Rakutko (r-ms)",
+      "reason": "README: \"~9 GB of disk for the weights … the 4B model needs about 8.5 GB of memory\" plus Apple Silicon or CUDA. Over our 4 GB memory bound and our disk headroom."
+    },
+    {
+      "candidate": "system-one",
+      "author": "Sean Goedecke",
+      "reason": "Frozen Qwen3-8B scored locally; same memory and GPU wall, no public endpoint."
+    },
+    {
+      "candidate": "system-one-gemma",
+      "author": "Akash Kamat",
+      "reason": "The base model is gated: the README requires accepting Google's Gemma licence on Hugging Face first. We do not accept binding terms on Florian's behalf."
+    },
+    {
+      "candidate": "jevlike",
+      "author": "Vincent Wang-Maścianica",
+      "reason": "The released checkpoints are the Doom and chess vision scorers; there is no released general text-decision checkpoint to run against this suite."
+    },
+    {
+      "candidate": "AlexWortega/openjev",
+      "author": "Alex Wortega",
+      "reason": "A three-way NLI head (entailment / contradiction / neutral) plus task-specific heads. Turning that into a distribution over our arbitrary label sets needs an assumption we would then be measuring instead of the model."
+    },
+    {
+      "candidate": "Needle 3",
+      "author": "Cactus Compute",
+      "reason": "Its interface returns a chosen label plus one accept/refuse confidence, not a distribution over the exact label set, and we do not synthesize a distribution from a confidence scalar. Measured separately on the same 78 routing tasks in our earlier head-to-head (`~/jobs/needle3-vs-jev-20260918`): 0/78 category accuracy, ~4.2 s median on the same CPU."
+    },
+    {
+      "candidate": "GLiNER2",
+      "author": "Fastino",
+      "reason": "A multi-label classification head. Its per-label scores are not a categorical posterior over our label set without choosing a normalization, and that choice would drive the calibration number. Kept as a candidate for a later version with a documented mapping."
+    },
+    {
+      "candidate": "Succinct Router 14M",
+      "author": "Pedro Marques",
+      "reason": "A trained router over three fixed GPT settings, not a general typed-decision interface. In `MARKET.md`, not in the suite."
+    },
+    {
+      "candidate": "jev-model-router, Director, Loki",
+      "author": "various",
+      "reason": "Applications built on a decision model, not decision models. In `MARKET.md`."
+    }
+  ]
+}

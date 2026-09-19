@@ -4,6 +4,18 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-19 — JevBench v1: our own benchmark and the "Jev-class models" page
+
+**New page, new registry identity, one new public JSON.** `/jev-models` (nav: More → Jev-class models) shows
+JevBench v1, Benchmark Heaven's own measurement of typed-decision models (Jev and its open rebuilds against small
+instruction models): five independently sortable axes (smart, cheap, fast, reliable, open), no combined score.
+The publication-safe artifact is committed at `data/raw/benchmarks/jevbench/v1/jevbench-v1-results.json`
+(sha256 `38fc5f1d…`, byte-identical to `results/` in github.com/fstandhartinger/jevbench) and served verbatim
+at `GET /api/jevbench` with an `X-Content-SHA256` header. The registry gains `jevbench::v1` (category Other,
+collection status `manual_required`); its results are not joined to catalog models and do not enter any
+composite. `lib/jevbench.mjs` refuses an artifact carrying item text, labels or per-item predictions, and a
+zero price where the route has no billable account.
+
 ## 2026-09-19 — Two new benchmark identities: FrontierSWE v2 and PostTrainBench v1.1
 
 **New versioned benchmark identities, same file locations and API shape.** FrontierSWE v2 joins as
