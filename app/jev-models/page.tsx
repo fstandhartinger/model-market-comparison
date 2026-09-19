@@ -6,6 +6,7 @@ import { JevModelsV12Board, CostValue } from '../../components/JevModelsV12';
 import { JevCostsDisclosure } from '../../components/JevCostsDisclosure';
 import { JevRadars } from '../../components/JevRadars';
 import { readJevbenchV12Topics, jevbenchV12TopicsView } from '../../lib/jevbench-v12-topics.mjs';
+import { readJevbenchV12Tasks, jevbenchV12TasksView } from '../../lib/jevbench-v12-tasks.mjs';
 import { previewMetadata } from '../../lib/seo';
 
 // CR-92 (Florian 2026-09-19 ~13:20 UTC): JevBench v1.2 final — the JevBench Score (Intelligence, Calibration, Speed, Cost,
@@ -25,6 +26,7 @@ export default async function JevModelsPage() {
   const v12 = await readJevbenchV12();
   const view = jevbenchV12View(v12);
   const topics = jevbenchV12TopicsView(await readJevbenchV12Topics(v12.artifact));
+  const tasks = jevbenchV12TasksView(await readJevbenchV12Tasks(v12));
   const v11 = jevbenchV11View(await readJevbenchV11());
   const v1 = await readJevbench();
   const [lead] = view.ranked;
@@ -52,7 +54,7 @@ export default async function JevModelsPage() {
       </p>
     </header>
 
-    <JevModelsV12Board view={view}>
+    <JevModelsV12Board view={view} tasks={tasks}>
     {lead && <section className="mt-8 max-w-4xl" aria-labelledby="jev12-headline">
       <h2 id="jev12-headline" className="text-xl font-semibold">What the run says (JevBench Score)</h2>
       <ul className="mt-2 list-disc space-y-1.5 pl-5 text-[15px]" data-bh-jev12-findings>

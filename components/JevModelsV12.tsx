@@ -1,7 +1,9 @@
 "use client";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import type { JevAxis, JevTier12, JevV12Row, JevV12View } from "../lib/jevbench-v12.mjs";
+import type { JevTaskScope, JevTasksView } from "../lib/jevbench-v12-tasks.mjs";
 import { AXES, AXIS_LABEL, DEFAULT_PRESET, DEFAULT_WEIGHTS, PRESETS, SCORE_NAME, describe, isDefault, normalise, parseParams, percents, rerank, sameWeights, toParam, type JevWeights4 } from "../lib/jevbench-v12-weights.mjs";
+import { DEFAULT_TASK_SCOPE, TASK_SCOPES, scopeById, scopeRows, tasksForScope } from "../lib/jevbench-v12-scope.mjs";
 
 // CR-92 (Florian 2026-09-19): JevBench v1.2 final. The JevBench Score = geometric mean of Intelligence, Calibration, Speed
 // and Cost, 25 % each, is the hero; the earlier weightings stay as presets (recomputed the same way) with the unmissable
@@ -249,10 +251,63 @@ function Views({ view }: { view: JevV12View }) {
   </section>;
 }
 
+const TASK_STATUS: Record<string, { symbol: string; label: string; className: string }> = {
+  c: { symbol: "✓", label: "correct", className: "text-[rgb(var(--accent2))]" },
+  w: { symbol: "×", label: "wrong", className: "text-[rgb(var(--warn))]" },
+  f: { symbol: "!", label: "failed (scored wrong)", className: "text-[rgb(var(--warn))]" },
+  n: { symbol: "·", label: "not attempted", className: "bh-muted" },
+};
+
+function TaskGrid({ view, tasks, scope }: { view: JevV12View; tasks: JevTasksView; scope: JevTaskScope }) {
+  const visibleTasks = tasksForScope(tasks.tasks, scope);
+  const systems = [...view.ranked, ...view.partial];
+  const groups = ["easy", "standard", "judge", "hard"] as const;
+  const groupLabel = { easy: "Easy", standard: "Medium (standard)", judge: "Judge", hard: "Hard" };
+  return <section className="mt-8" aria-labelledby="jev12-tasks">
+    <h2 id="jev12-tasks" className="text-xl font-semibold">Which public tasks did each system get right?</h2>
+    <p className="bh-muted mt-1 max-w-4xl text-sm">This view shows public task outcomes only: {visibleTasks.length} of {tasks.tasks.length} public tasks in the selected scope. Held-out and imported task text is not shipped. The pinned artifact has no public-task outcomes for djev yet, so its cells remain unavailable.</p>
+    <details className="bh-panel mt-3 p-4" data-bh-jev12-task-grid>
+      <summary className="cursor-pointer font-semibold">Show {visibleTasks.length} public task outcomes across {systems.length} systems</summary>
+      <div className="bh-table-wrap mt-3 max-h-[38rem] overflow-auto">
+        <table className="bh-table min-w-[64rem] text-[12px]" data-bh-jev12-task-table>
+          <thead><tr>
+            <th scope="col" className="bh-jev-sticky min-w-[13rem] text-left">Task</th>
+            {systems.map((r) => <th key={r.key} scope="col" className="min-w-[5rem] max-w-[7rem] whitespace-normal text-center" title={r.display}>{short(r.display)}</th>)}
+          </tr></thead>
+          <tbody>
+            {groups.flatMap((tier) => {
+              const tierTasks = visibleTasks.filter((task) => task.tier === tier);
+              if (!tierTasks.length) return [];
+              return [
+                <tr key={'group-' + tier}><th scope="rowgroup" colSpan={systems.length + 1} className="bg-[rgb(var(--surface-2))] text-left font-semibold">{groupLabel[tier]} · {tierTasks.length} public tasks</th></tr>,
+                ...tierTasks.map((task) => <tr key={task.id} data-bh-jev12-task={task.id}>
+                  <th scope="row" className="bh-jev-sticky text-left font-normal">
+                    <span className="font-semibold">{task.id}</span>
+                    <span className="bh-muted block text-[11px]">{task.topic} · {task.type}</span>
+                  </th>
+                  {systems.map((r) => {
+                    const outcome = tasks.systems[r.key]?.outcomes[task.id];
+                    if (!outcome) return <td key={r.key} className="bh-muted text-center" title={r.key + ': no public outcome in the pinned artifact'} aria-label={r.key + ': no public outcome'}>—</td>;
+                    const meta = TASK_STATUS[outcome.status];
+                    const latency = outcome.latency === null ? 'latency unavailable' : outcome.latency.toFixed(3) + ' s';
+                    return <td key={r.key} className={'text-center font-semibold ' + meta.className} title={task.id + ' · ' + task.tier + ' · ' + task.topic + ' · ' + meta.label + ' · ' + latency} aria-label={r.display + ', ' + task.id + ': ' + meta.label}>{meta.symbol}</td>;
+                  })}
+                </tr>),
+              ];
+            })}
+          </tbody>
+        </table>
+      </div>
+      <p className="bh-muted mt-2 text-xs">✓ correct · × wrong · ! failed (scored wrong) · · not attempted · — no public outcome in the pinned artifact. Task descriptions are intentionally not included; the task id, tier and topic are the published public metadata.</p>
+    </details>
+  </section>;
+}
+
 const presetRaw = (w: JevWeights4): JevWeights4 => ({ intelligence: w.intelligence * 100, calibration: w.calibration * 100, speed: w.speed * 100, cost: w.cost * 100 });
 
-export function JevModelsV12Board({ view, children }: { view: JevV12View; children?: ReactNode }) {
+export function JevModelsV12Board({ view, tasks, children }: { view: JevV12View; tasks?: JevTasksView; children?: ReactNode }) {
   const s = view.scoring;
+  const [scope, setScope] = useState<JevTaskScope>(DEFAULT_TASK_SCOPE);
   const [raw, setRawState] = useState<JevWeights4>(presetRaw(DEFAULT_WEIGHTS));
   const w = useMemo(() => { const n = normalise(raw) ?? DEFAULT_WEIGHTS; return PRESETS.find((p) => sameWeights(p.w, n))?.w ?? n; }, [raw]);
   useEffect(() => { const fromUrl = parseParams(window.location.search); if (!isDefault(fromUrl)) setRawState(presetRaw(fromUrl)); }, []);
@@ -262,15 +317,37 @@ export function JevModelsV12Board({ view, children }: { view: JevV12View; childr
     u.searchParams.delete("preset");
     if (u.href !== window.location.href) window.history.replaceState(window.history.state, "", u.href);
   }, [w]);
-  const { ranked, partial } = useMemo(() => rerank(view.ranked, view.partial, w), [view, w]);
+  const scopedView = useMemo(() => {
+    if (!tasks) return view;
+    const ranked = scopeRows(view.ranked, tasks.systems, scope, DEFAULT_WEIGHTS);
+    const partial = scopeRows(view.partial, tasks.systems, scope, DEFAULT_WEIGHTS);
+    return { ...view, ranked, partial };
+  }, [view, tasks, scope]);
+  const { ranked, partial } = useMemo(() => rerank(scopedView.ranked, scopedView.partial, w), [scopedView, w]);
   const tw = view.tierWeights;
+  const scopeInfo = scopeById(scope);
   return <>
     <div className="mt-6 space-y-4" data-bh-jevc-hero>
-      <ScoreChart rows={ranked} partial={partial} w={w} view={view} />
+      <ScoreChart rows={ranked} partial={partial} w={w} view={scopedView} />
       <Controls w={w} raw={raw} setPreset={(p) => setRawState(presetRaw(p))} setRaw={setRawState} reset={() => setRawState(presetRaw(DEFAULT_WEIGHTS))} />
     </div>
+    {tasks && <section className="bh-panel mt-8 max-w-4xl p-4" aria-labelledby="jev12-difficulty" data-bh-jev12-difficulty data-bh-jev12-scope={scope}>
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <h2 id="jev12-difficulty" className="text-xl font-semibold">Explore by task difficulty</h2>
+          <p className="bh-muted mt-1 max-w-2xl text-sm">All tasks is the published default. Choose an easier scope to see how the ranking changes when your work is mostly straightforward; Intelligence and the JevBench Score are recomputed from the published tier aggregates.</p>
+        </div>
+        {scope !== DEFAULT_TASK_SCOPE && <button type="button" className="bh-button text-sm font-semibold" onClick={() => setScope(DEFAULT_TASK_SCOPE)} data-bh-jev12-scope-reset>Reset to all tasks</button>}
+      </div>
+      <div className="mt-3 flex flex-wrap gap-2" role="group" aria-label="Task difficulty scope">
+        {TASK_SCOPES.map((item) => <button key={item.id} type="button" className="bh-button min-h-10 text-sm font-semibold" aria-pressed={scope === item.id} onClick={() => setScope(item.id)} data-bh-jev12-scope-option={item.id}>{item.label}</button>)}
+      </div>
+      {scope !== DEFAULT_TASK_SCOPE && <p className="mt-3 text-sm font-semibold text-[rgb(var(--warn))]" role="status" data-bh-jev12-scope-warning>⚠ Not the default JevBench setting — showing {scopeInfo.label.toLowerCase()} only; the official all-tasks result remains available via reset.</p>}
+      <p className="bh-muted mt-2 text-xs">Tier mapping: Easy = easy; Medium = standard; Judge and Hard remain in All tasks. The score still includes the published Calibration, Speed and Cost axes.</p>
+    </section>}
     {children}
-    <Table view={view} rows={ranked} partialRows={partial} w={w} />
+    <Table view={scopedView} rows={ranked} partialRows={partial} w={w} />
+    {tasks && <TaskGrid view={scopedView} tasks={tasks} scope={scope} />}
     <section className="bh-panel mt-8 max-w-4xl p-4 text-sm" aria-labelledby="jev12-how" data-bh-jev12-formula>
       <h2 id="jev12-how" className="font-semibold">How the {SCORE_NAME} works</h2>
       <p className="mt-2 text-base"><b>{SCORE_NAME} = (Intelligence × Calibration × Speed × Cost)<sup>1/4</sup></b>, each axis on 0–100 — the geometric mean. A weak axis pulls the score down hard: a strong axis cannot buy it back.</p>
@@ -285,6 +362,6 @@ export function JevModelsV12Board({ view, children }: { view: JevV12View; childr
           {(["jevbench_score", "intelligence", "calibration", "speed", "cost", "ranked", "presets"] as const).map((k) => s[k] && <div key={k}><dt className="inline font-semibold text-gray-200">{k === "jevbench_score" ? SCORE_NAME : k[0].toUpperCase() + k.slice(1)}. </dt><dd className="inline">{s[k]}</dd></div>)}
         </dl></details>
     </section>
-    <Views view={view} />
+    {scope === DEFAULT_TASK_SCOPE ? <Views view={scopedView} /> : <p className="bh-muted mt-8 max-w-4xl text-sm">The weighting comparison table is tied to the published All tasks scope. Reset to All tasks to compare alternate weightings without mixing scopes.</p>}
   </>;
 }

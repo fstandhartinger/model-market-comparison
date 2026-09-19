@@ -1,0 +1,12 @@
+export type JevTaskTier = 'easy' | 'standard' | 'judge' | 'hard';
+export type JevTaskScope = 'all' | 'easy-medium' | 'easy';
+export type JevTask = { id: string; tier: JevTaskTier; topic: string; type: string };
+export type JevTaskOutcome = { status: 'c' | 'w' | 'f' | 'n'; latency: number | null };
+export type JevTaskTierStats = { correct: number; wrong: number; failed: number; notAttempted: number; attempted: number; accuracy: number | null };
+export type JevTaskSystem = { display: string; partial: boolean; byTier: Record<JevTaskTier, JevTaskTierStats>; outcomes: Record<string, JevTaskOutcome> };
+export type JevTasksView = { sha256: string; revision: string; note: string; taskCounts: Record<JevTaskTier, { public: number }>; tasks: JevTask[]; systems: Record<string, JevTaskSystem> };
+export const JEVBENCH_V12_TASKS_ARTIFACT: string;
+export const JEVBENCH_V12_TASKS_SHA256: string;
+export function validateJevbenchV12Tasks(a: any, v12: any): any;
+export function readJevbenchV12Tasks(v12: any, root?: string): Promise<{ artifact: any; bytes: Buffer; sha256: string }>;
+export function jevbenchV12TasksView(data: { artifact: any; sha256: string }): JevTasksView;
