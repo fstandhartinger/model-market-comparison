@@ -86,7 +86,16 @@ test('RSI-Exam rows read like the rest of the page: a niche tier tag and the har
   assert.equal(cohortLabel('claude code'), 'Claude Code', 'the same harness must not appear under two spellings on one page');
   assert.equal(cohortLabel('codex'), 'Codex');
   assert.equal(cohortLabel('kimi cli'), 'Kimi CLI');
-  assert.equal(cohortLabel('musecode'), 'musecode', 'an unlisted harness stays as the source spells it');
+  // Review gate 20260920T014003Z: one harness, one name. RSI-Exam's lower-case tokens are the third
+  // spelling of harnesses our own catalog already publishes under a product name — Artificial Analysis
+  // and RealSWE carry "Grok Build" and "Muse Code", FrontierCode carries the slug "grok-build", and
+  // RSI-Exam's own setup table writes "Grok Build" and "Antigravity CLI". Each maps to the published
+  // name, so a reader never meets the same harness twice under different labels.
+  assert.equal(cohortLabel('musecode'), 'Muse Code');
+  assert.equal(cohortLabel('grok'), 'Grok Build');
+  assert.equal(cohortLabel('grok-build'), 'Grok Build');
+  assert.equal(cohortLabel('antigravity'), 'Antigravity CLI');
+  assert.equal(cohortLabel('proximus'), 'proximus', 'an unlisted harness stays as the source spells it');
   assert.equal(JSON.parse(readFileSync('data/benchmark-taxonomy.json', 'utf8')).tiers['rsi-exam'], 'niche');
 });
 
