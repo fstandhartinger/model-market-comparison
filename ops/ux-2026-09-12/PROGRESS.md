@@ -5775,9 +5775,11 @@ on the canonical host, 1440/390 × light/dark: 93 shots + 2 element shots in `/o
   accessible label. F-145 was left as the separate Fable implementation and independently checked. F-146 adds the generated Step-5 vendor
   claim count and visible `developer's claim` labels to all 40 self-reported values. The CR-100 toast fix from the authorized foreign worker
   (`3aef266`) was preserved unchanged.
-- Commits pushed: `16c65c9`, `db1c76e`, `6b5b8ce`, `7752df3` (the foreign worker's `3aef266` was already on `main`). The final deployed
-  application revision for this UI slice is `7752df33be5ab0403260ef8938cdf0a79ff19f2a`; both `https://benchmarkheaven.com` and the Sandy
-  host publish that revision in `/api/meta` and `X-Benchmark-Heaven-Revision`.
+- Commits pushed: `16c65c9`, `db1c76e`, `6b5b8ce`, `7752df3` (the foreign worker's `3aef266` was already on `main`). The UI slice was
+  independently verified live at application revision `7752df33be5ab0403260ef8938cdf0a79ff19f2a`; both
+  `https://benchmarkheaven.com` and the Sandy host published that revision in `/api/meta` and `X-Benchmark-Heaven-Revision` at capture time.
+  The authorized CR-101 worker then advanced `main` with verifier-only commits `540d271` and `8dd0ecb`; those changes were preserved and do
+  not alter the product runtime covered by this evidence.
 - Evidence: `/opt/benchmarkheaven/state/ux-evidence/iter136-fable27/`. The independent Kimi K3 review used the canonical and Sandy hosts,
   1440/390 px and light/dark contexts, and returned the required final line `VERDICT: PASS`: `verify-fable-pass27.mjs` 48/48 per host,
   `verify-cr-96.mjs` 67/67 per host, and `verify-cr-97.mjs` 115/115 per host — 230/230 per host, 460/460 combined. Its DOM probe also
