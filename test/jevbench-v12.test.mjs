@@ -17,12 +17,12 @@ test('the committed v1.2 artifact is the tagged public one and validates; the Sc
   // 534 decisions counted once and priced once). No measurement changed and no rank changed; scores move by <= 0.3.
   // CR-97: v1.2.4 takes classifier.dev out of the ranking — it runs Jev — so Jev is #1 and every row below moves up one.
   const all = v.ranked.map((r) => [r.key, Number(r.main.toFixed(1))]);
-  assert.deepEqual(all, [['jev-1.13.0', 75.4], ['semif-qwen3.5-4b', 74.7], ['djev', 74.3], ['laya', 70.1],
-    ['open-alternative-jev', 69.8], ['system-one-open', 68.9], ['openjev-razorback16', 67.7], ['jeff', 66.9], ['kev-0.6b', 66.7],
-    ['openjev-sglang', 66.3], ['openjev-verdict', 66.2], ['gpt-5.6-luna', 66.2], ['open-jev-deberta-v3-large', 64.6],
+  assert.deepEqual(all, [['jev-1.13.0', 75.4], ['semif-qwen3.5-4b', 74.7], ['djev', 74.3], ['openjev-verdict-1.4', 72.5], ['laya', 70.1],
+    ['open-alternative-jev', 69.8], ['system-one-open', 68.9], ['openjev-razorback16', 67.7], ['simplejev-qwen3.8-27b', 67.3], ['jeff', 66.9], ['kev-0.6b', 66.7],
+    ['openjev-sglang', 66.3], ['openjev-verdict', 66.2], ['gpt-5.6-luna', 66.2], ['open-jev-deberta-v3-large', 64.6], ['simplejev-qwen3.6-35b-a3b', 63.8],
     ['nimble-9b', 63.7], ['kev-0.5b', 63.1], ['kev-4b', 62.2], ['gemini-3.1-flash-lite', 60.9], ['kev-8b', 58.3],
     ['deepseek-flash', 57.8], ['system-one-sg', 56.6], ['gliner2', 53.0]]);
-  assert.equal(v.revision, 'v1.2.5');
+  assert.equal(v.revision, 'v1.2.6');
   // CR-96: the unit travels with the artifact and names what it is not, so no surface can imply per-token prices.
   assert.equal(v.costUnit.unit, '$ per 1,000 decisions');
   assert.equal(v.costUnit.not_unit, '$ per 1,000 tokens');

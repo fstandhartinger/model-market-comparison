@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { readJevbenchV12, jevbenchV12View } from '../../lib/jevbench-v12.mjs';
 import { readJevbenchV11, jevbenchV11View } from '../../lib/jevbench-v11.mjs';
-import { readJevbench, JEVBENCH_REPO } from '../../lib/jevbench.mjs';
+import { JEVBENCH_REPO } from '../../lib/jevbench.mjs';
 import { JevModelsV12Board, CostValue, CostUnitNote } from '../../components/JevModelsV12';
 import { JevCostsDisclosure } from '../../components/JevCostsDisclosure';
 import { JevRadars } from '../../components/JevRadars';
@@ -31,6 +31,27 @@ const jevCostExample = (view: ReturnType<typeof jevbenchV12View>) => {
   return { tokens: Math.round(Number(tokens)), tariff, cost };
 };
 
+// CR-105 (2026-09-20): availability was re-audited against the public repos/weights and a RunPod GPU attempt.
+// Keep this current list separate from the historical v1 capture: several candidates in that file are now measured.
+const currentNotMeasured = [
+  { candidate: 'open-jev', author: 'Dasein Labs', reason: 'MLX on Apple Silicon only. Its own README says Linux containers cannot reach the Apple GPU, so a RunPod NVIDIA GPU cannot run it.' },
+  { candidate: 'open-jev', author: 'JoshuaSP', reason: 'A DiffusionGemma 26B-A4B serving wrapper rather than new trained weights. It was demonstrated on an H100; no public endpoint exists and no suitable 80 GB RunPod host was available in this round.' },
+  { candidate: 'mini-jev', author: 'Mikhail Rakutko (r-ms)', reason: 'Public weights exist and fit a normal GPU, but the implementation covers Choice/Noul and explicitly does not measure Score. A faithful full-suite adapter would require new interface work rather than a mechanical endpoint adapter.' },
+  { candidate: 'system-one-gemma', author: 'Akash Kamat', reason: 'The adapter is public, but its Gemma base is gated behind Google’s licence terms. We do not accept binding terms on Florian’s behalf.' },
+  { candidate: 'jevlike', author: 'Vincent Wang-Maścianica', reason: 'Only Doom and chess vision checkpoints are released; there is no general text-decision checkpoint for this suite.' },
+  { candidate: 'AlexWortega/openjev', author: 'Alex Wortega', reason: 'Its released NLI and task-specific heads do not define a distribution over an arbitrary supplied label set. Inventing that mapping would measure our assumption.' },
+  { candidate: 'Needle 3', author: 'Cactus Compute', reason: 'Its native response is a chosen label plus one accept/refuse confidence, not a categorical distribution over the supplied labels. The options-as-tools adaptation remains published as a partial run.' },
+  { candidate: 'Succinct Router 14M', author: 'Pedro Marques', reason: 'A router over three fixed GPT settings, not a general typed-decision model.' },
+  { candidate: 'jev-model-router, Director, Loki', author: 'various', reason: 'Applications built on decision models, not decision models themselves.' },
+  { candidate: 'ProgramAsWeights', author: 'ProgramAsWeights', reason: 'The compiler still requires GitHub authentication and the available path would expose held-out rubrics to a third party. No public weights or anonymous endpoint are available.' },
+  { candidate: 'EigenJev', author: 'EigenJev', reason: 'The endpoint requires authentication and no public weights or runnable implementation are published.' },
+  { candidate: 'Decider 2B', author: 'Decider', reason: 'Weights and an adapter exist, but the released FP8/Flash Linear Attention stack needs compatible Hopper-class CUDA kernels. The earlier RTX 3090 attempt failed and no compatible RunPod host was available today.' },
+  { candidate: 'Reflex', author: 'Reflex', reason: 'Weights and an adapter exist, but the released PyTorch 2.9/CUDA 13 runtime was incompatible with the earlier RTX 3090. No compatible RunPod host was available today.' },
+  { candidate: 'NanoJev', author: 'NanoJev', reason: 'Public weights exist, but the server exposes a different schema (including boolean rather than Noul) and lacks the full structured/null contract. It needs substantive compatibility work before a fair full-suite run.' },
+  { candidate: 'LitJev', author: 'LitJev', reason: 'Public code and base weights exist, but the documented run target is an H100 with 80 GB. No suitable RunPod host was available today.' },
+  { candidate: 'SimpleJev RWKV variants', author: 'SimpleJev', reason: 'The public demo exposes RWKV IDs, but it does not identify their exact checkpoints or licences. Without reproducible model provenance, we do not publish benchmark rows for them.' },
+];
+
 export default async function JevModelsPage() {
   const v12 = await readJevbenchV12();
   const view = jevbenchV12View(v12);
@@ -38,7 +59,6 @@ export default async function JevModelsPage() {
   const topics = jevbenchV12TopicsView(await readJevbenchV12Topics(v12.artifact));
   const tasks = jevbenchV12TasksView(await readJevbenchV12Tasks(v12));
   const v11 = jevbenchV11View(await readJevbenchV11());
-  const v1 = await readJevbench();
   const [lead] = view.ranked;
   const rankOf = (key: string) => view.ranked.findIndex((r) => r.key === key) + 1;
   const bestOpen = view.ranked.find((r) => r.cls === 'jev-rebuild');
@@ -53,8 +73,7 @@ export default async function JevModelsPage() {
   });
   const topInt = [...view.ranked].sort((a, b) => (b.axes.intelligence ?? 0) - (a.axes.intelligence ?? 0))[0];
   const [topHonorable] = view.honorable;
-  const measuredKeys = new Set(all.map((r) => short(r.display).toLowerCase()));
-  const notMeasured = (v1.availability.not_measured as { candidate: string; author: string; reason: string }[]).filter((n) => !measuredKeys.has(n.candidate.toLowerCase()));
+  const notMeasured = currentNotMeasured;
   const credits = all.filter((r) => !r.key.endsWith('-tools')).sort((a, b) => a.display.localeCompare(b.display));
   return <>
     <header className="bh-page-head">
