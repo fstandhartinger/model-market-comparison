@@ -4,13 +4,61 @@
 **Last collected:** refreshed daily by `scripts/fetch-mistral-catalog.mjs` (first automated run
 2026-09-14; manual refreshes before: 2026-09-08, 2026-08-26, 2026-07-22, 2026-07-12)
 
+## Update 2026-09-20 — the page stopped publishing API ids (iteration 134)
+
+Between 2026-09-16 and 2026-09-20 Mistral rebuilt `/pricing/api`. Three things changed, and the
+first one had silently frozen this source for four days (`WARN fetch-mistral-catalog: keeping the
+previous snapshot`, last good capture 2026-09-16):
+
+1. **The copy-to-clipboard API id is gone.** No card carries `data-text` any more, so every card
+   parsed without an id and the collector ended in `Mistral pricing: no priced chat models`. The id
+   moved to the Mistral **docs model page** each card links, as the page's single copyable badge
+   (`title="Click to copy: mistral-medium-3-5"`). Note that the id is *not* the docs URL slug —
+   `…/models/model-cards/mistral-medium-3-5-26-04` publishes `mistral-medium-3-5` — so the slug is
+   never used as an id.
+2. **Cached input became a client-side toggle.** `Cached input (/M tokens)` is no longer in the
+   served HTML; the card only declares `data-discounts=["regional","cache"]`.
+3. **Cards gained a first-party taxonomy** (`data-category-slug`), which the collector now needs:
+   the fine-tuned **Classifier API model (3B/8B)** cards carry real `Input`/`Output (/M tokens)`
+   prices, so "priced per million tokens" alone no longer means chat. Before the rebuild they were
+   excluded only because they had no `data-text`.
+
+The collector therefore now works like this:
+
+- Identity is the card's **normalized model name** against the curated snapshot ("Ministral 3 (3B)"
+  = "Ministral 3 3B"), which keeps every curated `api_model_id` — including aliases such as
+  `mistral-large-latest`, which must never become a `model_id`/family identity.
+- A card the snapshot does not name has its id read from the docs model page it links, recorded in
+  `docs_sources` with `reason: "api_id"` and `mapping: "derived"`. A new card with no docs link, or
+  one whose docs page was not resolved, **fails the refresh closed** rather than entering the
+  snapshot unidentified.
+- A row that already published a cached-input price has it re-read from its docs page
+  (`reason: "cache_read"`), so the rebuild costs no coverage. Rows that never had one are not
+  resolved — that would mean eight more third-party pages per daily run, and eight more ways for it
+  to fail closed. **Open:** cached-input coverage for those rows.
+- A resolved docs page must state the **same list prices** as the pricing card, or nothing is
+  published from either.
+- A card is a chat/text model only if its categories include `text-to-text` **and** it has both an
+  `Input (/M tokens)` (Voxtral: `Text Input (per min / per M tok)`) and an `Output (/M tokens)` USD
+  price. OCR (`text-to-text` but priced per 1000 pages), embeddings (`Input` only), classifiers
+  (`classifier-apis`), transcription/TTS (`voice`) and the unpriced Labs endpoints drop out.
+- Hero tiles carry no categories of their own; they still have to agree on price with the catalog
+  entry they repeat.
+- `diff.cache_read_dropped` names any row that lost its cached price anyway, so the loss is never
+  silent.
+
+Live run 2026-09-20: 10 models, all 9 curated rows reproduced with identical ids, names, orgs and
+prices; **GLM 5.3** added (`zai-glm-5-3`, $1.4/$4.4, cached $0.14, both read from
+`docs.mistral.ai/models/zai-glm-5-3`); GLM 5.2 kept its $0.14 cached price; nothing removed.
+
 ## Update 2026-09-14 — executable collector (R9.1)
 `scripts/fetch-mistral-catalog.mjs` + `lib/mistral-catalog.mjs` (tests in
 `test/mistral-catalog.test.mjs`) now do the refresh as the non-fatal daily step
 `fetch-mistral-catalog` in `ops/daily/daily.mjs`. One GET of <https://mistral.ai/pricing/api>
 (`robots.txt`: `Allow: /`); no browser needed.
 
-- Each model is a `<mistral-block-card-model>`; the API id is the copy button's `data-text`.
+- Each model is a `<mistral-block-card-model>`; the API id was the copy button's `data-text`
+  (removed by the 2026-09-20 rebuild above).
 - A card is a chat/text model only if it has both an `Input (/M tokens)` (Voxtral: `Text Input
   (per min / per M tok)`) and an `Output (/M tokens)` USD price. OCR (per 1000 pages),
   embeddings, classifiers, TTS/transcription and unpriced Labs endpoints (Leanstral) drop out by
