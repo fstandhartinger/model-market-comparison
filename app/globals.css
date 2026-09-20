@@ -470,7 +470,7 @@ details[open] > .bh-collapsible-grid { display: grid; }
 .bh-custom-evaluation-toast {
   position: fixed; z-index: 45; right: 1rem; max-width: min(44rem, calc(100vw - 2rem));
   display: flex; align-items: center; gap: .65rem; padding: .55rem .65rem .55rem .85rem;
-  border: 1px solid rgb(var(--line)); border-radius: .65rem; background: rgb(var(--surface)); color: rgb(var(--text));
+  border: 1px solid rgb(var(--line)); border-radius: .65rem; background: var(--surface); color: var(--text);
   box-shadow: 0 12px 35px rgb(0 0 0 / .22); font-size: .82rem; line-height: 1.3;
   font-weight: 400; letter-spacing: normal; text-transform: none;
   animation: bh-offer-in .22s ease-out both;

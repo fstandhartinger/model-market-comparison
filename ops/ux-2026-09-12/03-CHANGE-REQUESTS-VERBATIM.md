@@ -1352,3 +1352,11 @@ Florian, 20 Sep 2026, verbatim:
 > notice it. It should also be possible to click it away, possibly with an option to 'don't show this again.'
 > We could also offer 'consulting,' not just evaluations. However, the toast should also be minimalistic/simple—not too
 > much text; details can be provided on a separate page.
+
+## CR-20260920e (JevBench page) → CR-100 — opaque custom-evaluation toast
+
+Florian, 20 Sep 2026, verbatim:
+> That new toasts background is tranparent, not opaque as it should be. fix it
+
+Supervisor notes (not Florian's words): `--surface` and `--text` are complete hex colours, so the CR-99 toast uses
+them directly rather than wrapping them in `rgb(...)`. The permanent custom-evaluation badge is unchanged.
