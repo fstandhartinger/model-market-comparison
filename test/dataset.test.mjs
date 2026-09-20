@@ -445,8 +445,11 @@ test("GLM-5.2 keeps all qualified source evidence on the reasoning max row", () 
   assert.ok(glm);
   assert.equal(glm.benchmarks.aa_coding_index, 68.8);
   assert.equal(glm.benchmarks.aa_coding_agent_index, 43.3); // 2026-08-26: AA re-scored
-  // 2026-09-13: AA re-scored GLM-5.2 intelligence 38.6 -> 34.
-  assert.equal(glm.benchmarks.aa_intelligence_index, 34);
+  // AA periodically re-scores this row (34 -> 33.7 on 2026-09-20). Pin the attachment to
+  // today's exact source value instead of making normal source churn break publication.
+  const aaGlm = aa.models.find((model) => model.slug === "glm-5-2" && model.name === "GLM-5.2 (max)");
+  assert.ok(aaGlm);
+  assert.equal(glm.benchmarks.aa_intelligence_index, aaGlm.evaluations.artificial_analysis_intelligence_index);
   assert.equal(glm.designarena.frontend?.modelId, "glm-5.2");
   assert.equal(glm.designarena.fullstack?.modelId, "glm-5.2");
   assert.ok(glm.designarena.frontend?.battles >= 500);
