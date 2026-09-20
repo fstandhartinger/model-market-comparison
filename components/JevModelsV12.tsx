@@ -213,7 +213,7 @@ function Table({ view, rows, honorableRows, partialRows, w, scope }: { view: Jev
   const pick = (c: Col) => { if (c === col) setFlip((f) => !f); else { setCol(c); setFlip(false); } };
   const aria = (c: Col) => (c !== col ? "none" : HIGHER[c] !== flip ? "descending" : "ascending");
   const eff = percents(w);
-  const H = ({ c, label, sub, hero }: { c: Col; label: string; sub?: string; hero?: boolean }) => <th scope="col" aria-sort={aria(c)} className={hero ? "min-w-[7.5rem]" : "whitespace-nowrap"}>
+  const H = ({ c, label, sub, hero }: { c: Col; label: string; sub?: string; hero?: boolean }) => <th scope="col" aria-sort={aria(c)} className={hero ? "sm:min-w-[9.5rem]" : "whitespace-nowrap"}>
     <button type="button" data-bh-jev12-sort={c} onClick={() => pick(c)} className={`inline-flex min-h-9 items-center gap-1 rounded px-1 text-left ${col === c ? "text-accent" : ""}`}>
       <span><span className={`block font-semibold ${hero ? "text-[14px]" : "text-[12px]"}`}>{label}</span>{sub && <span className="block text-[11px] font-normal">{sub}</span>}</span>
       <span aria-hidden="true">{col === c ? (aria(c) === "descending" ? "↓" : "↑") : ""}</span></button></th>;
@@ -484,8 +484,8 @@ export function JevModelsV12Board({ view, tasks, children }: { view: JevV12View;
         </div>
         {scope !== DEFAULT_TASK_SCOPE && <button type="button" className="bh-button text-sm font-semibold" onClick={() => setScope(DEFAULT_TASK_SCOPE)} data-bh-jev12-scope-reset>Reset to all tasks</button>}
       </div>
-      <div className="mt-3 flex flex-wrap gap-2" role="group" aria-label="Task difficulty scope">
-        {TASK_SCOPES.map((item) => <button key={item.id} type="button" className="bh-button min-h-10 text-sm font-semibold" aria-pressed={scope === item.id} onClick={() => setScope(item.id)} data-bh-jev12-scope-option={item.id}>{item.label}</button>)}
+      <div className="mt-3 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap" role="group" aria-label="Task difficulty scope">
+        {TASK_SCOPES.map((item) => <button key={item.id} type="button" className="bh-button min-h-10 w-full text-sm font-semibold sm:w-auto" aria-pressed={scope === item.id} onClick={() => setScope(item.id)} data-bh-jev12-scope-option={item.id}>{item.label}</button>)}
       </div>
       {scope !== DEFAULT_TASK_SCOPE && <p className="mt-3 text-sm font-semibold text-[rgb(var(--warn))]" role="status" data-bh-jev12-scope-warning>⚠ Not the default JevBench setting — {scopeInfo.label} tasks; the chart, table and ranking above are recomputed.</p>}
       <p className="bh-muted mt-2 text-xs">Tier mapping: Easy = easy; Medium = standard. Easy scopes change Intelligence only. Hard only measures all four axes on the same hard-tier subset; systems without a hard-tier run are shown as partial and are not ranked.</p>

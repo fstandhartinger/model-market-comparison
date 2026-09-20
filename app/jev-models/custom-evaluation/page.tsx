@@ -16,6 +16,10 @@ export default function CustomEvaluationPage() {
       <p className="bh-eyebrow">JevBench · open source and community-run</p>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">Evaluate Jev-class systems on the data that matters to you</h1>
       <p className="bh-muted mt-3 max-w-2xl text-lg">JevBench is our free, open-source benchmark for the community. You can run the same harness yourself, contribute new systems and tasks, or ask us to help with a custom evaluation.</p>
+      <p className="mt-5 flex flex-wrap gap-3" data-bh-custom-actions>
+        <a className="bh-button border-accent font-semibold text-accent" href={contact}>Email us about your data</a>
+        <a className="bh-button" href="https://github.com/fstandhartinger/jevbench" target="_blank" rel="noopener noreferrer">Run it yourself on GitHub</a>
+      </p>
     </header>
 
     <section className="mt-8" aria-labelledby="custom-what">
@@ -37,7 +41,7 @@ export default function CustomEvaluationPage() {
       <p className="bh-eyebrow">Free and open source</p>
       <h2 id="custom-yourself" className="mt-1 text-xl font-semibold">Do it yourself with JevBench</h2>
       <p className="bh-muted mt-2">Clone <a className="text-accent underline" href="https://github.com/fstandhartinger/jevbench">github.com/fstandhartinger/jevbench</a>, put your labelled decisions in the repository&apos;s JSONL task format, and run the harness with the adapter for your system:</p>
-      <pre className="mt-4 overflow-x-auto rounded-lg border border-line bg-surface p-4 text-xs leading-relaxed"><code>{`git clone https://github.com/fstandhartinger/jevbench.git
+      <pre className="mt-4 whitespace-pre-wrap rounded-lg border border-line bg-surface p-4 text-xs leading-relaxed"><code>{`git clone https://github.com/fstandhartinger/jevbench.git
 cd jevbench
 python -m unittest discover -s tests -v
 
@@ -55,7 +59,7 @@ python -m jevbench.cli summarize --tasks path/to/your-data.jsonl \\
 
     <section className="mt-7" aria-labelledby="custom-contact">
       <h2 id="custom-contact" className="text-xl font-semibold">Start with an email</h2>
-      <p className="bh-muted mt-2">Need custom eval on your data? If you would rather work through it with us, tell us about the task, dataset and decision you need to make. Evaluation and consulting arrangements are discussed by email; we do not present custom work as part of the free open-source project.</p>
+      <p className="bh-muted mt-2">Need custom eval on your data? If you would rather work through it with us, tell us about the task, dataset and decision you need to make. Custom evaluations and consulting are arranged by email.</p>
       <p className="mt-3"><a className="text-accent underline" href={contact}>Email florian.standhartinger@gmail.com to discuss an evaluation</a>.</p>
     </section>
 
