@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from 'react';
 import { humanVersion } from '../lib/version-label';
+import { cohortLabel } from '../lib/benchmark-view.mjs';
 
 type ModelOpt = { id: string; name: string; org: string };
 type AxisOpt = { id: string; name: string; version: string; cohort: string; unit: string; n: number };
@@ -71,7 +72,7 @@ function ModelPredictions({ data }: { data: ModelResponse }) {
                 <tr key={p.target.axisId}>
                   <th scope="row" className="max-w-sm text-left align-top font-medium">
                     {p.target.name}
-                    <p className="bh-muted mt-1 text-xs font-normal">{humanVersion(p.target.version).label} · {p.target.cohort} · {p.target.unit}</p>
+                    <p className="bh-muted mt-1 text-xs font-normal">{humanVersion(p.target.version).label} · {cohortLabel(p.target.cohort)} · {p.target.unit}</p>
                     <p className="bh-muted mt-1 text-xs font-normal">
                       Observed cohort range {p.target.observedRange ? `${fmt(p.target.observedRange[0])}–${fmt(p.target.observedRange[1])} ${p.target.unit}` : '—'}
                     </p>
@@ -102,7 +103,7 @@ function AxisPredictions({ data }: { data: AxisResponse }) {
     <div className="mt-5">
       <div className="my-3 flex flex-wrap items-center gap-3 text-sm">
         <span className="bh-badge">Target</span>
-        <span>{data.axis.name} · {humanVersion(data.axis.version).label} ·{data.axis.cohort} · {data.axis.unit}</span>
+        <span>{data.axis.name} · {humanVersion(data.axis.version).label} ·{cohortLabel(data.axis.cohort)} · {data.axis.unit}</span>
         <span className="bh-muted text-xs">Observed cohort range {data.axis.observedRange ? `${fmt(data.axis.observedRange[0])}–${fmt(data.axis.observedRange[1])} ${data.axis.unit}` : '—'}</span>
         {data.axis.publishedRange ? <span className="bh-muted text-xs">Documented score range {fmt(data.axis.publishedRange[0])}–{fmt(data.axis.publishedRange[1])} {data.axis.unit}; impossible points are omitted, not clamped.</span> : null}
       </div>
@@ -236,7 +237,7 @@ export function BenchmaxxExplorer({ models, axes }: { models: ModelOpt[]; axes: 
             <label htmlFor="bm-axis-select" className="text-sm">Benchmark and version</label>
             <select id="bm-axis-select" className="bh-input mt-1 w-full" value={axisId} onChange={(e) => setAxisId(e.target.value)}>
               {visibleAxes.slice(0, 200).map((a) => (
-                <option key={a.id} value={a.id}>{a.name} · {humanVersion(a.version).label} · {a.cohort}</option>
+                <option key={a.id} value={a.id}>{a.name} · {humanVersion(a.version).label} · {cohortLabel(a.cohort)}</option>
               ))}
             </select>
             {visibleAxes.length > 200 ? <p className="bh-muted mt-1 text-xs">First 200 matches shown — type to narrow the list.</p> : null}

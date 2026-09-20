@@ -99,6 +99,29 @@ test('RSI-Exam rows read like the rest of the page: a niche tier tag and the har
   assert.equal(JSON.parse(readFileSync('data/benchmark-taxonomy.json', 'utf8')).tiers['rsi-exam'], 'niche');
 });
 
+test('One cohort label map for every surface: the view library owns it, the components stop rendering raw slugs', async () => {
+  // Iteration 135 (opencode-kimi sign-off of the 014003Z gate): the matrix labelled its rows, but the
+  // model-page benchmark sheet, its evidence panel, the Benchmaxxing explorer, the radar and the compare
+  // and ranking tables still rendered the raw slug ("· grok"). The map moved to lib/benchmark-view.mjs so
+  // each display site labels identically; the stored cohort stays raw (none of these may re-key an axis).
+  const { cohortLabel } = await import('../lib/benchmark-view.mjs');
+  const matrix = await import('../lib/benchmark-matrix.mjs');
+  assert.equal(matrix.cohortLabel, cohortLabel, 'the matrix re-exports the same function, never its own copy');
+  assert.equal(cohortLabel('musecode'), 'Muse Code');
+  for (const [file, hints] of Object.entries({
+    'components/BenchmarkSheetLazy.tsx': ['cohortLabel(a.cohort)'],
+    'components/BenchmarkEvidence.tsx': ['cohortLabel(axis.cohort)', 'cohortLabel(row.harness)'],
+    'components/BenchmaxxExplorer.tsx': ['cohortLabel(p.target.cohort)', 'cohortLabel(data.axis.cohort)', 'cohortLabel(a.cohort)'],
+    'components/BenchmarkRadar.tsx': ['cohortLabel(a.cohort)'],
+    'components/BenchmarkRanking.tsx': ['cohortLabel(axis.cohort)', 'cohortLabel(e.cohort)'],
+    'components/BenchmarkCompare.tsx': ['cohortLabel(a.cohort)'],
+  })) {
+    const source = readFileSync(file, 'utf8');
+    assert.match(source, /cohortLabel.*benchmark-view\.mjs/, `${file} imports the shared map`);
+    for (const hint of hints) assert.ok(source.includes(hint), `${file} renders ${hint}`);
+  }
+});
+
 test('RSI-Exam values are shown as the source publishes them, not as a share of tasks solved', async () => {
   const { formatValue, scoreTypeText, compatibleRow } = await import('../lib/benchmark-matrix.mjs');
   const row = { unit: 'points', range: [0, 1], higherBetter: true };

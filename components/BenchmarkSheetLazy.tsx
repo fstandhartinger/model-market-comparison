@@ -2,6 +2,7 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import Link from 'next/link';
 import type { BenchmarkView } from '../lib/benchmark-view.mjs';
+import { cohortLabel } from '../lib/benchmark-view.mjs';
 import { SourceScore } from './BenchmarkEvidence';
 import { humanVersion } from '../lib/version-label';
 
@@ -74,7 +75,7 @@ export function SheetRows({ modelId, rows }: { modelId: string; rows: SheetRow[]
         </summary>} head={
           <p className="bh-muted text-xs">
             <Link className="text-accent hover:underline" href={`/benchmarks?benchmark=${encodeURIComponent(a.benchmarkId)}`}>{a.name} {a.suffix ?? a.versionLabel} ↗</Link>
-            {a.cohort ? ` · ${a.cohort}` : ''}{a.description ? ` — ${a.description}` : ''}
+            {a.cohort ? ` · ${cohortLabel(a.cohort)}` : ''}{a.description ? ` — ${a.description}` : ''}
           </p>} />
     </li>)}
   </ul>;

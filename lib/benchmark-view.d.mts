@@ -18,6 +18,8 @@ export interface ViewAxis { id: string; benchmarkId: string; family: string; nam
 export interface BenchmarkView { models: ViewModel[]; axes: ViewAxis[]; /** Radar-only family-scope indices (Epoch ECI); not part of `axes`. */ indexAxes?: ViewAxis[]; sources: { url: string; date: string; published: string | null; file: string }[]; divergences: BenchmarkDivergence[]; missing: BenchmarkMissing[]; generatedAt: string; registryCount: number; legacyDate: string; speedDate?: string | null; families?: CompareFamily[]; picks?: string[] }
 export interface ProfileFlag { axisId: string; scoreId: string; direction: string; value: number; z: number; baseline: number; gap: number; profileN: number; peers: number; peerFamilies: number; mean: number; sd: number }
 export const ANOMALY_POLICY: { minPeers: number; minFamilies: number; minProfile: number; peerZ: number; profileGap: number };
+export const HARNESS_LABELS: Record<string, string>;
+export function cohortLabel(cohort: string | null | undefined): string | null | undefined;
 export function effectiveBasis(o: { source_basis?: string; basis: string }): string;
 export function cohortOf(o: import('./benchmark-scores.mjs').BenchmarkObservation): string;
 export function latestScores(rows: ViewScore[], basis?: string): ViewScore[];

@@ -1,5 +1,5 @@
 import type { BenchmarkView, ViewAxis, ViewScore } from '../lib/benchmark-view.mjs';
-import { ANOMALY_POLICY, profileAnomalies } from '../lib/benchmark-view.mjs';
+import { ANOMALY_POLICY, cohortLabel, profileAnomalies } from '../lib/benchmark-view.mjs';
 import { humanVersion, versionSuffix } from '../lib/version-label';
 
 const fmt = (n: number | null | undefined, digits = 5): string =>
@@ -36,13 +36,13 @@ export function SourceScore({ view, axis, row }: { view: BenchmarkView; axis: Vi
       <details className="w-full">
         <summary className="cursor-pointer">Evidence</summary>
         <div className="bh-muted mt-1 space-y-1 break-words text-xs">
-          <div>Axis: {axis.name} · {humanVersion(axis.version).label} · {axis.cohort}</div>
+          <div>Axis: {axis.name} · {humanVersion(axis.version).label} · {cohortLabel(axis.cohort)}</div>
           <div>Exact value: <code>{String(row.value)}</code> {axis.unit}</div>
           {row.confidenceInterval ? <div>{Math.round(row.confidenceInterval.level * 100)}% confidence interval: {row.confidenceInterval.lower} to {row.confidenceInterval.upper} {axis.unit}</div> : null}
           {row.publishedStddev != null ? <div>Published standard deviation: {row.publishedStddev} {axis.unit}</div> : null}
           {row.sampleSize != null ? <div>Tasks evaluated: {row.sampleSize}</div> : null}
           {row.costPerRollout != null ? <div>Published mean cost: {row.costPerRollout} USD {costLabel(axis)}{isOpenRouterRun(axis) ? ` — measured by OpenRouter on ${axis.name}` : ''}</div> : null}
-          {row.harness ? <div>Evaluation harness: {row.harness}</div> : null}
+          {row.harness ? <div>Evaluation harness: {cohortLabel(row.harness)}</div> : null}
           <div>Observed: {row.date} · publication date: {src?.published || 'not recorded'}</div>
           <div>Observation id: <code>{row.id}</code></div>
           <div>Source: {src ? <a href={src.url} target="_blank" rel="noreferrer">{src.url}</a> : 'no source record'}</div>
