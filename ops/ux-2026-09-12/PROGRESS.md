@@ -5594,7 +5594,17 @@ Scope: everything after `REVIEW-20260919T032002Z.md` (`c476e26..a012816`), the c
 - **Three open items filed** (tier weights not re-normalised under a scope / `scopeTierWeights()` dead code; grid
   topic+type `title`-only and unreachable on touch; tier-summary denominators) and two recorded losses in the
   modernised CR-87 verifier (no per-preset title assertion; preset order expected from the API's own `rank_under`).
+- **Fix confirmed live at `ef1886c`:** strengthened `verify-cr-90.mjs` **74/74 canonical / 74/74 legacy**, 1440/390 ×
+  light/dark — default hero `534 decisions per system` with no `231 decisions` anywhere, grid still 231 public
+  outcomes, scopes 168 / 72. Evidence `/opt/benchmarkheaven/state/ux-evidence/review-20260920T043003Z/cr90-after-*`.
+  A non-claude engine still has to re-run it before `CR-90.1` reads `verified`.
+- Fable's F-139 directive had asked for exactly the missing check ("the default view is byte-identical to today's",
+  "with scope = all nothing on the page differs from the pass-25 shots"); the done-log row now says so.
+- Also cross-checked mechanically: every `CR-x.y` id in `04-CR-BRIEF.md` has a ledger row (the two that looked missing,
+  `CR-54.2`/`CR-54.3`, are rows with a leading space; both `verified`). Independently re-confirmed two iteration-130
+  claims: live `/api/jevbench/v1.1` hashes to the declared `c969a3b9…` with 11 systems / 9 ranked (CR-86.1), and the
+  live dataset carries `aa_agentic_index` on 102 model rows / 102 distinct families, maximum 58 on
+  `claude-fable-5.1::high` (CR-34.4).
 - Gates: `npm test` **929 pass / 0 fail / 1 skipped** (930), `npx tsc --noEmit -p .` clean, `npm run build` rc 0,
-  `git diff --check` clean. One single push before the 05:17 UTC daily run; the strengthened verifier runs against the
-  deployed fix afterwards and its output goes to `…/review-20260920T043003Z/cr90-after-{canonical,legacy}/`.
+  `git diff --check` clean.
 - X6 remains open; no `ALL-ACCEPTED`.
