@@ -830,3 +830,12 @@ Link (exact, do not change): https://donate.stripe.com/fZu00i9ro0wmdF88sg1Jm01. 
 - **CR-104.2 Responsive accessibility.** Switch labels with CSS/container width, not user-agent sniffing, and expose exactly one accessible name.
 - **CR-104.3 Phone layout and motion.** At 320 px portrait the pill remains beside the JevBench eyebrow with horizontal padding, and the toast flight still lands on it without changing the fixed-bottom, opaque exit, wiggle or reduced-motion paths.
 - **CR-104.4 Verify.** Full tests, typecheck and production build; both live hosts with 320 px phone-portrait screenshots in light and dark.
+
+
+## CR-20260920i checklist — publish JevBench v1.2.6 (CR-105)
+
+- **CR-105.1 Artifacts pinned.** Results, public-task and topic artifacts from the public JevBench tag `v1.2.6` are pinned by SHA-256 in the repo; the availability audit is refreshed without altering any prior measurement.
+- **CR-105.2 New systems live.** openJev Verdict 1.4 at 72.5 (#4), SimpleJev Qwen3.8-27B at 67.3 (#9), SimpleJev Qwen3.6-35B-A3B at 63.8 (#16); Verdict 1.4 links to the author's Hugging Face model; the earlier Verdict row is unchanged.
+- **CR-105.3 Availability audit refreshed.** The current concrete reason for every remaining unmeasured candidate is published; djev-spark stays out of the table (a serving wrapper around the already represented DiffusionGemma system, not new weights).
+- **CR-105.4 Nothing else moved.** Hard-only view, custom-evaluation offer/toast, labels, prior rows and scoring rules preserved.
+- **CR-105.5 Host verification.** Both production hosts verified after deployment at 1440 px and 390 px, light and dark, with evidence; the engine attribution for the shipping commits is closed by a review gate before the rows read `verified`.

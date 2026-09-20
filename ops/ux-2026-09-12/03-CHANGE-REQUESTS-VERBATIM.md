@@ -1387,3 +1387,27 @@ Florian, 20 Sep 2026, verbatim:
 
 Florian, 20 Sep 2026, verbatim:
 > Lets rename "YOU NEED A CUSTOM EVAL" to "NEED CUSTOM EVAL ON YOUR DATA?" or "NEED A CUSTOM EVAL?"
+
+
+## CR-20260920i (JevBench) → CR-105 — publish JevBench v1.2.6
+
+JevBench readiness review, 20 Sep 2026. Verbatim source file: `ops/ux-2026-09-12/jevbench/v1.2.6/CR-105.md`:
+
+> Publish three complete measurements on the unchanged frozen v1.2 task set: openJev Verdict 1.4, SimpleJev
+> Qwen3.8-27B and SimpleJev Qwen3.6-35B-A3B. Refresh the availability audit without altering any prior
+> measurement, and keep djev-spark out of the table because it is a serving wrapper around the already
+> represented DiffusionGemma system rather than new weights.
+>
+> Acceptance:
+> - pin results, public-task and topic artifacts from public JevBench tag `v1.2.6` by SHA-256;
+> - show Verdict 1.4 at 72.5 (#4), SimpleJev Qwen3.8-27B at 67.3 (#9), and SimpleJev Qwen3.6-35B-A3B at 63.8 (#16);
+> - link Verdict 1.4 to the author's Hugging Face model and preserve the earlier Verdict row unchanged;
+> - preserve the hard-only view, custom-evaluation offer/toast, labels, prior rows and scoring rules;
+> - publish the current, concrete reason for every remaining unmeasured candidate;
+> - verify both production hosts after deployment.
+
+Verbatim source file: `ops/ux-2026-09-12/jevbench/v1.2.6/CR-105.md` (dated 20 September 2026). Supervisor note
+(not Florian's words): the shipping commits `5d06d5ac` and `98325468` carry no `Co-Authored-By` trailer, so the
+implementing engine is unrecorded; the rows were seeded into the ledger by opencode-kimi iteration 141, which
+also live re-verified the deploy on both hosts (`bin/verify-cr-105.mjs`, 26/26 across both hosts at `98325468`).
+A review gate still owes the engine attribution before the rows can read `verified`.
