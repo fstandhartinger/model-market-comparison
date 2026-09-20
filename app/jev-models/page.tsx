@@ -22,10 +22,19 @@ const short = (d: string) => d.split(' (')[0].split(', formerly')[0];
 const one = (v: number | null) => (v === null ? '—' : v.toFixed(1));
 // Gaps are the difference of the scores as displayed (one decimal), so a reader can check them by eye.
 const gap = (a: number, b: number) => (Math.round(a * 10) - Math.round(b * 10)) / 10;
+const jevCostExample = (view: ReturnType<typeof jevbenchV12View>) => {
+  const example = view.costUnit.worked_example;
+  const tokens = example.match(/reads\s+(\d+(?:\.\d+)?)\s+input tokens/)?.[1];
+  const tariff = example.match(/tariff of \$(\d+(?:\.\d+)?) per MILLION input tokens/)?.[1];
+  const cost = example.match(/=\s*\$(\d+(?:\.\d+)?)/)?.[1];
+  if (!tokens || !tariff || !cost) throw new Error('JevBench cost artifact is missing the worked-example values');
+  return { tokens: Math.round(Number(tokens)), tariff, cost };
+};
 
 export default async function JevModelsPage() {
   const v12 = await readJevbenchV12();
   const view = jevbenchV12View(v12);
+  const costExample = jevCostExample(view);
   const topics = jevbenchV12TopicsView(await readJevbenchV12Topics(v12.artifact));
   const tasks = jevbenchV12TasksView(await readJevbenchV12Tasks(v12));
   const v11 = jevbenchV11View(await readJevbenchV11());
@@ -83,12 +92,11 @@ export default async function JevModelsPage() {
     <section className="mt-8 max-w-4xl text-sm" data-bh-jev-costs>
       {/* CR-96 (2026-09-20): a reader read this column as dollars per 1,000 tokens. Say the unit before anything else. */}
       <p className="bh-panel mb-3 p-3 text-[15px]" data-bh-jev12-cost-unit-panel>
-        <b>Every price here is US dollars per 1,000 <span className="text-accent">decisions</span> — not per 1,000 tokens.</b>{' '}
-        One decision is a whole question: its state, its rubric and its options, which is hundreds to thousands of input tokens.{' '}
-        <span className="bh-muted">{view.costUnit.worked_example.replace('One decision is a whole question, not a token. ', '')}</span>
+        <b>Every price here is US dollars per 1,000 decisions — not per 1,000 tokens.</b>{' '}
+        One decision is a whole question — state, rubric and options — about {costExample.tokens} input tokens for Jev 1.13.0, so at its ${costExample.tariff} per million input tokens 1,000 decisions cost ${costExample.cost}.
       </p>
-      <p className="bh-muted mb-2">Systems with a public tariff use that tariff and measured tokens. For systems without one, we use a clearly marked estimate based on a large inference provider&apos;s list price for the same weights or size class.</p>
       <JevCostsDisclosure>
+        <p className="bh-muted mt-2">{view.costUnit.worked_example}</p>
         <p className="bh-muted mt-2">Systems with a public tariff (per token or per request) are priced at that tariff times the tokens we measured. Systems without one — open weights, author demos, models we ran locally — are priced as if a <b className="text-gray-200">large inference provider</b> hosted them: the OpenRouter list price of the same weights; if OpenRouter does not list them, the nearest larger sibling; if no model of that size class is on OpenRouter, the DeepInfra list price of the same weights or of the nearest larger model of the same class. We do not use per-minute GPU rental or our own CPU time — providers buy capacity in bulk or own the hardware, and price accordingly. Price × tokens per decision = $ per 1,000 decisions, marked &ldquo;est.&rdquo;.</p>
         <ul className="mt-3 space-y-1.5" data-bh-jev-cost-rows>
           {estimated.map((r) => <li key={r.key}><b>{short(r.display)}</b> — <CostValue r={r} /> per 1,000 decisions: <span className="bh-muted">{r.costBasis.replace(/^ESTIMATE: (hosted-provider price, )?/, '')}</span></li>)}
@@ -99,8 +107,8 @@ export default async function JevModelsPage() {
           </ul>
           <p className="bh-muted mt-2">Sources: {String(prices.token_source ?? '')}.</p></details>}
       </JevCostsDisclosure>
-      {view.costCorrection && corrected.length > 0 && <details className="mt-3" data-bh-jev12-cost-correction>
-        <summary className="cursor-pointer text-accent">Correction, {view.costCorrection.revision} (20 September 2026): every price recomputed, each decision counted once</summary>
+      {view.costCorrection && corrected.length > 0 && <details className="bh-panel mt-3 p-4" data-bh-jev12-cost-correction>
+        <summary className="cursor-pointer text-sm font-semibold">Correction, {view.costCorrection.revision} (20 September 2026): every price recomputed, each decision counted once</summary>
         <p className="bh-muted mt-2">{view.costCorrection.rule}</p>
         <ul className="bh-muted mt-2 list-disc space-y-1 pl-5">
           {view.costCorrection.what_was_wrong.map((w, i) => <li key={i}>{w}</li>)}

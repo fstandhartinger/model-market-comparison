@@ -67,11 +67,13 @@ try {
     try {
       await p.goto(`${BASE}/jev-models`, { waitUntil: 'networkidle', timeout: 60000 });
       const notes = await p.$$eval('[data-bh-jev12-cost-unit]', (e) => e.map((x) => x.textContent || ''));
-      check(`${tag}: the "decisions, not tokens" note is on the page`, notes.length >= 1 && notes.every((t) => /per 1,000 decisions/.test(t) && /not \$ per 1,000 tokens/.test(t)), notes[0]?.slice(0, 160));
+      check(`${tag}: the "decisions, not tokens" note is on the page`, notes.length >= 1 && notes.every((t) => /per 1,000 decisions/.test(t) && /not per 1,000 tokens/.test(t) && /one decision ≈ 950 input tokens/.test(t)), notes[0]?.slice(0, 160));
       const panel = (await p.textContent('[data-bh-jev12-cost-unit-panel]')) || '';
-      check(`${tag}: the cost section opens with the unit`, /not per 1,000 tokens/i.test(panel) && /per MILLION input tokens/.test(panel), panel.slice(0, 200));
+      check(`${tag}: the cost section opens with exactly the two unit sentences`, /^Every price here is US dollars per 1,000 decisions — not per 1,000 tokens\. One decision is a whole question — state, rubric and options — about 950 input tokens for Jev 1\.13\.0, so at its \$0\.042 per million input tokens 1,000 decisions cost \$0\.0399\.$/.test(panel.replace(/\s+/g, ' ').trim()), panel.slice(0, 240));
+      const costDetails = (await p.textContent('[data-bh-jev-costs-details]')) || '';
+      check(`${tag}: the worked example leads the cost disclosure`, costDetails.indexOf('One decision is a whole question, not a token.') < costDetails.indexOf('Systems with a public tariff'), costDetails.slice(0, 240));
       const head = (await p.textContent('[data-bh-jev12-table] thead')) || '';
-      check(`${tag}: the table header says decisions, not tokens`, /\$ per 1,000/.test(head) && /decisions, not tokens/.test(head), head.slice(0, 200));
+      check(`${tag}: the table header says decisions, not tokens`, /\$ \/ 1,000 decisions/.test(head) && /not tokens/.test(head), head.slice(0, 200));
       check(`${tag}: the eyebrow says ${a.revision}`, ((await p.textContent('[data-bh-jevc-chart] .bh-eyebrow')) || '').includes(a.revision), '');
       const jevBar = (await p.textContent('[data-bh-jevc-bars] [data-bh-jev12-bar="jev-1.13.0"]')) || '';
       check(`${tag}: Jev's bar shows 75.4`, jevBar.includes('75.4'), jevBar.slice(0, 160));

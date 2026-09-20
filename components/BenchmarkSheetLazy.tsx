@@ -69,7 +69,7 @@ export function SheetRows({ modelId, rows }: { modelId: string; rows: SheetRow[]
               ? <><span className="h-1.5 min-w-0 flex-1 overflow-hidden rounded-full bg-[rgb(var(--line)/.5)]" aria-hidden="true"><span className="block h-full rounded-full bg-accent" style={{ width: `${Math.max(2, a.pct)}%` }} /></span><span className="w-7 text-right text-xs tabular-nums text-gray-400" title="Percentile among models measured on this benchmark">{Math.round(a.pct)}</span></>
               : <span className="bh-muted text-xs">no percentile{a.lowSample ? ' · low sample' : ''}</span>}
           </span>
-          <span className="text-right font-semibold tabular-nums">{a.value ?? '—'}{a.basis === 'self_reported' && <sup className="bh-muted" title="Self-reported by the developer">†<span className="sr-only"> self-reported by the developer</span></sup>}</span>
+          <span className="text-right font-semibold tabular-nums">{a.value ?? '—'}{a.basis === 'self_reported' && <><sup className="bh-muted" title="Self-reported by the developer">†<span className="sr-only"> self-reported by the developer</span></sup><span className="bh-muted ml-1 text-xs font-normal">developer&apos;s claim</span></>}</span>
           <span className="bh-muted hidden text-right text-xs tabular-nums md:block">{a.date}</span>
         </summary>} head={
           <p className="bh-muted text-xs">

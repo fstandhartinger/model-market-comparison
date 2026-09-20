@@ -55,9 +55,11 @@ export function SpeedNote({ view, className = "" }: { view: JevV12View; classNam
 
 /** CR-96: the one line every price display carries — the unit is decisions, never tokens. */
 export function CostUnitNote({ view, className = "", full = false }: { view: JevV12View; className?: string; full?: boolean }) {
+  const notUnit = view.costUnit.not_unit.replace(/^\$\s*/, "");
   return <span className={`bh-muted block text-[12px] ${className}`} data-bh-jev12-cost-unit>
-    💲 <b className="text-gray-200">{view.costUnit.unit}</b>, not {view.costUnit.not_unit}: one decision is a whole question — its state, its rubric and its options.{" "}
-    {full ? view.costUnit.worked_example : view.costUnit.short_note}
+    {full
+      ? <>💲 <b className="text-gray-200">{view.costUnit.unit}</b>, not {view.costUnit.not_unit}: one decision is a whole question — its state, its rubric and its options. {view.costUnit.worked_example}</>
+      : <>💲 <b className="text-gray-200">{view.costUnit.unit}</b>, not {notUnit} — one decision ≈ {Math.round(view.costUnit.mean_input_tokens_per_decision_jev)} input tokens.</>}
   </span>;
 }
 
@@ -247,7 +249,7 @@ function Table({ view, rows, honorableRows, partialRows, w, scope }: { view: Jev
             ? <H c="main" label={SCORE_NAME} sub="official" hero />
             : <H c="main" label={d.preset ? d.short : `Custom ${d.ratio}`} sub={`${d.scopeDefault ? `${d.ratio} · not the official score` : `${d.scopeLabel} · not the official score`}`} hero />}
           {AXES.map((k) => <H key={k} c={k} label={AXIS_LABEL[k]} sub={`${eff[k]} %`} />)}
-          <H c="usd" label="$ per 1,000" sub="decisions, not tokens" />
+          <H c="usd" label="$ / 1,000 decisions" sub="not tokens" />
           {TIER_ORDER.map((t) => <H key={t} c={t} label={TIER_LABEL[t]} sub={view.tierWeights[t] > 0 ? `${view.tierCounts[t]} dec. · ${Math.round(view.tierWeights[t] * 100)} %` : `${view.tierCounts[t]} dec. · outside this scope`} />)}
           <H c="p50" label="Latency" sub="p50 · p95, raw → adjusted" />
           <th scope="col" className="whitespace-nowrap text-[12px]">Endpoint</th>
@@ -267,13 +269,23 @@ function Table({ view, rows, honorableRows, partialRows, w, scope }: { view: Jev
 
 // CR-97 (Florian 2026-09-20): classifier.dev was #1 on a model that is not its own. It stays on the page with every
 // number it earned, under the ranking, with the rule and the reason in plain English — and without a rank.
+const firstSentence = (text: string) => text.trim().split(/(?<=[.!?])\s+/)[0] ?? text.trim();
+const lastSentence = (text: string) => {
+  const sentence = text.trim().split(/(?<=[.!?])\s+/).at(-1) ?? text.trim();
+  return sentence.endsWith(".") || sentence.endsWith("!") || sentence.endsWith("?") ? sentence : `${sentence}.`;
+};
+const sentence = (text: string) => {
+  const trimmed = text.trim();
+  return trimmed.endsWith(".") || trimmed.endsWith("!") || trimmed.endsWith("?") ? trimmed : `${trimmed}.`;
+};
+
 function HonorableMentions({ view, rows }: { view: JevV12View; rows: Row[] }) {
   const hm = view.honorableMentions;
   if (!hm || rows.length === 0) return null;
   const jev = (key: string) => view.ranked.find((r) => r.key === key) ?? null;
   return <section className="mt-8 max-w-4xl scroll-mt-6" id="jev12-honorable" aria-labelledby="jev12-honorable-head" data-bh-jev12-honorable>
     <h2 id="jev12-honorable-head" className="text-xl font-semibold">{hm.heading}</h2>
-    <p className="bh-muted mt-1 text-sm" data-bh-jev12-honorable-rule>{hm.rule}</p>
+    <p className="bh-muted mt-1 text-sm" data-bh-jev12-honorable-rule>{firstSentence(hm.rule)}</p>
     {rows.map((r) => {
       const d = hm.systems[r.key];
       const base = d ? jev(d.runs_on_key) : null;
@@ -290,11 +302,17 @@ function HonorableMentions({ view, rows }: { view: JevV12View; rows: Row[] }) {
           <li><span className="block font-semibold text-gray-200">$ per 1,000 decisions</span><CostValue r={r} /></li>
         </ul>
         {d && <div className="mt-3 space-y-2 text-sm">
-          <p data-bh-jev12-honorable-why>{d.why_not_ranked}</p>
-          <p><b className="text-gray-200">Only the fast tier was measured.</b> {d.tier_measured.replace(/^Only the fast tier was measured\.\s*/, "")}</p>
-          <p data-bh-jev12-honorable-price><b className="text-gray-200">Price.</b> {d.price_note}</p>
-          <p data-bh-jev12-honorable-finding><b className="text-gray-200">Not a pass-through.</b> {d.not_pass_through}</p>
-          <p className="bh-muted">{d.credit} Read {d.sources_read}: {d.sources.map((u, i) => <span key={u}>{i > 0 ? " · " : ""}<a className="text-accent underline" href={u} target="_blank" rel="noopener noreferrer">{u.replace(/^https:\/\//, "")}</a></span>)}</p>
+          <p className="text-sm" data-bh-jev12-honorable-reason>{sentence(d.short_reason.charAt(0).toUpperCase() + d.short_reason.slice(1))} {lastSentence(d.why_not_ranked)}</p>
+          <details className="bh-muted" data-bh-jev12-honorable-details>
+            <summary className="cursor-pointer text-accent">Why it is not ranked, what its price assumes, and what we found</summary>
+            <div className="mt-2 space-y-2">
+              <p data-bh-jev12-honorable-why>{d.why_not_ranked}</p>
+              <p><b className="text-gray-200">Only the fast tier was measured.</b> {d.tier_measured.replace(/^Only the fast tier was measured\.\s*/, "")}</p>
+              <p data-bh-jev12-honorable-price><b className="text-gray-200">Price.</b> {d.price_note}</p>
+              <p data-bh-jev12-honorable-finding><b className="text-gray-200">Not a pass-through.</b> {d.not_pass_through}</p>
+              <p>{d.credit} Read {d.sources_read}: {d.sources.map((u, i) => <span key={u}>{i > 0 ? " · " : ""}<a className="text-accent underline" href={u} target="_blank" rel="noopener noreferrer">{u.replace(/^https:\/\//, "")}</a></span>)}</p>
+            </div>
+          </details>
         </div>}
       </article>;
     })}
@@ -330,6 +348,11 @@ const TASK_TYPE: Record<string, string> = {
   score: "Score — a degree along a described dimension, over ordered levels.",
 };
 
+function PhoneTaskId({ id }: { id: string }) {
+  const compact = id.replace(/^(?:easy|standard|judge|hard)-/, "");
+  return <>{compact.split(/([_-])/).map((part, i) => <span key={`${part}-${i}`}>{part}{/^[_-]$/.test(part) && <wbr />}</span>)}</>;
+}
+
 const TASK_STATUS: Record<string, { symbol: string; label: string; className: string }> = {
   c: { symbol: "✓", label: "correct", className: "text-[rgb(var(--accent2))]" },
   w: { symbol: "×", label: "wrong", className: "text-[rgb(var(--warn))]" },
@@ -353,7 +376,7 @@ function TaskGrid({ view, tasks, scope }: { view: JevV12View; tasks: JevTasksVie
       <div className="bh-table-wrap mt-3 max-h-[38rem] overflow-auto">
         <table className="bh-table min-w-[54rem] text-[12px]" data-bh-jev12-task-table>
           <thead><tr>
-            <th scope="col" className="bh-jev-sticky min-w-[13rem] text-left">Task</th>
+            <th scope="col" className="bh-jev-sticky w-[13rem] min-w-[13rem] max-w-[13rem] text-left">Task</th>
             {systems.map((r) => <th key={r.key} scope="col" className="bh-jev-task-system h-[7.5rem] w-8 min-w-[2rem] max-w-[2rem] whitespace-nowrap px-0 text-center align-bottom text-[12px]" title={r.display} aria-label={r.display}><span className="bh-jev-task-rotated inline-block">{short(r.display)}</span></th>)}
           </tr></thead>
           <tbody>
@@ -361,7 +384,7 @@ function TaskGrid({ view, tasks, scope }: { view: JevV12View; tasks: JevTasksVie
               const tierTasks = visibleTasks.filter((task) => task.tier === tier);
               if (!tierTasks.length) return [];
               return [
-                <tr key={'group-' + tier} className="bg-[rgb(var(--surface-2))]" data-bh-jev12-task-group={tier}><th scope="rowgroup" className="bh-jev-sticky text-left font-semibold">{groupLabel[tier]} · {tierTasks.length} of {view.tierCounts[tier]} decisions public</th>{systems.map((r) => {
+                <tr key={'group-' + tier} className="bg-[rgb(var(--surface-2))]" data-bh-jev12-task-group={tier}><th scope="rowgroup" className="bh-jev-sticky text-left font-semibold"><span className="hidden sm:inline">{groupLabel[tier]} · {tierTasks.length} of {view.tierCounts[tier]} decisions public</span><span className="sm:hidden">{groupLabel[tier]} · {tierTasks.length} of {view.tierCounts[tier]} public</span></th>{systems.map((r) => {
                   // Review gate 20260920T043003Z: these cells used the artifact's whole-tier aggregate (72/72) under a
                   // header that counts public tasks (48). They count the public rows this group lists; the whole-tier
                   // figure stays available in the cell title and in the tier columns of the table above.
@@ -374,9 +397,10 @@ function TaskGrid({ view, tasks, scope }: { view: JevV12View; tasks: JevTasksVie
                   return <td key={r.key} className="bh-jev-task-cell w-8 min-w-[2rem] px-0 text-center text-[11px] font-semibold tabular-nums" title={title}>{summary ? `${summary.correct}/${summary.attempted}` : "—"}</td>;
                 })}</tr>,
                 ...tierTasks.map((task) => <tr key={task.id} className="bh-jev-task-row" data-bh-jev12-task={task.id}>
-                  <th scope="row" className="bh-jev-sticky min-w-[13rem] text-left font-normal">
-                    <span className="font-semibold whitespace-nowrap">{task.id}</span>
-                    <span className="bh-muted ml-2 whitespace-nowrap text-[11px]" data-bh-jev12-task-type={task.type} title={TASK_TYPE[task.type] ?? undefined}>{task.type}</span>
+                  <th scope="row" className="bh-jev-sticky w-[13rem] min-w-[13rem] max-w-[13rem] text-left font-normal" title={`${task.id} · ${task.type} — ${TASK_TYPE[task.type] ?? "published question type"}`} aria-label={`${task.id} · ${task.type} — ${TASK_TYPE[task.type] ?? "published question type"}`}>
+                    <span className="hidden font-semibold whitespace-nowrap sm:inline">{task.id}</span>
+                    <span className="bh-jev-task-phone-id font-semibold" aria-hidden="true"><PhoneTaskId id={task.id} /></span>
+                    <span className="bh-muted ml-2 hidden whitespace-nowrap text-[11px] sm:inline" data-bh-jev12-task-type={task.type}>{task.type}</span>
                   </th>
                   {systems.map((r) => {
                     const outcome = tasks.systems[r.key]?.outcomes[task.id];
@@ -391,7 +415,7 @@ function TaskGrid({ view, tasks, scope }: { view: JevV12View; tasks: JevTasksVie
           </tbody>
         </table>
       </div>
-      <p className="bh-muted mt-2 text-xs" data-bh-jev12-task-legend>✓ correct · × wrong · ! failed (scored wrong) · · not attempted · — no public outcome in the pinned artifact. A group row counts the public tasks it lists; the tier columns of the table above use all decisions of the tier. Every task id carries its topic (<span className="font-mono">hard-opus-a-long_policy-01</span> is a long_policy task), and the tag after the id is the published question type: <b className="text-gray-200">choice</b> — pick one of a defined set of options · <b className="text-gray-200">noul</b> — whether a stated condition holds · <b className="text-gray-200">score</b> — a degree along a described dimension. Task descriptions are intentionally not included; the task id, tier, topic and type are the published public metadata.</p>
+      <p className="bh-muted mt-2 text-xs" data-bh-jev12-task-legend>✓ correct · × wrong · ! failed (scored wrong) · · not attempted · — no public outcome in the pinned artifact. A group row counts the public tasks it lists; the tier columns of the table above use all decisions of the tier. Every task id carries its topic (<span className="font-mono">hard-opus-a-long_policy-01</span> is a long_policy task), and the tag after the id is the published question type: <b className="text-gray-200">choice</b> — pick one of a defined set of options · <b className="text-gray-200">noul</b> — whether a stated condition holds · <b className="text-gray-200">score</b> — a degree along a described dimension. <span className="sm:hidden">Task ids are shown without their tier prefix; the tier is the group row.</span> Task descriptions are intentionally not included; the task id, tier, topic and type are the published public metadata.</p>
     </details>
   </section>;
 }

@@ -32,8 +32,8 @@ export function JevCostsDisclosure({ children }: { children: ReactNode }) {
     };
   }, []);
 
-  return <details ref={detailsRef} id="jev-costs" className="bh-panel scroll-mt-6 p-5" data-bh-jev-costs-details>
-    <summary className="cursor-pointer text-xl font-semibold">How costs are estimated</summary>
+  return <details ref={detailsRef} id="jev-costs" className="bh-panel scroll-mt-6 p-4" data-bh-jev-costs-details>
+    <summary className="cursor-pointer text-sm font-semibold">How costs are estimated</summary>
     {children}
   </details>;
 }

@@ -463,6 +463,14 @@ details[open] > .bh-collapsible-grid { display: grid; }
    nothing on screen said which column was which system and only a desktop-hover `title` still named them.
    The head is pinned to the scrollport now; at scroll-top the grid is unchanged. */
 [data-bh-jev12-task-table] thead th { position: sticky; top: 0; z-index: 2; }
+[data-bh-jev12-task-table] { width: auto; }
+[data-bh-jev12-task-table] .bh-jev-sticky { position: sticky; left: 0; z-index: 3; width: 13rem; min-width: 13rem; max-width: 13rem; background: var(--surface); box-shadow: inset 0 -1px 0 rgb(var(--line)), inset -1px 0 0 rgb(var(--line)); }
+[data-bh-jev12-task-table] thead .bh-jev-sticky { z-index: 4; background: rgb(var(--ink)); }
+.bh-jev-task-phone-id { display: none; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow-wrap: anywhere; font-size: 11px; line-height: 14px; white-space: normal; }
+@media (max-width: 639px) {
+  [data-bh-jev12-task-table] .bh-jev-sticky { width: 7.5rem; min-width: 7.5rem; max-width: 7.5rem; }
+  .bh-jev-task-phone-id { display: -webkit-box; }
+}
 .bh-jevc-custom figure, figure.bh-jevc-custom { box-shadow: 0 0 0 2px rgb(var(--warn) / .7); }
 .bh-jevc-slider { width: 100%; min-height: 32px; }
 /* CR-99: a small, time-limited Jev custom-evaluation offer. On phones its JS placement
