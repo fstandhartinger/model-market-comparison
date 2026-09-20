@@ -37,7 +37,7 @@ export function ModelDetailOffers({
   // that blames the filters. Same words as the Overview row's "No public API price" tip.
   if (offers.length === 0) {
     return view === "top"
-      ? <section className="card min-w-0 p-4" data-bh-no-offers>
+      ? <section className="card min-w-0 self-start p-4" data-bh-no-offers>
           <h2 className="mb-1 font-semibold">Providers</h2>
           <p className="text-sm text-gray-500">No provider publishes an API price for this model yet, so no cost can be modeled.</p>
         </section>
