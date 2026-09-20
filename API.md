@@ -255,6 +255,8 @@ Raw files: `data/raw/aa-efficiency.json`, `openrouter-efficiency.json`,
 `fetch-live.mjs aa` also refreshes AA efficiency; `fetch-live.mjs or` refreshes the
 weekly ranking, four model pages in rotation and the Chutes fallback. The three
 recipes are under `ops/rebuild-2026-09/skills/` for phase-09 installation.
+During a live AA efficiency shrink, `fetch-live.mjs aa` confirms the complete parsed
+row set on a second public AA model page before replacing the retained snapshot.
 
 Production continues to use bundled JSON. Optional Postgres installations should
 run `node scripts/seed-db.mjs`: its idempotent `dataset_meta.extensions` JSONB

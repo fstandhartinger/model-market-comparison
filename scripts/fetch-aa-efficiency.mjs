@@ -23,14 +23,16 @@ export async function refreshAaEfficiency({ html = undefined, fetchedAt = undefi
   const attempts = [];
   let response = null;
   let usedUrl = null;
-  if (html === undefined) {
+  const liveProbe = html === undefined;
+  if (liveProbe) {
     if (checkRobots) {
       const robots = await fetcher("https://artificialanalysis.ai/robots.txt", { headers: { "User-Agent": UA }, signal: AbortSignal.timeout(30000) });
       if (!robots.ok) throw new Error(`AA robots HTTP ${robots.status}`);
       const policy = await robots.text();
       if (!/^User-Agent:/im.test(policy) || /^Disallow:\s*\S+/im.test(policy)) throw new Error("AA robots policy changed; review before model-page collection");
     }
-    for (const slug of slugs) {
+    let firstSuccessful = null;
+    for (const [index, slug] of slugs.entries()) {
       const url = aaModelPageURL(slug);
       if (attempts.length) await sleep(POLITE_DELAY_MS);
       const fetched = new Date().toISOString();
@@ -50,15 +52,89 @@ export async function refreshAaEfficiency({ html = undefined, fetchedAt = undefi
           await writeFile(`${evidenceDir}/body-${safe}.html`, body);
           await appendFile(`${evidenceDir}/collector-evidence-log.jsonl`, `${JSON.stringify({ ...entry, body_file: `body-${safe}.html` })}\n`);
         }
-        if (result.ok) { response = body; usedUrl = url; break; }
+        if (!result.ok || body === null) continue;
+
+        let candidate;
+        try {
+          // Parse without the previous-count guard first. A source can retire
+          // models; whether that is a real source-wide shrink is decided below
+          // by an independent model page, not by weakening the parser.
+          candidate = parseAaEfficiency(body, {
+            previous: null,
+            attempts,
+            sourceUrl: url,
+            fetchedAt,
+          });
+        } catch (error) {
+          attempts.at(-1).parse_error = error.message;
+          continue;
+        }
+
+        if (!firstSuccessful) firstSuccessful = { candidate, body, url, index };
+        const priorCount = previous?.count || 0;
+        if (candidate.count >= priorCount) {
+          response = body;
+          usedUrl = url;
+          break;
+        }
+
+        // A shrink is only accepted when another public AA model page carries
+        // the exact same parsed rows. This distinguishes a real retirement or
+        // reclassification from a partially rendered first page.
+        const confirmations = [candidate];
+        for (const confirmingSlug of slugs.slice(index + 1)) {
+          await sleep(POLITE_DELAY_MS);
+          const confirmingUrl = aaModelPageURL(confirmingSlug);
+          const confirmingFetched = new Date().toISOString();
+          let confirmingResult;
+          try {
+            confirmingResult = await fetcher(confirmingUrl, { headers: { "User-Agent": UA }, signal: AbortSignal.timeout(60_000) });
+            const confirmingBody = typeof confirmingResult.text === "function" ? await confirmingResult.text().catch(() => null) : null;
+            const confirmingEntry = { url: confirmingUrl, fetched_at: confirmingFetched, http_status: confirmingResult.status, bytes: confirmingBody?.length ?? 0, sha256: confirmingBody !== null ? createHash("sha256").update(confirmingBody).digest("hex") : null };
+            attempts.push(confirmingEntry);
+            if (evidenceDir && confirmingBody !== null) {
+              await captureLiveSource(confirmingUrl, confirmingBody, { directory: evidenceDir, status: confirmingResult.status });
+              const safe = confirmingUrl.replace(HASH_TAG, "_").slice(-120);
+              await mkdir(evidenceDir, { recursive: true });
+              await writeFile(`${evidenceDir}/body-${safe}.html`, confirmingBody);
+              await appendFile(evidenceDir + "/collector-evidence-log.jsonl", `${JSON.stringify({ ...confirmingEntry, body_file: `body-${safe}.html` })}\n`);
+            }
+            if (!confirmingResult.ok || confirmingBody === null) continue;
+            let confirming;
+            try {
+              confirming = parseAaEfficiency(confirmingBody, { previous: null, attempts, sourceUrl: confirmingUrl, fetchedAt });
+            } catch (error) {
+              confirmingEntry.parse_error = error.message;
+              continue;
+            }
+            if (JSON.stringify(confirming.rows) !== JSON.stringify(candidate.rows)) {
+              throw new Error(`AA efficiency shrink disagrees across model pages: ${url} has ${candidate.count}, ${confirmingUrl} has ${confirming.count}`);
+            }
+            confirmations.push(confirming);
+            if (confirmations.length >= 2) break;
+          } catch (error) {
+            if (error.message.startsWith("AA efficiency shrink disagrees")) throw error;
+          }
+        }
+        if (confirmations.length < 2) {
+          throw new Error(`AA efficiency shrink not independently confirmed: ${candidate.count} rows (previous ${priorCount})`);
+        }
+        response = firstSuccessful.body;
+        usedUrl = firstSuccessful.url;
+        break;
       } catch (error) {
+        if (error.message.startsWith("AA efficiency shrink disagrees")) throw error;
         attempts.push({ url, fetched_at: fetched, error: error.message });
       }
     }
     if (!response) throw new Error(`AA efficiency: every model-page probe failed (${attempts.map((a) => a.http_status || a.error).join(", ")})`);
     html = response;
   }
-  const snapshot = parseAaEfficiency(html, { previous, attempts, sourceUrl: usedUrl || aaModelPageURL(slugs[0]), fetchedAt });
+  // Live probes have already applied the previous-count guard, including the
+  // independent confirmation required for a real source-wide shrink. Applying
+  // it again would reject the confirmed 145-row AA payload. Explicit fixture
+  // input keeps the original previous-snapshot guard for callers/tests.
+  const snapshot = parseAaEfficiency(html, { previous: liveProbe ? null : previous, attempts, sourceUrl: usedUrl || aaModelPageURL(slugs[0]), fetchedAt });
   await writeJSONAtomic(target, snapshot);
   return snapshot;
 }

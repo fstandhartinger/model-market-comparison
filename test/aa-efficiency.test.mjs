@@ -118,6 +118,44 @@ test("live fetcher records attempts and only accepts the first successful probe"
   } finally { await rm(dir, { recursive: true, force: true }); }
 });
 
+test("live refresh accepts a smaller AA population only after a second page confirms the exact rows", async () => {
+  const dir = await mkdtemp(join(tmpdir(), "aa-efficiency-shrink-test-"));
+  const target = join(dir, "snapshot.json");
+  await writeFile(target, JSON.stringify({ count: AA_EFFICIENCY_MIN_ROWS + 5, keep: true }));
+  try {
+    const seen = [];
+    const fixture = validHtml();
+    const snapshot = await refreshAaEfficiency({ target, checkRobots: false, fetcher: async (url) => {
+      seen.push(url);
+      return { ok: true, status: 200, text: async () => fixture };
+    } });
+    assert.equal(snapshot.count, AA_EFFICIENCY_MIN_ROWS);
+    assert.equal(seen.length, 2, "one primary page plus one independent confirmation");
+    assert.equal(snapshot.attempts.length, 2);
+    assert.equal(JSON.parse(await readFile(target, "utf8")).count, AA_EFFICIENCY_MIN_ROWS);
+  } finally { await rm(dir, { recursive: true, force: true }); }
+});
+
+test("live refresh refuses a shrink when the confirming page disagrees", async () => {
+  const dir = await mkdtemp(join(tmpdir(), "aa-efficiency-shrink-disagreement-test-"));
+  const target = join(dir, "snapshot.json");
+  await writeFile(target, JSON.stringify({ count: AA_EFFICIENCY_MIN_ROWS + 5, keep: true }));
+  try {
+    const seen = [];
+    const fixture = validHtml();
+    const alternate = html([
+      ...carriers(AA_EFFICIENCY_MIN_ROWS).map((row) => ({ ...row, slug: `alternate-${row.slug}` })),
+      ...scored(AA_MIN_SCORED_DENOMINATOR),
+    ]);
+    await assert.rejects(refreshAaEfficiency({ target, checkRobots: false, fetcher: async (url) => {
+      seen.push(url);
+      return { ok: true, status: 200, text: async () => seen.length === 1 ? fixture : alternate };
+    } }), /shrink disagrees/);
+    assert.equal(seen.length, 2);
+    assert.equal(JSON.parse(await readFile(target, "utf8")).count, AA_EFFICIENCY_MIN_ROWS + 5);
+  } finally { await rm(dir, { recursive: true, force: true }); }
+});
+
 test("AA stops on restrictive robots and 429 without probing alternate pages", async () => {
   const dir = await mkdtemp(join(tmpdir(), "aa-robots-test-"));
   const target = join(dir, "snapshot.json");

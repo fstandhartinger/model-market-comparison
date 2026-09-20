@@ -4,6 +4,13 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-20 — AA efficiency refresh tolerates confirmed source-wide retirement
+
+The AA token-efficiency collector now accepts a smaller published model population only when a second public AA
+model page reproduces the exact parsed rows. This preserves fail-closed behavior for partial pages while allowing
+source-wide retirements to refresh honestly. The 2026-09-20 pages independently confirmed 145 rows (down from 156),
+with a scored denominator of 644; no API shape or raw data location changed.
+
 ## 2026-09-19 — /jev-models: the Main Composite Score chart first, with adjustable weights
 
 `/jev-models` now opens with the JevBench Main Composite Score as a native bar chart (bars coloured by system type,

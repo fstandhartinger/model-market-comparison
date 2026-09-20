@@ -139,6 +139,12 @@ the run report. A field emptied, a field that disappears, or a larger fall is a 
 τ³-Banking left Intelligence Index v4.3) and still fails closed for a manual source review. The bound is our
 own policy, not a promise Artificial Analysis made.
 
+The AA token-efficiency feed has a separate shrink guard because its rows are carried by model-page Flight payloads.
+When a live page has fewer efficiency carriers than the retained snapshot, the collector fetches a second public AA
+model page and accepts the smaller set only if the complete parsed rows match exactly. A disagreement or an
+unconfirmed shrink remains failed closed. The confirmation is recorded in the run's source attempts and evidence;
+the missing models are not silently retained as current measurements.
+
 ## Epoch ECI refresh details
 
 The collector makes one request per official export at each run:
