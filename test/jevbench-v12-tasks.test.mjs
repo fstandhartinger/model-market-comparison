@@ -60,8 +60,36 @@ test('difficulty scope recomputes Intelligence and the JevBench Score without ch
 test('difficulty scope URL parsing is bounded', () => {
   assert.equal(parseTaskScope('?scope=easy'), 'easy');
   assert.equal(parseTaskScope('?scope=easy-medium'), 'easy-medium');
+  assert.equal(parseTaskScope('?scope=hard'), 'hard');
   assert.equal(parseTaskScope('?scope=unknown'), 'all');
   assert.equal(parseTaskScope(''), 'all');
+});
+
+test('hard-only scope uses hard measurements for all four axes and never changes the default rows', async () => {
+  const view = jevbenchV12View(await readJevbenchV12());
+  const taskView = jevbenchV12TasksView(await readJevbenchV12Tasks(await readJevbenchV12()));
+  const original = view.ranked.map((row) => [row.key, row.main, { ...row.axes }, row.usd]);
+  const hard = scopeRows(view.ranked, taskView.systems, 'hard', DEFAULT_WEIGHTS);
+  const jev = hard.find((row) => row.key === 'jev-1.13.0');
+  assert.equal(scopeDecisions(view.tierCounts, 'hard'), 220);
+  assert.ok(jev);
+  assert.equal(jev.axes.intelligence, jev.hardSubset.intelligence);
+  assert.equal(jev.axes.calibration, jev.hardSubset.calibration);
+  assert.equal(jev.p50, jev.hardSubset.p50);
+  assert.equal(jev.usd, jev.hardSubset.usd);
+  assert.notEqual(jev.axes.speed, view.ranked.find((row) => row.key === jev.key).axes.speed);
+  assert.notEqual(jev.axes.cost, view.ranked.find((row) => row.key === jev.key).axes.cost);
+  assert.deepEqual(view.ranked.map((row) => [row.key, row.main, { ...row.axes }, row.usd]), original);
+});
+
+test('a system without a hard-tier run becomes an unranked partial in hard-only scope', async () => {
+  const view = jevbenchV12View(await readJevbenchV12());
+  const taskView = jevbenchV12TasksView(await readJevbenchV12Tasks(await readJevbenchV12()));
+  const [needle] = scopeRows(view.partial.filter((row) => row.key === 'needle-3-tools'), taskView.systems, 'hard', DEFAULT_WEIGHTS);
+  assert.equal(needle.listing, 'partial');
+  assert.equal(needle.ranked, false);
+  assert.equal(needle.main, null);
+  assert.equal(needle.hardScopeMissing, true);
 });
 
 test('the decisions count a scope reports is the artifact tier aggregate, not the public-task slice', async () => {

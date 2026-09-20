@@ -19,6 +19,7 @@ export type JevV12Row = {
   ranked: boolean; listing: JevListing; notRankedBecause: string | null; rank: number | null; main: number; axes: JevAxes; presets: Record<string, number>; rankUnder: Record<string, number> | null;
   tiers: Record<JevTier12, number | null>; p50: number; p95: number; p50Adj: number; p95Adj: number; adjustment: string;
   endpointKind: 'api' | 'gpu' | 'demo' | 'cpu'; endpoint: string; usd: number; costKind: 'measured' | 'estimate' | 'announced'; costBasis: string;
+  hardSubset: { n: number; attempted: number; intelligence: number; calibration: number | null; p50: number; p95: number; usd: number } | null;
   hasDistribution: boolean; calibrationNote: string | null; footnote: string | null;
 };
 export type JevV12View = {

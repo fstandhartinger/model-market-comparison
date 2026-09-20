@@ -136,7 +136,7 @@ function ScoreChart({ rows, honorable, partial, w, view, scope }: { rows: Row[];
     <p className="mt-1 flex flex-wrap items-center gap-2 text-sm" data-bh-jevc-subtitle>
       {d.official
         ? <><span className="bh-jevc-official">Official</span><span className="bh-muted" data-bh-jev12-oneliner>{view.oneLiner} <a href="#jevc-weights" className="text-accent underline">Change the weighting ↓</a></span></>
-        : <><span className="bh-jevc-notdefault">⚠ Not the default — {d.scopeDefault ? `not the ${SCORE_NAME}` : `${d.scopeLabel} tasks${describe(w).official ? "" : ` · ${d.ratio}`}`}</span><span className="bh-muted">{d.scopeDefault ? `Ranks and scores below are recomputed with ${d.ratio} (Intelligence : Calibration : Speed : Cost, geometric mean);` : `Ranks and scores below are recomputed for the ${d.scopeLabel.toLowerCase()} decisions (Intelligence from that tier only); the official all-tasks score is the ${SCORE_NAME}.`} ▲▼ = change vs. the official ranking. <a href="#jevc-weights" className="text-accent underline">Weighting ↓</a></span></>}
+        : <><span className="bh-jevc-notdefault">⚠ Not the default — {d.scopeDefault ? `not the ${SCORE_NAME}` : `${d.scopeLabel} tasks${describe(w).official ? "" : ` · ${d.ratio}`}`}</span><span className="bh-muted">{d.scopeDefault ? `Ranks and scores below are recomputed with ${d.ratio} (Intelligence : Calibration : Speed : Cost, geometric mean);` : scope === "hard" ? `Ranks and scores below use only the 220 hard-tier decisions for Intelligence, Calibration, Speed and Cost; the official all-tasks score is the ${SCORE_NAME}.` : `Ranks and scores below are recomputed for the ${d.scopeLabel.toLowerCase()} decisions (Intelligence from that scope); the official all-tasks score is the ${SCORE_NAME}.`} ▲▼ = change vs. the official ranking. <a href="#jevc-weights" className="text-accent underline">Weighting ↓</a></span></>}
     </p>
     <div className="mt-4 hidden grid-cols-[1.6rem_14rem_1fr_3.2rem_19rem] gap-x-2 text-[11px] sm:grid" aria-hidden="true">
       <span /><span /><span /><span />
@@ -421,9 +421,15 @@ export function JevModelsV12Board({ view, tasks, children }: { view: JevV12View;
   }, [w, scope, urlReady]);
   const scopedView = useMemo(() => {
     if (!tasks) return view;
-    const ranked = scopeRows(view.ranked, tasks.systems, scope, DEFAULT_WEIGHTS);
-    const honorable = scopeRows(view.honorable, tasks.systems, scope, DEFAULT_WEIGHTS);
-    const partial = scopeRows(view.partial, tasks.systems, scope, DEFAULT_WEIGHTS);
+    const rankedRows = scopeRows(view.ranked, tasks.systems, scope, DEFAULT_WEIGHTS);
+    const honorableRows = scopeRows(view.honorable, tasks.systems, scope, DEFAULT_WEIGHTS);
+    const partialRows = scopeRows(view.partial, tasks.systems, scope, DEFAULT_WEIGHTS);
+    // CR-99: a default-ranked system without a complete hard-tier run moves to the partial list in
+    // this view. Honorable mentions remain honorable, and no unranked row can acquire a rank.
+    const combined = [...rankedRows, ...honorableRows, ...partialRows];
+    const ranked = scope === "hard" ? combined.filter((r) => r.listing === "ranked" && !r.hardScopeMissing) : rankedRows;
+    const honorable = scope === "hard" ? combined.filter((r) => r.listing === "honorable_mention") : honorableRows;
+    const partial = scope === "hard" ? combined.filter((r) => r.listing === "partial" || r.hardScopeMissing) : partialRows;
     // Review gate 20260920T043003Z: the hero counts the decisions the shown score is computed from —
     // the artifact's tier aggregates for this scope (534 / 168 / 72), not the public-task slice the grid
     // ships (231 / 120 / 48). Counting public tasks here made the official view claim 231.
@@ -450,7 +456,7 @@ export function JevModelsV12Board({ view, tasks, children }: { view: JevV12View;
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <h2 id="jev12-difficulty" className="text-xl font-semibold">Explore by task difficulty</h2>
-          <p className="bh-muted mt-1 max-w-2xl text-sm">All tasks is the published default. Choose an easier scope to see how the ranking changes when your work is mostly straightforward; Intelligence and the JevBench Score are recomputed from the published tier aggregates.</p>
+          <p className="bh-muted mt-1 max-w-2xl text-sm">All tasks is the published default. Choose a scope to see how the ranking changes by difficulty. Hard only uses all {view.tierCounts.hard} hard-tier decisions and their measured Intelligence, Calibration, Speed and Cost.</p>
         </div>
         {scope !== DEFAULT_TASK_SCOPE && <button type="button" className="bh-button text-sm font-semibold" onClick={() => setScope(DEFAULT_TASK_SCOPE)} data-bh-jev12-scope-reset>Reset to all tasks</button>}
       </div>
@@ -458,7 +464,7 @@ export function JevModelsV12Board({ view, tasks, children }: { view: JevV12View;
         {TASK_SCOPES.map((item) => <button key={item.id} type="button" className="bh-button min-h-10 text-sm font-semibold" aria-pressed={scope === item.id} onClick={() => setScope(item.id)} data-bh-jev12-scope-option={item.id}>{item.label}</button>)}
       </div>
       {scope !== DEFAULT_TASK_SCOPE && <p className="mt-3 text-sm font-semibold text-[rgb(var(--warn))]" role="status" data-bh-jev12-scope-warning>⚠ Not the default JevBench setting — {scopeInfo.label} tasks; the chart, table and ranking above are recomputed.</p>}
-      <p className="bh-muted mt-2 text-xs">Tier mapping: Easy = easy; Medium = standard; Judge and Hard remain in All tasks. The score still includes the published Calibration, Speed and Cost axes.</p>
+      <p className="bh-muted mt-2 text-xs">Tier mapping: Easy = easy; Medium = standard. Easy scopes change Intelligence only. Hard only measures all four axes on the same hard-tier subset; systems without a hard-tier run are shown as partial and are not ranked.</p>
     </section>}
     {children}
     <Table view={scopedView} rows={ranked} honorableRows={honorable} partialRows={partial} w={w} scope={scope} />

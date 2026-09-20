@@ -465,3 +465,26 @@ details[open] > .bh-collapsible-grid { display: grid; }
 [data-bh-jev12-task-table] thead th { position: sticky; top: 0; z-index: 2; }
 .bh-jevc-custom figure, figure.bh-jevc-custom { box-shadow: 0 0 0 2px rgb(var(--warn) / .7); }
 .bh-jevc-slider { width: 100%; min-height: 32px; }
+/* CR-99: a small, time-limited Jev custom-evaluation offer. On phones its JS placement
+   moves it above any visible chart/control/table; reduced motion gets a fade only. */
+.bh-custom-evaluation-toast {
+  position: fixed; z-index: 45; right: 1rem; max-width: min(44rem, calc(100vw - 2rem));
+  display: flex; align-items: center; gap: .65rem; padding: .55rem .65rem .55rem .85rem;
+  border: 1px solid rgb(var(--line)); border-radius: .65rem; background: rgb(var(--surface)); color: rgb(var(--text));
+  box-shadow: 0 12px 35px rgb(0 0 0 / .22); font-size: .82rem; line-height: 1.3;
+  font-weight: 400; letter-spacing: normal; text-transform: none;
+  animation: bh-offer-in .22s ease-out both;
+}
+.bh-custom-evaluation-toast.is-landing { pointer-events: none; animation: bh-offer-land .65s cubic-bezier(.4,0,.2,1) both; }
+@keyframes bh-offer-in { from { opacity: 0; transform: translateY(.75rem); } to { opacity: 1; transform: none; } }
+@keyframes bh-offer-land { to { opacity: 0; transform: translate(var(--offer-x,0), var(--offer-y,0)) scale(.2); } }
+@media (max-width: 639px) {
+  .bh-custom-evaluation-toast { left: .75rem; right: .75rem; max-width: none; padding-left: .75rem; }
+  .bh-custom-evaluation-toast p { flex: 1 1 auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bh-custom-evaluation-toast { animation: bh-offer-fade .01s linear both; }
+  .bh-custom-evaluation-toast.is-landing { animation: bh-offer-fade-out .15s linear both; }
+  @keyframes bh-offer-fade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes bh-offer-fade-out { from { opacity: 1; } to { opacity: 0; } }
+}

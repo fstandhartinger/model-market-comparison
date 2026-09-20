@@ -1333,3 +1333,22 @@ paused, on top of CR-96 (live on both hosts first). Details, every quote and its
   (97.3 % vs Jev's 94.5 % on judge items, 70.5 % vs 74.1 % on hard ones). The service is credited, not criticised.
 - **CR-97.4** Supersedes CR-95.3 (the "why a Jev service leads" bullet). **Jev 1.13.0 is #1 at 75.4**; every row below
   classifier.dev moves up one place. No measurement, axis, price or score changed.
+
+## CR-20260920d (JevBench page) → CR-99 — hard-only view + custom evaluation offer
+
+Florian, 20 Sep 2026, verbatim:
+> For the jev bench page: let's add a special mode 'Hard only' for 'Explore by task
+> difficulty'. I think it's intereting to show what happens if people only throw hard results into the ring.
+> Let's also add a small badge on the page, that appears like a toast message and then also disappears after a while -
+> which is an offering that says something like (find a good phrasing): Which Jev-class model is best for your usecase?
+> We offer the service to evaluate all the participants on your data set and tell you which option is best in cost and
+> performance for your usecase. Flat fee $1000/evaluation (except for cases where it's too much effort, in which case
+> we'd make an offer) and then there should be a link to click so that people get into an extra page that explains the
+> details, and there people should be able to just contact us via our florian.standhartinger@gmail.com mail address to
+> get into contact and ask for a quote. ... Don't make this toast pop-up too intrusive; it should appear a few seconds
+> after someone lands on the page and then disappear again after a few seconds, but as it disappears, the animation
+> should clearly indicate where the link is that people can use to request custom evaluation jobs, etc. It shouldn't
+> seem too intrusive, but it should be noticeable enough that people who look at the numbers for a few seconds will
+> notice it. It should also be possible to click it away, possibly with an option to 'don't show this again.'
+> We could also offer 'consulting,' not just evaluations. However, the toast should also be minimalistic/simple—not too
+> much text; details can be provided on a separate page.

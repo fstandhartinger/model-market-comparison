@@ -1,5 +1,5 @@
 export type JevTaskTier = 'easy' | 'standard' | 'judge' | 'hard';
-export type JevTaskScope = 'all' | 'easy-medium' | 'easy';
+export type JevTaskScope = 'all' | 'easy-medium' | 'easy' | 'hard';
 export type JevTask = { id: string; tier: JevTaskTier; topic: string; type: string };
 export type JevTaskOutcome = { status: 'c' | 'w' | 'f' | 'n'; latency: number | null };
 export type JevTaskTierStats = { correct: number; wrong: number; failed: number; notAttempted: number; attempted: number; accuracy: number | null };
