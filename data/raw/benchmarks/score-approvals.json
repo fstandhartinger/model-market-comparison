@@ -19582,6 +19582,272 @@
       "review_row": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom",
       "verdict": "accepted",
       "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-2/packet-r1.md#vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom"
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-agents-last-exam",
+      "observation_sha256": "43af1cb6644447ce49815194c719eb209b9c72afe865e402c047daadcc2d3705",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-1.json",
+      "review_sha256": "e07d9a75d4ef75177c9075221a41083068cc40fde9e78d895fda847173fe0c28",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-1.json",
+      "review_row": "self-reported:deepseek-v41-flash-agents-last-exam",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-automationbench",
+      "observation_sha256": "c3ae1d568478c97d7444388d6380b047d2aafb3ade344b324e6721ce935276a0",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-1.json",
+      "review_sha256": "e07d9a75d4ef75177c9075221a41083068cc40fde9e78d895fda847173fe0c28",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-1.json",
+      "review_row": "self-reported:deepseek-v41-flash-automationbench",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-babyvision-w-tools",
+      "observation_sha256": "c0d5bbe826f3d6e171521d3fbe082c725ff3a2213b92ac8f094f373014214735",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-1.json",
+      "review_sha256": "e07d9a75d4ef75177c9075221a41083068cc40fde9e78d895fda847173fe0c28",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-1.json",
+      "review_row": "self-reported:deepseek-v41-flash-babyvision-w-tools",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-chartography-w-tools",
+      "observation_sha256": "540d3f064e4d73cc0ae717ee6938e3328849bd7a0fdaf9a783e6303ded57973e",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-1.json",
+      "review_sha256": "e07d9a75d4ef75177c9075221a41083068cc40fde9e78d895fda847173fe0c28",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-1.json",
+      "review_row": "self-reported:deepseek-v41-flash-chartography-w-tools",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-codeforces-rating",
+      "observation_sha256": "820ebf8ccd4336394cb1f6adc6c07d59c4b5f043b7d5fd5f97cbce61ac6cc419",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-1.json",
+      "review_sha256": "e07d9a75d4ef75177c9075221a41083068cc40fde9e78d895fda847173fe0c28",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-1.json",
+      "review_row": "self-reported:deepseek-v41-flash-codeforces-rating",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-cybergym",
+      "observation_sha256": "1b13d92ed1e3f971b390ecd86eec91d411592aae7f0868638efedffb7af9e261",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-1.json",
+      "review_sha256": "e07d9a75d4ef75177c9075221a41083068cc40fde9e78d895fda847173fe0c28",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-1.json",
+      "review_row": "self-reported:deepseek-v41-flash-cybergym",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-deepswe-v1-1",
+      "observation_sha256": "51bcc9a0f90fc6e8db6964774d7df1d1bda5a4a52b19b90baece65d68db86c36",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-1.json",
+      "review_sha256": "e07d9a75d4ef75177c9075221a41083068cc40fde9e78d895fda847173fe0c28",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-1.json",
+      "review_row": "self-reported:deepseek-v41-flash-deepswe-v1-1",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-exploitgym",
+      "observation_sha256": "571bf2bec9ae5eb020afa00a8e715bcb773bf6116304022706fc81ac19ea4c30",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-1.json",
+      "review_sha256": "e07d9a75d4ef75177c9075221a41083068cc40fde9e78d895fda847173fe0c28",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-1.json",
+      "review_row": "self-reported:deepseek-v41-flash-exploitgym",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-gpqa-diamond",
+      "observation_sha256": "204b414baac60dad44ab240368e62d7c6afda587804266868ff96f750d1735a9",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-1.json",
+      "review_sha256": "e07d9a75d4ef75177c9075221a41083068cc40fde9e78d895fda847173fe0c28",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-1.json",
+      "review_row": "self-reported:deepseek-v41-flash-gpqa-diamond",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-hle",
+      "observation_sha256": "f9f350025186dd5b8f65b8a40b4a0370fb9fd83d2c2a90ba149768351fc56b02",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-1.json",
+      "review_sha256": "e07d9a75d4ef75177c9075221a41083068cc40fde9e78d895fda847173fe0c28",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-1.json",
+      "review_row": "self-reported:deepseek-v41-flash-hle",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-hle-w-tools",
+      "observation_sha256": "1a677f622571825be12824ac917b4b2d6a81a120859b716b97af89f0b5da061b",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-2.json",
+      "review_sha256": "0b9ae096751801cedd5812d54e7b45dcb0d24d11f9c3a9d444354b01c10ea4d3",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-2.json",
+      "review_row": "self-reported:deepseek-v41-flash-hle-w-tools",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-matharena-apex",
+      "observation_sha256": "997a105ebc04b4318d73464ea3e280086767173ec869dc3f3ea49296f9794d48",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-2.json",
+      "review_sha256": "0b9ae096751801cedd5812d54e7b45dcb0d24d11f9c3a9d444354b01c10ea4d3",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-2.json",
+      "review_row": "self-reported:deepseek-v41-flash-matharena-apex",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-nl2repo-bench",
+      "observation_sha256": "01e712063869d797c37be7dfa65940f7331708265c3a43348eb375ecd36eee36",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-2.json",
+      "review_sha256": "0b9ae096751801cedd5812d54e7b45dcb0d24d11f9c3a9d444354b01c10ea4d3",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-2.json",
+      "review_row": "self-reported:deepseek-v41-flash-nl2repo-bench",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-programbench-almost-at-1",
+      "observation_sha256": "7427b49f64ceaeb81bbe322a5693c0cd1e547e66d42f5683b55bdd3a153c2117",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-2.json",
+      "review_sha256": "0b9ae096751801cedd5812d54e7b45dcb0d24d11f9c3a9d444354b01c10ea4d3",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-2.json",
+      "review_row": "self-reported:deepseek-v41-flash-programbench-almost-at-1",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-sec-bench-pro",
+      "observation_sha256": "d71cfef2afb66bbe582a8abff89139610f4afd4e906bbc867c1edeba65d0aab1",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-2.json",
+      "review_sha256": "0b9ae096751801cedd5812d54e7b45dcb0d24d11f9c3a9d444354b01c10ea4d3",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-2.json",
+      "review_row": "self-reported:deepseek-v41-flash-sec-bench-pro",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-terminal-bench-v2-1",
+      "observation_sha256": "fbf8d0381fe584ea573908fb16020ad23e81671f04c7f69200ae76b5fe27c5d3",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-2.json",
+      "review_sha256": "0b9ae096751801cedd5812d54e7b45dcb0d24d11f9c3a9d444354b01c10ea4d3",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-2.json",
+      "review_row": "self-reported:deepseek-v41-flash-terminal-bench-v2-1",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-terminal-bench-v3",
+      "observation_sha256": "322e4c24b5af93c2f8edc5c38da7e04683a595b83c93379d50714e5675cfd153",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-2.json",
+      "review_sha256": "0b9ae096751801cedd5812d54e7b45dcb0d24d11f9c3a9d444354b01c10ea4d3",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-2.json",
+      "review_row": "self-reported:deepseek-v41-flash-terminal-bench-v3",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-terminal-bench-v4",
+      "observation_sha256": "a77d51facff5642831385dde1839255e1fb86f3d3abc474e9a53064a18c2e011",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-2.json",
+      "review_sha256": "0b9ae096751801cedd5812d54e7b45dcb0d24d11f9c3a9d444354b01c10ea4d3",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-2.json",
+      "review_row": "self-reported:deepseek-v41-flash-terminal-bench-v4",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-zerobench-main-w-tools",
+      "observation_sha256": "53e198b2b7634934bb0ebe09cb047a6b14cc39b08dd1a789b0184ef1b63558ef",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-2.json",
+      "review_sha256": "0b9ae096751801cedd5812d54e7b45dcb0d24d11f9c3a9d444354b01c10ea4d3",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-2.json",
+      "review_row": "self-reported:deepseek-v41-flash-zerobench-main-w-tools",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
     }
   ]
 }

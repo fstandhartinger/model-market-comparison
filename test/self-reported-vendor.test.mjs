@@ -170,9 +170,13 @@ test('the shipped candidates are self-reported, sourced from retained captures a
     const captured = o.source.file.endsWith('.gz') ? gunzipSync(stored) : stored;
     assert.equal(createHash('sha256').update(captured).digest('hex'), o.source.sha256, `${o.id} does not cite a retained capture`);
     const legacyLocator = /matched line: /.test(o.source.locator) && o.source.locator.includes(String(o.value));
-    const stepfunLocator = o.source.url === 'https://www.stepfun.com/step-5-preview'
-      && /Vg benchmark table row .*first value under "Step 5 Preview \(High\)"/.test(o.source.locator);
-    assert.ok(legacyLocator || stepfunLocator, `${o.id} must record the row and column its value was found in`);
+    // A hand-reviewed release-document ingestion (CR-98 StepFun, CR-85.2 DeepSeek) instead names the
+    // printed row and the column the value sits under. The row it names must be the benchmark the
+    // observation claims to be, so a locator cannot point at a neighbouring row.
+    const row = o.source.locator.match(/row "([^"]+)"/);
+    const namedLocator = Boolean(row) && /under "[^"]+"/.test(o.source.locator)
+      && row[1].includes(entries.get(o.benchmark_id).name);
+    assert.ok(legacyLocator || namedLocator, `${o.id} must record the row and column its value was found in`);
   }
   assert.equal(new Set(candidates.observations.map((o) => o.id)).size, candidates.observations.length);
 });
@@ -226,8 +230,7 @@ test('every shipped candidate records the column its value was read from', async
   const candidates = await read('data/raw/benchmarks/self-reported-candidates.json');
   for (const o of candidates.observations) {
     const legacy = /re-verified against our own capture: .*(column |names )/.test(o.protocol);
-    const stepfun = o.source.url === 'https://www.stepfun.com/step-5-preview'
-      && /first value under "Step 5 Preview \(High\)"/.test(o.source.locator);
-    assert.ok(legacy || stepfun, `${o.id} must record how the column was established`);
+    const named = /under "[^"]+"/.test(o.source.locator);
+    assert.ok(legacy || named, `${o.id} must record how the column was established`);
   }
 });

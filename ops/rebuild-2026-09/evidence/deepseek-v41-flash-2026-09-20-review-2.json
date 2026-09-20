@@ -1,0 +1,26 @@
+{
+  "artifact_id": "deepseek-v41-flash-self-reported-2026-09-20-slice-2",
+  "artifact_sha256": "3993ec741d135d2c544dfc6d6cb867a011f7fca3c7a20e2d95bc52988954bad2",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "self-reported:deepseek-v41-flash-hle-w-tools",
+    "self-reported:deepseek-v41-flash-matharena-apex",
+    "self-reported:deepseek-v41-flash-nl2repo-bench",
+    "self-reported:deepseek-v41-flash-programbench-almost-at-1",
+    "self-reported:deepseek-v41-flash-sec-bench-pro",
+    "self-reported:deepseek-v41-flash-terminal-bench-v2-1",
+    "self-reported:deepseek-v41-flash-terminal-bench-v3",
+    "self-reported:deepseek-v41-flash-terminal-bench-v4",
+    "self-reported:deepseek-v41-flash-zerobench-main-w-tools"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "self-reported:deepseek-v41-flash-terminal-bench-v2-1: the protocol's 'evaluated without network access' is drawn from the card's scaffold-comparison preamble ('Terminal-Bench 2.1 is evaluated without network access'), not from the main results preamble. Because the headline DS-V4.1-Flash value (90.6) equals the DSH Minimal scaffold value, it appears to be the same run, so this was treated as consistent with the document, not a defect.",
+    "The identity 'category' fields in this slice (e.g., 'Math' for MathArena Apex, 'Coding' for NL2Repo-Bench/ProgramBench, 'Safety/Alignment' for SEC-Bench Pro, 'Vision' for ZeroBench-main w/ tools) do not always match the card's table section headers, which group these rows under 'Agentic' or 'Reasoning'. None of the seven enumerated checks governs the 'category' field, so this was not asserted as a defect.",
+    "NL2Repo-Bench value is recorded as 64 (printed 64.0), Terminal-Bench 3.0 as 30 (printed 30.0), and ZeroBench-main w/ tools as 49 (printed 49.0); these are numerically identical, so not treated as mismatches."
+  ],
+  "missing_evidence": []
+}

@@ -2800,6 +2800,1184 @@
       ]
     },
     {
+      "id": "deepseek-agents-last-exam::snapshot-2026-09-10",
+      "name": "Agent's Last Exam",
+      "version": "snapshot-2026-09-10",
+      "version_status": "snapshot",
+      "family": "deepseek-agents-last-exam",
+      "category": "Agentic",
+      "one_sentence_description": "Agent's Last Exam result as reported by DeepSeek in the DeepSeek-V4.1-Flash model card; this registry identity preserves the printed version or the card's publication date when none was stated.",
+      "scoring": {
+        "metric": "Source-published score (Pass@1)",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "DeepSeek publishes the settings and scaffold but no complete independent reproduction recipe. This identity retains the exact printed label and keeps vendor claims out of measured cohorts and the Composite."
+      },
+      "maintainer": "Agent's Last Exam",
+      "source_type": "vendor_report",
+      "primary_url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+      "publication_urls": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "type": "vendor_report",
+          "role": "DeepSeek-V4.1-Flash model card containing the vendor-reported result"
+        },
+        {
+          "url": "https://api-docs.deepseek.com/news/news260910/",
+          "type": "vendor_report",
+          "role": "DeepSeek release note of 2026-09-10 announcing the model"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Hugging Face model-card Markdown",
+        "locator": "\"Comparison with frontier models (Max reasoning effort)\" table; row \"Agent's Last Exam (Pass@1)\"; column \"DS-V4.1-Flash\"",
+        "version_guard": "No version printed; keep this dated snapshot separate from every other release.",
+        "notes": "Capture only. Preserve the self_reported basis and the maximum reasoning effort the card states for every instruct result."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated; the card is a release document.",
+        "check_recommendation": "Check on a DeepSeek release or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-20",
+      "last_verified": "2026-09-20",
+      "evidence": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-deepseek-v41-flash/347c9db4e5506acb531c.gz",
+          "sha256": "32adaa3768b75d9b0892eb61333ae6205e7330089f5b8574af412dbe3a4ac4e4",
+          "fetched_at": "2026-09-20T18:14:01.175048+00:00",
+          "excerpt": "DeepSeek-V4.1-Flash — Agent's Last Exam (Pass@1): 31.8%; vendor model card captured 2026-09-20."
+        }
+      ]
+    },
+    {
+      "id": "deepseek-automationbench::snapshot-2026-09-10",
+      "name": "AutomationBench",
+      "version": "snapshot-2026-09-10",
+      "version_status": "snapshot",
+      "family": "deepseek-automationbench",
+      "category": "Agentic",
+      "one_sentence_description": "AutomationBench result as reported by DeepSeek in the DeepSeek-V4.1-Flash model card; this registry identity preserves the printed version or the card's publication date when none was stated.",
+      "scoring": {
+        "metric": "Source-published score (Pass@1)",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "DeepSeek publishes the settings and scaffold but no complete independent reproduction recipe. This identity retains the exact printed label and keeps vendor claims out of measured cohorts and the Composite."
+      },
+      "maintainer": "AutomationBench",
+      "source_type": "vendor_report",
+      "primary_url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+      "publication_urls": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "type": "vendor_report",
+          "role": "DeepSeek-V4.1-Flash model card containing the vendor-reported result"
+        },
+        {
+          "url": "https://api-docs.deepseek.com/news/news260910/",
+          "type": "vendor_report",
+          "role": "DeepSeek release note of 2026-09-10 announcing the model"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Hugging Face model-card Markdown",
+        "locator": "\"Comparison with frontier models (Max reasoning effort)\" table; row \"AutomationBench (Pass@1)\"; column \"DS-V4.1-Flash\"",
+        "version_guard": "No version printed; keep this dated snapshot separate from every other release.",
+        "notes": "Capture only. Preserve the self_reported basis and the maximum reasoning effort the card states for every instruct result."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated; the card is a release document.",
+        "check_recommendation": "Check on a DeepSeek release or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-20",
+      "last_verified": "2026-09-20",
+      "evidence": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-deepseek-v41-flash/347c9db4e5506acb531c.gz",
+          "sha256": "32adaa3768b75d9b0892eb61333ae6205e7330089f5b8574af412dbe3a4ac4e4",
+          "fetched_at": "2026-09-20T18:14:01.175048+00:00",
+          "excerpt": "DeepSeek-V4.1-Flash — AutomationBench (Pass@1): 54.8%; vendor model card captured 2026-09-20."
+        }
+      ]
+    },
+    {
+      "id": "deepseek-babyvision-w-tools::snapshot-2026-09-10",
+      "name": "BabyVision w/ tools",
+      "version": "snapshot-2026-09-10",
+      "version_status": "snapshot",
+      "family": "deepseek-babyvision-w-tools",
+      "category": "Vision",
+      "one_sentence_description": "BabyVision w/ tools result as reported by DeepSeek in the DeepSeek-V4.1-Flash model card; this registry identity preserves the printed version or the card's publication date when none was stated.",
+      "scoring": {
+        "metric": "Source-published score (Pass@1)",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "DeepSeek publishes the settings and scaffold but no complete independent reproduction recipe. This identity retains the exact printed label and keeps vendor claims out of measured cohorts and the Composite."
+      },
+      "maintainer": "BabyVision",
+      "source_type": "vendor_report",
+      "primary_url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+      "publication_urls": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "type": "vendor_report",
+          "role": "DeepSeek-V4.1-Flash model card containing the vendor-reported result"
+        },
+        {
+          "url": "https://api-docs.deepseek.com/news/news260910/",
+          "type": "vendor_report",
+          "role": "DeepSeek release note of 2026-09-10 announcing the model"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Hugging Face model-card Markdown",
+        "locator": "\"Comparison with frontier models (Max reasoning effort)\" table; row \"BabyVision w/ tools (Pass@1)\"; column \"DS-V4.1-Flash\"",
+        "version_guard": "No version printed; keep this dated snapshot separate from every other release.",
+        "notes": "Capture only. Preserve the self_reported basis and the maximum reasoning effort the card states for every instruct result."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated; the card is a release document.",
+        "check_recommendation": "Check on a DeepSeek release or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-20",
+      "last_verified": "2026-09-20",
+      "evidence": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-deepseek-v41-flash/347c9db4e5506acb531c.gz",
+          "sha256": "32adaa3768b75d9b0892eb61333ae6205e7330089f5b8574af412dbe3a4ac4e4",
+          "fetched_at": "2026-09-20T18:14:01.175048+00:00",
+          "excerpt": "DeepSeek-V4.1-Flash — BabyVision w/ tools (Pass@1): 89.6%; vendor model card captured 2026-09-20."
+        }
+      ]
+    },
+    {
+      "id": "deepseek-chartography-w-tools::snapshot-2026-09-10",
+      "name": "Chartography w/ tools",
+      "version": "snapshot-2026-09-10",
+      "version_status": "snapshot",
+      "family": "deepseek-chartography-w-tools",
+      "category": "Vision",
+      "one_sentence_description": "Chartography w/ tools result as reported by DeepSeek in the DeepSeek-V4.1-Flash model card; this registry identity preserves the printed version or the card's publication date when none was stated.",
+      "scoring": {
+        "metric": "Source-published score (Pass@1)",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "DeepSeek publishes the settings and scaffold but no complete independent reproduction recipe. This identity retains the exact printed label and keeps vendor claims out of measured cohorts and the Composite."
+      },
+      "maintainer": "Chartography",
+      "source_type": "vendor_report",
+      "primary_url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+      "publication_urls": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "type": "vendor_report",
+          "role": "DeepSeek-V4.1-Flash model card containing the vendor-reported result"
+        },
+        {
+          "url": "https://api-docs.deepseek.com/news/news260910/",
+          "type": "vendor_report",
+          "role": "DeepSeek release note of 2026-09-10 announcing the model"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Hugging Face model-card Markdown",
+        "locator": "\"Comparison with frontier models (Max reasoning effort)\" table; row \"Chartography w/ tools (Pass@1)\"; column \"DS-V4.1-Flash\"",
+        "version_guard": "No version printed; keep this dated snapshot separate from every other release.",
+        "notes": "Capture only. Preserve the self_reported basis and the maximum reasoning effort the card states for every instruct result."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated; the card is a release document.",
+        "check_recommendation": "Check on a DeepSeek release or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-20",
+      "last_verified": "2026-09-20",
+      "evidence": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-deepseek-v41-flash/347c9db4e5506acb531c.gz",
+          "sha256": "32adaa3768b75d9b0892eb61333ae6205e7330089f5b8574af412dbe3a4ac4e4",
+          "fetched_at": "2026-09-20T18:14:01.175048+00:00",
+          "excerpt": "DeepSeek-V4.1-Flash — Chartography w/ tools (Pass@1): 78.9%; vendor model card captured 2026-09-20."
+        }
+      ]
+    },
+    {
+      "id": "deepseek-codeforces-rating::snapshot-2026-09-10",
+      "name": "Codeforces (Rating)",
+      "version": "snapshot-2026-09-10",
+      "version_status": "snapshot",
+      "family": "deepseek-codeforces-rating",
+      "category": "Coding",
+      "one_sentence_description": "Codeforces (Rating) result as reported by DeepSeek in the DeepSeek-V4.1-Flash model card; this registry identity preserves the printed version or the card's publication date when none was stated.",
+      "scoring": {
+        "metric": "Source-published score (Rating)",
+        "unit": "Elo",
+        "range": [
+          0,
+          null
+        ],
+        "higher_better": true,
+        "notes": "DeepSeek publishes the settings and scaffold but no complete independent reproduction recipe. This identity retains the exact printed label and keeps vendor claims out of measured cohorts and the Composite."
+      },
+      "maintainer": "Codeforces",
+      "source_type": "vendor_report",
+      "primary_url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+      "publication_urls": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "type": "vendor_report",
+          "role": "DeepSeek-V4.1-Flash model card containing the vendor-reported result"
+        },
+        {
+          "url": "https://api-docs.deepseek.com/news/news260910/",
+          "type": "vendor_report",
+          "role": "DeepSeek release note of 2026-09-10 announcing the model"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Hugging Face model-card Markdown",
+        "locator": "\"Comparison with frontier models (Max reasoning effort)\" table; row \"Codeforces (Rating)\"; column \"DS-V4.1-Flash\"",
+        "version_guard": "No version printed; keep this dated snapshot separate from every other release.",
+        "notes": "Capture only. Preserve the self_reported basis and the maximum reasoning effort the card states for every instruct result."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated; the card is a release document.",
+        "check_recommendation": "Check on a DeepSeek release or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-20",
+      "last_verified": "2026-09-20",
+      "evidence": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-deepseek-v41-flash/347c9db4e5506acb531c.gz",
+          "sha256": "32adaa3768b75d9b0892eb61333ae6205e7330089f5b8574af412dbe3a4ac4e4",
+          "fetched_at": "2026-09-20T18:14:01.175048+00:00",
+          "excerpt": "DeepSeek-V4.1-Flash — Codeforces (Rating): 3471 Elo; vendor model card captured 2026-09-20."
+        }
+      ]
+    },
+    {
+      "id": "deepseek-cybergym::snapshot-2026-09-10",
+      "name": "CyberGym",
+      "version": "snapshot-2026-09-10",
+      "version_status": "snapshot",
+      "family": "deepseek-cybergym",
+      "category": "Safety/Alignment",
+      "one_sentence_description": "CyberGym result as reported by DeepSeek in the DeepSeek-V4.1-Flash model card; this registry identity preserves the printed version or the card's publication date when none was stated.",
+      "scoring": {
+        "metric": "Source-published score (Pass@1)",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "DeepSeek publishes the settings and scaffold but no complete independent reproduction recipe. This identity retains the exact printed label and keeps vendor claims out of measured cohorts and the Composite."
+      },
+      "maintainer": "CyberGym",
+      "source_type": "vendor_report",
+      "primary_url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+      "publication_urls": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "type": "vendor_report",
+          "role": "DeepSeek-V4.1-Flash model card containing the vendor-reported result"
+        },
+        {
+          "url": "https://api-docs.deepseek.com/news/news260910/",
+          "type": "vendor_report",
+          "role": "DeepSeek release note of 2026-09-10 announcing the model"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Hugging Face model-card Markdown",
+        "locator": "\"Comparison with frontier models (Max reasoning effort)\" table; row \"CyberGym (Pass@1)\"; column \"DS-V4.1-Flash\"",
+        "version_guard": "No version printed; keep this dated snapshot separate from every other release.",
+        "notes": "Capture only. Preserve the self_reported basis and the maximum reasoning effort the card states for every instruct result."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated; the card is a release document.",
+        "check_recommendation": "Check on a DeepSeek release or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-20",
+      "last_verified": "2026-09-20",
+      "evidence": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-deepseek-v41-flash/347c9db4e5506acb531c.gz",
+          "sha256": "32adaa3768b75d9b0892eb61333ae6205e7330089f5b8574af412dbe3a4ac4e4",
+          "fetched_at": "2026-09-20T18:14:01.175048+00:00",
+          "excerpt": "DeepSeek-V4.1-Flash — CyberGym (Pass@1): 88.1%; vendor model card captured 2026-09-20."
+        }
+      ]
+    },
+    {
+      "id": "deepseek-deepswe-v1-1::1.1",
+      "name": "DeepSWE v1.1",
+      "version": "1.1",
+      "version_status": "published",
+      "family": "deepseek-deepswe-v1-1",
+      "category": "Coding",
+      "one_sentence_description": "DeepSWE v1.1 result as reported by DeepSeek in the DeepSeek-V4.1-Flash model card; this registry identity preserves the printed version or the card's publication date when none was stated.",
+      "scoring": {
+        "metric": "Source-published score (Resolved)",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "DeepSeek publishes the settings and scaffold but no complete independent reproduction recipe. This identity retains the exact printed label and keeps vendor claims out of measured cohorts and the Composite."
+      },
+      "maintainer": "DeepSWE",
+      "source_type": "vendor_report",
+      "primary_url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+      "publication_urls": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "type": "vendor_report",
+          "role": "DeepSeek-V4.1-Flash model card containing the vendor-reported result"
+        },
+        {
+          "url": "https://api-docs.deepseek.com/news/news260910/",
+          "type": "vendor_report",
+          "role": "DeepSeek release note of 2026-09-10 announcing the model"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Hugging Face model-card Markdown",
+        "locator": "\"Comparison with frontier models (Max reasoning effort)\" table; row \"DeepSWE v1.1 (Resolved)\"; column \"DS-V4.1-Flash\"",
+        "version_guard": "Require the printed version 1.1 before collecting.",
+        "notes": "Capture only. Preserve the self_reported basis and the maximum reasoning effort the card states for every instruct result."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated; the card is a release document.",
+        "check_recommendation": "Check on a DeepSeek release or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-20",
+      "last_verified": "2026-09-20",
+      "evidence": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-deepseek-v41-flash/347c9db4e5506acb531c.gz",
+          "sha256": "32adaa3768b75d9b0892eb61333ae6205e7330089f5b8574af412dbe3a4ac4e4",
+          "fetched_at": "2026-09-20T18:14:01.175048+00:00",
+          "excerpt": "DeepSeek-V4.1-Flash — DeepSWE v1.1 (Resolved): 74.2%; vendor model card captured 2026-09-20."
+        }
+      ]
+    },
+    {
+      "id": "deepseek-exploitgym::snapshot-2026-09-10",
+      "name": "ExploitGym",
+      "version": "snapshot-2026-09-10",
+      "version_status": "snapshot",
+      "family": "deepseek-exploitgym",
+      "category": "Safety/Alignment",
+      "one_sentence_description": "ExploitGym result as reported by DeepSeek in the DeepSeek-V4.1-Flash model card; this registry identity preserves the printed version or the card's publication date when none was stated.",
+      "scoring": {
+        "metric": "Source-published score (Pass@1)",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "DeepSeek publishes the settings and scaffold but no complete independent reproduction recipe. This identity retains the exact printed label and keeps vendor claims out of measured cohorts and the Composite."
+      },
+      "maintainer": "ExploitGym",
+      "source_type": "vendor_report",
+      "primary_url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+      "publication_urls": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "type": "vendor_report",
+          "role": "DeepSeek-V4.1-Flash model card containing the vendor-reported result"
+        },
+        {
+          "url": "https://api-docs.deepseek.com/news/news260910/",
+          "type": "vendor_report",
+          "role": "DeepSeek release note of 2026-09-10 announcing the model"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Hugging Face model-card Markdown",
+        "locator": "\"Comparison with frontier models (Max reasoning effort)\" table; row \"ExploitGym (Pass@1)\"; column \"DS-V4.1-Flash\"",
+        "version_guard": "No version printed; keep this dated snapshot separate from every other release.",
+        "notes": "Capture only. Preserve the self_reported basis and the maximum reasoning effort the card states for every instruct result."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated; the card is a release document.",
+        "check_recommendation": "Check on a DeepSeek release or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-20",
+      "last_verified": "2026-09-20",
+      "evidence": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-deepseek-v41-flash/347c9db4e5506acb531c.gz",
+          "sha256": "32adaa3768b75d9b0892eb61333ae6205e7330089f5b8574af412dbe3a4ac4e4",
+          "fetched_at": "2026-09-20T18:14:01.175048+00:00",
+          "excerpt": "DeepSeek-V4.1-Flash — ExploitGym (Pass@1): 15.3%; vendor model card captured 2026-09-20."
+        }
+      ]
+    },
+    {
+      "id": "deepseek-gpqa-diamond::snapshot-2026-09-10",
+      "name": "GPQA Diamond",
+      "version": "snapshot-2026-09-10",
+      "version_status": "snapshot",
+      "family": "deepseek-gpqa-diamond",
+      "category": "Reasoning",
+      "one_sentence_description": "GPQA Diamond result as reported by DeepSeek in the DeepSeek-V4.1-Flash model card; this registry identity preserves the printed version or the card's publication date when none was stated.",
+      "scoring": {
+        "metric": "Source-published score (Pass@1)",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "DeepSeek publishes the settings and scaffold but no complete independent reproduction recipe. This identity retains the exact printed label and keeps vendor claims out of measured cohorts and the Composite."
+      },
+      "maintainer": "GPQA",
+      "source_type": "vendor_report",
+      "primary_url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+      "publication_urls": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "type": "vendor_report",
+          "role": "DeepSeek-V4.1-Flash model card containing the vendor-reported result"
+        },
+        {
+          "url": "https://api-docs.deepseek.com/news/news260910/",
+          "type": "vendor_report",
+          "role": "DeepSeek release note of 2026-09-10 announcing the model"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Hugging Face model-card Markdown",
+        "locator": "\"Comparison with frontier models (Max reasoning effort)\" table; row \"GPQA Diamond (Pass@1)\"; column \"DS-V4.1-Flash\"",
+        "version_guard": "No version printed; keep this dated snapshot separate from every other release.",
+        "notes": "Capture only. Preserve the self_reported basis and the maximum reasoning effort the card states for every instruct result."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated; the card is a release document.",
+        "check_recommendation": "Check on a DeepSeek release or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-20",
+      "last_verified": "2026-09-20",
+      "evidence": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-deepseek-v41-flash/347c9db4e5506acb531c.gz",
+          "sha256": "32adaa3768b75d9b0892eb61333ae6205e7330089f5b8574af412dbe3a4ac4e4",
+          "fetched_at": "2026-09-20T18:14:01.175048+00:00",
+          "excerpt": "DeepSeek-V4.1-Flash — GPQA Diamond (Pass@1): 90.9%; vendor model card captured 2026-09-20."
+        }
+      ]
+    },
+    {
+      "id": "deepseek-hle-w-tools::snapshot-2026-09-10",
+      "name": "HLE w/ tools",
+      "version": "snapshot-2026-09-10",
+      "version_status": "snapshot",
+      "family": "deepseek-hle-w-tools",
+      "category": "Agentic",
+      "one_sentence_description": "HLE w/ tools result as reported by DeepSeek in the DeepSeek-V4.1-Flash model card; this registry identity preserves the printed version or the card's publication date when none was stated.",
+      "scoring": {
+        "metric": "Source-published score (Pass@1)",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "DeepSeek publishes the settings and scaffold but no complete independent reproduction recipe. This identity retains the exact printed label and keeps vendor claims out of measured cohorts and the Composite."
+      },
+      "maintainer": "HLE",
+      "source_type": "vendor_report",
+      "primary_url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+      "publication_urls": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "type": "vendor_report",
+          "role": "DeepSeek-V4.1-Flash model card containing the vendor-reported result"
+        },
+        {
+          "url": "https://api-docs.deepseek.com/news/news260910/",
+          "type": "vendor_report",
+          "role": "DeepSeek release note of 2026-09-10 announcing the model"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Hugging Face model-card Markdown",
+        "locator": "\"Comparison with frontier models (Max reasoning effort)\" table; row \"HLE w/ tools (Pass@1)\"; column \"DS-V4.1-Flash\"",
+        "version_guard": "No version printed; keep this dated snapshot separate from every other release.",
+        "notes": "Capture only. Preserve the self_reported basis and the maximum reasoning effort the card states for every instruct result."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated; the card is a release document.",
+        "check_recommendation": "Check on a DeepSeek release or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-20",
+      "last_verified": "2026-09-20",
+      "evidence": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-deepseek-v41-flash/347c9db4e5506acb531c.gz",
+          "sha256": "32adaa3768b75d9b0892eb61333ae6205e7330089f5b8574af412dbe3a4ac4e4",
+          "fetched_at": "2026-09-20T18:14:01.175048+00:00",
+          "excerpt": "DeepSeek-V4.1-Flash — HLE w/ tools (Pass@1): 63.9%; vendor model card captured 2026-09-20."
+        }
+      ]
+    },
+    {
+      "id": "deepseek-hle::snapshot-2026-09-10",
+      "name": "HLE",
+      "version": "snapshot-2026-09-10",
+      "version_status": "snapshot",
+      "family": "deepseek-hle",
+      "category": "Reasoning",
+      "one_sentence_description": "HLE result as reported by DeepSeek in the DeepSeek-V4.1-Flash model card; this registry identity preserves the printed version or the card's publication date when none was stated.",
+      "scoring": {
+        "metric": "Source-published score (Pass@1)",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "DeepSeek publishes the settings and scaffold but no complete independent reproduction recipe. This identity retains the exact printed label and keeps vendor claims out of measured cohorts and the Composite."
+      },
+      "maintainer": "HLE",
+      "source_type": "vendor_report",
+      "primary_url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+      "publication_urls": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "type": "vendor_report",
+          "role": "DeepSeek-V4.1-Flash model card containing the vendor-reported result"
+        },
+        {
+          "url": "https://api-docs.deepseek.com/news/news260910/",
+          "type": "vendor_report",
+          "role": "DeepSeek release note of 2026-09-10 announcing the model"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Hugging Face model-card Markdown",
+        "locator": "\"Comparison with frontier models (Max reasoning effort)\" table; row \"HLE (Pass@1)\"; column \"DS-V4.1-Flash\"",
+        "version_guard": "No version printed; keep this dated snapshot separate from every other release.",
+        "notes": "Capture only. Preserve the self_reported basis and the maximum reasoning effort the card states for every instruct result."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated; the card is a release document.",
+        "check_recommendation": "Check on a DeepSeek release or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-20",
+      "last_verified": "2026-09-20",
+      "evidence": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-deepseek-v41-flash/347c9db4e5506acb531c.gz",
+          "sha256": "32adaa3768b75d9b0892eb61333ae6205e7330089f5b8574af412dbe3a4ac4e4",
+          "fetched_at": "2026-09-20T18:14:01.175048+00:00",
+          "excerpt": "DeepSeek-V4.1-Flash — HLE (Pass@1): 36.8%; vendor model card captured 2026-09-20."
+        }
+      ]
+    },
+    {
+      "id": "deepseek-matharena-apex::snapshot-2026-09-10",
+      "name": "MathArena Apex",
+      "version": "snapshot-2026-09-10",
+      "version_status": "snapshot",
+      "family": "deepseek-matharena-apex",
+      "category": "Math",
+      "one_sentence_description": "MathArena Apex result as reported by DeepSeek in the DeepSeek-V4.1-Flash model card; this registry identity preserves the printed version or the card's publication date when none was stated.",
+      "scoring": {
+        "metric": "Source-published score (Pass@1)",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "DeepSeek publishes the settings and scaffold but no complete independent reproduction recipe. This identity retains the exact printed label and keeps vendor claims out of measured cohorts and the Composite."
+      },
+      "maintainer": "MathArena",
+      "source_type": "vendor_report",
+      "primary_url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+      "publication_urls": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "type": "vendor_report",
+          "role": "DeepSeek-V4.1-Flash model card containing the vendor-reported result"
+        },
+        {
+          "url": "https://api-docs.deepseek.com/news/news260910/",
+          "type": "vendor_report",
+          "role": "DeepSeek release note of 2026-09-10 announcing the model"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Hugging Face model-card Markdown",
+        "locator": "\"Comparison with frontier models (Max reasoning effort)\" table; row \"MathArena Apex (Pass@1)\"; column \"DS-V4.1-Flash\"",
+        "version_guard": "No version printed; keep this dated snapshot separate from every other release.",
+        "notes": "Capture only. Preserve the self_reported basis and the maximum reasoning effort the card states for every instruct result."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated; the card is a release document.",
+        "check_recommendation": "Check on a DeepSeek release or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-20",
+      "last_verified": "2026-09-20",
+      "evidence": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-deepseek-v41-flash/347c9db4e5506acb531c.gz",
+          "sha256": "32adaa3768b75d9b0892eb61333ae6205e7330089f5b8574af412dbe3a4ac4e4",
+          "fetched_at": "2026-09-20T18:14:01.175048+00:00",
+          "excerpt": "DeepSeek-V4.1-Flash — MathArena Apex (Pass@1): 65.6%; vendor model card captured 2026-09-20."
+        }
+      ]
+    },
+    {
+      "id": "deepseek-nl2repo-bench::snapshot-2026-09-10",
+      "name": "NL2Repo-Bench",
+      "version": "snapshot-2026-09-10",
+      "version_status": "snapshot",
+      "family": "deepseek-nl2repo-bench",
+      "category": "Coding",
+      "one_sentence_description": "NL2Repo-Bench result as reported by DeepSeek in the DeepSeek-V4.1-Flash model card; this registry identity preserves the printed version or the card's publication date when none was stated.",
+      "scoring": {
+        "metric": "Source-published score (Score)",
+        "unit": "points",
+        "range": [
+          0,
+          null
+        ],
+        "higher_better": true,
+        "notes": "DeepSeek publishes the settings and scaffold but no complete independent reproduction recipe. This identity retains the exact printed label and keeps vendor claims out of measured cohorts and the Composite."
+      },
+      "maintainer": "NL2Repo-Bench",
+      "source_type": "vendor_report",
+      "primary_url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+      "publication_urls": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "type": "vendor_report",
+          "role": "DeepSeek-V4.1-Flash model card containing the vendor-reported result"
+        },
+        {
+          "url": "https://api-docs.deepseek.com/news/news260910/",
+          "type": "vendor_report",
+          "role": "DeepSeek release note of 2026-09-10 announcing the model"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Hugging Face model-card Markdown",
+        "locator": "\"Comparison with frontier models (Max reasoning effort)\" table; row \"NL2Repo-Bench (Score)\"; column \"DS-V4.1-Flash\"",
+        "version_guard": "No version printed; keep this dated snapshot separate from every other release.",
+        "notes": "Capture only. Preserve the self_reported basis and the maximum reasoning effort the card states for every instruct result."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated; the card is a release document.",
+        "check_recommendation": "Check on a DeepSeek release or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-20",
+      "last_verified": "2026-09-20",
+      "evidence": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-deepseek-v41-flash/347c9db4e5506acb531c.gz",
+          "sha256": "32adaa3768b75d9b0892eb61333ae6205e7330089f5b8574af412dbe3a4ac4e4",
+          "fetched_at": "2026-09-20T18:14:01.175048+00:00",
+          "excerpt": "DeepSeek-V4.1-Flash — NL2Repo-Bench (Score): 64 points; vendor model card captured 2026-09-20."
+        }
+      ]
+    },
+    {
+      "id": "deepseek-programbench-almost-at-1::snapshot-2026-09-10",
+      "name": "ProgramBench (Almost@1)",
+      "version": "snapshot-2026-09-10",
+      "version_status": "snapshot",
+      "family": "deepseek-programbench-almost-at-1",
+      "category": "Coding",
+      "one_sentence_description": "ProgramBench (Almost@1) result as reported by DeepSeek in the DeepSeek-V4.1-Flash model card; this registry identity preserves the printed version or the card's publication date when none was stated.",
+      "scoring": {
+        "metric": "Source-published score (Almost@1)",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "DeepSeek publishes the settings and scaffold but no complete independent reproduction recipe. This identity retains the exact printed label and keeps vendor claims out of measured cohorts and the Composite."
+      },
+      "maintainer": "ProgramBench",
+      "source_type": "vendor_report",
+      "primary_url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+      "publication_urls": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "type": "vendor_report",
+          "role": "DeepSeek-V4.1-Flash model card containing the vendor-reported result"
+        },
+        {
+          "url": "https://api-docs.deepseek.com/news/news260910/",
+          "type": "vendor_report",
+          "role": "DeepSeek release note of 2026-09-10 announcing the model"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Hugging Face model-card Markdown",
+        "locator": "\"Comparison with frontier models (Max reasoning effort)\" table; row \"ProgramBench (Almost@1)\"; column \"DS-V4.1-Flash\"",
+        "version_guard": "No version printed; keep this dated snapshot separate from every other release.",
+        "notes": "Capture only. Preserve the self_reported basis and the maximum reasoning effort the card states for every instruct result."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated; the card is a release document.",
+        "check_recommendation": "Check on a DeepSeek release or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-20",
+      "last_verified": "2026-09-20",
+      "evidence": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-deepseek-v41-flash/347c9db4e5506acb531c.gz",
+          "sha256": "32adaa3768b75d9b0892eb61333ae6205e7330089f5b8574af412dbe3a4ac4e4",
+          "fetched_at": "2026-09-20T18:14:01.175048+00:00",
+          "excerpt": "DeepSeek-V4.1-Flash — ProgramBench (Almost@1): 20.3%; vendor model card captured 2026-09-20."
+        }
+      ]
+    },
+    {
+      "id": "deepseek-sec-bench-pro::snapshot-2026-09-10",
+      "name": "SEC-Bench Pro",
+      "version": "snapshot-2026-09-10",
+      "version_status": "snapshot",
+      "family": "deepseek-sec-bench-pro",
+      "category": "Safety/Alignment",
+      "one_sentence_description": "SEC-Bench Pro result as reported by DeepSeek in the DeepSeek-V4.1-Flash model card; this registry identity preserves the printed version or the card's publication date when none was stated.",
+      "scoring": {
+        "metric": "Source-published score (Pass@1)",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "DeepSeek publishes the settings and scaffold but no complete independent reproduction recipe. This identity retains the exact printed label and keeps vendor claims out of measured cohorts and the Composite."
+      },
+      "maintainer": "SEC-Bench",
+      "source_type": "vendor_report",
+      "primary_url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+      "publication_urls": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "type": "vendor_report",
+          "role": "DeepSeek-V4.1-Flash model card containing the vendor-reported result"
+        },
+        {
+          "url": "https://api-docs.deepseek.com/news/news260910/",
+          "type": "vendor_report",
+          "role": "DeepSeek release note of 2026-09-10 announcing the model"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Hugging Face model-card Markdown",
+        "locator": "\"Comparison with frontier models (Max reasoning effort)\" table; row \"SEC-Bench Pro (Pass@1)\"; column \"DS-V4.1-Flash\"",
+        "version_guard": "No version printed; keep this dated snapshot separate from every other release.",
+        "notes": "Capture only. Preserve the self_reported basis and the maximum reasoning effort the card states for every instruct result."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated; the card is a release document.",
+        "check_recommendation": "Check on a DeepSeek release or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-20",
+      "last_verified": "2026-09-20",
+      "evidence": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-deepseek-v41-flash/347c9db4e5506acb531c.gz",
+          "sha256": "32adaa3768b75d9b0892eb61333ae6205e7330089f5b8574af412dbe3a4ac4e4",
+          "fetched_at": "2026-09-20T18:14:01.175048+00:00",
+          "excerpt": "DeepSeek-V4.1-Flash — SEC-Bench Pro (Pass@1): 62.8%; vendor model card captured 2026-09-20."
+        }
+      ]
+    },
+    {
+      "id": "deepseek-terminal-bench-v2-1::2.1",
+      "name": "Terminal-Bench 2.1",
+      "version": "2.1",
+      "version_status": "published",
+      "family": "deepseek-terminal-bench-v2-1",
+      "category": "Agentic",
+      "one_sentence_description": "Terminal-Bench 2.1 result as reported by DeepSeek in the DeepSeek-V4.1-Flash model card; this registry identity preserves the printed version or the card's publication date when none was stated.",
+      "scoring": {
+        "metric": "Source-published score (Pass@1)",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "DeepSeek publishes the settings and scaffold but no complete independent reproduction recipe. This identity retains the exact printed label and keeps vendor claims out of measured cohorts and the Composite."
+      },
+      "maintainer": "Terminal-Bench",
+      "source_type": "vendor_report",
+      "primary_url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+      "publication_urls": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "type": "vendor_report",
+          "role": "DeepSeek-V4.1-Flash model card containing the vendor-reported result"
+        },
+        {
+          "url": "https://api-docs.deepseek.com/news/news260910/",
+          "type": "vendor_report",
+          "role": "DeepSeek release note of 2026-09-10 announcing the model"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Hugging Face model-card Markdown",
+        "locator": "\"Comparison with frontier models (Max reasoning effort)\" table; row \"Terminal-Bench 2.1 (Pass@1)\"; column \"DS-V4.1-Flash\"",
+        "version_guard": "Require the printed version 2.1 before collecting.",
+        "notes": "Capture only. Preserve the self_reported basis and the maximum reasoning effort the card states for every instruct result."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated; the card is a release document.",
+        "check_recommendation": "Check on a DeepSeek release or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-20",
+      "last_verified": "2026-09-20",
+      "evidence": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-deepseek-v41-flash/347c9db4e5506acb531c.gz",
+          "sha256": "32adaa3768b75d9b0892eb61333ae6205e7330089f5b8574af412dbe3a4ac4e4",
+          "fetched_at": "2026-09-20T18:14:01.175048+00:00",
+          "excerpt": "DeepSeek-V4.1-Flash — Terminal-Bench 2.1 (Pass@1): 90.6%; vendor model card captured 2026-09-20."
+        }
+      ]
+    },
+    {
+      "id": "deepseek-terminal-bench-v3::3.0",
+      "name": "Terminal-Bench 3.0",
+      "version": "3.0",
+      "version_status": "published",
+      "family": "deepseek-terminal-bench-v3",
+      "category": "Agentic",
+      "one_sentence_description": "Terminal-Bench 3.0 result as reported by DeepSeek in the DeepSeek-V4.1-Flash model card; this registry identity preserves the printed version or the card's publication date when none was stated.",
+      "scoring": {
+        "metric": "Source-published score (Pass@1)",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "DeepSeek publishes the settings and scaffold but no complete independent reproduction recipe. This identity retains the exact printed label and keeps vendor claims out of measured cohorts and the Composite."
+      },
+      "maintainer": "Terminal-Bench",
+      "source_type": "vendor_report",
+      "primary_url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+      "publication_urls": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "type": "vendor_report",
+          "role": "DeepSeek-V4.1-Flash model card containing the vendor-reported result"
+        },
+        {
+          "url": "https://api-docs.deepseek.com/news/news260910/",
+          "type": "vendor_report",
+          "role": "DeepSeek release note of 2026-09-10 announcing the model"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Hugging Face model-card Markdown",
+        "locator": "\"Comparison with frontier models (Max reasoning effort)\" table; row \"Terminal-Bench 3.0 (Pass@1)\"; column \"DS-V4.1-Flash\"",
+        "version_guard": "Require the printed version 3.0 before collecting.",
+        "notes": "Capture only. Preserve the self_reported basis and the maximum reasoning effort the card states for every instruct result."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated; the card is a release document.",
+        "check_recommendation": "Check on a DeepSeek release or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-20",
+      "last_verified": "2026-09-20",
+      "evidence": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-deepseek-v41-flash/347c9db4e5506acb531c.gz",
+          "sha256": "32adaa3768b75d9b0892eb61333ae6205e7330089f5b8574af412dbe3a4ac4e4",
+          "fetched_at": "2026-09-20T18:14:01.175048+00:00",
+          "excerpt": "DeepSeek-V4.1-Flash — Terminal-Bench 3.0 (Pass@1): 30%; vendor model card captured 2026-09-20."
+        }
+      ]
+    },
+    {
+      "id": "deepseek-terminal-bench-v4::4.0",
+      "name": "Terminal-Bench 4.0",
+      "version": "4.0",
+      "version_status": "published",
+      "family": "deepseek-terminal-bench-v4",
+      "category": "Agentic",
+      "one_sentence_description": "Terminal-Bench 4.0 result as reported by DeepSeek in the DeepSeek-V4.1-Flash model card; this registry identity preserves the printed version or the card's publication date when none was stated.",
+      "scoring": {
+        "metric": "Source-published score (Pass@1)",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "DeepSeek publishes the settings and scaffold but no complete independent reproduction recipe. This identity retains the exact printed label and keeps vendor claims out of measured cohorts and the Composite."
+      },
+      "maintainer": "Terminal-Bench",
+      "source_type": "vendor_report",
+      "primary_url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+      "publication_urls": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "type": "vendor_report",
+          "role": "DeepSeek-V4.1-Flash model card containing the vendor-reported result"
+        },
+        {
+          "url": "https://api-docs.deepseek.com/news/news260910/",
+          "type": "vendor_report",
+          "role": "DeepSeek release note of 2026-09-10 announcing the model"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Hugging Face model-card Markdown",
+        "locator": "\"Comparison with frontier models (Max reasoning effort)\" table; row \"Terminal-Bench 4.0 (Pass@1)\"; column \"DS-V4.1-Flash\"",
+        "version_guard": "Require the printed version 4.0 before collecting.",
+        "notes": "Capture only. Preserve the self_reported basis and the maximum reasoning effort the card states for every instruct result."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated; the card is a release document.",
+        "check_recommendation": "Check on a DeepSeek release or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-20",
+      "last_verified": "2026-09-20",
+      "evidence": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-deepseek-v41-flash/347c9db4e5506acb531c.gz",
+          "sha256": "32adaa3768b75d9b0892eb61333ae6205e7330089f5b8574af412dbe3a4ac4e4",
+          "fetched_at": "2026-09-20T18:14:01.175048+00:00",
+          "excerpt": "DeepSeek-V4.1-Flash — Terminal-Bench 4.0 (Pass@1): 31.2%; vendor model card captured 2026-09-20."
+        }
+      ]
+    },
+    {
+      "id": "deepseek-zerobench-main-w-tools::snapshot-2026-09-10",
+      "name": "ZeroBench-main w/ tools",
+      "version": "snapshot-2026-09-10",
+      "version_status": "snapshot",
+      "family": "deepseek-zerobench-main-w-tools",
+      "category": "Vision",
+      "one_sentence_description": "ZeroBench-main w/ tools result as reported by DeepSeek in the DeepSeek-V4.1-Flash model card; this registry identity preserves the printed version or the card's publication date when none was stated.",
+      "scoring": {
+        "metric": "Source-published score (Pass@5)",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "DeepSeek publishes the settings and scaffold but no complete independent reproduction recipe. This identity retains the exact printed label and keeps vendor claims out of measured cohorts and the Composite."
+      },
+      "maintainer": "ZeroBench",
+      "source_type": "vendor_report",
+      "primary_url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+      "publication_urls": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "type": "vendor_report",
+          "role": "DeepSeek-V4.1-Flash model card containing the vendor-reported result"
+        },
+        {
+          "url": "https://api-docs.deepseek.com/news/news260910/",
+          "type": "vendor_report",
+          "role": "DeepSeek release note of 2026-09-10 announcing the model"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Hugging Face model-card Markdown",
+        "locator": "\"Comparison with frontier models (Max reasoning effort)\" table; row \"ZeroBench-main w/ tools (Pass@5)\"; column \"DS-V4.1-Flash\"",
+        "version_guard": "No version printed; keep this dated snapshot separate from every other release.",
+        "notes": "Capture only. Preserve the self_reported basis and the maximum reasoning effort the card states for every instruct result."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated; the card is a release document.",
+        "check_recommendation": "Check on a DeepSeek release or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-20",
+      "last_verified": "2026-09-20",
+      "evidence": [
+        {
+          "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-deepseek-v41-flash/347c9db4e5506acb531c.gz",
+          "sha256": "32adaa3768b75d9b0892eb61333ae6205e7330089f5b8574af412dbe3a4ac4e4",
+          "fetched_at": "2026-09-20T18:14:01.175048+00:00",
+          "excerpt": "DeepSeek-V4.1-Flash — ZeroBench-main w/ tools (Pass@5): 49%; vendor model card captured 2026-09-20."
+        }
+      ]
+    },
+    {
       "id": "deepswe::snapshot-2026-09-15",
       "name": "DeepSWE (Datacurve, via Epoch AI)",
       "family": "deepswe",

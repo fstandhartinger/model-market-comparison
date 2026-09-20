@@ -110,8 +110,9 @@ test('actual source adapter keeps all version identities, values and dated legac
   // 560 KB in iteration 81 (SWE-rebench, GSO and τ^τ-bench's six harness axes add ~1 KB of axis metadata each), and
   // to 575 KB in iteration 113 (CR-81/82: ArXivMath/BrokenArXiv 08/2026 and WeirdML v3 join as their own axes), and
   // to 625 KB in iteration 114 (CR-82.3/82.4: VulcanBench Frontier v4 and four KernelBench-CUDA problem axes), and
-  // to 650 KB for CR-98's 40 explicitly versioned/vendor-snapshot Step-5 rows (no catalog-wide score rows leak in).
-  assert.ok(JSON.stringify(selected).length < 650_000, 'initial benchmark payload bounded to selected models');
+  // to 650 KB for CR-98's 40 explicitly versioned/vendor-snapshot Step-5 rows (no catalog-wide score rows leak in), and
+  // to 675 KB for CR-85.2's 19 DeepSeek-V4.1-Flash model-card axes (axis metadata only; each carries one vendor row).
+  assert.ok(JSON.stringify(selected).length < 675_000, 'initial benchmark payload bounded to selected models');
   assert.equal(JSON.stringify(ds), before);
 });
 

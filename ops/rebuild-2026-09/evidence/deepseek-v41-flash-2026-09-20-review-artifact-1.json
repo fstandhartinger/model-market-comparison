@@ -1,0 +1,244 @@
+{
+  "observations": [
+    {
+      "id": "self-reported:deepseek-v41-flash-agents-last-exam",
+      "benchmark_id": "deepseek-agents-last-exam::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md#DeepSeek-V4.1-Flash",
+        "name": "DeepSeek-V4.1-Flash",
+        "model_id": "deepseek-v4.1-flash::max",
+        "variant": "max",
+        "harness": "Official scaffold"
+      },
+      "value": 31.8,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+        "retrieved_at": "2026-09-20T18:14:01.175048+00:00",
+        "published_at": "2026-09-10",
+        "sha256": "347c9db4e5506acb531cbc3b724407ab88e9af8781679152f0823d7bac16d251",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20-deepseek-v41-flash/347c9db4e5506acb531c.gz",
+        "locator": "\"Comparison with frontier models (Max reasoning effort)\" table row \"Agent's Last Exam (Pass@1)\"; value under \"DS-V4.1-Flash\""
+      },
+      "protocol": "Vendor-reported by DeepSeek for DeepSeek-V4.1-Flash, printed as \"Agent's Last Exam (Pass@1)\". Official scaffold. reasoning_effort=100 (the card's maximum effort, the catalog's only DeepSeek-V4.1-Flash configuration), temperature=1.0, top_p=0.95. No independent reproduction is claimed; replace with an independently measured matching-version result when available.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-automationbench",
+      "benchmark_id": "deepseek-automationbench::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md#DeepSeek-V4.1-Flash",
+        "name": "DeepSeek-V4.1-Flash",
+        "model_id": "deepseek-v4.1-flash::max",
+        "variant": "max",
+        "harness": "Official scaffold"
+      },
+      "value": 54.8,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+        "retrieved_at": "2026-09-20T18:14:01.175048+00:00",
+        "published_at": "2026-09-10",
+        "sha256": "347c9db4e5506acb531cbc3b724407ab88e9af8781679152f0823d7bac16d251",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20-deepseek-v41-flash/347c9db4e5506acb531c.gz",
+        "locator": "\"Comparison with frontier models (Max reasoning effort)\" table row \"AutomationBench (Pass@1)\"; value under \"DS-V4.1-Flash\""
+      },
+      "protocol": "Vendor-reported by DeepSeek for DeepSeek-V4.1-Flash, printed as \"AutomationBench (Pass@1)\". Official scaffold. reasoning_effort=100 (the card's maximum effort, the catalog's only DeepSeek-V4.1-Flash configuration), temperature=1.0, top_p=0.95. No independent reproduction is claimed; replace with an independently measured matching-version result when available.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-babyvision-w-tools",
+      "benchmark_id": "deepseek-babyvision-w-tools::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md#DeepSeek-V4.1-Flash",
+        "name": "DeepSeek-V4.1-Flash",
+        "model_id": "deepseek-v4.1-flash::max",
+        "variant": "max",
+        "harness": "Claude Code"
+      },
+      "value": 89.6,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+        "retrieved_at": "2026-09-20T18:14:01.175048+00:00",
+        "published_at": "2026-09-10",
+        "sha256": "347c9db4e5506acb531cbc3b724407ab88e9af8781679152f0823d7bac16d251",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20-deepseek-v41-flash/347c9db4e5506acb531c.gz",
+        "locator": "\"Comparison with frontier models (Max reasoning effort)\" table row \"BabyVision w/ tools (Pass@1)\"; value under \"DS-V4.1-Flash\""
+      },
+      "protocol": "Vendor-reported by DeepSeek for DeepSeek-V4.1-Flash, printed as \"BabyVision w/ tools (Pass@1)\". Claude Code harness, 512k-token context window. reasoning_effort=100 (the card's maximum effort, the catalog's only DeepSeek-V4.1-Flash configuration), temperature=1.0, top_p=0.95. No independent reproduction is claimed; replace with an independently measured matching-version result when available.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-chartography-w-tools",
+      "benchmark_id": "deepseek-chartography-w-tools::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md#DeepSeek-V4.1-Flash",
+        "name": "DeepSeek-V4.1-Flash",
+        "model_id": "deepseek-v4.1-flash::max",
+        "variant": "max",
+        "harness": "Claude Code"
+      },
+      "value": 78.9,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+        "retrieved_at": "2026-09-20T18:14:01.175048+00:00",
+        "published_at": "2026-09-10",
+        "sha256": "347c9db4e5506acb531cbc3b724407ab88e9af8781679152f0823d7bac16d251",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20-deepseek-v41-flash/347c9db4e5506acb531c.gz",
+        "locator": "\"Comparison with frontier models (Max reasoning effort)\" table row \"Chartography w/ tools (Pass@1)\"; value under \"DS-V4.1-Flash\""
+      },
+      "protocol": "Vendor-reported by DeepSeek for DeepSeek-V4.1-Flash, printed as \"Chartography w/ tools (Pass@1)\". Claude Code harness, 512k-token context window. reasoning_effort=100 (the card's maximum effort, the catalog's only DeepSeek-V4.1-Flash configuration), temperature=1.0, top_p=0.95. No independent reproduction is claimed; replace with an independently measured matching-version result when available.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-codeforces-rating",
+      "benchmark_id": "deepseek-codeforces-rating::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md#DeepSeek-V4.1-Flash",
+        "name": "DeepSeek-V4.1-Flash",
+        "model_id": "deepseek-v4.1-flash::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 3471,
+      "unit": "Elo",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+        "retrieved_at": "2026-09-20T18:14:01.175048+00:00",
+        "published_at": "2026-09-10",
+        "sha256": "347c9db4e5506acb531cbc3b724407ab88e9af8781679152f0823d7bac16d251",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20-deepseek-v41-flash/347c9db4e5506acb531c.gz",
+        "locator": "\"Comparison with frontier models (Max reasoning effort)\" table row \"Codeforces (Rating)\"; value under \"DS-V4.1-Flash\""
+      },
+      "protocol": "Vendor-reported by DeepSeek for DeepSeek-V4.1-Flash, printed as \"Codeforces (Rating)\". reasoning_effort=100 (the card's maximum effort, the catalog's only DeepSeek-V4.1-Flash configuration), temperature=1.0, top_p=0.95. No independent reproduction is claimed; replace with an independently measured matching-version result when available.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-cybergym",
+      "benchmark_id": "deepseek-cybergym::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md#DeepSeek-V4.1-Flash",
+        "name": "DeepSeek-V4.1-Flash",
+        "model_id": "deepseek-v4.1-flash::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 88.1,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+        "retrieved_at": "2026-09-20T18:14:01.175048+00:00",
+        "published_at": "2026-09-10",
+        "sha256": "347c9db4e5506acb531cbc3b724407ab88e9af8781679152f0823d7bac16d251",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20-deepseek-v41-flash/347c9db4e5506acb531c.gz",
+        "locator": "\"Comparison with frontier models (Max reasoning effort)\" table row \"CyberGym (Pass@1)\"; value under \"DS-V4.1-Flash\""
+      },
+      "protocol": "Vendor-reported by DeepSeek for DeepSeek-V4.1-Flash, printed as \"CyberGym (Pass@1)\". reasoning_effort=100 (the card's maximum effort, the catalog's only DeepSeek-V4.1-Flash configuration), temperature=1.0, top_p=0.95. No independent reproduction is claimed; replace with an independently measured matching-version result when available.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-deepswe-v1-1",
+      "benchmark_id": "deepseek-deepswe-v1-1::1.1",
+      "subject": {
+        "source_id": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md#DeepSeek-V4.1-Flash",
+        "name": "DeepSeek-V4.1-Flash",
+        "model_id": "deepseek-v4.1-flash::max",
+        "variant": "max",
+        "harness": "mini-SWE"
+      },
+      "value": 74.2,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+        "retrieved_at": "2026-09-20T18:14:01.175048+00:00",
+        "published_at": "2026-09-10",
+        "sha256": "347c9db4e5506acb531cbc3b724407ab88e9af8781679152f0823d7bac16d251",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20-deepseek-v41-flash/347c9db4e5506acb531c.gz",
+        "locator": "\"Comparison with frontier models (Max reasoning effort)\" table row \"DeepSWE v1.1 (Resolved)\"; value under \"DS-V4.1-Flash\""
+      },
+      "protocol": "Vendor-reported by DeepSeek for DeepSeek-V4.1-Flash, printed as \"DeepSWE v1.1 (Resolved)\". mini-SWE harness (\"to align with official setup requirements\"), 1M-token context window. reasoning_effort=100 (the card's maximum effort, the catalog's only DeepSeek-V4.1-Flash configuration), temperature=1.0, top_p=0.95. No independent reproduction is claimed; replace with an independently measured matching-version result when available.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-exploitgym",
+      "benchmark_id": "deepseek-exploitgym::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md#DeepSeek-V4.1-Flash",
+        "name": "DeepSeek-V4.1-Flash",
+        "model_id": "deepseek-v4.1-flash::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 15.3,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+        "retrieved_at": "2026-09-20T18:14:01.175048+00:00",
+        "published_at": "2026-09-10",
+        "sha256": "347c9db4e5506acb531cbc3b724407ab88e9af8781679152f0823d7bac16d251",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20-deepseek-v41-flash/347c9db4e5506acb531c.gz",
+        "locator": "\"Comparison with frontier models (Max reasoning effort)\" table row \"ExploitGym (Pass@1)\"; value under \"DS-V4.1-Flash\""
+      },
+      "protocol": "Vendor-reported by DeepSeek for DeepSeek-V4.1-Flash, printed as \"ExploitGym (Pass@1)\". reasoning_effort=100 (the card's maximum effort, the catalog's only DeepSeek-V4.1-Flash configuration), temperature=1.0, top_p=0.95. No independent reproduction is claimed; replace with an independently measured matching-version result when available.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-gpqa-diamond",
+      "benchmark_id": "deepseek-gpqa-diamond::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md#DeepSeek-V4.1-Flash",
+        "name": "DeepSeek-V4.1-Flash",
+        "model_id": "deepseek-v4.1-flash::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 90.9,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+        "retrieved_at": "2026-09-20T18:14:01.175048+00:00",
+        "published_at": "2026-09-10",
+        "sha256": "347c9db4e5506acb531cbc3b724407ab88e9af8781679152f0823d7bac16d251",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20-deepseek-v41-flash/347c9db4e5506acb531c.gz",
+        "locator": "\"Comparison with frontier models (Max reasoning effort)\" table row \"GPQA Diamond (Pass@1)\"; value under \"DS-V4.1-Flash\""
+      },
+      "protocol": "Vendor-reported by DeepSeek for DeepSeek-V4.1-Flash, printed as \"GPQA Diamond (Pass@1)\". reasoning_effort=100 (the card's maximum effort, the catalog's only DeepSeek-V4.1-Flash configuration), temperature=1.0, top_p=0.95. No independent reproduction is claimed; replace with an independently measured matching-version result when available.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-hle",
+      "benchmark_id": "deepseek-hle::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md#DeepSeek-V4.1-Flash",
+        "name": "DeepSeek-V4.1-Flash",
+        "model_id": "deepseek-v4.1-flash::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 36.8,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+        "retrieved_at": "2026-09-20T18:14:01.175048+00:00",
+        "published_at": "2026-09-10",
+        "sha256": "347c9db4e5506acb531cbc3b724407ab88e9af8781679152f0823d7bac16d251",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20-deepseek-v41-flash/347c9db4e5506acb531c.gz",
+        "locator": "\"Comparison with frontier models (Max reasoning effort)\" table row \"HLE (Pass@1)\"; value under \"DS-V4.1-Flash\""
+      },
+      "protocol": "Vendor-reported by DeepSeek for DeepSeek-V4.1-Flash, printed as \"HLE (Pass@1)\". reasoning_effort=100 (the card's maximum effort, the catalog's only DeepSeek-V4.1-Flash configuration), temperature=1.0, top_p=0.95. No independent reproduction is claimed; replace with an independently measured matching-version result when available.",
+      "comparison_key": null
+    }
+  ]
+}

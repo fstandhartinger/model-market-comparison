@@ -1,0 +1,26 @@
+{
+  "artifact_id": "deepseek-v41-flash-self-reported-2026-09-20-slice-1",
+  "artifact_sha256": "b5e13a27c88e2f18e7e32727102dc3873e23a8a0ce4722a0c29582bfb30891de",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "self-reported:deepseek-v41-flash-agents-last-exam",
+    "self-reported:deepseek-v41-flash-automationbench",
+    "self-reported:deepseek-v41-flash-babyvision-w-tools",
+    "self-reported:deepseek-v41-flash-chartography-w-tools",
+    "self-reported:deepseek-v41-flash-codeforces-rating",
+    "self-reported:deepseek-v41-flash-cybergym",
+    "self-reported:deepseek-v41-flash-deepswe-v1-1",
+    "self-reported:deepseek-v41-flash-exploitgym",
+    "self-reported:deepseek-v41-flash-gpqa-diamond",
+    "self-reported:deepseek-v41-flash-hle"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "subject.source_id on each row appends the fragment '#DeepSeek-V4.1-Flash' to the capture URL; treated as a section anchor. It is not covered by checks 1-7 and the source.url is the plain capture URL, so it was not counted as a defect.",
+    "The HLE cell prints '36.8 (39.1†)'; 36.8 was accepted as the full-dataset HLE (Pass@1) value because the footnote '† Text-only subset of HLE' marks the parenthetical 39.1 as the text-only subset. This matches the packet's own refusal entry for the text-only subset, so no defect is asserted."
+  ],
+  "missing_evidence": []
+}
