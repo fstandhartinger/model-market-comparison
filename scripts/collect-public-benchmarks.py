@@ -723,6 +723,56 @@ def parse(source,spec,load_source):
                     'mean_spend_usd':resource['cost'] if resource else None,'mean_run_time_min':resource['time'] if resource else None,
                     'mean_output_tokens':resource['out'] if resource else None,'resource_row_id':resource['id'] if resource else None,
                     'resource_task_counts':resource.get('n') if resource else None}})
+    elif kind=='toolathlon_verified_board':
+        # Toolathlon-Verified (HKUST NLP, toolathlon.xyz): the leaderboard page server-renders two tables — the
+        # current Verified board (`leaderboard-current-table`) and an archived snapshot of the pre-Verified board
+        # (`leaderboard-history-table`). Only the Verified board is this identity: the site itself says the two
+        # score series are not comparable, so the archive is never parsed. Inside the Verified board only rows
+        # carrying the green check ("Results bearing this badge were independently evaluated by us") are scored;
+        # a row submitted by someone else is skipped rather than published as a measurement. The value is the
+        # published Pass@1 (mean over three runs); the ± figure is the across-run standard deviation the release
+        # post describes, not a confidence interval, and it stays in the protocol with Pass@3, Pass^3, turns and
+        # tool calls. Guards: the release identity phrases, the task/server/toolkit counts, both table classes,
+        # the badge legend, the column set, the type/agent vocabulary, a ranked board, and the release post's own
+        # statements about the 108-task scope, the three runs and what the badge means.
+        req=spec['require']
+        for phrase in req['page_text']:
+            if phrase not in source:raise ValueError('Toolathlon page statement changed: '+phrase)
+        method=' '.join(load_source(spec['method_source']).split())
+        for phrase in req['method_text']:
+            if phrase not in method:raise ValueError('Toolathlon release statement changed: '+phrase)
+        if 'leaderboard-history-table' not in source:raise ValueError('Toolathlon archived board missing; the page layout changed')
+        board=re.search(r'<table class="performance-table leaderboard-current-table">(.*?)</table>',source,re.S)
+        if not board:raise ValueError('Toolathlon Verified board missing')
+        columns=[text(c) for c in re.findall(r'<th[^>]*>(.*?)</th>',board[1],re.S)]
+        if columns!=req['columns']:raise ValueError(f'Toolathlon columns changed: {columns!r}')
+        verified=0
+        for index,tr in enumerate(re.finditer(r'<tr[^>]*>(.*?)</tr>',board[1],re.S)):
+            cells={k:v for k,v in re.findall(r'<td[^>]*data-label="([^"]*)"[^>]*>(.*?)</td>',tr[1],re.S)}
+            if not cells:continue
+            if set(cells)!=set(req['columns_by_label']):raise ValueError(f'Toolathlon row {index} cells changed: {sorted(cells)!r}')
+            if req['badge_marker'] not in cells['Model']:continue
+            verified+=1
+            label=text(re.sub(r'<svg.*?</svg>|<img[^>]*>|<span class="verified-badge".*?</span>','',cells['Model'],flags=re.S))
+            if not label:raise ValueError(f'Toolathlon row {index}: model label missing')
+            kind_=text(cells['Model Type']);agent=text(cells['Agent']);date=text(cells['Date'])
+            if kind_ not in req['model_types']:raise ValueError(f'Toolathlon {label!r}: unlisted model type {kind_!r}')
+            if agent not in req['agents']:raise ValueError(f'Toolathlon {label!r}: unlisted agent configuration {agent!r}')
+            if not re.fullmatch(r'\d{4}-\d{2}-\d{2}',date):raise ValueError(f'Toolathlon {label!r}: unreadable date {date!r}')
+            score=re.fullmatch(r'(\d+(?:\.\d+)?)(?:\s*±\s*(\d+(?:\.\d+)?))?',text(cells['Pass@1']))
+            if not score:raise ValueError(f'Toolathlon {label!r}: unreadable Pass@1 {text(cells["Pass@1"])!r}')
+            value=float(score[1])
+            if not 0<=value<=100:raise ValueError(f'Toolathlon {label!r}: Pass@1 out of range')
+            optional=lambda column:(None if text(cells[column]) in ('','—','-') else numeric(cells[column]))
+            rows.append({'name':label,'id':label,'pass_1':value,'harness':agent,'source_row':index,
+                'context':{'model':label,'model_type':kind_,'agent':agent,'evaluated_at':date,
+                    'pass_1':value,'stddev_across_runs':float(score[2]) if score[2] else None,
+                    'pass_3':optional('Pass@3'),'pass_cubed':optional('Pass^3'),
+                    'mean_turns':optional('# Turns'),'mean_tool_calls':optional('# Tool Calls'),
+                    'independently_evaluated':True}})
+        if verified<req['minimum_verified']:raise ValueError(f'Toolathlon Verified board shrank: {verified} independently evaluated rows')
+        ranked=[r['pass_1'] for r in rows]
+        if any(ranked[i]<ranked[i+1] for i in range(len(ranked)-1)):raise ValueError('Toolathlon board is no longer ranked by Pass@1')
     else:raise ValueError('Unknown parser kind '+kind)
     if not isinstance(rows,list) or not rows:raise ValueError('No source result rows')
     return rows

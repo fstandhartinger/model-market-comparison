@@ -261052,6 +261052,856 @@
           "locator": "method_source"
         }
       ]
+    },
+    {
+      "id": "public:2b07dbda6a31796009d3fc15",
+      "benchmark_id": "toolathlon-verified::2026-06-30",
+      "subject": {
+        "source_id": "GLM 5.3 Flash (max)",
+        "name": "GLM 5.3 Flash (max)",
+        "model_id": null,
+        "variant": null,
+        "harness": "Default"
+      },
+      "value": 78.4,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://toolathlon.xyz/docs/leaderboard",
+        "retrieved_at": "2026-09-20T00:37:00.655911+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/0d8342b1213fd06430fb.gz",
+        "sha256": "0d8342b1213fd06430fb65dfd657d4e808daf509a2ede8123ae820e7a18f6497",
+        "locator": "toolathlon_verified_board; source row 1; GLM 5.3 Flash (max); field pass_1"
+      },
+      "protocol": "Toolathlon-Verified (HKUST NLP), released 30 June 2026: 108 real-world tool-use tasks over 32 MCP servers (604 tools) and 7 local toolkits (16 tools), graded by execution against the task's ground truth. The value is the published Pass@1, the mean over three runs; the ± figure the board shows is the across-run standard deviation, not a confidence interval, and is kept per row with Pass@3, Pass^3, the mean turns and tool calls, the model type, the agent configuration and the evaluation date. Only rows the maintainers evaluated themselves (the board's green check) are ingested; rows submitted by others are not published as measurements here. Verified is a separate score series from the pre-June-2026 Toolathlon board, which the site archives and calls not comparable — that board is never parsed. Secondary benchmark, never a Composite input.; source row: {\"model\":\"GLM 5.3 Flash (max)\",\"model_type\":\"Open-Weights\",\"agent\":\"Default\",\"evaluated_at\":\"2026-08-30\",\"pass_1\":78.4,\"stddev_across_runs\":1.9,\"pass_3\":null,\"pass_cubed\":null,\"mean_turns\":null,\"mean_tool_calls\":null,\"independently_evaluated\":true}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://toolathlon.xyz/docs/blog/toolathlon-verified",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/683409c645ca5ace0163.gz",
+          "sha256": "683409c645ca5ace0163893bf2c7c692d714e8c804daf5bb15d1fedae87e8b84",
+          "retrieved_at": "2026-09-20T00:37:03.769603+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:76e5e4338a98ea0fcb6aab33",
+      "benchmark_id": "toolathlon-verified::2026-06-30",
+      "subject": {
+        "source_id": "Kimi K3 (max)",
+        "name": "Kimi K3 (max)",
+        "model_id": null,
+        "variant": null,
+        "harness": "Default"
+      },
+      "value": 76.5,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://toolathlon.xyz/docs/leaderboard",
+        "retrieved_at": "2026-09-20T00:37:00.655911+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/0d8342b1213fd06430fb.gz",
+        "sha256": "0d8342b1213fd06430fb65dfd657d4e808daf509a2ede8123ae820e7a18f6497",
+        "locator": "toolathlon_verified_board; source row 2; Kimi K3 (max); field pass_1"
+      },
+      "protocol": "Toolathlon-Verified (HKUST NLP), released 30 June 2026: 108 real-world tool-use tasks over 32 MCP servers (604 tools) and 7 local toolkits (16 tools), graded by execution against the task's ground truth. The value is the published Pass@1, the mean over three runs; the ± figure the board shows is the across-run standard deviation, not a confidence interval, and is kept per row with Pass@3, Pass^3, the mean turns and tool calls, the model type, the agent configuration and the evaluation date. Only rows the maintainers evaluated themselves (the board's green check) are ingested; rows submitted by others are not published as measurements here. Verified is a separate score series from the pre-June-2026 Toolathlon board, which the site archives and calls not comparable — that board is never parsed. Secondary benchmark, never a Composite input.; source row: {\"model\":\"Kimi K3 (max)\",\"model_type\":\"Open-Weights\",\"agent\":\"Default\",\"evaluated_at\":\"2026-07-16\",\"pass_1\":76.5,\"stddev_across_runs\":1.9,\"pass_3\":83.3,\"pass_cubed\":68.5,\"mean_turns\":22.8,\"mean_tool_calls\":39.1,\"independently_evaluated\":true}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://toolathlon.xyz/docs/blog/toolathlon-verified",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/683409c645ca5ace0163.gz",
+          "sha256": "683409c645ca5ace0163893bf2c7c692d714e8c804daf5bb15d1fedae87e8b84",
+          "retrieved_at": "2026-09-20T00:37:03.769603+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:f1d89176bbc4df42c2e364a0",
+      "benchmark_id": "toolathlon-verified::2026-06-30",
+      "subject": {
+        "source_id": "Claude Opus 4.8 (max)",
+        "name": "Claude Opus 4.8 (max)",
+        "model_id": null,
+        "variant": null,
+        "harness": "Default"
+      },
+      "value": 76.2,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://toolathlon.xyz/docs/leaderboard",
+        "retrieved_at": "2026-09-20T00:37:00.655911+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/0d8342b1213fd06430fb.gz",
+        "sha256": "0d8342b1213fd06430fb65dfd657d4e808daf509a2ede8123ae820e7a18f6497",
+        "locator": "toolathlon_verified_board; source row 3; Claude Opus 4.8 (max); field pass_1"
+      },
+      "protocol": "Toolathlon-Verified (HKUST NLP), released 30 June 2026: 108 real-world tool-use tasks over 32 MCP servers (604 tools) and 7 local toolkits (16 tools), graded by execution against the task's ground truth. The value is the published Pass@1, the mean over three runs; the ± figure the board shows is the across-run standard deviation, not a confidence interval, and is kept per row with Pass@3, Pass^3, the mean turns and tool calls, the model type, the agent configuration and the evaluation date. Only rows the maintainers evaluated themselves (the board's green check) are ingested; rows submitted by others are not published as measurements here. Verified is a separate score series from the pre-June-2026 Toolathlon board, which the site archives and calls not comparable — that board is never parsed. Secondary benchmark, never a Composite input.; source row: {\"model\":\"Claude Opus 4.8 (max)\",\"model_type\":\"Proprietary\",\"agent\":\"Default\",\"evaluated_at\":\"2026-06-30\",\"pass_1\":76.2,\"stddev_across_runs\":3.4,\"pass_3\":84.3,\"pass_cubed\":66.7,\"mean_turns\":19.9,\"mean_tool_calls\":36.3,\"independently_evaluated\":true}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://toolathlon.xyz/docs/blog/toolathlon-verified",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/683409c645ca5ace0163.gz",
+          "sha256": "683409c645ca5ace0163893bf2c7c692d714e8c804daf5bb15d1fedae87e8b84",
+          "retrieved_at": "2026-09-20T00:37:03.769603+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:f8a672dd0fe3cdd0049ff614",
+      "benchmark_id": "toolathlon-verified::2026-06-30",
+      "subject": {
+        "source_id": "Muse Spark 1.2 (xhigh)",
+        "name": "Muse Spark 1.2 (xhigh)",
+        "model_id": null,
+        "variant": null,
+        "harness": "Default"
+      },
+      "value": 75.9,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://toolathlon.xyz/docs/leaderboard",
+        "retrieved_at": "2026-09-20T00:37:00.655911+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/0d8342b1213fd06430fb.gz",
+        "sha256": "0d8342b1213fd06430fb65dfd657d4e808daf509a2ede8123ae820e7a18f6497",
+        "locator": "toolathlon_verified_board; source row 4; Muse Spark 1.2 (xhigh); field pass_1"
+      },
+      "protocol": "Toolathlon-Verified (HKUST NLP), released 30 June 2026: 108 real-world tool-use tasks over 32 MCP servers (604 tools) and 7 local toolkits (16 tools), graded by execution against the task's ground truth. The value is the published Pass@1, the mean over three runs; the ± figure the board shows is the across-run standard deviation, not a confidence interval, and is kept per row with Pass@3, Pass^3, the mean turns and tool calls, the model type, the agent configuration and the evaluation date. Only rows the maintainers evaluated themselves (the board's green check) are ingested; rows submitted by others are not published as measurements here. Verified is a separate score series from the pre-June-2026 Toolathlon board, which the site archives and calls not comparable — that board is never parsed. Secondary benchmark, never a Composite input.; source row: {\"model\":\"Muse Spark 1.2 (xhigh)\",\"model_type\":\"Proprietary\",\"agent\":\"Default\",\"evaluated_at\":\"2026-08-05\",\"pass_1\":75.9,\"stddev_across_runs\":1.3,\"pass_3\":87.0,\"pass_cubed\":63.0,\"mean_turns\":44.2,\"mean_tool_calls\":48.6,\"independently_evaluated\":true}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://toolathlon.xyz/docs/blog/toolathlon-verified",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/683409c645ca5ace0163.gz",
+          "sha256": "683409c645ca5ace0163893bf2c7c692d714e8c804daf5bb15d1fedae87e8b84",
+          "retrieved_at": "2026-09-20T00:37:03.769603+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:7828286e1996466f5801d879",
+      "benchmark_id": "toolathlon-verified::2026-06-30",
+      "subject": {
+        "source_id": "Muse Spark 1.1 (xhigh)",
+        "name": "Muse Spark 1.1 (xhigh)",
+        "model_id": null,
+        "variant": null,
+        "harness": "Default"
+      },
+      "value": 75.6,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://toolathlon.xyz/docs/leaderboard",
+        "retrieved_at": "2026-09-20T00:37:00.655911+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/0d8342b1213fd06430fb.gz",
+        "sha256": "0d8342b1213fd06430fb65dfd657d4e808daf509a2ede8123ae820e7a18f6497",
+        "locator": "toolathlon_verified_board; source row 5; Muse Spark 1.1 (xhigh); field pass_1"
+      },
+      "protocol": "Toolathlon-Verified (HKUST NLP), released 30 June 2026: 108 real-world tool-use tasks over 32 MCP servers (604 tools) and 7 local toolkits (16 tools), graded by execution against the task's ground truth. The value is the published Pass@1, the mean over three runs; the ± figure the board shows is the across-run standard deviation, not a confidence interval, and is kept per row with Pass@3, Pass^3, the mean turns and tool calls, the model type, the agent configuration and the evaluation date. Only rows the maintainers evaluated themselves (the board's green check) are ingested; rows submitted by others are not published as measurements here. Verified is a separate score series from the pre-June-2026 Toolathlon board, which the site archives and calls not comparable — that board is never parsed. Secondary benchmark, never a Composite input.; source row: {\"model\":\"Muse Spark 1.1 (xhigh)\",\"model_type\":\"Proprietary\",\"agent\":\"Default\",\"evaluated_at\":\"2026-07-09\",\"pass_1\":75.6,\"stddev_across_runs\":0.4,\"pass_3\":86.1,\"pass_cubed\":63.9,\"mean_turns\":28.9,\"mean_tool_calls\":42.7,\"independently_evaluated\":true}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://toolathlon.xyz/docs/blog/toolathlon-verified",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/683409c645ca5ace0163.gz",
+          "sha256": "683409c645ca5ace0163893bf2c7c692d714e8c804daf5bb15d1fedae87e8b84",
+          "retrieved_at": "2026-09-20T00:37:03.769603+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:1b05493e142c71d2cb0750a7",
+      "benchmark_id": "toolathlon-verified::2026-06-30",
+      "subject": {
+        "source_id": "DeepSeek V4 Pro 0813 (max)",
+        "name": "DeepSeek V4 Pro 0813 (max)",
+        "model_id": null,
+        "variant": null,
+        "harness": "Default"
+      },
+      "value": 74.4,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://toolathlon.xyz/docs/leaderboard",
+        "retrieved_at": "2026-09-20T00:37:00.655911+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/0d8342b1213fd06430fb.gz",
+        "sha256": "0d8342b1213fd06430fb65dfd657d4e808daf509a2ede8123ae820e7a18f6497",
+        "locator": "toolathlon_verified_board; source row 6; DeepSeek V4 Pro 0813 (max); field pass_1"
+      },
+      "protocol": "Toolathlon-Verified (HKUST NLP), released 30 June 2026: 108 real-world tool-use tasks over 32 MCP servers (604 tools) and 7 local toolkits (16 tools), graded by execution against the task's ground truth. The value is the published Pass@1, the mean over three runs; the ± figure the board shows is the across-run standard deviation, not a confidence interval, and is kept per row with Pass@3, Pass^3, the mean turns and tool calls, the model type, the agent configuration and the evaluation date. Only rows the maintainers evaluated themselves (the board's green check) are ingested; rows submitted by others are not published as measurements here. Verified is a separate score series from the pre-June-2026 Toolathlon board, which the site archives and calls not comparable — that board is never parsed. Secondary benchmark, never a Composite input.; source row: {\"model\":\"DeepSeek V4 Pro 0813 (max)\",\"model_type\":\"Open-Weights\",\"agent\":\"Default\",\"evaluated_at\":\"2026-08-13\",\"pass_1\":74.4,\"stddev_across_runs\":1.2,\"pass_3\":null,\"pass_cubed\":null,\"mean_turns\":null,\"mean_tool_calls\":null,\"independently_evaluated\":true}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://toolathlon.xyz/docs/blog/toolathlon-verified",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/683409c645ca5ace0163.gz",
+          "sha256": "683409c645ca5ace0163893bf2c7c692d714e8c804daf5bb15d1fedae87e8b84",
+          "retrieved_at": "2026-09-20T00:37:03.769603+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:073dbb9d116ece3102da56b9",
+      "benchmark_id": "toolathlon-verified::2026-06-30",
+      "subject": {
+        "source_id": "GPT-5.5 (xhigh)",
+        "name": "GPT-5.5 (xhigh)",
+        "model_id": null,
+        "variant": null,
+        "harness": "Default"
+      },
+      "value": 73.5,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://toolathlon.xyz/docs/leaderboard",
+        "retrieved_at": "2026-09-20T00:37:00.655911+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/0d8342b1213fd06430fb.gz",
+        "sha256": "0d8342b1213fd06430fb65dfd657d4e808daf509a2ede8123ae820e7a18f6497",
+        "locator": "toolathlon_verified_board; source row 7; GPT-5.5 (xhigh); field pass_1"
+      },
+      "protocol": "Toolathlon-Verified (HKUST NLP), released 30 June 2026: 108 real-world tool-use tasks over 32 MCP servers (604 tools) and 7 local toolkits (16 tools), graded by execution against the task's ground truth. The value is the published Pass@1, the mean over three runs; the ± figure the board shows is the across-run standard deviation, not a confidence interval, and is kept per row with Pass@3, Pass^3, the mean turns and tool calls, the model type, the agent configuration and the evaluation date. Only rows the maintainers evaluated themselves (the board's green check) are ingested; rows submitted by others are not published as measurements here. Verified is a separate score series from the pre-June-2026 Toolathlon board, which the site archives and calls not comparable — that board is never parsed. Secondary benchmark, never a Composite input.; source row: {\"model\":\"GPT-5.5 (xhigh)\",\"model_type\":\"Proprietary\",\"agent\":\"Default\",\"evaluated_at\":\"2026-06-30\",\"pass_1\":73.5,\"stddev_across_runs\":1.2,\"pass_3\":82.4,\"pass_cubed\":62.0,\"mean_turns\":24.4,\"mean_tool_calls\":37.8,\"independently_evaluated\":true}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://toolathlon.xyz/docs/blog/toolathlon-verified",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/683409c645ca5ace0163.gz",
+          "sha256": "683409c645ca5ace0163893bf2c7c692d714e8c804daf5bb15d1fedae87e8b84",
+          "retrieved_at": "2026-09-20T00:37:03.769603+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:44a3ac076393cc6148ac89a3",
+      "benchmark_id": "toolathlon-verified::2026-06-30",
+      "subject": {
+        "source_id": "Claude Sonnet 5 (max)",
+        "name": "Claude Sonnet 5 (max)",
+        "model_id": null,
+        "variant": null,
+        "harness": "Default"
+      },
+      "value": 71.6,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://toolathlon.xyz/docs/leaderboard",
+        "retrieved_at": "2026-09-20T00:37:00.655911+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/0d8342b1213fd06430fb.gz",
+        "sha256": "0d8342b1213fd06430fb65dfd657d4e808daf509a2ede8123ae820e7a18f6497",
+        "locator": "toolathlon_verified_board; source row 8; Claude Sonnet 5 (max); field pass_1"
+      },
+      "protocol": "Toolathlon-Verified (HKUST NLP), released 30 June 2026: 108 real-world tool-use tasks over 32 MCP servers (604 tools) and 7 local toolkits (16 tools), graded by execution against the task's ground truth. The value is the published Pass@1, the mean over three runs; the ± figure the board shows is the across-run standard deviation, not a confidence interval, and is kept per row with Pass@3, Pass^3, the mean turns and tool calls, the model type, the agent configuration and the evaluation date. Only rows the maintainers evaluated themselves (the board's green check) are ingested; rows submitted by others are not published as measurements here. Verified is a separate score series from the pre-June-2026 Toolathlon board, which the site archives and calls not comparable — that board is never parsed. Secondary benchmark, never a Composite input.; source row: {\"model\":\"Claude Sonnet 5 (max)\",\"model_type\":\"Proprietary\",\"agent\":\"Default\",\"evaluated_at\":\"2026-07-01\",\"pass_1\":71.6,\"stddev_across_runs\":1.2,\"pass_3\":83.3,\"pass_cubed\":53.7,\"mean_turns\":27.1,\"mean_tool_calls\":51.5,\"independently_evaluated\":true}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://toolathlon.xyz/docs/blog/toolathlon-verified",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/683409c645ca5ace0163.gz",
+          "sha256": "683409c645ca5ace0163893bf2c7c692d714e8c804daf5bb15d1fedae87e8b84",
+          "retrieved_at": "2026-09-20T00:37:03.769603+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:3a8a5a68992fedc07a868cc5",
+      "benchmark_id": "toolathlon-verified::2026-06-30",
+      "subject": {
+        "source_id": "DeepSeek V4 Flash 0731 (max)",
+        "name": "DeepSeek V4 Flash 0731 (max)",
+        "model_id": null,
+        "variant": null,
+        "harness": "Default"
+      },
+      "value": 70.7,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://toolathlon.xyz/docs/leaderboard",
+        "retrieved_at": "2026-09-20T00:37:00.655911+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/0d8342b1213fd06430fb.gz",
+        "sha256": "0d8342b1213fd06430fb65dfd657d4e808daf509a2ede8123ae820e7a18f6497",
+        "locator": "toolathlon_verified_board; source row 9; DeepSeek V4 Flash 0731 (max); field pass_1"
+      },
+      "protocol": "Toolathlon-Verified (HKUST NLP), released 30 June 2026: 108 real-world tool-use tasks over 32 MCP servers (604 tools) and 7 local toolkits (16 tools), graded by execution against the task's ground truth. The value is the published Pass@1, the mean over three runs; the ± figure the board shows is the across-run standard deviation, not a confidence interval, and is kept per row with Pass@3, Pass^3, the mean turns and tool calls, the model type, the agent configuration and the evaluation date. Only rows the maintainers evaluated themselves (the board's green check) are ingested; rows submitted by others are not published as measurements here. Verified is a separate score series from the pre-June-2026 Toolathlon board, which the site archives and calls not comparable — that board is never parsed. Secondary benchmark, never a Composite input.; source row: {\"model\":\"DeepSeek V4 Flash 0731 (max)\",\"model_type\":\"Open-Weights\",\"agent\":\"Default\",\"evaluated_at\":\"2026-07-31\",\"pass_1\":70.7,\"stddev_across_runs\":0.9,\"pass_3\":81.5,\"pass_cubed\":58.3,\"mean_turns\":26.3,\"mean_tool_calls\":49.0,\"independently_evaluated\":true}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://toolathlon.xyz/docs/blog/toolathlon-verified",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/683409c645ca5ace0163.gz",
+          "sha256": "683409c645ca5ace0163893bf2c7c692d714e8c804daf5bb15d1fedae87e8b84",
+          "retrieved_at": "2026-09-20T00:37:03.769603+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:8eb7f80a72aee009ae8e5b98",
+      "benchmark_id": "toolathlon-verified::2026-06-30",
+      "subject": {
+        "source_id": "Gemini 3.5 Flash (high)",
+        "name": "Gemini 3.5 Flash (high)",
+        "model_id": null,
+        "variant": null,
+        "harness": "Default"
+      },
+      "value": 67.3,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://toolathlon.xyz/docs/leaderboard",
+        "retrieved_at": "2026-09-20T00:37:00.655911+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/0d8342b1213fd06430fb.gz",
+        "sha256": "0d8342b1213fd06430fb65dfd657d4e808daf509a2ede8123ae820e7a18f6497",
+        "locator": "toolathlon_verified_board; source row 10; Gemini 3.5 Flash (high); field pass_1"
+      },
+      "protocol": "Toolathlon-Verified (HKUST NLP), released 30 June 2026: 108 real-world tool-use tasks over 32 MCP servers (604 tools) and 7 local toolkits (16 tools), graded by execution against the task's ground truth. The value is the published Pass@1, the mean over three runs; the ± figure the board shows is the across-run standard deviation, not a confidence interval, and is kept per row with Pass@3, Pass^3, the mean turns and tool calls, the model type, the agent configuration and the evaluation date. Only rows the maintainers evaluated themselves (the board's green check) are ingested; rows submitted by others are not published as measurements here. Verified is a separate score series from the pre-June-2026 Toolathlon board, which the site archives and calls not comparable — that board is never parsed. Secondary benchmark, never a Composite input.; source row: {\"model\":\"Gemini 3.5 Flash (high)\",\"model_type\":\"Proprietary\",\"agent\":\"Default\",\"evaluated_at\":\"2026-06-30\",\"pass_1\":67.3,\"stddev_across_runs\":1.2,\"pass_3\":79.6,\"pass_cubed\":53.7,\"mean_turns\":45.3,\"mean_tool_calls\":45.6,\"independently_evaluated\":true}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://toolathlon.xyz/docs/blog/toolathlon-verified",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/683409c645ca5ace0163.gz",
+          "sha256": "683409c645ca5ace0163893bf2c7c692d714e8c804daf5bb15d1fedae87e8b84",
+          "retrieved_at": "2026-09-20T00:37:03.769603+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:84f4143bbfbc52df6277b1c4",
+      "benchmark_id": "toolathlon-verified::2026-06-30",
+      "subject": {
+        "source_id": "Gemini 3.1 Pro (high)",
+        "name": "Gemini 3.1 Pro (high)",
+        "model_id": null,
+        "variant": null,
+        "harness": "Default"
+      },
+      "value": 61.1,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://toolathlon.xyz/docs/leaderboard",
+        "retrieved_at": "2026-09-20T00:37:00.655911+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/0d8342b1213fd06430fb.gz",
+        "sha256": "0d8342b1213fd06430fb65dfd657d4e808daf509a2ede8123ae820e7a18f6497",
+        "locator": "toolathlon_verified_board; source row 11; Gemini 3.1 Pro (high); field pass_1"
+      },
+      "protocol": "Toolathlon-Verified (HKUST NLP), released 30 June 2026: 108 real-world tool-use tasks over 32 MCP servers (604 tools) and 7 local toolkits (16 tools), graded by execution against the task's ground truth. The value is the published Pass@1, the mean over three runs; the ± figure the board shows is the across-run standard deviation, not a confidence interval, and is kept per row with Pass@3, Pass^3, the mean turns and tool calls, the model type, the agent configuration and the evaluation date. Only rows the maintainers evaluated themselves (the board's green check) are ingested; rows submitted by others are not published as measurements here. Verified is a separate score series from the pre-June-2026 Toolathlon board, which the site archives and calls not comparable — that board is never parsed. Secondary benchmark, never a Composite input.; source row: {\"model\":\"Gemini 3.1 Pro (high)\",\"model_type\":\"Proprietary\",\"agent\":\"Default\",\"evaluated_at\":\"2026-07-01\",\"pass_1\":61.1,\"stddev_across_runs\":1.3,\"pass_3\":72.2,\"pass_cubed\":48.1,\"mean_turns\":26.2,\"mean_tool_calls\":32.2,\"independently_evaluated\":true}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://toolathlon.xyz/docs/blog/toolathlon-verified",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/683409c645ca5ace0163.gz",
+          "sha256": "683409c645ca5ace0163893bf2c7c692d714e8c804daf5bb15d1fedae87e8b84",
+          "retrieved_at": "2026-09-20T00:37:03.769603+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:6909d5c5eb6c98750bb0c972",
+      "benchmark_id": "toolathlon-verified::2026-06-30",
+      "subject": {
+        "source_id": "GLM 5.2 (max)",
+        "name": "GLM 5.2 (max)",
+        "model_id": null,
+        "variant": null,
+        "harness": "Default"
+      },
+      "value": 59.9,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://toolathlon.xyz/docs/leaderboard",
+        "retrieved_at": "2026-09-20T00:37:00.655911+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/0d8342b1213fd06430fb.gz",
+        "sha256": "0d8342b1213fd06430fb65dfd657d4e808daf509a2ede8123ae820e7a18f6497",
+        "locator": "toolathlon_verified_board; source row 12; GLM 5.2 (max); field pass_1"
+      },
+      "protocol": "Toolathlon-Verified (HKUST NLP), released 30 June 2026: 108 real-world tool-use tasks over 32 MCP servers (604 tools) and 7 local toolkits (16 tools), graded by execution against the task's ground truth. The value is the published Pass@1, the mean over three runs; the ± figure the board shows is the across-run standard deviation, not a confidence interval, and is kept per row with Pass@3, Pass^3, the mean turns and tool calls, the model type, the agent configuration and the evaluation date. Only rows the maintainers evaluated themselves (the board's green check) are ingested; rows submitted by others are not published as measurements here. Verified is a separate score series from the pre-June-2026 Toolathlon board, which the site archives and calls not comparable — that board is never parsed. Secondary benchmark, never a Composite input.; source row: {\"model\":\"GLM 5.2 (max)\",\"model_type\":\"Open-Weights\",\"agent\":\"Default\",\"evaluated_at\":\"2026-06-30\",\"pass_1\":59.9,\"stddev_across_runs\":1.9,\"pass_3\":78.7,\"pass_cubed\":41.7,\"mean_turns\":23.3,\"mean_tool_calls\":41.9,\"independently_evaluated\":true}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://toolathlon.xyz/docs/blog/toolathlon-verified",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/683409c645ca5ace0163.gz",
+          "sha256": "683409c645ca5ace0163893bf2c7c692d714e8c804daf5bb15d1fedae87e8b84",
+          "retrieved_at": "2026-09-20T00:37:03.769603+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:bd950dad39662fc7199a4489",
+      "benchmark_id": "toolathlon-verified::2026-06-30",
+      "subject": {
+        "source_id": "Kimi K2.6",
+        "name": "Kimi K2.6",
+        "model_id": null,
+        "variant": null,
+        "harness": "Default"
+      },
+      "value": 58.0,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://toolathlon.xyz/docs/leaderboard",
+        "retrieved_at": "2026-09-20T00:37:00.655911+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/0d8342b1213fd06430fb.gz",
+        "sha256": "0d8342b1213fd06430fb65dfd657d4e808daf509a2ede8123ae820e7a18f6497",
+        "locator": "toolathlon_verified_board; source row 13; Kimi K2.6; field pass_1"
+      },
+      "protocol": "Toolathlon-Verified (HKUST NLP), released 30 June 2026: 108 real-world tool-use tasks over 32 MCP servers (604 tools) and 7 local toolkits (16 tools), graded by execution against the task's ground truth. The value is the published Pass@1, the mean over three runs; the ± figure the board shows is the across-run standard deviation, not a confidence interval, and is kept per row with Pass@3, Pass^3, the mean turns and tool calls, the model type, the agent configuration and the evaluation date. Only rows the maintainers evaluated themselves (the board's green check) are ingested; rows submitted by others are not published as measurements here. Verified is a separate score series from the pre-June-2026 Toolathlon board, which the site archives and calls not comparable — that board is never parsed. Secondary benchmark, never a Composite input.; source row: {\"model\":\"Kimi K2.6\",\"model_type\":\"Open-Weights\",\"agent\":\"Default\",\"evaluated_at\":\"2026-07-15\",\"pass_1\":58.0,\"stddev_across_runs\":4.9,\"pass_3\":72.2,\"pass_cubed\":41.7,\"mean_turns\":30.8,\"mean_tool_calls\":42.3,\"independently_evaluated\":true}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://toolathlon.xyz/docs/blog/toolathlon-verified",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/683409c645ca5ace0163.gz",
+          "sha256": "683409c645ca5ace0163893bf2c7c692d714e8c804daf5bb15d1fedae87e8b84",
+          "retrieved_at": "2026-09-20T00:37:03.769603+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:9a1c87ba1e807be7295e2f49",
+      "benchmark_id": "toolathlon-verified::2026-06-30",
+      "subject": {
+        "source_id": "Kimi K2.7 Code",
+        "name": "Kimi K2.7 Code",
+        "model_id": null,
+        "variant": null,
+        "harness": "Default"
+      },
+      "value": 58.0,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://toolathlon.xyz/docs/leaderboard",
+        "retrieved_at": "2026-09-20T00:37:00.655911+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/0d8342b1213fd06430fb.gz",
+        "sha256": "0d8342b1213fd06430fb65dfd657d4e808daf509a2ede8123ae820e7a18f6497",
+        "locator": "toolathlon_verified_board; source row 14; Kimi K2.7 Code; field pass_1"
+      },
+      "protocol": "Toolathlon-Verified (HKUST NLP), released 30 June 2026: 108 real-world tool-use tasks over 32 MCP servers (604 tools) and 7 local toolkits (16 tools), graded by execution against the task's ground truth. The value is the published Pass@1, the mean over three runs; the ± figure the board shows is the across-run standard deviation, not a confidence interval, and is kept per row with Pass@3, Pass^3, the mean turns and tool calls, the model type, the agent configuration and the evaluation date. Only rows the maintainers evaluated themselves (the board's green check) are ingested; rows submitted by others are not published as measurements here. Verified is a separate score series from the pre-June-2026 Toolathlon board, which the site archives and calls not comparable — that board is never parsed. Secondary benchmark, never a Composite input.; source row: {\"model\":\"Kimi K2.7 Code\",\"model_type\":\"Open-Weights\",\"agent\":\"Default\",\"evaluated_at\":\"2026-06-30\",\"pass_1\":58.0,\"stddev_across_runs\":4.3,\"pass_3\":74.1,\"pass_cubed\":41.7,\"mean_turns\":23.1,\"mean_tool_calls\":37.6,\"independently_evaluated\":true}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://toolathlon.xyz/docs/blog/toolathlon-verified",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/683409c645ca5ace0163.gz",
+          "sha256": "683409c645ca5ace0163893bf2c7c692d714e8c804daf5bb15d1fedae87e8b84",
+          "retrieved_at": "2026-09-20T00:37:03.769603+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:4c25cc827a0d9db38ed73e2d",
+      "benchmark_id": "toolathlon-verified::2026-06-30",
+      "subject": {
+        "source_id": "Gemini 3.5 Flash-Lite (high)",
+        "name": "Gemini 3.5 Flash-Lite (high)",
+        "model_id": null,
+        "variant": null,
+        "harness": "Default"
+      },
+      "value": 57.1,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://toolathlon.xyz/docs/leaderboard",
+        "retrieved_at": "2026-09-20T00:37:00.655911+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/0d8342b1213fd06430fb.gz",
+        "sha256": "0d8342b1213fd06430fb65dfd657d4e808daf509a2ede8123ae820e7a18f6497",
+        "locator": "toolathlon_verified_board; source row 15; Gemini 3.5 Flash-Lite (high); field pass_1"
+      },
+      "protocol": "Toolathlon-Verified (HKUST NLP), released 30 June 2026: 108 real-world tool-use tasks over 32 MCP servers (604 tools) and 7 local toolkits (16 tools), graded by execution against the task's ground truth. The value is the published Pass@1, the mean over three runs; the ± figure the board shows is the across-run standard deviation, not a confidence interval, and is kept per row with Pass@3, Pass^3, the mean turns and tool calls, the model type, the agent configuration and the evaluation date. Only rows the maintainers evaluated themselves (the board's green check) are ingested; rows submitted by others are not published as measurements here. Verified is a separate score series from the pre-June-2026 Toolathlon board, which the site archives and calls not comparable — that board is never parsed. Secondary benchmark, never a Composite input.; source row: {\"model\":\"Gemini 3.5 Flash-Lite (high)\",\"model_type\":\"Proprietary\",\"agent\":\"Default\",\"evaluated_at\":\"2026-07-30\",\"pass_1\":57.1,\"stddev_across_runs\":3.6,\"pass_3\":71.3,\"pass_cubed\":41.7,\"mean_turns\":37.9,\"mean_tool_calls\":38.3,\"independently_evaluated\":true}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://toolathlon.xyz/docs/blog/toolathlon-verified",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/683409c645ca5ace0163.gz",
+          "sha256": "683409c645ca5ace0163893bf2c7c692d714e8c804daf5bb15d1fedae87e8b84",
+          "retrieved_at": "2026-09-20T00:37:03.769603+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:bd4469ed654f2e9fa8eb1087",
+      "benchmark_id": "toolathlon-verified::2026-06-30",
+      "subject": {
+        "source_id": "Hy3 (high)",
+        "name": "Hy3 (high)",
+        "model_id": null,
+        "variant": null,
+        "harness": "Default"
+      },
+      "value": 56.8,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://toolathlon.xyz/docs/leaderboard",
+        "retrieved_at": "2026-09-20T00:37:00.655911+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/0d8342b1213fd06430fb.gz",
+        "sha256": "0d8342b1213fd06430fb65dfd657d4e808daf509a2ede8123ae820e7a18f6497",
+        "locator": "toolathlon_verified_board; source row 16; Hy3 (high); field pass_1"
+      },
+      "protocol": "Toolathlon-Verified (HKUST NLP), released 30 June 2026: 108 real-world tool-use tasks over 32 MCP servers (604 tools) and 7 local toolkits (16 tools), graded by execution against the task's ground truth. The value is the published Pass@1, the mean over three runs; the ± figure the board shows is the across-run standard deviation, not a confidence interval, and is kept per row with Pass@3, Pass^3, the mean turns and tool calls, the model type, the agent configuration and the evaluation date. Only rows the maintainers evaluated themselves (the board's green check) are ingested; rows submitted by others are not published as measurements here. Verified is a separate score series from the pre-June-2026 Toolathlon board, which the site archives and calls not comparable — that board is never parsed. Secondary benchmark, never a Composite input.; source row: {\"model\":\"Hy3 (high)\",\"model_type\":\"Open-Weights\",\"agent\":\"Default\",\"evaluated_at\":\"2026-07-30\",\"pass_1\":56.8,\"stddev_across_runs\":3.7,\"pass_3\":72.2,\"pass_cubed\":40.7,\"mean_turns\":20.5,\"mean_tool_calls\":37.9,\"independently_evaluated\":true}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://toolathlon.xyz/docs/blog/toolathlon-verified",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/683409c645ca5ace0163.gz",
+          "sha256": "683409c645ca5ace0163893bf2c7c692d714e8c804daf5bb15d1fedae87e8b84",
+          "retrieved_at": "2026-09-20T00:37:03.769603+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:626fc72bf7ab9455989c8429",
+      "benchmark_id": "toolathlon-verified::2026-06-30",
+      "subject": {
+        "source_id": "DeepSeek V4 Pro (max)",
+        "name": "DeepSeek V4 Pro (max)",
+        "model_id": null,
+        "variant": null,
+        "harness": "Default"
+      },
+      "value": 55.9,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://toolathlon.xyz/docs/leaderboard",
+        "retrieved_at": "2026-09-20T00:37:00.655911+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/0d8342b1213fd06430fb.gz",
+        "sha256": "0d8342b1213fd06430fb65dfd657d4e808daf509a2ede8123ae820e7a18f6497",
+        "locator": "toolathlon_verified_board; source row 17; DeepSeek V4 Pro (max); field pass_1"
+      },
+      "protocol": "Toolathlon-Verified (HKUST NLP), released 30 June 2026: 108 real-world tool-use tasks over 32 MCP servers (604 tools) and 7 local toolkits (16 tools), graded by execution against the task's ground truth. The value is the published Pass@1, the mean over three runs; the ± figure the board shows is the across-run standard deviation, not a confidence interval, and is kept per row with Pass@3, Pass^3, the mean turns and tool calls, the model type, the agent configuration and the evaluation date. Only rows the maintainers evaluated themselves (the board's green check) are ingested; rows submitted by others are not published as measurements here. Verified is a separate score series from the pre-June-2026 Toolathlon board, which the site archives and calls not comparable — that board is never parsed. Secondary benchmark, never a Composite input.; source row: {\"model\":\"DeepSeek V4 Pro (max)\",\"model_type\":\"Open-Weights\",\"agent\":\"Default\",\"evaluated_at\":\"2026-06-30\",\"pass_1\":55.9,\"stddev_across_runs\":1.2,\"pass_3\":68.5,\"pass_cubed\":41.7,\"mean_turns\":23.6,\"mean_tool_calls\":39.1,\"independently_evaluated\":true}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://toolathlon.xyz/docs/blog/toolathlon-verified",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/683409c645ca5ace0163.gz",
+          "sha256": "683409c645ca5ace0163893bf2c7c692d714e8c804daf5bb15d1fedae87e8b84",
+          "retrieved_at": "2026-09-20T00:37:03.769603+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:bc4202fe7105ef9ac6c2ed96",
+      "benchmark_id": "toolathlon-verified::2026-06-30",
+      "subject": {
+        "source_id": "Inkling-Small (xhigh)",
+        "name": "Inkling-Small (xhigh)",
+        "model_id": null,
+        "variant": null,
+        "harness": "Default"
+      },
+      "value": 54.4,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://toolathlon.xyz/docs/leaderboard",
+        "retrieved_at": "2026-09-20T00:37:00.655911+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/0d8342b1213fd06430fb.gz",
+        "sha256": "0d8342b1213fd06430fb65dfd657d4e808daf509a2ede8123ae820e7a18f6497",
+        "locator": "toolathlon_verified_board; source row 18; Inkling-Small (xhigh); field pass_1"
+      },
+      "protocol": "Toolathlon-Verified (HKUST NLP), released 30 June 2026: 108 real-world tool-use tasks over 32 MCP servers (604 tools) and 7 local toolkits (16 tools), graded by execution against the task's ground truth. The value is the published Pass@1, the mean over three runs; the ± figure the board shows is the across-run standard deviation, not a confidence interval, and is kept per row with Pass@3, Pass^3, the mean turns and tool calls, the model type, the agent configuration and the evaluation date. Only rows the maintainers evaluated themselves (the board's green check) are ingested; rows submitted by others are not published as measurements here. Verified is a separate score series from the pre-June-2026 Toolathlon board, which the site archives and calls not comparable — that board is never parsed. Secondary benchmark, never a Composite input.; source row: {\"model\":\"Inkling-Small (xhigh)\",\"model_type\":\"Open-Weights\",\"agent\":\"Default\",\"evaluated_at\":\"2026-07-30\",\"pass_1\":54.4,\"stddev_across_runs\":3.2,\"pass_3\":66.9,\"pass_cubed\":38.4,\"mean_turns\":48.4,\"mean_tool_calls\":46.9,\"independently_evaluated\":true}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://toolathlon.xyz/docs/blog/toolathlon-verified",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/683409c645ca5ace0163.gz",
+          "sha256": "683409c645ca5ace0163893bf2c7c692d714e8c804daf5bb15d1fedae87e8b84",
+          "retrieved_at": "2026-09-20T00:37:03.769603+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:6433b172e6c3f91d6995a06c",
+      "benchmark_id": "toolathlon-verified::2026-06-30",
+      "subject": {
+        "source_id": "DeepSeek V4 Flash (max)",
+        "name": "DeepSeek V4 Flash (max)",
+        "model_id": null,
+        "variant": null,
+        "harness": "Default"
+      },
+      "value": 50.9,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://toolathlon.xyz/docs/leaderboard",
+        "retrieved_at": "2026-09-20T00:37:00.655911+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/0d8342b1213fd06430fb.gz",
+        "sha256": "0d8342b1213fd06430fb65dfd657d4e808daf509a2ede8123ae820e7a18f6497",
+        "locator": "toolathlon_verified_board; source row 19; DeepSeek V4 Flash (max); field pass_1"
+      },
+      "protocol": "Toolathlon-Verified (HKUST NLP), released 30 June 2026: 108 real-world tool-use tasks over 32 MCP servers (604 tools) and 7 local toolkits (16 tools), graded by execution against the task's ground truth. The value is the published Pass@1, the mean over three runs; the ± figure the board shows is the across-run standard deviation, not a confidence interval, and is kept per row with Pass@3, Pass^3, the mean turns and tool calls, the model type, the agent configuration and the evaluation date. Only rows the maintainers evaluated themselves (the board's green check) are ingested; rows submitted by others are not published as measurements here. Verified is a separate score series from the pre-June-2026 Toolathlon board, which the site archives and calls not comparable — that board is never parsed. Secondary benchmark, never a Composite input.; source row: {\"model\":\"DeepSeek V4 Flash (max)\",\"model_type\":\"Open-Weights\",\"agent\":\"Default\",\"evaluated_at\":\"2026-07-30\",\"pass_1\":50.9,\"stddev_across_runs\":1.5,\"pass_3\":63.9,\"pass_cubed\":35.2,\"mean_turns\":28.6,\"mean_tool_calls\":47.1,\"independently_evaluated\":true}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://toolathlon.xyz/docs/blog/toolathlon-verified",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/683409c645ca5ace0163.gz",
+          "sha256": "683409c645ca5ace0163893bf2c7c692d714e8c804daf5bb15d1fedae87e8b84",
+          "retrieved_at": "2026-09-20T00:37:03.769603+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:f49f4a06e5e9705e27c95f6b",
+      "benchmark_id": "toolathlon-verified::2026-06-30",
+      "subject": {
+        "source_id": "MiMo V2.5",
+        "name": "MiMo V2.5",
+        "model_id": null,
+        "variant": null,
+        "harness": "Default"
+      },
+      "value": 49.1,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://toolathlon.xyz/docs/leaderboard",
+        "retrieved_at": "2026-09-20T00:37:00.655911+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/0d8342b1213fd06430fb.gz",
+        "sha256": "0d8342b1213fd06430fb65dfd657d4e808daf509a2ede8123ae820e7a18f6497",
+        "locator": "toolathlon_verified_board; source row 20; MiMo V2.5; field pass_1"
+      },
+      "protocol": "Toolathlon-Verified (HKUST NLP), released 30 June 2026: 108 real-world tool-use tasks over 32 MCP servers (604 tools) and 7 local toolkits (16 tools), graded by execution against the task's ground truth. The value is the published Pass@1, the mean over three runs; the ± figure the board shows is the across-run standard deviation, not a confidence interval, and is kept per row with Pass@3, Pass^3, the mean turns and tool calls, the model type, the agent configuration and the evaluation date. Only rows the maintainers evaluated themselves (the board's green check) are ingested; rows submitted by others are not published as measurements here. Verified is a separate score series from the pre-June-2026 Toolathlon board, which the site archives and calls not comparable — that board is never parsed. Secondary benchmark, never a Composite input.; source row: {\"model\":\"MiMo V2.5\",\"model_type\":\"Open-Weights\",\"agent\":\"Default\",\"evaluated_at\":\"2026-07-30\",\"pass_1\":49.1,\"stddev_across_runs\":3.9,\"pass_3\":65.7,\"pass_cubed\":30.6,\"mean_turns\":23.2,\"mean_tool_calls\":38.5,\"independently_evaluated\":true}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://toolathlon.xyz/docs/blog/toolathlon-verified",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/683409c645ca5ace0163.gz",
+          "sha256": "683409c645ca5ace0163893bf2c7c692d714e8c804daf5bb15d1fedae87e8b84",
+          "retrieved_at": "2026-09-20T00:37:03.769603+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:4dc8cf1d3a41763a224ff368",
+      "benchmark_id": "toolathlon-verified::2026-06-30",
+      "subject": {
+        "source_id": "MiniMax M2.7",
+        "name": "MiniMax M2.7",
+        "model_id": null,
+        "variant": null,
+        "harness": "Default"
+      },
+      "value": 47.5,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://toolathlon.xyz/docs/leaderboard",
+        "retrieved_at": "2026-09-20T00:37:00.655911+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/0d8342b1213fd06430fb.gz",
+        "sha256": "0d8342b1213fd06430fb65dfd657d4e808daf509a2ede8123ae820e7a18f6497",
+        "locator": "toolathlon_verified_board; source row 21; MiniMax M2.7; field pass_1"
+      },
+      "protocol": "Toolathlon-Verified (HKUST NLP), released 30 June 2026: 108 real-world tool-use tasks over 32 MCP servers (604 tools) and 7 local toolkits (16 tools), graded by execution against the task's ground truth. The value is the published Pass@1, the mean over three runs; the ± figure the board shows is the across-run standard deviation, not a confidence interval, and is kept per row with Pass@3, Pass^3, the mean turns and tool calls, the model type, the agent configuration and the evaluation date. Only rows the maintainers evaluated themselves (the board's green check) are ingested; rows submitted by others are not published as measurements here. Verified is a separate score series from the pre-June-2026 Toolathlon board, which the site archives and calls not comparable — that board is never parsed. Secondary benchmark, never a Composite input.; source row: {\"model\":\"MiniMax M2.7\",\"model_type\":\"Open-Weights\",\"agent\":\"Default\",\"evaluated_at\":\"2026-07-30\",\"pass_1\":47.5,\"stddev_across_runs\":3.8,\"pass_3\":62.0,\"pass_cubed\":32.4,\"mean_turns\":24.6,\"mean_tool_calls\":43.2,\"independently_evaluated\":true}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://toolathlon.xyz/docs/blog/toolathlon-verified",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/683409c645ca5ace0163.gz",
+          "sha256": "683409c645ca5ace0163893bf2c7c692d714e8c804daf5bb15d1fedae87e8b84",
+          "retrieved_at": "2026-09-20T00:37:03.769603+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:b09fb9b55b04538442a17617",
+      "benchmark_id": "toolathlon-verified::2026-06-30",
+      "subject": {
+        "source_id": "Inkling (xhigh)",
+        "name": "Inkling (xhigh)",
+        "model_id": null,
+        "variant": null,
+        "harness": "Default"
+      },
+      "value": 45.5,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://toolathlon.xyz/docs/leaderboard",
+        "retrieved_at": "2026-09-20T00:37:00.655911+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/0d8342b1213fd06430fb.gz",
+        "sha256": "0d8342b1213fd06430fb65dfd657d4e808daf509a2ede8123ae820e7a18f6497",
+        "locator": "toolathlon_verified_board; source row 22; Inkling (xhigh); field pass_1"
+      },
+      "protocol": "Toolathlon-Verified (HKUST NLP), released 30 June 2026: 108 real-world tool-use tasks over 32 MCP servers (604 tools) and 7 local toolkits (16 tools), graded by execution against the task's ground truth. The value is the published Pass@1, the mean over three runs; the ± figure the board shows is the across-run standard deviation, not a confidence interval, and is kept per row with Pass@3, Pass^3, the mean turns and tool calls, the model type, the agent configuration and the evaluation date. Only rows the maintainers evaluated themselves (the board's green check) are ingested; rows submitted by others are not published as measurements here. Verified is a separate score series from the pre-June-2026 Toolathlon board, which the site archives and calls not comparable — that board is never parsed. Secondary benchmark, never a Composite input.; source row: {\"model\":\"Inkling (xhigh)\",\"model_type\":\"Open-Weights\",\"agent\":\"Default\",\"evaluated_at\":\"2026-07-15\",\"pass_1\":45.5,\"stddev_across_runs\":3.7,\"pass_3\":63.8,\"pass_cubed\":25.5,\"mean_turns\":47.3,\"mean_tool_calls\":50.2,\"independently_evaluated\":true}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://toolathlon.xyz/docs/blog/toolathlon-verified",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/683409c645ca5ace0163.gz",
+          "sha256": "683409c645ca5ace0163893bf2c7c692d714e8c804daf5bb15d1fedae87e8b84",
+          "retrieved_at": "2026-09-20T00:37:03.769603+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:a17dc6a5784911ab28be0b14",
+      "benchmark_id": "toolathlon-verified::2026-06-30",
+      "subject": {
+        "source_id": "Qwen3.5 397B-A17B",
+        "name": "Qwen3.5 397B-A17B",
+        "model_id": null,
+        "variant": null,
+        "harness": "Default"
+      },
+      "value": 40.7,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://toolathlon.xyz/docs/leaderboard",
+        "retrieved_at": "2026-09-20T00:37:00.655911+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/0d8342b1213fd06430fb.gz",
+        "sha256": "0d8342b1213fd06430fb65dfd657d4e808daf509a2ede8123ae820e7a18f6497",
+        "locator": "toolathlon_verified_board; source row 23; Qwen3.5 397B-A17B; field pass_1"
+      },
+      "protocol": "Toolathlon-Verified (HKUST NLP), released 30 June 2026: 108 real-world tool-use tasks over 32 MCP servers (604 tools) and 7 local toolkits (16 tools), graded by execution against the task's ground truth. The value is the published Pass@1, the mean over three runs; the ± figure the board shows is the across-run standard deviation, not a confidence interval, and is kept per row with Pass@3, Pass^3, the mean turns and tool calls, the model type, the agent configuration and the evaluation date. Only rows the maintainers evaluated themselves (the board's green check) are ingested; rows submitted by others are not published as measurements here. Verified is a separate score series from the pre-June-2026 Toolathlon board, which the site archives and calls not comparable — that board is never parsed. Secondary benchmark, never a Composite input.; source row: {\"model\":\"Qwen3.5 397B-A17B\",\"model_type\":\"Open-Weights\",\"agent\":\"Default\",\"evaluated_at\":\"2026-07-30\",\"pass_1\":40.7,\"stddev_across_runs\":2.0,\"pass_3\":51.9,\"pass_cubed\":27.8,\"mean_turns\":19.5,\"mean_tool_calls\":35.7,\"independently_evaluated\":true}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://toolathlon.xyz/docs/blog/toolathlon-verified",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/683409c645ca5ace0163.gz",
+          "sha256": "683409c645ca5ace0163893bf2c7c692d714e8c804daf5bb15d1fedae87e8b84",
+          "retrieved_at": "2026-09-20T00:37:03.769603+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:76f36fdf4334c1fb45993663",
+      "benchmark_id": "toolathlon-verified::2026-06-30",
+      "subject": {
+        "source_id": "Nemotron 3 Ultra",
+        "name": "Nemotron 3 Ultra",
+        "model_id": null,
+        "variant": null,
+        "harness": "Default"
+      },
+      "value": 34.3,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://toolathlon.xyz/docs/leaderboard",
+        "retrieved_at": "2026-09-20T00:37:00.655911+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/0d8342b1213fd06430fb.gz",
+        "sha256": "0d8342b1213fd06430fb65dfd657d4e808daf509a2ede8123ae820e7a18f6497",
+        "locator": "toolathlon_verified_board; source row 24; Nemotron 3 Ultra; field pass_1"
+      },
+      "protocol": "Toolathlon-Verified (HKUST NLP), released 30 June 2026: 108 real-world tool-use tasks over 32 MCP servers (604 tools) and 7 local toolkits (16 tools), graded by execution against the task's ground truth. The value is the published Pass@1, the mean over three runs; the ± figure the board shows is the across-run standard deviation, not a confidence interval, and is kept per row with Pass@3, Pass^3, the mean turns and tool calls, the model type, the agent configuration and the evaluation date. Only rows the maintainers evaluated themselves (the board's green check) are ingested; rows submitted by others are not published as measurements here. Verified is a separate score series from the pre-June-2026 Toolathlon board, which the site archives and calls not comparable — that board is never parsed. Secondary benchmark, never a Composite input.; source row: {\"model\":\"Nemotron 3 Ultra\",\"model_type\":\"Open-Weights\",\"agent\":\"Default\",\"evaluated_at\":\"2026-07-15\",\"pass_1\":34.3,\"stddev_across_runs\":1.5,\"pass_3\":50.0,\"pass_cubed\":19.4,\"mean_turns\":28.6,\"mean_tool_calls\":31.9,\"independently_evaluated\":true}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://toolathlon.xyz/docs/blog/toolathlon-verified",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/683409c645ca5ace0163.gz",
+          "sha256": "683409c645ca5ace0163893bf2c7c692d714e8c804daf5bb15d1fedae87e8b84",
+          "retrieved_at": "2026-09-20T00:37:03.769603+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:8eaac6910ef820687ffd382a",
+      "benchmark_id": "toolathlon-verified::2026-06-30",
+      "subject": {
+        "source_id": "Kimi K2.5",
+        "name": "Kimi K2.5",
+        "model_id": null,
+        "variant": null,
+        "harness": "Default"
+      },
+      "value": 33.0,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://toolathlon.xyz/docs/leaderboard",
+        "retrieved_at": "2026-09-20T00:37:00.655911+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/0d8342b1213fd06430fb.gz",
+        "sha256": "0d8342b1213fd06430fb65dfd657d4e808daf509a2ede8123ae820e7a18f6497",
+        "locator": "toolathlon_verified_board; source row 25; Kimi K2.5; field pass_1"
+      },
+      "protocol": "Toolathlon-Verified (HKUST NLP), released 30 June 2026: 108 real-world tool-use tasks over 32 MCP servers (604 tools) and 7 local toolkits (16 tools), graded by execution against the task's ground truth. The value is the published Pass@1, the mean over three runs; the ± figure the board shows is the across-run standard deviation, not a confidence interval, and is kept per row with Pass@3, Pass^3, the mean turns and tool calls, the model type, the agent configuration and the evaluation date. Only rows the maintainers evaluated themselves (the board's green check) are ingested; rows submitted by others are not published as measurements here. Verified is a separate score series from the pre-June-2026 Toolathlon board, which the site archives and calls not comparable — that board is never parsed. Secondary benchmark, never a Composite input.; source row: {\"model\":\"Kimi K2.5\",\"model_type\":\"Open-Weights\",\"agent\":\"Default\",\"evaluated_at\":\"2026-07-15\",\"pass_1\":33.0,\"stddev_across_runs\":1.2,\"pass_3\":50.9,\"pass_cubed\":15.7,\"mean_turns\":20.3,\"mean_tool_calls\":31.3,\"independently_evaluated\":true}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://toolathlon.xyz/docs/blog/toolathlon-verified",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/683409c645ca5ace0163.gz",
+          "sha256": "683409c645ca5ace0163893bf2c7c692d714e8c804daf5bb15d1fedae87e8b84",
+          "retrieved_at": "2026-09-20T00:37:03.769603+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
     }
   ],
   "collections": [
@@ -261714,6 +262564,12 @@
       "status": "collected",
       "source_url": "https://rsi-exam.ai/",
       "reason": "15 source results parsed; configurations remain separate; unmatched model identities are retained."
+    },
+    {
+      "benchmark_id": "toolathlon-verified::2026-06-30",
+      "status": "collected",
+      "source_url": "https://toolathlon.xyz/docs/leaderboard",
+      "reason": "25 source results parsed; configurations remain separate; unmatched model identities are retained."
     }
   ],
   "rejected": [

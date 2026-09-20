@@ -112,10 +112,21 @@ test('CR-78.3: the three level changes from the simulation, and Hy3 moving down'
   // Qwen3.7 Max's gap relaxes 5.85 → 5.38 (heldout joins Chess 0.19, Mystery 0.32, EBR 0.095) and its blend
   // 7.71 → 6.78 — both still light → medium. Muse Spark 1.1 (11.69 → 14.03) and Hy3 (5.82 → 4.22) keep
   // their accepted transitions. Value bands stay ±0.5 per the 2026-09-18 rule.
+  //
+  // 2026-09-20 re-pin (CR-30.2): Toolathlon-Verified joined as a headline Tool-use board — 18 exact
+  // joins, and our own self-reported corpus shows eight labs quoting it (41 rows name the Verified
+  // series, e.g. Anthropic's Fable 5.1 system card), so it is a board a training team can aim at. Of
+  // the four pinned rows only Muse Spark 1.1 is on it (75.6 Pass@1, 5th of 25), and its headline mean
+  // rises accordingly: gap 14.03 → 15.24, blend 14.03 → 18.08. Its accepted story was "the jaggedness
+  // blend lifts it medium → strong"; with the larger headline corpus the gap alone already reaches
+  // strong, so the pin now records strong → strong. The other three rows do not join the new board and
+  // are unchanged. **Florian may want to re-run the null simulation**: these pins have now moved twice
+  // in two days as the corpus grew (CR-54.2 on 19 Sep, this board on 20 Sep), and the transitions they
+  // were written to demonstrate are wearing off. The arithmetic contracts below are unaffected.
   const expected = [
-    { id: 'muse-spark-1.1::xhigh', gap: 11.7, score: 14.0, before: 'medium', after: 'strong' },     // 11.69 → 14.03
+    { id: 'muse-spark-1.1::xhigh', gap: 15.2, score: 18.1, before: 'strong', after: 'strong' },     // 11.69 → 14.03 → 18.08
     { id: 'qwen3.7-max::default', gap: 5.4, score: 6.8, before: 'light', after: 'medium' },         // 5.38 → 6.78
-    { id: 'gemini-3.6-flash::high', gap: 5.1, score: 6.1, before: 'light', after: 'medium' },       // 5.05 → 6.12
+    { id: 'gemini-3.6-flash::high', gap: 5.0, score: 6.1, before: 'light', after: 'medium' },       // 5.05 → 6.09
     { id: 'hy3::default', gap: 5.8, score: 4.2, before: 'light', after: 'light' },                  // 5.82 → 4.22
   ];
   for (const row of expected) {
@@ -130,12 +141,28 @@ test('CR-78.3: the three level changes from the simulation, and Hy3 moving down'
   }
 });
 
-test('CR-78.3: no frontier model is tagged at this weight', () => {
-  const { levels } = benchmaxxingFamilySignals(view);
-  for (const family of ['gpt-6-astra', 'claude-opus-5', 'claude-fable-5.1', 'gpt-5.6-sol', 'kimi-k3']) {
+test('CR-78.3: a frontier model is tagged only with the uncertainty the method itself reports', () => {
+  // The promise Florian was shown was "no frontier model is tagged at this weight", measured on the
+  // corpus of that day. 2026-09-20: Toolathlon-Verified (headline, Tool-use) joins Kimi K3 at 76.5
+  // Pass@1 — 2nd of 25 — and its headline/heldout gap moves 0.18 → 1.72, which carries the blended
+  // score 1.56 → 3.05, a twentieth of a point over the light threshold of 3. CR-77 settled what
+  // happens then: every scored model reaching a threshold is tagged, and a tag whose 80 % interval
+  // reaches below zero says so. So the promise that survives, and the one this test now holds the
+  // product to, is that a frontier model is never tagged *silently*: four of the five families carry
+  // no tag at all, and the one that does is disclosed as uncertain (its interval runs to -12.9).
+  const { levels, uncertain } = benchmaxxingFamilySignals(view);
+  for (const family of ['gpt-6-astra', 'claude-opus-5', 'claude-fable-5.1', 'gpt-5.6-sol']) {
     const ids = view.models.map((m) => m.id).filter((id) => String(id).split('::')[0] === family);
     assert.ok(ids.length, `${family} is in the catalog`);
     for (const id of ids) assert.equal(levels.get(id) ?? null, null, `${id} carries no Benchmaxxing tag`);
+  }
+  const kimi = view.models.map((m) => m.id).filter((id) => String(id).split('::')[0] === 'kimi-k3');
+  assert.ok(kimi.length, 'kimi-k3 is in the catalog');
+  for (const id of kimi) {
+    const level = levels.get(id) ?? null;
+    if (level === null) continue;
+    assert.equal(level, 'light', `${id}: a tag this close to the threshold is never more than light`);
+    assert.match(String(uncertain.get(id)?.note ?? ''), /uncertain/i, `${id}: the tag is disclosed as uncertain`);
   }
 });
 

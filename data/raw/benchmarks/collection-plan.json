@@ -4449,6 +4449,94 @@
 				"https://rsi-exam.ai/",
 				"https://rsi-exam.ai/blog.html"
 			]
+		},
+		{
+			"benchmark_id": "toolathlon-verified::2026-06-30",
+			"parser": {
+				"kind": "toolathlon_verified_board",
+				"name_field": "name",
+				"id_field": "id",
+				"value_field": "pass_1",
+				"harness_field": "harness",
+				"plain_text_names": true,
+				"method_source": {
+					"url": "https://toolathlon.xyz/docs/blog/toolathlon-verified",
+					"file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/683409c645ca5ace0163.gz",
+					"sha256": "683409c645ca5ace0163893bf2c7c692d714e8c804daf5bb15d1fedae87e8b84",
+					"retrieved_at": "2026-09-20T00:37:03.769603+00:00"
+				},
+				"require": {
+					"page_text": [
+						"<span class=\"leaderboard-version-note-title\">Toolathlon-Verified</span>",
+						"<span class=\"leaderboard-version-note-date\">Current benchmark · Released June 30, 2026</span>",
+						"<div class=\"stat-number\">108</div><div class=\"stat-label\"># Tasks</div>",
+						"<div class=\"stat-number\">32 <sub>(604)</sub></div>",
+						"<div class=\"stat-number\">7 <sub>(16)</sub></div>",
+						"Results bearing this badge were independently evaluated by us."
+					],
+					"method_text": [
+						"It preserves the original 108-task scope",
+						"The chart below reports mean Pass@1 across the three runs for each model.",
+						"A green check marks rows independently evaluated by the Toolathlon team.",
+						"Toolathlon-Verified begins a separate official score series"
+					],
+					"columns": [
+						"Model",
+						"Type",
+						"Agent",
+						"Date",
+						"Pass@1",
+						"Pass@3",
+						"Pass^3",
+						"# Turns",
+						"# Tool Calls"
+					],
+					"columns_by_label": [
+						"Model",
+						"Model Type",
+						"Agent",
+						"Date",
+						"Pass@1",
+						"Pass@3",
+						"Pass^3",
+						"# Turns",
+						"# Tool Calls"
+					],
+					"badge_marker": "class=\"verified-badge\"",
+					"model_types": [
+						"Open-Weights",
+						"Proprietary"
+					],
+					"agents": [
+						"Default"
+					],
+					"minimum_verified": 25
+				}
+			},
+			"status": "collected",
+			"reason": "Toolathlon publishes the Verified board as a server-rendered table on its own site, with a green check on every row it evaluated itself. Only those rows are ingested; the archived pre-Verified board is a different score series and is never parsed.",
+			"recipe": {
+				"command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-toolathlon; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+				"format": "Server-rendered HTML table",
+				"locator": "The page's own current-board table `<table class=\"performance-table leaderboard-current-table\">`: one row per model x agent configuration with data-label cells Model / Model Type / Agent / Date / Pass@1 / Pass@3 / Pass^3 / # Turns / # Tool Calls. The value is Pass@1 in percent (mean over three runs); the ± figure is the across-run standard deviation. Only rows carrying the `verified-badge` check are scored. The sibling `leaderboard-history-table` is the archived pre-Verified board and is never parsed.",
+				"version_guard": "The leaderboard page must still name the release (\"Toolathlon-Verified\", current benchmark, released June 30, 2026), state 108 tasks, 32 MCP servers (604 tools) and 7 local toolkits (16 tools), carry both the current and the archived board table, and explain the green check as independent evaluation by the maintainers; the current board must keep its nine columns, a listed model type and agent configuration per row, and stay ranked by Pass@1. The release post must still state the preserved 108-task scope, Pass@1 as the mean over three runs, what the green check means, and that Verified is a separate score series. A new release, a changed task set or a re-normalisation is a new identity, never a silent update of this one.",
+				"notes": "Measured by the benchmark maintainers (HKUST NLP). robots.txt allows /docs/ (only /cdn-cgi/ and /_next/ are disallowed) and its Content-Signal header allows ai-input; the page itself is captured, never the disallowed /_next/ data routes. Observed source inconsistency: the page's \"Best Pass@1 Score\" stat card still reads 76.2 % while the board's top row is 78.4 % — the stat card lags the table, so it is never ingested. Exact joins: data/raw/benchmarks/identity-map.json (lib/board-identity.mjs, parseToolathlonVerifiedLabel)."
+			},
+			"cadence": "daily, at most one capture per source; stop on access restrictions",
+			"version_guard": "The leaderboard page must still name the release (\"Toolathlon-Verified\", current benchmark, released June 30, 2026), state 108 tasks, 32 MCP servers (604 tools) and 7 local toolkits (16 tools), carry both the current and the archived board table, and explain the green check as independent evaluation by the maintainers; the current board must keep its nine columns, a listed model type and agent configuration per row, and stay ranked by Pass@1. The release post must still state the preserved 108-task scope, Pass@1 as the mean over three runs, what the green check means, and that Verified is a separate score series. A new release, a changed task set or a re-normalisation is a new identity, never a silent update of this one.",
+			"source": {
+				"url": "https://toolathlon.xyz/docs/leaderboard",
+				"file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/0d8342b1213fd06430fb.gz",
+				"sha256": "0d8342b1213fd06430fb65dfd657d4e808daf509a2ede8123ae820e7a18f6497",
+				"retrieved_at": "2026-09-20T00:37:00.655911+00:00"
+			},
+			"protocol": "Toolathlon-Verified (HKUST NLP), released 30 June 2026: 108 real-world tool-use tasks over 32 MCP servers (604 tools) and 7 local toolkits (16 tools), graded by execution against the task's ground truth. The value is the published Pass@1, the mean over three runs; the ± figure the board shows is the across-run standard deviation, not a confidence interval, and is kept per row with Pass@3, Pass^3, the mean turns and tool calls, the model type, the agent configuration and the evaluation date. Only rows the maintainers evaluated themselves (the board's green check) are ingested; rows submitted by others are not published as measurements here. Verified is a separate score series from the pre-June-2026 Toolathlon board, which the site archives and calls not comparable — that board is never parsed. Secondary benchmark, never a Composite input.",
+			"basis": "measured",
+			"minimum_rows": 25,
+			"source_urls": [
+				"https://toolathlon.xyz/docs/leaderboard",
+				"https://toolathlon.xyz/docs/blog/toolathlon-verified"
+			]
 		}
 	]
 }

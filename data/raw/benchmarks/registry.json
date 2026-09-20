@@ -9616,6 +9616,88 @@
           "excerpt": "Each model receives one rollout per released task, so the results compare aggregate capability but do not estimate within-model run-to-run variance."
         }
       ]
+    },
+    {
+      "id": "toolathlon-verified::2026-06-30",
+      "name": "Toolathlon-Verified (HKUST NLP)",
+      "version": "2026-06-30",
+      "version_status": "published",
+      "family": "toolathlon-verified",
+      "category": "Tool-use",
+      "one_sentence_description": "An agent completes 108 real-world tool-use tasks across 32 MCP servers and 7 local toolkits, and each task is graded by executing the resulting state against the task's ground truth.",
+      "scoring": {
+        "metric": "Pass@1 in percent, the mean over three runs (Verified series)",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Run by the maintainers in the board's Default agent configuration; the board's ± figure is the standard deviation across the three runs, not a confidence interval, and Pass@3, Pass^3, the mean turns and tool calls, the model type and the evaluation date stay in each observation's protocol. Only rows carrying the board's green check (\"independently evaluated by us\") are ingested — a row submitted by someone else is not published here as a measurement. The pre-June-2026 Toolathlon board is a different score series that the site itself calls not comparable; it is archived on the same page and never parsed. Secondary benchmark, never a Composite input."
+      },
+      "maintainer": "HKUST NLP (Toolathlon team)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://toolathlon.xyz/docs/leaderboard",
+      "publication_urls": [
+        {
+          "url": "https://toolathlon.xyz/docs/leaderboard",
+          "type": "official_leaderboard",
+          "role": "Toolathlon-Verified board and the archived pre-Verified snapshot"
+        },
+        {
+          "url": "https://toolathlon.xyz/docs/blog/toolathlon-verified",
+          "type": "official_leaderboard",
+          "role": "Release post: what the Verified revision changed, Pass@1 as the mean over three runs, what the green check means"
+        },
+        {
+          "url": "https://github.com/hkust-nlp/Toolathlon",
+          "type": "github",
+          "role": "Benchmark tasks, evaluators and harness"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-toolathlon; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "Server-rendered HTML table",
+        "identity_policy": "source_label",
+        "locator": "The page's own current-board table `<table class=\"performance-table leaderboard-current-table\">`: one row per model x agent configuration with data-label cells Model / Model Type / Agent / Date / Pass@1 / Pass@3 / Pass^3 / # Turns / # Tool Calls. The value is Pass@1 in percent (mean over three runs); the ± figure is the across-run standard deviation. Only rows carrying the `verified-badge` check are scored. The sibling `leaderboard-history-table` is the archived pre-Verified board and is never parsed.",
+        "version_guard": "The leaderboard page must still name the release (\"Toolathlon-Verified\", current benchmark, released June 30, 2026), state 108 tasks, 32 MCP servers (604 tools) and 7 local toolkits (16 tools), carry both the current and the archived board table, and explain the green check as independent evaluation by the maintainers; the current board must keep its nine columns, a listed model type and agent configuration per row, and stay ranked by Pass@1. The release post must still state the preserved 108-task scope, Pass@1 as the mean over three runs, what the green check means, and that Verified is a separate score series. A new release, a changed task set or a re-normalisation is a new identity, never a silent update of this one.",
+        "notes": "Measured by the benchmark maintainers (HKUST NLP). robots.txt allows /docs/ (only /cdn-cgi/ and /_next/ are disallowed) and its Content-Signal header allows ai-input; the page itself is captured, never the disallowed /_next/ data routes. Observed source inconsistency: the page's \"Best Pass@1 Score\" stat card still reads 76.2 % while the board's top row is 78.4 % — the stat card lags the table, so it is never ingested. Exact joins: data/raw/benchmarks/identity-map.json (lib/board-identity.mjs, parseToolathlonVerifiedLabel)."
+      },
+      "update_cadence": {
+        "source_schedule": "The maintainers add models to the Verified board as they evaluate them (most recent row 30 August 2026); a new benchmark revision is announced as its own release.",
+        "check_recommendation": "Daily with the ordinary refresh; a new release or a changed task set is a new identity and needs a reviewed change."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Best Pass@1 at capture is 78.4 % (GLM 5.3 Flash), and Pass^3 — all three runs correct — tops out at 68.5 %, so the board still separates the strongest systems; computed saturation (CR-38.2) applies on build."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-20",
+      "last_verified": "2026-09-20",
+      "evidence": [
+        {
+          "url": "https://toolathlon.xyz/docs/leaderboard",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/0d8342b1213fd06430fb.gz",
+          "sha256": "026e26f4f9b1c127a81841d22c53a203420b87f8a2c3cc709c366cd0d0578c28",
+          "fetched_at": "2026-09-20T00:37:00.655911+00:00",
+          "excerpt": "Toolathlon-Verified — Current benchmark · Released June 30, 2026; 108 # Tasks; 32 (604) # MCP servers (# tools); Results bearing this badge were independently evaluated by us."
+        },
+        {
+          "url": "https://toolathlon.xyz/docs/blog/toolathlon-verified",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/683409c645ca5ace0163.gz",
+          "sha256": "ba41899720745da81c32ab32ea52d5ea7fae42e3d1edaed65b2cbdf4423c9c31",
+          "fetched_at": "2026-09-20T00:37:03.769603+00:00",
+          "excerpt": "The chart below reports mean Pass@1 across the three runs for each model. Error bars show the across-run standard deviation—not a confidence interval."
+        },
+        {
+          "url": "https://toolathlon.xyz/docs/blog/toolathlon-verified",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-toolathlon/683409c645ca5ace0163.gz",
+          "sha256": "ba41899720745da81c32ab32ea52d5ea7fae42e3d1edaed65b2cbdf4423c9c31",
+          "fetched_at": "2026-09-20T00:37:03.769603+00:00",
+          "excerpt": "Toolathlon-Verified begins a separate official score series; its results are not directly comparable with the original release."
+        }
+      ]
     }
   ],
   "aa_field_map": [
