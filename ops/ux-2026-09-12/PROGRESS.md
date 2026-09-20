@@ -6018,6 +6018,9 @@ on the canonical host, 1440/390 × light/dark: 93 shots + 2 element shots in `/o
   single new URL is one polite GET per run. Tomorrow is the first scheduled run to see either population.
 - **Sign-off owed:** CR-85.2's card slice is claude-opus code, so a different engine owes its `verified`. CR-85.2 also stays
   `in-progress` on its own terms. No `ALL-ACCEPTED`.
-- **Live at `1a787ed5111e18ff98b56ee6f08f5681e8abcaf4` (the final revision of this iteration) on both hosts: 109/109 and
-  109/109** (`/opt/benchmarkheaven/state/ux-evidence/iter140-cr85-2-deepseek/final-{canonical,legacy}/verification.json`) —
-  re-run after the collector fix to show the ingestion is unchanged by it.
+- **Live at `1a787ed` on both hosts: 109/109 and 109/109**
+  (`/opt/benchmarkheaven/state/ux-evidence/iter140-cr85-2-deepseek/final-{canonical,legacy}/verification.json`) — re-run after
+  the collector fix to show the ingestion is unchanged by it — and again on the iteration's last deployed revision
+  **`35cca4c5d0c684a7c00ff048f22129a6c5486995`: 109/109 and 109/109**
+  (`…/deployed-{canonical,legacy}/verification.json`). Four verified runs across three revisions; every one re-derives its
+  expected values from the committed capture rather than reading our own dataset back.
