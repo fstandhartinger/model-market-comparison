@@ -5494,3 +5494,6 @@ Scope: everything after `REVIEW-20260919T032002Z.md` (`c476e26..a012816`), the c
 - **Live evidence** `/opt/benchmarkheaven/state/ux-evidence/iter126-cr30-toolathlon/final-{benchmarkheaven-com,model-market-comparison-app-mintapis-com}/`:
   **51/51 per host** at `15696a9`. CR-83's verifier was re-run at the same revision: **44/44**.
 - **Gates:** build-dataset 844/664/95/2880, `npm test` 922 pass / 0 fail / 1 skipped, `npx tsc --noEmit -p .` clean.
+- **Housekeeping:** the untracked `ops/ux-2026-09-12/bin/shoot-fable-pass25.mjs` that the last two gates preserved was
+  swept into `0856ef4` by a `git add` of the whole `ops` path. Its content is unchanged, and every sibling
+  `shoot-fable-pass*.mjs` is tracked, so it is now where it belongs — recorded here so nobody looks for a lost file.
