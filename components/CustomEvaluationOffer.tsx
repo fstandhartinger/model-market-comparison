@@ -43,15 +43,15 @@ export function CustomEvaluationOffer() {
   }, [phase]);
 
   return <>
-    <a ref={badge} href="/jev-models/custom-evaluation" className={`bh-custom-evaluation-badge ml-2 ${phase === "landed" ? "is-wiggling" : ""}`} data-bh-custom-evaluation-badge>
-      <span className="bh-offer-badge-full">Custom evaluation</span><span className="bh-offer-badge-short">Custom eval</span>
+    <a ref={badge} href="/jev-models/custom-evaluation" aria-label="You need a custom eval" className={`bh-custom-evaluation-badge ml-2 ${phase === "landed" ? "is-wiggling" : ""}`} data-bh-custom-evaluation-badge>
+      You need a custom eval
     </a>
     {(phase === "open" || phase === "landing") && <div ref={toast} role="status" aria-live="polite" aria-atomic="true"
       className={`bh-custom-evaluation-toast ${phase === "landing" ? "is-landing" : ""}`} data-bh-custom-evaluation-toast data-phase={phase}>
-      <p><span>JevBench is open source. Run it on your data, or ask us about a custom evaluation.</span>{" "}<a href="/jev-models/custom-evaluation" className="font-semibold text-accent underline">See your options</a></p>
+      <p><span>You need a custom eval? JevBench is open source: run it on your data, or ask us to help.</span>{" "}<a href="/jev-models/custom-evaluation" className="font-semibold text-accent underline">See your options</a></p>
       <div className="flex shrink-0 items-center gap-1">
         <button type="button" className="min-h-11 px-2 text-xs text-accent underline" onClick={() => dismiss(true)}>Don&apos;t show again</button>
-        <button type="button" className="min-h-11 min-w-11 text-lg" aria-label="Dismiss custom evaluation offer" onClick={() => dismiss(false)}>×</button>
+        <button type="button" className="min-h-11 min-w-11 text-lg" aria-label="Dismiss You need a custom eval offer" onClick={() => dismiss(false)}>×</button>
       </div>
     </div>}
   </>;

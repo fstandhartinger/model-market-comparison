@@ -15,7 +15,7 @@ test('CR-99 offer timing, persistence and accessibility stay explicit', () => {
   assert.match(offer, /try \{/);
   assert.match(offer, /aria-live="polite"/);
   assert.match(offer, /event\.key === "Escape"/);
-  assert.match(offer, /aria-label="Dismiss custom evaluation offer"/);
+  assert.match(offer, /aria-label="Dismiss You need a custom eval offer"/);
   assert.match(css, /prefers-reduced-motion: reduce/);
   assert.match(css, /--offer-x/);
 });
@@ -31,11 +31,21 @@ test('CR-102 keeps the phone badge beside the eyebrow and makes the toast land l
   assert.doesNotMatch(offer, /addEventListener\("scroll"/);
 });
 
+test('CR-103 uses the new offer label consistently and keeps narrow-phone padding', () => {
+  assert.match(offer, /aria-label="You need a custom eval"/);
+  assert.match(offer, />\s*You need a custom eval\s*</);
+  assert.match(offer, /You need a custom eval\?/);
+  assert.match(layout, /href="\/jev-models\/custom-evaluation">You need a custom eval/);
+  assert.match(page, /You need a custom eval\?/);
+  assert.match(css, /@media \(max-width: 359px\)[\s\S]*padding-inline: 6px/);
+  assert.doesNotMatch(offer, /Custom evaluation/);
+});
+
 test('CR-102 page states the deliverable, self-run route, data treatment and contact without prices', () => {
   for (const phrase of ['accuracy, calibration, latency and cost', 'free, open-source benchmark', 'github.com/fstandhartinger/jevbench', 'python -m jevbench.cli run', 'python -m jevbench.cli summarize', 'MIT licence', 'written report', 'raw results', 'integration, routing and self-hosting', 'do not publish it', 'delete it on request', 'florian.standhartinger@gmail.com']) assert.match(page, new RegExp(phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'));
   assert.doesNotMatch(page, /\$1,000|flat fee|individual quote/i);
   assert.doesNotMatch(page, /working days|turnaround/i);
   assert.match(page, /subject=Custom%20Jev-class%20model%20evaluation/);
   assert.match(page, /href="\/impressum"/);
-  assert.match(layout, /href="\/jev-models\/custom-evaluation">Custom evaluation/);
+  assert.match(layout, /href="\/jev-models\/custom-evaluation">You need a custom eval/);
 });

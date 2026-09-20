@@ -475,8 +475,8 @@ details[open] > .bh-collapsible-grid { display: grid; }
 }
 .bh-jevc-custom figure, figure.bh-jevc-custom { box-shadow: 0 0 0 2px rgb(var(--warn) / .7); }
 .bh-jevc-slider { width: 100%; min-height: 32px; }
-/* CR-102: the permanent badge stays on the eyebrow row, with a visually compact pill and
-   an invisible 44 px hit area. Only the narrowest portrait screens need the shorter label. */
+/* CR-102/103: the permanent badge stays on the eyebrow row, with a visually compact pill,
+   horizontal breathing room and an invisible 44 px hit area. */
 .bh-custom-evaluation-badge {
   position: relative; display: inline-flex; flex: 0 1 auto; align-items: center; justify-content: center;
   min-width: 0; white-space: nowrap; border: 1px dashed var(--control-border); border-radius: 999px;
@@ -484,11 +484,8 @@ details[open] > .bh-collapsible-grid { display: grid; }
   font-size: 10px; font-weight: 600; line-height: 14px; letter-spacing: .02em; text-transform: uppercase;
 }
 .bh-custom-evaluation-badge::after { content: ""; position: absolute; left: -4px; right: -4px; top: 50%; height: 44px; transform: translateY(-50%); }
-.bh-offer-badge-short { display: none; }
 @media (max-width: 359px) {
-  .bh-custom-evaluation-badge { margin-left: 5px; padding-inline: 7px; font-size: 9px; letter-spacing: 0; }
-  .bh-offer-badge-full { display: none; }
-  .bh-offer-badge-short { display: inline; }
+  .bh-custom-evaluation-badge { margin-left: 4px; padding-inline: 6px; font-size: 8px; line-height: 13px; letter-spacing: 0; }
 }
 /* The toast is viewport-fixed on every size. The safe-area term keeps phone home indicators clear;
    sheets and dialogs intentionally sit above it at z-index 70. Reduced motion gets only a fade. */

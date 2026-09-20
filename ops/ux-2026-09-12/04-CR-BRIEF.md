@@ -816,3 +816,10 @@ Link (exact, do not change): https://donate.stripe.com/fZu00i9ro0wmdF88sg1Jm01. 
 - **CR-99.2 Offer.** After about 6 seconds, show a quiet two-line custom-evaluation offer for about 8 seconds, then visibly converge on one permanent Custom evaluation link. It is keyboard accessible, closes with Escape or ×, offers Don't show again through guarded localStorage, stays dismissed for the session, fades under reduced motion and does not cover the chart on a phone.
 - **CR-99.3 Detail page.** `/jev-models/custom-evaluation` states the work, inputs, deliverables, $1,000 flat fee and individual-quote exception, optional consulting, data treatment and a pre-addressed email link. It makes no turnaround promise and links the legal pages. Link it from the offer, permanent badge and shared footer.
 - **CR-99.4 Verify.** Full tests, typecheck and production build; both live hosts at 1440/390 in light/dark; hard-only URL/reset/ranking, toast timing/landing/no-overlap, Escape/× and Don't show again persistence, detail page and mailto.
+
+## CR-20260920g checklist — custom-evaluation pill label (CR-103)
+
+- **CR-103.1 Copy.** Rename the permanent pill to “You need a custom eval” and keep the badge, footer, toast, offer page and accessible labels consistent.
+- **CR-103.2 Phone layout.** At 320 px portrait the pill remains beside the JevBench eyebrow with horizontal padding; reduce pill type and padding before allowing the eyebrow to wrap.
+- **CR-103.3 Motion.** The toast flight still lands on the resized pill; preserve the fixed-bottom toast, opaque slow exit, wiggle and reduced-motion path.
+- **CR-103.4 Verify.** Full tests, production build, both live hosts, and 320 px phone-portrait screenshots in light and dark.

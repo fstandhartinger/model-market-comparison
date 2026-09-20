@@ -1377,3 +1377,8 @@ Florian, phone screenshot, 20 Sep 2026, verbatim:
 > the $1000 offer from the detail page, and not reveal yet, that we are offering that as a paid service so clearly
 > (also don't hide it, just offer our consulting and custom eval - rest will be duscussed vis mail). Also mention our
 > open source repo wnd hiw to do it yourself. Make us look like a open source / free / community service
+
+## CR-20260920g (JevBench page) → CR-103 — custom-evaluation pill label
+
+Florian, 20 Sep 2026, verbatim:
+> Can we rename the text in the bubble from CUSTOM EVALUATION to YOU NEED A CUSTOM EVAL?
