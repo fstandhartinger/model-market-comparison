@@ -5,7 +5,7 @@
   {
    "revision": "v1.2.7",
    "date": "2026-09-20",
-   "note": "Added three systems: jqv (a stock Qwen3-32B read as a decision model, submitted with a public endpoint) and the GLiNER2.5 small and multi checkpoints. The GLiNER2.5 rows ran the full frozen 534-decision set on our CPU with the same mapping as the GLiNER2 row. jqv is a partial row: its endpoint is the submitter's own machine, and this revision stopped sending held-out items to an endpoint a submitter operates. The easy and standard/judge tiers had already been sent in full when that was decided; the 109 held-out hard items never were, so the row covers 425 of 534 decisions and carries no rank. Mappings, endpoint conditions and cost bases were committed before the runs (docs/v1.2-additions-run3.md). No earlier row changed."
+   "note": "Added three systems: jqv (a stock Qwen3-32B read as a decision model, submitted with a public endpoint) and the GLiNER2.5 small and multi checkpoints. The GLiNER2.5 rows ran the full frozen 534-decision set on our CPU with the same mapping as the GLiNER2 row. jqv is a partial row: its endpoint is the submitter's own machine, and this revision stopped sending held-out items to an endpoint a submitter operates. The easy and standard/judge tiers had already been sent in full when that was decided; the 109 held-out hard items never were, so the row covers 425 of 534 decisions and carries no rank. Mappings, endpoint conditions and cost bases were committed before any row was aggregated and before the published GLiNER2.5 runs started (docs/v1.2-additions-run3.md); jqv's run had begun about ten minutes earlier, but it needs no mapping and is priced at its base model's public tariff. No earlier row changed."
   },
   {
    "revision": "v1.2.6",
@@ -45,7 +45,7 @@
  ],
  "protocol": "jevbench::v1.2",
  "status": "final",
- "generated_utc": "2026-09-20T23:27:39+00:00",
+ "generated_utc": "2026-09-20T23:42:58+00:00",
  "measured_in": "v1.2-wip (tag v1.2-wip); no measurement changed for v1.2 final; later additions measured on the same frozen items: v1.2.1: djev (Maisa, diffusion-gemma); v1.2.2: classifier.dev (fast tier), GLiNER2 (Fastino, gliner2.5-base), jeff (Logan Markewich, GLiFormer 400M), Laya (Convai Innovations, ModernBERT-large 421M), openJev Verdict (heman10x, ModernBERT-base 151M); v1.2.5: kev 0.5B, kev 0.6B (research preview), kev 4B (research preview), kev 8B (research preview); v1.2.6: openJev Verdict 1.4, SimpleJev Qwen3.6-35B-A3B, SimpleJev Qwen3.8-27B; v1.2.7: GLiNER2.5 multi (Fastino, 287M), GLiNER2.5 small (Fastino, 74M), jqv (Qwen3-32B zero-shot)",
  "revision_note": "v1.2 final: 4 axes (Intelligence, Calibration, Speed, Cost), 25 % each, geometric mean; hard tier 30 % of Intelligence; latency of non-production endpoints adjusted (assumption); one open-alternative-jev row (author's option order); Needle 3 options-as-tools priced. v1.2.1: added djev (Maisa, diffusion-gemma). v1.2.2: added classifier.dev (fast tier), GLiNER2 (Fastino, gliner2.5-base), jeff (Logan Markewich, GLiFormer 400M), Laya (Convai Innovations, ModernBERT-large 421M), openJev Verdict (heman10x, ModernBERT-base 151M). v1.2.5: added kev 0.5B, kev 0.6B (research preview), kev 4B (research preview), kev 8B (research preview). v1.2.6: added openJev Verdict 1.4, SimpleJev Qwen3.6-35B-A3B, SimpleJev Qwen3.8-27B. v1.2.7: added GLiNER2.5 multi (Fastino, 287M), GLiNER2.5 small (Fastino, 74M), jqv (Qwen3-32B zero-shot).",
  "score_name": "JevBench Score",
