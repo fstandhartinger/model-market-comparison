@@ -51,11 +51,11 @@ function RunnerDisagreements({ report }: { report: BenchmaxxingReportData }) {
   return <div className="mt-4 space-y-2 text-sm" data-bmx-runner-disagreement>
     <p className="font-medium">Runner disagreement</p>
     <ul className="space-y-1">{large.map((d) => <li key={d.id} className="leading-5">
-      <span className="tabular font-semibold">{Math.abs(Math.round(d.gap))} points</span> on {d.benchmark}: {d.a.runner} ranks it{' '}
-      <span className="bh-muted">p{Math.round(d.a.percentile)}</span> ({native(d.a)}), {d.b.runner}{' '}
+      <span className="tabular font-semibold">{Math.abs(Math.round(d.gap))} points</span> on {d.benchmark}: <span title={`${d.a.runner}: ${d.a.harness}`} data-bmx-runner-a>{d.a.runner}</span> ranks it{' '}
+      <span className="bh-muted">p{Math.round(d.a.percentile)}</span> ({native(d.a)}), <span title={`${d.b.runner}: ${d.b.harness}`} data-bmx-runner-b>{d.b.runner}</span>{' '}
       <span className="bh-muted">p{Math.round(d.b.percentile)}</span> ({native(d.b)}) — <span className="bh-muted">among the {d.sharedCohort} models both ran</span>
     </li>)}</ul>
-    <p className="bh-muted text-xs" data-bmx-runner-disagreement-note>Same task set at the same version, each evaluator with its own harness — {large[0].a.runner}: {large[0].a.harness}. {large[0].b.runner}: {large[0].b.harness}. Boards whose versions differ are never paired. This says the runners disagree about this model — not which of them is right, and it is not part of the score above.</p>
+    <p className="bh-muted text-xs" data-bmx-runner-disagreement-note>Same tasks, same version, different harness (hover a runner for its setup); versions that differ are never paired. The runners disagree about this model — this is not part of the score above.</p>
   </div>;
 }
 

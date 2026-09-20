@@ -58,7 +58,7 @@ export function CostUnitNote({ view, className = "", full = false }: { view: Jev
   const notUnit = view.costUnit.not_unit.replace(/^\$\s*/, "");
   return <span className={`bh-muted block text-[12px] ${className}`} data-bh-jev12-cost-unit>
     {full
-      ? <>💲 <b className="text-gray-200">{view.costUnit.unit}</b>, not {view.costUnit.not_unit}: one decision is a whole question — its state, its rubric and its options. {view.costUnit.worked_example}</>
+      ? <>💲 <b className="text-gray-200">{view.costUnit.unit}</b>, not {view.costUnit.not_unit}. {view.costUnit.worked_example}</>
       : <>💲 <b className="text-gray-200">{view.costUnit.unit}</b>, not {notUnit} — one decision ≈ {Math.round(view.costUnit.mean_input_tokens_per_decision_jev)} input tokens.</>}
   </span>;
 }
@@ -256,7 +256,7 @@ function Table({ view, rows, honorableRows, partialRows, w, scope }: { view: Jev
         </tr></thead>
         <tbody>
           {ranked.map((r) => <R key={r.key} r={r} />)}
-          {honorable.length > 0 && <tr data-bh-jev12-honorable-head><td colSpan={15} className="bh-muted text-[12px]"><span className="sticky left-3 inline-block max-w-[330px] whitespace-normal"><a href="#jev12-honorable" className="text-accent underline">{view.honorableMentions?.heading ?? "Honorable mentions"}</a> — shown, not ranked: {view.honorableMentions?.rule}</span></td></tr>}
+          {honorable.length > 0 && <tr data-bh-jev12-honorable-head><td colSpan={15} className="bh-muted text-[12px]"><span className="sticky left-3 inline-block max-w-[330px] whitespace-normal"><a href="#jev12-honorable" className="text-accent underline">{view.honorableMentions?.heading ?? "Honorable mentions"}</a> — shown, not ranked: {firstSentence(view.honorableMentions?.rule ?? '')}</span></td></tr>}
           {honorable.map((r) => <R key={r.key} r={r} />)}
           {partial.length > 0 && <tr><td colSpan={15} className="bh-muted text-[12px]"><span className="sticky left-3 inline-block max-w-[330px] whitespace-normal">Partial runs — shown, not ranked: a tier attempted for fewer than 95 % of its decisions.</span></td></tr>}
           {partial.map((r) => <R key={r.key} r={r} />)}

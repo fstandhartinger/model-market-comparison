@@ -58,7 +58,7 @@ export default async function JevModelsPage() {
   const credits = all.filter((r) => !r.key.endsWith('-tools')).sort((a, b) => a.display.localeCompare(b.display));
   return <>
     <header className="bh-page-head">
-      <p className="bh-eyebrow flex flex-nowrap items-center"><span>JevBench v1.2 · our own benchmark</span><CustomEvaluationOffer /></p>
+      <p className="bh-eyebrow flex flex-nowrap items-center"><span><span className="sm:hidden">JevBench v1.2</span><span className="hidden sm:inline">JevBench v1.2 · our own benchmark</span></span><CustomEvaluationOffer /></p>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">Jev-class models</h1>
       <p className="mt-3 max-w-3xl text-lg" data-bh-jev-own>JevBench is <b>Benchmark Heaven&apos;s own benchmark</b> for Jev-class decision models: state and a bounded rubric in, a typed answer out.</p>
       <p className="bh-muted mt-2 max-w-3xl">Version 1.2 measures {all.length} systems on {view.decisions} decisions, including {view.tierCounts.hard} hard ones, and ranks them by the <b className="text-gray-200">JevBench Score</b>. Built and run by us, not collected from someone else&apos;s leaderboard; the results describe the tested configurations, not every application.</p>

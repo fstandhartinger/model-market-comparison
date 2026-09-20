@@ -60,8 +60,9 @@ for (const [label, width, height, scheme] of [['desktop-light', 1440, 1000, 'lig
   check(`${label}: it leads with the size of the disagreement`, /\d+ points on Terminal-Bench 2\.1/.test(text), text.slice(0, 90));
   check(`${label}: it names both runners with their ranks`, /Artificial Analysis ranks it p\d+/.test(text) && /Vals AI p\d+/.test(text), text.slice(0, 160));
   check(`${label}: it says the ranks are inside the shared cohort`, /among the \d+ models both ran/.test(text), /among the \d+ models both ran/.exec(text)?.[0]);
-  check(`${label}: it names each evaluator's harness`, /Terminus 2/.test(text) && /standard error/.test(text), '');
-  check(`${label}: it states versions that differ are never paired`, /versions differ are never paired/.test(text), '');
+  const harnessTitles = await block.locator('[data-bmx-runner-a], [data-bmx-runner-b]').evaluateAll((e) => e.map((x) => x.getAttribute('title') || '')).catch(() => []);
+  check(`${label}: each runner's name carries its harness (title)`, harnessTitles.some((t) => /Terminus 2/.test(t)) && harnessTitles.some((t) => /standard error/.test(t)), harnessTitles);
+  check(`${label}: it states versions that differ are never paired`, /differ are never paired/.test(text), '');
   check(`${label}: it states it is not part of the score`, /not part of the score/.test(text), '');
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   check(`${label}: no horizontal page overflow`, overflow <= 1, overflow);
