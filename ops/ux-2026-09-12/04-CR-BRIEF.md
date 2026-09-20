@@ -823,3 +823,10 @@ Link (exact, do not change): https://donate.stripe.com/fZu00i9ro0wmdF88sg1Jm01. 
 - **CR-103.2 Phone layout.** At 320 px portrait the pill remains beside the JevBench eyebrow with horizontal padding; reduce pill type and padding before allowing the eyebrow to wrap.
 - **CR-103.3 Motion.** The toast flight still lands on the resized pill; preserve the fixed-bottom toast, opaque slow exit, wiggle and reduced-motion path.
 - **CR-103.4 Verify.** Full tests, production build, both live hosts, and 320 px phone-portrait screenshots in light and dark.
+
+## CR-20260920h checklist — responsive custom-eval pill wording (CR-104)
+
+- **CR-104.1 Copy.** Use “Need custom eval on your data?” for desktop and wider phones and “Need a custom eval?” on narrow screens; keep the footer, toast, offer page and accessible labels consistent.
+- **CR-104.2 Responsive accessibility.** Switch labels with CSS/container width, not user-agent sniffing, and expose exactly one accessible name.
+- **CR-104.3 Phone layout and motion.** At 320 px portrait the pill remains beside the JevBench eyebrow with horizontal padding, and the toast flight still lands on it without changing the fixed-bottom, opaque exit, wiggle or reduced-motion paths.
+- **CR-104.4 Verify.** Full tests, typecheck and production build; both live hosts with 320 px phone-portrait screenshots in light and dark.

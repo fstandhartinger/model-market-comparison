@@ -3,9 +3,9 @@ import { previewMetadata } from "../../../lib/seo";
 
 export const metadata: Metadata = previewMetadata({
   path: "/jev-models/custom-evaluation",
-  documentTitle: "You need a custom Jev-class eval?",
-  title: "You need a custom Jev-class eval? | Benchmark Heaven",
-  description: "You need a custom eval? Run the open-source JevBench harness on your own data, contribute to the community benchmark, or ask us to help.",
+  documentTitle: "Need custom eval on your data?",
+  title: "Need custom eval on your data? | Benchmark Heaven",
+  description: "Need custom eval on your data? Run the open-source JevBench harness yourself, contribute to the community benchmark, or ask us to help.",
 });
 
 const contact = "mailto:florian.standhartinger@gmail.com?subject=Custom%20Jev-class%20model%20evaluation";
@@ -19,7 +19,7 @@ export default function CustomEvaluationPage() {
     </header>
 
     <section className="mt-8" aria-labelledby="custom-what">
-      <h2 id="custom-what" className="text-xl font-semibold">You need a custom eval?</h2>
+      <h2 id="custom-what" className="text-xl font-semibold">Need custom eval on your data?</h2>
       <p className="bh-muted mt-2">We can run relevant entrants on your labelled dataset, report accuracy, calibration, latency and cost, and help you reason about integration, routing and self-hosting. The scope depends on your data and requirements, so it starts with a conversation rather than a package or a price list.</p>
     </section>
 
@@ -55,7 +55,7 @@ python -m jevbench.cli summarize --tasks path/to/your-data.jsonl \\
 
     <section className="mt-7" aria-labelledby="custom-contact">
       <h2 id="custom-contact" className="text-xl font-semibold">Start with an email</h2>
-      <p className="bh-muted mt-2">If you need a custom eval and would rather work through it with us, tell us about the task, dataset and decision you need to make. Evaluation and consulting arrangements are discussed by email; we do not present custom work as part of the free open-source project.</p>
+      <p className="bh-muted mt-2">Need custom eval on your data? If you would rather work through it with us, tell us about the task, dataset and decision you need to make. Evaluation and consulting arrangements are discussed by email; we do not present custom work as part of the free open-source project.</p>
       <p className="mt-3"><a className="text-accent underline" href={contact}>Email florian.standhartinger@gmail.com to discuss an evaluation</a>.</p>
     </section>
 

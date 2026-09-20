@@ -1382,3 +1382,8 @@ Florian, phone screenshot, 20 Sep 2026, verbatim:
 
 Florian, 20 Sep 2026, verbatim:
 > Can we rename the text in the bubble from CUSTOM EVALUATION to YOU NEED A CUSTOM EVAL?
+
+## CR-20260920h (JevBench page) → CR-104 — responsive custom-eval pill wording
+
+Florian, 20 Sep 2026, verbatim:
+> Lets rename "YOU NEED A CUSTOM EVAL" to "NEED CUSTOM EVAL ON YOUR DATA?" or "NEED A CUSTOM EVAL?"

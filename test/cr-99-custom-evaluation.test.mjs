@@ -15,7 +15,7 @@ test('CR-99 offer timing, persistence and accessibility stay explicit', () => {
   assert.match(offer, /try \{/);
   assert.match(offer, /aria-live="polite"/);
   assert.match(offer, /event\.key === "Escape"/);
-  assert.match(offer, /aria-label="Dismiss You need a custom eval offer"/);
+  assert.match(offer, /aria-label="Dismiss custom eval offer"/);
   assert.match(css, /prefers-reduced-motion: reduce/);
   assert.match(css, /--offer-x/);
 });
@@ -31,14 +31,16 @@ test('CR-102 keeps the phone badge beside the eyebrow and makes the toast land l
   assert.doesNotMatch(offer, /addEventListener\("scroll"/);
 });
 
-test('CR-103 uses the new offer label consistently and keeps narrow-phone padding', () => {
-  assert.match(offer, /aria-label="You need a custom eval"/);
-  assert.match(offer, />\s*You need a custom eval\s*</);
-  assert.match(offer, /You need a custom eval\?/);
-  assert.match(layout, /href="\/jev-models\/custom-evaluation">You need a custom eval/);
-  assert.match(page, /You need a custom eval\?/);
-  assert.match(css, /@media \(max-width: 359px\)[\s\S]*padding-inline: 6px/);
-  assert.doesNotMatch(offer, /Custom evaluation/);
+test('CR-104 uses both responsive offer labels with one accessible name', () => {
+  assert.match(offer, /aria-label="Need custom eval on your data\?"/);
+  assert.match(offer, /bh-offer-badge-full" aria-hidden="true">Need custom eval on your data\?/);
+  assert.match(offer, /bh-offer-badge-short" aria-hidden="true">Need a custom eval\?/);
+  assert.match(layout, /href="\/jev-models\/custom-evaluation">Need custom eval on your data\?/);
+  assert.match(page, /Need custom eval on your data\?/);
+  assert.match(css, /bh-offer-badge-short \{ display: none; \}/);
+  assert.match(css, /@media \(max-width: 359px\)[\s\S]*bh-offer-badge-full \{ display: none; \}[\s\S]*bh-offer-badge-short \{ display: inline; \}/);
+  assert.match(css, /@media \(max-width: 639px\)[\s\S]*padding-inline: 6px/);
+  assert.doesNotMatch(offer, /You need a custom eval/);
 });
 
 test('CR-102 page states the deliverable, self-run route, data treatment and contact without prices', () => {
@@ -47,5 +49,5 @@ test('CR-102 page states the deliverable, self-run route, data treatment and con
   assert.doesNotMatch(page, /working days|turnaround/i);
   assert.match(page, /subject=Custom%20Jev-class%20model%20evaluation/);
   assert.match(page, /href="\/impressum"/);
-  assert.match(layout, /href="\/jev-models\/custom-evaluation">You need a custom eval/);
+  assert.match(layout, /href="\/jev-models\/custom-evaluation">Need custom eval on your data\?/);
 });

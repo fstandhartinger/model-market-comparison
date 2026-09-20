@@ -484,8 +484,14 @@ details[open] > .bh-collapsible-grid { display: grid; }
   font-size: 10px; font-weight: 600; line-height: 14px; letter-spacing: .02em; text-transform: uppercase;
 }
 .bh-custom-evaluation-badge::after { content: ""; position: absolute; left: -4px; right: -4px; top: 50%; height: 44px; transform: translateY(-50%); }
+.bh-offer-badge-short { display: none; }
+@media (max-width: 639px) {
+  .bh-custom-evaluation-badge { padding-inline: 6px; font-size: 8px; line-height: 13px; letter-spacing: 0; }
+}
 @media (max-width: 359px) {
-  .bh-custom-evaluation-badge { margin-left: 4px; padding-inline: 6px; font-size: 8px; line-height: 13px; letter-spacing: 0; }
+  .bh-custom-evaluation-badge { margin-left: 4px; }
+  .bh-offer-badge-full { display: none; }
+  .bh-offer-badge-short { display: inline; }
 }
 /* The toast is viewport-fixed on every size. The safe-area term keeps phone home indicators clear;
    sheets and dialogs intentionally sit above it at z-index 70. Reduced motion gets only a fade. */
