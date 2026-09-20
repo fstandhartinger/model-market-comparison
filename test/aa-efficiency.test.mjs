@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { mkdtemp, readFile, writeFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { parseAaEfficiency, AA_EFFICIENCY_MIN_ROWS, AA_MIN_SCORED_DENOMINATOR } from "../lib/aa-efficiency.mjs";
+import { parseAaEfficiency, AA_EFFICIENCY_MIN_ROWS, AA_MIN_SCORED_DENOMINATOR, AA_EFFICIENCY_MODEL_SLUGS } from "../lib/aa-efficiency.mjs";
 import { refreshAaEfficiency } from "../scripts/fetch-aa-efficiency.mjs";
 
 // Synthetic fixtures, deliberately not benchmark observations.
@@ -152,6 +152,25 @@ test("live refresh refuses a shrink when the confirming page disagrees", async (
       return { ok: true, status: 200, text: async () => seen.length === 1 ? fixture : alternate };
     } }), /shrink disagrees/);
     assert.equal(seen.length, 2);
+    assert.equal(JSON.parse(await readFile(target, "utf8")).count, AA_EFFICIENCY_MIN_ROWS + 5);
+  } finally { await rm(dir, { recursive: true, force: true }); }
+});
+
+test("live refresh fails closed, and stops probing, when no page can confirm the shrink", async () => {
+  const dir = await mkdtemp(join(tmpdir(), "aa-efficiency-shrink-unconfirmed-test-"));
+  const target = join(dir, "snapshot.json");
+  await writeFile(target, JSON.stringify({ count: AA_EFFICIENCY_MIN_ROWS + 5, keep: true }));
+  try {
+    const seen = [];
+    const fixture = validHtml();
+    // Review gate 20260920T055002Z: the confirming pages are unreachable. An unconfirmed shrink is a decision about
+    // the source, so it must surface as such and must not send the collector back over the same pages.
+    await assert.rejects(refreshAaEfficiency({ target, checkRobots: false, fetcher: async (url) => {
+      seen.push(url);
+      if (seen.length === 1) return { ok: true, status: 200, text: async () => fixture };
+      return { ok: false, status: 502, text: async () => null };
+    } }), /shrink not independently confirmed/);
+    assert.equal(seen.length, AA_EFFICIENCY_MODEL_SLUGS.length, "each model page is read at most once");
     assert.equal(JSON.parse(await readFile(target, "utf8")).count, AA_EFFICIENCY_MIN_ROWS + 5);
   } finally { await rm(dir, { recursive: true, force: true }); }
 });

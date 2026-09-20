@@ -31,7 +31,6 @@ export async function refreshAaEfficiency({ html = undefined, fetchedAt = undefi
       const policy = await robots.text();
       if (!/^User-Agent:/im.test(policy) || /^Disallow:\s*\S+/im.test(policy)) throw new Error("AA robots policy changed; review before model-page collection");
     }
-    let firstSuccessful = null;
     for (const [index, slug] of slugs.entries()) {
       const url = aaModelPageURL(slug);
       if (attempts.length) await sleep(POLITE_DELAY_MS);
@@ -70,7 +69,6 @@ export async function refreshAaEfficiency({ html = undefined, fetchedAt = undefi
           continue;
         }
 
-        if (!firstSuccessful) firstSuccessful = { candidate, body, url, index };
         const priorCount = previous?.count || 0;
         if (candidate.count >= priorCount) {
           response = body;
@@ -119,11 +117,17 @@ export async function refreshAaEfficiency({ html = undefined, fetchedAt = undefi
         if (confirmations.length < 2) {
           throw new Error(`AA efficiency shrink not independently confirmed: ${candidate.count} rows (previous ${priorCount})`);
         }
-        response = firstSuccessful.body;
-        usedUrl = firstSuccessful.url;
+        // Review gate 20260920T055002Z: write the page whose rows were confirmed. This wrote the first page that
+        // ever parsed, which is a different page as soon as an earlier slug was rejected — its rows were never
+        // compared with anything.
+        response = body;
+        usedUrl = url;
         break;
       } catch (error) {
-        if (error.message.startsWith("AA efficiency shrink disagrees")) throw error;
+        // Review gate 20260920T055002Z: an unconfirmed shrink is a decision about the source, not a failed probe.
+        // Falling through re-fetched the pages the confirmation loop had just read and ended in "every model-page
+        // probe failed", which names the wrong cause for a run that has to be diagnosed from its receipt.
+        if (error.message.startsWith("AA efficiency shrink")) throw error;
         attempts.push({ url, fetched_at: fetched, error: error.message });
       }
     }
