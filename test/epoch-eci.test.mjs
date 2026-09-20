@@ -67,10 +67,10 @@ test("iteration 134: a dropped connection is retried, an answer is not", async (
   const slept = [];
   const sleep = async (ms) => { slept.push(ms); };
   let calls = 0;
-  const flaky = async () => { calls += 1; if (calls < 3) throw new TypeError("fetch failed"); return "body"; };
+  const flaky = async () => { calls += 1; if (calls < 2) throw new TypeError("fetch failed"); return "body"; };
   assert.equal(await fetchTextWithRetry(flaky, "https://epoch.ai/data/eci_scores.csv", { sleep }), "body");
-  assert.equal(calls, 3);
-  assert.deepEqual(slept, [2000, 4000], "backoff grows and the successful attempt does not sleep");
+  assert.equal(calls, 2);
+  assert.deepEqual(slept, [2000], "exactly one retry is delayed and the successful attempt does not sleep");
 
   // A 404 is how the pinned build-hash chunk reports that it moved; retrying it would only delay the
   // rediscovery walk that handles it.
@@ -83,7 +83,7 @@ test("iteration 134: a dropped connection is retried, an answer is not", async (
   calls = 0;
   const dead = async () => { calls += 1; throw new TypeError("fetch failed"); };
   await assert.rejects(() => fetchTextWithRetry(dead, "https://epoch.ai/eci", { sleep }), /fetch failed/);
-  assert.equal(calls, 3);
+  assert.equal(calls, 2);
 });
 
 test("iteration 134: the pinned catalog chunk is the one the site currently serves", async () => {

@@ -63,6 +63,7 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
   await mkdir(join(runDir, 'sources'), { recursive: true });
   await mkdir(home, { recursive: true });
   const report = { started_at: started, run_dir: runDir, dry_run: dryRun, scope, steps: [], published: false, exit_code: 1 };
+  report.retained_sources = [];
   let before, after, top5 = null;
   // CR-73.2: the reuse log lives beside the runs so a run can recognise a unit whose inputs have
   // not moved. A dry run reads and writes its own log — it may be running over an overlay of
@@ -145,7 +146,18 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     report.openrouter_withdrawals = (await readJSON(join(work, 'data/raw/openrouter.json'))).withdrawal_run ?? null;
     if (full) {
       await command('fetch-coding-v1.5', process.execPath, ['scripts/fetch-aa-coding-agents.mjs']);
-      await command('fetch-epoch-eci', process.execPath, ['scripts/fetch-epoch-eci.mjs']);
+      // Epoch is an independently dated attachment. Its collector writes atomically, so any network,
+      // HTTP, layout or validation failure leaves the last verified snapshot byte-for-byte intact.
+      // Keep publishing the other sources, but name the retained source in this run's report.
+      try {
+        await command('fetch-epoch-eci', process.execPath, ['scripts/fetch-epoch-eci.mjs']);
+      } catch (error) {
+        const reason = error.message.slice(0, 300);
+        report.retained_sources.push({ source: 'epoch_eci', step: 'fetch-epoch-eci', reason });
+        report.warnings = report.warnings || [];
+        report.warnings.push(`fetch-epoch-eci skipped: ${reason}`);
+        console.warn('WARN fetch-epoch-eci: keeping the previous snapshot');
+      }
       // CR-35.5: rebuild the Epoch hub-provenance sidecar from the newest captured metadata CSV
       // (non-fatal — provenance only, never blocks publication).
       try {
@@ -339,7 +351,8 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
       ...report.retained_contracts.map((r) => `${r.dataset}: today's capture withheld after a review dispute; previous snapshot kept with its date`),
       ...report.deterministic_fallback_contracts.map((r) => `${r.dataset}: reviewer models gave no usable answer; accepted on the full-row source verification`),
     ];
-    const stale = sourceFreshnessErrors({ scope: report.scope, day, before, after, retained: report.retained_contracts.map((r) => r.source) }); // `scope` is the commit scope below
+    const retainedSources = [...report.retained_contracts.map((r) => r.source), ...report.retained_sources.map((r) => r.source)];
+    const stale = sourceFreshnessErrors({ scope: report.scope, day, before, after, retained: retainedSources }); // `scope` is the commit scope below
     if (stale.length) throw new Error(stale.join('; '));
     top5 = JSON.parse(await command('top5', process.execPath, ['scripts/top5.mjs', '5']));
     await writeJSONAtomic(join(reports, 'dataset-after.json'), after);
@@ -448,6 +461,7 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
       ];
     })(),
     ...(report.retained_contracts?.length ? [`Zurueckgehalten (Quelle strittig, alter Stand bleibt): ${report.retained_contracts.map((r) => `${r.dataset} (${r.restored.map((f) => `${f.file} vom ${String(f.retained_collected_at).slice(0, 10)}`).join(', ')}; ${String(r.reasons?.[0] ?? '').slice(0, 200)})`).join('; ')}`] : []),
+    ...(report.retained_sources?.length ? [`Veraltete externe Quelle (alter gepruefter Stand bleibt): ${report.retained_sources.map((r) => `${r.source}: ${r.reason.split('\n').filter(Boolean).at(-1).slice(0, 300)}`).join('; ')}`] : []),
     ...(report.deterministic_fallback_contracts?.length ? [`Ohne Modellpruefung (Pruefer-Antwort unbrauchbar, deterministische Vollpruefung gilt): ${report.deterministic_fallback_contracts.map((r) => r.dataset).join(', ')}`] : []),
     ...(report.unverified_providers?.length ? [`Neue Anbieter ohne gepruefte Metadaten (nicht in EU-/Nicht-US-Filtern): ${report.unverified_providers.join(', ')}`] : []),
     // Iteration 134: the reason belongs in the receipt. fetch-mistral-catalog sat here for four days

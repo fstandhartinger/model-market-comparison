@@ -12,7 +12,16 @@ const output = join(root, "data/raw/epoch-eci.json");
 const retrievedAt = new Date().toISOString();
 
 async function fetchOnce(url) {
-  const response = await fetch(url, { headers: { "user-agent": "BenchmarkHeaven/1.0 (public research data refresh)" } });
+  let response;
+  try {
+    response = await fetch(url, {
+      headers: { "user-agent": "BenchmarkHeaven/1.0 (public research data refresh)" },
+      signal: AbortSignal.timeout(30_000),
+    });
+  } catch (error) {
+    const detail = [error.cause?.code, error.cause?.message].filter(Boolean).join(": ");
+    throw Object.assign(new Error(`${url}: ${error.message}${detail ? ` (${detail})` : ""}`), { cause: error });
+  }
   if (!response.ok) throw Object.assign(new Error(`${url}: HTTP ${response.status}`), { status: response.status });
   return response.text();
 }

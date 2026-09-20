@@ -65,6 +65,8 @@ test('CR-67.1/67.2: the dispute still rejects the contract, and the run withhold
     assert.deepEqual(sourceFreshnessErrors({ day, before, after, retained: ['aa_coding_agents_v1_5'] }), []);
     assert.match(sourceFreshnessErrors({ day, before, after }).join(), /aa_coding_agents_v1_5 is not today/);
     assert.match(sourceFreshnessErrors({ day, before, after: { sources: { ...after.sources, aa_coding_agents_v1_5: day } }, retained: ['aa_coding_agents_v1_5'] }).join(), /withheld but its date changed/);
+    const epochRetained = { sources: { ...Object.fromEntries(DAILY_FRESH_SOURCES.map((k) => [k, day])), epoch_eci: '2026-09-16' } };
+    assert.deepEqual(sourceFreshnessErrors({ day, before, after: epochRetained, retained: ['epoch_eci'] }), []);
     // No prior copy → nothing to fall back to → the run fails.
     await assert.rejects(retainPriorSnapshot({ runDir: join(dir, 'empty'), rawDir, dataset: 'aa_coding_v15' }));
   } finally { await rm(dir, { recursive: true, force: true }); }
