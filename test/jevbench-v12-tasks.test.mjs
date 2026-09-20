@@ -5,7 +5,7 @@ import { readFile } from 'node:fs/promises';
 import { readJevbenchV12, jevbenchV12View } from '../lib/jevbench-v12.mjs';
 import { JEVBENCH_V12_TASKS_ARTIFACT, JEVBENCH_V12_TASKS_SHA256, readJevbenchV12Tasks, validateJevbenchV12Tasks, jevbenchV12TasksView } from '../lib/jevbench-v12-tasks.mjs';
 import { DEFAULT_WEIGHTS } from '../lib/jevbench-v12-weights.mjs';
-import { tasksForScope, parseTaskScope, scopeRows } from '../lib/jevbench-v12-scope.mjs';
+import { tasksForScope, parseTaskScope, scopeDecisions, scopeRows } from '../lib/jevbench-v12-scope.mjs';
 import { createHash } from 'node:crypto';
 
 const clone = async () => JSON.parse(await readFile(JEVBENCH_V12_TASKS_ARTIFACT, 'utf8'));
@@ -59,4 +59,17 @@ test('difficulty scope URL parsing is bounded', () => {
   assert.equal(parseTaskScope('?scope=easy-medium'), 'easy-medium');
   assert.equal(parseTaskScope('?scope=unknown'), 'all');
   assert.equal(parseTaskScope(''), 'all');
+});
+
+test('the decisions count a scope reports is the artifact tier aggregate, not the public-task slice', async () => {
+  const v12 = await readJevbenchV12();
+  const view = jevbenchV12View(v12);
+  const taskView = jevbenchV12TasksView(await readJevbenchV12Tasks(v12));
+  // Review gate 20260920T043003Z: the hero read "231 decisions per system" on the official view because
+  // it counted public tasks. The score is computed from every decision in the scope's tiers.
+  assert.equal(scopeDecisions(view.tierCounts, 'all'), 534);
+  assert.equal(scopeDecisions(view.tierCounts, 'easy-medium'), view.tierCounts.easy + view.tierCounts.standard);
+  assert.equal(scopeDecisions(view.tierCounts, 'easy'), view.tierCounts.easy);
+  assert.ok(scopeDecisions(view.tierCounts, 'all') > tasksForScope(taskView.tasks, 'all').length);
+  assert.ok(scopeDecisions(view.tierCounts, 'easy-medium') > tasksForScope(taskView.tasks, 'easy-medium').length);
 });

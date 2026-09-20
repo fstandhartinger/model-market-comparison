@@ -25,6 +25,12 @@ try {
       const grid = page.locator('[data-bh-jev12-task-grid]');
       check(`${tag}: difficulty controls render`, await difficulty.count() === 1 && await difficulty.locator('[data-bh-jev12-scope-option]').count() === 3);
       check(`${tag}: default scope is All tasks without warning`, await difficulty.getAttribute('data-bh-jev12-scope') === 'all' && await difficulty.locator('[data-bh-jev12-scope-warning]').count() === 0);
+      // Review gate 20260920T043003Z: the hero's decision count must be the artifact's tier aggregate for the
+      // scope (534 / 168 / 72), never the public-task slice the grid ships (231 / 120 / 48). The default view
+      // had no assertion at all and read "231 decisions per system" while its own table showed 146 + 220 alone.
+      const defaultEyebrow = await page.locator('[data-bh-jev12-main-chart] .bh-eyebrow').first().innerText();
+      check(`${tag}: default hero counts all 534 decisions per system`, /534 decisions per system/i.test(defaultEyebrow) && !/231 decisions/i.test(defaultEyebrow), defaultEyebrow);
+      check(`${tag}: default grid still ships the 231 public outcomes only`, /231 public task outcomes/.test(await grid.locator('summary').innerText()));
       await difficulty.locator('[data-bh-jev12-scope-option="easy-medium"]').click();
       check(`${tag}: Easy + Medium changes scope and warns`, await difficulty.getAttribute('data-bh-jev12-scope') === 'easy-medium' && await difficulty.locator('[data-bh-jev12-scope-warning]').count() === 1);
       check(`${tag}: Easy + Medium grid summary is public-only`, /120 public task outcomes/.test(await grid.locator('summary').innerText()));
@@ -36,7 +42,7 @@ try {
         tableMain: document.querySelector('[data-bh-jev12-sort="main"]')?.textContent || '',
         scope: new URL(window.location.href).searchParams.get('scope'),
       }));
-      check(`${tag}: Easy + Medium chart and table are explicitly custom`, easyMediumState.chart === 'custom' && /Easy \+ Medium tasks/.test(easyMediumState.badge) && /120 decisions per system/.test(easyMediumState.eyebrow) && /Easy \+ Medium/.test(easyMediumState.subtitle) && /recomputed for the easy \+ medium decisions/i.test(easyMediumState.subtitle) && /Easy \+ Medium · not the official score/.test(easyMediumState.tableMain) && easyMediumState.scope === 'easy-medium', easyMediumState);
+      check(`${tag}: Easy + Medium chart and table are explicitly custom`, easyMediumState.chart === 'custom' && /Easy \+ Medium tasks/.test(easyMediumState.badge) && /168 decisions per system/.test(easyMediumState.eyebrow) && /Easy \+ Medium/.test(easyMediumState.subtitle) && /recomputed for the easy \+ medium decisions/i.test(easyMediumState.subtitle) && /Easy \+ Medium · not the official score/.test(easyMediumState.tableMain) && easyMediumState.scope === 'easy-medium', easyMediumState);
       await difficulty.locator('[data-bh-jev12-scope-option="easy"]').click();
       check(`${tag}: Easy changes scope`, await difficulty.getAttribute('data-bh-jev12-scope') === 'easy' && /48 public task outcomes/.test(await grid.locator('summary').innerText()));
       const easyState = await page.evaluate(() => ({
@@ -47,7 +53,7 @@ try {
         tableMain: document.querySelector('[data-bh-jev12-sort="main"]')?.textContent || '',
         scope: new URL(window.location.href).searchParams.get('scope'),
       }));
-      check(`${tag}: Easy chart and table are explicitly custom`, easyState.chart === 'custom' && /Easy only tasks/.test(easyState.badge) && /48 decisions per system/.test(easyState.eyebrow) && /Easy only/.test(easyState.subtitle) && /recomputed for the easy only decisions/i.test(easyState.subtitle) && /Easy only · not the official score/.test(easyState.tableMain) && easyState.scope === 'easy', easyState);
+      check(`${tag}: Easy chart and table are explicitly custom`, easyState.chart === 'custom' && /Easy only tasks/.test(easyState.badge) && /72 decisions per system/.test(easyState.eyebrow) && /Easy only/.test(easyState.subtitle) && /recomputed for the easy only decisions/i.test(easyState.subtitle) && /Easy only · not the official score/.test(easyState.tableMain) && easyState.scope === 'easy', easyState);
       await page.reload({ waitUntil: 'networkidle', timeout: 60000 });
       check(`${tag}: reload restores the scoped URL view`, await page.locator('[data-bh-jev12-difficulty]').getAttribute('data-bh-jev12-scope') === 'easy' && await page.locator('[data-bh-jev12-main-chart]').getAttribute('data-bh-jevc-chart') === 'custom' && new URL(page.url()).searchParams.get('scope') === 'easy');
       await difficulty.locator('[data-bh-jev12-scope-reset]').click();

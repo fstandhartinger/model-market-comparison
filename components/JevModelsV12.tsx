@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState, type ReactNode } from "react";
 import type { JevAxis, JevTier12, JevV12Row, JevV12View } from "../lib/jevbench-v12.mjs";
 import type { JevTaskScope, JevTasksView } from "../lib/jevbench-v12-tasks.mjs";
 import { AXES, AXIS_LABEL, DEFAULT_PRESET, DEFAULT_WEIGHTS, PRESETS, SCORE_NAME, describe, isDefault, normalise, parseParams, percents, rerank, sameWeights, toParam, type JevWeights4 } from "../lib/jevbench-v12-weights.mjs";
-import { DEFAULT_TASK_SCOPE, TASK_SCOPES, parseTaskScope, scopeById, scopeRows, tasksForScope, toTaskScopeParam } from "../lib/jevbench-v12-scope.mjs";
+import { DEFAULT_TASK_SCOPE, TASK_SCOPES, parseTaskScope, scopeById, scopeDecisions, scopeRows, tasksForScope, toTaskScopeParam } from "../lib/jevbench-v12-scope.mjs";
 
 // CR-92 (Florian 2026-09-19): JevBench v1.2 final. The JevBench Score = geometric mean of Intelligence, Calibration, Speed
 // and Cost, 25 % each, is the hero; the earlier weightings stay as presets (recomputed the same way) with the unmissable
@@ -348,7 +348,10 @@ export function JevModelsV12Board({ view, tasks, children }: { view: JevV12View;
     if (!tasks) return view;
     const ranked = scopeRows(view.ranked, tasks.systems, scope, DEFAULT_WEIGHTS);
     const partial = scopeRows(view.partial, tasks.systems, scope, DEFAULT_WEIGHTS);
-    return { ...view, ranked, partial, decisions: tasksForScope(tasks.tasks, scope).length };
+    // Review gate 20260920T043003Z: the hero counts the decisions the shown score is computed from —
+    // the artifact's tier aggregates for this scope (534 / 168 / 72), not the public-task slice the grid
+    // ships (231 / 120 / 48). Counting public tasks here made the official view claim 231.
+    return { ...view, ranked, partial, decisions: scopeDecisions(view.tierCounts, scope) };
   }, [view, tasks, scope]);
   const { ranked, partial } = useMemo(() => rerank(scopedView.ranked, scopedView.partial, w), [scopedView, w]);
   const tw = view.tierWeights;

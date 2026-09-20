@@ -6,6 +6,7 @@ export function scopeById(id: string): { id: 'all' | 'easy-medium' | 'easy'; lab
 export function taskScopeLabel(id: string): string;
 export function parseTaskScope(search: string | URLSearchParams): 'all' | 'easy-medium' | 'easy';
 export function toTaskScopeParam(id: string): string | null;
+export function scopeDecisions(tierCounts: Record<string, number> | undefined, id: string): number;
 export function tasksForScope(tasks: JevTask[], id: string): JevTask[];
 export function scopedIntelligence(row: JevV12Row, taskSystem: JevTasksView['systems'][string] | undefined, scopeId: string): number | null;
 export function scopeRows<R extends JevV12Row>(rows: R[], taskSystems: JevTasksView['systems'], scopeId: string, defaultWeights: Record<string, number>): (R & { publishedMain: number; publishedRank: number | null })[];
