@@ -194,7 +194,9 @@ for (const path of ['data/raw/benchmarks/public-observations.json', 'data/raw/be
       // A self-reported join without its own review receipt stays unjoined (verifyScoreEvidence checks the receipt).
       if (models.some((m) => m.id === reviewed.model_id) && (!selfReported || reviewed.review)) {
         observation.subject.model_id = reviewed.model_id;
-        observation.join_note = `Reviewed identity map ${identityMap.reviewed_at}: ${reviewed.rule}`;
+        const reviewedAt = reviewed.reviewed_at ?? identityMap.reviewed_at;
+        if (!reviewedAt) throw new Error(`Identity map entry has no review date: ${observation.id}`);
+        observation.join_note = `Reviewed identity map ${reviewedAt}: ${reviewed.rule}`;
         if (selfReported) observation.identity_review = reviewed.review;
       }
     }

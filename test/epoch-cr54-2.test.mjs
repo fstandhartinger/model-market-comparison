@@ -142,5 +142,10 @@ test('CR-54.2: every join re-derives from the slug and lands on an existing conf
     assert.equal(o.subject.model_id, 'minimax-m3::default', o.id);
     assert.match(o.join_note, /^Exact display name, unique default catalog configuration/, o.id);
   }
-  for (const o of joined.filter((x) => !bridged.includes(x))) assert.match(o.join_note, /^Reviewed identity map 2026-09-16: /, o.id);
+  const entryByKey = new Map(map.map((e) => [`${e.benchmark_id}\0${e.source_id}`, e]));
+  for (const o of joined.filter((x) => !bridged.includes(x))) {
+    const entry = entryByKey.get(`${o.benchmark_id}\0${o.subject.source_id}`);
+    assert.ok(entry?.reviewed_at, `${o.id} has a per-entry review date`);
+    assert.match(o.join_note, new RegExp(`^Reviewed identity map ${entry.reviewed_at}: `), o.id);
+  }
 });

@@ -77,8 +77,13 @@ const BOARDS = [
 ];
 const observations = JSON.parse(readFileSync('data/raw/benchmarks/public-observations.json')).observations;
 const catalog = JSON.parse(readFileSync('data/dataset.json')).models.map(({ id, family_key, variant }) => ({ id, family_key, variant }));
-const previous = JSON.parse(readFileSync('data/raw/benchmarks/identity-map.json')).entries;
+const previousMap = JSON.parse(readFileSync('data/raw/benchmarks/identity-map.json'));
+const previous = previousMap.entries;
+const previousByKey = new Map(previous.map((e) => [`${e.benchmark_id}\0${e.source_id}\0${e.model_id}`, e]));
 const keep = new Map(previous.filter((e) => e.review).map((e) => [`${e.benchmark_id}\0${e.source_id}\0${e.model_id}`, e.review]));
+// Keep the review date attached to the exact join it describes. New joins are reviewed by
+// this run; they must not inherit the legacy map-wide date from 2026-09-16.
+const reviewDate = new Date().toISOString().slice(0, 10);
 const entries = [], unmatched = [];
 for (const board of BOARDS) {
   const all = observations.filter((o) => o.benchmark_id.startsWith(board.prefix) && (o.source_basis ?? o.basis) === board.basis)
@@ -89,14 +94,19 @@ for (const board of BOARDS) {
   const rows = all.filter((r) => r.benchmark_id === benchmarkId);
   for (const j of (board.join ?? identityJoins)(rows, board.parse, catalog)) {
     const review = keep.get(`${j.row.benchmark_id}\0${j.row.source_id}\0${j.model_id}`);
+    const previousEntry = previousByKey.get(`${j.row.benchmark_id}\0${j.row.source_id}\0${j.model_id}`);
     if (j.model_id) entries.push({ benchmark_id: j.row.benchmark_id, source_id: j.row.source_id, model_id: j.model_id, rule: j.rule,
+      reviewed_at: previousEntry?.reviewed_at ?? (previousEntry ? previousMap.reviewed_at : reviewDate),
       ...(board.basis === 'self_reported' ? { basis: 'self_reported', ...(review ? { review } : {}) } : {}) });
     else unmatched.push({ benchmark_id: j.row.benchmark_id, source_id: j.row.source_id, reason: j.reason });
   }
   }
 }
 writeFileSync('data/raw/benchmarks/identity-map.json', JSON.stringify({
-  schema_version: 1, reviewed_at: '2026-09-16',
+  schema_version: 1,
+  // Kept for older consumers; every current entry carries its own reviewed_at. Do not use
+  // this field for a new join because it is only the legacy baseline for pre-migration rows.
+  reviewed_at: previousMap.reviewed_at ?? reviewDate,
   policy: 'Exact joins for public boards whose labels are not catalog names. A label must state the exact model and a setting that exists as a catalog configuration; without a stated setting only a family whose catalog holds exactly one configuration, the default, joins; a configuration named more than once on one board joins neither row. Boards that label models by slug join only when the slug, after one documented normalisation (lower-case, `_`→`-`, a trailing `-<digit>-<digit>` read as a version), is exactly a catalog family key. Self-reported rows keep the critic approval of their unjoined observation; their join takes effect only with its own independent review receipt (`review`). Rules: lib/coding-identity.mjs (product-name boards) and lib/board-identity.mjs (slug boards).',
   entries,
 }, null, 2) + '\n');

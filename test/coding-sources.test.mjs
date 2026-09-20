@@ -118,7 +118,9 @@ test('identity map: exact existing configurations; measured joins visible; self-
     // published as fractions; the registry unit is percent — same convention as arc-agi/eqbench-judgemark).
     assert.equal(o.basis === 'derived' && o.derivation?.formula === 'Source value × 100 to registry units' ? o.source_basis : o.basis, 'measured');
     assert.equal(o.subject.model_id, entry.model_id);
-    assert.match(o.join_note, new RegExp(`^Reviewed identity map ${map.reviewed_at}: `));
+    const mapEntry = map.entries.find((e) => e.benchmark_id === o.benchmark_id && e.source_id === o.subject.source_id);
+    assert.ok(mapEntry?.reviewed_at, `${o.id} has a per-entry review date`);
+    assert.match(o.join_note, new RegExp(`^Reviewed identity map ${mapEntry.reviewed_at}: `));
   }
   const effortless = map.entries.filter((e) => /without an effort|without a setting/.test(e.rule));
   assert.ok(effortless.every((e) => e.model_id.endsWith('::default')), 'no effort is ever guessed');
