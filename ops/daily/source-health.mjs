@@ -20,10 +20,27 @@ export const STATUS_KIND = {
 const NOT_A_SOURCE = /^(score-batch-\d+|benchmark-history)$/;
 
 // A failed subprocess reason is the command line plus its traceback; the last line names the actual error.
+// 20 Sep 2026 (iteration 134): a captured step failure is a whole stdout+stderr transcript, and its
+// first line is usually progress, not the fault. `fetch-aa` was recorded for days as
+// "→ ArtificialAnalysis models …" while the line that says what broke — "Error: AA efficiency
+// incomplete scrape: 145 rows (minimum 156)" — sat four lines further down. Stack frames are
+// dropped, a thrown Error wins, then the line after `Command failed:`, and only then the first line.
+const STACK_FRAME = /^at\s/;
+const COMMAND_FAILED = /^Command failed:/;
+const THROWN_ERROR = /^[\w$]*(Error|Exception):\s*\S/;
 const reasonLine = (reason) => {
   if (!reason) return null;
-  const lines = String(reason).split('\n').map((l) => l.trim()).filter(Boolean);
-  return (lines[0].startsWith('Command failed:') && lines.length > 1 ? lines.at(-1) : lines[0]).slice(0, 300);
+  const lines = String(reason).split('\n').map((l) => l.trim()).filter(Boolean).filter((l) => !STACK_FRAME.test(l));
+  if (lines.length === 0) return null;
+  // The thrown error wins wherever it sits; then the line a `Command failed:` header introduces
+  // (which is the shape npm and execFile produce); then anything that is not that header.
+  const thrown = lines.find((l) => THROWN_ERROR.test(l));
+  const failed = lines.findIndex((l) => COMMAND_FAILED.test(l));
+  const pick = thrown
+    ?? (failed >= 0 ? lines[failed + 1] : null)
+    ?? lines.filter((l) => !COMMAND_FAILED.test(l)).at(failed >= 0 ? -1 : 0)
+    ?? lines[0];
+  return pick.slice(0, 300);
 };
 
 /** reports: [{ checked_at, checks: [{ id, status, reason? }] }] → per-source health, newest run first. */
@@ -98,12 +115,14 @@ export function staleSources({ collectors = {}, benchmarks = null, day, maxAgeDa
   for (const [name, c] of Object.entries(collectors)) {
     if (!c.failing_since) continue;
     const since = c.last_ok ?? c.failing_since;
-    if (dayDiff(day, since) >= maxAgeDays) out.push({ id: name, kind: 'collector', last_ok: c.last_ok, failing_since: c.failing_since, reason: c.last_error });
+    const age = dayDiff(day, since);
+    if (age >= maxAgeDays) out.push({ id: name, kind: 'collector', last_ok: c.last_ok, failing_since: c.failing_since, reason: c.last_error, stale_days: age });
   }
   for (const s of benchmarks?.sources || []) {
     if (s.kind !== 'failing') continue;
     const since = (s.last_ok ?? s.failing_since ?? '').slice(0, 10);
-    if (since && dayDiff(day, since) >= maxAgeDays) out.push({ id: s.id, kind: 'benchmark', last_ok: s.last_ok?.slice(0, 10) ?? null, failing_since: s.failing_since?.slice(0, 10) ?? null, reason: s.reason });
+    const age = since ? dayDiff(day, since) : null;
+    if (age !== null && age >= maxAgeDays) out.push({ id: s.id, kind: 'benchmark', last_ok: s.last_ok?.slice(0, 10) ?? null, failing_since: s.failing_since?.slice(0, 10) ?? null, reason: s.reason, stale_days: age });
   }
   return out.sort((a, b) => (a.last_ok ?? '').localeCompare(b.last_ok ?? '') || a.id.localeCompare(b.id));
 }

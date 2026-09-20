@@ -43,7 +43,7 @@ test('CR-66.9: a collector failing 3 days in a row is named with its last good d
     state = updateCollectorHealth(state, [{ name: 'fetch-nebius-catalog', ok: false, error: 'Command failed: node x\nError: HTTP 503' }, { name: 'fetch-mistral-catalog', ok: true }], day);
     const stale = staleSources({ collectors: state.collectors, day });
     if (day < '2026-09-16') assert.deepEqual(stale, [], `${day}: not yet 3 days`);
-    else assert.deepEqual(stale, [{ id: 'fetch-nebius-catalog', kind: 'collector', last_ok: '2026-09-13', failing_since: '2026-09-14', reason: 'Error: HTTP 503' }]);
+    else assert.deepEqual(stale, [{ id: 'fetch-nebius-catalog', kind: 'collector', last_ok: '2026-09-13', failing_since: '2026-09-14', reason: 'Error: HTTP 503', stale_days: 3 }]);
   }
   state = updateCollectorHealth(state, [{ name: 'fetch-nebius-catalog', ok: true }], '2026-09-17');
   assert.deepEqual(staleSources({ collectors: state.collectors, day: '2026-09-17' }), [], 'recovery clears it');
@@ -52,7 +52,31 @@ test('CR-66.9: a collector failing 3 days in a row is named with its last good d
     { id: 'lmarena', kind: 'failing', last_ok: '2026-09-16T05:00:00Z', failing_since: '2026-09-17T05:00:00Z', reason: 'timeout' },
     { id: 'swe-bench', kind: 'ok', last_ok: '2026-09-01T05:00:00Z' },
   ] };
-  assert.deepEqual(staleSources({ benchmarks, day: '2026-09-17' }).map((s) => [s.id, s.last_ok]), [['vals-index', '2026-09-12']]);
+  assert.deepEqual(staleSources({ benchmarks, day: '2026-09-17' }).map((s) => [s.id, s.last_ok, s.stale_days]), [['vals-index', '2026-09-12', 5]]);
+});
+
+test('iteration 134: the recorded reason is the line that names the fault, not the first line of the transcript', async () => {
+  const { updateCollectorHealth, staleSources } = await import('../ops/daily/source-health.mjs');
+  const reasonOf = (error) => updateCollectorHealth({ collectors: {} }, [{ name: 'fetch-x', ok: false, error }], '2026-09-20').collectors['fetch-x'].last_error;
+  // The shape that hid the 2026-09-20 AA failure: progress first, the throw four lines down, the
+  // `Command failed:` header last. Reported for days as "→ ArtificialAnalysis models …".
+  assert.equal(reasonOf('→ ArtificialAnalysis models …\n  653 models\n\nError: AA efficiency incomplete scrape: 145 rows (minimum 156)\n    at parseAaEfficiency (file:///x/lib/aa-efficiency.mjs:107:11)\n\nCommand failed: node scripts/fetch-live.mjs aa'),
+    'Error: AA efficiency incomplete scrape: 145 rows (minimum 156)');
+  // The shape that was already right, and must stay right: header first, message after it.
+  assert.equal(reasonOf('Command failed: node scripts/fetch-mistral-catalog.mjs\nMistral pricing refresh failed; previous snapshot preserved: Mistral pricing: no priced chat models'),
+    'Mistral pricing refresh failed; previous snapshot preserved: Mistral pricing: no priced chat models');
+  assert.equal(reasonOf('Command failed: node x\nError: HTTP 503'), 'Error: HTTP 503');
+  assert.equal(reasonOf('HTTP 429 from the upstream'), 'HTTP 429 from the upstream');
+  assert.equal(reasonOf('TypeError: x is not a function\n    at foo (/a.mjs:1:1)'), 'TypeError: x is not a function');
+  // Nothing better than the header to report is still the header, never an empty reason.
+  assert.equal(reasonOf('Command failed: node x'), 'Command failed: node x');
+  assert.equal(reasonOf('    at foo (/a.mjs:1:1)'), null);
+  assert.equal(reasonOf(''), null);
+  // A stale source carries that reason and its age, because the summary line prints both.
+  let state = updateCollectorHealth({ collectors: {} }, [{ name: 'fetch-mistral-catalog', ok: true }], '2026-09-16');
+  state = updateCollectorHealth(state, [{ name: 'fetch-mistral-catalog', ok: false, error: 'Command failed: node y\nMistral pricing: no priced chat models' }], '2026-09-17');
+  assert.deepEqual(staleSources({ collectors: state.collectors, day: '2026-09-20' }),
+    [{ id: 'fetch-mistral-catalog', kind: 'collector', last_ok: '2026-09-16', failing_since: '2026-09-17', reason: 'Mistral pricing: no priced chat models', stale_days: 4 }]);
 });
 
 test('CR-66.9: daily.mjs writes stale sources into the run report and the summary', async () => {
@@ -60,5 +84,7 @@ test('CR-66.9: daily.mjs writes stale sources into the run report and the summar
   const src = await readFile(new URL('../ops/daily/daily.mjs', import.meta.url), 'utf8');
   assert.match(src, /report\.stale_sources = staleSources\(/);
   assert.match(src, /Veraltete Quellen \(>= 3 Tage\)/);
+  // Iteration 134: the line has to carry the reason and the age, not just a name and a date.
+  assert.match(src, /Veraltete Quellen[^\n]*\$\{x\.stale_days\}[^\n]*\$\{x\.reason \?\? 'Grund nicht aufgezeichnet'\}/);
   assert.ok(src.indexOf('report.stale_sources = staleSources(') < src.indexOf("writeJSONAtomic(join(reports, 'run-report.json'), report)"));
 });

@@ -450,7 +450,10 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     ...(report.retained_contracts?.length ? [`Zurueckgehalten (Quelle strittig, alter Stand bleibt): ${report.retained_contracts.map((r) => `${r.dataset} (${r.restored.map((f) => `${f.file} vom ${String(f.retained_collected_at).slice(0, 10)}`).join(', ')}; ${String(r.reasons?.[0] ?? '').slice(0, 200)})`).join('; ')}`] : []),
     ...(report.deterministic_fallback_contracts?.length ? [`Ohne Modellpruefung (Pruefer-Antwort unbrauchbar, deterministische Vollpruefung gilt): ${report.deterministic_fallback_contracts.map((r) => r.dataset).join(', ')}`] : []),
     ...(report.unverified_providers?.length ? [`Neue Anbieter ohne gepruefte Metadaten (nicht in EU-/Nicht-US-Filtern): ${report.unverified_providers.join(', ')}`] : []),
-    ...(report.stale_sources?.length ? [`Veraltete Quellen (>= 3 Tage): ${report.stale_sources.length} — ${report.stale_sources.map((x) => `${x.id} (zuletzt gut: ${x.last_ok ?? 'nie'})`).join('; ')}`] : []),
+    // Iteration 134: the reason belongs in the receipt. fetch-mistral-catalog sat here for four days
+    // as a name and a date while the state file held "Mistral pricing: no priced chat models" — the
+    // sentence that names the cause and would have been acted on the first morning.
+    ...(report.stale_sources?.length ? [`Veraltete Quellen (>= 3 Tage): ${report.stale_sources.length} — ${report.stale_sources.map((x) => `${x.id} (zuletzt gut: ${x.last_ok ?? 'nie'}${x.stale_days == null ? '' : `, seit ${x.stale_days} Tagen`}): ${x.reason ?? 'Grund nicht aufgezeichnet'}`).join('; ')}`] : []),
     report.error ? `FEHLER: ${report.error.split('\n').filter(Boolean).at(-1).slice(0, 800)}` : 'Build, Tests, Typpruefung und Quellpruefung erfolgreich.',
   ].join('\n') + '\n';
   await writeFile(join(home, 'last-summary.txt'), summary);
