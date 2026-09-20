@@ -1,0 +1,19 @@
+```json
+{
+  "artifact_id": "protocol-weirdml-3",
+  "artifact_sha256": "45b47912bb1a5efb5e68deb5bb62da976000ba1fb6d47f209576d61ff90779bf",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["weirdml::3", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "The SOURCE 2 excerpt does not verbatim render numeric score values or an explicit '%' unit token next to the scoring text; unit 'percent' with range [0,100] is consistent with the described effective-score construction and the 'Average Score Across 11 Tasks' table column but is an inference from the protocol description, not an explicit unit statement.",
+    "The row's scoring notes omit secondary details present in SOURCE 2 (Ship Detect ×25 token scaling, 15 configurations, variance pooling for intervals); these are not fields the row claims, so no mismatch, but the row's guard text ('exactly 11 tasks') reflects the benchmark's task count, while the page shows 15 configurations per model — consistent with 'One configuration per row'.",
+    "I cannot recompute row or artifact hashes; binding relies on the owner-provided SHA-256 values and the executed producer receipt, which I could not independently execute.",
+    "status 'active' and version_status 'published' are consistent with SOURCE 2 presenting v3 as the current page with v2/v1 listed only as previous versions and an actively maintained results/summary section; the excerpt does not contain an explicit lifecycle statement, so this is a consistency check, not a verbatim match."
+  ],
+  "missing_evidence": []
+}
+```

@@ -1,0 +1,27 @@
+```json
+{
+  "artifact_id": "scores-5",
+  "artifact_sha256": "7e4d36bfd24f27492fee754c557568cb7b1529be52f20fda7ef44ef61108d22d",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10", "c1"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "blocker",
+      "location": "row vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10 .source.published_at",
+      "evidence": "Criterion c1 requires the source date for every observation. The row sets published_at to null. The primary evidence identifies the source only as arXiv 2412.19437v2; the packet contains no publication date for that version. The subject source_id mentions 'December 2024' as the model update date, but that is a model checkpoint date, not the source publication date, and using it to fill published_at would be an inference.",
+      "repair": "Set published_at to the explicitly published date of arXiv 2412.19437v2 from owner-verifiable primary evidence; do not infer it from the model's December 2024 date or from memory."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Could not recompute row or file SHA-256 hashes; binding relies on the owner-computed hashes supplied in the packet (owner executes transport/qualification checks).",
+    "The source table gives the Aider-Polyglot value for 'DeepSeek V3' as 49.6, matching the row; the retained subject identity (DeepSeek V3 Dec '24 chat model) is an accepted prior that I did not re-derive, per the criteria forbidding alias inference.",
+    "The benchmark_id suffix 'snapshot-2026-09-10' has no counterpart in the primary source; per instructions I did not demand a benchmark version from the source beyond what it claims.",
+    "The paper reports values to one decimal place; the row value 49.6 percent matches the transcribed table cell exactly, with no independent numeric cross-check available in the packet."
+  ],
+  "missing_evidence": ["Publication date of arXiv 2412.19437v2 (needed to populate source.published_at per criterion c1)"]
+}
+```

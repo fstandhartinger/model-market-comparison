@@ -1,18 +1,8 @@
 {
   "source": "Chutes — llm.chutes.ai/v1/models (first-party, public catalog)",
-  "collected_at": "2026-09-19",
+  "collected_at": "2026-09-20",
   "method": "scripts/fetch-chutes-catalog.mjs: one GET of the public catalog; prices are price.{input,output,input_cache_read}.usd per 1M tokens; curated model_name/provider_org carried over by exact tee_model_id; new ids marked mapping=derived. See chutes.method.md.",
   "models": [
-    {
-      "model_name": "gemma-4-31B",
-      "provider_org": "Google",
-      "input_per_1m_usd": 0.12,
-      "output_per_1m_usd": 0.37,
-      "cache_read_per_1m_usd": 0.012,
-      "context_length": 131072,
-      "confidential_compute": true,
-      "tee_model_id": "google/gemma-4-31B-turbo-TEE"
-    },
     {
       "model_name": "Qwen3.5-397B-A17B",
       "provider_org": "Alibaba",
@@ -22,17 +12,6 @@
       "context_length": 262144,
       "confidential_compute": true,
       "tee_model_id": "Qwen/Qwen3.5-397B-A17B-TEE"
-    },
-    {
-      "model_name": "Qwen3.8 27B",
-      "provider_org": "Alibaba",
-      "input_per_1m_usd": 0.24,
-      "output_per_1m_usd": 2.2,
-      "cache_read_per_1m_usd": 0.024,
-      "confidential_compute": true,
-      "context_length": 262144,
-      "tee_model_id": "Qwen/Qwen3.8-27B-TEE",
-      "notes": "Added 2026-08-26 from llm.chutes.ai | 2026-09-08: price cut 0.35/2.75->0.32/2.50, cache-read 0.032 (live llm.chutes.ai)"
     },
     {
       "model_name": "DeepSeek-V3.2",
@@ -55,14 +34,25 @@
       "tee_model_id": "zai-org/GLM-5.1-TEE"
     },
     {
-      "model_name": "Qwen3.6-27B",
-      "provider_org": "Alibaba",
-      "input_per_1m_usd": 0.3,
-      "output_per_1m_usd": 2,
-      "cache_read_per_1m_usd": 0.03,
-      "context_length": 262144,
+      "model_name": "gemma-4-31B",
+      "provider_org": "Google",
+      "input_per_1m_usd": 0.12,
+      "output_per_1m_usd": 0.37,
+      "cache_read_per_1m_usd": 0.012,
+      "context_length": 131072,
       "confidential_compute": true,
-      "tee_model_id": "Qwen/Qwen3.6-27B-TEE"
+      "tee_model_id": "google/gemma-4-31B-turbo-TEE"
+    },
+    {
+      "model_name": "Qwen3.8 27B",
+      "provider_org": "Alibaba",
+      "input_per_1m_usd": 0.24,
+      "output_per_1m_usd": 2.2,
+      "cache_read_per_1m_usd": 0.024,
+      "confidential_compute": true,
+      "context_length": 262144,
+      "tee_model_id": "Qwen/Qwen3.8-27B-TEE",
+      "notes": "Added 2026-08-26 from llm.chutes.ai | 2026-09-08: price cut 0.35/2.75->0.32/2.50, cache-read 0.032 (live llm.chutes.ai)"
     },
     {
       "model_name": "DeepSeek V4 Flash 0731",
@@ -76,15 +66,14 @@
       "notes": "Added 2026-08-26 from llm.chutes.ai"
     },
     {
-      "model_name": "Kimi-K2.6",
-      "provider_org": "Moonshot AI",
-      "input_per_1m_usd": 0.5,
-      "output_per_1m_usd": 2.85,
-      "cache_read_per_1m_usd": 0.05,
+      "model_name": "Qwen3.6-27B",
+      "provider_org": "Alibaba",
+      "input_per_1m_usd": 0.3,
+      "output_per_1m_usd": 2,
+      "cache_read_per_1m_usd": 0.03,
       "context_length": 262144,
       "confidential_compute": true,
-      "tee_model_id": "moonshotai/Kimi-K2.6-TEE",
-      "notes": "2026-08-26: price cut 0.66/3.5->0.58/3.4 (live llm.chutes.ai)."
+      "tee_model_id": "Qwen/Qwen3.6-27B-TEE"
     },
     {
       "model_name": "GLM-5.2",
@@ -96,6 +85,17 @@
       "confidential_compute": true,
       "tee_model_id": "zai-org/GLM-5.2-TEE",
       "notes": " | 2026-07-31: price cut 1.40/4.40->1.25/3.95, cache-read 0.625 (live llm.chutes.ai)."
+    },
+    {
+      "model_name": "Kimi-K2.6",
+      "provider_org": "Moonshot AI",
+      "input_per_1m_usd": 0.5,
+      "output_per_1m_usd": 2.85,
+      "cache_read_per_1m_usd": 0.05,
+      "context_length": 262144,
+      "confidential_compute": true,
+      "tee_model_id": "moonshotai/Kimi-K2.6-TEE",
+      "notes": "2026-08-26: price cut 0.66/3.5->0.58/3.4 (live llm.chutes.ai)."
     },
     {
       "model_name": "Kimi K3",
@@ -150,7 +150,7 @@
       "notes": "Added 2026-08-26 from llm.chutes.ai (root nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16)"
     }
   ],
-  "response_sha256": "8b9441bbea2fbdf9b61abc927760837743aa943fdf733d6c8477259debf92cce",
+  "response_sha256": "f4140c445c9b901b4b4d6b24655188f5132c7825b0866c176e872c467e418919",
   "diff": {
     "added": [],
     "removed": [],

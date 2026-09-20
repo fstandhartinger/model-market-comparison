@@ -1,0 +1,30 @@
+```json
+{
+  "artifact_id": "scores-0",
+  "artifact_sha256": "f98e008e69b9e4057d3938cd6b71546136169a0512b9036eef7175d2d22c9954",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["public:1d0dfbc2c6d265ffdde4df01", "public:defbb81c50face9fdf12f71a", "public:b4d6a9006eddf510ae3622f5", "public:320879fe0916ea2fb8f9cd48", "public:db533a9ed9003f6a4307f114", "public:3e9a1283906e76da9774c6b5", "public:9b7c3b43619608e665be2af7", "public:a436e9c2b8a5a0d3dd7a0332", "c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Could not recompute row-level or artifact SHA-256 hashes; relied on owner-computed hashes to bind rows. Hash/transport/qualification checks are owner-executed per packet scope.",
+    "Basis label 'self_reported' is not explicitly stated in the primary source rows; it is an attribution consistent with the published leaderboard presentation (values published by Anthropic on tbench.ai with model_display links to Anthropic pages). Verified as plausible, not literally transcribed.",
+    "Primary evidence uses the native_source_row wrapper format rather than the exact protocol JSON embedded in each row's 'protocol' field; field-by-field content of the embedded protocol strings (context, effort, trials=330) was verified to match the native source rows exactly for all 8 rows.",
+    "Field 'published_at' is null in all rows; the source rows carry context.date/display_date (2026-09-01 or 2026-07-24), which was used as the source date and matches the artifact. No separate published timestamp exists in the primary evidence.",
+    "Source rows are bounded per-row excerpts (indices 4, 5, 7, 8, 11, 12, 14, 17); gaps between indices could not be inspected, but per-row verification is what criterion c1 requires."
+  ],
+  "missing_evidence": [],
+  "per_row_verification_summary": {
+    "public:1d0dfbc2c6d265ffdde4df01": "value 57.88, name Fable 5.1, harness Claude Code, effort xhigh, trials 330, date 2026-09-01, benchmark terminal-bench::4.0, unit percent, source_id matches locator row 4 — all match SOURCE 1",
+    "public:defbb81c50face9fdf12f71a": "value 54.55, Fable 5.1, Claude Code, effort high, trials 330, 2026-09-01, row 5 — matches SOURCE 3",
+    "public:b4d6a9006eddf510ae3622f5": "value 53.94, Fable 5.1, Claude Code, effort medium, trials 330, 2026-09-01, row 7 — matches SOURCE 4",
+    "public:320879fe0916ea2fb8f9cd48": "value 53.94, Opus 5, Claude Code, effort xhigh, trials 330, 2026-07-24, row 8 — matches SOURCE 5",
+    "public:db533a9ed9003f6a4307f114": "value 50.3, Opus 5, Claude Code, effort high, trials 330, 2026-07-24, row 11 — matches SOURCE 6",
+    "public:3e9a1283906e76da9774c6b5": "value 44.85, Opus 5, Claude Code, effort medium, trials 330, 2026-07-24, row 12 — matches SOURCE 7",
+    "public:9b7c3b43619608e665be2af7": "value 43.33, Fable 5.1, Claude Code, effort low, trials 330, 2026-09-01, row 14 — matches SOURCE 8",
+    "public:a436e9c2b8a5a0d3dd7a0332": "value 34.85, Opus 5, Claude Code, effort low, trials 330, 2026-07-24, row 17 — matches SOURCE 9"
+  }
+}
+```

@@ -1,0 +1,35 @@
+```json
+{
+  "artifact_id": "scores-3",
+  "artifact_sha256": "fea3ad04d523714d9ec197efb7bc03f84acb3a34fe282e9e61bb27e823457586",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10", "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10", "c1"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10 -> source.published_at",
+      "evidence": "Row sets published_at=null, but the primary source (SOURCE 1, same sha256) clearly shows the article publication date: 'December 9, 2025' under 'Introducing: Devstral 2 and Mistral Vibe CLI.' Criterion c1 requires verification of source date; a transcribable publication date was left null.",
+      "repair": "Transcribe published_at as 2025-12-09 (or the packet's canonical date format) from the visible article dateline; do not leave it null when the primary evidence displays it."
+    },
+    {
+      "id": "F2",
+      "severity": "major",
+      "location": "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10 -> source.published_at",
+      "evidence": "Row sets published_at=null, but the primary source (SOURCE 2, same sha256) shows the article publication date 'December 9, 2025'. Criterion c1 requires source date verification.",
+      "repair": "Transcribe published_at as 2025-12-09 from the visible article dateline."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Row 2 value is 68 while the source states '68.0%'; numerically equal, treated as exact-match acceptable, noted as formatting only.",
+    "Per-row canonical SHA-256 bindings are owner-computed; I cannot recompute them, and the artifact-level SHA-256 and transport/qualification checks (including the producer receipt) were not executed by me — limitation, not evidence of error.",
+    "The harness is genuinely unspecified in the source for the SWE-bench Verified numbers (Cline scaffolding applies only to the separate human evaluations); rows correctly record harness=null and disclose this in protocol, so no alias or harness inference was made.",
+    "Retrieved_at timestamps and source sha256 in both rows match the packet header for SOURCE 1/SOURCE 2 as transcribed; I cannot independently verify the hash.",
+    "benchmark snapshot id 'swe-bench-verified::snapshot-2026-09-10' is an internal snapshot label; the source does not date the benchmark itself, so the snapshot binding is taken as given by the packet schema, not from the source."
+  ],
+  "missing_evidence": []
+}
+```
