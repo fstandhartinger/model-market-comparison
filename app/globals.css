@@ -475,19 +475,43 @@ details[open] > .bh-collapsible-grid { display: grid; }
 }
 .bh-jevc-custom figure, figure.bh-jevc-custom { box-shadow: 0 0 0 2px rgb(var(--warn) / .7); }
 .bh-jevc-slider { width: 100%; min-height: 32px; }
-/* CR-99: a small, time-limited Jev custom-evaluation offer. On phones its JS placement
-   moves it above any visible chart/control/table; reduced motion gets a fade only. */
+/* CR-102: the permanent badge stays on the eyebrow row, with a visually compact pill and
+   an invisible 44 px hit area. Only the narrowest portrait screens need the shorter label. */
+.bh-custom-evaluation-badge {
+  position: relative; display: inline-flex; flex: 0 1 auto; align-items: center; justify-content: center;
+  min-width: 0; white-space: nowrap; border: 1px dashed var(--control-border); border-radius: 999px;
+  padding: 3px 9px; background: rgb(var(--line) / .2); color: rgb(var(--accent));
+  font-size: 10px; font-weight: 600; line-height: 14px; letter-spacing: .02em; text-transform: uppercase;
+}
+.bh-custom-evaluation-badge::after { content: ""; position: absolute; left: -4px; right: -4px; top: 50%; height: 44px; transform: translateY(-50%); }
+.bh-offer-badge-short { display: none; }
+@media (max-width: 359px) {
+  .bh-custom-evaluation-badge { margin-left: 5px; padding-inline: 7px; font-size: 9px; letter-spacing: 0; }
+  .bh-offer-badge-full { display: none; }
+  .bh-offer-badge-short { display: inline; }
+}
+/* The toast is viewport-fixed on every size. The safe-area term keeps phone home indicators clear;
+   sheets and dialogs intentionally sit above it at z-index 70. Reduced motion gets only a fade. */
 .bh-custom-evaluation-toast {
-  position: fixed; z-index: 45; right: 1rem; max-width: min(44rem, calc(100vw - 2rem));
+  position: fixed; z-index: 45; right: 1rem; bottom: calc(1rem + env(safe-area-inset-bottom, 0px)); max-width: min(44rem, calc(100vw - 2rem));
   display: flex; align-items: center; gap: .65rem; padding: .55rem .65rem .55rem .85rem;
   border: 1px solid rgb(var(--line)); border-radius: .65rem; background: var(--surface); color: var(--text);
   box-shadow: 0 12px 35px rgb(0 0 0 / .22); font-size: .82rem; line-height: 1.3;
   font-weight: 400; letter-spacing: normal; text-transform: none;
   animation: bh-offer-in .22s ease-out both;
 }
-.bh-custom-evaluation-toast.is-landing { pointer-events: none; animation: bh-offer-land .65s cubic-bezier(.4,0,.2,1) both; }
+.bh-custom-evaluation-toast.is-landing { pointer-events: none; animation: bh-offer-land .9s cubic-bezier(.4,0,.2,1) both; }
+.bh-custom-evaluation-badge.is-wiggling { animation: bh-offer-wiggle .34s ease-out both; }
 @keyframes bh-offer-in { from { opacity: 0; transform: translateY(.75rem); } to { opacity: 1; transform: none; } }
-@keyframes bh-offer-land { to { opacity: 0; transform: translate(var(--offer-x,0), var(--offer-y,0)) scale(.2); } }
+@keyframes bh-offer-land {
+  0%, 70% { opacity: 1; }
+  to { opacity: 0; transform: translate(var(--offer-x,0), var(--offer-y,0)) scale(.2); }
+}
+@keyframes bh-offer-wiggle {
+  0%, 100% { transform: rotate(0) scale(1); }
+  30% { transform: rotate(-1.5deg) scale(1.035); }
+  65% { transform: rotate(1deg) scale(.99); }
+}
 @media (max-width: 639px) {
   .bh-custom-evaluation-toast { left: .75rem; right: .75rem; max-width: none; padding-left: .75rem; }
   .bh-custom-evaluation-toast p { flex: 1 1 auto; }
@@ -495,6 +519,7 @@ details[open] > .bh-collapsible-grid { display: grid; }
 @media (prefers-reduced-motion: reduce) {
   .bh-custom-evaluation-toast { animation: bh-offer-fade .01s linear both; }
   .bh-custom-evaluation-toast.is-landing { animation: bh-offer-fade-out .15s linear both; }
+  .bh-custom-evaluation-badge.is-wiggling { animation: none; }
   @keyframes bh-offer-fade { from { opacity: 0; } to { opacity: 1; } }
   @keyframes bh-offer-fade-out { from { opacity: 1; } to { opacity: 0; } }
 }

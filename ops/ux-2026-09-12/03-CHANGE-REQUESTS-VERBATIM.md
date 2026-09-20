@@ -1360,3 +1360,20 @@ Florian, 20 Sep 2026, verbatim:
 
 Supervisor notes (not Florian's words): `--surface` and `--text` are complete hex colours, so the CR-99 toast uses
 them directly rather than wrapping them in `rgb(...)`. The permanent custom-evaluation badge is unchanged.
+
+
+## CR-20260920f (JevBench page) → CR-102 — custom-evaluation toast UX and offer framing
+
+Florian, phone screenshot, 20 Sep 2026, verbatim:
+> Lets improve the ux of how this toast appears and disappears. I also don't like so much how that 'CUSTOM EVALUATION'
+> bubble is placed below the 'JevBench v1.2 · our own benchmark' header in mobile portrait mode. Lets make it show right
+> of it, like it does in desktop mode. Even if it means we have to make it smaller (adjust to available space and screen
+> width). Ans let's add a space left and right of the 'CUSTOM EVALUATION' text, currently that text looks too narrowly
+> squeezed into the bubbles outer border. And when the toast disappears, I generally like how it moves towards that
+> bubble, but it seems to get transparent on its way out a bit too fast, so that a user that doesn't watch the screen
+> with extremely high attention likely wouldn't notice where the toast goes. And maybe we can give that bubble a tiny
+> wiggle, right after the toast has disappeared. And: I find it looks a bit odd when that toast moves with the scolling
+> in mobile mode. I think it's better to have it fixed at the bottom of the screen instead. Also: let's for now remove
+> the $1000 offer from the detail page, and not reveal yet, that we are offering that as a paid service so clearly
+> (also don't hide it, just offer our consulting and custom eval - rest will be duscussed vis mail). Also mention our
+> open source repo wnd hiw to do it yourself. Make us look like a open source / free / community service
