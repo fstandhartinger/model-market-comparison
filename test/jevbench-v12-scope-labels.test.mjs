@@ -43,3 +43,17 @@ test('(c) the group summary cells come from the public slice, not the whole-tier
   assert.match(group, /of \{view\.tierCounts\[tier\]\} decisions public/, 'the header must name both bases');
   assert.match(group, /whole tier \$\{whole\.correct\}\/\$\{whole\.attempted\}/, 'the whole-tier figure stays available in the title');
 });
+
+// Review gate 20260920T055002Z: the grid's rotated head is the only thing that names its 21 system columns, and
+// `bh-jev-sticky` on the Task column resolves to nothing here (that rule is scoped to `.bh-jev-table`, and this
+// grid is a `.bh-table`). The head was `position: static`, so scrolled past the first screenful of 231 rows every
+// ✓/× belonged to an unnamed column.
+test('the public-task grid head is pinned to its own scroll container', async () => {
+  const css = await readFile('app/globals.css', 'utf8');
+  const rule = css.match(/\[data-bh-jev12-task-table\] thead th \{[^}]*\}/)?.[0];
+  assert.ok(rule, 'the grid head needs a sticky rule of its own');
+  assert.match(rule, /position:\s*sticky/);
+  assert.match(rule, /top:\s*0/);
+  assert.match(src, /data-bh-jev12-task-table/, 'the rule needs its hook on the table');
+  assert.match(src, /max-h-\[38rem\] overflow-auto/, 'the head is only sticky because the grid scrolls in a bounded box');
+});

@@ -116,6 +116,20 @@ try {
       check(`${tag}: group rows name both bases and count only the public rows they list`, gridData.groupBasesAgree && gridData.groupHeads.length === 3 && /^Easy · 48 of 72 decisions public$/.test(gridData.groupHeads[0]) && /^Medium \(standard\) · 72 of 96 decisions public$/.test(gridData.groupHeads[1]) && /^Hard · 111 of 220 decisions public$/.test(gridData.groupHeads[2]), gridData.groupHeads);
       check(`${tag}: every task row shows its question type as text`, gridData.typedRows === 231 && gridData.typeCodes.join(',') === 'choice,noul,score' && gridData.titleOnlyTopic === 0, { typedRows: gridData.typedRows, typeCodes: gridData.typeCodes, titleOnlyTopic: gridData.titleOnlyTopic });
       check(`${tag}: the legend defines the types and says where the topic is readable`, /choice/.test(gridData.legend) && /noul/.test(gridData.legend) && /score/.test(gridData.legend) && /carries its topic/.test(gridData.legend) && /group row counts the public tasks it lists/.test(gridData.legend), gridData.legend.slice(0, 260));
+      // Review gate 20260920T055002Z: the head is the only thing that names the 21 system columns. With 231 rows in
+      // a 38rem scroller it has to stay on screen, or every cell below the first screenful belongs to nobody.
+      const headPinned = await page.evaluate(() => {
+        const table = document.querySelector('[data-bh-jev12-task-table]');
+        const wrap = table.closest('div');
+        const head = table.querySelector('thead th:nth-child(3)');
+        wrap.scrollTop = wrap.scrollHeight;
+        const wr = wrap.getBoundingClientRect(), hr = head.getBoundingClientRect();
+        const position = getComputedStyle(head).position;
+        const offset = Math.round(hr.top - wr.top);
+        wrap.scrollTop = 0;
+        return { position, offset, scrollHeight: Math.round(wrap.scrollHeight), clientHeight: Math.round(wrap.clientHeight), label: head.textContent.replace(/\s+/g, ' ').trim() };
+      });
+      check(`${tag}: the grid head stays pinned while the 231 rows scroll`, headPinned.position === 'sticky' && headPinned.offset >= 0 && headPinned.offset <= 4 && headPinned.scrollHeight > headPinned.clientHeight && headPinned.label.length > 0, headPinned);
       check(`${tag}: the unavailable-systems sentence is gone while every system is covered`, await page.locator('[data-bh-jev12-task-uncovered]').count() === 0);
       check(`${tag}: task grid contains no hidden question/answer payload`, !/question|expected|prediction/i.test(await grid.locator('table').innerText()));
       if (kind === 'mobile') check(`${tag}: no page horizontal overflow`, await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth) <= 1);

@@ -458,5 +458,10 @@ details[open] > .bh-collapsible-grid { display: grid; }
 .bh-table .bh-jev-task-system { padding: 4px 0; width: 32px; min-width: 32px; max-width: 32px; }
 .bh-table .bh-jev-task-cell { padding: 2px 0; width: 32px; min-width: 32px; max-width: 32px; }
 .bh-table .bh-jev-task-row > th { padding: 4px 12px; }
+/* Review gate 20260920T055002Z: the 231-row public-task grid scrolls inside a 38rem box, but its head was
+   `position: static` — scrolled to the bottom the rotated system names sat 6,185 px above the scrollport, so
+   nothing on screen said which column was which system and only a desktop-hover `title` still named them.
+   The head is pinned to the scrollport now; at scroll-top the grid is unchanged. */
+[data-bh-jev12-task-table] thead th { position: sticky; top: 0; z-index: 2; }
 .bh-jevc-custom figure, figure.bh-jevc-custom { box-shadow: 0 0 0 2px rgb(var(--warn) / .7); }
 .bh-jevc-slider { width: 100%; min-height: 32px; }
