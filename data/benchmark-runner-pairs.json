@@ -1,0 +1,61 @@
+{
+  "version": "2026-09-20",
+  "note": "CR-68.5 (Florian, 2026-09-17): same benchmark measured by two runners — show a large disagreement as its own evidence line, and where the versions differ do not pair them at all. A group is listed here only when every board in it measures the SAME task set at the SAME stated version and only the runner (with its harness) differs; the version equality is quoted from the committed registry entries, never inferred from a name. Pairing is for evidence only: the boards keep separate identities everywhere else, exactly as their registry notes require. Unequal versions, a different subset, a different protocol (tools, search) or a different domain are refusals and are listed under not_paired with their reason.",
+  "groups": [
+    {
+      "id": "terminal-bench-2.1",
+      "benchmark": "Terminal-Bench 2.1",
+      "category": "Agentic",
+      "version_equality": "Both boards state Terminal-Bench 2.1 as the task set: aa-terminal-bench::2.1 is registered as \"Terminal-Bench v2.1 (AA)\" on the 89-task verified refresh, vals-index-terminal-bench-2.1::2 as \"Terminal-Bench 2.1 (Vals Index v2)\". Terminal-Bench 4.0 (aa-terminal-bench::4.0, terminal-bench::4.0) is a different version and is never paired with either.",
+      "runners": [
+        { "benchmark_id": "aa-terminal-bench::2.1", "runner": "Artificial Analysis", "harness": "Terminus 2; all verifier tests must pass, pass@1 averaged over three repeats" },
+        { "benchmark_id": "vals-index-terminal-bench-2.1::2", "runner": "Vals AI", "harness": "its own run; accuracy published with a standard error per model" }
+      ],
+      "reviewed_at": "2026-09-20",
+      "reviewed_by": "iteration 139 (claude-opus), from the committed registry entries of both boards"
+    },
+    {
+      "id": "gpqa-diamond",
+      "benchmark": "GPQA Diamond",
+      "category": "Science",
+      "version_equality": "All three boards are runs of the same public 198-question Diamond subset — the AA entry names \"the 198-question Diamond subset\", the Epoch entry \"the 198-question graduate-level science multiple-choice set\", and both the OpenRouter and Epoch entries state in their own registry notes that they are a separate run of the same public questions. The question set carries no version of its own, so there is no version to differ.",
+      "runners": [
+        { "benchmark_id": "aa-gpqa-diamond", "runner": "Artificial Analysis", "harness": "its own run; multiple-choice pass@1" },
+        { "benchmark_id": "openrouter-gpqa-diamond", "runner": "OpenRouter", "harness": "its own reproducible run, published on openrouter.ai/benchmarks" },
+        { "benchmark_id": "epoch-gpqa-diamond", "runner": "Epoch AI", "harness": "the inspect-ai harness; best score across scorers" }
+      ],
+      "reviewed_at": "2026-09-20",
+      "reviewed_by": "iteration 139 (claude-opus), from the committed registry entries of all three boards"
+    }
+  ],
+  "not_paired": [
+    {
+      "boards": ["aa-terminal-bench::2.1", "aa-terminal-bench::4.0"],
+      "reason": "Different versions of Terminal-Bench (2.1 vs 4.0) — a version difference is never paired, even within one runner."
+    },
+    {
+      "boards": ["aa-terminal-bench::4.0", "terminal-bench::4.0"],
+      "reason": "Same version, but the maintainers' own board publishes one row per agent harness (Claude Code, Codex, Grok Build, mini-SWE-agent), so its rows are harness results rather than a second runner's run of the same configuration; no cohort on that board reaches the minimum shared cohort either."
+    },
+    {
+      "boards": ["aa-terminal-bench::2.1", "aa-terminal-bench-hard::74221fb"],
+      "reason": "Terminal-Bench Hard is a different task subset, not the same task set run twice."
+    },
+    {
+      "boards": ["aa-hle", "openrouter-search-hle"],
+      "reason": "Different protocol: OpenRouter's run gives the model search, the AA board is text-only. Not the same measurement."
+    },
+    {
+      "boards": ["aa-tau2-telecom", "openrouter-tau2-bench-airline"],
+      "reason": "Different τ²-Bench domains (telecom vs airline) — different task sets."
+    },
+    {
+      "boards": ["swe-bench-verified", "epoch-swe-bench-verified"],
+      "reason": "Same task set, but the maintainers' board is published per submitting harness (one row per scaffold) and Epoch's run covers 9 models; neither side offers a shared cohort of the minimum size, so no honest rank comparison exists yet. Revisit when Epoch's run grows."
+    },
+    {
+      "boards": ["stepfun-*", "aa-*"],
+      "reason": "The stepfun-* entries are a vendor's self-reported quotes of AA boards, not a second runner's run; a self-reported claim against a measured value is already the audited divergence check (lib/benchmark-scores.mjs computeDivergences), which is a different question from runner disagreement."
+    }
+  ]
+}

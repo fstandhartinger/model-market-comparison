@@ -9,11 +9,16 @@ export type BenchmaxxingModel = { id: string; name: string; org: string; composi
   /** CR-77.2: why the tag rests on thin evidence; null when it does not. */ uncertain?: string | null };
 type Axis = { id: string; name: string; version: string; category: string; value: number | null; nativeValue?: number | null; observedDate?: string | null; unit: string; missing: boolean; tier?: string; side?: 'headline' | 'heldout' | null };
 type Pair = { category: string; headline: { id: string; name: string }; heldout: { id: string; name: string }; headlinePercentile: number; heldoutPercentile: number; gap: number; cohort: number };
+/** CR-68.5: one reviewed runner pair — the same task set at the same version, run by two evaluators. */
+type RunnerSide = { benchmarkId: string; axisId: string; runner: string; harness: string; name: string; unit: string; value: number | null; percentile: number };
+type RunnerDisagreement = { id: string; benchmark: string; category: string; versionEquality: string; sharedCohort: number; a: RunnerSide; b: RunnerSide; gap: number; large: boolean };
 export type BenchmaxxingReportData = { status: 'scored' | 'insufficient-coverage'; score: number | null; coverage: number; domainSpecialization: number | null; profile: { axes: Axis[]; measured: number; total: number }; comparisons: number; topics: number; rule: { minComparisons: number; minTopics: number };
   rawScore?: number | null; headlineBoards?: number; heldoutBoards?: number; pairCount?: number; drivers?: { positive: Pair[]; negative: Pair[] }; shrinkage?: { priorMean: number; k: number }; interval?: { lower: number; upper: number; level: number } | null;
   /** CR-78.1: the two halves of the published score — the headline vs held-out gap and the centred within-topic jaggedness. */
   parts?: { gap: number; jaggedness: number | null; jaggednessMean: number | null; jaggednessTerm: number; jaggednessWeight: number; jaggednessComparisons: number;
-    jaggednessTopics: { category: string; measured: number; pairs: number; df: number; spread: number }[] } };
+    jaggednessTopics: { category: string; measured: number; pairs: number; df: number; spread: number }[] };
+  /** CR-68.5: reviewed same-benchmark runner pairs this model is measured on, worst disagreement first. */
+  runnerDisagreements?: RunnerDisagreement[] };
 
 const SERIES = [{ color: '#35a7ff', dash: undefined }, { color: '#f5b65b', dash: '7 4' }];
 
@@ -32,6 +37,26 @@ function Jaggedness({ report }: { report: BenchmaxxingReportData }) {
     {worst ? ` Its boards disagree most in ${worst.category} (${worst.spread.toFixed(1)} points over ${worst.pairs} ${worst.pairs === 1 ? 'pair' : 'pairs'}).` : ''}
     {' '}At weight {p.jaggednessWeight} that adds <span className="tabular font-semibold">{signed(p.jaggednessTerm)}</span> to the gap part {signed(p.gap)} — together the score {signed(p.gap + p.jaggednessTerm)}.
   </p>;
+}
+
+/** CR-68.5 (Florian 2026-09-17): "Same benchmark measured by two runners … show a large disagreement as
+ *  its own runner-disagreement evidence line; if the versions differ, don't pair them at all." The reviewed
+ *  pairs are in data/benchmark-runner-pairs.json; both ranks are taken among the models measured on both
+ *  boards, because the two boards' own populations are different sizes and their percentiles are not
+ *  comparable. It is evidence beside the score, never part of it. */
+function RunnerDisagreements({ report }: { report: BenchmaxxingReportData }) {
+  const large = (report.runnerDisagreements ?? []).filter((d) => d.large);
+  if (!large.length) return null;
+  const native = (side: RunnerSide) => side.value == null ? '—' : formatRadarValue(side.value, side.unit);
+  return <div className="mt-4 space-y-2 text-sm" data-bmx-runner-disagreement>
+    <p className="font-medium">Runner disagreement</p>
+    <ul className="space-y-1">{large.map((d) => <li key={d.id} className="leading-5">
+      <span className="tabular font-semibold">{Math.abs(Math.round(d.gap))} points</span> on {d.benchmark}: {d.a.runner} ranks it{' '}
+      <span className="bh-muted">p{Math.round(d.a.percentile)}</span> ({native(d.a)}), {d.b.runner}{' '}
+      <span className="bh-muted">p{Math.round(d.b.percentile)}</span> ({native(d.b)}) — <span className="bh-muted">among the {d.sharedCohort} models both ran</span>
+    </li>)}</ul>
+    <p className="bh-muted text-xs" data-bmx-runner-disagreement-note>Same task set at the same version, each evaluator with its own harness — {large[0].a.runner}: {large[0].a.harness}. {large[0].b.runner}: {large[0].b.harness}. Boards whose versions differ are never paired. This says the runners disagree about this model — not which of them is right, and it is not part of the score above.</p>
+  </div>;
 }
 
 /** CR-68.3 / CR-69.4: the pairs that move the score most, both ways, with the numbers behind the shrunk score. */
@@ -62,7 +87,8 @@ function SignalCard({ name, slot, compare, report, level, uncertain = null }: { 
       {/* CR-78.2: the score has two parts and the page says so wherever it prints the number. */}
       <p className="bh-muted mt-2 text-sm">Two parts, added. <strong className="font-medium">The gap:</strong> plus = ranks higher on famous public benchmarks than on held-out ones nobody can train for; minus = the other way round; zero = no sign. <strong className="font-medium">The jaggedness:</strong> how unevenly it ranks across boards that test the same thing, measured against the catalog average. Percentile points, same topic only.</p>
       <Drivers report={report} />
-    </> : <><p className="mt-3 text-lg font-semibold">Not enough coverage</p><p className="bh-muted mt-2 text-sm">{report.profile.measured}/{report.profile.total} measured axes; n = {report.comparisons} headline/held-out boards in {report.topics} {report.topics === 1 ? 'topic' : 'topics'} — a score needs n ≥ {report.rule.minComparisons} in {report.rule.minTopics} topics. No score is synthesized from missing results.</p></>}
+      <RunnerDisagreements report={report} />
+    </> : <><p className="mt-3 text-lg font-semibold">Not enough coverage</p><p className="bh-muted mt-2 text-sm">{report.profile.measured}/{report.profile.total} measured axes; n = {report.comparisons} headline/held-out boards in {report.topics} {report.topics === 1 ? 'topic' : 'topics'} — a score needs n ≥ {report.rule.minComparisons} in {report.rule.minTopics} topics. No score is synthesized from missing results.</p><RunnerDisagreements report={report} /></>}
   </aside>;
 }
 
