@@ -5752,4 +5752,13 @@ on the canonical host, 1440/390 × light/dark: 93 shots + 2 element shots in `/o
 - **X4 still met** for the default view; F-146 is the one item that changes what a reader concludes from a number and must land before the next
   gate calls the Step 5 page done. F-141–F-144 and F-146 go to the work engine (F-141/F-146 judgment, F-142–F-144 mechanical TSX — do them
   directly, do not delegate to Kimi).
-- Gates for the F-145 commit: see the follow-up note below once live. No foreign writer during the pass; the 05:17 daily run had finished.
+- **Shipped:** `b9c688f` (pass write-up, F-145, `shoot-fable-pass26.mjs`, `verify-fable-pass26.mjs`, CR-96/97 rows) and `3c8be7b` (F-145
+  follow-up: `self-start`, because the one-sentence card stretched to the Composite card's 412 px in the desktop grid — first live run 14/16).
+  Gates before each push: `tsc` clean, `npm test` 949 pass / 0 fail / 1 skip, `build-dataset` OK (timestamp-only diff reverted), `npm run build`
+  rc 0. Both hosts served `3c8be7b` within ~3 min; after the switchover wait, `verify-fable-pass26.mjs` **16/16 on both hosts**
+  (`/opt/benchmarkheaven/state/ux-evidence/fable-20260920-pass26/{canonical,legacy}-verify/`). Fable is the implementer — F-145 needs a
+  non-Fable live pass before its done-log row is `verified`.
+- **Foreign writer, announced:** at 10:57 UTC the supervisor job `jevpage-hardonly-offer-20260920` appended CR-99 (JevBench "Hard only" scope,
+  a custom-evaluation toast and page) to `03-CHANGE-REQUESTS-VERBATIM.md` and set `paused-until` 16:57 UTC. Its uncommitted append was left
+  untouched (pushed with `git push` only, no rebase); it will commit it with its own work. Design rules for CR-99 are written in advance in
+  `DESIGN-DIRECTIVES.md` (Decisions in pass 26, item 8) so pass 27 judges instead of redoing. The 05:17 daily run had finished before the pass.
