@@ -79,3 +79,12 @@ test('RSI-Exam is registered as its own versioned benchmark with an honest scale
   assert.equal(JSON.parse(readFileSync('data/benchmark-taxonomy.json', 'utf8')).benchmark_kinds['rsi-exam'], 'capability');
   assert.equal(JSON.parse(readFileSync('data/benchmaxxing-tiers.json', 'utf8')).tiers['rsi-exam'].tier, 'heldout');
 });
+
+test('RSI-Exam rows read like the rest of the page: a niche tier tag and the harness cohorts a reader knows', async () => {
+  const { cohortLabel } = await import('../lib/benchmark-matrix.mjs');
+  assert.equal(cohortLabel('claude code'), 'Claude Code', 'the same harness must not appear under two spellings on one page');
+  assert.equal(cohortLabel('codex'), 'Codex');
+  assert.equal(cohortLabel('kimi cli'), 'Kimi CLI');
+  assert.equal(cohortLabel('musecode'), 'musecode', 'an unlisted harness stays as the source spells it');
+  assert.equal(JSON.parse(readFileSync('data/benchmark-taxonomy.json', 'utf8')).tiers['rsi-exam'], 'niche');
+});
