@@ -15,7 +15,7 @@ for (const host of hosts) {
     if (!html.includes(name) || !html.includes(score)) throw new Error(`${host}: missing ${name} / ${score}`);
     checks += 2;
   }
-  for (const text of ['Hard only', 'Test your model', 'v1.2.5']) {
+  for (const text of ['Hard only', 'Benchmark Jev-class models', 'v1.2.5']) {
     if (!html.includes(text)) throw new Error(`${host}: missing preserved surface ${text}`);
     checks += 1;
   }
