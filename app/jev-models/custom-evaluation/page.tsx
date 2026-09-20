@@ -41,7 +41,7 @@ export default function CustomEvaluationPage() {
       <p className="bh-eyebrow">Free and open source</p>
       <h2 id="custom-yourself" className="mt-1 text-xl font-semibold">Do it yourself with JevBench</h2>
       <p className="bh-muted mt-2">Clone <a className="text-accent underline" href="https://github.com/fstandhartinger/jevbench">github.com/fstandhartinger/jevbench</a>, put your labelled decisions in the repository&apos;s JSONL task format, and run the harness with the adapter for your system:</p>
-      <pre className="mt-4 whitespace-pre-wrap rounded-lg border border-line bg-surface p-4 text-xs leading-relaxed"><code>{`git clone https://github.com/fstandhartinger/jevbench.git
+      <pre className="mt-4 whitespace-pre-wrap break-words rounded-lg border border-line bg-surface p-4 text-xs leading-relaxed"><code>{`git clone https://github.com/fstandhartinger/jevbench.git
 cd jevbench
 python -m unittest discover -s tests -v
 
