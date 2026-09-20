@@ -14,14 +14,17 @@ const a = await (await fetch(`${BASE}/api/jevbench/v1.2`)).json();
 // CR-97 (2026-09-20) took classifier.dev out of the ranking (it runs Jev): it keeps its score with no rank, and the four
 // ranked rows below it each move up one place. Everything else CR-95 added must survive that unchanged.
 const V124 = a.revision >= 'v1.2.4';
-const NEW = a.revision === 'v1.2.2'
+const V125 = a.revision === 'v1.2.5';
+const NEW = V125
+  ? { 'classifier-dev-fast': [null, '84.8'], laya: [4, '70.1'], jeff: [8, '66.9'], 'openjev-verdict': [11, '66.2'], gliner2: [21, '53.0'] }
+  : a.revision === 'v1.2.2'
   ? { 'classifier-dev-fast': [1, '84.8'], laya: [5, '70.1'], jeff: [9, '66.9'], 'openjev-verdict': [11, '66.1'], gliner2: [18, '52.9'] }
   : V124
     ? { 'classifier-dev-fast': [null, '84.8'], laya: [4, '70.1'], jeff: [8, '66.9'], 'openjev-verdict': [10, '66.2'], gliner2: [17, '53.0'] }
     : { 'classifier-dev-fast': [1, '84.8'], laya: [5, '70.1'], jeff: [9, '66.9'], 'openjev-verdict': [11, '66.2'], gliner2: [18, '53.0'] };
 const row = (k) => a.systems.find((s) => s.key === k);
 // CR-96 (2026-09-20) corrected every price and moved the revision to v1.2.3; the five v1.2.2 rows and their ranks must survive it.
-check('artifact: revision v1.2.2 or later', ['v1.2.2', 'v1.2.3', 'v1.2.4'].includes(a.revision), a.revision);
+check('artifact: revision v1.2.2 or later', ['v1.2.2', 'v1.2.3', 'v1.2.4', 'v1.2.5'].includes(a.revision), a.revision);
 for (const [k, [rank, score]] of Object.entries(NEW)) {
   const r = row(k);
   check(`artifact: ${k} ${rank === null ? 'listed without a rank' : `rank ${rank}`}, ${score}`, r && r.rank === rank && r.jevbench_score.toFixed(1) === score, r && [r.rank, r.jevbench_score]);

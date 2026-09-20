@@ -1,5 +1,9 @@
-const hosts = process.argv.slice(2);
-if (!hosts.length) throw new Error('usage: node verify-cr-101.mjs <base-url> [...]');
+const fs = await import('node:fs/promises');
+const args = process.argv.slice(2);
+const outAt = args.indexOf('--out');
+const out = outAt >= 0 ? args[outAt + 1] : null;
+const hosts = args.filter((arg, i) => i !== outAt && i !== outAt + 1);
+if (!hosts.length) throw new Error('usage: node verify-cr-101.mjs <base-url> [...] [--out <outdir>]');
 const expected = [
   ['kev 0.5B', '63.1'],
   ['kev 0.6B', '66.7'],
@@ -7,6 +11,7 @@ const expected = [
   ['kev 8B', '58.3'],
 ];
 let checks = 0;
+const results = [];
 for (const host of hosts) {
   const res = await fetch(new URL('/jev-models', host));
   if (!res.ok) throw new Error(`${host}: HTTP ${res.status}`);
@@ -19,5 +24,10 @@ for (const host of hosts) {
     if (!html.includes(text)) throw new Error(`${host}: missing preserved surface ${text}`);
     checks += 1;
   }
+  results.push({ host, checks: 11 });
+}
+if (out) {
+  await fs.mkdir(out, { recursive: true });
+  await fs.writeFile(`${out}/verification.json`, JSON.stringify({ at: new Date().toISOString(), passed: checks, total: checks, results }, null, 2));
 }
 console.log(`CR-101 ${checks}/${checks}`);

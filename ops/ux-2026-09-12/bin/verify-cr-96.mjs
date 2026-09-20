@@ -17,9 +17,16 @@ const row = (k) => a.systems.find((s) => s.key === k);
 // --- CR-96.1 the corrected prices and scores ---
 // CR-97 (2026-09-20) took classifier.dev out of the ranking; the corrected prices and every score must survive that,
 // so this verifier follows the revision instead of pinning ranks that the later CR legitimately shifts by one.
+const V125 = a.revision === 'v1.2.5';
 const V124 = a.revision >= 'v1.2.4';
-check('artifact: revision v1.2.3 or later', ['v1.2.3', 'v1.2.4'].includes(a.revision), a.revision);
-const EXPECT = V124
+check('artifact: revision v1.2.3 or later', ['v1.2.3', 'v1.2.4', 'v1.2.5'].includes(a.revision), a.revision);
+const EXPECT = V125
+  ? { 'classifier-dev-fast': [null, '84.8'], 'jev-1.13.0': [1, '75.4'], 'semif-qwen3.5-4b': [2, '74.7'], djev: [3, '74.3'],
+    laya: [4, '70.1'], 'open-alternative-jev': [5, '69.8'], 'system-one-open': [6, '68.9'], 'openjev-razorback16': [7, '67.7'],
+    jeff: [8, '66.9'], 'kev-0.6b': [9, '66.7'], 'openjev-sglang': [10, '66.3'], 'openjev-verdict': [11, '66.2'], 'gpt-5.6-luna': [12, '66.2'],
+    'open-jev-deberta-v3-large': [13, '64.6'], 'nimble-9b': [14, '63.7'], 'kev-0.5b': [15, '63.1'], 'kev-4b': [16, '62.2'],
+    'gemini-3.1-flash-lite': [17, '60.9'], 'kev-8b': [18, '58.3'], 'deepseek-flash': [19, '57.8'], 'system-one-sg': [20, '56.6'], gliner2: [21, '53.0'] }
+  : V124
   ? { 'classifier-dev-fast': [null, '84.8'], 'jev-1.13.0': [1, '75.4'], 'semif-qwen3.5-4b': [2, '74.7'], djev: [3, '74.3'],
     laya: [4, '70.1'], 'open-alternative-jev': [5, '69.8'], 'system-one-open': [6, '68.9'], 'openjev-razorback16': [7, '67.7'],
     jeff: [8, '66.9'], 'openjev-sglang': [9, '66.3'], 'openjev-verdict': [10, '66.2'], 'gpt-5.6-luna': [11, '66.2'],
@@ -44,7 +51,7 @@ check('artifact: Jev\'s basis names the TypeSafe docs', /docs\.typesafe\.ai\/mod
 check('artifact: every row keeps a positive price and a cost score below 100',
   a.systems.every((s) => s.cost.usd_per_1000 > 0 && s.axes.cost <= 100), '');
 const fix = a.cost_correction_table;
-check('artifact: a correction entry for every row', fix && Object.keys(fix).length === a.systems.length, Object.keys(fix || {}).length);
+check('artifact: a correction entry for every v1.2.3 row', fix && Object.keys(fix).length === 21 && Object.keys(fix).every((k) => a.systems.some((s) => s.key === k)), Object.keys(fix || {}).length);
 check('artifact: every correction is under 15 %', Object.values(fix).every((c) => Math.abs(c.pct) < 15), '');
 check('artifact: 16 rows corrected, 5 unchanged', Object.values(fix).filter((c) => !c.unchanged).length === 16, Object.values(fix).filter((c) => !c.unchanged).length);
 check('artifact: cost_correction lists what was wrong', Array.isArray(a.cost_correction?.what_was_wrong) && a.cost_correction.what_was_wrong.length >= 3, '');

@@ -12,7 +12,7 @@ const checks = []; const check = (name, ok, detail) => checks.push({ name, ok: !
 const a = await (await fetch(`${BASE}/api/jevbench/v1.2`)).json();
 const dj = a.systems.find((s) => s.key === 'djev');
 // CR-95: v1.2.2 keeps djev, one rank lower; CR-97: v1.2.4 takes classifier.dev out of the ranking, so djev moves back up one.
-check('artifact: revision v1.2.1 or later', ['v1.2.1', 'v1.2.2', 'v1.2.3', 'v1.2.4'].includes(a.revision), a.revision);
+check('artifact: revision v1.2.1 or later', ['v1.2.1', 'v1.2.2', 'v1.2.3', 'v1.2.4', 'v1.2.5'].includes(a.revision), a.revision);
 const djevRank = a.systems.find((s) => s.key === 'djev').rank;
 // #3 in v1.2.1, #4 once v1.2.2 added a row above it, #3 again once v1.2.4 unranked classifier.dev. Its score never moved.
 check(`artifact: djev rank ${djevRank}, 74.3`, dj && [3, 4].includes(dj.rank) && dj.jevbench_score.toFixed(1) === '74.3', dj && [dj.rank, dj.jevbench_score]);

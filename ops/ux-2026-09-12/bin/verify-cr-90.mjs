@@ -23,7 +23,7 @@ try {
       await page.goto(`${BASE}/jev-models`, { waitUntil: 'networkidle', timeout: 60000 });
       const difficulty = page.locator('[data-bh-jev12-difficulty]');
       const grid = page.locator('[data-bh-jev12-task-grid]');
-      check(`${tag}: difficulty controls render`, await difficulty.count() === 1 && await difficulty.locator('[data-bh-jev12-scope-option]').count() === 3);
+      check(`${tag}: difficulty controls render`, await difficulty.count() === 1 && await difficulty.locator('[data-bh-jev12-scope-option]').count() === 4);
       check(`${tag}: default scope is All tasks without warning`, await difficulty.getAttribute('data-bh-jev12-scope') === 'all' && await difficulty.locator('[data-bh-jev12-scope-warning]').count() === 0);
       // Review gate 20260920T043003Z: the hero's decision count must be the artifact's tier aggregate for the
       // scope (534 / 168 / 72), never the public-task slice the grid ships (231 / 120 / 48). The default view
@@ -41,6 +41,19 @@ try {
       const defaultWeights = await weightState();
       check(`${tag}: default tier columns carry the official weights`, defaultWeights.tiers[0].includes('72 dec. · 14 %') && defaultWeights.tiers[1].includes('96 dec. · 28 %') && defaultWeights.tiers[2].includes('146 dec. · 28 %') && defaultWeights.tiers[3].includes('220 dec. · 30 %') && !defaultWeights.tiers.some((t) => /outside this scope/.test(t)), defaultWeights.tiers);
       check(`${tag}: default method list carries the official weights`, defaultWeights.intelScope === 'all' && /hard 30 %, easy 14 %, standard 28 %, judge 28 %/.test(defaultWeights.intel) && /220 \/ 72 \/ 96 \/ 146 decisions/.test(defaultWeights.intel) && !/outside this scope/.test(defaultWeights.intel), defaultWeights.intel);
+      // CR-99: the hard-only scope is a four-axis recomputation over all 220 hard decisions.
+      await difficulty.locator('[data-bh-jev12-scope-option="hard"]').click();
+      const hardState = await page.evaluate(() => ({
+        scope: document.querySelector('[data-bh-jev12-difficulty]')?.getAttribute('data-bh-jev12-scope'),
+        chart: document.querySelector('[data-bh-jev12-main-chart]')?.getAttribute('data-bh-jevc-chart'),
+        badge: document.querySelector('[data-bh-jevc-badge="not-default"]')?.textContent || '',
+        eyebrow: document.querySelector('[data-bh-jev12-main-chart] .bh-eyebrow')?.textContent || '',
+        summary: document.querySelector('[data-bh-jev12-task-grid] summary')?.textContent || '',
+        unranked: [...document.querySelectorAll('[data-bh-jev12-row]')].filter((row) => row.getAttribute('data-bh-jev12-ranked') !== '1').map((row) => row.getAttribute('data-bh-jev12-row')),
+      }));
+      check(`${tag}: Hard only recomputes all four axes on 220 decisions`, hardState.scope === 'hard' && hardState.chart === 'custom' && /Hard only/.test(hardState.badge) && /220 decisions per system/.test(hardState.eyebrow) && /111 public task outcomes/.test(hardState.summary), hardState);
+      check(`${tag}: Hard only keeps missing hard runs unranked`, hardState.unranked.every(Boolean), hardState.unranked);
+      await difficulty.locator('[data-bh-jev12-scope-reset]').click();
       await difficulty.locator('[data-bh-jev12-scope-option="easy-medium"]').click();
       check(`${tag}: Easy + Medium changes scope and warns`, await difficulty.getAttribute('data-bh-jev12-scope') === 'easy-medium' && await difficulty.locator('[data-bh-jev12-scope-warning]').count() === 1);
       check(`${tag}: Easy + Medium grid summary is public-only`, /120 public task outcomes/.test(await grid.locator('summary').innerText()));
@@ -86,7 +99,7 @@ try {
         const first = table.querySelector('tbody tr[data-bh-jev12-task]');
         const groupRows = [...table.querySelectorAll('tbody tr')].filter((row) => !row.hasAttribute('data-bh-jev12-task'));
         const groupCells = groupRows.flatMap((row) => [...row.querySelectorAll('td')].map((cell) => cell.textContent?.trim() || ''));
-        const groupHeads = groupRows.map((row) => row.querySelector('th')?.textContent?.replace(/\s+/g, ' ').trim() || '');
+        const groupHeads = groupRows.map((row) => row.querySelector('th span.hidden')?.textContent?.replace(/\s+/g, ' ').trim() || row.querySelector('th')?.textContent?.replace(/\s+/g, ' ').trim() || '');
         // Review gate 20260920T043003Z (c): a group row must not mix bases — its cells count the public rows it lists.
         const groupBasesAgree = groupRows.every((row) => {
           const declared = Number(row.querySelector('th')?.textContent?.match(/(\d+) of \d+ decisions public/)?.[1]);
@@ -99,7 +112,7 @@ try {
         const taskHeads = [...table.querySelectorAll('tbody tr[data-bh-jev12-task] th')];
         const typedRows = taskHeads.filter((head) => head.querySelector('[data-bh-jev12-task-type]')?.textContent?.trim()).length;
         const typeCodes = [...new Set(taskHeads.map((head) => head.querySelector('[data-bh-jev12-task-type]')?.textContent?.trim()))].sort();
-        const titleOnlyTopic = taskHeads.filter((head) => /·/.test(head.getAttribute('title') || '')).length;
+        const titleHasTopicAndType = taskHeads.filter((head) => /·\s+(choice|noul|score)\s+—/.test(head.getAttribute('title') || '')).length;
         const legend = document.querySelector('[data-bh-jev12-task-legend]')?.textContent?.replace(/\s+/g, ' ').trim() || '';
         const taskCellRects = first ? [...first.querySelectorAll('td')].map((cell) => { const rect = cell.getBoundingClientRect(); return { width: rect.width, height: rect.height }; }) : [];
         const rotated = [...table.querySelectorAll('thead th:not(:first-child) span')].every((node) => getComputedStyle(node).writingMode === 'vertical-rl' && getComputedStyle(node).transform !== 'none');
@@ -107,14 +120,14 @@ try {
         const blank = [...table.querySelectorAll('tbody tr[data-bh-jev12-task] td')].filter((node) => /no public outcome/.test(node.getAttribute('title') || ''));
         const djevIndex = heads.findIndex((head) => head === 'djev');
         const djevCell = djevIndex >= 0 ? first?.children[djevIndex] : null;
-        return { heads, taskRows, djevIndex, blank: blank.length, djevText: djevCell?.textContent?.trim(), djevTitle: djevCell?.getAttribute('title'), groupRows: groupRows.length, groupCells, groupHeads, groupBasesAgree, typedRows, typeCodes, titleOnlyTopic, legend, taskCellRects, rotated };
+        return { heads, taskRows, djevIndex, blank: blank.length, djevText: djevCell?.textContent?.trim(), djevTitle: djevCell?.getAttribute('title'), groupRows: groupRows.length, groupCells, groupHeads, groupBasesAgree, typedRows, typeCodes, titleHasTopicAndType, legend, taskCellRects, rotated };
       });
       check(`${tag}: grid exposes all 231 public tasks grouped by tier`, gridData.taskRows === 231, gridData.taskRows);
-      check(`${tag}: every scored system has a column, djev included`, gridData.heads.length === 22 && gridData.djevIndex >= 0 && /correct|wrong|failed|not attempted/.test(gridData.djevTitle || ''), gridData);
+      check(`${tag}: every scored system has a column, djev included`, gridData.heads.length >= 22 && gridData.djevIndex >= 0 && /correct|wrong|failed|not attempted/.test(gridData.djevTitle || ''), gridData);
       check(`${tag}: no column is left unavailable`, gridData.blank === 0, gridData.blank);
-      check(`${tag}: dense grid uses compact cells and per-system tier summaries`, gridData.groupRows === 3 && gridData.groupCells.length === 63 && gridData.groupCells.every((cell) => /^\d+\/\d+$/.test(cell)) && gridData.taskCellRects.every((rect) => rect.width <= 34 && rect.height <= 30) && gridData.rotated, gridData);
+      check(`${tag}: dense grid uses compact cells and per-system tier summaries`, gridData.groupRows === 3 && gridData.groupCells.length === gridData.groupRows * (gridData.heads.length - 1) && gridData.groupCells.every((cell) => /^\d+\/\d+$/.test(cell)) && gridData.taskCellRects.every((rect) => rect.width <= 34 && rect.height <= 30) && gridData.rotated, gridData);
       check(`${tag}: group rows name both bases and count only the public rows they list`, gridData.groupBasesAgree && gridData.groupHeads.length === 3 && /^Easy · 48 of 72 decisions public$/.test(gridData.groupHeads[0]) && /^Medium \(standard\) · 72 of 96 decisions public$/.test(gridData.groupHeads[1]) && /^Hard · 111 of 220 decisions public$/.test(gridData.groupHeads[2]), gridData.groupHeads);
-      check(`${tag}: every task row shows its question type as text`, gridData.typedRows === 231 && gridData.typeCodes.join(',') === 'choice,noul,score' && gridData.titleOnlyTopic === 0, { typedRows: gridData.typedRows, typeCodes: gridData.typeCodes, titleOnlyTopic: gridData.titleOnlyTopic });
+      check(`${tag}: every task row carries its question type as text and accessible title`, gridData.typedRows === 231 && gridData.typeCodes.join(',') === 'choice,noul,score' && gridData.titleHasTopicAndType === 231, { typedRows: gridData.typedRows, typeCodes: gridData.typeCodes, titleHasTopicAndType: gridData.titleHasTopicAndType });
       check(`${tag}: the legend defines the types and says where the topic is readable`, /choice/.test(gridData.legend) && /noul/.test(gridData.legend) && /score/.test(gridData.legend) && /carries its topic/.test(gridData.legend) && /group row counts the public tasks it lists/.test(gridData.legend), gridData.legend.slice(0, 260));
       // Review gate 20260920T055002Z: the head is the only thing that names the 21 system columns. With 231 rows in
       // a 38rem scroller it has to stay on screen, or every cell below the first screenful belongs to nobody.

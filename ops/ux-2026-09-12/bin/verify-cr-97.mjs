@@ -17,14 +17,14 @@ const row = (k) => a.systems.find((s) => s.key === k);
 const CD = 'classifier-dev-fast';
 
 // --- CR-97.1 the artifact: listed, not ranked; nothing else moved but the ranks below it ---
-check('artifact: revision v1.2.4', a.revision === 'v1.2.4', a.revision);
+check('artifact: revision v1.2.4 or later', ['v1.2.4', 'v1.2.5'].includes(a.revision), a.revision);
 const cd = row(CD);
 check('artifact: classifier.dev is an honorable mention with no rank', cd && cd.listing === 'honorable_mention' && cd.ranked === false && cd.partial === false && cd.rank === null, cd && [cd.listing, cd.rank]);
 check('artifact: it keeps every number it earned', cd && cd.jevbench_score.toFixed(1) === '84.8' && cd.axes.intelligence > 0 && cd.axes.calibration > 0 && cd.axes.speed > 0 && cd.axes.cost > 0 && cd.cost.usd_per_1000 > 0, cd && [cd.jevbench_score, cd.cost.usd_per_1000]);
 check('artifact: it is not ranked under any weighting either', cd && cd.rank_under === undefined, cd && cd.rank_under);
 const ranked = a.systems.filter((s) => s.ranked);
 check('artifact: Jev 1.13.0 is #1 at 75.4', ranked[0] && ranked[0].key === 'jev-1.13.0' && ranked[0].rank === 1 && ranked[0].jevbench_score.toFixed(1) === '75.4', ranked[0] && [ranked[0].key, ranked[0].jevbench_score]);
-check('artifact: 17 ranked rows, 1..17, in score order', ranked.length === 17 && ranked.every((s, i) => s.rank === i + 1) && ranked.every((s, i) => i === 0 || s.jevbench_score <= ranked[i - 1].jevbench_score), ranked.length);
+check('artifact: ranked rows are a contiguous score-ordered sequence', ranked.length >= 17 && ranked.every((s, i) => s.rank === i + 1) && ranked.every((s, i) => i === 0 || s.jevbench_score <= ranked[i - 1].jevbench_score), ranked.length);
 check('artifact: only ranked rows carry a rank', a.systems.every((s) => (s.rank === null) !== s.ranked), a.systems.filter((s) => !s.ranked && s.rank !== null).map((s) => s.key));
 check('artifact: an honorable mention outscores #1 and is still not ranked', cd.jevbench_score > ranked[0].jevbench_score, [cd.jevbench_score, ranked[0].jevbench_score]);
 
