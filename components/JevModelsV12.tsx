@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState, type ReactNode } from "react";
 import type { JevAxis, JevTier12, JevV12Row, JevV12View } from "../lib/jevbench-v12.mjs";
 import type { JevTaskScope, JevTasksView } from "../lib/jevbench-v12-tasks.mjs";
 import { AXES, AXIS_LABEL, DEFAULT_PRESET, DEFAULT_WEIGHTS, PRESETS, SCORE_NAME, describe, isDefault, normalise, parseParams, percents, rerank, sameWeights, toParam, type JevWeights4 } from "../lib/jevbench-v12-weights.mjs";
-import { DEFAULT_TASK_SCOPE, TASK_SCOPES, scopeById, scopeRows, tasksForScope } from "../lib/jevbench-v12-scope.mjs";
+import { DEFAULT_TASK_SCOPE, TASK_SCOPES, parseTaskScope, scopeById, scopeRows, tasksForScope, toTaskScopeParam } from "../lib/jevbench-v12-scope.mjs";
 
 // CR-92 (Florian 2026-09-19): JevBench v1.2 final. The JevBench Score = geometric mean of Intelligence, Calibration, Speed
 // and Cost, 25 % each, is the hero; the earlier weightings stay as presets (recomputed the same way) with the unmissable
@@ -63,8 +63,20 @@ const Delta = ({ d }: { d: number }) => d === 0 ? null
       title={`${Math.abs(d)} place${Math.abs(d) === 1 ? "" : "s"} ${d > 0 ? "higher" : "lower"} than in the official ranking`}>
       {d > 0 ? "▲" : "▼"}{Math.abs(d)}<span className="sr-only"> vs. official rank</span></span>;
 
-function Controls({ w, raw, setPreset, setRaw, reset }: { w: JevWeights4; raw: JevWeights4; setPreset: (p: JevWeights4) => void; setRaw: (r: JevWeights4) => void; reset: () => void }) {
-  const d = describe(w);
+function stateDescription(w: JevWeights4, scope: JevTaskScope) {
+  const weights = describe(w);
+  const scopeDefault = scope === DEFAULT_TASK_SCOPE;
+  return {
+    ...weights,
+    official: weights.official && scopeDefault,
+    scopeDefault,
+    scopeLabel: scopeById(scope).label,
+    title: scopeDefault ? weights.title : `${weights.official ? SCORE_NAME : weights.title} — ${scopeById(scope).label} tasks`,
+  };
+}
+
+function Controls({ w, raw, scope, setPreset, setRaw, reset }: { w: JevWeights4; raw: JevWeights4; scope: JevTaskScope; setPreset: (p: JevWeights4) => void; setRaw: (r: JevWeights4) => void; reset: () => void }) {
+  const d = stateDescription(w, scope);
   const eff = percents(w);
   const [copied, setCopied] = useState(false);
   const copy = async () => { try { await navigator.clipboard.writeText(window.location.href); setCopied(true); setTimeout(() => setCopied(false), 1800); } catch { /* clipboard blocked: the URL bar already holds the link */ } };
@@ -73,7 +85,7 @@ function Controls({ w, raw, setPreset, setRaw, reset }: { w: JevWeights4; raw: J
       <h2 id="jevc-weights" className="text-base font-semibold">Weighting: Intelligence : Calibration : Speed : Cost</h2>
       {d.official
         ? <span className="bh-jevc-official" data-bh-jevc-badge="official">Official default</span>
-        : <span className="flex flex-wrap items-center gap-2"><span className="bh-jevc-notdefault" role="status" data-bh-jevc-badge="not-default">⚠ Not the default — not the {SCORE_NAME}</span>
+        : <span className="flex flex-wrap items-center gap-2"><span className="bh-jevc-notdefault" role="status" data-bh-jevc-badge="not-default">⚠ Not the default — {d.scopeDefault ? `not the ${SCORE_NAME}` : `${d.scopeLabel} tasks${describe(w).official ? "" : ` · ${d.ratio}`}`}</span>
             <button type="button" className="bh-button min-h-9 text-sm font-semibold" onClick={reset} data-bh-jevc-reset>Reset to the {SCORE_NAME}</button></span>}
     </div>
     <div className="mt-3 grid grid-cols-2 gap-2 lg:grid-cols-6 lg:items-start" role="group" aria-label="Weighting presets">
@@ -95,23 +107,23 @@ function Controls({ w, raw, setPreset, setRaw, reset }: { w: JevWeights4; raw: J
     <p className="bh-muted mt-3 text-[13px]" data-bh-jevc-note>
       The official <b className="text-gray-200">{SCORE_NAME}</b> weights the four axes <b className="text-gray-200">25 % each and takes their geometric mean</b>. The other buttons are the earlier views (Balanced 33:33:33 and the three &ldquo;Emphasis on&rdquo; weightings, which leave Calibration out), recomputed the same way.
       Any of them is your view, recomputed in your browser from the published axis scores — not the published score.{" "}
-      {!d.official && <button type="button" className="text-accent underline" onClick={copy} data-bh-jevc-copy>{copied ? "Link copied" : "Copy a link to this weighting"}</button>}
+      {!d.official && <button type="button" className="text-accent underline" onClick={copy} data-bh-jevc-copy>{copied ? "Link copied" : "Copy a link to this view"}</button>}
     </p>
   </section>;
 }
 
-function ScoreChart({ rows, partial, w, view }: { rows: Row[]; partial: Row[]; w: JevWeights4; view: JevV12View }) {
-  const d = describe(w);
+function ScoreChart({ rows, partial, w, view, scope }: { rows: Row[]; partial: Row[]; w: JevWeights4; view: JevV12View; scope: JevTaskScope }) {
+  const d = stateDescription(w, scope);
   const all = [...rows, ...partial];
   const types = Object.keys(TYPE).filter((t) => all.some((r) => r.cls === t));
   const f0 = (v: number | null) => (v === null ? "–" : v.toFixed(0));
   return <figure className={`bh-panel p-4 sm:p-5 ${d.official ? "" : "bh-jevc-custom"}`} data-bh-jev12-main-chart data-bh-jevc-chart={d.official ? "official" : "custom"} aria-labelledby="jevc-title">
-    <p className="bh-eyebrow">JevBench {view.revision} · {view.decisions} decisions per system</p>
+    <p className="bh-eyebrow">JevBench {view.revision} · {view.decisions} decisions per system{!d.scopeDefault && ` · ${d.scopeLabel}`}</p>
     <h2 id="jevc-title" className="mt-1 text-xl font-bold leading-snug sm:text-2xl" data-bh-jevc-title>{d.title}</h2>
     <p className="mt-1 flex flex-wrap items-center gap-2 text-sm" data-bh-jevc-subtitle>
       {d.official
         ? <><span className="bh-jevc-official">Official</span><span className="bh-muted" data-bh-jev12-oneliner>{view.oneLiner} <a href="#jevc-weights" className="text-accent underline">Change the weighting ↓</a></span></>
-        : <><span className="bh-jevc-notdefault">⚠ Not the default — not the {SCORE_NAME}</span><span className="bh-muted">Ranks and scores below are recomputed with {d.ratio} (Intelligence : Calibration : Speed : Cost, geometric mean); ▲▼ = change vs. the official ranking. <a href="#jevc-weights" className="text-accent underline">Weighting ↓</a></span></>}
+        : <><span className="bh-jevc-notdefault">⚠ Not the default — {d.scopeDefault ? `not the ${SCORE_NAME}` : `${d.scopeLabel} tasks${describe(w).official ? "" : ` · ${d.ratio}`}`}</span><span className="bh-muted">{d.scopeDefault ? `Ranks and scores below are recomputed with ${d.ratio} (Intelligence : Calibration : Speed : Cost, geometric mean);` : `Ranks and scores below are recomputed for the ${d.scopeLabel.toLowerCase()} decisions (Intelligence from that tier only); the official all-tasks score is the ${SCORE_NAME}.`} ▲▼ = change vs. the official ranking. <a href="#jevc-weights" className="text-accent underline">Weighting ↓</a></span></>}
     </p>
     <div className="mt-4 hidden grid-cols-[1.6rem_14rem_1fr_3.2rem_19rem] gap-x-2 text-[11px] sm:grid" aria-hidden="true">
       <span /><span /><span /><span />
@@ -128,7 +140,7 @@ function ScoreChart({ rows, partial, w, view }: { rows: Row[]; partial: Row[]; w
             <ProjectLink r={r}>{chartName(r)}</ProjectLink>{r.footnote ? <sup data-bh-jev12-dagger>†</sup> : null}{!r.ranked && <span className="bh-muted"> (partial run)</span>}{!d.official && r.rank !== null && <Delta d={r.delta} />}
           </span>
           <span className="bh-jevc-grid col-start-2 row-start-2 mt-1 flex h-4 sm:col-start-3 sm:row-start-1 sm:mt-0 sm:h-6" aria-hidden="true">
-            {s !== null && <span className={`bh-jevc-bar ${r.ranked ? "" : "is-partial"}`} style={{ width: `${Math.max(0, Math.min(100, s))}%` }} />}
+            {s !== null && <span className={`bh-jevc-bar ${r.ranked ? "" : "is-partial"}`} style={{ width: `${Math.max(0, Math.min(100, s)).toFixed(4)}%` }} />}
           </span>
           <b className="tabular col-start-3 row-span-2 row-start-1 self-center text-right text-base sm:col-start-4 sm:row-span-1 sm:text-lg" data-bh-jev12-main={s === null ? "" : s.toFixed(3)}>{one(s)}</b>
           <span className="bh-muted col-start-2 row-start-3 mt-0.5 min-w-0 font-mono text-[10.5px] sm:whitespace-nowrap sm:col-start-5 sm:row-start-1 sm:mt-0 sm:grid sm:grid-cols-[1fr_1fr_1fr_1fr_2.1fr] sm:text-right sm:text-[12px]" data-bh-jevc-subs>
@@ -168,10 +180,10 @@ function ScoreChart({ rows, partial, w, view }: { rows: Row[]; partial: Row[]; w
   </figure>;
 }
 
-function Table({ view, rows, partialRows, w }: { view: JevV12View; rows: Row[]; partialRows: Row[]; w: JevWeights4 }) {
+function Table({ view, rows, partialRows, w, scope }: { view: JevV12View; rows: Row[]; partialRows: Row[]; w: JevWeights4; scope: JevTaskScope }) {
   const [col, setCol] = useState<Col>("main");
   const [flip, setFlip] = useState(false);
-  const d = describe(w);
+  const d = stateDescription(w, scope);
   const sort = (list: Row[]) => {
     const better = HIGHER[col] !== flip;
     return [...list].sort((a, b) => {
@@ -218,7 +230,7 @@ function Table({ view, rows, partialRows, w }: { view: JevV12View; rows: Row[]; 
           <th scope="col" className="bh-jev-sticky">System</th>
           {d.official
             ? <H c="main" label={SCORE_NAME} sub="official" hero />
-            : <H c="main" label={d.preset ? d.short : `Custom ${d.ratio}`} sub={`${d.ratio} · not the official score`} hero />}
+            : <H c="main" label={d.preset ? d.short : `Custom ${d.ratio}`} sub={`${d.scopeDefault ? `${d.ratio} · not the official score` : `${d.scopeLabel} · not the official score`}`} hero />}
           {AXES.map((k) => <H key={k} c={k} label={AXIS_LABEL[k]} sub={`${eff[k]} %`} />)}
           <H c="usd" label="$ per 1,000" sub="decisions" />
           {TIER_ORDER.map((t) => <H key={t} c={t} label={TIER_LABEL[t]} sub={`${view.tierCounts[t]} dec. · ${Math.round(view.tierWeights[t] * 100)} %`} />)}
@@ -276,28 +288,27 @@ function TaskGrid({ view, tasks, scope }: { view: JevV12View; tasks: JevTasksVie
     <details className="bh-panel mt-3 p-4" data-bh-jev12-task-grid>
       <summary className="cursor-pointer font-semibold">Show {visibleTasks.length} public task outcomes across {systems.length} systems</summary>
       <div className="bh-table-wrap mt-3 max-h-[38rem] overflow-auto">
-        <table className="bh-table min-w-[64rem] text-[12px]" data-bh-jev12-task-table>
+        <table className="bh-table min-w-[54rem] text-[12px]" data-bh-jev12-task-table>
           <thead><tr>
             <th scope="col" className="bh-jev-sticky min-w-[13rem] text-left">Task</th>
-            {systems.map((r) => <th key={r.key} scope="col" className="min-w-[5rem] max-w-[7rem] whitespace-normal text-center" title={r.display}>{short(r.display)}</th>)}
+            {systems.map((r) => <th key={r.key} scope="col" className="bh-jev-task-system h-[7.5rem] w-8 min-w-[2rem] max-w-[2rem] whitespace-nowrap px-0 text-center align-bottom text-[12px]" title={r.display} aria-label={r.display}><span className="bh-jev-task-rotated inline-block">{short(r.display)}</span></th>)}
           </tr></thead>
           <tbody>
             {groups.flatMap((tier) => {
               const tierTasks = visibleTasks.filter((task) => task.tier === tier);
               if (!tierTasks.length) return [];
               return [
-                <tr key={'group-' + tier}><th scope="rowgroup" colSpan={systems.length + 1} className="bg-[rgb(var(--surface-2))] text-left font-semibold">{groupLabel[tier]} · {tierTasks.length} public tasks</th></tr>,
-                ...tierTasks.map((task) => <tr key={task.id} data-bh-jev12-task={task.id}>
-                  <th scope="row" className="bh-jev-sticky text-left font-normal">
-                    <span className="font-semibold">{task.id}</span>
-                    <span className="bh-muted block text-[11px]">{task.topic} · {task.type}</span>
+                <tr key={'group-' + tier} className="bg-[rgb(var(--surface-2))]"><th scope="rowgroup" className="bh-jev-sticky text-left font-semibold">{groupLabel[tier]} · {tierTasks.length} public tasks</th>{systems.map((r) => { const summary = tasks.systems[r.key]?.byTier[tier]; return <td key={r.key} className="bh-jev-task-cell w-8 min-w-[2rem] px-0 text-center text-[11px] font-semibold tabular-nums" title={`${r.display}: ${summary ? `${summary.correct}/${summary.attempted} correct/attempted` : "no public outcomes"}`}>{summary ? `${summary.correct}/${summary.attempted}` : "—"}</td>; })}</tr>,
+                ...tierTasks.map((task) => <tr key={task.id} className="bh-jev-task-row" data-bh-jev12-task={task.id}>
+                  <th scope="row" className="bh-jev-sticky min-w-[13rem] text-left font-normal" title={`${task.topic} · ${task.type}`}>
+                    <span className="font-semibold whitespace-nowrap">{task.id}</span>
                   </th>
                   {systems.map((r) => {
                     const outcome = tasks.systems[r.key]?.outcomes[task.id];
-                    if (!outcome) return <td key={r.key} className="bh-muted text-center" title={r.key + ': no public outcome in the pinned artifact'} aria-label={r.key + ': no public outcome'}>—</td>;
+                    if (!outcome) return <td key={r.key} className="bh-jev-task-cell bh-muted w-8 min-w-[2rem] max-w-[2rem] px-0 py-0.5 text-center" title={r.key + ': no public outcome in the pinned artifact'} aria-label={r.key + ': no public outcome'}>—</td>;
                     const meta = TASK_STATUS[outcome.status];
                     const latency = outcome.latency === null ? 'latency unavailable' : outcome.latency.toFixed(3) + ' s';
-                    return <td key={r.key} className={'text-center font-semibold ' + meta.className} title={task.id + ' · ' + task.tier + ' · ' + task.topic + ' · ' + meta.label + ' · ' + latency} aria-label={r.display + ', ' + task.id + ': ' + meta.label}>{meta.symbol}</td>;
+                    return <td key={r.key} className={'bh-jev-task-cell w-8 min-w-[2rem] max-w-[2rem] px-0 py-0.5 text-center font-semibold ' + meta.className} title={task.id + ' · ' + task.tier + ' · ' + task.topic + ' · ' + meta.label + ' · ' + latency} aria-label={r.display + ', ' + task.id + ': ' + meta.label}>{meta.symbol}</td>;
                   })}
                 </tr>),
               ];
@@ -315,28 +326,37 @@ const presetRaw = (w: JevWeights4): JevWeights4 => ({ intelligence: w.intelligen
 export function JevModelsV12Board({ view, tasks, children }: { view: JevV12View; tasks?: JevTasksView; children?: ReactNode }) {
   const s = view.scoring;
   const [scope, setScope] = useState<JevTaskScope>(DEFAULT_TASK_SCOPE);
+  const [urlReady, setUrlReady] = useState(false);
   const [raw, setRawState] = useState<JevWeights4>(presetRaw(DEFAULT_WEIGHTS));
   const w = useMemo(() => { const n = normalise(raw) ?? DEFAULT_WEIGHTS; return PRESETS.find((p) => sameWeights(p.w, n))?.w ?? n; }, [raw]);
-  useEffect(() => { const fromUrl = parseParams(window.location.search); if (!isDefault(fromUrl)) setRawState(presetRaw(fromUrl)); }, []);
   useEffect(() => {
+    const fromUrl = parseParams(window.location.search);
+    if (!isDefault(fromUrl)) setRawState(presetRaw(fromUrl));
+    setScope(parseTaskScope(window.location.search) as JevTaskScope);
+    setUrlReady(true);
+  }, []);
+  useEffect(() => {
+    if (!urlReady) return;
     const u = new URL(window.location.href); const p = toParam(w);
     if (p) u.searchParams.set("w", p); else u.searchParams.delete("w");
+    const scopeParam = toTaskScopeParam(scope);
+    if (scopeParam) u.searchParams.set("scope", scopeParam); else u.searchParams.delete("scope");
     u.searchParams.delete("preset");
     if (u.href !== window.location.href) window.history.replaceState(window.history.state, "", u.href);
-  }, [w]);
+  }, [w, scope, urlReady]);
   const scopedView = useMemo(() => {
     if (!tasks) return view;
     const ranked = scopeRows(view.ranked, tasks.systems, scope, DEFAULT_WEIGHTS);
     const partial = scopeRows(view.partial, tasks.systems, scope, DEFAULT_WEIGHTS);
-    return { ...view, ranked, partial };
+    return { ...view, ranked, partial, decisions: tasksForScope(tasks.tasks, scope).length };
   }, [view, tasks, scope]);
   const { ranked, partial } = useMemo(() => rerank(scopedView.ranked, scopedView.partial, w), [scopedView, w]);
   const tw = view.tierWeights;
   const scopeInfo = scopeById(scope);
   return <>
     <div className="mt-6 space-y-4" data-bh-jevc-hero>
-      <ScoreChart rows={ranked} partial={partial} w={w} view={scopedView} />
-      <Controls w={w} raw={raw} setPreset={(p) => setRawState(presetRaw(p))} setRaw={setRawState} reset={() => setRawState(presetRaw(DEFAULT_WEIGHTS))} />
+      <ScoreChart rows={ranked} partial={partial} w={w} view={scopedView} scope={scope} />
+      <Controls w={w} raw={raw} scope={scope} setPreset={(p) => setRawState(presetRaw(p))} setRaw={setRawState} reset={() => { setRawState(presetRaw(DEFAULT_WEIGHTS)); setScope(DEFAULT_TASK_SCOPE); }} />
     </div>
     {tasks && <section className="bh-panel mt-8 max-w-4xl p-4" aria-labelledby="jev12-difficulty" data-bh-jev12-difficulty data-bh-jev12-scope={scope}>
       <div className="flex flex-wrap items-start justify-between gap-3">
@@ -349,11 +369,11 @@ export function JevModelsV12Board({ view, tasks, children }: { view: JevV12View;
       <div className="mt-3 flex flex-wrap gap-2" role="group" aria-label="Task difficulty scope">
         {TASK_SCOPES.map((item) => <button key={item.id} type="button" className="bh-button min-h-10 text-sm font-semibold" aria-pressed={scope === item.id} onClick={() => setScope(item.id)} data-bh-jev12-scope-option={item.id}>{item.label}</button>)}
       </div>
-      {scope !== DEFAULT_TASK_SCOPE && <p className="mt-3 text-sm font-semibold text-[rgb(var(--warn))]" role="status" data-bh-jev12-scope-warning>⚠ Not the default JevBench setting — showing {scopeInfo.label.toLowerCase()} only; the official all-tasks result remains available via reset.</p>}
+      {scope !== DEFAULT_TASK_SCOPE && <p className="mt-3 text-sm font-semibold text-[rgb(var(--warn))]" role="status" data-bh-jev12-scope-warning>⚠ Not the default JevBench setting — {scopeInfo.label} tasks; the chart, table and ranking above are recomputed.</p>}
       <p className="bh-muted mt-2 text-xs">Tier mapping: Easy = easy; Medium = standard; Judge and Hard remain in All tasks. The score still includes the published Calibration, Speed and Cost axes.</p>
     </section>}
     {children}
-    <Table view={scopedView} rows={ranked} partialRows={partial} w={w} />
+    <Table view={scopedView} rows={ranked} partialRows={partial} w={w} scope={scope} />
     {tasks && <TaskGrid view={scopedView} tasks={tasks} scope={scope} />}
     <section className="bh-panel mt-8 max-w-4xl p-4 text-sm" aria-labelledby="jev12-how" data-bh-jev12-formula>
       <h2 id="jev12-how" className="font-semibold">How the {SCORE_NAME} works</h2>

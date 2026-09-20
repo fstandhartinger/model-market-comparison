@@ -5,7 +5,7 @@ import { readFile } from 'node:fs/promises';
 import { readJevbenchV12, jevbenchV12View } from '../lib/jevbench-v12.mjs';
 import { JEVBENCH_V12_TASKS_ARTIFACT, JEVBENCH_V12_TASKS_SHA256, readJevbenchV12Tasks, validateJevbenchV12Tasks, jevbenchV12TasksView } from '../lib/jevbench-v12-tasks.mjs';
 import { DEFAULT_WEIGHTS } from '../lib/jevbench-v12-weights.mjs';
-import { tasksForScope, scopeRows } from '../lib/jevbench-v12-scope.mjs';
+import { tasksForScope, parseTaskScope, scopeRows } from '../lib/jevbench-v12-scope.mjs';
 import { createHash } from 'node:crypto';
 
 const clone = async () => JSON.parse(await readFile(JEVBENCH_V12_TASKS_ARTIFACT, 'utf8'));
@@ -52,4 +52,11 @@ test('difficulty scope recomputes Intelligence and the JevBench Score without ch
   const easy = scopeRows(view.ranked, taskView.systems, 'easy', DEFAULT_WEIGHTS);
   assert.notDeepEqual(easy.map((r) => r.key), view.ranked.map((r) => r.key));
   assert.ok(easy.some((r) => Math.abs(r.axes.intelligence - original.get(r.key).axes.intelligence) > 0.01));
+});
+
+test('difficulty scope URL parsing is bounded', () => {
+  assert.equal(parseTaskScope('?scope=easy'), 'easy');
+  assert.equal(parseTaskScope('?scope=easy-medium'), 'easy-medium');
+  assert.equal(parseTaskScope('?scope=unknown'), 'all');
+  assert.equal(parseTaskScope(''), 'all');
 });

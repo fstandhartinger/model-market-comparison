@@ -4,7 +4,9 @@ export const TASK_SCOPES: { id: 'all' | 'easy-medium' | 'easy'; label: string; s
 export const DEFAULT_TASK_SCOPE: 'all';
 export function scopeById(id: string): { id: 'all' | 'easy-medium' | 'easy'; label: string; short: string; tiers: JevTier12[] };
 export function taskScopeLabel(id: string): string;
+export function parseTaskScope(search: string | URLSearchParams): 'all' | 'easy-medium' | 'easy';
+export function toTaskScopeParam(id: string): string | null;
 export function tasksForScope(tasks: JevTask[], id: string): JevTask[];
 export function scopedIntelligence(row: JevV12Row, taskSystem: JevTasksView['systems'][string] | undefined, scopeId: string): number | null;
-export function scopeRows<R extends JevV12Row>(rows: R[], taskSystems: JevTasksView['systems'], scopeId: string, defaultWeights: Record<string, number>): R[];
+export function scopeRows<R extends JevV12Row>(rows: R[], taskSystems: JevTasksView['systems'], scopeId: string, defaultWeights: Record<string, number>): (R & { publishedMain: number; publishedRank: number | null })[];
 export function scopeTierWeights(scopeId: string): Record<JevTier12, number>;
