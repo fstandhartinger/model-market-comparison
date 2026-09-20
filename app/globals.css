@@ -469,6 +469,7 @@ details[open] > .bh-collapsible-grid { display: grid; }
 .bh-jev-task-phone-id { display: none; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow-wrap: anywhere; font-size: 11px; line-height: 14px; white-space: normal; }
 @media (max-width: 639px) {
   [data-bh-jev12-task-table] .bh-jev-sticky { width: 7.5rem; min-width: 7.5rem; max-width: 7.5rem; }
+  [data-bh-jev12-task-table] .bh-jev-task-row > th { padding-left: 4px; padding-right: 4px; }
   .bh-jev-task-phone-id { display: -webkit-box; }
 }
 .bh-jevc-custom figure, figure.bh-jevc-custom { box-shadow: 0 0 0 2px rgb(var(--warn) / .7); }

@@ -27,12 +27,13 @@ try {
     const detail = await p.$('[data-bh-jev12-honorable-details]');
     const initiallyClosed = !!detail && !(await detail.getAttribute('open'));
     const visibleReason = (await p.textContent('[data-bh-jev12-honorable-reason]')) || '';
-    check(`${tag} honorable mention is compact and closed`, !!hm && initiallyClosed && (await hm.boundingBox())?.height <= (mobile ? 520 : 260) && (visibleReason.match(/[.!?](?:\s|$)/g) || []).length === 2, { initiallyClosed, visibleReason });
+    const sentenceCount = visibleReason.replace(/v\d+(?:\.\d+)+/g, 'version').split(/(?<=[.!?])\s+/).filter(Boolean).length;
+    check(`${tag} honorable mention is compact and closed`, !!hm && initiallyClosed && (await hm.boundingBox())?.height <= (mobile ? 520 : 260) && sentenceCount === 2, { initiallyClosed, sentenceCount, visibleReason });
     if (detail) await detail.evaluate((x) => x.setAttribute('open', 'open'));
     const hmText = hm ? (await hm.textContent()) || '' : '';
     check(`${tag} honorable disclosure keeps the explanation, caveats, finding and links`, /0\.7 confidence/.test(hmText) && /\$0\.033 per 1,000/.test(hmText) && /97\.3 %/.test(hmText) && (await p.$$eval('[data-bh-jev12-honorable-details] a', (a) => a.length)) >= 4, hmText.slice(-300));
     const grid = await p.$('[data-bh-jev12-task-grid]');
-    if (grid) await grid.locator('summary').click();
+    if (grid) await (await grid.$('summary'))?.click();
     await p.waitForTimeout(100);
     const gridInfo = await p.evaluate(() => {
       const wrap = document.querySelector('[data-bh-jev12-task-table]')?.parentElement;
