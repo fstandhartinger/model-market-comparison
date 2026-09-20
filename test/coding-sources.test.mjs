@@ -21,6 +21,9 @@ const SLUG_BOARDS = ['osworld-2', 'swe-rebench', 'gso', 'hyper-tau-bench', 'lisa
   'kernelbench-cuda-megaqwen-decode', 'kernelbench-cuda-grid-mingru-sps',
   // 2026-09-19 (iteration 117, CR-30.2): two product-name boards from their own primary sites.
   'frontierswe', 'posttrainbench',
+  // 2026-09-20 (iteration 126, CR-83.1): RSI-Exam, product names with the agent harness and the stated
+  // reasoning effort in brackets; the harness stays in the protocol and never enters the identity.
+  'rsi-exam',
   // 2026-09-19 (iteration 115, CR-54.2): six boards from Epoch AI's Benchmarking Hub ZIP, slug labels joined by
   // the same lib/coding-identity.mjs parseDeepSweId rule as DeepSWE/SimpleQA Verified. math_level_5 and
   // frontiermath_erdos stay excluded; recorded in data/raw/benchmarks/epoch-hub-decisions.json.

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "verified_at": "2026-09-19",
+  "verified_at": "2026-09-20",
   "entries": [
     {
       "id": "aa-aime::2025",
@@ -9527,6 +9527,93 @@
           "sha256": "c969a3b9d6ba3e64a4b6826f72cbba032157a634c1fd7da42e8cb5856713e55c",
           "fetched_at": "2026-09-19T08:50:00+00:00",
           "excerpt": "\"benchmark\": \"JevBench v1.1\", \"protocol\": \"jevbench::v1.1\", \"n_decisions_per_system\": 314, \"weights\": {\"capability\": 0.6, \"cost\": 0.2, \"speed\": 0.2} — the tag v1.1.2 copy and the committed copy have the same sha256."
+        }
+      ]
+    },
+    {
+      "id": "rsi-exam::0.1",
+      "name": "RSI-Exam 0.1 (aiming-lab)",
+      "version": "0.1",
+      "version_status": "published",
+      "family": "rsi-exam",
+      "category": "Agentic",
+      "one_sentence_description": "An agent spends a long, budgeted run improving an inherited, working-but-weak executable research method or harness on a visible split, and the single artifact it submits is re-run once on a sealed hidden split across 88 executable research tasks in six domains.",
+      "scoring": {
+        "metric": "Mean frozen normalised hidden-set score over the 88 active tasks (Full board)",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Each task's native metric is mapped onto a common 0-1 scale by anchors frozen before the release: the inherited starter method is 0.00, a finite mathematical, theoretical or oracle upper bound is 1.00, and where the task author provides a verified strong frontier solution it is placed at 0.60 as the frontier-calibrated reference; without a finite upper bound an exponential tail approaches but never reaches 1.00. The board averages those per-task scores with equal weight. One rollout per model x agent-harness pair per task, so the numbers carry no run-to-run variance estimate; a score of 0.00 means the submitted artifact did not improve on the inherited method, including after an early termination. The Public 35 / Private 53 panels restrict the same runs to the two splits and stay in each observation's protocol. Secondary benchmark, never a Composite input."
+      },
+      "maintainer": "RSI-Exam Team (aiming-lab, UNC Chapel Hill)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://rsi-exam.ai/",
+      "publication_urls": [
+        {
+          "url": "https://rsi-exam.ai/",
+          "type": "official_leaderboard",
+          "role": "RSI-Exam leaderboard (Full 88 / Public 35 / Private 53) and resource comparison"
+        },
+        {
+          "url": "https://rsi-exam.ai/blog.html",
+          "type": "official_leaderboard",
+          "role": "Release write-up: task construction, scoring and normalisation anchors, experimental setup, results"
+        },
+        {
+          "url": "https://github.com/aiming-lab/RSI-Exam",
+          "type": "github",
+          "role": "Evaluation infrastructure, harness commands and task download (MIT)"
+        },
+        {
+          "url": "https://huggingface.co/datasets/RSI-Exam/RSI-Exam",
+          "type": "huggingface",
+          "role": "The 35 public tasks with their grading containers"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-rsi-exam; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "Static HTML page with server-rendered SVG and one strict JSON island",
+        "identity_policy": "source_label",
+        "locator": "Server-rendered SVG between the page's own <!-- LB:START --> / <!-- LB:END --> markers: one <div class=\"hlbwrap\" id=\"lbpanel-<scope>\"> per scope, each <g class=\"hlbrow\"> carrying rank (hlbrank), model (hlbmodel), harness and reasoning effort (hlbsub) and the mean hidden-set normalised score (hlbval). The Full panel is the score; Public and Private are the same runs restricted to the two splits and stay in the protocol. Mean spend, run time and output tokens come from the page's <script id=\"effdata\"> JSON island for the models it covers.",
+        "version_guard": "The page must still state the release label \"RSI-Exam 0.1\", the three scope tabs Full 88 / Public 35 / Private 53 over the same task bank, the frontier-calibrated reference anchor, one ranked panel per scope covering the same systems, and a resource chart whose score for every model it covers equals that model's Full-board value. The release write-up must still state the anchors (inherited Starter 0.00, frontier-calibrated SOTA anchor 0.60, upper bound 1.00) and one rollout per model per released task. A changed task count, a re-normalisation or a new release label is a new identity, never a silent update of this one.",
+        "notes": "Measured by the maintainers; rows are model x agent-harness pairs (the harness is part of the measured system and is kept per row, never part of the model identity). robots.txt: none published (404). Repository and evaluation code are MIT; attribute the RSI-Exam Team and link the leaderboard. The site states a reasoning effort per row; Kimi K3 is the one row whose effort the source contradicts itself on (leaderboard label 'kimi cli · max' against the release write-up's setup table 'Not specified', and its resource-chart id carries no effort suffix while every other one does), so it is left unjoined rather than guessed. Exact joins: data/raw/benchmarks/identity-map.json (lib/board-identity.mjs, parseRsiExamLabel). Filed as CR-83.1 from Florian's X bookmark folder 'evals'."
+      },
+      "update_cadence": {
+        "source_schedule": "The maintainers add frontier models to the same 0.1 board as they are evaluated (three added on 18 September 2026); task releases beyond 0.1 are announced as new releases.",
+        "check_recommendation": "Daily with the ordinary refresh; a changed task count, release label or normalisation is a new identity and needs a reviewed change."
+      },
+      "saturated": {
+        "value": false,
+        "note": "The best Full-board mean at capture is 0.5126 (GPT-6-astra, codex max) — below the frontier-calibrated reference anchor at 0.60; computed saturation (CR-38.2) applies on build."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-20",
+      "last_verified": "2026-09-20",
+      "evidence": [
+        {
+          "url": "https://rsi-exam.ai/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-rsi-exam/bf00330b037fc6674912.gz",
+          "sha256": "7a9c6e9b2f4bd4869af073ec9d807f31590d722a414552c33d8759f92067bea6",
+          "fetched_at": "2026-09-20T00:05:20.580923+00:00",
+          "excerpt": "mean held-out normalised score per model over all 88 active tasks; scope tabs Full 88 / Public 35 / Private 53; anchor line 'frontier-calibrated reference'"
+        },
+        {
+          "url": "https://rsi-exam.ai/blog.html",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-rsi-exam/a1d892d9c0f1a86a741a.gz",
+          "sha256": "6ae167f1b35499398d95816cb2ee3510c0448e453f67a111d944aa82eb51c03c",
+          "fetched_at": "2026-09-20T00:05:24.260963+00:00",
+          "excerpt": "Anchors. The inherited Starter is fixed at 0.00. ... use the resulting measured performance as an optional Frontier-calibrated SOTA anchor at 0.60."
+        },
+        {
+          "url": "https://rsi-exam.ai/blog.html",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-20-rsi-exam/a1d892d9c0f1a86a741a.gz",
+          "sha256": "6ae167f1b35499398d95816cb2ee3510c0448e453f67a111d944aa82eb51c03c",
+          "fetched_at": "2026-09-20T00:05:24.260963+00:00",
+          "excerpt": "Each model receives one rollout per released task, so the results compare aggregate capability but do not estimate within-model run-to-run variance."
         }
       ]
     }

@@ -4375,6 +4375,80 @@
 				"https://arxiv.org/abs/2603.08640",
 				"https://github.com/aisa-group/PostTrainBench"
 			]
+		},
+		{
+			"benchmark_id": "rsi-exam::0.1",
+			"parser": {
+				"kind": "rsi_exam_leaderboard",
+				"name_field": "name",
+				"id_field": "id",
+				"value_field": "score",
+				"harness_field": "harness",
+				"plain_text_names": true,
+				"method_source": {
+					"url": "https://rsi-exam.ai/blog.html",
+					"file": "data/raw/benchmarks/daily-evidence/2026-09-20-rsi-exam/a1d892d9c0f1a86a741a.gz",
+					"sha256": "a1d892d9c0f1a86a741ae3c692c09a8160217e94fd33730e1d0c866e874b5d21",
+					"retrieved_at": "2026-09-20T00:05:24.260963+00:00"
+				},
+				"require": {
+					"version_label": "RSI-Exam 0.1",
+					"boards": {
+						"full": 88,
+						"public": 35,
+						"private": 53
+					},
+					"headline_scope": "full",
+					"anchor_label": "frontier-calibrated reference",
+					"minimum_rows": 15,
+					"minimum_resource_rows": 9,
+					"harness_vocab": [
+						"antigravity",
+						"claude code",
+						"codex",
+						"grok",
+						"kimi cli",
+						"musecode",
+						"qwen coder"
+					],
+					"effort_vocab": [
+						"low",
+						"medium",
+						"high",
+						"xhigh",
+						"max"
+					],
+					"method_text": [
+						"The inherited Starter is fixed at 0.00.",
+						"Frontier-calibrated SOTA anchor at 0.60.",
+						"Each model receives one rollout per released task"
+					]
+				}
+			},
+			"status": "collected",
+			"reason": "RSI-Exam publishes its leaderboard as server-rendered SVG on its own site, one panel per scope over the same 88-task bank. The Full panel is this identity; the Public and Private panels are the same runs restricted to the two splits and are kept in the protocol, never as separate scores.",
+			"recipe": {
+				"command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-rsi-exam; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+				"format": "Static HTML page with server-rendered SVG and one strict JSON island",
+				"locator": "Server-rendered SVG between the page's own <!-- LB:START --> / <!-- LB:END --> markers: one <div class=\"hlbwrap\" id=\"lbpanel-<scope>\"> per scope, each <g class=\"hlbrow\"> carrying rank (hlbrank), model (hlbmodel), harness and reasoning effort (hlbsub) and the mean hidden-set normalised score (hlbval). The Full panel is the score; Public and Private are the same runs restricted to the two splits and stay in the protocol. Mean spend, run time and output tokens come from the page's <script id=\"effdata\"> JSON island for the models it covers.",
+				"version_guard": "The page must still state the release label \"RSI-Exam 0.1\", the three scope tabs Full 88 / Public 35 / Private 53 over the same task bank, the frontier-calibrated reference anchor, one ranked panel per scope covering the same systems, and a resource chart whose score for every model it covers equals that model's Full-board value. The release write-up must still state the anchors (inherited Starter 0.00, frontier-calibrated SOTA anchor 0.60, upper bound 1.00) and one rollout per model per released task. A changed task count, a re-normalisation or a new release label is a new identity, never a silent update of this one.",
+				"notes": "Measured by the benchmark maintainers (aiming-lab, UNC). robots.txt: none published (404), so nothing is disallowed; the page is 84 kB and is captured by the ordinary daily run. Row labels are product names with the agent harness and the stated reasoning effort; exact joins come from data/raw/benchmarks/identity-map.json (lib/board-identity.mjs, parseRsiExamLabel)."
+			},
+			"cadence": "daily, at most one capture per source; stop on access restrictions",
+			"version_guard": "The page must still state the release label \"RSI-Exam 0.1\", the three scope tabs Full 88 / Public 35 / Private 53 over the same task bank, the frontier-calibrated reference anchor, one ranked panel per scope covering the same systems, and a resource chart whose score for every model it covers equals that model's Full-board value. The release write-up must still state the anchors (inherited Starter 0.00, frontier-calibrated SOTA anchor 0.60, upper bound 1.00) and one rollout per model per released task. A changed task count, a re-normalisation or a new release label is a new identity, never a silent update of this one.",
+			"source": {
+				"url": "https://rsi-exam.ai/",
+				"file": "data/raw/benchmarks/daily-evidence/2026-09-20-rsi-exam/bf00330b037fc6674912.gz",
+				"sha256": "bf00330b037fc66749129d69b72d60422539e52fc97c3cf7ad75de1659e7fdff",
+				"retrieved_at": "2026-09-20T00:05:20.580923+00:00"
+			},
+			"protocol": "RSI-Exam 0.1 (aiming-lab), Full board: the mean frozen normalised hidden-set score over all 88 active tasks (35 public + 53 private) in six domains. Per task the agent inherits a working but weak executable method or harness, experiments against a visible split inside a sealed container under the task's budget (12 h agent timeout in the published harness commands), and submits one executable artifact that a fresh verifier container re-runs once on the hidden split; that single hidden-set number is the task score, normalised against anchors frozen before the release (inherited starter 0.00, optional frontier-calibrated reference 0.60, upper bound 1.00 where a finite one exists, exponential tail otherwise). One rollout per model x harness per task, so the board estimates no run-to-run variance; container egress is restricted to the model provider API. Each row is one model x agent-harness pair as the source labels it; the Public 35 / Private 53 restrictions of the same runs stay in the row context. Secondary benchmark, never a Composite input.",
+			"basis": "measured",
+			"minimum_rows": 15,
+			"source_urls": [
+				"https://rsi-exam.ai/",
+				"https://rsi-exam.ai/blog.html"
+			]
 		}
 	]
 }

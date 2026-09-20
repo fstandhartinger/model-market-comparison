@@ -655,6 +655,74 @@ def parse(source,spec,load_source):
                     'n_runs':n_runs,'std':std,'base_models':req['base_models'],'benchmarks':req['benchmark_weights'],
                     'is_external':info['isExternal'],'footnote_marker':info.get('footnoteMarker') or None,
                     'verification_note':info.get('verificationNote') or None}})
+    elif kind=='rsi_exam_leaderboard':
+        # RSI-Exam (aiming-lab, rsi-exam.ai): the leaderboard is server-rendered SVG inside the page's own
+        # LB:START/LB:END block — one panel per scope over the same task bank (Full 88 tasks, Public 35,
+        # Private 53), each row one model x agent-harness pair with its mean hidden-set normalised score.
+        # The Full panel is this identity; the two split panels of the same run stay in the protocol and are
+        # never scored separately. The page's resource chart ships a strict JSON island (`effdata`) with the
+        # same score plus mean spend, run time and output tokens; every model it covers must carry the Full
+        # panel's value, which is the cross-check that the rendered bar and the page's own data agree.
+        # The release write-up (method_source) must still state the anchors (Starter 0.00, frontier-calibrated
+        # reference 0.60, upper bound 1.00) and the one-rollout-per-task rule, so a re-normalised release
+        # cannot keep this identity.
+        req=spec['require']
+        if f'<span class="eyebrow e-orange">{req["version_label"]}</span>' not in source:raise ValueError('RSI-Exam version label changed: '+req['version_label'])
+        block=re.search(r'<!-- LB:START -->(.*?)<!-- LB:END -->',source,re.S)
+        if not block:raise ValueError('RSI-Exam leaderboard block missing')
+        board=block[1]
+        tabs={m[1]:int(m[2]) for m in re.finditer(r'data-board="([a-z]+)"[^>]*>[^<]*<span class="lbn">(\d+)</span>',board)}
+        if tabs!=req['boards']:raise ValueError(f'RSI-Exam scope task counts changed: {tabs!r}')
+        panels={}
+        for m in re.finditer(r'<div class="hlbwrap" id="lbpanel-([a-z]+)"[^>]*>(.*?)</svg>',board,re.S):
+            label=re.search(r'aria-label="([^"]*)"',m[2])
+            panel_rows=[]
+            for g in re.finditer(r'<g class="hlbrow".*?</g>',m[2],re.S):
+                cell=lambda c:(re.search(r'class="'+c+r'"[^>]*>([^<]*)<',g[0]) or [None,None])[1]
+                rank,model,sub,value=cell('hlbrank'),cell('hlbmodel'),cell('hlbsub'),cell('hlbval')
+                if None in (rank,model,sub,value):raise ValueError('RSI-Exam row shape changed in panel '+m[1])
+                panel_rows.append({'rank':int(rank),'model':text(model),'sub':text(sub),'value':numeric(value)})
+            panels[m[1]]={'rows':panel_rows,'aria':text(label[1]) if label else ''}
+        if set(panels)!=set(req['boards']):raise ValueError(f'RSI-Exam scope panels changed: {sorted(panels)!r}')
+        if req['headline_scope'] not in panels:raise ValueError('RSI-Exam headline scope missing')
+        if str(req['boards'][req['headline_scope']]) not in panels[req['headline_scope']]['aria']:raise ValueError('RSI-Exam headline panel no longer states its task count: '+panels[req['headline_scope']]['aria'])
+        if req['anchor_label'] not in board:raise ValueError('RSI-Exam anchor label missing: '+req['anchor_label'])
+        keys=None
+        for scope,panel in sorted(panels.items()):
+            ranked=panel['rows']
+            if len(ranked)<req['minimum_rows']:raise ValueError(f'RSI-Exam {scope} panel shrank: {len(ranked)}')
+            if [r['rank'] for r in ranked]!=list(range(1,len(ranked)+1)):raise ValueError(f'RSI-Exam {scope} panel ranks are not 1..n')
+            if any(ranked[i]['value']<ranked[i+1]['value'] for i in range(len(ranked)-1)):raise ValueError(f'RSI-Exam {scope} panel is not ranked by its own value')
+            scoped={(r['model'],r['sub']) for r in ranked}
+            if keys is None:keys=scoped
+            elif scoped!=keys:raise ValueError(f'RSI-Exam {scope} panel covers a different system set')
+        resources={}
+        island=re.search(r'<script id="effdata" type="application/json">(.*?)</script>',source,re.S)
+        if not island:raise ValueError('RSI-Exam resource data island missing')
+        for index,r in enumerate(json.loads(island[1])):
+            if not isinstance(r,dict) or not all(isinstance(r.get(k),str) and r[k].strip() for k in ['id','name','sub']):raise ValueError(f'RSI-Exam resource row {index} schema changed')
+            if any(not isinstance(r.get(k),(int,float)) or isinstance(r.get(k),bool) for k in ['score','cost','time','out']):raise ValueError(f'RSI-Exam resource row {index} values changed')
+            resources[(text(r['name']),text(r['sub']))]=r
+        if len(resources)<req['minimum_resource_rows']:raise ValueError(f'RSI-Exam resource rows shrank: {len(resources)}')
+        headline={(r['model'],r['sub']):r for r in panels[req['headline_scope']]['rows']}
+        for key,r in resources.items():
+            if key not in headline:raise ValueError(f'RSI-Exam resource row {key!r} is not on the {req["headline_scope"]} board')
+            if abs(headline[key]['value']-r['score'])>5e-5:raise ValueError(f'RSI-Exam {key!r}: resource chart says {r["score"]}, the board says {headline[key]["value"]}')
+        method=' '.join(load_source(spec['method_source']).split())
+        for phrase in req['method_text']:
+            if phrase not in method:raise ValueError('RSI-Exam method statement changed: '+phrase)
+        for index,row in enumerate(panels[req['headline_scope']]['rows']):
+            harness,_,effort=row['sub'].partition(' · ')
+            if harness not in req['harness_vocab']:raise ValueError(f'RSI-Exam unlisted harness {harness!r}')
+            if effort not in req['effort_vocab']:raise ValueError(f'RSI-Exam unlisted reasoning effort {effort!r}')
+            resource=resources.get((row['model'],row['sub']))
+            rows.append({'name':f"{row['model']} [{row['sub']}]",'id':f"{row['model']} [{row['sub']}]",'score':row['value'],'harness':harness,'source_row':index,
+                'context':{'model':row['model'],'harness':harness,'stated_effort':effort,'rank':row['rank'],
+                    'scope_scores':{scope:next((r['value'] for r in panels[scope]['rows'] if (r['model'],r['sub'])==(row['model'],row['sub'])),None) for scope in sorted(panels)},
+                    'scope_tasks':req['boards'],
+                    'mean_spend_usd':resource['cost'] if resource else None,'mean_run_time_min':resource['time'] if resource else None,
+                    'mean_output_tokens':resource['out'] if resource else None,'resource_row_id':resource['id'] if resource else None,
+                    'resource_task_counts':resource.get('n') if resource else None}})
     else:raise ValueError('Unknown parser kind '+kind)
     if not isinstance(rows,list) or not rows:raise ValueError('No source result rows')
     return rows

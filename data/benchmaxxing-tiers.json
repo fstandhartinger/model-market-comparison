@@ -291,6 +291,10 @@
     "posttrainbench": {
       "tier": "secondary",
       "reason": "Public retraining protocol and harness (aisa-group/PostTrainBench, MIT; arXiv2603.08640, verified by Epoch AI); a base-model retraining eval quoted on posttrainbench.com only."
+    },
+    "rsi-exam": {
+      "tier": "heldout",
+      "reason": "Every task score comes from a sealed hidden split the agent never sees, 53 of the 88 tasks are held back entirely, and the tasks were written for this benchmark in 2026 by domain experts — a lab cannot tune toward the graded data."
     }
   }
 }
