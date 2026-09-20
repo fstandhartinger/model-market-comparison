@@ -11,7 +11,7 @@ await fs.mkdir(OUT, { recursive: true });
 const checks = []; const check = (name, ok, detail) => checks.push({ name, ok: !!ok, detail: typeof detail === 'string' ? detail : JSON.stringify(detail) });
 const a = await (await fetch(`${BASE}/api/jevbench/v1.2`)).json();
 const dj = a.systems.find((s) => s.key === 'djev');
-check('artifact: revision v1.2.1 or later', ['v1.2.1', 'v1.2.2'].includes(a.revision), a.revision);  // CR-95: v1.2.2 keeps djev, one rank lower
+check('artifact: revision v1.2.1 or later', ['v1.2.1', 'v1.2.2', 'v1.2.3'].includes(a.revision), a.revision);  // CR-95: v1.2.2 keeps djev, one rank lower
 check('artifact: djev rank 4 (was 3 in v1.2.1), 74.3', dj && dj.rank === 4 && dj.jevbench_score.toFixed(1) === '74.3', dj && [dj.rank, dj.jevbench_score]);
 check('artifact: djev announced price, production API, no adjustment', dj && dj.cost.kind === 'announced' && dj.endpoint_kind === 'api' && dj.speed.p50_s_adjusted === dj.speed.p50_s_raw, '');
 const b = await chromium.launch();
@@ -30,7 +30,7 @@ try {
       check(`${tag}: djev bar shows 74.3 and its name`, txt.includes('74.3') && txt.includes('djev'), txt.slice(0, 160));
       check(`${tag}: announced price tag`, (await p.$$('[data-bh-jev12-cost-kind="announced"]')).length >= 1, '');
       check(`${tag}: djev footnote`, ((await p.textContent('[data-bh-jev12-footnote="djev"]')) || '').includes('announced price'), '');
-      check(`${tag}: eyebrow says the current revision`, /v1\.2\.[12]/.test((await p.textContent('[data-bh-jevc-chart] .bh-eyebrow')) || ''), '');
+      check(`${tag}: eyebrow says the current revision`, /v1\.2\.[123]/.test((await p.textContent('[data-bh-jevc-chart] .bh-eyebrow')) || ''), '');
       check(`${tag}: no page errors`, errs.length === 0, errs);
       await p.locator('[data-bh-jevc-chart]').screenshot({ path: `${OUT}/${tag}-chart.png` });
     } finally { await c.close(); }

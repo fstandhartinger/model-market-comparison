@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { readJevbenchV12, jevbenchV12View } from '../../lib/jevbench-v12.mjs';
 import { readJevbenchV11, jevbenchV11View } from '../../lib/jevbench-v11.mjs';
 import { readJevbench, JEVBENCH_REPO } from '../../lib/jevbench.mjs';
-import { JevModelsV12Board, CostValue } from '../../components/JevModelsV12';
+import { JevModelsV12Board, CostValue, CostUnitNote } from '../../components/JevModelsV12';
 import { JevCostsDisclosure } from '../../components/JevCostsDisclosure';
 import { JevRadars } from '../../components/JevRadars';
 import { readJevbenchV12Topics, jevbenchV12TopicsView } from '../../lib/jevbench-v12-topics.mjs';
@@ -36,6 +36,11 @@ export default async function JevModelsPage() {
   const prices = v11.referencePrices ?? {};
   const all = [...view.ranked, ...view.partial];
   const estimated = all.filter((r) => r.costKind === 'estimate');
+  // CR-96: the rows whose price the v1.2.3 correction moved, in the published order.
+  const corrected = all.flatMap((r) => {
+    const c = view.costCorrectionTable?.[r.key];
+    return c && !c.unchanged ? [{ r, c }] : [];
+  });
   const topInt = [...view.ranked].sort((a, b) => (b.axes.intelligence ?? 0) - (a.axes.intelligence ?? 0))[0];
   const measuredKeys = new Set(all.map((r) => short(r.display).toLowerCase()));
   const notMeasured = (v1.availability.not_measured as { candidate: string; author: string; reason: string }[]).filter((n) => !measuredKeys.has(n.candidate.toLowerCase()));
@@ -73,11 +78,17 @@ export default async function JevModelsPage() {
     <JevRadars ranked={view.ranked} partial={view.partial} topics={topics} />
 
     <section className="mt-8 max-w-4xl text-sm" data-bh-jev-costs>
+      {/* CR-96 (2026-09-20): a reader read this column as dollars per 1,000 tokens. Say the unit before anything else. */}
+      <p className="bh-panel mb-3 p-3 text-[15px]" data-bh-jev12-cost-unit-panel>
+        <b>Every price here is US dollars per 1,000 <span className="text-accent">decisions</span> — not per 1,000 tokens.</b>{' '}
+        One decision is a whole question: its state, its rubric and its options, which is hundreds to thousands of input tokens.{' '}
+        <span className="bh-muted">{view.costUnit.worked_example.replace('One decision is a whole question, not a token. ', '')}</span>
+      </p>
       <p className="bh-muted mb-2">Systems with a public tariff use that tariff and measured tokens. For systems without one, we use a clearly marked estimate based on a large inference provider&apos;s list price for the same weights or size class.</p>
       <JevCostsDisclosure>
         <p className="bh-muted mt-2">Systems with a public tariff (per token or per request) are priced at that tariff times the tokens we measured. Systems without one — open weights, author demos, models we ran locally — are priced as if a <b className="text-gray-200">large inference provider</b> hosted them: the OpenRouter list price of the same weights; if OpenRouter does not list them, the nearest larger sibling; if no model of that size class is on OpenRouter, the DeepInfra list price of the same weights or of the nearest larger model of the same class. We do not use per-minute GPU rental or our own CPU time — providers buy capacity in bulk or own the hardware, and price accordingly. Price × tokens per decision = $ per 1,000 decisions, marked &ldquo;est.&rdquo;.</p>
         <ul className="mt-3 space-y-1.5" data-bh-jev-cost-rows>
-          {estimated.map((r) => <li key={r.key}><b>{short(r.display)}</b> — <CostValue r={r} /> per 1,000: <span className="bh-muted">{r.costBasis.replace(/^ESTIMATE: (hosted-provider price, )?/, '')}</span></li>)}
+          {estimated.map((r) => <li key={r.key}><b>{short(r.display)}</b> — <CostValue r={r} /> per 1,000 decisions: <span className="bh-muted">{r.costBasis.replace(/^ESTIMATE: (hosted-provider price, )?/, '')}</span></li>)}
         </ul>
         {prices.size_classes && <details className="mt-3"><summary className="cursor-pointer text-accent">Reference prices by size class ($ per million input / output tokens)</summary>
           <ul className="bh-muted mt-2 space-y-1" data-bh-jev-cost-classes>
@@ -85,6 +96,17 @@ export default async function JevModelsPage() {
           </ul>
           <p className="bh-muted mt-2">Sources: {String(prices.token_source ?? '')}.</p></details>}
       </JevCostsDisclosure>
+      {view.costCorrection && corrected.length > 0 && <details className="mt-3" data-bh-jev12-cost-correction>
+        <summary className="cursor-pointer text-accent">Correction, {view.costCorrection.revision} (20 September 2026): every price recomputed, each decision counted once</summary>
+        <p className="bh-muted mt-2">{view.costCorrection.rule}</p>
+        <ul className="bh-muted mt-2 list-disc space-y-1 pl-5">
+          {view.costCorrection.what_was_wrong.map((w, i) => <li key={i}>{w}</li>)}
+        </ul>
+        <p className="bh-muted mt-2">No tariff, measurement, item, answer or rank changed. The prices before and after:</p>
+        <ul className="bh-muted mt-2 space-y-1" data-bh-jev12-cost-correction-rows>
+          {corrected.map(({ r, c }) => <li key={r.key}><b className="text-gray-200">{short(r.display)}</b> — ${c.old.toFixed(4)} → ${c.new.toFixed(4)} ({c.pct > 0 ? '+' : ''}{c.pct.toFixed(2)} %)</li>)}
+        </ul>
+      </details>}
     </section>
 
     <section className="mt-10 max-w-4xl space-y-3" aria-labelledby="jev-not-measured">

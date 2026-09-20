@@ -13,13 +13,24 @@ test('the committed v1.2 artifact is the tagged public one and validates; the Sc
   assert.equal(d.sha256, JEVBENCH_V12_SHA256);
   const v = jevbenchV12View(d);
   const top = v.ranked.slice(0, 12).map((r) => [r.key, Number(r.main.toFixed(1))]);
-  // CR-93: v1.2.1 added djev; CR-95: v1.2.2 adds five requested systems. No earlier row's score changed; ranks move.
+  // CR-93: v1.2.1 added djev; CR-95: v1.2.2 adds five requested systems; CR-96: v1.2.3 corrects every price (each of the
+  // 534 decisions counted once and priced once). No measurement changed and no rank changed; scores move by <= 0.3.
   const all = v.ranked.map((r) => [r.key, Number(r.main.toFixed(1))]);
-  assert.deepEqual(all, [['classifier-dev-fast', 84.8], ['jev-1.13.0', 75.3], ['semif-qwen3.5-4b', 74.6], ['djev', 74.3], ['laya', 70.1],
-    ['open-alternative-jev', 69.8], ['system-one-open', 68.7], ['openjev-razorback16', 67.6], ['jeff', 66.9], ['openjev-sglang', 66.2],
-    ['openjev-verdict', 66.1], ['gpt-5.6-luna', 66.0], ['open-jev-deberta-v3-large', 64.4], ['nimble-9b', 63.5], ['gemini-3.1-flash-lite', 60.8],
-    ['deepseek-flash', 58.1], ['system-one-sg', 56.5], ['gliner2', 52.9]]);
-  assert.equal(v.revision, 'v1.2.2');
+  assert.deepEqual(all, [['classifier-dev-fast', 84.8], ['jev-1.13.0', 75.4], ['semif-qwen3.5-4b', 74.7], ['djev', 74.3], ['laya', 70.1],
+    ['open-alternative-jev', 69.8], ['system-one-open', 68.9], ['openjev-razorback16', 67.7], ['jeff', 66.9], ['openjev-sglang', 66.3],
+    ['openjev-verdict', 66.2], ['gpt-5.6-luna', 66.2], ['open-jev-deberta-v3-large', 64.6], ['nimble-9b', 63.7], ['gemini-3.1-flash-lite', 60.9],
+    ['deepseek-flash', 57.8], ['system-one-sg', 56.6], ['gliner2', 53.0]]);
+  assert.equal(v.revision, 'v1.2.3');
+  // CR-96: the unit travels with the artifact and names what it is not, so no surface can imply per-token prices.
+  assert.equal(v.costUnit.unit, '$ per 1,000 decisions');
+  assert.equal(v.costUnit.not_unit, '$ per 1,000 tokens');
+  assert.match(v.costUnit.worked_example, /per MILLION input tokens/);
+  assert.match(v.scoring.cost, /not per 1,000 tokens/i);
+  // Jev's own price is its public tariff times its measured tokens: $0.042 per million input, output free.
+  const jevRow = v.ranked.find((r) => r.key === 'jev-1.13.0');
+  assert.ok(Math.abs(jevRow.usd - (v.costUnit.mean_input_tokens_per_decision_jev * 1000 * 0.042) / 1e6) < 1e-9);
+  // Every corrected row is small and no rank moved: the correction table only ever changes the price.
+  for (const [key, c] of Object.entries(v.costCorrectionTable)) assert.ok(Math.abs(c.pct) < 15, key);
   const dj = v.ranked.find((r) => r.key === 'djev');
   assert.ok(dj.display === 'djev (Maisa, diffusion-gemma)' && dj.costKind === 'announced' && /announced/i.test(dj.costBasis) && dj.endpointKind === 'api' && dj.p50Adj === dj.p50 && dj.axes.cost < 100 && dj.footnote);
   // CR-95: the new rows carry their own type, a price that is not 100, and a footnote; the four local ones are adjusted.
@@ -33,8 +44,9 @@ test('the committed v1.2 artifact is the tagged public one and validates; the Sc
   assert.equal(v.ranked.filter((r) => r.key.startsWith('open-alternative-jev')).length, 1);
   assert.equal(v.ranked.find((r) => r.key === 'open-alternative-jev').display, 'open-alternative-jev (Qwen3.5-4B, IkerMoel)');
   assert.ok(v.partial.length === 3 && v.partial.every((r) => r.rank === null));
+  // Needle 3 options-as-tools has a price at all (v1.2 gave it an automatic 100); CR-96 corrected it from $0.0162 to $0.0144.
   const tools = v.partial.find((r) => r.key === 'needle-3-tools');
-  assert.ok(tools.usd > 0.016 && tools.usd < 0.0165 && tools.axes.cost < 100 && tools.costKind === 'estimate');
+  assert.ok(tools.usd > 0.014 && tools.usd < 0.0145 && tools.axes.cost < 100 && tools.costKind === 'estimate');
   assert.match(v.speedNote, /assumption/);
 });
 

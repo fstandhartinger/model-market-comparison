@@ -1277,3 +1277,26 @@ verification: `ops/ux-2026-09-12/jevbench/v1.2.2/CR-95.md`.
 - **CR-95.3** Because a service built on Jev now leads, the headline says why in one line: same Intelligence, a flat plan price
   instead of a per-token tariff, faster from our server, lower Calibration.
 - **CR-95.4** Revision v1.2.2 on the page; topic radars cover the new rows (topics artifact re-pinned).
+
+
+## CR-20260920a (JevBench page) → CR-96 — JevBench v1.2.3: the cost correction, and a Cost column nobody can read as per-token
+
+Florian, Telegram, 20 Sep 2026 ~06:50 UTC, with two screenshots (a reply by Seva Leonov @vsevolodl under the results post,
+"dude, Jev is 4.2 cents per 1m, not per 1k 🤦", and a Google snippet of the TypeSafe blog), verbatim:
+> check this - do we have the wrong pricing? if yes, fix all of it.
+
+Supervisor notes (not Florian's words): implemented by ~/jobs/jevbench-price-check-20260920 with the loop paused. Details and
+verification: `ops/ux-2026-09-12/jevbench/v1.2.3/CR-96.md`.
+- **The tariff was right.** docs.typesafe.ai/models: "Jev 1.13 … Price (per Btok / per Mtok) $42 / $0.042", "Charged per input
+  token. Output tokens are free." JevBench has used exactly that since v1.0. Our column is $ per 1,000 **decisions**, and one Jev
+  decision is 950 input tokens on average: 950 × 1,000 × $0.042 / 1,000,000 = $0.0399 per 1,000 decisions.
+- **Three arithmetic mistakes of our own were found and fixed** (repo tag `v1.2.3`): the 242-decision standard+judge run was
+  averaged twice in the v1.1-tier price (556 rows instead of 314); rows priced from the gemini-3.1-flash-lite token counts used
+  that run's standard+judge-only average (452 tokens/decision) for all 314 v1.1 decisions instead of its 314-decision average
+  (383); and requests whose answer came back unparseable were left unpriced although they were billed (9 DeepSeek decisions).
+- **CR-96.1** Artifact = tag `v1.2.3`. Fifteen rows 1.5–11 % cheaper, DeepSeek V4.1 Flash 2.6 % more expensive; scores move by
+  ≤ 0.3 points; **no rank changed**. Jev 1.13.0 $0.0406 → $0.0399, 75.3 → 75.4.
+- **CR-96.2** The unit travels with the artifact (`cost_unit`) and `lib/jevbench-v12.mjs` refuses an artifact without it.
+- **CR-96.3** Table header, a note under the table, the Cost bullet, a panel above the cost section and the repo charts all say
+  "$ per 1,000 decisions — not per 1,000 tokens", with the worked example.
+- **CR-96.4** The correction is disclosed on the page: all three mistakes and every before/after price.

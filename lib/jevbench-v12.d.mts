@@ -19,6 +19,10 @@ export type JevV12View = {
   sha256: string; revision: string; protocol: string; generated: string; revisionNote: string; scoreName: string; oneLiner: string; speedNote: string;
   scoring: Record<string, string>; presets: Record<string, Record<JevAxis, number>>; main: string; tierCounts: Record<JevTier12, number>;
   tierWeights: Record<JevTier12, number>; decisions: number; ranked: JevV12Row[]; partial: JevV12Row[];
+  costUnit: { unit: string; not_unit: string; one_liner: string; worked_example: string; short_note: string; mean_input_tokens_per_decision_jev: number };
+  costCorrection: { revision: string; file: string; what_was_wrong: string[]; rule: string } | null;
+  costCorrectionTable: Record<string, { old: number; new: number; pct: number; unchanged: boolean }> | null;
+  revisionLog: { revision: string; date: string | null; note: string }[];
 };
 export function intelligence(tiers: Partial<Record<JevTier12, number | null>>): number | null;
 export function adjustedLatency(s: number, kind: string): number;

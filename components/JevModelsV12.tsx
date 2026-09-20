@@ -53,6 +53,14 @@ export function SpeedNote({ view, className = "" }: { view: JevV12View; classNam
   return <span className={`bh-muted block text-[12px] ${className}`} data-bh-jev12-speed-note>⏱ {view.speedNote}</span>;
 }
 
+/** CR-96: the one line every price display carries — the unit is decisions, never tokens. */
+export function CostUnitNote({ view, className = "", full = false }: { view: JevV12View; className?: string; full?: boolean }) {
+  return <span className={`bh-muted block text-[12px] ${className}`} data-bh-jev12-cost-unit>
+    💲 <b className="text-gray-200">{view.costUnit.unit}</b>, not {view.costUnit.not_unit}: one decision is a whole question — its state, its rubric and its options.{" "}
+    {full ? view.costUnit.worked_example : view.costUnit.short_note}
+  </span>;
+}
+
 function ProjectLink({ r, children, className = "" }: { r: JevV12Row; children: ReactNode; className?: string }) {
   return r.link
     ? <a href={r.link} target="_blank" rel="noopener noreferrer" className={`underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent hover:decoration-current ${className}`} title={`${r.display} — ${r.author} · ${r.link.replace(/^https:\/\//, "")}`} data-bh-jev-link={r.key}>{children}</a>
@@ -224,6 +232,7 @@ function Table({ view, rows, partialRows, w, scope }: { view: JevV12View; rows: 
     <h2 id="jev12-table" className="text-xl font-semibold">Axes, tiers, latency and cost</h2>
     <p className="bh-muted mt-1 text-sm">Sort by any column; values the run could not produce always sort last. Hover a cost for how it was priced, a latency for the endpoint. Names link to each project.</p>
     <SpeedNote view={view} className="mt-1" />
+    <CostUnitNote view={view} className="mt-1" />
     <div className="bh-table-wrap mt-3">
       <table className="bh-table bh-jev-table" data-bh-jev12-table>
         <thead><tr>
@@ -233,7 +242,7 @@ function Table({ view, rows, partialRows, w, scope }: { view: JevV12View; rows: 
             ? <H c="main" label={SCORE_NAME} sub="official" hero />
             : <H c="main" label={d.preset ? d.short : `Custom ${d.ratio}`} sub={`${d.scopeDefault ? `${d.ratio} · not the official score` : `${d.scopeLabel} · not the official score`}`} hero />}
           {AXES.map((k) => <H key={k} c={k} label={AXIS_LABEL[k]} sub={`${eff[k]} %`} />)}
-          <H c="usd" label="$ per 1,000" sub="decisions" />
+          <H c="usd" label="$ per 1,000" sub="decisions, not tokens" />
           {TIER_ORDER.map((t) => <H key={t} c={t} label={TIER_LABEL[t]} sub={view.tierWeights[t] > 0 ? `${view.tierCounts[t]} dec. · ${Math.round(view.tierWeights[t] * 100)} %` : `${view.tierCounts[t]} dec. · outside this scope`} />)}
           <H c="p50" label="Latency" sub="p50 · p95, raw → adjusted" />
           <th scope="col" className="whitespace-nowrap text-[12px]">Endpoint</th>
@@ -414,7 +423,7 @@ export function JevModelsV12Board({ view, tasks, children }: { view: JevV12View;
         <li data-bh-jev12-intel-weights={scope}><b className="text-gray-200">Intelligence</b> — weighted accuracy{scope === DEFAULT_TASK_SCOPE ? "" : ` for the ${scopeInfo.label} scope`}: {scoredTiers.map((t, i) => <span key={t}>{i > 0 ? ", " : ""}{TIER_LABEL[t].toLowerCase()} {Math.round(scopedView.tierWeights[t] * 100)} %</span>)} ({scoredTiers.map((t) => view.tierCounts[t]).join(" / ")} decisions).{unscoredTiers.length > 0 && ` ${listAnd(unscoredTiers.map((t) => TIER_LABEL[t]))} ${unscoredTiers.length === 1 ? "is" : "are"} outside this scope, so ${unscoredTiers.length === 1 ? "it does" : "they do"} not enter the score.`}</li>
         <li><b className="text-gray-200">Calibration</b> — on the hard tier: does &ldquo;80 % sure&rdquo; come true 80 % of the time, and does the returned distribution match the exact gold distribution on the probability items.</li>
         <li><b className="text-gray-200">Speed</b> — median and 95th-percentile latency, one request at a time: 0.1 s scores 100, each 10× slower costs 20 points (1 s = 80, 10 s = 60). <SpeedNote view={view} className="mt-0.5 inline" /></li>
-        <li><b className="text-gray-200">Cost</b> — dollars per 1,000 decisions: $0.001 scores 100, each 10× more expensive costs 30 points ($0.01 = 70, $0.10 = 40, $1 = 10). Models without a tariff are priced at hosted-provider prices, marked &ldquo;est.&rdquo; (<a href="#jev-costs" className="text-accent underline">how</a>).</li>
+        <li><b className="text-gray-200">Cost</b> — dollars per 1,000 <b className="text-gray-200">decisions</b>, never per 1,000 tokens: $0.001 scores 100, each 10× more expensive costs 30 points ($0.01 = 70, $0.10 = 40, $1 = 10). Models without a tariff are priced at hosted-provider prices, marked &ldquo;est.&rdquo; (<a href="#jev-costs" className="text-accent underline">how</a>). <CostUnitNote view={view} className="mt-0.5" full /></li>
       </ul>
       <details className="mt-3"><summary className="cursor-pointer text-accent">Full scoring rules</summary>
         <dl className="bh-muted mt-2 space-y-2">
