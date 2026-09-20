@@ -1654,6 +1654,20 @@
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/public-review/arc-agi--2-0-packet.json numbered_candidates; public:17a09a2b2fb003c2f365e092"
     },
     {
+      "id": "public:17a83944e876e5d5dd19589d",
+      "observation_sha256": "aa9a1903ec9c8db0bbd3d029890164de294d2c48734c06db882cf56a1d09cb90",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "deepseek/deepseek-v4-flash-0731:free"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-18T12-58-20-378Z/gauntlet/scores-2/review-r2.json",
+      "review_sha256": "cb79bba1bf306fa4d4f6047dd5170f5f010dd0dcaf079b4be4bf5c12354bfa84",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-18T12-58-20-378Z/gauntlet/scores-2/artifact-r2.json",
+      "review_row": "public:17a83944e876e5d5dd19589d",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-18T12-58-20-378Z/gauntlet/scores-2/packet-r2.md#public:17a83944e876e5d5dd19589d"
+    },
+    {
       "id": "public:17d19fe6c42544cd1fd34e9d",
       "observation_sha256": "c87f821965ec16db112c3e1944f7b6345e55626cce32715f1300a5194241d7c3",
       "critic_model": "google/gemini-3.7-flash",
@@ -1666,6 +1680,20 @@
       "review_row": 1,
       "verdict": "accepted",
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/public-review/terminal-bench--4.0-0-packet.json numbered_candidates; public:17d19fe6c42544cd1fd34e9d"
+    },
+    {
+      "id": "public:17d5502bd07b4baf5a0e4e6a",
+      "observation_sha256": "c02002b63d5b4722be0e9b2dd3e6ddedf5b23b116fb41943784b398260099b31",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "deepseek/deepseek-v4-flash-0731:free"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-18T12-58-20-378Z/gauntlet/scores-2/review-r2.json",
+      "review_sha256": "cb79bba1bf306fa4d4f6047dd5170f5f010dd0dcaf079b4be4bf5c12354bfa84",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-18T12-58-20-378Z/gauntlet/scores-2/artifact-r2.json",
+      "review_row": "public:17d5502bd07b4baf5a0e4e6a",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-18T12-58-20-378Z/gauntlet/scores-2/packet-r2.md#public:17d5502bd07b4baf5a0e4e6a"
     },
     {
       "id": "public:17ebccba344faa700ed6c1d9",
@@ -4578,6 +4606,20 @@
       "review_row": 83,
       "verdict": "accepted",
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/public-review/mmmu--snapshot-2026-09-10-0-packet.json numbered_candidates; public:3fb706777689913fd609c799"
+    },
+    {
+      "id": "public:3fc65e2a70007acea87bb5cb",
+      "observation_sha256": "5dad3e4474cff9ce262d6aae55235ae8a3ecaab951579539394ce939e39632e3",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "deepseek/deepseek-v4-flash-0731:free"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-18T12-58-20-378Z/gauntlet/scores-2/review-r2.json",
+      "review_sha256": "cb79bba1bf306fa4d4f6047dd5170f5f010dd0dcaf079b4be4bf5c12354bfa84",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-18T12-58-20-378Z/gauntlet/scores-2/artifact-r2.json",
+      "review_row": "public:3fc65e2a70007acea87bb5cb",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-18T12-58-20-378Z/gauntlet/scores-2/packet-r2.md#public:3fc65e2a70007acea87bb5cb"
     },
     {
       "id": "public:3fda971b1a92ab94f83a20e9",
@@ -18538,6 +18580,566 @@
       "evidence_locator": "Self-reported release-document tranche A, slice 4 of 4; critic packet rebuildable with ops/ux-2026-09-12/bin/self-reported-critic-packet.mjs; self-reported:fcdf54e5922e03b797e4"
     },
     {
+      "id": "self-reported:step5-aa-briefcase",
+      "observation_sha256": "a2092d5a1f4294e9852aab725ddc52b815c19a04ac28cf560347f26050c46703",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-1b.json",
+      "review_sha256": "1e21b49d15e16568edb6d969eeae306ec61af6807dd41428364dbaae3be92c8b",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-1.json",
+      "review_row": "self-reported:step5-aa-briefcase",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-aa-briefcase is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-aa-lcr-v1-1",
+      "observation_sha256": "fd7c8a0a038e5ce416b4ab8ac4f81562c7e648f3f6434cbcbcae446fe3e0c570",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-1b.json",
+      "review_sha256": "1e21b49d15e16568edb6d969eeae306ec61af6807dd41428364dbaae3be92c8b",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-1.json",
+      "review_row": "self-reported:step5-aa-lcr-v1-1",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-aa-lcr-v1-1 is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-agents-last-exam-ale-cli",
+      "observation_sha256": "748c446ebce8d46ae4faafe5ef3fc5da1b6f3390c517b3833b953cb47ab3269e",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-1b.json",
+      "review_sha256": "1e21b49d15e16568edb6d969eeae306ec61af6807dd41428364dbaae3be92c8b",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-1.json",
+      "review_row": "self-reported:step5-agents-last-exam-ale-cli",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-agents-last-exam-ale-cli is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-apex-agents",
+      "observation_sha256": "8b3db169297b4df6623cc1a6d2a73d0c08db518fcb097ed43df5ecb386b1024a",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-1b.json",
+      "review_sha256": "1e21b49d15e16568edb6d969eeae306ec61af6807dd41428364dbaae3be92c8b",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-1.json",
+      "review_row": "self-reported:step5-apex-agents",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-apex-agents is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-automationbench-aa",
+      "observation_sha256": "3cec57e8477453169e4de3f66dd9849fc21fca2f1c21ef7fbb3b576b4a65d0ae",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-1b.json",
+      "review_sha256": "1e21b49d15e16568edb6d969eeae306ec61af6807dd41428364dbaae3be92c8b",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-1.json",
+      "review_row": "self-reported:step5-automationbench-aa",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-automationbench-aa is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-automationbench-public",
+      "observation_sha256": "a33395d4ee4377365b4d27186c5e6a95880bf56b22c96f29d212702184c241af",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-1b.json",
+      "review_sha256": "1e21b49d15e16568edb6d969eeae306ec61af6807dd41428364dbaae3be92c8b",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-1.json",
+      "review_row": "self-reported:step5-automationbench-public",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-automationbench-public is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-browsecomp",
+      "observation_sha256": "4b19641903f91e00e1352c35cb9f2d68bb60228df876fe373bc3a1a00350eaca",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-1b.json",
+      "review_sha256": "1e21b49d15e16568edb6d969eeae306ec61af6807dd41428364dbaae3be92c8b",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-1.json",
+      "review_row": "self-reported:step5-browsecomp",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-browsecomp is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-critpt",
+      "observation_sha256": "3c985d4fe1264a56ee7c3141a647b2c1d156b636b42df8a93179881be9239295",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-1b.json",
+      "review_sha256": "1e21b49d15e16568edb6d969eeae306ec61af6807dd41428364dbaae3be92c8b",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-1.json",
+      "review_row": "self-reported:step5-critpt",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-critpt is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-cybergym",
+      "observation_sha256": "4310fe485027445bea0e53fc7b21eacc86191dc62576790481f19199a3bcc99e",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-1b.json",
+      "review_sha256": "1e21b49d15e16568edb6d969eeae306ec61af6807dd41428364dbaae3be92c8b",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-1.json",
+      "review_row": "self-reported:step5-cybergym",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-cybergym is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-deepswe-v1-1",
+      "observation_sha256": "2ba637828a9aa422d0770ca1c484a8b35ab4f3aa06b5c7be5a99050e0c361581",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-1b.json",
+      "review_sha256": "1e21b49d15e16568edb6d969eeae306ec61af6807dd41428364dbaae3be92c8b",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-1.json",
+      "review_row": "self-reported:step5-deepswe-v1-1",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-deepswe-v1-1 is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-draco",
+      "observation_sha256": "2f9524c059915fb54fd536af1cc2e447b94251dc7939b299e60702421032baae",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-2b.json",
+      "review_sha256": "a4bdf8042401f9cf3de11fe0bddd90c77945d416d2d6c4479ef83542a42465ea",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-2.json",
+      "review_row": "self-reported:step5-draco",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-draco is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-finstepbench-corporatevaluation",
+      "observation_sha256": "802f0d0b9f3d7505e66c05d0d239734479aa87c5b439891c7adae5cd56d18a1f",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-2b.json",
+      "review_sha256": "a4bdf8042401f9cf3de11fe0bddd90c77945d416d2d6c4479ef83542a42465ea",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-2.json",
+      "review_row": "self-reported:step5-finstepbench-corporatevaluation",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-finstepbench-corporatevaluation is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-finstepbench-financedr",
+      "observation_sha256": "12dc529804a73dd78092b9ba69375e4f0aa52f881e82b6865d9e3a67b2e91591",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-2b.json",
+      "review_sha256": "a4bdf8042401f9cf3de11fe0bddd90c77945d416d2d6c4479ef83542a42465ea",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-2.json",
+      "review_row": "self-reported:step5-finstepbench-financedr",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-finstepbench-financedr is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-finstepbench-livesearch",
+      "observation_sha256": "9011d9ad70229e460a755c959ccf3d61e85e6457079cba5b548071bd10ba7188",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-2b.json",
+      "review_sha256": "a4bdf8042401f9cf3de11fe0bddd90c77945d416d2d6c4479ef83542a42465ea",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-2.json",
+      "review_row": "self-reported:step5-finstepbench-livesearch",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-finstepbench-livesearch is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-frontierfinance",
+      "observation_sha256": "61719be223344f770344a679fc519dfd658febf9d9fb2e63f4ea3c8f5f013cb9",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-2b.json",
+      "review_sha256": "a4bdf8042401f9cf3de11fe0bddd90c77945d416d2d6c4479ef83542a42465ea",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-2.json",
+      "review_row": "self-reported:step5-frontierfinance",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-frontierfinance is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-gdp-pdf",
+      "observation_sha256": "faff0307484d892f5676813f8a2852cf55e4751a96651adc72f8f75ad4109351",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-2b.json",
+      "review_sha256": "a4bdf8042401f9cf3de11fe0bddd90c77945d416d2d6c4479ef83542a42465ea",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-2.json",
+      "review_row": "self-reported:step5-gdp-pdf",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-gdp-pdf is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-gdpval-aa-v2",
+      "observation_sha256": "f434095ce2d5fdd81eaa080eb0f977e65656345b38447ffb91aa556aed954851",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-2b.json",
+      "review_sha256": "a4bdf8042401f9cf3de11fe0bddd90c77945d416d2d6c4479ef83542a42465ea",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-2.json",
+      "review_row": "self-reported:step5-gdpval-aa-v2",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-gdpval-aa-v2 is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-gpqa-diamond",
+      "observation_sha256": "16ae99715239ccd846294d2fb334f2260e6722312ee5884531a7e3e0ead2b112",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-2b.json",
+      "review_sha256": "a4bdf8042401f9cf3de11fe0bddd90c77945d416d2d6c4479ef83542a42465ea",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-2.json",
+      "review_row": "self-reported:step5-gpqa-diamond",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-gpqa-diamond is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-hle",
+      "observation_sha256": "93019f6810ed0ffa9d8722fbb5eed7e478aac2369791b8d419bdb2185a7acb14",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-2b.json",
+      "review_sha256": "a4bdf8042401f9cf3de11fe0bddd90c77945d416d2d6c4479ef83542a42465ea",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-2.json",
+      "review_row": "self-reported:step5-hle",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-hle is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-hle-w-tools",
+      "observation_sha256": "9080596f3ed77934f8b5ad81ffc96d4ffece67c30d2c43516998d8bb4af008ae",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-2b.json",
+      "review_sha256": "a4bdf8042401f9cf3de11fe0bddd90c77945d416d2d6c4479ef83542a42465ea",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-2.json",
+      "review_row": "self-reported:step5-hle-w-tools",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-hle-w-tools is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-jobbench",
+      "observation_sha256": "40eb8f6aa4e730b0d216ba641a9ab40109b2e4ada6935500a62439311949aa95",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-3c.json",
+      "review_sha256": "8895b32c52a60fc682985ae8aec24f74f70fc674e8fe38c11d6dd409dfd1801a",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-3.json",
+      "review_row": "self-reported:step5-jobbench",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-jobbench is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 3 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-mcp-atlas",
+      "observation_sha256": "dfa1dacdfc467fd9af7519eeef8dd0cee3f00118af22e78e9849388d74b6463c",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-3c.json",
+      "review_sha256": "8895b32c52a60fc682985ae8aec24f74f70fc674e8fe38c11d6dd409dfd1801a",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-3.json",
+      "review_row": "self-reported:step5-mcp-atlas",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-mcp-atlas is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 3 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-mls-bench-lite",
+      "observation_sha256": "77df5f20d457a47de8fec72bdc0ee9feb923cb8ce167084c568fb7f193f68f83",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-3c.json",
+      "review_sha256": "8895b32c52a60fc682985ae8aec24f74f70fc674e8fe38c11d6dd409dfd1801a",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-3.json",
+      "review_row": "self-reported:step5-mls-bench-lite",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-mls-bench-lite is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 3 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-mmmu-pro",
+      "observation_sha256": "f87f394c7e8b8397fb54caa249b1084f35a954552909e3599f23e3949630df24",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-3c.json",
+      "review_sha256": "8895b32c52a60fc682985ae8aec24f74f70fc674e8fe38c11d6dd409dfd1801a",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-3.json",
+      "review_row": "self-reported:step5-mmmu-pro",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-mmmu-pro is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 3 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-officeqa-pro",
+      "observation_sha256": "fefa663097660bb8ae822a1d77f8722c30b58f470d2e09586613d20c11a44515",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-3c.json",
+      "review_sha256": "8895b32c52a60fc682985ae8aec24f74f70fc674e8fe38c11d6dd409dfd1801a",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-3.json",
+      "review_row": "self-reported:step5-officeqa-pro",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-officeqa-pro is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 3 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-presentbench",
+      "observation_sha256": "33a9952ab8af85a36a9a2c3587b67e20898053063e691d71066e9ffd89e3a9ae",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-3c.json",
+      "review_sha256": "8895b32c52a60fc682985ae8aec24f74f70fc674e8fe38c11d6dd409dfd1801a",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-3.json",
+      "review_row": "self-reported:step5-presentbench",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-presentbench is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 3 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-programbench-pass-rate",
+      "observation_sha256": "dafbe663adb619282fa662e5f7da93d98e1c7c3f53db017aac4c8a4b4f569c5f",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-3c.json",
+      "review_sha256": "8895b32c52a60fc682985ae8aec24f74f70fc674e8fe38c11d6dd409dfd1801a",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-3.json",
+      "review_row": "self-reported:step5-programbench-pass-rate",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-programbench-pass-rate is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 3 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-roadmapbench",
+      "observation_sha256": "b71a25832b8aad471a0f62ecc67a873810e73a54c4ea0430872bbafe624efa59",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-3c.json",
+      "review_sha256": "8895b32c52a60fc682985ae8aec24f74f70fc674e8fe38c11d6dd409dfd1801a",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-3.json",
+      "review_row": "self-reported:step5-roadmapbench",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-roadmapbench is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 3 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-scicode",
+      "observation_sha256": "dc8c03792770dd4b21dfd6d65354c8ed9072649ac87b29b0263ebafd0bea56d7",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-3c.json",
+      "review_sha256": "8895b32c52a60fc682985ae8aec24f74f70fc674e8fe38c11d6dd409dfd1801a",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-3.json",
+      "review_row": "self-reported:step5-scicode",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-scicode is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 3 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-speadsheet-v2",
+      "observation_sha256": "15de57b5d1ed27b273440fea811365a8121b878007e9af11dc8e6833bb73cca7",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-3c.json",
+      "review_sha256": "8895b32c52a60fc682985ae8aec24f74f70fc674e8fe38c11d6dd409dfd1801a",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-3.json",
+      "review_row": "self-reported:step5-speadsheet-v2",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-speadsheet-v2 is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 3 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-stepcode-bench-daily",
+      "observation_sha256": "2722b83b0fd33d121b2ef683220f9ae2b3fd2f2bc9d63a3edba3e75c122ce132",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-4.json",
+      "review_sha256": "0eed25912acc561abe4253355dcf503ad600d38bbe57fc313636f84ecd0430d1",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-4.json",
+      "review_row": "self-reported:step5-stepcode-bench-daily",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-stepcode-bench-daily is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 4 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-stepcode-bench-general",
+      "observation_sha256": "ee96e10015a438a31442c3c18172d81762ad007fc5a9deb652a731a995e05fc7",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-4.json",
+      "review_sha256": "0eed25912acc561abe4253355dcf503ad600d38bbe57fc313636f84ecd0430d1",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-4.json",
+      "review_row": "self-reported:step5-stepcode-bench-general",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-stepcode-bench-general is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 4 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-stepcodebench",
+      "observation_sha256": "db0efa41e4ee18a9c38c88daa71f54d359560b8019f6b6723d1a73c152d97f2e",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-4.json",
+      "review_sha256": "0eed25912acc561abe4253355dcf503ad600d38bbe57fc313636f84ecd0430d1",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-4.json",
+      "review_row": "self-reported:step5-stepcodebench",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-stepcodebench is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 4 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-swe-atlas-qna",
+      "observation_sha256": "bc5c3ca33c16317d39b9e20aa210db1e244263536e768babdc797f156a10de17",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-4.json",
+      "review_sha256": "0eed25912acc561abe4253355dcf503ad600d38bbe57fc313636f84ecd0430d1",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-4.json",
+      "review_row": "self-reported:step5-swe-atlas-qna",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-swe-atlas-qna is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 4 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-swe-atlas-test-writing",
+      "observation_sha256": "8d41677c16f412caacda104165770357b15befe354a00deb15930c887a7177e6",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-4.json",
+      "review_sha256": "0eed25912acc561abe4253355dcf503ad600d38bbe57fc313636f84ecd0430d1",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-4.json",
+      "review_row": "self-reported:step5-swe-atlas-test-writing",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-swe-atlas-test-writing is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 4 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-swe-marathon-v1-1-partial-score",
+      "observation_sha256": "886dfa414e49d8d8f72da9cb8ae568238f31cd82c685b61b8e578eb8d59cac0a",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-4.json",
+      "review_sha256": "0eed25912acc561abe4253355dcf503ad600d38bbe57fc313636f84ecd0430d1",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-4.json",
+      "review_row": "self-reported:step5-swe-marathon-v1-1-partial-score",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-swe-marathon-v1-1-partial-score is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 4 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-tau3-banking",
+      "observation_sha256": "34f0934f8f78c09b101bd35d18363878cfe0bd8934ff89470cc912517f427ab9",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-4.json",
+      "review_sha256": "0eed25912acc561abe4253355dcf503ad600d38bbe57fc313636f84ecd0430d1",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-4.json",
+      "review_row": "self-reported:step5-tau3-banking",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-tau3-banking is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 4 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-terminal-bench-v2-1",
+      "observation_sha256": "971254a12eaef2d88f9e18aaeb3927e61cb350461682b6cce00605d9809b1365",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-4.json",
+      "review_sha256": "0eed25912acc561abe4253355dcf503ad600d38bbe57fc313636f84ecd0430d1",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-4.json",
+      "review_row": "self-reported:step5-terminal-bench-v2-1",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-terminal-bench-v2-1 is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 4 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-terminal-bench-v4",
+      "observation_sha256": "3a5604db462862d022651a4d7076332cfdb584e4c23ee9ed70cc24de84959427",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-4.json",
+      "review_sha256": "0eed25912acc561abe4253355dcf503ad600d38bbe57fc313636f84ecd0430d1",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-4.json",
+      "review_row": "self-reported:step5-terminal-bench-v4",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-terminal-bench-v4 is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 4 covered this exact row."
+    },
+    {
+      "id": "self-reported:step5-toolathlon-verified",
+      "observation_sha256": "9bbd3d6d5340f7ec12d9415225400f6120fbd6fd119c597377b6ada6587e20f0",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "openai/gpt-5.6-luna"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-4.json",
+      "review_sha256": "0eed25912acc561abe4253355dcf503ad600d38bbe57fc313636f84ecd0430d1",
+      "artifact_file": "ops/rebuild-2026-09/evidence/step5-2026-09-20-review-artifact-4.json",
+      "review_row": "self-reported:step5-toolathlon-verified",
+      "verdict": "accepted",
+      "evidence_locator": "Florian owner acceptance, 2026-09-20: add Step-5 Preview mostly from self-reported scores; self-reported:step5-toolathlon-verified is visibly vendor-reported/unverified and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 4 covered this exact row."
+    },
+    {
       "id": "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10",
       "observation_sha256": "5dd1315e959c6b34ceb385148b07b1da875f05fec2c88846d3512d85b9239bd7",
       "critic_model": "google/gemini-3.7-flash",
@@ -18551,6 +19153,35 @@
       "review_row": "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10",
       "verdict": "accepted",
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/vendor-round2-packet.json vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10"
+    },
+    {
+      "id": "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10",
+      "observation_sha256": "6e7d83bba318f7bb18682bc88027a51e93aa93ab2c738b1526000283c9c8e14b",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "deepseek/deepseek-v4-flash-0731"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/gauntlet/scores-7/review-r1.json",
+      "review_sha256": "04043de1a28a2ae87b695bf60759c0d16742722fb92adf819758172923c53739",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/gauntlet/scores-7/artifact-r1.json",
+      "review_row": "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/gauntlet/scores-7/packet-r1.md#vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10"
+    },
+    {
+      "id": "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10",
+      "observation_sha256": "eee201f65f7ffffd5daafee854110677c765dff6625f227be4b5b7c70a071044",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "deepseek/deepseek-v4-flash-0731",
+        "deepseek/deepseek-v4.1-flash"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/gauntlet/scores-10/review-r2.json",
+      "review_sha256": "1f77c708938f15499aafdd50ac91fd0149fa5dd47af186bc9cc69540afa6fe4d",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/gauntlet/scores-10/artifact-r2.json",
+      "review_row": "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/gauntlet/scores-10/packet-r2.md#vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10"
     },
     {
       "id": "vendor:DeepSeek-V3:longbench::2",
@@ -18568,6 +19199,49 @@
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/vendor-round2-packet.json vendor:DeepSeek-V3:longbench::2"
     },
     {
+      "id": "vendor:DeepSeek-V3:longbench::2",
+      "observation_sha256": "e9c5eccbc55baa685f6dc6404f051ff0bb391e61d177f2b36982da5585547a48",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-16T07-39-38-064Z/gauntlet/scores-4/review-r1.json",
+      "review_sha256": "3af0cddcc5b24a150c480579360c2394c5648c65cd674a56f082155babef40c5",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-16T07-39-38-064Z/gauntlet/scores-4/artifact-r1.json",
+      "review_row": "vendor:DeepSeek-V3:longbench::2",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-16T07-39-38-064Z/gauntlet/scores-4/packet-r1.md#vendor:DeepSeek-V3:longbench::2"
+    },
+    {
+      "id": "vendor:DeepSeek-V3:longbench::2",
+      "observation_sha256": "4a4d90bfee810b7a3f1647bf2aa804ab9a0ebde0b78ed90a8bf58d213277e7df",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "deepseek/deepseek-v4-flash-0731"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/gauntlet/scores-8/review-r1.json",
+      "review_sha256": "137125f5b9b3030afba4f27bb0f8c453a6ef042254ae249f52ed038696371d19",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/gauntlet/scores-8/artifact-r1.json",
+      "review_row": "vendor:DeepSeek-V3:longbench::2",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/gauntlet/scores-8/packet-r1.md#vendor:DeepSeek-V3:longbench::2"
+    },
+    {
+      "id": "vendor:DeepSeek-V3:longbench::2",
+      "observation_sha256": "885dab0344814c85b117555770754e3e8bc9d76562a8bad049bede1832545d17",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "deepseek/deepseek-v4-flash-0731",
+        "deepseek/deepseek-v4.1-flash"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/gauntlet/scores-11/review-r2.json",
+      "review_sha256": "57f4792f46d7088101cd79049e802c66a380c9c3ba6c9bd60db067ef07865b51",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/gauntlet/scores-11/artifact-r2.json",
+      "review_row": "vendor:DeepSeek-V3:longbench::2",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/gauntlet/scores-11/packet-r2.md#vendor:DeepSeek-V3:longbench::2"
+    },
+    {
       "id": "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
       "observation_sha256": "6e7762ad66a8261063f6ca6231126251b6c31861cdb1a1c59d4c07c0d479b75d",
       "critic_model": "google/gemini-3.7-flash",
@@ -18581,6 +19255,34 @@
       "review_row": "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
       "verdict": "accepted",
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/vendor-round2-packet.json vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10"
+    },
+    {
+      "id": "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+      "observation_sha256": "8182693c9db6e58e43ac473e42e05a61bb6a9c7e023b0038114586e9ba2237d5",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "deepseek/deepseek-v4-flash-0731"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/gauntlet/scores-6/review-r1.json",
+      "review_sha256": "1f53fd4a94dfa1254e74e832003619f1501538e67205cea0355059f91e52ac9d",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/gauntlet/scores-6/artifact-r1.json",
+      "review_row": "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/gauntlet/scores-6/packet-r1.md#vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10"
+    },
+    {
+      "id": "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+      "observation_sha256": "a74ddfd38306705ae8263897c512a855c9d0b47c505a95626fa567e1fc18d239",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "deepseek/deepseek-v4-flash-0731"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/gauntlet/scores-9/review-r1.json",
+      "review_sha256": "78a6cdcf8bc455bee099e39ccaf5441a8ea65547f43f05efce3959ac6bd58bd6",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/gauntlet/scores-9/artifact-r1.json",
+      "review_row": "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/gauntlet/scores-9/packet-r1.md#vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10"
     },
     {
       "id": "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
@@ -18628,6 +19330,34 @@
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/vendor-round2-packet.json vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline"
     },
     {
+      "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
+      "observation_sha256": "4931d7c2d2a3311e75f34cc9304a675b9273154ce134f1f611b81b276f24ce2c",
+      "critic_model": "deepseek/deepseek-v4.1-flash",
+      "producer_models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-16T07-39-38-064Z/gauntlet/scores-0/review-r1.json",
+      "review_sha256": "62840f4b1cb8804cedf4538a464b7f4e3cefcd4d7e79ae8f71ba5f7029a700d8",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-16T07-39-38-064Z/gauntlet/scores-0/artifact-r1.json",
+      "review_row": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-16T07-39-38-064Z/gauntlet/scores-0/packet-r1.md#vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline"
+    },
+    {
+      "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
+      "observation_sha256": "dc92163eef90bcfcdc8475c3a560079769d293c11163bb59bb8e0893d01cc41d",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "deepseek/deepseek-v4-flash-0731"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/gauntlet/scores-7/review-r3.json",
+      "review_sha256": "87725b055c345c53dbd3b90deb8dd104e63c945763011f72aaf37aa0d4356789",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/gauntlet/scores-7/artifact-r3.json",
+      "review_row": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/gauntlet/scores-7/packet-r3.md#vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline"
+    },
+    {
       "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
       "observation_sha256": "f9906d94a070aee55f8bb2ad9d976ed00392c9d5e2c91a8cd9cc22a2a99a337f",
       "critic_model": "google/gemini-3.7-flash",
@@ -18641,6 +19371,34 @@
       "review_row": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
       "verdict": "accepted",
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/vendor-round2-packet.json vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail"
+    },
+    {
+      "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+      "observation_sha256": "bc5b9d239c90980b006eaeb1f16f144191f676389193d3eca684ce31536f9660",
+      "critic_model": "deepseek/deepseek-v4.1-flash",
+      "producer_models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-16T07-39-38-064Z/gauntlet/scores-0/review-r1.json",
+      "review_sha256": "62840f4b1cb8804cedf4538a464b7f4e3cefcd4d7e79ae8f71ba5f7029a700d8",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-16T07-39-38-064Z/gauntlet/scores-0/artifact-r1.json",
+      "review_row": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-16T07-39-38-064Z/gauntlet/scores-0/packet-r1.md#vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail"
+    },
+    {
+      "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+      "observation_sha256": "dbdf05d5423a3a8eedbe760f5d3ef06f9933300d7e023f88152bcd43e8f58c63",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "deepseek/deepseek-v4-flash-0731"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/gauntlet/scores-7/review-r3.json",
+      "review_sha256": "87725b055c345c53dbd3b90deb8dd104e63c945763011f72aaf37aa0d4356789",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/gauntlet/scores-7/artifact-r3.json",
+      "review_row": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/gauntlet/scores-7/packet-r3.md#vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail"
     },
     {
       "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom",
@@ -18658,34 +19416,6 @@
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/vendor-round2-packet.json vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom"
     },
     {
-      "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
-      "observation_sha256": "bc5b9d239c90980b006eaeb1f16f144191f676389193d3eca684ce31536f9660",
-      "critic_model": "deepseek/deepseek-v4.1-flash",
-      "producer_models": [
-        "z-ai/glm-5.3-flash"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-16T07-39-38-064Z/gauntlet/scores-0/review-r1.json",
-      "review_sha256": "62840f4b1cb8804cedf4538a464b7f4e3cefcd4d7e79ae8f71ba5f7029a700d8",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-16T07-39-38-064Z/gauntlet/scores-0/artifact-r1.json",
-      "review_row": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-16T07-39-38-064Z/gauntlet/scores-0/packet-r1.md#vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail"
-    },
-    {
-      "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
-      "observation_sha256": "4931d7c2d2a3311e75f34cc9304a675b9273154ce134f1f611b81b276f24ce2c",
-      "critic_model": "deepseek/deepseek-v4.1-flash",
-      "producer_models": [
-        "z-ai/glm-5.3-flash"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-16T07-39-38-064Z/gauntlet/scores-0/review-r1.json",
-      "review_sha256": "62840f4b1cb8804cedf4538a464b7f4e3cefcd4d7e79ae8f71ba5f7029a700d8",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-16T07-39-38-064Z/gauntlet/scores-0/artifact-r1.json",
-      "review_row": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-16T07-39-38-064Z/gauntlet/scores-0/packet-r1.md#vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline"
-    },
-    {
       "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom",
       "observation_sha256": "e2b7df076d9320c65348f1e6d418012a8c5bc3b706d9bf75aec7926a8a9bf327",
       "critic_model": "deepseek/deepseek-v4.1-flash",
@@ -18700,132 +19430,6 @@
       "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-16T07-39-38-064Z/gauntlet/scores-0/packet-r1.md#vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom"
     },
     {
-      "id": "vendor:DeepSeek-V3:longbench::2",
-      "observation_sha256": "e9c5eccbc55baa685f6dc6404f051ff0bb391e61d177f2b36982da5585547a48",
-      "critic_model": "deepseek/deepseek-v4-flash-0731",
-      "producer_models": [
-        "z-ai/glm-5.3-flash"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-16T07-39-38-064Z/gauntlet/scores-4/review-r1.json",
-      "review_sha256": "3af0cddcc5b24a150c480579360c2394c5648c65cd674a56f082155babef40c5",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-16T07-39-38-064Z/gauntlet/scores-4/artifact-r1.json",
-      "review_row": "vendor:DeepSeek-V3:longbench::2",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-16T07-39-38-064Z/gauntlet/scores-4/packet-r1.md#vendor:DeepSeek-V3:longbench::2"
-    },
-    {
-      "id": "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
-      "observation_sha256": "8182693c9db6e58e43ac473e42e05a61bb6a9c7e023b0038114586e9ba2237d5",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "deepseek/deepseek-v4-flash-0731"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/gauntlet/scores-6/review-r1.json",
-      "review_sha256": "1f53fd4a94dfa1254e74e832003619f1501538e67205cea0355059f91e52ac9d",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/gauntlet/scores-6/artifact-r1.json",
-      "review_row": "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/gauntlet/scores-6/packet-r1.md#vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10"
-    },
-    {
-      "id": "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10",
-      "observation_sha256": "6e7d83bba318f7bb18682bc88027a51e93aa93ab2c738b1526000283c9c8e14b",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "deepseek/deepseek-v4-flash-0731"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/gauntlet/scores-7/review-r1.json",
-      "review_sha256": "04043de1a28a2ae87b695bf60759c0d16742722fb92adf819758172923c53739",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/gauntlet/scores-7/artifact-r1.json",
-      "review_row": "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/gauntlet/scores-7/packet-r1.md#vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10"
-    },
-    {
-      "id": "vendor:DeepSeek-V3:longbench::2",
-      "observation_sha256": "4a4d90bfee810b7a3f1647bf2aa804ab9a0ebde0b78ed90a8bf58d213277e7df",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "deepseek/deepseek-v4-flash-0731"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/gauntlet/scores-8/review-r1.json",
-      "review_sha256": "137125f5b9b3030afba4f27bb0f8c453a6ef042254ae249f52ed038696371d19",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/gauntlet/scores-8/artifact-r1.json",
-      "review_row": "vendor:DeepSeek-V3:longbench::2",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/gauntlet/scores-8/packet-r1.md#vendor:DeepSeek-V3:longbench::2"
-    },
-    {
-      "id": "public:17a83944e876e5d5dd19589d",
-      "observation_sha256": "aa9a1903ec9c8db0bbd3d029890164de294d2c48734c06db882cf56a1d09cb90",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "deepseek/deepseek-v4-flash-0731:free"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-18T12-58-20-378Z/gauntlet/scores-2/review-r2.json",
-      "review_sha256": "cb79bba1bf306fa4d4f6047dd5170f5f010dd0dcaf079b4be4bf5c12354bfa84",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-18T12-58-20-378Z/gauntlet/scores-2/artifact-r2.json",
-      "review_row": "public:17a83944e876e5d5dd19589d",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-18T12-58-20-378Z/gauntlet/scores-2/packet-r2.md#public:17a83944e876e5d5dd19589d"
-    },
-    {
-      "id": "public:17d5502bd07b4baf5a0e4e6a",
-      "observation_sha256": "c02002b63d5b4722be0e9b2dd3e6ddedf5b23b116fb41943784b398260099b31",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "deepseek/deepseek-v4-flash-0731:free"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-18T12-58-20-378Z/gauntlet/scores-2/review-r2.json",
-      "review_sha256": "cb79bba1bf306fa4d4f6047dd5170f5f010dd0dcaf079b4be4bf5c12354bfa84",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-18T12-58-20-378Z/gauntlet/scores-2/artifact-r2.json",
-      "review_row": "public:17d5502bd07b4baf5a0e4e6a",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-18T12-58-20-378Z/gauntlet/scores-2/packet-r2.md#public:17d5502bd07b4baf5a0e4e6a"
-    },
-    {
-      "id": "public:3fc65e2a70007acea87bb5cb",
-      "observation_sha256": "5dad3e4474cff9ce262d6aae55235ae8a3ecaab951579539394ce939e39632e3",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "deepseek/deepseek-v4-flash-0731:free"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-18T12-58-20-378Z/gauntlet/scores-2/review-r2.json",
-      "review_sha256": "cb79bba1bf306fa4d4f6047dd5170f5f010dd0dcaf079b4be4bf5c12354bfa84",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-18T12-58-20-378Z/gauntlet/scores-2/artifact-r2.json",
-      "review_row": "public:3fc65e2a70007acea87bb5cb",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-18T12-58-20-378Z/gauntlet/scores-2/packet-r2.md#public:3fc65e2a70007acea87bb5cb"
-    },
-    {
-      "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
-      "observation_sha256": "dbdf05d5423a3a8eedbe760f5d3ef06f9933300d7e023f88152bcd43e8f58c63",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "deepseek/deepseek-v4-flash-0731"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/gauntlet/scores-7/review-r3.json",
-      "review_sha256": "87725b055c345c53dbd3b90deb8dd104e63c945763011f72aaf37aa0d4356789",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/gauntlet/scores-7/artifact-r3.json",
-      "review_row": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/gauntlet/scores-7/packet-r3.md#vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail"
-    },
-    {
-      "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
-      "observation_sha256": "dc92163eef90bcfcdc8475c3a560079769d293c11163bb59bb8e0893d01cc41d",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "deepseek/deepseek-v4-flash-0731"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/gauntlet/scores-7/review-r3.json",
-      "review_sha256": "87725b055c345c53dbd3b90deb8dd104e63c945763011f72aaf37aa0d4356789",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/gauntlet/scores-7/artifact-r3.json",
-      "review_row": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/gauntlet/scores-7/packet-r3.md#vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline"
-    },
-    {
       "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom",
       "observation_sha256": "57799e8f670c24ae2412da5eed34aba2d9914bd534d97e9ca175dc31b62e60bf",
       "critic_model": "z-ai/glm-5.3-flash",
@@ -18838,50 +19442,6 @@
       "review_row": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom",
       "verdict": "accepted",
       "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/gauntlet/scores-7/packet-r3.md#vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom"
-    },
-    {
-      "id": "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
-      "observation_sha256": "a74ddfd38306705ae8263897c512a855c9d0b47c505a95626fa567e1fc18d239",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "deepseek/deepseek-v4-flash-0731"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/gauntlet/scores-9/review-r1.json",
-      "review_sha256": "78a6cdcf8bc455bee099e39ccaf5441a8ea65547f43f05efce3959ac6bd58bd6",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/gauntlet/scores-9/artifact-r1.json",
-      "review_row": "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/gauntlet/scores-9/packet-r1.md#vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10"
-    },
-    {
-      "id": "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10",
-      "observation_sha256": "eee201f65f7ffffd5daafee854110677c765dff6625f227be4b5b7c70a071044",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "deepseek/deepseek-v4-flash-0731",
-        "deepseek/deepseek-v4.1-flash"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/gauntlet/scores-10/review-r2.json",
-      "review_sha256": "1f77c708938f15499aafdd50ac91fd0149fa5dd47af186bc9cc69540afa6fe4d",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/gauntlet/scores-10/artifact-r2.json",
-      "review_row": "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/gauntlet/scores-10/packet-r2.md#vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10"
-    },
-    {
-      "id": "vendor:DeepSeek-V3:longbench::2",
-      "observation_sha256": "885dab0344814c85b117555770754e3e8bc9d76562a8bad049bede1832545d17",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "deepseek/deepseek-v4-flash-0731",
-        "deepseek/deepseek-v4.1-flash"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/gauntlet/scores-11/review-r2.json",
-      "review_sha256": "57f4792f46d7088101cd79049e802c66a380c9c3ba6c9bd60db067ef07865b51",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/gauntlet/scores-11/artifact-r2.json",
-      "review_row": "vendor:DeepSeek-V3:longbench::2",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/gauntlet/scores-11/packet-r2.md#vendor:DeepSeek-V3:longbench::2"
     }
   ]
 }

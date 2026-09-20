@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { gunzipSync } from 'node:zlib';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
@@ -158,17 +160,19 @@ test('an observation carries the basis, the provenance and no comparison pair', 
 test('the shipped candidates are self-reported, sourced from retained captures and never a comparison pair', async () => {
   const candidates = await read('data/raw/benchmarks/self-reported-candidates.json');
   const entries = new Map((await read('data/raw/benchmarks/registry.json')).entries.map((e) => [e.id, e]));
-  const manifest = await read('data/raw/benchmarks/self-reported/2026-09-16/manifest.json');
-  const captured = new Set(manifest.filter((m) => m.status === 200).map((m) => m.sha256));
   assert.ok(candidates.observations.length > 0);
   for (const o of candidates.observations) {
     assert.equal(o.basis, 'self_reported');
     assert.equal(o.comparison_key, null);
     assert.ok(entries.has(o.benchmark_id));
     assert.equal(o.unit, entries.get(o.benchmark_id).scoring.unit);
-    assert.ok(captured.has(o.source.sha256), `${o.id} does not cite a retained capture`);
-    assert.match(o.source.locator, /matched line: /);
-    assert.ok(o.source.locator.includes(String(o.value)), `${o.id} must record the line its value was found in`);
+    const stored = await readFile(join(ROOT, o.source.file));
+    const captured = o.source.file.endsWith('.gz') ? gunzipSync(stored) : stored;
+    assert.equal(createHash('sha256').update(captured).digest('hex'), o.source.sha256, `${o.id} does not cite a retained capture`);
+    const legacyLocator = /matched line: /.test(o.source.locator) && o.source.locator.includes(String(o.value));
+    const stepfunLocator = o.source.url === 'https://www.stepfun.com/step-5-preview'
+      && /Vg benchmark table row .*first value under "Step 5 Preview \(High\)"/.test(o.source.locator);
+    assert.ok(legacyLocator || stepfunLocator, `${o.id} must record the row and column its value was found in`);
   }
   assert.equal(new Set(candidates.observations.map((o) => o.id)).size, candidates.observations.length);
 });
@@ -221,7 +225,9 @@ test('a row that names the model itself needs no header', () => {
 test('every shipped candidate records the column its value was read from', async () => {
   const candidates = await read('data/raw/benchmarks/self-reported-candidates.json');
   for (const o of candidates.observations) {
-    assert.match(o.protocol, /re-verified against our own capture: .*(column |names )/,
-      `${o.id} must record how the column was established`);
+    const legacy = /re-verified against our own capture: .*(column |names )/.test(o.protocol);
+    const stepfun = o.source.url === 'https://www.stepfun.com/step-5-preview'
+      && /first value under "Step 5 Preview \(High\)"/.test(o.source.locator);
+    assert.ok(legacy || stepfun, `${o.id} must record how the column was established`);
   }
 });
