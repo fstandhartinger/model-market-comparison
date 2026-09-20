@@ -1411,3 +1411,9 @@ Verbatim source file: `ops/ux-2026-09-12/jevbench/v1.2.6/CR-105.md` (dated 20 Se
 implementing engine is unrecorded; the rows were seeded into the ledger by opencode-kimi iteration 141, which
 also live re-verified the deploy on both hosts (`bin/verify-cr-105.mjs`, 26/26 across both hosts at `98325468`).
 A review gate still owes the engine attribution before the rows can read `verified`.
+
+## CR-20260920j (JevBench page) → CR-106 — longer custom-evaluation toast and subtle tint
+
+Florian, 20 Sep 2026, verbatim:
+> this toast on our eval page ('Need custom eval on your data? JevBench is open source: run it yourself, or ask us to
+> help. See your options'), can we show it 2 seconds longer? And maybe we give it a slightly different color?

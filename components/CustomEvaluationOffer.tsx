@@ -17,8 +17,8 @@ export function CustomEvaluationOffer() {
     try { suppressed = localStorage.getItem(NEVER_KEY) === "1" || sessionStorage.getItem(SESSION_KEY) === "1"; } catch { /* storage may be unavailable */ }
     if (suppressed) { setPhase("hidden"); return; }
     const show = window.setTimeout(() => setPhase("open"), 6000);
-    const land = window.setTimeout(() => setPhase("landing"), 14000);
-    const finish = window.setTimeout(() => setPhase("landed"), 14950);
+    const land = window.setTimeout(() => setPhase("landing"), 16000);
+    const finish = window.setTimeout(() => setPhase("landed"), 16950);
     return () => { clearTimeout(show); clearTimeout(land); clearTimeout(finish); };
   }, []);
 

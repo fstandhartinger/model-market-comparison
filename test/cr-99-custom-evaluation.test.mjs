@@ -10,7 +10,8 @@ const css = await readFile(new URL('../app/globals.css', import.meta.url), 'utf8
 
 test('CR-99 offer timing, persistence and accessibility stay explicit', () => {
   assert.match(offer, /setTimeout\(\(\) => setPhase\("open"\), 6000\)/);
-  assert.match(offer, /setTimeout\(\(\) => setPhase\("landing"\), 14000\)/);
+  assert.match(offer, /setTimeout\(\(\) => setPhase\("landing"\), 16000\)/);
+  assert.match(offer, /setTimeout\(\(\) => setPhase\("landed"\), 16950\)/);
   assert.match(offer, /localStorage\.getItem\(NEVER_KEY\)/);
   assert.match(offer, /try \{/);
   assert.match(offer, /aria-live="polite"/);
@@ -18,6 +19,15 @@ test('CR-99 offer timing, persistence and accessibility stay explicit', () => {
   assert.match(offer, /aria-label="Dismiss custom eval offer"/);
   assert.match(css, /prefers-reduced-motion: reduce/);
   assert.match(css, /--offer-x/);
+});
+
+test('CR-106 keeps the toast calm, token-based and opaque in both themes', () => {
+  assert.match(css, /--offer-tint-opacity: \.09; --offer-border-opacity: \.38/);
+  assert.match(css, /\[data-theme="light"\][\s\S]*--offer-tint-opacity: \.06; --offer-border-opacity: \.32/);
+  assert.match(css, /background: linear-gradient\(rgb\(var\(--accent\) \/ var\(--offer-tint-opacity\)\)[\s\S]*var\(--surface\)/);
+  assert.match(css, /border: 1px solid rgb\(var\(--accent\) \/ var\(--offer-border-opacity\)\)/);
+  assert.doesNotMatch(css, /\.bh-custom-evaluation-toast[\s\S]{0,500}rgb\(var\(--surface\)/);
+  assert.doesNotMatch(css, /\.bh-custom-evaluation-toast[\s\S]{0,500}rgb\(var\(--text\)/);
 });
 
 test('CR-102 keeps the phone badge beside the eyebrow and makes the toast land legibly', () => {

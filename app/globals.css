@@ -7,6 +7,7 @@
   --ink: 14 19 27; --panel: 23 30 41; --line: 57 70 87;
   --accent: 108 174 255; --accent2: 103 224 193; --warn: 255 197 111;
   --surface: #171e29; --text: #edf2f8; --muted: #adb9ca; --control-border: #74869e;
+  --offer-tint-opacity: .09; --offer-border-opacity: .38;
   --negative: #ffafbc; --radar-1: #6caeff; --radar-2: #67e0c1;
   --radar-3: #ffc56f; --radar-4: #d0acff; --radar-grid: #8c9ab0;
   /* CR-1.9: categorical slots for compared models (dataviz reference order, validated on #171e29:
@@ -23,6 +24,7 @@
   --ink: 245 248 252; --panel: 255 255 255; --line: 199 210 225;
   --accent: 29 78 185; --accent2: 4 109 91; --warn: 145 69 9;
   --surface: #fff; --text: #182639; --muted: #4c5e75; --control-border: #718198;
+  --offer-tint-opacity: .06; --offer-border-opacity: .32;
   --negative: #b91c3a; --radar-1: #1d4eb9; --radar-2: #046d5b;
   --radar-3: #914509; --radar-4: #7433b7; --radar-grid: #61758f;
   /* CR-1.9: validated on #fff (adjacent CVD ΔE 9.1, normal 19.6); three slots sit below 3:1, so
@@ -498,7 +500,8 @@ details[open] > .bh-collapsible-grid { display: grid; }
 .bh-custom-evaluation-toast {
   position: fixed; z-index: 45; right: 1rem; bottom: calc(1rem + env(safe-area-inset-bottom, 0px)); max-width: min(44rem, calc(100vw - 2rem));
   display: flex; align-items: center; gap: .65rem; padding: .55rem .65rem .55rem .85rem;
-  border: 1px solid rgb(var(--line)); border-radius: .65rem; background: var(--surface); color: var(--text);
+  border: 1px solid rgb(var(--accent) / var(--offer-border-opacity)); border-radius: .65rem;
+  background: linear-gradient(rgb(var(--accent) / var(--offer-tint-opacity)), rgb(var(--accent) / var(--offer-tint-opacity))), var(--surface); color: var(--text);
   box-shadow: 0 12px 35px rgb(0 0 0 / .22); font-size: .82rem; line-height: 1.3;
   font-weight: 400; letter-spacing: normal; text-transform: none;
   animation: bh-offer-in .22s ease-out both;

@@ -839,3 +839,10 @@ Link (exact, do not change): https://donate.stripe.com/fZu00i9ro0wmdF88sg1Jm01. 
 - **CR-105.3 Availability audit refreshed.** The current concrete reason for every remaining unmeasured candidate is published; djev-spark stays out of the table (a serving wrapper around the already represented DiffusionGemma system, not new weights).
 - **CR-105.4 Nothing else moved.** Hard-only view, custom-evaluation offer/toast, labels, prior rows and scoring rules preserved.
 - **CR-105.5 Host verification.** Both production hosts verified after deployment at 1440 px and 390 px, light and dark, with evidence; the engine attribution for the shipping commits is closed by a review gate before the rows read `verified`.
+
+## CR-20260920j checklist — longer custom-evaluation toast and subtle tint (CR-106)
+
+- **CR-106.1 Timing.** Keep the 6-second appearance delay, then leave the toast open for 10 seconds before its unchanged 0.9-second landing flight and badge wiggle.
+- **CR-106.2 Tint.** Distinguish the toast from normal cards with a calm, low-opacity accent overlay on `var(--surface)` and a slightly stronger accent border, explicitly tuned for light and dark.
+- **CR-106.3 Contrast.** The computed toast text/background contrast is at least 4.5:1 in light and dark; `--surface` and `--text` remain consumed as hex tokens with `var(...)`, never `rgb(var(...))`.
+- **CR-106.4 Verify.** Full tests, typecheck and production build; both live hosts at desktop and phone widths in light and dark, with one screenshot per theme and the timing/motion path preserved.
