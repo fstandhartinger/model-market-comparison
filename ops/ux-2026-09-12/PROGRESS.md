@@ -6024,3 +6024,34 @@ on the canonical host, 1440/390 × light/dark: 93 shots + 2 element shots in `/o
   **`35cca4c5d0c684a7c00ff048f22129a6c5486995`: 109/109 and 109/109**
   (`…/deployed-{canonical,legacy}/verification.json`). Four verified runs across three revisions; every one re-derives its
   expected values from the committed capture rather than reading our own dataset back.
+
+### Fable pass 27 — 2026-09-20 ~19:30–20:45 UTC (claude-fable, design authority): what changed since pass 26
+
+Full text: `DESIGN-DIRECTIVES.md` ("Verdict on the live site — pass 27", "Decisions in pass 27", F-149–F-151 open, Done log rows F-141–F-148).
+Judged live revision `16e8a10` on the canonical host, 1440/390 × light/dark, 129 shots + `metrics.json` in
+`/opt/benchmarkheaven/state/ux-evidence/fable-20260920-pass27/canonical/` (`bin/shoot-fable-pass27.mjs`): 0 page errors, no horizontal overflow.
+- **Scope (Florian: Fable sparingly):** `/jev-models` after F-141–F-146 (iteration 136) and CR-99–CR-104 (hard-only scope, custom-evaluation toast + pill,
+  the new `/jev-models/custom-evaluation` page, v1.2.5), the Step 5 and DeepSeek V4.1 Flash sheets (F-146, CR-85.2), the CR-68.5 runner-disagreement
+  line on the Benchmaxxing report. Simple/Advanced/Guided/Benchmaxxing/Benchmarks/model re-shot as quick views — unchanged since pass 26.
+- **F-141–F-144 and F-146 landed as written** (honorable card 237/411 px, unit note one line, `$ / 1,000 decisions` cell two lines, Task column
+  208 px / pinned 120 px with six outcome columns beside it, generated vendor line + visible claim words). Moved to the Done log as **verified**
+  (iteration 136 Kimi 48/48 per host + gate 138 non-implementer re-run).
+- **Seven findings, four fixed by Fable (surgical, no numbers), three directives for the work engine:** F-147 the phone pill was 8 px beside a
+  two-line eyebrow → below `sm` the eyebrow reads "JevBench v1.2" (the lead says "Benchmark Heaven's own benchmark" in bold two lines lower) and
+  the pill keeps 10 px; F-148 the runner-disagreement footnote was 4 sentences / 9 lines → two sentences, harness in each runner name's `title`
+  (`verify-cr-68-5.mjs` reads the titles); F-146 follow-up: a vendor row said "no percentile … developer's claim" → the words replace the
+  percentile; F-142 follow-up: the Cost bullet said "one decision is a whole question" twice; F-141 follow-up: the table's honorable row printed
+  the full three-sentence rule in a 330 px cell → first sentence. Open: **F-149** custom-evaluation page's two actions (mail, GitHub) under the
+  title + wrap the code block on phones; **F-150** JevBench table head 87 px → ≤ 68 (sort column min-width so "JevBench Score" is one line);
+  **F-151** the four scope buttons 2 × 2 below `sm` ("Hard only" is an orphan). Two rules added: type floor 10 px; one status per row.
+- **Shipped:** `7d200b9` (five component edits, `test/fable-pass27.test.mjs` 5/5, shoot script, directives). Gates before the push: `npx tsc`,
+  `npm test` 980 (979 pass, 1 skipped), `node scripts/build-dataset.mjs` (timestamp-only diff restored), `npm run build`, `git diff --check`.
+- **Live at `7d200b97a66fd09d9a6856e6c94e3dc5f0ce6b9d` on both hosts:** `bin/verify-fable-pass27-design.mjs` **56/56 on benchmarkheaven.com and
+  56/56 on the Sandy mirror** (eyebrow form and one-line row, pill 10 px inside the row, smallest text ≥ 10 px with sup/sub exponents exempt, no
+  unit note repeats "whole question", honorable row one sentence, runner line intact + two-sentence note ≤ 4 lines + both harness titles, no
+  vendor row with two status phrases, 40 = 40 claim words, count line present, no page error, no overflow). Regression on the canonical host at
+  the same revision: `verify-cr-68-5.mjs` 31/31, `verify-cr-96.mjs` 71/71, `verify-cr-97.mjs` 115/115. Evidence:
+  `…/fable-20260920-pass27/{verify-canonical,verify-legacy}/verification.json` + screenshots, `…/regress/`.
+- **X4 still met** for the default view. Fable is the implementer of `7d200b9`, so F-147, F-148 and the three follow-ups need a non-Fable engine
+  to re-run `verify-fable-pass27-design.mjs` on both hosts before their Done-log rows read `verified`. No `ALL-ACCEPTED`; the open X6/CR rows
+  are unchanged by this pass.
