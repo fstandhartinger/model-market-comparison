@@ -846,3 +846,12 @@ Link (exact, do not change): https://donate.stripe.com/fZu00i9ro0wmdF88sg1Jm01. 
 - **CR-106.2 Tint.** Distinguish the toast from normal cards with a calm, low-opacity accent overlay on `var(--surface)` and a slightly stronger accent border, explicitly tuned for light and dark.
 - **CR-106.3 Contrast.** The computed toast text/background contrast is at least 4.5:1 in light and dark; `--surface` and `--text` remain consumed as hex tokens with `var(...)`, never `rgb(var(...))`.
 - **CR-106.4 Verify.** Full tests, typecheck and production build; both live hosts at desktop and phone widths in light and dark, with one screenshot per theme and the timing/motion path preserved.
+
+## CR-20260920k checklist — publish JevBench v1.2.7 (CR-107)
+
+- **CR-107.1 Pin.** Results, public-task and topic artifacts from public JevBench tag `v1.2.7`, each by SHA-256; the per-task artifact gets its own `v1.2.7` ops folder.
+- **CR-107.2 Ranked rows.** GLiNER2.5 multi at 63.1 (#19) and GLiNER2.5 small at 62.1 (#21), each linked to its Hugging Face checkpoint.
+- **CR-107.3 Partial row.** jqv at 67.2 with no rank, listed as a partial run, with "425 of 534" and the reason (submitter-hosted endpoint, held-out hard items never sent) readable on the page.
+- **CR-107.4 Nothing else moved.** The earlier GLiNER2 row stays at 53.0; hard-only view, custom-evaluation offer/toast (including CR-106's timing and tint), labels, prior rows and scoring rules preserved.
+- **CR-107.5 Availability.** OpenDecision joins "Who could not be measured, and why" with its current reason.
+- **CR-107.6 Verify.** Full tests, typecheck and production build; `verify-cr-107.mjs` on both live hosts.

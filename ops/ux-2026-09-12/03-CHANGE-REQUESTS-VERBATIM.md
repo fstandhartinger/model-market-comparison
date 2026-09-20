@@ -1417,3 +1417,28 @@ A review gate still owes the engine attribution before the rows can read `verifi
 Florian, 20 Sep 2026, verbatim:
 > this toast on our eval page ('Need custom eval on your data? JevBench is open source: run it yourself, or ask us to
 > help. See your options'), can we show it 2 seconds longer? And maybe we give it a slightly different color?
+
+## CR-20260920k (JevBench) → CR-107 — publish JevBench v1.2.7
+
+JevBench run-3 measurement round, 20 September 2026. Verbatim source file: `ops/ux-2026-09-12/jevbench/v1.2.7/CR-107.md`:
+
+> Publish the fourth round of reader-requested additions on the unchanged frozen v1.2 task set: the two GLiNER2.5
+> checkpoints we can run ourselves (small, 74M, and multi, 287M) as complete ranked rows, and jqv — a stock
+> Qwen3-32B read as a decision model, submitted with a public endpoint in issue #6 — as a partial row that is shown
+> but not ranked, because its endpoint runs on the submitter's own machine and the held-out hard items were
+> deliberately not sent there. No earlier measurement, axis, price or rank rule changes.
+>
+> Acceptance:
+> - pin results, public-task and topic artifacts from public JevBench tag `v1.2.7` by SHA-256;
+> - show GLiNER2.5 multi at 63.1 (#19) and GLiNER2.5 small at 62.1 (#21), each linked to its Hugging Face checkpoint;
+> - show jqv at 67.2 without a rank, marked as a partial run, with its coverage (425 of 534 decisions) and the
+>   reason readable on the page;
+> - leave the earlier GLiNER2 row (gliner2.5-base, 53.0) and every other earlier row untouched;
+> - preserve the hard-only view, the custom-evaluation offer/toast, labels, prior rows and the scoring rules;
+> - publish the current, concrete reason for every remaining unmeasured candidate, including OpenDecision;
+> - verify both production hosts after deployment.
+
+Supervisor note (not Florian's words): implemented by the job `~/jobs/jevbench-add-requests-20260919` (run 3,
+Claude Opus 5) in an isolated worktree, with the UX loop paused via `paused-until` while iteration 142 was still
+running in `/opt/model-market-comparison`; the pause was released after both hosts verified. The measurement round
+itself is in that job's `RESULT.md`.

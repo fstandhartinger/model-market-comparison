@@ -49,6 +49,7 @@ const currentNotMeasured = [
   { candidate: 'Reflex', author: 'Reflex', reason: 'Weights and an adapter exist, but the released PyTorch 2.9/CUDA 13 runtime was incompatible with the earlier RTX 3090. No compatible RunPod host was available today.' },
   { candidate: 'NanoJev', author: 'NanoJev', reason: 'Public weights exist, but the server exposes a different schema (including boolean rather than Noul) and lacks the full structured/null contract. It needs substantive compatibility work before a fair full-suite run.' },
   { candidate: 'LitJev', author: 'LitJev', reason: 'Public code and base weights exist, but the documented run target is an H100 with 80 GB. No suitable RunPod host was available today.' },
+  { candidate: 'OpenDecision', author: 'Deepan Wadhwa', reason: 'Public, Apache-2.0 and correct on our CPU, but it is a zero-shot NLI engine that re-reads the whole state once per option: a single hard-tier decision took over two minutes on four CPU threads, so the full 534-decision suite needs a GPU round rather than new adapter work.' },
   { candidate: 'SimpleJev RWKV variants', author: 'SimpleJev', reason: 'The public demo exposes RWKV IDs, but it does not identify their exact checkpoints or licences. Without reproducible model provenance, we do not publish benchmark rows for them.' },
 ];
 
