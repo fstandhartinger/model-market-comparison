@@ -1,17 +1,16 @@
 # DESIGN DIRECTIVES — Benchmark Heaven (design authority: Claude Fable 5.1)
 
-**Pass 25: 2026-09-20 ~03:30 UTC**, the "what changed since pass 24" pass (Florian: Fable sparingly). Since pass 24 the changed surface is
-**`/jev-models`** again — CR-90 (difficulty scope + per-task grid), CR-93 (djev), CR-94 (the two "Compare two systems" radars and the longer
-latency paragraph in Limits), CR-95 (JevBench v1.2.2: five systems, two new system types, the "why a service built on Jev leads" bullet), F-134/F-135
-landed — plus the CR-89 "Support" line in the footer and the About paragraph, two new boards on `/benchmarks` (RSI-Exam 0.1, CR-83.1;
-Toolathlon-Verified, CR-30.2), the harness-cohort label fix of gate 20260920T014003Z, and the Benchmaxxing tag Kimi K3 now carries (CR-78.3).
-Judged against live revision `c1161c7` on the canonical host at 1440/390 × light/dark: 96 shots in
-`/opt/benchmarkheaven/state/ux-evidence/fable-20260920-pass25/canonical/` (`metrics.json`: 0 page errors in all four contexts, no horizontal overflow on
-any page; radar geometry, ring-label boxes, caption lines and sentences, the picker/swap states, the Support link) and 46 in `…/boards/` (the two board
-rows, the Kimi K3 tag on the Overview and the model page, the CR-90 scope control in its default and "Easy only" states, the task grid closed, open and
-scrolled). Scripts: `bin/shoot-fable-pass25.mjs`, `bin/shoot-fable-pass25b.mjs`; verifier for the fixes shipped in this pass: `bin/verify-fable-pass25.mjs`.
-The Simple, Advanced, Guided, Benchmaxxing, Benchmarks and model pages were re-shot as quick views and are unchanged since pass 24. Earlier passes:
-`…/fable-20260919-pass24/` … `…/fable-20260913/`.
+**Pass 26: 2026-09-20 ~11:30 UTC**, the "what changed since pass 25" pass (Florian: Fable sparingly). Since pass 25 the changed surface is
+**`/jev-models`** — F-139/F-140 landed (scope state, dense task grid, the gate's sticky head), CR-96 (JevBench v1.2.3: the "$ per 1,000
+decisions" unit everywhere a price is, the correction disclosure), CR-97 (v1.2.4: classifier.dev out of the ranking into an honorable-mention
+section, Jev 1.13.0 #1) — plus **the Step 5 Preview model page** (CR-98: 40 vendor-reported † values, a model with no provider offer) and the
+2026-09-20 data refresh. Judged against live revision `48bceea` on the canonical host at 1440/390 × light/dark: 93 shots in
+`/opt/benchmarkheaven/state/ux-evidence/fable-20260920-pass26/canonical/` (`metrics.json`: 0 page errors in all four contexts, no horizontal overflow
+on any page; the honorable card's paragraphs, lines and sentences, the cost-unit panel and note, the table header cell, the task grid's geometry closed,
+open and scrolled, the `?scope=easy` state, the Step 5 page's headings, † marks and its Overview row) plus two element shots of the cost section
+(`*-jev-cost-section.png`). Script: `bin/shoot-fable-pass26.mjs`; verifier for the fix shipped in this pass: `bin/verify-fable-pass26.mjs`.
+The Simple, Advanced, Guided, Benchmaxxing, Benchmarks and model (Fable 5.1) pages were re-shot as quick views and are unchanged since pass 25.
+Earlier passes: `…/fable-20260920-pass25/` … `…/fable-20260913/`.
 
 **The bar (Florian):** minimalistic and simple, very expressive, not overloaded, key messages
 first, graphical with many charts.
@@ -30,60 +29,84 @@ the reviewing engine directly.
 
 ---
 
-## Verdict on the live site — pass 25 (2026-09-20), the JevBench page after CR-90/93/94/95, the Support link, two boards
+## Verdict on the live site — pass 26 (2026-09-20), the JevBench page after CR-96/CR-97 and F-139/F-140, the Step 5 Preview page
 
-**The radars are the right answer to Florian's question and they say it with the table's numbers.** Two systems, the four score axes on one radar
-and accuracy by subject topic on the other, both values printed under every spoke in the series' colour, a legend line per system with its JevBench
-Score and rank, a values table behind a disclosure, the partial-run treatment (grey "n=4", no point) and the same-family treatment (a dashed, mixed,
-square-marked B when Jev meets a service built on Jev) — at 1440 and 390, light and dark, 0 page errors, no overflow
-(`desktop_light-jev-compare.png`, `*-pickB.png`, `*-pickLast.png`, `mobile_*-jev-compare-vp*.png`). The v1.2.2 chart carries its two new types in the
-legend and the bars, the headline says in one bullet why classifier.dev leads from the row data alone, the Support line is one quiet footer sentence
-and one About paragraph, RSI-Exam renders as the 0–1 index it is (0.46 · **0.51** · 0.40, best in row bold) and Toolathlon-Verified's lone value has
-no bar (F-84). The Kimi K3 tag is disclosed everywhere it appears (◔, the interval sentence, the −3.0 line on the model page); that is a data decision
-for Florian, not a design finding.
+**The ranking now says the right thing, and the state and the unit travel with the numbers.** Jev 1.13.0 is #1 at 75.4 with classifier.dev
+shown hatched below the ranked rows and named "honorable mention" in the legend; "Easy only" flips the eyebrow, the title, a ⚠ badge, the ▲▼
+deltas and the URL together (`desktop_light-jev-chart-easy.png`, `jev-easy` in `metrics.json`) — the pass-25 rule holds. The Cost column's
+header says "decisions, not tokens", the table's note says it again with Jev's own arithmetic, the correction is one link that opens the three
+mistakes and every before/after price (`*-jev-correction-open.png`). The task grid's head stays pinned through 231 rows in all four contexts
+(`headTop: 1` after a 900 px scroll). Light and dark match. 0 page errors, no overflow anywhere. The Step 5 Preview Overview row is honest without
+being loud: ◔ Thin data · 1/7 and "No public API price" (`step5-overview-row`).
 
-**What is not at the bar — five things, three fixed in this pass, two for the implementer.**
+**What is not at the bar — six things, one fixed in this pass, five for the implementer.**
 
-1. **Both radars print "50" and "100" on the 12-o'clock spoke, and the top spoke's own point strikes "100"** (`metrics.json` `ringlabels` x = 382 =
-   the spoke; Intelligence 90.4/90.1 and Math 87.6 sit under the label in every context; at 390 the 9 px labels render 7 px tall). The pass-21/22
-   rule for both other radars (F-113, F-117) was not applied to the new ones. → **F-136, fixed** (half-step angle, inside the ring on the apothem,
-   F-70 halo, 11 px, `data-radar-ring`).
-2. **The topic radar's caption is five sentences — 9 rendered lines on a phone** (`figSentences: 5`, `figLines: 9` at 390): the definition, the
-   tier-mix explanation, "not part of the score", the topic method with its link, the held-out note. The pass-20 rule caps a visible footnote at two
-   sentences. → **F-137, fixed** (one sentence plus the conditional "grey n=…" line; "not part of the score" moves into the heading; the tier mix,
-   method link and held-out note become the first lines of the disclosure, now "Values and notes").
-3. **On a phone the ⇄ Swap button is a third full-width 44 px input between System A and System B** (`swap w 324 = the selects`,
-   `mobile_light-jev-compare-vp.png`): it reads as a picker. → **F-138, fixed** (content-wide, right-aligned under System A below `sm`; unchanged
-   on the picker row at `sm+`).
-4. **Choose "Easy only" and the chart above still says "Official"** (`boards/*-jev-chart-easy.png`, `easy-state` in `boards/metrics.json`): the
-   scores are recomputed (classifier.dev 87.1, Laya moves to #2), but the chart's badge reads "Official default", its eyebrow still says "534
-   decisions per system", the table header still says "official", and the URL carries nothing. The only warning is a line inside the difficulty panel
-   700 px below the chart — and it reads "showing easy only only". CR-90.1 asked for exactly the CR-87.10 state ("title/subtitle change, badge, one-click
-   reset, combined wording when both differ, URL parameter"). A recomputed score labelled "Official" is the one presentational defect in this pass that
-   changes what a reader concludes from a number. → **F-139** (implementer, judgment). CR-90.1 goes back to `open` in the ledger for this reason.
-5. **The per-task grid is not compact**: 67 px rows for a ✓, 107 px cells, a 101 px header, a 1,953 px table in a 1,334 px wrap at 1440 and one system
-   column visible at 390 (`boards/*-jev-grid-open.png`, `grid-geom`); 231 rows become 15,000 px of inner scroll, and the per-system tier totals CR-90.2
-   asked for are not there (the group row says "Easy · 48 public tasks" and nothing per system). → **F-140** (implementer, mechanical).
+1. **The honorable-mention card is a wall of text.** One article, 537 px tall at 1440 and 1,235 px on a phone, 7 paragraphs, 2,455 characters:
+   the reason (5 sentences, 6/15 lines), the price note (4 sentences, 6/17 lines), the finding (3 sentences), the credit line with four links —
+   and above it a 3-sentence rule paragraph (3/6 lines) that the method section already carries (CR-97.2). Every fact in it is right and sourced;
+   none of it is a chart, and the reader who wants to know *why classifier.dev has no rank* has to read 400 words to find the one sentence that
+   says it. Florian asked for "darunter auflisten und erklären, wieso" — a listing with the reason, not a dossier. → **F-141** (judgment: copy
+   moves inside one component; the artifact strings stay as they are).
+2. **The cost section opens with a five-sentence panel and repeats itself.** The unit panel is 5 sentences (6 lines at 1440, 14 on a phone, in a
+   bordered box); under it a muted paragraph says what the disclosure's first paragraph says again; then two disclosures in two different styles
+   (a `bh-panel` with a 20 px summary, then a bare accent link). Under the table the `CostUnitNote` is 4 lines at 1440 and 10 on a phone (300
+   characters) beside a one-line Speed note, and the "$ per 1,000 / decisions, not tokens" header cell wraps to 5 lines (87 px tall — the pass-22
+   header budget is 68 px). The message — *dollars per 1,000 decisions, not tokens* — is right and it is first; it is said five times in five
+   lengths. → **F-142** (mechanical: two sentences in the panel, one line under the table, a two-line header, one disclosure style).
+3. **On desktop the task grid does not hug its labels.** The Task column absorbs the table's spare width: 650 px of a 1,334 px wrap, so every
+   ✓ sits 450 px to the right of its task id (`grid.firstTh.w = 650`, `*-jev-grid-open-vp.png`). A heatmap reads by row; the eye should not have to
+   cross a blank field. → **F-143** (mechanical).
+4. **On a phone the row label leaves with the first horizontal scroll** — the gate's open question (REVIEW-20260920T055002Z). The Task cell needs
+   291 px of a 324 px scrollport (`grid.firstTh.w = 291` at 390), so pinning it as it is would leave one outcome column. Decided: **pin it, in a
+   phone-length form.** Below `sm` the cell is 7.5 rem wide and shows the id without its tier prefix — the group row already names the tier —
+   wrapped at its hyphens and underscores onto at most two 11 px lines; the type word goes into the cell's title and label on phones. That leaves six
+   outcome columns beside a label that never leaves. → **F-144** (mechanical, with the exact id transform written down).
+5. **A model with no provider gets a 400 px card headed "Top 0 cheapest providers".** The Step 5 Preview page (0 offers) shows an empty
+   card whose only line says "No per-token pricing matches the active global filters" — nothing is filtered, there is no offer at all — beside
+   the Composite card, at both widths (`*-step5.png`). "Top 0" is not a heading. → **F-145, fixed in this pass** (one branch in
+   `components/ModelDetailOffers.tsx`: a one-line card "No provider publishes an API price for this model yet, so no cost can be modeled." — the
+   same sentence the Overview row already uses).
+6. **Forty vendor-reported values whose status is a superscript.** On the Step 5 page every sheet row reads "no percentile", a number and a
+   tiny †; the only text that says "self-reported by the developer" is screen-reader-only (`step5-geom.selfRep`: 20 sr-only spans, 0 visible),
+   and nothing above the sheet says these are the developer's own claims. CR-98.4 asked for a *visible* vendor-reported status; the legend
+   explains † but the reader has to open it. Key message first: one generated line under the sheet heading, and the per-row cell says
+   "developer's claim" where a measured row would show its percentile. → **F-146** (judgment-light: one line plus one cell label, both generated).
 
-Also noted, not a defect: at 390 the radar ring spans 46 % of the SVG width and the spoke labels render at ~10.5 px — small but legible with the values on
-their own line; the axis caption is two sentences (kept); the B-series value colour in dark is the text-mixed blue (near-white), distinct from A's blue —
-accepted, that is what the gate's same-family rule intends. `components/JevModelsV11.tsx` is still unimported (pass-24 note stands).
+Also noted, not a defect: the 30 px task rows (the F-140 budget said ≤ 28 px; the 2 px is line-height, accepted); the chart label
+"classifier.dev (fast tier)† (honorabl…" truncates only its secondary parenthetical (rule: identifying text never truncates — it does not);
+the Composite card's "87.4 · 1 of 7 inputs · dominance-adjusted from 92.7" for a one-input model is the method's honest output and the ◔ tag
+carries it in the table — a data question for Florian if he wants a one-input model to show no Composite at all, not a design one.
+The bench-sheet element shots in the shoot script failed (`main table` — the sheet is a list, not a table); the full-page shots cover it.
 
-## Decisions in pass 25
+## Decisions in pass 26
 
-1. **X4 (UI meets the design bar) still met at pass 25** for what a reader sees by default; F-139 is a state-labelling defect behind a control and is
-   the one item that must land before the next gate calls CR-90 done. CR-90.1 is set back to `open` in `PROGRESS.md` with F-139 as the reason (the gate
-   rule: a reviewer flips a row whose acceptance the live site does not meet).
-2. **Fable shipped F-136–F-138 itself** (one file, `components/JevRadars.tsx`, plus `test/fable-pass25.test.mjs`) — each fix is a line or a copy move,
-   and the record since pass 8 says Kimi stalls on one-file TSX edits. They need a **non-Fable live pass**: `bin/verify-fable-pass25.mjs` on both hosts,
-   1440/390 × light/dark, expect **50/50 per host** (12 checks per desktop context, 13 per phone context; Fable's own run before the fix: 26/50).
-3. **F-139 and F-140 go to the work engine.** F-139 touches the chart, controls and table state and the URL — a judgment item; F-140 is CSS and a
-   count per tier — mechanical.
-4. **A view control changes the hero's state wherever the hero is (rule added, extends CR-87.10):** any control that recomputes the ranked score —
-   weights, task scope, a future filter — flips the chart badge, eyebrow, table header and URL into the same "not the default" state; a warning line
-   next to the control alone is not enough, because the chart is read without it.
-5. **A heatmap is dense (rule added):** an outcome grid has symbol-only cells ≤ 32 px wide, rows ≤ 28 px, a rotated or numbered system header, and
-   fits the desktop wrap without a horizontal scroll; the row's metadata lives in the pinned first cell's title and the group row carries the totals.
+1. **X4 (UI meets the design bar) still met at pass 26** for what a reader sees by default. F-141 and F-142 are density defects on a page that says
+   the right things; F-146 is the one item that changes what a reader concludes from a number (a vendor's 88.7 % read as a measured 88.7 %) and
+   must land before the next gate calls CR-98.4 done. CR-98.4 stays `verified` for what it checked (status visible *in the DOM* and in the legend);
+   the ledger note records F-146 as its visible-status follow-up.
+2. **The CR-96 and CR-97 rows were missing from the ledger** (the supervisor jobs implemented them with the loop paused and seeded nothing);
+   this pass seeds CR-96.1–96.4 and CR-97.1–97.4 as `implemented` with the jobs' evidence paths. They need a non-implementer gate
+   (`verify-cr-96.mjs`, `verify-cr-97.mjs`, both hosts).
+3. **F-142 adjusts a CR-96.3 presentation detail on purpose:** the supervisor's checklist says the panel above the cost section carries the worked
+   example; Florian's own words were "fix all of it". The panel keeps the unit and Jev's arithmetic in two sentences; the long worked example
+   becomes the first paragraph of "How costs are estimated", one click away, and the repo charts are untouched. Every fact stays on the page.
+4. **Fable shipped F-145 itself** (one conditional in one file, no numbers) and wrote `bin/verify-fable-pass26.mjs` for it; it needs a non-Fable
+   live pass on both hosts, 1440/390 × light/dark, expect **16/16 per host**.
+5. **F-141–F-144 and F-146 go to the work engine**, in that order of value. F-141 and F-146 are judgment items (Claude Opus 5 / Codex Luna);
+   F-142–F-144 are mechanical but touch TSX, so they are faster done by the reviewing engine than delegated (pass-8 record).
+6. **A pinned label has a phone-length form (rule added, F-144):** when a pinned row label cannot fit a third of the phone scrollport, it is not
+   unpinned — it is shortened by a written rule (drop what the group row already says, wrap at its separators) and the dropped words go into the
+   cell's title. The full id stays at `sm+`.
+7. **A card never announces an empty count (rule added, F-145):** "Top 0 …", "0 of …" and "No … matches the filters" when nothing was filtered
+   are defects; an empty state says in one sentence what is missing and why, in the same words the Overview row uses.
+
+## Verdict on the live site — pass 25 (2026-09-20), condensed
+
+The JevBench page after CR-90/93/94/95: the two "Compare two systems" radars judged at the bar; F-136–F-138 shipped by Fable (ring labels off
+the spoke, two-sentence topic caption, compact phone Swap) and verified by non-implementers (50/50 per host); F-139 (a view control changes the
+hero's state wherever the hero is) and F-140 (a heatmap is dense) specified, shipped by codex-luna in iteration 129 and verified by opencode-kimi
+and two review gates (`f509927`, `fcaf334`). Rules added: a view control changes the hero's state everywhere; a heatmap is dense; ring labels never
+sit on a spoke, on every radar. Full text: `git show 48bceea:ops/ux-2026-09-12/DESIGN-DIRECTIVES.md`.
 
 ## Verdict on the live site — pass 24 (2026-09-19), condensed
 
@@ -124,8 +147,92 @@ and the counts line under it keeps the page honest (P4).
 
 ## Directives (open)
 
+### F-141 — The honorable-mention card: the headline, the reason, the numbers — and a disclosure for the dossier `[judgment]`
+
+*Where:* `components/JevModelsV12.tsx` (`HonorableMentions`), the artifact strings unchanged.
+*What:* The section keeps its heading and **the first sentence of `hm.rule` only** ("A service that runs another entrant's model is listed with
+all of its scores and axes, but is not ranked against the models."); sentences 2–3 of the rule move into the disclosure below (the method section
+already carries the rule in full). Each card shows, in this order: the name with the "no rank" tag and the score line as today; the "Runs on
+Jev (TypeSafe)." line; the five-value axes row; **one visible reason of two sentences**, built from artifact fields, not new prose:
+`{short_reason capitalised}.` + the last sentence of `why_not_ranked` (split on ". ", take the final sentence: "Ranking it against Jev would rank
+Jev's model against Jev's model, so from v1.2.4 it is an honorable mention instead of #1."). Everything else — the full `why_not_ranked`,
+`tier_measured`, `price_note`, `not_pass_through`, the credit and the four source links — goes into one `<details>` inside the card with the
+summary **"Why it is not ranked, what its price assumes, and what we found"**, closed by default, `data-bh-jev12-honorable-details`. The `$ per
+1,000 decisions` axis keeps its `est.` tag; the price caveat lives in the disclosure. Nothing is deleted; the artifact is not edited.
+*Accept:* at 1440 and 390 × light/dark the article is ≤ 260 px tall at 1440 and ≤ 520 px at 390 closed; visible sentences outside the disclosure
+≤ 4 (score line, runs-on, reason ×2); the disclosure opens to the same seven facts and four links as today (text length of the section unchanged
+± the moved rule sentences); `verify-cr-97.mjs` still passes with its selectors pointed at the disclosure where a paragraph moved.
+
+### F-142 — One unit message in one length: two sentences in the panel, one line under the table, a two-line header, one disclosure style `[mechanical]`
+
+*Where:* `app/jev-models/page.tsx` (cost section), `components/JevModelsV12.tsx` (`CostUnitNote`, table header `H c="usd"`).
+*What:* (a) The unit panel (`data-bh-jev12-cost-unit-panel`) is exactly two sentences: **"Every price here is US dollars per 1,000 decisions — not
+per 1,000 tokens."** and "One decision is a whole question — state, rubric and options — about 950 input tokens for Jev 1.13.0, so at its $0.042
+per million input tokens 1,000 decisions cost $0.0399." (numbers from `view.costUnit`, never typed). (b) The muted paragraph between the panel and
+the disclosure is removed (its text is the disclosure's first paragraph already). (c) `view.costUnit.worked_example` becomes the first paragraph
+inside "How costs are estimated", above the estimated-cost list. (d) The two disclosures share one style: both `bh-panel p-4` with a
+`text-sm font-semibold` summary (the "Method and tiers" style at the bottom of the page); the correction's summary text is unchanged. (e)
+`CostUnitNote` under the table is one line: `💲 $ per 1,000 decisions, not per 1,000 tokens — one decision ≈ 950 input tokens.` (`short_note`
+trimmed to its first clause; the rest is in the panel); the `full` variant used in the Cost bullet is unchanged. (f) The header cell reads label
+**"$ / 1,000 decisions"**, sub **"not tokens"** — two lines, ≤ 44 px tall at 1440.
+*Accept:* panel `figSentences` = 2 and ≤ 3 lines at 1440 / ≤ 6 at 390; no `p.bh-muted` between the panel and the first `<details>`; the
+`CostUnitNote` under `[data-bh-jev12-table]` is 1 line at 1440 and ≤ 2 at 390; the `$ / 1,000 decisions` header cell ≤ 44 px tall and the header
+row ≤ 68 px at 1440; both cost disclosures have the same computed summary font-size and the same panel class; `verify-cr-96.mjs` passes on both
+hosts with its text assertions updated to the new strings (the unit words "per 1,000 decisions" and "not per 1,000 tokens" must still be found in
+the panel, the note, the header and the Cost bullet).
+
+### F-143 — The task grid hugs its labels on desktop `[mechanical]`
+
+*Where:* `components/JevModelsV12.tsx` (`TaskGrid`), `app/globals.css` if `.bh-table` forces `width: 100%`.
+*What:* The grid table is `w-auto` (not the wrap's full width) and the Task column is `w-[13rem] min-w-[13rem] max-w-[13rem]` at `sm+`, so the 21
+outcome columns start 208 px from the wrap's left edge and the table is ~880 px wide inside the 1,334 px wrap; the wrap keeps `overflow-auto` for
+narrower viewports. Row height unchanged.
+*Accept:* at 1440 `firstTh.w` = 208 ± 4, the first outcome cell's left edge ≤ 260 px from the wrap's left edge, no horizontal scrollbar on the wrap
+(`scrollWidth === clientWidth`), 231 rows, head still pinned after a 900 px scroll, light and dark.
+
+### F-144 — On a phone the Task cell is pinned, in a phone-length form `[mechanical]`
+
+*Where:* `components/JevModelsV12.tsx` (`TaskGrid`: the Task `<th>` in the head, the group rows and the task rows), `app/globals.css`.
+*What:* The first column is `position: sticky; left: 0; z-index: 2` with `background: rgb(var(--surface))` and a 1 px right border in
+`rgb(var(--line))`, at every width (the head's Task cell is both `top: 0` and `left: 0`). At `sm+` it is the F-143 column, full id + type tag.
+**Below `sm`** the cell is `w-[7.5rem] min-w-[7.5rem] max-w-[7.5rem]`; the id is shown **without its tier prefix** — strip a leading `easy-`,
+`original-` or `hard-` (the group row names the tier; `original-` is the standard tier's prefix) — and a `<wbr>` is inserted after every `-` and
+`_` so the id wraps onto at most two lines at 11 px / 14 px line-height (row ≤ 30 px); the type word is **not rendered** below `sm` and instead
+joins the cell's `title` and `aria-label` as `"{full id} · {type} — {TASK_TYPE[type]}"`. The group row's first cell is pinned the same way and
+its text below `sm` is `"{Tier} · {n} of {N} public"`. The legend line under the grid adds, below `sm` only, one sentence: "Task ids are shown
+without their tier prefix; the tier is the group row."
+*Accept:* at 390 × light/dark, after scrolling the wrap 260 px right and 900 px down: the first cell of the row in view has `left` = the wrap's
+left edge ± 1 px and width 120 ± 2, its text is ≤ 2 lines and contains no `easy-`/`original-`/`hard-` prefix, its `title` contains the full id and
+the type word, ≥ 6 outcome cells are fully inside the scrollport, the head is still at `top` 1 px; at 1440 the first cell is pinned at the wrap's
+left edge with the full id and the type tag visible. No page error, no page overflow. At 1.3× text (html font-size 20.8 px) the cell still shows
+≥ 4 outcome columns.
+
+### F-146 — A vendor's numbers say so where the number is `[judgment]`
+
+*Where:* `components/BenchmarkSheet.tsx` (header line), `components/BenchmarkSheetLazy.tsx` (`SheetRows` row cell), `components/TableLegend.tsx`
+unchanged.
+*What:* (a) Under the "Benchmark sheet" heading, when ≥ 1 row has `basis === 'self_reported'`, one generated line in the muted style directly under
+the existing counts line: **"{n} of {m} values are {org}'s own claims (†), not independent measurements; a matching independent result replaces a
+claim as soon as one exists."** (`n`, `m`, `org` from the rows and the model; `data-bh-sheet-vendor-line`). When `n` = 0 the line is absent. (b) In
+each row, where a measured row shows its percentile bar, a self-reported row shows the muted words **"developer's claim"** instead of "no
+percentile" (the † and its sr-only text stay on the value). The legend row for † is unchanged. Not a banner, not a colour: text in the muted
+token, once per row and once per sheet.
+*Accept:* on `/models/step-5-preview::default` at 1440/390 × light/dark the line reads "40 of 40 values are StepFun's own claims (†) …" (counts
+generated — re-derive from the page's rows in the verifier, never pin 40), every self-reported row's middle cell reads "developer's claim", and on
+`/models/claude-fable-5.1::high` the line is absent and no row says "developer's claim" unless its value carries †. No new element wider than
+390 px. `verify-cr-98.mjs` still passes.
+
 ## Design system notes (apply while touching any file above)
 
+- **A pinned label has a phone-length form (pass 26, F-144):** a pinned row label that cannot fit a third of the phone scrollport is shortened
+  by a written rule (drop what the group row already says, wrap at its separators, ≤ 2 lines) and the dropped words go into the cell's title;
+  it is never unpinned. The full form stays at `sm+`.
+- **A card never announces an empty count (pass 26, F-145):** "Top 0 …", "0 of …", and "no … matches the filters" when nothing was filtered
+  are defects; an empty state is one sentence saying what is missing and why, in the same words the Overview row uses.
+- **A vendor's number says so where the number is (pass 26, F-146):** a self-reported value carries its status in visible words on its row
+  and one generated count line at the top of its sheet; a superscript and a legend are not a status.
+- **One message, one length (pass 26, F-142):** when a unit or caveat must appear in several places, it appears in one wording, and only the
+  first occurrence may carry the arithmetic; the others are one line.
 - **A view control changes the hero's state wherever the hero is (pass 25, F-139, extends CR-87.10):** any control that recomputes the
   ranked score flips the chart badge, eyebrow, table header and URL into the same "not the default" state; a warning next to the control alone is
   not enough.
@@ -454,3 +561,4 @@ and the counts line under it keeps the page honest (P4).
 | F-135 "How costs are estimated" is a closed `<details id="jev-costs">` with a one-line summary outside; chart/Method links and a `#jev-costs` load open it and scroll to it | `5945e08` (codex-luna, iteration 119) | `/opt/benchmarkheaven/state/ux-evidence/review-20260919T165003Z/f134-f135-{canonical,legacy}/` | **verified** — claude-opus (review gate 20260919T165003Z, non-implementer) at live `f0de1a6`, both hosts, 1440/390 × light/dark: closed on load, 90 px at 390 (cap 160), first cost row in view after the chart-link click, a second in-page link opens it, direct hash load opens it in view, cost rows + reference prices inside, no overflow, 0 page errors (46/48 per host; the 2 misses are F-134's line cap) |
 | F-139 task scope other than All makes the chart, table, controls and URL explicitly non-default, with reload/reset and combined-weight wording | `f509927` (codex-luna, iteration 129) | `/opt/benchmarkheaven/state/ux-evidence/iter129-codex-f139-f140/{canonical-deployed,legacy-deployed,cr87-current-canonical,cr87-current-legacy}/` + independent Kimi output | **verified by opencode-kimi (different engine, 2026-09-20):** `verify-cr-90.mjs` **66/66 on both hosts**, 1440/390 × light/dark; Easy + Medium and Easy scope labels, `?scope=` persistence, reload restoration, official reset, chart/table state and no errors all pass. The current v1.2 companion `verify-cr-87.mjs` also passes **84/84 per host**. | **Review gate 20260920T043003Z (claude-opus):** the directive's own acceptance — "with scope = all nothing on the page differs from the pass-25 shots" — was **not** met: the default hero read `231 decisions per system` instead of 534, because the scoped view counted public tasks, and the verifier asserted nothing about the default view although the directive's test spec asked for exactly that. Fixed by the gate (`scopeDecisions()`); the strengthened verifier now checks 534/231/168/72 and passes 74/74 per host. Needs a non-claude re-run.
 | F-140 JevBench public-task grid is a dense heatmap with 32 px symbol cells, compact rows, rotated headers and per-system tier totals | `f509927` (codex-luna, iteration 129) | same | **verified by opencode-kimi (different engine, 2026-09-20):** same **66/66 per host**; 231 task rows, 21 system columns, 3 × 21 `correct/attempted` summary cells, rotated headers, no hidden payload, no mobile overflow and no page/console errors | | **Review gate 20260920T055002Z (claude-opus):** the directive's "rotated headers" were the only thing naming the 21 system columns, and the head was `position: static` — scrolled to the bottom of the 231 rows it sat 6,185 px above the scrollport, so on desktop as much as on a phone every cell below the first screenful belonged to an unnamed column. The Task cells' `bh-jev-sticky` is defined only under `.bh-jev-table` and this grid is a `.bh-table`, so the class resolved to nothing. Fixed by the gate (`fcaf334`, `[data-bh-jev12-task-table] thead th { position: sticky; top: 0 }`); unchanged at scroll-top, pinned at offset 1 px in all four contexts, live **114/114 per host**. The **horizontal** half is left open for Fable: at 390 px the Task cell needs 291 px of a 324 px scrollport (451 px at 1.3× text), so pinning it as-is leaves one outcome cell and the 170 px phone cap of the main table would clip the question type. |
+| F-145 A model with no provider offer shows a one-sentence Providers card, never "Top 0 cheapest providers" or an empty offers disclosure | (Fable, pass 26 — hash in the ledger note) | `/opt/benchmarkheaven/state/ux-evidence/fable-20260920-pass26/{canonical,legacy}-verify/` | needs a **non-Fable** live pass: `bin/verify-fable-pass26.mjs` on both hosts, expect 16/16 per host |

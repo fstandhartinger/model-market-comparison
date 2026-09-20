@@ -33,6 +33,17 @@ export function ModelDetailOffers({
     price: offerPrice(offer, ctx),
   })), [offers, scope, ctx]);
 
+  // F-145 (Fable pass 26): a model nobody offers yet gets one sentence, not a card headed "Top 0 cheapest providers"
+  // that blames the filters. Same words as the Overview row's "No public API price" tip.
+  if (offers.length === 0) {
+    return view === "top"
+      ? <section className="card min-w-0 p-4" data-bh-no-offers>
+          <h2 className="mb-1 font-semibold">Providers</h2>
+          <p className="text-sm text-gray-500">No provider publishes an API price for this model yet, so no cost can be modeled.</p>
+        </section>
+      : null;
+  }
+
   if (view === "top") {
     const top = ranked.slice(0, 5);
     return (
