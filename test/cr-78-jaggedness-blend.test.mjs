@@ -123,11 +123,24 @@ test('CR-78.3: the three level changes from the simulation, and Hy3 moving down'
   // are unchanged. **Florian may want to re-run the null simulation**: these pins have now moved twice
   // in two days as the corpus grew (CR-54.2 on 19 Sep, this board on 20 Sep), and the transitions they
   // were written to demonstrate are wearing off. The arithmetic contracts below are unaffected.
+  //
+  // 2026-09-20 re-pin (CR-85.2): LiveBench joined as a heldout board (30 exact joins; questions are
+  // refreshed monthly and each release postdates the training cutoffs, so it is a board nobody can aim
+  // at). None of the four pinned rows changes its (headline − heldout) gap — the gaps below are
+  // untouched — but the heldout corpus is one axis wider for the models it joins, so their profile is
+  // a little less jagged and the blended score falls slightly: Muse Spark 1.1 18.08 → 17.87,
+  // Qwen3.7 Max 6.77 → 6.56, Gemini 3.6 Flash 6.13 → 5.92, Hy3 4.21 → 4.20. Catalog-wide exactly two
+  // models change level, both by crossing the medium line (6) downwards from just above it:
+  // Gemini 3.6 Flash 6.13 → 5.92 and Qwen3.6 Plus 6.06 → 5.90. Gemini 3.6 Flash is therefore back
+  // inside the 0.5 band around a threshold that the 2026-09-18 rule was written for (it sits 0.08
+  // under the medium line), so its hard after-level assertion is dropped again and only the published
+  // blend identity is asserted for it; the tier is not fudged to keep the old transition. The value
+  // bands stay ±0.5 and every row still asserts score = gap + jaggedness term.
   const expected = [
-    { id: 'muse-spark-1.1::xhigh', gap: 15.2, score: 18.1, before: 'strong', after: 'strong' },     // 11.69 → 14.03 → 18.08
-    { id: 'qwen3.7-max::default', gap: 5.4, score: 6.8, before: 'light', after: 'medium' },         // 5.38 → 6.78
-    { id: 'gemini-3.6-flash::high', gap: 5.0, score: 6.1, before: 'light', after: 'medium' },       // 5.05 → 6.09
-    { id: 'hy3::default', gap: 5.8, score: 4.2, before: 'light', after: 'light' },                  // 5.82 → 4.22
+    { id: 'muse-spark-1.1::xhigh', gap: 15.2, score: 18.0, before: 'strong', after: 'strong' },     // 11.69 → 14.03 → 18.08 → 17.87
+    { id: 'qwen3.7-max::default', gap: 5.4, score: 6.7, before: 'light', after: 'medium' },         // 5.38 → 6.78 → 6.56
+    { id: 'gemini-3.6-flash::high', gap: 5.0, score: 6.0, before: 'light' },                        // 5.05 → 6.09 → 5.92 (0.08 under the medium line)
+    { id: 'hy3::default', gap: 5.8, score: 4.2, before: 'light', after: 'light' },                  // 5.82 → 4.22 → 4.20
   ];
   for (const row of expected) {
     const report = scoreBenchmaxxing(view, row.id);

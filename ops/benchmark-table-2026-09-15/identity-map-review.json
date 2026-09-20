@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-20T02:16:00.117Z",
-  "joined": 1328,
+  "generated_at": "2026-09-20T16:43:01.803Z",
+  "joined": 1358,
   "unmatched": [
     {
       "benchmark_id": "deepswe::snapshot-2026-09-15",
@@ -6858,6 +6858,16 @@
       "reason": "label is not a catalog model slug"
     },
     {
+      "benchmark_id": "weirdml::3",
+      "source_id": "opus-4.5",
+      "reason": "label is not a catalog model slug"
+    },
+    {
+      "benchmark_id": "weirdml::3",
+      "source_id": "gpt-5.6-luna-xhigh-openrouter",
+      "reason": "label is not a catalog model slug"
+    },
+    {
       "benchmark_id": "swe-rebench::2026-05-15..2026-07-01",
       "source_id": "Qwen3.5-35B-A3B__tools",
       "reason": "setting not stated and qwen3.5-35b-a3b has 2 catalog configurations"
@@ -7776,6 +7786,141 @@
       "benchmark_id": "toolathlon-verified::2026-06-30",
       "source_id": "Kimi K2.5",
       "reason": "setting not stated and kimi-k2.5 has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "livebench::2026-06-25",
+      "source_id": "claude-opus-4-5-20251101-thinking-64k-high-effort",
+      "reason": "label names a dated checkpoint (claude-opus-4-5-20251101-thinking-64k-high-effort); dated checkpoints are never joined"
+    },
+    {
+      "benchmark_id": "livebench::2026-06-25",
+      "source_id": "claude-opus-4-6-thinking-auto-high-effort",
+      "reason": "slug claude-opus-4-6-thinking-auto is not a catalog family"
+    },
+    {
+      "benchmark_id": "livebench::2026-06-25",
+      "source_id": "claude-opus-4-7-xhigh-effort",
+      "reason": "no catalog configuration for claude-opus-4.7 with setting xhigh"
+    },
+    {
+      "benchmark_id": "livebench::2026-06-25",
+      "source_id": "claude-sonnet-4-6-thinking-auto-medium-effort",
+      "reason": "slug claude-sonnet-4-6-thinking-auto is not a catalog family"
+    },
+    {
+      "benchmark_id": "livebench::2026-06-25",
+      "source_id": "deepseek-v4-flash",
+      "reason": "setting not stated and deepseek-v4-flash has 3 catalog configurations"
+    },
+    {
+      "benchmark_id": "livebench::2026-06-25",
+      "source_id": "deepseek-v4-pro",
+      "reason": "setting not stated and deepseek-v4-pro has 3 catalog configurations"
+    },
+    {
+      "benchmark_id": "livebench::2026-06-25",
+      "source_id": "gemini-3.1-pro-preview-high",
+      "reason": "no catalog configuration for gemini-3.1-pro-preview with setting high"
+    },
+    {
+      "benchmark_id": "livebench::2026-06-25",
+      "source_id": "glm-5.2",
+      "reason": "setting not stated and glm-5.2 has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "livebench::2026-06-25",
+      "source_id": "gpt-5.2-2025-12-11-high",
+      "reason": "label names a dated checkpoint (gpt-5.2-2025-12-11-high); dated checkpoints are never joined"
+    },
+    {
+      "benchmark_id": "livebench::2026-06-25",
+      "source_id": "gpt-5.2-codex",
+      "reason": "setting not stated and gpt-5.2-codex has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "livebench::2026-06-25",
+      "source_id": "grok-4.3",
+      "reason": "setting not stated and grok-4.3 has 4 catalog configurations"
+    },
+    {
+      "benchmark_id": "livebench::2026-06-25",
+      "source_id": "grok-4.5",
+      "reason": "setting not stated and grok-4.5 has 1 catalog configurations"
+    },
+    {
+      "benchmark_id": "livebench::2026-06-25",
+      "source_id": "grok-build-0.1",
+      "reason": "label is not a catalog model slug"
+    },
+    {
+      "benchmark_id": "livebench::2026-06-25",
+      "source_id": "kimi-k2.6-thinking",
+      "reason": "label states setting thinking, which is not a reviewed setting"
+    },
+    {
+      "benchmark_id": "livebench::2026-06-25",
+      "source_id": "qwen3.6-27b",
+      "reason": "setting not stated and qwen3.6-27b has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "livebench::2026-06-25",
+      "source_id": "kimi-k3",
+      "reason": "setting not stated and kimi-k3 has 3 catalog configurations"
+    },
+    {
+      "benchmark_id": "livebench::2026-06-25",
+      "source_id": "gemini-3.5-flash-lite-high",
+      "reason": "no catalog configuration for gemini-3.5-flash-lite with setting high"
+    },
+    {
+      "benchmark_id": "livebench::2026-06-25",
+      "source_id": "deepseek-v4-flash-0731",
+      "reason": "setting not stated and deepseek-v4-flash-0731 has 1 catalog configurations"
+    },
+    {
+      "benchmark_id": "livebench::2026-06-25",
+      "source_id": "smaug-agentic",
+      "reason": "label is not a catalog model slug"
+    },
+    {
+      "benchmark_id": "livebench::2026-06-25",
+      "source_id": "smaug-mini",
+      "reason": "label is not a catalog model slug"
+    },
+    {
+      "benchmark_id": "livebench::2026-06-25",
+      "source_id": "deepseek-v4-pro-0813",
+      "reason": "setting not stated and deepseek-v4-pro-0813 has 1 catalog configurations"
+    },
+    {
+      "benchmark_id": "livebench::2026-06-25",
+      "source_id": "grok-4.6",
+      "reason": "setting not stated and grok-4.6 has 4 catalog configurations"
+    },
+    {
+      "benchmark_id": "livebench::2026-06-25",
+      "source_id": "qwen3.8-27b",
+      "reason": "setting not stated and qwen3.8-27b has 4 catalog configurations"
+    },
+    {
+      "benchmark_id": "livebench::2026-06-25",
+      "source_id": "ox-alpha-max",
+      "reason": "label is not a catalog model slug"
+    },
+    {
+      "benchmark_id": "livebench::2026-06-25",
+      "source_id": "glm-5.3",
+      "reason": "setting not stated and glm-5.3 has 1 catalog configurations"
+    },
+    {
+      "benchmark_id": "livebench::2026-06-25",
+      "source_id": "nemotron-3-ultra-550b-a55b",
+      "reason": "setting not stated and nemotron-3-ultra-550b-a55b has 1 catalog configurations"
+    },
+    {
+      "benchmark_id": "livebench::2026-06-25",
+      "source_id": "smaug-flash",
+      "reason": "label is not a catalog model slug"
     }
   ]
 }

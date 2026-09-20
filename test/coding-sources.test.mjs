@@ -31,7 +31,11 @@ const SLUG_BOARDS = ['osworld-2', 'swe-rebench', 'gso', 'hyper-tau-bench', 'lisa
   // the same lib/coding-identity.mjs parseDeepSweId rule as DeepSWE/SimpleQA Verified. math_level_5 and
   // frontiermath_erdos stay excluded; recorded in data/raw/benchmarks/epoch-hub-decisions.json.
   'chess-puzzles', 'mystery-game-puzzles', 'ebr-bench', 'mirrorcode', 'epoch-gpqa-diamond',
-  'epoch-swe-bench-verified'];
+  'epoch-swe-bench-verified',
+  // 2026-09-20 (iteration 139, CR-85.2): LiveBench's release CSV, run slugs of the form
+  // `<family>-<effort>` and Anthropic's `<family>-<effort>-effort`; dated checkpoints and the
+  // unreviewed "thinking" setting stay unjoined (lib/board-identity.mjs livebenchJoins).
+  'livebench'];
 const MIN = { 'deepswe::snapshot-2026-09-15': 60, 'swe-atlas-qna::snapshot-2026-09-15': 20, 'swe-atlas-test-writing::snapshot-2026-09-15': 20, 'swe-atlas-refactoring::snapshot-2026-09-15': 15 };
 
 test('the collector reproduces the committed observations from the committed evidence alone', () => {
@@ -116,7 +120,12 @@ test('identity map: exact existing configurations; measured joins visible; self-
     assert.ok(o, entry.source_id);
     // A ×100 unit conversion of a measured source stays measured ground truth (weirdml::3 scores are
     // published as fractions; the registry unit is percent — same convention as arc-agi/eqbench-judgemark).
-    assert.equal(o.basis === 'derived' && o.derivation?.formula === 'Source value × 100 to registry units' ? o.source_basis : o.basis, 'measured');
+    // 2026-09-20 (iteration 139, CR-85.2): the same holds for LiveBench, which publishes the per-task
+    // scores and its own documented overall formula but no overall column — our value is that formula
+    // applied to the captured task scores, so the honest basis is the source's (`source_basis`).
+    const keepsSourceBasis = o.basis === 'derived'
+      && (o.derivation?.formula === 'Source value × 100 to registry units' || o.benchmark_id.startsWith('livebench::'));
+    assert.equal(keepsSourceBasis ? o.source_basis : o.basis, 'measured');
     assert.equal(o.subject.model_id, entry.model_id);
     const mapEntry = map.entries.find((e) => e.benchmark_id === o.benchmark_id && e.source_id === o.subject.source_id);
     assert.ok(mapEntry?.reviewed_at, `${o.id} has a per-entry review date`);
