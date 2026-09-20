@@ -6001,6 +6001,23 @@ on the canonical host, 1440/390 × light/dark: 93 shots + 2 element shots in `/o
   byte-identical** (md5 `c823ca0a53ce98ce0b2a156987b5d9fa` before and after, 97 observations, 59 carried). A third test pins
   the invariant that keeps this from recurring — every source URL in the candidates file is either in the scout's own locked
   capture manifest or on the carry list, and the carry list never names a document the scout already owns.
+- **The question a reviewer should ask, asked and answered: can a lab's own numbers move its Benchmaxxing signal?** Neither
+  `measuredAxisMaps` nor `evidencedAxisMaps` filters on `basis`, so the 19 new axes (and CR-98's 40 before them) do reach the
+  Benchmaxxing view — the radar profile for this model goes from 310 to 329 axes. They cannot move anything, and the reason is
+  structural rather than lucky: `computePairStats` is built from the **measured** maps, and a board whose only row is a vendor
+  claim has a measured cohort of **0**, so it forms no pair and enters no prediction. Measured both ways: every one of the 19
+  card axes has cohort size 0, and `scoreBenchmaxxing` returns **7.6026927493156595 before and after**, identical to the digit.
+  `test/deepseek-v41-flash-claims.test.mjs` now pins both, so a later change that starts feeding claims into the pair
+  statistics fails there rather than quietly moving a tag.
+- **The CR's two remaining sources for this model, checked rather than assumed.** `designarena` is `{}` for
+  `deepseek-v4.1-flash::max` and the Lumina ledger does not mention the model at all (0 occurrences). So DesignArena is empty
+  and blocked behind CR-34.5's terms escalation to Florian, and Lumina has nothing to give — neither is work this loop can do.
+- **Checked that tomorrow's 05:17 run will not trip over the new entries.** Neither the 19 DeepSeek nor the 40 Step-5
+  identities are in `collection-plan.json`, so the "Primary source unavailable" throw cannot reach them; they land in the daily
+  refresh's final loop as `source_reachable_protocol_date_retained` (`no_adapter` in source-health, not `failing`), and their
+  single new URL is one polite GET per run. Tomorrow is the first scheduled run to see either population.
 - **Sign-off owed:** CR-85.2's card slice is claude-opus code, so a different engine owes its `verified`. CR-85.2 also stays
-  `in-progress` on its own terms: the CR names DesignArena and Lumina for this model too, and iteration 125's Epoch and
-  LiveBench re-checks are still open. No `ALL-ACCEPTED`.
+  `in-progress` on its own terms. No `ALL-ACCEPTED`.
+- **Live at `1a787ed5111e18ff98b56ee6f08f5681e8abcaf4` (the final revision of this iteration) on both hosts: 109/109 and
+  109/109** (`/opt/benchmarkheaven/state/ux-evidence/iter140-cr85-2-deepseek/final-{canonical,legacy}/verification.json`) —
+  re-run after the collector fix to show the ingestion is unchanged by it.

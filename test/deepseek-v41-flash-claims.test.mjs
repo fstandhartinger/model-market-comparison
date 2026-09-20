@@ -123,3 +123,24 @@ test('the vendor claims raise V4.1 Flash coverage without entering the Composite
   assert.equal(computeCompositeScores(dataset.models).get(MODEL), 50);
   assert.equal(compositeEvidenceCount(model), 0);
 });
+
+// A board whose only row is a vendor claim has no measured cohort, so it cannot form the pair
+// statistics Benchmaxxing is built from. That is what keeps a lab's own numbers out of its own
+// Benchmaxxing signal, and it is worth pinning: the measured cohort of each card board must stay
+// empty, and the model's score must stay exactly where it was before the card was ingested.
+test('the card\'s boards cannot move the Benchmaxxing signal', async () => {
+  const dataset = await read('data/dataset.json');
+  const { buildBenchmarkView } = await import('../lib/benchmark-view.mjs');
+  const { measuredAxisMaps, evidencedAxisMaps, computePairStats, scoreBenchmaxxing } = await import('../lib/benchmax.mjs');
+  const view = buildBenchmarkView(dataset);
+  const maps = measuredAxisMaps(view);
+  const cardAxes = view.axes.filter((a) => dataset.benchmark_results.observations
+    .some((o) => o.source?.url === CARD && o.benchmark_id === a.benchmarkId));
+  assert.equal(cardAxes.length, 19);
+  for (const axis of cardAxes) assert.equal(maps.get(axis.id).size, 0, axis.benchmarkId);
+  const evid = evidencedAxisMaps(view);
+  const stats = computePairStats(maps);
+  const scored = scoreBenchmaxxing(view, MODEL, { maps, evid, stats });
+  // The value 6357d9e produced, before any of these 19 rows existed.
+  assert.equal(scored.score, 7.6026927493156595);
+});
