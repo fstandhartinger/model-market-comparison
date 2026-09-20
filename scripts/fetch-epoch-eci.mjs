@@ -5,17 +5,22 @@ import { readFile, writeFile, rename } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
-import { ECI_URLS, parseCsv, parseBenchmarkCatalog, buildEciSnapshot, discoverBenchmarkCatalog } from "../lib/epoch-eci.mjs";
+import { ECI_URLS, parseCsv, parseBenchmarkCatalog, buildEciSnapshot, discoverBenchmarkCatalog, fetchTextWithRetry } from "../lib/epoch-eci.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const output = join(root, "data/raw/epoch-eci.json");
 const retrievedAt = new Date().toISOString();
 
-async function fetchText(url) {
+async function fetchOnce(url) {
   const response = await fetch(url, { headers: { "user-agent": "BenchmarkHeaven/1.0 (public research data refresh)" } });
   if (!response.ok) throw Object.assign(new Error(`${url}: HTTP ${response.status}`), { status: response.status });
   return response.text();
 }
+
+// A dropped connection is not a reason to lose the day's publication; see fetchTextWithRetry.
+const fetchText = (url) => fetchTextWithRetry(fetchOnce, url, {
+  onRetry: ({ attempt, error }) => console.warn(`Epoch ${url}: attempt ${attempt} failed (${error.message}); retrying`),
+});
 
 const sha256 = (text) => createHash("sha256").update(text).digest("hex");
 const required = (rows, name, fields) => {

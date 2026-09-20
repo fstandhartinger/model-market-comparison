@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { buildEciSnapshot, fitEci, parseBenchmarkCatalog, parseCsv } from "../lib/epoch-eci.mjs";
+import { buildEciSnapshot, fetchTextWithRetry, fitEci, isTransientFetchError, parseBenchmarkCatalog, parseCsv } from "../lib/epoch-eci.mjs";
 
 test("Epoch CSV parser preserves quoted commas and newlines", () => {
   const rows = parseCsv('name,note,value\nmodel,"a, b\\nsecond line",1\n');
@@ -54,4 +54,42 @@ test("the Epoch benchmark catalog chunk is rediscovered when its build hash chan
   assert.ok(requested.every((url) => url === "https://epoch.ai/eci" || url.startsWith("https://epoch.ai/_astro/")));
   assert.equal(isBenchmarkCatalogChunk("GenericBenchmarkChart.DDD.js", site["https://epoch.ai/_astro/GenericBenchmarkChart.DDD.js"]), false);
   await assert.rejects(discoverBenchmarkCatalog(async (url) => { if (url.endsWith("/eci")) return "<html></html>"; throw new Error("404"); }), /not found/);
+});
+
+test("iteration 134: a dropped connection is retried, an answer is not", async () => {
+  const withStatus = (status) => Object.assign(new Error(`https://epoch.ai/x: HTTP ${status}`), { status });
+  // No status means the request never completed — undici's bare "fetch failed", which is what killed
+  // the 2026-09-20 07:17 catch-up run while epoch.ai answered normally three minutes later.
+  assert.equal(isTransientFetchError(new TypeError("fetch failed")), true);
+  assert.equal(isTransientFetchError(withStatus(503)), true);
+  for (const status of [400, 403, 404, 429, 500]) assert.equal(isTransientFetchError(withStatus(status)), false, `HTTP ${status} is an answer`);
+
+  const slept = [];
+  const sleep = async (ms) => { slept.push(ms); };
+  let calls = 0;
+  const flaky = async () => { calls += 1; if (calls < 3) throw new TypeError("fetch failed"); return "body"; };
+  assert.equal(await fetchTextWithRetry(flaky, "https://epoch.ai/data/eci_scores.csv", { sleep }), "body");
+  assert.equal(calls, 3);
+  assert.deepEqual(slept, [2000, 4000], "backoff grows and the successful attempt does not sleep");
+
+  // A 404 is how the pinned build-hash chunk reports that it moved; retrying it would only delay the
+  // rediscovery walk that handles it.
+  calls = 0;
+  const gone = async () => { calls += 1; throw withStatus(404); };
+  await assert.rejects(() => fetchTextWithRetry(gone, "https://epoch.ai/_astro/benchmarks.X.js", { sleep }), /HTTP 404/);
+  assert.equal(calls, 1, "an answer is never retried");
+
+  // Exhausting the budget rethrows the last transport error rather than inventing a result.
+  calls = 0;
+  const dead = async () => { calls += 1; throw new TypeError("fetch failed"); };
+  await assert.rejects(() => fetchTextWithRetry(dead, "https://epoch.ai/eci", { sleep }), /fetch failed/);
+  assert.equal(calls, 3);
+});
+
+test("iteration 134: the pinned catalog chunk is the one the site currently serves", async () => {
+  const { ECI_URLS } = await import("../lib/epoch-eci.mjs");
+  // A stale pin costs ~18 extra requests on every run — the long way round is the fallback, not the
+  // normal path. This pin was refreshed 2026-09-20 from a live run that reported the move.
+  assert.match(ECI_URLS.benchmark_catalog, /^https:\/\/epoch\.ai\/_astro\/benchmarks\.[A-Za-z0-9_-]+\.js$/);
+  assert.equal(ECI_URLS.benchmark_catalog, "https://epoch.ai/_astro/benchmarks.9KxXV3Nj.js");
 });
