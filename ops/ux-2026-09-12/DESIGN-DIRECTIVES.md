@@ -124,39 +124,6 @@ and the counts line under it keeps the page honest (P4).
 
 ## Directives (open)
 
-### F-139 [judgment] — A task scope other than "All tasks" puts the chart, the table and the URL into the "not the default" state
-
-*Where:* `components/JevModelsV12.tsx` (`JevModelsV12Board`, `ScoreChart`, `Controls`, `Table`, the difficulty section), `lib/jevbench-v12-scope.mjs`
-(URL parameter), `ops/ux-2026-09-12/bin/verify-cr-90.mjs`, `test/jevbench-v12-tasks.test.mjs`.
-*What:* (1) Whenever `scope !== 'all'`, the chart renders exactly the CR-87.10 state it already has for other weightings: `data-bh-jevc-chart="custom"`,
-the ⚠ badge, the subtitle "Ranks and scores below are recomputed for the {N} easy decisions (Intelligence from that tier only) — the official all-tasks
-score is the JevBench Score. ▲▼ = change vs. the official ranking.", the eyebrow "JevBench v1.2.2 · {N} decisions per system · Easy only", and the
-Controls badge "Not the default — Easy only tasks" (when weights differ too: "Not the default — Easy only tasks · 20:20:60"). The table's hero header
-sub-line reads "Easy only · not the official score" and the `official` sub-value under each score is the published all-tasks JevBench Score, as it is
-for other weightings; ▲▼ deltas are against the published rank. (2) One "Reset to the JevBench Score" button resets scope *and* weights; the difficulty
-panel keeps its "Reset to all tasks". (3) `?scope=easy|easy-medium` in the URL (absent = all; invalid = all), restored on load, written by
-`history.replaceState` like `?w=`; "Copy a link to this weighting" becomes "Copy a link to this view" and covers both. (4) The panel's warning line is
-one sentence without the doubled word: "⚠ Not the default JevBench setting — Easy only tasks; the chart, table and ranking above are recomputed."
-(5) The "How the ranking moves" table's replacement note stays. Tests: `describe`-level default detection covers scope; `verify-cr-90.mjs` asserts the
-chart/badge/eyebrow/header state and the URL for each scope, and that the default view is byte-identical to today's.
-*Accept:* on both hosts, 1440/390 × light/dark: after clicking "Easy only" the chart badge, eyebrow, subtitle, Controls badge and table header all name
-the scope; the URL contains `scope=easy`; a reload of that URL restores the state; the reset returns everything to the official view with no `scope`
-in the URL; with scope = all nothing on the page differs from the pass-25 shots; `verify-cr-90.mjs` and `verify-cr-87.mjs` green.
-
-### F-140 [mechanical] — The per-task grid is a dense heatmap with per-system tier totals
-
-*Where:* `TaskGrid` in `components/JevModelsV12.tsx`, `app/globals.css` (one rule for the rotated header), `ops/ux-2026-09-12/bin/verify-cr-90.mjs`.
-*What:* (1) Outcome cells are symbol-only, `w-8` (32 px), `px-0 py-0.5`, so a row is ≤ 28 px; the task `<th>` shows the id on one line (12 px) with
-`topic · type` in its `title` and in the cell's `aria-label`, not as a second line. (2) System names in the header are rotated
-(`writing-mode: vertical-rl; transform: rotate(180deg)`, `height: 7.5rem`, 12 px, `title` = full display name), so 21 systems take 21 × 32 = 672 px
-and the whole table (task column 13 rem) fits the 1,334 px wrap at 1440 with no horizontal scroll; at 390 the wrap scrolls sideways with the task
-column pinned (a 21-system table with a pinned column is the results-table precedent, not the pass-9 chart rule). (3) Each tier group row shows, per
-system, `correct/attempted` for that tier in the visible scope, bold (counted from the outcomes in the pinned artifact — nothing new is computed),
-with the tier name and public-task count in the first cell. (4) The `max-h-[38rem]` inner scroll stays; the legend line under the grid stays.
-*Accept:* at 1440 the grid table's width ≤ its wrap's width, every outcome row ≤ 28 px, header ≤ 130 px; every group row carries one `c/n` per system
-and the counts equal the number of ✓ among that system's cells in that tier; at 390 the task column stays pinned while scrolling sideways, no page
-overflow; both hosts, light/dark; `verify-cr-90.mjs` green.
-
 ## Design system notes (apply while touching any file above)
 
 - **A view control changes the hero's state wherever the hero is (pass 25, F-139, extends CR-87.10):** any control that recomputes the
@@ -485,3 +452,5 @@ overflow; both hosts, light/dark; `verify-cr-90.mjs` green.
 | F-137 topic radar caption: one sentence plus the conditional "grey n=…" line; "not part of the score" in the heading; tier mix, method link and held-out note as the first lines of the "Values and notes" disclosure | pass 25 (Fable, surgical) + test | same (before: 5 sentences, 9 lines at 390) | same |
 | F-138 phone ⇄ Swap is content-wide and right-aligned under System A below `sm` | pass 25 (Fable, surgical) + test | same (before: 324 px, the width of the selects) | same |
 | F-135 "How costs are estimated" is a closed `<details id="jev-costs">` with a one-line summary outside; chart/Method links and a `#jev-costs` load open it and scroll to it | `5945e08` (codex-luna, iteration 119) | `/opt/benchmarkheaven/state/ux-evidence/review-20260919T165003Z/f134-f135-{canonical,legacy}/` | **verified** — claude-opus (review gate 20260919T165003Z, non-implementer) at live `f0de1a6`, both hosts, 1440/390 × light/dark: closed on load, 90 px at 390 (cap 160), first cost row in view after the chart-link click, a second in-page link opens it, direct hash load opens it in view, cost rows + reference prices inside, no overflow, 0 page errors (46/48 per host; the 2 misses are F-134's line cap) |
+| F-139 task scope other than All makes the chart, table, controls and URL explicitly non-default, with reload/reset and combined-weight wording | `f509927` (codex-luna, iteration 129) | `/opt/benchmarkheaven/state/ux-evidence/iter129-codex-f139-f140/{canonical-deployed,legacy-deployed}/verification.json`; independent Kimi output archived beside it | **verified by opencode-kimi (different engine, 2026-09-20):** `verify-cr-90.mjs` **66/66 on both hosts**, 1440/390 × light/dark; Easy + Medium and Easy scope labels, `?scope=` persistence, reload restoration, official reset, chart/table state and no errors all pass |
+| F-140 JevBench public-task grid is a dense heatmap with 32 px symbol cells, compact rows, rotated headers and per-system tier totals | `f509927` (codex-luna, iteration 129) | same | **verified by opencode-kimi (different engine, 2026-09-20):** same **66/66 per host**; 231 task rows, 21 system columns, 3 × 21 `correct/attempted` summary cells, rotated headers, no hidden payload, no mobile overflow and no page/console errors |
