@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "note": "Release documents whose self-reported rows were ingested by hand, from a capture the 2026-09-15 scout job never saw. scripts/collect-self-reported-scores.mjs rebuilds the scout population from scratch on every run; without this list that rebuild would delete these rows, because the scout cannot produce them. A document listed here has its observations, its collections and its refusals carried through unchanged, and every carried row is re-checked against its own retained capture before it survives. Removing a line here is a decision to drop those rows: the collector fails closed if a listed document contributes nothing.",
+  "documents": [
+    {
+      "url": "https://www.stepfun.com/step-5-preview",
+      "reviewed_at": "2026-09-20",
+      "reason": "CR-98: StepFun's Step-5 Preview launch table, 40 vendor claims ingested by hand in 39d7caf with their own critic round."
+    },
+    {
+      "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/raw/main/README.md",
+      "reviewed_at": "2026-09-20",
+      "reason": "CR-85.2: DeepSeek's own DeepSeek-V4.1-Flash model card, 19 vendor claims ingested by hand in 4cf8d10 with their own critic round."
+    }
+  ]
+}

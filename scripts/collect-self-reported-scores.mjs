@@ -2,11 +2,19 @@
 // Deterministic, offline: turns the scout extraction into registry candidates, but only where our own
 // capture of the primary document confirms the number. Re-run after a new capture or a widened
 // identity map; the output is a pure function of the retained evidence.
+//
+// Two populations share the output file. This script owns one of them — everything the 2026-09-15
+// scout job found — and rebuilds it from scratch on every run. The other is the release documents
+// ingested by hand since (CR-98's Step-5 launch table, CR-85.2's DeepSeek model card), which the
+// locked scout extraction cannot produce and which a rebuild would therefore delete. Those are
+// listed by URL in data/raw/benchmarks/self-reported/carried-documents.json and are carried through
+// here, each one re-checked against its own retained capture first, so the file stays a pure
+// function of the retained evidence either way.
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { gunzipSync } from 'node:zlib';
 import { writeJSONAtomic } from '../lib/snapshot.mjs';
-import { mapIdentity, verifyRow, buildObservation } from '../lib/self-reported-vendor.mjs';
+import { mapIdentity, verifyRow, buildObservation, carryReviewedDocuments } from '../lib/self-reported-vendor.mjs';
 
 const read = async (p) => JSON.parse(await readFile(p, 'utf8'));
 const hash = (b) => createHash('sha256').update(b).digest('hex');
@@ -63,7 +71,29 @@ observations.sort((a, b) => a.id.localeCompare(b.id));
 rejected.sort((a, b) => `${a.benchmark_id}${a.source_id}${a.reason}`.localeCompare(`${b.benchmark_id}${b.source_id}${b.reason}`));
 collections.sort((a, b) => a.benchmark_id.localeCompare(b.benchmark_id));
 
+// The hand-ingested release documents: carried through, never rebuilt, never silently dropped.
+const carriedDocuments = (await read('data/raw/benchmarks/self-reported/carried-documents.json')).documents;
+const previous = await read('data/raw/benchmarks/self-reported-candidates.json').catch((e) => {
+  if (e.code === 'ENOENT') return { observations: [], collections: [], rejected: [] };
+  throw e;
+});
+const carried = carryReviewedDocuments(previous, carriedDocuments, new Set(observations.map((o) => o.id)));
+// A carried row is only as good as the capture behind it; re-check that before it survives a rebuild.
+for (const o of carried.observations) {
+  const stored = await readFile(o.source.file);
+  if (hash(o.source.file.endsWith('.gz') ? gunzipSync(stored) : stored) !== o.source.sha256) {
+    throw new Error(`Carried row no longer matches its retained capture: ${o.id}`);
+  }
+}
+observations.push(...carried.observations);
+collections.push(...carried.collections);
+rejected.push(...carried.rejected);
+observations.sort((a, b) => a.id.localeCompare(b.id));
+rejected.sort((a, b) => `${a.benchmark_id}${a.source_id}${a.reason}`.localeCompare(`${b.benchmark_id}${b.source_id}${b.reason}`));
+collections.sort((a, b) => a.benchmark_id.localeCompare(b.benchmark_id));
+
 await writeJSONAtomic('data/raw/benchmarks/self-reported-candidates.json', { schema_version: 1, observations, collections, rejected });
 console.log(JSON.stringify({ observations: observations.length, matched: observations.filter((o) => o.subject.model_id).length,
   unmatched: observations.filter((o) => !o.subject.model_id).length, rejected: rejected.length,
-  benchmarks: [...new Set(observations.map((o) => o.benchmark_id))].length }));
+  benchmarks: [...new Set(observations.map((o) => o.benchmark_id))].length,
+  carried: carried.observations.length, carried_documents: carriedDocuments.length }));

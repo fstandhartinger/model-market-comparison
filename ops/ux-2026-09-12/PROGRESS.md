@@ -5989,11 +5989,18 @@ on the canonical host, 1440/390 × light/dark: 93 shots + 2 element shots in `/o
   text-only figure absent, the Composite unchanged at 77.418 on 1 of 7 inputs with 0 attached. The page says it in its own
   words: *"19 of 40 values are DeepSeek's own claims (†), not independent measurements; a matching independent result
   replaces a claim as soon as one exists."*
-- **Noted for whoever runs the self-reported collector next.** `scripts/collect-self-reported-scores.mjs` rewrites
+- **A pre-existing data-loss bug found on the way, and fixed.** `scripts/collect-self-reported-scores.mjs` rewrites
   `self-reported-candidates.json` wholesale from the locked 2026-09-16 scout extraction. It is not in the daily pipeline, but a
-  hand-run today would delete CR-98's 40 Step-5 rows and these 19 — both were added directly, as the CR-98 commit did. That is
-  a pre-existing fragility this iteration did not create and did not fix; it is written down here so the next run does not
-  discover it by losing rows.
+  hand run **did** delete CR-98's 40 Step-5 rows and these 19 — measured, not assumed: a run against the shipped file took it
+  from 97 observations to 38. Both populations had been added directly, as the CR-98 commit did, and the scout extraction
+  cannot produce either. Fixed in the follow-up commit: `data/raw/benchmarks/self-reported/carried-documents.json` lists the
+  hand-ingested release documents by URL, `carryReviewedDocuments` in `lib/self-reported-vendor.mjs` carries their
+  observations, collections and refusals through a rebuild, and the collector re-checks each carried row against its own
+  retained capture before it survives. It fails closed both ways: a listed document that contributes nothing throws (its rows
+  were already lost), and a carried id that the scout also produces throws. **Proof: a rebuild now leaves the file
+  byte-identical** (md5 `c823ca0a53ce98ce0b2a156987b5d9fa` before and after, 97 observations, 59 carried). A third test pins
+  the invariant that keeps this from recurring — every source URL in the candidates file is either in the scout's own locked
+  capture manifest or on the carry list, and the carry list never names a document the scout already owns.
 - **Sign-off owed:** CR-85.2's card slice is claude-opus code, so a different engine owes its `verified`. CR-85.2 also stays
   `in-progress` on its own terms: the CR names DesignArena and Lumina for this model too, and iteration 125's Epoch and
   LiveBench re-checks are still open. No `ALL-ACCEPTED`.

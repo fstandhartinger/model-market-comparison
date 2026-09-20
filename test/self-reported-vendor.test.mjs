@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 import {
   parseScoreToken, parseComparisonBaseline, normalizeName, nameVariants,
   flattenHtmlTables, documentLines, verifyRow, mapIdentity, buildObservation,
-  splitCells, locateColumn,
+  splitCells, locateColumn, carryReviewedDocuments,
 } from '../lib/self-reported-vendor.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -233,4 +233,47 @@ test('every shipped candidate records the column its value was read from', async
     const named = /under "[^"]+"/.test(o.source.locator);
     assert.ok(legacy || named, `${o.id} must record how the column was established`);
   }
+});
+
+// A collector re-run used to delete every hand-ingested release-document row: the scout extraction
+// it rebuilds from was locked on 2026-09-16 and cannot produce CR-98's or CR-85.2's claims.
+test('a rebuild carries the hand-ingested release documents instead of deleting them', async () => {
+  const candidates = await read('data/raw/benchmarks/self-reported-candidates.json');
+  const { documents } = await read('data/raw/benchmarks/self-reported/carried-documents.json');
+  const urls = new Set(documents.map((d) => d.url));
+  const carried = carryReviewedDocuments(candidates, documents, new Set());
+  assert.equal(carried.observations.length, candidates.observations.filter((o) => urls.has(o.source.url)).length);
+  assert.ok(carried.observations.length >= 59);
+  // Each document's refusals and collections travel with its rows; nothing else does.
+  assert.ok(carried.collections.every((c) => carried.observations.some((o) => o.benchmark_id === c.benchmark_id)));
+  assert.ok(carried.rejected.every((r) => [...urls].some((url) => String(r.source_id).startsWith(url))));
+  assert.ok(carried.observations.every((o) => o.basis === 'self_reported'));
+});
+
+test('the carry fails closed rather than losing a row quietly', async () => {
+  const candidates = await read('data/raw/benchmarks/self-reported-candidates.json');
+  const { documents } = await read('data/raw/benchmarks/self-reported/carried-documents.json');
+  // A listed document with no rows left means they were already lost; that must stop a rebuild.
+  assert.throws(() => carryReviewedDocuments(candidates, [...documents, { url: 'https://example.invalid/card' }], new Set()),
+    /contributes no rows/);
+  // A carried id the scout also produces would make the two populations disagree about one row.
+  const one = candidates.observations.find((o) => documents.some((d) => d.url === o.source.url));
+  assert.throws(() => carryReviewedDocuments(candidates, documents, new Set([one.id])), /collides with a scout row/);
+});
+
+test('every hand-ingested release document in the candidates file is on the carry list', async () => {
+  const candidates = await read('data/raw/benchmarks/self-reported-candidates.json');
+  const { documents } = await read('data/raw/benchmarks/self-reported/carried-documents.json');
+  // The scout population is exactly what its own locked capture manifest holds; anything else in the
+  // file came in by hand and has to be on the carry list, or the next rebuild deletes it.
+  const lock = await read('data/raw/benchmarks/self-reported/lock.json');
+  const manifest = await read(`${lock.capture_dir}/manifest.json`);
+  const scoutSources = new Set(manifest.filter((r) => r.status === 200).map((r) => r.url));
+  const listed = new Set(documents.map((d) => d.url));
+  for (const o of candidates.observations) {
+    const url = o.source.url;
+    assert.ok(listed.has(url) || scoutSources.has(url), `${url} is either a scout source or on the carry list`);
+  }
+  // And the list must not name a document the scout already owns, or one rebuild would fight the next.
+  for (const document of documents) assert.ok(!scoutSources.has(document.url), document.url);
 });
