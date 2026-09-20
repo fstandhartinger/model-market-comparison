@@ -88,6 +88,42 @@ test('a score or axis that does not recompute, a missing price or a re-ordered r
   assert.throws(() => validateJevbenchV12(a), /item-level/);
 });
 
+// CR-97: the honorable-mention rule is what keeps a service on another entrant's model out of the ranking. If any of
+// these could pass, the row could quietly take a rank again, or lose one without the reason being published.
+test('an honorable mention that takes a rank, loses its rule or loses the model it runs fails', async () => {
+  const hmKey = (a) => a.systems.find((s) => s.listing === 'honorable_mention').key;
+  let a = await clone(); const key = hmKey(a);
+  const hm = (x) => x.systems.find((s) => s.key === key);
+  // Ranking it again — either by the flag or by handing it a rank number.
+  hm(a).ranked = true;
+  assert.throws(() => validateJevbenchV12(a), /ranked\/partial must agree with listing/);
+  a = await clone(); hm(a).rank = 1;
+  assert.throws(() => validateJevbenchV12(a), /only a ranked system carries a rank/);
+  a = await clone(); hm(a).listing = 'ranked'; hm(a).ranked = true; hm(a).rank = 1;
+  assert.throws(() => validateJevbenchV12(a), /rank must follow the JevBench Score/);
+  // Dropping the published rule or the reason.
+  a = await clone(); a.honorable_mentions.rule = 'not ranked';
+  assert.throws(() => validateJevbenchV12(a), /honorable_mentions.rule must state the rule/);
+  a = await clone(); a.scoring.ranked = 'Ranked: every tier attempted for >= 95 % of its decisions.';
+  assert.throws(() => validateJevbenchV12(a), /must carry the honorable-mention rule/);
+  a = await clone(); delete a.honorable_mentions.systems[key].price_note;
+  assert.throws(() => validateJevbenchV12(a), /price_note/);
+  a = await clone(); hm(a).not_ranked_because = 'because';
+  assert.throws(() => validateJevbenchV12(a), /must repeat the published reason/);
+  // The model it runs must exist and be ranked: "not ranked" is only fair if the model itself is in the list.
+  a = await clone(); a.honorable_mentions.systems[key].runs_on_key = 'no-such-system';
+  assert.throws(() => validateJevbenchV12(a), /must name another, ranked system/);
+  a = await clone(); a.honorable_mentions.systems[key].runs_on_key = key;
+  assert.throws(() => validateJevbenchV12(a), /must name another, ranked system/);
+  a = await clone(); a.honorable_mentions.systems[key].sources = ['classifier.dev'];
+  assert.throws(() => validateJevbenchV12(a), /sources/);
+  // A row marked honorable_mention with no published entry, and an entry with no row.
+  a = await clone(); Object.assign(a.systems.find((s) => s.key === 'gliner2'), { listing: 'honorable_mention', ranked: false, rank: null });
+  assert.throws(() => validateJevbenchV12(a), /must match the rows marked honorable_mention/);
+  a = await clone(); delete a.honorable_mentions.systems[key];
+  assert.throws(() => validateJevbenchV12(a), /must match the rows marked honorable_mention/);
+});
+
 test('presets recompute to the published views; URL weights round-trip; the default is the JevBench Score', async () => {
   const v = jevbenchV12View(await readJevbenchV12());
   for (const p of PRESETS) {
