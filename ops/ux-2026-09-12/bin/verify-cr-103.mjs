@@ -57,8 +57,10 @@ try {
     check(`${tag}: no page errors`, errors.length === 0, errors);
     await page.goto(`${BASE}/jev-models/custom-evaluation`, { waitUntil: 'networkidle', timeout: 60000 });
     const detailText = ((await page.locator('body').innerText()) || '').replace(/\s+/g, ' ');
-    const detailMail = await page.locator('a[href^="mailto:"]').count();
+    const detailMail = await page.locator('a[href^="mailto:"]').evaluateAll((els) => new Set(els.map((a) => a.getAttribute('href'))).size);
     check(`${tag}: custom-evaluation detail page carries the open-source offer and deliverables`, /Need custom eval on your data\?/.test(detailText) && /accuracy, calibration, latency and cost/.test(detailText) && /written report/.test(detailText) && /do not publish it/.test(detailText) && /MIT licence/.test(detailText), detailText.slice(0, 500));
+    // F-149 (Fable pass 27, 2026-09-20) puts a second visible mail action under the title with the same target,
+    // so the one-contact rule is read as one distinct mailto URL, not one element.
     check(`${tag}: detail page has contact and legal links without a turnaround promise`, detailMail === 1 && /Impressum/.test(detailText) && /Privacy/.test(detailText) && /Terms/.test(detailText) && !/turnaround|working days/i.test(detailText), { detailMail, detailText: detailText.slice(-500) });
     check(`${tag}: detail page has no horizontal overflow`, await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1), 'scroll width');
     await page.screenshot({ path: `${OUT}/${tag}-custom-page.png`, fullPage: true });

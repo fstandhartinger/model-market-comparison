@@ -17,7 +17,7 @@ const row = (k) => a.systems.find((s) => s.key === k);
 const CD = 'classifier-dev-fast';
 
 // --- CR-97.1 the artifact: listed, not ranked; nothing else moved but the ranks below it ---
-check('artifact: revision v1.2.4 or later', ['v1.2.4', 'v1.2.5'].includes(a.revision), a.revision);
+check('artifact: revision v1.2.4 or later', ['v1.2.4', 'v1.2.5', 'v1.2.6'].includes(a.revision), a.revision);
 const cd = row(CD);
 check('artifact: classifier.dev is an honorable mention with no rank', cd && cd.listing === 'honorable_mention' && cd.ranked === false && cd.partial === false && cd.rank === null, cd && [cd.listing, cd.rank]);
 check('artifact: it keeps every number it earned', cd && cd.jevbench_score.toFixed(1) === '84.8' && cd.axes.intelligence > 0 && cd.axes.calibration > 0 && cd.axes.speed > 0 && cd.axes.cost > 0 && cd.cost.usd_per_1000 > 0, cd && [cd.jevbench_score, cd.cost.usd_per_1000]);

@@ -17,10 +17,19 @@ const row = (k) => a.systems.find((s) => s.key === k);
 // --- CR-96.1 the corrected prices and scores ---
 // CR-97 (2026-09-20) took classifier.dev out of the ranking; the corrected prices and every score must survive that,
 // so this verifier follows the revision instead of pinning ranks that the later CR legitimately shifts by one.
+const V126 = a.revision === 'v1.2.6';
 const V125 = a.revision === 'v1.2.5';
-const V124 = a.revision >= 'v1.2.4';
-check('artifact: revision v1.2.3 or later', ['v1.2.3', 'v1.2.4', 'v1.2.5'].includes(a.revision), a.revision);
-const EXPECT = V125
+const V124 = a.revision >= 'v1.2.4' && !V126 && !V125;
+check('artifact: revision v1.2.3 or later', ['v1.2.3', 'v1.2.4', 'v1.2.5', 'v1.2.6'].includes(a.revision), a.revision);
+const EXPECT = V126
+  ? { 'classifier-dev-fast': [null, '84.8'], 'jev-1.13.0': [1, '75.4'], 'semif-qwen3.5-4b': [2, '74.7'], djev: [3, '74.3'],
+    'openjev-verdict-1.4': [4, '72.5'], laya: [5, '70.1'], 'open-alternative-jev': [6, '69.8'], 'system-one-open': [7, '68.9'],
+    'openjev-razorback16': [8, '67.7'], 'simplejev-qwen3.8-27b': [9, '67.3'], jeff: [10, '66.9'], 'kev-0.6b': [11, '66.7'],
+    'openjev-sglang': [12, '66.3'], 'openjev-verdict': [13, '66.2'], 'gpt-5.6-luna': [14, '66.2'],
+    'open-jev-deberta-v3-large': [15, '64.6'], 'simplejev-qwen3.6-35b-a3b': [16, '63.8'], 'nimble-9b': [17, '63.7'],
+    'kev-0.5b': [18, '63.1'], 'kev-4b': [19, '62.2'], 'gemini-3.1-flash-lite': [20, '60.9'], 'kev-8b': [21, '58.3'],
+    'deepseek-flash': [22, '57.8'], 'system-one-sg': [23, '56.6'], gliner2: [24, '53.0'] }
+  : V125
   ? { 'classifier-dev-fast': [null, '84.8'], 'jev-1.13.0': [1, '75.4'], 'semif-qwen3.5-4b': [2, '74.7'], djev: [3, '74.3'],
     laya: [4, '70.1'], 'open-alternative-jev': [5, '69.8'], 'system-one-open': [6, '68.9'], 'openjev-razorback16': [7, '67.7'],
     jeff: [8, '66.9'], 'kev-0.6b': [9, '66.7'], 'openjev-sglang': [10, '66.3'], 'openjev-verdict': [11, '66.2'], 'gpt-5.6-luna': [12, '66.2'],
