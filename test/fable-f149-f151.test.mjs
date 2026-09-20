@@ -37,8 +37,8 @@ test('F-149: the email-section closing sentence is the short form; the code bloc
   assert.doesNotMatch(pre, /overflow-x-auto/, 'no sideways scroll at 390');
 });
 
-test('F-150: the sort column is min-w-[9.5rem] so the head fits the pass-22 budget at both widths', () => {
-  assert.match(jev, /className=\{hero \? "min-w-\[9\.5rem\]" : "whitespace-nowrap"\}/);
+test('F-150: the sort column is min-w-[10.5rem] so the head fits the pass-22 budget at both widths', () => {
+  assert.match(jev, /className=\{hero \? "min-w-\[10\.5rem\]" : "whitespace-nowrap"\}/);
   assert.doesNotMatch(jev, /min-w-\[7\.5rem\]/, 'the 120 px cap is gone');
 });
 

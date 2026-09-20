@@ -43,7 +43,7 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
     const table = document.querySelector('[data-bh-jev12-table]');
     const wrap = table?.closest('.bh-table-wrap');
     const head = table?.querySelector('thead tr');
-    const ths = [...(head?.querySelectorAll('th') ?? [])].map((th) => { const range = document.createRange(); range.selectNodeContents(th); const lines = new Set([...range.getClientRects()].map((x) => Math.round(x.top / 2))).size; range.detach(); return { text: th.innerText.replace(/\s+/g, ' ').slice(0, 40), h: Math.round(r(th).height), lines }; });
+    const ths = [...(head?.querySelectorAll('th') ?? [])].map((th) => { const range = document.createRange(); range.selectNodeContents(th); const tops = [...range.getClientRects()].filter((x) => x.height >= 8).map((x) => Math.round(x.top / 8)); range.detach(); return { text: th.innerText.replace(/\s+/g, ' ').slice(0, 40), h: Math.round(r(th).height), lines: new Set(tops).size }; });
     const sticky = table?.querySelector('thead th.bh-jev-sticky');
     const stickyPinned = sticky && wrap ? (() => { wrap.scrollLeft = 400; const left = r(sticky).left - r(wrap).left; wrap.scrollLeft = 0; return { left, w: r(sticky).width }; })() : null;
     const group = document.querySelector('[data-bh-jev12-difficulty] [role="group"]');

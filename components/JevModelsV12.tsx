@@ -213,7 +213,7 @@ function Table({ view, rows, honorableRows, partialRows, w, scope }: { view: Jev
   const pick = (c: Col) => { if (c === col) setFlip((f) => !f); else { setCol(c); setFlip(false); } };
   const aria = (c: Col) => (c !== col ? "none" : HIGHER[c] !== flip ? "descending" : "ascending");
   const eff = percents(w);
-  const H = ({ c, label, sub, hero }: { c: Col; label: string; sub?: string; hero?: boolean }) => <th scope="col" aria-sort={aria(c)} className={hero ? "min-w-[9.5rem]" : "whitespace-nowrap"}>
+  const H = ({ c, label, sub, hero }: { c: Col; label: string; sub?: string; hero?: boolean }) => <th scope="col" aria-sort={aria(c)} className={hero ? "min-w-[10.5rem]" : "whitespace-nowrap"}>
     <button type="button" data-bh-jev12-sort={c} onClick={() => pick(c)} className={`inline-flex min-h-9 items-center gap-1 rounded px-1 text-left ${col === c ? "text-accent" : ""}`}>
       <span><span className={`block font-semibold ${hero ? "text-[14px]" : "text-[12px]"}`}>{label}</span>{sub && <span className="block text-[11px] font-normal">{sub}</span>}</span>
       <span aria-hidden="true">{col === c ? (aria(c) === "descending" ? "↓" : "↑") : ""}</span></button></th>;
