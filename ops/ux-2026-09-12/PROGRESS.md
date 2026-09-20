@@ -5513,3 +5513,25 @@ Scope: everything after `REVIEW-20260919T032002Z.md` (`c476e26..a012816`), the c
   passed all 50 checks. No repository code or benchmark data changed in this iteration.
 - **X6 remains open** for CR-85.1's first real scheduled digest, CR-85.2, CR-30.2/.3, CR-37.1/.3, CR-38.1,
   CR-62.4, CR-73.5 and the other rows already named in its ledger entry. No `ALL-ACCEPTED` line.
+
+## Iteration 128 — 2026-09-20 ~02:00 → ~02:30 UTC (codex-luna, work): per-entry identity-map review provenance
+
+- Fixed the review-date defect recorded by the preceding gate. `identity-map.json` now carries an explicit
+  `reviewed_at` on every exact join: historical entries retain the date of their first committed appearance,
+  while genuinely new joins use the current review date. The top-level `reviewed_at` remains only as a legacy
+  fallback for older consumers; no blanket re-dating was performed.
+- Added the auditable one-time migration `ops/benchmark-table-2026-09-15/migrate-identity-map-review-dates.mjs`,
+  regenerated the score projection, and confirmed the only score/dataset changes are **493 `join_note` fields**.
+  Date distribution is 197 entries at 2026-09-15, 835 at 2026-09-16, 56 at 2026-09-18, 203 at 2026-09-19,
+  and 37 at 2026-09-20. No numeric values, model identities, or source provenance changed.
+- Added regression coverage for per-entry dates and ingestion fallback. Gates: `npm test` **924 pass / 0 fail /
+  1 skipped** (925 total), `npx tsc --noEmit -p .` clean, `node scripts/build-dataset.mjs` clean, `npm run build`
+  clean, and `git diff --check` clean. Commit `ded9634` is pushed to `main`.
+- Deployment `ioaqw2pagdztinqgr499bv7n` finished at `ded9634`; targeted live provenance checks passed **9/9** on
+  `benchmarkheaven.com`, `www.benchmarkheaven.com`, and the legacy Sandy mirror. Evidence:
+  `/opt/benchmarkheaven/state/ux-evidence/iter128-identity-map-provenance/`.
+- The existing broad identity verifier reports 7/9 on each host because two old cost-board assertions expect
+  those rows to remain entirely unjoined; those failures concern pre-existing cost joins, and this commit's
+  audited data diff changed neither their identities nor values. This is recorded, not silently called a pass.
+- The prior X6 sentence calling the hardcoded review date a new open defect is superseded by this entry. The fix
+  remains `implemented`, not `verified`, until a different engine signs off; X6 and `ALL-ACCEPTED` remain open.
