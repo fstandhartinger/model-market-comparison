@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState, type ReactNode } from "react";
 import type { JevAxis, JevTier12, JevV12Row, JevV12View } from "../lib/jevbench-v12.mjs";
 import type { JevTaskScope, JevTasksView } from "../lib/jevbench-v12-tasks.mjs";
 import { AXES, AXIS_LABEL, DEFAULT_PRESET, DEFAULT_WEIGHTS, PRESETS, SCORE_NAME, describe, isDefault, normalise, parseParams, percents, rerank, sameWeights, toParam, type JevWeights4 } from "../lib/jevbench-v12-weights.mjs";
-import { DEFAULT_TASK_SCOPE, TASK_SCOPES, parseTaskScope, scopeById, scopeDecisions, scopeRows, tasksForScope, toTaskScopeParam } from "../lib/jevbench-v12-scope.mjs";
+import { DEFAULT_TASK_SCOPE, TASK_SCOPES, parseTaskScope, publicTierSummary, scopeById, scopeDecisions, scopeRows, scopeTierWeights, tasksForScope, toTaskScopeParam } from "../lib/jevbench-v12-scope.mjs";
 
 // CR-92 (Florian 2026-09-19): JevBench v1.2 final. The JevBench Score = geometric mean of Intelligence, Calibration, Speed
 // and Cost, 25 % each, is the hero; the earlier weightings stay as presets (recomputed the same way) with the unmissable
@@ -22,6 +22,7 @@ const one = (v: number | null) => (v === null ? "—" : v.toFixed(1));
 const pct = (v: number | null) => (v === null ? "—" : `${(v * 100).toFixed(1)}%`);
 const sec = (v: number | null) => (v === null ? "—" : `${v.toFixed(2)} s`);
 const short = (d: string) => d.split(" (")[0].split(", formerly")[0];
+const listAnd = (items: string[]) => items.length < 2 ? items.join("") : `${items.slice(0, -1).join(", ")} and ${items[items.length - 1]}`;
 const TYPE: Record<string, { label: string; v: string }> = {
   jev: { label: "Jev (TypeSafe, closed)", v: "--jev-t-jev" },
   "jev-rebuild": { label: "Jev rebuild (open, or open source planned)", v: "--jev-t-rebuild" },
@@ -233,7 +234,7 @@ function Table({ view, rows, partialRows, w, scope }: { view: JevV12View; rows: 
             : <H c="main" label={d.preset ? d.short : `Custom ${d.ratio}`} sub={`${d.scopeDefault ? `${d.ratio} · not the official score` : `${d.scopeLabel} · not the official score`}`} hero />}
           {AXES.map((k) => <H key={k} c={k} label={AXIS_LABEL[k]} sub={`${eff[k]} %`} />)}
           <H c="usd" label="$ per 1,000" sub="decisions" />
-          {TIER_ORDER.map((t) => <H key={t} c={t} label={TIER_LABEL[t]} sub={`${view.tierCounts[t]} dec. · ${Math.round(view.tierWeights[t] * 100)} %`} />)}
+          {TIER_ORDER.map((t) => <H key={t} c={t} label={TIER_LABEL[t]} sub={view.tierWeights[t] > 0 ? `${view.tierCounts[t]} dec. · ${Math.round(view.tierWeights[t] * 100)} %` : `${view.tierCounts[t]} dec. · outside this scope`} />)}
           <H c="p50" label="Latency" sub="p50 · p95, raw → adjusted" />
           <th scope="col" className="whitespace-nowrap text-[12px]">Endpoint</th>
         </tr></thead>
@@ -267,6 +268,16 @@ function Views({ view }: { view: JevV12View }) {
   </section>;
 }
 
+// Review gate 20260920T043003Z: F-140 moved the task's topic and type into a native `title`, which never opens on
+// touch — on a phone the 231 rows were bare ids. The topic is in every id already (hard-opus-a-long_policy-01);
+// the question type is not, so it is shown beside the id. Definitions are TypeSafe's own primitive definitions
+// (docs.typesafe.ai/primitives/{choice,noul,score}); the published code is shown, never renamed.
+const TASK_TYPE: Record<string, string> = {
+  choice: "Choice — the system picks one of a defined set of options.",
+  noul: "Noul — whether a stated condition holds; the answer is the probability of yes.",
+  score: "Score — a degree along a described dimension, over ordered levels.",
+};
+
 const TASK_STATUS: Record<string, { symbol: string; label: string; className: string }> = {
   c: { symbol: "✓", label: "correct", className: "text-[rgb(var(--accent2))]" },
   w: { symbol: "×", label: "wrong", className: "text-[rgb(var(--warn))]" },
@@ -298,10 +309,22 @@ function TaskGrid({ view, tasks, scope }: { view: JevV12View; tasks: JevTasksVie
               const tierTasks = visibleTasks.filter((task) => task.tier === tier);
               if (!tierTasks.length) return [];
               return [
-                <tr key={'group-' + tier} className="bg-[rgb(var(--surface-2))]"><th scope="rowgroup" className="bh-jev-sticky text-left font-semibold">{groupLabel[tier]} · {tierTasks.length} public tasks</th>{systems.map((r) => { const summary = tasks.systems[r.key]?.byTier[tier]; return <td key={r.key} className="bh-jev-task-cell w-8 min-w-[2rem] px-0 text-center text-[11px] font-semibold tabular-nums" title={`${r.display}: ${summary ? `${summary.correct}/${summary.attempted} correct/attempted` : "no public outcomes"}`}>{summary ? `${summary.correct}/${summary.attempted}` : "—"}</td>; })}</tr>,
+                <tr key={'group-' + tier} className="bg-[rgb(var(--surface-2))]" data-bh-jev12-task-group={tier}><th scope="rowgroup" className="bh-jev-sticky text-left font-semibold">{groupLabel[tier]} · {tierTasks.length} of {view.tierCounts[tier]} decisions public</th>{systems.map((r) => {
+                  // Review gate 20260920T043003Z: these cells used the artifact's whole-tier aggregate (72/72) under a
+                  // header that counts public tasks (48). They count the public rows this group lists; the whole-tier
+                  // figure stays available in the cell title and in the tier columns of the table above.
+                  const system = tasks.systems[r.key];
+                  const summary = publicTierSummary(system, tierTasks);
+                  const whole = system?.byTier[tier];
+                  const title = summary
+                    ? `${r.display}: ${summary.correct}/${summary.attempted} correct/attempted on the ${tierTasks.length} public ${groupLabel[tier].toLowerCase()} tasks${whole?.attempted ? ` · whole tier ${whole.correct}/${whole.attempted}` : ""}`
+                    : `${r.display}: no public outcomes`;
+                  return <td key={r.key} className="bh-jev-task-cell w-8 min-w-[2rem] px-0 text-center text-[11px] font-semibold tabular-nums" title={title}>{summary ? `${summary.correct}/${summary.attempted}` : "—"}</td>;
+                })}</tr>,
                 ...tierTasks.map((task) => <tr key={task.id} className="bh-jev-task-row" data-bh-jev12-task={task.id}>
-                  <th scope="row" className="bh-jev-sticky min-w-[13rem] text-left font-normal" title={`${task.topic} · ${task.type}`}>
+                  <th scope="row" className="bh-jev-sticky min-w-[13rem] text-left font-normal">
                     <span className="font-semibold whitespace-nowrap">{task.id}</span>
+                    <span className="bh-muted ml-2 whitespace-nowrap text-[11px]" data-bh-jev12-task-type={task.type} title={TASK_TYPE[task.type] ?? undefined}>{task.type}</span>
                   </th>
                   {systems.map((r) => {
                     const outcome = tasks.systems[r.key]?.outcomes[task.id];
@@ -316,7 +339,7 @@ function TaskGrid({ view, tasks, scope }: { view: JevV12View; tasks: JevTasksVie
           </tbody>
         </table>
       </div>
-      <p className="bh-muted mt-2 text-xs">✓ correct · × wrong · ! failed (scored wrong) · · not attempted · — no public outcome in the pinned artifact. Task descriptions are intentionally not included; the task id, tier and topic are the published public metadata.</p>
+      <p className="bh-muted mt-2 text-xs" data-bh-jev12-task-legend>✓ correct · × wrong · ! failed (scored wrong) · · not attempted · — no public outcome in the pinned artifact. A group row counts the public tasks it lists; the tier columns of the table above use all decisions of the tier. Every task id carries its topic (<span className="font-mono">hard-opus-a-long_policy-01</span> is a long_policy task), and the tag after the id is the published question type: <b className="text-gray-200">choice</b> — pick one of a defined set of options · <b className="text-gray-200">noul</b> — whether a stated condition holds · <b className="text-gray-200">score</b> — a degree along a described dimension. Task descriptions are intentionally not included; the task id, tier, topic and type are the published public metadata.</p>
     </details>
   </section>;
 }
@@ -351,11 +374,17 @@ export function JevModelsV12Board({ view, tasks, children }: { view: JevV12View;
     // Review gate 20260920T043003Z: the hero counts the decisions the shown score is computed from —
     // the artifact's tier aggregates for this scope (534 / 168 / 72), not the public-task slice the grid
     // ships (231 / 120 / 48). Counting public tasks here made the official view claim 231.
-    return { ...view, ranked, partial, decisions: scopeDecisions(view.tierCounts, scope) };
+    // The tier weights move with the scope too: under Easy + Medium the score re-normalises to easy 33 % /
+    // standard 67 % and drops Judge and Hard, so the columns and the method list may not keep 14/28/28/30 %.
+    return { ...view, ranked, partial, decisions: scopeDecisions(view.tierCounts, scope), tierWeights: scopeTierWeights(scope) };
   }, [view, tasks, scope]);
   const { ranked, partial } = useMemo(() => rerank(scopedView.ranked, scopedView.partial, w), [scopedView, w]);
-  const tw = view.tierWeights;
   const scopeInfo = scopeById(scope);
+  // Review gate 20260920T043003Z: the method list stated the official 14/28/28/30 % under every scope while the
+  // score above it had already re-normalised. Both lists come from the scoped weights now.
+  const tierTextOrder: JevTier12[] = ["hard", "easy", "standard", "judge"];
+  const scoredTiers = tierTextOrder.filter((t) => scopedView.tierWeights[t] > 0);
+  const unscoredTiers = tierTextOrder.filter((t) => scopedView.tierWeights[t] === 0);
   return <>
     <div className="mt-6 space-y-4" data-bh-jevc-hero>
       <ScoreChart rows={ranked} partial={partial} w={w} view={scopedView} scope={scope} />
@@ -382,7 +411,7 @@ export function JevModelsV12Board({ view, tasks, children }: { view: JevV12View;
       <h2 id="jev12-how" className="font-semibold">How the {SCORE_NAME} works</h2>
       <p className="mt-2 text-base"><b>{SCORE_NAME} = (Intelligence × Calibration × Speed × Cost)<sup>1/4</sup></b>, each axis on 0–100 — the geometric mean. A weak axis pulls the score down hard: a strong axis cannot buy it back.</p>
       <ul className="bh-muted mt-3 space-y-1.5">
-        <li><b className="text-gray-200">Intelligence</b> — weighted accuracy: hard {Math.round(tw.hard * 100)} %, easy {Math.round(tw.easy * 100)} %, standard {Math.round(tw.standard * 100)} %, judge {Math.round(tw.judge * 100)} % ({view.tierCounts.hard} / {view.tierCounts.easy} / {view.tierCounts.standard} / {view.tierCounts.judge} decisions).</li>
+        <li data-bh-jev12-intel-weights={scope}><b className="text-gray-200">Intelligence</b> — weighted accuracy{scope === DEFAULT_TASK_SCOPE ? "" : ` for the ${scopeInfo.label} scope`}: {scoredTiers.map((t, i) => <span key={t}>{i > 0 ? ", " : ""}{TIER_LABEL[t].toLowerCase()} {Math.round(scopedView.tierWeights[t] * 100)} %</span>)} ({scoredTiers.map((t) => view.tierCounts[t]).join(" / ")} decisions).{unscoredTiers.length > 0 && ` ${listAnd(unscoredTiers.map((t) => TIER_LABEL[t]))} ${unscoredTiers.length === 1 ? "is" : "are"} outside this scope, so ${unscoredTiers.length === 1 ? "it does" : "they do"} not enter the score.`}</li>
         <li><b className="text-gray-200">Calibration</b> — on the hard tier: does &ldquo;80 % sure&rdquo; come true 80 % of the time, and does the returned distribution match the exact gold distribution on the probability items.</li>
         <li><b className="text-gray-200">Speed</b> — median and 95th-percentile latency, one request at a time: 0.1 s scores 100, each 10× slower costs 20 points (1 s = 80, 10 s = 60). <SpeedNote view={view} className="mt-0.5 inline" /></li>
         <li><b className="text-gray-200">Cost</b> — dollars per 1,000 decisions: $0.001 scores 100, each 10× more expensive costs 30 points ($0.01 = 70, $0.10 = 40, $1 = 10). Models without a tariff are priced at hosted-provider prices, marked &ldquo;est.&rdquo; (<a href="#jev-costs" className="text-accent underline">how</a>).</li>

@@ -5,7 +5,8 @@ import { readFile } from 'node:fs/promises';
 import { readJevbenchV12, jevbenchV12View } from '../lib/jevbench-v12.mjs';
 import { JEVBENCH_V12_TASKS_ARTIFACT, JEVBENCH_V12_TASKS_SHA256, readJevbenchV12Tasks, validateJevbenchV12Tasks, jevbenchV12TasksView } from '../lib/jevbench-v12-tasks.mjs';
 import { DEFAULT_WEIGHTS } from '../lib/jevbench-v12-weights.mjs';
-import { tasksForScope, parseTaskScope, scopeDecisions, scopeRows } from '../lib/jevbench-v12-scope.mjs';
+import { tasksForScope, parseTaskScope, publicTierSummary, scopeDecisions, scopeRows, scopeTierWeights } from '../lib/jevbench-v12-scope.mjs';
+import { TIER_WEIGHTS } from '../lib/jevbench-v12-score.mjs';
 import { createHash } from 'node:crypto';
 
 const clone = async () => JSON.parse(await readFile(JEVBENCH_V12_TASKS_ARTIFACT, 'utf8'));
@@ -72,4 +73,56 @@ test('the decisions count a scope reports is the artifact tier aggregate, not th
   assert.equal(scopeDecisions(view.tierCounts, 'easy'), view.tierCounts.easy);
   assert.ok(scopeDecisions(view.tierCounts, 'all') > tasksForScope(taskView.tasks, 'all').length);
   assert.ok(scopeDecisions(view.tierCounts, 'easy-medium') > tasksForScope(taskView.tasks, 'easy-medium').length);
+});
+
+// Review gate 20260920T043003Z, open item (a): the tier weight columns and the "How the score works" list kept the
+// official 14/28/28/30 % under a scope while the score above them had already re-normalised. scopeTierWeights() was
+// written for exactly that and was dead code; these pin it against intelligence()'s own re-normalisation.
+test('scoped tier weights re-normalise to the scope and drop the tiers it excludes', () => {
+  assert.deepEqual(scopeTierWeights('all'), TIER_WEIGHTS);
+  const em = scopeTierWeights('easy-medium');
+  assert.equal(em.judge, 0);
+  assert.equal(em.hard, 0);
+  assert.ok(Math.abs(em.easy + em.standard - 1) < 1e-12);
+  assert.ok(Math.abs(em.easy - TIER_WEIGHTS.easy / (TIER_WEIGHTS.easy + TIER_WEIGHTS.standard)) < 1e-12);
+  assert.equal(Math.round(em.easy * 100), 33);
+  assert.equal(Math.round(em.standard * 100), 67);
+  const easy = scopeTierWeights('easy');
+  assert.deepEqual(easy, { easy: 1, standard: 0, judge: 0, hard: 0 });
+});
+
+test('the scoped tier weights are the weights intelligence() actually applies', async () => {
+  const v12 = await readJevbenchV12();
+  const view = jevbenchV12View(v12);
+  const row = view.ranked[0];
+  // A weighted mean of the in-scope tier accuracies with scopeTierWeights must reproduce scopedIntelligence's value.
+  for (const scope of ['all', 'easy-medium', 'easy']) {
+    const w = scopeTierWeights(scope);
+    const expected = 100 * ['easy', 'standard', 'judge', 'hard'].reduce((sum, t) => sum + w[t] * row.tiers[t], 0);
+    const taskView = jevbenchV12TasksView(await readJevbenchV12Tasks(v12));
+    const [scoped] = scopeRows([row], taskView.systems, scope, DEFAULT_WEIGHTS);
+    assert.ok(Math.abs(scoped.axes.intelligence - expected) < 0.02, `${scope}: ${scoped.axes.intelligence} vs ${expected}`);
+  }
+});
+
+// Review gate 20260920T043003Z, open item (c): a group row headed "48 public tasks" showed cells of 72/72 — the
+// artifact's whole-tier aggregate. The cells must count the public rows the group lists.
+test('the public-slice tier summary counts only the public tasks of the group, never the whole tier', async () => {
+  const v12 = await readJevbenchV12();
+  const view = jevbenchV12View(v12);
+  const taskView = jevbenchV12TasksView(await readJevbenchV12Tasks(v12));
+  const easyTasks = tasksForScope(taskView.tasks, 'easy');
+  assert.equal(easyTasks.length, 48);
+  for (const key of Object.keys(taskView.systems)) {
+    const system = taskView.systems[key];
+    const summary = publicTierSummary(system, easyTasks);
+    assert.ok(summary.attempted <= easyTasks.length, `${key}: more attempts than public tasks`);
+    assert.ok(summary.correct <= summary.attempted);
+    // the whole-tier aggregate counts every decision of the tier, so it can never be the public-slice number here
+    assert.ok(system.byTier.easy.attempted <= view.tierCounts.easy);
+    const recomputed = easyTasks.filter((t) => system.outcomes[t.id]?.status === 'c').length;
+    assert.equal(summary.correct, recomputed);
+  }
+  assert.equal(publicTierSummary(undefined, easyTasks), null);
+  assert.deepEqual(publicTierSummary({ outcomes: { a: { status: 'c' }, b: { status: 'n' }, c: { status: 'w' } } }, [{ id: 'a' }, { id: 'b' }, { id: 'c' }]), { correct: 1, attempted: 2 });
 });
