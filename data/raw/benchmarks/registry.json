@@ -9539,14 +9539,14 @@
       "category": "Agentic",
       "one_sentence_description": "An agent spends a long, budgeted run improving an inherited, working-but-weak executable research method or harness on a visible split, and the single artifact it submits is re-run once on a sealed hidden split across 88 executable research tasks in six domains.",
       "scoring": {
-        "metric": "Mean frozen normalised hidden-set score over the 88 active tasks (Full board)",
-        "unit": "fraction",
+        "metric": "Mean frozen normalised hidden-set score (0–1) over the 88 active tasks (Full board)",
+        "unit": "points",
         "range": [
           0,
           1
         ],
         "higher_better": true,
-        "notes": "Each task's native metric is mapped onto a common 0-1 scale by anchors frozen before the release: the inherited starter method is 0.00, a finite mathematical, theoretical or oracle upper bound is 1.00, and where the task author provides a verified strong frontier solution it is placed at 0.60 as the frontier-calibrated reference; without a finite upper bound an exponential tail approaches but never reaches 1.00. The board averages those per-task scores with equal weight. One rollout per model x agent-harness pair per task, so the numbers carry no run-to-run variance estimate; a score of 0.00 means the submitted artifact did not improve on the inherited method, including after an early termination. The Public 35 / Private 53 panels restrict the same runs to the two splits and stay in each observation's protocol. Secondary benchmark, never a Composite input."
+        "notes": "Each task's native metric is mapped onto a common 0-1 scale by anchors frozen before the release: the inherited starter method is 0.00, a finite mathematical, theoretical or oracle upper bound is 1.00, and where the task author provides a verified strong frontier solution it is placed at 0.60 as the frontier-calibrated reference; without a finite upper bound an exponential tail approaches but never reaches 1.00. The board averages those per-task scores with equal weight. The number is a normalised index on the benchmark’s own 0–1 scale, not a share of tasks solved, and is shown the way the source publishes it — never as a percentage and never averaged into a category composite. One rollout per model x agent-harness pair per task, so the numbers carry no run-to-run variance estimate; a score of 0.00 means the submitted artifact did not improve on the inherited method, including after an early termination. The Public 35 / Private 53 panels restrict the same runs to the two splits and stay in each observation's protocol. Secondary benchmark, never a Composite input."
       },
       "maintainer": "RSI-Exam Team (aiming-lab, UNC Chapel Hill)",
       "source_type": "official_leaderboard",

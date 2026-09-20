@@ -21,21 +21,31 @@ const JOINED = { 'gpt-6-astra::max': 0.5126, 'claude-fable-5.1::max': 0.4813, 'c
 // The source contradicts itself on Kimi K3's effort, and it states xhigh for both Qwen rows, which the catalog
 // does not hold for them: no value may appear for these.
 const REFUSED = ['kimi-k3::max', 'kimi-k3::default', 'qwen3.8-max::default', 'qwen3.8-max-0902::default'];
+// The matrix API answers for a bounded set of columns, so the fifteen rows are checked in batches.
+const batches = [];
 const ids = [...Object.keys(JOINED), ...REFUSED];
-const api = await (await fetch(`${BASE}/api/benchmark-matrix?models=${encodeURIComponent(ids.join(','))}&rows=all`)).json();
-const matrix = api.matrix ?? {};
+for (let i = 0; i < ids.length; i += 5) batches.push(ids.slice(i, i + 5));
+const matrices = [];
+for (const batch of batches) {
+  const answer = await (await fetch(`${BASE}/api/benchmark-matrix?models=${encodeURIComponent(batch.join(','))}&rows=all`)).json();
+  matrices.push(answer.matrix ?? {});
+}
+const matrix = matrices[0];
 const rsiRows = (matrix.rows ?? []).map((r, i) => ({ r, i })).filter(({ r }) => r.benchmarkId === 'rsi-exam::0.1');
-check('API: RSI-Exam is an agentic 0–1 board with its own description and source link', rsiRows.length > 0
-  && rsiRows.every(({ r }) => r.group === 'agentic' && r.unit === 'fraction' && r.range[0] === 0 && r.range[1] === 1
+check('API: RSI-Exam is an agentic 0–1 index with its own description and source link', rsiRows.length > 0
+  && rsiRows.every(({ r }) => r.group === 'agentic' && r.unit === 'points' && r.range[0] === 0 && r.range[1] === 1
     && r.url === 'https://rsi-exam.ai/' && r.version === '0.1' && r.description.length > 60 && !r.judged),
   rsiRows.map(({ r }) => ({ name: r.name, cohort: r.cohort, group: r.group, unit: r.unit, tags: r.tags })));
 check('API: the rows carry the niche tier tag', rsiRows.every(({ r }) => r.tags.includes('niche')), rsiRows.map(({ r }) => r.tags));
 check('API: harness cohorts read as the source spells them, capitalised like the rest of the page',
   rsiRows.every(({ r }) => !/^(claude code|kimi cli|qwen coder)$/.test(String(r.cohort))), rsiRows.map(({ r }) => r.cohort));
-const valueOf = (id) => (matrix.values?.[id] ?? []).filter(([k]) => rsiRows.some(({ i }) => i === k)).map(([, v]) => v);
+const valueOf = (id) => matrices.flatMap((m) => {
+  const rows = (m.rows ?? []).map((r, i) => ({ r, i })).filter(({ r }) => r.benchmarkId === 'rsi-exam::0.1');
+  return (m.values?.[id] ?? []).filter(([k]) => rows.some(({ i }) => i === k)).map(([, v]) => v);
+});
 for (const [id, value] of Object.entries(JOINED)) check(`API: ${id} = ${value}`, valueOf(id).includes(value), valueOf(id));
 for (const id of REFUSED) check(`API: ${id} carries no RSI-Exam value`, valueOf(id).length === 0, valueOf(id));
-const scores = await (await fetch(`${BASE}/api/benchmark-scores?model_id=${encodeURIComponent('claude-opus-5::max')}&limit=800`)).json();
+const scores = await (await fetch(`${BASE}/api/benchmark-scores?model_id=${encodeURIComponent('claude-opus-5::max')}&benchmark_id=${encodeURIComponent('rsi-exam::0.1')}&limit=500`)).json();
 const obs = (scores.observations ?? scores.results ?? []).find((o) => o.benchmark_id === 'rsi-exam::0.1');
 check('API: the observation is measured, cites rsi-exam.ai and keeps the splits, the harness and the resource figures',
   obs && obs.basis === 'measured' && obs.source?.url === 'https://rsi-exam.ai/' && obs.value === 0.464
@@ -57,8 +67,9 @@ try {
       await goto(page, `${BASE}/benchmarks?models=${encodeURIComponent(['gpt-6-astra::max', 'claude-opus-5::max', 'glm-5.3::max', 'kimi-k3::max'].join(','))}&rows=all&v=${Date.now()}`);
       await settle(page);
       const rows = await page.evaluate(() => [...document.querySelectorAll('table tr')].map((tr) => tr.innerText.replace(/\s+/g, ' ').trim()).filter((t) => t.includes('RSI-Exam')));
-      check(`${tag}: RSI-Exam renders as rows with values on /benchmarks`, rows.length > 0 && rows.some((r) => /0\.51|0\.46|0\.40/.test(r)), rows.slice(0, 4));
-      check(`${tag}: no row shows a value for Kimi K3`, rows.every((r) => !/0\.382/.test(r)), rows.slice(0, 4));
+      check(`${tag}: RSI-Exam renders as rows with values on /benchmarks`, rows.length > 0 && rows.some((r) => /0\.51/.test(r) && /0\.46/.test(r)), rows.slice(0, 4));
+      check(`${tag}: the values are the source's own 0–1 index, never a percentage`, rows.every((r) => !/51\.\d\s*%/.test(r) && !/46\.\d\s*%/.test(r)), rows.slice(0, 2));
+      check(`${tag}: no row shows a value for Kimi K3`, rows.every((r) => !/0\.38/.test(r)), rows.slice(0, 4));
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
       check(`${tag}: no horizontal page overflow`, overflow <= 1, String(overflow));
       const target = page.locator('table tr', { hasText: 'RSI-Exam' }).first();
@@ -68,7 +79,7 @@ try {
       await goto(page, `${BASE}/models/${encodeURIComponent('claude-opus-5::max')}?v=${Date.now()}`);
       await settle(page);
       const body = await page.evaluate(() => document.body.innerText.replace(/\s+/g, ' '));
-      check(`${tag}: the model page names RSI-Exam with its value`, /RSI-Exam/.test(body) && /0\.46/.test(body), /RSI-Exam[^.]{0,80}/.exec(body)?.[0] ?? body.slice(0, 120));
+      check(`${tag}: the model page names RSI-Exam with its value`, /RSI-Exam/.test(body) && /0\.46/.test(body), /RSI-Exam[\s\S]{0,120}/.exec(body)?.[0] ?? body.slice(0, 120));
       check(`${tag}: no page errors`, !errors.length, errors);
       await page.screenshot({ path: `${OUT}/${tag}-model-page.png`, fullPage: false }).catch(() => {});
     } finally { await context.close(); }

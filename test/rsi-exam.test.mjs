@@ -74,6 +74,7 @@ test('RSI-Exam is registered as its own versioned benchmark with an honest scale
   assert.ok(entry, 'registry entry exists');
   assert.equal(entry.category, 'Agentic');
   assert.deepEqual(entry.scoring.range, [0, 1]);
+  assert.equal(entry.scoring.unit, 'points', 'a 0-1 normalised index, never rendered as a percentage');
   assert.equal(entry.scoring.higher_better, true);
   assert.match(entry.scoring.notes, /0\.60/, 'the frontier-calibrated anchor is documented');
   assert.equal(JSON.parse(readFileSync('data/benchmark-taxonomy.json', 'utf8')).benchmark_kinds['rsi-exam'], 'capability');
@@ -87,4 +88,13 @@ test('RSI-Exam rows read like the rest of the page: a niche tier tag and the har
   assert.equal(cohortLabel('kimi cli'), 'Kimi CLI');
   assert.equal(cohortLabel('musecode'), 'musecode', 'an unlisted harness stays as the source spells it');
   assert.equal(JSON.parse(readFileSync('data/benchmark-taxonomy.json', 'utf8')).tiers['rsi-exam'], 'niche');
+});
+
+test('RSI-Exam values are shown as the source publishes them, not as a share of tasks solved', async () => {
+  const { formatValue, scoreTypeText, compatibleRow } = await import('../lib/benchmark-matrix.mjs');
+  const row = { unit: 'points', range: [0, 1], higherBetter: true };
+  assert.equal(formatValue(0.5126, 'points'), '0.51');
+  assert.match(scoreTypeText(row), /0–1 scale, not a share of tasks solved/);
+  assert.equal(compatibleRow(row), false, 'a 0-1 index never averages into a category composite');
+  assert.equal(scoreTypeText({ unit: 'points', range: [0, 100], higherBetter: true }), 'Score: an index on a 0–100 scale. Higher is better.');
 });
