@@ -23,12 +23,13 @@ try {
     check(`${tag} cost note names decisions and its token contrast`, /\$ per 1,000 decisions, not per 1,000 tokens — one decision ≈ 950 input tokens\./.test(note), note);
     const head = (await p.textContent('[data-bh-jev12-table] thead')) || '';
     check(`${tag} cost header is compact and explicit`, /\$ \/ 1,000 decisions/.test(head) && /not tokens/.test(head), head.slice(0, 220));
-    const hm = await p.$('[data-bh-jev12-honorable]');
+    const hmSection = await p.$('[data-bh-jev12-honorable]');
+    const hm = await p.$('[data-bh-jev12-honorable-row]');
     const detail = await p.$('[data-bh-jev12-honorable-details]');
     const initiallyClosed = !!detail && !(await detail.getAttribute('open'));
     const visibleReason = (await p.textContent('[data-bh-jev12-honorable-reason]')) || '';
     const sentenceCount = visibleReason.replace(/v\d+(?:\.\d+)+/g, 'version').split(/(?<=[.!?])\s+/).filter(Boolean).length;
-    check(`${tag} honorable mention is compact and closed`, !!hm && initiallyClosed && (await hm.boundingBox())?.height <= (mobile ? 520 : 260) && sentenceCount === 2, { initiallyClosed, sentenceCount, visibleReason });
+    check(`${tag} honorable mention is compact and closed`, !!hmSection && !!hm && initiallyClosed && (await hm.boundingBox())?.height <= (mobile ? 520 : 260) && sentenceCount === 2, { initiallyClosed, sentenceCount, visibleReason });
     if (detail) await detail.evaluate((x) => x.setAttribute('open', 'open'));
     const hmText = hm ? (await hm.textContent()) || '' : '';
     check(`${tag} honorable disclosure keeps the explanation, caveats, finding and links`, /0\.7 confidence/.test(hmText) && /\$0\.033 per 1,000/.test(hmText) && /97\.3 %/.test(hmText) && (await p.$$eval('[data-bh-jev12-honorable-details] a', (a) => a.length)) >= 4, hmText.slice(-300));
