@@ -26,7 +26,7 @@ for (const host of hosts) {
     if (!html.includes(name) || !html.includes(score)) throw new Error(`${host}: missing ${name} / ${score}`);
     checks += 2;
   }
-  for (const text of ['Hard only', 'You need a custom eval', 'Who could not be measured, and why', 'SimpleJev RWKV variants']) {
+  for (const text of ['Hard only', 'custom eval on your data?', 'Who could not be measured, and why', 'SimpleJev RWKV variants']) {
     if (!html.includes(text)) throw new Error(`${host}: missing preserved/current surface ${text}`);
     checks += 1;
   }
