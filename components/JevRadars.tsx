@@ -30,7 +30,9 @@ function Radar({ spokes, series, size, id, title, desc }: { spokes: Spoke[]; ser
   return <svg viewBox={`0 0 ${size.w} ${size.h}`} className="h-auto w-full" role="img" aria-labelledby={`${id}-t ${id}-d`} data-bh-jev12-radar-svg>
     <title id={`${id}-t`}>{title}</title><desc id={`${id}-d`}>{desc}</desc>
     {[20, 40, 60, 80, 100].map((v) => <polygon key={v} points={ring(v)} fill="none" stroke="rgb(var(--line))" strokeOpacity={v === 100 ? 0.9 : 0.5} strokeWidth={1} />)}
-    {[50, 100].map((v) => <text key={v} x={cx + 3} y={cy - (R * v) / 100 + 10} fontSize={9} fill="var(--muted)">{v}</text>)}
+    {/* F-136 (Fable pass 25, = F-113/F-117 for these radars): ring labels sit at the half-step between spoke 0 and spoke 1, inside their
+        ring (on the polygon's apothem), with the F-70 halo, so the top spoke's own point never strikes them. */}
+    {[50, 100].map((v) => { const a = -Math.PI / 2 + Math.PI / spokes.length; const d = (R * v / 100) * Math.cos(Math.PI / spokes.length) - 3; return <text key={v} x={cx + d * Math.cos(a)} y={cy + d * Math.sin(a)} textAnchor="start" dominantBaseline="hanging" fontSize={11} fill="currentColor" opacity={0.7} style={{ paintOrder: "stroke", stroke: "var(--surface)", strokeWidth: "3px", strokeLinejoin: "round" }} data-radar-ring>{v}</text>; })}
     {spokes.map((s, i) => { const [x, y] = at(i, 100); return <line key={s.key} x1={cx} y1={cy} x2={x} y2={y} stroke="rgb(var(--line))" strokeOpacity={0.6} />; })}
     {series.map((se, k) => {
       const pts = spokes.map((s, i) => (s.values[k] === null || s.thin[k] ? null : at(i, s.values[k] as number))).filter((p): p is number[] => p !== null);
@@ -95,7 +97,7 @@ export function JevRadars({ ranked, partial, topics }: { ranked: JevV12Row[]; pa
     <div className="bh-panel mt-3 p-4">
       <div className="flex flex-col gap-2 sm:flex-row sm:items-end">
         {pick("jev12-radar-a", "System A", A.key, setA, B.key)}
-        <button type="button" className="bh-button shrink-0 text-sm font-semibold" onClick={() => { setA(B.key); setB(A.key); }} aria-label="Swap system A and system B" data-bh-jev12-radar-swap>⇄ Swap</button>
+        <button type="button" className="bh-button shrink-0 self-end text-sm font-semibold sm:self-auto" onClick={() => { setA(B.key); setB(A.key); }} aria-label="Swap system A and system B" data-bh-jev12-radar-swap>⇄ Swap</button>
         {pick("jev12-radar-b", "System B", B.key, setB, A.key)}
       </div>
       <ul className="mt-3 space-y-1 text-[13px]" aria-label="Legend" data-bh-jev12-radar-legend>
@@ -113,14 +115,19 @@ export function JevRadars({ ranked, partial, topics }: { ranked: JevV12Row[]; pa
           </details>
         </figure>
         <figure className="min-w-0" data-bh-jev12-radar="topics">
-          <h3 className="text-base font-semibold">Accuracy by subject topic</h3>
+          <h3 className="text-base font-semibold">Accuracy by subject topic <span className="bh-muted text-[12px] font-normal">— not part of the score</span></h3>
           <Radar spokes={topicSpokes} series={series} size={{ w: 460, h: 370, r: 100 }} id="jev12-radar-topics" title="Radar: accuracy by subject topic, two systems" desc={topicDesc} />
+          {/* F-137 (Fable pass 25): two visible sentences at most (pass-20 rule); the tier mix, the topic method and the held-out note are the
+              first lines of the disclosure below, above the table. */}
           <figcaption className="bh-muted space-y-1 text-[12px]">
-            <span className="block">Share of a topic&apos;s decisions answered correctly, easy to hard together (items per topic in the table). Topics mix tiers differently — Everyday language is mostly easy items, Rules &amp; law and Finance mostly hard ones — so compare the two systems within a topic, not topics with each other. Not part of the JevBench Score.</span>
+            <span className="block">Share of each topic&apos;s decisions answered correctly, all tiers together — compare the two systems within a topic, not topics with each other.</span>
             {anyThin && <span className="block" data-bh-jev12-radar-thin>Grey “n=…”: a partial run answered fewer than {min} items of that topic — too few to plot.</span>}
-            <span className="block">Topics: one per item, drafted by a model and checked by hand — <a className="text-accent underline" href="https://github.com/fstandhartinger/jevbench/blob/main/datasets/TOPICS.md">method</a>. Held-out items count in the totals; their texts stay private.</span>
           </figcaption>
-          <details className="mt-2 text-[13px]"><summary className="cursor-pointer text-accent">Values as a table</summary>
+          <details className="mt-2 text-[13px]" data-bh-jev12-radar-notes><summary className="cursor-pointer text-accent">Values and notes</summary>
+            <ul className="bh-muted mt-2 list-disc space-y-1 pl-4 text-[12px]">
+              <li>Topics mix tiers differently — Everyday language is mostly easy items, Rules &amp; law and Finance mostly hard ones — which is why topics are not compared with each other.</li>
+              <li>Topics: one per item, drafted by a model and checked by hand — <a className="text-accent underline" href="https://github.com/fstandhartinger/jevbench/blob/main/datasets/TOPICS.md">method</a>. Held-out items count in the totals; their texts stay private.</li>
+            </ul>
             <div className="bh-table-wrap"><table className="bh-table mt-2" data-bh-jev12-radar-table="topics"><thead><tr><th scope="col">Topic (items)</th><th scope="col">A: {series[0].name}</th><th scope="col">B: {series[1].name}</th></tr></thead>
               <tbody>{topics.topics.map((t, i) => <tr key={t.key} title={t.covers}><th scope="row" className="text-left font-normal"><b>{t.label}</b> <span className="bh-muted">({t.n})</span><span className="bh-muted block text-[11px]">{t.covers}</span></th>
                 {cells.map((c, k) => <td key={k} className={`tabular ${topicSpokes[i].thin[k] ? "bh-muted" : ""}`}>{pct(c[t.key].accuracy)} <span className="bh-muted block text-[11px]">{c[t.key].correct} of {c[t.key].attempted}{c[t.key].attempted < c[t.key].n ? ` answered (of ${c[t.key].n})` : ""}{topicSpokes[i].thin[k] ? " — too few" : ""}</span></td>)}</tr>)}</tbody></table></div>
