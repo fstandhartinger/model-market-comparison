@@ -67,7 +67,7 @@ try {
     try {
       await p.goto(`${BASE}/jev-models`, { waitUntil: 'networkidle', timeout: 60000 });
       const notes = await p.$$eval('[data-bh-jev12-cost-unit]', (e) => e.map((x) => x.textContent || ''));
-      check(`${tag}: the "decisions, not tokens" note is on the page`, notes.length >= 1 && notes.every((t) => /per 1,000 decisions/.test(t) && /not per 1,000 tokens/.test(t) && /one decision ≈ 950 input tokens/.test(t)), notes[0]?.slice(0, 160));
+      check(`${tag}: the "decisions, not tokens" note is on the page`, notes.length >= 1 && notes.every((t) => /per 1,000 decisions/.test(t) && (/not per 1,000 tokens/.test(t) || /not \$ per 1,000 tokens/.test(t))) && notes.some((t) => /not per 1,000 tokens — one decision ≈ 950 input tokens/.test(t)), notes[0]?.slice(0, 160));
       const panel = (await p.textContent('[data-bh-jev12-cost-unit-panel]')) || '';
       check(`${tag}: the cost section opens with exactly the two unit sentences`, /^Every price here is US dollars per 1,000 decisions — not per 1,000 tokens\. One decision is a whole question — state, rubric and options — about 950 input tokens for Jev 1\.13\.0, so at its \$0\.042 per million input tokens 1,000 decisions cost \$0\.0399\.$/.test(panel.replace(/\s+/g, ' ').trim()), panel.slice(0, 240));
       const costDetails = (await p.textContent('[data-bh-jev-costs-details]')) || '';

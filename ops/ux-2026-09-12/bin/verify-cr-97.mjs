@@ -81,7 +81,8 @@ try {
       const secText = sec ? (await sec.textContent()) || '' : '';
       check(`${tag}: it states the rule`, /not ranked against the models/.test(secText), secText.slice(0, 160));
       const visibleReason = (await p.textContent('[data-bh-jev12-honorable-reason]')) || '';
-      check(`${tag}: the visible reason is two sentences`, (visibleReason.match(/[.!?](?:\s|$)/g) || []).length === 2, visibleReason);
+      const visibleSentenceCount = visibleReason.replace(/v\d+(?:\.\d+)+/g, 'version').split(/(?<=[.!?])\s+/).filter(Boolean).length;
+      check(`${tag}: the visible reason is two sentences`, visibleSentenceCount === 2, visibleReason);
       check(`${tag}: the explanation is closed by default`, closedByDefault, '');
       check(`${tag}: it says what it runs on`, /Runs on Jev \(TypeSafe\)/.test(secText), '');
       check(`${tag}: it shows the score and the axes`, secText.includes('84.8') && /Intelligence/.test(secText) && /Calibration/.test(secText) && /Speed/.test(secText) && /Cost/.test(secText), '');
