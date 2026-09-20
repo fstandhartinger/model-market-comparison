@@ -30,7 +30,7 @@ export function BenchmarkSheet({ view, modelId, percentiles, attachments = {} }:
         const rows = a.scores.filter((r) => r.modelId === modelId);
         const shown = latestScores(rows)[0] ?? rows[0];
         return { axisId: a.id, benchmarkId: a.benchmarkId, name: a.name, suffix: versionSuffix(a.name, a.version) ?? null, versionLabel: humanVersion(a.version).label,
-          pct: percentiles[a.id] ?? null, lowSample: !!shown?.lowSample, value: shown ? nativeValue(shown.value, a.unit) : null, date: shown?.date ? shown.date.slice(0, 10) : '',
+          pct: percentiles[a.id] ?? null, lowSample: !!shown?.lowSample, value: shown ? nativeValue(shown.value, a.unit) : null, basis: shown?.basis ?? null, date: shown?.date ? shown.date.slice(0, 10) : '',
           cohort: a.cohort || null, description: a.description || null };
       })} />
     </section>)}
