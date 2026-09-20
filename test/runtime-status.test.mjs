@@ -2,10 +2,18 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { revisionFromEnvironment, sourceAgeDays, publicOperatorReceipt } from '../lib/runtime-status.mjs';
 
-test('revision identity only exposes a valid Coolify SOURCE_COMMIT and never invents one', () => {
+test('revision identity only exposes a valid commit the deploying host states, and never invents one', () => {
   assert.equal(revisionFromEnvironment({ SOURCE_COMMIT: '9caf5f3e049f32c62ed0ca57bccfee620d52761a' }), '9caf5f3e049f32c62ed0ca57bccfee620d52761a');
   assert.equal(revisionFromEnvironment({ SOURCE_COMMIT: 'not-a-commit' }), 'unknown');
   assert.equal(revisionFromEnvironment({}), 'unknown');
+  // Iteration 134: the legacy Render host published `unknown` because only Coolify's variable was
+  // read, and `revision` is what every gate uses to prove a deploy landed.
+  assert.equal(revisionFromEnvironment({ RENDER_GIT_COMMIT: '9CAF5F3E049F32C62ED0CA57BCCFEE620D52761A' }), '9caf5f3e049f32c62ed0ca57bccfee620d52761a');
+  assert.equal(revisionFromEnvironment({ RENDER_GIT_COMMIT: 'not-a-commit' }), 'unknown');
+  // A host that supplies both is its own first: the sentinel from an image built outside Coolify
+  // must not shadow the identity the deploying host states.
+  assert.equal(revisionFromEnvironment({ SOURCE_COMMIT: 'unknown', RENDER_GIT_COMMIT: 'abc1234' }), 'abc1234');
+  assert.equal(revisionFromEnvironment({ SOURCE_COMMIT: 'def5678', RENDER_GIT_COMMIT: 'abc1234' }), 'def5678');
 });
 
 test('operator receipt retains last success and reports source ages from the live snapshot without claiming a refresh', () => {
