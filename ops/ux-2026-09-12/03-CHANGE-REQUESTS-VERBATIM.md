@@ -1300,3 +1300,36 @@ verification: `ops/ux-2026-09-12/jevbench/v1.2.3/CR-96.md`.
 - **CR-96.3** Table header, a note under the table, the Cost bullet, a panel above the cost section and the repo charts all say
   "$ per 1,000 decisions — not per 1,000 tokens", with the worked example.
 - **CR-96.4** The correction is disclosed on the page: all three mistakes and every before/after price.
+
+
+## CR-20260920b (JevBench page) → CR-97 — classifier.dev out of the ranking, into an honorable mention (JevBench v1.2.4)
+
+Florian, 20 Sep 2026, German, verbatim:
+> Lass uns classifier.dev vorerst aus der Liste nehmen und darunter auflisten und erklären, wieso wir es nicht im
+> Ranking haben - weil es kein eigenes Modell ist sondern das Original Jev zu einem günstigeren Preis (wahrscheinlich
+> weil das free Kontingent aus der Waitlist oder von vercel verwendet wird) und mit einem orchestrierungsansatz (bin
+> mir nicht sicher, wie man das nennt - best of N oder review oder gremium oder so, also das was auf der classifier.dev
+> Seite als der classifier.dev smart Ansatz beschrieben wird). Das darf schon gern als honorable mention gelistet sein
+> auf unserer Benchmarkliste, aber bitte nicht als #1 auf dem ranking.
+
+Supervisor notes (not Florian's words): implemented by ~/jobs/jevbench-classifierdev-honorable-20260920 with the loop
+paused, on top of CR-96 (live on both hosts first). Details, every quote and its source:
+`ops/ux-2026-09-12/jevbench/v1.2.4/CR-97.md`.
+- **The facts come from classifier.dev's own pages, read 20 Sep 2026.** Fast tier: "The fast tier is Jev, TypeSafe's
+  decision model" and an API response of `"model": "jev-1.13.0"`. Smart tier (which we never ran): "The smart tier is
+  Jev plus a reasoning model re-asking only the answers Jev put under 0.7 confidence" — **escalation on low
+  confidence, a model cascade**, not best-of-N, not self-consistency, not a committee; it escalates to
+  gemini-3.8-flash. Price: free (20,000 fast classifications a day, what our run used) or Pro $20/month for 200,000 a
+  day. **Their pages do not say how the flat rate is funded**, so the page says the price comes from their flat-rate
+  plan and that we do not know their cost basis — Florian's waitlist/Vercel hunch is not published.
+- **CR-97.1** Artifact = tag `v1.2.4`. Every row carries a `listing` (ranked / honorable_mention / partial) and only a
+  ranked row carries a rank; the loader refuses an artifact that breaks that or an honorable mention that does not
+  name the ranked system whose model it runs.
+- **CR-97.2** General rule, published with the data and stated in the method section: *a service that runs another
+  entrant's model is listed with all of its scores and axes, but is not ranked against the models.*
+- **CR-97.3** New section under the ranking, "Honorable mentions — services built on another entrant's model":
+  classifier.dev with its 84.8, all four axes and its price, no rank, "Runs on Jev (TypeSafe)", why it is not ranked,
+  the flat-rate caveat ($0.0033 assumes the Pro plan at full use; $0.033 at a tenth of it) and the honest finding
+  (97.3 % vs Jev's 94.5 % on judge items, 70.5 % vs 74.1 % on hard ones). The service is credited, not criticised.
+- **CR-97.4** Supersedes CR-95.3 (the "why a Jev service leads" bullet). **Jev 1.13.0 is #1 at 75.4**; every row below
+  classifier.dev moves up one place. No measurement, axis, price or score changed.

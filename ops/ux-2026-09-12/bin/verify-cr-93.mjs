@@ -11,8 +11,11 @@ await fs.mkdir(OUT, { recursive: true });
 const checks = []; const check = (name, ok, detail) => checks.push({ name, ok: !!ok, detail: typeof detail === 'string' ? detail : JSON.stringify(detail) });
 const a = await (await fetch(`${BASE}/api/jevbench/v1.2`)).json();
 const dj = a.systems.find((s) => s.key === 'djev');
-check('artifact: revision v1.2.1 or later', ['v1.2.1', 'v1.2.2', 'v1.2.3'].includes(a.revision), a.revision);  // CR-95: v1.2.2 keeps djev, one rank lower
-check('artifact: djev rank 4 (was 3 in v1.2.1), 74.3', dj && dj.rank === 4 && dj.jevbench_score.toFixed(1) === '74.3', dj && [dj.rank, dj.jevbench_score]);
+// CR-95: v1.2.2 keeps djev, one rank lower; CR-97: v1.2.4 takes classifier.dev out of the ranking, so djev moves back up one.
+check('artifact: revision v1.2.1 or later', ['v1.2.1', 'v1.2.2', 'v1.2.3', 'v1.2.4'].includes(a.revision), a.revision);
+const djevRank = a.systems.find((s) => s.key === 'djev').rank;
+// #3 in v1.2.1, #4 once v1.2.2 added a row above it, #3 again once v1.2.4 unranked classifier.dev. Its score never moved.
+check(`artifact: djev rank ${djevRank}, 74.3`, dj && [3, 4].includes(dj.rank) && dj.jevbench_score.toFixed(1) === '74.3', dj && [dj.rank, dj.jevbench_score]);
 check('artifact: djev announced price, production API, no adjustment', dj && dj.cost.kind === 'announced' && dj.endpoint_kind === 'api' && dj.speed.p50_s_adjusted === dj.speed.p50_s_raw, '');
 const b = await chromium.launch();
 try {
@@ -24,13 +27,13 @@ try {
     try {
       await p.goto(`${BASE}/jev-models`, { waitUntil: 'networkidle', timeout: 60000 });
       const bars = await p.$$eval('[data-bh-jevc-bars] [data-bh-jev12-bar]', (e) => e.map((x) => x.getAttribute('data-bh-jev12-bar')));
-      check(`${tag}: djev is the 4th bar`, bars[3] === 'djev', bars.slice(0, 5));
+      check(`${tag}: djev is bar ${djevRank}`, bars[djevRank - 1] === 'djev', bars.slice(0, 5));
       const bar = await p.$('[data-bh-jevc-bars] [data-bh-jev12-bar="djev"]');
       const txt = bar ? await bar.textContent() : '';
       check(`${tag}: djev bar shows 74.3 and its name`, txt.includes('74.3') && txt.includes('djev'), txt.slice(0, 160));
       check(`${tag}: announced price tag`, (await p.$$('[data-bh-jev12-cost-kind="announced"]')).length >= 1, '');
       check(`${tag}: djev footnote`, ((await p.textContent('[data-bh-jev12-footnote="djev"]')) || '').includes('announced price'), '');
-      check(`${tag}: eyebrow says the current revision`, /v1\.2\.[123]/.test((await p.textContent('[data-bh-jevc-chart] .bh-eyebrow')) || ''), '');
+      check(`${tag}: eyebrow says the current revision`, ((await p.textContent('[data-bh-jevc-chart] .bh-eyebrow')) || '').includes(a.revision), a.revision);
       check(`${tag}: no page errors`, errs.length === 0, errs);
       await p.locator('[data-bh-jevc-chart]').screenshot({ path: `${OUT}/${tag}-chart.png` });
     } finally { await c.close(); }

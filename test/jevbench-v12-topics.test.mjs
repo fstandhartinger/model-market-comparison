@@ -13,7 +13,7 @@ test('the committed topic artifact is the pinned one, validates and covers every
   assert.equal(t.sha256, JEVBENCH_V12_TOPICS_SHA256);
   const view = jevbenchV12TopicsView(t);
   const v = jevbenchV12View(v12);
-  assert.deepEqual(Object.keys(view.systems).sort(), [...v.ranked, ...v.partial].map((r) => r.key).sort());
+  assert.deepEqual(Object.keys(view.systems).sort(), [...v.ranked, ...v.honorable, ...v.partial].map((r) => r.key).sort());
   assert.equal(view.topics.reduce((s, x) => s + x.n, 0), v.decisions);
   assert.ok(view.topics.length >= 6 && view.topics.length <= 9 && view.topics.every((x) => x.n >= view.minAttempted && x.short));
   // spot values (jevbench repo RESULTS-v1.2.md, "Accuracy by subject topic")

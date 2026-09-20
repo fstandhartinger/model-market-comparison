@@ -34,7 +34,7 @@ export default async function JevModelsPage() {
   const bestOpen = view.ranked.find((r) => r.cls === 'jev-rebuild');
   const jev = view.ranked.find((r) => r.cls === 'jev');
   const prices = v11.referencePrices ?? {};
-  const all = [...view.ranked, ...view.partial];
+  const all = [...view.ranked, ...view.honorable, ...view.partial];
   const estimated = all.filter((r) => r.costKind === 'estimate');
   // CR-96: the rows whose price the v1.2.3 correction moved, in the published order.
   const corrected = all.flatMap((r) => {
@@ -42,6 +42,7 @@ export default async function JevModelsPage() {
     return c && !c.unchanged ? [{ r, c }] : [];
   });
   const topInt = [...view.ranked].sort((a, b) => (b.axes.intelligence ?? 0) - (a.axes.intelligence ?? 0))[0];
+  const [topHonorable] = view.honorable;
   const measuredKeys = new Set(all.map((r) => short(r.display).toLowerCase()));
   const notMeasured = (v1.availability.not_measured as { candidate: string; author: string; reason: string }[]).filter((n) => !measuredKeys.has(n.candidate.toLowerCase()));
   const credits = all.filter((r) => !r.key.endsWith('-tools')).sort((a, b) => a.display.localeCompare(b.display));
@@ -65,8 +66,9 @@ export default async function JevModelsPage() {
       <ul className="mt-2 list-disc space-y-1.5 pl-5 text-[15px]" data-bh-jev12-findings>
         <li><b>{lead.display}</b> leads with {one(lead.main)}: Intelligence {one(lead.axes.intelligence)}, Calibration {one(lead.axes.calibration)}, Speed {one(lead.axes.speed)}, Cost {one(lead.axes.cost)} (<CostValue r={lead} /> per 1,000 decisions).</li>
         {jev && jev.key !== lead.key && <li><b>{jev.display}</b> is #{rankOf(jev.key)} at {one(jev.main)}, {one(gap(lead.main, jev.main))} points behind.</li>}
-        {/* CR-95 (v1.2.2): a service built on Jev can outscore Jev's own API; say why, from the same row data. */}
-        {jev && lead.cls === 'jev-service' && <li data-bh-jev12-service-lead>{short(lead.display)} runs Jev behind its own API, so it matches Jev on Intelligence ({one(lead.axes.intelligence)} vs {one(jev.axes.intelligence)}). It leads on Speed ({one(lead.axes.speed)} vs {one(jev.axes.speed)}; p50 {lead.p50.toFixed(2)} s vs {jev.p50.toFixed(2)} s from our server) and on Cost ({one(lead.axes.cost)} vs {one(jev.axes.cost)}): its flat plan at full use, <CostValue r={lead} />, against Jev&apos;s per-token tariff, <CostValue r={jev} /> per 1,000 decisions. Its Calibration is lower ({one(lead.axes.calibration)} vs {one(jev.axes.calibration)}).</li>}
+        {/* CR-97 (Florian 2026-09-20): a service running another entrant's model is listed, not ranked. CR-95.3's
+            "why a service leads" bullet is replaced by the reason it no longer does. */}
+        {topHonorable && <li data-bh-jev12-honorable-lead><b>{short(topHonorable.display)}</b> scores {one(topHonorable.main)} — higher than anything in the ranking — but is <b>not ranked</b>: it runs {view.honorableMentions?.systems[topHonorable.key]?.runs_on ?? 'another entrant&rsquo;s model'}, so ranking it would put the same model in the list twice, once at the model&apos;s own price and once at the service&apos;s. It keeps every number it earned under <a href="#jev12-honorable" className="text-accent underline">{view.honorableMentions?.heading ?? 'Honorable mentions'}</a>.</li>}
         {bestOpen && bestOpen.key !== lead.key && <li>Open rebuilds of Jev appeared within days. The best of them, <b>{bestOpen.display}</b>, is #{rankOf(bestOpen.key)} at {one(bestOpen.main)} — <span data-bh-jev12-gap>{one(gap(lead.main, bestOpen.main))} points behind</span>: more speed and a lower (estimated) price, less intelligence and calibration.</li>}
         {topInt && topInt.key !== lead.key && <li><b>{topInt.display}</b> has the highest Intelligence ({one(topInt.axes.intelligence)}) but places #{rankOf(topInt.key)}: its cost score is {one(topInt.axes.cost)} (<CostValue r={topInt} /> per 1,000 decisions), and the geometric mean does not let accuracy buy that back.</li>}
         {view.partial.length > 0 && <li>{view.partial.map((r) => short(r.display)).join(', ')} did not finish every tier in time; they are shown below the ranking as partial runs, without a rank.</li>}
@@ -75,7 +77,7 @@ export default async function JevModelsPage() {
     </JevModelsV12Board>
 
     {/* CR-94: two-system radars — the four score axes and accuracy by subject topic (completes CR-90.3). */}
-    <JevRadars ranked={view.ranked} partial={view.partial} topics={topics} />
+    <JevRadars ranked={view.ranked} honorable={view.honorable} partial={view.partial} topics={topics} />
 
     <section className="mt-8 max-w-4xl text-sm" data-bh-jev-costs>
       {/* CR-96 (2026-09-20): a reader read this column as dollars per 1,000 tokens. Say the unit before anything else. */}
@@ -111,7 +113,7 @@ export default async function JevModelsPage() {
 
     <section className="mt-10 max-w-4xl space-y-3" aria-labelledby="jev-not-measured">
       <h2 id="jev-not-measured" className="text-xl font-semibold">Who could not be measured, and why</h2>
-      <p className="bh-muted text-sm">An exclusion is an availability fact about our run — hardware, access, terms — <b className="text-gray-200">never a quality verdict</b>. Partial runs are in the table above, greyed and without a rank.</p>
+      <p className="bh-muted text-sm">An exclusion is an availability fact about our run — hardware, access, terms — <b className="text-gray-200">never a quality verdict</b>. Partial runs are in the table above, greyed and without a rank; so are the <a className="text-accent underline" href="#jev12-honorable">honorable mentions</a>, which are complete runs that simply are not ranked.</p>
       <ul className="space-y-2 text-sm" data-bh-jev-availability>
         {notMeasured.map((n, i) => <li key={`${n.candidate}-${i}`} className="bh-panel p-3" data-bh-jev-availability-row={n.candidate}><b>{n.candidate}</b> <span className="bh-muted">({n.author})</span> — <span className="bh-muted">{n.reason.replace(/`/g, '')}</span></li>)}
       </ul>
@@ -125,6 +127,7 @@ export default async function JevModelsPage() {
         <ul className="list-disc space-y-1.5 pl-5">{(['easy', 'standard', 'judge'] as const).map((t) => <li key={t}><b className="text-gray-200">{t}</b>: {v11.tierNotes[t]}</li>)}
           <li><b className="text-gray-200">hard</b>: {view.scoring.hard_tier}</li></ul>
         <p>Every system sees the same state, instructions, rubric and exact label set; only the transport differs. Requests go out one at a time with no retries, so latency includes the network. Estimated costs are hosted-provider prices for the same weights or size class and are marked &ldquo;est.&rdquo; — hover one for its basis, or see <a className="text-accent underline" href="#jev-costs">how costs are estimated</a>. Every system has a price; none gets a free 100.</p>
+        {view.honorableMentions && <p data-bh-jev12-method-honorable><b className="text-gray-200">A service running another entrant&apos;s model is listed, but not ranked against the models.</b> {view.honorableMentions.rule.replace(/^A service that runs another entrant's model is listed with all of its scores and axes, but is not ranked against the models\. /, '')} Which rows this applies to, and why: <a className="text-accent underline" href="#jev12-honorable">{view.honorableMentions.heading}</a>.</p>}
         <p>v1.2 numbers are not comparable with v1.1 or v1.0 (different tiers and scoring). The v1.0 page keeps its own numbers, calibration plots and per-family tables.</p>
       </div>
     </details>

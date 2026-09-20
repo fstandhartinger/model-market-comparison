@@ -56,8 +56,8 @@ function Radar({ spokes, series, size, id, title, desc }: { spokes: Spoke[]; ser
   </svg>;
 }
 
-export function JevRadars({ ranked, partial, topics }: { ranked: JevV12Row[]; partial: JevV12Row[]; topics: JevTopicsView }) {
-  const all = [...ranked, ...partial];
+export function JevRadars({ ranked, honorable, partial, topics }: { ranked: JevV12Row[]; honorable: JevV12Row[]; partial: JevV12Row[]; topics: JevTopicsView }) {
+  const all = [...ranked, ...honorable, ...partial];
   const first = ranked.find((r) => r.key === "jev-1.13.0") ?? ranked[0];
   const [a, setA] = useState(first.key);
   const [b, setB] = useState((ranked.find((r) => r.key !== first.key) ?? ranked[1]).key);
@@ -78,16 +78,19 @@ export function JevRadars({ ranked, partial, topics }: { ranked: JevV12Row[]; pa
     values: cells.map((c) => (c[t.key].accuracy === null ? null : c[t.key].accuracy! * 100)),
     texts: cells.map((c) => (c[t.key].attempted < min ? `n=${c[t.key].attempted}` : pct(c[t.key].accuracy))),
   }));
-  const option = (r: JevV12Row) => <option key={r.key} value={r.key}>{r.rank ? `${r.rank}. ` : ""}{short(r.display)}{r.ranked ? "" : " (partial)"}</option>;
+  // CR-97: an honorable mention keeps every number, so it stays selectable here — it is simply never labelled with a rank.
+  const notRanked = (r: JevV12Row) => (r.ranked ? "" : r.listing === "honorable_mention" ? " (honorable mention)" : " (partial)");
+  const option = (r: JevV12Row) => <option key={r.key} value={r.key}>{r.rank ? `${r.rank}. ` : ""}{short(r.display)}{notRanked(r)}</option>;
   // A plain render function, not a component: a component defined here would remount on every change and drop the focus.
   const pick = (id: string, label: string, value: string, set: (k: string) => void, other: string) => <label className="block min-w-0 flex-1 text-[13px]" htmlFor={id}>
     <span className="bh-muted mb-1 block font-semibold">{label}</span>
     <select id={id} className="bh-input w-full" value={value} onChange={(e) => set(e.target.value)} data-bh-jev12-radar-pick={id.endsWith("a") ? "a" : "b"}>
       <optgroup label="Ranked">{ranked.filter((r) => r.key !== other).map(option)}</optgroup>
+      {honorable.length > 0 && <optgroup label="Honorable mentions (not ranked)">{honorable.filter((r) => r.key !== other).map(option)}</optgroup>}
       <optgroup label="Partial runs (not ranked)">{partial.filter((r) => r.key !== other).map(option)}</optgroup>
     </select></label>;
   const Swatch = ({ s }: { s: Series }) => <svg width="30" height="12" aria-hidden="true" className="mr-1.5 inline-block align-middle"><line x1="1" y1="6" x2="29" y2="6" stroke={s.stroke} strokeWidth="2.4" strokeDasharray={s.dashed ? "6 4" : undefined} />{s.square ? <rect x="11.5" y="2.5" width="7" height="7" fill={s.stroke} /> : <circle cx="15" cy="6" r="3.8" fill={s.stroke} />}</svg>;
-  const scoreText = (r: JevV12Row) => `JevBench Score ${one(r.main)}${r.rank ? ` (#${r.rank})` : " (partial run, not ranked)"}`;
+  const scoreText = (r: JevV12Row) => `JevBench Score ${one(r.main)}${r.rank ? ` (#${r.rank})` : r.listing === "honorable_mention" ? " (honorable mention, not ranked)" : " (partial run, not ranked)"}`;
   const axisDesc = `${series[0].name} vs ${series[1].name}. ` + AXES.map((k, i) => `${AXIS_LABEL[k]}: ${axisSpokes[i].texts[0]} vs ${axisSpokes[i].texts[1]}`).join("; ") + ".";
   const topicDesc = `Accuracy by subject topic, ${series[0].name} vs ${series[1].name}. ` + topics.topics.map((t, i) => `${t.label} (${t.n} items): ${topicSpokes[i].texts[0]} vs ${topicSpokes[i].texts[1]}`).join("; ") + ".";
   const anyThin = topicSpokes.some((s) => s.thin.some(Boolean));

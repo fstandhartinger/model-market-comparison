@@ -48,9 +48,12 @@ try {
         check(`${tag} ${label}: legend shows both JevBench Scores`, legend.includes(byKey[x].jevbench_score.toFixed(1)) && legend.includes(byKey[y].jevbench_score.toFixed(1)), legend.slice(0, 200));
       };
       await verify('default');
-      // Review gate 20260919T233002Z: Jev and the jev-service row are both blue, so the default pair must still be told apart.
+      // Review gate 20260919T233002Z: two systems of the same family share a colour, so the pair must still be told apart —
+      // by colour when the families differ, by a dashed second outline when they do not. CR-97 changed which pair is the
+      // default (classifier.dev is no longer ranked, so #2 is a rebuild), so the check states the intent, not one case.
       const defaultStrokes = await p.$$eval('[data-bh-jev12-radar="axes"] [data-bh-jev12-radar-series] polygon', (nodes) => nodes.map((n) => [getComputedStyle(n).stroke, getComputedStyle(n).strokeDasharray]));
-      check(`${tag}: the default pair is separated by line style or colour`, defaultStrokes.length === 2 && defaultStrokes[0][0] !== defaultStrokes[1][0] && /6px,\s*4px|6 4/.test(defaultStrokes[1][1]), defaultStrokes);
+      check(`${tag}: the default pair is separated by line style or colour`, defaultStrokes.length === 2
+        && (defaultStrokes[0][0] !== defaultStrokes[1][0] || /6px,\s*4px|6 4/.test(defaultStrokes[1][1])), defaultStrokes);
       await p.locator('[data-bh-jev12-compare] .bh-panel').screenshot({ path: `${OUT}/${tag}-radars-default.png` });
       await p.click('[data-bh-jev12-radar-swap]');
       const [A2, B2] = await pair();

@@ -20,7 +20,9 @@ test('the public-task artifact is pinned, public-only, and covers its declared s
   assert.equal(view.tasks.length, 231);
   assert.deepEqual(view.tasks.reduce((out, t) => { out[t.tier]++; return out; }, { easy: 0, standard: 0, judge: 0, hard: 0 }), { easy: 48, standard: 72, judge: 0, hard: 111 });
   // Review gate 20260919T233002Z: the v1.2.2 capture covers every scored system, so the grid must have no blank column.
-  const v12Keys = jevbenchV12View(v12).ranked.concat(jevbenchV12View(v12).partial).map((r) => r.key);
+  // CR-97: an honorable mention is a complete run with every number, so the grid must cover it too.
+  const v = jevbenchV12View(v12);
+  const v12Keys = [...v.ranked, ...v.honorable, ...v.partial].map((r) => r.key);
   assert.deepEqual(Object.keys(view.systems).sort(), [...v12Keys].sort());
   assert.ok(view.systems.djev && view.systems['classifier-dev-fast'], 'djev and the CR-95 rows must have public-task outcomes');
   assert.ok(!JSON.stringify(view).match(/question|expected|prediction|heldout/i));

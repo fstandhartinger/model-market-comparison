@@ -8,9 +8,15 @@ export const AXES: JevAxis[];
 export const TIER_WEIGHTS: Record<JevTier12, number>;
 export const VENDOR_LINKS: Record<string, string>;
 export const EP_LABEL: Record<string, string>;
+export type JevListing = 'ranked' | 'honorable_mention' | 'partial';
+export const LISTINGS: JevListing[];
+export type JevHonorableMention = {
+  runs_on: string; runs_on_key: string; short_reason: string; why_not_ranked: string; price_note: string;
+  tier_measured: string; not_pass_through: string; credit: string; sources: string[]; sources_read: string;
+};
 export type JevV12Row = {
   key: string; display: string; author: string; cls: string; link: string | null; licence: string; open: 'yes' | 'weights' | 'no';
-  ranked: boolean; rank: number | null; main: number; axes: JevAxes; presets: Record<string, number>; rankUnder: Record<string, number> | null;
+  ranked: boolean; listing: JevListing; notRankedBecause: string | null; rank: number | null; main: number; axes: JevAxes; presets: Record<string, number>; rankUnder: Record<string, number> | null;
   tiers: Record<JevTier12, number | null>; p50: number; p95: number; p50Adj: number; p95Adj: number; adjustment: string;
   endpointKind: 'api' | 'gpu' | 'demo' | 'cpu'; endpoint: string; usd: number; costKind: 'measured' | 'estimate' | 'announced'; costBasis: string;
   hasDistribution: boolean; calibrationNote: string | null; footnote: string | null;
@@ -18,7 +24,8 @@ export type JevV12Row = {
 export type JevV12View = {
   sha256: string; revision: string; protocol: string; generated: string; revisionNote: string; scoreName: string; oneLiner: string; speedNote: string;
   scoring: Record<string, string>; presets: Record<string, Record<JevAxis, number>>; main: string; tierCounts: Record<JevTier12, number>;
-  tierWeights: Record<JevTier12, number>; decisions: number; ranked: JevV12Row[]; partial: JevV12Row[];
+  tierWeights: Record<JevTier12, number>; decisions: number; ranked: JevV12Row[]; honorable: JevV12Row[]; partial: JevV12Row[];
+  honorableMentions: { heading: string; rule: string; systems: Record<string, JevHonorableMention> } | null;
   costUnit: { unit: string; not_unit: string; one_liner: string; worked_example: string; short_note: string; mean_input_tokens_per_decision_jev: number };
   costCorrection: { revision: string; file: string; what_was_wrong: string[]; rule: string } | null;
   costCorrectionTable: Record<string, { old: number; new: number; pct: number; unchanged: boolean }> | null;

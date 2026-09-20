@@ -121,9 +121,13 @@ function Controls({ w, raw, scope, setPreset, setRaw, reset }: { w: JevWeights4;
   </section>;
 }
 
-function ScoreChart({ rows, partial, w, view, scope }: { rows: Row[]; partial: Row[]; w: JevWeights4; view: JevV12View; scope: JevTaskScope }) {
+// CR-97 (2026-09-20): three ways to be listed. Only a ranked row has a rank; an honorable mention runs another
+// entrant's model, a partial run missed a tier. Both unranked kinds keep every number and are drawn in grey.
+const NOT_RANKED: Record<string, string> = { honorable_mention: "honorable mention", partial: "partial run" };
+
+function ScoreChart({ rows, honorable, partial, w, view, scope }: { rows: Row[]; honorable: Row[]; partial: Row[]; w: JevWeights4; view: JevV12View; scope: JevTaskScope }) {
   const d = stateDescription(w, scope);
-  const all = [...rows, ...partial];
+  const all = [...rows, ...honorable, ...partial];
   const types = Object.keys(TYPE).filter((t) => all.some((r) => r.cls === t));
   const f0 = (v: number | null) => (v === null ? "–" : v.toFixed(0));
   return <figure className={`bh-panel p-4 sm:p-5 ${d.official ? "" : "bh-jevc-custom"}`} data-bh-jev12-main-chart data-bh-jevc-chart={d.official ? "official" : "custom"} aria-labelledby="jevc-title">
@@ -141,12 +145,12 @@ function ScoreChart({ rows, partial, w, view, scope }: { rows: Row[]; partial: R
     <ol className="mt-2 space-y-2.5 sm:mt-1" data-bh-jevc-bars>
       {all.map((r) => {
         const s = r.score;
-        const label = `${r.display}: ${one(s)}${r.rank ? `, rank ${r.rank}` : ", partial run, not ranked"}. Intelligence ${one(r.axes.intelligence)}, calibration ${r.axes.calibration === null ? "none" : one(r.axes.calibration)}, speed ${one(r.axes.speed)}, cost ${one(r.axes.cost)}${r.costKind === "estimate" ? " (estimated)" : r.costKind === "announced" ? " (announced price, not yet charged)" : ""}.`;
+        const label = `${r.display}: ${one(s)}${r.rank ? `, rank ${r.rank}` : `, ${NOT_RANKED[r.listing]}, not ranked`}. Intelligence ${one(r.axes.intelligence)}, calibration ${r.axes.calibration === null ? "none" : one(r.axes.calibration)}, speed ${one(r.axes.speed)}, cost ${one(r.axes.cost)}${r.costKind === "estimate" ? " (estimated)" : r.costKind === "announced" ? " (announced price, not yet charged)" : ""}.`;
         return <li key={r.key} style={typeVar(r.cls)} className="grid grid-cols-[1.4rem_1fr_3.3rem] items-center gap-x-2 text-sm sm:grid-cols-[1.6rem_14rem_1fr_3.2rem_19rem]"
           data-bh-jev12-bar={r.key} data-bh-jevc-score={s === null ? "" : s.toFixed(3)} aria-label={label}>
           <span className="bh-muted tabular col-start-1 row-start-1 text-right text-xs" data-bh-jevc-rank={r.rank ?? ""}>{r.rank ?? ""}</span>
           <span className="col-start-2 row-start-1 min-w-0 md:truncate sm:col-start-2 sm:text-right" title={r.display}>
-            <ProjectLink r={r}>{chartName(r)}</ProjectLink>{r.footnote ? <sup data-bh-jev12-dagger>†</sup> : null}{!r.ranked && <span className="bh-muted"> (partial run)</span>}{!d.official && r.rank !== null && <Delta d={r.delta} />}
+            <ProjectLink r={r}>{chartName(r)}</ProjectLink>{r.footnote ? <sup data-bh-jev12-dagger>†</sup> : null}{!r.ranked && <span className="bh-muted" title={r.notRankedBecause ?? undefined}> ({NOT_RANKED[r.listing]})</span>}{!d.official && r.rank !== null && <Delta d={r.delta} />}
           </span>
           <span className="bh-jevc-grid col-start-2 row-start-2 mt-1 flex h-4 sm:col-start-3 sm:row-start-1 sm:mt-0 sm:h-6" aria-hidden="true">
             {s !== null && <span className={`bh-jevc-bar ${r.ranked ? "" : "is-partial"}`} style={{ width: `${Math.max(0, Math.min(100, s)).toFixed(4)}%` }} />}
@@ -169,7 +173,7 @@ function ScoreChart({ rows, partial, w, view, scope }: { rows: Row[]; partial: R
     </p>
     <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px]" aria-label="Legend" data-bh-jevc-legend>
       {types.map((t) => <li key={t} style={typeVar(t)}><span className="bh-jevc-swatch mr-1.5" />{TYPE[t].label}</li>)}
-      {partial.length > 0 && <li><span className="bh-jevc-swatch is-partial mr-1.5" />Partial run — shown, not ranked</li>}
+      {(honorable.length > 0 || partial.length > 0) && <li><span className="bh-jevc-swatch is-partial mr-1.5" />Shown, not ranked — {[honorable.length > 0 ? "honorable mention (runs another entrant's model)" : "", partial.length > 0 ? "partial run" : ""].filter(Boolean).join(" · ")}</li>}
     </ul>
     <figcaption className="bh-muted mt-3 space-y-1 text-[11.5px] leading-snug" data-bh-jevc-footnotes>
       <SpeedNote view={view} className="text-[11.5px]" />
@@ -189,7 +193,7 @@ function ScoreChart({ rows, partial, w, view, scope }: { rows: Row[]; partial: R
   </figure>;
 }
 
-function Table({ view, rows, partialRows, w, scope }: { view: JevV12View; rows: Row[]; partialRows: Row[]; w: JevWeights4; scope: JevTaskScope }) {
+function Table({ view, rows, honorableRows, partialRows, w, scope }: { view: JevV12View; rows: Row[]; honorableRows: Row[]; partialRows: Row[]; w: JevWeights4; scope: JevTaskScope }) {
   const [col, setCol] = useState<Col>("main");
   const [flip, setFlip] = useState(false);
   const d = stateDescription(w, scope);
@@ -203,6 +207,7 @@ function Table({ view, rows, partialRows, w, scope }: { view: JevV12View; rows: 
   };
   const ranked = useMemo(() => sort(rows), [rows, col, flip]); // eslint-disable-line react-hooks/exhaustive-deps
   const partial = useMemo(() => sort(partialRows), [partialRows, col, flip]); // eslint-disable-line react-hooks/exhaustive-deps
+  const honorable = useMemo(() => sort(honorableRows), [honorableRows, col, flip]); // eslint-disable-line react-hooks/exhaustive-deps
   const pick = (c: Col) => { if (c === col) setFlip((f) => !f); else { setCol(c); setFlip(false); } };
   const aria = (c: Col) => (c !== col ? "none" : HIGHER[c] !== flip ? "descending" : "ascending");
   const eff = percents(w);
@@ -215,7 +220,7 @@ function Table({ view, rows, partialRows, w, scope }: { view: JevV12View; rows: 
     <th scope="row" className="bh-jev-sticky text-left font-normal"><span className="bh-muted block text-[11px] leading-tight">by {r.author}</span>
       <span className="block font-semibold leading-snug"><ProjectLink r={r}>{short(r.display)}</ProjectLink>{r.footnote ? <sup>†</sup> : null}</span>
       {(() => { const cfg = r.display.slice(short(r.display).length).replace(/^[ ,]*\(?|\)$/g, ""); return cfg && cfg !== r.author ? <span className="bh-muted block text-[11px] leading-tight">{cfg}</span> : null; })()}
-      {!r.ranked && <span className="bh-thin-tag mt-1 inline-block">partial run · not ranked</span>}</th>
+      {!r.ranked && <span className="bh-thin-tag mt-1 inline-block" title={r.notRankedBecause ?? undefined}>{NOT_RANKED[r.listing]} · not ranked</span>}</th>
     <td className="tabular"><b className="text-lg" data-bh-jevc-cell-score>{one(r.score)}</b>{!d.official && <span className="bh-muted block text-[11px]" data-bh-jevc-cell-official>official {one(r.official)}</span>}</td>
     <td className="tabular text-[13px]">{one(r.axes.intelligence)}</td>
     <td className="tabular text-[13px]">{r.axes.calibration === null ? <span className="bh-muted text-[12px]" title={r.calibrationNote ?? undefined} data-bh-jev12-no-dist>none (label only)</span> : one(r.axes.calibration)}</td>
@@ -227,7 +232,7 @@ function Table({ view, rows, partialRows, w, scope }: { view: JevV12View; rows: 
       <span className="bh-muted block text-[11px]">p95 {sec(r.p95)} raw{r.p95Adj !== r.p95 ? ` → ${sec(r.p95Adj)}` : ""}</span></td>
     <td className="text-[12px]" title={r.endpoint}>{r.endpointKind === "api" ? "production API" : r.endpointKind === "gpu" ? "our RunPod GPU" : r.endpointKind === "demo" ? "author's demo server" : "our CPU"}</td>
   </tr>;
-  const notes = [...view.ranked, ...view.partial].filter((r) => r.footnote);
+  const notes = [...view.ranked, ...view.honorable, ...view.partial].filter((r) => r.footnote);
   return <section className="mt-8" aria-labelledby="jev12-table">
     <h2 id="jev12-table" className="text-xl font-semibold">Axes, tiers, latency and cost</h2>
     <p className="bh-muted mt-1 text-sm">Sort by any column; values the run could not produce always sort last. Hover a cost for how it was priced, a latency for the endpoint. Names link to each project.</p>
@@ -249,12 +254,50 @@ function Table({ view, rows, partialRows, w, scope }: { view: JevV12View; rows: 
         </tr></thead>
         <tbody>
           {ranked.map((r) => <R key={r.key} r={r} />)}
-          {partial.length > 0 && <tr><td colSpan={15} className="bh-muted text-[12px]"><span className="sticky left-3 inline-block max-w-[330px] whitespace-normal">Partial runs — shown, not ranked: {view.scoring.ranked.replace(/^Ranked: /, "ranked = ")}</span></td></tr>}
+          {honorable.length > 0 && <tr data-bh-jev12-honorable-head><td colSpan={15} className="bh-muted text-[12px]"><span className="sticky left-3 inline-block max-w-[330px] whitespace-normal"><a href="#jev12-honorable" className="text-accent underline">{view.honorableMentions?.heading ?? "Honorable mentions"}</a> — shown, not ranked: {view.honorableMentions?.rule}</span></td></tr>}
+          {honorable.map((r) => <R key={r.key} r={r} />)}
+          {partial.length > 0 && <tr><td colSpan={15} className="bh-muted text-[12px]"><span className="sticky left-3 inline-block max-w-[330px] whitespace-normal">Partial runs — shown, not ranked: a tier attempted for fewer than 95 % of its decisions.</span></td></tr>}
           {partial.map((r) => <R key={r.key} r={r} />)}
         </tbody>
       </table>
     </div>
     {notes.length > 0 && <ul className="bh-muted mt-2 space-y-1 text-xs" data-bh-jev12-notes>{notes.map((r) => <li key={r.key}>† <b className="text-gray-200">{short(r.display)}</b>: {r.footnote}</li>)}</ul>}
+  </section>;
+}
+
+// CR-97 (Florian 2026-09-20): classifier.dev was #1 on a model that is not its own. It stays on the page with every
+// number it earned, under the ranking, with the rule and the reason in plain English — and without a rank.
+function HonorableMentions({ view, rows }: { view: JevV12View; rows: Row[] }) {
+  const hm = view.honorableMentions;
+  if (!hm || rows.length === 0) return null;
+  const jev = (key: string) => view.ranked.find((r) => r.key === key) ?? null;
+  return <section className="mt-8 max-w-4xl scroll-mt-6" id="jev12-honorable" aria-labelledby="jev12-honorable-head" data-bh-jev12-honorable>
+    <h2 id="jev12-honorable-head" className="text-xl font-semibold">{hm.heading}</h2>
+    <p className="bh-muted mt-1 text-sm" data-bh-jev12-honorable-rule>{hm.rule}</p>
+    {rows.map((r) => {
+      const d = hm.systems[r.key];
+      const base = d ? jev(d.runs_on_key) : null;
+      return <article key={r.key} className="bh-panel mt-3 p-4" data-bh-jev12-honorable-row={r.key}>
+        <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+          <h3 className="text-lg font-semibold"><ProjectLink r={r}>{short(r.display)}</ProjectLink>
+            <span className="bh-thin-tag ml-2 align-middle" data-bh-jev12-honorable-tag>no rank</span></h3>
+          <p className="tabular text-sm"><b className="text-lg" data-bh-jev12-honorable-score={r.main.toFixed(3)}>{one(r.main)}</b> {SCORE_NAME}
+            {base && <span className="bh-muted"> · {short(base.display)} (#{base.rank}) scores {one(base.main)}</span>}</p>
+        </div>
+        {d && <p className="mt-1 text-sm font-semibold" data-bh-jev12-honorable-runs-on>Runs on {d.runs_on}.</p>}
+        <ul className="bh-muted mt-2 grid grid-cols-2 gap-x-4 gap-y-1 text-[13px] sm:grid-cols-5" data-bh-jev12-honorable-axes>
+          {AXES.map((k) => <li key={k}><span className="block font-semibold text-gray-200">{AXIS_LABEL[k]}</span><span className="tabular">{one(r.axes[k])}</span></li>)}
+          <li><span className="block font-semibold text-gray-200">$ per 1,000 decisions</span><CostValue r={r} /></li>
+        </ul>
+        {d && <div className="mt-3 space-y-2 text-sm">
+          <p data-bh-jev12-honorable-why>{d.why_not_ranked}</p>
+          <p><b className="text-gray-200">Only the fast tier was measured.</b> {d.tier_measured.replace(/^Only the fast tier was measured\.\s*/, "")}</p>
+          <p data-bh-jev12-honorable-price><b className="text-gray-200">Price.</b> {d.price_note}</p>
+          <p data-bh-jev12-honorable-finding><b className="text-gray-200">Not a pass-through.</b> {d.not_pass_through}</p>
+          <p className="bh-muted">{d.credit} Read {d.sources_read}: {d.sources.map((u, i) => <span key={u}>{i > 0 ? " · " : ""}<a className="text-accent underline" href={u} target="_blank" rel="noopener noreferrer">{u.replace(/^https:\/\//, "")}</a></span>)}</p>
+        </div>}
+      </article>;
+    })}
   </section>;
 }
 
@@ -296,7 +339,7 @@ const TASK_STATUS: Record<string, { symbol: string; label: string; className: st
 
 function TaskGrid({ view, tasks, scope }: { view: JevV12View; tasks: JevTasksView; scope: JevTaskScope }) {
   const visibleTasks = tasksForScope(tasks.tasks, scope);
-  const systems = [...view.ranked, ...view.partial];
+  const systems = [...view.ranked, ...view.honorable, ...view.partial];
   // Review gate 20260919T233002Z: name whichever systems the pinned capture is missing instead of one hard-coded key,
   // so a later row added to the score artifact can never be silently blank here.
   const uncovered = systems.filter((r) => !tasks.systems[r.key]).map((r) => short(r.display));
@@ -379,15 +422,19 @@ export function JevModelsV12Board({ view, tasks, children }: { view: JevV12View;
   const scopedView = useMemo(() => {
     if (!tasks) return view;
     const ranked = scopeRows(view.ranked, tasks.systems, scope, DEFAULT_WEIGHTS);
+    const honorable = scopeRows(view.honorable, tasks.systems, scope, DEFAULT_WEIGHTS);
     const partial = scopeRows(view.partial, tasks.systems, scope, DEFAULT_WEIGHTS);
     // Review gate 20260920T043003Z: the hero counts the decisions the shown score is computed from —
     // the artifact's tier aggregates for this scope (534 / 168 / 72), not the public-task slice the grid
     // ships (231 / 120 / 48). Counting public tasks here made the official view claim 231.
     // The tier weights move with the scope too: under Easy + Medium the score re-normalises to easy 33 % /
     // standard 67 % and drops Judge and Hard, so the columns and the method list may not keep 14/28/28/30 %.
-    return { ...view, ranked, partial, decisions: scopeDecisions(view.tierCounts, scope), tierWeights: scopeTierWeights(scope) };
+    return { ...view, ranked, honorable, partial, decisions: scopeDecisions(view.tierCounts, scope), tierWeights: scopeTierWeights(scope) };
   }, [view, tasks, scope]);
-  const { ranked, partial } = useMemo(() => rerank(scopedView.ranked, scopedView.partial, w), [scopedView, w]);
+  // rerank() ranks the first list and only re-scores the second; both unranked kinds go in the second, then split again.
+  const { ranked, partial: unranked } = useMemo(() => rerank(scopedView.ranked, [...scopedView.honorable, ...scopedView.partial], w), [scopedView, w]);
+  const honorable = useMemo(() => unranked.filter((r) => r.listing === "honorable_mention"), [unranked]);
+  const partial = useMemo(() => unranked.filter((r) => r.listing === "partial"), [unranked]);
   const scopeInfo = scopeById(scope);
   // Review gate 20260920T043003Z: the method list stated the official 14/28/28/30 % under every scope while the
   // score above it had already re-normalised. Both lists come from the scoped weights now.
@@ -396,7 +443,7 @@ export function JevModelsV12Board({ view, tasks, children }: { view: JevV12View;
   const unscoredTiers = tierTextOrder.filter((t) => scopedView.tierWeights[t] === 0);
   return <>
     <div className="mt-6 space-y-4" data-bh-jevc-hero>
-      <ScoreChart rows={ranked} partial={partial} w={w} view={scopedView} scope={scope} />
+      <ScoreChart rows={ranked} honorable={honorable} partial={partial} w={w} view={scopedView} scope={scope} />
       <Controls w={w} raw={raw} scope={scope} setPreset={(p) => setRawState(presetRaw(p))} setRaw={setRawState} reset={() => { setRawState(presetRaw(DEFAULT_WEIGHTS)); setScope(DEFAULT_TASK_SCOPE); }} />
     </div>
     {tasks && <section className="bh-panel mt-8 max-w-4xl p-4" aria-labelledby="jev12-difficulty" data-bh-jev12-difficulty data-bh-jev12-scope={scope}>
@@ -414,7 +461,8 @@ export function JevModelsV12Board({ view, tasks, children }: { view: JevV12View;
       <p className="bh-muted mt-2 text-xs">Tier mapping: Easy = easy; Medium = standard; Judge and Hard remain in All tasks. The score still includes the published Calibration, Speed and Cost axes.</p>
     </section>}
     {children}
-    <Table view={scopedView} rows={ranked} partialRows={partial} w={w} scope={scope} />
+    <Table view={scopedView} rows={ranked} honorableRows={honorable} partialRows={partial} w={w} scope={scope} />
+    <HonorableMentions view={scopedView} rows={honorable} />
     {tasks && <TaskGrid view={scopedView} tasks={tasks} scope={scope} />}
     <section className="bh-panel mt-8 max-w-4xl p-4 text-sm" aria-labelledby="jev12-how" data-bh-jev12-formula>
       <h2 id="jev12-how" className="font-semibold">How the {SCORE_NAME} works</h2>

@@ -15,12 +15,13 @@ test('the committed v1.2 artifact is the tagged public one and validates; the Sc
   const top = v.ranked.slice(0, 12).map((r) => [r.key, Number(r.main.toFixed(1))]);
   // CR-93: v1.2.1 added djev; CR-95: v1.2.2 adds five requested systems; CR-96: v1.2.3 corrects every price (each of the
   // 534 decisions counted once and priced once). No measurement changed and no rank changed; scores move by <= 0.3.
+  // CR-97: v1.2.4 takes classifier.dev out of the ranking — it runs Jev — so Jev is #1 and every row below moves up one.
   const all = v.ranked.map((r) => [r.key, Number(r.main.toFixed(1))]);
-  assert.deepEqual(all, [['classifier-dev-fast', 84.8], ['jev-1.13.0', 75.4], ['semif-qwen3.5-4b', 74.7], ['djev', 74.3], ['laya', 70.1],
+  assert.deepEqual(all, [['jev-1.13.0', 75.4], ['semif-qwen3.5-4b', 74.7], ['djev', 74.3], ['laya', 70.1],
     ['open-alternative-jev', 69.8], ['system-one-open', 68.9], ['openjev-razorback16', 67.7], ['jeff', 66.9], ['openjev-sglang', 66.3],
     ['openjev-verdict', 66.2], ['gpt-5.6-luna', 66.2], ['open-jev-deberta-v3-large', 64.6], ['nimble-9b', 63.7], ['gemini-3.1-flash-lite', 60.9],
     ['deepseek-flash', 57.8], ['system-one-sg', 56.6], ['gliner2', 53.0]]);
-  assert.equal(v.revision, 'v1.2.3');
+  assert.equal(v.revision, 'v1.2.4');
   // CR-96: the unit travels with the artifact and names what it is not, so no surface can imply per-token prices.
   assert.equal(v.costUnit.unit, '$ per 1,000 decisions');
   assert.equal(v.costUnit.not_unit, '$ per 1,000 tokens');
@@ -34,8 +35,23 @@ test('the committed v1.2 artifact is the tagged public one and validates; the Sc
   const dj = v.ranked.find((r) => r.key === 'djev');
   assert.ok(dj.display === 'djev (Maisa, diffusion-gemma)' && dj.costKind === 'announced' && /announced/i.test(dj.costBasis) && dj.endpointKind === 'api' && dj.p50Adj === dj.p50 && dj.axes.cost < 100 && dj.footnote);
   // CR-95: the new rows carry their own type, a price that is not 100, and a footnote; the four local ones are adjusted.
-  const cd = v.ranked.find((r) => r.key === 'classifier-dev-fast');
+  // CR-97: classifier.dev keeps all of that and loses only its rank — it is the honorable mention, not a ranked row.
+  assert.deepEqual(v.honorable.map((r) => [r.key, Number(r.main.toFixed(1))]), [['classifier-dev-fast', 84.8]]);
+  const [cd] = v.honorable;
   assert.ok(cd.cls === 'jev-service' && cd.endpointKind === 'api' && cd.p50Adj === cd.p50 && cd.costKind === 'estimate' && /Pro \$20\/month/.test(cd.costBasis) && cd.footnote);
+  assert.ok(cd.rank === null && cd.ranked === false && cd.listing === 'honorable_mention' && cd.notRankedBecause);
+  assert.ok(cd.main > v.ranked[0].main, 'the point of the rule: an honorable mention may outscore #1');
+  const hm = v.honorableMentions.systems['classifier-dev-fast'];
+  assert.equal(hm.runs_on_key, 'jev-1.13.0');
+  assert.match(v.honorableMentions.rule, /not ranked against the models/);
+  assert.match(v.scoring.ranked, /not ranked against the models/);
+  // The published reason must carry the facts Florian asked for: whose model, what the smart tier is, and the flat-rate caveat.
+  assert.match(hm.why_not_ranked, /The fast tier is Jev/);
+  assert.match(hm.why_not_ranked, /0\.7 confidence/);
+  assert.match(hm.why_not_ranked, /not best-of-N/);
+  assert.match(hm.tier_measured, /never run/);
+  assert.match(hm.price_note, /\$0\.033 per 1,000/);
+  assert.match(hm.not_pass_through, /97\.3 %/);
   for (const k of ['laya', 'jeff', 'gliner2', 'openjev-verdict']) {
     const r = v.ranked.find((x) => x.key === k);
     assert.ok(r && r.endpointKind === 'cpu' && Math.abs(r.p50Adj - (2 * r.p50 + 0.15)) < 1e-9 && r.axes.cost < 100 && r.footnote, k);
@@ -43,7 +59,7 @@ test('the committed v1.2 artifact is the tagged public one and validates; the Sc
   assert.equal(v.ranked.find((r) => r.key === 'gliner2').cls, 'classifier');
   assert.equal(v.ranked.filter((r) => r.key.startsWith('open-alternative-jev')).length, 1);
   assert.equal(v.ranked.find((r) => r.key === 'open-alternative-jev').display, 'open-alternative-jev (Qwen3.5-4B, IkerMoel)');
-  assert.ok(v.partial.length === 3 && v.partial.every((r) => r.rank === null));
+  assert.ok(v.partial.length === 3 && v.partial.every((r) => r.rank === null && r.listing === 'partial'));
   // Needle 3 options-as-tools has a price at all (v1.2 gave it an automatic 100); CR-96 corrected it from $0.0162 to $0.0144.
   const tools = v.partial.find((r) => r.key === 'needle-3-tools');
   assert.ok(tools.usd > 0.014 && tools.usd < 0.0145 && tools.axes.cost < 100 && tools.costKind === 'estimate');
