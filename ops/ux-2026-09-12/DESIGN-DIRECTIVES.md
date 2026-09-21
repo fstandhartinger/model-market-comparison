@@ -1,15 +1,16 @@
 # DESIGN DIRECTIVES — Benchmark Heaven (design authority: Claude Fable 5.1)
 
-**Pass 28: 2026-09-21 ~04:20 UTC**, the "what changed since pass 27" pass (Florian: Fable sparingly). Since pass 27 the changed surface is
-**`/jev-models`** once more — CR-105 and CR-107 (v1.2.6 and v1.2.7: four more ranked rows, jqv as a partial row with a five-sentence note), CR-106 (the
-toast two seconds longer and tinted), F-149–F-151 landed by the work engine — plus the **`/benchmarks`** table after iterations 143/144 (ProgramBench,
-MCP Atlas, VulcanBench's withheld row, LiveBench's discovered bundle, AA's re-versioned GDPval/Briefcase). Judged against live revision `b7b939d` on
-the canonical host at 1440/390 × light/dark: 78 shots in `/opt/benchmarkheaven/state/ux-evidence/fable-20260921-pass28/canonical/` (`metrics.json`:
-0 page errors in all four contexts, no horizontal overflow on any page; every JevBench row with its tag and title; the notes block's items and lines;
-the toast at 7.5/15.5/16.4/17.1 s; the custom page's action buttons with computed colours; the Benchmarks rows iterations 143/144 added; the smallest
-rendered font per page). Script: `bin/shoot-fable-pass28.mjs`; source pins: `test/fable-pass28.test.mjs`; live verifier for non-Fable engines:
-`bin/verify-fable-pass28-design.mjs`. Simple, Advanced, Guided, Benchmaxxing and the model page were re-shot as quick views and are unchanged
-since pass 27 apart from the F-154 labels. Earlier passes: `…/fable-20260920-pass27/` … `…/fable-20260913/`.
+**Pass 29: 2026-09-21 ~19:20 UTC**, the "what changed since pass 28" pass (Florian: Fable sparingly). Since pass 28 the changed surface is
+**`/benchmarks`** — CR-63.21 (phone chip cap "+N"), CR-63.22 / CR-83.1 (→ for internal links, harness labels), CR-50.2 (the "Free route" pill in
+the overview and on the model page), the one-benchmark ranking after iterations 154/155 (Context Arena "8-needle", Blueprint-Bench 2's two floored
+rows, no bar on a zero top value), plus JevBench v1.2.14. Judged against live revision `866f591` on the canonical host at 1440/390 × light/dark:
+64 shots in `/opt/benchmarkheaven/state/ux-evidence/fable-20260921-pass29/canonical/` (`metrics.json`, `metrics-matrix.json`: 0 page errors in all
+four contexts, no horizontal overflow on any page; the matrix's chip histogram and every capped row's height, toggle text and visibility before and
+after a tap; the ranking's status sentences, rows and bar widths for Blueprint-Bench 2 and Context Arena; the Free route pills' computed style; the
+`#all-offers` deep link on a fresh load; every link's glyph against its target; the smallest rendered font per page). Script:
+`bin/shoot-fable-pass29.mjs`; source pins: `test/fable-pass29.test.mjs`; live verifier for non-Fable engines: `bin/verify-fable-pass29-design.mjs`.
+Simple, Guided, Benchmaxxing, the model page and `/jev-models` were re-shot as quick views and are unchanged since pass 28 apart from the data.
+Earlier passes: `…/fable-20260921-pass28/` … `…/fable-20260913/`.
 
 **The bar (Florian):** minimalistic and simple, very expressive, not overloaded, key messages
 first, graphical with many charts.
@@ -28,52 +29,59 @@ the reviewing engine directly.
 
 ---
 
-## Verdict on the live site — pass 28 (2026-09-21), the JevBench page after CR-105–CR-107 and F-149–F-151, the custom-evaluation page, the Benchmarks table after iterations 143/144
+## Verdict on the live site — pass 29 (2026-09-21), the Benchmarks page after CR-63.21/63.22, CR-50.2, CR-83.1 and iterations 154/155
 
-**F-149–F-151 landed as written, and v1.2.7 says the right thing in the right place.** The custom-evaluation page opens with two 44 px actions
-at y 271 (1440) and y 363 (390), inside the first viewport, and its code block wraps (`pre.sw === pre.cw` at 390). The JevBench table head is 66 px
-at 1440 and 58 px at 390 (budgets 68/70). The four scope buttons are one row at 1440 and two rows of two at 390 (`scopeButtons` y 4706/4758). The
-toast appears at ~6 s, tinted — accent at 6 % (light) / 9 % (dark) over the surface with a 32 %/38 % accent border — two lines at 1440, four on a
-phone, still open at 15.5 s and gone by ~17 s: Florian's two seconds. jqv sits at the end of the table as "partial run · not ranked" at 67.2 with no
-rank, the two GLiNER2.5 rows are ranked, and the chart draws the five unranked bars in grey. `/benchmarks` says "78 benchmarks across 12
-categories" for the default top 5, and ProgramBench, MCP Atlas (Scale AI), VulcanBench (Saturated), LiveBench, GDPval-AA v2, AA-Briefcase, GDP.pdf
-and the four MathArena editions are rows with their tags, no overflow. Light and dark match. 0 page errors everywhere.
+**CR-63.21, CR-63.22 and CR-50.2 landed as decided.** At 390 the matrix caps 15 of its 99 rows (7 with three chips, 8 with four) behind a
+"+1"/"+2" pill drawn at chip height (10 px, 16 px line, dashed, 44 px halo); the AA Coding Index row is 64 px where it was three lines of chips;
+on desktop the toggle is hidden and every chip stays inline (`desktop_light-matrix-capped-row.png`). The "Free route" pill is the iteration-149
+decision to the letter: a 10 px muted outline under the price on the three Advanced rows that have one today (Decart, ModelRun, Novita), "Free"
+below 1024 px, a title that names provider, date and limits, and the model page's `#all-offers` deep link opens the folded route list on a fresh load
+at both widths. The glyph audit found no internal link with ↗ and no external link with → on Simple, Advanced, the matrix, two rankings and the
+model page. Blueprint-Bench 2 draws no bar for its two 0-point rows; Context Arena reads "Version 8-needle" after the gate's `humanVersion` fix;
+JevBench v1.2.14 lists 45 rows with Winnow-12B at rank 5. Light and dark match. 0 page errors everywhere.
 
-**What is not at the bar — three things, all fixed in this pass.**
+**What is not at the bar — two things, both fixed in this pass.**
 
-1. **The JevBench table ends in a wall of small print.** Under the table sat 17 † notes at 12 px — 33 lines (≈ 520 px) at 1440 and 91 lines
-   (≈ 1,450 px) on a phone — between the last partial row and "Honorable mentions" (`jev-geom.notes`, `*-jev-partial-vp.png`). Every one of them
-   is already on the page, collapsed, in the chart's own legend (`data-bh-jev12-footnote`). The pass-20 rule allows two visible sentences and puts
-   the rest in a disclosure; the jqv note alone is five. And the row that needs its note most, jqv, had **no `title`** on its "partial run · not
-   ranked" tag (`rows[jqv].tagTitle = ""` — v1.2.7's artifact carries no `not_ranked_because`), so at the row itself the reader learned nothing.
-   → **F-152, fixed in this pass:** the block is a closed `<details>` ("† Notes on 17 marked systems — how each was run"), the row's † is a link
-   that opens it and lands on that entry, and the †'s `title` and the tag's fallback `title` are the note's first sentence. The chart's copy is
-   untouched; `verify-cr-92/93/95` keep reading `[data-bh-jev12-footnote]`, and the page HTML still says "425 of 534" (CR-107.3).
-2. **The custom-evaluation page's primary action is not primary.** F-149 asked for the email link in the site's primary style; it shipped as the
-   same outline button as "Run it yourself on GitHub", differing only in text colour (`custom-geom.actions`: both `backgroundColor` = surface in
-   both themes). → **F-153, fixed in this pass:** `.bh-button-primary` — solid accent with ink text, like the wizard's Continue — on the email link
-   only.
-3. **Type below the floor on the home page.** The Simple page's shortlist columns print their axis ticks at 9.5 px (1440) and 9 px (390)
-   (`simple-minfont`: "SPAN 70"), and the Advanced page's route badges (HS / EU / TEE / free) are 9 px; the pass-27 floor is 10 px.
-   → **F-154, fixed in this pass:** all ten sizes are 10 px; nothing else moves.
+1. **The opened chip row reads in the wrong order.** Tapping "+1" on the AA Coding Index row gave "AA · Headline · **less** · Changed at source"
+   (`mobile_light-matrix-capped-row-open.png`): the toggle was rendered before the chips it reveals, so the revealed chip sat under the control
+   that hides it. → **F-155, fixed in this pass:** the extras span renders before the button; an opened row ends with "less". Nothing else moves.
+2. **A thin board introduces itself as an empty site.** Blueprint-Bench 2 opens on its two matched rows with the sentence "2 of 845 catalog
+   configurations have a result" (`desktop_light-rank-blueprint.png`) — true, but the wrong key message: the reader learns nothing about the 26
+   rows the board publishes, and the checkbox "Include results not matched to a catalog model" does not say how many it would add. 36 of the 399
+   axes open this way (1–4 matched rows while the board publishes more; list in `PROGRESS.md`, pass 29). → **F-156, fixed in this pass:** a board
+   with unmatched rows opens with "2 of 26 published results are matched to catalog models · points · higher is better" and the checkbox reads
+   "… (24)"; a fully matched board keeps the catalog sentence.
 
-Also noted, not a defect: the two eyebrows on `/jev-models` ("JevBench v1.2 · our own benchmark" above the title, "JevBench v1.2.7 · 534 decisions
-per system" on the card) — the first names the protocol, the second the results revision, as pass 24 decided; the chart legend and the table now
-carry the same 17 notes, both collapsed — one generated source in two places, which the F-142 rule allows when the wording is identical; the
-hero's "31 systems" counts the ranked rows while the table shows 36 with the unranked five — the sentence says "ranks them", which is the count it
-gives; the toast's tint is calm rather than loud, which is what CR-106 asked for.
+Also noted, not defects: "Version 8-needle · Published board" repeats the "(8-needle)" that is already in the board's name — a named identity
+could drop the word "Version"; low value, left. A capped phone row whose second chip is long ("AA index input") still wraps its "+2" to a third
+line (Terminal-Bench v2.1, 107 px) — the cap is by count, not by width, and the stub is 152 px at 390; eight rows, accepted. The tallest phone
+rows (DeepSWE at 150 px) come from a three-line name plus a cohort line, not from chips.
 
-## Decisions in pass 28
+## Decisions in pass 29
 
-1. **X4 (UI meets the design bar) still met at pass 28** for the default view. The three fixes are density and legibility corrections; none changes
-   a number or a rank.
-2. **F-152 changes the presentation of CR-107.3's reason on purpose.** The reason is still in the page HTML, one click away in the disclosure, and
-   now also at the row as the †'s and the tag's `title`. The CR stays `verified`; `verify-cr-107.mjs` is unchanged and its HTML check passes.
-3. **Fable shipped F-152–F-154 itself** (five files, no numbers) and pinned them in `test/fable-pass28.test.mjs`; a non-Fable engine runs
-   `bin/verify-fable-pass28-design.mjs` on both hosts before the Done-log rows read `verified`.
-4. **The pass also recovered iteration 145's uncommitted work** (`873bcb0`, text-only registry/protocol changes; see `PROGRESS.md`) because the tree
-   was dirty when the pass started and the 05:17 daily run refuses a dirty checkout. Not a design decision; recorded so the commit's provenance is clear.
-5. **Two rules added** to the design-system notes: notes under a table are a disclosure (F-152); one solid button per page (F-153).
+1. **Iteration 155's proposal — widen the ranking to unmatched rows when fewer than 5 rows are matched — is not adopted.** (a) The Rank column
+   would rank source-named rows beside catalog models, and some source names are the same model before its join (MathArena's "GPT-6 Astra (low)"
+   was one until iteration 154), so a mixed default view can list one model twice. (b) 36 axes would change their default view silently, and the
+   open-weights and regional filters cannot act on rows that are not catalog models. (c) The reader's question on a thin board is "how big is this
+   board, and why do I see two rows" — that is one sentence and one count, not a different table. F-156 answers it; the widening stays one tap away
+   and now says what it adds. F-65 (widen only when nothing is matched) stands.
+2. **X4 (UI meets the design bar) still met at pass 29** for the default view. Both fixes are reading-order and wording corrections; neither
+   changes a number, a rank or a row.
+3. **Fable shipped F-155 and F-156 itself** (`4d57b17`, two components, no numbers) and pinned them in `test/fable-pass29.test.mjs`; a non-Fable
+   engine runs `bin/verify-fable-pass29-design.mjs` on both hosts before the Done-log rows read `verified`. The checkbox label keeps its prefix so
+   `verify-iter155.mjs` / `verify-iter156.mjs` (`getByLabel`, substring) still find it.
+4. **Two rules added** to the design-system notes: a toggle follows what it reveals (F-155); a thin board says how big it is (F-156).
+
+## Verdict on the live site — pass 28 (2026-09-21), condensed
+
+The JevBench page after CR-105–CR-107 and F-149–F-151, the custom-evaluation page and the Benchmarks table after iterations 143/144 (revision
+`b7b939d`, 78 shots in `…/fable-20260921-pass28/canonical/`): F-149–F-151 landed as written (44 px actions under the title, table head 66/58 px,
+2 × 2 scope buttons at 390, the tinted toast open 6–17 s), jqv as "partial run · not ranked", `/benchmarks` at 78 rows across 12 categories with
+ProgramBench, MCP Atlas, VulcanBench, LiveBench and the re-versioned GDPval/Briefcase as rows. Three fixes by Fable, all verified since by a
+non-Fable gate: **F-152** the table's 17 † notes (33 lines at 1440, 91 on a phone) became a closed `<details>` the row's † opens, with the note's
+first sentence as the †'s and the tag's title; **F-153** the custom page's email action became the one solid `bh-button-primary`; **F-154** the
+Simple shortlist ticks (9/9.5 px) and Advanced route badges (9 px) rose to the 10 px floor. Two rules recorded: notes under a table are a
+disclosure; one solid button per page. The pass also recovered iteration 145's uncommitted work (`873bcb0`) because the tree was dirty.
 
 ## Verdict on the live site — pass 27 (2026-09-20), condensed
 
@@ -142,38 +150,35 @@ and the counts line under it keeps the page honest (P4).
 
 ---
 
-## Directives (pass 28; completed by Fable — awaiting non-Fable live verification)
+## Directives (pass 29; completed by Fable — awaiting non-Fable live verification)
 
-### F-152 — The JevBench table's † notes are a closed disclosure the row's † opens `[judgment]`
+### F-155 — The chip toggle follows the chips it reveals `[mechanical]`
 
-*Where:* `components/JevModelsV12.tsx` (the `Table` component's `notes` block and the row `R`).
-*What:* (a) The open `<ul data-bh-jev12-notes>` under the table becomes `<details id="jev12-notes" data-bh-jev12-notes>` (closed) with the summary
-"† Notes on {n} marked systems — how each was run" and the same `<li>`s inside, each `id="jev12-note-{key}"`. (b) The row's `<sup>†</sup>` becomes
-`<sup><a href="#jev12-note-{key}" title={firstSentence(footnote)} aria-label="Note on {name}" onClick={openNotes}>†</a></sup>`, where `openNotes`
-sets the details open before the browser follows the hash. (c) The "partial run · not ranked" tag's `title` falls back to the note's first sentence
-when the artifact has no `not_ranked_because`. The chart's collapsed legend (`data-bh-jev12-footnote`) is unchanged.
-*Accept:* at 1440 and 390 × light/dark the block between the last table row and "Honorable mentions" is a closed `<details>` of ≤ 2 lines with ≥ 10
-items inside; clicking jqv's † opens it with `location.hash === "#jev12-note-jqv"` and the entry in the viewport; jqv's tag and † carry a title
-longer than 20 characters; the page HTML contains "425 of 534"; `verify-cr-92/93/95/107.mjs` pass; `data-bh-jev12-notes` occurs once in the source.
+*Where:* `components/BenchmarkMatrix.tsx` (`RowTags`, CR-63.21).
+*What:* render `<span className="bh-matrix-tagcap-extra" data-open=…>` before the `<button className="bh-matrix-tagcap">`; nothing else changes
+(the span is `display: contents`, the phone media query still hides it until opened, the 44 px halo and chip-height toggle stay).
+*Accept:* at 390 × light/dark, tapping the first "+N" on `/benchmarks` gives a row whose visible chip/toggle sequence ends with "less" after the
+revealed chips (the "less" pill's top ≥ the previous chip's top); at 1440 the toggle is hidden and every chip is visible; the CR-63.21 test in
+`test/benchmark-matrix.test.mjs` and `verify-cr-63-21.mjs` pass; `test/fable-pass29.test.mjs` pins the source order.
 
-### F-153 — The custom-evaluation page's email action is the solid primary button `[mechanical]`
+### F-156 — A thin board says how many results it publishes `[mechanical]`
 
-*Where:* `app/jev-models/custom-evaluation/page.tsx` (`[data-bh-custom-actions]`), `app/globals.css`.
-*What:* `.bh-button-primary { background: rgb(var(--accent)); border-color: rgb(var(--accent)); color: rgb(var(--ink)); }` with an .88 hover; the
-`mailto:` link is `bh-button bh-button-primary font-semibold`; the GitHub link stays `bh-button`.
-*Accept:* the email link's computed `backgroundColor` equals the theme's `--accent` in light and dark; the GitHub link's does not; both 44 px;
-exactly one `mailto:` on the page; `verify-cr-103.mjs` and `test/fable-pass27.test.mjs` pass.
-
-### F-154 — Nothing below the 10 px type floor on the Simple and Advanced pages `[mechanical]`
-
-*Where:* `components/ShortlistColumns.tsx` (axis ticks, "no data", the dashed placeholder), `components/ModelExplorer.tsx` (HS / EU / TEE / free
-route badges).
-*What:* every `text-[9px]` and `text-[9.5px]` becomes `text-[10px]`; no other change.
-*Accept:* on `/` (Simple) at 1440 and 390 the smallest rendered font in `main` is ≥ 10 px (the `sup`/`sub` exemption applies); on Advanced with one
-row expanded the same; the shortlist tick column still fits (no label overlaps its neighbour at 390).
+*Where:* `components/BenchmarkRanking.tsx`.
+*What:* `matchedRows = allRows.length − unmatchedCount`. When `unmatchedCount > 0` the status sentence reads
+"{matchedRows} of {allRows.length} published results are matched to catalog models · unit: {unit} · {direction}"; when every row is matched it
+stays "{matched} of {catalog} catalog configurations have a result · …". The checkbox label becomes
+"Include results not matched to a catalog model ({unmatchedCount})" — prefix unchanged. No change to which rows open by default (F-65 stands).
+*Accept:* `/benchmarks?benchmark=blueprint-bench::2` at 1440/390 × light/dark: the sentence reads "N of M published results are matched …" with
+M > N, the checkbox ends in "(M − N)", the table has N rows, ticking the box lists M results; the page's default board ("One benchmark" tab)
+keeps "N of M catalog configurations have a result" with no checkbox; 0 page errors. `verify-fable-pass29-design.mjs` runs all of it (26 checks).
 
 ## Design system notes (apply while touching any file above)
 
+- **A toggle follows what it reveals (pass 29, F-155):** a "+N / less" control renders after the items it shows, never between or before
+  them; an opened group reads items → control.
+- **A thin board says how big it is (pass 29, F-156):** a ranking that opens on a few matched rows states "N of M published results are matched"
+  in its one status sentence, and the control that widens it says how many rows it adds. The default view stays the matched rows; F-65 widens
+  only when nothing is matched. "N of 845 catalog configurations" is the sentence for a fully matched board only.
 - **Notes under a table are a disclosure, like under the chart (pass 28, F-152):** row notes never print open under a table; they are a
   closed `<details>` with a generated count, each row's mark links into it, and the mark's `title` carries the note's first sentence. A row tag
   that states a status carries a `title` even when the artifact has none (fallback: the note's first sentence).
@@ -535,3 +540,5 @@ row expanded the same; the shortlist tick column still fits (no label overlaps i
 | F-153 the custom-evaluation page's email action is the solid primary button | same commit + test | same | **Verified by review gate 20260921T100004Z (non-Fable):** solid accent email button, outline GitHub, both hosts, light/dark, 1440/390 (`/opt/benchmarkheaven/state/ux-evidence/review-20260921T100004Z/fable28-{canonical,legacy}/`). |
 | F-154 no text below the 10 px floor on the Simple and Advanced pages (shortlist ticks, route badges) | same commit + test | same | **Verified by review gate 20260921T100004Z (non-Fable):** minimum text 10 px on Simple and Advanced (one row expanded), both hosts, all four contexts, after iteration 146 restored the outlier tag's 10 px (`/opt/benchmarkheaven/state/ux-evidence/review-20260921T100004Z/fable28-{canonical,legacy}/`).  |
 | CR-50.2 decision (Fable 5.1 one-shot, 2026-09-21 ~12:02 UTC, asked by iteration 149): "Free route" pill — muted outline (`.bh-free-tag`, light-Benchmaxxing weight), under the price in the Adjusted Cost cell, "Free" below 1024 px, links to the model page's route list; no pill in the name cell or on the Benchmarks tab; model-page free rows name provider + limits in their title; one legend line | `c1f0a0d`, `10cd203` (claude-opus, iteration 149) + `test/cr-50-2-free-route-tag.test.mjs` | `/opt/benchmarkheaven/state/ux-evidence/iter149-cr50-2/` (`fable-decision.txt`, `verify-cr-50-2.mjs` results) | Implemented as specified; the as-of date in the title reads "listed live on <date>". Owes a non-claude live sign-off. |
+| F-155 the "+N / less" toggle follows the chips it reveals (phone matrix rows) | `4d57b17` (Fable, 2026-09-21 ~19:50, "Fable pass 29") + `test/fable-pass29.test.mjs` | `/opt/benchmarkheaven/state/ux-evidence/fable-20260921-pass29/` (`canonical/` before, `local/` 26/26 on the dev server, `live-*/` after the deploy; `verify-fable-pass29-design.mjs`) | implemented by Fable; live at `4d57b17` on both hosts, `verify-fable-pass29-design.mjs` **26/26 per host** (`live-canonical/`, `live-legacy/`, 20:0x UTC); needs a non-Fable engine to re-run it before `verified` |
+| F-156 a partly matched ranking board opens with "N of M published results are matched"; the unmatched checkbox carries its count | same commit + test | same | implemented by Fable; the iteration-155 widening proposal is declined (Decisions in pass 29, item 1); live at `4d57b17` on both hosts, 26/26 per host (same runs); needs a non-Fable engine to re-run it before `verified` |

@@ -6469,3 +6469,39 @@ Gates: focused tests 19/19 (registry, lifecycle pin updated for the 8 arxivmath 
 - Gates: `build-dataset` completed (`844` models / `664` families / `95` providers / `2886` offers; generated timestamps restored), `npm test` **1032 pass / 0 fail / 1 skip**, `tsc` clean, `npm run build` clean, `git diff --check` clean.
 - Independent live evidence: CR-113 `34/34` combined plus responsive `16/16`; iteration 153 `60/60` per host; Context Arena `27/27` per host; Blueprint-Bench `43/43` per host; CR-63.21 `22/22` per host; Fable pass 28 `30/30` per host. Post-push both hosts reported `37ca06c…`; the corrected version selector passed `16/16` and CR-113 passed `34/34` again (`/opt/benchmarkheaven/state/ux-evidence/review-20260921T183003Z/post-deploy/`).
 - The Context Arena and Blueprint-Bench additions remain **in-progress** at the parent CR rows because their remaining planned-family and source follow-up work is not complete. CR-38.1, CR-62.4, CR-73.5, CR-85.1, CR-85.2, CR-34.5 and the other X6 blockers remain open/in-progress as described in the review. X6 is not passed; `ALL-ACCEPTED` is not appended.
+
+### Fable pass 29 — 2026-09-21 ~19:20–20:20 UTC (claude-fable, design authority): what changed since pass 28
+
+Full text: `DESIGN-DIRECTIVES.md` ("Verdict on the live site — pass 29", "Decisions in pass 29", F-155–F-156 completed, Done log rows F-155–F-156).
+
+- **Scope (Florian: Fable sparingly):** the surfaces that changed after pass 28 — `/benchmarks` after CR-63.21 (phone chip cap), CR-63.22 / CR-83.1
+  (→ glyphs, harness labels), CR-50.2 ("Free route" pill), iterations 154/155 (Context Arena, Blueprint-Bench 2, zero-value bars), JevBench v1.2.14.
+  Judged live at `866f591`, 1440/390 × light/dark, 64 shots + `metrics.json` / `metrics-matrix.json` in
+  `/opt/benchmarkheaven/state/ux-evidence/fable-20260921-pass29/canonical/` (`bin/shoot-fable-pass29.mjs`). 0 page errors, no overflow.
+  Simple / Guided / Benchmaxxing / model page / `/jev-models` re-shot as quick views — unchanged since pass 28 apart from the data.
+- **At the bar:** CR-63.21 as decided (15 of 99 rows capped at 390: 7 × "+1", 8 × "+2"; 10 px dashed pill at chip height; desktop unchanged);
+  CR-50.2 as decided (three muted "Free route" pills on Advanced, "Free" below 1024 px, titled; `#all-offers` opens the route list on a fresh load);
+  glyph audit clean (no internal ↗, no external → on five pages); Blueprint-Bench 2 draws no bar on its 0-point rows; Context Arena says
+  "Version 8-needle"; JevBench 45 rows, Winnow-12B rank 5.
+- **Two findings, both fixed by Fable (surgical, no numbers) in `4d57b17`:** **F-155** the opened phone chip row read "AA · Headline · less ·
+  Changed at source" — the toggle rendered before the chips it reveals → extras span before the button; **F-156** a thin board opened with
+  "2 of 845 catalog configurations have a result" and an uncounted "Include results not matched…" checkbox → "2 of 26 published results are
+  matched to catalog models" and "… (24)"; fully matched boards keep the catalog sentence. Pins: `test/fable-pass29.test.mjs`. Gates before the
+  push: `build-dataset` rc 0 (timestamp-only diff discarded), `npm test` 1038 pass / 0 fail / 1 skip, `tsc` clean;
+  `bin/verify-fable-pass29-design.mjs` **26/26** on a local `next dev` (`…/pass29/local/`).
+- **Decision — iteration 155's widening proposal (unmatched rows when < 5 matched) declined.** Rank semantics (source names can be the same
+  model before its join, so a mixed view can list a model twice), 36 axes would change silently, and the open-weights/regional filters cannot act on
+  non-catalog rows. F-156 gives the reader the board's size in one sentence; the widening stays one tap away and now says what it adds. F-65 stands.
+  The 36 axes that open on 1–4 matched rows while publishing more (matched/published at `866f591`): aider-polyglot whole 1/15, critpt 1/13,
+  frontiercode(-cost) mini-swe-agent 1/7 ×2, scicode 1/20, spiral-bench 1/23, swe-bench-multilingual mini-SWE-agent harness 1/3, terminal-bench 4.0
+  Claude Code bare 1/2, longbench 2/3, openrouter-search browsecomp(-cost) 2/3 ×2, widesearch(-cost) 2/3 ×2, posttrainbench Codex 2/3,
+  swe-bench-multilingual mini-SWE-agent 2/13, swe-bench-verified mini-SWE-agent 2/47, blueprint-bench 2/26, eq-bench 3/28, japanese-rp-bench 3/32,
+  openrouter-search dsqa(-cost) 3/4 ×2, osworld-2 3/7, swe-bench-pro-public 3/25, aider-polyglot diff 4/47, judgemark 4/42, slop-score 4/23,
+  frontiercode(-cost) grok-build 4/6 ×2, kernelbench glm52 4/15, kernelbench mingru 4/12, matharena-brokenarxiv 08 4/7, posttrainbench Claude Code
+  4/7, rsi-exam claude code 4/6, swe-bench-verified published 4/6, weirdml 2 4/161, weirdml 3 4/7.
+- **Also noted, not defects:** "Version 8-needle" repeats the "(8-needle)" in the board name (low value, left); a capped row whose second chip is
+  long still wraps "+2" to a third line (8 rows; cap is by count, stub 152 px at 390); the tallest phone rows come from three-line names, not chips.
+- **Live at `4d57b17`** (both hosts by 19:54 UTC, verified after the switchover minute): `bin/verify-fable-pass29-design.mjs` **26/26 per host**
+  (`…/pass29/live-canonical/`, `…/pass29/live-legacy/`, each with `verification.json` and the opened-row / widened-board shots).
+- **Owed:** a non-Fable engine re-runs `bin/verify-fable-pass29-design.mjs` on both hosts and moves the F-155/F-156 Done-log rows to
+  `verified`. X4 still met at pass 29 for the default view; X3 continues.
