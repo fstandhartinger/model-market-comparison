@@ -120,11 +120,15 @@ test('identity map: exact existing configurations; measured joins visible; self-
       assert.equal(o.identity_review.critic_model, entry.review.critic_model);
     } else assert.equal(o.subject.model_id, null, 'without a receipt the row stays unjoined');
   }
+  // A row its maintainer took off the board (reviewed in public-withdrawals.json) keeps its join rule, so it
+  // joins again if it is re-published; until then it has no observation.
+  const withdrawn = new Set(json('data/raw/benchmarks/public-withdrawals.json').withdrawals.map((w) => `${w.benchmark_id}#${w.source_id}`));
   for (const entry of map.entries.filter((e) => e.basis !== 'self_reported')) {
     assert.ok([...IDS, ...EPOCH_RUN, ...SLUG_BOARDS].some((id) => entry.benchmark_id === id || entry.benchmark_id.startsWith(`${id}::`)),
       `the map covers only the reviewed boards: ${entry.benchmark_id}`);
     assert.ok(catalog.has(entry.model_id), `${entry.model_id} exists`);
     const o = observations.find((x) => x.benchmark_id === entry.benchmark_id && x.subject.source_id === entry.source_id);
+    if (!o && withdrawn.has(`${entry.benchmark_id}#${entry.source_id}`)) continue;
     assert.ok(o, entry.source_id);
     // A ×100 unit conversion of a measured source stays measured ground truth (weirdml::3 scores are
     // published as fractions; the registry unit is percent — same convention as arc-agi/eqbench-judgemark).

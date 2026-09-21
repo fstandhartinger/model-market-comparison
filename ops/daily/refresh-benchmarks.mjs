@@ -131,6 +131,10 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
     'registry.json', 'collection-plan.json', 'public-observations.json', 'vendor-candidates.json',
     'aa-observed-fields.json', 'ingestion-lock.json', 'score-approvals.json',
   ].map((name) => json(join(root, name))));
+  // A reviewed, per-row record of results the maintainer has taken off its board (see public-identities.mjs).
+  const withdrawals = (await json(join(root, 'public-withdrawals.json')).catch((error) => {
+    if (error.code === 'ENOENT') return { withdrawals: [] }; throw error;
+  })).withdrawals;
   const checks = [], reviews = [], changedIds = new Set(), evidenceById = new Map();
   const fail = (id, error) => { const reason = error.message ?? String(error); checks.push({ id, status: 'retained_after_failure', reason }); console.error(`BENCHMARK RETAINED ${id}: ${reason}`); };
   const urls = new Map();
@@ -291,14 +295,21 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
       await put(onePlan, { schema_version: 1, entries: [proposed] });
       await exec('python3', ['ops/daily/public-candidate.py', onePlan, output], { timeout: 60_000, maxBuffer: 2_000_000 });
       const { candidate, evidence: nativeEvidence } = await json(output);
-      const reconciled = reconcilePublicIdentities(candidate.observations, nativeEvidence, priorRows);
+      const reconciled = reconcilePublicIdentities(candidate.observations, nativeEvidence, priorRows,
+        { withdrawals: withdrawals.filter((w) => w.benchmark_id === spec.benchmark_id) });
       candidate.observations = reconciled.rows;
       const evidence = reconciled.evidence;
-      const ids = new Set(candidate.observations.map((r) => r.id));
-      if (priorRows.some((r) => !ids.has(r.id))) throw new Error('Prior result identities disappeared; source/version/reordering needs review');
+      const ids = new Set(candidate.observations.map((r) => r.id)), gone = new Set(reconciled.withdrawn.map((w) => w.id));
+      if (priorRows.some((r) => !ids.has(r.id) && !gone.has(r.id))) throw new Error('Prior result identities disappeared; source/version/reordering needs review');
+      // The receipt names every withdrawn row; its value lives on as a dated "no longer published" estimate.
+      const withdrawnBySource = reconciled.withdrawn.map((w) => ({ id: w.id, source_id: w.source_id, first_absent_at: w.first_absent.retrieved_at }));
       const old = new Map(priorRows.map((r) => [r.id, r]));
       const changed = candidate.observations.filter((r) => !equal(semantic(r), semantic(old.get(r.id) ?? {})));
-      if (!changed.length) { checks.push({ id: spec.benchmark_id, status: 'checked_unchanged', rows: candidate.observations.length, source: proposed.source }); continue; }
+      if (!changed.length) {
+        if (gone.size) publicRows = publicRows.filter((r) => !gone.has(r.id));
+        checks.push({ id: spec.benchmark_id, status: 'checked_unchanged', rows: candidate.observations.length, source: proposed.source, ...(gone.size ? { withdrawn_by_source: withdrawnBySource } : {}) });
+        continue;
+      }
       const entry = registry.entries.find((e) => e.id === spec.benchmark_id);
       const protocolSources = await protocol(entry);
       // Joining happens in the offline ingestion draft before fingerprints are
@@ -309,7 +320,7 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
           content: JSON.stringify({ native_source_row: evidence[row.id], protocol: proposed.protocol, registry: { id: entry.id, version: entry.version, scoring: entry.scoring } }) }, ...protocolSources]);
       }
       publicRows = publicRows.filter((r) => r.benchmark_id !== spec.benchmark_id).concat(candidate.observations.map((r) => changedIds.has(r.id) ? r : old.get(r.id)));
-      checks.push({ id: spec.benchmark_id, status: 'candidate', rows: candidate.observations.length, changed_rows: changed.length });
+      checks.push({ id: spec.benchmark_id, status: 'candidate', rows: candidate.observations.length, changed_rows: changed.length, ...(gone.size ? { withdrawn_by_source: withdrawnBySource } : {}) });
     } catch (error) { fail(spec.benchmark_id, error); }
   }
   // Vendor collection uses a cheap completion to read current primary text.

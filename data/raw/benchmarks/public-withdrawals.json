@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "note": "Results a maintainer has taken off its own board. The daily refresh drops a prior public row only when it is named here by exact public ID and source label and is still absent from today's capture; its value stays visible as a dated 'no longer published' history estimate. Every other disappearance fails closed. One record per row, never per board.",
+  "withdrawals": [
+    {
+      "benchmark_id": "matharena-brokenarxiv::2026-06",
+      "id": "public:917b4d5bd350bea063dc4c77",
+      "source_id": "Claude-Fable-5.1 (max)",
+      "last_value": 84.72,
+      "last_seen": {
+        "url": "https://matharena.ai/competition_tables/arxiv_false--june",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/ba1db28a84d33e1dbd14.gz",
+        "sha256": "ba1db28a84d33e1dbd14e6022aa5cde74079226f168f871ae932dcc13152904c",
+        "retrieved_at": "2026-09-18T05:43:26.077660+00:00"
+      },
+      "first_absent": {
+        "url": "https://matharena.ai/competition_tables/arxiv_false--june",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/bd2bd59d3d5319e084d0.gz",
+        "sha256": "bd2bd59d3d5319e084d0c57898ec5c2369085c4d83d97c56e879d27fc84dd3b2",
+        "retrieved_at": "2026-09-20T10:15:44.783341+00:00"
+      },
+      "still_absent_at": ["2026-09-21T07:49:32.535173+00:00", "2026-09-21T10:41:29.871016+00:00", "2026-09-21T12:58:00Z"],
+      "reason": "MathArena's BrokenArXiv 06/2026 table no longer lists 'Claude-Fable-5.1 (max)' (84.72%, $6.87, 137,272 output tokens). Between the two captures the only other changes are three added rows, among them 'Claude-Fable-5.1 (low)' at 86.57% with a different cost ($1.12) and token count (22,329) — a separate run at a different setting, not a relabel, so it is not treated as the same row. The page gives no reason for the removal. The 21 other prior rows are unchanged to the value.",
+      "reviewed_at": "2026-09-21",
+      "reviewed_by": "claude-opus iteration 150 (Sandy UX workstream); parser diff of both committed captures, re-fetched live byte-identical at 12:58 UTC"
+    }
+  ]
+}

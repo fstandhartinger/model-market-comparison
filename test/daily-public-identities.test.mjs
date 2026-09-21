@@ -30,3 +30,20 @@ test('ambiguous identities require unchanged exact-ID semantics and missing rows
   assert.throws(() => reconcile([row('a', 'A')], { a: {} }, [row('b', 'B')]), /disappeared/);
   assert.throws(() => reconcile([row('a', 'A')], {}, []), /evidence/);
 });
+
+test('a reviewed withdrawal drops exactly its absent row; every other disappearance still fails', () => {
+  const prior = [row('a', 'A'), row('b', 'B'), row('c', 'C')];
+  const w = { benchmark_id: 'synthetic::v1', id: 'b', source_id: 'B', first_absent: { retrieved_at: 'x' } };
+  const next = [row('n0', 'A'), row('n1', 'C'), row('n2', 'B low', 8)];
+  const result = reconcile(next, evidence(next), prior, { withdrawals: [w] });
+  assert.deepEqual(result.rows.map((r) => r.id).slice(0, 2), ['a', 'c']);
+  assert.deepEqual(result.withdrawn.map((x) => x.id), ['b']);
+  // The record does not cover another row.
+  assert.throws(() => reconcile([row('n0', 'A')], evidence([row('n0', 'A')]), prior, { withdrawals: [w] }), /disappeared/);
+  // A withdrawn row that is published again stays, under its old ID.
+  const back = [row('n0', 'A'), row('n1', 'B'), row('n2', 'C')];
+  const again = reconcile(back, evidence(back), prior, { withdrawals: [w] });
+  assert.deepEqual(again.withdrawn, []); assert.deepEqual(again.rows.map((r) => r.id), ['a', 'b', 'c']);
+  // A record must name the prior row's own source label.
+  assert.throws(() => reconcile(next, evidence(next), prior, { withdrawals: [{ ...w, source_id: 'A' }] }), /does not match/);
+});
