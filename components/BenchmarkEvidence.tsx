@@ -47,7 +47,7 @@ export function SourceScore({ view, axis, row }: { view: BenchmarkView; axis: Vi
           <div>Observation id: <code>{row.id}</code></div>
           <div>Source: {src ? <a href={src.url} target="_blank" rel="noreferrer">{src.url}</a> : 'no source record'}</div>
           {!legacy ? (
-            <div><a className="text-accent underline" href={`/api/benchmark-scores?observation_id=${encodeURIComponent(row.id)}&benchmark_id=${encodeURIComponent(axis.benchmarkId)}`}>Exact observation and full protocol ↗</a></div>
+            <div><a className="text-accent underline" target="_blank" rel="noreferrer" href={`/api/benchmark-scores?observation_id=${encodeURIComponent(row.id)}&benchmark_id=${encodeURIComponent(axis.benchmarkId)}`}>Exact observation and full protocol ↗</a></div>
           ) : null}
           {legacy ? (
             <div>Protocol: <a href={axis.url} target="_blank" rel="noreferrer">inspect</a>{src?.file ? <> · file <code>{src.file}</code></> : null}</div>
