@@ -228,10 +228,13 @@ test('CR-63.21: phone rows cap visible chips at two behind a "+N" toggle; every 
   const tsx = readFileSync(new URL('../components/BenchmarkMatrix.tsx', import.meta.url), 'utf8');
   assert.match(tsx, /const MATRIX_TAG_CAP = 2;/, 'the visible-chip cap is two');
   assert.match(tsx, /className="bh-matrix-tagcap" aria-expanded=\{open\}/, 'the toggle is a stateful aria-expanded button');
-  assert.match(tsx, /title=\{open \? "Show fewer tags" : `Show \$\{extra\.length\} more tags: \$\{extraNames\}`\}/, 'the toggle names the hidden chips');
+  assert.match(tsx, /title=\{open \? "Show fewer tags" : `Show \$\{extra\.length\} more tag\$\{extra\.length === 1 \? "" : "s"\}: \$\{extraNames\}`\}/, 'the toggle names the hidden chips, singular for one');
   assert.match(tsx, /<RowTags tags=\{matrix\.tags\} row=\{row\} \/>/, 'the bench cell renders through the capped component');
   const css = readFileSync(new URL('../app/globals.css', import.meta.url), 'utf8');
   assert.match(css, /@media \(max-width: 639\.98px\) \{\s*\.bh-matrix-tagcap \{ display: inline-block; \}\s*\.bh-matrix-tagcap-extra:not\(\[data-open\]\) \{ display: none; \}/, 'the phone media query hides extra chips until opened, desktop shows everything');
+  // Review 20260921T154003Z: the global 44 px button floor must not make the toggle taller than a chip; the touch target is a halo.
+  assert.match(css, /\.bh-matrix-tagcap \{[^}]*position: relative; min-height: 0; \}/, 'the toggle is drawn at chip height');
+  assert.match(css, /\.bh-matrix-tagcap::before \{ content: ""; position: absolute; inset: -14px -8px; \}/, 'a 44 px touch halo keeps the tap target');
 });
 
 test('CR-65.15: the DesignArena frontend board is labelled Web Apps (agentic) and links its exact board', async () => {

@@ -272,7 +272,8 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
       const affected = registry.aa_field_map.filter((m) => fields.has(m.field.split('.')[0]) && aaMappingApplies(m, next.collected_at));
       for (const mapping of affected) {
         // This arm only runs for a field whose values changed today, so the summary is a real
-        // fact of today's capture. Retained boards never see it: their fields do not change.
+        // fact of today's capture. A retained board's field can change too (removals when AA drops
+        // deprecated models); a removals-only summary says it establishes nothing (iteration 151).
         const activity = aaFieldActivity(mapping.field.split('.')[0], changed, old);
         await protocol(registry.entries.find((e) => e.id === mapping.benchmark_id), { activity, receipt });
       }
