@@ -3,3 +3,9 @@ export function isFreeRoute(offer: { or_model_id?: string | null; input_per_1m?:
 export function paidRoutes<T extends { or_model_id?: string | null; input_per_1m?: number | null; output_per_1m?: number | null }>(offers: readonly T[] | null | undefined): T[];
 export function isStealthPreview(offer: { or_model_id?: string | null; endpoint_tag?: string | null; input_per_1m?: number | null; output_per_1m?: number | null } | null | undefined): boolean;
 export function freeRouteLabel(offer: { or_model_id?: string | null; endpoint_tag?: string | null; input_per_1m?: number | null; output_per_1m?: number | null } | null | undefined): string;
+export const FREE_ROUTE_MAX_AGE_DAYS: number;
+type FreeRouteOffer = { or_model_id?: string | null; endpoint_tag?: string | null; input_per_1m?: number | null; output_per_1m?: number | null; platform?: string | null; status?: number | null; provider?: string | null };
+type FreeRouteWhen = { snapshotDate?: string | null; generatedAt?: string | null };
+export function isCurrentFreeRoute(offer: FreeRouteOffer | null | undefined, when?: FreeRouteWhen): boolean;
+export function currentFreeRoutes<T extends FreeRouteOffer>(offers: readonly T[] | null | undefined, when?: FreeRouteWhen): T[];
+export function freeRouteTitle(routes: readonly { provider?: string | null }[] | null | undefined, snapshotDate?: string | null): string;

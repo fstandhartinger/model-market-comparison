@@ -1,9 +1,9 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import type { ClientOffer, ProviderInfo, ClientModel, ClientData } from "../lib/client-model";
 import { offerPrice, priceContext, priceLabel, scopeFromSettings, rankedOffers, scopedCatalogRoutes } from "../lib/cost";
-import { FREE_ROUTE_NOTE, freeRouteLabel, isFreeRoute, isStealthPreview } from "../lib/free-route.mjs";
+import { FREE_ROUTE_NOTE, freeRouteLabel, freeRouteTitle, isCurrentFreeRoute, isFreeRoute, isStealthPreview } from "../lib/free-route.mjs";
 import { usdPerM } from "../lib/format";
 import { PriceValue, PriceAssumptions } from "./PriceValue";
 import { useSettings } from "./SettingsContext";
@@ -32,6 +32,15 @@ export function ModelDetailOffers({
     ...offer,
     price: offerPrice(offer, ctx),
   })), [offers, scope, ctx]);
+  const freeWhen = { snapshotDate: pricingData.sourceDates?.openrouter, generatedAt: pricingData.generated_at };
+  // CR-50.2: the overview's "Free route" pill links to #all-offers; open the folded route list when it is the target.
+  const allRef = useRef<HTMLDetailsElement>(null);
+  useEffect(() => {
+    if (view === "all" && window.location.hash === "#all-offers" && allRef.current) {
+      allRef.current.open = true;
+      allRef.current.scrollIntoView();
+    }
+  }, [view]);
 
   // F-145 (Fable pass 26): a model nobody offers yet gets one sentence, not a card headed "Top 0 cheapest providers"
   // that blames the filters. Same words as the Overview row's "No public API price" tip.
@@ -91,7 +100,7 @@ export function ModelDetailOffers({
   return (
     // F-08b: the full route list stays on the page, folded — the top-5 table above answers
     // the usual question, and the unfolded list alone was a third of the page.
-    <details className="card mt-6 min-w-0 overflow-x-auto p-4">
+    <details ref={allRef} id="all-offers" className="card mt-6 min-w-0 overflow-x-auto p-4">
       <summary className="font-semibold">Token offers by platform · {catalog.length} offers <span className="text-xs font-normal text-gray-500">({priceLabel(s)})</span></summary>
       <PriceAssumptions />
       <p className="mb-3 text-[11px] text-gray-500">{catalog.length} offers within the active global filters; “—” means the catalog is active but no public token price is available.</p>
@@ -104,7 +113,11 @@ export function ModelDetailOffers({
             <tbody>
               {platformOffers.map((offer) => (
                 <tr key={[offer.key, offer.region, offer.pricing_tier, offer.route_type, offer.endpoint_tag].join("::")} data-free-route={isFreeRoute(offer) ? "1" : undefined}>
-                  <td className="px-2 py-1">{offer.provider}{isFreeRoute(offer) && <span title={FREE_ROUTE_NOTE} className="ml-1 rounded border border-line px-1 text-[10px] text-gray-400">{freeRouteLabel(offer)}<span className="sr-only"> — {FREE_ROUTE_NOTE}</span></span>}</td>
+                  <td className="px-2 py-1">{offer.provider}{isFreeRoute(offer) && (() => {
+                    // CR-50.2: a current, healthy free route names its provider and its limits; any other $0 route keeps the generic note.
+                    const note = isCurrentFreeRoute(offer, freeWhen) ? freeRouteTitle([offer], pricingData.sourceDates?.openrouter) : FREE_ROUTE_NOTE;
+                    return <span title={note} data-bh-free-route-current={isCurrentFreeRoute(offer, freeWhen) ? "1" : undefined} className="ml-1 rounded border border-line px-1 text-[10px] text-gray-400">{freeRouteLabel(offer)}<span className="sr-only"> — {note}</span></span>;
+                  })()}</td>
                   <td className="hidden px-2 py-1 text-xs text-gray-500 md:table-cell">{offer.region}{offer.endpoint_tag && <span className="ml-1 text-gray-400">{offer.endpoint_tag}</span>}{offer.pricing_tier && <span className="ml-1 text-sky-300">{offer.pricing_tier.replaceAll("_", " ")}</span>}{offer.route_type && <span className="ml-1 text-amber-300">{offer.route_type.replaceAll("_", " ")}</span>}{offer.eu_hosted && <span className="ml-1 text-emerald-300">EU</span>}{offer.eu_policy_equivalent && <span title="Company-approved equivalent; Global inference may occur outside the EU" className="ml-1 text-sky-300">EU equivalent</span>}{offer.tee && <span className="ml-1 text-purple-300">TEE</span>}</td>
                   <td className="hidden px-2 py-1 text-right tabular md:table-cell">{usdPerM(offer.input_per_1m)}<span className="text-gray-600"> raw in $/1M</span></td>
                   <td className="hidden px-2 py-1 text-right tabular md:table-cell">{usdPerM(offer.output_per_1m)}<span className="text-gray-600"> raw out $/1M</span></td>

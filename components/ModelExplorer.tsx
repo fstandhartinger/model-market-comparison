@@ -6,7 +6,7 @@ import { SCORE_PICKER_LABELS, SCORE_LABELS, SCORE_SHORT_LABELS, type ScoreKey } 
 import { scoreLabel, scoreVersion } from "../lib/score-label";
 import { usdPerM, num, orgColor } from "../lib/format";
 import { modelPrice, rankedOffers, scopedCatalogOffers, scopedCatalogRoutes, scopeFromSettings, offerPrice, priceContext, priceLabel, type PriceSettings } from "../lib/cost";
-import { FREE_ROUTE_NOTE, NO_PUBLIC_PRICE_NOTE, freeRouteLabel, isFreeRoute, isStealthPreview } from "../lib/free-route.mjs";
+import { FREE_ROUTE_NOTE, NO_PUBLIC_PRICE_NOTE, currentFreeRoutes, freeRouteLabel, freeRouteTitle, isFreeRoute, isStealthPreview } from "../lib/free-route.mjs";
 import { Toggle, NumFilter } from "./ui";
 import { InfoTip } from "./InfoTip";
 import { ADJUSTED_COST_TIP, scoreTip } from "./methodology";
@@ -353,6 +353,8 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
   // behind a collapsed disclosure, so the visible footnote stays at two sentences.
   const showThin = score === "composite" && rows.some((x) => isThinComposite(x.m));
   const showBmx = rows.some((x) => x.m.benchmaxxing_level);
+  const freeRouteWhen = { snapshotDate: data.sourceDates?.openrouter, generatedAt: data.generated_at };
+  const showFree = rows.some((x) => currentFreeRoutes(scopedCatalogRoutes(data.offersByModel[x.m.id], offerScope), freeRouteWhen).length > 0);
   const tagLegend = <details className="bh-legend mt-1" data-bh-legend>
     <summary className="cursor-pointer select-none text-gray-400 hover:text-inherit">Legend: marks and tags</summary>
     <dl className="mt-2 grid grid-cols-[auto_1fr] items-center gap-x-3 gap-y-1.5">
@@ -365,6 +367,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
         <dt className="sr-only">Tag rule</dt><dd className="col-start-2 text-gray-400">Every level: {BENCHMAXX_TAG_RULE_TEXT}; a screening flag, not proof</dd></>}
       <dt data-bh-tag-legend="value"><span className="bh-value-tag" data-kind="cheap" data-level="strong">↓ cheaper</span> <span className="bh-value-tag" data-kind="pricey" data-level="strong">↑ pricier</span></dt><dd>Cost well below / above models with a similar score in this list</dd>
       <dt><span className="bh-value-tag" data-kind="cheap" data-level="weak">↘ cheaper</span> <span className="bh-value-tag" data-kind="pricey" data-level="weak">↗ pricier</span></dt><dd>Somewhat below / above</dd>
+      {showFree && <><dt data-bh-tag-legend="free-route"><span className="bh-free-tag">Free route</span></dt><dd>A zero-price OpenRouter route was live at the last refresh; limits apply, other routes cost money, and the cost shown is the cheapest paid route</dd></>}
     </dl>
     <p className="mt-2">Ratios compare against the models in the current view, so Simple and Advanced can differ.{showBmx && <> <Link className="text-accent underline" href="/benchmaxxing">What Benchmaxxing means →</Link></>}</p>
   </details>;
@@ -515,6 +518,14 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                 if (representative) return representative;
                 return (a.price.value ?? Infinity) - (b.price.value ?? Infinity);
               });
+              // CR-50.2 (form: design authority, iteration 149): a current, healthy zero-price route within the active
+              // filters gets a muted "Free route" pill under the price; the price itself stays the cheapest paid route.
+              const freeRoutes = currentFreeRoutes(allOffers, freeRouteWhen);
+              const freeTitle = freeRoutes.length ? freeRouteTitle(freeRoutes, data.sourceDates?.openrouter) : "";
+              const freeMark = freeRoutes.length > 0 && <span className="mt-0.5 flex justify-end">
+                <Link href={`/models/${encodeURIComponent(m.id)}#all-offers`} onClick={(e) => e.stopPropagation()} className="bh-free-tag" data-bh-free-route={m.id} title={freeTitle}>
+                  <span className="bh-free-full" aria-hidden="true">Free route</span><span className="bh-free-compact" aria-hidden="true">Free</span><span className="sr-only">{freeTitle}</span>
+                </Link></span>;
               return (
               <Fragment key={m.id}>
               <tr className="bh-ranking-row cursor-pointer hover:bg-white/5" onClick={() => setExpanded(isOpen ? null : m.id)}
@@ -573,7 +584,10 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                   // Florian 2026-09-15 (directive 10): below 1024 px (where the words overflow the cell) the tag is the compact "↓11×"; the words stay in the tooltip and for screen readers.
                   // CR-42.1: a strong tag is a filled pill with a straight arrow, a weak one an outlined pill with a slanted arrow.
                   return <span className="bh-value-tag" data-kind={v.kind} data-level={v.level} title={`${words}. ${why}`}><span aria-hidden="true">{v.kind === "cheap" ? (strong ? "↓" : "↘") : (strong ? "↑" : "↗")}</span><span className="bh-vt-full">{words}</span><span className="bh-vt-compact" aria-hidden="true">{ratio}</span><span className="sr-only">{strong ? "Notably" : "Slightly"} {v.kind === "cheap" ? "cheap" : "pricey"}, {words}: {why}</span></span>;
-                })()}<PriceValue price={price} compact showEstimate={false} context={{ cheapest: cheap.length > 0, strongest: s.collapse && preferredId.get(m.family_key) === m.id }} /></span></MagnitudeBar> : (data.offersByModel[m.id] ?? []).some(isStealthPreview)
+                })()}<PriceValue price={price} compact showEstimate={false} context={{ cheapest: cheap.length > 0, strongest: s.collapse && preferredId.get(m.family_key) === m.id }} /></span>{freeMark}</MagnitudeBar> : freeMark
+                  // CR-50.2: a model whose only usable route is free has no paid price — a dash, and the pill says why.
+                  ? <><span className="block text-right text-gray-600">—</span>{freeMark}</>
+                  : (data.offersByModel[m.id] ?? []).some(isStealthPreview)
                   // CR-60.3: a stealth model with only its $0 preview route has no paid price; say why the cell is empty.
                   ? <span className="block whitespace-nowrap text-right text-xs text-gray-500" title={FREE_ROUTE_NOTE}>free (stealth preview)</span>
                   : (data.offersByModel[m.id] ?? []).length === 0 && (data.offersByFamily?.[m.family_key] ?? []).length === 0

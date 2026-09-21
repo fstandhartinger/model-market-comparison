@@ -239,6 +239,13 @@ table.dtable tbody tr:hover { background: rgb(var(--accent) / .04); }
 .bh-thin-tag { display: inline-flex; align-items: center; white-space: nowrap; border-radius: 999px; padding: 0 6px; font-size: 10px; font-weight: 500; line-height: 14px; vertical-align: middle; color: var(--muted); border: 1px dashed var(--control-border); background: rgb(var(--line) / .2); cursor: help; }
 .bh-thin-tag .bh-thin-compact { display: none; }
 @media (max-width: 1023px) { .bh-thin-tag { padding: 0 4px; } .bh-thin-tag .bh-thin-full { display: none; } .bh-thin-tag .bh-thin-compact { display: inline; } }
+/* CR-50.2 (design authority, iteration 149): a current free route — the muted outline of the light Benchmaxxing pill,
+   no accent colour; "Free route" on desktop, "Free" below 1024 px. */
+.bh-free-tag { display: inline-flex; align-items: center; white-space: nowrap; border-radius: 999px; padding: 0 6px; font-size: 10px; font-weight: 500; line-height: 16px; vertical-align: middle; text-decoration: none; color: var(--muted); background: transparent; box-shadow: inset 0 0 0 1px var(--control-border); }
+a.bh-free-tag:hover { color: inherit; text-decoration: underline; }
+a.bh-free-tag:focus-visible { outline: 2px solid rgb(var(--accent)); outline-offset: 2px; }
+.bh-free-tag .bh-free-compact { display: none; }
+@media (max-width: 1023px) { .bh-free-tag { padding: 0 4px; } .bh-free-tag .bh-free-full { display: none; } .bh-free-tag .bh-free-compact { display: inline; } }
 /* CR-77.2: a Benchmaxxing tag built on thin evidence (few comparisons, or an interval reaching below zero) keeps its
    level and carries this muted marker; the reason is in its title, never colour alone. */
 .bh-bmx-uncertain { display: inline-block; margin-left: 4px; color: var(--muted); font-size: 11px; line-height: 1; vertical-align: middle; cursor: help; }
