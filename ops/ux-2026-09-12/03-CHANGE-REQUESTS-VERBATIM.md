@@ -1503,3 +1503,10 @@ Eldan asked @airesearch12 to benchmark the newly released Winnow-12B Gemma 4
 fine-tune. Florian accepted and asked us to take care of it: full v1.2 run,
 licence and public-item-training disclosure, publication after the single-writer
 lane clears, both hosts verified, then a short result DM.
+
+## CR-20260921f — rerankers → CR-115
+
+Ghita asked @airesearch12 to add zerank-2 and more rerankers; Florian replied
+“Good idea, actually / I'll do it right away” and instructed the agent to do it.
+Publish the complete open-weight cohort with one neutral, preregistered adapter,
+public-only calibration, a no-instruction baseline, and preserved prior rows.

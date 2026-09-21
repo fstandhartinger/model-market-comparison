@@ -905,3 +905,11 @@ Seeded by review gate 20260921T100004Z from the verbatim CR-108 acceptance list 
 - **CR-113.3:** Record Apache-2.0 Gemma 4 terms, the remote-GPU endpoint, measured latency, non-zero estimated cost and the private-training audit limitation.
 - **CR-113.4:** Preserve the upstream v1.2.12/v1.2.13 thinking rows, every prior score, the held-out diagnostic, hard-only view and scoring rules.
 - **CR-113.5:** Verify both production hosts after deployment.
+
+## CR-115 — JevBench reranker class
+
+- **CR-115.1:** Pin JevBench v1.2.16 results, per-task and topic artifacts by SHA-256.
+- **CR-115.2:** Publish five full open reranker rows, led by zerank-2 at 68.9 / #12.
+- **CR-115.3:** Preserve the preregistered neutral mapping and public-only calibration curves.
+- **CR-115.4:** Record non-zero measured GPU cost and preserve every prior row and rule.
+- **CR-115.5:** Verify both production hosts before replying to Ghita.
