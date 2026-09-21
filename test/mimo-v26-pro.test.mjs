@@ -49,3 +49,9 @@ test('CR-117: benchmaxxing correctly withholds a verdict when no qualifying comp
   assert.equal(result.levels.has(model.id), false);
   assert.equal(result.tagged.has(model.id), false);
 });
+
+test('CR-117.3: the visible MiMo Cyber Bench description discloses the 81.7-versus-80.2 source conflict', () => {
+  const entry = registry.entries.find((row) => row.id === 'xiaomi-mimo-cyber-bench::snapshot-2026-09-22');
+  assert.match(entry.one_sentence_description, /81\.7/);
+  assert.match(entry.one_sentence_description, /80\.2/);
+});
