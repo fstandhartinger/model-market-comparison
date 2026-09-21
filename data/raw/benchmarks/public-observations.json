@@ -273860,6 +273860,924 @@
           "locator": "method_source"
         }
       ]
+    },
+    {
+      "id": "public:7f62827b190bfdf45d13afd0",
+      "benchmark_id": "react-native-evals::91-evals",
+      "subject": {
+        "source_id": "Apex",
+        "name": "Apex",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 90.90909090909092,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://rn-evals.vercel.app/",
+        "retrieved_at": "2026-09-21T20:32:45.098128+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/44177e508aa4b210b607.gz",
+        "sha256": "44177e508aa4b210b607a99c44f7aaea9c6f86d1a91016b0e2f46bc6d19fe812",
+        "locator": "rn_evals_board; source row 0; Apex; field value"
+      },
+      "protocol": "React Native Evals (Callstack): 91 React Native code-generation evals in six groups (navigation, animation, async state, lists, React Native APIs, Skia); each model solves every eval through OpenCode, repeated over the board's stated number of runs; an LLM judge checks the generated files against each eval's written requirements (optional weights); value = the board's overall score in percent, which equals requirements passed / requirements judged over all evals and runs for every row with the full requirement count (errored evals are not judged; for a row with fewer judged requirements the board's figure differs from that ratio by at most 0.1 points); the board names models by product name and gateway route and states no reasoning setting; the judge model is not named on the board; source row: {\"solver_model\":\"apex/callstack/Apex\",\"requirements_passed\":3600,\"requirements_judged\":3960,\"requirements_judged_most\":3960,\"tokens_used\":961938,\"cost_usd\":7.7223109999999995,\"repeat_runs\":10,\"run_finished_at\":\"2026-09-17T11:25:53.630Z\",\"judge_model_stated\":\"unknown\",\"stated_effort\":\"not stated\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/callstackincubator/evals/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/6d9a19b55ceedc325187.gz",
+          "sha256": "6d9a19b55ceedc3251874d39a5ba64dfd45ee6afaae2117f117915551b7461ab",
+          "retrieved_at": "2026-09-21T20:32:47.849503+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:c1f4cbba79b3fdf2faf42638",
+      "benchmark_id": "react-native-evals::91-evals",
+      "subject": {
+        "source_id": "claude-opus-5",
+        "name": "Claude Opus 5",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 90.80917874396135,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://rn-evals.vercel.app/",
+        "retrieved_at": "2026-09-21T20:32:45.098128+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/44177e508aa4b210b607.gz",
+        "sha256": "44177e508aa4b210b607a99c44f7aaea9c6f86d1a91016b0e2f46bc6d19fe812",
+        "locator": "rn_evals_board; source row 1; claude-opus-5; field value"
+      },
+      "protocol": "React Native Evals (Callstack): 91 React Native code-generation evals in six groups (navigation, animation, async state, lists, React Native APIs, Skia); each model solves every eval through OpenCode, repeated over the board's stated number of runs; an LLM judge checks the generated files against each eval's written requirements (optional weights); value = the board's overall score in percent, which equals requirements passed / requirements judged over all evals and runs for every row with the full requirement count (errored evals are not judged; for a row with fewer judged requirements the board's figure differs from that ratio by at most 0.1 points); the board names models by product name and gateway route and states no reasoning setting; the judge model is not named on the board; source row: {\"solver_model\":\"vercel/anthropic/claude-opus-5\",\"requirements_passed\":3578,\"requirements_judged\":3940,\"requirements_judged_most\":3960,\"tokens_used\":2477456,\"cost_usd\":169.04555499999992,\"repeat_runs\":10,\"run_finished_at\":\"2026-09-17T11:25:53.630Z\",\"judge_model_stated\":\"unknown\",\"stated_effort\":\"not stated\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/callstackincubator/evals/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/6d9a19b55ceedc325187.gz",
+          "sha256": "6d9a19b55ceedc3251874d39a5ba64dfd45ee6afaae2117f117915551b7461ab",
+          "retrieved_at": "2026-09-21T20:32:47.849503+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:4689f3740e86263e284501ce",
+      "benchmark_id": "react-native-evals::91-evals",
+      "subject": {
+        "source_id": "claude-fable-5",
+        "name": "Claude Fable 5",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 90.22727272727273,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://rn-evals.vercel.app/",
+        "retrieved_at": "2026-09-21T20:32:45.098128+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/44177e508aa4b210b607.gz",
+        "sha256": "44177e508aa4b210b607a99c44f7aaea9c6f86d1a91016b0e2f46bc6d19fe812",
+        "locator": "rn_evals_board; source row 2; claude-fable-5; field value"
+      },
+      "protocol": "React Native Evals (Callstack): 91 React Native code-generation evals in six groups (navigation, animation, async state, lists, React Native APIs, Skia); each model solves every eval through OpenCode, repeated over the board's stated number of runs; an LLM judge checks the generated files against each eval's written requirements (optional weights); value = the board's overall score in percent, which equals requirements passed / requirements judged over all evals and runs for every row with the full requirement count (errored evals are not judged; for a row with fewer judged requirements the board's figure differs from that ratio by at most 0.1 points); the board names models by product name and gateway route and states no reasoning setting; the judge model is not named on the board; source row: {\"solver_model\":\"vercel/anthropic/claude-fable-5\",\"requirements_passed\":3573,\"requirements_judged\":3960,\"requirements_judged_most\":3960,\"tokens_used\":1274370,\"cost_usd\":179.13615000000001,\"repeat_runs\":10,\"run_finished_at\":\"2026-09-17T11:25:53.630Z\",\"judge_model_stated\":\"unknown\",\"stated_effort\":\"not stated\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/callstackincubator/evals/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/6d9a19b55ceedc325187.gz",
+          "sha256": "6d9a19b55ceedc3251874d39a5ba64dfd45ee6afaae2117f117915551b7461ab",
+          "retrieved_at": "2026-09-21T20:32:47.849503+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:f66460d1daa97fe62c4bb956",
+      "benchmark_id": "react-native-evals::91-evals",
+      "subject": {
+        "source_id": "GPT-5.6-sol",
+        "name": "GPT 5.6 Sol",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 89.82323232323232,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://rn-evals.vercel.app/",
+        "retrieved_at": "2026-09-21T20:32:45.098128+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/44177e508aa4b210b607.gz",
+        "sha256": "44177e508aa4b210b607a99c44f7aaea9c6f86d1a91016b0e2f46bc6d19fe812",
+        "locator": "rn_evals_board; source row 3; GPT-5.6-sol; field value"
+      },
+      "protocol": "React Native Evals (Callstack): 91 React Native code-generation evals in six groups (navigation, animation, async state, lists, React Native APIs, Skia); each model solves every eval through OpenCode, repeated over the board's stated number of runs; an LLM judge checks the generated files against each eval's written requirements (optional weights); value = the board's overall score in percent, which equals requirements passed / requirements judged over all evals and runs for every row with the full requirement count (errored evals are not judged; for a row with fewer judged requirements the board's figure differs from that ratio by at most 0.1 points); the board names models by product name and gateway route and states no reasoning setting; the judge model is not named on the board; source row: {\"solver_model\":\"vercel/openai/gpt-5.6-sol\",\"requirements_passed\":3557,\"requirements_judged\":3960,\"requirements_judged_most\":3960,\"tokens_used\":null,\"cost_usd\":null,\"repeat_runs\":10,\"run_finished_at\":\"2026-09-17T11:25:53.630Z\",\"judge_model_stated\":\"unknown\",\"stated_effort\":\"not stated\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/callstackincubator/evals/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/6d9a19b55ceedc325187.gz",
+          "sha256": "6d9a19b55ceedc3251874d39a5ba64dfd45ee6afaae2117f117915551b7461ab",
+          "retrieved_at": "2026-09-21T20:32:47.849503+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:0b8f99bd2287a795efb728fa",
+      "benchmark_id": "react-native-evals::91-evals",
+      "subject": {
+        "source_id": "GPT-5.5",
+        "name": "GPT 5.5",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 89.31818181818181,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://rn-evals.vercel.app/",
+        "retrieved_at": "2026-09-21T20:32:45.098128+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/44177e508aa4b210b607.gz",
+        "sha256": "44177e508aa4b210b607a99c44f7aaea9c6f86d1a91016b0e2f46bc6d19fe812",
+        "locator": "rn_evals_board; source row 4; GPT-5.5; field value"
+      },
+      "protocol": "React Native Evals (Callstack): 91 React Native code-generation evals in six groups (navigation, animation, async state, lists, React Native APIs, Skia); each model solves every eval through OpenCode, repeated over the board's stated number of runs; an LLM judge checks the generated files against each eval's written requirements (optional weights); value = the board's overall score in percent, which equals requirements passed / requirements judged over all evals and runs for every row with the full requirement count (errored evals are not judged; for a row with fewer judged requirements the board's figure differs from that ratio by at most 0.1 points); the board names models by product name and gateway route and states no reasoning setting; the judge model is not named on the board; source row: {\"solver_model\":\"vercel/openai/gpt-5.5\",\"requirements_passed\":3537,\"requirements_judged\":3960,\"requirements_judged_most\":3960,\"tokens_used\":962259,\"cost_usd\":73.19546000000001,\"repeat_runs\":10,\"run_finished_at\":\"2026-09-17T11:25:53.630Z\",\"judge_model_stated\":\"unknown\",\"stated_effort\":\"not stated\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/callstackincubator/evals/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/6d9a19b55ceedc325187.gz",
+          "sha256": "6d9a19b55ceedc3251874d39a5ba64dfd45ee6afaae2117f117915551b7461ab",
+          "retrieved_at": "2026-09-21T20:32:47.849503+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:61568c770caeaaad43479da5",
+      "benchmark_id": "react-native-evals::91-evals",
+      "subject": {
+        "source_id": "grok-4.5",
+        "name": "Grok 4.5",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 88.7878787878788,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://rn-evals.vercel.app/",
+        "retrieved_at": "2026-09-21T20:32:45.098128+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/44177e508aa4b210b607.gz",
+        "sha256": "44177e508aa4b210b607a99c44f7aaea9c6f86d1a91016b0e2f46bc6d19fe812",
+        "locator": "rn_evals_board; source row 5; grok-4.5; field value"
+      },
+      "protocol": "React Native Evals (Callstack): 91 React Native code-generation evals in six groups (navigation, animation, async state, lists, React Native APIs, Skia); each model solves every eval through OpenCode, repeated over the board's stated number of runs; an LLM judge checks the generated files against each eval's written requirements (optional weights); value = the board's overall score in percent, which equals requirements passed / requirements judged over all evals and runs for every row with the full requirement count (errored evals are not judged; for a row with fewer judged requirements the board's figure differs from that ratio by at most 0.1 points); the board names models by product name and gateway route and states no reasoning setting; the judge model is not named on the board; source row: {\"solver_model\":\"vercel/xai/grok-4.5\",\"requirements_passed\":3516,\"requirements_judged\":3960,\"requirements_judged_most\":3960,\"tokens_used\":2414413,\"cost_usd\":54.651509999999995,\"repeat_runs\":10,\"run_finished_at\":\"2026-09-17T11:25:53.630Z\",\"judge_model_stated\":\"unknown\",\"stated_effort\":\"not stated\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/callstackincubator/evals/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/6d9a19b55ceedc325187.gz",
+          "sha256": "6d9a19b55ceedc3251874d39a5ba64dfd45ee6afaae2117f117915551b7461ab",
+          "retrieved_at": "2026-09-21T20:32:47.849503+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:e6627177692042ee1b672285",
+      "benchmark_id": "react-native-evals::91-evals",
+      "subject": {
+        "source_id": "grok-4.6",
+        "name": "Grok 4.6",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 88.59625668449198,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://rn-evals.vercel.app/",
+        "retrieved_at": "2026-09-21T20:32:45.098128+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/44177e508aa4b210b607.gz",
+        "sha256": "44177e508aa4b210b607a99c44f7aaea9c6f86d1a91016b0e2f46bc6d19fe812",
+        "locator": "rn_evals_board; source row 6; grok-4.6; field value"
+      },
+      "protocol": "React Native Evals (Callstack): 91 React Native code-generation evals in six groups (navigation, animation, async state, lists, React Native APIs, Skia); each model solves every eval through OpenCode, repeated over the board's stated number of runs; an LLM judge checks the generated files against each eval's written requirements (optional weights); value = the board's overall score in percent, which equals requirements passed / requirements judged over all evals and runs for every row with the full requirement count (errored evals are not judged; for a row with fewer judged requirements the board's figure differs from that ratio by at most 0.1 points); the board names models by product name and gateway route and states no reasoning setting; the judge model is not named on the board; source row: {\"solver_model\":\"vercel/xai/grok-4.6\",\"requirements_passed\":3504,\"requirements_judged\":3955,\"requirements_judged_most\":3960,\"tokens_used\":2213378,\"cost_usd\":53.368779999999994,\"repeat_runs\":10,\"run_finished_at\":\"2026-09-17T11:25:53.630Z\",\"judge_model_stated\":\"unknown\",\"stated_effort\":\"not stated\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/callstackincubator/evals/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/6d9a19b55ceedc325187.gz",
+          "sha256": "6d9a19b55ceedc3251874d39a5ba64dfd45ee6afaae2117f117915551b7461ab",
+          "retrieved_at": "2026-09-21T20:32:47.849503+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:65354effd46da8d28e065e3b",
+      "benchmark_id": "react-native-evals::91-evals",
+      "subject": {
+        "source_id": "claude-opus-4.8",
+        "name": "Claude Opus 4.8",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 88.53535353535354,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://rn-evals.vercel.app/",
+        "retrieved_at": "2026-09-21T20:32:45.098128+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/44177e508aa4b210b607.gz",
+        "sha256": "44177e508aa4b210b607a99c44f7aaea9c6f86d1a91016b0e2f46bc6d19fe812",
+        "locator": "rn_evals_board; source row 7; claude-opus-4.8; field value"
+      },
+      "protocol": "React Native Evals (Callstack): 91 React Native code-generation evals in six groups (navigation, animation, async state, lists, React Native APIs, Skia); each model solves every eval through OpenCode, repeated over the board's stated number of runs; an LLM judge checks the generated files against each eval's written requirements (optional weights); value = the board's overall score in percent, which equals requirements passed / requirements judged over all evals and runs for every row with the full requirement count (errored evals are not judged; for a row with fewer judged requirements the board's figure differs from that ratio by at most 0.1 points); the board names models by product name and gateway route and states no reasoning setting; the judge model is not named on the board; source row: {\"solver_model\":\"vercel/anthropic/claude-opus-4.8\",\"requirements_passed\":3506,\"requirements_judged\":3960,\"requirements_judged_most\":3960,\"tokens_used\":1210065,\"cost_usd\":82.95626500000002,\"repeat_runs\":10,\"run_finished_at\":\"2026-09-17T11:25:53.630Z\",\"judge_model_stated\":\"unknown\",\"stated_effort\":\"not stated\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/callstackincubator/evals/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/6d9a19b55ceedc325187.gz",
+          "sha256": "6d9a19b55ceedc3251874d39a5ba64dfd45ee6afaae2117f117915551b7461ab",
+          "retrieved_at": "2026-09-21T20:32:47.849503+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:1f7a1d43578afdcff6f91228",
+      "benchmark_id": "react-native-evals::91-evals",
+      "subject": {
+        "source_id": "GPT-5.6-terra",
+        "name": "GPT 5.6 Terra",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 87.77777777777779,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://rn-evals.vercel.app/",
+        "retrieved_at": "2026-09-21T20:32:45.098128+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/44177e508aa4b210b607.gz",
+        "sha256": "44177e508aa4b210b607a99c44f7aaea9c6f86d1a91016b0e2f46bc6d19fe812",
+        "locator": "rn_evals_board; source row 8; GPT-5.6-terra; field value"
+      },
+      "protocol": "React Native Evals (Callstack): 91 React Native code-generation evals in six groups (navigation, animation, async state, lists, React Native APIs, Skia); each model solves every eval through OpenCode, repeated over the board's stated number of runs; an LLM judge checks the generated files against each eval's written requirements (optional weights); value = the board's overall score in percent, which equals requirements passed / requirements judged over all evals and runs for every row with the full requirement count (errored evals are not judged; for a row with fewer judged requirements the board's figure differs from that ratio by at most 0.1 points); the board names models by product name and gateway route and states no reasoning setting; the judge model is not named on the board; source row: {\"solver_model\":\"vercel/openai/gpt-5.6-terra\",\"requirements_passed\":3476,\"requirements_judged\":3960,\"requirements_judged_most\":3960,\"tokens_used\":706292,\"cost_usd\":21.995288,\"repeat_runs\":10,\"run_finished_at\":\"2026-09-17T11:25:53.630Z\",\"judge_model_stated\":\"unknown\",\"stated_effort\":\"not stated\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/callstackincubator/evals/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/6d9a19b55ceedc325187.gz",
+          "sha256": "6d9a19b55ceedc3251874d39a5ba64dfd45ee6afaae2117f117915551b7461ab",
+          "retrieved_at": "2026-09-21T20:32:47.849503+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:c3906737f3c38204ae7f0e47",
+      "benchmark_id": "react-native-evals::91-evals",
+      "subject": {
+        "source_id": "claude-sonnet-5",
+        "name": "Claude Sonnet 5",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 87.44949494949495,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://rn-evals.vercel.app/",
+        "retrieved_at": "2026-09-21T20:32:45.098128+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/44177e508aa4b210b607.gz",
+        "sha256": "44177e508aa4b210b607a99c44f7aaea9c6f86d1a91016b0e2f46bc6d19fe812",
+        "locator": "rn_evals_board; source row 9; claude-sonnet-5; field value"
+      },
+      "protocol": "React Native Evals (Callstack): 91 React Native code-generation evals in six groups (navigation, animation, async state, lists, React Native APIs, Skia); each model solves every eval through OpenCode, repeated over the board's stated number of runs; an LLM judge checks the generated files against each eval's written requirements (optional weights); value = the board's overall score in percent, which equals requirements passed / requirements judged over all evals and runs for every row with the full requirement count (errored evals are not judged; for a row with fewer judged requirements the board's figure differs from that ratio by at most 0.1 points); the board names models by product name and gateway route and states no reasoning setting; the judge model is not named on the board; source row: {\"solver_model\":\"vercel/anthropic/claude-sonnet-5\",\"requirements_passed\":3463,\"requirements_judged\":3960,\"requirements_judged_most\":3960,\"tokens_used\":4369873,\"cost_usd\":108.99263400000002,\"repeat_runs\":10,\"run_finished_at\":\"2026-09-17T11:25:53.630Z\",\"judge_model_stated\":\"unknown\",\"stated_effort\":\"not stated\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/callstackincubator/evals/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/6d9a19b55ceedc325187.gz",
+          "sha256": "6d9a19b55ceedc3251874d39a5ba64dfd45ee6afaae2117f117915551b7461ab",
+          "retrieved_at": "2026-09-21T20:32:47.849503+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:513545adb4f082344d8ed70c",
+      "benchmark_id": "react-native-evals::91-evals",
+      "subject": {
+        "source_id": "GPT-5.6-luna",
+        "name": "GPT 5.6 Luna",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 87.37373737373737,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://rn-evals.vercel.app/",
+        "retrieved_at": "2026-09-21T20:32:45.098128+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/44177e508aa4b210b607.gz",
+        "sha256": "44177e508aa4b210b607a99c44f7aaea9c6f86d1a91016b0e2f46bc6d19fe812",
+        "locator": "rn_evals_board; source row 10; GPT-5.6-luna; field value"
+      },
+      "protocol": "React Native Evals (Callstack): 91 React Native code-generation evals in six groups (navigation, animation, async state, lists, React Native APIs, Skia); each model solves every eval through OpenCode, repeated over the board's stated number of runs; an LLM judge checks the generated files against each eval's written requirements (optional weights); value = the board's overall score in percent, which equals requirements passed / requirements judged over all evals and runs for every row with the full requirement count (errored evals are not judged; for a row with fewer judged requirements the board's figure differs from that ratio by at most 0.1 points); the board names models by product name and gateway route and states no reasoning setting; the judge model is not named on the board; source row: {\"solver_model\":\"vercel/openai/gpt-5.6-luna\",\"requirements_passed\":3460,\"requirements_judged\":3960,\"requirements_judged_most\":3960,\"tokens_used\":2166464,\"cost_usd\":5.860925000000001,\"repeat_runs\":10,\"run_finished_at\":\"2026-09-17T11:25:53.630Z\",\"judge_model_stated\":\"unknown\",\"stated_effort\":\"not stated\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/callstackincubator/evals/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/6d9a19b55ceedc325187.gz",
+          "sha256": "6d9a19b55ceedc3251874d39a5ba64dfd45ee6afaae2117f117915551b7461ab",
+          "retrieved_at": "2026-09-21T20:32:47.849503+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:1ffc84d84f68ecf8ef76683a",
+      "benchmark_id": "react-native-evals::91-evals",
+      "subject": {
+        "source_id": "muse-spark-1.1",
+        "name": "Muse Spark 1.1",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 86.64141414141415,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://rn-evals.vercel.app/",
+        "retrieved_at": "2026-09-21T20:32:45.098128+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/44177e508aa4b210b607.gz",
+        "sha256": "44177e508aa4b210b607a99c44f7aaea9c6f86d1a91016b0e2f46bc6d19fe812",
+        "locator": "rn_evals_board; source row 11; muse-spark-1.1; field value"
+      },
+      "protocol": "React Native Evals (Callstack): 91 React Native code-generation evals in six groups (navigation, animation, async state, lists, React Native APIs, Skia); each model solves every eval through OpenCode, repeated over the board's stated number of runs; an LLM judge checks the generated files against each eval's written requirements (optional weights); value = the board's overall score in percent, which equals requirements passed / requirements judged over all evals and runs for every row with the full requirement count (errored evals are not judged; for a row with fewer judged requirements the board's figure differs from that ratio by at most 0.1 points); the board names models by product name and gateway route and states no reasoning setting; the judge model is not named on the board; source row: {\"solver_model\":\"vercel/meta/muse-spark-1.1\",\"requirements_passed\":3431,\"requirements_judged\":3960,\"requirements_judged_most\":3960,\"tokens_used\":1360438,\"cost_usd\":24.49135275000001,\"repeat_runs\":10,\"run_finished_at\":\"2026-09-17T11:25:53.630Z\",\"judge_model_stated\":\"unknown\",\"stated_effort\":\"not stated\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/callstackincubator/evals/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/6d9a19b55ceedc325187.gz",
+          "sha256": "6d9a19b55ceedc3251874d39a5ba64dfd45ee6afaae2117f117915551b7461ab",
+          "retrieved_at": "2026-09-21T20:32:47.849503+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:2d43f56b8431d29416f9d6e2",
+      "benchmark_id": "react-native-evals::91-evals",
+      "subject": {
+        "source_id": "ox-alpha",
+        "name": "Ox Alpha",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 86.2878787878788,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://rn-evals.vercel.app/",
+        "retrieved_at": "2026-09-21T20:32:45.098128+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/44177e508aa4b210b607.gz",
+        "sha256": "44177e508aa4b210b607a99c44f7aaea9c6f86d1a91016b0e2f46bc6d19fe812",
+        "locator": "rn_evals_board; source row 12; ox-alpha; field value"
+      },
+      "protocol": "React Native Evals (Callstack): 91 React Native code-generation evals in six groups (navigation, animation, async state, lists, React Native APIs, Skia); each model solves every eval through OpenCode, repeated over the board's stated number of runs; an LLM judge checks the generated files against each eval's written requirements (optional weights); value = the board's overall score in percent, which equals requirements passed / requirements judged over all evals and runs for every row with the full requirement count (errored evals are not judged; for a row with fewer judged requirements the board's figure differs from that ratio by at most 0.1 points); the board names models by product name and gateway route and states no reasoning setting; the judge model is not named on the board; source row: {\"solver_model\":\"openrouter/stealth/ox-alpha\",\"requirements_passed\":3417,\"requirements_judged\":3960,\"requirements_judged_most\":3960,\"tokens_used\":3432078,\"cost_usd\":null,\"repeat_runs\":10,\"run_finished_at\":\"2026-09-17T11:25:53.630Z\",\"judge_model_stated\":\"unknown\",\"stated_effort\":\"not stated\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/callstackincubator/evals/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/6d9a19b55ceedc325187.gz",
+          "sha256": "6d9a19b55ceedc3251874d39a5ba64dfd45ee6afaae2117f117915551b7461ab",
+          "retrieved_at": "2026-09-21T20:32:47.849503+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:d7329615f2465bdf8b017fc2",
+      "benchmark_id": "react-native-evals::91-evals",
+      "subject": {
+        "source_id": "gemini-3.1-pro-preview",
+        "name": "Gemini 3.1 Pro Preview",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 84.26767676767678,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://rn-evals.vercel.app/",
+        "retrieved_at": "2026-09-21T20:32:45.098128+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/44177e508aa4b210b607.gz",
+        "sha256": "44177e508aa4b210b607a99c44f7aaea9c6f86d1a91016b0e2f46bc6d19fe812",
+        "locator": "rn_evals_board; source row 13; gemini-3.1-pro-preview; field value"
+      },
+      "protocol": "React Native Evals (Callstack): 91 React Native code-generation evals in six groups (navigation, animation, async state, lists, React Native APIs, Skia); each model solves every eval through OpenCode, repeated over the board's stated number of runs; an LLM judge checks the generated files against each eval's written requirements (optional weights); value = the board's overall score in percent, which equals requirements passed / requirements judged over all evals and runs for every row with the full requirement count (errored evals are not judged; for a row with fewer judged requirements the board's figure differs from that ratio by at most 0.1 points); the board names models by product name and gateway route and states no reasoning setting; the judge model is not named on the board; source row: {\"solver_model\":\"vercel/google/gemini-3.1-pro-preview\",\"requirements_passed\":3337,\"requirements_judged\":3960,\"requirements_judged_most\":3960,\"tokens_used\":1384793,\"cost_usd\":64.36406399999998,\"repeat_runs\":10,\"run_finished_at\":\"2026-09-17T11:25:53.630Z\",\"judge_model_stated\":\"unknown\",\"stated_effort\":\"not stated\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/callstackincubator/evals/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/6d9a19b55ceedc325187.gz",
+          "sha256": "6d9a19b55ceedc3251874d39a5ba64dfd45ee6afaae2117f117915551b7461ab",
+          "retrieved_at": "2026-09-21T20:32:47.849503+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:cfa0a898d5bee476529b539e",
+      "benchmark_id": "react-native-evals::91-evals",
+      "subject": {
+        "source_id": "glm-5.2",
+        "name": "Glm 5.2",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 83.9918705325682,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://rn-evals.vercel.app/",
+        "retrieved_at": "2026-09-21T20:32:45.098128+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/44177e508aa4b210b607.gz",
+        "sha256": "44177e508aa4b210b607a99c44f7aaea9c6f86d1a91016b0e2f46bc6d19fe812",
+        "locator": "rn_evals_board; source row 14; glm-5.2; field value"
+      },
+      "protocol": "React Native Evals (Callstack): 91 React Native code-generation evals in six groups (navigation, animation, async state, lists, React Native APIs, Skia); each model solves every eval through OpenCode, repeated over the board's stated number of runs; an LLM judge checks the generated files against each eval's written requirements (optional weights); value = the board's overall score in percent, which equals requirements passed / requirements judged over all evals and runs for every row with the full requirement count (errored evals are not judged; for a row with fewer judged requirements the board's figure differs from that ratio by at most 0.1 points); the board names models by product name and gateway route and states no reasoning setting; the judge model is not named on the board; source row: {\"solver_model\":\"vercel/zai/glm-5.2\",\"requirements_passed\":3315,\"requirements_judged\":3947,\"requirements_judged_most\":3960,\"tokens_used\":7450356,\"cost_usd\":119.7108738,\"repeat_runs\":10,\"run_finished_at\":\"2026-09-17T11:25:53.630Z\",\"judge_model_stated\":\"unknown\",\"stated_effort\":\"not stated\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/callstackincubator/evals/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/6d9a19b55ceedc325187.gz",
+          "sha256": "6d9a19b55ceedc3251874d39a5ba64dfd45ee6afaae2117f117915551b7461ab",
+          "retrieved_at": "2026-09-21T20:32:47.849503+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:8133d06cabb0f5b316217cb3",
+      "benchmark_id": "react-native-evals::91-evals",
+      "subject": {
+        "source_id": "minimax-m3",
+        "name": "Minimax M3",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 83.45959595959596,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://rn-evals.vercel.app/",
+        "retrieved_at": "2026-09-21T20:32:45.098128+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/44177e508aa4b210b607.gz",
+        "sha256": "44177e508aa4b210b607a99c44f7aaea9c6f86d1a91016b0e2f46bc6d19fe812",
+        "locator": "rn_evals_board; source row 15; minimax-m3; field value"
+      },
+      "protocol": "React Native Evals (Callstack): 91 React Native code-generation evals in six groups (navigation, animation, async state, lists, React Native APIs, Skia); each model solves every eval through OpenCode, repeated over the board's stated number of runs; an LLM judge checks the generated files against each eval's written requirements (optional weights); value = the board's overall score in percent, which equals requirements passed / requirements judged over all evals and runs for every row with the full requirement count (errored evals are not judged; for a row with fewer judged requirements the board's figure differs from that ratio by at most 0.1 points); the board names models by product name and gateway route and states no reasoning setting; the judge model is not named on the board; source row: {\"solver_model\":\"vercel/minimax/minimax-m3\",\"requirements_passed\":3305,\"requirements_judged\":3960,\"requirements_judged_most\":3960,\"tokens_used\":1117756,\"cost_usd\":5.5976172,\"repeat_runs\":10,\"run_finished_at\":\"2026-09-17T11:25:53.630Z\",\"judge_model_stated\":\"unknown\",\"stated_effort\":\"not stated\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/callstackincubator/evals/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/6d9a19b55ceedc325187.gz",
+          "sha256": "6d9a19b55ceedc3251874d39a5ba64dfd45ee6afaae2117f117915551b7461ab",
+          "retrieved_at": "2026-09-21T20:32:47.849503+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:381d667a637d0fe490da4c97",
+      "benchmark_id": "react-native-evals::91-evals",
+      "subject": {
+        "source_id": "kimi-k2.6",
+        "name": "Kimi K2.6",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 82.92929292929291,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://rn-evals.vercel.app/",
+        "retrieved_at": "2026-09-21T20:32:45.098128+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/44177e508aa4b210b607.gz",
+        "sha256": "44177e508aa4b210b607a99c44f7aaea9c6f86d1a91016b0e2f46bc6d19fe812",
+        "locator": "rn_evals_board; source row 16; kimi-k2.6; field value"
+      },
+      "protocol": "React Native Evals (Callstack): 91 React Native code-generation evals in six groups (navigation, animation, async state, lists, React Native APIs, Skia); each model solves every eval through OpenCode, repeated over the board's stated number of runs; an LLM judge checks the generated files against each eval's written requirements (optional weights); value = the board's overall score in percent, which equals requirements passed / requirements judged over all evals and runs for every row with the full requirement count (errored evals are not judged; for a row with fewer judged requirements the board's figure differs from that ratio by at most 0.1 points); the board names models by product name and gateway route and states no reasoning setting; the judge model is not named on the board; source row: {\"solver_model\":\"vercel/moonshotai/kimi-k2.6\",\"requirements_passed\":3284,\"requirements_judged\":3960,\"requirements_judged_most\":3960,\"tokens_used\":null,\"cost_usd\":null,\"repeat_runs\":10,\"run_finished_at\":\"2026-09-17T11:25:53.630Z\",\"judge_model_stated\":\"unknown\",\"stated_effort\":\"not stated\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/callstackincubator/evals/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/6d9a19b55ceedc325187.gz",
+          "sha256": "6d9a19b55ceedc3251874d39a5ba64dfd45ee6afaae2117f117915551b7461ab",
+          "retrieved_at": "2026-09-21T20:32:47.849503+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:233ff55744c8c6e332cfbe90",
+      "benchmark_id": "react-native-evals::91-evals",
+      "subject": {
+        "source_id": "gemini-3.5-flash",
+        "name": "Gemini 3.5 Flash",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 82.30095068330363,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://rn-evals.vercel.app/",
+        "retrieved_at": "2026-09-21T20:32:45.098128+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/44177e508aa4b210b607.gz",
+        "sha256": "44177e508aa4b210b607a99c44f7aaea9c6f86d1a91016b0e2f46bc6d19fe812",
+        "locator": "rn_evals_board; source row 17; gemini-3.5-flash; field value"
+      },
+      "protocol": "React Native Evals (Callstack): 91 React Native code-generation evals in six groups (navigation, animation, async state, lists, React Native APIs, Skia); each model solves every eval through OpenCode, repeated over the board's stated number of runs; an LLM judge checks the generated files against each eval's written requirements (optional weights); value = the board's overall score in percent, which equals requirements passed / requirements judged over all evals and runs for every row with the full requirement count (errored evals are not judged; for a row with fewer judged requirements the board's figure differs from that ratio by at most 0.1 points); the board names models by product name and gateway route and states no reasoning setting; the judge model is not named on the board; source row: {\"solver_model\":\"vercel/google/gemini-3.5-flash\",\"requirements_passed\":3255,\"requirements_judged\":3955,\"requirements_judged_most\":3960,\"tokens_used\":1566841,\"cost_usd\":33.673528499999996,\"repeat_runs\":10,\"run_finished_at\":\"2026-09-17T11:25:53.630Z\",\"judge_model_stated\":\"unknown\",\"stated_effort\":\"not stated\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/callstackincubator/evals/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/6d9a19b55ceedc325187.gz",
+          "sha256": "6d9a19b55ceedc3251874d39a5ba64dfd45ee6afaae2117f117915551b7461ab",
+          "retrieved_at": "2026-09-21T20:32:47.849503+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:9f1b5f1ad4b21058e702d4f6",
+      "benchmark_id": "react-native-evals::91-evals",
+      "subject": {
+        "source_id": "gemma-4-31B-it",
+        "name": "Gemma 4 31B It",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 80.58080808080807,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://rn-evals.vercel.app/",
+        "retrieved_at": "2026-09-21T20:32:45.098128+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/44177e508aa4b210b607.gz",
+        "sha256": "44177e508aa4b210b607a99c44f7aaea9c6f86d1a91016b0e2f46bc6d19fe812",
+        "locator": "rn_evals_board; source row 18; gemma-4-31B-it; field value"
+      },
+      "protocol": "React Native Evals (Callstack): 91 React Native code-generation evals in six groups (navigation, animation, async state, lists, React Native APIs, Skia); each model solves every eval through OpenCode, repeated over the board's stated number of runs; an LLM judge checks the generated files against each eval's written requirements (optional weights); value = the board's overall score in percent, which equals requirements passed / requirements judged over all evals and runs for every row with the full requirement count (errored evals are not judged; for a row with fewer judged requirements the board's figure differs from that ratio by at most 0.1 points); the board names models by product name and gateway route and states no reasoning setting; the judge model is not named on the board; source row: {\"solver_model\":\"llama.cpp/google/gemma-4-31B-it\",\"requirements_passed\":3191,\"requirements_judged\":3960,\"requirements_judged_most\":3960,\"tokens_used\":1104115,\"cost_usd\":1.8776341400000003,\"repeat_runs\":10,\"run_finished_at\":\"2026-09-17T11:25:53.630Z\",\"judge_model_stated\":\"unknown\",\"stated_effort\":\"not stated\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/callstackincubator/evals/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/6d9a19b55ceedc325187.gz",
+          "sha256": "6d9a19b55ceedc3251874d39a5ba64dfd45ee6afaae2117f117915551b7461ab",
+          "retrieved_at": "2026-09-21T20:32:47.849503+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:1959d515e5e19948a4310cb2",
+      "benchmark_id": "react-native-evals::91-evals",
+      "subject": {
+        "source_id": "DeepSeek-v4-flash",
+        "name": "DeepSeek V4 Flash",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 80.42929292929293,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://rn-evals.vercel.app/",
+        "retrieved_at": "2026-09-21T20:32:45.098128+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/44177e508aa4b210b607.gz",
+        "sha256": "44177e508aa4b210b607a99c44f7aaea9c6f86d1a91016b0e2f46bc6d19fe812",
+        "locator": "rn_evals_board; source row 19; DeepSeek-v4-flash; field value"
+      },
+      "protocol": "React Native Evals (Callstack): 91 React Native code-generation evals in six groups (navigation, animation, async state, lists, React Native APIs, Skia); each model solves every eval through OpenCode, repeated over the board's stated number of runs; an LLM judge checks the generated files against each eval's written requirements (optional weights); value = the board's overall score in percent, which equals requirements passed / requirements judged over all evals and runs for every row with the full requirement count (errored evals are not judged; for a row with fewer judged requirements the board's figure differs from that ratio by at most 0.1 points); the board names models by product name and gateway route and states no reasoning setting; the judge model is not named on the board; source row: {\"solver_model\":\"vercel/deepseek/deepseek-v4-flash\",\"requirements_passed\":3185,\"requirements_judged\":3960,\"requirements_judged_most\":3960,\"tokens_used\":null,\"cost_usd\":null,\"repeat_runs\":10,\"run_finished_at\":\"2026-09-17T11:25:53.630Z\",\"judge_model_stated\":\"unknown\",\"stated_effort\":\"not stated\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/callstackincubator/evals/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/6d9a19b55ceedc325187.gz",
+          "sha256": "6d9a19b55ceedc3251874d39a5ba64dfd45ee6afaae2117f117915551b7461ab",
+          "retrieved_at": "2026-09-21T20:32:47.849503+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:60111d0a889202a7fa884df3",
+      "benchmark_id": "react-native-evals::91-evals",
+      "subject": {
+        "source_id": "mimo-v2.5-pro",
+        "name": "Mimo V2.5 Pro",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 80.37878787878788,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://rn-evals.vercel.app/",
+        "retrieved_at": "2026-09-21T20:32:45.098128+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/44177e508aa4b210b607.gz",
+        "sha256": "44177e508aa4b210b607a99c44f7aaea9c6f86d1a91016b0e2f46bc6d19fe812",
+        "locator": "rn_evals_board; source row 20; mimo-v2.5-pro; field value"
+      },
+      "protocol": "React Native Evals (Callstack): 91 React Native code-generation evals in six groups (navigation, animation, async state, lists, React Native APIs, Skia); each model solves every eval through OpenCode, repeated over the board's stated number of runs; an LLM judge checks the generated files against each eval's written requirements (optional weights); value = the board's overall score in percent, which equals requirements passed / requirements judged over all evals and runs for every row with the full requirement count (errored evals are not judged; for a row with fewer judged requirements the board's figure differs from that ratio by at most 0.1 points); the board names models by product name and gateway route and states no reasoning setting; the judge model is not named on the board; source row: {\"solver_model\":\"vercel/xiaomi/mimo-v2.5-pro\",\"requirements_passed\":3183,\"requirements_judged\":3960,\"requirements_judged_most\":3960,\"tokens_used\":2529272,\"cost_usd\":8.148398685000002,\"repeat_runs\":10,\"run_finished_at\":\"2026-09-17T11:25:53.630Z\",\"judge_model_stated\":\"unknown\",\"stated_effort\":\"not stated\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/callstackincubator/evals/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/6d9a19b55ceedc325187.gz",
+          "sha256": "6d9a19b55ceedc3251874d39a5ba64dfd45ee6afaae2117f117915551b7461ab",
+          "retrieved_at": "2026-09-21T20:32:47.849503+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:d865953b3795f0a6d7a490f9",
+      "benchmark_id": "react-native-evals::91-evals",
+      "subject": {
+        "source_id": "GPT-OSS-120B",
+        "name": "GPT OSS 120B",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 75.52105566591705,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://rn-evals.vercel.app/",
+        "retrieved_at": "2026-09-21T20:32:45.098128+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/44177e508aa4b210b607.gz",
+        "sha256": "44177e508aa4b210b607a99c44f7aaea9c6f86d1a91016b0e2f46bc6d19fe812",
+        "locator": "rn_evals_board; source row 21; GPT-OSS-120B; field value"
+      },
+      "protocol": "React Native Evals (Callstack): 91 React Native code-generation evals in six groups (navigation, animation, async state, lists, React Native APIs, Skia); each model solves every eval through OpenCode, repeated over the board's stated number of runs; an LLM judge checks the generated files against each eval's written requirements (optional weights); value = the board's overall score in percent, which equals requirements passed / requirements judged over all evals and runs for every row with the full requirement count (errored evals are not judged; for a row with fewer judged requirements the board's figure differs from that ratio by at most 0.1 points); the board names models by product name and gateway route and states no reasoning setting; the judge model is not named on the board; source row: {\"solver_model\":\"cloudflare-ai-gateway/workers-ai/@cf/openai/gpt-oss-120b\",\"requirements_passed\":2582,\"requirements_judged\":3420,\"requirements_judged_most\":3960,\"tokens_used\":1184043,\"cost_usd\":3.4373814100000004,\"repeat_runs\":10,\"run_finished_at\":\"2026-09-17T11:25:53.630Z\",\"judge_model_stated\":\"unknown\",\"stated_effort\":\"not stated\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/callstackincubator/evals/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/6d9a19b55ceedc325187.gz",
+          "sha256": "6d9a19b55ceedc3251874d39a5ba64dfd45ee6afaae2117f117915551b7461ab",
+          "retrieved_at": "2026-09-21T20:32:47.849503+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:fd7add6549e00630cf4afd83",
+      "benchmark_id": "react-native-evals::91-evals",
+      "subject": {
+        "source_id": "GPT-OSS-20B",
+        "name": "GPT OSS 20B",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 73.87768669463215,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://rn-evals.vercel.app/",
+        "retrieved_at": "2026-09-21T20:32:45.098128+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/44177e508aa4b210b607.gz",
+        "sha256": "44177e508aa4b210b607a99c44f7aaea9c6f86d1a91016b0e2f46bc6d19fe812",
+        "locator": "rn_evals_board; source row 22; GPT-OSS-20B; field value"
+      },
+      "protocol": "React Native Evals (Callstack): 91 React Native code-generation evals in six groups (navigation, animation, async state, lists, React Native APIs, Skia); each model solves every eval through OpenCode, repeated over the board's stated number of runs; an LLM judge checks the generated files against each eval's written requirements (optional weights); value = the board's overall score in percent, which equals requirements passed / requirements judged over all evals and runs for every row with the full requirement count (errored evals are not judged; for a row with fewer judged requirements the board's figure differs from that ratio by at most 0.1 points); the board names models by product name and gateway route and states no reasoning setting; the judge model is not named on the board; source row: {\"solver_model\":\"cloudflare-ai-gateway/workers-ai/@cf/openai/gpt-oss-20b\",\"requirements_passed\":2676,\"requirements_judged\":3622,\"requirements_judged_most\":3960,\"tokens_used\":1150382,\"cost_usd\":1.2488267000000002,\"repeat_runs\":10,\"run_finished_at\":\"2026-09-17T11:25:53.630Z\",\"judge_model_stated\":\"unknown\",\"stated_effort\":\"not stated\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/callstackincubator/evals/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/6d9a19b55ceedc325187.gz",
+          "sha256": "6d9a19b55ceedc3251874d39a5ba64dfd45ee6afaae2117f117915551b7461ab",
+          "retrieved_at": "2026-09-21T20:32:47.849503+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:52a87e7911a0a1878feacae4",
+      "benchmark_id": "react-native-evals::91-evals",
+      "subject": {
+        "source_id": "mistral-large-3",
+        "name": "Mistral Large 3",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 72.77777777777777,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://rn-evals.vercel.app/",
+        "retrieved_at": "2026-09-21T20:32:45.098128+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/44177e508aa4b210b607.gz",
+        "sha256": "44177e508aa4b210b607a99c44f7aaea9c6f86d1a91016b0e2f46bc6d19fe812",
+        "locator": "rn_evals_board; source row 23; mistral-large-3; field value"
+      },
+      "protocol": "React Native Evals (Callstack): 91 React Native code-generation evals in six groups (navigation, animation, async state, lists, React Native APIs, Skia); each model solves every eval through OpenCode, repeated over the board's stated number of runs; an LLM judge checks the generated files against each eval's written requirements (optional weights); value = the board's overall score in percent, which equals requirements passed / requirements judged over all evals and runs for every row with the full requirement count (errored evals are not judged; for a row with fewer judged requirements the board's figure differs from that ratio by at most 0.1 points); the board names models by product name and gateway route and states no reasoning setting; the judge model is not named on the board; source row: {\"solver_model\":\"vercel/mistral/mistral-large-3\",\"requirements_passed\":2882,\"requirements_judged\":3960,\"requirements_judged_most\":3960,\"tokens_used\":3019926,\"cost_usd\":16.176770500000003,\"repeat_runs\":10,\"run_finished_at\":\"2026-09-17T11:25:53.630Z\",\"judge_model_stated\":\"unknown\",\"stated_effort\":\"not stated\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/callstackincubator/evals/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/6d9a19b55ceedc325187.gz",
+          "sha256": "6d9a19b55ceedc3251874d39a5ba64dfd45ee6afaae2117f117915551b7461ab",
+          "retrieved_at": "2026-09-21T20:32:47.849503+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:959d9f93786d8627515d5731",
+      "benchmark_id": "react-native-evals::91-evals",
+      "subject": {
+        "source_id": "Nemotron-3-Ultra-550B",
+        "name": "Nemotron 3 Ultra 550B",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 67.57575757575758,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://rn-evals.vercel.app/",
+        "retrieved_at": "2026-09-21T20:32:45.098128+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/44177e508aa4b210b607.gz",
+        "sha256": "44177e508aa4b210b607a99c44f7aaea9c6f86d1a91016b0e2f46bc6d19fe812",
+        "locator": "rn_evals_board; source row 24; Nemotron-3-Ultra-550B; field value"
+      },
+      "protocol": "React Native Evals (Callstack): 91 React Native code-generation evals in six groups (navigation, animation, async state, lists, React Native APIs, Skia); each model solves every eval through OpenCode, repeated over the board's stated number of runs; an LLM judge checks the generated files against each eval's written requirements (optional weights); value = the board's overall score in percent, which equals requirements passed / requirements judged over all evals and runs for every row with the full requirement count (errored evals are not judged; for a row with fewer judged requirements the board's figure differs from that ratio by at most 0.1 points); the board names models by product name and gateway route and states no reasoning setting; the judge model is not named on the board; source row: {\"solver_model\":\"vercel/nvidia/nemotron-3-ultra-550b-a55b\",\"requirements_passed\":2676,\"requirements_judged\":3960,\"requirements_judged_most\":3960,\"tokens_used\":null,\"cost_usd\":null,\"repeat_runs\":10,\"run_finished_at\":\"2026-09-17T11:25:53.630Z\",\"judge_model_stated\":\"unknown\",\"stated_effort\":\"not stated\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/callstackincubator/evals/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/6d9a19b55ceedc325187.gz",
+          "sha256": "6d9a19b55ceedc3251874d39a5ba64dfd45ee6afaae2117f117915551b7461ab",
+          "retrieved_at": "2026-09-21T20:32:47.849503+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:c82a4f05d501faabf2c2be7e",
+      "benchmark_id": "react-native-evals::91-evals",
+      "subject": {
+        "source_id": "Nemotron-3-Super-120B",
+        "name": "Nemotron 3 Super 120B",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 57.97979797979798,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://rn-evals.vercel.app/",
+        "retrieved_at": "2026-09-21T20:32:45.098128+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/44177e508aa4b210b607.gz",
+        "sha256": "44177e508aa4b210b607a99c44f7aaea9c6f86d1a91016b0e2f46bc6d19fe812",
+        "locator": "rn_evals_board; source row 25; Nemotron-3-Super-120B; field value"
+      },
+      "protocol": "React Native Evals (Callstack): 91 React Native code-generation evals in six groups (navigation, animation, async state, lists, React Native APIs, Skia); each model solves every eval through OpenCode, repeated over the board's stated number of runs; an LLM judge checks the generated files against each eval's written requirements (optional weights); value = the board's overall score in percent, which equals requirements passed / requirements judged over all evals and runs for every row with the full requirement count (errored evals are not judged; for a row with fewer judged requirements the board's figure differs from that ratio by at most 0.1 points); the board names models by product name and gateway route and states no reasoning setting; the judge model is not named on the board; source row: {\"solver_model\":\"vercel/nvidia/nemotron-3-super-120b-a12b\",\"requirements_passed\":2296,\"requirements_judged\":3960,\"requirements_judged_most\":3960,\"tokens_used\":null,\"cost_usd\":null,\"repeat_runs\":10,\"run_finished_at\":\"2026-09-17T11:25:53.630Z\",\"judge_model_stated\":\"unknown\",\"stated_effort\":\"not stated\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/callstackincubator/evals/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/6d9a19b55ceedc325187.gz",
+          "sha256": "6d9a19b55ceedc3251874d39a5ba64dfd45ee6afaae2117f117915551b7461ab",
+          "retrieved_at": "2026-09-21T20:32:47.849503+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:4c0d900d86cec37d592301e2",
+      "benchmark_id": "react-native-evals::91-evals",
+      "subject": {
+        "source_id": "Nemotron-Nano",
+        "name": "Nemotron Nano",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 43.58585858585858,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://rn-evals.vercel.app/",
+        "retrieved_at": "2026-09-21T20:32:45.098128+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/44177e508aa4b210b607.gz",
+        "sha256": "44177e508aa4b210b607a99c44f7aaea9c6f86d1a91016b0e2f46bc6d19fe812",
+        "locator": "rn_evals_board; source row 26; Nemotron-Nano; field value"
+      },
+      "protocol": "React Native Evals (Callstack): 91 React Native code-generation evals in six groups (navigation, animation, async state, lists, React Native APIs, Skia); each model solves every eval through OpenCode, repeated over the board's stated number of runs; an LLM judge checks the generated files against each eval's written requirements (optional weights); value = the board's overall score in percent, which equals requirements passed / requirements judged over all evals and runs for every row with the full requirement count (errored evals are not judged; for a row with fewer judged requirements the board's figure differs from that ratio by at most 0.1 points); the board names models by product name and gateway route and states no reasoning setting; the judge model is not named on the board; source row: {\"solver_model\":\"vercel/nvidia/nemotron-3-nano-30b-a3b\",\"requirements_passed\":1726,\"requirements_judged\":3960,\"requirements_judged_most\":3960,\"tokens_used\":null,\"cost_usd\":null,\"repeat_runs\":10,\"run_finished_at\":\"2026-09-17T11:25:53.630Z\",\"judge_model_stated\":\"unknown\",\"stated_effort\":\"not stated\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/callstackincubator/evals/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/6d9a19b55ceedc325187.gz",
+          "sha256": "6d9a19b55ceedc3251874d39a5ba64dfd45ee6afaae2117f117915551b7461ab",
+          "retrieved_at": "2026-09-21T20:32:47.849503+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
     }
   ],
   "collections": [
@@ -274564,6 +275482,12 @@
       "status": "collected",
       "source_url": "https://zli12321.github.io/LHTB/script.js",
       "reason": "22 source results parsed; configurations remain separate; unmatched model identities are retained."
+    },
+    {
+      "benchmark_id": "react-native-evals::91-evals",
+      "status": "collected",
+      "source_url": "https://rn-evals.vercel.app/",
+      "reason": "27 source results parsed; configurations remain separate; unmatched model identities are retained."
     }
   ],
   "rejected": [

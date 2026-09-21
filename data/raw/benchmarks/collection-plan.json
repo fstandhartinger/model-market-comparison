@@ -5017,6 +5017,105 @@
         "https://zli12321.github.io/LHTB/script.js",
         "https://zli12321.github.io/LHTB/leaderboard.html"
       ]
+    },
+    {
+      "benchmark_id": "react-native-evals::91-evals",
+      "parser": {
+        "kind": "rn_evals_board",
+        "name_field": "name",
+        "id_field": "id",
+        "value_field": "value",
+        "plain_text_names": true,
+        "method_source": {
+          "url": "https://raw.githubusercontent.com/callstackincubator/evals/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/6d9a19b55ceedc325187.gz",
+          "sha256": "6d9a19b55ceedc3251874d39a5ba64dfd45ee6afaae2117f117915551b7461ab",
+          "retrieved_at": "2026-09-21T20:32:47.849503+00:00"
+        },
+        "require": {
+          "page_text": [
+            "AI Agent Evaluations for React Native",
+            "Performance results of AI coding agents on React Native code generation tasks, measuring success rate for common task groups, token usage, and cost."
+          ],
+          "method_text": [
+            "The benchmark evaluates model-generated React Native implementations using requirement-based assessment.",
+            "Model outputs are judged against these requirements using file-level evidence"
+          ],
+          "board_keys": [
+            "categories",
+            "judgeModel",
+            "runStartedAt",
+            "runFinishedAt",
+            "runCount",
+            "warnings",
+            "models",
+            "evalMatrixById"
+          ],
+          "categories": [
+            [
+              "navigation",
+              13
+            ],
+            [
+              "animation",
+              13
+            ],
+            [
+              "async-state",
+              13
+            ],
+            [
+              "lists",
+              18
+            ],
+            [
+              "react-native-apis",
+              9
+            ],
+            [
+              "skia",
+              25
+            ]
+          ],
+          "row_keys": [
+            "id",
+            "label",
+            "solverModel",
+            "overallScorePct",
+            "requirementsPassed",
+            "requirementsTotal",
+            "tokensUsed",
+            "costUsd",
+            "categories"
+          ],
+          "pct_tolerance": 1e-09,
+            "incomplete_pct_tolerance": 0.1
+        }
+      },
+      "status": "collected",
+      "reason": "Callstack's React Native Evals board: every model row with its requirement pass rate over the 91-eval suite, re-derived from the row's own counts.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-rn-evals; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "Next.js flight payload (JSON in the server-rendered page)",
+        "locator": "The Next.js flight payload of rn-evals.vercel.app (the `self.__next_f.push([1, \"...\"])` chunks the page streams with its HTML): one board object {categories, judgeModel, runStartedAt, runFinishedAt, runCount, warnings, models, evalMatrixById}; `models[]` rows {id, label, solverModel, overallScorePct, requirementsPassed, requirementsTotal, tokensUsed, costUsd, categories} — the rows the page's chart and table render. The value is overallScorePct (requirements passed / requirements judged, summed over every eval and every repeat run).",
+        "version_guard": "The page must still describe AI coding agents on React Native code-generation tasks measured by success rate per task group; the board object must keep its schema and exactly the six eval groups navigation 13, animation 13, async-state 13, lists 18, react-native-apis 9 and skia 25 (91 evals); every row's overallScorePct must reproduce requirementsPassed / requirementsTotal x 100, ids and labels unique, no board warnings; the repository README must still describe requirement-based assessment judged against file-level evidence. Another group set or eval count is a new identity, never a silent update of this one.",
+        "notes": "Vercel-hosted page; robots.txt 404 (conventional access). Repository MIT. Check the shared source cooldown first; stop on 403, 429, challenges or unexpected content. One capture per day."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "The page must still describe AI coding agents on React Native code-generation tasks measured by success rate per task group; the board object must keep its schema and exactly the six eval groups navigation 13, animation 13, async-state 13, lists 18, react-native-apis 9 and skia 25 (91 evals); every row's overallScorePct must reproduce requirementsPassed / requirementsTotal x 100, ids and labels unique, no board warnings; the repository README must still describe requirement-based assessment judged against file-level evidence. Another group set or eval count is a new identity, never a silent update of this one.",
+      "source": {
+        "url": "https://rn-evals.vercel.app/",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/44177e508aa4b210b607.gz",
+        "sha256": "44177e508aa4b210b607a99c44f7aaea9c6f86d1a91016b0e2f46bc6d19fe812",
+        "retrieved_at": "2026-09-21T20:32:45.098128+00:00"
+      },
+      "protocol": "React Native Evals (Callstack): 91 React Native code-generation evals in six groups (navigation, animation, async state, lists, React Native APIs, Skia); each model solves every eval through OpenCode, repeated over the board's stated number of runs; an LLM judge checks the generated files against each eval's written requirements (optional weights); value = the board's overall score in percent, which equals requirements passed / requirements judged over all evals and runs for every row with the full requirement count (errored evals are not judged; for a row with fewer judged requirements the board's figure differs from that ratio by at most 0.1 points); the board names models by product name and gateway route and states no reasoning setting; the judge model is not named on the board",
+      "basis": "measured",
+      "minimum_rows": 20,
+      "source_urls": [
+        "https://rn-evals.vercel.app/",
+        "https://raw.githubusercontent.com/callstackincubator/evals/main/README.md"
+      ]
     }
   ]
 }

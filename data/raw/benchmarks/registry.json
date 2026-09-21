@@ -14029,6 +14029,76 @@
           "excerpt": "const N_TASKS = 46; … const COMMUNITY = LB.map((d) => ({ agent: \"Terminus-2\", name: d.name, … date: \"2026-07-01\", verified: true }));"
         }
       ]
+    },
+    {
+      "id": "react-native-evals::91-evals",
+      "name": "React Native Evals",
+      "version": "91-evals",
+      "version_status": "published",
+      "family": "react-native-evals",
+      "category": "Coding",
+      "one_sentence_description": "Coding agents build React Native app features — navigation, animation, async state, lists, native APIs and Skia graphics — and an LLM judge checks the generated code against each task's written requirements.",
+      "scoring": {
+        "metric": "The board's overall score in percent: the share of requirements met, summed over all 91 evals and every repeat run (an LLM judge decides each requirement against the generated files)",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Each eval gives the model a small React Native app and a task prompt; the model solves it through OpenCode and a judge model reads the generated files against the eval's requirements.yaml (plain-language requirements, optional weights). The board repeats the whole suite (10 runs in the 2026-09-21 capture) and scores the summed requirement counts, and every row with the full requirement count reproduces its score exactly from its own passed and judged counts. Errored evals are not judged: a row can rest on fewer judged requirements than the board's largest (GPT OSS 120B: 3,420 of 3,960 on 2026-09-21), and for such rows the board's figure differs from the plain ratio by up to 0.03 points on 2026-09-21 (the collector accepts at most 0.1); both counts stay in each row's protocol, with tokens and cost where the board reports them. The judge model is not named on the board. The board names models by product name and gateway route and states no reasoning setting. Judged benchmark (an LLM judge rates requirement fulfilment, no ground-truth answer); secondary, never a Composite input."
+      },
+      "maintainer": "Callstack (callstackincubator/evals)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://rn-evals.vercel.app/",
+      "publication_urls": [
+        {
+          "url": "https://rn-evals.vercel.app/",
+          "type": "official_leaderboard",
+          "role": "Leaderboard (chart, table and cost views)"
+        },
+        {
+          "url": "https://github.com/callstackincubator/evals",
+          "type": "github",
+          "role": "Evals, runner, judge and methodology whitepaper (MIT)"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-rn-evals; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "Next.js flight payload (JSON in the server-rendered page)",
+        "locator": "The Next.js flight payload of rn-evals.vercel.app (the `self.__next_f.push([1, \"...\"])` chunks the page streams with its HTML): one board object {categories, judgeModel, runStartedAt, runFinishedAt, runCount, warnings, models, evalMatrixById}; `models[]` rows {id, label, solverModel, overallScorePct, requirementsPassed, requirementsTotal, tokensUsed, costUsd, categories} — the rows the page's chart and table render. The value is overallScorePct (requirements passed / requirements judged, summed over every eval and every repeat run).",
+        "version_guard": "The page must still describe AI coding agents on React Native code-generation tasks measured by success rate per task group; the board object must keep its schema and exactly the six eval groups navigation 13, animation 13, async-state 13, lists 18, react-native-apis 9 and skia 25 (91 evals); every row's overallScorePct must reproduce requirementsPassed / requirementsTotal x 100, ids and labels unique, no board warnings; the repository README must still describe requirement-based assessment judged against file-level evidence. Another group set or eval count is a new identity, never a silent update of this one.",
+        "identity_policy": "source_label",
+        "notes": "Measured by Callstack, who run every model themselves through OpenCode and judge the output with an LLM. The board names models by product name and a gateway route (e.g. vercel/openai/gpt-5.6-sol) and states no reasoning setting, so under the exact-join policy only a family the catalog holds as a single default configuration joins; every other row stays visible as named by the source. Rows that are agents rather than models (Callstack's own Apex) or unnamed stealth models (Ox Alpha) never join. robots.txt 404 (Vercel); repository MIT — scores with attribution to Callstack and a link to the board. Joins: data/raw/benchmarks/identity-map.json (lib/board-identity.mjs parseRnEvalsLabel)."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated; the page shows the last run date (2026-09-17 in the 2026-09-21 capture) and the repository changes as evals are added.",
+        "check_recommendation": "Daily with the ordinary refresh; a changed eval group set or eval count is a new identity and needs a reviewed change."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Best overall score 90.9 % (Callstack's Apex agent) and 90.8 % (Claude Opus 5) on 2026-09-21; the lower half of the board spans 44–84 %. Computed saturation (CR-38.2) applies on build."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-21",
+      "last_verified": "2026-09-21",
+      "evidence": [
+        {
+          "url": "https://rn-evals.vercel.app/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/44177e508aa4b210b607.gz",
+          "sha256": "b591ee1d8f85e0b4d9086b12fed18591639bc567a0985b88dcb3f20874d540b6",
+          "fetched_at": "2026-09-21T20:32:45.098128+00:00",
+          "excerpt": "AI Agent Evaluations for React Native — Performance results of AI coding agents on React Native code generation tasks, measuring success rate for common task groups, token usage, and cost. … Last run: September 17, 2026 · 10 x Runs · Build by Callstack"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/callstackincubator/evals/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/6d9a19b55ceedc325187.gz",
+          "sha256": "b987f51ec244890c3b63409729f88d555d784f79fc2ccd4c74882eeaae32afd8",
+          "fetched_at": "2026-09-21T20:32:47.849503+00:00",
+          "excerpt": "The benchmark evaluates model-generated React Native implementations using requirement-based assessment. … Model outputs are judged against these requirements using file-level evidence"
+        }
+      ]
     }
   ],
   "aa_field_map": [

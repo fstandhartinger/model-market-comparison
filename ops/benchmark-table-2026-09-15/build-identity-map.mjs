@@ -4,7 +4,7 @@
 // ops/benchmark-table-2026-09-15/identity-map-review.json. Review the diff of both files before committing.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { identityJoins, parseDeepSweId, parseScaleLabel, parseFrontierCodeId, parseCursorBenchLabel, parseSweBenchProLabel } from '../../lib/coding-identity.mjs';
-import { boardJoins, parseBullshitBenchId, parseApprenticeBenchId, parseValsIndexId, parseOsworld2Id, parseMathArenaLabel, parseWeirdmlV3Label, parseSweRebenchLabel, parseGsoId, parseHyperTauId, parseLisanBenchId, parseVulcanbenchFrontierLabel, parseKernelbenchCudaLabel, parseFrontiersweV2Label, parsePosttrainbenchLabel, parseRsiExamLabel, parseToolathlonVerifiedLabel, parseToolathlonArchiveLabel, parseProgrambenchLabel, parseMcpAtlasLabel, livebenchJoins, parseContextArenaId, parseBlueprintBenchLabel, parseLhtbLabel } from '../../lib/board-identity.mjs';
+import { boardJoins, parseBullshitBenchId, parseApprenticeBenchId, parseValsIndexId, parseOsworld2Id, parseMathArenaLabel, parseWeirdmlV3Label, parseSweRebenchLabel, parseGsoId, parseHyperTauId, parseLisanBenchId, parseVulcanbenchFrontierLabel, parseKernelbenchCudaLabel, parseFrontiersweV2Label, parsePosttrainbenchLabel, parseRsiExamLabel, parseToolathlonVerifiedLabel, parseToolathlonArchiveLabel, parseProgrambenchLabel, parseMcpAtlasLabel, livebenchJoins, parseContextArenaId, parseBlueprintBenchLabel, parseLhtbLabel, parseRnEvalsLabel } from '../../lib/board-identity.mjs';
 
 const BOARDS = [
   { prefix: 'deepswe::', parse: parseDeepSweId, basis: 'measured' },
@@ -86,6 +86,9 @@ const BOARDS = [
   // 2026-09-21 (iteration 157, CR-37.1): Long-Horizon Terminal-Bench community board, product names without any
   // setting (Terminus-2 harness); only single-default-configuration families join.
   { prefix: 'long-horizon-terminal-bench::', parse: parseLhtbLabel, join: boardJoins, basis: 'measured' },
+  // 2026-09-21 (iteration 158, CR-37.1): Callstack's React Native Evals, product-name labels with a gateway route and
+  // no setting; only single-default-configuration families join.
+  { prefix: 'react-native-evals::', parse: parseRnEvalsLabel, join: boardJoins, basis: 'measured' },
   // 2026-09-20 (iteration 139, CR-85.2): LiveBench release CSV slugs — `<family>-<effort>` and
   // Anthropic's `<family>-<effort>-effort>`; catalog-aware name-first resolution (Qwen "Max" is a
   // name), dated checkpoints and the unreviewed "thinking" setting refused (lib/board-identity.mjs).

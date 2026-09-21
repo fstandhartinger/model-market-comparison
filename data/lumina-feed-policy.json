@@ -768,6 +768,13 @@
       "decision": "excluded",
       "reason": "2026-09-21 (iteration 157): Gert Labs' rankings page (gertlabs.com/rankings) is a client app that loads its data only from /api/v1/global/rankings, and gertlabs.com/robots.txt disallows /api/ for every user agent — the DesignArena precedent (CR-34.5): not collected without the operator's permission."
     },
+    "benchlm-reactnativeevals": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "react-native-evals::91-evals"
+      ],
+      "note": "2026-09-21 (iteration 158): Callstack's own board (rn-evals.vercel.app, data/SCRAPING.md) is collected daily. Lumina's 48 cited values are aggregator copies and estimates; ours are the board's own rows."
+    },
     "frontiermath": {
       "decision": "in_registry",
       "benchmark_ids": [

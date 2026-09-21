@@ -38,6 +38,9 @@ const SLUG_BOARDS = ['osworld-2', 'swe-rebench', 'gso', 'hyper-tau-bench', 'lisa
   // 2026-09-21 (iteration 157, CR-37.1): Long-Horizon Terminal-Bench's community board, product names with no
   // setting (lib/board-identity.mjs parseLhtbLabel).
   'long-horizon-terminal-bench',
+  // 2026-09-21 (iteration 158, CR-37.1): Callstack's React Native Evals, product names with no setting
+  // (lib/board-identity.mjs parseRnEvalsLabel).
+  'react-native-evals',
   // 2026-09-19 (iteration 115, CR-54.2): six boards from Epoch AI's Benchmarking Hub ZIP, slug labels joined by
   // the same lib/coding-identity.mjs parseDeepSweId rule as DeepSWE/SimpleQA Verified. math_level_5 and
   // frontiermath_erdos stay excluded; recorded in data/raw/benchmarks/epoch-hub-decisions.json.

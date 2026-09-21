@@ -136,6 +136,11 @@
       "quote": "evaluation necessarily relies on an LLM judge",
       "field": "evidence.excerpt",
       "why": "An LLM judge scores each response 0–2 by how it handles the false statement; there is no rule-based verifier."
+    },
+    "react-native-evals": {
+      "quote": "an LLM judge decides each requirement against the generated files",
+      "field": "scoring.metric",
+      "why": "No reference solution or test decides: a judge model reads the generated code and rules each plain-language requirement met or not (requirements.yaml, the repository's LLM Judge Methodology), and the board's score is the share it rules met."
     }
   },
   "considered_not_judged": {

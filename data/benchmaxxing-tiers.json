@@ -327,6 +327,10 @@
     "long-horizon-terminal-bench": {
       "tier": "secondary",
       "reason": "The 46 task environments are public on Hugging Face (Apache-2.0) while the verifiers that grade them stay hidden, and the maintainers replay every submitted run themselves; the board is a lab's (Tencent HY) own report with its model Hy3 among the rows, and our self-reported corpus holds no Long-Horizon Terminal-Bench row, so it is not evidenced as a board labs quote in release material."
+    },
+    "react-native-evals": {
+      "tier": "judged",
+      "reason": "An LLM judge rules each written requirement met or not against the generated code; a judge's ruling, not a test or reference answer, is the score."
     }
   }
 }

@@ -947,6 +947,46 @@ def parse(source,spec,load_source):
             key=(r['agent'],r['name'])
             if key in seen:raise ValueError('LHTB: repeated row '+repr(key))
             seen.add(key)
+    elif kind=='rn_evals_board':
+        # React Native Evals (Callstack, rn-evals.vercel.app): the Next.js page streams its whole board in the
+        # server-rendered flight payload (`self.__next_f.push([1,"..."])` chunks) as one object {categories, judgeModel,
+        # runStartedAt, runFinishedAt, runCount, warnings, models, evalMatrixById}. Each model row states requirements
+        # passed and judged, summed over every eval and every repeat run; the value is the board's overallScorePct, which
+        # equals passed / judged x 100 exactly for every complete row. The six eval groups with their eval counts are the suite this identity names;
+        # another group set or count is a new identity, never a silent update. A requirement's verdict comes from an
+        # LLM judge reading the generated code against the eval's written requirements (the repository's README).
+        req=spec['require'];page=text(source);readme=' '.join(load_source(spec['method_source']).split())
+        for phrase in req['page_text']:
+            if phrase not in page:raise ValueError('React Native Evals page no longer states: '+phrase[:80])
+        for phrase in req['method_text']:
+            if phrase not in readme:raise ValueError('React Native Evals README no longer states: '+phrase[:80])
+        flight=''.join(json.loads(chunk) for chunk in re.findall(r'self\.__next_f\.push\(\[1,("(?:[^"\\]|\\.)*")\]\)',source))
+        starts=[m.start() for m in re.finditer(r'\{"categories":\[',flight)]
+        if len(starts)!=1:raise ValueError(f'React Native Evals: expected one board object, found {len(starts)}')
+        data,_=json.JSONDecoder().raw_decode(flight,starts[0])
+        if set(data)!=set(req['board_keys']):raise ValueError(f'React Native Evals board schema changed: {sorted(data)}')
+        groups=[[c.get('id'),c.get('evalCount')] for c in data['categories']]
+        if groups!=req['categories']:raise ValueError(f'React Native Evals suite changed (new identity): {groups!r}')
+        if not isinstance(data['runCount'],int) or data['runCount']<1:raise ValueError('React Native Evals: run count unreadable')
+        if data['warnings']:raise ValueError(f"React Native Evals board carries warnings: {data['warnings']!r}")
+        models=data['models'];seen=set()
+        if not isinstance(models,list) or not models:raise ValueError('React Native Evals: no model rows')
+        most=max(m.get('requirementsTotal') or 0 for m in models)
+        for index,m in enumerate(models):
+            if not isinstance(m,dict) or set(m)!=set(req['row_keys']):raise ValueError(f'React Native Evals row {index} schema changed')
+            passed,judged,pct=m['requirementsPassed'],m['requirementsTotal'],m['overallScorePct']
+            if not all(isinstance(x,int) for x in (passed,judged)) or not 0<=passed<=judged or judged<=0:raise ValueError(f"React Native Evals {m['id']!r}: requirement counts unreadable")
+            # A complete row (as many judged requirements as the board's largest) must reproduce passed/judged exactly;
+            # a row with errored evals is published as a mean over runs of unequal size, so it may differ slightly.
+            tolerance=req['pct_tolerance'] if judged==most else req['incomplete_pct_tolerance']
+            if not isinstance(pct,(int,float)) or abs(pct-100*passed/judged)>tolerance:raise ValueError(f"React Native Evals {m['id']!r}: score does not reproduce passed/judged")
+            if m['id'] in seen or m['label'] in seen:raise ValueError('React Native Evals row repeated: '+m['id'])
+            seen.update({m['id'],m['label']})
+            rows.append({'name':m['label'],'id':m['id'],'value':pct,'source_row':index,
+                'context':{'solver_model':m['solverModel'],'requirements_passed':passed,'requirements_judged':judged,
+                    'requirements_judged_most':most,'tokens_used':m['tokensUsed'] or None,'cost_usd':m['costUsd'],
+                    'repeat_runs':data['runCount'],'run_finished_at':data['runFinishedAt'],'judge_model_stated':data['judgeModel'],
+                    'stated_effort':'not stated'}})
     else:raise ValueError('Unknown parser kind '+kind)
     if not isinstance(rows,list) or not rows:raise ValueError('No source result rows')
     return rows
