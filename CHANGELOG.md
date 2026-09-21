@@ -4,6 +4,14 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-21 — Blueprint-Bench 2 (secondary, non-Composite)
+
+New registry id `blueprint-bench::2` (Vision): Andon Labs' floor-plan benchmark, collected daily from the
+leaderboard table on the maintainer's own page. Values are the published 0–1 connectivity-similarity score (`unit:
+points`, `basis: measured`, random baseline 0, perfect 1), unconverted. Rows the page prints as `0.000**` (at or below
+the random baseline) carry `"marker"` in their `protocol`. 26 rows; the page names no reasoning setting, so 2 join
+catalog configurations and the rest keep the source's own names. Same endpoints; no path, field or unit changed.
+
 ## 2026-09-21 — Context Arena MRCR v2 (secondary, non-Composite)
 
 New registry id `context-arena-mrcr-v2::8-needle` (Long-context): Context Arena's runs of Google DeepMind's MRCR v2,

@@ -12,7 +12,9 @@ const NO_SCORES: ViewAxis['scores'] = [];
 /** F-27: the result reads first (value, unit, date); source link and evidence live in a per-row
  *  expand, so a phone table is Rank · Model · Result and a desktop page stays scannable. */
 function ResultCell({ view, axis, row, topValue, compareHref }: { view: BenchmarkView; axis: ViewAxis; row: ViewAxis['scores'][number]; topValue: number | null; compareHref?: string }) {
-  const barWidth = axis.unit === 'Elo' || topValue == null ? null : axis.higherBetter === false ? (row.value > 0 ? Math.min(100, (topValue / row.value) * 100) : 100) : topValue > 0 ? Math.min(100, (row.value / topValue) * 100) : 100;
+  // A higher-is-better board whose best shown value is 0 or below has nothing to scale against: no bar, never a full one
+  // (Blueprint-Bench 2 prints scores at or below its random baseline as 0).
+  const barWidth = axis.unit === 'Elo' || topValue == null ? null : axis.higherBetter === false ? (row.value > 0 ? Math.min(100, (topValue / row.value) * 100) : 100) : topValue > 0 ? Math.min(100, (row.value / topValue) * 100) : null;
   return <>
     <p className="font-semibold tabular">{row.value.toLocaleString('en-US', { maximumSignificantDigits: 4 })} <span className="bh-muted text-xs font-normal">{axis.unit}</span>{row.date ? <span className="bh-muted ml-2 hidden text-xs font-normal sm:inline">{row.date.slice(0, 10)}</span> : null}</p>{barWidth != null ? <span aria-hidden="true" className="mt-1 block h-1 rounded bg-accent" style={{ width: `${Math.max(4, barWidth)}%` }} /> : null}
     <details className="mt-0.5 text-xs"><summary className="!min-h-0 !py-0.5 text-accent">Source &amp; evidence</summary><div className="mt-2 min-w-0"><SourceScore view={view} axis={axis} row={row} />{compareHref && <Link className="mt-2 inline-block text-accent underline" href={compareHref}>Compare →</Link>}</div></details>

@@ -79,3 +79,9 @@ test('Blueprint-Bench 2 is registered as its own versioned benchmark on the sour
   const tiers = JSON.parse(readFileSync(new URL('../data/benchmaxxing-tiers.json', import.meta.url), 'utf8'));
   assert.equal(tiers.tiers['blueprint-bench'].tier, 'secondary');
 });
+
+test('a higher-is-better ranking whose best shown value is 0 draws no bar, never a full one', () => {
+  const src = readFileSync(new URL('../components/BenchmarkRanking.tsx', import.meta.url), 'utf8');
+  const line = src.split('\n').find((l) => l.includes('const barWidth ='));
+  assert.match(line, /topValue > 0 \? Math\.min\(100, \(row\.value \/ topValue\) \* 100\) : null;$/);
+});
