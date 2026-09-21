@@ -274778,6 +274778,1056 @@
           "locator": "method_source"
         }
       ]
+    },
+    {
+      "id": "public:f3b7eaae3c05d470c06d4a93",
+      "benchmark_id": "researchclawbench::40-tasks",
+      "subject": {
+        "source_id": "Claude-Opus-4.6",
+        "name": "Claude-Opus-4.6",
+        "model_id": null,
+        "variant": null,
+        "harness": "ResearchHarness"
+      },
+      "value": 19.868108108108107,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://internscience.github.io/ResearchClawBench-Home/data/leaderboard.json",
+        "retrieved_at": "2026-09-21T20:48:40.424571+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/5d538e012068a8fec9fe.gz",
+        "sha256": "5d538e012068a8fec9fe974c4080b78879e92f3cc0ba412934cda59a7a087320",
+        "locator": "researchclawbench_board; source row 15; Claude-Opus-4.6; field value"
+      },
+      "protocol": "ResearchClawBench (InternScience): 40 end-to-end research tasks from 10 scientific domains, each grounded in a published paper whose results the agent must re-discover from the paper's raw data and related literature, with the target paper hidden; an LLM acting as a strict peer reviewer scores each report against an expert-curated weighted rubric (text and image criteria), 0–100 with 50 = matching the original paper; ResearchHarness rows only (the benchmark's lightweight baseline harness around a standalone model), Pass@1 view; value = the plain mean of the row's scored tasks, the figure the leaderboard ranks by — a task without a scored run is left out, not counted as 0, so coverage (tasks scored of 40) stays in each row's protocol; the board names models by product name and states no reasoning setting; source row: {\"agent\":\"ResearchHarness (Claude-Opus-4.6)\",\"tasks_scored\":37,\"tasks_total\":40,\"mean_cost_usd\":6.0475,\"latest_run_date\":\"20260417\",\"stated_effort\":\"not stated\",\"view\":\"Pass@1\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/InternScience/ResearchClawBench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/09509897989f8b6f64bb.gz",
+          "sha256": "09509897989f8b6f64bb9516644082291553770c5fe38b4e5e7a5675cbd1e661",
+          "retrieved_at": "2026-09-21T20:48:48.104788+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/static/app.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/3d1f147a79b09329806d.gz",
+          "sha256": "3d1f147a79b09329806d23b301143952c2d1e3a0d947a3612caafad63239038f",
+          "retrieved_at": "2026-09-21T20:48:45.551320+00:00",
+          "published_at": null,
+          "locator": "frontend_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/fd28ace3577a593175a4.gz",
+          "sha256": "fd28ace3577a593175a46d77a5fccc4bad468c411d52c5c43ec9c9ec4e413764",
+          "retrieved_at": "2026-09-21T20:48:43.035439+00:00",
+          "published_at": null,
+          "locator": "detail_source"
+        }
+      ]
+    },
+    {
+      "id": "public:e4fd0a3b08d23d8477bf3279",
+      "benchmark_id": "researchclawbench::40-tasks",
+      "subject": {
+        "source_id": "Claude-Opus-4.7",
+        "name": "Claude-Opus-4.7",
+        "model_id": null,
+        "variant": null,
+        "harness": "ResearchHarness"
+      },
+      "value": 20.735714285714288,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://internscience.github.io/ResearchClawBench-Home/data/leaderboard.json",
+        "retrieved_at": "2026-09-21T20:48:40.424571+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/5d538e012068a8fec9fe.gz",
+        "sha256": "5d538e012068a8fec9fe974c4080b78879e92f3cc0ba412934cda59a7a087320",
+        "locator": "researchclawbench_board; source row 16; Claude-Opus-4.7; field value"
+      },
+      "protocol": "ResearchClawBench (InternScience): 40 end-to-end research tasks from 10 scientific domains, each grounded in a published paper whose results the agent must re-discover from the paper's raw data and related literature, with the target paper hidden; an LLM acting as a strict peer reviewer scores each report against an expert-curated weighted rubric (text and image criteria), 0–100 with 50 = matching the original paper; ResearchHarness rows only (the benchmark's lightweight baseline harness around a standalone model), Pass@1 view; value = the plain mean of the row's scored tasks, the figure the leaderboard ranks by — a task without a scored run is left out, not counted as 0, so coverage (tasks scored of 40) stays in each row's protocol; the board names models by product name and states no reasoning setting; source row: {\"agent\":\"ResearchHarness (Claude-Opus-4.7)\",\"tasks_scored\":35,\"tasks_total\":40,\"mean_cost_usd\":5.0614,\"latest_run_date\":\"20260428\",\"stated_effort\":\"not stated\",\"view\":\"Pass@1\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/InternScience/ResearchClawBench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/09509897989f8b6f64bb.gz",
+          "sha256": "09509897989f8b6f64bb9516644082291553770c5fe38b4e5e7a5675cbd1e661",
+          "retrieved_at": "2026-09-21T20:48:48.104788+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/static/app.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/3d1f147a79b09329806d.gz",
+          "sha256": "3d1f147a79b09329806d23b301143952c2d1e3a0d947a3612caafad63239038f",
+          "retrieved_at": "2026-09-21T20:48:45.551320+00:00",
+          "published_at": null,
+          "locator": "frontend_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/fd28ace3577a593175a4.gz",
+          "sha256": "fd28ace3577a593175a46d77a5fccc4bad468c411d52c5c43ec9c9ec4e413764",
+          "retrieved_at": "2026-09-21T20:48:43.035439+00:00",
+          "published_at": null,
+          "locator": "detail_source"
+        }
+      ]
+    },
+    {
+      "id": "public:9f635fe6c4ad5cbf5c343443",
+      "benchmark_id": "researchclawbench::40-tasks",
+      "subject": {
+        "source_id": "Claude-Opus-4.8",
+        "name": "Claude-Opus-4.8",
+        "model_id": null,
+        "variant": null,
+        "harness": "ResearchHarness"
+      },
+      "value": 21.116923076923076,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://internscience.github.io/ResearchClawBench-Home/data/leaderboard.json",
+        "retrieved_at": "2026-09-21T20:48:40.424571+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/5d538e012068a8fec9fe.gz",
+        "sha256": "5d538e012068a8fec9fe974c4080b78879e92f3cc0ba412934cda59a7a087320",
+        "locator": "researchclawbench_board; source row 17; Claude-Opus-4.8; field value"
+      },
+      "protocol": "ResearchClawBench (InternScience): 40 end-to-end research tasks from 10 scientific domains, each grounded in a published paper whose results the agent must re-discover from the paper's raw data and related literature, with the target paper hidden; an LLM acting as a strict peer reviewer scores each report against an expert-curated weighted rubric (text and image criteria), 0–100 with 50 = matching the original paper; ResearchHarness rows only (the benchmark's lightweight baseline harness around a standalone model), Pass@1 view; value = the plain mean of the row's scored tasks, the figure the leaderboard ranks by — a task without a scored run is left out, not counted as 0, so coverage (tasks scored of 40) stays in each row's protocol; the board names models by product name and states no reasoning setting; source row: {\"agent\":\"ResearchHarness (Claude-Opus-4.8)\",\"tasks_scored\":39,\"tasks_total\":40,\"mean_cost_usd\":3.9738,\"latest_run_date\":\"20260602\",\"stated_effort\":\"not stated\",\"view\":\"Pass@1\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/InternScience/ResearchClawBench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/09509897989f8b6f64bb.gz",
+          "sha256": "09509897989f8b6f64bb9516644082291553770c5fe38b4e5e7a5675cbd1e661",
+          "retrieved_at": "2026-09-21T20:48:48.104788+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/static/app.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/3d1f147a79b09329806d.gz",
+          "sha256": "3d1f147a79b09329806d23b301143952c2d1e3a0d947a3612caafad63239038f",
+          "retrieved_at": "2026-09-21T20:48:45.551320+00:00",
+          "published_at": null,
+          "locator": "frontend_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/fd28ace3577a593175a4.gz",
+          "sha256": "fd28ace3577a593175a46d77a5fccc4bad468c411d52c5c43ec9c9ec4e413764",
+          "retrieved_at": "2026-09-21T20:48:43.035439+00:00",
+          "published_at": null,
+          "locator": "detail_source"
+        }
+      ]
+    },
+    {
+      "id": "public:54cd0fd01050515d050f50c9",
+      "benchmark_id": "researchclawbench::40-tasks",
+      "subject": {
+        "source_id": "DeepSeek-V4-Pro",
+        "name": "DeepSeek-V4-Pro",
+        "model_id": null,
+        "variant": null,
+        "harness": "ResearchHarness"
+      },
+      "value": 17.1225641025641,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://internscience.github.io/ResearchClawBench-Home/data/leaderboard.json",
+        "retrieved_at": "2026-09-21T20:48:40.424571+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/5d538e012068a8fec9fe.gz",
+        "sha256": "5d538e012068a8fec9fe974c4080b78879e92f3cc0ba412934cda59a7a087320",
+        "locator": "researchclawbench_board; source row 18; DeepSeek-V4-Pro; field value"
+      },
+      "protocol": "ResearchClawBench (InternScience): 40 end-to-end research tasks from 10 scientific domains, each grounded in a published paper whose results the agent must re-discover from the paper's raw data and related literature, with the target paper hidden; an LLM acting as a strict peer reviewer scores each report against an expert-curated weighted rubric (text and image criteria), 0–100 with 50 = matching the original paper; ResearchHarness rows only (the benchmark's lightweight baseline harness around a standalone model), Pass@1 view; value = the plain mean of the row's scored tasks, the figure the leaderboard ranks by — a task without a scored run is left out, not counted as 0, so coverage (tasks scored of 40) stays in each row's protocol; the board names models by product name and states no reasoning setting; source row: {\"agent\":\"ResearchHarness (DeepSeek-V4-Pro)\",\"tasks_scored\":39,\"tasks_total\":40,\"mean_cost_usd\":0.2779,\"latest_run_date\":\"20260518\",\"stated_effort\":\"not stated\",\"view\":\"Pass@1\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/InternScience/ResearchClawBench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/09509897989f8b6f64bb.gz",
+          "sha256": "09509897989f8b6f64bb9516644082291553770c5fe38b4e5e7a5675cbd1e661",
+          "retrieved_at": "2026-09-21T20:48:48.104788+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/static/app.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/3d1f147a79b09329806d.gz",
+          "sha256": "3d1f147a79b09329806d23b301143952c2d1e3a0d947a3612caafad63239038f",
+          "retrieved_at": "2026-09-21T20:48:45.551320+00:00",
+          "published_at": null,
+          "locator": "frontend_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/fd28ace3577a593175a4.gz",
+          "sha256": "fd28ace3577a593175a46d77a5fccc4bad468c411d52c5c43ec9c9ec4e413764",
+          "retrieved_at": "2026-09-21T20:48:43.035439+00:00",
+          "published_at": null,
+          "locator": "detail_source"
+        }
+      ]
+    },
+    {
+      "id": "public:0f7568007dbd1d297442fef3",
+      "benchmark_id": "researchclawbench::40-tasks",
+      "subject": {
+        "source_id": "GLM-5.1",
+        "name": "GLM-5.1",
+        "model_id": null,
+        "variant": null,
+        "harness": "ResearchHarness"
+      },
+      "value": 18.190999999999995,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://internscience.github.io/ResearchClawBench-Home/data/leaderboard.json",
+        "retrieved_at": "2026-09-21T20:48:40.424571+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/5d538e012068a8fec9fe.gz",
+        "sha256": "5d538e012068a8fec9fe974c4080b78879e92f3cc0ba412934cda59a7a087320",
+        "locator": "researchclawbench_board; source row 19; GLM-5.1; field value"
+      },
+      "protocol": "ResearchClawBench (InternScience): 40 end-to-end research tasks from 10 scientific domains, each grounded in a published paper whose results the agent must re-discover from the paper's raw data and related literature, with the target paper hidden; an LLM acting as a strict peer reviewer scores each report against an expert-curated weighted rubric (text and image criteria), 0–100 with 50 = matching the original paper; ResearchHarness rows only (the benchmark's lightweight baseline harness around a standalone model), Pass@1 view; value = the plain mean of the row's scored tasks, the figure the leaderboard ranks by — a task without a scored run is left out, not counted as 0, so coverage (tasks scored of 40) stays in each row's protocol; the board names models by product name and states no reasoning setting; source row: {\"agent\":\"ResearchHarness (GLM-5.1)\",\"tasks_scored\":40,\"tasks_total\":40,\"mean_cost_usd\":1.2992,\"latest_run_date\":\"20260416\",\"stated_effort\":\"not stated\",\"view\":\"Pass@1\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/InternScience/ResearchClawBench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/09509897989f8b6f64bb.gz",
+          "sha256": "09509897989f8b6f64bb9516644082291553770c5fe38b4e5e7a5675cbd1e661",
+          "retrieved_at": "2026-09-21T20:48:48.104788+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/static/app.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/3d1f147a79b09329806d.gz",
+          "sha256": "3d1f147a79b09329806d23b301143952c2d1e3a0d947a3612caafad63239038f",
+          "retrieved_at": "2026-09-21T20:48:45.551320+00:00",
+          "published_at": null,
+          "locator": "frontend_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/fd28ace3577a593175a4.gz",
+          "sha256": "fd28ace3577a593175a46d77a5fccc4bad468c411d52c5c43ec9c9ec4e413764",
+          "retrieved_at": "2026-09-21T20:48:43.035439+00:00",
+          "published_at": null,
+          "locator": "detail_source"
+        }
+      ]
+    },
+    {
+      "id": "public:0186ef60b2d113a49791708e",
+      "benchmark_id": "researchclawbench::40-tasks",
+      "subject": {
+        "source_id": "GLM-5.2",
+        "name": "GLM-5.2",
+        "model_id": null,
+        "variant": null,
+        "harness": "ResearchHarness"
+      },
+      "value": 20.709230769230775,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://internscience.github.io/ResearchClawBench-Home/data/leaderboard.json",
+        "retrieved_at": "2026-09-21T20:48:40.424571+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/5d538e012068a8fec9fe.gz",
+        "sha256": "5d538e012068a8fec9fe974c4080b78879e92f3cc0ba412934cda59a7a087320",
+        "locator": "researchclawbench_board; source row 20; GLM-5.2; field value"
+      },
+      "protocol": "ResearchClawBench (InternScience): 40 end-to-end research tasks from 10 scientific domains, each grounded in a published paper whose results the agent must re-discover from the paper's raw data and related literature, with the target paper hidden; an LLM acting as a strict peer reviewer scores each report against an expert-curated weighted rubric (text and image criteria), 0–100 with 50 = matching the original paper; ResearchHarness rows only (the benchmark's lightweight baseline harness around a standalone model), Pass@1 view; value = the plain mean of the row's scored tasks, the figure the leaderboard ranks by — a task without a scored run is left out, not counted as 0, so coverage (tasks scored of 40) stays in each row's protocol; the board names models by product name and states no reasoning setting; source row: {\"agent\":\"ResearchHarness (GLM-5.2)\",\"tasks_scored\":39,\"tasks_total\":40,\"mean_cost_usd\":1.2381,\"latest_run_date\":\"20260623\",\"stated_effort\":\"not stated\",\"view\":\"Pass@1\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/InternScience/ResearchClawBench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/09509897989f8b6f64bb.gz",
+          "sha256": "09509897989f8b6f64bb9516644082291553770c5fe38b4e5e7a5675cbd1e661",
+          "retrieved_at": "2026-09-21T20:48:48.104788+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/static/app.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/3d1f147a79b09329806d.gz",
+          "sha256": "3d1f147a79b09329806d23b301143952c2d1e3a0d947a3612caafad63239038f",
+          "retrieved_at": "2026-09-21T20:48:45.551320+00:00",
+          "published_at": null,
+          "locator": "frontend_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/fd28ace3577a593175a4.gz",
+          "sha256": "fd28ace3577a593175a46d77a5fccc4bad468c411d52c5c43ec9c9ec4e413764",
+          "retrieved_at": "2026-09-21T20:48:43.035439+00:00",
+          "published_at": null,
+          "locator": "detail_source"
+        }
+      ]
+    },
+    {
+      "id": "public:d7456a019d2ac1006aa19aa1",
+      "benchmark_id": "researchclawbench::40-tasks",
+      "subject": {
+        "source_id": "GPT-5.4",
+        "name": "GPT-5.4",
+        "model_id": null,
+        "variant": null,
+        "harness": "ResearchHarness"
+      },
+      "value": 15.276500000000002,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://internscience.github.io/ResearchClawBench-Home/data/leaderboard.json",
+        "retrieved_at": "2026-09-21T20:48:40.424571+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/5d538e012068a8fec9fe.gz",
+        "sha256": "5d538e012068a8fec9fe974c4080b78879e92f3cc0ba412934cda59a7a087320",
+        "locator": "researchclawbench_board; source row 21; GPT-5.4; field value"
+      },
+      "protocol": "ResearchClawBench (InternScience): 40 end-to-end research tasks from 10 scientific domains, each grounded in a published paper whose results the agent must re-discover from the paper's raw data and related literature, with the target paper hidden; an LLM acting as a strict peer reviewer scores each report against an expert-curated weighted rubric (text and image criteria), 0–100 with 50 = matching the original paper; ResearchHarness rows only (the benchmark's lightweight baseline harness around a standalone model), Pass@1 view; value = the plain mean of the row's scored tasks, the figure the leaderboard ranks by — a task without a scored run is left out, not counted as 0, so coverage (tasks scored of 40) stays in each row's protocol; the board names models by product name and states no reasoning setting; source row: {\"agent\":\"ResearchHarness (GPT-5.4)\",\"tasks_scored\":40,\"tasks_total\":40,\"mean_cost_usd\":2.1245,\"latest_run_date\":\"20260415\",\"stated_effort\":\"not stated\",\"view\":\"Pass@1\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/InternScience/ResearchClawBench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/09509897989f8b6f64bb.gz",
+          "sha256": "09509897989f8b6f64bb9516644082291553770c5fe38b4e5e7a5675cbd1e661",
+          "retrieved_at": "2026-09-21T20:48:48.104788+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/static/app.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/3d1f147a79b09329806d.gz",
+          "sha256": "3d1f147a79b09329806d23b301143952c2d1e3a0d947a3612caafad63239038f",
+          "retrieved_at": "2026-09-21T20:48:45.551320+00:00",
+          "published_at": null,
+          "locator": "frontend_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/fd28ace3577a593175a4.gz",
+          "sha256": "fd28ace3577a593175a46d77a5fccc4bad468c411d52c5c43ec9c9ec4e413764",
+          "retrieved_at": "2026-09-21T20:48:43.035439+00:00",
+          "published_at": null,
+          "locator": "detail_source"
+        }
+      ]
+    },
+    {
+      "id": "public:1fdc66f8c73d02f45c8a2839",
+      "benchmark_id": "researchclawbench::40-tasks",
+      "subject": {
+        "source_id": "GPT-5.5",
+        "name": "GPT-5.5",
+        "model_id": null,
+        "variant": null,
+        "harness": "ResearchHarness"
+      },
+      "value": 16.99825,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://internscience.github.io/ResearchClawBench-Home/data/leaderboard.json",
+        "retrieved_at": "2026-09-21T20:48:40.424571+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/5d538e012068a8fec9fe.gz",
+        "sha256": "5d538e012068a8fec9fe974c4080b78879e92f3cc0ba412934cda59a7a087320",
+        "locator": "researchclawbench_board; source row 22; GPT-5.5; field value"
+      },
+      "protocol": "ResearchClawBench (InternScience): 40 end-to-end research tasks from 10 scientific domains, each grounded in a published paper whose results the agent must re-discover from the paper's raw data and related literature, with the target paper hidden; an LLM acting as a strict peer reviewer scores each report against an expert-curated weighted rubric (text and image criteria), 0–100 with 50 = matching the original paper; ResearchHarness rows only (the benchmark's lightweight baseline harness around a standalone model), Pass@1 view; value = the plain mean of the row's scored tasks, the figure the leaderboard ranks by — a task without a scored run is left out, not counted as 0, so coverage (tasks scored of 40) stays in each row's protocol; the board names models by product name and states no reasoning setting; source row: {\"agent\":\"ResearchHarness (GPT-5.5)\",\"tasks_scored\":40,\"tasks_total\":40,\"mean_cost_usd\":1.8217,\"latest_run_date\":\"20260429\",\"stated_effort\":\"not stated\",\"view\":\"Pass@1\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/InternScience/ResearchClawBench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/09509897989f8b6f64bb.gz",
+          "sha256": "09509897989f8b6f64bb9516644082291553770c5fe38b4e5e7a5675cbd1e661",
+          "retrieved_at": "2026-09-21T20:48:48.104788+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/static/app.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/3d1f147a79b09329806d.gz",
+          "sha256": "3d1f147a79b09329806d23b301143952c2d1e3a0d947a3612caafad63239038f",
+          "retrieved_at": "2026-09-21T20:48:45.551320+00:00",
+          "published_at": null,
+          "locator": "frontend_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/fd28ace3577a593175a4.gz",
+          "sha256": "fd28ace3577a593175a46d77a5fccc4bad468c411d52c5c43ec9c9ec4e413764",
+          "retrieved_at": "2026-09-21T20:48:43.035439+00:00",
+          "published_at": null,
+          "locator": "detail_source"
+        }
+      ]
+    },
+    {
+      "id": "public:f79ec7a099a2fe68eb5325d7",
+      "benchmark_id": "researchclawbench::40-tasks",
+      "subject": {
+        "source_id": "Gemini-3.1-Pro",
+        "name": "Gemini-3.1-Pro",
+        "model_id": null,
+        "variant": null,
+        "harness": "ResearchHarness"
+      },
+      "value": 13.282857142857145,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://internscience.github.io/ResearchClawBench-Home/data/leaderboard.json",
+        "retrieved_at": "2026-09-21T20:48:40.424571+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/5d538e012068a8fec9fe.gz",
+        "sha256": "5d538e012068a8fec9fe974c4080b78879e92f3cc0ba412934cda59a7a087320",
+        "locator": "researchclawbench_board; source row 23; Gemini-3.1-Pro; field value"
+      },
+      "protocol": "ResearchClawBench (InternScience): 40 end-to-end research tasks from 10 scientific domains, each grounded in a published paper whose results the agent must re-discover from the paper's raw data and related literature, with the target paper hidden; an LLM acting as a strict peer reviewer scores each report against an expert-curated weighted rubric (text and image criteria), 0–100 with 50 = matching the original paper; ResearchHarness rows only (the benchmark's lightweight baseline harness around a standalone model), Pass@1 view; value = the plain mean of the row's scored tasks, the figure the leaderboard ranks by — a task without a scored run is left out, not counted as 0, so coverage (tasks scored of 40) stays in each row's protocol; the board names models by product name and states no reasoning setting; source row: {\"agent\":\"ResearchHarness (Gemini-3.1-Pro)\",\"tasks_scored\":35,\"tasks_total\":40,\"mean_cost_usd\":1.5999,\"latest_run_date\":\"20260416\",\"stated_effort\":\"not stated\",\"view\":\"Pass@1\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/InternScience/ResearchClawBench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/09509897989f8b6f64bb.gz",
+          "sha256": "09509897989f8b6f64bb9516644082291553770c5fe38b4e5e7a5675cbd1e661",
+          "retrieved_at": "2026-09-21T20:48:48.104788+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/static/app.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/3d1f147a79b09329806d.gz",
+          "sha256": "3d1f147a79b09329806d23b301143952c2d1e3a0d947a3612caafad63239038f",
+          "retrieved_at": "2026-09-21T20:48:45.551320+00:00",
+          "published_at": null,
+          "locator": "frontend_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/fd28ace3577a593175a4.gz",
+          "sha256": "fd28ace3577a593175a46d77a5fccc4bad468c411d52c5c43ec9c9ec4e413764",
+          "retrieved_at": "2026-09-21T20:48:43.035439+00:00",
+          "published_at": null,
+          "locator": "detail_source"
+        }
+      ]
+    },
+    {
+      "id": "public:d38380062f36a74e8c2d05d7",
+      "benchmark_id": "researchclawbench::40-tasks",
+      "subject": {
+        "source_id": "Gemini-3.5-Flash",
+        "name": "Gemini-3.5-Flash",
+        "model_id": null,
+        "variant": null,
+        "harness": "ResearchHarness"
+      },
+      "value": 17.948529411764703,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://internscience.github.io/ResearchClawBench-Home/data/leaderboard.json",
+        "retrieved_at": "2026-09-21T20:48:40.424571+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/5d538e012068a8fec9fe.gz",
+        "sha256": "5d538e012068a8fec9fe974c4080b78879e92f3cc0ba412934cda59a7a087320",
+        "locator": "researchclawbench_board; source row 24; Gemini-3.5-Flash; field value"
+      },
+      "protocol": "ResearchClawBench (InternScience): 40 end-to-end research tasks from 10 scientific domains, each grounded in a published paper whose results the agent must re-discover from the paper's raw data and related literature, with the target paper hidden; an LLM acting as a strict peer reviewer scores each report against an expert-curated weighted rubric (text and image criteria), 0–100 with 50 = matching the original paper; ResearchHarness rows only (the benchmark's lightweight baseline harness around a standalone model), Pass@1 view; value = the plain mean of the row's scored tasks, the figure the leaderboard ranks by — a task without a scored run is left out, not counted as 0, so coverage (tasks scored of 40) stays in each row's protocol; the board names models by product name and states no reasoning setting; source row: {\"agent\":\"ResearchHarness (Gemini-3.5-Flash)\",\"tasks_scored\":34,\"tasks_total\":40,\"mean_cost_usd\":1.2039,\"latest_run_date\":\"20260527\",\"stated_effort\":\"not stated\",\"view\":\"Pass@1\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/InternScience/ResearchClawBench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/09509897989f8b6f64bb.gz",
+          "sha256": "09509897989f8b6f64bb9516644082291553770c5fe38b4e5e7a5675cbd1e661",
+          "retrieved_at": "2026-09-21T20:48:48.104788+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/static/app.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/3d1f147a79b09329806d.gz",
+          "sha256": "3d1f147a79b09329806d23b301143952c2d1e3a0d947a3612caafad63239038f",
+          "retrieved_at": "2026-09-21T20:48:45.551320+00:00",
+          "published_at": null,
+          "locator": "frontend_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/fd28ace3577a593175a4.gz",
+          "sha256": "fd28ace3577a593175a46d77a5fccc4bad468c411d52c5c43ec9c9ec4e413764",
+          "retrieved_at": "2026-09-21T20:48:43.035439+00:00",
+          "published_at": null,
+          "locator": "detail_source"
+        }
+      ]
+    },
+    {
+      "id": "public:58e54ca28966615685f8cd37",
+      "benchmark_id": "researchclawbench::40-tasks",
+      "subject": {
+        "source_id": "Grok-4.1",
+        "name": "Grok-4.1",
+        "model_id": null,
+        "variant": null,
+        "harness": "ResearchHarness"
+      },
+      "value": 13.50230769230769,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://internscience.github.io/ResearchClawBench-Home/data/leaderboard.json",
+        "retrieved_at": "2026-09-21T20:48:40.424571+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/5d538e012068a8fec9fe.gz",
+        "sha256": "5d538e012068a8fec9fe974c4080b78879e92f3cc0ba412934cda59a7a087320",
+        "locator": "researchclawbench_board; source row 25; Grok-4.1; field value"
+      },
+      "protocol": "ResearchClawBench (InternScience): 40 end-to-end research tasks from 10 scientific domains, each grounded in a published paper whose results the agent must re-discover from the paper's raw data and related literature, with the target paper hidden; an LLM acting as a strict peer reviewer scores each report against an expert-curated weighted rubric (text and image criteria), 0–100 with 50 = matching the original paper; ResearchHarness rows only (the benchmark's lightweight baseline harness around a standalone model), Pass@1 view; value = the plain mean of the row's scored tasks, the figure the leaderboard ranks by — a task without a scored run is left out, not counted as 0, so coverage (tasks scored of 40) stays in each row's protocol; the board names models by product name and states no reasoning setting; source row: {\"agent\":\"ResearchHarness (Grok-4.1)\",\"tasks_scored\":39,\"tasks_total\":40,\"mean_cost_usd\":0.0357,\"latest_run_date\":\"20260415\",\"stated_effort\":\"not stated\",\"view\":\"Pass@1\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/InternScience/ResearchClawBench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/09509897989f8b6f64bb.gz",
+          "sha256": "09509897989f8b6f64bb9516644082291553770c5fe38b4e5e7a5675cbd1e661",
+          "retrieved_at": "2026-09-21T20:48:48.104788+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/static/app.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/3d1f147a79b09329806d.gz",
+          "sha256": "3d1f147a79b09329806d23b301143952c2d1e3a0d947a3612caafad63239038f",
+          "retrieved_at": "2026-09-21T20:48:45.551320+00:00",
+          "published_at": null,
+          "locator": "frontend_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/fd28ace3577a593175a4.gz",
+          "sha256": "fd28ace3577a593175a46d77a5fccc4bad468c411d52c5c43ec9c9ec4e413764",
+          "retrieved_at": "2026-09-21T20:48:43.035439+00:00",
+          "published_at": null,
+          "locator": "detail_source"
+        }
+      ]
+    },
+    {
+      "id": "public:04b8eb301a07a2eae1c889b0",
+      "benchmark_id": "researchclawbench::40-tasks",
+      "subject": {
+        "source_id": "Grok-4.3",
+        "name": "Grok-4.3",
+        "model_id": null,
+        "variant": null,
+        "harness": "ResearchHarness"
+      },
+      "value": 12.412894736842103,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://internscience.github.io/ResearchClawBench-Home/data/leaderboard.json",
+        "retrieved_at": "2026-09-21T20:48:40.424571+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/5d538e012068a8fec9fe.gz",
+        "sha256": "5d538e012068a8fec9fe974c4080b78879e92f3cc0ba412934cda59a7a087320",
+        "locator": "researchclawbench_board; source row 26; Grok-4.3; field value"
+      },
+      "protocol": "ResearchClawBench (InternScience): 40 end-to-end research tasks from 10 scientific domains, each grounded in a published paper whose results the agent must re-discover from the paper's raw data and related literature, with the target paper hidden; an LLM acting as a strict peer reviewer scores each report against an expert-curated weighted rubric (text and image criteria), 0–100 with 50 = matching the original paper; ResearchHarness rows only (the benchmark's lightweight baseline harness around a standalone model), Pass@1 view; value = the plain mean of the row's scored tasks, the figure the leaderboard ranks by — a task without a scored run is left out, not counted as 0, so coverage (tasks scored of 40) stays in each row's protocol; the board names models by product name and states no reasoning setting; source row: {\"agent\":\"ResearchHarness (Grok-4.3)\",\"tasks_scored\":38,\"tasks_total\":40,\"mean_cost_usd\":0.4383,\"latest_run_date\":\"20260518\",\"stated_effort\":\"not stated\",\"view\":\"Pass@1\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/InternScience/ResearchClawBench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/09509897989f8b6f64bb.gz",
+          "sha256": "09509897989f8b6f64bb9516644082291553770c5fe38b4e5e7a5675cbd1e661",
+          "retrieved_at": "2026-09-21T20:48:48.104788+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/static/app.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/3d1f147a79b09329806d.gz",
+          "sha256": "3d1f147a79b09329806d23b301143952c2d1e3a0d947a3612caafad63239038f",
+          "retrieved_at": "2026-09-21T20:48:45.551320+00:00",
+          "published_at": null,
+          "locator": "frontend_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/fd28ace3577a593175a4.gz",
+          "sha256": "fd28ace3577a593175a46d77a5fccc4bad468c411d52c5c43ec9c9ec4e413764",
+          "retrieved_at": "2026-09-21T20:48:43.035439+00:00",
+          "published_at": null,
+          "locator": "detail_source"
+        }
+      ]
+    },
+    {
+      "id": "public:3c4d8f02b81e746ca47aab03",
+      "benchmark_id": "researchclawbench::40-tasks",
+      "subject": {
+        "source_id": "Hy3-Preview",
+        "name": "Hy3-Preview",
+        "model_id": null,
+        "variant": null,
+        "harness": "ResearchHarness"
+      },
+      "value": 12.877575757575759,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://internscience.github.io/ResearchClawBench-Home/data/leaderboard.json",
+        "retrieved_at": "2026-09-21T20:48:40.424571+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/5d538e012068a8fec9fe.gz",
+        "sha256": "5d538e012068a8fec9fe974c4080b78879e92f3cc0ba412934cda59a7a087320",
+        "locator": "researchclawbench_board; source row 27; Hy3-Preview; field value"
+      },
+      "protocol": "ResearchClawBench (InternScience): 40 end-to-end research tasks from 10 scientific domains, each grounded in a published paper whose results the agent must re-discover from the paper's raw data and related literature, with the target paper hidden; an LLM acting as a strict peer reviewer scores each report against an expert-curated weighted rubric (text and image criteria), 0–100 with 50 = matching the original paper; ResearchHarness rows only (the benchmark's lightweight baseline harness around a standalone model), Pass@1 view; value = the plain mean of the row's scored tasks, the figure the leaderboard ranks by — a task without a scored run is left out, not counted as 0, so coverage (tasks scored of 40) stays in each row's protocol; the board names models by product name and states no reasoning setting; source row: {\"agent\":\"ResearchHarness (Hy3-Preview)\",\"tasks_scored\":33,\"tasks_total\":40,\"mean_cost_usd\":0.0285,\"latest_run_date\":\"20260708\",\"stated_effort\":\"not stated\",\"view\":\"Pass@1\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/InternScience/ResearchClawBench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/09509897989f8b6f64bb.gz",
+          "sha256": "09509897989f8b6f64bb9516644082291553770c5fe38b4e5e7a5675cbd1e661",
+          "retrieved_at": "2026-09-21T20:48:48.104788+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/static/app.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/3d1f147a79b09329806d.gz",
+          "sha256": "3d1f147a79b09329806d23b301143952c2d1e3a0d947a3612caafad63239038f",
+          "retrieved_at": "2026-09-21T20:48:45.551320+00:00",
+          "published_at": null,
+          "locator": "frontend_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/fd28ace3577a593175a4.gz",
+          "sha256": "fd28ace3577a593175a46d77a5fccc4bad468c411d52c5c43ec9c9ec4e413764",
+          "retrieved_at": "2026-09-21T20:48:43.035439+00:00",
+          "published_at": null,
+          "locator": "detail_source"
+        }
+      ]
+    },
+    {
+      "id": "public:c1b69f2810ac3607871dedde",
+      "benchmark_id": "researchclawbench::40-tasks",
+      "subject": {
+        "source_id": "Kimi-K2.5",
+        "name": "Kimi-K2.5",
+        "model_id": null,
+        "variant": null,
+        "harness": "ResearchHarness"
+      },
+      "value": 13.955384615384615,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://internscience.github.io/ResearchClawBench-Home/data/leaderboard.json",
+        "retrieved_at": "2026-09-21T20:48:40.424571+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/5d538e012068a8fec9fe.gz",
+        "sha256": "5d538e012068a8fec9fe974c4080b78879e92f3cc0ba412934cda59a7a087320",
+        "locator": "researchclawbench_board; source row 28; Kimi-K2.5; field value"
+      },
+      "protocol": "ResearchClawBench (InternScience): 40 end-to-end research tasks from 10 scientific domains, each grounded in a published paper whose results the agent must re-discover from the paper's raw data and related literature, with the target paper hidden; an LLM acting as a strict peer reviewer scores each report against an expert-curated weighted rubric (text and image criteria), 0–100 with 50 = matching the original paper; ResearchHarness rows only (the benchmark's lightweight baseline harness around a standalone model), Pass@1 view; value = the plain mean of the row's scored tasks, the figure the leaderboard ranks by — a task without a scored run is left out, not counted as 0, so coverage (tasks scored of 40) stays in each row's protocol; the board names models by product name and states no reasoning setting; source row: {\"agent\":\"ResearchHarness (Kimi-K2.5)\",\"tasks_scored\":39,\"tasks_total\":40,\"mean_cost_usd\":0.512,\"latest_run_date\":\"20260415\",\"stated_effort\":\"not stated\",\"view\":\"Pass@1\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/InternScience/ResearchClawBench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/09509897989f8b6f64bb.gz",
+          "sha256": "09509897989f8b6f64bb9516644082291553770c5fe38b4e5e7a5675cbd1e661",
+          "retrieved_at": "2026-09-21T20:48:48.104788+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/static/app.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/3d1f147a79b09329806d.gz",
+          "sha256": "3d1f147a79b09329806d23b301143952c2d1e3a0d947a3612caafad63239038f",
+          "retrieved_at": "2026-09-21T20:48:45.551320+00:00",
+          "published_at": null,
+          "locator": "frontend_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/fd28ace3577a593175a4.gz",
+          "sha256": "fd28ace3577a593175a46d77a5fccc4bad468c411d52c5c43ec9c9ec4e413764",
+          "retrieved_at": "2026-09-21T20:48:43.035439+00:00",
+          "published_at": null,
+          "locator": "detail_source"
+        }
+      ]
+    },
+    {
+      "id": "public:14ab9cb43277a12d02fe3e6c",
+      "benchmark_id": "researchclawbench::40-tasks",
+      "subject": {
+        "source_id": "Kimi-K2.6",
+        "name": "Kimi-K2.6",
+        "model_id": null,
+        "variant": null,
+        "harness": "ResearchHarness"
+      },
+      "value": 17.995526315789476,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://internscience.github.io/ResearchClawBench-Home/data/leaderboard.json",
+        "retrieved_at": "2026-09-21T20:48:40.424571+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/5d538e012068a8fec9fe.gz",
+        "sha256": "5d538e012068a8fec9fe974c4080b78879e92f3cc0ba412934cda59a7a087320",
+        "locator": "researchclawbench_board; source row 29; Kimi-K2.6; field value"
+      },
+      "protocol": "ResearchClawBench (InternScience): 40 end-to-end research tasks from 10 scientific domains, each grounded in a published paper whose results the agent must re-discover from the paper's raw data and related literature, with the target paper hidden; an LLM acting as a strict peer reviewer scores each report against an expert-curated weighted rubric (text and image criteria), 0–100 with 50 = matching the original paper; ResearchHarness rows only (the benchmark's lightweight baseline harness around a standalone model), Pass@1 view; value = the plain mean of the row's scored tasks, the figure the leaderboard ranks by — a task without a scored run is left out, not counted as 0, so coverage (tasks scored of 40) stays in each row's protocol; the board names models by product name and states no reasoning setting; source row: {\"agent\":\"ResearchHarness (Kimi-K2.6)\",\"tasks_scored\":38,\"tasks_total\":40,\"mean_cost_usd\":1.1877,\"latest_run_date\":\"20260519\",\"stated_effort\":\"not stated\",\"view\":\"Pass@1\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/InternScience/ResearchClawBench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/09509897989f8b6f64bb.gz",
+          "sha256": "09509897989f8b6f64bb9516644082291553770c5fe38b4e5e7a5675cbd1e661",
+          "retrieved_at": "2026-09-21T20:48:48.104788+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/static/app.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/3d1f147a79b09329806d.gz",
+          "sha256": "3d1f147a79b09329806d23b301143952c2d1e3a0d947a3612caafad63239038f",
+          "retrieved_at": "2026-09-21T20:48:45.551320+00:00",
+          "published_at": null,
+          "locator": "frontend_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/fd28ace3577a593175a4.gz",
+          "sha256": "fd28ace3577a593175a46d77a5fccc4bad468c411d52c5c43ec9c9ec4e413764",
+          "retrieved_at": "2026-09-21T20:48:43.035439+00:00",
+          "published_at": null,
+          "locator": "detail_source"
+        }
+      ]
+    },
+    {
+      "id": "public:af63f789ba94fdc5a0c340df",
+      "benchmark_id": "researchclawbench::40-tasks",
+      "subject": {
+        "source_id": "MiMo-V2-Pro",
+        "name": "MiMo-V2-Pro",
+        "model_id": null,
+        "variant": null,
+        "harness": "ResearchHarness"
+      },
+      "value": 15.336315789473684,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://internscience.github.io/ResearchClawBench-Home/data/leaderboard.json",
+        "retrieved_at": "2026-09-21T20:48:40.424571+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/5d538e012068a8fec9fe.gz",
+        "sha256": "5d538e012068a8fec9fe974c4080b78879e92f3cc0ba412934cda59a7a087320",
+        "locator": "researchclawbench_board; source row 30; MiMo-V2-Pro; field value"
+      },
+      "protocol": "ResearchClawBench (InternScience): 40 end-to-end research tasks from 10 scientific domains, each grounded in a published paper whose results the agent must re-discover from the paper's raw data and related literature, with the target paper hidden; an LLM acting as a strict peer reviewer scores each report against an expert-curated weighted rubric (text and image criteria), 0–100 with 50 = matching the original paper; ResearchHarness rows only (the benchmark's lightweight baseline harness around a standalone model), Pass@1 view; value = the plain mean of the row's scored tasks, the figure the leaderboard ranks by — a task without a scored run is left out, not counted as 0, so coverage (tasks scored of 40) stays in each row's protocol; the board names models by product name and states no reasoning setting; source row: {\"agent\":\"ResearchHarness (MiMo-V2-Pro)\",\"tasks_scored\":38,\"tasks_total\":40,\"mean_cost_usd\":0.6196,\"latest_run_date\":\"20260415\",\"stated_effort\":\"not stated\",\"view\":\"Pass@1\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/InternScience/ResearchClawBench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/09509897989f8b6f64bb.gz",
+          "sha256": "09509897989f8b6f64bb9516644082291553770c5fe38b4e5e7a5675cbd1e661",
+          "retrieved_at": "2026-09-21T20:48:48.104788+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/static/app.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/3d1f147a79b09329806d.gz",
+          "sha256": "3d1f147a79b09329806d23b301143952c2d1e3a0d947a3612caafad63239038f",
+          "retrieved_at": "2026-09-21T20:48:45.551320+00:00",
+          "published_at": null,
+          "locator": "frontend_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/fd28ace3577a593175a4.gz",
+          "sha256": "fd28ace3577a593175a46d77a5fccc4bad468c411d52c5c43ec9c9ec4e413764",
+          "retrieved_at": "2026-09-21T20:48:43.035439+00:00",
+          "published_at": null,
+          "locator": "detail_source"
+        }
+      ]
+    },
+    {
+      "id": "public:ea0a40d2a98fce89aa2b86e0",
+      "benchmark_id": "researchclawbench::40-tasks",
+      "subject": {
+        "source_id": "MiMo-V2.5",
+        "name": "MiMo-V2.5",
+        "model_id": null,
+        "variant": null,
+        "harness": "ResearchHarness"
+      },
+      "value": 16.913846153846155,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://internscience.github.io/ResearchClawBench-Home/data/leaderboard.json",
+        "retrieved_at": "2026-09-21T20:48:40.424571+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/5d538e012068a8fec9fe.gz",
+        "sha256": "5d538e012068a8fec9fe974c4080b78879e92f3cc0ba412934cda59a7a087320",
+        "locator": "researchclawbench_board; source row 31; MiMo-V2.5; field value"
+      },
+      "protocol": "ResearchClawBench (InternScience): 40 end-to-end research tasks from 10 scientific domains, each grounded in a published paper whose results the agent must re-discover from the paper's raw data and related literature, with the target paper hidden; an LLM acting as a strict peer reviewer scores each report against an expert-curated weighted rubric (text and image criteria), 0–100 with 50 = matching the original paper; ResearchHarness rows only (the benchmark's lightweight baseline harness around a standalone model), Pass@1 view; value = the plain mean of the row's scored tasks, the figure the leaderboard ranks by — a task without a scored run is left out, not counted as 0, so coverage (tasks scored of 40) stays in each row's protocol; the board names models by product name and states no reasoning setting; source row: {\"agent\":\"ResearchHarness (MiMo-V2.5)\",\"tasks_scored\":39,\"tasks_total\":40,\"mean_cost_usd\":0.2294,\"latest_run_date\":\"20260518\",\"stated_effort\":\"not stated\",\"view\":\"Pass@1\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/InternScience/ResearchClawBench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/09509897989f8b6f64bb.gz",
+          "sha256": "09509897989f8b6f64bb9516644082291553770c5fe38b4e5e7a5675cbd1e661",
+          "retrieved_at": "2026-09-21T20:48:48.104788+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/static/app.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/3d1f147a79b09329806d.gz",
+          "sha256": "3d1f147a79b09329806d23b301143952c2d1e3a0d947a3612caafad63239038f",
+          "retrieved_at": "2026-09-21T20:48:45.551320+00:00",
+          "published_at": null,
+          "locator": "frontend_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/fd28ace3577a593175a4.gz",
+          "sha256": "fd28ace3577a593175a46d77a5fccc4bad468c411d52c5c43ec9c9ec4e413764",
+          "retrieved_at": "2026-09-21T20:48:43.035439+00:00",
+          "published_at": null,
+          "locator": "detail_source"
+        }
+      ]
+    },
+    {
+      "id": "public:46781c5a1e652adaf3a84c0a",
+      "benchmark_id": "researchclawbench::40-tasks",
+      "subject": {
+        "source_id": "MiniMax-M3",
+        "name": "MiniMax-M3",
+        "model_id": null,
+        "variant": null,
+        "harness": "ResearchHarness"
+      },
+      "value": 19.821052631578947,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://internscience.github.io/ResearchClawBench-Home/data/leaderboard.json",
+        "retrieved_at": "2026-09-21T20:48:40.424571+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/5d538e012068a8fec9fe.gz",
+        "sha256": "5d538e012068a8fec9fe974c4080b78879e92f3cc0ba412934cda59a7a087320",
+        "locator": "researchclawbench_board; source row 32; MiniMax-M3; field value"
+      },
+      "protocol": "ResearchClawBench (InternScience): 40 end-to-end research tasks from 10 scientific domains, each grounded in a published paper whose results the agent must re-discover from the paper's raw data and related literature, with the target paper hidden; an LLM acting as a strict peer reviewer scores each report against an expert-curated weighted rubric (text and image criteria), 0–100 with 50 = matching the original paper; ResearchHarness rows only (the benchmark's lightweight baseline harness around a standalone model), Pass@1 view; value = the plain mean of the row's scored tasks, the figure the leaderboard ranks by — a task without a scored run is left out, not counted as 0, so coverage (tasks scored of 40) stays in each row's protocol; the board names models by product name and states no reasoning setting; source row: {\"agent\":\"ResearchHarness (MiniMax-M3)\",\"tasks_scored\":38,\"tasks_total\":40,\"mean_cost_usd\":0.4488,\"latest_run_date\":\"20260608\",\"stated_effort\":\"not stated\",\"view\":\"Pass@1\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/InternScience/ResearchClawBench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/09509897989f8b6f64bb.gz",
+          "sha256": "09509897989f8b6f64bb9516644082291553770c5fe38b4e5e7a5675cbd1e661",
+          "retrieved_at": "2026-09-21T20:48:48.104788+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/static/app.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/3d1f147a79b09329806d.gz",
+          "sha256": "3d1f147a79b09329806d23b301143952c2d1e3a0d947a3612caafad63239038f",
+          "retrieved_at": "2026-09-21T20:48:45.551320+00:00",
+          "published_at": null,
+          "locator": "frontend_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/fd28ace3577a593175a4.gz",
+          "sha256": "fd28ace3577a593175a46d77a5fccc4bad468c411d52c5c43ec9c9ec4e413764",
+          "retrieved_at": "2026-09-21T20:48:43.035439+00:00",
+          "published_at": null,
+          "locator": "detail_source"
+        }
+      ]
+    },
+    {
+      "id": "public:cf1142f64eba8df66c69964e",
+      "benchmark_id": "researchclawbench::40-tasks",
+      "subject": {
+        "source_id": "Qwen3.5-397B-A17B",
+        "name": "Qwen3.5-397B-A17B",
+        "model_id": null,
+        "variant": null,
+        "harness": "ResearchHarness"
+      },
+      "value": 14.232,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://internscience.github.io/ResearchClawBench-Home/data/leaderboard.json",
+        "retrieved_at": "2026-09-21T20:48:40.424571+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/5d538e012068a8fec9fe.gz",
+        "sha256": "5d538e012068a8fec9fe974c4080b78879e92f3cc0ba412934cda59a7a087320",
+        "locator": "researchclawbench_board; source row 33; Qwen3.5-397B-A17B; field value"
+      },
+      "protocol": "ResearchClawBench (InternScience): 40 end-to-end research tasks from 10 scientific domains, each grounded in a published paper whose results the agent must re-discover from the paper's raw data and related literature, with the target paper hidden; an LLM acting as a strict peer reviewer scores each report against an expert-curated weighted rubric (text and image criteria), 0–100 with 50 = matching the original paper; ResearchHarness rows only (the benchmark's lightweight baseline harness around a standalone model), Pass@1 view; value = the plain mean of the row's scored tasks, the figure the leaderboard ranks by — a task without a scored run is left out, not counted as 0, so coverage (tasks scored of 40) stays in each row's protocol; the board names models by product name and states no reasoning setting; source row: {\"agent\":\"ResearchHarness (Qwen3.5-397B-A17B)\",\"tasks_scored\":40,\"tasks_total\":40,\"mean_cost_usd\":0.5767,\"latest_run_date\":\"20260416\",\"stated_effort\":\"not stated\",\"view\":\"Pass@1\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/InternScience/ResearchClawBench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/09509897989f8b6f64bb.gz",
+          "sha256": "09509897989f8b6f64bb9516644082291553770c5fe38b4e5e7a5675cbd1e661",
+          "retrieved_at": "2026-09-21T20:48:48.104788+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/static/app.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/3d1f147a79b09329806d.gz",
+          "sha256": "3d1f147a79b09329806d23b301143952c2d1e3a0d947a3612caafad63239038f",
+          "retrieved_at": "2026-09-21T20:48:45.551320+00:00",
+          "published_at": null,
+          "locator": "frontend_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/fd28ace3577a593175a4.gz",
+          "sha256": "fd28ace3577a593175a46d77a5fccc4bad468c411d52c5c43ec9c9ec4e413764",
+          "retrieved_at": "2026-09-21T20:48:43.035439+00:00",
+          "published_at": null,
+          "locator": "detail_source"
+        }
+      ]
+    },
+    {
+      "id": "public:0bda5a457e8077afd8719a6d",
+      "benchmark_id": "researchclawbench::40-tasks",
+      "subject": {
+        "source_id": "Qwen3.6-Plus",
+        "name": "Qwen3.6-Plus",
+        "model_id": null,
+        "variant": null,
+        "harness": "ResearchHarness"
+      },
+      "value": 17.99575,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://internscience.github.io/ResearchClawBench-Home/data/leaderboard.json",
+        "retrieved_at": "2026-09-21T20:48:40.424571+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/5d538e012068a8fec9fe.gz",
+        "sha256": "5d538e012068a8fec9fe974c4080b78879e92f3cc0ba412934cda59a7a087320",
+        "locator": "researchclawbench_board; source row 34; Qwen3.6-Plus; field value"
+      },
+      "protocol": "ResearchClawBench (InternScience): 40 end-to-end research tasks from 10 scientific domains, each grounded in a published paper whose results the agent must re-discover from the paper's raw data and related literature, with the target paper hidden; an LLM acting as a strict peer reviewer scores each report against an expert-curated weighted rubric (text and image criteria), 0–100 with 50 = matching the original paper; ResearchHarness rows only (the benchmark's lightweight baseline harness around a standalone model), Pass@1 view; value = the plain mean of the row's scored tasks, the figure the leaderboard ranks by — a task without a scored run is left out, not counted as 0, so coverage (tasks scored of 40) stays in each row's protocol; the board names models by product name and states no reasoning setting; source row: {\"agent\":\"ResearchHarness (Qwen3.6-Plus)\",\"tasks_scored\":40,\"tasks_total\":40,\"mean_cost_usd\":0.5182,\"latest_run_date\":\"20260415\",\"stated_effort\":\"not stated\",\"view\":\"Pass@1\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/InternScience/ResearchClawBench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/09509897989f8b6f64bb.gz",
+          "sha256": "09509897989f8b6f64bb9516644082291553770c5fe38b4e5e7a5675cbd1e661",
+          "retrieved_at": "2026-09-21T20:48:48.104788+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/static/app.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/3d1f147a79b09329806d.gz",
+          "sha256": "3d1f147a79b09329806d23b301143952c2d1e3a0d947a3612caafad63239038f",
+          "retrieved_at": "2026-09-21T20:48:45.551320+00:00",
+          "published_at": null,
+          "locator": "frontend_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/fd28ace3577a593175a4.gz",
+          "sha256": "fd28ace3577a593175a46d77a5fccc4bad468c411d52c5c43ec9c9ec4e413764",
+          "retrieved_at": "2026-09-21T20:48:43.035439+00:00",
+          "published_at": null,
+          "locator": "detail_source"
+        }
+      ]
+    },
+    {
+      "id": "public:8802dd09e33d73a2262e0245",
+      "benchmark_id": "researchclawbench::40-tasks",
+      "subject": {
+        "source_id": "Qwen3.7-Max",
+        "name": "Qwen3.7-Max",
+        "model_id": null,
+        "variant": null,
+        "harness": "ResearchHarness"
+      },
+      "value": 18.714411764705883,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://internscience.github.io/ResearchClawBench-Home/data/leaderboard.json",
+        "retrieved_at": "2026-09-21T20:48:40.424571+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/5d538e012068a8fec9fe.gz",
+        "sha256": "5d538e012068a8fec9fe974c4080b78879e92f3cc0ba412934cda59a7a087320",
+        "locator": "researchclawbench_board; source row 35; Qwen3.7-Max; field value"
+      },
+      "protocol": "ResearchClawBench (InternScience): 40 end-to-end research tasks from 10 scientific domains, each grounded in a published paper whose results the agent must re-discover from the paper's raw data and related literature, with the target paper hidden; an LLM acting as a strict peer reviewer scores each report against an expert-curated weighted rubric (text and image criteria), 0–100 with 50 = matching the original paper; ResearchHarness rows only (the benchmark's lightweight baseline harness around a standalone model), Pass@1 view; value = the plain mean of the row's scored tasks, the figure the leaderboard ranks by — a task without a scored run is left out, not counted as 0, so coverage (tasks scored of 40) stays in each row's protocol; the board names models by product name and states no reasoning setting; source row: {\"agent\":\"ResearchHarness (Qwen3.7-Max)\",\"tasks_scored\":34,\"tasks_total\":40,\"mean_cost_usd\":0.4174,\"latest_run_date\":\"20260527\",\"stated_effort\":\"not stated\",\"view\":\"Pass@1\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/InternScience/ResearchClawBench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/09509897989f8b6f64bb.gz",
+          "sha256": "09509897989f8b6f64bb9516644082291553770c5fe38b4e5e7a5675cbd1e661",
+          "retrieved_at": "2026-09-21T20:48:48.104788+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/static/app.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/3d1f147a79b09329806d.gz",
+          "sha256": "3d1f147a79b09329806d23b301143952c2d1e3a0d947a3612caafad63239038f",
+          "retrieved_at": "2026-09-21T20:48:45.551320+00:00",
+          "published_at": null,
+          "locator": "frontend_source"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/fd28ace3577a593175a4.gz",
+          "sha256": "fd28ace3577a593175a46d77a5fccc4bad468c411d52c5c43ec9c9ec4e413764",
+          "retrieved_at": "2026-09-21T20:48:43.035439+00:00",
+          "published_at": null,
+          "locator": "detail_source"
+        }
+      ]
     }
   ],
   "collections": [
@@ -275488,6 +276538,12 @@
       "status": "collected",
       "source_url": "https://rn-evals.vercel.app/",
       "reason": "27 source results parsed; configurations remain separate; unmatched model identities are retained."
+    },
+    {
+      "benchmark_id": "researchclawbench::40-tasks",
+      "status": "collected",
+      "source_url": "https://internscience.github.io/ResearchClawBench-Home/data/leaderboard.json",
+      "reason": "21 source results parsed; configurations remain separate; unmatched model identities are retained."
     }
   ],
   "rejected": [

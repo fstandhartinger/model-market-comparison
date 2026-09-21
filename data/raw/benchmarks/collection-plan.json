@@ -5116,6 +5116,131 @@
         "https://rn-evals.vercel.app/",
         "https://raw.githubusercontent.com/callstackincubator/evals/main/README.md"
       ]
+    },
+    {
+      "benchmark_id": "researchclawbench::40-tasks",
+      "parser": {
+        "kind": "researchclawbench_board",
+        "name_field": "name",
+        "value_field": "value",
+        "harness_field": "harness",
+        "plain_text_names": true,
+        "method_source": {
+          "url": "https://raw.githubusercontent.com/InternScience/ResearchClawBench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/09509897989f8b6f64bb.gz",
+          "sha256": "09509897989f8b6f64bb9516644082291553770c5fe38b4e5e7a5675cbd1e661",
+          "retrieved_at": "2026-09-21T20:48:48.104788+00:00"
+        },
+        "frontend_source": {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/static/app.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/3d1f147a79b09329806d.gz",
+          "sha256": "3d1f147a79b09329806d23b301143952c2d1e3a0d947a3612caafad63239038f",
+          "retrieved_at": "2026-09-21T20:48:45.551320+00:00"
+        },
+        "detail_source": {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/fd28ace3577a593175a4.gz",
+          "sha256": "fd28ace3577a593175a46d77a5fccc4bad468c411d52c5c43ec9c9ec4e413764",
+          "retrieved_at": "2026-09-21T20:48:43.035439+00:00"
+        },
+        "require": {
+          "page_text": [
+            "Best score per task across all agents. 50 = matches original paper, 100 = surpasses it."
+          ],
+          "method_text": [
+            "A weighted rubric (checklist) with text and image criteria, judged by an LLM acting as a strict peer reviewer.",
+            "and a lightweight ResearchHarness baseline"
+          ],
+          "app_text": [
+            "fetchStaticJSON('data/leaderboard.json')",
+            "return scores.length ? scores.reduce((a, b) => a + b, 0) / scores.length : -Infinity;",
+            "return /^ResearchHarness\\b/.test(String(name || ''));"
+          ],
+          "board_keys": [
+            "tasks",
+            "agents",
+            "scores",
+            "frontier"
+          ],
+          "tasks": [
+            "Astronomy_000",
+            "Astronomy_001",
+            "Astronomy_002",
+            "Astronomy_003",
+            "Chemistry_000",
+            "Chemistry_001",
+            "Chemistry_002",
+            "Chemistry_003",
+            "Earth_000",
+            "Earth_001",
+            "Earth_002",
+            "Earth_003",
+            "Energy_000",
+            "Energy_001",
+            "Energy_002",
+            "Energy_003",
+            "Information_000",
+            "Information_001",
+            "Information_002",
+            "Information_003",
+            "Life_000",
+            "Life_001",
+            "Life_002",
+            "Life_003",
+            "Material_000",
+            "Material_001",
+            "Material_002",
+            "Material_003",
+            "Math_000",
+            "Math_001",
+            "Math_002",
+            "Math_003",
+            "Neuroscience_000",
+            "Neuroscience_001",
+            "Neuroscience_002",
+            "Neuroscience_003",
+            "Physics_000",
+            "Physics_001",
+            "Physics_002",
+            "Physics_003"
+          ],
+          "entry_keys": [
+            "score",
+            "run_id",
+            "model",
+            "model_display",
+            "cost_usd",
+            "duration_seconds",
+            "details_exported"
+          ]
+        }
+      },
+      "status": "collected",
+      "reason": "ResearchClawBench's leaderboard: every ResearchHarness (standalone model) row with the plain mean of its scored tasks, as the page ranks it.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-researchclawbench; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JSON (static site data file)",
+        "locator": "data/leaderboard.json of the ResearchClawBench home page (the file the page's app loads for its Pass@1 leaderboard): scores[agent][task] = {score, run_id, model, model_display, cost_usd, duration_seconds}. Only agents named \"ResearchHarness (<model>)\" are read; the value is the plain mean of that agent's scored task scores, the figure the page ranks by (app.js getAverageAgentScore).",
+        "version_guard": "leaderboard.json must keep its keys {tasks, agents, scores, frontier} and exactly the 40 reviewed task ids (four per domain: Astronomy, Chemistry, Earth, Energy, Information, Life, Material, Math, Neuroscience, Physics); each ResearchHarness row's entries must keep the reviewed fields with scores in 0–100 and name only the model in the row's own label; the page must still say 50 = matches the original paper, the README must still describe the weighted rubric judged by an LLM acting as a strict peer reviewer and the ResearchHarness baseline, and app.js must still rank agents by the plain mean of their scored tasks. Another task list is a new identity, never a silent update of this one.",
+        "notes": "GitHub Pages; robots.txt 404 (conventional access). Both repositories MIT. Check the shared source cooldown first; stop on 403, 429, challenges or unexpected content. One capture per day."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "leaderboard.json must keep its keys {tasks, agents, scores, frontier} and exactly the 40 reviewed task ids (four per domain: Astronomy, Chemistry, Earth, Energy, Information, Life, Material, Math, Neuroscience, Physics); each ResearchHarness row's entries must keep the reviewed fields with scores in 0–100 and name only the model in the row's own label; the page must still say 50 = matches the original paper, the README must still describe the weighted rubric judged by an LLM acting as a strict peer reviewer and the ResearchHarness baseline, and app.js must still rank agents by the plain mean of their scored tasks. Another task list is a new identity, never a silent update of this one.",
+      "source": {
+        "url": "https://internscience.github.io/ResearchClawBench-Home/data/leaderboard.json",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/5d538e012068a8fec9fe.gz",
+        "sha256": "5d538e012068a8fec9fe974c4080b78879e92f3cc0ba412934cda59a7a087320",
+        "retrieved_at": "2026-09-21T20:48:40.424571+00:00"
+      },
+      "protocol": "ResearchClawBench (InternScience): 40 end-to-end research tasks from 10 scientific domains, each grounded in a published paper whose results the agent must re-discover from the paper's raw data and related literature, with the target paper hidden; an LLM acting as a strict peer reviewer scores each report against an expert-curated weighted rubric (text and image criteria), 0–100 with 50 = matching the original paper; ResearchHarness rows only (the benchmark's lightweight baseline harness around a standalone model), Pass@1 view; value = the plain mean of the row's scored tasks, the figure the leaderboard ranks by — a task without a scored run is left out, not counted as 0, so coverage (tasks scored of 40) stays in each row's protocol; the board names models by product name and states no reasoning setting",
+      "basis": "measured",
+      "minimum_rows": 15,
+      "source_urls": [
+        "https://internscience.github.io/ResearchClawBench-Home/data/leaderboard.json",
+        "https://internscience.github.io/ResearchClawBench-Home/",
+        "https://internscience.github.io/ResearchClawBench-Home/static/app.js",
+        "https://raw.githubusercontent.com/InternScience/ResearchClawBench/main/README.md"
+      ]
     }
   ]
 }

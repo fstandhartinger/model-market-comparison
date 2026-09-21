@@ -775,6 +775,17 @@
       ],
       "note": "2026-09-21 (iteration 158): Callstack's own board (rn-evals.vercel.app, data/SCRAPING.md) is collected daily. Lumina's 48 cited values are aggregator copies and estimates; ours are the board's own rows."
     },
+    "benchlm-researchclawbench": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "researchclawbench::40-tasks"
+      ],
+      "note": "2026-09-21 (iteration 158): InternScience's own leaderboard data file (data/SCRAPING.md) is collected daily — its ResearchHarness (standalone model) rows. Lumina's cited values are aggregator copies."
+    },
+    "benchlm-livecodebenchpro": {
+      "decision": "planned",
+      "note": "2026-09-21 (iteration 158): the primary board is livecodebenchpro.com, whose app reads webhook.cp-bench.orzzh.com/leaderboard/llm (no robots rules). Every row's rating history ends with the 2025-11-16 contests and the newest model is Gemini 3.1 Pro Preview, so the board is stale like LiveCodeBench (low priority)."
+    },
     "frontiermath": {
       "decision": "in_registry",
       "benchmark_ids": [

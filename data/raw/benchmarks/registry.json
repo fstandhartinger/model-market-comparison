@@ -14099,6 +14099,95 @@
           "excerpt": "The benchmark evaluates model-generated React Native implementations using requirement-based assessment. … Model outputs are judged against these requirements using file-level evidence"
         }
       ]
+    },
+    {
+      "id": "researchclawbench::40-tasks",
+      "name": "ResearchClawBench",
+      "version": "40-tasks",
+      "version_status": "published",
+      "family": "researchclawbench",
+      "category": "Science",
+      "one_sentence_description": "An AI agent gets the raw data and related literature behind a published scientific paper — the paper itself hidden — and must redo the research end to end, from analysis to a written report, across 40 tasks in 10 scientific domains.",
+      "scoring": {
+        "metric": "Mean rubric score over the tasks a model has a scored run for, 0–100 (an LLM acting as a strict peer reviewer grades each report against an expert-curated weighted rubric; 50 = the report matches the original paper)",
+        "unit": "points",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Only the board's ResearchHarness rows are collected: the benchmark's own lightweight baseline harness around a standalone model, so the rows compare models. The board's other rows (Claude Code, Codex CLI, InnoClaw, Qiushi Engine and more) are research-agent products built around some model and are not model rows. Pass@1 view (the page's default; its Pass@5 view takes the best of five attempts). The value is the plain mean of the row's scored tasks, the figure the page ranks by: a task without a scored run is left out rather than counted as 0, so coverage differs (33 to 40 of 40 on 2026-09-21) and stays in each row's protocol with the mean cost per task. The page says 100 = surpasses the paper, the README 70+. Judged benchmark (an LLM judge applies the rubric); secondary, never a Composite input."
+      },
+      "maintainer": "ResearchClawBench team (InternScience)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://internscience.github.io/ResearchClawBench-Home/",
+      "publication_urls": [
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/",
+          "type": "official_leaderboard",
+          "role": "Leaderboard (Pass@1 and Pass@5 views, run browser)"
+        },
+        {
+          "url": "https://github.com/InternScience/ResearchClawBench",
+          "type": "github",
+          "role": "Tasks, rubrics, evaluation code and README (MIT)"
+        },
+        {
+          "url": "https://arxiv.org/abs/2606.07591",
+          "type": "vendor_report",
+          "role": "Benchmark paper (task design and rubric scoring)"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-researchclawbench; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JSON (static site data file)",
+        "locator": "data/leaderboard.json of the ResearchClawBench home page (the file the page's app loads for its Pass@1 leaderboard): scores[agent][task] = {score, run_id, model, model_display, cost_usd, duration_seconds}. Only agents named \"ResearchHarness (<model>)\" are read; the value is the plain mean of that agent's scored task scores, the figure the page ranks by (app.js getAverageAgentScore).",
+        "version_guard": "leaderboard.json must keep its keys {tasks, agents, scores, frontier} and exactly the 40 reviewed task ids (four per domain: Astronomy, Chemistry, Earth, Energy, Information, Life, Material, Math, Neuroscience, Physics); each ResearchHarness row's entries must keep the reviewed fields with scores in 0–100 and name only the model in the row's own label; the page must still say 50 = matches the original paper, the README must still describe the weighted rubric judged by an LLM acting as a strict peer reviewer and the ResearchHarness baseline, and app.js must still rank agents by the plain mean of their scored tasks. Another task list is a new identity, never a silent update of this one.",
+        "identity_policy": "source_label",
+        "notes": "Measured by the ResearchClawBench team, who run each standalone model under ResearchHarness themselves; agent products are submitted or run separately and are not collected. The board names models by product name and states no reasoning setting, so under the exact-join policy only a family the catalog holds as a single default configuration joins; every other row stays visible as named by the source. Hy3-Preview is labelled a preview model by the maintainers. robots.txt 404 (GitHub Pages); both repositories MIT — scores with attribution to InternScience and a link to the leaderboard. Joins: data/raw/benchmarks/identity-map.json (lib/board-identity.mjs parseResearchClawBenchLabel)."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated; the README's news list shows new rows every few weeks (latest 2026-09-17 in the 2026-09-21 capture; the newest ResearchHarness model run is from 2026-07).",
+        "check_recommendation": "Daily with the ordinary refresh; a changed task list is a new identity and needs a reviewed change."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Best ResearchHarness mean 21.1 (Claude Opus 4.8) on 2026-09-21, far below the 50 that means matching the paper; the best agent product reaches 38.6. Computed saturation (CR-38.2) applies on build."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-21",
+      "last_verified": "2026-09-21",
+      "evidence": [
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/data/leaderboard.json",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/5d538e012068a8fec9fe.gz",
+          "sha256": "f9d7e272456ec9929d807386358dfc53f5f5ccbbd3e51120f910992df549c39b",
+          "fetched_at": "2026-09-21T20:48:40.424571+00:00",
+          "excerpt": "{\"tasks\": [\"Astronomy_000\", … \"Physics_003\"], \"agents\": [… \"ResearchHarness (Claude-Opus-4.8)\" …], \"scores\": {…}, \"frontier\": {…}}"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/fd28ace3577a593175a4.gz",
+          "sha256": "9f3edd3d0a716d08ed90f99544d8db5ca21c7b49bf66bd19c53e05ace0cb97a3",
+          "fetched_at": "2026-09-21T20:48:43.035439+00:00",
+          "excerpt": "Frontier Best score per task across all agents. 50 = matches original paper, 100 = surpasses it. Leaderboard"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/static/app.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/3d1f147a79b09329806d.gz",
+          "sha256": "45ce61f6c68d24987c331a927f2a3229d86c5af5ad5ce79a2b62286f172437c6",
+          "fetched_at": "2026-09-21T20:48:45.551320+00:00",
+          "excerpt": "function getAverageAgentScore(data, agent) { … return scores.length ? scores.reduce((a, b) => a + b, 0) / scores.length : -Infinity; }"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/InternScience/ResearchClawBench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/09509897989f8b6f64bb.gz",
+          "sha256": "3ad59343fe80671904ed028de1ceedbce8cd067f004c85a5c50c64c02e70be69",
+          "fetched_at": "2026-09-21T20:48:48.104788+00:00",
+          "excerpt": "Fine-grained, multimodal scoring. A weighted rubric (checklist) with text and image criteria, judged by an LLM acting as a strict peer reviewer. … and a lightweight ResearchHarness baseline."
+        }
+      ]
     }
   ],
   "aa_field_map": [

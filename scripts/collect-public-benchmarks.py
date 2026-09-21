@@ -987,6 +987,41 @@ def parse(source,spec,load_source):
                     'requirements_judged_most':most,'tokens_used':m['tokensUsed'] or None,'cost_usd':m['costUsd'],
                     'repeat_runs':data['runCount'],'run_finished_at':data['runFinishedAt'],'judge_model_stated':data['judgeModel'],
                     'stated_effort':'not stated'}})
+    elif kind=='researchclawbench_board':
+        # ResearchClawBench (InternScience): the static leaderboard page loads data/leaderboard.json {tasks, agents,
+        # scores, frontier} — scores[agent][task] = {score 0-100, run_id, model, model_display, cost_usd,
+        # duration_seconds} for the Pass@1 view, a task the agent has no scored run for being absent. The page ranks each
+        # agent by the plain mean of its scored tasks (app.js getAverageAgentScore). Only the "ResearchHarness (<model>)"
+        # rows are collected: they run standalone models under the one lightweight baseline harness, so they compare
+        # models; every other agent is a research product (its own scaffold around some model) and is not a model row.
+        # The 40 task ids are the suite this identity names; another task list is a new identity.
+        req=spec['require'];data=json.loads(source)
+        page=text(load_source(spec['detail_source']));readme=' '.join(load_source(spec['method_source']).split());app=load_source(spec['frontend_source'])
+        for phrase in req['page_text']:
+            if phrase not in page:raise ValueError('ResearchClawBench page no longer states: '+phrase[:80])
+        for phrase in req['method_text']:
+            if phrase not in readme:raise ValueError('ResearchClawBench README no longer states: '+phrase[:80])
+        for phrase in req['app_text']:
+            if phrase not in app:raise ValueError('ResearchClawBench app no longer contains: '+phrase[:80])
+        if set(data)!=set(req['board_keys']):raise ValueError(f'ResearchClawBench board schema changed: {sorted(data)}')
+        if data['tasks']!=req['tasks']:raise ValueError('ResearchClawBench task list changed (new identity)')
+        if not set(data['scores'])<=set(data['agents']) or len(set(data['agents']))!=len(data['agents']):raise ValueError('ResearchClawBench agent list inconsistent')
+        for index,agent in enumerate(data['agents']):
+            found=re.fullmatch(r'ResearchHarness \(([^()]+)\)',agent)
+            if not found:continue
+            entries=data['scores'].get(agent) or {}
+            if not entries or not set(entries)<=set(data['tasks']):raise ValueError(f'ResearchClawBench {agent}: tasks unreadable')
+            scores=[];displays=set();runs=[];costs=[]
+            for task,entry in entries.items():
+                if not isinstance(entry,dict) or not set(entry)<=set(req['entry_keys']) or not {'score','model_display','run_id'}<=set(entry):raise ValueError(f'ResearchClawBench {agent} {task}: entry schema changed')
+                if not isinstance(entry['score'],(int,float)) or not 0<=entry['score']<=100:raise ValueError(f'ResearchClawBench {agent} {task}: score unreadable')
+                scores.append(entry['score']);displays.add(entry['model_display']);runs.append(entry['run_id'])
+                if isinstance(entry.get('cost_usd'),(int,float)):costs.append(entry['cost_usd'])
+            if displays!={found[1]}:raise ValueError(f'ResearchClawBench {agent}: runs name another model {sorted(displays)!r}')
+            dates=[d for r in runs for d in re.findall(r'_(20\d{6})_',str(r))]
+            rows.append({'name':found[1],'value':sum(scores)/len(scores),'source_row':index,'harness':'ResearchHarness',
+                'context':{'agent':agent,'tasks_scored':len(scores),'tasks_total':len(data['tasks']),
+                    'mean_cost_usd':round(sum(costs)/len(costs),4) if costs else None,'latest_run_date':max(dates) if dates else None,'stated_effort':'not stated','view':'Pass@1'}})
     else:raise ValueError('Unknown parser kind '+kind)
     if not isinstance(rows,list) or not rows:raise ValueError('No source result rows')
     return rows

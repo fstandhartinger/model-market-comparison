@@ -141,6 +141,11 @@
       "quote": "an LLM judge decides each requirement against the generated files",
       "field": "scoring.metric",
       "why": "No reference solution or test decides: a judge model reads the generated code and rules each plain-language requirement met or not (requirements.yaml, the repository's LLM Judge Methodology), and the board's score is the share it rules met."
+    },
+    "researchclawbench": {
+      "quote": "an LLM acting as a strict peer reviewer grades each report against an expert-curated weighted rubric",
+      "field": "scoring.metric",
+      "why": "The research report is rated against rubric criteria by a judge model; the original paper is the reference, but a judge's reading of the report — not a checkable answer — decides the score."
     }
   },
   "considered_not_judged": {

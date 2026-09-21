@@ -331,6 +331,10 @@
     "react-native-evals": {
       "tier": "judged",
       "reason": "An LLM judge rules each written requirement met or not against the generated code; a judge's ruling, not a test or reference answer, is the score."
+    },
+    "researchclawbench": {
+      "tier": "judged",
+      "reason": "An LLM acting as a strict peer reviewer grades each research report against a weighted rubric; the judge's rating is the score."
     }
   }
 }
