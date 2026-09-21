@@ -6325,4 +6325,4 @@ Gates: focused tests 19/19 (registry, lifecycle pin updated for the 8 arxivmath 
 
 | ID | Requirement (short) | Status | Evidence | Notes |
 |---|---|---|---|---|
-| CR-110.1–110.5 | Pin v1.2.9, add Certo at 68.2/#12, preserve held-out detail, verify both hosts | in-progress | `ops/ux-2026-09-12/jevbench/v1.2.9/`; `ops/ux-2026-09-12/bin/verify-cr-110.mjs` | Florian's prior DM acceptance is recorded verbatim; UX loop paused via `paused-until`. |
+| CR-110.1–110.5 | Pin v1.2.9, add Certo at 68.2/#12, preserve held-out detail, verify both hosts | complete | `ops/ux-2026-09-12/jevbench/v1.2.9/`; `ops/ux-2026-09-12/bin/verify-cr-110.mjs`; `/opt/benchmarkheaven/state/ux-evidence/cr110-certo/` | Full suite 1,001 pass / 1 skip / 0 fail; typecheck and build clean; both hosts passed 30/30 three times plus desktop/phone browser checks with no overflow or page errors. |
