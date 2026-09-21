@@ -930,3 +930,11 @@ Seeded by review gate 20260921T100004Z from the verbatim CR-108 acceptance list 
 - **CR-117.4 Benchmaxxing.** Run the published same-topic, measured-only method. With zero qualifying vendor-versus-independent same-benchmark overlaps, report “not enough independent data yet”; do not issue a tag or infer intent.
 - **CR-117.5 Exact prices.** Join only `xiaomi/mimo-v2.6-pro` to the AA model row. Keep Pro UltraSpeed and Flash separate; publish each exact endpoint price with OpenRouter provenance.
 - **CR-117.6 Verify.** Registry and score-evidence validation, full tests, typecheck and production build; model, comparisons, Pareto and Benchmaxxing views on both production hosts, with phone-readable screenshots.
+
+## CR-118 — JevBench v1.3.0 scoring release
+
+- **CR-118.1 Exact Intelligence.** Chance-correct each tier as `(accuracy - chance) / (1 - chance)`, clipped at zero; chance is averaged from `1 / options` (or score levels) over the actual frozen items. Keep hard at 30% and split the rest 1:2:2 over easy, standard and judge.
+- **CR-118.2 Near-chance penalty.** Below 50 chance-corrected Intelligence, multiply every composite/preset by `(Intelligence / 50)^2`; at or above 50, no penalty. Calibration, Speed and Cost are unchanged.
+- **CR-118.3 Eligibility unchanged.** Keep systems, services and small tool models in their existing ranked/unranked classes.
+- **CR-118.4 Explain it.** Add the short page note: a cheap and fast system barely better than guessing could rank high; Intelligence is now above chance and systems below half-way get a growing penalty.
+- **CR-118.5 Publish and verify.** Pin the public v1.3.0 artifacts, recompute default, hard-only and every preset, run tests/build, then verify both hosts at desktop and phone widths before drafting posts. No X post is part of this change request.

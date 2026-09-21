@@ -171,7 +171,7 @@ function ScoreChart({ rows, honorable, partial, w, view, scope }: { rows: Row[];
       <span /><span /><span className="bh-muted flex justify-between tabular"><span>0</span><span>20</span><span>40</span><span>60</span><span>80</span><span>100</span></span>
     </div>
     <p className="mt-3 text-center text-[13px] sm:text-sm" data-bh-jevc-formula>
-      Score = Intelligence<sup>{w.intelligence.toFixed(2)}</sup> × Calibration<sup>{w.calibration.toFixed(2)}</sup> × Speed<sup>{w.speed.toFixed(2)}</sup> × Cost<sup>{w.cost.toFixed(2)}</sup> <span className="bh-muted">(each 0–100; geometric mean)</span>
+      Score = Intelligence<sup>{w.intelligence.toFixed(2)}</sup> × Calibration<sup>{w.calibration.toFixed(2)}</sup> × Speed<sup>{w.speed.toFixed(2)}</sup> × Cost<sup>{w.cost.toFixed(2)}</sup> <span className="bh-muted">(each 0–100; geometric mean; below 50 Intelligence, × (I / 50)²)</span>
       {!d.official && <span className="bh-muted block text-[12px]">Official ({DEFAULT_PRESET.name}): the geometric mean of the four axes, 25 % each</span>}
     </p>
     <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px]" aria-label="Legend" data-bh-jevc-legend>

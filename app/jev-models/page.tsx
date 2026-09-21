@@ -15,7 +15,7 @@ import { jevbenchV12HeldoutView } from '../../lib/jevbench-v12-heldout.mjs';
 // 25 % each, geometric mean) is the default; the earlier weightings stay as presets. CR-88's WIP banner and noindex are gone and the
 // page is back in the menu and sitemap (Florian approved the result). Every number is read from the committed v1.2 artifact
 // (lib/jevbench-v12.mjs recomputes each one); v1.0 stays published at /jev-models/v1.
-export const metadata: Metadata = previewMetadata({ path: '/jev-models', documentTitle: 'Jev-class decision models — JevBench v1.2', title: 'Jev-class models — JevBench v1.2 | Benchmark Heaven',
+export const metadata: Metadata = previewMetadata({ path: '/jev-models', documentTitle: 'Jev-class decision models — JevBench v1.3.0', title: 'Jev-class models — JevBench v1.3.0 | Benchmark Heaven',
   description: 'Our own benchmark of typed-decision models: Jev, its open rebuilds and instruction models on the JevBench Score — Intelligence, Calibration, Speed and Cost, 25 % each, geometric mean.' });
 
 const day = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
@@ -81,10 +81,10 @@ export default async function JevModelsPage() {
   const credits = all.filter((r) => !r.key.endsWith('-tools')).sort((a, b) => a.display.localeCompare(b.display));
   return <>
     <header className="bh-page-head">
-      <p className="bh-eyebrow flex flex-nowrap items-center"><span><span className="sm:hidden">JevBench v1.2</span><span className="hidden sm:inline">JevBench v1.2 · our own benchmark</span></span><CustomEvaluationOffer /></p>
+      <p className="bh-eyebrow flex flex-nowrap items-center"><span><span className="sm:hidden">JevBench v1.3.0</span><span className="hidden sm:inline">JevBench v1.3.0 · our own benchmark</span></span><CustomEvaluationOffer /></p>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">Jev-class models</h1>
       <p className="mt-3 max-w-3xl text-lg" data-bh-jev-own>JevBench is <b>Benchmark Heaven&apos;s own benchmark</b> for Jev-class decision models: state and a bounded rubric in, a typed answer out.</p>
-      <p className="bh-muted mt-2 max-w-3xl">Version 1.2 measures {all.length} systems on {view.decisions} decisions, including {view.tierCounts.hard} hard ones, and ranks them by the <b className="text-gray-200">JevBench Score</b>. Built and run by us, not collected from someone else&apos;s leaderboard; the results describe the tested configurations, not every application.</p>
+      <p className="bh-muted mt-2 max-w-3xl">Version 1.3.0 measures {all.length} systems on the unchanged {view.decisions} decisions, including {view.tierCounts.hard} hard ones, and ranks them by the <b className="text-gray-200">JevBench Score</b>. Built and run by us, not collected from someone else&apos;s leaderboard; the results describe the tested configurations, not every application.</p>
       <p className="bh-muted mt-3 max-w-3xl text-xs leading-relaxed" data-bh-jev-meta>
         Scored {day(view.generated)} · protocol <code>{view.protocol}</code> · {view.tierCounts.easy} easy + {view.tierCounts.standard} standard + {view.tierCounts.judge} judge + {view.tierCounts.hard} hard decisions · one request at a time from a server in Germany ·{' '}
         <a className="text-accent underline" href={JEVBENCH_REPO}>harness, public tasks &amp; scoring rules (MIT)</a> ·{' '}
@@ -92,6 +92,11 @@ export default async function JevModelsPage() {
         <a className="text-accent underline" href="/jev-models/v1" data-bh-jev-v1-link>v1.0 results</a>
       </p>
     </header>
+
+    <aside className="bh-panel mt-6 max-w-4xl p-4 text-sm" data-bh-jev-score-change>
+      <h2 className="font-semibold">What changed in the score</h2>
+      <p className="bh-muted mt-1">A system that is cheap and fast but barely better than guessing could rank high; intelligence is now measured above chance, and systems below half-way get a growing penalty. The tasks, Calibration, Speed, Cost and ranking eligibility are unchanged.</p>
+    </aside>
 
     <JevModelsV12Board view={view} tasks={tasks}>
     {lead && <section className="mt-8 max-w-4xl" aria-labelledby="jev12-headline">

@@ -12,8 +12,8 @@ const [page, css, sheet, report, jev] = await Promise.all([
   read('../components/BenchmaxxingReport.tsx'), read('../components/JevModelsV12.tsx'),
 ]);
 
-test('F-147: below sm the eyebrow is "JevBench v1.2" and the pill text is never smaller than 10 px', () => {
-  assert.match(page, /<span className="sm:hidden">JevBench v1\.2<\/span><span className="hidden sm:inline">JevBench v1\.2 · our own benchmark<\/span>/);
+test('F-147: below sm the eyebrow carries the current JevBench version and the pill text is never smaller than 10 px', () => {
+  assert.match(page, /<span className="sm:hidden">JevBench v1\.3\.0<\/span><span className="hidden sm:inline">JevBench v1\.3\.0 · our own benchmark<\/span>/);
   const phone = css.match(/@media \(max-width: 639px\) \{\s*\.bh-custom-evaluation-badge \{[^}]*\}/)?.[0];
   assert.ok(phone, 'the phone rule for the badge exists');
   assert.match(phone, /font-size: 10px; line-height: 14px/);

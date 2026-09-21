@@ -6,7 +6,7 @@ import { readJevbenchV12, jevbenchV12View } from '../lib/jevbench-v12.mjs';
 import { JEVBENCH_V12_TASKS_ARTIFACT, JEVBENCH_V12_TASKS_SHA256, readJevbenchV12Tasks, validateJevbenchV12Tasks, jevbenchV12TasksView } from '../lib/jevbench-v12-tasks.mjs';
 import { DEFAULT_WEIGHTS } from '../lib/jevbench-v12-weights.mjs';
 import { tasksForScope, parseTaskScope, publicTierSummary, scopeDecisions, scopeRows, scopeTierWeights } from '../lib/jevbench-v12-scope.mjs';
-import { TIER_WEIGHTS } from '../lib/jevbench-v12-score.mjs';
+import { TIER_CHANCES, TIER_WEIGHTS } from '../lib/jevbench-v12-score.mjs';
 import { createHash } from 'node:crypto';
 
 const clone = async () => JSON.parse(await readFile(JEVBENCH_V12_TASKS_ARTIFACT, 'utf8'));
@@ -125,10 +125,13 @@ test('the scoped tier weights are the weights intelligence() actually applies', 
   const v12 = await readJevbenchV12();
   const view = jevbenchV12View(v12);
   const row = view.ranked[0];
-  // A weighted mean of the in-scope tier accuracies with scopeTierWeights must reproduce scopedIntelligence's value.
+  // A weighted mean of the in-scope chance-corrected tier accuracies must reproduce scopedIntelligence's value.
   for (const scope of ['all', 'easy-medium', 'easy']) {
     const w = scopeTierWeights(scope);
-    const expected = 100 * ['easy', 'standard', 'judge', 'hard'].reduce((sum, t) => sum + w[t] * row.tiers[t], 0);
+    const expected = ['easy', 'standard', 'judge', 'hard'].reduce((sum, t) => {
+      const corrected = Math.max(0, 100 * (row.tiers[t] - TIER_CHANCES[t]) / (1 - TIER_CHANCES[t]));
+      return sum + w[t] * corrected;
+    }, 0);
     const taskView = jevbenchV12TasksView(await readJevbenchV12Tasks(v12));
     const [scoped] = scopeRows([row], taskView.systems, scope, DEFAULT_WEIGHTS);
     assert.ok(Math.abs(scoped.axes.intelligence - expected) < 0.02, `${scope}: ${scoped.axes.intelligence} vs ${expected}`);

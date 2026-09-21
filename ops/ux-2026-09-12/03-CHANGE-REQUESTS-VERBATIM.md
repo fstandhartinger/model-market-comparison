@@ -1519,3 +1519,11 @@ the 2B and the 9B on the full v1.2 set exactly like every entrant", check whethe
 contains our public JevBench items ("allowed, but it must be noted, and our new held-out diagnostic will
 show the effect"), then "Publish (repo tag v1.2.x, page via BH single-writer rule, CR id = max+1, both
 hosts verified)". Name it unambiguously: "Open-Jev 2B (Zefan Cai)" / "Open-Jev 9B (Zefan Cai)".
+
+## CR-20260922a — JevBench v1.3.0 score → CR-118
+
+Florian chose this scoring method himself in the 22 September method lab and asked for the updated config, a draft
+tweet, and refreshed earlier suggestions with screenshots. Official formula: chance-corrected Intelligence per tier
+from each item's actual option count; unchanged 30% hard / 1:2:2 remaining tier weights; unchanged Calibration, Speed
+and Cost; and below 50 Intelligence a `(Intelligence / 50)^2` score multiplier. The task set and ranking eligibility
+do not change. Drafts only; post nothing.
