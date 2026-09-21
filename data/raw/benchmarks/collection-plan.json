@@ -4620,11 +4620,11 @@
         }
       },
       "status": "collected",
-      "reason": "Toolathlon publishes the Verified board as a server-rendered table on its own site, with a green check on every row it evaluated itself. Only those rows are ingested; the archived pre-Verified board is a different score series and is never parsed.",
+      "reason": "Toolathlon publishes the Verified board as a server-rendered table on its own site, with a green check on every row it evaluated itself. Only those rows are ingested; the archived pre-Verified board is a different score series, collected separately as toolathlon::pre-verified.",
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-toolathlon; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
         "format": "Server-rendered HTML table",
-        "locator": "The page's own current-board table `<table class=\"performance-table leaderboard-current-table\">`: one row per model x agent configuration with data-label cells Model / Model Type / Agent / Date / Pass@1 / Pass@3 / Pass^3 / # Turns / # Tool Calls. The value is Pass@1 in percent (mean over three runs); the ± figure is the across-run standard deviation. Only rows carrying the `verified-badge` check are scored. The sibling `leaderboard-history-table` is the archived pre-Verified board and is never parsed.",
+        "locator": "The page's own current-board table `<table class=\"performance-table leaderboard-current-table\">`: one row per model x agent configuration with data-label cells Model / Model Type / Agent / Date / Pass@1 / Pass@3 / Pass^3 / # Turns / # Tool Calls. The value is Pass@1 in percent (mean over three runs); the ± figure is the across-run standard deviation. Only rows carrying the `verified-badge` check are scored. The sibling `leaderboard-history-table` is the archived pre-Verified board; it is never parsed into this identity (it is its own, toolathlon::pre-verified).",
         "version_guard": "The leaderboard page must still name the release (\"Toolathlon-Verified\", current benchmark, released June 30, 2026), state 108 tasks, 32 MCP servers (604 tools) and 7 local toolkits (16 tools), carry both the current and the archived board table, and explain the green check as independent evaluation by the maintainers; the current board must keep its nine columns, a listed model type and agent configuration per row, and stay ranked by Pass@1. The release post must still state the preserved 108-task scope, Pass@1 as the mean over three runs, what the green check means, and that Verified is a separate score series. A new release, a changed task set or a re-normalisation is a new identity, never a silent update of this one.",
         "notes": "Measured by the benchmark maintainers (HKUST NLP). robots.txt allows /docs/ (only /cdn-cgi/ and /_next/ are disallowed) and its Content-Signal header allows ai-input; the page itself is captured, never the disallowed /_next/ data routes. Observed source inconsistency: the page's \"Best Pass@1 Score\" stat card still reads 76.2 % while the board's top row is 78.4 % — the stat card lags the table, so it is never ingested. The board has exactly one agent configuration (\"Default\"), so no harness cohort is published — the configuration stays in each row's protocol and the parser fails closed on any other value, which is when a cohort would start to mean something. Exact joins: data/raw/benchmarks/identity-map.json (lib/board-identity.mjs, parseToolathlonVerifiedLabel)."
       },
@@ -4639,6 +4639,99 @@
       "protocol": "Toolathlon-Verified (HKUST NLP), released 30 June 2026: 108 real-world tool-use tasks over 32 MCP servers (604 tools) and 7 local toolkits (16 tools), graded by execution against the task's ground truth. The value is the published Pass@1, the mean over three runs; the ± figure the board shows is the across-run standard deviation, not a confidence interval, and is kept per row with Pass@3, Pass^3, the mean turns and tool calls, the model type, the agent configuration and the evaluation date. Only rows the maintainers evaluated themselves (the board's green check) are ingested; rows submitted by others are not published as measurements here. Verified is a separate score series from the pre-June-2026 Toolathlon board, which the site archives and calls not comparable — that board is never parsed. Secondary benchmark, never a Composite input.",
       "basis": "measured",
       "minimum_rows": 25,
+      "source_urls": [
+        "https://toolathlon.xyz/docs/leaderboard",
+        "https://toolathlon.xyz/docs/blog/toolathlon-verified"
+      ]
+    },
+    {
+      "benchmark_id": "toolathlon::pre-verified",
+      "parser": {
+        "kind": "toolathlon_verified_board",
+        "board": "history",
+        "name_field": "name",
+        "id_field": "id",
+        "value_field": "pass_1",
+        "plain_text_names": true,
+        "method_source": {
+          "url": "https://toolathlon.xyz/docs/blog/toolathlon-verified",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-toolathlon-pre-verified/2fa0875016ad93ec0ca1.gz",
+          "sha256": "2fa0875016ad93ec0ca1223a6003075720710fe47b403a11f0470372e27db261",
+          "retrieved_at": "2026-09-21T19:19:06.164384+00:00"
+        },
+        "require": {
+          "page_text": [
+            "Previous Toolathlon leaderboard",
+            "Snapshot before Toolathlon-Verified · 51 models",
+            "This archived snapshot shows the leaderboard immediately before Toolathlon-Verified. It is retained for historical context; these scores use earlier task definitions and evaluation infrastructure and are not directly comparable with the Verified results above.",
+            "Results bearing this badge were independently evaluated by us",
+            "Claude-Opus was evaluated once due to budget constraints.",
+            "OpenAI models require the Responses API to achieve better native performance."
+          ],
+          "method_text": [
+            "It preserves the original 108-task scope",
+            "Toolathlon-Verified begins a separate official score series; its results are not directly comparable with the original release."
+          ],
+          "columns": [
+            "Model",
+            "Type",
+            "Agent",
+            "Date",
+            "Pass@1",
+            "Pass@3",
+            "Pass^3",
+            "# Turns"
+          ],
+          "columns_by_label": [
+            "Model",
+            "Model Type",
+            "Agent",
+            "Date",
+            "Pass@1",
+            "Pass@3",
+            "Pass^3",
+            "# Turns"
+          ],
+          "badge_marker": "class=\"verified-badge\"",
+          "model_types": [
+            "Open-Source",
+            "Proprietary"
+          ],
+          "agents": [
+            "Default"
+          ],
+          "skip_agents": [
+            "Claude Agent SDK"
+          ],
+          "score_markers": {
+            "†": "† the page: Claude-Opus was evaluated once due to budget constraints (single run, not a mean over runs)"
+          },
+          "label_markers": {
+            "‡": "‡ the page: OpenAI models were re-run through the Responses API and the earlier Chat Completions results removed"
+          },
+          "minimum_verified": 36
+        }
+      },
+      "status": "collected",
+      "reason": "The maintainers keep the pre-Verified leaderboard as an archived snapshot on the same page as the Verified board. It is its own identity (the site calls the two series not comparable); only the rows they evaluated themselves are ingested.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-toolathlon; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "Server-rendered HTML table (archived accordion)",
+        "locator": "`<table class=\"performance-table leaderboard-history-table\">`: data-label cells Model / Model Type / Agent / Date / Pass@1 / Pass@3 / Pass^3 / # Turns; value = Pass@1 percent; badged rows only; † and ‡ footnotes recorded per row; the Claude Agent SDK row is left out (a vendor scaffold, not the Default agent).",
+        "version_guard": "Accordion title and \"Snapshot before Toolathlon-Verified · 51 models\", the not-comparable note, both footnotes and the badge legend unchanged; eight columns; listed model types; only Default (or the reviewed skipped Claude Agent SDK) agents; at least 36 badged rows ranked by Pass@1; the release post still states the preserved 108-task scope and the separate score series.",
+        "notes": "Frozen archive (newest row 19 May 2026). Parsed daily from the same capture as the Verified board. Unbadged rows (sourced from vendor announcements) are skipped before the cell guard, because one of them (GPT-5.4-xhigh) is missing its Pass@1 data-label."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Accordion title and \"Snapshot before Toolathlon-Verified · 51 models\", the not-comparable note, both footnotes and the badge legend unchanged; eight columns; listed model types; only Default (or the reviewed skipped Claude Agent SDK) agents; at least 36 badged rows ranked by Pass@1; the release post still states the preserved 108-task scope and the separate score series.",
+      "source": {
+        "url": "https://toolathlon.xyz/docs/leaderboard",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-toolathlon-pre-verified/20d48e79f2e25ec87d81.gz",
+        "sha256": "20d48e79f2e25ec87d815aaa490b31dc04c3a79eb950e210027b9b1a12fde2ab",
+        "retrieved_at": "2026-09-21T19:19:02.818145+00:00"
+      },
+      "protocol": "Toolathlon, original release (HKUST NLP): 108 real-world tool-use tasks over MCP servers and local toolkits, graded by execution against each task's ground truth, under the task definitions and infrastructure in use before the 30 June 2026 Verified repair. Value = the Pass@1 the maintainers' archived board publishes; the ± figure is the across-run standard deviation, kept with Pass@3, Pass^3, mean turns, model type, agent configuration and evaluation date. Only rows the maintainers evaluated themselves (green check) are ingested. The site calls this series not directly comparable with Toolathlon-Verified; never ranked against it. Secondary benchmark, never a Composite input.",
+      "basis": "measured",
+      "minimum_rows": 36,
       "source_urls": [
         "https://toolathlon.xyz/docs/leaderboard",
         "https://toolathlon.xyz/docs/blog/toolathlon-verified"

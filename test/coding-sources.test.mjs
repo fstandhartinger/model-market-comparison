@@ -27,6 +27,8 @@ const SLUG_BOARDS = ['osworld-2', 'swe-rebench', 'gso', 'hyper-tau-bench', 'lisa
   // 2026-09-20 (iteration 126, CR-30.2): Toolathlon-Verified, product names with the setting in
   // parentheses; only rows the maintainers evaluated themselves are collected.
   'toolathlon-verified',
+  // 2026-09-21 (iteration 156, CR-37.1): the archived pre-Verified Toolathlon board (maintainers' own rows only).
+  'toolathlon',
   // 2026-09-21 (iteration 154, CR-37.1): Context Arena MRCR v2, OpenRouter-style slugs with the reasoning
   // mode the run used (lib/board-identity.mjs parseContextArenaId).
   'context-arena-mrcr-v2',

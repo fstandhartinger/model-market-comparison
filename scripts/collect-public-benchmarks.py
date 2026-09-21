@@ -812,31 +812,49 @@ def parse(source,spec,load_source):
         # tool calls. Guards: the release identity phrases, the task/server/toolkit counts, both table classes,
         # the badge legend, the column set, the type/agent vocabulary, a ranked board, and the release post's own
         # statements about the 108-task scope, the three runs and what the badge means.
-        req=spec['require']
+        # 2026-09-21 (iteration 156, CR-37.1): `board: "history"` reads the archived pre-Verified board as its own
+        # frozen identity (toolathlon::pre-verified) — never merged with or ranked against the Verified series. Its
+        # footnote markers are reviewed, not stripped blindly: `score_markers` (after Pass@1) and `label_markers`
+        # (after the model name) each map a mark to the page's own footnote, kept per row; `skip_agents` names the
+        # agent configurations that are a different measured system (a vendor SDK scaffold) and are left out.
+        req=spec['require'];history=spec.get('board','current')=='history'
+        if spec.get('board','current') not in ('current','history'):raise ValueError('Toolathlon board option must be current or history')
         for phrase in req['page_text']:
             if phrase not in source:raise ValueError('Toolathlon page statement changed: '+phrase)
         method=' '.join(load_source(spec['method_source']).split())
         for phrase in req['method_text']:
             if phrase not in method:raise ValueError('Toolathlon release statement changed: '+phrase)
         if 'leaderboard-history-table' not in source:raise ValueError('Toolathlon archived board missing; the page layout changed')
-        board=re.search(r'<table class="performance-table leaderboard-current-table">(.*?)</table>',source,re.S)
-        if not board:raise ValueError('Toolathlon Verified board missing')
+        if 'leaderboard-current-table' not in source:raise ValueError('Toolathlon Verified board missing; the page layout changed')
+        board=re.search(r'<table class="performance-table leaderboard-%s-table">(.*?)</table>'%('history' if history else 'current'),source,re.S)
+        if not board:raise ValueError('Toolathlon %s board missing'%('archived' if history else 'Verified'))
+        score_marks=req.get('score_markers',{});label_marks=req.get('label_markers',{});skip_agents=req.get('skip_agents',[])
         columns=[text(c) for c in re.findall(r'<th[^>]*>(.*?)</th>',board[1],re.S)]
         if columns!=req['columns']:raise ValueError(f'Toolathlon columns changed: {columns!r}')
         verified=0
         for index,tr in enumerate(re.finditer(r'<tr[^>]*>(.*?)</tr>',board[1],re.S)):
             cells={k:v for k,v in re.findall(r'<td[^>]*data-label="([^"]*)"[^>]*>(.*?)</td>',tr[1],re.S)}
             if not cells:continue
+            # The archive's rows submitted by others are never read, so a markup slip in one of them (21 Sep 2026:
+            # GPT-5.4-xhigh's Pass@1 cell lacks its data-label) cannot block the maintainers' own rows.
+            if history and req['badge_marker'] not in cells.get('Model',''):continue
             if set(cells)!=set(req['columns_by_label']):raise ValueError(f'Toolathlon row {index} cells changed: {sorted(cells)!r}')
             if req['badge_marker'] not in cells['Model']:continue
             verified+=1
             label=text(re.sub(r'<svg.*?</svg>|<img[^>]*>|<span class="verified-badge".*?</span>','',cells['Model'],flags=re.S))
+            notes=[]
+            for mark,note in label_marks.items():
+                if label.endswith(' '+mark):label=label[:-len(mark)-1].strip();notes.append(note)
             if not label:raise ValueError(f'Toolathlon row {index}: model label missing')
             kind_=text(cells['Model Type']);agent=text(cells['Agent']);date=text(cells['Date'])
             if kind_ not in req['model_types']:raise ValueError(f'Toolathlon {label!r}: unlisted model type {kind_!r}')
+            if agent in skip_agents:verified-=1;continue
             if agent not in req['agents']:raise ValueError(f'Toolathlon {label!r}: unlisted agent configuration {agent!r}')
             if not re.fullmatch(r'\d{4}-\d{2}-\d{2}',date):raise ValueError(f'Toolathlon {label!r}: unreadable date {date!r}')
-            score=re.fullmatch(r'(\d+(?:\.\d+)?)(?:\s*±\s*(\d+(?:\.\d+)?))?',text(cells['Pass@1']))
+            shown=text(cells['Pass@1'])
+            for mark,note in score_marks.items():
+                if shown.endswith(' '+mark):shown=shown[:-len(mark)-1].strip();notes.append(note)
+            score=re.fullmatch(r'(\d+(?:\.\d+)?)(?:\s*±\s*(\d+(?:\.\d+)?))?',shown)
             if not score:raise ValueError(f'Toolathlon {label!r}: unreadable Pass@1 {text(cells["Pass@1"])!r}')
             value=float(score[1])
             if not 0<=value<=100:raise ValueError(f'Toolathlon {label!r}: Pass@1 out of range')
@@ -845,9 +863,9 @@ def parse(source,spec,load_source):
                 'context':{'model':label,'model_type':kind_,'agent':agent,'evaluated_at':date,
                     'pass_1':value,'stddev_across_runs':float(score[2]) if score[2] else None,
                     'pass_3':optional('Pass@3'),'pass_cubed':optional('Pass^3'),
-                    'mean_turns':optional('# Turns'),'mean_tool_calls':optional('# Tool Calls'),
-                    'independently_evaluated':True}})
-        if verified<req['minimum_verified']:raise ValueError(f'Toolathlon Verified board shrank: {verified} independently evaluated rows')
+                    'mean_turns':optional('# Turns'),'mean_tool_calls':optional('# Tool Calls') if '# Tool Calls' in cells else None,
+                    'independently_evaluated':True,**({'source_notes':notes} if notes else {})}})
+        if verified<req['minimum_verified']:raise ValueError(f'Toolathlon %s board shrank: {verified} independently evaluated rows'%('archived' if history else 'Verified'))
         ranked=[r['pass_1'] for r in rows]
         if any(ranked[i]<ranked[i+1] for i in range(len(ranked)-1)):raise ValueError('Toolathlon board is no longer ranked by Pass@1')
     elif kind=='context_arena_summary':

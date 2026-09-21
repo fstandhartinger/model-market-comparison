@@ -300,6 +300,10 @@
       "tier": "heldout",
       "reason": "Every task score comes from a sealed hidden split the agent never sees, 53 of the 88 tasks are held back entirely, and the tasks were written for this benchmark in 2026 by domain experts — a lab cannot tune toward the graded data."
     },
+    "toolathlon": {
+      "tier": "headline",
+      "reason": "The original release's task set and evaluators are public in the maintainers' GitHub repository, and labs quoted it in release material before the Verified repair — the committed Lumina ledger (data/raw/lumina-ledger.json, family toolathlon) counts 15 vendor-reported results cited from Meta, DeepSeek, Google DeepMind, Kimi and Z.ai pages — so it was a board a training team could aim at."
+    },
     "toolathlon-verified": {
       "tier": "headline",
       "reason": "Public task set and evaluators in the maintainers' GitHub repository, and our own self-reported corpus shows eight labs quoting Toolathlon in release material — 41 rows name the Verified series (e.g. Anthropic's Fable 5.1 system card) — so it is a board a training team can aim at."

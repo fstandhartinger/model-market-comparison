@@ -736,8 +736,11 @@
       "note": "Mapped by the Lumina intake job, 15 Sep 2026"
     },
     "toolathlon": {
-      "decision": "planned",
-      "collector": "CR-30.2 tier A: Toolathlon-Verified from an independent board"
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "toolathlon::pre-verified"
+      ],
+      "note": "2026-09-21 (iteration 156): Lumina's Toolathlon values are vendor and aggregator copies of the original release; the maintainers' own archived pre-Verified board (toolathlon.xyz, badged rows only) is now collected as its own identity. Toolathlon-Verified is the separate series toolathlon-verified::2026-06-30 (benchlm-toolathlonverified)."
     },
     "vending-bench": {
       "decision": "in_registry",
