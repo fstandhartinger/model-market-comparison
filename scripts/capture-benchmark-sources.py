@@ -41,10 +41,13 @@ while queue:
   if any(x in b[:100000].lower() for x in [b'<title>just a moment',b'cf-chl-',b'g-recaptcha',b'hcaptcha']):blocked.add(host);raise RuntimeError('Challenge detected; stopped host')
   sha=hashlib.sha256(b).hexdigest();p=dest/(sha[:20]+'.gz');p.write_bytes(gzip.compress(b,mtime=0));r.update(status=q.status,file=str(p),sha256=sha,bytes=len(b),final_url=q.url)
   if follow and q.status==200:
-   # Vite SPAs ship their data in one hashed module bundle; names change per deploy.
-   matches=re.findall(r'<script type="module"[^>]*\ssrc="(/assets/[A-Za-z0-9._-]+\.js)"',b.decode('utf-8','replace'))
+   # Single-page apps ship their data in one hashed bundle; the name changes every deploy. Two build
+   # tools, one rule: exactly one bundle script must match, and its src is resolved against the page.
+   page=b.decode('utf-8','replace')
+   matches=re.findall(r'<script type="module"[^>]*\ssrc="(/assets/[A-Za-z0-9._-]+\.js)"',page)
+   matches+=re.findall(r'<script[^>]*\sdefer[^>]*\ssrc="(\.?/?static/js/main\.[A-Za-z0-9]+\.js)"',page)
    if len(matches)!=1:r['follow_error']='Expected exactly one module script, found '+str(len(matches))
-   else:queue.append({'url':origin+matches[0],'discovered_from':url})
+   else:queue.append({'url':urllib.parse.urljoin(q.geturl(),matches[0]),'discovered_from':url})
  except Exception as e:
   if isinstance(e,urllib.error.HTTPError) and e.code in [403,429]:blocked.add(host)
   r.update(status='source_unreachable',reason=str(e))

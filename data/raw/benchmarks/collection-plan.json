@@ -568,10 +568,12 @@
           "fetched_at": "2026-09-10T22:23:16Z"
         },
         "frontend_source": {
-          "url": "https://livebench.ai/static/js/main.ac6b12ef.js",
-          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/final-4efcf9b59965.gz",
-          "sha256": "31e3792c378b20b9a0e3d309eb94fef26e49b61b890e20e348f601b209a1c888",
-          "fetched_at": "2026-09-10T22:22:25Z"
+          "page_url": "https://livebench.ai/",
+          "follow_module_script": true,
+          "url": "https://livebench.ai/static/js/main.04358d6f.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-livebench/b29cff6f2cd542927e75.gz",
+          "sha256": "b29cff6f2cd542927e75c9a582f65c4e8d290fb8dd244387d2f85969bdd003aa",
+          "retrieved_at": "2026-09-21T02:05:35.724575+00:00"
         }
       },
       "status": "collected",
@@ -581,7 +583,7 @@
         "format": "CSV with JSON category map",
         "locator": "Read the latest release selector from the linked static JS and require 2026-06-25; fetch table_2026_06_25.csv and categories_2026_06_25.json. Preserve task/category and release identifiers. The JS Pe function defines the displayed category mean and explicit Grok-3 overrides; do not silently recompute overrides.",
         "version_guard": "Verify the published version 2026-06-25 before reading results.",
-        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05. 2026-09-21: the frontend bundle is no longer pinned by its hashed filename — livebench.ai rebuilt on 2026-09-17 and `main.ac6b12ef.js` became a 404, which froze this board's daily refresh for four days. The bundle is now discovered from the page's own script tag (`page_url` + `follow_module_script`), the same route ApprenticeBench uses; the two Grok-3 override literals still guard what the bundle must say."
       },
       "cadence": "daily, at most one capture per source; stop on access restrictions",
       "version_guard": "Verify the published version 2026-06-25 before reading results.",
