@@ -1527,3 +1527,14 @@ tweet, and refreshed earlier suggestions with screenshots. Official formula: cha
 from each item's actual option count; unchanged 30% hard / 1:2:2 remaining tier weights; unchanged Calibration, Speed
 and Cost; and below 50 Intelligence a `(Intelligence / 50)^2` score multiplier. The task set and ranking eligibility
 do not change. Drafts only; post nothing.
+
+## CR-20260922b — multimodal JevBench preview → CR-119
+
+Florian, 22 Sep 2026, verbatim:
+> yes, publish multimodal JevBench as a separate, clearly labelled preview board - don't put it into the menu yet, send me the url so that I can see the result.
+
+Publish `/jev-models/multimodal-preview` as a noindex preview, linked from nowhere and absent from the sitemap. Show
+public, licensed examples only; keep held-out content private; compute every number in repository code from the run
+artifacts; report real and synthetic items separately; exclude image-incapable text-only systems rather than scoring
+them zero; disclose unavailable axes rather than inventing values; verify both production hosts at desktop and phone
+widths in light and dark; send Florian the URL with a screenshot. This preview is not part of the JevBench Score.

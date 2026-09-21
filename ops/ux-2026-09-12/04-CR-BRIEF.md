@@ -938,3 +938,11 @@ Seeded by review gate 20260921T100004Z from the verbatim CR-108 acceptance list 
 - **CR-118.3 Eligibility unchanged.** Keep systems, services and small tool models in their existing ranked/unranked classes.
 - **CR-118.4 Explain it.** Add the short page note: a cheap and fast system barely better than guessing could rank high; Intelligence is now above chance and systems below half-way get a growing penalty.
 - **CR-118.5 Publish and verify.** Pin the public v1.3.0 artifacts, recompute default, hard-only and every preset, run tests/build, then verify both hosts at desktop and phone widths before drafting posts. No X post is part of this change request.
+
+## CR-119 — multimodal JevBench preview
+
+- **CR-119.1 Isolated preview.** Publish `/jev-models/multimodal-preview` with the exact prominent preview warning, `noindex, nofollow`, no navigation link and no sitemap entry.
+- **CR-119.2 Artifact-derived results.** Repository code derives the 128-public-real-item overall and skill rankings, latency axes, available cost estimates and separate eight-item synthetic summary from committed run artifacts; no held-out item is published.
+- **CR-119.3 Honest eligibility and axes.** Image-capable completed systems are ranked; text-only systems are “not eligible,” never zero. Calibration and unavailable prices remain explicitly unmeasured. This is not the JevBench Score.
+- **CR-119.4 Content and examples.** Explain image reasoning, computer use and browser use, methodology and limitations. Show only public licensed examples with source attribution; keep synthetic results separate and non-rank-worthy.
+- **CR-119.5 Verify and deliver.** Focused tests, typecheck and production build; both production hosts at 1440×1200 and 390×844, light and dark, without page overflow or browser errors; send Florian the URL with a live screenshot.
