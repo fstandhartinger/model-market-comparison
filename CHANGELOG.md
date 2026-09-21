@@ -4,6 +4,24 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-21 — Four duplicate catalog models merged
+
+Four models were listed twice: the benchmarked row and a benchmark-less twin that a cloud, EU or Epoch catalog spells
+with or without the size suffix. The twins are gone and their offers and scores now sit on the canonical row:
+
+| Removed id | Now part of |
+|---|---|
+| `nemotron-3-ultra::default` | `nemotron-3-ultra-550b-a55b::reasoning` (Azure AI Foundry offer, Epoch ECI 146.27) |
+| `nemotron-3.5-lightning-30b-a3b::default` | `nemotron-3.5-lightning::default` (TrustedTokens EU offer) |
+| `llama-4-maverick-17b::default` | `llama-4-maverick::default` (AWS Bedrock, Azure AI Foundry offers) |
+| `llama-4-scout-17b::default` | `llama-4-scout::default` (AWS Bedrock offer) |
+
+`GET /api/models/{id}` for a removed id no longer resolves. Nemotron 3 Ultra's Composite now includes Epoch ECI. Five
+board rows labelled "Nemotron 3 Ultra" without a reasoning setting (SimpleBench, Toolathlon-Verified, Epoch's chess
+puzzles, mystery game puzzles and GPQA Diamond runs) keep the source's own name (`subject.model_id: null`): the
+merged family's only configuration is reasoning, and a label without a setting joins only a single default
+configuration. No path, field or unit changed.
+
 ## 2026-09-21 — Blueprint-Bench 2 (secondary, non-Composite)
 
 New registry id `blueprint-bench::2` (Vision): Andon Labs' floor-plan benchmark, collected daily from the
