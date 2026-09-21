@@ -37,4 +37,6 @@ test('F-154: nothing is set below the 10 px type floor in the shortlist columns 
     assert.doesNotMatch(src, /fontSize: ?["']?(?:[0-9]|9\.5)px/, `${name}: no inline size below 10 px`);
   }
   assert.equal((shortlist.match(/text-\[10px\]/g) || []).length, 6, 'the five former 9/9.5 px labels join the one existing 10 px label');
+  assert.match(css, /\.bh-outlier-tag \{[^}]*font-size: 10px;/, 'the Simple-table outlier tags meet the 10 px floor');
+  assert.doesNotMatch(css, /font-size: 9(?:\.5)?px/, 'globals.css holds no size below the floor');
 });

@@ -20,10 +20,13 @@ if sys.argv[1] == 'text':
             raw='\n'.join(f'PDF page {i+1}\n'+pages[i] for i in range(max(0,index-1),index+1))
     else:
         raw=data.decode('utf-8-sig')
+    # next-rsc: the page renders from its own RSC payload, so the protocol text lives inside the
+    # inline <script> chunks; include them verbatim (only where a review names this recipe).
+    rsc = len(sys.argv) > 3 and sys.argv[3] == 'next-rsc'
     class Visible(HTMLParser):
         def __init__(self): super().__init__(); self.skip=0; self.parts=[]
         def handle_starttag(self,tag,attrs):
-            if tag in ['script','style']: self.skip+=1
+            if tag in ['script','style'] and not rsc: self.skip+=1
         def handle_endtag(self,tag):
             if tag in ['script','style'] and self.skip:self.skip-=1
         def handle_data(self,data):

@@ -188,7 +188,7 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
     const sources = [];
     for (const reference of references) {
       const receipt = current(reference);
-      const content = protocolSourceContent(entry.id, reference, await textSource(receipt));
+      const content = protocolSourceContent(entry.id, reference, await textSource(receipt, reference.recipe));
       sources.push({ ...receipt, content: bounded(content, entry.id), locator: protocolSourceLocator(reference) });
     }
     const reviewed = await review({ runDir: evidenceDir, artifactId: `protocol-${entry.id}`, rows: [protocolReviewRow(entry)],

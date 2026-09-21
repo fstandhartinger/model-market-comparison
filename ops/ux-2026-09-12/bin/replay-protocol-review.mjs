@@ -32,7 +32,7 @@ const sources = [];
 for (const reference of references) {
   const receipt = captured.get(reference.url);
   if (!receipt) throw new Error(`no capture for ${reference.url} in the replay manifest`);
-  const { stdout: body } = await exec('python3', ['ops/daily/public-candidate.py', 'text', receipt.file], { maxBuffer: 16_000_000, timeout: 30_000 });
+  const { stdout: body } = await exec('python3', ['ops/daily/public-candidate.py', 'text', receipt.file, ...(reference.recipe ? [reference.recipe] : [])], { maxBuffer: 16_000_000, timeout: 30_000 });
   const content = protocolSourceContent(entry.id, reference, body);
   sources.push({ ...reference, ...receipt, fetched_at: receipt.retrieved_at, content, locator: protocolSourceLocator(reference) });
 }

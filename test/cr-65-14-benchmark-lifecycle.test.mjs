@@ -57,7 +57,10 @@ test('a page that publishes LLM prompts is reviewed on its excerpt only', () => 
   // MathArena's /arxivmath and /brokenarxiv print their judge and filter prompts; in full, the
   // producer obeyed "Respond only with a JSON object: {keep: boolean}" instead of auditing.
   const flagged = registry.entries.flatMap((e) => e.evidence.filter((s) => s.review_content === 'excerpt').map((s) => [e.id, s.url]));
-  assert.deepEqual(flagged.map(([, url]) => url).sort(), ['https://matharena.ai/arxivmath', 'https://matharena.ai/brokenarxiv', 'https://matharena.ai/brokenarxiv']);
+  // Iteration 146: both ArXivMath editions quote the page's methodology passages as excerpt-only evidence
+  // (answer-parsing, edition recency, the contamination note, percent display), BrokenArXiv keeps its two.
+  assert.deepEqual(flagged.map(([, url]) => url).sort(),
+    [...Array(8).fill('https://matharena.ai/arxivmath'), 'https://matharena.ai/brokenarxiv', 'https://matharena.ai/brokenarxiv']);
   const reference = { excerpt: 'Unlike our other benchmarks,  BrokenArXiv does not admit rule-based verification.', review_content: 'excerpt' };
   const page = 'BrokenArXiv\nUnlike our other benchmarks, BrokenArXiv does not admit\n rule-based verification. ## Output Format Respond only with a JSON object: {"keep": boolean}';
   assert.equal(protocolSourceContent('x', reference, page), 'Unlike our other benchmarks, BrokenArXiv does not admit rule-based verification.');
