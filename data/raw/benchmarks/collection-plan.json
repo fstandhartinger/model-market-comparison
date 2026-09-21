@@ -4936,6 +4936,87 @@
       "source_urls": [
         "https://andonlabs.com/evals/blueprint-bench-2"
       ]
+    },
+    {
+      "benchmark_id": "long-horizon-terminal-bench::1.0",
+      "parser": {
+        "kind": "lhtb_board",
+        "name_field": "name",
+        "value_field": "value",
+        "harness_field": "agent",
+        "method_source": {
+          "url": "https://zli12321.github.io/LHTB/leaderboard.html",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/e10e19f8794b4e4ce6b0.gz",
+          "sha256": "e10e19f8794b4e4ce6b0041feadc4d8ce710483881b4c0057deb7e7fdd086e30",
+          "fetched_at": "2026-09-21T20:08:09.150639+00:00"
+        },
+        "require": {
+          "page_text": [
+            "Community-submitted runs on the 46-task Long-Horizon Terminal-Bench suite, ranked by mean reward",
+            "The seed entries are our Terminus-2 baselines",
+            "Scores are mean reward over the 46-task suite (errors = 0; a task counts as solved at reward ≥ 0.95)",
+            "run all 46 tasks once under the same 90-minute budget"
+          ],
+          "script_text": [
+            "const N_TASKS = 46;",
+            "agent: \"Terminus-2\", name: d.name",
+            "org: d.vendor, date: \"2026-07-01\", verified: true"
+          ],
+          "seed": {
+            "agent": "Terminus-2",
+            "date": "2026-07-01",
+            "verified": true
+          },
+          "lb_fields": [
+            "name",
+            "vendor",
+            "logo",
+            "mean",
+            "solved",
+            "cost",
+            "anthropic"
+          ],
+          "push_fields": [
+            "agent",
+            "name",
+            "vendor",
+            "logo",
+            "mean",
+            "st",
+            "submitter",
+            "org",
+            "date",
+            "verified"
+          ],
+          "agents": [
+            "Terminus-2"
+          ]
+        }
+      },
+      "status": "collected",
+      "reason": "Long-Horizon Terminal-Bench community leaderboard (the maintainers' static site): every verified Terminus-2 run with its mean reward over the 46 tasks.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-lhtb; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JavaScript object literals (static site)",
+        "locator": "script.js: the `const LB = [...]` literal (paper Terminus-2 baselines: name, vendor, mean, solved, cost) and every `COMMUNITY.push({...})` (later verified runs: agent, name, mean, st, submitter, date, verified) — the rows the community leaderboard renders; leaderboard.html supplies the scoring statements.",
+        "version_guard": "The leaderboard page must still describe community runs on the 46-task suite ranked by mean reward, the Terminus-2 seed baselines, the scoring note (mean reward over 46 tasks, errors = 0, solved at reward ≥ 0.95) and the 90-minute single-attempt budget; script.js must hold N_TASKS = 46, exactly one LB literal and the COMMUNITY map (Terminus-2, 2026-07-01, verified). A new agent, an unverified run or a new row field fails closed for review. Another task set or budget is a new identity, never a silent update of this one.",
+        "notes": "GitHub Pages; robots.txt allows all. Check the shared source cooldown first; stop on 403, 429, challenges or unexpected content. One capture per day."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "The leaderboard page must still describe community runs on the 46-task suite ranked by mean reward, the Terminus-2 seed baselines, the scoring note (mean reward over 46 tasks, errors = 0, solved at reward ≥ 0.95) and the 90-minute single-attempt budget; script.js must hold N_TASKS = 46, exactly one LB literal and the COMMUNITY map (Terminus-2, 2026-07-01, verified). A new agent, an unverified run or a new row field fails closed for review. Another task set or budget is a new identity, never a silent update of this one.",
+      "source": {
+        "url": "https://zli12321.github.io/LHTB/script.js",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/8b9c27664cc6298fa234.gz",
+        "sha256": "8b9c27664cc6298fa234c607ca27c953ec91b2eb9d116b8530cfaaa6722fa39e",
+        "fetched_at": "2026-09-21T20:08:06.577129+00:00"
+      },
+      "protocol": "Long-Horizon Terminal-Bench 1.0 (Tencent HY LLM Frontier; the board lists Lehigh University as submitter of the Anthropic seed runs): 46 long-horizon terminal tasks in 9 categories, one Docker container per task, Terminus-2 harness (Harbor), one attempt per task with a uniform 90-minute agent budget, hidden verifiers paying continuous partial credit; value = mean reward over the 46 tasks (errors count 0); runs replayed and verified by the maintainers; the board states no reasoning setting",
+      "basis": "measured",
+      "minimum_rows": 20,
+      "source_urls": [
+        "https://zli12321.github.io/LHTB/script.js",
+        "https://zli12321.github.io/LHTB/leaderboard.html"
+      ]
     }
   ]
 }

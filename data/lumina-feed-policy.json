@@ -756,6 +756,17 @@
     "zerobench": {
       "decision": "vendor_reported",
       "note": "Reviewed 2026-09-16: the \"evaluator host\" rows for ZeroBench are artificialanalysis.ai/models/<model> pages, not an Artificial Analysis evaluation board; the rest are lab-reported. Any AA-derived value stays on hold (CR-35.3)"
+    },
+    "long-horizon-terminal-bench": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "long-horizon-terminal-bench::1.0"
+      ],
+      "note": "2026-09-21 (iteration 157): the maintainers' own community leaderboard (zli12321.github.io/LHTB, data/SCRAPING.md) is collected daily. Lumina's 37 cited values are aggregator copies; ours are the board's verified Terminus-2 runs."
+    },
+    "benchlm-gertlabs": {
+      "decision": "excluded",
+      "reason": "2026-09-21 (iteration 157): Gert Labs' rankings page (gertlabs.com/rankings) is a client app that loads its data only from /api/v1/global/rankings, and gertlabs.com/robots.txt disallows /api/ for every user agent — the DesignArena precedent (CR-34.5): not collected without the operator's permission."
     }
   },
   "host_roles_note": "A host role is a first cut, not a verdict: an evaluator host can relay vendor numbers (cybench.github.io links system cards; artificialanalysis.ai/models pages show lab-reported values). Every family that lands in evaluator_result is therefore read by hand and recorded in family_decisions."

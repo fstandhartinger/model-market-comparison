@@ -912,6 +912,41 @@ def parse(source,spec,load_source):
                     'bins_upto_128k':{b:[round(per[b]['avg_score'],6),per[b]['n_tests']] for b in bins},
                     'auc_128k':o.get('auc_128k'),'auc_1m':o.get('auc_1m'),'cum_avg_1m':o.get('cum_avg_1m'),'has_incomplete_bins':m.get('has_incomplete_bins'),
                     'latest_run':m.get('latest_run_timestamp')}})
+    elif kind=='lhtb_board':
+        # Long-Horizon Terminal-Bench (Tencent HY LLM Frontier, zli12321.github.io/LHTB): the community
+        # leaderboard page renders its rows from script.js — the paper's Terminus-2 baselines in `const LB = [...]`
+        # (mapped into COMMUNITY with the date and verified flag stated in that map) plus later runs appended with
+        # `COMMUNITY.push({...})`. Value: mean reward over the 46 tasks (continuous partial credit 0..1, errors = 0).
+        # Only literal objects of the reviewed field sets are read; a new agent or field needs a reviewed change.
+        req=spec['require'];page=text(load_source(spec['method_source']))
+        for phrase in req['page_text']:
+            if phrase not in page:raise ValueError('LHTB leaderboard page no longer states: '+phrase[:80])
+        for phrase in req['script_text']:
+            if phrase not in source:raise ValueError('LHTB script no longer contains: '+phrase[:80])
+        lb=re.findall(r'\bconst LB = \[(.*?)\n  \];',source,re.S)
+        if len(lb)!=1:raise ValueError('LHTB: expected exactly one LB literal')
+        def fields(obj,allowed,where):
+            f=dict(re.findall(r'(\w+):\s*("[^"\n]*"|\[[^\]\n]*\]|-?[\d.]+|true|false)',obj))
+            if set(f)-set(allowed) or not {'name','mean'}<=set(f):raise ValueError(f'LHTB {where}: row schema changed: {sorted(f)}')
+            f={k:json.loads(v) for k,v in f.items()}
+            if not isinstance(f['mean'],(int,float)) or not 0<=f['mean']<=1:raise ValueError(f"LHTB {where}: mean reward unreadable for {f['name']!r}")
+            return f
+        seed=req['seed'];rows=[];seen=set()
+        for index,obj in enumerate(re.findall(r'\{([^{}]+)\}',lb[0])):
+            f=fields(obj,req['lb_fields'],'LB')
+            rows.append({'name':f['name'],'value':f['mean'],'source_row':index,'agent':seed['agent'],
+                'context':{'agent':seed['agent'],'vendor':f.get('vendor'),'date':seed['date'],'verified':seed['verified'],'solved_at_0.95':f.get('solved'),'cost_per_task_usd_paper_estimate':f.get('cost'),'list':'LB (paper baseline)'}})
+        seeded=len(rows)
+        for index,obj in enumerate(re.findall(r'\bCOMMUNITY\.push\(\{([^{}]+)\}\);',source,re.S)):
+            f=fields(obj,req['push_fields'],'COMMUNITY.push')
+            if f.get('agent') not in req['agents']:raise ValueError(f"LHTB: unreviewed agent {f.get('agent')!r} for {f['name']!r}")
+            if f.get('verified') is not True:raise ValueError(f"LHTB: unverified run {f['name']!r} needs a reviewed decision")
+            rows.append({'name':f['name'],'value':f['mean'],'source_row':seeded+index,'agent':f['agent'],
+                'context':{'agent':f['agent'],'vendor':f.get('vendor'),'date':f.get('date'),'verified':True,'solved_at_0.90_0.95_1.00':f.get('st'),'submitter':f.get('submitter'),'list':'COMMUNITY.push (after the paper)'}})
+        for r in rows:
+            key=(r['agent'],r['name'])
+            if key in seen:raise ValueError('LHTB: repeated row '+repr(key))
+            seen.add(key)
     else:raise ValueError('Unknown parser kind '+kind)
     if not isinstance(rows,list) or not rows:raise ValueError('No source result rows')
     return rows

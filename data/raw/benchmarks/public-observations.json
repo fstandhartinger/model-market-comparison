@@ -273112,6 +273112,754 @@
           "locator": "method_source"
         }
       ]
+    },
+    {
+      "id": "public:5b6b8a5d97b77d394322b129",
+      "benchmark_id": "long-horizon-terminal-bench::1.0",
+      "subject": {
+        "source_id": "Grok 4.5",
+        "name": "Grok 4.5",
+        "model_id": null,
+        "variant": null,
+        "harness": "Terminus-2"
+      },
+      "value": 0.505,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://zli12321.github.io/LHTB/script.js",
+        "retrieved_at": "2026-09-21T20:08:06.577129+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/8b9c27664cc6298fa234.gz",
+        "sha256": "8b9c27664cc6298fa234c607ca27c953ec91b2eb9d116b8530cfaaa6722fa39e",
+        "locator": "lhtb_board; source row 0; Grok 4.5; field value"
+      },
+      "protocol": "Long-Horizon Terminal-Bench 1.0 (Tencent HY LLM Frontier; the board lists Lehigh University as submitter of the Anthropic seed runs): 46 long-horizon terminal tasks in 9 categories, one Docker container per task, Terminus-2 harness (Harbor), one attempt per task with a uniform 90-minute agent budget, hidden verifiers paying continuous partial credit; value = mean reward over the 46 tasks (errors count 0); runs replayed and verified by the maintainers; the board states no reasoning setting; source row: {\"agent\":\"Terminus-2\",\"vendor\":\"xAI\",\"date\":\"2026-07-01\",\"verified\":true,\"solved_at_0.95\":13,\"cost_per_task_usd_paper_estimate\":11.19,\"list\":\"LB (paper baseline)\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://zli12321.github.io/LHTB/leaderboard.html",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/e10e19f8794b4e4ce6b0.gz",
+          "sha256": "e10e19f8794b4e4ce6b0041feadc4d8ce710483881b4c0057deb7e7fdd086e30",
+          "retrieved_at": "2026-09-21T20:08:09.150639+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:87815b160daec9b4a224b66c",
+      "benchmark_id": "long-horizon-terminal-bench::1.0",
+      "subject": {
+        "source_id": "Claude Sonnet 5",
+        "name": "Claude Sonnet 5",
+        "model_id": null,
+        "variant": null,
+        "harness": "Terminus-2"
+      },
+      "value": 0.497,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://zli12321.github.io/LHTB/script.js",
+        "retrieved_at": "2026-09-21T20:08:06.577129+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/8b9c27664cc6298fa234.gz",
+        "sha256": "8b9c27664cc6298fa234c607ca27c953ec91b2eb9d116b8530cfaaa6722fa39e",
+        "locator": "lhtb_board; source row 1; Claude Sonnet 5; field value"
+      },
+      "protocol": "Long-Horizon Terminal-Bench 1.0 (Tencent HY LLM Frontier; the board lists Lehigh University as submitter of the Anthropic seed runs): 46 long-horizon terminal tasks in 9 categories, one Docker container per task, Terminus-2 harness (Harbor), one attempt per task with a uniform 90-minute agent budget, hidden verifiers paying continuous partial credit; value = mean reward over the 46 tasks (errors count 0); runs replayed and verified by the maintainers; the board states no reasoning setting; source row: {\"agent\":\"Terminus-2\",\"vendor\":\"Anthropic\",\"date\":\"2026-07-01\",\"verified\":true,\"solved_at_0.95\":8,\"cost_per_task_usd_paper_estimate\":60.37,\"list\":\"LB (paper baseline)\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://zli12321.github.io/LHTB/leaderboard.html",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/e10e19f8794b4e4ce6b0.gz",
+          "sha256": "e10e19f8794b4e4ce6b0041feadc4d8ce710483881b4c0057deb7e7fdd086e30",
+          "retrieved_at": "2026-09-21T20:08:09.150639+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:d3bd54ab792cf3510d7e7570",
+      "benchmark_id": "long-horizon-terminal-bench::1.0",
+      "subject": {
+        "source_id": "Claude Opus 4.8",
+        "name": "Claude Opus 4.8",
+        "model_id": null,
+        "variant": null,
+        "harness": "Terminus-2"
+      },
+      "value": 0.492,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://zli12321.github.io/LHTB/script.js",
+        "retrieved_at": "2026-09-21T20:08:06.577129+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/8b9c27664cc6298fa234.gz",
+        "sha256": "8b9c27664cc6298fa234c607ca27c953ec91b2eb9d116b8530cfaaa6722fa39e",
+        "locator": "lhtb_board; source row 2; Claude Opus 4.8; field value"
+      },
+      "protocol": "Long-Horizon Terminal-Bench 1.0 (Tencent HY LLM Frontier; the board lists Lehigh University as submitter of the Anthropic seed runs): 46 long-horizon terminal tasks in 9 categories, one Docker container per task, Terminus-2 harness (Harbor), one attempt per task with a uniform 90-minute agent budget, hidden verifiers paying continuous partial credit; value = mean reward over the 46 tasks (errors count 0); runs replayed and verified by the maintainers; the board states no reasoning setting; source row: {\"agent\":\"Terminus-2\",\"vendor\":\"Anthropic\",\"date\":\"2026-07-01\",\"verified\":true,\"solved_at_0.95\":9,\"cost_per_task_usd_paper_estimate\":39.11,\"list\":\"LB (paper baseline)\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://zli12321.github.io/LHTB/leaderboard.html",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/e10e19f8794b4e4ce6b0.gz",
+          "sha256": "e10e19f8794b4e4ce6b0041feadc4d8ce710483881b4c0057deb7e7fdd086e30",
+          "retrieved_at": "2026-09-21T20:08:09.150639+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:1d81f1474e85d9debdc669b9",
+      "benchmark_id": "long-horizon-terminal-bench::1.0",
+      "subject": {
+        "source_id": "Claude Fable 5",
+        "name": "Claude Fable 5",
+        "model_id": null,
+        "variant": null,
+        "harness": "Terminus-2"
+      },
+      "value": 0.487,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://zli12321.github.io/LHTB/script.js",
+        "retrieved_at": "2026-09-21T20:08:06.577129+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/8b9c27664cc6298fa234.gz",
+        "sha256": "8b9c27664cc6298fa234c607ca27c953ec91b2eb9d116b8530cfaaa6722fa39e",
+        "locator": "lhtb_board; source row 3; Claude Fable 5; field value"
+      },
+      "protocol": "Long-Horizon Terminal-Bench 1.0 (Tencent HY LLM Frontier; the board lists Lehigh University as submitter of the Anthropic seed runs): 46 long-horizon terminal tasks in 9 categories, one Docker container per task, Terminus-2 harness (Harbor), one attempt per task with a uniform 90-minute agent budget, hidden verifiers paying continuous partial credit; value = mean reward over the 46 tasks (errors count 0); runs replayed and verified by the maintainers; the board states no reasoning setting; source row: {\"agent\":\"Terminus-2\",\"vendor\":\"Anthropic\",\"date\":\"2026-07-01\",\"verified\":true,\"solved_at_0.95\":12,\"cost_per_task_usd_paper_estimate\":73.11,\"list\":\"LB (paper baseline)\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://zli12321.github.io/LHTB/leaderboard.html",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/e10e19f8794b4e4ce6b0.gz",
+          "sha256": "e10e19f8794b4e4ce6b0041feadc4d8ce710483881b4c0057deb7e7fdd086e30",
+          "retrieved_at": "2026-09-21T20:08:09.150639+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:625592d2956c930e905e9271",
+      "benchmark_id": "long-horizon-terminal-bench::1.0",
+      "subject": {
+        "source_id": "GPT-5.6-sol",
+        "name": "GPT-5.6-sol",
+        "model_id": null,
+        "variant": null,
+        "harness": "Terminus-2"
+      },
+      "value": 0.451,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://zli12321.github.io/LHTB/script.js",
+        "retrieved_at": "2026-09-21T20:08:06.577129+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/8b9c27664cc6298fa234.gz",
+        "sha256": "8b9c27664cc6298fa234c607ca27c953ec91b2eb9d116b8530cfaaa6722fa39e",
+        "locator": "lhtb_board; source row 4; GPT-5.6-sol; field value"
+      },
+      "protocol": "Long-Horizon Terminal-Bench 1.0 (Tencent HY LLM Frontier; the board lists Lehigh University as submitter of the Anthropic seed runs): 46 long-horizon terminal tasks in 9 categories, one Docker container per task, Terminus-2 harness (Harbor), one attempt per task with a uniform 90-minute agent budget, hidden verifiers paying continuous partial credit; value = mean reward over the 46 tasks (errors count 0); runs replayed and verified by the maintainers; the board states no reasoning setting; source row: {\"agent\":\"Terminus-2\",\"vendor\":\"OpenAI\",\"date\":\"2026-07-01\",\"verified\":true,\"solved_at_0.95\":7,\"cost_per_task_usd_paper_estimate\":21.14,\"list\":\"LB (paper baseline)\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://zli12321.github.io/LHTB/leaderboard.html",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/e10e19f8794b4e4ce6b0.gz",
+          "sha256": "e10e19f8794b4e4ce6b0041feadc4d8ce710483881b4c0057deb7e7fdd086e30",
+          "retrieved_at": "2026-09-21T20:08:09.150639+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:0ddd6b234171cb783c5e3038",
+      "benchmark_id": "long-horizon-terminal-bench::1.0",
+      "subject": {
+        "source_id": "GPT-5.5",
+        "name": "GPT-5.5",
+        "model_id": null,
+        "variant": null,
+        "harness": "Terminus-2"
+      },
+      "value": 0.445,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://zli12321.github.io/LHTB/script.js",
+        "retrieved_at": "2026-09-21T20:08:06.577129+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/8b9c27664cc6298fa234.gz",
+        "sha256": "8b9c27664cc6298fa234c607ca27c953ec91b2eb9d116b8530cfaaa6722fa39e",
+        "locator": "lhtb_board; source row 5; GPT-5.5; field value"
+      },
+      "protocol": "Long-Horizon Terminal-Bench 1.0 (Tencent HY LLM Frontier; the board lists Lehigh University as submitter of the Anthropic seed runs): 46 long-horizon terminal tasks in 9 categories, one Docker container per task, Terminus-2 harness (Harbor), one attempt per task with a uniform 90-minute agent budget, hidden verifiers paying continuous partial credit; value = mean reward over the 46 tasks (errors count 0); runs replayed and verified by the maintainers; the board states no reasoning setting; source row: {\"agent\":\"Terminus-2\",\"vendor\":\"OpenAI\",\"date\":\"2026-07-01\",\"verified\":true,\"solved_at_0.95\":7,\"cost_per_task_usd_paper_estimate\":21.46,\"list\":\"LB (paper baseline)\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://zli12321.github.io/LHTB/leaderboard.html",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/e10e19f8794b4e4ce6b0.gz",
+          "sha256": "e10e19f8794b4e4ce6b0041feadc4d8ce710483881b4c0057deb7e7fdd086e30",
+          "retrieved_at": "2026-09-21T20:08:09.150639+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:9615970b3d12176be3fe7998",
+      "benchmark_id": "long-horizon-terminal-bench::1.0",
+      "subject": {
+        "source_id": "MiniMax M3",
+        "name": "MiniMax M3",
+        "model_id": null,
+        "variant": null,
+        "harness": "Terminus-2"
+      },
+      "value": 0.385,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://zli12321.github.io/LHTB/script.js",
+        "retrieved_at": "2026-09-21T20:08:06.577129+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/8b9c27664cc6298fa234.gz",
+        "sha256": "8b9c27664cc6298fa234c607ca27c953ec91b2eb9d116b8530cfaaa6722fa39e",
+        "locator": "lhtb_board; source row 6; MiniMax M3; field value"
+      },
+      "protocol": "Long-Horizon Terminal-Bench 1.0 (Tencent HY LLM Frontier; the board lists Lehigh University as submitter of the Anthropic seed runs): 46 long-horizon terminal tasks in 9 categories, one Docker container per task, Terminus-2 harness (Harbor), one attempt per task with a uniform 90-minute agent budget, hidden verifiers paying continuous partial credit; value = mean reward over the 46 tasks (errors count 0); runs replayed and verified by the maintainers; the board states no reasoning setting; source row: {\"agent\":\"Terminus-2\",\"vendor\":\"MiniMax\",\"date\":\"2026-07-01\",\"verified\":true,\"solved_at_0.95\":3,\"cost_per_task_usd_paper_estimate\":6.13,\"list\":\"LB (paper baseline)\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://zli12321.github.io/LHTB/leaderboard.html",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/e10e19f8794b4e4ce6b0.gz",
+          "sha256": "e10e19f8794b4e4ce6b0041feadc4d8ce710483881b4c0057deb7e7fdd086e30",
+          "retrieved_at": "2026-09-21T20:08:09.150639+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:51b4e82959489ef50b902ead",
+      "benchmark_id": "long-horizon-terminal-bench::1.0",
+      "subject": {
+        "source_id": "Claude Sonnet 4.6",
+        "name": "Claude Sonnet 4.6",
+        "model_id": null,
+        "variant": null,
+        "harness": "Terminus-2"
+      },
+      "value": 0.373,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://zli12321.github.io/LHTB/script.js",
+        "retrieved_at": "2026-09-21T20:08:06.577129+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/8b9c27664cc6298fa234.gz",
+        "sha256": "8b9c27664cc6298fa234c607ca27c953ec91b2eb9d116b8530cfaaa6722fa39e",
+        "locator": "lhtb_board; source row 7; Claude Sonnet 4.6; field value"
+      },
+      "protocol": "Long-Horizon Terminal-Bench 1.0 (Tencent HY LLM Frontier; the board lists Lehigh University as submitter of the Anthropic seed runs): 46 long-horizon terminal tasks in 9 categories, one Docker container per task, Terminus-2 harness (Harbor), one attempt per task with a uniform 90-minute agent budget, hidden verifiers paying continuous partial credit; value = mean reward over the 46 tasks (errors count 0); runs replayed and verified by the maintainers; the board states no reasoning setting; source row: {\"agent\":\"Terminus-2\",\"vendor\":\"Anthropic\",\"date\":\"2026-07-01\",\"verified\":true,\"solved_at_0.95\":4,\"cost_per_task_usd_paper_estimate\":38.0,\"list\":\"LB (paper baseline)\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://zli12321.github.io/LHTB/leaderboard.html",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/e10e19f8794b4e4ce6b0.gz",
+          "sha256": "e10e19f8794b4e4ce6b0041feadc4d8ce710483881b4c0057deb7e7fdd086e30",
+          "retrieved_at": "2026-09-21T20:08:09.150639+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:6109d0d340fe8320e16e1ff5",
+      "benchmark_id": "long-horizon-terminal-bench::1.0",
+      "subject": {
+        "source_id": "Kimi K2.7 Code",
+        "name": "Kimi K2.7 Code",
+        "model_id": null,
+        "variant": null,
+        "harness": "Terminus-2"
+      },
+      "value": 0.367,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://zli12321.github.io/LHTB/script.js",
+        "retrieved_at": "2026-09-21T20:08:06.577129+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/8b9c27664cc6298fa234.gz",
+        "sha256": "8b9c27664cc6298fa234c607ca27c953ec91b2eb9d116b8530cfaaa6722fa39e",
+        "locator": "lhtb_board; source row 8; Kimi K2.7 Code; field value"
+      },
+      "protocol": "Long-Horizon Terminal-Bench 1.0 (Tencent HY LLM Frontier; the board lists Lehigh University as submitter of the Anthropic seed runs): 46 long-horizon terminal tasks in 9 categories, one Docker container per task, Terminus-2 harness (Harbor), one attempt per task with a uniform 90-minute agent budget, hidden verifiers paying continuous partial credit; value = mean reward over the 46 tasks (errors count 0); runs replayed and verified by the maintainers; the board states no reasoning setting; source row: {\"agent\":\"Terminus-2\",\"vendor\":\"Moonshot\",\"date\":\"2026-07-01\",\"verified\":true,\"solved_at_0.95\":3,\"cost_per_task_usd_paper_estimate\":8.31,\"list\":\"LB (paper baseline)\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://zli12321.github.io/LHTB/leaderboard.html",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/e10e19f8794b4e4ce6b0.gz",
+          "sha256": "e10e19f8794b4e4ce6b0041feadc4d8ce710483881b4c0057deb7e7fdd086e30",
+          "retrieved_at": "2026-09-21T20:08:09.150639+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:8e9d5522f113c70e0c6034a7",
+      "benchmark_id": "long-horizon-terminal-bench::1.0",
+      "subject": {
+        "source_id": "GLM 5.2",
+        "name": "GLM 5.2",
+        "model_id": null,
+        "variant": null,
+        "harness": "Terminus-2"
+      },
+      "value": 0.316,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://zli12321.github.io/LHTB/script.js",
+        "retrieved_at": "2026-09-21T20:08:06.577129+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/8b9c27664cc6298fa234.gz",
+        "sha256": "8b9c27664cc6298fa234c607ca27c953ec91b2eb9d116b8530cfaaa6722fa39e",
+        "locator": "lhtb_board; source row 9; GLM 5.2; field value"
+      },
+      "protocol": "Long-Horizon Terminal-Bench 1.0 (Tencent HY LLM Frontier; the board lists Lehigh University as submitter of the Anthropic seed runs): 46 long-horizon terminal tasks in 9 categories, one Docker container per task, Terminus-2 harness (Harbor), one attempt per task with a uniform 90-minute agent budget, hidden verifiers paying continuous partial credit; value = mean reward over the 46 tasks (errors count 0); runs replayed and verified by the maintainers; the board states no reasoning setting; source row: {\"agent\":\"Terminus-2\",\"vendor\":\"Zhipu\",\"date\":\"2026-07-01\",\"verified\":true,\"solved_at_0.95\":1,\"cost_per_task_usd_paper_estimate\":11.93,\"list\":\"LB (paper baseline)\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://zli12321.github.io/LHTB/leaderboard.html",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/e10e19f8794b4e4ce6b0.gz",
+          "sha256": "e10e19f8794b4e4ce6b0041feadc4d8ce710483881b4c0057deb7e7fdd086e30",
+          "retrieved_at": "2026-09-21T20:08:09.150639+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:5b6647f2161ee6c10498c32a",
+      "benchmark_id": "long-horizon-terminal-bench::1.0",
+      "subject": {
+        "source_id": "Qwen3.6 Plus",
+        "name": "Qwen3.6 Plus",
+        "model_id": null,
+        "variant": null,
+        "harness": "Terminus-2"
+      },
+      "value": 0.313,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://zli12321.github.io/LHTB/script.js",
+        "retrieved_at": "2026-09-21T20:08:06.577129+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/8b9c27664cc6298fa234.gz",
+        "sha256": "8b9c27664cc6298fa234c607ca27c953ec91b2eb9d116b8530cfaaa6722fa39e",
+        "locator": "lhtb_board; source row 10; Qwen3.6 Plus; field value"
+      },
+      "protocol": "Long-Horizon Terminal-Bench 1.0 (Tencent HY LLM Frontier; the board lists Lehigh University as submitter of the Anthropic seed runs): 46 long-horizon terminal tasks in 9 categories, one Docker container per task, Terminus-2 harness (Harbor), one attempt per task with a uniform 90-minute agent budget, hidden verifiers paying continuous partial credit; value = mean reward over the 46 tasks (errors count 0); runs replayed and verified by the maintainers; the board states no reasoning setting; source row: {\"agent\":\"Terminus-2\",\"vendor\":\"Alibaba\",\"date\":\"2026-07-01\",\"verified\":true,\"solved_at_0.95\":1,\"cost_per_task_usd_paper_estimate\":4.47,\"list\":\"LB (paper baseline)\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://zli12321.github.io/LHTB/leaderboard.html",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/e10e19f8794b4e4ce6b0.gz",
+          "sha256": "e10e19f8794b4e4ce6b0041feadc4d8ce710483881b4c0057deb7e7fdd086e30",
+          "retrieved_at": "2026-09-21T20:08:09.150639+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:d2e49e8f2debcb382517ed83",
+      "benchmark_id": "long-horizon-terminal-bench::1.0",
+      "subject": {
+        "source_id": "DeepSeek V4 Pro",
+        "name": "DeepSeek V4 Pro",
+        "model_id": null,
+        "variant": null,
+        "harness": "Terminus-2"
+      },
+      "value": 0.307,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://zli12321.github.io/LHTB/script.js",
+        "retrieved_at": "2026-09-21T20:08:06.577129+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/8b9c27664cc6298fa234.gz",
+        "sha256": "8b9c27664cc6298fa234c607ca27c953ec91b2eb9d116b8530cfaaa6722fa39e",
+        "locator": "lhtb_board; source row 11; DeepSeek V4 Pro; field value"
+      },
+      "protocol": "Long-Horizon Terminal-Bench 1.0 (Tencent HY LLM Frontier; the board lists Lehigh University as submitter of the Anthropic seed runs): 46 long-horizon terminal tasks in 9 categories, one Docker container per task, Terminus-2 harness (Harbor), one attempt per task with a uniform 90-minute agent budget, hidden verifiers paying continuous partial credit; value = mean reward over the 46 tasks (errors count 0); runs replayed and verified by the maintainers; the board states no reasoning setting; source row: {\"agent\":\"Terminus-2\",\"vendor\":\"DeepSeek\",\"date\":\"2026-07-01\",\"verified\":true,\"solved_at_0.95\":3,\"cost_per_task_usd_paper_estimate\":6.32,\"list\":\"LB (paper baseline)\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://zli12321.github.io/LHTB/leaderboard.html",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/e10e19f8794b4e4ce6b0.gz",
+          "sha256": "e10e19f8794b4e4ce6b0041feadc4d8ce710483881b4c0057deb7e7fdd086e30",
+          "retrieved_at": "2026-09-21T20:08:09.150639+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:ba603aa19ec4b84942cf3b52",
+      "benchmark_id": "long-horizon-terminal-bench::1.0",
+      "subject": {
+        "source_id": "Qwen3.7 Max",
+        "name": "Qwen3.7 Max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Terminus-2"
+      },
+      "value": 0.296,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://zli12321.github.io/LHTB/script.js",
+        "retrieved_at": "2026-09-21T20:08:06.577129+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/8b9c27664cc6298fa234.gz",
+        "sha256": "8b9c27664cc6298fa234c607ca27c953ec91b2eb9d116b8530cfaaa6722fa39e",
+        "locator": "lhtb_board; source row 12; Qwen3.7 Max; field value"
+      },
+      "protocol": "Long-Horizon Terminal-Bench 1.0 (Tencent HY LLM Frontier; the board lists Lehigh University as submitter of the Anthropic seed runs): 46 long-horizon terminal tasks in 9 categories, one Docker container per task, Terminus-2 harness (Harbor), one attempt per task with a uniform 90-minute agent budget, hidden verifiers paying continuous partial credit; value = mean reward over the 46 tasks (errors count 0); runs replayed and verified by the maintainers; the board states no reasoning setting; source row: {\"agent\":\"Terminus-2\",\"vendor\":\"Alibaba\",\"date\":\"2026-07-01\",\"verified\":true,\"solved_at_0.95\":2,\"cost_per_task_usd_paper_estimate\":7.78,\"list\":\"LB (paper baseline)\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://zli12321.github.io/LHTB/leaderboard.html",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/e10e19f8794b4e4ce6b0.gz",
+          "sha256": "e10e19f8794b4e4ce6b0041feadc4d8ce710483881b4c0057deb7e7fdd086e30",
+          "retrieved_at": "2026-09-21T20:08:09.150639+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:a89d2996cf776815e96b8066",
+      "benchmark_id": "long-horizon-terminal-bench::1.0",
+      "subject": {
+        "source_id": "Hy3",
+        "name": "Hy3",
+        "model_id": null,
+        "variant": null,
+        "harness": "Terminus-2"
+      },
+      "value": 0.288,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://zli12321.github.io/LHTB/script.js",
+        "retrieved_at": "2026-09-21T20:08:06.577129+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/8b9c27664cc6298fa234.gz",
+        "sha256": "8b9c27664cc6298fa234c607ca27c953ec91b2eb9d116b8530cfaaa6722fa39e",
+        "locator": "lhtb_board; source row 13; Hy3; field value"
+      },
+      "protocol": "Long-Horizon Terminal-Bench 1.0 (Tencent HY LLM Frontier; the board lists Lehigh University as submitter of the Anthropic seed runs): 46 long-horizon terminal tasks in 9 categories, one Docker container per task, Terminus-2 harness (Harbor), one attempt per task with a uniform 90-minute agent budget, hidden verifiers paying continuous partial credit; value = mean reward over the 46 tasks (errors count 0); runs replayed and verified by the maintainers; the board states no reasoning setting; source row: {\"agent\":\"Terminus-2\",\"vendor\":\"Tencent\",\"date\":\"2026-07-01\",\"verified\":true,\"solved_at_0.95\":1,\"cost_per_task_usd_paper_estimate\":2.47,\"list\":\"LB (paper baseline)\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://zli12321.github.io/LHTB/leaderboard.html",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/e10e19f8794b4e4ce6b0.gz",
+          "sha256": "e10e19f8794b4e4ce6b0041feadc4d8ce710483881b4c0057deb7e7fdd086e30",
+          "retrieved_at": "2026-09-21T20:08:09.150639+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:ae5a3c95f78dfcfead2c9a98",
+      "benchmark_id": "long-horizon-terminal-bench::1.0",
+      "subject": {
+        "source_id": "Doubao Seed 2.1 Pro",
+        "name": "Doubao Seed 2.1 Pro",
+        "model_id": null,
+        "variant": null,
+        "harness": "Terminus-2"
+      },
+      "value": 0.286,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://zli12321.github.io/LHTB/script.js",
+        "retrieved_at": "2026-09-21T20:08:06.577129+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/8b9c27664cc6298fa234.gz",
+        "sha256": "8b9c27664cc6298fa234c607ca27c953ec91b2eb9d116b8530cfaaa6722fa39e",
+        "locator": "lhtb_board; source row 14; Doubao Seed 2.1 Pro; field value"
+      },
+      "protocol": "Long-Horizon Terminal-Bench 1.0 (Tencent HY LLM Frontier; the board lists Lehigh University as submitter of the Anthropic seed runs): 46 long-horizon terminal tasks in 9 categories, one Docker container per task, Terminus-2 harness (Harbor), one attempt per task with a uniform 90-minute agent budget, hidden verifiers paying continuous partial credit; value = mean reward over the 46 tasks (errors count 0); runs replayed and verified by the maintainers; the board states no reasoning setting; source row: {\"agent\":\"Terminus-2\",\"vendor\":\"ByteDance\",\"date\":\"2026-07-01\",\"verified\":true,\"solved_at_0.95\":2,\"cost_per_task_usd_paper_estimate\":5.16,\"list\":\"LB (paper baseline)\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://zli12321.github.io/LHTB/leaderboard.html",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/e10e19f8794b4e4ce6b0.gz",
+          "sha256": "e10e19f8794b4e4ce6b0041feadc4d8ce710483881b4c0057deb7e7fdd086e30",
+          "retrieved_at": "2026-09-21T20:08:09.150639+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:eb562cc573e04fa5be9e2aa0",
+      "benchmark_id": "long-horizon-terminal-bench::1.0",
+      "subject": {
+        "source_id": "Gemini 3.1 Pro",
+        "name": "Gemini 3.1 Pro",
+        "model_id": null,
+        "variant": null,
+        "harness": "Terminus-2"
+      },
+      "value": 0.279,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://zli12321.github.io/LHTB/script.js",
+        "retrieved_at": "2026-09-21T20:08:06.577129+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/8b9c27664cc6298fa234.gz",
+        "sha256": "8b9c27664cc6298fa234c607ca27c953ec91b2eb9d116b8530cfaaa6722fa39e",
+        "locator": "lhtb_board; source row 15; Gemini 3.1 Pro; field value"
+      },
+      "protocol": "Long-Horizon Terminal-Bench 1.0 (Tencent HY LLM Frontier; the board lists Lehigh University as submitter of the Anthropic seed runs): 46 long-horizon terminal tasks in 9 categories, one Docker container per task, Terminus-2 harness (Harbor), one attempt per task with a uniform 90-minute agent budget, hidden verifiers paying continuous partial credit; value = mean reward over the 46 tasks (errors count 0); runs replayed and verified by the maintainers; the board states no reasoning setting; source row: {\"agent\":\"Terminus-2\",\"vendor\":\"Google\",\"date\":\"2026-07-01\",\"verified\":true,\"solved_at_0.95\":2,\"cost_per_task_usd_paper_estimate\":7.61,\"list\":\"LB (paper baseline)\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://zli12321.github.io/LHTB/leaderboard.html",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/e10e19f8794b4e4ce6b0.gz",
+          "sha256": "e10e19f8794b4e4ce6b0041feadc4d8ce710483881b4c0057deb7e7fdd086e30",
+          "retrieved_at": "2026-09-21T20:08:09.150639+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:611b46d3c8d06671bb484845",
+      "benchmark_id": "long-horizon-terminal-bench::1.0",
+      "subject": {
+        "source_id": "GPT-5.4",
+        "name": "GPT-5.4",
+        "model_id": null,
+        "variant": null,
+        "harness": "Terminus-2"
+      },
+      "value": 0.272,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://zli12321.github.io/LHTB/script.js",
+        "retrieved_at": "2026-09-21T20:08:06.577129+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/8b9c27664cc6298fa234.gz",
+        "sha256": "8b9c27664cc6298fa234c607ca27c953ec91b2eb9d116b8530cfaaa6722fa39e",
+        "locator": "lhtb_board; source row 16; GPT-5.4; field value"
+      },
+      "protocol": "Long-Horizon Terminal-Bench 1.0 (Tencent HY LLM Frontier; the board lists Lehigh University as submitter of the Anthropic seed runs): 46 long-horizon terminal tasks in 9 categories, one Docker container per task, Terminus-2 harness (Harbor), one attempt per task with a uniform 90-minute agent budget, hidden verifiers paying continuous partial credit; value = mean reward over the 46 tasks (errors count 0); runs replayed and verified by the maintainers; the board states no reasoning setting; source row: {\"agent\":\"Terminus-2\",\"vendor\":\"OpenAI\",\"date\":\"2026-07-01\",\"verified\":true,\"solved_at_0.95\":1,\"cost_per_task_usd_paper_estimate\":27.57,\"list\":\"LB (paper baseline)\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://zli12321.github.io/LHTB/leaderboard.html",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/e10e19f8794b4e4ce6b0.gz",
+          "sha256": "e10e19f8794b4e4ce6b0041feadc4d8ce710483881b4c0057deb7e7fdd086e30",
+          "retrieved_at": "2026-09-21T20:08:09.150639+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:7e1c0f039d7c6ee82b1c7b32",
+      "benchmark_id": "long-horizon-terminal-bench::1.0",
+      "subject": {
+        "source_id": "GLM 5.1",
+        "name": "GLM 5.1",
+        "model_id": null,
+        "variant": null,
+        "harness": "Terminus-2"
+      },
+      "value": 0.267,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://zli12321.github.io/LHTB/script.js",
+        "retrieved_at": "2026-09-21T20:08:06.577129+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/8b9c27664cc6298fa234.gz",
+        "sha256": "8b9c27664cc6298fa234c607ca27c953ec91b2eb9d116b8530cfaaa6722fa39e",
+        "locator": "lhtb_board; source row 17; GLM 5.1; field value"
+      },
+      "protocol": "Long-Horizon Terminal-Bench 1.0 (Tencent HY LLM Frontier; the board lists Lehigh University as submitter of the Anthropic seed runs): 46 long-horizon terminal tasks in 9 categories, one Docker container per task, Terminus-2 harness (Harbor), one attempt per task with a uniform 90-minute agent budget, hidden verifiers paying continuous partial credit; value = mean reward over the 46 tasks (errors count 0); runs replayed and verified by the maintainers; the board states no reasoning setting; source row: {\"agent\":\"Terminus-2\",\"vendor\":\"Zhipu\",\"date\":\"2026-07-01\",\"verified\":true,\"solved_at_0.95\":2,\"cost_per_task_usd_paper_estimate\":5.13,\"list\":\"LB (paper baseline)\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://zli12321.github.io/LHTB/leaderboard.html",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/e10e19f8794b4e4ce6b0.gz",
+          "sha256": "e10e19f8794b4e4ce6b0041feadc4d8ce710483881b4c0057deb7e7fdd086e30",
+          "retrieved_at": "2026-09-21T20:08:09.150639+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:32054acb4b843997a6a6f4a4",
+      "benchmark_id": "long-horizon-terminal-bench::1.0",
+      "subject": {
+        "source_id": "Kimi K2.6",
+        "name": "Kimi K2.6",
+        "model_id": null,
+        "variant": null,
+        "harness": "Terminus-2"
+      },
+      "value": 0.255,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://zli12321.github.io/LHTB/script.js",
+        "retrieved_at": "2026-09-21T20:08:06.577129+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/8b9c27664cc6298fa234.gz",
+        "sha256": "8b9c27664cc6298fa234c607ca27c953ec91b2eb9d116b8530cfaaa6722fa39e",
+        "locator": "lhtb_board; source row 18; Kimi K2.6; field value"
+      },
+      "protocol": "Long-Horizon Terminal-Bench 1.0 (Tencent HY LLM Frontier; the board lists Lehigh University as submitter of the Anthropic seed runs): 46 long-horizon terminal tasks in 9 categories, one Docker container per task, Terminus-2 harness (Harbor), one attempt per task with a uniform 90-minute agent budget, hidden verifiers paying continuous partial credit; value = mean reward over the 46 tasks (errors count 0); runs replayed and verified by the maintainers; the board states no reasoning setting; source row: {\"agent\":\"Terminus-2\",\"vendor\":\"Moonshot\",\"date\":\"2026-07-01\",\"verified\":true,\"solved_at_0.95\":0,\"cost_per_task_usd_paper_estimate\":9.94,\"list\":\"LB (paper baseline)\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://zli12321.github.io/LHTB/leaderboard.html",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/e10e19f8794b4e4ce6b0.gz",
+          "sha256": "e10e19f8794b4e4ce6b0041feadc4d8ce710483881b4c0057deb7e7fdd086e30",
+          "retrieved_at": "2026-09-21T20:08:09.150639+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:765d3d04465ac2a2c1b9f215",
+      "benchmark_id": "long-horizon-terminal-bench::1.0",
+      "subject": {
+        "source_id": "GPT-5.3 Codex",
+        "name": "GPT-5.3 Codex",
+        "model_id": null,
+        "variant": null,
+        "harness": "Terminus-2"
+      },
+      "value": 0.215,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://zli12321.github.io/LHTB/script.js",
+        "retrieved_at": "2026-09-21T20:08:06.577129+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/8b9c27664cc6298fa234.gz",
+        "sha256": "8b9c27664cc6298fa234c607ca27c953ec91b2eb9d116b8530cfaaa6722fa39e",
+        "locator": "lhtb_board; source row 19; GPT-5.3 Codex; field value"
+      },
+      "protocol": "Long-Horizon Terminal-Bench 1.0 (Tencent HY LLM Frontier; the board lists Lehigh University as submitter of the Anthropic seed runs): 46 long-horizon terminal tasks in 9 categories, one Docker container per task, Terminus-2 harness (Harbor), one attempt per task with a uniform 90-minute agent budget, hidden verifiers paying continuous partial credit; value = mean reward over the 46 tasks (errors count 0); runs replayed and verified by the maintainers; the board states no reasoning setting; source row: {\"agent\":\"Terminus-2\",\"vendor\":\"OpenAI\",\"date\":\"2026-07-01\",\"verified\":true,\"solved_at_0.95\":2,\"cost_per_task_usd_paper_estimate\":8.2,\"list\":\"LB (paper baseline)\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://zli12321.github.io/LHTB/leaderboard.html",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/e10e19f8794b4e4ce6b0.gz",
+          "sha256": "e10e19f8794b4e4ce6b0041feadc4d8ce710483881b4c0057deb7e7fdd086e30",
+          "retrieved_at": "2026-09-21T20:08:09.150639+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:05718bdda934b83bd0ea3af6",
+      "benchmark_id": "long-horizon-terminal-bench::1.0",
+      "subject": {
+        "source_id": "Grok 4.20",
+        "name": "Grok 4.20",
+        "model_id": null,
+        "variant": null,
+        "harness": "Terminus-2"
+      },
+      "value": 0.102,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://zli12321.github.io/LHTB/script.js",
+        "retrieved_at": "2026-09-21T20:08:06.577129+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/8b9c27664cc6298fa234.gz",
+        "sha256": "8b9c27664cc6298fa234c607ca27c953ec91b2eb9d116b8530cfaaa6722fa39e",
+        "locator": "lhtb_board; source row 20; Grok 4.20; field value"
+      },
+      "protocol": "Long-Horizon Terminal-Bench 1.0 (Tencent HY LLM Frontier; the board lists Lehigh University as submitter of the Anthropic seed runs): 46 long-horizon terminal tasks in 9 categories, one Docker container per task, Terminus-2 harness (Harbor), one attempt per task with a uniform 90-minute agent budget, hidden verifiers paying continuous partial credit; value = mean reward over the 46 tasks (errors count 0); runs replayed and verified by the maintainers; the board states no reasoning setting; source row: {\"agent\":\"Terminus-2\",\"vendor\":\"xAI\",\"date\":\"2026-07-01\",\"verified\":true,\"solved_at_0.95\":0,\"cost_per_task_usd_paper_estimate\":20.63,\"list\":\"LB (paper baseline)\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://zli12321.github.io/LHTB/leaderboard.html",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/e10e19f8794b4e4ce6b0.gz",
+          "sha256": "e10e19f8794b4e4ce6b0041feadc4d8ce710483881b4c0057deb7e7fdd086e30",
+          "retrieved_at": "2026-09-21T20:08:09.150639+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:1e0e59e382af3a0c96c2d72c",
+      "benchmark_id": "long-horizon-terminal-bench::1.0",
+      "subject": {
+        "source_id": "Kimi K3",
+        "name": "Kimi K3",
+        "model_id": null,
+        "variant": null,
+        "harness": "Terminus-2"
+      },
+      "value": 0.378,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://zli12321.github.io/LHTB/script.js",
+        "retrieved_at": "2026-09-21T20:08:06.577129+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/8b9c27664cc6298fa234.gz",
+        "sha256": "8b9c27664cc6298fa234c607ca27c953ec91b2eb9d116b8530cfaaa6722fa39e",
+        "locator": "lhtb_board; source row 21; Kimi K3; field value"
+      },
+      "protocol": "Long-Horizon Terminal-Bench 1.0 (Tencent HY LLM Frontier; the board lists Lehigh University as submitter of the Anthropic seed runs): 46 long-horizon terminal tasks in 9 categories, one Docker container per task, Terminus-2 harness (Harbor), one attempt per task with a uniform 90-minute agent budget, hidden verifiers paying continuous partial credit; value = mean reward over the 46 tasks (errors count 0); runs replayed and verified by the maintainers; the board states no reasoning setting; source row: {\"agent\":\"Terminus-2\",\"vendor\":\"Moonshot\",\"date\":\"2026-07-22\",\"verified\":true,\"solved_at_0.90_0.95_1.00\":[7,6,5],\"submitter\":\"Tencent\",\"list\":\"COMMUNITY.push (after the paper)\"}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://zli12321.github.io/LHTB/leaderboard.html",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/e10e19f8794b4e4ce6b0.gz",
+          "sha256": "e10e19f8794b4e4ce6b0041feadc4d8ce710483881b4c0057deb7e7fdd086e30",
+          "retrieved_at": "2026-09-21T20:08:09.150639+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
     }
   ],
   "collections": [
@@ -273810,6 +274558,12 @@
       "status": "collected",
       "source_url": "https://toolathlon.xyz/docs/leaderboard",
       "reason": "36 source results parsed; configurations remain separate; unmatched model identities are retained."
+    },
+    {
+      "benchmark_id": "long-horizon-terminal-bench::1.0",
+      "status": "collected",
+      "source_url": "https://zli12321.github.io/LHTB/script.js",
+      "reason": "22 source results parsed; configurations remain separate; unmatched model identities are retained."
     }
   ],
   "rejected": [

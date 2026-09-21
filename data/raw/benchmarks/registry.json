@@ -13954,6 +13954,81 @@
           "excerpt": "The composite score weights six sub-metrics: Jaccard similarity (50%) … degree similarity (20%) … density similarity (10%) … room count (10%), door count (5%), and orientation (5%). … Scores are then normalized so that the random baseline maps to 0 and a perfect score maps to 1."
         }
       ]
+    },
+    {
+      "id": "long-horizon-terminal-bench::1.0",
+      "name": "Long-Horizon Terminal-Bench",
+      "version": "1.0",
+      "version_status": "published",
+      "family": "long-horizon-terminal-bench",
+      "category": "Agentic",
+      "one_sentence_description": "An agent works in a terminal for up to 90 minutes per task on 46 long jobs — building systems, migrating frameworks, playing games move by move — and earns partial credit for real progress.",
+      "scoring": {
+        "metric": "Mean reward over the 46 tasks (hidden verifiers pay continuous partial credit from 0 to 1; errors count 0)",
+        "unit": "points",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "The number is shown the way the board publishes it — a mean partial-credit reward on a 0–1 scale, not a share of tasks solved (the board also counts a task solved at reward ≥ 0.95; that count stays in each row's protocol). Every run uses the same Terminus-2 harness, one attempt per task and a uniform 90-minute budget. The seed rows are the maintainers' paper baselines (July 2026); later runs are added after the maintainers replay and verify them. Per-task cost estimates from the paper stay in the protocol. Secondary benchmark, never a Composite input."
+      },
+      "maintainer": "Long-Horizon Terminal-Bench authors (Tencent HY LLM Frontier)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://zli12321.github.io/LHTB/leaderboard.html",
+      "publication_urls": [
+        {
+          "url": "https://zli12321.github.io/LHTB/leaderboard.html",
+          "type": "official_leaderboard",
+          "role": "Community leaderboard (primary results publication)"
+        },
+        {
+          "url": "https://arxiv.org/abs/2607.08964",
+          "type": "vendor_report",
+          "role": "Benchmark report (task design, harness, scoring)"
+        },
+        {
+          "url": "https://huggingface.co/datasets/IntelligenceLab/LHTB-leaderboard",
+          "type": "huggingface",
+          "role": "Submission archive (per-run job folders and metadata, Apache-2.0)"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-lhtb; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JavaScript object literals (static site)",
+        "locator": "script.js: the `const LB = [...]` literal (paper Terminus-2 baselines: name, vendor, mean, solved, cost) and every `COMMUNITY.push({...})` (later verified runs: agent, name, mean, st, submitter, date, verified) — the rows the community leaderboard renders; leaderboard.html supplies the scoring statements.",
+        "version_guard": "The leaderboard page must still describe community runs on the 46-task suite ranked by mean reward, the Terminus-2 seed baselines, the scoring note (mean reward over 46 tasks, errors = 0, solved at reward ≥ 0.95) and the 90-minute single-attempt budget; script.js must hold N_TASKS = 46, exactly one LB literal and the COMMUNITY map (Terminus-2, 2026-07-01, verified). A new agent, an unverified run or a new row field fails closed for review. Another task set or budget is a new identity, never a silent update of this one.",
+        "identity_policy": "source_label",
+        "notes": "Measured by the maintainers, who replay each submission's trajectories against the hidden verifiers. The board names models by product name only; the submissions' metadata.yaml and job config.json state no reasoning setting, so under the exact-join policy only a family the catalog holds as a single default configuration joins, and every other row stays visible as named by the source. robots.txt allows all (GitHub Pages); the submission archive is Apache-2.0 — scores with attribution and a link to the leaderboard. Joins: data/raw/benchmarks/identity-map.json (lib/board-identity.mjs parseLhtbLabel)."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated; community submissions are added after review (seeded 2026-07-01, one later run on 2026-07-22 in the 2026-09-21 capture; the Hugging Face submission archive changes more often).",
+        "check_recommendation": "Daily with the ordinary refresh; a changed task set, harness budget or scoring is a new identity and needs a reviewed change."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Best mean reward 0.505 (Grok 4.5) on the 0–1 scale; 29 of 46 tasks never passed by any model according to the report. Computed saturation (CR-38.2) applies on build."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-21",
+      "last_verified": "2026-09-21",
+      "evidence": [
+        {
+          "url": "https://zli12321.github.io/LHTB/leaderboard.html",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/e10e19f8794b4e4ce6b0.gz",
+          "sha256": "78de6cedf807c58328cf80f96e0e686d2f18d1bd66a1529bcc2c98743e35efb6",
+          "fetched_at": "2026-09-21T20:08:09.150639+00:00",
+          "excerpt": "Community-submitted runs on the 46-task Long-Horizon Terminal-Bench suite, ranked by mean reward. The seed entries are our Terminus-2 baselines … Scores are mean reward over the 46-task suite (errors = 0; a task counts as solved at reward ≥ 0.95)."
+        },
+        {
+          "url": "https://zli12321.github.io/LHTB/script.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/8b9c27664cc6298fa234.gz",
+          "sha256": "f550228396dc17c57066d9ec3b18f085eb9dd37b084600a8b1e8a17eb9845938",
+          "fetched_at": "2026-09-21T20:08:06.577129+00:00",
+          "excerpt": "const N_TASKS = 46; … const COMMUNITY = LB.map((d) => ({ agent: \"Terminus-2\", name: d.name, … date: \"2026-07-01\", verified: true }));"
+        }
+      ]
     }
   ],
   "aa_field_map": [

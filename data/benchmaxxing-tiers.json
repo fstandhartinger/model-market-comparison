@@ -323,6 +323,10 @@
     "blueprint-bench": {
       "tier": "secondary",
       "reason": "Andon Labs runs every model itself on 50 apartments whose photos and floor plans it does not say are public or private; the page states neither a public task set nor a held-out split, and our self-reported corpus holds no Blueprint-Bench row, so it is not evidenced as a board labs quote in release material."
+    },
+    "long-horizon-terminal-bench": {
+      "tier": "secondary",
+      "reason": "The 46 task environments are public on Hugging Face (Apache-2.0) while the verifiers that grade them stay hidden, and the maintainers replay every submitted run themselves; the board is a lab's (Tencent HY) own report with its model Hy3 among the rows, and our self-reported corpus holds no Long-Horizon Terminal-Bench row, so it is not evidenced as a board labs quote in release material."
     }
   }
 }
