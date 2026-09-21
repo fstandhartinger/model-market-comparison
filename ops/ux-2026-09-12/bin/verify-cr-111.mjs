@@ -8,7 +8,11 @@ const hosts = outAt >= 0 ? args.filter((a, i) => i !== outAt && i !== outAt + 1)
 let checks = 0;
 const results = [];
 for (const host of hosts) {
-  const [pageRes, apiRes] = await Promise.all([fetch(new URL('/jev-models', host)), fetch(new URL('/api/jevbench/v1.2', host))]);
+  const pageUrl = new URL('/jev-models', host);
+  const apiUrl = new URL('/api/jevbench/v1.2', host);
+  pageUrl.searchParams.set('verify', 'cr111');
+  apiUrl.searchParams.set('verify', 'cr111');
+  const [pageRes, apiRes] = await Promise.all([fetch(pageUrl, { cache: 'no-store' }), fetch(apiUrl, { cache: 'no-store' })]);
   if (!pageRes.ok || !apiRes.ok) throw new Error(`${host}: page ${pageRes.status}, api ${apiRes.status}`);
   const html = await pageRes.text();
   const api = await apiRes.json();
