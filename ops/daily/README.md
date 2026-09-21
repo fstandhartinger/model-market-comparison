@@ -37,6 +37,11 @@ unit tests, typecheck and prerender checks in an isolated work directory. It sup
 Git publication and Telegram sends. Inspect the printed run directory and summary.
 The normal scheduled run additionally commits only accepted data/evidence, pushes a
 green revision, and checks the webhook deployment against the expected dataset.
+It reads its base from fetched `origin/main` and publishes from the disposable staging
+clone. The primary checkout is deliberately writer-owned: uncommitted work there is
+reported in the run record but is never copied, cleaned, committed or used as a reason
+to block publication. If another completed commit reaches `origin/main` during collection,
+the staging push fails non-fast-forward and preserves both candidates for reconciliation.
 
 The pipeline collects AA and DesignArena, OpenRouter models/provider endpoints, AA
 Coding Agent v1.5, AA token efficiency, rotated OpenRouter usage/cache pages, Chutes

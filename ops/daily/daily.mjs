@@ -15,10 +15,6 @@ import { staleSources, updateCollectorHealth } from './source-health.mjs';
 import { profileRunDir } from './profile-run.mjs';
 import { dailyConcurrency } from './concurrency.mjs';
 const exec = promisify(execFile);
-// How long publication waits for the other writer's checkout to become clean before it gives up for the day.
-// Overridable for tests; the shell entry point allows 3 h in total, so 30 min is affordable.
-const CLEAN_CHECKOUT_WAIT_MS = Number(process.env.BH_CLEAN_CHECKOUT_WAIT_MS ?? 30 * 60_000);
-const CLEAN_CHECKOUT_POLL_MS = Number(process.env.BH_CLEAN_CHECKOUT_POLL_MS ?? 60_000);
 const ROOT = fileURLToPath(new URL('../../', import.meta.url));
 const hash = (value) => createHash('sha256').update(value).digest('hex');
 const readJSON = async (path) => JSON.parse(await readFile(path, 'utf8'));
@@ -94,30 +90,15 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
   const status = async (name, cwd) => parseStatusPorcelain(await git(name, ['status', '--porcelain=v1', '--untracked-files=all'], cwd));
   console.log(`Benchmark Heaven daily ${started}: ${runDir}${dryRun ? ' (dry run)' : ''}${full ? '' : ` (scope ${scope})`}`);
   try {
-    if (await git('branch', ['branch', '--show-current']) !== 'main') throw new Error('Daily publication requires the main checkout');
-    // 2026-09-16: publication needs a clean checkout, but the UX workstream writes to this repo all day
-    // and its cron ticks every 10 minutes, so "dirty at 05:17" used to cost the whole day's refresh — the
-    // scheduled runs of 15 and 16 Sep both died here. Wait for the other writer instead of giving up: the
-    // gate is unchanged and still fail-closed, it just gets a bounded window.
-    let dirty = await status('initial-status', repo);
-    if (!dryRun && dirty.length) {
-      const deadline = Date.now() + CLEAN_CHECKOUT_WAIT_MS;
-      for (let attempt = 1; dirty.length && Date.now() < deadline; attempt++) {
-        console.log(`WAIT initial-status: ${dirty.length} uncommitted path(s); another writer owns the repo. Retrying in ${Math.round(CLEAN_CHECKOUT_POLL_MS / 1000)}s.`);
-        await new Promise((r) => setTimeout(r, CLEAN_CHECKOUT_POLL_MS));
-        dirty = await status(`initial-status-retry-${attempt}`, repo);
-      }
-      if (dirty.length) throw new Error(`Daily publication requires a clean checkout; owner changes were preserved (still dirty after ${Math.round(CLEAN_CHECKOUT_WAIT_MS / 60000)} min: ${dirty.slice(0, 5).map((e) => e.path).join(', ')})`);
-      console.log('OK initial-status cleared while waiting');
-    }
+    // The primary checkout belongs to the interactive/UX writer. Publication is based on
+    // origin/main and happens entirely from the disposable staging clone, so local edits can
+    // neither enter the candidate nor block a refresh. A concurrent remote update is still
+    // rejected by Git's ordinary non-fast-forward push check.
+    const dirty = await status('primary-status', repo);
+    report.primary_checkout = { dirty_paths: dirty.map((entry) => entry.path), ignored_for_publication: !dryRun };
     await git('fetch-main', ['fetch', 'origin', 'main']);
-    if (!dryRun) await git('sync-main', ['merge', '--ff-only', 'origin/main']);
-    const base = await git('base', ['rev-parse', 'HEAD']);
-    const remote = await git('remote-base', ['rev-parse', 'origin/main']);
-    if (!dryRun && base !== remote) throw new Error('Local main has unpublished commits; refusing to include them in a daily push');
+    const base = await git('base', ['rev-parse', 'origin/main']);
     report.base = base;
-    before = await readJSON(join(repo, 'data/dataset.json'));
-    await writeJSONAtomic(join(reports, 'dataset-before.json'), before);
     await command('clone', 'git', ['clone', '--no-hardlinks', repo, work], repo, 120_000);
     await git('detach-stage', ['checkout', '--detach', base], work);
     const overlayHashes = new Map();
@@ -132,6 +113,8 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
       }
       await linkDryRunDependencies(repo, work);
     } else await command('npm-ci', 'npm', ['ci', '--no-audit', '--no-fund'], work, 900_000);
+    before = await readJSON(join(work, 'data/dataset.json'));
+    await writeJSONAtomic(join(reports, 'dataset-before.json'), before);
     await cp(join(work, 'data/raw'), join(runDir, 'before/raw'), { recursive: true });
     const legacy = hash(await readFile(join(work, 'data/raw/aa-coding-agents.json')));
     // Workers only review benchmark sources; a prices run has none to review (the publish gate checks the offers).
@@ -383,9 +366,9 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
           return git('candidate-commit', ['rev-parse', 'HEAD'], work);
         },
         push: async () => {
-          if (await git('recheck-head', ['rev-parse', 'HEAD']) !== base || (await status('recheck-status', repo)).length) throw new Error('Main changed during collection; candidate remains isolated');
           const remoteUrl = await git('remote-url', ['remote', 'get-url', 'origin']);
-          // Push from staging first: a rejected push leaves the primary checkout untouched.
+          // The staging commit descends from the fetched origin/main base. If origin moved,
+          // this normal push fails non-fast-forward and the candidate remains isolated.
           await git('push-data', ['push', remoteUrl, 'HEAD:refs/heads/main'], work);
         },
       });
@@ -394,9 +377,6 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
       if (!gated.published) throw new Error(gated.error);
       const sha = gated.commit;
       report.published = true; report.commit = sha;
-      if (await git('post-push-head', ['rev-parse', 'HEAD']) !== base || (await status('post-push-status', repo)).length) throw new Error('Main changed after push; published revision is green, local edits were preserved');
-      await git('fetch-published', ['fetch', 'origin', 'main']);
-      await git('install-published', ['merge', '--ff-only', sha]);
       const deadline = Date.now() + 600_000;
       let last = '';
       const pending = new Set(['benchmarkheaven.com', 'model-market-comparison.app.mintapis.com']);
