@@ -4,6 +4,15 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-21 — Context Arena MRCR v2 (secondary, non-Composite)
+
+New registry id `context-arena-mrcr-v2::8-needle` (Long-context): Context Arena's runs of Google DeepMind's MRCR v2,
+8 needles, collected daily from the board JSON the site's own app requests. The value is the cumulative average up
+to 128k tokens in percent (`basis: derived`, `source_basis: measured`, derivation = source fraction × 100); AUC
+@128k/@1M, per-bin scores and run counts are in each row's `protocol`. 183 rows, 48 joined to catalog
+configurations. Same endpoints (`/api/benchmark-scores?benchmark_id=…`, `/api/benchmark-matrix`, `/api/dataset`);
+no path, field or unit changed.
+
 ## 2026-09-20 — AA efficiency refresh tolerates confirmed source-wide retirement
 
 The AA token-efficiency collector now accepts a smaller published model population only when a second public AA
