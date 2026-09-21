@@ -11,7 +11,7 @@ import { join } from 'node:path';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { reviewArtifact } from '../../daily/gauntlet.mjs';
-import { protocolReviewRow, PROTOCOL_REVIEW_CRITERIA, protocolSourceContent, protocolSourceLocator } from '../../daily/refresh-benchmarks.mjs';
+import { protocolReviewRow, PROTOCOL_REVIEW_CRITERIA, protocolSourceContent, protocolSourceLocator, captureKey } from '../../daily/refresh-benchmarks.mjs';
 
 const exec = promisify(execFile);
 const [id, outDir, ...flags] = process.argv.slice(2);
@@ -23,15 +23,15 @@ const entry = registry.entries.find((e) => e.id === id);
 if (!entry) throw new Error(`unknown benchmark id ${id}`);
 const manifests = JSON.parse(await readFile(process.env.BH_REPLAY_MANIFEST
   ?? 'data/raw/benchmarks/daily-evidence/2026-09-18T05-40-11-593Z/manifest.json', 'utf8'));
-const captured = new Map(manifests.filter((r) => r.status === 200).map((r) => [r.url, r]));
+const captured = new Map(manifests.filter((r) => r.status === 200).map((r) => [captureKey(r), r]));
 
 // Same reference selection, text extraction and excerpt bound as ops/daily/refresh-benchmarks.mjs.
 const references = (entry.evidence ?? []).filter((s) => !s.source_sha256 && !/literal field/.test(s.excerpt ?? ''));
 if (!references.length) references.push({ url: entry.primary_url });
 const sources = [];
 for (const reference of references) {
-  const receipt = captured.get(reference.url);
-  if (!receipt) throw new Error(`no capture for ${reference.url} in the replay manifest`);
+  const receipt = captured.get(captureKey(reference));
+  if (!receipt) throw new Error(`no capture for ${captureKey(reference)} in the replay manifest`);
   const { stdout: body } = await exec('python3', ['ops/daily/public-candidate.py', 'text', receipt.file, ...(reference.recipe ? [reference.recipe] : [])], { maxBuffer: 16_000_000, timeout: 30_000 });
   const content = protocolSourceContent(entry.id, reference, body);
   sources.push({ ...reference, ...receipt, fetched_at: receipt.retrieved_at, content, locator: protocolSourceLocator(reference) });

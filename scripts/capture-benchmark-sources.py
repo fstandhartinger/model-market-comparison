@@ -44,10 +44,16 @@ while queue:
   if member:
    # A file that only ships inside a maintainer's archive (Epoch's benchmark_data.zip, 2026-09-21): the named member,
    # exactly once, is the captured source; the archive's own hash and size stay on the receipt.
-   z=zipfile.ZipFile(io.BytesIO(b));names=[n for n in z.namelist() if n==member]
-   if len(names)!=1:raise RuntimeError('Expected exactly one zip member '+member+', found '+str(len(names)))
-   if z.getinfo(member).file_size>=12000000:raise RuntimeError('Zip member exceeds 12MB bound')
-   r.update(container_sha256=hashlib.sha256(b).hexdigest(),container_bytes=len(b));b=z.read(member)
+   # Only stored/deflate members, read in chunks under the same 12 MB bound: a declared size is not trusted.
+   z=zipfile.ZipFile(io.BytesIO(b));infos=[i for i in z.infolist() if i.filename==member]
+   if len(infos)!=1:raise RuntimeError('Expected exactly one zip member '+member+', found '+str(len(infos)))
+   if infos[0].compress_type not in (zipfile.ZIP_STORED,zipfile.ZIP_DEFLATED):raise RuntimeError('Unsupported zip compression')
+   r.update(container_sha256=hashlib.sha256(b).hexdigest(),container_bytes=len(b));out=bytearray()
+   with z.open(infos[0]) as f:
+    while chunk:=f.read(1<<20):
+     out+=chunk
+     if len(out)>=12000000:raise RuntimeError('Zip member exceeds 12MB bound')
+   b=bytes(out)
   sha=hashlib.sha256(b).hexdigest();p=dest/(sha[:20]+'.gz');p.write_bytes(gzip.compress(b,mtime=0));r.update(status=q.status,file=str(p),sha256=sha,bytes=len(b),final_url=q.url)
   if follow and q.status==200:
    # Single-page apps ship their data in one hashed bundle; the name changes every deploy. Two build

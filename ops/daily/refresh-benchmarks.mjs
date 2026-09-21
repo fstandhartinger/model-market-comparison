@@ -159,13 +159,13 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
   // AA's model page was already fetched by efficiency; never fetch it again.
   const live = (await readFile(join(runDir, 'sources', 'live-manifest.jsonl'), 'utf8')).trim().split('\n').map(JSON.parse);
   const captured = new Map();
-  for (const receipt of live) if (receipt.status === 200 && urls.has(receipt.url)) {
+  for (const receipt of live) if (receipt.status === 200 && urls.has(captureKey(receipt))) {
     // A page whose bundle hash changes every deploy is never satisfied by a
     // reused receipt of the page alone; it always re-runs the follow logic.
-    const wanted = urls.get(receipt.url);
+    const wanted = urls.get(captureKey(receipt));
     if (wanted && typeof wanted === 'object' && wanted.follow_module_script) continue;
     const target = join(evidenceDir, `${receipt.sha256.slice(0, 20)}.gz`);
-    await cp(receipt.file, target); captured.set(receipt.url, { ...receipt, file: target }); urls.delete(receipt.url);
+    await cp(receipt.file, target); captured.set(captureKey(receipt), { ...receipt, file: target }); urls.delete(captureKey(receipt));
   }
   await put(join(temporary, 'urls.json'), [...urls.values()]);
   const capture = await exec('python3', ['scripts/capture-benchmark-sources.py', join(temporary, 'urls.json'), evidenceDir], { timeout: 1_800_000, maxBuffer: 8_000_000 });

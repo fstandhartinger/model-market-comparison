@@ -116,6 +116,7 @@ test('AA re-versioned fields: one identity per collection window, never both, ne
 test('AA methodology evidence: every active AA identity quotes a passage present in the capture it names', async () => {
   // AA edits this page in place (2026-09-21: sentence-final periods and a rewritten Terminal-Bench 4.0 harness
   // paragraph between 02:24 and 07:46), so each excerpt is checked against its own recorded capture and hash.
+  // Terminal-Bench 4.0 deliberately keeps its 02:24 passage: the rewrite is an open identity decision, not a re-quote.
   const { execFileSync } = await import('node:child_process');
   const { createHash } = await import('node:crypto');
   const registry = JSON.parse(await readFile(new URL('../data/raw/benchmarks/registry.json', import.meta.url)));
@@ -125,11 +126,12 @@ test('AA methodology evidence: every active AA identity quotes a passage present
   let checked = 0;
   for (const e of registry.entries.filter((x) => mapped.has(x.id))) for (const s of e.evidence) {
     if (s.url !== url || s.source_sha256) continue;
-    if (!texts.has(s.file)) {
-      assert.equal(createHash('sha256').update(await readFile(new URL(`../${s.file}`, import.meta.url))).digest('hex'), s.sha256, `${e.id}: ${s.file} hash`);
-      texts.set(s.file, execFileSync('python3', ['ops/daily/public-candidate.py', 'text', s.file], { maxBuffer: 64_000_000 }).toString().replace(/\s+/g, ' '));
-    }
-    assert.ok(texts.get(s.file).includes(s.excerpt.replace(/\s+/g, ' ').trim()), `${e.id}: excerpt not verbatim in ${s.file}`);
+    if (!texts.has(s.file)) texts.set(s.file, {
+      sha256: createHash('sha256').update(await readFile(new URL(`../${s.file}`, import.meta.url))).digest('hex'),
+      text: execFileSync('python3', ['ops/daily/public-candidate.py', 'text', s.file], { maxBuffer: 64_000_000 }).toString().replace(/\s+/g, ' '),
+    });
+    assert.equal(texts.get(s.file).sha256, s.sha256, `${e.id}: ${s.file} hash`);
+    assert.ok(texts.get(s.file).text.includes(s.excerpt.replace(/\s+/g, ' ').trim()), `${e.id}: excerpt not verbatim in ${s.file}`);
     checked++;
   }
   assert.ok(checked >= 24, `only ${checked} excerpts checked`);
