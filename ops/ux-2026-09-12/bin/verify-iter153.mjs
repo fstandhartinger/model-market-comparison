@@ -55,7 +55,7 @@ try {
   }
 } finally { await browser.close(); }
 const passed = checks.filter((x) => x.ok).length;
-await fs.writeFile(`${OUT}/verification.json`, JSON.stringify({ base: BASE, revision: REV, runner: 'claude-opus (iteration 153)', at: new Date().toISOString(), passed, total: checks.length, checks }, null, 2));
+await fs.writeFile(`${OUT}/verification.json`, JSON.stringify({ base: BASE, revision: REV, runner: process.env.BH_RUNNER || 'unspecified', at: new Date().toISOString(), passed, total: checks.length, checks }, null, 2));
 for (const x of checks) if (!x.ok) console.log(`FAIL ${x.name} — ${JSON.stringify(x.detail).slice(0, 300)}`);
 console.log(`${BASE} @ ${REV}: ${passed}/${checks.length}`);
 process.exit(passed === checks.length ? 0 : 1);
