@@ -234,13 +234,13 @@ test('a value moved to the same-family successor identity is not "no longer publ
   const old = ['a', 'b', 'gone'].map((id) => observation(id, 0.5, 'bench::4.0'));
   const live = [observation('u', 0.52, 'bench::4.0'), ...['a', 'b'].map((id) => observation(id, 0.5, 'bench::4.0-new'))];
   const entries = [registryEntry('bench::4.0', { status: 'retained', superseded_by: 'bench::4.0-new' }), registryEntry('bench::4.0-new')];
-  const estimates = datedEstimates(live, registry(entries), [state('S1', '2026-09-10T00:00:00.000Z', old)]);
+  const windows = [{ field: 'tb40', benchmark_id: 'bench::4.0', collected_until: '2026-09-10T23:59:59.999Z' },
+    { field: 'tb40', benchmark_id: 'bench::4.0-new', collected_from: '2026-09-21T10:31:33.582Z' }];
+  const estimates = datedEstimates(live, { entries, aa_field_map: windows }, [state('S1', '2026-09-10T00:00:00.000Z', old)]);
   assert.deepEqual(estimates.map((e) => e.subject_name), [title('gone')]);
-  // A successor in another family (Terminal-Bench Hard → Terminal-Bench 2.1) is a different board: no exemption.
-  const other = [registryEntry('other::1', { status: 'retained', superseded_by: 'bench::4.0-new' }), registryEntry('bench::4.0-new')];
-  const otherOld = ['a', 'gone'].map((id) => observation(id, 0.5, 'other::1'));
-  const otherLive = [observation('u', 0.5, 'other::1'), observation('a', 0.5, 'bench::4.0-new')];
-  assert.equal(datedEstimates(otherLive, registry(other), [state('S1', '2026-09-10T00:00:00.000Z', otherOld)]).length, 2);
+  // An ordinary version change (Coding Agent 1.4 → 1.5: superseded, but no field window) is not a migration:
+  // a value that left the old board is still reported, whether or not the model appears on the new one (Codex P2).
+  assert.equal(datedEstimates(live, registry(entries), [state('S1', '2026-09-10T00:00:00.000Z', old)]).length, 3);
 });
 
 test('a vanished value is never deleted: a new ingestion keeps the retained state', async () => {

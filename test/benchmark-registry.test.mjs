@@ -93,11 +93,16 @@ test('AA re-versioned fields: one identity per collection window, never both, ne
     assert.deepEqual(maps.map((m) => m.benchmark_id).sort(), [oldId, newId].sort());
     const reading = (at) => maps.filter((m) => aaMappingApplies(m, at)).map((m) => m.benchmark_id);
     assert.deepEqual(reading('2026-09-10T21:47:16.627Z'), [oldId], `${field}: the retained snapshot`);
-    assert.deepEqual(reading('2026-09-21T05:20:00Z'), [newId], `${field}: the next daily snapshot`);
+    assert.deepEqual(reading('2026-09-22T05:20:00Z'), [newId], `${field}: the next daily snapshot`);
     assert.deepEqual(reading('2026-09-15T00:00:00Z'), [], `${field}: an unreviewed in-between snapshot feeds neither`);
     assert.equal(benchmarkById(registry, oldId).superseded_by, newId);
     assert.equal(benchmarkById(registry, oldId).status, 'retained');
   }
+  // Terminal-Bench 4.0's paragraph was still the v2.4.6 one in the 07:46 daily capture; its successor opens only
+  // with the 10:31 capture that carries the rewrite, so the morning's snapshots feed neither identity (Codex P2).
+  const tb = registry.aa_field_map.filter((m) => m.field === 'terminalbenchV40');
+  assert.deepEqual(tb.filter((m) => aaMappingApplies(m, '2026-09-21T07:46:30Z')).map((m) => m.benchmark_id), []);
+  assert.deepEqual(tb.filter((m) => aaMappingApplies(m, '2026-09-21T10:31:33.582Z')).map((m) => m.benchmark_id), ['aa-terminal-bench::4.0-upstream-timeouts']);
   // Every other field keeps exactly one unbounded mapping.
   for (const m of registry.aa_field_map.filter((x) => !pairs.some(([f]) => f === x.field))) {
     assert.equal(m.collected_from ?? m.collected_until, undefined, m.field);
@@ -125,7 +130,7 @@ test('AA methodology evidence: every active AA identity quotes a passage present
   const registry = JSON.parse(await readFile(new URL('../data/raw/benchmarks/registry.json', import.meta.url)));
   const url = 'https://artificialanalysis.ai/methodology/intelligence-benchmarking';
   const texts = new Map();
-  const mapped = new Set(registry.aa_field_map.filter((m) => aaMappingApplies(m, '2026-09-21T05:20:00Z')).map((m) => m.benchmark_id));
+  const mapped = new Set(registry.aa_field_map.filter((m) => aaMappingApplies(m, '2026-09-22T05:20:00Z')).map((m) => m.benchmark_id));
   let checked = 0;
   for (const e of registry.entries.filter((x) => mapped.has(x.id))) for (const s of e.evidence) {
     if (s.url !== url || s.source_sha256) continue;
