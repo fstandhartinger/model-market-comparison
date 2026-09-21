@@ -856,6 +856,18 @@ Link (exact, do not change): https://donate.stripe.com/fZu00i9ro0wmdF88sg1Jm01. 
 - **CR-107.5 Availability.** OpenDecision joins "Who could not be measured, and why" with its current reason.
 - **CR-107.6 Verify.** Full tests, typecheck and production build; `verify-cr-107.mjs` on both live hosts.
 
+## CR-20260921a checklist — publish JevBench v1.2.8 (CR-108)
+
+Seeded by review gate 20260921T100004Z from the verbatim CR-108 acceptance list (the publishing job added no checklist).
+
+- **CR-108.1 Pinned release.** Results, public-task and topic artifacts from public JevBench tag `v1.2.8`, pinned by SHA-256.
+- **CR-108.2 New rows.** Every run-4 entrant shown with its artifact score and rank, each name linked to its project.
+- **CR-108.3 Own class.** decision-machine-1 in the class "Closed decision model (API only, not Jev)" with its own legend entry and colour, light and dark.
+- **CR-108.4 jqv complete.** jqv ranked with hard coverage 1.0; the "425 of 534" partial note gone.
+- **CR-108.5 Nothing else moved.** Every earlier row's score untouched; hard-only view, custom-evaluation offer/toast, labels and scoring rules preserved.
+- **CR-108.6 Availability.** "Who could not be measured" drops Decider 2B, Reflex, OpenDecision, LitJev and adds Werr and DIY Jev with concrete reasons.
+- **CR-108.7 Verify.** Both production hosts after deployment, desktop and phone, light and dark.
+
 ## CR-20260921b checklist — held-out hard-tier detail and split policy (CR-109)
 
 - **CR-109.1 Derived diagnostic.** Repository code derives hard public and held-out correct/attempted counts, accuracies, public-minus-held-out gaps, unpooled normal 95% intervals and the complete-field mean from the frozen v1.2.8 per-task artifact; no displayed result is hand-entered.
