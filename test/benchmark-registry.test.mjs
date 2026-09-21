@@ -113,17 +113,23 @@ test('AA re-versioned fields: one identity per collection window, never both, ne
   assert.throws(() => aaMappingApplies({ field: 'x' }, 'not a date'), /collection time/);
 });
 
-test('AA methodology evidence: every active AA identity quotes a passage present in the 2026-09-21 capture', async () => {
+test('AA methodology evidence: every active AA identity quotes a passage present in the capture it names', async () => {
+  // AA edits this page in place (2026-09-21: sentence-final periods and a rewritten Terminal-Bench 4.0 harness
+  // paragraph between 02:24 and 07:46), so each excerpt is checked against its own recorded capture and hash.
   const { execFileSync } = await import('node:child_process');
+  const { createHash } = await import('node:crypto');
   const registry = JSON.parse(await readFile(new URL('../data/raw/benchmarks/registry.json', import.meta.url)));
   const url = 'https://artificialanalysis.ai/methodology/intelligence-benchmarking';
-  const file = 'data/raw/benchmarks/daily-evidence/2026-09-21-aa-methodology/dc576b98ac473011f36a.gz';
-  const text = execFileSync('python3', ['ops/daily/public-candidate.py', 'text', file], { maxBuffer: 64_000_000 }).toString().replace(/\s+/g, ' ');
+  const texts = new Map();
   const mapped = new Set(registry.aa_field_map.filter((m) => aaMappingApplies(m, '2026-09-21T05:20:00Z')).map((m) => m.benchmark_id));
   let checked = 0;
   for (const e of registry.entries.filter((x) => mapped.has(x.id))) for (const s of e.evidence) {
     if (s.url !== url || s.source_sha256) continue;
-    assert.ok(text.includes(s.excerpt.replace(/\s+/g, ' ').trim()), `${e.id}: excerpt not verbatim in today's methodology page`);
+    if (!texts.has(s.file)) {
+      assert.equal(createHash('sha256').update(await readFile(new URL(`../${s.file}`, import.meta.url))).digest('hex'), s.sha256, `${e.id}: ${s.file} hash`);
+      texts.set(s.file, execFileSync('python3', ['ops/daily/public-candidate.py', 'text', s.file], { maxBuffer: 64_000_000 }).toString().replace(/\s+/g, ' '));
+    }
+    assert.ok(texts.get(s.file).includes(s.excerpt.replace(/\s+/g, ' ').trim()), `${e.id}: excerpt not verbatim in ${s.file}`);
     checked++;
   }
   assert.ok(checked >= 24, `only ${checked} excerpts checked`);
