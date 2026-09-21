@@ -13802,6 +13802,76 @@
           "excerpt": "count instances of a body of text and reproduce the correct instance. … Any report of MRCR should explicitly state whether or not tools were provided to the model"
         }
       ]
+    },
+    {
+      "id": "blueprint-bench::2",
+      "name": "Blueprint-Bench 2",
+      "version": "2",
+      "version_status": "published",
+      "family": "blueprint-bench",
+      "category": "Vision",
+      "one_sentence_description": "An agent looks at about twenty interior photos of each of 50 apartments and draws the floor plan: which rooms exist and which rooms connect to which.",
+      "scoring": {
+        "metric": "Connectivity similarity score of the generated floor plans against ground truth, normalised so the random baseline is 0 and a perfect plan is 1",
+        "unit": "points",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Each plan's room-connection graph is compared with the true plan under rotation and reflection: Jaccard similarity of room-to-room connections 50 %, degree similarity 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %. The composite is normalised so that the random baseline maps to 0 and a perfect score to 1, and the board prints any score at or below the random baseline as 0.000 (marked ** on the page; the row's protocol keeps that marker). The number is shown the way the source publishes it — a normalised index, not a share of apartments solved. The page's human baseline (0.586, run on 12 of the 50 apartments) is not a model and is not collected. Secondary benchmark, never a Composite input."
+      },
+      "maintainer": "Andon Labs",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://andonlabs.com/evals/blueprint-bench-2",
+      "publication_urls": [
+        {
+          "url": "https://andonlabs.com/evals/blueprint-bench-2",
+          "type": "official_leaderboard",
+          "role": "Leaderboard table, method and scoring description (primary results publication)"
+        },
+        {
+          "url": "https://andonlabs.com/evals/blueprint-bench",
+          "type": "official_leaderboard",
+          "role": "Original Blueprint-Bench (version 1) page and paper link"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-blueprint-bench-2; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "HTML table",
+        "identity_policy": "source_label",
+        "locator": "The 'Leaderboard' table on the Blueprint-Bench 2 page (server-rendered, the page's only <table>): rank, model name, score (0–1). The 'Human*' baseline row is skipped; a score ending in ** is at or below the random baseline and is kept with that marker.",
+        "version_guard": "The page must still describe Blueprint-Bench 2 (50 apartments processed sequentially, ~20 photos each, 2D floor plans), the normalisation (random baseline 0, perfect 1), the scoring weights (Jaccard similarity 50 %) and both footnotes (** at or below the random baseline; * human baseline on 12 apartments); the table header must read Model / Score, three cells per row, one row per model. Another version, apartment set or scoring is a new identity, never a silent update of this one.",
+        "notes": "Measured by Andon Labs, which runs every model itself as an agent with a persistent notepad across the 50 apartments. The table names models by product name only and states no reasoning setting, so under the exact-join policy only a family the catalog holds as a single default configuration joins; every other row stays visible as named by the source. robots.txt: none (the path answers the site's HTML shell → conventional access); no licence statement on the page — scores only, with attribution to Andon Labs and a link to the page. Joins: data/raw/benchmarks/identity-map.json (lib/board-identity.mjs parseBlueprintBenchLabel)."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated; Andon Labs adds models as it runs them (released May 2026; the 2026-09-21 capture lists 26 models up to GPT-6 Astra and Claude Fable 5.1).",
+        "check_recommendation": "Daily with the ordinary refresh; a changed task set, scoring or normalisation is a new identity and needs a reviewed change."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Best model 0.497 against a human baseline of 0.586 on the page's own 0–1 scale; computed saturation (CR-38.2) applies on build."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-21",
+      "last_verified": "2026-09-21",
+      "evidence": [
+        {
+          "url": "https://andonlabs.com/evals/blueprint-bench-2",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-blueprint-bench-2/f1ae172f38a9a3246282.gz",
+          "sha256": "e1aee19431b5c23d93ea9f81d8add0f5dd40b720966f0e477418767ec38bd48d",
+          "fetched_at": "2026-09-21T17:34:30.150578+00:00",
+          "excerpt": "Blueprint-Bench 2 tests spatial reasoning by asking AI agents to convert apartment photographs into accurate 2D floor plans. Each agent processes 50 apartments sequentially, examining ~20 interior photos per apartment and generating a floor plan showing room layouts, connections, and relative sizes."
+        },
+        {
+          "url": "https://andonlabs.com/evals/blueprint-bench-2",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-blueprint-bench-2/f1ae172f38a9a3246282.gz",
+          "sha256": "e1aee19431b5c23d93ea9f81d8add0f5dd40b720966f0e477418767ec38bd48d",
+          "fetched_at": "2026-09-21T17:34:30.150578+00:00",
+          "excerpt": "The composite score weights six sub-metrics: Jaccard similarity (50%) … degree similarity (20%) … density similarity (10%) … room count (10%), door count (5%), and orientation (5%). … Scores are then normalized so that the random baseline maps to 0 and a perfect score maps to 1."
+        }
+      ]
     }
   ],
   "aa_field_map": [

@@ -487,8 +487,11 @@
       "reason": "An aggregator's own composite (BenchLM prior), not a benchmark anyone ran (CR-38.4)"
     },
     "blueprint-bench-2": {
-      "decision": "planned",
-      "collector": "Andon Labs Blueprint-Bench v2 (data/SCRAPING.md)"
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "blueprint-bench::2"
+      ],
+      "note": "2026-09-21 (iteration 155): the planned collector is live (Andon Labs' own Blueprint-Bench 2 leaderboard, data/SCRAPING.md). Lumina's cited values are Google's model-card and aggregator copies; ours is the maintainer's table."
     },
     "browsecomp": {
       "decision": "in_registry",

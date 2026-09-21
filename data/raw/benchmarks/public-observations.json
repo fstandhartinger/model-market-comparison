@@ -271264,6 +271264,630 @@
           "locator": "method_source"
         }
       ]
+    },
+    {
+      "id": "public:489d1c3eacdc78c94511e458",
+      "benchmark_id": "blueprint-bench::2",
+      "subject": {
+        "source_id": "GPT-6 Astra",
+        "name": "GPT-6 Astra",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.497,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://andonlabs.com/evals/blueprint-bench-2",
+        "retrieved_at": "2026-09-21T17:34:30.150578+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-blueprint-bench-2/f1ae172f38a9a3246282.gz",
+        "sha256": "f1ae172f38a9a3246282d938b51c3d61ac548a66ca932adf368e036338bf8d83",
+        "locator": "html_table; source row 2; GPT-6 Astra; field value"
+      },
+      "protocol": "Blueprint-Bench 2 (Andon Labs): agent converts ~20 interior photos per apartment into a 2D floor plan, 50 apartments in sequence with a persistent notepad; connectivity-similarity composite (Jaccard 50 %, degree 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %, D4-invariant) normalised to random baseline 0 / perfect 1; the page states no reasoning setting; source row: {\"cells\":[\"2\",\"GPT-6 Astra\",\"0.497\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:f0ca29385c4968898345ebe4",
+      "benchmark_id": "blueprint-bench::2",
+      "subject": {
+        "source_id": "Claude Fable 5.1",
+        "name": "Claude Fable 5.1",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.419,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://andonlabs.com/evals/blueprint-bench-2",
+        "retrieved_at": "2026-09-21T17:34:30.150578+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-blueprint-bench-2/f1ae172f38a9a3246282.gz",
+        "sha256": "f1ae172f38a9a3246282d938b51c3d61ac548a66ca932adf368e036338bf8d83",
+        "locator": "html_table; source row 3; Claude Fable 5.1; field value"
+      },
+      "protocol": "Blueprint-Bench 2 (Andon Labs): agent converts ~20 interior photos per apartment into a 2D floor plan, 50 apartments in sequence with a persistent notepad; connectivity-similarity composite (Jaccard 50 %, degree 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %, D4-invariant) normalised to random baseline 0 / perfect 1; the page states no reasoning setting; source row: {\"cells\":[\"3\",\"Claude Fable 5.1\",\"0.419\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:e9d5a019e7fa8ef0298b4933",
+      "benchmark_id": "blueprint-bench::2",
+      "subject": {
+        "source_id": "Claude Fable 5",
+        "name": "Claude Fable 5",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.386,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://andonlabs.com/evals/blueprint-bench-2",
+        "retrieved_at": "2026-09-21T17:34:30.150578+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-blueprint-bench-2/f1ae172f38a9a3246282.gz",
+        "sha256": "f1ae172f38a9a3246282d938b51c3d61ac548a66ca932adf368e036338bf8d83",
+        "locator": "html_table; source row 4; Claude Fable 5; field value"
+      },
+      "protocol": "Blueprint-Bench 2 (Andon Labs): agent converts ~20 interior photos per apartment into a 2D floor plan, 50 apartments in sequence with a persistent notepad; connectivity-similarity composite (Jaccard 50 %, degree 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %, D4-invariant) normalised to random baseline 0 / perfect 1; the page states no reasoning setting; source row: {\"cells\":[\"4\",\"Claude Fable 5\",\"0.386\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:491639545a68c7678c49919c",
+      "benchmark_id": "blueprint-bench::2",
+      "subject": {
+        "source_id": "Gemini 3.8 Flash",
+        "name": "Gemini 3.8 Flash",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.386,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://andonlabs.com/evals/blueprint-bench-2",
+        "retrieved_at": "2026-09-21T17:34:30.150578+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-blueprint-bench-2/f1ae172f38a9a3246282.gz",
+        "sha256": "f1ae172f38a9a3246282d938b51c3d61ac548a66ca932adf368e036338bf8d83",
+        "locator": "html_table; source row 5; Gemini 3.8 Flash; field value"
+      },
+      "protocol": "Blueprint-Bench 2 (Andon Labs): agent converts ~20 interior photos per apartment into a 2D floor plan, 50 apartments in sequence with a persistent notepad; connectivity-similarity composite (Jaccard 50 %, degree 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %, D4-invariant) normalised to random baseline 0 / perfect 1; the page states no reasoning setting; source row: {\"cells\":[\"5\",\"Gemini 3.8 Flash\",\"0.386\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:85a753465e2ba022eee3ef61",
+      "benchmark_id": "blueprint-bench::2",
+      "subject": {
+        "source_id": "GPT-5.5",
+        "name": "GPT-5.5",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.362,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://andonlabs.com/evals/blueprint-bench-2",
+        "retrieved_at": "2026-09-21T17:34:30.150578+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-blueprint-bench-2/f1ae172f38a9a3246282.gz",
+        "sha256": "f1ae172f38a9a3246282d938b51c3d61ac548a66ca932adf368e036338bf8d83",
+        "locator": "html_table; source row 6; GPT-5.5; field value"
+      },
+      "protocol": "Blueprint-Bench 2 (Andon Labs): agent converts ~20 interior photos per apartment into a 2D floor plan, 50 apartments in sequence with a persistent notepad; connectivity-similarity composite (Jaccard 50 %, degree 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %, D4-invariant) normalised to random baseline 0 / perfect 1; the page states no reasoning setting; source row: {\"cells\":[\"6\",\"GPT-5.5\",\"0.362\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:040be19d42e890da4d90e95f",
+      "benchmark_id": "blueprint-bench::2",
+      "subject": {
+        "source_id": "Gemini 3.5 Flash",
+        "name": "Gemini 3.5 Flash",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.336,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://andonlabs.com/evals/blueprint-bench-2",
+        "retrieved_at": "2026-09-21T17:34:30.150578+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-blueprint-bench-2/f1ae172f38a9a3246282.gz",
+        "sha256": "f1ae172f38a9a3246282d938b51c3d61ac548a66ca932adf368e036338bf8d83",
+        "locator": "html_table; source row 7; Gemini 3.5 Flash; field value"
+      },
+      "protocol": "Blueprint-Bench 2 (Andon Labs): agent converts ~20 interior photos per apartment into a 2D floor plan, 50 apartments in sequence with a persistent notepad; connectivity-similarity composite (Jaccard 50 %, degree 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %, D4-invariant) normalised to random baseline 0 / perfect 1; the page states no reasoning setting; source row: {\"cells\":[\"7\",\"Gemini 3.5 Flash\",\"0.336\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:5a66616fd273bf4edac53195",
+      "benchmark_id": "blueprint-bench::2",
+      "subject": {
+        "source_id": "GPT-5.6 Sol",
+        "name": "GPT-5.6 Sol",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.336,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://andonlabs.com/evals/blueprint-bench-2",
+        "retrieved_at": "2026-09-21T17:34:30.150578+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-blueprint-bench-2/f1ae172f38a9a3246282.gz",
+        "sha256": "f1ae172f38a9a3246282d938b51c3d61ac548a66ca932adf368e036338bf8d83",
+        "locator": "html_table; source row 8; GPT-5.6 Sol; field value"
+      },
+      "protocol": "Blueprint-Bench 2 (Andon Labs): agent converts ~20 interior photos per apartment into a 2D floor plan, 50 apartments in sequence with a persistent notepad; connectivity-similarity composite (Jaccard 50 %, degree 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %, D4-invariant) normalised to random baseline 0 / perfect 1; the page states no reasoning setting; source row: {\"cells\":[\"8\",\"GPT-5.6 Sol\",\"0.336\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:5f9785779758476807ed3888",
+      "benchmark_id": "blueprint-bench::2",
+      "subject": {
+        "source_id": "Grok 4.6",
+        "name": "Grok 4.6",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.332,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://andonlabs.com/evals/blueprint-bench-2",
+        "retrieved_at": "2026-09-21T17:34:30.150578+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-blueprint-bench-2/f1ae172f38a9a3246282.gz",
+        "sha256": "f1ae172f38a9a3246282d938b51c3d61ac548a66ca932adf368e036338bf8d83",
+        "locator": "html_table; source row 9; Grok 4.6; field value"
+      },
+      "protocol": "Blueprint-Bench 2 (Andon Labs): agent converts ~20 interior photos per apartment into a 2D floor plan, 50 apartments in sequence with a persistent notepad; connectivity-similarity composite (Jaccard 50 %, degree 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %, D4-invariant) normalised to random baseline 0 / perfect 1; the page states no reasoning setting; source row: {\"cells\":[\"9\",\"Grok 4.6\",\"0.332\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:c90cd391ba95e9b374b85d65",
+      "benchmark_id": "blueprint-bench::2",
+      "subject": {
+        "source_id": "Gemini 3.6 Flash",
+        "name": "Gemini 3.6 Flash",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.312,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://andonlabs.com/evals/blueprint-bench-2",
+        "retrieved_at": "2026-09-21T17:34:30.150578+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-blueprint-bench-2/f1ae172f38a9a3246282.gz",
+        "sha256": "f1ae172f38a9a3246282d938b51c3d61ac548a66ca932adf368e036338bf8d83",
+        "locator": "html_table; source row 10; Gemini 3.6 Flash; field value"
+      },
+      "protocol": "Blueprint-Bench 2 (Andon Labs): agent converts ~20 interior photos per apartment into a 2D floor plan, 50 apartments in sequence with a persistent notepad; connectivity-similarity composite (Jaccard 50 %, degree 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %, D4-invariant) normalised to random baseline 0 / perfect 1; the page states no reasoning setting; source row: {\"cells\":[\"10\",\"Gemini 3.6 Flash\",\"0.312\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:2fce3c680e43279c2e7cdb41",
+      "benchmark_id": "blueprint-bench::2",
+      "subject": {
+        "source_id": "GPT-5.6 Terra",
+        "name": "GPT-5.6 Terra",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.308,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://andonlabs.com/evals/blueprint-bench-2",
+        "retrieved_at": "2026-09-21T17:34:30.150578+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-blueprint-bench-2/f1ae172f38a9a3246282.gz",
+        "sha256": "f1ae172f38a9a3246282d938b51c3d61ac548a66ca932adf368e036338bf8d83",
+        "locator": "html_table; source row 11; GPT-5.6 Terra; field value"
+      },
+      "protocol": "Blueprint-Bench 2 (Andon Labs): agent converts ~20 interior photos per apartment into a 2D floor plan, 50 apartments in sequence with a persistent notepad; connectivity-similarity composite (Jaccard 50 %, degree 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %, D4-invariant) normalised to random baseline 0 / perfect 1; the page states no reasoning setting; source row: {\"cells\":[\"11\",\"GPT-5.6 Terra\",\"0.308\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:d5e23672da6637a22c8730fe",
+      "benchmark_id": "blueprint-bench::2",
+      "subject": {
+        "source_id": "Claude Opus 5",
+        "name": "Claude Opus 5",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.304,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://andonlabs.com/evals/blueprint-bench-2",
+        "retrieved_at": "2026-09-21T17:34:30.150578+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-blueprint-bench-2/f1ae172f38a9a3246282.gz",
+        "sha256": "f1ae172f38a9a3246282d938b51c3d61ac548a66ca932adf368e036338bf8d83",
+        "locator": "html_table; source row 12; Claude Opus 5; field value"
+      },
+      "protocol": "Blueprint-Bench 2 (Andon Labs): agent converts ~20 interior photos per apartment into a 2D floor plan, 50 apartments in sequence with a persistent notepad; connectivity-similarity composite (Jaccard 50 %, degree 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %, D4-invariant) normalised to random baseline 0 / perfect 1; the page states no reasoning setting; source row: {\"cells\":[\"12\",\"Claude Opus 5\",\"0.304\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:c7025131b6d18e25b59e60a6",
+      "benchmark_id": "blueprint-bench::2",
+      "subject": {
+        "source_id": "Kimi K3",
+        "name": "Kimi K3",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.295,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://andonlabs.com/evals/blueprint-bench-2",
+        "retrieved_at": "2026-09-21T17:34:30.150578+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-blueprint-bench-2/f1ae172f38a9a3246282.gz",
+        "sha256": "f1ae172f38a9a3246282d938b51c3d61ac548a66ca932adf368e036338bf8d83",
+        "locator": "html_table; source row 13; Kimi K3; field value"
+      },
+      "protocol": "Blueprint-Bench 2 (Andon Labs): agent converts ~20 interior photos per apartment into a 2D floor plan, 50 apartments in sequence with a persistent notepad; connectivity-similarity composite (Jaccard 50 %, degree 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %, D4-invariant) normalised to random baseline 0 / perfect 1; the page states no reasoning setting; source row: {\"cells\":[\"13\",\"Kimi K3\",\"0.295\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:cdc727c8b178e6c315c5446e",
+      "benchmark_id": "blueprint-bench::2",
+      "subject": {
+        "source_id": "Grok 4.5",
+        "name": "Grok 4.5",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.273,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://andonlabs.com/evals/blueprint-bench-2",
+        "retrieved_at": "2026-09-21T17:34:30.150578+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-blueprint-bench-2/f1ae172f38a9a3246282.gz",
+        "sha256": "f1ae172f38a9a3246282d938b51c3d61ac548a66ca932adf368e036338bf8d83",
+        "locator": "html_table; source row 14; Grok 4.5; field value"
+      },
+      "protocol": "Blueprint-Bench 2 (Andon Labs): agent converts ~20 interior photos per apartment into a 2D floor plan, 50 apartments in sequence with a persistent notepad; connectivity-similarity composite (Jaccard 50 %, degree 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %, D4-invariant) normalised to random baseline 0 / perfect 1; the page states no reasoning setting; source row: {\"cells\":[\"14\",\"Grok 4.5\",\"0.273\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:c6f882dec399bac675abea18",
+      "benchmark_id": "blueprint-bench::2",
+      "subject": {
+        "source_id": "GPT-5.4",
+        "name": "GPT-5.4",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.271,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://andonlabs.com/evals/blueprint-bench-2",
+        "retrieved_at": "2026-09-21T17:34:30.150578+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-blueprint-bench-2/f1ae172f38a9a3246282.gz",
+        "sha256": "f1ae172f38a9a3246282d938b51c3d61ac548a66ca932adf368e036338bf8d83",
+        "locator": "html_table; source row 15; GPT-5.4; field value"
+      },
+      "protocol": "Blueprint-Bench 2 (Andon Labs): agent converts ~20 interior photos per apartment into a 2D floor plan, 50 apartments in sequence with a persistent notepad; connectivity-similarity composite (Jaccard 50 %, degree 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %, D4-invariant) normalised to random baseline 0 / perfect 1; the page states no reasoning setting; source row: {\"cells\":[\"15\",\"GPT-5.4\",\"0.271\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:bb3c1c6763147595927e0f92",
+      "benchmark_id": "blueprint-bench::2",
+      "subject": {
+        "source_id": "Gemini 3.1 Pro",
+        "name": "Gemini 3.1 Pro",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.265,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://andonlabs.com/evals/blueprint-bench-2",
+        "retrieved_at": "2026-09-21T17:34:30.150578+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-blueprint-bench-2/f1ae172f38a9a3246282.gz",
+        "sha256": "f1ae172f38a9a3246282d938b51c3d61ac548a66ca932adf368e036338bf8d83",
+        "locator": "html_table; source row 16; Gemini 3.1 Pro; field value"
+      },
+      "protocol": "Blueprint-Bench 2 (Andon Labs): agent converts ~20 interior photos per apartment into a 2D floor plan, 50 apartments in sequence with a persistent notepad; connectivity-similarity composite (Jaccard 50 %, degree 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %, D4-invariant) normalised to random baseline 0 / perfect 1; the page states no reasoning setting; source row: {\"cells\":[\"16\",\"Gemini 3.1 Pro\",\"0.265\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:7191a825d02fa49204162f36",
+      "benchmark_id": "blueprint-bench::2",
+      "subject": {
+        "source_id": "Claude Sonnet 5",
+        "name": "Claude Sonnet 5",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.249,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://andonlabs.com/evals/blueprint-bench-2",
+        "retrieved_at": "2026-09-21T17:34:30.150578+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-blueprint-bench-2/f1ae172f38a9a3246282.gz",
+        "sha256": "f1ae172f38a9a3246282d938b51c3d61ac548a66ca932adf368e036338bf8d83",
+        "locator": "html_table; source row 17; Claude Sonnet 5; field value"
+      },
+      "protocol": "Blueprint-Bench 2 (Andon Labs): agent converts ~20 interior photos per apartment into a 2D floor plan, 50 apartments in sequence with a persistent notepad; connectivity-similarity composite (Jaccard 50 %, degree 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %, D4-invariant) normalised to random baseline 0 / perfect 1; the page states no reasoning setting; source row: {\"cells\":[\"17\",\"Claude Sonnet 5\",\"0.249\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:20f6fb71c8d4d1d7c8b53245",
+      "benchmark_id": "blueprint-bench::2",
+      "subject": {
+        "source_id": "Claude Opus 4.7",
+        "name": "Claude Opus 4.7",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.245,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://andonlabs.com/evals/blueprint-bench-2",
+        "retrieved_at": "2026-09-21T17:34:30.150578+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-blueprint-bench-2/f1ae172f38a9a3246282.gz",
+        "sha256": "f1ae172f38a9a3246282d938b51c3d61ac548a66ca932adf368e036338bf8d83",
+        "locator": "html_table; source row 18; Claude Opus 4.7; field value"
+      },
+      "protocol": "Blueprint-Bench 2 (Andon Labs): agent converts ~20 interior photos per apartment into a 2D floor plan, 50 apartments in sequence with a persistent notepad; connectivity-similarity composite (Jaccard 50 %, degree 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %, D4-invariant) normalised to random baseline 0 / perfect 1; the page states no reasoning setting; source row: {\"cells\":[\"18\",\"Claude Opus 4.7\",\"0.245\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:7f7e9afb85a532530522056d",
+      "benchmark_id": "blueprint-bench::2",
+      "subject": {
+        "source_id": "GPT-5.6 Luna",
+        "name": "GPT-5.6 Luna",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.226,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://andonlabs.com/evals/blueprint-bench-2",
+        "retrieved_at": "2026-09-21T17:34:30.150578+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-blueprint-bench-2/f1ae172f38a9a3246282.gz",
+        "sha256": "f1ae172f38a9a3246282d938b51c3d61ac548a66ca932adf368e036338bf8d83",
+        "locator": "html_table; source row 19; GPT-5.6 Luna; field value"
+      },
+      "protocol": "Blueprint-Bench 2 (Andon Labs): agent converts ~20 interior photos per apartment into a 2D floor plan, 50 apartments in sequence with a persistent notepad; connectivity-similarity composite (Jaccard 50 %, degree 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %, D4-invariant) normalised to random baseline 0 / perfect 1; the page states no reasoning setting; source row: {\"cells\":[\"19\",\"GPT-5.6 Luna\",\"0.226\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:0ce1e427ddf2bbf883948f5b",
+      "benchmark_id": "blueprint-bench::2",
+      "subject": {
+        "source_id": "Claude Opus 4.8",
+        "name": "Claude Opus 4.8",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.145,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://andonlabs.com/evals/blueprint-bench-2",
+        "retrieved_at": "2026-09-21T17:34:30.150578+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-blueprint-bench-2/f1ae172f38a9a3246282.gz",
+        "sha256": "f1ae172f38a9a3246282d938b51c3d61ac548a66ca932adf368e036338bf8d83",
+        "locator": "html_table; source row 20; Claude Opus 4.8; field value"
+      },
+      "protocol": "Blueprint-Bench 2 (Andon Labs): agent converts ~20 interior photos per apartment into a 2D floor plan, 50 apartments in sequence with a persistent notepad; connectivity-similarity composite (Jaccard 50 %, degree 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %, D4-invariant) normalised to random baseline 0 / perfect 1; the page states no reasoning setting; source row: {\"cells\":[\"20\",\"Claude Opus 4.8\",\"0.145\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:f75ec3e872f56b50d31a7516",
+      "benchmark_id": "blueprint-bench::2",
+      "subject": {
+        "source_id": "Claude Sonnet 4.6",
+        "name": "Claude Sonnet 4.6",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.067,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://andonlabs.com/evals/blueprint-bench-2",
+        "retrieved_at": "2026-09-21T17:34:30.150578+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-blueprint-bench-2/f1ae172f38a9a3246282.gz",
+        "sha256": "f1ae172f38a9a3246282d938b51c3d61ac548a66ca932adf368e036338bf8d83",
+        "locator": "html_table; source row 21; Claude Sonnet 4.6; field value"
+      },
+      "protocol": "Blueprint-Bench 2 (Andon Labs): agent converts ~20 interior photos per apartment into a 2D floor plan, 50 apartments in sequence with a persistent notepad; connectivity-similarity composite (Jaccard 50 %, degree 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %, D4-invariant) normalised to random baseline 0 / perfect 1; the page states no reasoning setting; source row: {\"cells\":[\"21\",\"Claude Sonnet 4.6\",\"0.067\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:c0aa301171e7f9923a009261",
+      "benchmark_id": "blueprint-bench::2",
+      "subject": {
+        "source_id": "Kimi K2.6",
+        "name": "Kimi K2.6",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.039,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://andonlabs.com/evals/blueprint-bench-2",
+        "retrieved_at": "2026-09-21T17:34:30.150578+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-blueprint-bench-2/f1ae172f38a9a3246282.gz",
+        "sha256": "f1ae172f38a9a3246282d938b51c3d61ac548a66ca932adf368e036338bf8d83",
+        "locator": "html_table; source row 22; Kimi K2.6; field value"
+      },
+      "protocol": "Blueprint-Bench 2 (Andon Labs): agent converts ~20 interior photos per apartment into a 2D floor plan, 50 apartments in sequence with a persistent notepad; connectivity-similarity composite (Jaccard 50 %, degree 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %, D4-invariant) normalised to random baseline 0 / perfect 1; the page states no reasoning setting; source row: {\"cells\":[\"22\",\"Kimi K2.6\",\"0.039\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:79ea654b79d413cc6f357799",
+      "benchmark_id": "blueprint-bench::2",
+      "subject": {
+        "source_id": "Gemini 3 Flash",
+        "name": "Gemini 3 Flash",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.0,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://andonlabs.com/evals/blueprint-bench-2",
+        "retrieved_at": "2026-09-21T17:34:30.150578+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-blueprint-bench-2/f1ae172f38a9a3246282.gz",
+        "sha256": "f1ae172f38a9a3246282d938b51c3d61ac548a66ca932adf368e036338bf8d83",
+        "locator": "html_table; source row 23; Gemini 3 Flash; field value"
+      },
+      "protocol": "Blueprint-Bench 2 (Andon Labs): agent converts ~20 interior photos per apartment into a 2D floor plan, 50 apartments in sequence with a persistent notepad; connectivity-similarity composite (Jaccard 50 %, degree 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %, D4-invariant) normalised to random baseline 0 / perfect 1; the page states no reasoning setting; source row: {\"cells\":[\"23\",\"Gemini 3 Flash\",\"0.000\"],\"configuration\":null,\"value_column\":2,\"marker\":\"at or below the random baseline (printed as 0.000**)\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:b3e400c7b489b660d91cafdf",
+      "benchmark_id": "blueprint-bench::2",
+      "subject": {
+        "source_id": "Grok 4.3",
+        "name": "Grok 4.3",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.0,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://andonlabs.com/evals/blueprint-bench-2",
+        "retrieved_at": "2026-09-21T17:34:30.150578+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-blueprint-bench-2/f1ae172f38a9a3246282.gz",
+        "sha256": "f1ae172f38a9a3246282d938b51c3d61ac548a66ca932adf368e036338bf8d83",
+        "locator": "html_table; source row 24; Grok 4.3; field value"
+      },
+      "protocol": "Blueprint-Bench 2 (Andon Labs): agent converts ~20 interior photos per apartment into a 2D floor plan, 50 apartments in sequence with a persistent notepad; connectivity-similarity composite (Jaccard 50 %, degree 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %, D4-invariant) normalised to random baseline 0 / perfect 1; the page states no reasoning setting; source row: {\"cells\":[\"24\",\"Grok 4.3\",\"0.000\"],\"configuration\":null,\"value_column\":2,\"marker\":\"at or below the random baseline (printed as 0.000**)\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:7608a1c53e43a40d10a72066",
+      "benchmark_id": "blueprint-bench::2",
+      "subject": {
+        "source_id": "Gemini Robotics-ER 1.6",
+        "name": "Gemini Robotics-ER 1.6",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.0,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://andonlabs.com/evals/blueprint-bench-2",
+        "retrieved_at": "2026-09-21T17:34:30.150578+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-blueprint-bench-2/f1ae172f38a9a3246282.gz",
+        "sha256": "f1ae172f38a9a3246282d938b51c3d61ac548a66ca932adf368e036338bf8d83",
+        "locator": "html_table; source row 25; Gemini Robotics-ER 1.6; field value"
+      },
+      "protocol": "Blueprint-Bench 2 (Andon Labs): agent converts ~20 interior photos per apartment into a 2D floor plan, 50 apartments in sequence with a persistent notepad; connectivity-similarity composite (Jaccard 50 %, degree 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %, D4-invariant) normalised to random baseline 0 / perfect 1; the page states no reasoning setting; source row: {\"cells\":[\"25\",\"Gemini Robotics-ER 1.6\",\"0.000\"],\"configuration\":null,\"value_column\":2,\"marker\":\"at or below the random baseline (printed as 0.000**)\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:2dc82061aebb515d1bc1c41c",
+      "benchmark_id": "blueprint-bench::2",
+      "subject": {
+        "source_id": "Claude Haiku 4.5",
+        "name": "Claude Haiku 4.5",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.0,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://andonlabs.com/evals/blueprint-bench-2",
+        "retrieved_at": "2026-09-21T17:34:30.150578+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-blueprint-bench-2/f1ae172f38a9a3246282.gz",
+        "sha256": "f1ae172f38a9a3246282d938b51c3d61ac548a66ca932adf368e036338bf8d83",
+        "locator": "html_table; source row 26; Claude Haiku 4.5; field value"
+      },
+      "protocol": "Blueprint-Bench 2 (Andon Labs): agent converts ~20 interior photos per apartment into a 2D floor plan, 50 apartments in sequence with a persistent notepad; connectivity-similarity composite (Jaccard 50 %, degree 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %, D4-invariant) normalised to random baseline 0 / perfect 1; the page states no reasoning setting; source row: {\"cells\":[\"26\",\"Claude Haiku 4.5\",\"0.000\"],\"configuration\":null,\"value_column\":2,\"marker\":\"at or below the random baseline (printed as 0.000**)\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:f7283ea1be47a99c2dfd5f4d",
+      "benchmark_id": "blueprint-bench::2",
+      "subject": {
+        "source_id": "Grok 4.20 Reasoning",
+        "name": "Grok 4.20 Reasoning",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.0,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://andonlabs.com/evals/blueprint-bench-2",
+        "retrieved_at": "2026-09-21T17:34:30.150578+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-blueprint-bench-2/f1ae172f38a9a3246282.gz",
+        "sha256": "f1ae172f38a9a3246282d938b51c3d61ac548a66ca932adf368e036338bf8d83",
+        "locator": "html_table; source row 27; Grok 4.20 Reasoning; field value"
+      },
+      "protocol": "Blueprint-Bench 2 (Andon Labs): agent converts ~20 interior photos per apartment into a 2D floor plan, 50 apartments in sequence with a persistent notepad; connectivity-similarity composite (Jaccard 50 %, degree 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %, D4-invariant) normalised to random baseline 0 / perfect 1; the page states no reasoning setting; source row: {\"cells\":[\"27\",\"Grok 4.20 Reasoning\",\"0.000\"],\"configuration\":null,\"value_column\":2,\"marker\":\"at or below the random baseline (printed as 0.000**)\"}",
+      "comparison_key": null
     }
   ],
   "collections": [
@@ -271950,6 +272574,12 @@
       "status": "collected",
       "source_url": "https://contextarena.ai/api/needle-summary?needles=8",
       "reason": "183 source results parsed; configurations remain separate; unmatched model identities are retained."
+    },
+    {
+      "benchmark_id": "blueprint-bench::2",
+      "status": "collected",
+      "source_url": "https://andonlabs.com/evals/blueprint-bench-2",
+      "reason": "26 source results parsed; configurations remain separate; unmatched model identities are retained."
     }
   ],
   "rejected": [

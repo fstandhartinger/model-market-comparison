@@ -315,6 +315,10 @@
     "context-arena-mrcr-v2": {
       "tier": "secondary",
       "reason": "Synthetic long-context retrieval task on Google DeepMind's public MRCR v2 dataset, run by one independent maintainer; it measures a context-length trait rather than task skill, and our self-reported corpus holds no MRCR row, so it is not evidenced as a board labs quote in release material."
+    },
+    "blueprint-bench": {
+      "tier": "secondary",
+      "reason": "Andon Labs runs every model itself on 50 apartments whose photos and floor plans it does not say are public or private; the page states neither a public task set nor a held-out split, and our self-reported corpus holds no Blueprint-Bench row, so it is not evidenced as a board labs quote in release material."
     }
   }
 }

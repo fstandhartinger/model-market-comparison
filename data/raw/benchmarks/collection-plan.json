@@ -4787,6 +4787,62 @@
         "https://contextarena.ai/api/needle-summary?needles=8",
         "https://github.com/google-deepmind/eval_hub/blob/master/eval_hub/mrcr_v2/README.md"
       ]
+    },
+    {
+      "benchmark_id": "blueprint-bench::2",
+      "parser": {
+        "kind": "html_table",
+        "table_index": 0,
+        "name_field": "name",
+        "value_field": "value",
+        "name_column": 1,
+        "value_column": 2,
+        "width": 3,
+        "header_contains": [
+          "Model",
+          "Score"
+        ],
+        "header_rows": 1,
+        "unique_names": true,
+        "skip_field": "name",
+        "skip_values": [
+          "Human*"
+        ],
+        "value_markers": {
+          "**": "at or below the random baseline (printed as 0.000**)"
+        },
+        "require_text": [
+          "Blueprint-Bench 2 tests spatial reasoning by asking AI agents to convert apartment photographs into accurate 2D floor plans",
+          "Each agent processes 50 apartments sequentially",
+          "All scores are normalized so that the random baseline maps to 0 and a perfect score maps to 1",
+          "Jaccard similarity (50%)",
+          "Score at or below the random baseline",
+          "Human baseline tested on subset of 12 apartments only"
+        ]
+      },
+      "status": "collected",
+      "reason": "Andon Labs' Blueprint-Bench 2 leaderboard table (server-rendered HTML). Every model row is ingested with its published 0–1 score; the human baseline is skipped.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-blueprint-bench-2; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "HTML table",
+        "locator": "The 'Leaderboard' table on the Blueprint-Bench 2 page (server-rendered, the page's only <table>): rank, model name, score (0–1). The 'Human*' baseline row is skipped; a score ending in ** is at or below the random baseline and is kept with that marker.",
+        "version_guard": "The page must still describe Blueprint-Bench 2 (50 apartments processed sequentially, ~20 photos each, 2D floor plans), the normalisation (random baseline 0, perfect 1), the scoring weights (Jaccard similarity 50 %) and both footnotes (** at or below the random baseline; * human baseline on 12 apartments); the table header must read Model / Score, three cells per row, one row per model. Another version, apartment set or scoring is a new identity, never a silent update of this one.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. One capture per day."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "The page must still describe Blueprint-Bench 2 (50 apartments processed sequentially, ~20 photos each, 2D floor plans), the normalisation (random baseline 0, perfect 1), the scoring weights (Jaccard similarity 50 %) and both footnotes (** at or below the random baseline; * human baseline on 12 apartments); the table header must read Model / Score, three cells per row, one row per model. Another version, apartment set or scoring is a new identity, never a silent update of this one.",
+      "source": {
+        "url": "https://andonlabs.com/evals/blueprint-bench-2",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-blueprint-bench-2/f1ae172f38a9a3246282.gz",
+        "sha256": "f1ae172f38a9a3246282d938b51c3d61ac548a66ca932adf368e036338bf8d83",
+        "fetched_at": "2026-09-21T17:34:30.150578+00:00"
+      },
+      "protocol": "Blueprint-Bench 2 (Andon Labs): agent converts ~20 interior photos per apartment into a 2D floor plan, 50 apartments in sequence with a persistent notepad; connectivity-similarity composite (Jaccard 50 %, degree 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %, D4-invariant) normalised to random baseline 0 / perfect 1; the page states no reasoning setting",
+      "basis": "measured",
+      "minimum_rows": 20,
+      "source_urls": [
+        "https://andonlabs.com/evals/blueprint-bench-2"
+      ]
     }
   ]
 }

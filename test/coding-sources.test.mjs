@@ -30,6 +30,9 @@ const SLUG_BOARDS = ['osworld-2', 'swe-rebench', 'gso', 'hyper-tau-bench', 'lisa
   // 2026-09-21 (iteration 154, CR-37.1): Context Arena MRCR v2, OpenRouter-style slugs with the reasoning
   // mode the run used (lib/board-identity.mjs parseContextArenaId).
   'context-arena-mrcr-v2',
+  // 2026-09-21 (iteration 155, CR-37.1): Andon Labs' Blueprint-Bench 2, product names with no setting
+  // (lib/board-identity.mjs parseBlueprintBenchLabel).
+  'blueprint-bench',
   // 2026-09-19 (iteration 115, CR-54.2): six boards from Epoch AI's Benchmarking Hub ZIP, slug labels joined by
   // the same lib/coding-identity.mjs parseDeepSweId rule as DeepSWE/SimpleQA Verified. math_level_5 and
   // frontiermath_erdos stay excluded; recorded in data/raw/benchmarks/epoch-hub-decisions.json.

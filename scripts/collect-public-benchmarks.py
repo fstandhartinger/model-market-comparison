@@ -91,11 +91,22 @@ def parse(source,spec,load_source):
     elif kind=='html_table':
         p=Tables();p.feed(source);table=p.tables[spec['table_index']]
         if not table or not all(word in text(' '.join(' '.join(c) for c in table[0])) for word in spec['header_contains']):raise ValueError('HTML header/version changed')
+        # Opt-in page guards (2026-09-21, Blueprint-Bench 2): statements the page must still make (task, scale,
+        # footnotes), and value-cell markers the page defines, kept per row because text() strips `**`.
+        page=text(source)
+        for phrase in spec.get('require_text',[]):
+            if phrase not in page:raise ValueError('Page statement changed: '+phrase[:80])
+        markers=spec.get('value_markers',{})
         for index,r in enumerate(table[spec.get('header_rows',1):],spec.get('header_rows',1)):
             cells=[text(' '.join(c)) for c in r]
             if len(cells)!=spec['width']:continue # Detail/footnote rows have a distinct width.
             for column,label in spec.get('value_columns',[[spec['value_column'],None]]):
-                rows.append({'name':cells[spec['name_column']],'value':cells[column], 'source_row':index,'context':{'cells':cells,'configuration':label,'value_column':column}})
+                raw=' '.join(' '.join(r[column]).split())
+                marked=[meaning for marker,meaning in markers.items() if raw.endswith(marker) and not raw.endswith('*'+marker)]
+                rows.append({'name':cells[spec['name_column']],'value':cells[column], 'source_row':index,'context':{'cells':cells,'configuration':label,'value_column':column,**({'marker':marked[0]} if marked else {})}})
+        if spec.get('unique_names'):
+            names=[row['name'] for row in rows]
+            if len(set(names))!=len(names):raise ValueError('Duplicate model rows in HTML table')
     elif kind=='astro_props':
         # Astro serialises island props as [type, value] pairs; only plain values (0) and arrays (1) are decoded.
         islands=[m.group(0) for m in re.finditer(r'<astro-island\b[^>]*>',source) if spec['component'] in m.group(0)]
