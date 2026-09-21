@@ -91,6 +91,15 @@ button:disabled, select:disabled { cursor: not-allowed; opacity: .55; }
 .bh-matrix-tag[data-tag="aa"], .bh-matrix-tag[data-tag="arena"] { border-color: rgb(var(--accent2) / .45); color: rgb(var(--accent2)); }
 /* F-122: the legend prints the tip beside the pill, so the sample pill is not a hover affordance. */
 .bh-matrix-tag[data-bh-legend-sample] { cursor: default; }
+/* CR-63.21: on phone only, a row with 3+ chips shows two plus a "+N" toggle; every chip stays
+   reachable by opening the toggle. On desktop the toggle hides and all chips stay inline — the
+   place the tags are explained remains the collapsed legend below the table. */
+.bh-matrix-tagcap { display: none; border: 1px dashed rgb(var(--line)); border-radius: 999px; padding: 0 7px; font-size: 10px; font-weight: 650; line-height: 16px; letter-spacing: .02em; color: var(--muted); background: none; cursor: pointer; }
+.bh-matrix-tagcap-extra { display: contents; }
+@media (max-width: 639.98px) {
+  .bh-matrix-tagcap { display: inline-block; }
+  .bh-matrix-tagcap-extra:not([data-open]) { display: none; }
+}
 .bh-matrix-cell { position: relative; height: 1px; padding: 0; vertical-align: middle; }
 .bh-matrix-link { position: relative; display: flex; height: 100%; min-height: 44px; align-items: center; justify-content: flex-end; padding: 8px 12px; color: var(--text); text-decoration: none; }
 .bh-matrix-link:hover { background: rgb(var(--accent) / .07); }

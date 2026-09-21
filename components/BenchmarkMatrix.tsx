@@ -30,6 +30,24 @@ function Tag({ id, tags, row }: { id: string; tags: Matrix["tags"]; row: MatrixR
   return <span className="bh-matrix-tag" data-tag={id} title={tip}>{t.label}<span className="sr-only">: {tip}</span></span>;
 }
 
+/** CR-63.21: on phone a row with three or four chips grew several lines tall. Two chips show, the
+    rest sit behind a "+N" toggle that names and reveals them; on desktop every chip stays inline. */
+const MATRIX_TAG_CAP = 2;
+function RowTags({ tags, row }: { tags: Matrix["tags"]; row: MatrixRow }) {
+  const [open, setOpen] = useState(false);
+  const ids = row.tags;
+  if (ids.length <= MATRIX_TAG_CAP) return <>{ids.map((t) => <Tag key={t} id={t} tags={tags} row={row} />)}</>;
+  const extra = ids.slice(MATRIX_TAG_CAP);
+  const extraNames = extra.map((t) => tags[t]?.label ?? t).join(", ");
+  return <>
+    {ids.slice(0, MATRIX_TAG_CAP).map((t) => <Tag key={t} id={t} tags={tags} row={row} />)}
+    <button type="button" className="bh-matrix-tagcap" aria-expanded={open}
+      title={open ? "Show fewer tags" : `Show ${extra.length} more tags: ${extraNames}`}
+      onClick={() => setOpen((v) => !v)}>{open ? "less" : `+${extra.length}`}</button>
+    <span className="bh-matrix-tagcap-extra" data-open={open || undefined}>{extra.map((t) => <Tag key={t} id={t} tags={tags} row={row} />)}</span>
+  </>;
+}
+
 /** CR-3.1: the custom row checklist — one toggle per category, and the benchmarks inside it. */
 function RowPicker({ rows, groups, selected, selectedBoards, onChange, open, onToggle }: { rows: MatrixRow[]; groups: Matrix["groups"]; selected: Set<string>; selectedBoards: number; onChange: (keys: string[]) => void; open: boolean; onToggle: (e: React.SyntheticEvent<HTMLDetailsElement>) => void }) {
   const set = (keys: string[], on: boolean) => { const n = new Set(selected); keys.forEach((k) => on ? n.add(k) : n.delete(k)); onChange([...n]); };
@@ -242,7 +260,7 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
               return <tr key={row.id}>
                 <th scope="row" className="bh-matrix-stub">
                   {/* F-100 (pass 18): the harness sits on the name line, so two rows of one benchmark read apart at a glance. */}
-                  <span className="bh-matrix-bench">{row.name}{row.cohort && <span className="bh-matrix-cohort">{row.cohort}</span>}{row.tags.map((t) => <Tag key={t} id={t} tags={matrix.tags} row={row} />)}</span>
+                  <span className="bh-matrix-bench">{row.name}{row.cohort && <span className="bh-matrix-cohort">{row.cohort}</span>}<RowTags tags={matrix.tags} row={row} /></span>
                   {/* F-98 / CR-38.2 + F-100: a stated task window is the one line worth a row of its own; the version and the
                       date the results were read are on hover here, on the (i) of the Simple table and on the result page. */}
                   {/* F-105 (pass 19): a best-of row's name-line tag already names its versions and agents, so the "Version …"

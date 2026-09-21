@@ -224,6 +224,16 @@ test('CR-63.6: small values keep one decimal count; formatNative names Elo and m
   assert.equal(formatNative(null, 'Elo'), '—');
 });
 
+test('CR-63.21: phone rows cap visible chips at two behind a "+N" toggle; every chip stays reachable', () => {
+  const tsx = readFileSync(new URL('../components/BenchmarkMatrix.tsx', import.meta.url), 'utf8');
+  assert.match(tsx, /const MATRIX_TAG_CAP = 2;/, 'the visible-chip cap is two');
+  assert.match(tsx, /className="bh-matrix-tagcap" aria-expanded=\{open\}/, 'the toggle is a stateful aria-expanded button');
+  assert.match(tsx, /title=\{open \? "Show fewer tags" : `Show \$\{extra\.length\} more tags: \$\{extraNames\}`\}/, 'the toggle names the hidden chips');
+  assert.match(tsx, /<RowTags tags=\{matrix\.tags\} row=\{row\} \/>/, 'the bench cell renders through the capped component');
+  const css = readFileSync(new URL('../app/globals.css', import.meta.url), 'utf8');
+  assert.match(css, /@media \(max-width: 639\.98px\) \{\s*\.bh-matrix-tagcap \{ display: inline-block; \}\s*\.bh-matrix-tagcap-extra:not\(\[data-open\]\) \{ display: none; \}/, 'the phone media query hides extra chips until opened, desktop shows everything');
+});
+
 test('CR-65.15: the DesignArena frontend board is labelled Web Apps (agentic) and links its exact board', async () => {
   const { readFile } = await import('node:fs/promises');
   const files = ['lib/types.ts', 'lib/client-model.ts', 'lib/benchmark-view.mjs', 'lib/headline-history.mjs', 'lib/score-label.ts', 'components/CompareView.tsx', 'components/ModelExplorer.tsx', 'components/CompositeNote.tsx', 'app/about/page.tsx'];
