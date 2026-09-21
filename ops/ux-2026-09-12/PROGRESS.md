@@ -6385,7 +6385,7 @@ Gates: focused tests 19/19 (registry, lifecycle pin updated for the 8 arxivmath 
 
 | ID | Requirement (short) | Status | Evidence | Notes |
 |---|---|---|---|---|
-| CR-112.1–112.5 | Pin v1.2.11, correct djev's open/self-hostable provenance, preserve all measurements, verify both hosts | implemented | `ops/ux-2026-09-12/jevbench/v1.2.11/`; `ops/ux-2026-09-12/bin/verify-cr-112.mjs` | `Davipar/djev-dev` is David Villalón's Apache-2.0 runtime for Maisa's djev over Google's Apache-2.0 DiffusionGemma checkpoint; no separate djev weights. `djev-spark` is an alternate DiffusionGemma structured-read runtime. All scores/ranks/outcomes unchanged. Live verification pending deployment. |
+| CR-112.1–112.5 | Pin v1.2.11, correct djev's open/self-hostable provenance, preserve all measurements, verify both hosts | verified | `ops/ux-2026-09-12/jevbench/v1.2.11/`; `ops/ux-2026-09-12/bin/verify-cr-112.mjs`; `/opt/benchmarkheaven/state/ux-evidence/djev-cr112-20260921/` | `Davipar/djev-dev` is David Villalón's Apache-2.0 runtime for Maisa's djev over Google's Apache-2.0 DiffusionGemma checkpoint; no separate djev weights. `djev-spark` is an alternate DiffusionGemma structured-read runtime. All scores/ranks/outcomes unchanged. Live at `0337d36`; verifier 9/9 on each production host. |
 
 
 ## Iteration 150 — 2026-09-21 ~12:40 → ~14:25 UTC (claude-opus, work): daily arm blockers — MathArena withdrawal, AA re-quote dry run
