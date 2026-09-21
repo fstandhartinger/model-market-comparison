@@ -11,6 +11,7 @@ import { reviewArtifact, batchRows, sha256, defaultRunner } from './gauntlet.mjs
 import { mapWithConcurrency, dailyConcurrency } from './concurrency.mjs';
 import { openReuseCache, unitFingerprint, reuseProvenance } from './reuse-cache.mjs';
 import { reconcilePublicIdentities } from './public-identities.mjs';
+import { aaMappingApplies } from '../../lib/benchmark-registry.mjs';
 const exec = promisify(execFile);
 const root = 'data/raw/benchmarks';
 const json = async (p) => JSON.parse(await readFile(p, 'utf8'));
@@ -186,7 +187,9 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
     const changed = next.rows.filter((r) => !equal(r, old.get(r.source_id)));
     if (changed.length) {
       const fields = new Set(changed.flatMap((r) => Object.keys(r.fields).filter((key) => !equal(r.fields[key], old.get(r.source_id)?.fields[key]))));
-      const affected = registry.aa_field_map.filter((m) => fields.has(m.field.split('.')[0]));
+      // Only the identity whose window holds this snapshot is reviewed; a retained predecessor of a
+      // re-versioned field (its passage gone from AA's page) never reads the new snapshot.
+      const affected = registry.aa_field_map.filter((m) => fields.has(m.field.split('.')[0]) && aaMappingApplies(m, next.collected_at));
       for (const mapping of affected) await protocol(registry.entries.find((e) => e.id === mapping.benchmark_id));
       const records = flightRecords(html), native = new Map();
       const resolveAll = (v) => { v = resolveFlight(v, records); return Array.isArray(v) ? v.map(resolveAll) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, resolveAll(x)])) : v; };

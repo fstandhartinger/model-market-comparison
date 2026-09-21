@@ -141,16 +141,21 @@ test('the card\'s boards cannot move the Benchmaxxing signal', async () => {
   const evid = evidencedAxisMaps(view);
   const stats = computePairStats(maps);
   const scored = scoreBenchmaxxing(view, MODEL, { maps, evid, stats });
-  // What a vendor claim could move, if it leaked in, is this model's own two parts: the gap over its
-  // headline/held-out pairs and its own within-topic jaggedness. Both are pinned at the values 6357d9e
-  // produced, before any of these 19 rows existed, and neither has moved since.
-  assert.equal(scored.parts.gap, 6.385872583499426);
-  assert.equal(scored.parts.jaggedness, 17.082261541228107);
-  // The published score is the gap plus weight x (this model's jaggedness - the catalog mean). The mean is
-  // a catalog-wide constant, so it moves whenever any *other* model gains a measured board: 6357d9e's
-  // 7.6026927493156595 became 7.600814394428958 when MCP Atlas was ingested (2026-09-21, iteration 143,
-  // CR-30.2) and the catalog mean rose from 13.02619432184066 to 13.032455504796333. Re-pin with the
-  // reason when that happens; never with a changed tier.
-  assert.equal(scored.parts.jaggednessMean, 13.032455504796333);
-  assert.equal(scored.score, 7.600814394428958);
+  assert.equal(scored.status, 'scored');
+  // What a vendor claim could move, if it leaked in, is this model's own two parts (the gap over its
+  // headline/held-out pairs and its within-topic jaggedness) and the catalog mean. The property is tested
+  // directly: the same catalog without the card's rows scores this model identically, to the last bit.
+  // 2026-09-21 (iteration 144): this replaced exact pins (gap 6.385872583499426, jaggedness
+  // 17.082261541228107, mean 13.032455504796333, score 7.600814394428958 at 6b7eabb). Those pins encoded
+  // AA's 2026-09-10 field snapshot, which had been frozen for eleven days behind a methodology change;
+  // AA's refreshed fields legitimately move the gap (5.41 in a 2026-09-21 capture) and would have failed
+  // the daily publication on data that was not wrong.
+  const without = structuredClone(dataset);
+  without.benchmark_results.observations = without.benchmark_results.observations.filter((o) => o.source?.url !== CARD);
+  const bare = buildBenchmarkView(without);
+  const bareMaps = measuredAxisMaps(bare);
+  const reference = scoreBenchmaxxing(bare, MODEL, { maps: bareMaps, evid: evidencedAxisMaps(bare), stats: computePairStats(bareMaps) });
+  assert.ok(without.benchmark_results.observations.length < dataset.benchmark_results.observations.length, 'the card rows were present to remove');
+  for (const key of ['gap', 'jaggedness', 'jaggednessMean']) assert.equal(scored.parts[key], reference.parts[key], key);
+  assert.equal(scored.score, reference.score);
 });

@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { validateBenchmarkRegistry, benchmarkById } from '../lib/benchmark-registry.mjs';
+import { validateBenchmarkRegistry, benchmarkById, aaMappingApplies } from '../lib/benchmark-registry.mjs';
 import { parseAaBenchmarkFields, assertAaBenchmarkContinuity } from '../lib/aa-benchmark-fields.mjs';
 
 // Synthetic Flight data: demonstrates units/zero/null/reference and duplicate behavior.
@@ -77,4 +77,54 @@ test('Coding Agent legacy observation date and current source version remain iso
   assert.equal(current.version, '1.5');
   assert.equal(old.count, 68);
   assert.ok(current.rows.every((r) => r.components.some((c) => c.id === 'terminal-bench-v4')));
+});
+
+// 2026-09-21: AA re-fitted GDPval-AA (v2 → v2.1) and AA-Briefcase (→ v1.1) Elo under the same source fields and
+// changed GDP.pdf's document delivery. The old identity reads only the 2026-09-10 snapshot, the successor only
+// snapshots from 2026-09-21; nothing in between is attributed to either.
+test('AA re-versioned fields: one identity per collection window, never both, never overlapping', async () => {
+  const registry = validateBenchmarkRegistry(JSON.parse(await readFile(new URL('../data/raw/benchmarks/registry.json', import.meta.url))));
+  const pairs = [['gdpval', 'aa-gdpval::2', 'aa-gdpval::2.1'], ['briefcaseBreakdown.overall.elo', 'aa-briefcase::snapshot-2026-09-10', 'aa-briefcase::1.1'],
+    ['gdpPdfAllPass', 'aa-gdp-pdf::snapshot-2026-09-10', 'aa-gdp-pdf::snapshot-2026-09-21']];
+  for (const [field, oldId, newId] of pairs) {
+    const maps = registry.aa_field_map.filter((m) => m.field === field);
+    assert.deepEqual(maps.map((m) => m.benchmark_id).sort(), [oldId, newId].sort());
+    const reading = (at) => maps.filter((m) => aaMappingApplies(m, at)).map((m) => m.benchmark_id);
+    assert.deepEqual(reading('2026-09-10T21:47:16.627Z'), [oldId], `${field}: the retained snapshot`);
+    assert.deepEqual(reading('2026-09-21T05:20:00Z'), [newId], `${field}: the next daily snapshot`);
+    assert.deepEqual(reading('2026-09-15T00:00:00Z'), [], `${field}: an unreviewed in-between snapshot feeds neither`);
+    assert.equal(benchmarkById(registry, oldId).superseded_by, newId);
+    assert.equal(benchmarkById(registry, oldId).status, 'retained');
+  }
+  // Every other field keeps exactly one unbounded mapping.
+  for (const m of registry.aa_field_map.filter((x) => !pairs.some(([f]) => f === x.field))) {
+    assert.equal(m.collected_from ?? m.collected_until, undefined, m.field);
+    assert.equal(registry.aa_field_map.filter((x) => x.field === m.field).length, 1, m.field);
+  }
+  const overlap = structuredClone(registry);
+  delete overlap.aa_field_map.find((m) => m.benchmark_id === 'aa-gdpval::2.1').collected_from;
+  assert.throws(() => validateBenchmarkRegistry(overlap), /overlapping AA field mapping gdpval/);
+  const duplicate = structuredClone(registry);
+  duplicate.aa_field_map.push({ ...duplicate.aa_field_map.find((m) => m.field === 'hle') });
+  assert.throws(() => validateBenchmarkRegistry(duplicate), /overlapping AA field mapping hle/);
+  const badDate = structuredClone(registry);
+  badDate.aa_field_map.find((m) => m.benchmark_id === 'aa-gdpval::2').collected_until = 'soon';
+  assert.throws(() => validateBenchmarkRegistry(badDate), /window gdpval/);
+  assert.throws(() => aaMappingApplies({ field: 'x' }, 'not a date'), /collection time/);
+});
+
+test('AA methodology evidence: every active AA identity quotes a passage present in the 2026-09-21 capture', async () => {
+  const { execFileSync } = await import('node:child_process');
+  const registry = JSON.parse(await readFile(new URL('../data/raw/benchmarks/registry.json', import.meta.url)));
+  const url = 'https://artificialanalysis.ai/methodology/intelligence-benchmarking';
+  const file = 'data/raw/benchmarks/daily-evidence/2026-09-21-aa-methodology/dc576b98ac473011f36a.gz';
+  const text = execFileSync('python3', ['ops/daily/public-candidate.py', 'text', file], { maxBuffer: 64_000_000 }).toString().replace(/\s+/g, ' ');
+  const mapped = new Set(registry.aa_field_map.filter((m) => aaMappingApplies(m, '2026-09-21T05:20:00Z')).map((m) => m.benchmark_id));
+  let checked = 0;
+  for (const e of registry.entries.filter((x) => mapped.has(x.id))) for (const s of e.evidence) {
+    if (s.url !== url || s.source_sha256) continue;
+    assert.ok(text.includes(s.excerpt.replace(/\s+/g, ' ').trim()), `${e.id}: excerpt not verbatim in today's methodology page`);
+    checked++;
+  }
+  assert.ok(checked >= 24, `only ${checked} excerpts checked`);
 });

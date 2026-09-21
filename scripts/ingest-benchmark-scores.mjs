@@ -8,6 +8,7 @@ import { validateBenchmarkScores, withholdConflictingSourceRows } from '../lib/b
 import { verifyScoreEvidence } from '../lib/benchmark-score-evidence.mjs';
 import { parseRealSwe, buildRealSweSnapshot } from '../lib/realswe.mjs';
 import { buildOpenRouterBenchmarkObservations, BENCHMARK_IDS as OPENROUTER_BENCHMARKS } from '../lib/openrouter-benchmark-scores.mjs';
+import { aaMappingApplies } from '../lib/benchmark-registry.mjs';
 const read = async (p) => JSON.parse(await readFile(p, 'utf8'));
 const hash = (s) => createHash('sha256').update(s).digest('hex');
 const registry = await read('data/raw/benchmarks/registry.json');
@@ -40,6 +41,15 @@ const preserveSourceIdentity = new Set(registry.entries
   .map((e) => e.id));
 for (const mapping of registry.aa_field_map) {
   const entry = entryById.get(mapping.benchmark_id);
+  // A re-versioned field reads only the snapshots inside its identity's window; the other identity of
+  // the same field publishes nothing from this snapshot rather than a value on the wrong scale.
+  if (!aaMappingApplies(mapping, aa.collected_at)) {
+    const later = mapping.collected_from && Date.parse(aa.collected_at) < Date.parse(mapping.collected_from);
+    collections.push({ benchmark_id: entry.id, status: later ? 'manual_required' : 'not_published', source_url: aa.source_url,
+      reason: later ? `AA's current reviewed snapshot (collected ${aa.collected_at}) predates this version; its values arrive with the next reviewed AA snapshot.`
+        : `AA no longer publishes this version under field ${mapping.field}; the current snapshot (collected ${aa.collected_at}) belongs to ${entry.superseded_by}.` });
+    continue;
+  }
   const blocked = mapping.field === 'livecodebench';
   collections.push({ benchmark_id: entry.id, status: blocked ? 'contested' : 'collected', source_url: aa.source_url,
     reason: blocked ? 'Historical task date window is unverified; all values withheld.' : 'Exact AA UUID and field from the reviewed protocol snapshot; null does not prove whether AA ran the test.' });
