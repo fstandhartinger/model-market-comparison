@@ -57,3 +57,11 @@ test('the public-task grid head is pinned to its own scroll container', async ()
   assert.match(src, /data-bh-jev12-task-table/, 'the rule needs its hook on the table');
   assert.match(src, /max-h-\[38rem\] overflow-auto/, 'the head is only sticky because the grid scrolls in a bounded box');
 });
+
+test('CR-118: the "How the score works" panel states the v1.3.0 chance correction and the near-chance penalty', () => {
+  const li = src.match(/<li data-bh-jev12-intel-weights[\s\S]*?<\/li>/)?.[0] ?? '';
+  assert.match(li, /accuracy above chance/, 'Intelligence is no longer plain weighted accuracy');
+  assert.doesNotMatch(li, /— weighted accuracy/);
+  const formula = src.match(/<section [^>]*data-bh-jev12-formula>[\s\S]*?<\/section>/)?.[0] ?? '';
+  assert.match(formula, /data-bh-jev12-penalty>Below 50 Intelligence[^<]*\(Intelligence ÷ 50\)²/);
+});
