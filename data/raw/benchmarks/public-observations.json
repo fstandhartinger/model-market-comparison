@@ -261964,6 +261964,867 @@
           0.048791295454545455
         ]
       }
+    },
+    {
+      "id": "public:c7839f7fa273be09d6e42833",
+      "benchmark_id": "programbench::1",
+      "subject": {
+        "source_id": "claude-opus-5-xhigh",
+        "name": "Claude Opus 5 (xhigh)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-SWE-agent"
+      },
+      "value": 74.7,
+      "unit": "percent",
+      "basis": "derived",
+      "source": {
+        "url": "https://programbench.com/",
+        "retrieved_at": "2026-09-21T00:48:03.447305+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/7efa63c912e1ec18459e.gz",
+        "sha256": "7efa63c912e1ec18459e6d97b6842612ed7a6bed189ccf9db5f0313d81866ab7",
+        "locator": "programbench_board; source row 0; claude-opus-5-xhigh; field mean_score"
+      },
+      "protocol": "ProgramBench (Princeton & Meta, arXiv:2605.03546): the agent is dropped into an offline container with a compiled reference binary and its bundled documentation and must architect and implement a fresh codebase that reproduces the binary's externally observable behavior (wrapping the binary, reusing an existing implementation or obtaining the original source is disqualification); every board row runs the mini-SWE-agent baseline harness (6-hour wall time, 1000 steps, --network none); score = mean over the 200 benchmark instances of each instance's passed-test fraction (unattempted counts as 0); the board also publishes Resolved (fully solved), Almost (>=95% of tests), average cost/calls/output tokens per task and each row's publication date. Not a Composite input.; source row: {\"provider\":\"Anthropic\",\"slug\":\"claude-opus-5-xhigh\",\"score_fraction\":0.747,\"cost_per_task_usd\":50.53295,\"calls_per_task\":257,\"tokens_per_task\":357785,\"publication_date\":\"Jul 31, 2026\",\"tasks\":200,\"harness\":\"mini-SWE-agent\",\"update_stamp\":\"Updated Sep. 9, 2026\"}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.747
+        ]
+      },
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/facebookresearch/ProgramBench/main/src/programbench/submission.py",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/48d34c0f02f40e550bbc.gz",
+          "sha256": "48d34c0f02f40e550bbcd27a67dd6ce814d9f26badd912a977e048e2acba4c9e",
+          "retrieved_at": "2026-09-21T00:48:21.351718+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:0c668154994ef36e0b9267e4",
+      "benchmark_id": "programbench::1",
+      "subject": {
+        "source_id": "claude-opus-4-8-xhigh",
+        "name": "Claude Opus 4.8 (xhigh)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-SWE-agent"
+      },
+      "value": 70.9,
+      "unit": "percent",
+      "basis": "derived",
+      "source": {
+        "url": "https://programbench.com/",
+        "retrieved_at": "2026-09-21T00:48:03.447305+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/7efa63c912e1ec18459e.gz",
+        "sha256": "7efa63c912e1ec18459e6d97b6842612ed7a6bed189ccf9db5f0313d81866ab7",
+        "locator": "programbench_board; source row 1; claude-opus-4-8-xhigh; field mean_score"
+      },
+      "protocol": "ProgramBench (Princeton & Meta, arXiv:2605.03546): the agent is dropped into an offline container with a compiled reference binary and its bundled documentation and must architect and implement a fresh codebase that reproduces the binary's externally observable behavior (wrapping the binary, reusing an existing implementation or obtaining the original source is disqualification); every board row runs the mini-SWE-agent baseline harness (6-hour wall time, 1000 steps, --network none); score = mean over the 200 benchmark instances of each instance's passed-test fraction (unattempted counts as 0); the board also publishes Resolved (fully solved), Almost (>=95% of tests), average cost/calls/output tokens per task and each row's publication date. Not a Composite input.; source row: {\"provider\":\"Anthropic\",\"slug\":\"claude-opus-4-8-xhigh\",\"score_fraction\":0.7090000000000001,\"cost_per_task_usd\":21.02445,\"calls_per_task\":145,\"tokens_per_task\":270298,\"publication_date\":\"Jul 17, 2026\",\"tasks\":200,\"harness\":\"mini-SWE-agent\",\"update_stamp\":\"Updated Sep. 9, 2026\"}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.7090000000000001
+        ]
+      },
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/facebookresearch/ProgramBench/main/src/programbench/submission.py",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/48d34c0f02f40e550bbc.gz",
+          "sha256": "48d34c0f02f40e550bbcd27a67dd6ce814d9f26badd912a977e048e2acba4c9e",
+          "retrieved_at": "2026-09-21T00:48:21.351718+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:618ceda832dfa1ddb398f076",
+      "benchmark_id": "programbench::1",
+      "subject": {
+        "source_id": "gpt-5-6-sol-xhigh",
+        "name": "GPT-5.6 Sol (xhigh)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-SWE-agent"
+      },
+      "value": 69.9,
+      "unit": "percent",
+      "basis": "derived",
+      "source": {
+        "url": "https://programbench.com/",
+        "retrieved_at": "2026-09-21T00:48:03.447305+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/7efa63c912e1ec18459e.gz",
+        "sha256": "7efa63c912e1ec18459e6d97b6842612ed7a6bed189ccf9db5f0313d81866ab7",
+        "locator": "programbench_board; source row 2; gpt-5-6-sol-xhigh; field mean_score"
+      },
+      "protocol": "ProgramBench (Princeton & Meta, arXiv:2605.03546): the agent is dropped into an offline container with a compiled reference binary and its bundled documentation and must architect and implement a fresh codebase that reproduces the binary's externally observable behavior (wrapping the binary, reusing an existing implementation or obtaining the original source is disqualification); every board row runs the mini-SWE-agent baseline harness (6-hour wall time, 1000 steps, --network none); score = mean over the 200 benchmark instances of each instance's passed-test fraction (unattempted counts as 0); the board also publishes Resolved (fully solved), Almost (>=95% of tests), average cost/calls/output tokens per task and each row's publication date. Not a Composite input.; source row: {\"provider\":\"OpenAI\",\"slug\":\"gpt-5-6-sol-xhigh\",\"score_fraction\":0.6990000000000001,\"cost_per_task_usd\":6.080299999999999,\"calls_per_task\":42,\"tokens_per_task\":56179,\"publication_date\":\"Aug 2, 2026\",\"tasks\":200,\"harness\":\"mini-SWE-agent\",\"update_stamp\":\"Updated Sep. 9, 2026\"}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.6990000000000001
+        ]
+      },
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/facebookresearch/ProgramBench/main/src/programbench/submission.py",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/48d34c0f02f40e550bbc.gz",
+          "sha256": "48d34c0f02f40e550bbcd27a67dd6ce814d9f26badd912a977e048e2acba4c9e",
+          "retrieved_at": "2026-09-21T00:48:21.351718+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:98548841494c9557b1c22c0e",
+      "benchmark_id": "programbench::1",
+      "subject": {
+        "source_id": "gpt-5-5-xhigh",
+        "name": "GPT 5.5 (xhigh)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-SWE-agent"
+      },
+      "value": 69.5,
+      "unit": "percent",
+      "basis": "derived",
+      "source": {
+        "url": "https://programbench.com/",
+        "retrieved_at": "2026-09-21T00:48:03.447305+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/7efa63c912e1ec18459e.gz",
+        "sha256": "7efa63c912e1ec18459e6d97b6842612ed7a6bed189ccf9db5f0313d81866ab7",
+        "locator": "programbench_board; source row 3; gpt-5-5-xhigh; field mean_score"
+      },
+      "protocol": "ProgramBench (Princeton & Meta, arXiv:2605.03546): the agent is dropped into an offline container with a compiled reference binary and its bundled documentation and must architect and implement a fresh codebase that reproduces the binary's externally observable behavior (wrapping the binary, reusing an existing implementation or obtaining the original source is disqualification); every board row runs the mini-SWE-agent baseline harness (6-hour wall time, 1000 steps, --network none); score = mean over the 200 benchmark instances of each instance's passed-test fraction (unattempted counts as 0); the board also publishes Resolved (fully solved), Almost (>=95% of tests), average cost/calls/output tokens per task and each row's publication date. Not a Composite input.; source row: {\"provider\":\"OpenAI\",\"slug\":\"gpt-5-5-xhigh\",\"score_fraction\":0.695,\"cost_per_task_usd\":8.847999999999999,\"calls_per_task\":82,\"tokens_per_task\":51624,\"publication_date\":\"May 8, 2026\",\"tasks\":200,\"harness\":\"mini-SWE-agent\",\"update_stamp\":\"Updated Sep. 9, 2026\"}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.695
+        ]
+      },
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/facebookresearch/ProgramBench/main/src/programbench/submission.py",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/48d34c0f02f40e550bbc.gz",
+          "sha256": "48d34c0f02f40e550bbcd27a67dd6ce814d9f26badd912a977e048e2acba4c9e",
+          "retrieved_at": "2026-09-21T00:48:21.351718+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:616e59cbc59c22774ad240bf",
+      "benchmark_id": "programbench::1",
+      "subject": {
+        "source_id": "gpt-5-5-high",
+        "name": "GPT 5.5 (high)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-SWE-agent"
+      },
+      "value": 66.5,
+      "unit": "percent",
+      "basis": "derived",
+      "source": {
+        "url": "https://programbench.com/",
+        "retrieved_at": "2026-09-21T00:48:03.447305+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/7efa63c912e1ec18459e.gz",
+        "sha256": "7efa63c912e1ec18459e6d97b6842612ed7a6bed189ccf9db5f0313d81866ab7",
+        "locator": "programbench_board; source row 4; gpt-5-5-high; field mean_score"
+      },
+      "protocol": "ProgramBench (Princeton & Meta, arXiv:2605.03546): the agent is dropped into an offline container with a compiled reference binary and its bundled documentation and must architect and implement a fresh codebase that reproduces the binary's externally observable behavior (wrapping the binary, reusing an existing implementation or obtaining the original source is disqualification); every board row runs the mini-SWE-agent baseline harness (6-hour wall time, 1000 steps, --network none); score = mean over the 200 benchmark instances of each instance's passed-test fraction (unattempted counts as 0); the board also publishes Resolved (fully solved), Almost (>=95% of tests), average cost/calls/output tokens per task and each row's publication date. Not a Composite input.; source row: {\"provider\":\"OpenAI\",\"slug\":\"gpt-5-5-high\",\"score_fraction\":0.665,\"cost_per_task_usd\":3.653,\"calls_per_task\":41,\"tokens_per_task\":27379,\"publication_date\":\"May 7, 2026\",\"tasks\":200,\"harness\":\"mini-SWE-agent\",\"update_stamp\":\"Updated Sep. 9, 2026\"}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.665
+        ]
+      },
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/facebookresearch/ProgramBench/main/src/programbench/submission.py",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/48d34c0f02f40e550bbc.gz",
+          "sha256": "48d34c0f02f40e550bbcd27a67dd6ce814d9f26badd912a977e048e2acba4c9e",
+          "retrieved_at": "2026-09-21T00:48:21.351718+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:affa337db10e81a5574310b3",
+      "benchmark_id": "programbench::1",
+      "subject": {
+        "source_id": "glm-5-2",
+        "name": "GLM-5.2",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-SWE-agent"
+      },
+      "value": 64.6,
+      "unit": "percent",
+      "basis": "derived",
+      "source": {
+        "url": "https://programbench.com/",
+        "retrieved_at": "2026-09-21T00:48:03.447305+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/7efa63c912e1ec18459e.gz",
+        "sha256": "7efa63c912e1ec18459e6d97b6842612ed7a6bed189ccf9db5f0313d81866ab7",
+        "locator": "programbench_board; source row 5; glm-5-2; field mean_score"
+      },
+      "protocol": "ProgramBench (Princeton & Meta, arXiv:2605.03546): the agent is dropped into an offline container with a compiled reference binary and its bundled documentation and must architect and implement a fresh codebase that reproduces the binary's externally observable behavior (wrapping the binary, reusing an existing implementation or obtaining the original source is disqualification); every board row runs the mini-SWE-agent baseline harness (6-hour wall time, 1000 steps, --network none); score = mean over the 200 benchmark instances of each instance's passed-test fraction (unattempted counts as 0); the board also publishes Resolved (fully solved), Almost (>=95% of tests), average cost/calls/output tokens per task and each row's publication date. Not a Composite input.; source row: {\"provider\":\"Z.ai (Zhipu AI)\",\"slug\":\"glm-5-2\",\"score_fraction\":0.6459999999999999,\"cost_per_task_usd\":25.36085,\"calls_per_task\":222,\"tokens_per_task\":237624,\"publication_date\":\"Jul 17, 2026\",\"tasks\":200,\"harness\":\"mini-SWE-agent\",\"update_stamp\":\"Updated Sep. 9, 2026\"}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.6459999999999999
+        ]
+      },
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/facebookresearch/ProgramBench/main/src/programbench/submission.py",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/48d34c0f02f40e550bbc.gz",
+          "sha256": "48d34c0f02f40e550bbcd27a67dd6ce814d9f26badd912a977e048e2acba4c9e",
+          "retrieved_at": "2026-09-21T00:48:21.351718+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:56c45335fc2d6af4bac9086c",
+      "benchmark_id": "programbench::1",
+      "subject": {
+        "source_id": "gemini-3-7-flash",
+        "name": "Gemini 3.7 Flash",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-SWE-agent"
+      },
+      "value": 61.199999999999996,
+      "unit": "percent",
+      "basis": "derived",
+      "source": {
+        "url": "https://programbench.com/",
+        "retrieved_at": "2026-09-21T00:48:03.447305+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/7efa63c912e1ec18459e.gz",
+        "sha256": "7efa63c912e1ec18459e6d97b6842612ed7a6bed189ccf9db5f0313d81866ab7",
+        "locator": "programbench_board; source row 6; gemini-3-7-flash; field mean_score"
+      },
+      "protocol": "ProgramBench (Princeton & Meta, arXiv:2605.03546): the agent is dropped into an offline container with a compiled reference binary and its bundled documentation and must architect and implement a fresh codebase that reproduces the binary's externally observable behavior (wrapping the binary, reusing an existing implementation or obtaining the original source is disqualification); every board row runs the mini-SWE-agent baseline harness (6-hour wall time, 1000 steps, --network none); score = mean over the 200 benchmark instances of each instance's passed-test fraction (unattempted counts as 0); the board also publishes Resolved (fully solved), Almost (>=95% of tests), average cost/calls/output tokens per task and each row's publication date. Not a Composite input.; source row: {\"provider\":\"Google\",\"slug\":\"gemini-3-7-flash\",\"score_fraction\":0.612,\"cost_per_task_usd\":2.03985,\"calls_per_task\":133,\"tokens_per_task\":74885,\"publication_date\":\"Aug 15, 2026\",\"tasks\":200,\"harness\":\"mini-SWE-agent\",\"update_stamp\":\"Updated Sep. 9, 2026\"}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.612
+        ]
+      },
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/facebookresearch/ProgramBench/main/src/programbench/submission.py",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/48d34c0f02f40e550bbc.gz",
+          "sha256": "48d34c0f02f40e550bbcd27a67dd6ce814d9f26badd912a977e048e2acba4c9e",
+          "retrieved_at": "2026-09-21T00:48:21.351718+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:d7ff5dea7e6622bb3c2b3bf7",
+      "benchmark_id": "programbench::1",
+      "subject": {
+        "source_id": "gpt-5-6-sol",
+        "name": "GPT-5.6 Sol",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-SWE-agent"
+      },
+      "value": 57.8,
+      "unit": "percent",
+      "basis": "derived",
+      "source": {
+        "url": "https://programbench.com/",
+        "retrieved_at": "2026-09-21T00:48:03.447305+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/7efa63c912e1ec18459e.gz",
+        "sha256": "7efa63c912e1ec18459e6d97b6842612ed7a6bed189ccf9db5f0313d81866ab7",
+        "locator": "programbench_board; source row 7; gpt-5-6-sol; field mean_score"
+      },
+      "protocol": "ProgramBench (Princeton & Meta, arXiv:2605.03546): the agent is dropped into an offline container with a compiled reference binary and its bundled documentation and must architect and implement a fresh codebase that reproduces the binary's externally observable behavior (wrapping the binary, reusing an existing implementation or obtaining the original source is disqualification); every board row runs the mini-SWE-agent baseline harness (6-hour wall time, 1000 steps, --network none); score = mean over the 200 benchmark instances of each instance's passed-test fraction (unattempted counts as 0); the board also publishes Resolved (fully solved), Almost (>=95% of tests), average cost/calls/output tokens per task and each row's publication date. Not a Composite input.; source row: {\"provider\":\"OpenAI\",\"slug\":\"gpt-5-6-sol\",\"score_fraction\":0.578,\"cost_per_task_usd\":1.00135,\"calls_per_task\":15,\"tokens_per_task\":13084,\"publication_date\":\"Jul 30, 2026\",\"tasks\":200,\"harness\":\"mini-SWE-agent\",\"update_stamp\":\"Updated Sep. 9, 2026\"}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.578
+        ]
+      },
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/facebookresearch/ProgramBench/main/src/programbench/submission.py",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/48d34c0f02f40e550bbc.gz",
+          "sha256": "48d34c0f02f40e550bbcd27a67dd6ce814d9f26badd912a977e048e2acba4c9e",
+          "retrieved_at": "2026-09-21T00:48:21.351718+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:b7c304df3b923dbac8d72a63",
+      "benchmark_id": "programbench::1",
+      "subject": {
+        "source_id": "gpt-5-5",
+        "name": "GPT 5.5",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-SWE-agent"
+      },
+      "value": 56.60000000000001,
+      "unit": "percent",
+      "basis": "derived",
+      "source": {
+        "url": "https://programbench.com/",
+        "retrieved_at": "2026-09-21T00:48:03.447305+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/7efa63c912e1ec18459e.gz",
+        "sha256": "7efa63c912e1ec18459e6d97b6842612ed7a6bed189ccf9db5f0313d81866ab7",
+        "locator": "programbench_board; source row 8; gpt-5-5; field mean_score"
+      },
+      "protocol": "ProgramBench (Princeton & Meta, arXiv:2605.03546): the agent is dropped into an offline container with a compiled reference binary and its bundled documentation and must architect and implement a fresh codebase that reproduces the binary's externally observable behavior (wrapping the binary, reusing an existing implementation or obtaining the original source is disqualification); every board row runs the mini-SWE-agent baseline harness (6-hour wall time, 1000 steps, --network none); score = mean over the 200 benchmark instances of each instance's passed-test fraction (unattempted counts as 0); the board also publishes Resolved (fully solved), Almost (>=95% of tests), average cost/calls/output tokens per task and each row's publication date. Not a Composite input.; source row: {\"provider\":\"OpenAI\",\"slug\":\"gpt-5-5\",\"score_fraction\":0.5660000000000001,\"cost_per_task_usd\":1.2061,\"calls_per_task\":19,\"tokens_per_task\":11928,\"publication_date\":\"May 7, 2026\",\"tasks\":200,\"harness\":\"mini-SWE-agent\",\"update_stamp\":\"Updated Sep. 9, 2026\"}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.5660000000000001
+        ]
+      },
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/facebookresearch/ProgramBench/main/src/programbench/submission.py",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/48d34c0f02f40e550bbc.gz",
+          "sha256": "48d34c0f02f40e550bbcd27a67dd6ce814d9f26badd912a977e048e2acba4c9e",
+          "retrieved_at": "2026-09-21T00:48:21.351718+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:b8a630d16116e5cc6d404a04",
+      "benchmark_id": "programbench::1",
+      "subject": {
+        "source_id": "gemini-3-6-flash",
+        "name": "Gemini 3.6 Flash",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-SWE-agent"
+      },
+      "value": 55.7,
+      "unit": "percent",
+      "basis": "derived",
+      "source": {
+        "url": "https://programbench.com/",
+        "retrieved_at": "2026-09-21T00:48:03.447305+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/7efa63c912e1ec18459e.gz",
+        "sha256": "7efa63c912e1ec18459e6d97b6842612ed7a6bed189ccf9db5f0313d81866ab7",
+        "locator": "programbench_board; source row 9; gemini-3-6-flash; field mean_score"
+      },
+      "protocol": "ProgramBench (Princeton & Meta, arXiv:2605.03546): the agent is dropped into an offline container with a compiled reference binary and its bundled documentation and must architect and implement a fresh codebase that reproduces the binary's externally observable behavior (wrapping the binary, reusing an existing implementation or obtaining the original source is disqualification); every board row runs the mini-SWE-agent baseline harness (6-hour wall time, 1000 steps, --network none); score = mean over the 200 benchmark instances of each instance's passed-test fraction (unattempted counts as 0); the board also publishes Resolved (fully solved), Almost (>=95% of tests), average cost/calls/output tokens per task and each row's publication date. Not a Composite input.; source row: {\"provider\":\"Google\",\"slug\":\"gemini-3-6-flash\",\"score_fraction\":0.557,\"cost_per_task_usd\":4.832,\"calls_per_task\":150,\"tokens_per_task\":107792,\"publication_date\":\"Jul 31, 2026\",\"tasks\":200,\"harness\":\"mini-SWE-agent\",\"update_stamp\":\"Updated Sep. 9, 2026\"}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.557
+        ]
+      },
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/facebookresearch/ProgramBench/main/src/programbench/submission.py",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/48d34c0f02f40e550bbc.gz",
+          "sha256": "48d34c0f02f40e550bbcd27a67dd6ce814d9f26badd912a977e048e2acba4c9e",
+          "retrieved_at": "2026-09-21T00:48:21.351718+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:12b039051889034deab51b7a",
+      "benchmark_id": "programbench::1",
+      "subject": {
+        "source_id": "claude-opus-4-7-xhigh",
+        "name": "Claude Opus 4.7 (xhigh)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-SWE-agent"
+      },
+      "value": 55.1,
+      "unit": "percent",
+      "basis": "derived",
+      "source": {
+        "url": "https://programbench.com/",
+        "retrieved_at": "2026-09-21T00:48:03.447305+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/7efa63c912e1ec18459e.gz",
+        "sha256": "7efa63c912e1ec18459e6d97b6842612ed7a6bed189ccf9db5f0313d81866ab7",
+        "locator": "programbench_board; source row 10; claude-opus-4-7-xhigh; field mean_score"
+      },
+      "protocol": "ProgramBench (Princeton & Meta, arXiv:2605.03546): the agent is dropped into an offline container with a compiled reference binary and its bundled documentation and must architect and implement a fresh codebase that reproduces the binary's externally observable behavior (wrapping the binary, reusing an existing implementation or obtaining the original source is disqualification); every board row runs the mini-SWE-agent baseline harness (6-hour wall time, 1000 steps, --network none); score = mean over the 200 benchmark instances of each instance's passed-test fraction (unattempted counts as 0); the board also publishes Resolved (fully solved), Almost (>=95% of tests), average cost/calls/output tokens per task and each row's publication date. Not a Composite input.; source row: {\"provider\":\"Anthropic\",\"slug\":\"claude-opus-4-7-xhigh\",\"score_fraction\":0.551,\"cost_per_task_usd\":10.9561,\"calls_per_task\":159,\"tokens_per_task\":97205,\"publication_date\":\"May 7, 2026\",\"tasks\":200,\"harness\":\"mini-SWE-agent\",\"update_stamp\":\"Updated Sep. 9, 2026\"}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.551
+        ]
+      },
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/facebookresearch/ProgramBench/main/src/programbench/submission.py",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/48d34c0f02f40e550bbc.gz",
+          "sha256": "48d34c0f02f40e550bbcd27a67dd6ce814d9f26badd912a977e048e2acba4c9e",
+          "retrieved_at": "2026-09-21T00:48:21.351718+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:062db8adf20bfe7d364e1240",
+      "benchmark_id": "programbench::1",
+      "subject": {
+        "source_id": "gemini-3-5-flash",
+        "name": "Gemini 3.5 Flash",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-SWE-agent"
+      },
+      "value": 53.6,
+      "unit": "percent",
+      "basis": "derived",
+      "source": {
+        "url": "https://programbench.com/",
+        "retrieved_at": "2026-09-21T00:48:03.447305+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/7efa63c912e1ec18459e.gz",
+        "sha256": "7efa63c912e1ec18459e6d97b6842612ed7a6bed189ccf9db5f0313d81866ab7",
+        "locator": "programbench_board; source row 11; gemini-3-5-flash; field mean_score"
+      },
+      "protocol": "ProgramBench (Princeton & Meta, arXiv:2605.03546): the agent is dropped into an offline container with a compiled reference binary and its bundled documentation and must architect and implement a fresh codebase that reproduces the binary's externally observable behavior (wrapping the binary, reusing an existing implementation or obtaining the original source is disqualification); every board row runs the mini-SWE-agent baseline harness (6-hour wall time, 1000 steps, --network none); score = mean over the 200 benchmark instances of each instance's passed-test fraction (unattempted counts as 0); the board also publishes Resolved (fully solved), Almost (>=95% of tests), average cost/calls/output tokens per task and each row's publication date. Not a Composite input.; source row: {\"provider\":\"Google\",\"slug\":\"gemini-3-5-flash\",\"score_fraction\":0.536,\"cost_per_task_usd\":5.60185,\"calls_per_task\":166,\"tokens_per_task\":132679,\"publication_date\":\"Jul 29, 2026\",\"tasks\":200,\"harness\":\"mini-SWE-agent\",\"update_stamp\":\"Updated Sep. 9, 2026\"}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.536
+        ]
+      },
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/facebookresearch/ProgramBench/main/src/programbench/submission.py",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/48d34c0f02f40e550bbc.gz",
+          "sha256": "48d34c0f02f40e550bbcd27a67dd6ce814d9f26badd912a977e048e2acba4c9e",
+          "retrieved_at": "2026-09-21T00:48:21.351718+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:827dd0a5a48befd451cf2d57",
+      "benchmark_id": "programbench::1",
+      "subject": {
+        "source_id": "claude-opus-4-6",
+        "name": "Claude Opus 4.6",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-SWE-agent"
+      },
+      "value": 52.1,
+      "unit": "percent",
+      "basis": "derived",
+      "source": {
+        "url": "https://programbench.com/",
+        "retrieved_at": "2026-09-21T00:48:03.447305+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/7efa63c912e1ec18459e.gz",
+        "sha256": "7efa63c912e1ec18459e6d97b6842612ed7a6bed189ccf9db5f0313d81866ab7",
+        "locator": "programbench_board; source row 12; claude-opus-4-6; field mean_score"
+      },
+      "protocol": "ProgramBench (Princeton & Meta, arXiv:2605.03546): the agent is dropped into an offline container with a compiled reference binary and its bundled documentation and must architect and implement a fresh codebase that reproduces the binary's externally observable behavior (wrapping the binary, reusing an existing implementation or obtaining the original source is disqualification); every board row runs the mini-SWE-agent baseline harness (6-hour wall time, 1000 steps, --network none); score = mean over the 200 benchmark instances of each instance's passed-test fraction (unattempted counts as 0); the board also publishes Resolved (fully solved), Almost (>=95% of tests), average cost/calls/output tokens per task and each row's publication date. Not a Composite input.; source row: {\"provider\":\"Anthropic\",\"slug\":\"claude-opus-4-6\",\"score_fraction\":0.521,\"cost_per_task_usd\":11.376600000000002,\"calls_per_task\":260,\"tokens_per_task\":89147,\"publication_date\":\"Apr 30, 2026\",\"tasks\":200,\"harness\":\"mini-SWE-agent\",\"update_stamp\":\"Updated Sep. 9, 2026\"}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.521
+        ]
+      },
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/facebookresearch/ProgramBench/main/src/programbench/submission.py",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/48d34c0f02f40e550bbc.gz",
+          "sha256": "48d34c0f02f40e550bbcd27a67dd6ce814d9f26badd912a977e048e2acba4c9e",
+          "retrieved_at": "2026-09-21T00:48:21.351718+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:e6526cb1c3726458a75cd01f",
+      "benchmark_id": "programbench::1",
+      "subject": {
+        "source_id": "claude-opus-4-7",
+        "name": "Claude Opus 4.7",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-SWE-agent"
+      },
+      "value": 50.9,
+      "unit": "percent",
+      "basis": "derived",
+      "source": {
+        "url": "https://programbench.com/",
+        "retrieved_at": "2026-09-21T00:48:03.447305+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/7efa63c912e1ec18459e.gz",
+        "sha256": "7efa63c912e1ec18459e6d97b6842612ed7a6bed189ccf9db5f0313d81866ab7",
+        "locator": "programbench_board; source row 13; claude-opus-4-7; field mean_score"
+      },
+      "protocol": "ProgramBench (Princeton & Meta, arXiv:2605.03546): the agent is dropped into an offline container with a compiled reference binary and its bundled documentation and must architect and implement a fresh codebase that reproduces the binary's externally observable behavior (wrapping the binary, reusing an existing implementation or obtaining the original source is disqualification); every board row runs the mini-SWE-agent baseline harness (6-hour wall time, 1000 steps, --network none); score = mean over the 200 benchmark instances of each instance's passed-test fraction (unattempted counts as 0); the board also publishes Resolved (fully solved), Almost (>=95% of tests), average cost/calls/output tokens per task and each row's publication date. Not a Composite input.; source row: {\"provider\":\"Anthropic\",\"slug\":\"claude-opus-4-7\",\"score_fraction\":0.509,\"cost_per_task_usd\":3.81215,\"calls_per_task\":93,\"tokens_per_task\":41669,\"publication_date\":\"Apr 29, 2026\",\"tasks\":200,\"harness\":\"mini-SWE-agent\",\"update_stamp\":\"Updated Sep. 9, 2026\"}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.509
+        ]
+      },
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/facebookresearch/ProgramBench/main/src/programbench/submission.py",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/48d34c0f02f40e550bbc.gz",
+          "sha256": "48d34c0f02f40e550bbcd27a67dd6ce814d9f26badd912a977e048e2acba4c9e",
+          "retrieved_at": "2026-09-21T00:48:21.351718+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:3916869033275c74d00f9796",
+      "benchmark_id": "programbench::1",
+      "subject": {
+        "source_id": "claude-sonnet-4-6",
+        "name": "Claude Sonnet 4.6",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-SWE-agent"
+      },
+      "value": 47.5,
+      "unit": "percent",
+      "basis": "derived",
+      "source": {
+        "url": "https://programbench.com/",
+        "retrieved_at": "2026-09-21T00:48:03.447305+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/7efa63c912e1ec18459e.gz",
+        "sha256": "7efa63c912e1ec18459e6d97b6842612ed7a6bed189ccf9db5f0313d81866ab7",
+        "locator": "programbench_board; source row 14; claude-sonnet-4-6; field mean_score"
+      },
+      "protocol": "ProgramBench (Princeton & Meta, arXiv:2605.03546): the agent is dropped into an offline container with a compiled reference binary and its bundled documentation and must architect and implement a fresh codebase that reproduces the binary's externally observable behavior (wrapping the binary, reusing an existing implementation or obtaining the original source is disqualification); every board row runs the mini-SWE-agent baseline harness (6-hour wall time, 1000 steps, --network none); score = mean over the 200 benchmark instances of each instance's passed-test fraction (unattempted counts as 0); the board also publishes Resolved (fully solved), Almost (>=95% of tests), average cost/calls/output tokens per task and each row's publication date. Not a Composite input.; source row: {\"provider\":\"Anthropic\",\"slug\":\"claude-sonnet-4-6\",\"score_fraction\":0.475,\"cost_per_task_usd\":26.734699999999997,\"calls_per_task\":472,\"tokens_per_task\":190227,\"publication_date\":\"Apr 29, 2026\",\"tasks\":200,\"harness\":\"mini-SWE-agent\",\"update_stamp\":\"Updated Sep. 9, 2026\"}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.475
+        ]
+      },
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/facebookresearch/ProgramBench/main/src/programbench/submission.py",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/48d34c0f02f40e550bbc.gz",
+          "sha256": "48d34c0f02f40e550bbcd27a67dd6ce814d9f26badd912a977e048e2acba4c9e",
+          "retrieved_at": "2026-09-21T00:48:21.351718+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:19253a84d5fa4ae0390c6bfe",
+      "benchmark_id": "programbench::1",
+      "subject": {
+        "source_id": "gpt-5-4",
+        "name": "GPT 5.4",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-SWE-agent"
+      },
+      "value": 37.7,
+      "unit": "percent",
+      "basis": "derived",
+      "source": {
+        "url": "https://programbench.com/",
+        "retrieved_at": "2026-09-21T00:48:03.447305+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/7efa63c912e1ec18459e.gz",
+        "sha256": "7efa63c912e1ec18459e6d97b6842612ed7a6bed189ccf9db5f0313d81866ab7",
+        "locator": "programbench_board; source row 15; gpt-5-4; field mean_score"
+      },
+      "protocol": "ProgramBench (Princeton & Meta, arXiv:2605.03546): the agent is dropped into an offline container with a compiled reference binary and its bundled documentation and must architect and implement a fresh codebase that reproduces the binary's externally observable behavior (wrapping the binary, reusing an existing implementation or obtaining the original source is disqualification); every board row runs the mini-SWE-agent baseline harness (6-hour wall time, 1000 steps, --network none); score = mean over the 200 benchmark instances of each instance's passed-test fraction (unattempted counts as 0); the board also publishes Resolved (fully solved), Almost (>=95% of tests), average cost/calls/output tokens per task and each row's publication date. Not a Composite input.; source row: {\"provider\":\"OpenAI\",\"slug\":\"gpt-5-4\",\"score_fraction\":0.377,\"cost_per_task_usd\":0.3265,\"calls_per_task\":16,\"tokens_per_task\":7408,\"publication_date\":\"Apr 29, 2026\",\"tasks\":200,\"harness\":\"mini-SWE-agent\",\"update_stamp\":\"Updated Sep. 9, 2026\"}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.377
+        ]
+      },
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/facebookresearch/ProgramBench/main/src/programbench/submission.py",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/48d34c0f02f40e550bbc.gz",
+          "sha256": "48d34c0f02f40e550bbcd27a67dd6ce814d9f26badd912a977e048e2acba4c9e",
+          "retrieved_at": "2026-09-21T00:48:21.351718+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:36ded64d9be990ee9ad03e30",
+      "benchmark_id": "programbench::1",
+      "subject": {
+        "source_id": "gemini-3-1-pro",
+        "name": "Gemini 3.1 Pro",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-SWE-agent"
+      },
+      "value": 36.4,
+      "unit": "percent",
+      "basis": "derived",
+      "source": {
+        "url": "https://programbench.com/",
+        "retrieved_at": "2026-09-21T00:48:03.447305+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/7efa63c912e1ec18459e.gz",
+        "sha256": "7efa63c912e1ec18459e6d97b6842612ed7a6bed189ccf9db5f0313d81866ab7",
+        "locator": "programbench_board; source row 16; gemini-3-1-pro; field mean_score"
+      },
+      "protocol": "ProgramBench (Princeton & Meta, arXiv:2605.03546): the agent is dropped into an offline container with a compiled reference binary and its bundled documentation and must architect and implement a fresh codebase that reproduces the binary's externally observable behavior (wrapping the binary, reusing an existing implementation or obtaining the original source is disqualification); every board row runs the mini-SWE-agent baseline harness (6-hour wall time, 1000 steps, --network none); score = mean over the 200 benchmark instances of each instance's passed-test fraction (unattempted counts as 0); the board also publishes Resolved (fully solved), Almost (>=95% of tests), average cost/calls/output tokens per task and each row's publication date. Not a Composite input.; source row: {\"provider\":\"Google\",\"slug\":\"gemini-3-1-pro\",\"score_fraction\":0.364,\"cost_per_task_usd\":1.5108000000000001,\"calls_per_task\":94,\"tokens_per_task\":18071,\"publication_date\":\"Apr 29, 2026\",\"tasks\":200,\"harness\":\"mini-SWE-agent\",\"update_stamp\":\"Updated Sep. 9, 2026\"}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.364
+        ]
+      },
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/facebookresearch/ProgramBench/main/src/programbench/submission.py",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/48d34c0f02f40e550bbc.gz",
+          "sha256": "48d34c0f02f40e550bbcd27a67dd6ce814d9f26badd912a977e048e2acba4c9e",
+          "retrieved_at": "2026-09-21T00:48:21.351718+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:bc400aeace2a10aa8d74862b",
+      "benchmark_id": "programbench::1",
+      "subject": {
+        "source_id": "gemini-3-flash",
+        "name": "Gemini 3 Flash",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-SWE-agent"
+      },
+      "value": 31.8,
+      "unit": "percent",
+      "basis": "derived",
+      "source": {
+        "url": "https://programbench.com/",
+        "retrieved_at": "2026-09-21T00:48:03.447305+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/7efa63c912e1ec18459e.gz",
+        "sha256": "7efa63c912e1ec18459e6d97b6842612ed7a6bed189ccf9db5f0313d81866ab7",
+        "locator": "programbench_board; source row 17; gemini-3-flash; field mean_score"
+      },
+      "protocol": "ProgramBench (Princeton & Meta, arXiv:2605.03546): the agent is dropped into an offline container with a compiled reference binary and its bundled documentation and must architect and implement a fresh codebase that reproduces the binary's externally observable behavior (wrapping the binary, reusing an existing implementation or obtaining the original source is disqualification); every board row runs the mini-SWE-agent baseline harness (6-hour wall time, 1000 steps, --network none); score = mean over the 200 benchmark instances of each instance's passed-test fraction (unattempted counts as 0); the board also publishes Resolved (fully solved), Almost (>=95% of tests), average cost/calls/output tokens per task and each row's publication date. Not a Composite input.; source row: {\"provider\":\"Google\",\"slug\":\"gemini-3-flash\",\"score_fraction\":0.318,\"cost_per_task_usd\":0.29515,\"calls_per_task\":85,\"tokens_per_task\":22561,\"publication_date\":\"Apr 29, 2026\",\"tasks\":200,\"harness\":\"mini-SWE-agent\",\"update_stamp\":\"Updated Sep. 9, 2026\"}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.318
+        ]
+      },
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/facebookresearch/ProgramBench/main/src/programbench/submission.py",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/48d34c0f02f40e550bbc.gz",
+          "sha256": "48d34c0f02f40e550bbcd27a67dd6ce814d9f26badd912a977e048e2acba4c9e",
+          "retrieved_at": "2026-09-21T00:48:21.351718+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:76331a775e38438757b2c422",
+      "benchmark_id": "programbench::1",
+      "subject": {
+        "source_id": "claude-haiku-4-5",
+        "name": "Claude Haiku 4.5",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-SWE-agent"
+      },
+      "value": 30.0,
+      "unit": "percent",
+      "basis": "derived",
+      "source": {
+        "url": "https://programbench.com/",
+        "retrieved_at": "2026-09-21T00:48:03.447305+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/7efa63c912e1ec18459e.gz",
+        "sha256": "7efa63c912e1ec18459e6d97b6842612ed7a6bed189ccf9db5f0313d81866ab7",
+        "locator": "programbench_board; source row 18; claude-haiku-4-5; field mean_score"
+      },
+      "protocol": "ProgramBench (Princeton & Meta, arXiv:2605.03546): the agent is dropped into an offline container with a compiled reference binary and its bundled documentation and must architect and implement a fresh codebase that reproduces the binary's externally observable behavior (wrapping the binary, reusing an existing implementation or obtaining the original source is disqualification); every board row runs the mini-SWE-agent baseline harness (6-hour wall time, 1000 steps, --network none); score = mean over the 200 benchmark instances of each instance's passed-test fraction (unattempted counts as 0); the board also publishes Resolved (fully solved), Almost (>=95% of tests), average cost/calls/output tokens per task and each row's publication date. Not a Composite input.; source row: {\"provider\":\"Anthropic\",\"slug\":\"claude-haiku-4-5\",\"score_fraction\":0.3,\"cost_per_task_usd\":0.8024,\"calls_per_task\":124,\"tokens_per_task\":47506,\"publication_date\":\"Apr 29, 2026\",\"tasks\":200,\"harness\":\"mini-SWE-agent\",\"update_stamp\":\"Updated Sep. 9, 2026\"}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.3
+        ]
+      },
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/facebookresearch/ProgramBench/main/src/programbench/submission.py",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/48d34c0f02f40e550bbc.gz",
+          "sha256": "48d34c0f02f40e550bbcd27a67dd6ce814d9f26badd912a977e048e2acba4c9e",
+          "retrieved_at": "2026-09-21T00:48:21.351718+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:37baa25ec484ffed16dc72cb",
+      "benchmark_id": "programbench::1",
+      "subject": {
+        "source_id": "gpt-5-4-mini",
+        "name": "GPT 5.4 mini",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-SWE-agent"
+      },
+      "value": 16.4,
+      "unit": "percent",
+      "basis": "derived",
+      "source": {
+        "url": "https://programbench.com/",
+        "retrieved_at": "2026-09-21T00:48:03.447305+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/7efa63c912e1ec18459e.gz",
+        "sha256": "7efa63c912e1ec18459e6d97b6842612ed7a6bed189ccf9db5f0313d81866ab7",
+        "locator": "programbench_board; source row 19; gpt-5-4-mini; field mean_score"
+      },
+      "protocol": "ProgramBench (Princeton & Meta, arXiv:2605.03546): the agent is dropped into an offline container with a compiled reference binary and its bundled documentation and must architect and implement a fresh codebase that reproduces the binary's externally observable behavior (wrapping the binary, reusing an existing implementation or obtaining the original source is disqualification); every board row runs the mini-SWE-agent baseline harness (6-hour wall time, 1000 steps, --network none); score = mean over the 200 benchmark instances of each instance's passed-test fraction (unattempted counts as 0); the board also publishes Resolved (fully solved), Almost (>=95% of tests), average cost/calls/output tokens per task and each row's publication date. Not a Composite input.; source row: {\"provider\":\"OpenAI\",\"slug\":\"gpt-5-4-mini\",\"score_fraction\":0.16399999999999998,\"cost_per_task_usd\":0.03965,\"calls_per_task\":18,\"tokens_per_task\":3147,\"publication_date\":\"Apr 29, 2026\",\"tasks\":200,\"harness\":\"mini-SWE-agent\",\"update_stamp\":\"Updated Sep. 9, 2026\"}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.16399999999999998
+        ]
+      },
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/facebookresearch/ProgramBench/main/src/programbench/submission.py",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/48d34c0f02f40e550bbc.gz",
+          "sha256": "48d34c0f02f40e550bbcd27a67dd6ce814d9f26badd912a977e048e2acba4c9e",
+          "retrieved_at": "2026-09-21T00:48:21.351718+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:ce62b1d5a24bbe58e6f28005",
+      "benchmark_id": "programbench::1",
+      "subject": {
+        "source_id": "gpt-5-mini",
+        "name": "GPT 5 mini",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-SWE-agent"
+      },
+      "value": 16.0,
+      "unit": "percent",
+      "basis": "derived",
+      "source": {
+        "url": "https://programbench.com/",
+        "retrieved_at": "2026-09-21T00:48:03.447305+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/7efa63c912e1ec18459e.gz",
+        "sha256": "7efa63c912e1ec18459e6d97b6842612ed7a6bed189ccf9db5f0313d81866ab7",
+        "locator": "programbench_board; source row 20; gpt-5-mini; field mean_score"
+      },
+      "protocol": "ProgramBench (Princeton & Meta, arXiv:2605.03546): the agent is dropped into an offline container with a compiled reference binary and its bundled documentation and must architect and implement a fresh codebase that reproduces the binary's externally observable behavior (wrapping the binary, reusing an existing implementation or obtaining the original source is disqualification); every board row runs the mini-SWE-agent baseline harness (6-hour wall time, 1000 steps, --network none); score = mean over the 200 benchmark instances of each instance's passed-test fraction (unattempted counts as 0); the board also publishes Resolved (fully solved), Almost (>=95% of tests), average cost/calls/output tokens per task and each row's publication date. Not a Composite input.; source row: {\"provider\":\"OpenAI\",\"slug\":\"gpt-5-mini\",\"score_fraction\":0.16,\"cost_per_task_usd\":0.0256,\"calls_per_task\":15,\"tokens_per_task\":7146,\"publication_date\":\"Apr 29, 2026\",\"tasks\":200,\"harness\":\"mini-SWE-agent\",\"update_stamp\":\"Updated Sep. 9, 2026\"}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.16
+        ]
+      },
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/facebookresearch/ProgramBench/main/src/programbench/submission.py",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/48d34c0f02f40e550bbc.gz",
+          "sha256": "48d34c0f02f40e550bbcd27a67dd6ce814d9f26badd912a977e048e2acba4c9e",
+          "retrieved_at": "2026-09-21T00:48:21.351718+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
     }
   ],
   "collections": [
@@ -262632,6 +263493,12 @@
       "status": "collected",
       "source_url": "https://toolathlon.xyz/docs/leaderboard",
       "reason": "25 source results parsed; configurations remain separate; unmatched model identities are retained."
+    },
+    {
+      "benchmark_id": "programbench::1",
+      "status": "collected",
+      "source_url": "https://programbench.com/",
+      "reason": "21 source results parsed; configurations remain separate; unmatched model identities are retained."
     }
   ],
   "rejected": [

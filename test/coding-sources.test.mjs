@@ -35,7 +35,10 @@ const SLUG_BOARDS = ['osworld-2', 'swe-rebench', 'gso', 'hyper-tau-bench', 'lisa
   // 2026-09-20 (iteration 139, CR-85.2): LiveBench's release CSV, run slugs of the form
   // `<family>-<effort>` and Anthropic's `<family>-<effort>-effort`; dated checkpoints and the
   // unreviewed "thinking" setting stay unjoined (lib/board-identity.mjs livebenchJoins).
-  'livebench'];
+  'livebench',
+  // 2026-09-21 (iteration 142, CR-38.1): ProgramBench's own board, product names with the effort tier in
+  // parentheses (xhigh/high) and no suffix for the default tier (lib/board-identity.mjs parseProgrambenchLabel).
+  'programbench'];
 const MIN = { 'deepswe::snapshot-2026-09-15': 60, 'swe-atlas-qna::snapshot-2026-09-15': 20, 'swe-atlas-test-writing::snapshot-2026-09-15': 20, 'swe-atlas-refactoring::snapshot-2026-09-15': 15 };
 
 test('the collector reproduces the committed observations from the committed evidence alone', () => {

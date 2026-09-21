@@ -11895,6 +11895,48 @@
       "model_id": "deepseek-v4.1-flash::max",
       "rule": "label states model deepseek-v4.1-flash and setting max; exact catalog configuration deepseek-v4.1-flash::max",
       "reviewed_at": "2026-09-20"
+    },
+    {
+      "benchmark_id": "programbench::1",
+      "source_id": "claude-opus-5-xhigh",
+      "model_id": "claude-opus-5::xhigh",
+      "rule": "label states model claude-opus-5 and setting xhigh; exact catalog configuration claude-opus-5::xhigh",
+      "reviewed_at": "2026-09-21"
+    },
+    {
+      "benchmark_id": "programbench::1",
+      "source_id": "claude-opus-4-8-xhigh",
+      "model_id": "claude-opus-4.8::xhigh",
+      "rule": "label states model claude-opus-4.8 and setting xhigh; exact catalog configuration claude-opus-4.8::xhigh",
+      "reviewed_at": "2026-09-21"
+    },
+    {
+      "benchmark_id": "programbench::1",
+      "source_id": "gpt-5-6-sol-xhigh",
+      "model_id": "gpt-5.6-sol::xhigh",
+      "rule": "label states model gpt-5.6-sol and setting xhigh; exact catalog configuration gpt-5.6-sol::xhigh",
+      "reviewed_at": "2026-09-21"
+    },
+    {
+      "benchmark_id": "programbench::1",
+      "source_id": "gpt-5-5-xhigh",
+      "model_id": "gpt-5.5::xhigh",
+      "rule": "label states model gpt-5.5 and setting xhigh; exact catalog configuration gpt-5.5::xhigh",
+      "reviewed_at": "2026-09-21"
+    },
+    {
+      "benchmark_id": "programbench::1",
+      "source_id": "gpt-5-5-high",
+      "model_id": "gpt-5.5::high",
+      "rule": "label states model gpt-5.5 and setting high; exact catalog configuration gpt-5.5::high",
+      "reviewed_at": "2026-09-21"
+    },
+    {
+      "benchmark_id": "programbench::1",
+      "source_id": "gemini-3-flash",
+      "model_id": "gemini-3-flash::default",
+      "rule": "label names gemini-3-flash without a setting; the catalog has exactly one configuration, the default (gemini-3-flash::default)",
+      "reviewed_at": "2026-09-21"
     }
   ]
 }

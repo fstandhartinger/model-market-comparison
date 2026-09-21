@@ -505,6 +505,57 @@ def parse(source,spec,load_source):
                 'context':{'label':m['label'],'harness':m.get('harness'),'stated_effort':m.get('effort') or 'not stated','stated_model':m.get('model'),
                     'annotation_verdict':verdict,'run_id':cell.get('run_id'),'elapsed_seconds':cell.get('elapsed_seconds'),'problem':problem,
                     'hardware':hardware,'peak_fraction':value,'percent_of_roofline':value*100}})
+    elif kind=='programbench_board':
+        # ProgramBench (Princeton & Meta: Yang, Lieret et al., arXiv:2605.03546, programbench.com): the leaderboard's
+        # own `var results = [...]` board — 21 rows {model, provider, logo, slug, score, cost, calls,
+        # tokens, date, date_str}; the site's headline score is the macro-average over the 200
+        # benchmark instances of each instance's passed-test fraction (unattempted counts as 0),
+        # run under the mini-SWE-agent baseline harness (config: 6-hour wall time, 1000 steps,
+        # offline container --network none), stated per board. The parsed value is score x 100 in
+        # percent. Guards: the page identity phrases (200 tasks, mini-SWE-agent, the benchmark's own
+        # description), exactly one results literal, the exact row schema, score sorted descending
+        # and bounded, and the method files (registry README, scoring source) still describing the
+        # same 200-instance macro-average. The pre-collected provenance receipts (one
+        # submission.yaml + score.json per row, sha256-pinned) are build-time proof that each board
+        # row is a registered submission of the ProgramBench registry — the registry's own README
+        # calls it the authoritative registry the leaderboard is compiled from — but the site's
+        # per-instance details for .compile_skip rows predate the current _stats files, so a
+        # byte-exact recompute is not the guard (2026-09-21 recompute reproduced the 8 Jul/Aug rows
+        # to <=0.0005 and the 5 legacy rows to <=0.009).
+        req=spec['require']
+        for phrase in req['text']:
+            if phrase not in source:raise ValueError('ProgramBench page identity changed: missing '+phrase)
+        found=list(re.finditer(r'\bvar results = \[',source))
+        if len(found)!=1:raise ValueError('ProgramBench results literal missing or ambiguous: '+str(len(found)))
+        arr=static_json(source,found[0].end()-1)
+        if not isinstance(arr,list) or not arr:raise ValueError('ProgramBench board is not a non-empty row array')
+        required=set(req['row_fields'])
+        def num(x):return isinstance(x,(int,float)) and not isinstance(x,bool) and math.isfinite(x)
+        models=set()
+        for index,rf in enumerate(arr):
+            if not isinstance(rf,dict) or set(rf.keys())!=required:raise ValueError(f'ProgramBench row {index}: field set changed ({sorted(required^set(rf.keys()))})')
+            if any(not isinstance(rf.get(k),str) or not rf.get(k) for k in ('model','provider','logo','slug','date_str')):raise ValueError(f'ProgramBench row {index}: string fields changed')
+            if not num(rf['score']) or not 0<=rf['score']<=1:raise ValueError(f'ProgramBench row {index}: score out of range')
+            if not num(rf['cost']) or rf['cost']<0 or not isinstance(rf['calls'],int) or rf['calls']<0 or not isinstance(rf['tokens'],int) or rf['tokens']<0 or not isinstance(rf['date'],int) or rf['date']<=0:raise ValueError(f'ProgramBench row {index}: cost/calls/tokens/date out of range')
+            if rf['model'] in models:raise ValueError('ProgramBench board repeats a model: '+rf['model'])
+            models.add(rf['model'])
+            if rf['provider'] not in req['providers']:raise ValueError(f'ProgramBench row {index}: unlisted provider {rf.get("provider")!r}')
+        scores=[r['score'] for r in arr]
+        if any(scores[i]<scores[i+1] for i in range(len(scores)-1)):raise ValueError('ProgramBench board is no longer ranked by mean score')
+        manifest=load_source(spec['manifest_source'])
+        method=load_source(spec['method_source'])
+        readme=load_source(spec['readme_source'])
+        for phrase in req['manifest_phrases']:
+            if phrase not in manifest:raise ValueError('ProgramBench registry manifest changed: '+phrase)
+        for phrase in req['method_phrases']:
+            if phrase not in method:raise ValueError('ProgramBench scoring source changed: '+phrase)
+        for phrase in req['readme_phrases']:
+            if phrase not in readme:raise ValueError('ProgramBench registry README changed: '+phrase)
+        for index,r in enumerate(arr):
+            rows.append({'name':r['model'],'id':r['slug'],'mean_score':r['score'],'source_row':index,'harness':req['harness'],
+                'context':{'provider':r['provider'],'slug':r['slug'],'score_fraction':r['score'],
+                    'cost_per_task_usd':r['cost'],'calls_per_task':r['calls'],'tokens_per_task':r['tokens'],
+                    'publication_date':r['date_str'],'tasks':req['tasks'],'harness':req['harness'],'update_stamp':req['update_stamp']}})
     elif kind=='frontierswe_v2_board':
         # FrontierSWE v2 (Proximal team, frontierswe.com): the leaderboard page embeds its rows in the
         # app's own Next.js flight payload ("entries":{"abs":{"best":…,"mean":…,"worst":…}}). The

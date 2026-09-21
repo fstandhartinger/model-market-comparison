@@ -4959,6 +4959,128 @@
       ]
     },
     {
+      "id": "programbench::1",
+      "name": "ProgramBench",
+      "version": "1",
+      "version_status": "published",
+      "family": "programbench",
+      "category": "Coding",
+      "one_sentence_description": "AI agents rebuild a complete working program from scratch, given only a compiled reference binary and its bundled documentation in an offline container, and the rebuilt program is scored by hidden behavioral tests.",
+      "scoring": {
+        "metric": "Mean per-instance score in percent: each of the 200 benchmark instances is scored by the fraction of its hidden behavioral tests passed, the per-instance scores are macro-averaged over the full 200 (an unattempted instance counts as 0), and the board shows the mean rounded to 0.1 percentage points",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Run under the mini-SWE-agent baseline harness in an offline docker container (--network none, 6-hour wall-time limit, 1000-step limit): the agent must architect and implement a fresh codebase that reproduces the reference binary's externally observable behavior; wrapping the binary, reusing an existing implementation or reading the original source is disqualification. Per-instance score = fraction of the instance's behavioral tests passed (registry ignore map applied; 2026-09-21 the map holds 200 empty lists, no ignored tests). The board also publishes Resolved (score = 1.0, fully solved instances) and Almost (score >= 0.95) shares, average API cost and LLM calls and output tokens per task, and each row's publication date; those stay in the protocol. The board's sub-percent per-instance scores are the same metric the package/verify CLI recomputes (src/programbench/submission.py: mean_score = sum(values)/n_total over 200). Community benchmark of an academic team (Princeton & Meta, arXiv:2605.03546); not a Composite input."
+      },
+      "maintainer": "ProgramBench team (John Yang, Kilian Lieret et al.; Princeton University & Meta)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://programbench.com/",
+      "publication_urls": [
+        {
+          "url": "https://programbench.com/",
+          "type": "official_leaderboard",
+          "role": "Leaderboard (main and extended-results pages)"
+        },
+        {
+          "url": "https://github.com/facebookresearch/ProgramBench",
+          "type": "github",
+          "role": "CLI, eval, docker containers (LICENSE) and the mini-SWE-agent baseline"
+        },
+        {
+          "url": "https://github.com/ProgramBench/submissions",
+          "type": "github",
+          "role": "Authoritative submission registry the leaderboard is compiled from (MIT)"
+        },
+        {
+          "url": "https://huggingface.co/datasets/programbench/ProgramBench-Tests",
+          "type": "huggingface",
+          "role": "Task instances and hidden tests"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "Static HTML with one `var results = [...]` board literal",
+        "identity_policy": "source_label",
+        "locator": "GET / -> the page's own `var results = [...]`; value = score x 100 in percent (the site's headline mean score).",
+        "version_guard": "Page identity phrases (ProgramBench, the rebuild-from-binary task statement, 200 tasks, mini-SWE-agent, the update stamp); exactly one results literal; the exact ten-field row schema; a unique model per row, scores descending and each score within 0..1; the listed providers; the registry README still naming this repo the authoritative registry and the 200-instance macro-average; the scoring source still defining the same per-test-fraction/200 aggregation. A changed task count, a second agent, a dropped board row or a recomputed metric is a different identity and fails closed.",
+        "notes": "robots.txt of programbench.com: 404 (no rules; conventional access). The leaderboard carries no per-model reasoning effort except where the label itself states one in parentheses; every row runs the same mini-SWE-agent scaffold. The registry's _stats recompute is provenance, not a byte-exact cross-check: the site's own details for legacy (.compile_skip) rows predate the current _stats files (2026-09-21 recompute reproduced the eight 2026-07/08 rows to <=0.0005 and the five 2026-04/05 rows to <=0.009), so the site board is the single authoritative daily source."
+      },
+      "update_cadence": {
+        "source_schedule": "The board states its own update stamp (2026-09-21: 'Updated Sep. 9, 2026'); rows are added as registry pull requests and new submissions appear in the authoritative registry repo.",
+        "check_recommendation": "Daily with the ordinary refresh; a changed update stamp or row set is reviewed before it takes effect."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Best board score 74.7 % (Claude Opus 5 xhigh) and only 4.5 % of instances fully solved on the strongest row; computed saturation (CR-38.2) applies on build."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-21",
+      "last_verified": "2026-09-21",
+      "evidence": [
+        {
+          "url": "https://programbench.com/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/7efa63c912e1ec18459e.gz",
+          "sha256": "3f7a2ec87414edb7615faf081a79e044aa111a1519217bc5da7c1dd34fa56296",
+          "fetched_at": "2026-09-21T00:48:03.447305+00:00",
+          "excerpt": "Leaderboard: 'AI agents rebuild programs from binaries and documentation'; 21-row board (Claude Opus 5 (xhigh) 74.7 ... GPT 5 mini 16.0); 'Evaluated with mini-SWE-agent · 200 tasks · Updated Sep. 9, 2026'; per-row provider, mean score, cost/calls/tokens per task, publication date."
+        },
+        {
+          "url": "https://programbench.com/extended/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/d0e9544f11bdf58f4763.gz",
+          "sha256": "bbd08b4f026b3818480e99a061094be5389d3ca0898c079373597317eba5d14c",
+          "fetched_at": "2026-09-21T00:48:07.133730+00:00",
+          "excerpt": "Extended Results page: same 21 rows with Resolved (fully solved %) and Almost (>=95% of tests) columns, cost, calls; 'Click row to see model details · Sorting: Resolved → Almost resolved → Avg. pass rate (more)' and a Score vs. average cost / turns panel restating the mean scores in percent."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/ProgramBench/submissions/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/f370a15cd4836016c8b8.gz",
+          "sha256": "3f75242a1db7ba31090913d599d1a5c24997a5a5dd3354a7b7df8ff6e3e767d3",
+          "fetched_at": "2026-09-21T00:48:10.548815+00:00",
+          "excerpt": "This repo is the authoritative registry of ProgramBench submissions; the public website leaderboard at programbench.com is compiled directly from the entries here. submissions/<id>/{pointer.yaml, submission.yaml, _stats/score.json}; ignored-test strike-out is a pure recompile."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/ProgramBench/submissions/main/LICENSE",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/e16b8d6ba8de2b8bfe25.gz",
+          "sha256": "6d8086217469accf765e248385ae0b37ed499ea69b85641edfd12cf48acee6fc",
+          "fetched_at": "2026-09-21T00:48:13.254804+00:00",
+          "excerpt": "MIT License (submissions registry)."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/facebookresearch/ProgramBench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/6b455a05aa20ad4bd734.gz",
+          "sha256": "2684a65ce93c61b9d4814086752e0eaabf6e4c530220113e7e839b5cc1b4c06d",
+          "fetched_at": "2026-09-21T00:48:15.964870+00:00",
+          "excerpt": "Given only a compiled binary and its documentation, AI agents must architect and implement a complete codebase that reproduces the original program's behavior; arXiv:2605.03546; mini-SWE-agent baseline; tests on HuggingFace (programbench/ProgramBench-Tests)."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/facebookresearch/ProgramBench/main/LICENSE",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/e16b8d6ba8de2b8bfe25.gz",
+          "sha256": "6d8086217469accf765e248385ae0b37ed499ea69b85641edfd12cf48acee6fc",
+          "fetched_at": "2026-09-21T00:48:18.644149+00:00",
+          "excerpt": "License (facebookresearch/ProgramBench)."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/facebookresearch/ProgramBench/main/src/programbench/submission.py",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/48d34c0f02f40e550bbc.gz",
+          "sha256": "442e1c5240c3756204673f9553c1d3e8906d6ce168796f0f432bc4ccffa1f616",
+          "fetched_at": "2026-09-21T00:48:21.351718+00:00",
+          "excerpt": "score_from_tests = fraction passed over the non-ignored tests; aggregate() = mean_score over n_total (200, unattempted counts as 0), resolved at 1.0, near-resolved at 0.95; the leaderboard can recompute scores from _stats/score.json with the registry ignore map."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/ProgramBench/submissions/main/ignored_tests.json",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/9d3e0cf0d6efd2b71ba9.gz",
+          "sha256": "ea3f0e6aace01a72c19089d3427eb577673ff921031db89dee2be1fd01e80557",
+          "fetched_at": "2026-09-21T00:49:55.020907+00:00",
+          "excerpt": "Ignore map over 200 instance ids; every list empty (2026-09-21) - no ignored tests, so scores are plain passed-test fractions."
+        }
+      ]
+    },
+    {
       "id": "gso::opt1-102",
       "name": "GSO software optimization, Opt@1 (UC Berkeley)",
       "version": "opt1-102",
