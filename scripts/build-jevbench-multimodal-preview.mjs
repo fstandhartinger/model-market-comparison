@@ -71,7 +71,7 @@ const synScores = Object.fromEntries([
 if (Object.values(synScores).some((x) => x.n !== synthetic.length)) throw new Error('Synthetic result coverage mismatch');
 
 const artifact = {
-  benchmark: 'JevBench multimodal preview', revision: 'preview-1', generated_at: new Date().toISOString(), status: 'preview',
+  benchmark: 'JevBench multimodal preview', revision: 'preview-1', generated_at: '2026-09-21T21:55:57.399Z', status: 'preview',
   notice: 'Not part of the JevBench Score. Results may change.', public_real_items: 128, held_out_items_published: 0,
   counts, systems, synthetic: { n: synthetic.length, share_of_evaluated: synthetic.length / (items.length + synthetic.length), rank_worthy: false, scores: synScores },
   examples: [
