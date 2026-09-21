@@ -66,6 +66,9 @@ export const PROTOCOL_REVIEW_CRITERIA = [
   'Check the lifecycle fields (status, version_status, superseded_by) against the same protocol text. `status` records whether the maintainer still reports results for this board: `"active"` means it still publishes them; `"retained"` means the protocol shows the board retired, removed, or replaced going forward, and we keep the values already collected without claiming they are current. `superseded_by` holds **our registry id for the successor board**, not a quotation: check that the protocol names that successor, and do not expect this board\'s protocol passage to establish the successor\'s version — that version is settled by the successor\'s own registry entry and its own evidence. Read status and supersession independently: a board can be superseded in one index and still be reported in another, and a supersession note alone is not a retirement. Report a mismatch when the protocol text contradicts one of these fields, and missing evidence when the excerpt cannot settle it. These fields are the row\'s only statement about whether the board is still live; judge them, and judge nothing else as such a statement.',
 ];
 
+// One archive can carry several sources, so a member is keyed by URL and member name.
+export const captureKey = (source) => source.zip_member ? `${source.url}#zip:${source.zip_member}` : source.url;
+
 const textSource = async (source, recipe) => {
   const { stdout } = await exec('python3', ['ops/daily/public-candidate.py', 'text', source.file, ...(recipe ? [recipe] : [])], { maxBuffer: 16_000_000, timeout: 30_000 });
   return stdout;
@@ -137,6 +140,8 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
     if (source?.page_url && source.follow_module_script) { urls.set(source.page_url, { url: source.page_url, follow_module_script: true }); return; }
     if (!source?.url || !source.url.startsWith('https://')) return;
     if (/(^|\.)(x\.com|twitter\.com)$/.test(new URL(source.url).hostname)) return;
+    // A file shipped only inside an archive is captured as that one member (see capture-benchmark-sources.py).
+    if (source.zip_member) { urls.set(captureKey(source), { url: source.url, zip_member: source.zip_member }); return; }
     urls.set(source.url, source.url === 'https://uncommon-sandpiper-321.convex.cloud/api/query'
       ? { url: source.url, method: 'POST', body: { path: 'runs:getLeaderboard', args: {}, format: 'json' } } : source.url);
   };
@@ -165,7 +170,7 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
   await put(join(temporary, 'urls.json'), [...urls.values()]);
   const capture = await exec('python3', ['scripts/capture-benchmark-sources.py', join(temporary, 'urls.json'), evidenceDir], { timeout: 1_800_000, maxBuffer: 8_000_000 });
   await writeFile(join(temporary, 'capture.log'), capture.stdout + capture.stderr);
-  for (const receipt of await json(join(evidenceDir, 'manifest.json'))) captured.set(receipt.url, receipt);
+  for (const receipt of await json(join(evidenceDir, 'manifest.json'))) captured.set(captureKey(receipt), receipt);
   const current = (source) => {
     if (source.page_url && source.follow_module_script) {
       // The current source is the bundle discovered from this run's page capture.
@@ -173,8 +178,8 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
       if (!receipt) throw new Error(`Primary source unavailable: ${source.page_url}: discovered module script capture missing or failed`);
       return { ...source, ...receipt, fetched_at: receipt.retrieved_at };
     }
-    const receipt = captured.get(source.url);
-    if (receipt?.status !== 200) throw new Error(`Primary source unavailable: ${source.url}: ${receipt?.reason ?? receipt?.status ?? 'manual authenticated source'}`);
+    const receipt = captured.get(captureKey(source));
+    if (receipt?.status !== 200) throw new Error(`Primary source unavailable: ${captureKey(source)}: ${receipt?.reason ?? receipt?.status ?? 'manual authenticated source'}`);
     return { ...source, ...receipt, fetched_at: receipt.retrieved_at ?? receipt.fetched_at };
   };
   const bounded = (text, label) => { if (Buffer.byteLength(text) > 60_000) throw new Error(`${label}: full source exceeds review bound; a reviewed extraction recipe is required`); return text; };

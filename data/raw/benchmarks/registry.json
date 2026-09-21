@@ -5104,9 +5104,9 @@
           "role": "Open task repos"
         },
         {
-          "url": "https://epoch.ai/data-download?search=frontierswe",
+          "url": "https://epoch.ai/data/benchmark_data.zip",
           "type": "vendor_report",
-          "role": "Epoch AI FrontierSWE relay CSV (effort statement + byte-exact cross-check)"
+          "role": "Epoch AI FrontierSWE relay CSV, member frontierswe_external.csv of Epoch's benchmark_data.zip (effort statement + byte-exact cross-check; the former data-download link is a 404 since 2026-09-19)"
         }
       ],
       "how_to_collect": {
@@ -5166,11 +5166,12 @@
           "excerpt": "FrontierSWE v2 — 34 hand-written tasks; 5 trials per task; 20-hour budget; mean@5 headline; Proximal (San Francisco)."
         },
         {
-          "url": "https://epoch.ai/data-download?search=frontierswe",
+          "url": "https://epoch.ai/data/benchmark_data.zip",
           "file": "data/raw/benchmarks/daily-evidence/2026-09-19-frontierswe-posttrainbench/epoch-frontierswe-external.csv.gz",
           "sha256": "050da77e25395ca3d24e3e3ffe6d2d9a997c35bb0f76f55b4302c81be8ef3e5a",
           "fetched_at": "2026-09-19T06:10:00.000000+00:00",
-          "excerpt": "frontierswe_external.csv — 12 rows; Model version <slug>_<effort>; Source https://www.frontierswe.com/; Claude Fable 5.1 / claude-fable-5-1_max / 0.5629078999999999 = the site’s 56.29 mean@5 byte-exactly; Notes: V2 (site); fallback footnote for Fable 5.1."
+          "excerpt": "frontierswe_external.csv — 12 rows; Model version <slug>_<effort>; Source https://www.frontierswe.com/; Claude Fable 5.1 / claude-fable-5-1_max / 0.5629078999999999 = the site’s 56.29 mean@5 byte-exactly; Notes: V2 (site); fallback footnote for Fable 5.1.",
+          "zip_member": "frontierswe_external.csv"
         }
       ]
     },

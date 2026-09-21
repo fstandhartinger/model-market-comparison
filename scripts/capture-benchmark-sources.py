@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Bounded public source capture. URL list JSON and output directory; no source code execution."""
-import sys,urllib.request,urllib.error,urllib.robotparser,urllib.parse,hashlib,json,gzip,time,re
+import sys,urllib.request,urllib.error,urllib.robotparser,urllib.parse,hashlib,json,gzip,time,re,zipfile,io
 from pathlib import Path
 from datetime import datetime,timezone
 urls=json.loads(Path(sys.argv[1]).read_text());dest=Path(sys.argv[2]);dest.mkdir(parents=True,exist_ok=True)
@@ -15,6 +15,7 @@ while queue:
  item=queue.pop(0)
  url=item if isinstance(item,str) else item['url'];body=None;method='GET'
  follow=isinstance(item,dict) and item.get('follow_module_script') is True
+ member=item.get('zip_member') if isinstance(item,dict) else None
  if isinstance(item,dict) and item.get('method','GET')!='GET':
   # The sole POST adapter is a documented, read-only leaderboard query.
   if item.get('method')!='POST' or url!='https://uncommon-sandpiper-321.convex.cloud/api/query' or item.get('body')!={'path':'runs:getLeaderboard','args':{},'format':'json'}:raise ValueError('Unsupported capture request')
@@ -22,6 +23,7 @@ while queue:
  host=urllib.parse.urlsplit(url).netloc;origin='https://'+host
  r={'url':url,'retrieved_at':datetime.now(timezone.utc).isoformat(),'method':method}
  if isinstance(item,dict) and item.get('discovered_from'):r['discovered_from']=item['discovered_from']
+ if member:r['zip_member']=member
  if body is not None:r['request_body']=item['body']
  try:
   if host in blocked:raise RuntimeError('Host stopped after access restriction')
@@ -39,6 +41,13 @@ while queue:
   q=urllib.request.urlopen(urllib.request.Request(url,data=body,method=method,headers={'User-Agent':UA,**({'Content-Type':'application/json'} if body else {})}),timeout=45);b=q.read(12000000);last[host]=time.monotonic()
   if len(b)>=12000000:raise RuntimeError('Response exceeds 12MB bound')
   if any(x in b[:100000].lower() for x in [b'<title>just a moment',b'cf-chl-',b'g-recaptcha',b'hcaptcha']):blocked.add(host);raise RuntimeError('Challenge detected; stopped host')
+  if member:
+   # A file that only ships inside a maintainer's archive (Epoch's benchmark_data.zip, 2026-09-21): the named member,
+   # exactly once, is the captured source; the archive's own hash and size stay on the receipt.
+   z=zipfile.ZipFile(io.BytesIO(b));names=[n for n in z.namelist() if n==member]
+   if len(names)!=1:raise RuntimeError('Expected exactly one zip member '+member+', found '+str(len(names)))
+   if z.getinfo(member).file_size>=12000000:raise RuntimeError('Zip member exceeds 12MB bound')
+   r.update(container_sha256=hashlib.sha256(b).hexdigest(),container_bytes=len(b));b=z.read(member)
   sha=hashlib.sha256(b).hexdigest();p=dest/(sha[:20]+'.gz');p.write_bytes(gzip.compress(b,mtime=0));r.update(status=q.status,file=str(p),sha256=sha,bytes=len(b),final_url=q.url)
   if follow and q.status==200:
    # Single-page apps ship their data in one hashed bundle; the name changes every deploy. Two build
