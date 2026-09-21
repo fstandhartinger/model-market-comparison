@@ -1470,3 +1470,8 @@ Supervisor note (not Florian's words): implemented by the job `~/jobs/jevbench-a
 Claude Opus 5) in an isolated worktree, with the UX loop paused via `paused-until` from 06:00 UTC; the pause is released
 after both hosts verified. The measurement round itself is in that job's `RESULT.md`. Verifier:
 `node ops/ux-2026-09-12/bin/verify-cr-108.mjs ops/ux-2026-09-12/jevbench/v1.2.8/verify-cr-108-expect.json <host>...`.
+
+Live verification (21 Sep 2026, 06:15–06:20 UTC): both hosts serve revision v1.2.8; `verify-cr-108` passed 126/126
+(63 per host) three times in a row after the first two attempts ran into the rollout; real-browser check at 1440 px
+and 390 px, light and dark, 8/8 (rows visible, legend present, no horizontal overflow, no page errors). Evidence:
+`/opt/benchmarkheaven/state/ux-evidence/jevbench-v128-cr108/`.
