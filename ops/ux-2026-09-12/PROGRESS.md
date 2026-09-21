@@ -6346,3 +6346,8 @@ Gates: focused tests 19/19 (registry, lifecycle pin updated for the 8 arxivmath 
 - Fixed: `verify-fable-pass28-design.mjs` read the jqv row's first `.bh-thin-tag`, which since CR-108 is the cost column's `est.` pill (titled by its parent span) — iteration 146's "untitled jqv tag / ISR cache" finding was a verifier false positive. The check now selects the not-ranked tag; 30/30 on both hosts.
 - Seeded: CR-108 checklist (04-CR-BRIEF) and rows CR-108.1–.7, live-checked (63/63 per host against v1.2.9), `implemented` pending a non-claude sign-off.
 - Not accepted: X6 (see its row). No `ALL-ACCEPTED`.
+## CR-111 — 2026-09-21: smalljev semantic-v9 entrant
+
+| ID | Requirement (short) | Status | Evidence | Notes |
+|---|---|---|---|---|
+| CR-111.1–111.5 | Pin v1.2.10, add smalljev at 62.4/#29 with honest provenance, preserve earlier results, verify both hosts | implemented | `ops/ux-2026-09-12/jevbench/v1.2.10/`; `ops/ux-2026-09-12/bin/verify-cr-111.mjs` | Awaiting deployment and live verification. |

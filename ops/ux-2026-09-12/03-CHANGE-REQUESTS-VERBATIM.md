@@ -1488,3 +1488,12 @@ Florian's accepted instruction in the existing X DM, 21 Sep 2026, verbatim:
 > Yes, including it in the benchmark
 
 Publish AltSlate Labs' Certo v1 full v1.2 measurement, without changing earlier scores or the frozen task set. Preserve the CR-109 held-out methodology view and split policy. Verify both live hosts before replying to the entrant.
+## CR-20260921d — smalljev entrant → CR-111
+
+Aditya, X DM to @airesearch12, 21 Sep 09:49 (216 followers, joined April 2020), verbatim:
+
+> https://github.com/isHeSatoshi/smalljev — Hey Florian, really appreciate you building JevBench for the community. I've built smalljev and would love to have it benchmarked. Let me know if you run into any issues or need anything from my side.
+
+Florian accepted the request:
+
+> Add this https://github.com/isHeSatoshi/smalljev

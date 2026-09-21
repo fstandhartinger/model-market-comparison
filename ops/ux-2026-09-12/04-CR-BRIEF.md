@@ -882,3 +882,10 @@ Seeded by review gate 20260921T100004Z from the verbatim CR-108 acceptance list 
 - **CR-110.3 Honest conditions.** Keep its local-GPU endpoint, MIT licence, measured speed and non-zero estimated cost basis.
 - **CR-110.4 No collateral changes.** Earlier scores, rules, hard view, CR-109 held-out diagnostic and split policy stay intact.
 - **CR-110.5 Verify.** Full tests, typecheck and production build; both live hosts verified before the entrant DM.
+## CR-111 — smalljev semantic-v9 entrant
+
+- **CR-111.1:** Pin the public JevBench v1.2.10 results, per-task and topic artifacts by SHA-256.
+- **CR-111.2:** Publish smalljev semantic-v9 at 62.4 / #29 with its repository link.
+- **CR-111.3:** Record Apache-2.0, the GPU endpoint, non-zero estimated cost and public-benchmark-directed training disclosure.
+- **CR-111.4:** Preserve every earlier score, the held-out diagnostic, hard-only view, custom-evaluation offer and scoring rules.
+- **CR-111.5:** Verify both production hosts after deployment.
