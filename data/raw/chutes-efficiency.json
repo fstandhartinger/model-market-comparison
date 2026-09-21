@@ -1,5 +1,5 @@
 {
-  "collected_at": "2026-09-21T07:34:25.020Z",
+  "collected_at": "2026-09-21T22:15:28.900Z",
   "window": {
     "start_date": "2026-09-14",
     "end_date": "2026-09-20"
@@ -193,7 +193,7 @@
       "chute_id": "1aabce98-9a04-59ee-8698-a665c51b8b83",
       "name": "[private]",
       "date": "2026-09-20",
-      "total_requests": 28,
+      "total_requests": 29,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -345,7 +345,7 @@
       "chute_id": "65aad57a-d4b2-587a-8a4c-f10f2c72996c",
       "name": "[private]",
       "date": "2026-09-20",
-      "total_requests": 38,
+      "total_requests": 39,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -425,7 +425,7 @@
       "chute_id": "950316bb-a97c-5d9d-8c3f-5e607978db3e",
       "name": "[private]",
       "date": "2026-09-20",
-      "total_requests": 23,
+      "total_requests": 24,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -505,7 +505,7 @@
       "chute_id": "bc6dae73-fc37-5a70-a0c7-2678a3685882",
       "name": "[private]",
       "date": "2026-09-20",
-      "total_requests": 731,
+      "total_requests": 732,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -561,7 +561,7 @@
       "chute_id": "db2b164f-cf43-5036-ada0-fdd88d8d24b4",
       "name": "[private]",
       "date": "2026-09-20",
-      "total_requests": 23,
+      "total_requests": 24,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -1049,7 +1049,7 @@
       "chute_id": "950316bb-a97c-5d9d-8c3f-5e607978db3e",
       "name": "[private]",
       "date": "2026-09-19",
-      "total_requests": 16,
+      "total_requests": 17,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -1145,7 +1145,7 @@
       "chute_id": "bc6dae73-fc37-5a70-a0c7-2678a3685882",
       "name": "[private]",
       "date": "2026-09-19",
-      "total_requests": 429,
+      "total_requests": 430,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -1201,7 +1201,7 @@
       "chute_id": "db2b164f-cf43-5036-ada0-fdd88d8d24b4",
       "name": "[private]",
       "date": "2026-09-19",
-      "total_requests": 16,
+      "total_requests": 17,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -1801,7 +1801,7 @@
       "chute_id": "950316bb-a97c-5d9d-8c3f-5e607978db3e",
       "name": "[private]",
       "date": "2026-09-18",
-      "total_requests": 8,
+      "total_requests": 9,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -1937,7 +1937,7 @@
       "chute_id": "bc6dae73-fc37-5a70-a0c7-2678a3685882",
       "name": "[private]",
       "date": "2026-09-18",
-      "total_requests": 192,
+      "total_requests": 193,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -2001,7 +2001,7 @@
       "chute_id": "db2b164f-cf43-5036-ada0-fdd88d8d24b4",
       "name": "[private]",
       "date": "2026-09-18",
-      "total_requests": 22,
+      "total_requests": 23,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -2769,7 +2769,7 @@
       "chute_id": "db2b164f-cf43-5036-ada0-fdd88d8d24b4",
       "name": "[private]",
       "date": "2026-09-17",
-      "total_requests": 24,
+      "total_requests": 25,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -3537,7 +3537,7 @@
       "chute_id": "db2b164f-cf43-5036-ada0-fdd88d8d24b4",
       "name": "[private]",
       "date": "2026-09-16",
-      "total_requests": 12,
+      "total_requests": 13,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -5248,23 +5248,23 @@
   "provenance": {
     "source": "Chutes LLM usage statistics",
     "url": "https://api.chutes.ai/invocations/stats/llm?start_date=2026-09-14&end_date=2026-09-20",
-    "collected_at": "2026-09-21T07:34:25.020Z",
+    "collected_at": "2026-09-21T22:15:28.900Z",
     "basis": "self_reported"
   },
   "ratio_provenance": {
     "source": "Chutes LLM usage statistics",
     "url": "https://api.chutes.ai/invocations/stats/llm?start_date=2026-09-14&end_date=2026-09-20",
-    "collected_at": "2026-09-21T07:34:25.020Z",
+    "collected_at": "2026-09-21T22:15:28.900Z",
     "basis": "derived",
     "formula": "sum(total_input_tokens) / sum(total_output_tokens)",
     "scope": "Global Chutes token-positive chute/day usage, not a coding-agent-only cohort."
   },
-  "response_sha256": "bb50a641dec9824eba4319c976efa6fecdfb6324145ddf0d7840432850901cbd",
+  "response_sha256": "d8f52054bc245ae86d48819357def0e488b00ed17f9d4abd6ee4cd3e8e388777",
   "attempts": [
     {
       "source": "Chutes LLM usage statistics",
       "url": "https://api.chutes.ai/invocations/stats/llm?start_date=2026-09-14&end_date=2026-09-20",
-      "collected_at": "2026-09-21T07:34:25.020Z",
+      "collected_at": "2026-09-21T22:15:28.900Z",
       "status": "available",
       "http_status": 200
     }

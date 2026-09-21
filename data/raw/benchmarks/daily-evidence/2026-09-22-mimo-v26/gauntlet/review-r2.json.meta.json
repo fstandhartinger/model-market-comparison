@@ -1,0 +1,30 @@
+{
+  "started_at": "2026-09-21T22:50:33.243Z",
+  "mode": "critic",
+  "requested_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
+  "producers": [
+    "openai/gpt-5.6-sol"
+  ],
+  "qualification": {
+    "id": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
+    "family": "deepseek",
+    "free": true,
+    "aa_intelligence_index": 34.3,
+    "aa_source": "exact_variant"
+  },
+  "route": "chutes_direct_fallback_after_local_router_transport_failure",
+  "input_sha256": "257b8c4941c54beefb6bf0c9e4f77ef690853ae971e14b391482fc1226ef942f",
+  "actual_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
+  "usage": {
+    "prompt_tokens": 15334,
+    "total_tokens": 15702,
+    "completion_tokens": 368,
+    "prompt_tokens_details": {
+      "cached_tokens": 15104
+    },
+    "reasoning_tokens": 0
+  },
+  "finish_reason": "stop",
+  "finished_at": "2026-09-21T22:50:39.455Z",
+  "output_sha256": "6052a7d5e89552802c44019df387b6f2cb1f3612137b253fefcc58ba71955a8d"
+}

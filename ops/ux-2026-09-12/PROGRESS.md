@@ -6545,3 +6545,10 @@ Full text: `DESIGN-DIRECTIVES.md` ("Verdict on the live site — pass 29", "Deci
 | ID | Status | Evidence | Note |
 |---|---|---|---|
 | CR-116.1–116.5 | verified | `ops/ux-2026-09-12/jevbench/v1.2.16/CR-116.md`; `ops/ux-2026-09-12/bin/verify-cr-116.mjs`; `/opt/benchmarkheaven/state/ux-evidence/review-20260921T214002Z/cr116/`; `/opt/benchmarkheaven/state/ux-evidence/review-20260921T214002Z/cr116-browser/` | Open-Jev 9B (Zefan Cai) 56.7 / #44 and 2B 53.8 / #46 plus both held-out rows passed the focused HTTP/API check 21/21 per host and the corrected browser check 8/8 across desktop/mobile light/dark; code and focused tests passed. This gate did not implement the release. |
+
+# CR-117 — 2026-09-22: Xiaomi MiMo-V2.6-Pro
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| CR-117.1–117.5 | implemented | `data/research/mimo-v2.6-pro-2026-09-22.md`; `data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/`; `test/mimo-v26-pro.test.mjs` | Added the official MIT checkpoint identity, exact standard OpenRouter route, current AA measurements, and 17 independently reviewed Xiaomi claims marked `self_reported`. Benchmaxxing has zero qualifying overlaps and therefore no verdict or tag: not enough independent data yet. |
+| CR-117.6 | in-progress | focused tests 41/41; benchmark registry and score-evidence guards; `tsc --noEmit`; production build | Awaiting production deployment and both-host browser verification/screenshots. |

@@ -263,71 +263,6 @@
       ]
     },
     {
-      "id": "aa-briefcase::snapshot-2026-09-10",
-      "name": "AA-Briefcase",
-      "version": "snapshot-2026-09-10",
-      "version_status": "snapshot",
-      "family": "aa-briefcase",
-      "category": "Agentic",
-      "one_sentence_description": "Tests multi-week professional knowledge-work projects with linked tasks and large source collections.",
-      "scoring": {
-        "metric": "Combined Elo from rubric task success, analytical quality and presentation comparisons",
-        "unit": "Elo",
-        "range": [
-          null,
-          null
-        ],
-        "higher_better": true,
-        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. AA source field: briefcaseBreakdown.overall.elo. Keep raw units; do not normalize before phase-05 validation."
-      },
-      "maintainer": "Artificial Analysis",
-      "source_type": "official_leaderboard",
-      "primary_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
-      "publication_urls": [
-        {
-          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
-          "type": "official_leaderboard",
-          "role": "Primary results publication and collection entry point"
-        }
-      ],
-      "how_to_collect": {
-        "command": "node scripts/extract-aa-benchmark-fields.mjs MODEL_PAGE.html SOURCE_RECEIPT.json",
-        "format": "Next.js Flight JSON",
-        "locator": "Decode model-page Flight JSON with lib/aa-rsc.mjs; exact model UUID/slug/effort, field briefcaseBreakdown.overall.elo; preserve source units and nulls.",
-        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity. Retained 2026-09-21: AA's methodology now publishes AA-Briefcase v1.1 under the same source field, so this identity only reads AA snapshots collected up to 2026-09-10 (see aa_field_map collected_until); later values belong to aa-briefcase::1.1.",
-        "notes": "Reuse the same model-page response as the efficiency collector. SOURCE_RECEIPT.json must carry url, fetched_at, status=200 and the SHA256 of MODEL_PAGE.html. Raw discovery collection does not authorize score comparisons or change the Composite."
-      },
-      "update_cadence": {
-        "source_schedule": "Not stated in the verified source; no promised publication schedule.",
-        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
-      },
-      "saturated": {
-        "value": false,
-        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
-      },
-      "superseded_by": "aa-briefcase::1.1",
-      "status": "retained",
-      "first_seen": "2026-09-10",
-      "last_verified": "2026-09-10",
-      "evidence": [
-        {
-          "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
-          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-1ea3e75f96c3.txt",
-          "sha256": "767bce5f921c5987907766015e69fdc66bffd355e7096f9e002237ca252c0bee",
-          "fetched_at": "2026-09-10T21:47:46.639Z",
-          "excerpt": "AA-Briefcase\nStatus:\nIncluded in\nArtificial Analysis Intelligence Index v4.3\nat 15% weighting.\nDescription:\nAA-Briefcase is a new benchmark for testing models on realistic knowledge work tasks in complex projects built by industry experts. Models are evaluated on multi-week knowledge work projects, each with many linked tasks and thousands of input source files. AA-Briefcase combines rubric and pairwise grading to evaluate verifiable task success, analytical quality, and presentation quality, giving a holistic view of overall agentic capability in knowledge work.\nExample dataset:\nhttps://huggingface.co/datasets/ArtificialAnalysis/AA-Briefcase-Lite\nAgent harness:\nhttps://github.com/ArtificialAnalysis/Stirrup\nImplementation:\nEach AA-Briefcase scenario is a realistic multi-week business problem, organized as a multi-week workflow that the agent works through in sequence, with 2-5 tasks per week. Although tasks within a scenario share files and context across weeks, models currently complete each task in an independent run, without carrying over their own prior submissions. The agent receives the task description and accessible source files, then produces final deliverable files without live interaction or iterative feedback during execution.\nScenario source pools include shared files and week-specific files, mixing real, augmented, and synthetic materials. Source files are designed to include realistic professional artifacts such as Slack exports, spreadsheets, PDFs, interview transcripts, market research, standards documents, app-store pages, board materials, emails, and othe"
-        },
-        {
-          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
-          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-29d2fef1679c.html.gz",
-          "sha256": "0755b50e126d34a650236b552a8b8ebb2d6d7462bd97040b8c65295d9baa556d",
-          "source_sha256": "d921f7b255347b1091c5595adbbb5170ed6e9fe62250967a8586eb303ee99d2d",
-          "fetched_at": "2026-09-10T21:47:16.627Z",
-          "excerpt": "\"briefcaseBreakdown\" (literal field in the captured Flight model rows; gzip source retained)"
-        }
-      ]
-    },
-    {
       "id": "aa-briefcase::1.1",
       "name": "AA-Briefcase v1.1",
       "version": "1.1",
@@ -395,6 +330,71 @@
           "sha256": "49a797285d935b6417252ac3ed07c758eb92056ca53fbcd9f3b63709d4b475dc",
           "source_sha256": "fd7d6c211b7165ddc89d38e0dd0da43a7505896862bdf2df8d715ad4c94b94eb",
           "fetched_at": "2026-09-21T02:24:09.194364+00:00",
+          "excerpt": "\"briefcaseBreakdown\" (literal field in the captured Flight model rows; gzip source retained)"
+        }
+      ]
+    },
+    {
+      "id": "aa-briefcase::snapshot-2026-09-10",
+      "name": "AA-Briefcase",
+      "version": "snapshot-2026-09-10",
+      "version_status": "snapshot",
+      "family": "aa-briefcase",
+      "category": "Agentic",
+      "one_sentence_description": "Tests multi-week professional knowledge-work projects with linked tasks and large source collections.",
+      "scoring": {
+        "metric": "Combined Elo from rubric task success, analytical quality and presentation comparisons",
+        "unit": "Elo",
+        "range": [
+          null,
+          null
+        ],
+        "higher_better": true,
+        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. AA source field: briefcaseBreakdown.overall.elo. Keep raw units; do not normalize before phase-05 validation."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "publication_urls": [
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and collection entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "node scripts/extract-aa-benchmark-fields.mjs MODEL_PAGE.html SOURCE_RECEIPT.json",
+        "format": "Next.js Flight JSON",
+        "locator": "Decode model-page Flight JSON with lib/aa-rsc.mjs; exact model UUID/slug/effort, field briefcaseBreakdown.overall.elo; preserve source units and nulls.",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity. Retained 2026-09-21: AA's methodology now publishes AA-Briefcase v1.1 under the same source field, so this identity only reads AA snapshots collected up to 2026-09-10 (see aa_field_map collected_until); later values belong to aa-briefcase::1.1.",
+        "notes": "Reuse the same model-page response as the efficiency collector. SOURCE_RECEIPT.json must carry url, fetched_at, status=200 and the SHA256 of MODEL_PAGE.html. Raw discovery collection does not authorize score comparisons or change the Composite."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": "aa-briefcase::1.1",
+      "status": "retained",
+      "first_seen": "2026-09-10",
+      "last_verified": "2026-09-10",
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-1ea3e75f96c3.txt",
+          "sha256": "767bce5f921c5987907766015e69fdc66bffd355e7096f9e002237ca252c0bee",
+          "fetched_at": "2026-09-10T21:47:46.639Z",
+          "excerpt": "AA-Briefcase\nStatus:\nIncluded in\nArtificial Analysis Intelligence Index v4.3\nat 15% weighting.\nDescription:\nAA-Briefcase is a new benchmark for testing models on realistic knowledge work tasks in complex projects built by industry experts. Models are evaluated on multi-week knowledge work projects, each with many linked tasks and thousands of input source files. AA-Briefcase combines rubric and pairwise grading to evaluate verifiable task success, analytical quality, and presentation quality, giving a holistic view of overall agentic capability in knowledge work.\nExample dataset:\nhttps://huggingface.co/datasets/ArtificialAnalysis/AA-Briefcase-Lite\nAgent harness:\nhttps://github.com/ArtificialAnalysis/Stirrup\nImplementation:\nEach AA-Briefcase scenario is a realistic multi-week business problem, organized as a multi-week workflow that the agent works through in sequence, with 2-5 tasks per week. Although tasks within a scenario share files and context across weeks, models currently complete each task in an independent run, without carrying over their own prior submissions. The agent receives the task description and accessible source files, then produces final deliverable files without live interaction or iterative feedback during execution.\nScenario source pools include shared files and week-specific files, mixing real, augmented, and synthetic materials. Source files are designed to include realistic professional artifacts such as Slack exports, spreadsheets, PDFs, interview transcripts, market research, standards documents, app-store pages, board materials, emails, and othe"
+        },
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-29d2fef1679c.html.gz",
+          "sha256": "0755b50e126d34a650236b552a8b8ebb2d6d7462bd97040b8c65295d9baa556d",
+          "source_sha256": "d921f7b255347b1091c5595adbbb5170ed6e9fe62250967a8586eb303ee99d2d",
+          "fetched_at": "2026-09-10T21:47:16.627Z",
           "excerpt": "\"briefcaseBreakdown\" (literal field in the captured Flight model rows; gzip source retained)"
         }
       ]
@@ -2539,6 +2539,76 @@
       ]
     },
     {
+      "id": "blueprint-bench::2",
+      "name": "Blueprint-Bench 2",
+      "version": "2",
+      "version_status": "published",
+      "family": "blueprint-bench",
+      "category": "Vision",
+      "one_sentence_description": "An agent looks at about twenty interior photos of each of 50 apartments and draws the floor plan: which rooms exist and which rooms connect to which.",
+      "scoring": {
+        "metric": "Connectivity similarity score of the generated floor plans against ground truth, normalised so the random baseline is 0 and a perfect plan is 1",
+        "unit": "points",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Each plan's room-connection graph is compared with the true plan under rotation and reflection: Jaccard similarity of room-to-room connections 50 %, degree similarity 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %. The composite is normalised so that the random baseline maps to 0 and a perfect score to 1, and the board prints any score at or below the random baseline as 0.000 (marked ** on the page; the row's protocol keeps that marker). The number is shown the way the source publishes it — a normalised index, not a share of apartments solved. The page's human baseline (0.586, run on 12 of the 50 apartments) is not a model and is not collected. Secondary benchmark, never a Composite input."
+      },
+      "maintainer": "Andon Labs",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://andonlabs.com/evals/blueprint-bench-2",
+      "publication_urls": [
+        {
+          "url": "https://andonlabs.com/evals/blueprint-bench-2",
+          "type": "official_leaderboard",
+          "role": "Leaderboard table, method and scoring description (primary results publication)"
+        },
+        {
+          "url": "https://andonlabs.com/evals/blueprint-bench",
+          "type": "official_leaderboard",
+          "role": "Original Blueprint-Bench (version 1) page and paper link"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-blueprint-bench-2; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "HTML table",
+        "identity_policy": "source_label",
+        "locator": "The 'Leaderboard' table on the Blueprint-Bench 2 page (server-rendered, the page's only <table>): rank, model name, score (0–1). The 'Human*' baseline row is skipped; a score ending in ** is at or below the random baseline and is kept with that marker.",
+        "version_guard": "The page must still describe Blueprint-Bench 2 (50 apartments processed sequentially, ~20 photos each, 2D floor plans), the normalisation (random baseline 0, perfect 1), the scoring weights (Jaccard similarity 50 %) and both footnotes (** at or below the random baseline; * human baseline on 12 apartments); the table header must read Model / Score, three cells per row, one row per model. Another version, apartment set or scoring is a new identity, never a silent update of this one.",
+        "notes": "Measured by Andon Labs, which runs every model itself as an agent with a persistent notepad across the 50 apartments. The table names models by product name only and states no reasoning setting, so under the exact-join policy only a family the catalog holds as a single default configuration joins; every other row stays visible as named by the source. robots.txt: none (the path answers the site's HTML shell → conventional access); no licence statement on the page — scores only, with attribution to Andon Labs and a link to the page. Joins: data/raw/benchmarks/identity-map.json (lib/board-identity.mjs parseBlueprintBenchLabel)."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated; Andon Labs adds models as it runs them (released May 2026; the 2026-09-21 capture lists 26 models up to GPT-6 Astra and Claude Fable 5.1).",
+        "check_recommendation": "Daily with the ordinary refresh; a changed task set, scoring or normalisation is a new identity and needs a reviewed change."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Best model 0.497 against a human baseline of 0.586 on the page's own 0–1 scale; computed saturation (CR-38.2) applies on build."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-21",
+      "last_verified": "2026-09-21",
+      "evidence": [
+        {
+          "url": "https://andonlabs.com/evals/blueprint-bench-2",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-blueprint-bench-2/f1ae172f38a9a3246282.gz",
+          "sha256": "e1aee19431b5c23d93ea9f81d8add0f5dd40b720966f0e477418767ec38bd48d",
+          "fetched_at": "2026-09-21T17:34:30.150578+00:00",
+          "excerpt": "Blueprint-Bench 2 tests spatial reasoning by asking AI agents to convert apartment photographs into accurate 2D floor plans. Each agent processes 50 apartments sequentially, examining ~20 interior photos per apartment and generating a floor plan showing room layouts, connections, and relative sizes."
+        },
+        {
+          "url": "https://andonlabs.com/evals/blueprint-bench-2",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-blueprint-bench-2/f1ae172f38a9a3246282.gz",
+          "sha256": "e1aee19431b5c23d93ea9f81d8add0f5dd40b720966f0e477418767ec38bd48d",
+          "fetched_at": "2026-09-21T17:34:30.150578+00:00",
+          "excerpt": "The composite score weights six sub-metrics: Jaccard similarity (50%) … degree similarity (20%) … density similarity (10%) … room count (10%), door count (5%), and orientation (5%). … Scores are then normalized so that the random baseline maps to 0 and a perfect score maps to 1."
+        }
+      ]
+    },
+    {
       "id": "bu-bench-v1::snapshot-2026-09-09",
       "name": "BU Bench V1 (Browser Use)",
       "version": "snapshot-2026-09-09",
@@ -2892,6 +2962,81 @@
         "version_guard": "Exact 13-column Epoch run header (Model version, mean_score, Best score (across scorers), Release date, Organization, Country, Training compute (FLOP), Training compute notes, stderr, Log viewer, Logs, Started at, id), and benchmark_metadata.csv still maps Chess Puzzles to chess_puzzles.csv / “Best score (across scorers)”. A new problem set, a changed score column or a changed header is a new identity after manual review; epoch.ai robots.txt allows /data/ (verified 2026-09-16, CR-54.1); one capture per refresh, no retries against errors.",
         "notes": "Manual snapshot like DeepSWE/SimpleQA Verified: Epoch publishes one multi-benchmark ZIP that changes with every Epoch update. Refresh with this recipe, then rerun build-identity-map.mjs. robots.txt allows /data/. CC BY 4.0: attribute Epoch AI. Epoch-run results (not an *_external file), so CR-35.5's original-source question does not arise. Model labels are Epoch slugs; exact joins come from data/raw/benchmarks/identity-map.json (lib/coding-identity.mjs, parseDeepSweId rules). Ingested under CR-54.2 on 2026-09-19; the two siblings kept out (math_level_5, frontiermath_erdos) and their reasons live in data/raw/benchmarks/epoch-hub-decisions.json."
       }
+    },
+    {
+      "id": "context-arena-mrcr-v2::8-needle",
+      "name": "Context Arena — MRCR v2 (8-needle)",
+      "version": "8-needle",
+      "version_status": "published",
+      "family": "context-arena-mrcr-v2",
+      "category": "Long-context",
+      "one_sentence_description": "The model must find and reproduce the right one of eight near-identical earlier replies hidden in a long conversation, averaged over context lengths from 8k to 128k tokens.",
+      "scoring": {
+        "metric": "Cumulative average score up to 128k tokens (unweighted mean of the 8k–128k bins), percent",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "8-needle MRCR v2, Context Arena's default \"full\" test set; each response is scored 0–1 by string similarity after a hash check, and a bin's score is the mean over its tests. The 128k cumulative average is the figure GDM's README says it reports; Context Arena's AUC variants and the 1M figures are kept per row but never used as the value. Secondary benchmark, never a Composite input."
+      },
+      "maintainer": "Context Arena (Dillon Uzar); dataset by Google DeepMind (eval_hub MRCR v2)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://contextarena.ai/",
+      "publication_urls": [
+        {
+          "url": "https://contextarena.ai/",
+          "type": "official_leaderboard",
+          "role": "Leaderboard app (renders the JSON endpoint below)"
+        },
+        {
+          "url": "https://contextarena.ai/api/needle-summary?needles=8",
+          "type": "official_leaderboard",
+          "role": "The app's own board data: per-bin and overall metrics per model × reasoning mode"
+        },
+        {
+          "url": "https://github.com/google-deepmind/eval_hub/blob/master/eval_hub/mrcr_v2/README.md",
+          "type": "github",
+          "role": "MRCR v2 dataset, task definition and reporting convention (GDM)"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-context-arena; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JSON API",
+        "identity_policy": "source_label",
+        "locator": "Context Arena's own JSON endpoint GET /api/needle-summary?needles=8 (the request the leaderboard app makes; mode \"full\"): `models[]`, one row per model_slug × reasoning_mode, with `bin_metrics` per token bin (avg_score 0–1, n_tests, is_incomplete) and `overall_metrics` (cum_avg_128k, auc_128k, auc_1m, cum_avg_1m, total_runs). The value is overall_metrics.cum_avg_128k × 100: the unweighted mean of the 8k, 16k, 32k, 64k and 128k bin scores.",
+        "version_guard": "The endpoint must still answer the default request with needles 8 in the \"full\" test set and the eight power-of-two bins 8k … 1M; every scored row must carry complete bins 8k, 16k, 32k, 64k and 128k whose unweighted mean reproduces the row's own cum_avg_128k. GDM's MRCR v2 README must still describe the task (count instances of a body of text and reproduce the correct instance), the 8-needle \"upto_128K\" cumulative reporting and the tools caveat. Another needle count, test set or bin layout is a new identity, never a silent update of this one.",
+        "notes": "Measured by Context Arena (Dillon Uzar) on Google DeepMind's published MRCR v2 dataset via each model's API; the dataset and README are GDM's (eval_hub). robots.txt is absent (404 → conventional access); the site publishes no licence or terms page, so only scores with attribution are stored — attribute Context Arena and GDM eval_hub and link the leaderboard. Rows the site itself marks insufficient or unranked are not scored; a row whose bins up to 128k are incomplete is not scored until they complete; a model the site marks deprecated keeps its measured row with the flag in the protocol. Joins: data/raw/benchmarks/identity-map.json (lib/board-identity.mjs, parseContextArenaId)."
+      },
+      "update_cadence": {
+        "source_schedule": "Context Arena adds models and reasoning modes as it runs them (newest run in the 2026-09-21 capture: 2026-09-16).",
+        "check_recommendation": "Daily with the ordinary refresh; another needle count, test set or bin layout is a new identity and needs a reviewed change."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Best 128k cumulative average at capture is 98.2 % while the median complete row is far lower, so the board still separates models; computed saturation (CR-38.2) applies on build."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-21",
+      "last_verified": "2026-09-21",
+      "evidence": [
+        {
+          "url": "https://raw.githubusercontent.com/google-deepmind/eval_hub/master/eval_hub/mrcr_v2/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-context-arena/7b2010f4685643f4af7b.gz",
+          "sha256": "57a9f8fa79ae0f45ac1a54a376290fad969b17734d1487b1c23ab92f30d493c4",
+          "fetched_at": "2026-09-21T17:13:30.878266+00:00",
+          "excerpt": "At the time of this release, we currently report the 8-needle version of the task on the \"upto_128K\" (cumulative) and \"at_1M\" pointwise variants."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/google-deepmind/eval_hub/master/eval_hub/mrcr_v2/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-context-arena/7b2010f4685643f4af7b.gz",
+          "sha256": "57a9f8fa79ae0f45ac1a54a376290fad969b17734d1487b1c23ab92f30d493c4",
+          "fetched_at": "2026-09-21T17:13:30.878266+00:00",
+          "excerpt": "count instances of a body of text and reproduce the correct instance. … Any report of MRCR should explicitly state whether or not tools were provided to the model"
+        }
+      ]
     },
     {
       "id": "critpt::snapshot-2026-09-10",
@@ -5241,128 +5386,6 @@
       ]
     },
     {
-      "id": "programbench::1",
-      "name": "ProgramBench",
-      "version": "1",
-      "version_status": "published",
-      "family": "programbench",
-      "category": "Coding",
-      "one_sentence_description": "AI agents rebuild a complete working program from scratch, given only a compiled reference binary and its bundled documentation in an offline container, and the rebuilt program is scored by hidden behavioral tests.",
-      "scoring": {
-        "metric": "Mean per-instance score in percent: each of the 200 benchmark instances is scored by the fraction of its hidden behavioral tests passed, the per-instance scores are macro-averaged over the full 200 (an unattempted instance counts as 0), and the board shows the mean rounded to 0.1 percentage points",
-        "unit": "percent",
-        "range": [
-          0,
-          100
-        ],
-        "higher_better": true,
-        "notes": "Run under the mini-SWE-agent baseline harness in an offline docker container (--network none, 6-hour wall-time limit, 1000-step limit): the agent must architect and implement a fresh codebase that reproduces the reference binary's externally observable behavior; wrapping the binary, reusing an existing implementation or reading the original source is disqualification. Per-instance score = fraction of the instance's behavioral tests passed (registry ignore map applied; 2026-09-21 the map holds 200 empty lists, no ignored tests). The board also publishes Resolved (score = 1.0, fully solved instances) and Almost (score >= 0.95) shares, average API cost and LLM calls and output tokens per task, and each row's publication date; those stay in the protocol. The board's sub-percent per-instance scores are the same metric the package/verify CLI recomputes (src/programbench/submission.py: mean_score = sum(values)/n_total over 200). Community benchmark of an academic team (Princeton & Meta, arXiv:2605.03546); not a Composite input."
-      },
-      "maintainer": "ProgramBench team (John Yang, Kilian Lieret et al.; Princeton University & Meta)",
-      "source_type": "official_leaderboard",
-      "primary_url": "https://programbench.com/",
-      "publication_urls": [
-        {
-          "url": "https://programbench.com/",
-          "type": "official_leaderboard",
-          "role": "Leaderboard (main and extended-results pages)"
-        },
-        {
-          "url": "https://github.com/facebookresearch/ProgramBench",
-          "type": "github",
-          "role": "CLI, eval, docker containers (LICENSE) and the mini-SWE-agent baseline"
-        },
-        {
-          "url": "https://github.com/ProgramBench/submissions",
-          "type": "github",
-          "role": "Authoritative submission registry the leaderboard is compiled from (MIT)"
-        },
-        {
-          "url": "https://huggingface.co/datasets/programbench/ProgramBench-Tests",
-          "type": "huggingface",
-          "role": "Task instances and hidden tests"
-        }
-      ],
-      "how_to_collect": {
-        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
-        "format": "Static HTML with one `var results = [...]` board literal",
-        "identity_policy": "source_label",
-        "locator": "GET / -> the page's own `var results = [...]`; value = score x 100 in percent (the site's headline mean score).",
-        "version_guard": "Page identity phrases (ProgramBench, the rebuild-from-binary task statement, 200 tasks, mini-SWE-agent, the update stamp); exactly one results literal; the exact ten-field row schema; a unique model per row, scores descending and each score within 0..1; the listed providers; the registry README still naming this repo the authoritative registry and the 200-instance macro-average; the scoring source still defining the same per-test-fraction/200 aggregation. A changed task count, a second agent, a dropped board row or a recomputed metric is a different identity and fails closed.",
-        "notes": "robots.txt of programbench.com: 404 (no rules; conventional access). The leaderboard carries no per-model reasoning effort except where the label itself states one in parentheses; every row runs the same mini-SWE-agent scaffold. The registry's _stats recompute is provenance, not a byte-exact cross-check: the site's own details for legacy (.compile_skip) rows predate the current _stats files (2026-09-21 recompute reproduced the eight 2026-07/08 rows to <=0.0005 and the five 2026-04/05 rows to <=0.009), so the site board is the single authoritative daily source."
-      },
-      "update_cadence": {
-        "source_schedule": "The board states its own update stamp (2026-09-21: 'Updated Sep. 9, 2026'); rows are added as registry pull requests and new submissions appear in the authoritative registry repo.",
-        "check_recommendation": "Daily with the ordinary refresh; a changed update stamp or row set is reviewed before it takes effect."
-      },
-      "saturated": {
-        "value": false,
-        "note": "Best board score 74.7 % (Claude Opus 5 xhigh) and only 4.5 % of instances fully solved on the strongest row; computed saturation (CR-38.2) applies on build."
-      },
-      "superseded_by": null,
-      "status": "active",
-      "first_seen": "2026-09-21",
-      "last_verified": "2026-09-21",
-      "evidence": [
-        {
-          "url": "https://programbench.com/",
-          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/7efa63c912e1ec18459e.gz",
-          "sha256": "3f7a2ec87414edb7615faf081a79e044aa111a1519217bc5da7c1dd34fa56296",
-          "fetched_at": "2026-09-21T00:48:03.447305+00:00",
-          "excerpt": "Leaderboard: 'AI agents rebuild programs from binaries and documentation'; 21-row board (Claude Opus 5 (xhigh) 74.7 ... GPT 5 mini 16.0); 'Evaluated with mini-SWE-agent · 200 tasks · Updated Sep. 9, 2026'; per-row provider, mean score, cost/calls/tokens per task, publication date."
-        },
-        {
-          "url": "https://programbench.com/extended/",
-          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/d0e9544f11bdf58f4763.gz",
-          "sha256": "bbd08b4f026b3818480e99a061094be5389d3ca0898c079373597317eba5d14c",
-          "fetched_at": "2026-09-21T00:48:07.133730+00:00",
-          "excerpt": "Extended Results page: same 21 rows with Resolved (fully solved %) and Almost (>=95% of tests) columns, cost, calls; 'Click row to see model details · Sorting: Resolved → Almost resolved → Avg. pass rate (more)' and a Score vs. average cost / turns panel restating the mean scores in percent."
-        },
-        {
-          "url": "https://raw.githubusercontent.com/ProgramBench/submissions/main/README.md",
-          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/f370a15cd4836016c8b8.gz",
-          "sha256": "3f75242a1db7ba31090913d599d1a5c24997a5a5dd3354a7b7df8ff6e3e767d3",
-          "fetched_at": "2026-09-21T00:48:10.548815+00:00",
-          "excerpt": "This repo is the authoritative registry of ProgramBench submissions; the public website leaderboard at programbench.com is compiled directly from the entries here. submissions/<id>/{pointer.yaml, submission.yaml, _stats/score.json}; ignored-test strike-out is a pure recompile."
-        },
-        {
-          "url": "https://raw.githubusercontent.com/ProgramBench/submissions/main/LICENSE",
-          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/e16b8d6ba8de2b8bfe25.gz",
-          "sha256": "6d8086217469accf765e248385ae0b37ed499ea69b85641edfd12cf48acee6fc",
-          "fetched_at": "2026-09-21T00:48:13.254804+00:00",
-          "excerpt": "MIT License (submissions registry)."
-        },
-        {
-          "url": "https://raw.githubusercontent.com/facebookresearch/ProgramBench/main/README.md",
-          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/6b455a05aa20ad4bd734.gz",
-          "sha256": "2684a65ce93c61b9d4814086752e0eaabf6e4c530220113e7e839b5cc1b4c06d",
-          "fetched_at": "2026-09-21T00:48:15.964870+00:00",
-          "excerpt": "Given only a compiled binary and its documentation, AI agents must architect and implement a complete codebase that reproduces the original program's behavior; arXiv:2605.03546; mini-SWE-agent baseline; tests on HuggingFace (programbench/ProgramBench-Tests)."
-        },
-        {
-          "url": "https://raw.githubusercontent.com/facebookresearch/ProgramBench/main/LICENSE",
-          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/e16b8d6ba8de2b8bfe25.gz",
-          "sha256": "6d8086217469accf765e248385ae0b37ed499ea69b85641edfd12cf48acee6fc",
-          "fetched_at": "2026-09-21T00:48:18.644149+00:00",
-          "excerpt": "License (facebookresearch/ProgramBench)."
-        },
-        {
-          "url": "https://raw.githubusercontent.com/facebookresearch/ProgramBench/main/src/programbench/submission.py",
-          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/48d34c0f02f40e550bbc.gz",
-          "sha256": "442e1c5240c3756204673f9553c1d3e8906d6ce168796f0f432bc4ccffa1f616",
-          "fetched_at": "2026-09-21T00:48:21.351718+00:00",
-          "excerpt": "score_from_tests = fraction passed over the non-ignored tests; aggregate() = mean_score over n_total (200, unattempted counts as 0), resolved at 1.0, near-resolved at 0.95; the leaderboard can recompute scores from _stats/score.json with the registry ignore map."
-        },
-        {
-          "url": "https://raw.githubusercontent.com/ProgramBench/submissions/main/ignored_tests.json",
-          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/9d3e0cf0d6efd2b71ba9.gz",
-          "sha256": "ea3f0e6aace01a72c19089d3427eb577673ff921031db89dee2be1fd01e80557",
-          "fetched_at": "2026-09-21T00:49:55.020907+00:00",
-          "excerpt": "Ignore map over 200 instance ids; every list empty (2026-09-21) - no ignored tests, so scores are plain passed-test fractions."
-        }
-      ]
-    },
-    {
       "id": "gso::opt1-102",
       "name": "GSO software optimization, Opt@1 (UC Berkeley)",
       "version": "opt1-102",
@@ -6535,6 +6558,81 @@
           "sha256": "dad300ad18655b69db720e1b88fc5a5eac06c5b2f0e52c2bf50f10ff057674f3",
           "fetched_at": "2026-09-10T22:23:16Z",
           "excerpt": "Exact release-specific raw publication"
+        }
+      ]
+    },
+    {
+      "id": "long-horizon-terminal-bench::1.0",
+      "name": "Long-Horizon Terminal-Bench",
+      "version": "1.0",
+      "version_status": "published",
+      "family": "long-horizon-terminal-bench",
+      "category": "Agentic",
+      "one_sentence_description": "An agent works in a terminal for up to 90 minutes per task on 46 long jobs — building systems, migrating frameworks, playing games move by move — and earns partial credit for real progress.",
+      "scoring": {
+        "metric": "Mean reward over the 46 tasks (hidden verifiers pay continuous partial credit from 0 to 1; errors count 0)",
+        "unit": "points",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "The number is shown the way the board publishes it — a mean partial-credit reward on a 0–1 scale, not a share of tasks solved (the board also counts a task solved at reward ≥ 0.95; that count stays in each row's protocol). Every run uses the same Terminus-2 harness, one attempt per task and a uniform 90-minute budget. The seed rows are the maintainers' paper baselines (July 2026); later runs are added after the maintainers replay and verify them. Per-task cost estimates from the paper stay in the protocol. Secondary benchmark, never a Composite input."
+      },
+      "maintainer": "Long-Horizon Terminal-Bench authors (Tencent HY LLM Frontier)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://zli12321.github.io/LHTB/leaderboard.html",
+      "publication_urls": [
+        {
+          "url": "https://zli12321.github.io/LHTB/leaderboard.html",
+          "type": "official_leaderboard",
+          "role": "Community leaderboard (primary results publication)"
+        },
+        {
+          "url": "https://arxiv.org/abs/2607.08964",
+          "type": "vendor_report",
+          "role": "Benchmark report (task design, harness, scoring)"
+        },
+        {
+          "url": "https://huggingface.co/datasets/IntelligenceLab/LHTB-leaderboard",
+          "type": "huggingface",
+          "role": "Submission archive (per-run job folders and metadata, Apache-2.0)"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-lhtb; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JavaScript object literals (static site)",
+        "locator": "script.js: the `const LB = [...]` literal (paper Terminus-2 baselines: name, vendor, mean, solved, cost) and every `COMMUNITY.push({...})` (later verified runs: agent, name, mean, st, submitter, date, verified) — the rows the community leaderboard renders; leaderboard.html supplies the scoring statements.",
+        "version_guard": "The leaderboard page must still describe community runs on the 46-task suite ranked by mean reward, the Terminus-2 seed baselines, the scoring note (mean reward over 46 tasks, errors = 0, solved at reward ≥ 0.95) and the 90-minute single-attempt budget; script.js must hold N_TASKS = 46, exactly one LB literal and the COMMUNITY map (Terminus-2, 2026-07-01, verified). A new agent, an unverified run or a new row field fails closed for review. Another task set or budget is a new identity, never a silent update of this one.",
+        "identity_policy": "source_label",
+        "notes": "Measured by the maintainers, who replay each submission's trajectories against the hidden verifiers. The board names models by product name only; the submissions' metadata.yaml and job config.json state no reasoning setting, so under the exact-join policy only a family the catalog holds as a single default configuration joins, and every other row stays visible as named by the source. robots.txt allows all (GitHub Pages); the submission archive is Apache-2.0 — scores with attribution and a link to the leaderboard. Joins: data/raw/benchmarks/identity-map.json (lib/board-identity.mjs parseLhtbLabel)."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated; community submissions are added after review (seeded 2026-07-01, one later run on 2026-07-22 in the 2026-09-21 capture; the Hugging Face submission archive changes more often).",
+        "check_recommendation": "Daily with the ordinary refresh; a changed task set, harness budget or scoring is a new identity and needs a reviewed change."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Best mean reward 0.505 (Grok 4.5) on the 0–1 scale; 29 of 46 tasks never passed by any model according to the report. Computed saturation (CR-38.2) applies on build."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-21",
+      "last_verified": "2026-09-21",
+      "evidence": [
+        {
+          "url": "https://zli12321.github.io/LHTB/leaderboard.html",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/e10e19f8794b4e4ce6b0.gz",
+          "sha256": "78de6cedf807c58328cf80f96e0e686d2f18d1bd66a1529bcc2c98743e35efb6",
+          "fetched_at": "2026-09-21T20:08:09.150639+00:00",
+          "excerpt": "Community-submitted runs on the 46-task Long-Horizon Terminal-Bench suite, ranked by mean reward. The seed entries are our Terminus-2 baselines … Scores are mean reward over the 46-task suite (errors = 0; a task counts as solved at reward ≥ 0.95)."
+        },
+        {
+          "url": "https://zli12321.github.io/LHTB/script.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/8b9c27664cc6298fa234.gz",
+          "sha256": "f550228396dc17c57066d9ec3b18f085eb9dd37b084600a8b1e8a17eb9845938",
+          "fetched_at": "2026-09-21T20:08:06.577129+00:00",
+          "excerpt": "const N_TASKS = 46; … const COMMUNITY = LB.map((d) => ({ agent: \"Terminus-2\", name: d.name, … date: \"2026-07-01\", verified: true }));"
         }
       ]
     },
@@ -8650,6 +8748,198 @@
       ]
     },
     {
+      "id": "programbench::1",
+      "name": "ProgramBench",
+      "version": "1",
+      "version_status": "published",
+      "family": "programbench",
+      "category": "Coding",
+      "one_sentence_description": "AI agents rebuild a complete working program from scratch, given only a compiled reference binary and its bundled documentation in an offline container, and the rebuilt program is scored by hidden behavioral tests.",
+      "scoring": {
+        "metric": "Mean per-instance score in percent: each of the 200 benchmark instances is scored by the fraction of its hidden behavioral tests passed, the per-instance scores are macro-averaged over the full 200 (an unattempted instance counts as 0), and the board shows the mean rounded to 0.1 percentage points",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Run under the mini-SWE-agent baseline harness in an offline docker container (--network none, 6-hour wall-time limit, 1000-step limit): the agent must architect and implement a fresh codebase that reproduces the reference binary's externally observable behavior; wrapping the binary, reusing an existing implementation or reading the original source is disqualification. Per-instance score = fraction of the instance's behavioral tests passed (registry ignore map applied; 2026-09-21 the map holds 200 empty lists, no ignored tests). The board also publishes Resolved (score = 1.0, fully solved instances) and Almost (score >= 0.95) shares, average API cost and LLM calls and output tokens per task, and each row's publication date; those stay in the protocol. The board's sub-percent per-instance scores are the same metric the package/verify CLI recomputes (src/programbench/submission.py: mean_score = sum(values)/n_total over 200). Community benchmark of an academic team (Princeton & Meta, arXiv:2605.03546); not a Composite input."
+      },
+      "maintainer": "ProgramBench team (John Yang, Kilian Lieret et al.; Princeton University & Meta)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://programbench.com/",
+      "publication_urls": [
+        {
+          "url": "https://programbench.com/",
+          "type": "official_leaderboard",
+          "role": "Leaderboard (main and extended-results pages)"
+        },
+        {
+          "url": "https://github.com/facebookresearch/ProgramBench",
+          "type": "github",
+          "role": "CLI, eval, docker containers (LICENSE) and the mini-SWE-agent baseline"
+        },
+        {
+          "url": "https://github.com/ProgramBench/submissions",
+          "type": "github",
+          "role": "Authoritative submission registry the leaderboard is compiled from (MIT)"
+        },
+        {
+          "url": "https://huggingface.co/datasets/programbench/ProgramBench-Tests",
+          "type": "huggingface",
+          "role": "Task instances and hidden tests"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "Static HTML with one `var results = [...]` board literal",
+        "identity_policy": "source_label",
+        "locator": "GET / -> the page's own `var results = [...]`; value = score x 100 in percent (the site's headline mean score).",
+        "version_guard": "Page identity phrases (ProgramBench, the rebuild-from-binary task statement, 200 tasks, mini-SWE-agent, the update stamp); exactly one results literal; the exact ten-field row schema; a unique model per row, scores descending and each score within 0..1; the listed providers; the registry README still naming this repo the authoritative registry and the 200-instance macro-average; the scoring source still defining the same per-test-fraction/200 aggregation. A changed task count, a second agent, a dropped board row or a recomputed metric is a different identity and fails closed.",
+        "notes": "robots.txt of programbench.com: 404 (no rules; conventional access). The leaderboard carries no per-model reasoning effort except where the label itself states one in parentheses; every row runs the same mini-SWE-agent scaffold. The registry's _stats recompute is provenance, not a byte-exact cross-check: the site's own details for legacy (.compile_skip) rows predate the current _stats files (2026-09-21 recompute reproduced the eight 2026-07/08 rows to <=0.0005 and the five 2026-04/05 rows to <=0.009), so the site board is the single authoritative daily source."
+      },
+      "update_cadence": {
+        "source_schedule": "The board states its own update stamp (2026-09-21: 'Updated Sep. 9, 2026'); rows are added as registry pull requests and new submissions appear in the authoritative registry repo.",
+        "check_recommendation": "Daily with the ordinary refresh; a changed update stamp or row set is reviewed before it takes effect."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Best board score 74.7 % (Claude Opus 5 xhigh) and only 4.5 % of instances fully solved on the strongest row; computed saturation (CR-38.2) applies on build."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-21",
+      "last_verified": "2026-09-21",
+      "evidence": [
+        {
+          "url": "https://programbench.com/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/7efa63c912e1ec18459e.gz",
+          "sha256": "3f7a2ec87414edb7615faf081a79e044aa111a1519217bc5da7c1dd34fa56296",
+          "fetched_at": "2026-09-21T00:48:03.447305+00:00",
+          "excerpt": "Leaderboard: 'AI agents rebuild programs from binaries and documentation'; 21-row board (Claude Opus 5 (xhigh) 74.7 ... GPT 5 mini 16.0); 'Evaluated with mini-SWE-agent · 200 tasks · Updated Sep. 9, 2026'; per-row provider, mean score, cost/calls/tokens per task, publication date."
+        },
+        {
+          "url": "https://programbench.com/extended/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/d0e9544f11bdf58f4763.gz",
+          "sha256": "bbd08b4f026b3818480e99a061094be5389d3ca0898c079373597317eba5d14c",
+          "fetched_at": "2026-09-21T00:48:07.133730+00:00",
+          "excerpt": "Extended Results page: same 21 rows with Resolved (fully solved %) and Almost (>=95% of tests) columns, cost, calls; 'Click row to see model details · Sorting: Resolved → Almost resolved → Avg. pass rate (more)' and a Score vs. average cost / turns panel restating the mean scores in percent."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/ProgramBench/submissions/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/f370a15cd4836016c8b8.gz",
+          "sha256": "3f75242a1db7ba31090913d599d1a5c24997a5a5dd3354a7b7df8ff6e3e767d3",
+          "fetched_at": "2026-09-21T00:48:10.548815+00:00",
+          "excerpt": "This repo is the authoritative registry of ProgramBench submissions; the public website leaderboard at programbench.com is compiled directly from the entries here. submissions/<id>/{pointer.yaml, submission.yaml, _stats/score.json}; ignored-test strike-out is a pure recompile."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/ProgramBench/submissions/main/LICENSE",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/e16b8d6ba8de2b8bfe25.gz",
+          "sha256": "6d8086217469accf765e248385ae0b37ed499ea69b85641edfd12cf48acee6fc",
+          "fetched_at": "2026-09-21T00:48:13.254804+00:00",
+          "excerpt": "MIT License (submissions registry)."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/facebookresearch/ProgramBench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/6b455a05aa20ad4bd734.gz",
+          "sha256": "2684a65ce93c61b9d4814086752e0eaabf6e4c530220113e7e839b5cc1b4c06d",
+          "fetched_at": "2026-09-21T00:48:15.964870+00:00",
+          "excerpt": "Given only a compiled binary and its documentation, AI agents must architect and implement a complete codebase that reproduces the original program's behavior; arXiv:2605.03546; mini-SWE-agent baseline; tests on HuggingFace (programbench/ProgramBench-Tests)."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/facebookresearch/ProgramBench/main/LICENSE",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/e16b8d6ba8de2b8bfe25.gz",
+          "sha256": "6d8086217469accf765e248385ae0b37ed499ea69b85641edfd12cf48acee6fc",
+          "fetched_at": "2026-09-21T00:48:18.644149+00:00",
+          "excerpt": "License (facebookresearch/ProgramBench)."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/facebookresearch/ProgramBench/main/src/programbench/submission.py",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/48d34c0f02f40e550bbc.gz",
+          "sha256": "442e1c5240c3756204673f9553c1d3e8906d6ce168796f0f432bc4ccffa1f616",
+          "fetched_at": "2026-09-21T00:48:21.351718+00:00",
+          "excerpt": "score_from_tests = fraction passed over the non-ignored tests; aggregate() = mean_score over n_total (200, unattempted counts as 0), resolved at 1.0, near-resolved at 0.95; the leaderboard can recompute scores from _stats/score.json with the registry ignore map."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/ProgramBench/submissions/main/ignored_tests.json",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/9d3e0cf0d6efd2b71ba9.gz",
+          "sha256": "ea3f0e6aace01a72c19089d3427eb577673ff921031db89dee2be1fd01e80557",
+          "fetched_at": "2026-09-21T00:49:55.020907+00:00",
+          "excerpt": "Ignore map over 200 instance ids; every list empty (2026-09-21) - no ignored tests, so scores are plain passed-test fractions."
+        }
+      ]
+    },
+    {
+      "id": "react-native-evals::91-evals",
+      "name": "React Native Evals",
+      "version": "91-evals",
+      "version_status": "published",
+      "family": "react-native-evals",
+      "category": "Coding",
+      "one_sentence_description": "Coding agents build React Native app features — navigation, animation, async state, lists, native APIs and Skia graphics — and an LLM judge checks the generated code against each task's written requirements.",
+      "scoring": {
+        "metric": "The board's overall score in percent: the share of requirements met, summed over all 91 evals and every repeat run (an LLM judge decides each requirement against the generated files)",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Each eval gives the model a small React Native app and a task prompt; the model solves it through OpenCode and a judge model reads the generated files against the eval's requirements.yaml (plain-language requirements, optional weights). The board repeats the whole suite (10 runs in the 2026-09-21 capture) and scores the summed requirement counts, and every row with the full requirement count reproduces its score exactly from its own passed and judged counts. Errored evals are not judged: a row can rest on fewer judged requirements than the board's largest (GPT OSS 120B: 3,420 of 3,960 on 2026-09-21), and for such rows the board's figure differs from the plain ratio by up to 0.03 points on 2026-09-21 (the collector accepts at most 0.1); both counts stay in each row's protocol, with tokens and cost where the board reports them. The judge model is not named on the board. The board names models by product name and gateway route and states no reasoning setting. Judged benchmark (an LLM judge rates requirement fulfilment, no ground-truth answer); secondary, never a Composite input."
+      },
+      "maintainer": "Callstack (callstackincubator/evals)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://rn-evals.vercel.app/",
+      "publication_urls": [
+        {
+          "url": "https://rn-evals.vercel.app/",
+          "type": "official_leaderboard",
+          "role": "Leaderboard (chart, table and cost views)"
+        },
+        {
+          "url": "https://github.com/callstackincubator/evals",
+          "type": "github",
+          "role": "Evals, runner, judge and methodology whitepaper (MIT)"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-rn-evals; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "Next.js flight payload (JSON in the server-rendered page)",
+        "locator": "The Next.js flight payload of rn-evals.vercel.app (the `self.__next_f.push([1, \"...\"])` chunks the page streams with its HTML): one board object {categories, judgeModel, runStartedAt, runFinishedAt, runCount, warnings, models, evalMatrixById}; `models[]` rows {id, label, solverModel, overallScorePct, requirementsPassed, requirementsTotal, tokensUsed, costUsd, categories} — the rows the page's chart and table render. The value is overallScorePct (requirements passed / requirements judged, summed over every eval and every repeat run).",
+        "version_guard": "The page must still describe AI coding agents on React Native code-generation tasks measured by success rate per task group; the board object must keep its schema and exactly the six eval groups navigation 13, animation 13, async-state 13, lists 18, react-native-apis 9 and skia 25 (91 evals); every row's overallScorePct must reproduce requirementsPassed / requirementsTotal x 100, ids and labels unique, no board warnings; the repository README must still describe requirement-based assessment judged against file-level evidence. Another group set or eval count is a new identity, never a silent update of this one.",
+        "identity_policy": "source_label",
+        "notes": "Measured by Callstack, who run every model themselves through OpenCode and judge the output with an LLM. The board names models by product name and a gateway route (e.g. vercel/openai/gpt-5.6-sol) and states no reasoning setting, so under the exact-join policy only a family the catalog holds as a single default configuration joins; every other row stays visible as named by the source. Rows that are agents rather than models (Callstack's own Apex) or unnamed stealth models (Ox Alpha) never join. robots.txt 404 (Vercel); repository MIT — scores with attribution to Callstack and a link to the board. Joins: data/raw/benchmarks/identity-map.json (lib/board-identity.mjs parseRnEvalsLabel)."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated; the page shows the last run date (2026-09-17 in the 2026-09-21 capture) and the repository changes as evals are added.",
+        "check_recommendation": "Daily with the ordinary refresh; a changed eval group set or eval count is a new identity and needs a reviewed change."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Best overall score 90.9 % (Callstack's Apex agent) and 90.8 % (Claude Opus 5) on 2026-09-21; the lower half of the board spans 44–84 %. Computed saturation (CR-38.2) applies on build."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-21",
+      "last_verified": "2026-09-21",
+      "evidence": [
+        {
+          "url": "https://rn-evals.vercel.app/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/44177e508aa4b210b607.gz",
+          "sha256": "b591ee1d8f85e0b4d9086b12fed18591639bc567a0985b88dcb3f20874d540b6",
+          "fetched_at": "2026-09-21T20:32:45.098128+00:00",
+          "excerpt": "AI Agent Evaluations for React Native — Performance results of AI coding agents on React Native code generation tasks, measuring success rate for common task groups, token usage, and cost. … Last run: September 17, 2026 · 10 x Runs · Build by Callstack"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/callstackincubator/evals/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/6d9a19b55ceedc325187.gz",
+          "sha256": "b987f51ec244890c3b63409729f88d555d784f79fc2ccd4c74882eeaae32afd8",
+          "fetched_at": "2026-09-21T20:32:47.849503+00:00",
+          "excerpt": "The benchmark evaluates model-generated React Native implementations using requirement-based assessment. … Model outputs are judged against these requirements using file-level evidence"
+        }
+      ]
+    },
+    {
       "id": "realswe-cost::snapshot-2026-09-12",
       "name": "Real-SWE cost per rollout (Specific Labs)",
       "version": "snapshot-2026-09-12",
@@ -8788,6 +9078,95 @@
           "source_sha256": "a60e0495495d6e7419aa93f86498ca12c1a7a2a2d293a97008120e09e90d2fdc",
           "fetched_at": "2026-09-12T09:06:26.205Z",
           "excerpt": "Next.js dataset bundle (contains the marker entitlement-overage-lines): per-configuration passes/valid counts and the recorded cost-provenance rows (basis, source, recorded runs, lower-bound flags) for each of the eight configurations."
+        }
+      ]
+    },
+    {
+      "id": "researchclawbench::40-tasks",
+      "name": "ResearchClawBench",
+      "version": "40-tasks",
+      "version_status": "published",
+      "family": "researchclawbench",
+      "category": "Science",
+      "one_sentence_description": "An AI agent gets the raw data and related literature behind a published scientific paper — the paper itself hidden — and must redo the research end to end, from analysis to a written report, across 40 tasks in 10 scientific domains.",
+      "scoring": {
+        "metric": "Mean rubric score over the tasks a model has a scored run for, 0–100 (an LLM acting as a strict peer reviewer grades each report against an expert-curated weighted rubric; 50 = the report matches the original paper)",
+        "unit": "points",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Only the board's ResearchHarness rows are collected: the benchmark's own lightweight baseline harness around a standalone model, so the rows compare models. The board's other rows (Claude Code, Codex CLI, InnoClaw, Qiushi Engine and more) are research-agent products built around some model and are not model rows. Pass@1 view (the page's default; its Pass@5 view takes the best of five attempts). The value is the plain mean of the row's scored tasks, the figure the page ranks by: a task without a scored run is left out rather than counted as 0, so coverage differs (33 to 40 of 40 on 2026-09-21) and stays in each row's protocol with the mean cost per task. The page says 100 = surpasses the paper, the README 70+. Judged benchmark (an LLM judge applies the rubric); secondary, never a Composite input."
+      },
+      "maintainer": "ResearchClawBench team (InternScience)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://internscience.github.io/ResearchClawBench-Home/",
+      "publication_urls": [
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/",
+          "type": "official_leaderboard",
+          "role": "Leaderboard (Pass@1 and Pass@5 views, run browser)"
+        },
+        {
+          "url": "https://github.com/InternScience/ResearchClawBench",
+          "type": "github",
+          "role": "Tasks, rubrics, evaluation code and README (MIT)"
+        },
+        {
+          "url": "https://arxiv.org/abs/2606.07591",
+          "type": "vendor_report",
+          "role": "Benchmark paper (task design and rubric scoring)"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-researchclawbench; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JSON (static site data file)",
+        "locator": "data/leaderboard.json of the ResearchClawBench home page (the file the page's app loads for its Pass@1 leaderboard): scores[agent][task] = {score, run_id, model, model_display, cost_usd, duration_seconds}. Only agents named \"ResearchHarness (<model>)\" are read; the value is the plain mean of that agent's scored task scores, the figure the page ranks by (app.js getAverageAgentScore).",
+        "version_guard": "leaderboard.json must keep its keys {tasks, agents, scores, frontier} and exactly the 40 reviewed task ids (four per domain: Astronomy, Chemistry, Earth, Energy, Information, Life, Material, Math, Neuroscience, Physics); each ResearchHarness row's entries must keep the reviewed fields with scores in 0–100 and name only the model in the row's own label; the page must still say 50 = matches the original paper, the README must still describe the weighted rubric judged by an LLM acting as a strict peer reviewer and the ResearchHarness baseline, and app.js must still rank agents by the plain mean of their scored tasks. Another task list is a new identity, never a silent update of this one.",
+        "identity_policy": "source_label",
+        "notes": "Measured by the ResearchClawBench team, who run each standalone model under ResearchHarness themselves; agent products are submitted or run separately and are not collected. The board names models by product name and states no reasoning setting, so under the exact-join policy only a family the catalog holds as a single default configuration joins; every other row stays visible as named by the source. Hy3-Preview is labelled a preview model by the maintainers. robots.txt 404 (GitHub Pages); both repositories MIT — scores with attribution to InternScience and a link to the leaderboard. Joins: data/raw/benchmarks/identity-map.json (lib/board-identity.mjs parseResearchClawBenchLabel)."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated; the README's news list shows new rows every few weeks (latest 2026-09-17 in the 2026-09-21 capture; the newest ResearchHarness model run is from 2026-07).",
+        "check_recommendation": "Daily with the ordinary refresh; a changed task list is a new identity and needs a reviewed change."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Best ResearchHarness mean 21.1 (Claude Opus 4.8) on 2026-09-21, far below the 50 that means matching the paper; the best agent product reaches 38.6. Computed saturation (CR-38.2) applies on build."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-21",
+      "last_verified": "2026-09-21",
+      "evidence": [
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/data/leaderboard.json",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/5d538e012068a8fec9fe.gz",
+          "sha256": "f9d7e272456ec9929d807386358dfc53f5f5ccbbd3e51120f910992df549c39b",
+          "fetched_at": "2026-09-21T20:48:40.424571+00:00",
+          "excerpt": "{\"tasks\": [\"Astronomy_000\", … \"Physics_003\"], \"agents\": [… \"ResearchHarness (Claude-Opus-4.8)\" …], \"scores\": {…}, \"frontier\": {…}}"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/fd28ace3577a593175a4.gz",
+          "sha256": "9f3edd3d0a716d08ed90f99544d8db5ca21c7b49bf66bd19c53e05ace0cb97a3",
+          "fetched_at": "2026-09-21T20:48:43.035439+00:00",
+          "excerpt": "Frontier Best score per task across all agents. 50 = matches original paper, 100 = surpasses it. Leaderboard"
+        },
+        {
+          "url": "https://internscience.github.io/ResearchClawBench-Home/static/app.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/3d1f147a79b09329806d.gz",
+          "sha256": "45ce61f6c68d24987c331a927f2a3229d86c5af5ad5ce79a2b62286f172437c6",
+          "fetched_at": "2026-09-21T20:48:45.551320+00:00",
+          "excerpt": "function getAverageAgentScore(data, agent) { … return scores.length ? scores.reduce((a, b) => a + b, 0) / scores.length : -Infinity; }"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/InternScience/ResearchClawBench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/09509897989f8b6f64bb.gz",
+          "sha256": "3ad59343fe80671904ed028de1ceedbce8cd067f004c85a5c50c64c02e70be69",
+          "fetched_at": "2026-09-21T20:48:48.104788+00:00",
+          "excerpt": "Fine-grained, multimodal scoring. A weighted rubric (checklist) with text and image criteria, judged by an LLM acting as a strict peer reviewer. … and a lightweight ResearchHarness baseline."
         }
       ]
     },
@@ -12402,88 +12781,6 @@
       ]
     },
     {
-      "id": "toolathlon::pre-verified",
-      "name": "Toolathlon, original release (HKUST NLP, archived board)",
-      "version": "pre-verified",
-      "version_status": "published",
-      "family": "toolathlon",
-      "category": "Tool-use",
-      "one_sentence_description": "An agent completes 108 real-world tool-use tasks across MCP servers and local toolkits, graded by executing the resulting state against each task's ground truth — the original task definitions, before the June 2026 Verified repair.",
-      "scoring": {
-        "metric": "Pass@1 in percent as published on the archived pre-Verified board",
-        "unit": "percent",
-        "range": [
-          0,
-          100
-        ],
-        "higher_better": true,
-        "notes": "The maintainers' own archived snapshot of the leaderboard immediately before Toolathlon-Verified. The site says these scores use earlier task definitions and evaluation infrastructure and are not directly comparable with the Verified results, so this is its own identity and never ranked against toolathlon-verified::2026-06-30. Only rows carrying the board's green check (independently evaluated by the maintainers) are ingested; rows sourced from vendor announcements are not. The ± figure is the across-run standard deviation; rows the page marks † (Claude Opus) were evaluated once, and rows marked ‡ (OpenAI) were re-run through the Responses API — both footnotes stay in the row's protocol. The one row run in a vendor SDK scaffold (Claude Agent SDK) is a different measured system and is left out. Secondary benchmark, never a Composite input."
-      },
-      "maintainer": "HKUST NLP (Toolathlon team)",
-      "source_type": "official_leaderboard",
-      "primary_url": "https://toolathlon.xyz/docs/leaderboard",
-      "publication_urls": [
-        {
-          "url": "https://toolathlon.xyz/docs/leaderboard",
-          "type": "official_leaderboard",
-          "role": "The archived \"Previous Toolathlon leaderboard\" snapshot (51 models) below the Verified board"
-        },
-        {
-          "url": "https://toolathlon.xyz/docs/blog/toolathlon-verified",
-          "type": "official_leaderboard",
-          "role": "Release post: Verified preserves the original 108-task scope and begins a separate score series not comparable with the original release"
-        },
-        {
-          "url": "https://github.com/hkust-nlp/Toolathlon",
-          "type": "github",
-          "role": "Benchmark tasks, evaluators and harness"
-        }
-      ],
-      "how_to_collect": {
-        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-toolathlon; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
-        "format": "Server-rendered HTML table",
-        "identity_policy": "source_label",
-        "locator": "The page's archived-board table `<table class=\"performance-table leaderboard-history-table\">` inside the \"Previous Toolathlon leaderboard\" accordion: data-label cells Model / Model Type / Agent / Date / Pass@1 / Pass@3 / Pass^3 / # Turns. Value = Pass@1 in percent; only rows carrying the `verified-badge` check are scored; footnote marks † (after Pass@1) and ‡ (after the model name) are recorded, not dropped.",
-        "version_guard": "The page must still carry the accordion \"Previous Toolathlon leaderboard\" described as \"Snapshot before Toolathlon-Verified · 51 models\", its note that these scores use earlier task definitions and are not directly comparable with the Verified results, both footnotes (†, ‡) with their current wording and the badge legend; the archived table keeps its eight columns, listed model types, and at least 36 badged Default-agent rows ranked by Pass@1. The release post must still say Verified preserves the original 108-task scope and begins a separate score series. Any change to the archive is a reviewed change, never a silent update.",
-        "notes": "Frozen by the maintainers (newest row dated 19 May 2026); the daily refresh parses it from the same page capture as the Verified board, so a row that leaves the archive fails closed. robots.txt allows /docs/ and the Content-Signal header allows ai-input. The Lumina family `toolathlon` cites vendor and aggregator copies of these numbers; this is the maintainers' own table. Exact joins: data/raw/benchmarks/identity-map.json (lib/board-identity.mjs, parseToolathlonArchiveLabel)."
-      },
-      "update_cadence": {
-        "source_schedule": "None: an archived snapshot the maintainers retain for historical context after the June 2026 Verified release.",
-        "check_recommendation": "Daily with the ordinary refresh, from the same capture as the Verified board; any change to the archived table is a reviewed change."
-      },
-      "saturated": {
-        "value": false,
-        "note": "Best badged Pass@1 is 56.5 % (Gemini-3.5-Flash) on a frozen board; computed saturation (CR-38.2) applies on build."
-      },
-      "superseded_by": "toolathlon-verified::2026-06-30",
-      "status": "retained",
-      "first_seen": "2026-09-21",
-      "last_verified": "2026-09-21",
-      "evidence": [
-        {
-          "url": "https://toolathlon.xyz/docs/leaderboard",
-          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-toolathlon-pre-verified/20d48e79f2e25ec87d81.gz",
-          "sha256": "ef393a8130d3682dc5779e8abba16cebc5d64eed7463401a252533aaf2b8900d",
-          "fetched_at": "2026-09-21T19:19:02.818145+00:00",
-          "excerpt": "Previous Toolathlon leaderboard — Snapshot before Toolathlon-Verified · 51 models. This archived snapshot shows the leaderboard immediately before Toolathlon-Verified. It is retained for historical context; these scores use earlier task definitions and evaluation infrastructure and are not directly comparable with the Verified results above. † Claude-Opus was evaluated once due to budget constraints. ‡ OpenAI models require the Responses API …"
-        },
-        {
-          "url": "https://toolathlon.xyz/docs/blog/toolathlon-verified",
-          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-toolathlon-pre-verified/2fa0875016ad93ec0ca1.gz",
-          "sha256": "74a87f9dee74cde9f79b66fc40d837fd5ea1439f2c046e74e827618a137c3a2e",
-          "fetched_at": "2026-09-21T19:19:06.164384+00:00",
-          "excerpt": "It preserves the original 108-task scope while revising the task definitions, initial states, ground truth, evaluators, and execution infrastructure … Toolathlon-Verified begins a separate official score series; its results are not directly comparable with the original release."
-        },
-        {
-          "url": "https://toolathlon.xyz/robots.txt",
-          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-toolathlon-pre-verified/toolathlon.xyz-robots.txt",
-          "sha256": "a1100c59f5de56688a2296305d5d5d2e75c7d66755041e88e19d5c4f5e770c64",
-          "fetched_at": "2026-09-21T19:19:02.818145+00:00",
-          "excerpt": "Only /cdn-cgi/ and /_next/ are disallowed; /docs/ is crawlable."
-        }
-      ]
-    },
-    {
       "id": "toolathlon-verified::2026-06-30",
       "name": "Toolathlon-Verified (HKUST NLP)",
       "version": "2026-06-30",
@@ -12562,6 +12859,88 @@
           "sha256": "ba41899720745da81c32ab32ea52d5ea7fae42e3d1edaed65b2cbdf4423c9c31",
           "fetched_at": "2026-09-20T00:37:03.769603+00:00",
           "excerpt": "Toolathlon-Verified begins a separate official score series; its results are not directly comparable with the original release."
+        }
+      ]
+    },
+    {
+      "id": "toolathlon::pre-verified",
+      "name": "Toolathlon, original release (HKUST NLP, archived board)",
+      "version": "pre-verified",
+      "version_status": "published",
+      "family": "toolathlon",
+      "category": "Tool-use",
+      "one_sentence_description": "An agent completes 108 real-world tool-use tasks across MCP servers and local toolkits, graded by executing the resulting state against each task's ground truth — the original task definitions, before the June 2026 Verified repair.",
+      "scoring": {
+        "metric": "Pass@1 in percent as published on the archived pre-Verified board",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "The maintainers' own archived snapshot of the leaderboard immediately before Toolathlon-Verified. The site says these scores use earlier task definitions and evaluation infrastructure and are not directly comparable with the Verified results, so this is its own identity and never ranked against toolathlon-verified::2026-06-30. Only rows carrying the board's green check (independently evaluated by the maintainers) are ingested; rows sourced from vendor announcements are not. The ± figure is the across-run standard deviation; rows the page marks † (Claude Opus) were evaluated once, and rows marked ‡ (OpenAI) were re-run through the Responses API — both footnotes stay in the row's protocol. The one row run in a vendor SDK scaffold (Claude Agent SDK) is a different measured system and is left out. Secondary benchmark, never a Composite input."
+      },
+      "maintainer": "HKUST NLP (Toolathlon team)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://toolathlon.xyz/docs/leaderboard",
+      "publication_urls": [
+        {
+          "url": "https://toolathlon.xyz/docs/leaderboard",
+          "type": "official_leaderboard",
+          "role": "The archived \"Previous Toolathlon leaderboard\" snapshot (51 models) below the Verified board"
+        },
+        {
+          "url": "https://toolathlon.xyz/docs/blog/toolathlon-verified",
+          "type": "official_leaderboard",
+          "role": "Release post: Verified preserves the original 108-task scope and begins a separate score series not comparable with the original release"
+        },
+        {
+          "url": "https://github.com/hkust-nlp/Toolathlon",
+          "type": "github",
+          "role": "Benchmark tasks, evaluators and harness"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-toolathlon; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "Server-rendered HTML table",
+        "identity_policy": "source_label",
+        "locator": "The page's archived-board table `<table class=\"performance-table leaderboard-history-table\">` inside the \"Previous Toolathlon leaderboard\" accordion: data-label cells Model / Model Type / Agent / Date / Pass@1 / Pass@3 / Pass^3 / # Turns. Value = Pass@1 in percent; only rows carrying the `verified-badge` check are scored; footnote marks † (after Pass@1) and ‡ (after the model name) are recorded, not dropped.",
+        "version_guard": "The page must still carry the accordion \"Previous Toolathlon leaderboard\" described as \"Snapshot before Toolathlon-Verified · 51 models\", its note that these scores use earlier task definitions and are not directly comparable with the Verified results, both footnotes (†, ‡) with their current wording and the badge legend; the archived table keeps its eight columns, listed model types, and at least 36 badged Default-agent rows ranked by Pass@1. The release post must still say Verified preserves the original 108-task scope and begins a separate score series. Any change to the archive is a reviewed change, never a silent update.",
+        "notes": "Frozen by the maintainers (newest row dated 19 May 2026); the daily refresh parses it from the same page capture as the Verified board, so a row that leaves the archive fails closed. robots.txt allows /docs/ and the Content-Signal header allows ai-input. The Lumina family `toolathlon` cites vendor and aggregator copies of these numbers; this is the maintainers' own table. Exact joins: data/raw/benchmarks/identity-map.json (lib/board-identity.mjs, parseToolathlonArchiveLabel)."
+      },
+      "update_cadence": {
+        "source_schedule": "None: an archived snapshot the maintainers retain for historical context after the June 2026 Verified release.",
+        "check_recommendation": "Daily with the ordinary refresh, from the same capture as the Verified board; any change to the archived table is a reviewed change."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Best badged Pass@1 is 56.5 % (Gemini-3.5-Flash) on a frozen board; computed saturation (CR-38.2) applies on build."
+      },
+      "superseded_by": "toolathlon-verified::2026-06-30",
+      "status": "retained",
+      "first_seen": "2026-09-21",
+      "last_verified": "2026-09-21",
+      "evidence": [
+        {
+          "url": "https://toolathlon.xyz/docs/leaderboard",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-toolathlon-pre-verified/20d48e79f2e25ec87d81.gz",
+          "sha256": "ef393a8130d3682dc5779e8abba16cebc5d64eed7463401a252533aaf2b8900d",
+          "fetched_at": "2026-09-21T19:19:02.818145+00:00",
+          "excerpt": "Previous Toolathlon leaderboard — Snapshot before Toolathlon-Verified · 51 models. This archived snapshot shows the leaderboard immediately before Toolathlon-Verified. It is retained for historical context; these scores use earlier task definitions and evaluation infrastructure and are not directly comparable with the Verified results above. † Claude-Opus was evaluated once due to budget constraints. ‡ OpenAI models require the Responses API …"
+        },
+        {
+          "url": "https://toolathlon.xyz/docs/blog/toolathlon-verified",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-toolathlon-pre-verified/2fa0875016ad93ec0ca1.gz",
+          "sha256": "74a87f9dee74cde9f79b66fc40d837fd5ea1439f2c046e74e827618a137c3a2e",
+          "fetched_at": "2026-09-21T19:19:06.164384+00:00",
+          "excerpt": "It preserves the original 108-task scope while revising the task definitions, initial states, ground truth, evaluators, and execution infrastructure … Toolathlon-Verified begins a separate official score series; its results are not directly comparable with the original release."
+        },
+        {
+          "url": "https://toolathlon.xyz/robots.txt",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-toolathlon-pre-verified/toolathlon.xyz-robots.txt",
+          "sha256": "a1100c59f5de56688a2296305d5d5d2e75c7d66755041e88e19d5c4f5e770c64",
+          "fetched_at": "2026-09-21T19:19:02.818145+00:00",
+          "excerpt": "Only /cdn-cgi/ and /_next/ are disallowed; /docs/ is crawlable."
         }
       ]
     },
@@ -13811,381 +14190,1226 @@
       ]
     },
     {
-      "id": "context-arena-mrcr-v2::8-needle",
-      "name": "Context Arena — MRCR v2 (8-needle)",
-      "version": "8-needle",
-      "version_status": "published",
-      "family": "context-arena-mrcr-v2",
-      "category": "Long-context",
-      "one_sentence_description": "The model must find and reproduce the right one of eight near-identical earlier replies hidden in a long conversation, averaged over context lengths from 8k to 128k tokens.",
-      "scoring": {
-        "metric": "Cumulative average score up to 128k tokens (unweighted mean of the 8k–128k bins), percent",
-        "unit": "percent",
-        "range": [
-          0,
-          100
-        ],
-        "higher_better": true,
-        "notes": "8-needle MRCR v2, Context Arena's default \"full\" test set; each response is scored 0–1 by string similarity after a hash check, and a bin's score is the mean over its tests. The 128k cumulative average is the figure GDM's README says it reports; Context Arena's AUC variants and the 1M figures are kept per row but never used as the value. Secondary benchmark, never a Composite input."
-      },
-      "maintainer": "Context Arena (Dillon Uzar); dataset by Google DeepMind (eval_hub MRCR v2)",
-      "source_type": "official_leaderboard",
-      "primary_url": "https://contextarena.ai/",
-      "publication_urls": [
-        {
-          "url": "https://contextarena.ai/",
-          "type": "official_leaderboard",
-          "role": "Leaderboard app (renders the JSON endpoint below)"
-        },
-        {
-          "url": "https://contextarena.ai/api/needle-summary?needles=8",
-          "type": "official_leaderboard",
-          "role": "The app's own board data: per-bin and overall metrics per model × reasoning mode"
-        },
-        {
-          "url": "https://github.com/google-deepmind/eval_hub/blob/master/eval_hub/mrcr_v2/README.md",
-          "type": "github",
-          "role": "MRCR v2 dataset, task definition and reporting convention (GDM)"
-        }
-      ],
-      "how_to_collect": {
-        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-context-arena; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
-        "format": "JSON API",
-        "identity_policy": "source_label",
-        "locator": "Context Arena's own JSON endpoint GET /api/needle-summary?needles=8 (the request the leaderboard app makes; mode \"full\"): `models[]`, one row per model_slug × reasoning_mode, with `bin_metrics` per token bin (avg_score 0–1, n_tests, is_incomplete) and `overall_metrics` (cum_avg_128k, auc_128k, auc_1m, cum_avg_1m, total_runs). The value is overall_metrics.cum_avg_128k × 100: the unweighted mean of the 8k, 16k, 32k, 64k and 128k bin scores.",
-        "version_guard": "The endpoint must still answer the default request with needles 8 in the \"full\" test set and the eight power-of-two bins 8k … 1M; every scored row must carry complete bins 8k, 16k, 32k, 64k and 128k whose unweighted mean reproduces the row's own cum_avg_128k. GDM's MRCR v2 README must still describe the task (count instances of a body of text and reproduce the correct instance), the 8-needle \"upto_128K\" cumulative reporting and the tools caveat. Another needle count, test set or bin layout is a new identity, never a silent update of this one.",
-        "notes": "Measured by Context Arena (Dillon Uzar) on Google DeepMind's published MRCR v2 dataset via each model's API; the dataset and README are GDM's (eval_hub). robots.txt is absent (404 → conventional access); the site publishes no licence or terms page, so only scores with attribution are stored — attribute Context Arena and GDM eval_hub and link the leaderboard. Rows the site itself marks insufficient or unranked are not scored; a row whose bins up to 128k are incomplete is not scored until they complete; a model the site marks deprecated keeps its measured row with the flag in the protocol. Joins: data/raw/benchmarks/identity-map.json (lib/board-identity.mjs, parseContextArenaId)."
-      },
-      "update_cadence": {
-        "source_schedule": "Context Arena adds models and reasoning modes as it runs them (newest run in the 2026-09-21 capture: 2026-09-16).",
-        "check_recommendation": "Daily with the ordinary refresh; another needle count, test set or bin layout is a new identity and needs a reviewed change."
-      },
-      "saturated": {
-        "value": false,
-        "note": "Best 128k cumulative average at capture is 98.2 % while the median complete row is far lower, so the board still separates models; computed saturation (CR-38.2) applies on build."
-      },
-      "superseded_by": null,
-      "status": "active",
-      "first_seen": "2026-09-21",
-      "last_verified": "2026-09-21",
-      "evidence": [
-        {
-          "url": "https://raw.githubusercontent.com/google-deepmind/eval_hub/master/eval_hub/mrcr_v2/README.md",
-          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-context-arena/7b2010f4685643f4af7b.gz",
-          "sha256": "57a9f8fa79ae0f45ac1a54a376290fad969b17734d1487b1c23ab92f30d493c4",
-          "fetched_at": "2026-09-21T17:13:30.878266+00:00",
-          "excerpt": "At the time of this release, we currently report the 8-needle version of the task on the \"upto_128K\" (cumulative) and \"at_1M\" pointwise variants."
-        },
-        {
-          "url": "https://raw.githubusercontent.com/google-deepmind/eval_hub/master/eval_hub/mrcr_v2/README.md",
-          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-context-arena/7b2010f4685643f4af7b.gz",
-          "sha256": "57a9f8fa79ae0f45ac1a54a376290fad969b17734d1487b1c23ab92f30d493c4",
-          "fetched_at": "2026-09-21T17:13:30.878266+00:00",
-          "excerpt": "count instances of a body of text and reproduce the correct instance. … Any report of MRCR should explicitly state whether or not tools were provided to the model"
-        }
-      ]
-    },
-    {
-      "id": "blueprint-bench::2",
-      "name": "Blueprint-Bench 2",
-      "version": "2",
-      "version_status": "published",
-      "family": "blueprint-bench",
-      "category": "Vision",
-      "one_sentence_description": "An agent looks at about twenty interior photos of each of 50 apartments and draws the floor plan: which rooms exist and which rooms connect to which.",
-      "scoring": {
-        "metric": "Connectivity similarity score of the generated floor plans against ground truth, normalised so the random baseline is 0 and a perfect plan is 1",
-        "unit": "points",
-        "range": [
-          0,
-          1
-        ],
-        "higher_better": true,
-        "notes": "Each plan's room-connection graph is compared with the true plan under rotation and reflection: Jaccard similarity of room-to-room connections 50 %, degree similarity 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %. The composite is normalised so that the random baseline maps to 0 and a perfect score to 1, and the board prints any score at or below the random baseline as 0.000 (marked ** on the page; the row's protocol keeps that marker). The number is shown the way the source publishes it — a normalised index, not a share of apartments solved. The page's human baseline (0.586, run on 12 of the 50 apartments) is not a model and is not collected. Secondary benchmark, never a Composite input."
-      },
-      "maintainer": "Andon Labs",
-      "source_type": "official_leaderboard",
-      "primary_url": "https://andonlabs.com/evals/blueprint-bench-2",
-      "publication_urls": [
-        {
-          "url": "https://andonlabs.com/evals/blueprint-bench-2",
-          "type": "official_leaderboard",
-          "role": "Leaderboard table, method and scoring description (primary results publication)"
-        },
-        {
-          "url": "https://andonlabs.com/evals/blueprint-bench",
-          "type": "official_leaderboard",
-          "role": "Original Blueprint-Bench (version 1) page and paper link"
-        }
-      ],
-      "how_to_collect": {
-        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-blueprint-bench-2; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
-        "format": "HTML table",
-        "identity_policy": "source_label",
-        "locator": "The 'Leaderboard' table on the Blueprint-Bench 2 page (server-rendered, the page's only <table>): rank, model name, score (0–1). The 'Human*' baseline row is skipped; a score ending in ** is at or below the random baseline and is kept with that marker.",
-        "version_guard": "The page must still describe Blueprint-Bench 2 (50 apartments processed sequentially, ~20 photos each, 2D floor plans), the normalisation (random baseline 0, perfect 1), the scoring weights (Jaccard similarity 50 %) and both footnotes (** at or below the random baseline; * human baseline on 12 apartments); the table header must read Model / Score, three cells per row, one row per model. Another version, apartment set or scoring is a new identity, never a silent update of this one.",
-        "notes": "Measured by Andon Labs, which runs every model itself as an agent with a persistent notepad across the 50 apartments. The table names models by product name only and states no reasoning setting, so under the exact-join policy only a family the catalog holds as a single default configuration joins; every other row stays visible as named by the source. robots.txt: none (the path answers the site's HTML shell → conventional access); no licence statement on the page — scores only, with attribution to Andon Labs and a link to the page. Joins: data/raw/benchmarks/identity-map.json (lib/board-identity.mjs parseBlueprintBenchLabel)."
-      },
-      "update_cadence": {
-        "source_schedule": "Not stated; Andon Labs adds models as it runs them (released May 2026; the 2026-09-21 capture lists 26 models up to GPT-6 Astra and Claude Fable 5.1).",
-        "check_recommendation": "Daily with the ordinary refresh; a changed task set, scoring or normalisation is a new identity and needs a reviewed change."
-      },
-      "saturated": {
-        "value": false,
-        "note": "Best model 0.497 against a human baseline of 0.586 on the page's own 0–1 scale; computed saturation (CR-38.2) applies on build."
-      },
-      "superseded_by": null,
-      "status": "active",
-      "first_seen": "2026-09-21",
-      "last_verified": "2026-09-21",
-      "evidence": [
-        {
-          "url": "https://andonlabs.com/evals/blueprint-bench-2",
-          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-blueprint-bench-2/f1ae172f38a9a3246282.gz",
-          "sha256": "e1aee19431b5c23d93ea9f81d8add0f5dd40b720966f0e477418767ec38bd48d",
-          "fetched_at": "2026-09-21T17:34:30.150578+00:00",
-          "excerpt": "Blueprint-Bench 2 tests spatial reasoning by asking AI agents to convert apartment photographs into accurate 2D floor plans. Each agent processes 50 apartments sequentially, examining ~20 interior photos per apartment and generating a floor plan showing room layouts, connections, and relative sizes."
-        },
-        {
-          "url": "https://andonlabs.com/evals/blueprint-bench-2",
-          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-blueprint-bench-2/f1ae172f38a9a3246282.gz",
-          "sha256": "e1aee19431b5c23d93ea9f81d8add0f5dd40b720966f0e477418767ec38bd48d",
-          "fetched_at": "2026-09-21T17:34:30.150578+00:00",
-          "excerpt": "The composite score weights six sub-metrics: Jaccard similarity (50%) … degree similarity (20%) … density similarity (10%) … room count (10%), door count (5%), and orientation (5%). … Scores are then normalized so that the random baseline maps to 0 and a perfect score maps to 1."
-        }
-      ]
-    },
-    {
-      "id": "long-horizon-terminal-bench::1.0",
-      "name": "Long-Horizon Terminal-Bench",
-      "version": "1.0",
-      "version_status": "published",
-      "family": "long-horizon-terminal-bench",
+      "id": "xiaomi-agents-last-exam::snapshot-2026-09-22",
+      "name": "Agents' Last Exam",
+      "version": "snapshot-2026-09-22",
+      "version_status": "snapshot",
+      "family": "xiaomi-agents-last-exam",
       "category": "Agentic",
-      "one_sentence_description": "An agent works in a terminal for up to 90 minutes per task on 46 long jobs — building systems, migrating frameworks, playing games move by move — and earns partial credit for real progress.",
+      "one_sentence_description": "Agents' Last Exam result reported by Xiaomi for MiMo-V2.6-Pro in the 2026-09-22 launch benchmark table; the source does not supply a complete independent reproduction recipe.",
       "scoring": {
-        "metric": "Mean reward over the 46 tasks (hidden verifiers pay continuous partial credit from 0 to 1; errors count 0)",
-        "unit": "points",
-        "range": [
-          0,
-          1
-        ],
-        "higher_better": true,
-        "notes": "The number is shown the way the board publishes it — a mean partial-credit reward on a 0–1 scale, not a share of tasks solved (the board also counts a task solved at reward ≥ 0.95; that count stays in each row's protocol). Every run uses the same Terminus-2 harness, one attempt per task and a uniform 90-minute budget. The seed rows are the maintainers' paper baselines (July 2026); later runs are added after the maintainers replay and verify them. Per-task cost estimates from the paper stay in the protocol. Secondary benchmark, never a Composite input."
-      },
-      "maintainer": "Long-Horizon Terminal-Bench authors (Tencent HY LLM Frontier)",
-      "source_type": "official_leaderboard",
-      "primary_url": "https://zli12321.github.io/LHTB/leaderboard.html",
-      "publication_urls": [
-        {
-          "url": "https://zli12321.github.io/LHTB/leaderboard.html",
-          "type": "official_leaderboard",
-          "role": "Community leaderboard (primary results publication)"
-        },
-        {
-          "url": "https://arxiv.org/abs/2607.08964",
-          "type": "vendor_report",
-          "role": "Benchmark report (task design, harness, scoring)"
-        },
-        {
-          "url": "https://huggingface.co/datasets/IntelligenceLab/LHTB-leaderboard",
-          "type": "huggingface",
-          "role": "Submission archive (per-run job folders and metadata, Apache-2.0)"
-        }
-      ],
-      "how_to_collect": {
-        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-lhtb; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
-        "format": "JavaScript object literals (static site)",
-        "locator": "script.js: the `const LB = [...]` literal (paper Terminus-2 baselines: name, vendor, mean, solved, cost) and every `COMMUNITY.push({...})` (later verified runs: agent, name, mean, st, submitter, date, verified) — the rows the community leaderboard renders; leaderboard.html supplies the scoring statements.",
-        "version_guard": "The leaderboard page must still describe community runs on the 46-task suite ranked by mean reward, the Terminus-2 seed baselines, the scoring note (mean reward over 46 tasks, errors = 0, solved at reward ≥ 0.95) and the 90-minute single-attempt budget; script.js must hold N_TASKS = 46, exactly one LB literal and the COMMUNITY map (Terminus-2, 2026-07-01, verified). A new agent, an unverified run or a new row field fails closed for review. Another task set or budget is a new identity, never a silent update of this one.",
-        "identity_policy": "source_label",
-        "notes": "Measured by the maintainers, who replay each submission's trajectories against the hidden verifiers. The board names models by product name only; the submissions' metadata.yaml and job config.json state no reasoning setting, so under the exact-join policy only a family the catalog holds as a single default configuration joins, and every other row stays visible as named by the source. robots.txt allows all (GitHub Pages); the submission archive is Apache-2.0 — scores with attribution and a link to the leaderboard. Joins: data/raw/benchmarks/identity-map.json (lib/board-identity.mjs parseLhtbLabel)."
-      },
-      "update_cadence": {
-        "source_schedule": "Not stated; community submissions are added after review (seeded 2026-07-01, one later run on 2026-07-22 in the 2026-09-21 capture; the Hugging Face submission archive changes more often).",
-        "check_recommendation": "Daily with the ordinary refresh; a changed task set, harness budget or scoring is a new identity and needs a reviewed change."
-      },
-      "saturated": {
-        "value": false,
-        "note": "Best mean reward 0.505 (Grok 4.5) on the 0–1 scale; 29 of 46 tasks never passed by any model according to the report. Computed saturation (CR-38.2) applies on build."
-      },
-      "superseded_by": null,
-      "status": "active",
-      "first_seen": "2026-09-21",
-      "last_verified": "2026-09-21",
-      "evidence": [
-        {
-          "url": "https://zli12321.github.io/LHTB/leaderboard.html",
-          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/e10e19f8794b4e4ce6b0.gz",
-          "sha256": "78de6cedf807c58328cf80f96e0e686d2f18d1bd66a1529bcc2c98743e35efb6",
-          "fetched_at": "2026-09-21T20:08:09.150639+00:00",
-          "excerpt": "Community-submitted runs on the 46-task Long-Horizon Terminal-Bench suite, ranked by mean reward. The seed entries are our Terminus-2 baselines … Scores are mean reward over the 46-task suite (errors = 0; a task counts as solved at reward ≥ 0.95)."
-        },
-        {
-          "url": "https://zli12321.github.io/LHTB/script.js",
-          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-lhtb/8b9c27664cc6298fa234.gz",
-          "sha256": "f550228396dc17c57066d9ec3b18f085eb9dd37b084600a8b1e8a17eb9845938",
-          "fetched_at": "2026-09-21T20:08:06.577129+00:00",
-          "excerpt": "const N_TASKS = 46; … const COMMUNITY = LB.map((d) => ({ agent: \"Terminus-2\", name: d.name, … date: \"2026-07-01\", verified: true }));"
-        }
-      ]
-    },
-    {
-      "id": "react-native-evals::91-evals",
-      "name": "React Native Evals",
-      "version": "91-evals",
-      "version_status": "published",
-      "family": "react-native-evals",
-      "category": "Coding",
-      "one_sentence_description": "Coding agents build React Native app features — navigation, animation, async state, lists, native APIs and Skia graphics — and an LLM judge checks the generated code against each task's written requirements.",
-      "scoring": {
-        "metric": "The board's overall score in percent: the share of requirements met, summed over all 91 evals and every repeat run (an LLM judge decides each requirement against the generated files)",
+        "metric": "Source-published score",
         "unit": "percent",
         "range": [
           0,
           100
         ],
         "higher_better": true,
-        "notes": "Each eval gives the model a small React Native app and a task prompt; the model solves it through OpenCode and a judge model reads the generated files against the eval's requirements.yaml (plain-language requirements, optional weights). The board repeats the whole suite (10 runs in the 2026-09-21 capture) and scores the summed requirement counts, and every row with the full requirement count reproduces its score exactly from its own passed and judged counts. Errored evals are not judged: a row can rest on fewer judged requirements than the board's largest (GPT OSS 120B: 3,420 of 3,960 on 2026-09-21), and for such rows the board's figure differs from the plain ratio by up to 0.03 points on 2026-09-21 (the collector accepts at most 0.1); both counts stay in each row's protocol, with tokens and cost where the board reports them. The judge model is not named on the board. The board names models by product name and gateway route and states no reasoning setting. Judged benchmark (an LLM judge rates requirement fulfilment, no ground-truth answer); secondary, never a Composite input."
+        "notes": "Xiaomi's own result. The exact printed label is retained under a dated snapshot because no version was printed; it stays outside measured cohorts and Composite."
       },
-      "maintainer": "Callstack (callstackincubator/evals)",
-      "source_type": "official_leaderboard",
-      "primary_url": "https://rn-evals.vercel.app/",
+      "maintainer": "Agents' Last Exam",
+      "source_type": "vendor_report",
+      "primary_url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
       "publication_urls": [
         {
-          "url": "https://rn-evals.vercel.app/",
-          "type": "official_leaderboard",
-          "role": "Leaderboard (chart, table and cost views)"
+          "url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+          "type": "vendor_report",
+          "role": "Machine-readable MiMo-V2.6 launch benchmark appendix"
         },
         {
-          "url": "https://github.com/callstackincubator/evals",
-          "type": "github",
-          "role": "Evals, runner, judge and methodology whitepaper (MIT)"
+          "url": "https://mimo.xiaomi.com/mimo-v2-6",
+          "type": "vendor_report",
+          "role": "MiMo-V2.6 launch post and benchmark appendix"
+        },
+        {
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL",
+          "type": "huggingface",
+          "role": "MIT-licensed model card and benchmark table"
+        },
+        {
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL/blob/main/MiMo_V2_6_technical_report.pdf",
+          "type": "huggingface",
+          "role": "MiMo-V2.6 technical report and evaluation settings"
         }
       ],
       "how_to_collect": {
-        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-rn-evals; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
-        "format": "Next.js flight payload (JSON in the server-rendered page)",
-        "locator": "The Next.js flight payload of rn-evals.vercel.app (the `self.__next_f.push([1, \"...\"])` chunks the page streams with its HTML): one board object {categories, judgeModel, runStartedAt, runFinishedAt, runCount, warnings, models, evalMatrixById}; `models[]` rows {id, label, solverModel, overallScorePct, requirementsPassed, requirementsTotal, tokensUsed, costUsd, categories} — the rows the page's chart and table render. The value is overallScorePct (requirements passed / requirements judged, summed over every eval and every repeat run).",
-        "version_guard": "The page must still describe AI coding agents on React Native code-generation tasks measured by success rate per task group; the board object must keep its schema and exactly the six eval groups navigation 13, animation 13, async-state 13, lists 18, react-native-apis 9 and skia 25 (91 evals); every row's overallScorePct must reproduce requirementsPassed / requirementsTotal x 100, ids and labels unique, no board warnings; the repository README must still describe requirement-based assessment judged against file-level evidence. Another group set or eval count is a new identity, never a silent update of this one.",
-        "identity_policy": "source_label",
-        "notes": "Measured by Callstack, who run every model themselves through OpenCode and judge the output with an LLM. The board names models by product name and a gateway route (e.g. vercel/openai/gpt-5.6-sol) and states no reasoning setting, so under the exact-join policy only a family the catalog holds as a single default configuration joins; every other row stays visible as named by the source. Rows that are agents rather than models (Callstack's own Apex) or unnamed stealth models (Ox Alpha) never join. robots.txt 404 (Vercel); repository MIT — scores with attribution to Callstack and a link to the board. Joins: data/raw/benchmarks/identity-map.json (lib/board-identity.mjs parseRnEvalsLabel)."
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Xiaomi launch JavaScript data table",
+        "locator": "SECTIONS benchmark row \"Agents' Last Exam\"; scores[0] for MiMo-V2.6-Pro",
+        "version_guard": "Keep snapshot-2026-09-22; do not infer a version.",
+        "notes": "Capture only; do not execute downloaded JavaScript. Preserve self_reported basis."
       },
       "update_cadence": {
-        "source_schedule": "Not stated; the page shows the last run date (2026-09-17 in the 2026-09-21 capture) and the repository changes as evals are added.",
-        "check_recommendation": "Daily with the ordinary refresh; a changed eval group set or eval count is a new identity and needs a reviewed change."
+        "source_schedule": "No update schedule stated.",
+        "check_recommendation": "Check on a MiMo-V2.6 revision or when an independent matching-version result appears."
       },
       "saturated": {
         "value": false,
-        "note": "Best overall score 90.9 % (Callstack's Apex agent) and 90.8 % (Claude Opus 5) on 2026-09-21; the lower half of the board spans 44–84 %. Computed saturation (CR-38.2) applies on build."
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
       },
       "superseded_by": null,
       "status": "active",
-      "first_seen": "2026-09-21",
-      "last_verified": "2026-09-21",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
       "evidence": [
         {
-          "url": "https://rn-evals.vercel.app/",
-          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/44177e508aa4b210b607.gz",
-          "sha256": "b591ee1d8f85e0b4d9086b12fed18591639bc567a0985b88dcb3f20874d540b6",
-          "fetched_at": "2026-09-21T20:32:45.098128+00:00",
-          "excerpt": "AI Agent Evaluations for React Native — Performance results of AI coding agents on React Native code generation tasks, measuring success rate for common task groups, token usage, and cost. … Last run: September 17, 2026 · 10 x Runs · Build by Callstack"
-        },
-        {
-          "url": "https://raw.githubusercontent.com/callstackincubator/evals/main/README.md",
-          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-rn-evals/6d9a19b55ceedc325187.gz",
-          "sha256": "b987f51ec244890c3b63409729f88d555d784f79fc2ccd4c74882eeaae32afd8",
-          "fetched_at": "2026-09-21T20:32:47.849503+00:00",
-          "excerpt": "The benchmark evaluates model-generated React Native implementations using requirement-based assessment. … Model outputs are judged against these requirements using file-level evidence"
+          "url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/8ba4b07222116198f7fa.gz",
+          "sha256": "5cbecf6eae24bd1670b6d7d9f0591aa4b300876a94492258d0261aca1b503eb8",
+          "fetched_at": "2026-09-21T22:16:32.970696+00:00",
+          "excerpt": "MiMo-V2.6-Pro — Agents' Last Exam: 31.6%; Xiaomi launch appendix snapshot 2026-09-22."
         }
       ]
     },
     {
-      "id": "researchclawbench::40-tasks",
-      "name": "ResearchClawBench",
-      "version": "40-tasks",
+      "id": "xiaomi-automationbench-v1-0-6::1.0.6",
+      "name": "Automation Bench v1.0.6",
+      "version": "1.0.6",
       "version_status": "published",
-      "family": "researchclawbench",
-      "category": "Science",
-      "one_sentence_description": "An AI agent gets the raw data and related literature behind a published scientific paper — the paper itself hidden — and must redo the research end to end, from analysis to a written report, across 40 tasks in 10 scientific domains.",
+      "family": "xiaomi-automationbench-v1-0-6",
+      "category": "Agentic",
+      "one_sentence_description": "Automation Bench v1.0.6 result reported by Xiaomi for MiMo-V2.6-Pro in the 2026-09-22 launch benchmark table; the source does not supply a complete independent reproduction recipe.",
       "scoring": {
-        "metric": "Mean rubric score over the tasks a model has a scored run for, 0–100 (an LLM acting as a strict peer reviewer grades each report against an expert-curated weighted rubric; 50 = the report matches the original paper)",
-        "unit": "points",
+        "metric": "Source-published score",
+        "unit": "percent",
         "range": [
           0,
           100
         ],
         "higher_better": true,
-        "notes": "Only the board's ResearchHarness rows are collected: the benchmark's own lightweight baseline harness around a standalone model, so the rows compare models. The board's other rows (Claude Code, Codex CLI, InnoClaw, Qiushi Engine and more) are research-agent products built around some model and are not model rows. Pass@1 view (the page's default; its Pass@5 view takes the best of five attempts). The value is the plain mean of the row's scored tasks, the figure the page ranks by: a task without a scored run is left out rather than counted as 0, so coverage differs (33 to 40 of 40 on 2026-09-21) and stays in each row's protocol with the mean cost per task. The page says 100 = surpasses the paper, the README 70+. Judged benchmark (an LLM judge applies the rubric); secondary, never a Composite input."
+        "notes": "Xiaomi's own result. The exact printed label is retained at version 1.0.6; it stays outside measured cohorts and Composite."
       },
-      "maintainer": "ResearchClawBench team (InternScience)",
-      "source_type": "official_leaderboard",
-      "primary_url": "https://internscience.github.io/ResearchClawBench-Home/",
+      "maintainer": "AutomationBench",
+      "source_type": "vendor_report",
+      "primary_url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
       "publication_urls": [
         {
-          "url": "https://internscience.github.io/ResearchClawBench-Home/",
-          "type": "official_leaderboard",
-          "role": "Leaderboard (Pass@1 and Pass@5 views, run browser)"
-        },
-        {
-          "url": "https://github.com/InternScience/ResearchClawBench",
-          "type": "github",
-          "role": "Tasks, rubrics, evaluation code and README (MIT)"
-        },
-        {
-          "url": "https://arxiv.org/abs/2606.07591",
+          "url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
           "type": "vendor_report",
-          "role": "Benchmark paper (task design and rubric scoring)"
+          "role": "Machine-readable MiMo-V2.6 launch benchmark appendix"
+        },
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6",
+          "type": "vendor_report",
+          "role": "MiMo-V2.6 launch post and benchmark appendix"
+        },
+        {
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL",
+          "type": "huggingface",
+          "role": "MIT-licensed model card and benchmark table"
+        },
+        {
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL/blob/main/MiMo_V2_6_technical_report.pdf",
+          "type": "huggingface",
+          "role": "MiMo-V2.6 technical report and evaluation settings"
         }
       ],
       "how_to_collect": {
-        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-researchclawbench; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
-        "format": "JSON (static site data file)",
-        "locator": "data/leaderboard.json of the ResearchClawBench home page (the file the page's app loads for its Pass@1 leaderboard): scores[agent][task] = {score, run_id, model, model_display, cost_usd, duration_seconds}. Only agents named \"ResearchHarness (<model>)\" are read; the value is the plain mean of that agent's scored task scores, the figure the page ranks by (app.js getAverageAgentScore).",
-        "version_guard": "leaderboard.json must keep its keys {tasks, agents, scores, frontier} and exactly the 40 reviewed task ids (four per domain: Astronomy, Chemistry, Earth, Energy, Information, Life, Material, Math, Neuroscience, Physics); each ResearchHarness row's entries must keep the reviewed fields with scores in 0–100 and name only the model in the row's own label; the page must still say 50 = matches the original paper, the README must still describe the weighted rubric judged by an LLM acting as a strict peer reviewer and the ResearchHarness baseline, and app.js must still rank agents by the plain mean of their scored tasks. Another task list is a new identity, never a silent update of this one.",
-        "identity_policy": "source_label",
-        "notes": "Measured by the ResearchClawBench team, who run each standalone model under ResearchHarness themselves; agent products are submitted or run separately and are not collected. The board names models by product name and states no reasoning setting, so under the exact-join policy only a family the catalog holds as a single default configuration joins; every other row stays visible as named by the source. Hy3-Preview is labelled a preview model by the maintainers. robots.txt 404 (GitHub Pages); both repositories MIT — scores with attribution to InternScience and a link to the leaderboard. Joins: data/raw/benchmarks/identity-map.json (lib/board-identity.mjs parseResearchClawBenchLabel)."
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Xiaomi launch JavaScript data table",
+        "locator": "SECTIONS benchmark row \"Automation Bench v1.0.6\"; scores[0] for MiMo-V2.6-Pro",
+        "version_guard": "Require the printed version 1.0.6.",
+        "notes": "Capture only; do not execute downloaded JavaScript. Preserve self_reported basis."
       },
       "update_cadence": {
-        "source_schedule": "Not stated; the README's news list shows new rows every few weeks (latest 2026-09-17 in the 2026-09-21 capture; the newest ResearchHarness model run is from 2026-07).",
-        "check_recommendation": "Daily with the ordinary refresh; a changed task list is a new identity and needs a reviewed change."
+        "source_schedule": "No update schedule stated.",
+        "check_recommendation": "Check on a MiMo-V2.6 revision or when an independent matching-version result appears."
       },
       "saturated": {
         "value": false,
-        "note": "Best ResearchHarness mean 21.1 (Claude Opus 4.8) on 2026-09-21, far below the 50 that means matching the paper; the best agent product reaches 38.6. Computed saturation (CR-38.2) applies on build."
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
       },
       "superseded_by": null,
       "status": "active",
-      "first_seen": "2026-09-21",
-      "last_verified": "2026-09-21",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
       "evidence": [
         {
-          "url": "https://internscience.github.io/ResearchClawBench-Home/data/leaderboard.json",
-          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/5d538e012068a8fec9fe.gz",
-          "sha256": "f9d7e272456ec9929d807386358dfc53f5f5ccbbd3e51120f910992df549c39b",
-          "fetched_at": "2026-09-21T20:48:40.424571+00:00",
-          "excerpt": "{\"tasks\": [\"Astronomy_000\", … \"Physics_003\"], \"agents\": [… \"ResearchHarness (Claude-Opus-4.8)\" …], \"scores\": {…}, \"frontier\": {…}}"
+          "url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/8ba4b07222116198f7fa.gz",
+          "sha256": "5cbecf6eae24bd1670b6d7d9f0591aa4b300876a94492258d0261aca1b503eb8",
+          "fetched_at": "2026-09-21T22:16:32.970696+00:00",
+          "excerpt": "MiMo-V2.6-Pro — Automation Bench v1.0.6: 53.1%; Xiaomi launch appendix snapshot 2026-09-22."
+        }
+      ]
+    },
+    {
+      "id": "xiaomi-cybergym::snapshot-2026-09-22",
+      "name": "CyberGym",
+      "version": "snapshot-2026-09-22",
+      "version_status": "snapshot",
+      "family": "xiaomi-cybergym",
+      "category": "Coding",
+      "one_sentence_description": "CyberGym result reported by Xiaomi for MiMo-V2.6-Pro in the 2026-09-22 launch benchmark table; the source does not supply a complete independent reproduction recipe.",
+      "scoring": {
+        "metric": "Source-published score",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Xiaomi's own result. The exact printed label is retained under a dated snapshot because no version was printed; it stays outside measured cohorts and Composite."
+      },
+      "maintainer": "CyberGym",
+      "source_type": "vendor_report",
+      "primary_url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+      "publication_urls": [
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+          "type": "vendor_report",
+          "role": "Machine-readable MiMo-V2.6 launch benchmark appendix"
         },
         {
-          "url": "https://internscience.github.io/ResearchClawBench-Home/",
-          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/fd28ace3577a593175a4.gz",
-          "sha256": "9f3edd3d0a716d08ed90f99544d8db5ca21c7b49bf66bd19c53e05ace0cb97a3",
-          "fetched_at": "2026-09-21T20:48:43.035439+00:00",
-          "excerpt": "Frontier Best score per task across all agents. 50 = matches original paper, 100 = surpasses it. Leaderboard"
+          "url": "https://mimo.xiaomi.com/mimo-v2-6",
+          "type": "vendor_report",
+          "role": "MiMo-V2.6 launch post and benchmark appendix"
         },
         {
-          "url": "https://internscience.github.io/ResearchClawBench-Home/static/app.js",
-          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/3d1f147a79b09329806d.gz",
-          "sha256": "45ce61f6c68d24987c331a927f2a3229d86c5af5ad5ce79a2b62286f172437c6",
-          "fetched_at": "2026-09-21T20:48:45.551320+00:00",
-          "excerpt": "function getAverageAgentScore(data, agent) { … return scores.length ? scores.reduce((a, b) => a + b, 0) / scores.length : -Infinity; }"
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL",
+          "type": "huggingface",
+          "role": "MIT-licensed model card and benchmark table"
         },
         {
-          "url": "https://raw.githubusercontent.com/InternScience/ResearchClawBench/main/README.md",
-          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/09509897989f8b6f64bb.gz",
-          "sha256": "3ad59343fe80671904ed028de1ceedbce8cd067f004c85a5c50c64c02e70be69",
-          "fetched_at": "2026-09-21T20:48:48.104788+00:00",
-          "excerpt": "Fine-grained, multimodal scoring. A weighted rubric (checklist) with text and image criteria, judged by an LLM acting as a strict peer reviewer. … and a lightweight ResearchHarness baseline."
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL/blob/main/MiMo_V2_6_technical_report.pdf",
+          "type": "huggingface",
+          "role": "MiMo-V2.6 technical report and evaluation settings"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Xiaomi launch JavaScript data table",
+        "locator": "SECTIONS benchmark row \"CyberGym\"; scores[0] for MiMo-V2.6-Pro",
+        "version_guard": "Keep snapshot-2026-09-22; do not infer a version.",
+        "notes": "Capture only; do not execute downloaded JavaScript. Preserve self_reported basis."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated.",
+        "check_recommendation": "Check on a MiMo-V2.6 revision or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/8ba4b07222116198f7fa.gz",
+          "sha256": "5cbecf6eae24bd1670b6d7d9f0591aa4b300876a94492258d0261aca1b503eb8",
+          "fetched_at": "2026-09-21T22:16:32.970696+00:00",
+          "excerpt": "MiMo-V2.6-Pro — CyberGym: 94%; Xiaomi launch appendix snapshot 2026-09-22."
+        }
+      ]
+    },
+    {
+      "id": "xiaomi-deepswe-v1-1::1.1",
+      "name": "DeepSWE v1.1",
+      "version": "1.1",
+      "version_status": "published",
+      "family": "xiaomi-deepswe-v1-1",
+      "category": "Coding",
+      "one_sentence_description": "DeepSWE v1.1 result reported by Xiaomi for MiMo-V2.6-Pro in the 2026-09-22 launch benchmark table; the source does not supply a complete independent reproduction recipe.",
+      "scoring": {
+        "metric": "Source-published score",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Xiaomi's own result. The exact printed label is retained at version 1.1; it stays outside measured cohorts and Composite."
+      },
+      "maintainer": "DeepSWE",
+      "source_type": "vendor_report",
+      "primary_url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+      "publication_urls": [
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+          "type": "vendor_report",
+          "role": "Machine-readable MiMo-V2.6 launch benchmark appendix"
+        },
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6",
+          "type": "vendor_report",
+          "role": "MiMo-V2.6 launch post and benchmark appendix"
+        },
+        {
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL",
+          "type": "huggingface",
+          "role": "MIT-licensed model card and benchmark table"
+        },
+        {
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL/blob/main/MiMo_V2_6_technical_report.pdf",
+          "type": "huggingface",
+          "role": "MiMo-V2.6 technical report and evaluation settings"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Xiaomi launch JavaScript data table",
+        "locator": "SECTIONS benchmark row \"DeepSWE v1.1\"; scores[0] for MiMo-V2.6-Pro",
+        "version_guard": "Require the printed version 1.1.",
+        "notes": "Capture only; do not execute downloaded JavaScript. Preserve self_reported basis."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated.",
+        "check_recommendation": "Check on a MiMo-V2.6 revision or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/8ba4b07222116198f7fa.gz",
+          "sha256": "5cbecf6eae24bd1670b6d7d9f0591aa4b300876a94492258d0261aca1b503eb8",
+          "fetched_at": "2026-09-21T22:16:32.970696+00:00",
+          "excerpt": "MiMo-V2.6-Pro — DeepSWE v1.1: 71.9%; Xiaomi launch appendix snapshot 2026-09-22."
+        }
+      ]
+    },
+    {
+      "id": "xiaomi-exploitbench::snapshot-2026-09-22",
+      "name": "ExploitBench",
+      "version": "snapshot-2026-09-22",
+      "version_status": "snapshot",
+      "family": "xiaomi-exploitbench",
+      "category": "Coding",
+      "one_sentence_description": "ExploitBench result reported by Xiaomi for MiMo-V2.6-Pro in the 2026-09-22 launch benchmark table; the source does not supply a complete independent reproduction recipe.",
+      "scoring": {
+        "metric": "Source-published score",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Xiaomi's own result. The exact printed label is retained under a dated snapshot because no version was printed; it stays outside measured cohorts and Composite."
+      },
+      "maintainer": "ExploitBench",
+      "source_type": "vendor_report",
+      "primary_url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+      "publication_urls": [
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+          "type": "vendor_report",
+          "role": "Machine-readable MiMo-V2.6 launch benchmark appendix"
+        },
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6",
+          "type": "vendor_report",
+          "role": "MiMo-V2.6 launch post and benchmark appendix"
+        },
+        {
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL",
+          "type": "huggingface",
+          "role": "MIT-licensed model card and benchmark table"
+        },
+        {
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL/blob/main/MiMo_V2_6_technical_report.pdf",
+          "type": "huggingface",
+          "role": "MiMo-V2.6 technical report and evaluation settings"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Xiaomi launch JavaScript data table",
+        "locator": "SECTIONS benchmark row \"ExploitBench\"; scores[0] for MiMo-V2.6-Pro",
+        "version_guard": "Keep snapshot-2026-09-22; do not infer a version.",
+        "notes": "Capture only; do not execute downloaded JavaScript. Preserve self_reported basis."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated.",
+        "check_recommendation": "Check on a MiMo-V2.6 revision or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/8ba4b07222116198f7fa.gz",
+          "sha256": "5cbecf6eae24bd1670b6d7d9f0591aa4b300876a94492258d0261aca1b503eb8",
+          "fetched_at": "2026-09-21T22:16:32.970696+00:00",
+          "excerpt": "MiMo-V2.6-Pro — ExploitBench: 47.9%; Xiaomi launch appendix snapshot 2026-09-22."
+        }
+      ]
+    },
+    {
+      "id": "xiaomi-exploitgym::snapshot-2026-09-22",
+      "name": "ExploitGym",
+      "version": "snapshot-2026-09-22",
+      "version_status": "snapshot",
+      "family": "xiaomi-exploitgym",
+      "category": "Coding",
+      "one_sentence_description": "ExploitGym result reported by Xiaomi for MiMo-V2.6-Pro in the 2026-09-22 launch benchmark table; the source does not supply a complete independent reproduction recipe.",
+      "scoring": {
+        "metric": "Source-published score",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Xiaomi's own result. The exact printed label is retained under a dated snapshot because no version was printed; it stays outside measured cohorts and Composite."
+      },
+      "maintainer": "ExploitGym",
+      "source_type": "vendor_report",
+      "primary_url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+      "publication_urls": [
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+          "type": "vendor_report",
+          "role": "Machine-readable MiMo-V2.6 launch benchmark appendix"
+        },
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6",
+          "type": "vendor_report",
+          "role": "MiMo-V2.6 launch post and benchmark appendix"
+        },
+        {
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL",
+          "type": "huggingface",
+          "role": "MIT-licensed model card and benchmark table"
+        },
+        {
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL/blob/main/MiMo_V2_6_technical_report.pdf",
+          "type": "huggingface",
+          "role": "MiMo-V2.6 technical report and evaluation settings"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Xiaomi launch JavaScript data table",
+        "locator": "SECTIONS benchmark row \"ExploitGym\"; scores[0] for MiMo-V2.6-Pro",
+        "version_guard": "Keep snapshot-2026-09-22; do not infer a version.",
+        "notes": "Capture only; do not execute downloaded JavaScript. Preserve self_reported basis."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated.",
+        "check_recommendation": "Check on a MiMo-V2.6 revision or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/8ba4b07222116198f7fa.gz",
+          "sha256": "5cbecf6eae24bd1670b6d7d9f0591aa4b300876a94492258d0261aca1b503eb8",
+          "fetched_at": "2026-09-21T22:16:32.970696+00:00",
+          "excerpt": "MiMo-V2.6-Pro — ExploitGym: 17.8%; Xiaomi launch appendix snapshot 2026-09-22."
+        }
+      ]
+    },
+    {
+      "id": "xiaomi-gdpval-aa-2-1::2.1",
+      "name": "GDPVal 2.1 (AA)",
+      "version": "2.1",
+      "version_status": "published",
+      "family": "xiaomi-gdpval-aa-2-1",
+      "category": "Agentic",
+      "one_sentence_description": "GDPVal 2.1 (AA) result reported by Xiaomi for MiMo-V2.6-Pro in the 2026-09-22 launch benchmark table; the source does not supply a complete independent reproduction recipe.",
+      "scoring": {
+        "metric": "Source-published Elo rating",
+        "unit": "elo",
+        "range": [
+          0,
+          null
+        ],
+        "higher_better": true,
+        "notes": "Xiaomi's own result. The lowercase unit spelling is preserved exactly from the source; presentation may render it as Elo. The exact printed label is retained at version 2.1; it stays outside measured cohorts and Composite."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "vendor_report",
+      "primary_url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+      "publication_urls": [
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+          "type": "vendor_report",
+          "role": "Machine-readable MiMo-V2.6 launch benchmark appendix"
+        },
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6",
+          "type": "vendor_report",
+          "role": "MiMo-V2.6 launch post and benchmark appendix"
+        },
+        {
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL",
+          "type": "huggingface",
+          "role": "MIT-licensed model card and benchmark table"
+        },
+        {
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL/blob/main/MiMo_V2_6_technical_report.pdf",
+          "type": "huggingface",
+          "role": "MiMo-V2.6 technical report and evaluation settings"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Xiaomi launch JavaScript data table",
+        "locator": "SECTIONS benchmark row \"GDPVal 2.1 (AA)\"; scores[0] for MiMo-V2.6-Pro",
+        "version_guard": "Require the printed version 2.1.",
+        "notes": "Capture only; do not execute downloaded JavaScript. Preserve self_reported basis."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated.",
+        "check_recommendation": "Check on a MiMo-V2.6 revision or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/8ba4b07222116198f7fa.gz",
+          "sha256": "5cbecf6eae24bd1670b6d7d9f0591aa4b300876a94492258d0261aca1b503eb8",
+          "fetched_at": "2026-09-21T22:16:32.970696+00:00",
+          "excerpt": "MiMo-V2.6-Pro — GDPVal 2.1 (AA): 1673; Xiaomi launch appendix snapshot 2026-09-22."
+        }
+      ]
+    },
+    {
+      "id": "xiaomi-jobbench::snapshot-2026-09-22",
+      "name": "JobBench",
+      "version": "snapshot-2026-09-22",
+      "version_status": "snapshot",
+      "family": "xiaomi-jobbench",
+      "category": "Agentic",
+      "one_sentence_description": "JobBench result reported by Xiaomi for MiMo-V2.6-Pro in the 2026-09-22 launch benchmark table; the source does not supply a complete independent reproduction recipe.",
+      "scoring": {
+        "metric": "Source-published score",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Xiaomi's own result. The exact printed label is retained under a dated snapshot because no version was printed; it stays outside measured cohorts and Composite."
+      },
+      "maintainer": "JobBench",
+      "source_type": "vendor_report",
+      "primary_url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+      "publication_urls": [
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+          "type": "vendor_report",
+          "role": "Machine-readable MiMo-V2.6 launch benchmark appendix"
+        },
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6",
+          "type": "vendor_report",
+          "role": "MiMo-V2.6 launch post and benchmark appendix"
+        },
+        {
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL",
+          "type": "huggingface",
+          "role": "MIT-licensed model card and benchmark table"
+        },
+        {
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL/blob/main/MiMo_V2_6_technical_report.pdf",
+          "type": "huggingface",
+          "role": "MiMo-V2.6 technical report and evaluation settings"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Xiaomi launch JavaScript data table",
+        "locator": "SECTIONS benchmark row \"JobBench\"; scores[0] for MiMo-V2.6-Pro",
+        "version_guard": "Keep snapshot-2026-09-22; do not infer a version.",
+        "notes": "Capture only; do not execute downloaded JavaScript. Preserve self_reported basis."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated.",
+        "check_recommendation": "Check on a MiMo-V2.6 revision or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/8ba4b07222116198f7fa.gz",
+          "sha256": "5cbecf6eae24bd1670b6d7d9f0591aa4b300876a94492258d0261aca1b503eb8",
+          "fetched_at": "2026-09-21T22:16:32.970696+00:00",
+          "excerpt": "MiMo-V2.6-Pro — JobBench: 62%; Xiaomi launch appendix snapshot 2026-09-22."
+        }
+      ]
+    },
+    {
+      "id": "xiaomi-mimo-code-bench::snapshot-2026-09-22",
+      "name": "MiMo Code Bench",
+      "version": "snapshot-2026-09-22",
+      "version_status": "snapshot",
+      "family": "xiaomi-mimo-code-bench",
+      "category": "Coding",
+      "one_sentence_description": "MiMo Code Bench result reported by Xiaomi for MiMo-V2.6-Pro in the 2026-09-22 launch benchmark table; the source does not supply a complete independent reproduction recipe.",
+      "scoring": {
+        "metric": "Source-published score",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Xiaomi's own result. The exact printed label is retained under a dated snapshot because no version was printed; it stays outside measured cohorts and Composite."
+      },
+      "maintainer": "Xiaomi MiMo",
+      "source_type": "vendor_report",
+      "primary_url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+      "publication_urls": [
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+          "type": "vendor_report",
+          "role": "Machine-readable MiMo-V2.6 launch benchmark appendix"
+        },
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6",
+          "type": "vendor_report",
+          "role": "MiMo-V2.6 launch post and benchmark appendix"
+        },
+        {
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL",
+          "type": "huggingface",
+          "role": "MIT-licensed model card and benchmark table"
+        },
+        {
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL/blob/main/MiMo_V2_6_technical_report.pdf",
+          "type": "huggingface",
+          "role": "MiMo-V2.6 technical report and evaluation settings"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Xiaomi launch JavaScript data table",
+        "locator": "SECTIONS benchmark row \"MiMo Code Bench\"; scores[0] for MiMo-V2.6-Pro",
+        "version_guard": "Keep snapshot-2026-09-22; do not infer a version.",
+        "notes": "Capture only; do not execute downloaded JavaScript. Preserve self_reported basis."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated.",
+        "check_recommendation": "Check on a MiMo-V2.6 revision or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/8ba4b07222116198f7fa.gz",
+          "sha256": "5cbecf6eae24bd1670b6d7d9f0591aa4b300876a94492258d0261aca1b503eb8",
+          "fetched_at": "2026-09-21T22:16:32.970696+00:00",
+          "excerpt": "MiMo-V2.6-Pro — MiMo Code Bench: 63.2%; Xiaomi launch appendix snapshot 2026-09-22."
+        }
+      ]
+    },
+    {
+      "id": "xiaomi-mimo-cyber-bench::snapshot-2026-09-22",
+      "name": "MiMo Cyber Bench",
+      "version": "snapshot-2026-09-22",
+      "version_status": "snapshot",
+      "family": "xiaomi-mimo-cyber-bench",
+      "category": "Coding",
+      "one_sentence_description": "MiMo Cyber Bench result reported by Xiaomi for MiMo-V2.6-Pro in the 2026-09-22 launch benchmark table; the source does not supply a complete independent reproduction recipe.",
+      "scoring": {
+        "metric": "Source-published score",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Xiaomi's own result. The exact printed label is retained under a dated snapshot because no version was printed; it stays outside measured cohorts and Composite."
+      },
+      "maintainer": "Xiaomi MiMo",
+      "source_type": "vendor_report",
+      "primary_url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+      "publication_urls": [
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+          "type": "vendor_report",
+          "role": "Machine-readable MiMo-V2.6 launch benchmark appendix"
+        },
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6",
+          "type": "vendor_report",
+          "role": "MiMo-V2.6 launch post and benchmark appendix"
+        },
+        {
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL",
+          "type": "huggingface",
+          "role": "MIT-licensed model card and benchmark table"
+        },
+        {
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL/blob/main/MiMo_V2_6_technical_report.pdf",
+          "type": "huggingface",
+          "role": "MiMo-V2.6 technical report and evaluation settings"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Xiaomi launch JavaScript data table",
+        "locator": "SECTIONS benchmark row \"MiMo Cyber Bench\"; scores[0] for MiMo-V2.6-Pro",
+        "version_guard": "Keep snapshot-2026-09-22; do not infer a version.",
+        "notes": "Capture only; do not execute downloaded JavaScript. Preserve self_reported basis."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated.",
+        "check_recommendation": "Check on a MiMo-V2.6 revision or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/8ba4b07222116198f7fa.gz",
+          "sha256": "5cbecf6eae24bd1670b6d7d9f0591aa4b300876a94492258d0261aca1b503eb8",
+          "fetched_at": "2026-09-21T22:16:32.970696+00:00",
+          "excerpt": "MiMo-V2.6-Pro — MiMo Cyber Bench: 81.7%; Xiaomi launch appendix snapshot 2026-09-22."
+        }
+      ]
+    },
+    {
+      "id": "xiaomi-mimo-visual-coding::snapshot-2026-09-22",
+      "name": "MiMo Visual Coding",
+      "version": "snapshot-2026-09-22",
+      "version_status": "snapshot",
+      "family": "xiaomi-mimo-visual-coding",
+      "category": "Vision",
+      "one_sentence_description": "MiMo Visual Coding result reported by Xiaomi for MiMo-V2.6-Pro in the 2026-09-22 launch benchmark table; the source does not supply a complete independent reproduction recipe.",
+      "scoring": {
+        "metric": "Source-published score",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Xiaomi's own result. The exact printed label is retained under a dated snapshot because no version was printed; it stays outside measured cohorts and Composite."
+      },
+      "maintainer": "Xiaomi MiMo",
+      "source_type": "vendor_report",
+      "primary_url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+      "publication_urls": [
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+          "type": "vendor_report",
+          "role": "Machine-readable MiMo-V2.6 launch benchmark appendix"
+        },
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6",
+          "type": "vendor_report",
+          "role": "MiMo-V2.6 launch post and benchmark appendix"
+        },
+        {
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL",
+          "type": "huggingface",
+          "role": "MIT-licensed model card and benchmark table"
+        },
+        {
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL/blob/main/MiMo_V2_6_technical_report.pdf",
+          "type": "huggingface",
+          "role": "MiMo-V2.6 technical report and evaluation settings"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Xiaomi launch JavaScript data table",
+        "locator": "SECTIONS benchmark row \"MiMo Visual Coding\"; scores[0] for MiMo-V2.6-Pro",
+        "version_guard": "Keep snapshot-2026-09-22; do not infer a version.",
+        "notes": "Capture only; do not execute downloaded JavaScript. Preserve self_reported basis."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated.",
+        "check_recommendation": "Check on a MiMo-V2.6 revision or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/8ba4b07222116198f7fa.gz",
+          "sha256": "5cbecf6eae24bd1670b6d7d9f0591aa4b300876a94492258d0261aca1b503eb8",
+          "fetched_at": "2026-09-21T22:16:32.970696+00:00",
+          "excerpt": "MiMo-V2.6-Pro — MiMo Visual Coding: 72.3%; Xiaomi launch appendix snapshot 2026-09-22."
+        }
+      ]
+    },
+    {
+      "id": "xiaomi-osworld-verified::snapshot-2026-09-22",
+      "name": "OSWorld-Verified",
+      "version": "snapshot-2026-09-22",
+      "version_status": "snapshot",
+      "family": "xiaomi-osworld-verified",
+      "category": "Agentic",
+      "one_sentence_description": "OSWorld-Verified result reported by Xiaomi for MiMo-V2.6-Pro in the 2026-09-22 launch benchmark table; the source does not supply a complete independent reproduction recipe.",
+      "scoring": {
+        "metric": "Source-published score",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Xiaomi's own result. The exact printed label is retained under a dated snapshot because no version was printed; it stays outside measured cohorts and Composite."
+      },
+      "maintainer": "OSWorld",
+      "source_type": "vendor_report",
+      "primary_url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+      "publication_urls": [
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+          "type": "vendor_report",
+          "role": "Machine-readable MiMo-V2.6 launch benchmark appendix"
+        },
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6",
+          "type": "vendor_report",
+          "role": "MiMo-V2.6 launch post and benchmark appendix"
+        },
+        {
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL",
+          "type": "huggingface",
+          "role": "MIT-licensed model card and benchmark table"
+        },
+        {
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL/blob/main/MiMo_V2_6_technical_report.pdf",
+          "type": "huggingface",
+          "role": "MiMo-V2.6 technical report and evaluation settings"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Xiaomi launch JavaScript data table",
+        "locator": "SECTIONS benchmark row \"OSWorld-Verified\"; scores[0] for MiMo-V2.6-Pro",
+        "version_guard": "Keep snapshot-2026-09-22; do not infer a version.",
+        "notes": "Capture only; do not execute downloaded JavaScript. Preserve self_reported basis."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated.",
+        "check_recommendation": "Check on a MiMo-V2.6 revision or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/8ba4b07222116198f7fa.gz",
+          "sha256": "5cbecf6eae24bd1670b6d7d9f0591aa4b300876a94492258d0261aca1b503eb8",
+          "fetched_at": "2026-09-21T22:16:32.970696+00:00",
+          "excerpt": "MiMo-V2.6-Pro — OSWorld-Verified: 82%; Xiaomi launch appendix snapshot 2026-09-22."
+        }
+      ]
+    },
+    {
+      "id": "xiaomi-programbench::snapshot-2026-09-22",
+      "name": "ProgramBench",
+      "version": "snapshot-2026-09-22",
+      "version_status": "snapshot",
+      "family": "xiaomi-programbench",
+      "category": "Coding",
+      "one_sentence_description": "ProgramBench result reported by Xiaomi for MiMo-V2.6-Pro in the 2026-09-22 launch benchmark table; the source does not supply a complete independent reproduction recipe.",
+      "scoring": {
+        "metric": "Source-published score",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Xiaomi's own result. The exact printed label is retained under a dated snapshot because no version was printed; it stays outside measured cohorts and Composite."
+      },
+      "maintainer": "ProgramBench",
+      "source_type": "vendor_report",
+      "primary_url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+      "publication_urls": [
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+          "type": "vendor_report",
+          "role": "Machine-readable MiMo-V2.6 launch benchmark appendix"
+        },
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6",
+          "type": "vendor_report",
+          "role": "MiMo-V2.6 launch post and benchmark appendix"
+        },
+        {
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL",
+          "type": "huggingface",
+          "role": "MIT-licensed model card and benchmark table"
+        },
+        {
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL/blob/main/MiMo_V2_6_technical_report.pdf",
+          "type": "huggingface",
+          "role": "MiMo-V2.6 technical report and evaluation settings"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Xiaomi launch JavaScript data table",
+        "locator": "SECTIONS benchmark row \"ProgramBench\"; scores[0] for MiMo-V2.6-Pro",
+        "version_guard": "Keep snapshot-2026-09-22; do not infer a version.",
+        "notes": "Capture only; do not execute downloaded JavaScript. Preserve self_reported basis."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated.",
+        "check_recommendation": "Check on a MiMo-V2.6 revision or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/8ba4b07222116198f7fa.gz",
+          "sha256": "5cbecf6eae24bd1670b6d7d9f0591aa4b300876a94492258d0261aca1b503eb8",
+          "fetched_at": "2026-09-21T22:16:32.970696+00:00",
+          "excerpt": "MiMo-V2.6-Pro — ProgramBench: 26.5%; Xiaomi launch appendix snapshot 2026-09-22."
+        }
+      ]
+    },
+    {
+      "id": "xiaomi-sec-bench-pro::snapshot-2026-09-22",
+      "name": "SEC Bench Pro",
+      "version": "snapshot-2026-09-22",
+      "version_status": "snapshot",
+      "family": "xiaomi-sec-bench-pro",
+      "category": "Coding",
+      "one_sentence_description": "SEC Bench Pro result reported by Xiaomi for MiMo-V2.6-Pro in the 2026-09-22 launch benchmark table; the source does not supply a complete independent reproduction recipe.",
+      "scoring": {
+        "metric": "Source-published score",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Xiaomi's own result. The exact printed label is retained under a dated snapshot because no version was printed; it stays outside measured cohorts and Composite."
+      },
+      "maintainer": "SEC Bench Pro",
+      "source_type": "vendor_report",
+      "primary_url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+      "publication_urls": [
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+          "type": "vendor_report",
+          "role": "Machine-readable MiMo-V2.6 launch benchmark appendix"
+        },
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6",
+          "type": "vendor_report",
+          "role": "MiMo-V2.6 launch post and benchmark appendix"
+        },
+        {
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL",
+          "type": "huggingface",
+          "role": "MIT-licensed model card and benchmark table"
+        },
+        {
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL/blob/main/MiMo_V2_6_technical_report.pdf",
+          "type": "huggingface",
+          "role": "MiMo-V2.6 technical report and evaluation settings"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Xiaomi launch JavaScript data table",
+        "locator": "SECTIONS benchmark row \"SEC Bench Pro\"; scores[0] for MiMo-V2.6-Pro",
+        "version_guard": "Keep snapshot-2026-09-22; do not infer a version.",
+        "notes": "Capture only; do not execute downloaded JavaScript. Preserve self_reported basis."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated.",
+        "check_recommendation": "Check on a MiMo-V2.6 revision or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/8ba4b07222116198f7fa.gz",
+          "sha256": "5cbecf6eae24bd1670b6d7d9f0591aa4b300876a94492258d0261aca1b503eb8",
+          "fetched_at": "2026-09-21T22:16:32.970696+00:00",
+          "excerpt": "MiMo-V2.6-Pro — SEC Bench Pro: 66.3%; Xiaomi launch appendix snapshot 2026-09-22."
+        }
+      ]
+    },
+    {
+      "id": "xiaomi-terminal-bench-2-1::2.1",
+      "name": "Terminal Bench 2.1",
+      "version": "2.1",
+      "version_status": "published",
+      "family": "xiaomi-terminal-bench-2-1",
+      "category": "Agentic",
+      "one_sentence_description": "Terminal Bench 2.1 result reported by Xiaomi for MiMo-V2.6-Pro in the 2026-09-22 launch benchmark table; the source does not supply a complete independent reproduction recipe.",
+      "scoring": {
+        "metric": "Source-published score",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Xiaomi's own result. The exact printed label is retained at version 2.1; it stays outside measured cohorts and Composite."
+      },
+      "maintainer": "Terminal-Bench",
+      "source_type": "vendor_report",
+      "primary_url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+      "publication_urls": [
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+          "type": "vendor_report",
+          "role": "Machine-readable MiMo-V2.6 launch benchmark appendix"
+        },
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6",
+          "type": "vendor_report",
+          "role": "MiMo-V2.6 launch post and benchmark appendix"
+        },
+        {
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL",
+          "type": "huggingface",
+          "role": "MIT-licensed model card and benchmark table"
+        },
+        {
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL/blob/main/MiMo_V2_6_technical_report.pdf",
+          "type": "huggingface",
+          "role": "MiMo-V2.6 technical report and evaluation settings"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Xiaomi launch JavaScript data table",
+        "locator": "SECTIONS benchmark row \"Terminal Bench 2.1\"; scores[0] for MiMo-V2.6-Pro",
+        "version_guard": "Require the printed version 2.1.",
+        "notes": "Capture only; do not execute downloaded JavaScript. Preserve self_reported basis."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated.",
+        "check_recommendation": "Check on a MiMo-V2.6 revision or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/8ba4b07222116198f7fa.gz",
+          "sha256": "5cbecf6eae24bd1670b6d7d9f0591aa4b300876a94492258d0261aca1b503eb8",
+          "fetched_at": "2026-09-21T22:16:32.970696+00:00",
+          "excerpt": "MiMo-V2.6-Pro — Terminal Bench 2.1: 89.9%; Xiaomi launch appendix snapshot 2026-09-22."
+        }
+      ]
+    },
+    {
+      "id": "xiaomi-terminal-bench-4-0::4.0",
+      "name": "Terminal Bench 4.0",
+      "version": "4.0",
+      "version_status": "published",
+      "family": "xiaomi-terminal-bench-4-0",
+      "category": "Agentic",
+      "one_sentence_description": "Terminal Bench 4.0 result reported by Xiaomi for MiMo-V2.6-Pro in the 2026-09-22 launch benchmark table; the source does not supply a complete independent reproduction recipe.",
+      "scoring": {
+        "metric": "Source-published score",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Xiaomi's own result. The exact printed label is retained at version 4.0; it stays outside measured cohorts and Composite."
+      },
+      "maintainer": "Terminal-Bench",
+      "source_type": "vendor_report",
+      "primary_url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+      "publication_urls": [
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+          "type": "vendor_report",
+          "role": "Machine-readable MiMo-V2.6 launch benchmark appendix"
+        },
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6",
+          "type": "vendor_report",
+          "role": "MiMo-V2.6 launch post and benchmark appendix"
+        },
+        {
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL",
+          "type": "huggingface",
+          "role": "MIT-licensed model card and benchmark table"
+        },
+        {
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL/blob/main/MiMo_V2_6_technical_report.pdf",
+          "type": "huggingface",
+          "role": "MiMo-V2.6 technical report and evaluation settings"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Xiaomi launch JavaScript data table",
+        "locator": "SECTIONS benchmark row \"Terminal Bench 4.0\"; scores[0] for MiMo-V2.6-Pro",
+        "version_guard": "Require the printed version 4.0.",
+        "notes": "Capture only; do not execute downloaded JavaScript. Preserve self_reported basis."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated.",
+        "check_recommendation": "Check on a MiMo-V2.6 revision or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/8ba4b07222116198f7fa.gz",
+          "sha256": "5cbecf6eae24bd1670b6d7d9f0591aa4b300876a94492258d0261aca1b503eb8",
+          "fetched_at": "2026-09-21T22:16:32.970696+00:00",
+          "excerpt": "MiMo-V2.6-Pro — Terminal Bench 4.0: 34.9%; Xiaomi launch appendix snapshot 2026-09-22."
+        }
+      ]
+    },
+    {
+      "id": "xiaomi-toolathlon-verified::snapshot-2026-09-22",
+      "name": "Toolathlon-verified",
+      "version": "snapshot-2026-09-22",
+      "version_status": "snapshot",
+      "family": "xiaomi-toolathlon-verified",
+      "category": "Agentic",
+      "one_sentence_description": "Toolathlon-verified result reported by Xiaomi for MiMo-V2.6-Pro in the 2026-09-22 launch benchmark table; the source does not supply a complete independent reproduction recipe.",
+      "scoring": {
+        "metric": "Source-published score",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Xiaomi's own result. The exact printed label is retained under a dated snapshot because no version was printed; it stays outside measured cohorts and Composite."
+      },
+      "maintainer": "HKUST NLP",
+      "source_type": "vendor_report",
+      "primary_url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+      "publication_urls": [
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+          "type": "vendor_report",
+          "role": "Machine-readable MiMo-V2.6 launch benchmark appendix"
+        },
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6",
+          "type": "vendor_report",
+          "role": "MiMo-V2.6 launch post and benchmark appendix"
+        },
+        {
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL",
+          "type": "huggingface",
+          "role": "MIT-licensed model card and benchmark table"
+        },
+        {
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL/blob/main/MiMo_V2_6_technical_report.pdf",
+          "type": "huggingface",
+          "role": "MiMo-V2.6 technical report and evaluation settings"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Xiaomi launch JavaScript data table",
+        "locator": "SECTIONS benchmark row \"Toolathlon-verified\"; scores[0] for MiMo-V2.6-Pro",
+        "version_guard": "Keep snapshot-2026-09-22; do not infer a version.",
+        "notes": "Capture only; do not execute downloaded JavaScript. Preserve self_reported basis."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated.",
+        "check_recommendation": "Check on a MiMo-V2.6 revision or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://mimo.xiaomi.com/mimo-v2-6/bench.js",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/8ba4b07222116198f7fa.gz",
+          "sha256": "5cbecf6eae24bd1670b6d7d9f0591aa4b300876a94492258d0261aca1b503eb8",
+          "fetched_at": "2026-09-21T22:16:32.970696+00:00",
+          "excerpt": "MiMo-V2.6-Pro — Toolathlon-verified: 76.9%; Xiaomi launch appendix snapshot 2026-09-22."
         }
       ]
     }

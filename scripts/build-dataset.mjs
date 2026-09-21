@@ -373,6 +373,22 @@ const AA_HF_URL_CORRECTIONS = {
     url: "https://huggingface.co/google/gemma-3-4b-it",
     reason: "AA source points Gemma 3 4B Instruct at the 12B repository",
   },
+  "24d8fdfe-6241-424e-b7b7-1b6efb06e4fb": {
+    url: "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL",
+    license_name: "MIT",
+    license_url: "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL/blob/main/README.md",
+    reason: "AA had not yet published repository/licence metadata at release; Xiaomi's official model card declares MIT",
+  },
+};
+
+// Release-day cross-catalog corrections are keyed by AA UUID and require an
+// exact OpenRouter product id. This avoids family/name joins, which would also
+// match the separately priced UltraSpeed and Flash products.
+const AA_OPENROUTER_ID_CORRECTIONS = {
+  "24d8fdfe-6241-424e-b7b7-1b6efb06e4fb": {
+    id: "xiaomi/mimo-v2.6-pro",
+    reason: "AA had not yet published its OpenRouter id at release; OpenRouter's public catalog lists the exact MiMo-V2.6-Pro product",
+  },
 };
 
 // These source feeds publish a bare product identity even though AA's model
@@ -531,6 +547,8 @@ async function build() {
   for (const m of aa.models) {
     const meta = m.metadata || {};
     const hfCorrection = AA_HF_URL_CORRECTIONS[m.id] || null;
+    const openRouterCorrection = AA_OPENROUTER_ID_CORRECTIONS[m.id] || null;
+    const openRouterId = openRouterCorrection?.id || meta.openrouter_api_id || null;
     const huggingfaceUrl = hfCorrection?.url || meta.huggingface_url || null;
     const named = normalizeFamily(m.name, m.model_creator?.name);
     const routed = meta.openrouter_api_id ? normalizeFamily(meta.openrouter_api_id, m.model_creator?.name) : null;
@@ -582,12 +600,14 @@ async function build() {
         deprecated: meta.deprecated ?? null,
         is_reasoning: typeof meta.is_reasoning === "boolean" ? meta.is_reasoning : null,
         commercial_allowed: typeof meta.commercial_allowed === "boolean" ? meta.commercial_allowed : null,
-        license_name: meta.license_name || null,
-        license_url: meta.license_url || null,
+        license_name: hfCorrection?.license_name || meta.license_name || null,
+        license_url: hfCorrection?.license_url || meta.license_url || null,
         huggingface_url: huggingfaceUrl,
         source_huggingface_url: hfCorrection ? (meta.huggingface_url || null) : undefined,
         metadata_correction: hfCorrection?.reason,
-        openrouter_api_id: meta.openrouter_api_id || null,
+        openrouter_api_id: openRouterId,
+        source_openrouter_api_id: openRouterCorrection ? (meta.openrouter_api_id || null) : undefined,
+        openrouter_metadata_correction: openRouterCorrection?.reason,
         context_window_tokens: num(meta.context_window_tokens),
         ...(meta.retained_fields ? { retained_fields: meta.retained_fields } : {}),
       },
@@ -619,8 +639,8 @@ async function build() {
       designarena: {},
       copilot: null,
     });
-    if (meta.openrouter_api_id) {
-      const orId = stableOpenRouterId(meta.openrouter_api_id);
+    if (openRouterId) {
+      const orId = stableOpenRouterId(openRouterId);
       if (!aaOrCandidates.has(orId)) aaOrCandidates.set(orId, new Set());
       aaOrCandidates.get(orId).add(familyKey);
     }

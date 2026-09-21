@@ -921,3 +921,12 @@ Seeded by review gate 20260921T100004Z from the verbatim CR-108 acceptance list 
 - **CR-116.3:** Both rows appear in the held-out diagnostic under its existing convention (2B 46/111 public vs 48/109 held-out; 9B 66/111 vs 68/109; field of 49 complete systems).
 - **CR-116.4:** Preserve every score, rule and view.
 - **CR-116.5:** Verify both production hosts (`ops/ux-2026-09-12/bin/verify-cr-116.mjs`).
+
+## CR-117 — Xiaomi MiMo-V2.6-Pro release
+
+- **CR-117.1 Source-backed identity.** Publish MiMo-V2.6-Pro as Xiaomi's MIT-licensed open-weight 1.02T-total / 42B-active multimodal MoE, with its official Hugging Face checkpoint, 1M context, release date, and exact standard OpenRouter product.
+- **CR-117.2 Independent data.** Carry the existing-pipeline Artificial Analysis measurements with their source date and basis; do not infer absent LMArena, SWE-bench or Epoch results.
+- **CR-117.3 Vendor results.** Ingest all 17 Xiaomi launch-appendix results as `self_reported`, retain printed versions, date unversioned snapshots, exclude them from Composite, and disclose the MiMo Cyber Bench 81.7-versus-80.2 source conflict.
+- **CR-117.4 Benchmaxxing.** Run the published same-topic, measured-only method. With zero qualifying vendor-versus-independent same-benchmark overlaps, report “not enough independent data yet”; do not issue a tag or infer intent.
+- **CR-117.5 Exact prices.** Join only `xiaomi/mimo-v2.6-pro` to the AA model row. Keep Pro UltraSpeed and Flash separate; publish each exact endpoint price with OpenRouter provenance.
+- **CR-117.6 Verify.** Registry and score-evidence validation, full tests, typecheck and production build; model, comparisons, Pareto and Benchmaxxing views on both production hosts, with phone-readable screenshots.
