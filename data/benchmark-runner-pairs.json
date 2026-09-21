@@ -38,6 +38,18 @@
       "reason": "Same version, but the maintainers' own board publishes one row per agent harness (Claude Code, Codex, Grok Build, mini-SWE-agent), so its rows are harness results rather than a second runner's run of the same configuration; no cohort on that board reaches the minimum shared cohort either."
     },
     {
+      "boards": ["aa-terminal-bench::2.1", "aa-terminal-bench::4.0-upstream-timeouts"],
+      "reason": "Different versions of Terminal-Bench (2.1 vs 4.0) — a version difference is never paired, even within one runner."
+    },
+    {
+      "boards": ["aa-terminal-bench::4.0", "aa-terminal-bench::4.0-upstream-timeouts"],
+      "reason": "One runner (AA) and one task set, but two harness configurations: until 2026-09-10 AA stated mini-SWE-agent v2.4.6 with a 30-second per-command timeout, from 2026-09-21 the tasks' own timeouts. Not a second runner, so never a disagreement pair."
+    },
+    {
+      "boards": ["aa-terminal-bench::4.0-upstream-timeouts", "terminal-bench::4.0"],
+      "reason": "Same version, but the maintainers' own board publishes one row per agent harness (Claude Code, Codex, Grok Build, mini-SWE-agent), so its rows are harness results rather than a second runner's run of the same configuration."
+    },
+    {
       "boards": ["aa-terminal-bench::2.1", "aa-terminal-bench-hard::74221fb"],
       "reason": "Terminal-Bench Hard is a different task subset, not the same task set run twice."
     },

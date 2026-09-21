@@ -1945,7 +1945,7 @@
         "command": "node scripts/extract-aa-benchmark-fields.mjs MODEL_PAGE.html SOURCE_RECEIPT.json",
         "format": "Next.js Flight JSON",
         "locator": "Decode model-page Flight JSON with lib/aa-rsc.mjs; exact model UUID/slug/effort, field terminalbenchV40; preserve source units and nulls.",
-        "version_guard": "Verify the published version 4.0 before reading results.",
+        "version_guard": "Verify the published version 4.0 before reading results. Retained 2026-09-21: AA's methodology no longer states the mini-SWE-agent v2.4.6 pin or the 30-second per-command timeout ('Task timeouts and sandbox resources follow the upstream task definitions'), so this identity only reads AA snapshots collected up to 2026-09-10 (see aa_field_map collected_until); later values belong to aa-terminal-bench::4.0-upstream-timeouts.",
         "notes": "Reuse the same model-page response as the efficiency collector. SOURCE_RECEIPT.json must carry url, fetched_at, status=200 and the SHA256 of MODEL_PAGE.html. Raw discovery collection does not authorize score comparisons or change the Composite."
       },
       "update_cadence": {
@@ -1956,8 +1956,8 @@
         "value": false,
         "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
       },
-      "superseded_by": null,
-      "status": "active",
+      "superseded_by": "aa-terminal-bench::4.0-upstream-timeouts",
+      "status": "retained",
       "first_seen": "2026-09-10",
       "last_verified": "2026-09-18",
       "evidence": [
@@ -1975,6 +1975,71 @@
           "source_sha256": "d921f7b255347b1091c5595adbbb5170ed6e9fe62250967a8586eb303ee99d2d",
           "fetched_at": "2026-09-10T21:47:16.627Z",
           "excerpt": "\"terminalbenchV40\" (literal field in the captured Flight model rows; gzip source retained)"
+        }
+      ]
+    },
+    {
+      "id": "aa-terminal-bench::4.0-upstream-timeouts",
+      "name": "Terminal-Bench v4.0 (AA, upstream timeouts)",
+      "version": "4.0-upstream-timeouts",
+      "version_status": "published",
+      "family": "aa-terminal-bench",
+      "category": "Agentic",
+      "one_sentence_description": "Tests terminal-based work on the 66-task release using AA's mini-swe-agent harness with the tasks' own timeouts.",
+      "scoring": {
+        "metric": "All verifier tests must pass; pass@1 averaged over three repeats",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. AA source field: terminalbenchV40. Keep raw units; do not normalize before phase-05 validation."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "publication_urls": [
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and collection entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "node scripts/extract-aa-benchmark-fields.mjs MODEL_PAGE.html SOURCE_RECEIPT.json",
+        "format": "Next.js Flight JSON",
+        "locator": "Decode model-page Flight JSON with lib/aa-rsc.mjs; exact model UUID/slug/effort, field terminalbenchV40; preserve source units and nulls.",
+        "version_guard": "Verify the published version 4.0 and AA's implementation paragraph before reading results. This identity is Terminal-Bench 4.0 as AA describes it from 2026-09-21: the full 66-task dataset, 'the mini-swe-agent harness' with no harness version stated, pass@1 averaged over 3 repeats, a 500-step cap, and 'Task timeouts and sandbox resources follow the upstream task definitions'. A different task set, harness or timeout policy needs a new identity.",
+        "notes": "Reuse the same model-page response as the efficiency collector. SOURCE_RECEIPT.json must carry url, fetched_at, status=200 and the SHA256 of MODEL_PAGE.html. Raw discovery collection does not authorize score comparisons or change the Composite."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-21",
+      "last_verified": "2026-09-21",
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-aa-methodology-b/ae5a6a93929f731fed46.gz",
+          "sha256": "814dab9040e938f65005f5c7fde4f0e7c5a645adaeaef592b118df1151a1dea6",
+          "fetched_at": "2026-09-21T10:31:33.582713+00:00",
+          "excerpt": "Terminal-Bench 4.0 Description: The 4.0 release of Terminal-Bench, developed by Stanford University researchers, the Laude Institute, and the open source community. Covers software engineering, system administration, data processing, model training, and security, with each task graded by its own verification suite. Leaderboard: https://www.tbench.ai/?version=4 Dataset: https://github.com/harbor-framework/terminal-bench Implementation: We evaluate the full Terminal-Bench 4.0 dataset (66 tasks) using the mini-swe-agent harness, with pass@1 scoring averaged over 3 repeats per task Each task has its own set of tests. We follow the Terminal-Bench methodology: a task passes only if every test passes, grading runs in each task's own separate verifier container isolated from the agent's environment, and a verifier that exceeds its timeout counts as a failure We apply the following constraints on evaluations for the agent: Maximum agent steps are limited to 500 Task timeouts and sandbox resources follow the upstream task definitions All other agent configuration follows mini-swe-agent defaults, including the interactive mini config and prompts, the native bash tool, and no context compaction or summarization: the agent always sees its full transcript"
+        },
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-aa-methodology/fd7d6c211b7165ddc89d.gz",
+          "sha256": "49a797285d935b6417252ac3ed07c758eb92056ca53fbcd9f3b63709d4b475dc",
+          "source_sha256": "fd7d6c211b7165ddc89d38e0dd0da43a7505896862bdf2df8d715ad4c94b94eb",
+          "fetched_at": "2026-09-21T02:24:09.194364+00:00",
+          "excerpt": "\"terminalBench40\" (literal field in the captured Flight model rows, read as terminalbenchV40 through AA_FIELD_RENAMES; gzip source retained)"
         }
       ]
     },
@@ -13809,7 +13874,14 @@
     {
       "field": "terminalbenchV40",
       "benchmark_id": "aa-terminal-bench::4.0",
-      "notes": "Raw source field; metadata identity only. Confirm configuration and subset before phase-05 score ingestion."
+      "notes": "Raw source field; metadata identity only. Confirm configuration and subset before phase-05 score ingestion. Window: AA snapshots collected up to 2026-09-10T23:59:59.999Z; AA changed this field's harness configuration between 2026-09-10 and 2026-09-21 (methodology capture data/raw/benchmarks/daily-evidence/2026-09-21-aa-methodology-b/ae5a6a93929f731fed46.gz).",
+      "collected_until": "2026-09-10T23:59:59.999Z"
+    },
+    {
+      "field": "terminalbenchV40",
+      "benchmark_id": "aa-terminal-bench::4.0-upstream-timeouts",
+      "collected_from": "2026-09-21T00:00:00.000Z",
+      "notes": "Raw source field; metadata identity only. Confirm configuration and subset before phase-05 score ingestion. Window: AA snapshots collected from 2026-09-21T00:00:00.000Z; AA changed this field's harness configuration between 2026-09-10 and 2026-09-21 (methodology capture data/raw/benchmarks/daily-evidence/2026-09-21-aa-methodology-b/ae5a6a93929f731fed46.gz)."
     }
   ]
 }

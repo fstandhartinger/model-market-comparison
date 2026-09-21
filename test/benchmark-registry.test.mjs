@@ -85,7 +85,9 @@ test('Coding Agent legacy observation date and current source version remain iso
 test('AA re-versioned fields: one identity per collection window, never both, never overlapping', async () => {
   const registry = validateBenchmarkRegistry(JSON.parse(await readFile(new URL('../data/raw/benchmarks/registry.json', import.meta.url))));
   const pairs = [['gdpval', 'aa-gdpval::2', 'aa-gdpval::2.1'], ['briefcaseBreakdown.overall.elo', 'aa-briefcase::snapshot-2026-09-10', 'aa-briefcase::1.1'],
-    ['gdpPdfAllPass', 'aa-gdp-pdf::snapshot-2026-09-10', 'aa-gdp-pdf::snapshot-2026-09-21']];
+    ['gdpPdfAllPass', 'aa-gdp-pdf::snapshot-2026-09-10', 'aa-gdp-pdf::snapshot-2026-09-21'],
+    // Iteration 148: same task set, but AA dropped the mini-SWE-agent v2.4.6 pin and the 30 s command timeout.
+    ['terminalbenchV40', 'aa-terminal-bench::4.0', 'aa-terminal-bench::4.0-upstream-timeouts']];
   for (const [field, oldId, newId] of pairs) {
     const maps = registry.aa_field_map.filter((m) => m.field === field);
     assert.deepEqual(maps.map((m) => m.benchmark_id).sort(), [oldId, newId].sort());
@@ -116,7 +118,8 @@ test('AA re-versioned fields: one identity per collection window, never both, ne
 test('AA methodology evidence: every active AA identity quotes a passage present in the capture it names', async () => {
   // AA edits this page in place (2026-09-21: sentence-final periods and a rewritten Terminal-Bench 4.0 harness
   // paragraph between 02:24 and 07:46), so each excerpt is checked against its own recorded capture and hash.
-  // Terminal-Bench 4.0 deliberately keeps its 02:24 passage: the rewrite is an open identity decision, not a re-quote.
+  // Terminal-Bench 4.0's rewrite became a new identity (aa-terminal-bench::4.0-upstream-timeouts, iteration 148); the old one
+  // is out of window from 2026-09-21 and keeps its original passage.
   const { execFileSync } = await import('node:child_process');
   const { createHash } = await import('node:crypto');
   const registry = JSON.parse(await readFile(new URL('../data/raw/benchmarks/registry.json', import.meta.url)));

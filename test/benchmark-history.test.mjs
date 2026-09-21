@@ -213,6 +213,36 @@ test('cross-version estimate cites the source row provenance, not another target
   assert.notEqual(h.source.locator, 'row b1');
 });
 
+test('same version number: the retained identity is never the target its active successor is bridged into', () => {
+  // Iteration 148: aa-terminal-bench::4.0 (retained, harness pin) and ::4.0-upstream-timeouts (active) share
+  // versionRank 4.0; in registry order the retained one came first and drew every 2.1 estimate onto a dead row.
+  const bridges = ['b1', 'b2', 'b3', 'b4', 'b5'];
+  const obs = [...bridges.map((id) => observation(id, 1, 'bench::2.1')), observation('h', 3, 'bench::2.1'),
+    observation('u', 0.5, 'bench::4.0'), ...bridges.map((id) => observation(id, 2, 'bench::4.0-new'))];
+  const entries = [registryEntry('bench::2.1'), registryEntry('bench::4.0', { status: 'retained', version_status: 'published', superseded_by: 'bench::4.0-new' }),
+    registryEntry('bench::4.0-new', { version_status: 'published' })];
+  const estimates = crossVersionEstimates(obs, registry(entries));
+  assert.ok(estimates.length > 0);
+  assert.ok(estimates.every((e) => e.benchmark_id === 'bench::4.0-new'), 'every estimate targets the active successor');
+  assert.equal(estimates.find((e) => e.subject_name === title('h')).status, 'estimated');
+});
+
+test('a value moved to the same-family successor identity is not "no longer published"', () => {
+  // Iteration 148: once AA's field split publishes, aa-terminal-bench::4.0 keeps one curated preliminary value
+  // (so it still has live rows) while all its AA values moved to ::4.0-upstream-timeouts. Every retained state
+  // then re-emitted those 150 values as withdrawn. Only a value missing from the successor too is withdrawn.
+  const old = ['a', 'b', 'gone'].map((id) => observation(id, 0.5, 'bench::4.0'));
+  const live = [observation('u', 0.52, 'bench::4.0'), ...['a', 'b'].map((id) => observation(id, 0.5, 'bench::4.0-new'))];
+  const entries = [registryEntry('bench::4.0', { status: 'retained', superseded_by: 'bench::4.0-new' }), registryEntry('bench::4.0-new')];
+  const estimates = datedEstimates(live, registry(entries), [state('S1', '2026-09-10T00:00:00.000Z', old)]);
+  assert.deepEqual(estimates.map((e) => e.subject_name), [title('gone')]);
+  // A successor in another family (Terminal-Bench Hard → Terminal-Bench 2.1) is a different board: no exemption.
+  const other = [registryEntry('other::1', { status: 'retained', superseded_by: 'bench::4.0-new' }), registryEntry('bench::4.0-new')];
+  const otherOld = ['a', 'gone'].map((id) => observation(id, 0.5, 'other::1'));
+  const otherLive = [observation('u', 0.5, 'other::1'), observation('a', 0.5, 'bench::4.0-new')];
+  assert.equal(datedEstimates(otherLive, registry(other), [state('S1', '2026-09-10T00:00:00.000Z', otherOld)]).length, 2);
+});
+
 test('a vanished value is never deleted: a new ingestion keeps the retained state', async () => {
   const dir = await mkdtemp(join(tmpdir(), 'bh-history-'));
   try {

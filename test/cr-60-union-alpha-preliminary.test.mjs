@@ -144,7 +144,16 @@ test('the comparison matrix shows both values as preliminary cells, in the right
       assert.ok(!Object.entries(matrix.values).some(([id, cs]) => id === MODEL && cs.some(([r]) => r === measured[1])),
         'Union Alpha never appears in the measured cohort');
     } else {
-      assert.ok(population > 100, `the AA board row keeps its population (${population})`);
+      // Iteration 148: the chart (2026-09-16) predates AA's Terminal-Bench 4.0 harness rewrite, so the value stays on
+      // the retained identity. Once AA publishes a snapshot past that identity's window, the measured population
+      // moves to the successor and the preliminary value stands alone on the retired row — never on the new board.
+      const entry = ds.benchmark_results.registry.find((e) => e.id === spec.benchmark_id);
+      const successor = entry?.status === 'retained' && entry.superseded_by;
+      const successorRows = successor ? matrix.rows.map((r, j) => [r, j]).filter(([r]) => r.benchmarkId === successor) : [];
+      const successorPopulation = successorRows.reduce((n, [, j]) => n + Object.values(matrix.values).filter((cs) => cs.some(([r]) => r === j)).length, 0);
+      assert.ok(population > 100 || successorPopulation > 100,
+        `the AA board keeps its population (${population} on ${spec.benchmark_id}, ${successorPopulation} on ${successor || 'no successor'})`);
+      assert.ok(!successorRows.some(([, j]) => cells.some(([rowIndex]) => rowIndex === j)), 'the preliminary value never moves onto the successor board');
     }
   }
 });

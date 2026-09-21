@@ -131,6 +131,16 @@ observations; the `snapshot-<date>` suffix means *first pinned on*, not *collect
 minted only when the protocol review's `version_guard` sees the board itself change. Re-basable AA
 composites are unaffected — they are collected through the headline path.
 
+**A changed harness configuration is a new identity too, even when the old values do not move.** On
+2026-09-21 AA rewrote its Terminal-Bench 4.0 implementation paragraph: the `mini-SWE-agent v2.4.6` pin and the
+30-second per-command timeout were replaced by "the mini-swe-agent harness" and "Task timeouts and sandbox
+resources follow the upstream task definitions"; the task set (66), pass@1 over 3 repeats, the 500-step cap and
+the grading are unchanged, and all 149 previously published `terminalbenchV40` values are identical (16 models
+added). Unchanged old values do not show that the added models ran under the old settings, so the field is split
+by collection window like GDPval-AA v2 → v2.1: `aa-terminal-bench::4.0` reads snapshots up to 2026-09-10 and is
+`retained`, `aa-terminal-bench::4.0-upstream-timeouts` reads snapshots from 2026-09-21. The version string keeps
+`4.0` first so `versionRank` still ranks it as 4.0 (a date in it would rank it as an undated snapshot, below 2.1).
+
 **Bounded attrition, not a full stop.** `assertAaBenchmarkContinuity` used to fail the whole AA arm on any
 fall in any field's count, which is why the component boards stood still from 11 Sep 2026 on while the
 headline indices moved. A fall up to `AA_COVERAGE_DROP` (5 % of the field's prior count, floor 3 results) is
