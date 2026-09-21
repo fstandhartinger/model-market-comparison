@@ -839,6 +839,50 @@ def parse(source,spec,load_source):
         if verified<req['minimum_verified']:raise ValueError(f'Toolathlon Verified board shrank: {verified} independently evaluated rows')
         ranked=[r['pass_1'] for r in rows]
         if any(ranked[i]<ranked[i+1] for i in range(len(ranked)-1)):raise ValueError('Toolathlon board is no longer ranked by Pass@1')
+    elif kind=='context_arena_summary':
+        # Context Arena (Dillon Uzar, contextarena.ai) runs Google DeepMind's open MRCR v2 dataset (eval_hub) against
+        # models through their APIs and serves the board the app renders from its own JSON endpoint
+        # (/api/needle-summary?needles=8, the default "full" test set). One row per model x reasoning mode, each with
+        # per-bin results (tests grouped by total token count into power-of-two bins, 8k ... 1M) and overall metrics.
+        # The value is the 8-needle cumulative average up to 128k — the unweighted mean of the five bin scores
+        # 8k..128k, the "upto_128K (cumulative)" figure GDM's README says it reports — and every scored row must
+        # reproduce it from its own bins. AUC @128k/@1M (Context Arena's trapezoid summaries) stay in the protocol.
+        # A row is scored only when all five bins up to 128k are complete; the site's own ranking exclusions
+        # (insufficient data, unranked) are honoured, and a deprecated model's run stays a measurement, flagged.
+        data=json.loads(source);req=spec['require']
+        if data.get('request_params')!=req['request_params']:raise ValueError(f"Context Arena request changed: {data.get('request_params')!r}")
+        if data.get('available_bins')!=req['available_bins']:raise ValueError(f"Context Arena bins changed: {data.get('available_bins')!r}")
+        readme=' '.join(load_source(spec['method_source']).split())
+        for phrase in req['method_text']:
+            if phrase not in readme:raise ValueError('MRCR v2 README no longer states: '+phrase[:80])
+        models=data.get('models');bins=[str(b) for b in req['scored_bins']];seen=set()
+        if not isinstance(models,list) or not models:raise ValueError('Context Arena models missing')
+        for index,m in enumerate(models):
+            if not isinstance(m,dict) or not set(req['row_keys'])<=set(m) or not isinstance(m.get('model_slug'),str) or '/' not in m['model_slug']:raise ValueError(f'Context Arena row {index} schema changed')
+            mode=m['reasoning_mode']
+            if mode not in req['reasoning_modes']:raise ValueError(f"Context Arena {m['model_slug']}: unlisted reasoning mode {mode!r}")
+            sid=m['model_slug']+('' if mode is None else '@reasoning='+mode)
+            if sid in seen:raise ValueError('Context Arena row repeated: '+sid)
+            seen.add(sid)
+            if not m['has_sufficient_data'] or m['unranked'] or m['has_incomplete_bins_128k']:continue
+            if not isinstance(m['max_context_length'],int) or m['max_context_length']<int(bins[-1]):continue
+            per=m['bin_metrics'];o=m['overall_metrics']
+            if not isinstance(per,dict) or not isinstance(o,dict):raise ValueError(f'Context Arena {sid}: metrics missing')
+            scores=[]
+            for b in bins:
+                cell=per.get(b)
+                if not isinstance(cell,dict) or cell.get('is_incomplete') is not False:raise ValueError(f'Context Arena {sid}: bin {b} missing or incomplete on a complete row')
+                s=cell.get('avg_score');n=cell.get('n_tests')
+                if not isinstance(s,(int,float)) or isinstance(s,bool) or not 0<=s<=1 or not isinstance(n,int) or n<1:raise ValueError(f'Context Arena {sid}: bin {b} unreadable')
+                scores.append(s)
+            value=o.get('cum_avg_128k')
+            if not isinstance(value,(int,float)) or isinstance(value,bool) or abs(value-sum(scores)/len(scores))>req['mean_tolerance']:raise ValueError(f'Context Arena {sid}: cum_avg_128k is not the mean of its bins 8k..128k')
+            rows.append({'name':sid,'id':sid,'cum_avg_128k':value,'source_row':index,
+                'context':{'model_slug':m['model_slug'],'reasoning_mode':mode,'provider':m.get('provider_name'),'run_providers':m.get('run_provider_names'),
+                    'max_context_length':m['max_context_length'],'deprecated':m['is_deprecated'],'total_runs':o.get('total_runs'),
+                    'bins_upto_128k':{b:[round(per[b]['avg_score'],6),per[b]['n_tests']] for b in bins},
+                    'auc_128k':o.get('auc_128k'),'auc_1m':o.get('auc_1m'),'cum_avg_1m':o.get('cum_avg_1m'),'has_incomplete_bins':m.get('has_incomplete_bins'),
+                    'latest_run':m.get('latest_run_timestamp')}})
     else:raise ValueError('Unknown parser kind '+kind)
     if not isinstance(rows,list) or not rows:raise ValueError('No source result rows')
     return rows

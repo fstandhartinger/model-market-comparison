@@ -311,6 +311,10 @@
     "mcp-atlas": {
       "tier": "secondary",
       "reason": "Half public, half held out: the 500-task public subset is on Hugging Face with the harness on GitHub, the other 500 tasks are not, and Scale runs every row itself. Our self-reported corpus finds one lab quoting MCP-Atlas in release material (StepFun's Step 5 Preview), so it is a public board that is rarely quoted — neither heldout nor a board training teams broadly aim at."
+    },
+    "context-arena-mrcr-v2": {
+      "tier": "secondary",
+      "reason": "Synthetic long-context retrieval task on Google DeepMind's public MRCR v2 dataset, run by one independent maintainer; it measures a context-length trait rather than task skill, and our self-reported corpus holds no MRCR row, so it is not evidenced as a board labs quote in release material."
     }
   }
 }

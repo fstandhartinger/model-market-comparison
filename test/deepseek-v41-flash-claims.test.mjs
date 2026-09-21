@@ -107,7 +107,8 @@ test('the card\'s base-model table, its scaffold breakdown and other labs\' colu
 test('the vendor claims raise V4.1 Flash coverage without entering the Composite', async () => {
   const dataset = await read('data/dataset.json');
   const rows = dataset.benchmark_results.observations.filter((o) => o.subject?.model_id === MODEL);
-  assert.equal(rows.length, 39);
+  // 2026-09-21 (iteration 154): 39 → 40, MathArena ArXivMath 2026-06 now joins DeepSeek-V4.1-Flash (Max).
+  assert.equal(rows.length, 40);
   assert.equal(rows.filter((o) => o.basis === 'self_reported').length, 19);
   const model = dataset.models.find((m) => m.id === MODEL);
   assert.ok(model);

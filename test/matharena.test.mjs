@@ -51,6 +51,8 @@ test('MathArena joins: reviewed names only, the parenthesis is the stated settin
   assert.deepEqual(parseMathArenaLabel('Qwen3.6-35B'), { family: null, effort: null }, 'not approximated to qwen3.6-35b-a3b');
   const map = JSON.parse(readFileSync('data/raw/benchmarks/identity-map.json', 'utf8')).entries;
   const arxiv = map.filter((e) => e.benchmark_id === 'matharena-arxivmath::2026-06');
-  assert.equal(arxiv.length, 11);
+  // 2026-09-21 (iteration 154): 11 → 14 — the 2026-09-21 refresh published three new rows (GPT-6 Astra (low),
+  // Claude-Fable-5.1 (low), DeepSeek-V4.1-Flash (Max)); each names an existing configuration exactly.
+  assert.equal(arxiv.length, 14);
   assert.ok(!map.some((e) => e.benchmark_id.startsWith('matharena-') && /Think|Grok 4\.5|Qwen3\.6/.test(e.source_id)), 'unreviewed settings and non-default single configurations stay unjoined');
 });

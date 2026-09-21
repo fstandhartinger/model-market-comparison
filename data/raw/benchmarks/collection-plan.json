@@ -4692,6 +4692,101 @@
       "source_urls": [
         "https://labs.scale.com/leaderboard/mcp_atlas"
       ]
+    },
+    {
+      "benchmark_id": "context-arena-mrcr-v2::8-needle",
+      "parser": {
+        "kind": "context_arena_summary",
+        "name_field": "name",
+        "id_field": "id",
+        "value_field": "cum_avg_128k",
+        "scale": 100,
+        "plain_text_names": true,
+        "method_source": {
+          "url": "https://raw.githubusercontent.com/google-deepmind/eval_hub/master/eval_hub/mrcr_v2/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-context-arena/7b2010f4685643f4af7b.gz",
+          "sha256": "7b2010f4685643f4af7bdccfb5e58e6822edea23d009d75cda4a86fa5c558f43",
+          "retrieved_at": "2026-09-21T17:13:30.878266+00:00"
+        },
+        "require": {
+          "request_params": {
+            "needles": 8,
+            "mode": "full",
+            "model_slugs": null
+          },
+          "available_bins": [
+            8192,
+            16384,
+            32768,
+            65536,
+            131072,
+            262144,
+            524288,
+            1048576
+          ],
+          "scored_bins": [
+            8192,
+            16384,
+            32768,
+            65536,
+            131072
+          ],
+          "mean_tolerance": 1e-09,
+          "reasoning_modes": [
+            null,
+            "enabled",
+            "minimal",
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ],
+          "row_keys": [
+            "model_slug",
+            "reasoning_mode",
+            "overall_metrics",
+            "bin_metrics",
+            "has_incomplete_bins",
+            "has_incomplete_bins_128k",
+            "has_sufficient_data",
+            "unranked",
+            "is_deprecated",
+            "max_context_length",
+            "latest_run_timestamp"
+          ],
+          "method_text": [
+            "count instances of a body of text and reproduce the correct instance",
+            "we currently report the 8-needle version of the task on the \"upto_128K\" (cumulative) and \"at_1M\" pointwise variants",
+            "Any report of MRCR should explicitly state whether or not tools were provided to the model"
+          ]
+        }
+      },
+      "status": "collected",
+      "reason": "Context Arena serves its whole board as JSON from the endpoint its own app calls. The 8-needle 128k cumulative average is ingested for every complete row the site ranks; each value must reproduce from its own bins.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-context-arena; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JSON API",
+        "locator": "Context Arena's own JSON endpoint GET /api/needle-summary?needles=8 (the request the leaderboard app makes; mode \"full\"): `models[]`, one row per model_slug × reasoning_mode, with `bin_metrics` per token bin (avg_score 0–1, n_tests, is_incomplete) and `overall_metrics` (cum_avg_128k, auc_128k, auc_1m, cum_avg_1m, total_runs). The value is overall_metrics.cum_avg_128k × 100: the unweighted mean of the 8k, 16k, 32k, 64k and 128k bin scores.",
+        "version_guard": "The endpoint must still answer the default request with needles 8 in the \"full\" test set and the eight power-of-two bins 8k … 1M; every scored row must carry complete bins 8k, 16k, 32k, 64k and 128k whose unweighted mean reproduces the row's own cum_avg_128k. GDM's MRCR v2 README must still describe the task (count instances of a body of text and reproduce the correct instance), the 8-needle \"upto_128K\" cumulative reporting and the tools caveat. Another needle count, test set or bin layout is a new identity, never a silent update of this one.",
+        "notes": "Measured by Context Arena (Dillon Uzar) on Google DeepMind's published MRCR v2 dataset via each model's API; the dataset and README are GDM's (eval_hub). robots.txt is absent (404 → conventional access); the site publishes no licence or terms page, so only scores with attribution are stored — attribute Context Arena and GDM eval_hub and link the leaderboard. Rows the site itself marks insufficient or unranked are not scored; a row whose bins up to 128k are incomplete is not scored until they complete; a model the site marks deprecated keeps its measured row with the flag in the protocol. Joins: data/raw/benchmarks/identity-map.json (lib/board-identity.mjs, parseContextArenaId)."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "The endpoint must still answer the default request with needles 8 in the \"full\" test set and the eight power-of-two bins 8k … 1M; every scored row must carry complete bins 8k, 16k, 32k, 64k and 128k whose unweighted mean reproduces the row's own cum_avg_128k. GDM's MRCR v2 README must still describe the task (count instances of a body of text and reproduce the correct instance), the 8-needle \"upto_128K\" cumulative reporting and the tools caveat. Another needle count, test set or bin layout is a new identity, never a silent update of this one.",
+      "source": {
+        "url": "https://contextarena.ai/api/needle-summary?needles=8",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-context-arena/949e2c8ad74e8a238d21.gz",
+        "sha256": "949e2c8ad74e8a238d21390d033bd16190cb27ca11d764d818f2e0f1040b0701",
+        "retrieved_at": "2026-09-21T17:13:26.665692+00:00"
+      },
+      "protocol": "Context Arena (Dillon Uzar) runs Google DeepMind's MRCR v2 (multi-round coreference resolution, 8 needles, the \"full\" test set) against each model through its API: a long synthetic conversation holds eight identical writing requests, and the model must reproduce the i-th response, prefixed by a random hash, scored by string similarity (missing hash = 0). Tests are grouped by total token count into power-of-two bins. The value is the cumulative average up to 128k — the unweighted mean of the 8k, 16k, 32k, 64k and 128k bin scores, the \"upto_128K (cumulative)\" figure GDM reports — in percent. Context Arena's AUC @128k/@1M, the 1M cumulative average, the per-bin scores and test counts, total runs and the latest run date stay in each row. Rows the site marks insufficient or unranked, and rows whose bins up to 128k are incomplete, are not scored. The site says results come from running models against the published GDM dataset via API; it does not state whether tools were available, which GDM's README asks every MRCR report to state. Secondary benchmark, never a Composite input.",
+      "basis": "measured",
+      "minimum_rows": 150,
+      "source_urls": [
+        "https://contextarena.ai/",
+        "https://contextarena.ai/api/needle-summary?needles=8",
+        "https://github.com/google-deepmind/eval_hub/blob/master/eval_hub/mrcr_v2/README.md"
+      ]
     }
   ]
 }

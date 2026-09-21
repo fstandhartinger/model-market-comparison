@@ -137,6 +137,15 @@ test('CR-78.3: the three level changes from the simulation, and Hy3 moving down'
   // blend identity is asserted for it; the tier is not fudged to keep the old transition. The value
   // bands stay ±0.5 and every row still asserts score = gap + jaggedness term.
   //
+  // 2026-09-21 re-pin (iteration 154, CR-37.1): Context Arena's MRCR v2 board joined as a secondary
+  // Long-context board (48 exact joins). No pinned gap moves (the board is neither headline nor heldout),
+  // but the Long-context topic gains an axis for the models it joins, so within-topic unevenness moves:
+  // Hy3 joins it and its jaggedness goes 7.63 → 10.85, blend 4.20 → 5.13 (still light; outside the old
+  // ±0.5 band, so the point pin moves to 5.1). Muse Spark 1.1 17.87 → 17.64, Qwen3.7 Max 6.56 → 6.47,
+  // Gemini 3.6 Flash 5.92 → 5.97. Catalog-wide exactly one level changes: Gemini 3.6 Flash (high) light →
+  // medium, from 0.08 under the medium line to on it — the in-band case the 2026-09-18 rule leaves
+  // unasserted. Catalog mean jaggedness 13.03 → 13.16 (inside the simulation band). Tiers not fudged.
+  //
   // 2026-09-21 (iteration 144): the point pins are bound to the AA field snapshot they were written against.
   // AA's benchmark fields had been frozen at the 2026-09-10 capture for eleven days (a methodology change the
   // daily correctly refused); once they refresh, AA's own new results move these gaps — a 2026-09-21 capture
@@ -150,7 +159,7 @@ test('CR-78.3: the three level changes from the simulation, and Hy3 moving down'
     { id: 'muse-spark-1.1::xhigh', gap: 15.2, score: 18.0, before: 'strong', after: 'strong' },     // 11.69 → 14.03 → 18.08 → 17.87
     { id: 'qwen3.7-max::default', gap: 5.4, score: 6.7, before: 'light', after: 'medium' },         // 5.38 → 6.78 → 6.56
     { id: 'gemini-3.6-flash::high', gap: 5.0, score: 6.0, before: 'light' },                        // 5.05 → 6.09 → 5.92 (0.08 under the medium line)
-    { id: 'hy3::default', gap: 5.8, score: 4.2, before: 'light', after: 'light' },                  // 5.82 → 4.22 → 4.20
+    { id: 'hy3::default', gap: 5.8, score: 5.1, before: 'light', after: 'light' },                  // 5.82 → 4.22 → 4.20 → 5.13
   ];
   for (const row of expected) {
     const report = scoreBenchmaxxing(view, row.id);
