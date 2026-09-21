@@ -1,10 +1,10 @@
 {
   "source": "OVHcloud AI Endpoints",
   "region": "eu",
-  "collected_at": "2026-09-20",
+  "collected_at": "2026-09-21",
   "listing_url": "https://www.ovhcloud.com/en/public-cloud/ai-endpoints/catalog/",
-  "method": "scripts/fetch-ovhcloud-catalog.mjs (2026-09-20): one GET of the server-rendered AI Endpoints catalog; every card with both a '/Mtoken(input)' and a '/Mtoken(output)' EUR price is a text-generating LLM/VLM (embeddings, guards, speech, TTS and image generation have other units and are listed in skipped); curated rows kept by model_id or normalized name, new cards mapping=derived; USD = EUR × ECB daily reference rate, rounded to cents. EU-hosted, zero data retention apart from billing. See ovhcloud.method.md.",
-  "currency_note": "Original prices are EUR per 1 million tokens. USD = EUR * 1.146, rounded to the nearest USD cent consistently across all rows. The official ECB reference-rate date is 2026-09-18, the latest rate published at collection time on 2026-09-20.",
+  "method": "scripts/fetch-ovhcloud-catalog.mjs (2026-09-21): one GET of the server-rendered AI Endpoints catalog; every card with both a '/Mtoken(input)' and a '/Mtoken(output)' EUR price is a text-generating LLM/VLM (embeddings, guards, speech, TTS and image generation have other units and are listed in skipped); curated rows kept by model_id or normalized name, new cards mapping=derived; USD = EUR × ECB daily reference rate, rounded to cents. EU-hosted, zero data retention apart from billing. See ovhcloud.method.md.",
+  "currency_note": "Original prices are EUR per 1 million tokens. USD = EUR * 1.146, rounded to the nearest USD cent consistently across all rows. The official ECB reference-rate date is 2026-09-18, the latest rate published at collection time on 2026-09-21.",
   "usd_normalization": {
     "status": "applied",
     "eur_to_usd": 1.146,
@@ -126,20 +126,20 @@
       "catalog_slug": "qwen-2-5-vl-72b-instruct"
     }
   ],
-  "response_sha256": "0f18dd37fe95c35ea7fd4aa1aa0f9123cc9ffb60b4eab16454d84cd04f38ae4f",
+  "response_sha256": "da9001e5a889a8888672c3b7730957de721fdbe0f82c844d3aec4db9a5a00c99",
   "skipped": [
     "Qwen3-Embedding-8B",
     "Qwen3Guard-Gen-8B",
     "Qwen3Guard-Gen-0.6B",
-    "whisper-large-v3",
     "whisper-large-v3-turbo",
+    "whisper-large-v3",
     "bge-multilingual-gemma2",
     "bge-m3",
     "stable-diffusion-xl-base-v10",
-    "nvr-tts-de-de",
-    "nvr-tts-it-it",
     "nvr-tts-en-us",
-    "nvr-tts-es-es"
+    "nvr-tts-es-es",
+    "nvr-tts-it-it",
+    "nvr-tts-de-de"
   ],
   "diff": {
     "added": [],

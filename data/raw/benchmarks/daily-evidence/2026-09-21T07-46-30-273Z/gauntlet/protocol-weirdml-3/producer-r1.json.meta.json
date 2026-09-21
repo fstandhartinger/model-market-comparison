@@ -1,0 +1,70 @@
+{
+  "started_at": "2026-09-21T08:21:39.412Z",
+  "mode": "oneshot",
+  "requested_model": "deepseek/deepseek-v4-flash-0731",
+  "producers": [],
+  "qualification": {
+    "id": "deepseek/deepseek-v4-flash-0731",
+    "family": "deepseek",
+    "free": false,
+    "input_per_1m": 0.04,
+    "output_per_1m": 0.16,
+    "context": 1310720,
+    "aa_intelligence_index": 34.3,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "deepseek-v4-flash-0731::max"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "deepseek-v4-flash-0731::max",
+        "index": 34.3
+      }
+    ]
+  },
+  "input_sha256": "a1771d6f3c234a050612792f56a15a5b521575cacaf0aa1ebfbfb8bfaee24f46",
+  "route": "openrouter",
+  "attempt": 1,
+  "free_route_role": "critic",
+  "free_routes_offered": [
+    "chutes/moonshotai/Kimi-K3-TEE"
+  ],
+  "excluded_models": [],
+  "reasoning": {
+    "effort": "low",
+    "exclude": true
+  },
+  "response_format_mode": "json_object",
+  "response_schema_sha256": "376bde7986cc2f8fd182f04e745c607933760bea7c306ea6e8e992b7f70be25a",
+  "images": [],
+  "actual_model": "deepseek/deepseek-v4-flash-0731",
+  "usage": {
+    "prompt_tokens": 2352,
+    "completion_tokens": 12995,
+    "total_tokens": 15347,
+    "cost": 0.0025962948,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 2352,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.00262252,
+      "upstream_inference_prompt_cost": 0.00002352,
+      "upstream_inference_completions_cost": 0.002599
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 12905,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "finish_reason": "stop",
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "provider": "OpenInference",
+  "session_id": null,
+  "finished_at": "2026-09-21T08:28:17.845Z",
+  "output_sha256": "9a13f76cabf14e354c9cb62b654f0bfaea5a43eac199cf3928e75e6e20a44f83"
+}

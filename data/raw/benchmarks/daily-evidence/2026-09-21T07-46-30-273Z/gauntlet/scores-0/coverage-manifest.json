@@ -1,0 +1,159 @@
+{
+  "artifact_id": "scores-0",
+  "rounds_used": 2,
+  "rows": {
+    "total": 15,
+    "accepted": [
+      "public:5736109b3e21948d5b2085f1",
+      "public:4630e7e793bce524bea05b9e",
+      "public:5536054ff669e46f8baa9ff1",
+      "public:01d32f1a6d35816a84f6462a",
+      "public:44e7cd159c7a7872cd6a80c9",
+      "public:0149ff45e922c7644677cddc",
+      "public:495fe6bcb854c854a1e9a973",
+      "public:5934b60b0c0a875dc7fcbc3c",
+      "public:d4252844da91095413c40fb0",
+      "public:9c574fdca2ae99ad31c2e5d2",
+      "public:b657a26869313e0c884544bd",
+      "public:798a95c4b42aa7e4ff1a8b50",
+      "public:cc7c36553515d81f67c94de2",
+      "public:60c20e12a379da517fe01485",
+      "public:5f52c373b86e3e421e76ea49"
+    ],
+    "quarantined": []
+  },
+  "producer_flagged": [],
+  "criteria": [
+    "c1"
+  ],
+  "coverage": {
+    "producer": {
+      "complete": true,
+      "model": "z-ai/glm-5.3-flash",
+      "rows_covered": 15
+    },
+    "critic": [
+      {
+        "round": 2,
+        "verdict": "pass",
+        "coverage_complete": true,
+        "missing_rows": [],
+        "missing_criteria": []
+      }
+    ],
+    "final": {
+      "rows_covered": 15,
+      "criteria_covered": 1,
+      "complete": true
+    }
+  },
+  "receipts": [
+    {
+      "round": 2,
+      "role": "producer",
+      "reused_from_round": null,
+      "requested_model": "z-ai/glm-5.3-flash",
+      "model": "z-ai/glm-5.3-flash",
+      "route": "openrouter",
+      "attempt": 2,
+      "cost_usd": 0.003998808,
+      "out": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/producer-r2.json",
+      "output_sha256": "0e26c955349189c2189f63ca04556dba2b594d0100683a03665a5b5795fed342",
+      "qualification": {
+        "id": "z-ai/glm-5.3-flash",
+        "family": "z-ai",
+        "free": false,
+        "input_per_1m": 0.09,
+        "output_per_1m": 0.3,
+        "context": 1310720,
+        "aa_intelligence_index": 41.8,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "glm-5.3-flash::default"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "glm-5.3-flash::default",
+            "index": 41.8
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 23218,
+        "completion_tokens": 1113,
+        "total_tokens": 24331,
+        "cost": 0.003998808,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.0040392,
+          "upstream_inference_prompt_cost": 0.0034827,
+          "upstream_inference_completions_cost": 0.0005565
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 49,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    },
+    {
+      "round": 2,
+      "role": "critic",
+      "requested_model": "chutes/moonshotai/Kimi-K3-TEE",
+      "model": "moonshotai/Kimi-K3-TEE",
+      "route": "router:fw-kimi-k3",
+      "attempt": 2,
+      "cost_usd": 0,
+      "out": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/review-r2.json",
+      "output_sha256": "82c0e6ce5bc80722a578f5f7edab3126296ad21a2b6e90290b0276a063f6b3a2",
+      "qualification": {
+        "id": "chutes/moonshotai/Kimi-K3-TEE",
+        "family": "moonshotai",
+        "free": true,
+        "input_per_1m": 0,
+        "output_per_1m": 0,
+        "context": null,
+        "aa_intelligence_index": 43.6,
+        "aa_source": "exact_variant",
+        "matched_model_ids": [
+          "kimi-k3::max"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "kimi-k3::max",
+            "index": 43.6
+          }
+        ],
+        "transport": "router",
+        "router_model": "fw-kimi-k3",
+        "provider_model": "moonshotai/Kimi-K3-TEE",
+        "reasoning_effort": "max",
+        "allowed_as": "moonshotai/kimi-k3",
+        "healthy": true
+      },
+      "usage": {
+        "completion_tokens": 5419,
+        "prompt_tokens": 23047,
+        "total_tokens": 28466,
+        "completion_tokens_details": {
+          "reasoning_tokens": 4588,
+          "text_tokens": 831
+        },
+        "cost": 0
+      },
+      "reasoning": {
+        "effort": "max"
+      }
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "source": "Mistral AI (La Plateforme) — mistral.ai/pricing/api (first-party, public)",
   "region": "eu (France)",
-  "collected_at": "2026-09-20",
+  "collected_at": "2026-09-21",
   "method": "scripts/fetch-mistral-catalog.mjs: one GET of the server-rendered pricing page; every <mistral-block-card-model> with both an 'Input (/M tokens)' and an 'Output (/M tokens)' USD price is a chat/text model (OCR per 1000 pages, embeddings, classifiers, TTS/transcription and unpriced Labs endpoints drop out); duplicate cards must agree; identity is the card's normalized model name against the curated snapshot, because the page dropped its copy-to-clipboard API id on ~16 Sep 2026 — a model the snapshot does not name has its id read from the docs model page the card links ('Click to copy: <id>'), recorded in docs_sources, mapping=derived. The same redesign made cached input a client-side toggle, so a row that already published one has it re-read from its docs page (docs_sources reason=cache_read) and diff.cache_read_dropped names any row that lost it anyway; rows that never had a cached price are not resolved, so cached-input coverage is not complete. A resolved docs page must state the same list prices as the pricing card or the refresh fails closed. Region eu (Mistral hosts in the EU unless the US endpoint is chosen). See mistral.method.md.",
   "models": [
     {
@@ -97,7 +97,7 @@
       "api_model_id": "ministral-14b-latest"
     }
   ],
-  "response_sha256": "6d82c9054383efc19a37f4edb9d7c6edfc86441923fd6a436159b64f49ffaa77",
+  "response_sha256": "d4a8251032cdf951f372b5de9fc3568b5e88a704f7dd0ad3037c841854a317a5",
   "diff": {
     "added": [
       "zai-glm-5-3"
@@ -109,7 +109,7 @@
   "docs_sources": [
     {
       "model_name": "GLM 5.3",
-      "reason": "api_id",
+      "reason": "cache_read",
       "url": "https://docs.mistral.ai/models/zai-glm-5-3",
       "response_sha256": "19e2f58095e2870e2771617e0a9688ba46b60d500a1282883114cbdf2acf1c01"
     },

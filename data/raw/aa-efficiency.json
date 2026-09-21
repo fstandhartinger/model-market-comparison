@@ -3,7 +3,7 @@
   "basis": "measured",
   "interpretation": "benchmark_proxy",
   "caveat": "AA Intelligence Index benchmark token accounting. Ratios are BENCHMARK PROXIES, never typical user I/O usage; usage ratios must come from OpenRouter/Chutes sources.",
-  "collected_at": "2026-09-20T09:58:43.558Z",
+  "collected_at": "2026-09-21T07:34:00.481Z",
   "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
   "data_fields": {
     "tokens_per_task": "intelligenceIndexOutputTokensPerTask {reasoning, answer, output} (measured)",
@@ -13,17 +13,10 @@
   "attempts": [
     {
       "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
-      "fetched_at": "2026-09-20T09:58:43.391Z",
+      "fetched_at": "2026-09-21T07:33:59.711Z",
       "http_status": 200,
-      "bytes": 3847292,
-      "sha256": "ab7a5a19835bd898693859ceaf6ccec0cf524d2022c66af4849cc1a9d64e2ea4"
-    },
-    {
-      "url": "https://artificialanalysis.ai/models/claude-sonnet-5",
-      "fetched_at": "2026-09-20T09:58:46.175Z",
-      "http_status": 200,
-      "bytes": 3858990,
-      "sha256": "8f0f4dcb18d1d9ce8d6e41399001729de0da8c3cede983871f889127e9076619"
+      "bytes": 3860401,
+      "sha256": "c809eb44018173dc897a6865154546a40ba6c68daad728ca47cd97afe3857cfd"
     }
   ],
   "coverage": {
@@ -3185,20 +3178,20 @@
       "name": "Step 5 Preview",
       "variant": null,
       "tokens_per_task": {
-        "reasoning": 43287.08803762598,
-        "answer": 20631.545418405854,
-        "output": 63918.633456031836
+        "reasoning": 43316.90894671689,
+        "answer": 20657.3749638604,
+        "output": 63974.28391057729
       },
       "canonical_token_counts": {
-        "input": 5410121630,
-        "output": 155959173,
-        "answer": 26631970,
-        "reasoning": 129327203
+        "input": 5428901910,
+        "output": 156081604,
+        "answer": 26688795,
+        "reasoning": 129392809
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 34.689345460943166,
-        "reasoning_output_share": 0.6772217379678834
+        "input_output_ratio": 34.782458476016174,
+        "reasoning_output_share": 0.6770987699880299
       }
     },
     {

@@ -1,0 +1,22 @@
+[
+  {
+    "id": "matharena-brokenarxiv::2026-08",
+    "version": "2026-08",
+    "version_guard": "The competition table must keep exactly the twelve published leaderboard columns (Rank, Model Name, Provider, Accuracy (± 95% CI), Cost, Output Tokens, Input Tokens, Average Retries, Average Time, Open, Parameters, Active Parameters) and exactly 56 problems in its per-problem grid (MathArena's competitions card for 08/2026 reads \"56 problems\"). A different problem count or another monthly edition is a different identity; editions are never averaged.",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Accuracy (average performance on the competition) with a 95% confidence interval (normal approximation)",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Run by MathArena (SRI Lab, ETH Zurich, with INSAIT) on the August 2026 edition (56 problems). The 95% interval, cost, token counts and the source's own \"released after competition release\" flag stay in each observation's protocol. A model released after the problems were published may have seen them; the flag says so, it is not a correction. Monthly editions are separate identities and editions are never averaged. Secondary benchmark, never a Composite input. A judged score: the August edition's own description states grading on a 0–3 scale per response; editions are judged separately, never mixed."
+    },
+    "description": "Plausible but false statements taken from August 2026 arXiv papers; a model scores by refusing to prove them and saying the statement is false as written.",
+    "maintainer": "MathArena (SRI Lab, ETH Zurich; INSAIT)"
+  }
+]

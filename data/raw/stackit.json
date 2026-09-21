@@ -1,10 +1,10 @@
 {
   "source": "STACKIT AI Model Serving",
   "region": "eu01 (Germany South)",
-  "collected_at": "2026-09-20",
+  "collected_at": "2026-09-21",
   "listing_url": "https://docs.stackit.cloud/products/data-and-ai/ai-model-serving/basics/available-shared-models/",
   "pricing_url": "https://stackit.com/en/products/data-ai/stackit-ai-model-serving",
-  "method": "scripts/fetch-stackit-catalog.mjs (2026-09-20): model list from the first-party Available Shared Models documentation (page last updated 2026-09-08; Type Chat rows under Text Models, embedding models excluded), each model's billing category and status from its Facts table. Token prices from the EU01 (Germany South) SKU table on the STACKIT AI Model Serving product page: LLM-Standard 0.15/0.25 EUR, LLM-Premium 1.5/1.75 EUR, LLM-Plus 0.45/0.65 EUR per 1M input/output tokens, mapped via each model's billing category. USD = EUR x 1.146 (ECB euro reference rate of 2026-09-18, latest available on 2026-09-20), four decimal places. See stackit.method.md.",
+  "method": "scripts/fetch-stackit-catalog.mjs (2026-09-21): model list from the first-party Available Shared Models documentation (page last updated 2026-09-08; Type Chat rows under Text Models, embedding models excluded), each model's billing category and status from its Facts table. Token prices from the EU01 (Germany South) SKU table on the STACKIT AI Model Serving product page: LLM-Standard 0.15/0.25 EUR, LLM-Premium 1.5/1.75 EUR, LLM-Plus 0.45/0.65 EUR per 1M input/output tokens, mapped via each model's billing category. USD = EUR x 1.146 (ECB euro reference rate of 2026-09-18, latest available on 2026-09-21), four decimal places. See stackit.method.md.",
   "models": [
     {
       "model_name": "Qwen3 VL 235B A22B Instruct",
@@ -147,7 +147,7 @@
   "docs_last_updated": "2026-09-08",
   "response_sha256": {
     "docs": "38cb17c8e74f42cda510e6804a2289d3739cfc1fc4335a7fef91e6cb9ad219f9",
-    "product": "844720d17efa208ec5b8c5ee608b1c19f23074a003c5cc86fcff590741507a44"
+    "product": "ef6644aefabb5fcbb043cda9d3b92414802adeea93dd5419c62a3c7bb511c51a"
   },
   "diff": {
     "added": [],

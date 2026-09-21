@@ -1,0 +1,148 @@
+[
+  {
+    "id": "public:5c9e5db8541b8ab484448eab",
+    "benchmark_id": "matharena-arxivmath::2026-06",
+    "subject": {
+      "source_id": "GLM 5.2",
+      "name": "GLM 5.2",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 46.53,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://matharena.ai/competition_tables/arxiv--june",
+      "retrieved_at": "2026-09-21T07:49:24.157807+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/288d2c4634583d0c0aa1.gz",
+      "sha256": "288d2c4634583d0c0aa1d2863733045ec853314771eaa557032e4738f2012bbd",
+      "locator": "matharena_table; source row 20; GLM 5.2; field accuracy"
+    },
+    "protocol": "ArXivMath 06/2026 (MathArena): 48 problems from arXiv papers submitted in June 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; not a Composite input.; source row: {\"rank\":\"20\",\"model\":\"GLM 5.2\",\"provider\":\"Z.ai\",\"accuracy\":\"46.53% ± 8.15%\",\"cost\":\"$0.22\",\"output_tokens\":\"54238\",\"released_after_competition\":true,\"open_weights\":\"✔️\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:4764d627b44396cb491b9a07",
+    "benchmark_id": "matharena-arxivmath::2026-06",
+    "subject": {
+      "source_id": "DeepSeek-v4-Flash (Max)",
+      "name": "DeepSeek-v4-Flash (Max)",
+      "model_id": "deepseek-v4-flash::max",
+      "variant": null,
+      "harness": null
+    },
+    "value": 43.75,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://matharena.ai/competition_tables/arxiv--june",
+      "retrieved_at": "2026-09-21T07:49:24.157807+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/288d2c4634583d0c0aa1.gz",
+      "sha256": "288d2c4634583d0c0aa1d2863733045ec853314771eaa557032e4738f2012bbd",
+      "locator": "matharena_table; source row 21; DeepSeek-v4-Flash (Max); field accuracy"
+    },
+    "protocol": "ArXivMath 06/2026 (MathArena): 48 problems from arXiv papers submitted in June 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; not a Composite input.; source row: {\"rank\":\"21\",\"model\":\"DeepSeek-v4-Flash (Max)\",\"provider\":\"DeepSeek\",\"accuracy\":\"43.75% ± 8.10%\",\"cost\":\"$0.038\",\"output_tokens\":\"136104\",\"released_after_competition\":false,\"open_weights\":\"✔️\"}",
+    "comparison_key": null,
+    "join_note": "Reviewed identity map 2026-09-16: label states model deepseek-v4-flash and setting max; exact catalog configuration deepseek-v4-flash::max"
+  },
+  {
+    "id": "public:75ed509f35f063c45a09edf0",
+    "benchmark_id": "matharena-arxivmath::2026-06",
+    "subject": {
+      "source_id": "Claude-Fable-5.1 (low)",
+      "name": "Claude-Fable-5.1 (low)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 38.54,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://matharena.ai/competition_tables/arxiv--june",
+      "retrieved_at": "2026-09-21T07:49:24.157807+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/288d2c4634583d0c0aa1.gz",
+      "sha256": "288d2c4634583d0c0aa1d2863733045ec853314771eaa557032e4738f2012bbd",
+      "locator": "matharena_table; source row 22; Claude-Fable-5.1 (low); field accuracy"
+    },
+    "protocol": "ArXivMath 06/2026 (MathArena): 48 problems from arXiv papers submitted in June 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; not a Composite input.; source row: {\"rank\":\"22\",\"model\":\"Claude-Fable-5.1 (low)\",\"provider\":\"Anthropic\",\"accuracy\":\"38.54% ± 9.74%\",\"cost\":\"$0.11\",\"output_tokens\":\"2140\",\"released_after_competition\":true,\"open_weights\":\"❌\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:d699307ad31df9a05beae10c",
+    "benchmark_id": "matharena-arxivmath::2026-06",
+    "subject": {
+      "source_id": "Step 3.7 Flash",
+      "name": "Step 3.7 Flash",
+      "model_id": "step-3.7-flash::default",
+      "variant": null,
+      "harness": null
+    },
+    "value": 30.56,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://matharena.ai/competition_tables/arxiv--june",
+      "retrieved_at": "2026-09-21T07:49:24.157807+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/288d2c4634583d0c0aa1.gz",
+      "sha256": "288d2c4634583d0c0aa1d2863733045ec853314771eaa557032e4738f2012bbd",
+      "locator": "matharena_table; source row 23; Step 3.7 Flash; field accuracy"
+    },
+    "protocol": "ArXivMath 06/2026 (MathArena): 48 problems from arXiv papers submitted in June 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; not a Composite input.; source row: {\"rank\":\"23\",\"model\":\"Step 3.7 Flash\",\"provider\":\"StepFun\",\"accuracy\":\"30.56% ± 7.52%\",\"cost\":\"$0.045\",\"output_tokens\":\"150132\",\"released_after_competition\":false,\"open_weights\":\"✔️\"}",
+    "comparison_key": null,
+    "join_note": "Reviewed identity map 2026-09-16: label names step-3.7-flash without a setting; the catalog has exactly one configuration, the default (step-3.7-flash::default)"
+  },
+  {
+    "id": "public:47eeea52a8c32e987563ff01",
+    "benchmark_id": "matharena-arxivmath::2026-06",
+    "subject": {
+      "source_id": "Qwen3.6-35B",
+      "name": "Qwen3.6-35B",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 27.08,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://matharena.ai/competition_tables/arxiv--june",
+      "retrieved_at": "2026-09-21T07:49:24.157807+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/288d2c4634583d0c0aa1.gz",
+      "sha256": "288d2c4634583d0c0aa1d2863733045ec853314771eaa557032e4738f2012bbd",
+      "locator": "matharena_table; source row 24; Qwen3.6-35B; field accuracy"
+    },
+    "protocol": "ArXivMath 06/2026 (MathArena): 48 problems from arXiv papers submitted in June 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; not a Composite input.; source row: {\"rank\":\"24\",\"model\":\"Qwen3.6-35B\",\"provider\":\"Qwen\",\"accuracy\":\"27.08% ± 7.26%\",\"cost\":\"N/A\",\"output_tokens\":\"73032\",\"released_after_competition\":false,\"open_weights\":\"✔️\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:a8bee5afad8bc50e0575961b",
+    "benchmark_id": "matharena-arxivmath::2026-06",
+    "subject": {
+      "source_id": "Qwen3.5-2B",
+      "name": "Qwen3.5-2B",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 4.17,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://matharena.ai/competition_tables/arxiv--june",
+      "retrieved_at": "2026-09-21T07:49:24.157807+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/288d2c4634583d0c0aa1.gz",
+      "sha256": "288d2c4634583d0c0aa1d2863733045ec853314771eaa557032e4738f2012bbd",
+      "locator": "matharena_table; source row 25; Qwen3.5-2B; field accuracy"
+    },
+    "protocol": "ArXivMath 06/2026 (MathArena): 48 problems from arXiv papers submitted in June 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; not a Composite input.; source row: {\"rank\":\"25\",\"model\":\"Qwen3.5-2B\",\"provider\":\"Qwen\",\"accuracy\":\"4.17% ± 3.26%\",\"cost\":\"N/A\",\"output_tokens\":\"120860\",\"released_after_competition\":false,\"open_weights\":\"✔️\"}",
+    "comparison_key": null
+  }
+]

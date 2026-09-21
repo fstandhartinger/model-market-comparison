@@ -1,0 +1,75 @@
+{
+  "started_at": "2026-09-21T08:48:26.043Z",
+  "mode": "critic",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "producers": [
+    "z-ai/glm-5.3-flash"
+  ],
+  "qualification": {
+    "id": "deepseek/deepseek-v4.1-flash",
+    "family": "deepseek",
+    "free": false,
+    "input_per_1m": 0.3,
+    "output_per_1m": 1.2,
+    "context": 1048576,
+    "aa_intelligence_index": 39.5,
+    "aa_source": "exact_family_slug",
+    "matched_model_ids": [
+      "deepseek-v4.1-flash::max"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "deepseek-v4.1-flash::max",
+        "index": 39.5
+      }
+    ]
+  },
+  "input_sha256": "7a34e748efb235dc1f40f2c5d6baa5784061ce7bfdc5b26eb9500435fd5e478a",
+  "route": "openrouter",
+  "attempt": 3,
+  "free_route_role": "critic",
+  "free_routes_offered": [
+    "chutes/moonshotai/Kimi-K3-TEE"
+  ],
+  "excluded_models": [
+    "deepseek/deepseek-v4-flash-0731",
+    "chutes/moonshotai/Kimi-K3-TEE"
+  ],
+  "reasoning": {
+    "effort": "low",
+    "exclude": true
+  },
+  "response_format_mode": null,
+  "response_schema_sha256": null,
+  "images": [],
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "usage": {
+    "prompt_tokens": 15331,
+    "completion_tokens": 4487,
+    "total_tokens": 19818,
+    "cost": 0.0039535452,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.00399348,
+      "upstream_inference_prompt_cost": 0.00183972,
+      "upstream_inference_completions_cost": 0.00215376
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 3867,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "finish_reason": "stop",
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "provider": "Morph",
+  "session_id": null,
+  "finished_at": "2026-09-21T08:57:17.249Z",
+  "output_sha256": "b53b18aa20ea3d96f751ab0bc305e2d1eeebeb0bce2543f05e709a848e093e23"
+}

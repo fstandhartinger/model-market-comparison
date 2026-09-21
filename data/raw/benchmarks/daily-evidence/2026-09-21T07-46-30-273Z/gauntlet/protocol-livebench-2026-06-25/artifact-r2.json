@@ -1,0 +1,22 @@
+[
+  {
+    "id": "livebench::2026-06-25",
+    "version": "2026-06-25",
+    "version_guard": "Verify the published version 2026-06-25 before reading results.",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Overall mean of category averages, with source-published exceptions retained",
+      "unit": "points",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "The website release selector is newer than the README (which still calls 2025-04-25 current). Register the verified website release. Do not combine dated releases; preserve source-published overall overrides with attribution."
+    },
+    "description": "A periodically refreshed suite of objectively graded tasks with separate category scores and an overall category mean.",
+    "maintainer": "LiveBench team"
+  }
+]

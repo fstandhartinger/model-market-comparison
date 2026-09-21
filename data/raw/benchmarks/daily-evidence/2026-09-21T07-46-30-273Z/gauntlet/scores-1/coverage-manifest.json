@@ -1,0 +1,153 @@
+{
+  "artifact_id": "scores-1",
+  "rounds_used": 1,
+  "rows": {
+    "total": 6,
+    "accepted": [
+      "public:5c9e5db8541b8ab484448eab",
+      "public:4764d627b44396cb491b9a07",
+      "public:75ed509f35f063c45a09edf0",
+      "public:d699307ad31df9a05beae10c",
+      "public:47eeea52a8c32e987563ff01",
+      "public:a8bee5afad8bc50e0575961b"
+    ],
+    "quarantined": []
+  },
+  "producer_flagged": [],
+  "criteria": [
+    "c1"
+  ],
+  "coverage": {
+    "producer": {
+      "complete": true,
+      "model": "deepseek/deepseek-v4-flash-0731",
+      "rows_covered": 6
+    },
+    "critic": [
+      {
+        "round": 1,
+        "verdict": "pass",
+        "coverage_complete": true,
+        "missing_rows": [],
+        "missing_criteria": []
+      }
+    ],
+    "final": {
+      "rows_covered": 6,
+      "criteria_covered": 1,
+      "complete": true
+    }
+  },
+  "receipts": [
+    {
+      "round": 1,
+      "role": "producer",
+      "reused_from_round": null,
+      "requested_model": "deepseek/deepseek-v4-flash-0731",
+      "model": "deepseek/deepseek-v4-flash-0731",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0.0026333406,
+      "out": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/producer-r1.json",
+      "output_sha256": "aed13bfab90343e6416b8cf5b2ca364bfff4515a15c4b1289350a32eca4d7fc5",
+      "qualification": {
+        "id": "deepseek/deepseek-v4-flash-0731",
+        "family": "deepseek",
+        "free": false,
+        "input_per_1m": 0.04,
+        "output_per_1m": 0.16,
+        "context": 1310720,
+        "aa_intelligence_index": 34.3,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "deepseek-v4-flash-0731::max"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "deepseek-v4-flash-0731::max",
+            "index": 34.3
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 13819,
+        "completion_tokens": 12014,
+        "total_tokens": 25833,
+        "cost": 0.0026333406,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 9854,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.00265994,
+          "upstream_inference_prompt_cost": 0.00025714,
+          "upstream_inference_completions_cost": 0.0024028
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 11524,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    },
+    {
+      "round": 1,
+      "role": "critic",
+      "requested_model": "chutes/moonshotai/Kimi-K3-TEE",
+      "model": "moonshotai/Kimi-K3-TEE",
+      "route": "router:fw-kimi-k3",
+      "attempt": 1,
+      "cost_usd": 0,
+      "out": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/review-r1.json",
+      "output_sha256": "1c605eb6491dba6f3d5dd6d7cb2040a6176e36ef1c6ed3edccbbfa1d58217751",
+      "qualification": {
+        "id": "chutes/moonshotai/Kimi-K3-TEE",
+        "family": "moonshotai",
+        "free": true,
+        "input_per_1m": 0,
+        "output_per_1m": 0,
+        "context": null,
+        "aa_intelligence_index": 43.6,
+        "aa_source": "exact_variant",
+        "matched_model_ids": [
+          "kimi-k3::max"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "kimi-k3::max",
+            "index": 43.6
+          }
+        ],
+        "transport": "router",
+        "router_model": "fw-kimi-k3",
+        "provider_model": "moonshotai/Kimi-K3-TEE",
+        "reasoning_effort": "max",
+        "allowed_as": "moonshotai/kimi-k3",
+        "healthy": true
+      },
+      "usage": {
+        "completion_tokens": 5382,
+        "prompt_tokens": 13846,
+        "total_tokens": 19228,
+        "completion_tokens_details": {
+          "reasoning_tokens": 4793,
+          "text_tokens": 589
+        },
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "cost": 0
+      },
+      "reasoning": {
+        "effort": "max"
+      }
+    }
+  ]
+}
