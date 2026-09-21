@@ -36,6 +36,40 @@ print('ok')
   assert.equal(output.trim(), 'ok');
 });
 
+// 2026-09-21 (iteration 143): the board began publishing a run judged on fewer than its 23 tasks
+// (its own "§" footnote — the v3.7 protocol withholds one task's Code quality score). Before this,
+// the whole board's daily refresh failed closed on that single row and the source had been frozen
+// since 2026-09-20. A short denominator is withheld, a grown one still fails closed.
+test('VulcanBench Frontier withholds a partial-suite row and still fails closed on a grown or implausible one', () => {
+  const output = execFileSync('python3', ['-B', '-c', String.raw`
+import importlib.util,gzip,json
+from pathlib import Path
+s=importlib.util.spec_from_file_location('collector','scripts/collect-public-benchmarks.py');m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
+entries={e['benchmark_id']:e for e in json.loads(Path('data/raw/benchmarks/collection-plan.json').read_text())['entries']}
+e=entries['vulcanbench-frontier::4'];text=gzip.decompress(Path(e['source']['file']).read_bytes()).decode('utf-8-sig')
+lines=text.splitlines()
+def with_n(row_index,n):
+  out=list(lines);cells=out[row_index].split(',');cells[6]=str(n);out[row_index]=','.join(cells);return '\n'.join(out)+'\n'
+base=len(m.parse(text,e['parser'],None));assert base==24,base
+# One short row: that row is withheld, every other row still publishes.
+short=m.parse(with_n(1,22),e['parser'],None);assert len(short)==base-1,len(short)
+assert all(r['context']['n_tasks']==23 for r in short)
+def fails(csv_text,why):
+  try: m.parse(csv_text,e['parser'],None)
+  except ValueError: return
+  raise AssertionError('accepted: '+why)
+fails(with_n(1,24),'a grown suite is a different identity')
+fails(with_n(1,0),'a zero task count is not a partial run')
+fails(with_n(1,'n/a'),'a non-numeric task count')
+many=list(lines)
+for i in range(1,6):
+  cells=many[i].split(',');cells[6]='22';many[i]=','.join(cells)
+fails('\n'.join(many)+'\n','five partial rows means the suite changed, not one withheld judge score')
+print('ok')
+`]).toString();
+  assert.equal(output.trim(), 'ok');
+});
+
 test('VulcanBench Frontier joins: every model x effort column is an exact catalog configuration', () => {
   assert.deepEqual(parseVulcanbenchFrontierLabel('Fable 5.1 [max]'), { family: 'claude-fable-5.1', effort: 'max' });
   assert.deepEqual(parseVulcanbenchFrontierLabel('GPT-5.5 [extra-high]'), { family: 'gpt-5.5', effort: 'xhigh' }, "VulcanBench's own spelling of the xhigh tier");

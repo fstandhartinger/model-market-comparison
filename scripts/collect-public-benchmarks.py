@@ -468,8 +468,17 @@ def parse(source,spec,load_source):
         parsed=csvrows(source)
         header=['rank','model','lab','harness','effort','best_effort','n','combined_33','combined_33_se','code_quality','passed','mean_minutes','mean_usd','mean_raw_tokens','median_output_tokens','mean_output_tokens','report','protocol']
         if list(parsed[0].keys() if parsed else [])!=header:raise ValueError('VulcanBench Frontier CSV header changed')
+        partial=[]
         for index,r in enumerate(parsed):
-            if r.get('n')!='23':raise ValueError(f"VulcanBench Frontier row {index}: task count changed ({r.get('n')!r})")
+            # 2026-09-21: the board publishes a run judged on fewer than its 23 tasks when the v3.7 protocol
+            # withholds a task's Code quality score (its own "§" footnote on leaderboard.html — GPT-5.6 Sol at
+            # max, judged on 22 of 23 because a judge probe quoted an excerpt absent from the code). The
+            # combined score then has a different denominator, so such a row is withheld rather than compared
+            # with the full-suite rows. A row claiming *more* than 23 tasks is a different suite and still
+            # fails closed, as does an implausible count of partial rows.
+            if r.get('n')!='23':
+                if not re.fullmatch(r'\d{1,2}',r.get('n') or '') or not 1<=int(r['n'])<23:raise ValueError(f"VulcanBench Frontier row {index}: task count changed ({r.get('n')!r})")
+                partial.append(f"{r.get('model')} [{r.get('effort')}] n={r['n']}");continue
             if r.get('harness') not in ('Codex','Claude Code'):raise ValueError(f"VulcanBench Frontier row {index}: harness {r.get('harness')!r} is not a stated harness")
             if r.get('effort') not in ('low','medium','high','extra-high','max'):raise ValueError(f"VulcanBench Frontier row {index}: effort {r.get('effort')!r} not stated")
             if not r.get('protocol','').startswith('code-quality-maintenance-v3'):raise ValueError(f"VulcanBench Frontier row {index}: protocol family changed ({r.get('protocol')!r})")
@@ -477,6 +486,7 @@ def parse(source,spec,load_source):
                 'context':{'model':r['model'],'lab':r['lab'],'harness':r['harness'],'effort':r['effort'],'n_tasks':int(r['n']),'tasks_passed':int(r['passed']),
                     'combined_33_se':float(r['combined_33_se']),'code_quality':float(r['code_quality']),'mean_minutes':float(r['mean_minutes']),'mean_usd':float(r['mean_usd']),
                     'protocol':r['protocol'],'report':r['report'],'best_effort':r['best_effort']=='True'}})
+        if len(partial)>3:raise ValueError('VulcanBench Frontier: '+str(len(partial))+' rows judged on fewer than 23 tasks ('+'; '.join(partial)+'); the suite may have changed')
     elif kind=='kernelbench_cuda_board':
         # KernelBench-CUDA (Elliot Arledge, kernelbench.com): the published per-hardware leaderboard JSON
         # (benchmarks/cuda/results/leaderboard.json) is the artifact the site bakes and renders. One row per
