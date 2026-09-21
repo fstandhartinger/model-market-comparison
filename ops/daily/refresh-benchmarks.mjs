@@ -22,11 +22,44 @@ const put = (p, v) => writeJSONAtomic(p, v);
 // Hard); `status: "retained"` is how the registry records that. While these fields were missing
 // from the packet, the reviewer read the omission as a claim that the board is still actively
 // reported, disputed every retired board, and the whole AA arm failed closed from 2026-09-11 on.
+//
+// It must also carry nothing a protocol page cannot show. Two kinds of registry text are settled
+// elsewhere and cost the AA arm whole days of refusals (Harvey LAB-AA and ITBench-AA, 2026-09-21
+// replays): our "AA source field: x" plumbing note — that mapping is `aa_field_map`, and the values
+// are reviewed against the native model-page fields in the separate aa-fields review — and a clause
+// telling one maintainer's board apart from another's, which only the pair of registry entries can
+// settle (pinned in test/benchmark-source-conflicts.test.mjs). The registry and the site keep both.
+export const CROSS_SOURCE_CLAUSES = {
+  'aa-harvey-lab::snapshot-2026-09-10': " — not the same run or scale as Vals AI's HLAB row",
+};
+const withoutFieldNote = (scoring) => scoring?.notes == null ? scoring
+  : { ...scoring, notes: scoring.notes.replace(/\s*AA source field: [A-Za-z0-9_.]+\.?/g, '').trim() };
 export function protocolReviewRow(entry) {
+  const clause = CROSS_SOURCE_CLAUSES[entry.id];
+  if (clause && !entry.one_sentence_description.includes(clause)) throw new Error(`${entry.id}: cross-source clause no longer in the description`);
   return { id: entry.id, version: entry.version, version_guard: entry.how_to_collect.version_guard,
     status: entry.status, version_status: entry.version_status, superseded_by: entry.superseded_by ?? null,
-    scoring: entry.scoring, description: entry.one_sentence_description, maintainer: entry.maintainer };
+    scoring: withoutFieldNote(entry.scoring),
+    description: clause ? entry.one_sentence_description.replace(clause, '') : entry.one_sentence_description,
+    maintainer: entry.maintainer };
 }
+
+// Full short sources are supplied. For long pages, only an unchanged, exact previously reviewed
+// protocol passage may establish continuity. A page that publishes its own LLM prompts (MathArena's
+// /arxivmath and /brokenarxiv: "Respond only with a JSON object: {keep: boolean}") is reviewed on its
+// excerpt alone, whatever its size — in full, the last instruction a producer read was the page's,
+// and it answered {"keep": false} instead of the audit (2026-09-21 replays). The registry marks such
+// a source `review_content: "excerpt"`; the excerpt must still be verbatim in today's capture.
+export function protocolSourceContent(entryId, reference, body) {
+  const excerptOnly = reference.review_content === 'excerpt';
+  if (!excerptOnly && Buffer.byteLength(body) <= 60_000) return body;
+  const normalized = body.replace(/\s+/g, ' '), excerpt = reference.excerpt?.replace(/\s+/g, ' ').trim();
+  if (!excerpt || !normalized.includes(excerpt)) throw new Error(`${entryId}: methodology passage changed or unavailable in ${excerptOnly ? 'an excerpt-only' : 'a large'} primary page`);
+  return excerpt;
+}
+export const protocolSourceLocator = (reference) => reference.review_content === 'excerpt'
+  ? 'Published protocol text; exact excerpt (the page also publishes LLM prompts, which are not supplied)'
+  : reference.excerpt ? 'Published protocol text; exact excerpt when the full page exceeds the bound' : 'full visible primary text';
 
 export const PROTOCOL_REVIEW_CRITERIA = [
   'Check the registry version, benchmark identity, metric, units and description against the actual current primary protocol. If the excerpt cannot establish continuity, report missing evidence. A changed task set, harness, judges, configuration or release version cannot silently reuse the existing identity.',
@@ -155,16 +188,8 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
     const sources = [];
     for (const reference of references) {
       const receipt = current(reference);
-      const body = await textSource(receipt);
-      let content = body;
-      // Full short sources are supplied. For long pages, only an unchanged,
-      // exact previously reviewed protocol passage may establish continuity.
-      if (Buffer.byteLength(content) > 60_000) {
-        const normalized = body.replace(/\s+/g, ' '), excerpt = reference.excerpt?.replace(/\s+/g, ' ').trim();
-        if (!excerpt || !normalized.includes(excerpt)) throw new Error(`${entry.id}: methodology passage changed or unavailable in a large primary page`);
-        content = excerpt;
-      }
-      sources.push({ ...receipt, content: bounded(content, entry.id), locator: reference.excerpt ? 'Published protocol text; exact excerpt when the full page exceeds the bound' : 'full visible primary text' });
+      const content = protocolSourceContent(entry.id, reference, await textSource(receipt));
+      sources.push({ ...receipt, content: bounded(content, entry.id), locator: protocolSourceLocator(reference) });
     }
     const reviewed = await review({ runDir: evidenceDir, artifactId: `protocol-${entry.id}`, rows: [protocolReviewRow(entry)],
       sources, criteria: PROTOCOL_REVIEW_CRITERIA });

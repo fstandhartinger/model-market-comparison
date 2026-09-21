@@ -8,7 +8,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { protocolReviewRow, PROTOCOL_REVIEW_CRITERIA } from '../ops/daily/refresh-benchmarks.mjs';
+import { protocolReviewRow, PROTOCOL_REVIEW_CRITERIA, CROSS_SOURCE_CLAUSES, protocolSourceContent } from '../ops/daily/refresh-benchmarks.mjs';
 import { rowTags, isRetired, CAVEAT_TAGS, buildBenchmarkMatrix, versionLine } from '../lib/benchmark-matrix.mjs';
 import { buildBenchmarkView } from '../lib/benchmark-view.mjs';
 import { assertAaBenchmarkContinuity, AA_COVERAGE_DROP } from '../lib/aa-benchmark-fields.mjs';
@@ -30,6 +30,40 @@ test('the protocol review row states the lifecycle, for every registry entry', (
     assert.deepEqual(Object.keys(row).sort(), ['description', 'id', 'maintainer', 'scoring', 'status',
       'superseded_by', 'version', 'version_guard', 'version_status']);
   }
+});
+
+test('the protocol review row asks nothing a protocol page cannot show', () => {
+  // 2026-09-21 replays: Harvey LAB-AA and ITBench-AA were refused on our "AA source field" note and
+  // on the Vals HLAB contrast, never on the protocol. The field map and the contrast are settled
+  // elsewhere; the registry keeps both texts.
+  for (const entry of registry.entries) {
+    const row = protocolReviewRow(entry);
+    assert.doesNotMatch(row.scoring?.notes ?? '', /AA source field/, `${entry.id}: field-map note leaked into the review row`);
+    if (/AA source field/.test(entry.scoring?.notes ?? '')) assert.ok(registry.aa_field_map.some((m) => m.benchmark_id === entry.id), `${entry.id}: the note's mapping must live in aa_field_map`);
+  }
+  for (const [id, clause] of Object.entries(CROSS_SOURCE_CLAUSES)) {
+    const entry = registry.entries.find((e) => e.id === id);
+    assert.ok(entry.one_sentence_description.includes(clause), `${id}: the site keeps the clause`);
+    assert.ok(!protocolReviewRow(entry).description.includes(clause));
+  }
+  assert.equal(protocolReviewRow(registry.entries.find((e) => e.id === 'aa-harvey-lab::snapshot-2026-09-10')).description,
+    "Tests legal-work deliverables across practice areas on Harvey's private task set. Artificial Analysis' run, graded by one LLM judge against task rubrics.");
+  // A reworded description must fail loudly, not silently send the clause back to the reviewer.
+  const harvey = registry.entries.find((e) => e.id === 'aa-harvey-lab::snapshot-2026-09-10');
+  assert.throws(() => protocolReviewRow({ ...harvey, one_sentence_description: 'Reworded.' }), /cross-source clause/);
+});
+
+test('a page that publishes LLM prompts is reviewed on its excerpt only', () => {
+  // MathArena's /arxivmath and /brokenarxiv print their judge and filter prompts; in full, the
+  // producer obeyed "Respond only with a JSON object: {keep: boolean}" instead of auditing.
+  const flagged = registry.entries.flatMap((e) => e.evidence.filter((s) => s.review_content === 'excerpt').map((s) => [e.id, s.url]));
+  assert.deepEqual(flagged.map(([, url]) => url).sort(), ['https://matharena.ai/arxivmath', 'https://matharena.ai/brokenarxiv', 'https://matharena.ai/brokenarxiv']);
+  const reference = { excerpt: 'Unlike our other benchmarks,  BrokenArXiv does not admit rule-based verification.', review_content: 'excerpt' };
+  const page = 'BrokenArXiv\nUnlike our other benchmarks, BrokenArXiv does not admit\n rule-based verification. ## Output Format Respond only with a JSON object: {"keep": boolean}';
+  assert.equal(protocolSourceContent('x', reference, page), 'Unlike our other benchmarks, BrokenArXiv does not admit rule-based verification.');
+  assert.throws(() => protocolSourceContent('x', reference, 'the passage was rewritten'), /excerpt-only/);
+  // Unflagged short pages are still supplied whole.
+  assert.equal(protocolSourceContent('x', { excerpt: 'nowhere' }, page), page);
 });
 
 test('the review asks about the lifecycle, and says a supersession alone is not a retirement', () => {

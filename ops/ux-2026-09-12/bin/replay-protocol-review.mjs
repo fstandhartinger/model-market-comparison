@@ -11,7 +11,7 @@ import { join } from 'node:path';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { reviewArtifact } from '../../daily/gauntlet.mjs';
-import { protocolReviewRow, PROTOCOL_REVIEW_CRITERIA } from '../../daily/refresh-benchmarks.mjs';
+import { protocolReviewRow, PROTOCOL_REVIEW_CRITERIA, protocolSourceContent, protocolSourceLocator } from '../../daily/refresh-benchmarks.mjs';
 
 const exec = promisify(execFile);
 const [id, outDir, ...flags] = process.argv.slice(2);
@@ -33,14 +33,8 @@ for (const reference of references) {
   const receipt = captured.get(reference.url);
   if (!receipt) throw new Error(`no capture for ${reference.url} in the replay manifest`);
   const { stdout: body } = await exec('python3', ['ops/daily/public-candidate.py', 'text', receipt.file], { maxBuffer: 16_000_000, timeout: 30_000 });
-  let content = body;
-  if (Buffer.byteLength(content) > 60_000) {
-    const normalized = body.replace(/\s+/g, ' '), excerpt = reference.excerpt?.replace(/\s+/g, ' ').trim();
-    if (!excerpt || !normalized.includes(excerpt)) throw new Error(`${entry.id}: methodology passage changed or unavailable in a large primary page`);
-    content = excerpt;
-  }
-  sources.push({ ...reference, ...receipt, fetched_at: receipt.retrieved_at, content,
-    locator: reference.excerpt ? 'Published protocol text; exact excerpt when the full page exceeds the bound' : 'full visible primary text' });
+  const content = protocolSourceContent(entry.id, reference, body);
+  sources.push({ ...reference, ...receipt, fetched_at: receipt.retrieved_at, content, locator: protocolSourceLocator(reference) });
 }
 
 const row = protocolReviewRow(entry);

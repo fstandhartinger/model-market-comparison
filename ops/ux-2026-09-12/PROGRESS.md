@@ -6238,3 +6238,29 @@ Judged live revision `16e8a10` on the canonical host, 1440/390 × light/dark, 12
 - **CR-38.1 remains open/in progress:** the live `/api/meta` still reports Artificial Analysis as 2026-09-20; the latest unattended run available to this gate stopped before publication on a dirty-checkout guard, and the stale/failing source-health list (including MathArena, FrontierSWE, and unresolved AA protocol review) is not closed. The AA successor identities correctly remain empty until a reviewed snapshot publishes.
 - **CR-85.1 remains open:** the unattended daily publication requirement is still unproven. CR-85.2 remains in progress for its remaining exact-source/category work.
 - X6 remains open for the remaining CR rows and decisions listed in the review. The broad `verify-live-review.mjs` was stopped after hanging before its final JSON; its partial screenshots are not a pass. No `ALL-ACCEPTED` line was appended.
+
+## Iteration 145 — 2026-09-21 04:00 → 04:17 UTC (claude-opus, work): the protocol-review packet carries only what a protocol page can show — recovered and committed by the Fable pass at 04:20
+
+- **How this entry came to be.** The iteration's `claude -p` process ended at 04:17 while its last message said it was waiting for the
+  MathArena replays "or a 04:50 cutoff, after which I commit regardless"; the tick logged rc=0, no commit and no ledger entry followed, and
+  the work stayed in the tree (seven modified files, all text-only: 33 protocol strings, registry evidence, timestamps — no observation
+  value changed, checked with a value-only diff of `data/dataset.json`). The 04:20 Fable pass re-ran the gates on that tree
+  (`build-dataset` rc 0, `npm test` **995 tests, 994 pass, 0 fail, 1 skip**, `npx tsc --noEmit -p .` clean) and committed it with this
+  note so the 05:17 daily run does not abort on a dirty checkout again (as the 00:41 price run did). Nothing in it was re-judged by Fable
+  beyond the gates and the diff shape; the replay receipts below are the iteration's own.
+- **What it changed (CR-38.1, from the diff and the session log).** `ops/daily/refresh-benchmarks.mjs`: `protocolReviewRow` strips our
+  "AA source field: x" plumbing note from `scoring.notes` (the mapping lives in `aa_field_map`) and the Harvey LAB cross-source clause from
+  the description sent to the reviewer (`CROSS_SOURCE_CLAUSES`; the registry and the site keep both; a reworded description throws).
+  `protocolSourceContent` / `protocolSourceLocator` are exported: a source marked `review_content: "excerpt"` is reviewed on its verbatim
+  excerpt whatever its size, because MathArena's `/arxivmath` and `/brokenarxiv` pages print their own LLM prompts and a producer given the
+  full page answered `{"keep": false}` instead of the audit. `lib/benchmark-registry.mjs` validates the flag; `replay-protocol-review.mjs`
+  uses the same two helpers. Registry: the four MathArena identities' `version_guard` and problem-count quotes reworded to what the
+  competitions card renders; the BrokenArXiv excerpt extended; ITBench's metric corrected to AA's wording (precision at full recall, LLM
+  judge only normalises entities). `test/cr-65-14-benchmark-lifecycle.test.mjs`: "the protocol review row asks nothing a protocol page
+  cannot show".
+- **Replays against the 2026-09-21 capture** (`/opt/benchmarkheaven/state/ux-evidence/iter145-protocol-row/`): Harvey LAB-AA **accepted**
+  (rc 0); ITBench-AA refused once on the field note, then **accepted** with the corrected metric (`itbench-metric/rc.txt`). MathArena:
+  the first pass was stopped after the registry correction (`matharena/STOPPED.txt`); the second pass (`matharena-v2/`) has four
+  empty outputs — it never ran before the session ended. **Left for the next work iteration:** replay the four MathArena identities
+  with the committed registry; the Terminal-Bench 4.0 producer dispute (cannot find the unit "percent" in the excerpt) was being
+  checked and is unresolved; `frontierswe::2` (zip member) as recorded in iteration 144.
