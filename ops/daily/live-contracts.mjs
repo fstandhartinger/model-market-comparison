@@ -14,7 +14,7 @@
 // it must never see units in completion order.
 import { join } from 'node:path';
 import { writeJSONAtomic } from '../../lib/snapshot.mjs';
-import { reviewArtifact, sha256 } from './gauntlet.mjs';
+import { reviewArtifact, sha256, GAUNTLET_LIMITS } from './gauntlet.mjs';
 import { planRejectedContract, retainPriorSnapshot, reviewerUnavailable } from './live-retention.mjs';
 import { mapWithConcurrency, dailyConcurrency } from './concurrency.mjs';
 import { openReuseCache, unitFingerprint, reuseProvenance, withoutCaptureStamps } from './reuse-cache.mjs';
@@ -36,6 +36,8 @@ const VERIFIER_SECTIONS = {
   aa_coding_v15: ['function codingSourceRows(', '// --- evidence packets'],
 };
 
+const exampleContent = (r) => JSON.stringify({ row_id: r.row_id, staged: r.staged, primary: r.extract });
+
 /**
  * Build one review unit per dataset — pure, in manifest order, no worker call.
  */
@@ -43,7 +45,11 @@ export function buildLiveContractUnits({ manifest, verified, verifier, aaEfficie
   return manifest.datasets.map((dataset) => {
     const packets = verified.evidence.packets.filter((p) => p.dataset === dataset.dataset);
     const allRows = packets.flatMap((p) => p.rows);
-    const examples = [allRows[0], allRows.at(-1)].filter((r, i, a) => a.findIndex((x) => x.row_id === r.row_id) === i);
+    // 2026-09-20: or_efficiency's first row (deepseek-v4-pro's model page, 137 kB) outgrew the per-source bound and the
+    // contract was refused before any critic saw it, run after run. The examples are the first and last rows whose
+    // example fits that bound; the programmatic verifier still compares every row. None fitting still fails closed.
+    const fits = (r) => Buffer.byteLength(exampleContent(r)) <= GAUNTLET_LIMITS.sourceBytesCap;
+    const examples = [allRows.find(fits) ?? allRows[0], allRows.findLast(fits) ?? allRows.at(-1)].filter((r, i, a) => a.findIndex((x) => x.row_id === r.row_id) === i);
     const row = { id: dataset.dataset, mapping: RULES[dataset.dataset],
       required_rows: dataset.rows, programmatically_verified_rows: allRows.length,
       model_review_scope: 'extraction contract, failure/retention rules and explicitly supplied example rows',
@@ -55,7 +61,7 @@ export function buildLiveContractUnits({ manifest, verified, verifier, aaEfficie
     const sources = [
       { url: 'repo:ops/daily/review-live.mjs', locator: `${start} through ${end}`, content: verifier.slice(verifier.indexOf('const RAW_DEFAULT'), verifier.indexOf('async function verifyAa(')) + '\n' + verifier.slice(begin, finish), sha256: sha256(verifier), retrieved_at: now(), note: 'Exact local verifier code; hash binds its full file' },
       { url: 'execution:review-live', sha256: sha256(JSON.stringify(verified.report)), retrieved_at: now(), locator: dataset.dataset, content: JSON.stringify({ run_started_at: verified.report.run?.first_receipt, dataset, execution_report: verified.report, complete_coverage: manifest.coverage }) },
-      ...examples.map((r) => ({ ...r.source, locator: r.pointer, content: JSON.stringify({ row_id: r.row_id, staged: r.staged, primary: r.extract }) })),
+      ...examples.map((r) => ({ ...r.source, locator: r.pointer, content: exampleContent(r) })),
     ];
     if (dataset.dataset === 'aa_efficiency') sources.splice(1, 0, {
       url: 'repo:lib/aa-efficiency.mjs', locator: 'complete file', content: aaEfficiencyParser,

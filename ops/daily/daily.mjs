@@ -40,7 +40,8 @@ export async function linkDryRunDependencies(repo, work) {
 
 // CR-73.2: the reuse log is production evidence like the capture directory — build, tests,
 // typecheck, prerender and the gate must never read or write it (CR-66.4's rule, one entry wider).
-export const ISOLATED_STEP_UNSET = ['BH_EVIDENCE_DIR', 'BH_STATE', 'BH_DAILY_REUSE', 'BH_DAILY_REUSE_DIR'];
+// The run's worker catalog copy is production state too: a test that spawned a worker would qualify against it.
+export const ISOLATED_STEP_UNSET = ['BH_EVIDENCE_DIR', 'BH_STATE', 'BH_DAILY_REUSE', 'BH_DAILY_REUSE_DIR', 'BH_WORKER_CATALOG_CACHE'];
 export function isolatedStepEnvironment(environment) {
   const env = { ...environment };
   for (const key of ISOLATED_STEP_UNSET) delete env[key];
@@ -65,7 +66,7 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
   // not moved. A dry run reads and writes its own log — it may be running over an overlay of
   // uncommitted work, and an outcome accepted over that must never be reused by a publishing run.
   const reuseDir = join(home, 'state', dryRun ? 'reuse-dry' : 'reuse');
-  const environment = { ...process.env, BH_EVIDENCE_DIR: join(runDir, 'sources'), BH_STATE: join(runDir, 'workers'), BH_DAILY_REUSE_DIR: reuseDir, BH_WORKER_MAX_PRICE_PER_1M: '4', BH_WORKER_REASONING_EFFORT: 'low', BH_WORKER_DISABLE_OPTIONAL_REASONING: '0', BH_WORKER_FREE_ROUTER: '1' };
+  const environment = { ...process.env, BH_EVIDENCE_DIR: join(runDir, 'sources'), BH_STATE: join(runDir, 'workers'), BH_WORKER_CATALOG_CACHE: join(runDir, 'workers', 'openrouter-catalog.json'), BH_DAILY_REUSE_DIR: reuseDir, BH_WORKER_MAX_PRICE_PER_1M: '4', BH_WORKER_REASONING_EFFORT: 'low', BH_WORKER_DISABLE_OPTIONAL_REASONING: '0', BH_WORKER_FREE_ROUTER: '1' };
   for (const key of ['OPENAI_API_KEY', 'OPENAI_BASE_URL', 'OPENAI_API_BASE', 'CODEX_API_KEY']) delete environment[key];
   const command = async (name, file, args, cwd = work, timeout = 600_000, env = environment) => {
     const begin = Date.now();

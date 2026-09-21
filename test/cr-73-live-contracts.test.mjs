@@ -146,3 +146,17 @@ test('CR-73.3: buildLiveContractUnits keeps manifest order and one artifact per 
   assert.deepEqual(units[0].examples, ['aa-1', 'aa-2']);
   assert.ok(units[0].sources.every((s) => s.url && s.sha256 && s.content));
 });
+
+test('live contract examples skip a row whose example would exceed the per-source bound (or_efficiency, 2026-09-20)', () => {
+  const verifier = ['const RAW_DEFAULT', 'async function verifyAa(', 'async function verifyDa(', 'async function verifyOr(',
+    'async function verifyAaEfficiency(', 'function aaCarrierExtracts(', 'async function verifyOrEfficiency(',
+    'async function verifyChutes(', '// Raw benchmarkRows', 'function codingSourceRows(', '// --- evidence packets'].join('\n');
+  const row = (id, bytes) => ({ row_id: id, source: { url: 'https://openrouter.test/page', sha256: 'a'.repeat(64) }, pointer: id, staged: 1, extract: { endpoint_rows: 'x'.repeat(bytes) } });
+  const build = (rows) => buildLiveContractUnits({ manifest: { datasets: [{ dataset: 'or_efficiency', rows: rows.length }], coverage: {} }, verifier, aaEfficiencyParser: '',
+    verified: { evidence: { packets: [{ dataset: 'or_efficiency', rows }] }, report: {} }, now: () => '2026-09-21T00:00:00Z' })[0];
+  const unit = build([row('big-page', 137_000), row('bigger-page', 187_000), row('page', 81_000), row('ranking', 900)]);
+  assert.deepEqual(unit.examples, ['page', 'ranking']);
+  assert.equal(unit.row.programmatically_verified_rows, 4);
+  // Nothing fits: the oversized rows stay the examples, so the packet builder still refuses the unit.
+  assert.deepEqual(build([row('a', 140_000), row('b', 150_000)]).examples, ['a', 'b']);
+});

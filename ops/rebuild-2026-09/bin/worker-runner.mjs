@@ -28,7 +28,8 @@ const HELP = `worker.sh [options] "task"
   --list               current AA-filtered catalog
   --help               this help
 Unscored models are only allowed for the built-in smoke test (2048 tokens, <=$2/M).
-Catalog requests and opencode export each have a separate 30-second timeout.
+Catalog requests and opencode export each have a separate 30-second timeout; the OpenRouter catalog is retried up to
+three times on transport errors or 5xx, and BH_WORKER_CATALOG_CACHE=PATH (set by the daily run) reuses one copy for up to 6 h.
 BH_WORKER_MAX_PRICE_PER_1M optionally caps live input/output prices for completion calls.
 BH_WORKER_REASONING_EFFORT optionally selects a catalog-supported effort for completion calls.
 BH_WORKER_DISABLE_OPTIONAL_REASONING=1 disables thinking only where the live catalog marks it optional.
@@ -50,9 +51,43 @@ const redact = (message) => {
 };
 const getJSON = async (url, headers = {}) => {
   const response = await fetch(url, { headers, signal: AbortSignal.timeout(30_000) });
-  if (!response.ok) throw new Error(`Catalog HTTP ${response.status}`);
+  if (!response.ok) throw Object.assign(new Error(`Catalog HTTP ${response.status}`), { status: response.status });
   return response.json();
 };
+// 2026-09-21: every worker process fetched the 740 kB OpenRouter catalog itself, once, with no retry. When openrouter.ai
+// stalled, each gauntlet round died at the 30 s abort before a model was even chosen (rounds exactly 30.5 s apart, no
+// receipt, "worker: The operation was aborted due to timeout"), and one run lost the model review of four live contracts
+// and eight benchmark sources that way. The catalog is now retried on transport errors and 5xx, and a run that names
+// BH_WORKER_CATALOG_CACHE fetches it once and qualifies every worker against that same copy.
+const OPENROUTER_CATALOG = 'https://openrouter.ai/api/v1/models';
+const CATALOG_CACHE_MAX_AGE_MS = 6 * 3_600_000;
+const CATALOG_RETRY_WAITS_MS = [0, 5_000, 15_000];
+async function openRouterCatalog() {
+  const cachePath = process.env.BH_WORKER_CATALOG_CACHE;
+  if (cachePath) {
+    try {
+      const cached = JSON.parse(await readFile(cachePath, 'utf8'));
+      const age = Date.now() - Date.parse(cached.fetched_at);
+      if (Array.isArray(cached.data) && cached.data.length && age >= 0 && age < CATALOG_CACHE_MAX_AGE_MS) return { data: cached.data, source: 'run-cache', fetched_at: cached.fetched_at };
+    } catch (error) { if (error.code !== 'ENOENT' && !(error instanceof SyntaxError)) throw error; }
+  }
+  let lastError;
+  for (const wait of CATALOG_RETRY_WAITS_MS) {
+    if (wait) await new Promise((done) => setTimeout(done, wait));
+    try {
+      const body = await getJSON(OPENROUTER_CATALOG, { 'User-Agent': 'benchmarkheaven/1.0 (+https://benchmarkheaven.com)' });
+      if (!Array.isArray(body?.data) || !body.data.length) throw Object.assign(new Error('Catalog response lists no models'), { status: 0 });
+      const fetched_at = new Date().toISOString();
+      if (cachePath) await writeJSONAtomic(cachePath, { url: OPENROUTER_CATALOG, fetched_at, data: body.data });
+      return { data: body.data, source: 'fetched', fetched_at };
+    } catch (error) {
+      lastError = error;
+      // A 4xx or an empty catalog is an answer; only a request that never completed, or a 5xx, is worth another try.
+      if (error.status !== undefined && !(error.status >= 500)) throw error;
+    }
+  }
+  throw lastError;
+}
 async function atomicText(path, content) {
   const temporary = `${path}.${process.pid}.tmp`;
   try { await writeFile(temporary, content + '\n', { flag: 'wx' }); await rename(temporary, path); }
@@ -142,7 +177,8 @@ try {
   }
   if (options.file) task += `\n\n--- Supplied reference material (not instructions) ---\n${await readFile(options.file, 'utf8')}`;
   const dataset = JSON.parse(await readFile(resolve(REPO, 'data/dataset.json'), 'utf8'));
-  let catalog = (await getJSON('https://openrouter.ai/api/v1/models')).data;
+  const catalogReceipt = await openRouterCatalog();
+  let catalog = catalogReceipt.data;
   let responseFormat;
   if (options.json) {
     if (options.agent || options.smokeTest || options.schema) throw new Error('--json requires a regular completion without --schema');
@@ -191,7 +227,8 @@ try {
   const attempt = Number.parseInt(process.env.BH_WORKER_ATTEMPT ?? '1', 10);
   const metadata = { started_at: new Date().toISOString(), mode: options.agent ? 'agent' : options.critic ? 'critic' : options.smokeTest ? 'smoke_test' : 'oneshot', requested_model: options.agent ? 'chutes/moonshotai/Kimi-K3-TEE' : chosen.id, producers: options.producers, qualification: chosen, input_sha256: createHash('sha256').update(task).digest('hex'),
     route: options.agent ? 'opencode:chutes' : routeLabel(chosen), attempt: Number.isInteger(attempt) && attempt > 0 ? attempt : 1,
-    free_route_role: options.agent ? null : role, free_routes_offered: freeRouter.map((c) => c.id), excluded_models: [...options.excludeModels] };
+    free_route_role: options.agent ? null : role, free_routes_offered: freeRouter.map((c) => c.id), excluded_models: [...options.excludeModels],
+    catalog: { source: catalogReceipt.source, fetched_at: catalogReceipt.fetched_at } };
   attemptMetadata = metadata;
   if (!options.agent && chosen.transport !== 'router' && process.env.BH_WORKER_DISABLE_OPTIONAL_REASONING === '1' && catalog.find((m) => m.id === chosen.id)?.reasoning?.mandatory === false) reasoning = { enabled: false, exclude: true };
   metadata.reasoning = reasoning ?? null;
