@@ -889,3 +889,11 @@ Seeded by review gate 20260921T100004Z from the verbatim CR-108 acceptance list 
 - **CR-111.3:** Record Apache-2.0, the GPU endpoint, non-zero estimated cost and public-benchmark-directed training disclosure.
 - **CR-111.4:** Preserve every earlier score, the held-out diagnostic, hard-only view, custom-evaluation offer and scoring rules.
 - **CR-111.5:** Verify both production hosts after deployment.
+
+## CR-112 — djev openness correction
+
+- **CR-112.1:** Pin JevBench v1.2.11 results, per-task and topic artifacts by SHA-256.
+- **CR-112.2:** Correct djev to open/self-hostable: Apache-2.0 code, Google's Apache-2.0 DiffusionGemma weights, no djev-specific weights.
+- **CR-112.3:** Describe djev as an inference method on DiffusionGemma, not a separately trained model; treat djev-spark as an alternate structured-read runtime, not a separate checkpoint.
+- **CR-112.4:** Preserve every score, rank, outcome and other system field.
+- **CR-112.5:** Verify the correction on both production hosts after deployment.

@@ -20,7 +20,7 @@ test('the committed v1.2 artifact is the tagged public one and validates; the Sc
   const all = v.ranked.map((r) => [r.key, Number(r.main.toFixed(1))]);
   // CR-108: v1.2.8 adds the run-4 systems (all ranked) and jqv's complete re-run; decision-machine-1 has its own class.
   assert.deepEqual(all, [['jev-1.13.0', 75.4], ['semif-qwen3.5-4b', 74.7], ['djev', 74.3], ['openjev-verdict-1.4', 72.5], ['reflex-4b', 71.7], ['decision-machine-1', 71.5], ['laya', 70.1], ['jqv', 70.1], ['open-alternative-jev', 69.8], ['decider-35b-a3b', 68.9], ['system-one-open', 68.9], ['certo', 68.2], ['openjev-razorback16', 67.7], ['simplejev-qwen3.8-27b', 67.3], ['opendecision', 67.0], ['jeff', 66.9], ['kev-0.6b', 66.7], ['openjev-sglang', 66.3], ['openjev-verdict', 66.2], ['gpt-5.6-luna', 66.2], ['decider-2b', 64.6], ['open-jev-deberta-v3-large', 64.6], ['reflex-27b', 64.2], ['jev-local', 63.8], ['simplejev-qwen3.6-35b-a3b', 63.8], ['litjev', 63.7], ['kev-0.5b', 63.1], ['gliner2.5-multi', 63.1], ['smalljev', 62.4], ['kev-4b', 62.2], ['gliner2.5-small', 62.1], ['nimble-9b', 61.8], ['gemini-3.1-flash-lite', 60.9], ['kev-8b', 58.3], ['deepseek-flash', 57.8], ['system-one-sg', 56.6], ['gliner2', 53.0], ['gliner2-large', 50.5]]);
-  assert.equal(v.revision, 'v1.2.10');
+  assert.equal(v.revision, 'v1.2.11');
   const certo = v.ranked.find((r) => r.key === 'certo');
   assert.ok(certo && certo.rank === 12 && Number(certo.main.toFixed(1)) === 68.2 && certo.cls === 'jev-rebuild');
   assert.ok(certo.endpointKind === 'gpu' && certo.costKind === 'estimate' && certo.usd > 0 && certo.licence === 'MIT');
@@ -41,6 +41,10 @@ test('the committed v1.2 artifact is the tagged public one and validates; the Sc
   for (const [key, c] of Object.entries(v.costCorrectionTable)) assert.ok(Math.abs(c.pct) < 15, key);
   const dj = v.ranked.find((r) => r.key === 'djev');
   assert.ok(dj.display === 'djev (Maisa, diffusion-gemma)' && dj.costKind === 'announced' && /announced/i.test(dj.costBasis) && dj.endpointKind === 'api' && dj.p50Adj === dj.p50 && dj.axes.cost < 100 && dj.footnote);
+  assert.equal(dj.open, 'yes');
+  assert.equal(dj.link, 'https://github.com/Davipar/djev-dev');
+  assert.match(dj.licence, /Apache-2.0 code.*no djev-specific weights/);
+  assert.match(dj.underlying, /not a separately trained model/);
   // CR-95: the new rows carry their own type, a price that is not 100, and a footnote; the four local ones are adjusted.
   // CR-97: classifier.dev keeps all of that and loses only its rank — it is the honorable mention, not a ranked row.
   assert.deepEqual(v.honorable.map((r) => [r.key, Number(r.main.toFixed(1))]), [['classifier-dev-fast', 84.8]]);
