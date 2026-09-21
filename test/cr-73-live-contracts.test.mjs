@@ -154,9 +154,11 @@ test('live contract examples skip a row whose example would exceed the per-sourc
   const row = (id, bytes) => ({ row_id: id, source: { url: 'https://openrouter.test/page', sha256: 'a'.repeat(64) }, pointer: id, staged: 1, extract: { endpoint_rows: 'x'.repeat(bytes) } });
   const build = (rows) => buildLiveContractUnits({ manifest: { datasets: [{ dataset: 'or_efficiency', rows: rows.length }], coverage: {} }, verifier, aaEfficiencyParser: '',
     verified: { evidence: { packets: [{ dataset: 'or_efficiency', rows }] }, report: {} }, now: () => '2026-09-21T00:00:00Z' })[0];
-  const unit = build([row('big-page', 137_000), row('bigger-page', 187_000), row('page', 81_000), row('ranking', 900)]);
+  const unit = build([row('big-page', 137_000), row('bigger-page', 187_000), row('page', 81_000), { ...row('ranking', 0), extract: { date: '2026-09-21' } }]);
   assert.deepEqual(unit.examples, ['page', 'ranking']);
   assert.equal(unit.row.programmatically_verified_rows, 4);
-  // Nothing fits: the oversized rows stay the examples, so the packet builder still refuses the unit.
-  assert.deepEqual(build([row('a', 140_000), row('b', 150_000)]).examples, ['a', 'b']);
+  // A model page is never stood in for by a ranking row: no fitting page means the oversized page stays, and the
+  // packet builder still refuses the unit.
+  const ranking = (id) => ({ ...row(id, 0), extract: { date: '2026-09-21', total_prompt_tokens: 1 } });
+  assert.deepEqual(build([row('a', 140_000), row('b', 150_000), ranking('r1'), ranking('r2')]).examples, ['a', 'r2']);
 });

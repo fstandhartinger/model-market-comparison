@@ -146,7 +146,8 @@ export async function defaultRunner(args, { attempt = 1 } = {}) {
         // CR-73.4: the attempt index rides along so the receipt can state which try it was.
         BH_WORKER_ATTEMPT: String(Number.isInteger(attempt) && attempt > 0 ? attempt : 1),
         BH_WORKER_EXCLUDE_MODELS: [...new Set([...failed, ...(process.env.BH_WORKER_EXCLUDE_MODELS || '').split(',').filter(Boolean)])].join(',') },
-      maxBuffer: 4 * 1024 * 1024, timeout: (workerTimeout + 60) * 1000,
+      // The runner may spend up to 3 × 30 s + 20 s retrying the OpenRouter catalog before its model call starts.
+      maxBuffer: 4 * 1024 * 1024, timeout: (workerTimeout + 180) * 1000,
     });
     return { stdout, stderr };
   } catch (error) {

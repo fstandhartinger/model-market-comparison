@@ -46,10 +46,13 @@ export function buildLiveContractUnits({ manifest, verified, verifier, aaEfficie
     const packets = verified.evidence.packets.filter((p) => p.dataset === dataset.dataset);
     const allRows = packets.flatMap((p) => p.rows);
     // 2026-09-20: or_efficiency's first row (deepseek-v4-pro's model page, 137 kB) outgrew the per-source bound and the
-    // contract was refused before any critic saw it, run after run. The examples are the first and last rows whose
-    // example fits that bound; the programmatic verifier still compares every row. None fitting still fails closed.
+    // contract was refused before any critic saw it, run after run. An oversized first/last example is replaced by the
+    // nearest row of the same shape (same extract keys, so a model page stays a model page) that fits; when none does,
+    // the oversized row stays and the packet builder still refuses the unit. The verifier still compares every row.
     const fits = (r) => Buffer.byteLength(exampleContent(r)) <= GAUNTLET_LIMITS.sourceBytesCap;
-    const examples = [allRows.find(fits) ?? allRows[0], allRows.findLast(fits) ?? allRows.at(-1)].filter((r, i, a) => a.findIndex((x) => x.row_id === r.row_id) === i);
+    const shape = (r) => JSON.stringify(r.extract && typeof r.extract === 'object' ? Object.keys(r.extract).sort() : typeof r.extract);
+    const standIn = (original, order) => fits(original) ? original : order.find((r) => shape(r) === shape(original) && fits(r)) ?? original;
+    const examples = [standIn(allRows[0], allRows), standIn(allRows.at(-1), [...allRows].reverse())].filter((r, i, a) => a.findIndex((x) => x.row_id === r.row_id) === i);
     const row = { id: dataset.dataset, mapping: RULES[dataset.dataset],
       required_rows: dataset.rows, programmatically_verified_rows: allRows.length,
       model_review_scope: 'extraction contract, failure/retention rules and explicitly supplied example rows',
