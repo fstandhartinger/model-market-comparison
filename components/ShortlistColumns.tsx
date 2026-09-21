@@ -99,7 +99,7 @@ export function ShortlistColumns({ data, ids, tableIds, names, onToggle, full = 
     <div className={rows ? "mt-3" : "mt-3 overflow-x-auto"} data-shortlist-plot>
       {rows
         ? <div className="space-y-1">
-          {ticks.length > 0 && <div className="flex items-center gap-2 text-[9px] leading-none" aria-hidden="true" data-axis-ticks>
+          {ticks.length > 0 && <div className="flex items-center gap-2 text-[10px] leading-none" aria-hidden="true" data-axis-ticks>
             <span className="w-[38%] shrink-0" />
             <span className="bh-muted relative h-3 flex-1">{ticks.map((t) => <span key={t} className="absolute top-0 -translate-x-1/2 tabular" style={{ left: pct(t) }}>{tick(t)}</span>)}</span>
             <span className="w-10 shrink-0" />
@@ -108,7 +108,7 @@ export function ShortlistColumns({ data, ids, tableIds, names, onToggle, full = 
             const j = tableIds.indexOf(c.id);
             const valueText = c.noData ? "no data" : formatValue(c.value as number, unit);
             const bar = <>{c.noData
-                  ? <span className="bh-muted text-[9px]">no data</span>
+                  ? <span className="bh-muted text-[10px]">no data</span>
                   : <span className="block h-3.5 rounded-t rounded-r" style={{ width: `${Math.round((c.height ?? 0) * 100)}%`, background: j >= 0 ? seriesColor(j) : "rgb(var(--accent) / .45)" }} />}</>;
             return <div key={c.id} className="flex items-center gap-2 text-[11px] leading-tight" data-col={c.id} data-no-data={c.noData ? "1" : undefined}>
               <span className="order-3 w-10 shrink-0 text-right font-semibold tabular" aria-hidden="true">{c.noData ? "" : valueText}</span>
@@ -123,14 +123,14 @@ export function ShortlistColumns({ data, ids, tableIds, names, onToggle, full = 
           <div className="relative ml-8 h-44">
             <div className="absolute inset-x-0 bottom-0 top-4" data-plot>
               {ticks.map((t) => <div key={t} className="absolute inset-x-0 border-t border-line/70" style={{ bottom: pct(t) }} data-axis-tick={t} aria-hidden="true">
-                <span className="bh-muted absolute right-full mr-1.5 -translate-y-1/2 text-[9.5px] tabular">{tick(t)}</span>
+                <span className="bh-muted absolute right-full mr-1.5 -translate-y-1/2 text-[10px] tabular">{tick(t)}</span>
               </div>)}
               {kind === "zoomed" && <span className="absolute right-full top-full mr-1.5 mt-1 leading-none"><AxisBreak /></span>}
               <div className="absolute inset-0 flex items-end gap-1.5">
                 {columns.map((c) => {
                   const j = tableIds.indexOf(c.id), h = `${Math.round((c.height ?? 0) * 1000) / 10}%`;
                   const inner = c.noData
-                    ? <span className="bh-muted absolute inset-0 flex items-end justify-center rounded-t border border-dashed border-line pb-1 text-[9px]" aria-hidden="true">no data</span>
+                    ? <span className="bh-muted absolute inset-0 flex items-end justify-center rounded-t border border-dashed border-line pb-1 text-[10px]" aria-hidden="true">no data</span>
                     : <>
                       <span className="absolute inset-x-0 bottom-0 rounded-t" aria-hidden="true" style={{ height: h, background: j >= 0 ? seriesColor(j) : "rgb(var(--accent) / .45)" }} />
                       <span className="absolute inset-x-0 text-center text-[10px] font-semibold leading-none tabular" aria-hidden="true" style={{ bottom: `calc(${h} + 3px)` }}>{formatValue(c.value as number, unit)}</span>
@@ -148,7 +148,7 @@ export function ShortlistColumns({ data, ids, tableIds, names, onToggle, full = 
             {columns.map((c) => {
               const name = names.get(c.id) ?? c.id;
               return <div key={c.id} className="relative min-w-[2.2rem] flex-1">
-                <Link href={`/models/${encodeURIComponent(c.id)}`} tabIndex={-1} title={name} className="absolute right-1/2 top-1 origin-top-right -rotate-45 whitespace-nowrap text-[9.5px] leading-none hover:underline" data-name-for={c.id}>{name.length > NAME_MAX ? `${name.slice(0, NAME_MAX - 1)}…` : name}</Link>
+                <Link href={`/models/${encodeURIComponent(c.id)}`} tabIndex={-1} title={name} className="absolute right-1/2 top-1 origin-top-right -rotate-45 whitespace-nowrap text-[10px] leading-none hover:underline" data-name-for={c.id}>{name.length > NAME_MAX ? `${name.slice(0, NAME_MAX - 1)}…` : name}</Link>
               </div>;
             })}
           </div>

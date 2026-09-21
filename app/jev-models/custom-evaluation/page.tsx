@@ -17,7 +17,7 @@ export default function CustomEvaluationPage() {
       <h1 className="mt-1 text-3xl font-bold tracking-tight">Evaluate Jev-class systems on the data that matters to you</h1>
       <p className="bh-muted mt-3 max-w-2xl text-lg">JevBench is our free, open-source benchmark for the community. You can run the same harness yourself, contribute new systems and tasks, or ask us to help with a custom evaluation.</p>
       <p className="mt-5 flex flex-wrap gap-3" data-bh-custom-actions>
-        <a className="bh-button border-accent font-semibold text-accent" href={contact}>Email us about your data</a>
+        <a className="bh-button bh-button-primary font-semibold" href={contact}>Email us about your data</a>
         <a className="bh-button" href="https://github.com/fstandhartinger/jevbench" target="_blank" rel="noopener noreferrer">Run it yourself on GitHub</a>
       </p>
     </header>

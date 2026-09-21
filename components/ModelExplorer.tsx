@@ -667,11 +667,11 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                                     {p?.website
                                       ? <a href={p.website} target="_blank" rel="noopener noreferrer" className="underline decoration-dotted underline-offset-2 hover:text-accent" title={`Official website: ${p.website}`} aria-label={`${o.provider} official website`}>{o.provider}</a>
                                       : o.provider}
-                                    {p?.hyperscaler && <span className="ml-1 rounded bg-amber-500/20 px-1 text-[9px] text-amber-300">HS</span>}
-                                    {o.eu_hosted && <span className="ml-1 rounded bg-emerald-500/20 px-1 text-[9px] text-emerald-300">EU</span>}
-                                    {o.eu_policy_equivalent && <span title="Company-approved equivalent; Global inference may occur outside the EU" className="ml-1 rounded bg-sky-500/20 px-1 text-[9px] text-sky-300">EU≈</span>}
-                                    {o.tee && <span className="ml-1 rounded bg-purple-500/20 px-1 text-[9px] text-purple-300">TEE</span>}
-                                    {free && <span title={FREE_ROUTE_NOTE} className="ml-1 rounded border border-line px-1 text-[9px] text-gray-400">{freeRouteLabel(o)}<span className="sr-only"> — {FREE_ROUTE_NOTE}</span></span>}
+                                    {p?.hyperscaler && <span className="ml-1 rounded bg-amber-500/20 px-1 text-[10px] text-amber-300">HS</span>}
+                                    {o.eu_hosted && <span className="ml-1 rounded bg-emerald-500/20 px-1 text-[10px] text-emerald-300">EU</span>}
+                                    {o.eu_policy_equivalent && <span title="Company-approved equivalent; Global inference may occur outside the EU" className="ml-1 rounded bg-sky-500/20 px-1 text-[10px] text-sky-300">EU≈</span>}
+                                    {o.tee && <span className="ml-1 rounded bg-purple-500/20 px-1 text-[10px] text-purple-300">TEE</span>}
+                                    {free && <span title={FREE_ROUTE_NOTE} className="ml-1 rounded border border-line px-1 text-[10px] text-gray-400">{freeRouteLabel(o)}<span className="sr-only"> — {FREE_ROUTE_NOTE}</span></span>}
                                     <span className="ml-1 text-[10px] text-gray-500">{o.platform !== o.provider ? o.platform : ""} {o.region && o.region !== "global" ? `· ${o.region}` : ""}</span>
                                   </td>
                                   <td className="py-1 tabular text-right text-gray-400">{usdPerM(o.input_per_1m)}</td>

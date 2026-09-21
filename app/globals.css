@@ -162,6 +162,9 @@ button:disabled, select:disabled { cursor: not-allowed; opacity: .55; }
 }
 .bh-button { display: inline-flex; min-height: 44px; align-items: center; justify-content: center; gap: 6px; border: 1px solid var(--control-border); border-radius: 8px; padding: 8px 12px; background: var(--surface); color: var(--text); text-decoration: none; font-weight: 500; cursor: pointer; }
 .bh-button:hover { background: rgb(var(--accent) / .1); }
+/* F-153 (Fable pass 28): the one primary action on a page is solid accent, like the wizard's Continue. */
+.bh-button-primary { background: rgb(var(--accent)); border-color: rgb(var(--accent)); color: rgb(var(--ink)); }
+.bh-button-primary:hover { background: rgb(var(--accent) / .88); }
 .bh-input { min-width: 0; border: 1px solid var(--control-border); border-radius: 8px; padding: 9px 12px; background: rgb(var(--ink)); color: var(--text); }
 .bh-badge { display: inline-block; border: 1px solid rgb(var(--line)); border-radius: 6px; padding: 3px 7px; font-size: 11px; line-height: 1.4; font-weight: 500; background: rgb(var(--accent) / .07); color: var(--text); }
 .bh-positive { color: rgb(var(--accent2)); background: rgb(var(--accent2) / .08); }

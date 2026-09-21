@@ -1,17 +1,15 @@
 # DESIGN DIRECTIVES — Benchmark Heaven (design authority: Claude Fable 5.1)
 
-**Pass 27: 2026-09-20 ~19:30 UTC**, the "what changed since pass 26" pass (Florian: Fable sparingly). Since pass 26 the changed surface is
-**`/jev-models`** again — F-141–F-144 and F-146 landed (iteration 136, codex-luna), CR-99–CR-104 (the "Hard only" scope, the custom-evaluation
-toast that lands on a header pill, the pill's wording and phone sizing, the new **`/jev-models/custom-evaluation`** page), CR-101 (v1.2.5, 25
-systems) — plus **CR-68.5** (a "Runner disagreement" evidence line on the Benchmaxxing report), **CR-85.2** (the DeepSeek V4.1 Flash page with
-19 vendor † values) and CR-83.1's cohort labels. Judged against live revision `16e8a10` on the canonical host at 1440/390 × light/dark: 129 shots
-in `/opt/benchmarkheaven/state/ux-evidence/fable-20260920-pass27/canonical/` (`metrics.json`: 0 page errors in all four contexts, no horizontal
-overflow on any page; the pill's font size, box and row; the toast at 7.5 s, mid-landing at 14.4 s and the wiggling pill after; the honorable card's
-height, paragraphs and sentences; the cost-unit elements; every header cell's lines; the task grid closed, open and scrolled at both widths; the
-`?scope=hard` state; the custom page's headings, paragraphs, code block and links; the Step 5 and DeepSeek sheets' † counts and visible claim
-words; the runner-disagreement block's lines). Script: `bin/shoot-fable-pass27.mjs`; source pins for what this pass fixed: `test/fable-pass27.test.mjs`.
-The Simple, Advanced, Guided, Benchmaxxing, Benchmarks and model (Fable 5.1) pages were re-shot as quick views and are unchanged since pass 26.
-Earlier passes: `…/fable-20260920-pass26/` … `…/fable-20260913/`.
+**Pass 28: 2026-09-21 ~04:20 UTC**, the "what changed since pass 27" pass (Florian: Fable sparingly). Since pass 27 the changed surface is
+**`/jev-models`** once more — CR-105 and CR-107 (v1.2.6 and v1.2.7: four more ranked rows, jqv as a partial row with a five-sentence note), CR-106 (the
+toast two seconds longer and tinted), F-149–F-151 landed by the work engine — plus the **`/benchmarks`** table after iterations 143/144 (ProgramBench,
+MCP Atlas, VulcanBench's withheld row, LiveBench's discovered bundle, AA's re-versioned GDPval/Briefcase). Judged against live revision `b7b939d` on
+the canonical host at 1440/390 × light/dark: 78 shots in `/opt/benchmarkheaven/state/ux-evidence/fable-20260921-pass28/canonical/` (`metrics.json`:
+0 page errors in all four contexts, no horizontal overflow on any page; every JevBench row with its tag and title; the notes block's items and lines;
+the toast at 7.5/15.5/16.4/17.1 s; the custom page's action buttons with computed colours; the Benchmarks rows iterations 143/144 added; the smallest
+rendered font per page). Script: `bin/shoot-fable-pass28.mjs`; source pins: `test/fable-pass28.test.mjs`; live verifier for non-Fable engines:
+`bin/verify-fable-pass28-design.mjs`. Simple, Advanced, Guided, Benchmaxxing and the model page were re-shot as quick views and are unchanged
+since pass 27 apart from the F-154 labels. Earlier passes: `…/fable-20260920-pass27/` … `…/fable-20260913/`.
 
 **The bar (Florian):** minimalistic and simple, very expressive, not overloaded, key messages
 first, graphical with many charts.
@@ -30,72 +28,62 @@ the reviewing engine directly.
 
 ---
 
-## Verdict on the live site — pass 27 (2026-09-20), the JevBench page after F-141–F-146 and CR-99–CR-104, the custom-evaluation page, CR-68.5, CR-85.2
+## Verdict on the live site — pass 28 (2026-09-21), the JevBench page after CR-105–CR-107 and F-149–F-151, the custom-evaluation page, the Benchmarks table after iterations 143/144
 
-**The pass-26 directives landed as written, and the new pieces say the right thing.** The honorable card is 237 px at 1440 and 411 px on a phone
-(budgets 260/520), one visible two-sentence reason, one closed disclosure (`*-jev-honorable.png`, `hon` in `metrics.json`). The unit note under
-the table is one line at 1440, the "$ / 1,000 decisions · not tokens" header cell is two lines. The task grid's Task column is 208 px on desktop and
-a pinned 120 px cell on a phone showing `tool_selection-04` without its tier prefix beside six outcome columns, head at `top` 1 after a 900 px
-scroll (`mobile_light-jev-grid-scrolled-vp.png`). The Step 5 sheet says "40 of 41 values are StepFun's own claims (†)" and every vendor row
-carries visible words; the DeepSeek V4.1 Flash sheet says "19 of 40" the same way. The toast is opaque, viewport-fixed, two lines at 1440 and
-four on a phone, appears at 6 s, flies into the header pill at 14 s with the pill wiggling after (`*-jev-toast.png`, `*-jev-toast-landing.png`,
-`*-jev-badge-wiggle.png`); Escape, × and "Don't show again" all work. "Hard only" flips the eyebrow, title, badge and URL like the other scopes.
-The runner-disagreement line reads *21 points on Terminal-Bench 2.1: Artificial Analysis ranks it p35 (78.7 %), Vals AI p15 (54.7 %) — among the
-31 models both ran* — the CR's own example, in one line. Light and dark match. 0 page errors, no overflow anywhere.
+**F-149–F-151 landed as written, and v1.2.7 says the right thing in the right place.** The custom-evaluation page opens with two 44 px actions
+at y 271 (1440) and y 363 (390), inside the first viewport, and its code block wraps (`pre.sw === pre.cw` at 390). The JevBench table head is 66 px
+at 1440 and 58 px at 390 (budgets 68/70). The four scope buttons are one row at 1440 and two rows of two at 390 (`scopeButtons` y 4706/4758). The
+toast appears at ~6 s, tinted — accent at 6 % (light) / 9 % (dark) over the surface with a 32 %/38 % accent border — two lines at 1440, four on a
+phone, still open at 15.5 s and gone by ~17 s: Florian's two seconds. jqv sits at the end of the table as "partial run · not ranked" at 67.2 with no
+rank, the two GLiNER2.5 rows are ranked, and the chart draws the five unranked bars in grey. `/benchmarks` says "78 benchmarks across 12
+categories" for the default top 5, and ProgramBench, MCP Atlas (Scale AI), VulcanBench (Saturated), LiveBench, GDPval-AA v2, AA-Briefcase, GDP.pdf
+and the four MathArena editions are rows with their tags, no overflow. Light and dark match. 0 page errors everywhere.
 
-**What is not at the bar — seven things, four fixed in this pass, three for the implementer.**
+**What is not at the bar — three things, all fixed in this pass.**
 
-1. **The phone pill was 8 px text, and the eyebrow beside it wrapped.** At 390 the "NEED CUSTOM EVAL ON YOUR DATA?" pill rendered at 8 px (the
-   smallest type on the site; the floor everywhere else is 10 px) while "JEVBENCH V1.2 · OUR OWN BENCHMARK" broke onto two lines to make room, so
-   the header's first row was a two-line label next to a one-line pill (`mobile_light-jev-head.png`, `badge.style.fontSize = 8px`,
-   `headRow.children[0].h = 33`). Florian asked for the pill right of the eyebrow "even if we have to make it smaller (adjust to available
-   space)"; the available space is made by shortening what the eyebrow repeats, not by shrinking the pill below legibility: the lead sentence
-   under the title already says **"Benchmark Heaven's own benchmark"** in bold. → **F-147, fixed in this pass:** below `sm` the eyebrow reads
-   "JevBench v1.2" and the pill keeps 10 px / 14 px like desktop (the `sm+` eyebrow and both pill wordings are unchanged; CR-104's 360 px
-   switch to "NEED A CUSTOM EVAL?" stays).
-2. **The runner-disagreement footnote was longer than the finding.** Under the one-line finding sat a 4-sentence, 9-line note at 12 px repeating
-   both harness descriptions in full ("Artificial Analysis: Terminus 2; all verifier tests must pass, pass@1 averaged over three repeats. Vals
-   AI: its own run; accuracy published with a standard error per model…") — 144 px of small print for a 20 px line, in a side column that is
-   already prose (`desktop_light-report-runner-vp.png`, `report.note.lines = 9`). → **F-148, fixed in this pass:** the note is two short
-   sentences (same tasks, same version, different harness; never paired across versions; not part of the score) and each runner's name carries
-   its harness in its `title`, where the reader who wants it hovers. `verify-cr-68-5.mjs` reads the titles now.
-3. **A vendor row said its status twice.** F-146 asked for "developer's claim" *instead of* "no percentile"; the shipped row reads "no percentile …
-   88.7 %† developer's claim" — two status phrases per row, 40 rows in a column (`mobile_light-step5-sheet-vp.png`). → **F-146 follow-up,
-   fixed in this pass:** the percentile slot reads "developer's claim" on a self-reported row; the trailing words remain only when a bar is drawn
-   there instead. The generated count line and the † are unchanged; `verify-fable-pass27.mjs`'s count of 40 still holds.
-4. **The Cost bullet said "one decision is a whole question" twice** — the `full` unit note's hand-written clause followed by the artifact's
-   worked example that opens with the same sentence (`cu[1]` at 1440: 5 sentences, 4 lines). → **F-142 follow-up, fixed in this pass:** the clause
-   is gone; the note is the unit plus the worked example. The table's honorable-mention group row also still printed the full three-sentence
-   rule in a 330 px cell (7 lines inside the table, `desktop_light-jev-table.png`) — F-141 moved the rule's sentences 2–3 into the section's
-   disclosure but not out of the table. → **F-141 follow-up, fixed in this pass:** the row carries the rule's first sentence and the link.
-5. **The custom-evaluation page buries both actions.** It is a clean 375-word page in the right voice (open source first, no price, the mail as
-   the way in), but the two things a visitor can *do* — clone the harness, write the mail — are a link inside a paragraph 700 px down and a link
-   1,250 px down at 1440 (1,630 px on a phone). Key message first means the actions sit under the title. → **F-149** (mechanical).
-6. **The JevBench table head is still 87 px at 1440.** The pass-22 budget is 68 px; the "$ / 1,000 decisions" cell is two lines now (F-142), but
-   the sort column "JevBench Score / official ↓" wraps to three in its 120 px column and sets the row (`th[2].lines = 3`, every `th.h = 87`; 79 px
-   on a phone). → **F-150** (mechanical).
-7. **"Hard only" is an orphan on a phone.** The four scope buttons flow three-and-one below `sm` (`scope.buttons`: three at y 4165, "Hard only"
-   alone at 4217). → **F-151** (mechanical, one class).
+1. **The JevBench table ends in a wall of small print.** Under the table sat 17 † notes at 12 px — 33 lines (≈ 520 px) at 1440 and 91 lines
+   (≈ 1,450 px) on a phone — between the last partial row and "Honorable mentions" (`jev-geom.notes`, `*-jev-partial-vp.png`). Every one of them
+   is already on the page, collapsed, in the chart's own legend (`data-bh-jev12-footnote`). The pass-20 rule allows two visible sentences and puts
+   the rest in a disclosure; the jqv note alone is five. And the row that needs its note most, jqv, had **no `title`** on its "partial run · not
+   ranked" tag (`rows[jqv].tagTitle = ""` — v1.2.7's artifact carries no `not_ranked_because`), so at the row itself the reader learned nothing.
+   → **F-152, fixed in this pass:** the block is a closed `<details>` ("† Notes on 17 marked systems — how each was run"), the row's † is a link
+   that opens it and lands on that entry, and the †'s `title` and the tag's fallback `title` are the note's first sentence. The chart's copy is
+   untouched; `verify-cr-92/93/95` keep reading `[data-bh-jev12-footnote]`, and the page HTML still says "425 of 534" (CR-107.3).
+2. **The custom-evaluation page's primary action is not primary.** F-149 asked for the email link in the site's primary style; it shipped as the
+   same outline button as "Run it yourself on GitHub", differing only in text colour (`custom-geom.actions`: both `backgroundColor` = surface in
+   both themes). → **F-153, fixed in this pass:** `.bh-button-primary` — solid accent with ink text, like the wizard's Continue — on the email link
+   only.
+3. **Type below the floor on the home page.** The Simple page's shortlist columns print their axis ticks at 9.5 px (1440) and 9 px (390)
+   (`simple-minfont`: "SPAN 70"), and the Advanced page's route badges (HS / EU / TEE / free) are 9 px; the pass-27 floor is 10 px.
+   → **F-154, fixed in this pass:** all ten sizes are 10 px; nothing else moves.
 
-Also noted, not a defect: the toast's four lines on a phone (Florian's own copy, one sentence plus the link, fits in 88 px); the phone
-eyebrow's dropped clause is on screen in bold two lines lower; "40 of 41 values" counts the sheet's one measured row (the Overview's ◔ Thin data ·
-1/7 is the same fact) — the counts are generated, not typed; the code block on the custom page scrolls sideways on a phone (`pre.sw 529 / cw 314`),
-which is correct for shell lines that must not wrap inside a token — F-149 wraps it at the backslash continuations only.
+Also noted, not a defect: the two eyebrows on `/jev-models` ("JevBench v1.2 · our own benchmark" above the title, "JevBench v1.2.7 · 534 decisions
+per system" on the card) — the first names the protocol, the second the results revision, as pass 24 decided; the chart legend and the table now
+carry the same 17 notes, both collapsed — one generated source in two places, which the F-142 rule allows when the wording is identical; the
+hero's "31 systems" counts the ranked rows while the table shows 36 with the unranked five — the sentence says "ranks them", which is the count it
+gives; the toast's tint is calm rather than loud, which is what CR-106 asked for.
 
-## Decisions in pass 27
+## Decisions in pass 28
 
-1. **X4 (UI meets the design bar) still met at pass 27** for the default view. The four fixes shipped here are density and legibility corrections on
-   surfaces that already say the right thing; none changes a number or a rank.
-2. **F-147 is not a rewording of CR-104.** Both of Florian's pill wordings stay at the widths CR-104's verifier pins (full at ≥ 360 px, short below);
-   what changes is the eyebrow beside it below `sm` and the pill's type size back up to the site floor. `verify-cr-103.mjs`/`verify-cr-104` remain
-   valid; CR-86's "own benchmark" check reads the lead paragraph, which is untouched.
-3. **F-148 changes a verified CR's copy on purpose (CR-68.5).** Florian asked for "its own evidence line"; the line is untouched, the footnote is the
-   implementer's addition and is now two sentences with the harness detail one hover away. The verifier was updated in the same commit and the
-   CR stays `verified` — a non-Fable engine re-runs `verify-cr-68-5.mjs` on both hosts as part of the next gate.
-4. **Fable shipped F-147, F-148 and the three follow-ups itself** (six one-line edits in five files, no numbers) and pinned them in
-   `test/fable-pass27.test.mjs`; they need a non-Fable verifier on both hosts before their rows read `verified`.
-5. **F-149–F-151 go to the work engine.** All three are mechanical TSX/CSS edits — faster done by the reviewing engine than delegated (pass-8 record).
-6. **Two rules added** to the design-system notes: the type floor (10 px, nothing smaller anywhere, F-147) and one status per row (F-146 follow-up).
+1. **X4 (UI meets the design bar) still met at pass 28** for the default view. The three fixes are density and legibility corrections; none changes
+   a number or a rank.
+2. **F-152 changes the presentation of CR-107.3's reason on purpose.** The reason is still in the page HTML, one click away in the disclosure, and
+   now also at the row as the †'s and the tag's `title`. The CR stays `verified`; `verify-cr-107.mjs` is unchanged and its HTML check passes.
+3. **Fable shipped F-152–F-154 itself** (five files, no numbers) and pinned them in `test/fable-pass28.test.mjs`; a non-Fable engine runs
+   `bin/verify-fable-pass28-design.mjs` on both hosts before the Done-log rows read `verified`.
+4. **The pass also recovered iteration 145's uncommitted work** (`873bcb0`, text-only registry/protocol changes; see `PROGRESS.md`) because the tree
+   was dirty when the pass started and the 05:17 daily run refuses a dirty checkout. Not a design decision; recorded so the commit's provenance is clear.
+5. **Two rules added** to the design-system notes: notes under a table are a disclosure (F-152); one solid button per page (F-153).
+
+## Verdict on the live site — pass 27 (2026-09-20), condensed
+
+The JevBench page after F-141–F-146 and CR-99–CR-104, the custom-evaluation page, CR-68.5 and CR-85.2 (revision `16e8a10`, 129 shots in
+`…/fable-20260920-pass27/canonical/`). Right: honorable card 237/411 px, one unit note, the pinned Task cell, the visible vendor-claim words, the
+toast's flight into the pill, "Hard only" flipping eyebrow/title/badge/URL, the one-line runner-disagreement finding. Seven findings: F-147 the
+phone pill was 8 px beside a two-line eyebrow → eyebrow "JevBench v1.2" below `sm`, pill at the 10 px floor; F-148 the runner note was 9 lines →
+two sentences, harness in each runner's `title`; F-146/F-142/F-141 follow-ups (one status per row, one unit sentence, first sentence in the
+table row); F-149 the custom page's actions under the title; F-150 the table head back in budget; F-151 the scope buttons 2 × 2 on a phone. All
+seven are in the Done log. Rules added: the type floor is 10 px; one status per row. Full text: `git show b7b939d:ops/ux-2026-09-12/DESIGN-DIRECTIVES.md`.
 
 ## Verdict on the live site — pass 26 (2026-09-20), condensed
 
@@ -154,41 +142,43 @@ and the counts line under it keeps the page honest (P4).
 
 ---
 
-## Directives (pass 27; completed)
+## Directives (pass 28; completed by Fable — awaiting non-Fable live verification)
 
-### F-149 — The custom-evaluation page puts its two actions under the title `[mechanical]`
+### F-152 — The JevBench table's † notes are a closed disclosure the row's † opens `[judgment]`
 
-*Where:* `app/jev-models/custom-evaluation/page.tsx`.
-*What:* (a) Directly under the header's lead paragraph, one row of two buttons (`flex flex-wrap gap-3 mt-5`): the primary **"Email us about your
-data"** (`bh-btn-primary` or the site's primary button class; `href` = the existing `contact` mailto) and the secondary **"Run it yourself on
-GitHub"** (`href` = `https://github.com/fstandhartinger/jevbench`, `target="_blank" rel="noopener noreferrer"`), `data-bh-custom-actions`. Both
-44 px min-height. (b) The last paragraph of "Start with an email" — "Evaluation and consulting arrangements are discussed by email; we do not
-present custom work as part of the free open-source project." — becomes **"Custom evaluations and consulting are arranged by email."** (c) The
-code block gets `whitespace-pre-wrap` and the continuation lines keep their two-space indent, so at 390 nothing scrolls sideways. Nothing else
-moves; the sections, headings, licence line and footer stay.
-*Accept:* at 1440 and 390 × light/dark the two action links are inside the first viewport (`y + h` ≤ 844 at 390); exactly one `mailto:` target on
-the page as today; `pre.scrollWidth === pre.clientWidth` at 390; no 8 px or 9 px text; `verify-cr-103.mjs` passes (it only reads the detail
-page's title and pill).
+*Where:* `components/JevModelsV12.tsx` (the `Table` component's `notes` block and the row `R`).
+*What:* (a) The open `<ul data-bh-jev12-notes>` under the table becomes `<details id="jev12-notes" data-bh-jev12-notes>` (closed) with the summary
+"† Notes on {n} marked systems — how each was run" and the same `<li>`s inside, each `id="jev12-note-{key}"`. (b) The row's `<sup>†</sup>` becomes
+`<sup><a href="#jev12-note-{key}" title={firstSentence(footnote)} aria-label="Note on {name}" onClick={openNotes}>†</a></sup>`, where `openNotes`
+sets the details open before the browser follows the hash. (c) The "partial run · not ranked" tag's `title` falls back to the note's first sentence
+when the artifact has no `not_ranked_because`. The chart's collapsed legend (`data-bh-jev12-footnote`) is unchanged.
+*Accept:* at 1440 and 390 × light/dark the block between the last table row and "Honorable mentions" is a closed `<details>` of ≤ 2 lines with ≥ 10
+items inside; clicking jqv's † opens it with `location.hash === "#jev12-note-jqv"` and the entry in the viewport; jqv's tag and † carry a title
+longer than 20 characters; the page HTML contains "425 of 534"; `verify-cr-92/93/95/107.mjs` pass; `data-bh-jev12-notes` occurs once in the source.
 
-### F-150 — The JevBench table head fits the pass-22 budget `[mechanical]`
+### F-153 — The custom-evaluation page's email action is the solid primary button `[mechanical]`
 
-*Where:* `components/JevModelsV12.tsx` (table header `H c="score"` or the sort column's `<th>`), `app/globals.css` if a `.bh-table th` rule caps
-widths.
-*What:* The sort column ("JevBench Score / official ↓") is `min-w-[9.5rem]` at `sm+` so "JevBench Score" is one line and "official ↓" the second;
-no other cell is wider than three lines. The 120 px sticky column offset used by the name column stays unchanged if it references the score
-column's width — measure first (`metrics.json` `th[2].w` = 120 today).
-*Accept:* at 1440 the head row is ≤ 68 px and every `th` ≤ 3 lines; at 390 ≤ 70 px; the horizontal scroll behaviour and the pinned name column are
-unchanged; `verify-cr-96.mjs`/`verify-cr-97.mjs` pass on both hosts.
+*Where:* `app/jev-models/custom-evaluation/page.tsx` (`[data-bh-custom-actions]`), `app/globals.css`.
+*What:* `.bh-button-primary { background: rgb(var(--accent)); border-color: rgb(var(--accent)); color: rgb(var(--ink)); }` with an .88 hover; the
+`mailto:` link is `bh-button bh-button-primary font-semibold`; the GitHub link stays `bh-button`.
+*Accept:* the email link's computed `backgroundColor` equals the theme's `--accent` in light and dark; the GitHub link's does not; both 44 px;
+exactly one `mailto:` on the page; `verify-cr-103.mjs` and `test/fable-pass27.test.mjs` pass.
 
-### F-151 — The four scope buttons are a 2 × 2 grid below `sm` `[mechanical]`
+### F-154 — Nothing below the 10 px type floor on the Simple and Advanced pages `[mechanical]`
 
-*Where:* `components/JevModelsV12.tsx` (the `[data-bh-jev12-scope]` button row).
-*What:* The button container is `grid grid-cols-2 gap-2 sm:flex sm:flex-wrap`; each button `w-full sm:w-auto`. No wording changes.
-*Accept:* at 390 × light/dark the four buttons occupy two rows of two (`scope.buttons` y values: two distinct, two each); at 1440 one row as today;
-`verify-cr-90.mjs` passes.
+*Where:* `components/ShortlistColumns.tsx` (axis ticks, "no data", the dashed placeholder), `components/ModelExplorer.tsx` (HS / EU / TEE / free
+route badges).
+*What:* every `text-[9px]` and `text-[9.5px]` becomes `text-[10px]`; no other change.
+*Accept:* on `/` (Simple) at 1440 and 390 the smallest rendered font in `main` is ≥ 10 px (the `sup`/`sub` exemption applies); on Advanced with one
+row expanded the same; the shortlist tick column still fits (no label overlaps its neighbour at 390).
 
 ## Design system notes (apply while touching any file above)
 
+- **Notes under a table are a disclosure, like under the chart (pass 28, F-152):** row notes never print open under a table; they are a
+  closed `<details>` with a generated count, each row's mark links into it, and the mark's `title` carries the note's first sentence. A row tag
+  that states a status carries a `title` even when the artifact has none (fallback: the note's first sentence).
+- **One solid button per page (pass 28, F-153):** the page's one primary action is `bh-button-primary` (solid accent, ink text); every other
+  action is the outline `bh-button`. A text colour alone does not make a primary.
 - **The type floor is 10 px (pass 27, F-147):** no rendered text below 10 px anywhere, at any width — a label that does not fit is shortened by a
   written rule (drop what a neighbour already says), never shrunk past the floor.
 - **One status per row (pass 27, F-146 follow-up):** a row states a value's status in one place — where the measured row shows its percentile — and
@@ -541,3 +531,6 @@ unchanged; `verify-cr-96.mjs`/`verify-cr-97.mjs` pass on both hosts.
 | F-149 the custom-evaluation page's two actions sit under the title; the email section's closing sentence is the short form; the code block wraps instead of scrolling sideways | `8042d7a` + `6410cbb` (opencode-kimi, iteration 141, work engine per pass 27) + `test/fable-f149-f151.test.mjs` | `/opt/benchmarkheaven/state/ux-evidence/review-20260920T234002Z/f149-f151/{canonical,legacy}/` (`bin/verify-f149-f151.mjs`) | **Verified by codex-luna, non-implementer:** **40/40 per host**, 1440/390 × light/dark — actions in the first viewport, one mailto target, `pre.scrollWidth === pre.clientWidth` at 390, no text under 10 px, no page errors or overflow. |
 | F-150 the JevBench table head back inside the pass-22 budget (68 px at 1440, ≤ 70 px at 390) | `8042d7a` + `6410cbb` + `a1642fa` (opencode-kimi, iteration 141) + test | same verifier | **Verified by codex-luna, non-implementer:** live 40/40 per host; head within 68/70 px, every th ≤ 3 lines, pinned name column unchanged. The recorded `min-w-[10.5rem]` deviation remains the smallest value meeting the directive's own acceptance text. |
 | F-151 the four scope buttons are a 2 × 2 grid below `sm`, one row at `sm+` | `8042d7a` (opencode-kimi, iteration 141) + test | same | **Verified by codex-luna, non-implementer:** live 40/40 per host; two rows of two at 390 and one row at 1440, with no page errors or overflow. |
+| F-152 the JevBench table's † notes are a closed disclosure the row's † opens; jqv's tag and † carry the reason as titles | pass-28 commit (Fable, 2026-09-21 ~04:45, "Fable pass 28") + `test/fable-pass28.test.mjs` | `/opt/benchmarkheaven/state/ux-evidence/fable-20260921-pass28/` (`canonical/` before, `live-*/` after the deploy, `verify-fable-pass28-design.mjs`) | implemented by Fable; **needs a non-Fable verifier on both hosts** |
+| F-153 the custom-evaluation page's email action is the solid primary button | same commit + test | same | implemented by Fable; **needs a non-Fable verifier on both hosts** |
+| F-154 no text below the 10 px floor on the Simple and Advanced pages (shortlist ticks, route badges) | same commit + test | same | implemented by Fable; **needs a non-Fable verifier on both hosts** |

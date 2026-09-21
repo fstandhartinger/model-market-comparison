@@ -6264,3 +6264,29 @@ Judged live revision `16e8a10` on the canonical host, 1440/390 × light/dark, 12
   empty outputs — it never ran before the session ended. **Left for the next work iteration:** replay the four MathArena identities
   with the committed registry; the Terminal-Bench 4.0 producer dispute (cannot find the unit "percent" in the excerpt) was being
   checked and is unresolved; `frontierswe::2` (zip member) as recorded in iteration 144.
+
+### Fable pass 28 — 2026-09-21 ~04:20–05:05 UTC (claude-fable, design authority): what changed since pass 27
+
+Full text: `DESIGN-DIRECTIVES.md` ("Verdict on the live site — pass 28", "Decisions in pass 28", F-152–F-154 completed, Done log rows F-152–F-154).
+Judged live revision `b7b939d` on the canonical host, 1440/390 × light/dark, 78 shots + `metrics.json` in
+`/opt/benchmarkheaven/state/ux-evidence/fable-20260921-pass28/canonical/` (`bin/shoot-fable-pass28.mjs`): 0 page errors, no horizontal overflow.
+- **Scope (Florian: Fable sparingly):** `/jev-models` after CR-105–CR-107 (v1.2.6/v1.2.7, the tinted 16-second toast) and F-149–F-151, the
+  `/jev-models/custom-evaluation` page, `/benchmarks` after iterations 143/144 (ProgramBench, MCP Atlas, VulcanBench, LiveBench, AA re-versioning).
+  Simple/Advanced/Guided/Benchmaxxing/model re-shot as quick views — unchanged since pass 27 apart from F-154.
+- **F-149–F-151 landed as written** (actions at y 271/363 inside the first viewport, code block wraps; head 66/58 px; scope buttons 1 × 4 / 2 × 2);
+  CR-106's toast is tinted and open at 15.5 s; CR-107's jqv is a grey unranked row at 67.2 with the GLiNER2.5 rows ranked. The Benchmarks table
+  lists every board iterations 143/144 added, with tags, in its 78 × 12 default.
+- **Three findings, all fixed by Fable (surgical, no numbers):** **F-152** the table's 17 † notes were an open 33-line (1440) / 91-line (390) block
+  of 12 px text, duplicating the chart's collapsed legend, and jqv's "partial run · not ranked" tag had no title → a closed `<details>` with a
+  generated count, the row's † links into it and opens it, first sentence as the †'s and the tag's title (the HTML still says "425 of 534",
+  CR-107.3 stays verified); **F-153** the custom page's email action was an outline button like GitHub's → `.bh-button-primary` (solid accent);
+  **F-154** shortlist ticks at 9/9.5 px and route badges at 9 px → 10 px (the pass-27 floor). Two rules added: notes under a table are a
+  disclosure; one solid button per page.
+- **Also in this pass:** iteration 145's uncommitted, text-only work was verified through the gates and committed as `873bcb0` with its own
+  ledger entry (above), so the 05:17 daily run finds a clean checkout.
+- **Shipped:** this commit (five component/CSS edits, `test/fable-pass28.test.mjs` 3/3, `bin/shoot-fable-pass28.mjs`,
+  `bin/verify-fable-pass28-design.mjs`, directives). Gates on the tree before the push: `build-dataset` rc 0, `npm test` 995 tests, 994 pass,
+  0 fail, 1 skip (+ the new file 3/3), `npx tsc --noEmit -p .` clean, `npm run build` rc 0. **Needs a non-Fable verifier:** run
+  `node ops/ux-2026-09-12/bin/verify-fable-pass28-design.mjs <host> <outDir>` on both hosts after the deploy (Fable's own post-deploy run lands in
+  `…/fable-20260921-pass28/live-canonical/`, evidence only, not verification). No push to `main` between 05:17 and ~07:45 UTC (daily run).
+- **Next Fable pass:** only after the next UI-touching work (a Benchmarks-page or JevBench change), per Florian's "sparingly".

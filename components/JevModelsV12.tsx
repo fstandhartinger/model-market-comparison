@@ -220,9 +220,9 @@ function Table({ view, rows, honorableRows, partialRows, w, scope }: { view: Jev
   const R = ({ r }: { r: Row }) => <tr data-bh-jev12-row={r.key} data-bh-jev12-ranked={r.ranked ? "1" : "0"} className={r.ranked ? "" : "bh-jev11-partial"}>
     <td className="bh-muted tabular">{r.rank ?? ""}{!d.official && r.rank !== null && <Delta d={r.delta} />}</td>
     <th scope="row" className="bh-jev-sticky text-left font-normal"><span className="bh-muted block text-[11px] leading-tight">by {r.author}</span>
-      <span className="block font-semibold leading-snug"><ProjectLink r={r}>{short(r.display)}</ProjectLink>{r.footnote ? <sup>†</sup> : null}</span>
+      <span className="block font-semibold leading-snug"><ProjectLink r={r}>{short(r.display)}</ProjectLink>{r.footnote ? <sup><a href={`#jev12-note-${r.key}`} className="no-underline" title={firstSentence(r.footnote)} aria-label={`Note on ${short(r.display)}`} onClick={openNotes}>†</a></sup> : null}</span>
       {(() => { const cfg = r.display.slice(short(r.display).length).replace(/^[ ,]*\(?|\)$/g, ""); return cfg && cfg !== r.author ? <span className="bh-muted block text-[11px] leading-tight">{cfg}</span> : null; })()}
-      {!r.ranked && <span className="bh-thin-tag mt-1 inline-block" title={r.notRankedBecause ?? undefined}>{NOT_RANKED[r.listing]} · not ranked</span>}</th>
+      {!r.ranked && <span className="bh-thin-tag mt-1 inline-block" title={r.notRankedBecause ?? (r.footnote ? firstSentence(r.footnote) : undefined)}>{NOT_RANKED[r.listing]} · not ranked</span>}</th>
     <td className="tabular"><b className="text-lg" data-bh-jevc-cell-score>{one(r.score)}</b>{!d.official && <span className="bh-muted block text-[11px]" data-bh-jevc-cell-official>official {one(r.official)}</span>}</td>
     <td className="tabular text-[13px]">{one(r.axes.intelligence)}</td>
     <td className="tabular text-[13px]">{r.axes.calibration === null ? <span className="bh-muted text-[12px]" title={r.calibrationNote ?? undefined} data-bh-jev12-no-dist>none (label only)</span> : one(r.axes.calibration)}</td>
@@ -263,13 +263,18 @@ function Table({ view, rows, honorableRows, partialRows, w, scope }: { view: Jev
         </tbody>
       </table>
     </div>
-    {notes.length > 0 && <ul className="bh-muted mt-2 space-y-1 text-xs" data-bh-jev12-notes>{notes.map((r) => <li key={r.key}>† <b className="text-gray-200">{short(r.display)}</b>: {r.footnote}</li>)}</ul>}
+    {/* F-152 (Fable pass 28): the † notes are a closed disclosure — a row's † opens it and lands on its entry; the first sentence is the †'s title. */}
+    {notes.length > 0 && <details id="jev12-notes" className="mt-2 text-xs" data-bh-jev12-notes>
+      <summary className="cursor-pointer text-accent">† Notes on {notes.length} marked systems — how each was run</summary>
+      <ul className="bh-muted mt-2 space-y-1">{notes.map((r) => <li key={r.key} id={`jev12-note-${r.key}`}>† <b className="text-gray-200">{short(r.display)}</b>: {r.footnote}</li>)}</ul>
+    </details>}
   </section>;
 }
 
 // CR-97 (Florian 2026-09-20): classifier.dev was #1 on a model that is not its own. It stays on the page with every
 // number it earned, under the ranking, with the rule and the reason in plain English — and without a rank.
 const firstSentence = (text: string) => text.trim().split(/(?<=[.!?])\s+/)[0] ?? text.trim();
+const openNotes = () => { const d = document.getElementById("jev12-notes"); if (d instanceof HTMLDetailsElement) d.open = true; };
 const lastSentence = (text: string) => {
   const sentence = text.trim().split(/(?<=[.!?])\s+/).at(-1) ?? text.trim();
   return sentence.endsWith(".") || sentence.endsWith("!") || sentence.endsWith("?") ? sentence : `${sentence}.`;
