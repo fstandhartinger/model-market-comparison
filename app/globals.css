@@ -447,8 +447,8 @@ details[open] > .bh-collapsible-grid { display: grid; }
 /* F-128 (Fable pass 24): the pinned name cell stays opaque so scrolled cells cannot show through it; it is dimmed by colour instead. */
 .bh-jev11-partial > .bh-jev-sticky { opacity: 1; color: var(--muted); }
 /* CR-87 (2026-09-19): JevBench Main Composite Score chart — colour by system type (as the launch chart), live weights. */
-:root, [data-theme="dark"] { --jev-t-jev: 74 149 234; --jev-t-rebuild: 240 122 74; --jev-t-llm: 47 192 141; --jev-t-tool: 146 128 232; --jev-t-service: 135 190 245; --jev-t-classifier: 222 92 168; }
-[data-theme="light"] { --jev-t-jev: 42 122 213; --jev-t-rebuild: 224 97 45; --jev-t-llm: 22 163 116; --jev-t-tool: 75 58 166; --jev-t-service: 84 150 214; --jev-t-classifier: 176 42 124; }
+:root, [data-theme="dark"] { --jev-t-jev: 74 149 234; --jev-t-rebuild: 240 122 74; --jev-t-llm: 47 192 141; --jev-t-tool: 146 128 232; --jev-t-service: 135 190 245; --jev-t-classifier: 222 92 168; --jev-t-api: 226 178 60; }
+[data-theme="light"] { --jev-t-jev: 42 122 213; --jev-t-rebuild: 224 97 45; --jev-t-llm: 22 163 116; --jev-t-tool: 75 58 166; --jev-t-service: 84 150 214; --jev-t-classifier: 176 42 124; --jev-t-api: 150 104 0; }
 .bh-jevc-bar { height: 100%; border-radius: 0 4px 4px 0; background: rgb(var(--jev-t)); transition: width .35s ease; }
 .bh-jevc-bar.is-partial { background: repeating-linear-gradient(135deg, rgb(var(--jev-t) / .85) 0 2px, transparent 2px 7px); box-shadow: inset 0 0 0 1.5px rgb(var(--jev-t)); }
 .bh-jevc-swatch { display: inline-block; width: 22px; height: 10px; border-radius: 2px; vertical-align: middle; background: rgb(var(--jev-t)); }

@@ -18,13 +18,9 @@ test('the committed v1.2 artifact is the tagged public one and validates; the Sc
   // CR-97: v1.2.4 takes classifier.dev out of the ranking — it runs Jev — so Jev is #1 and every row below moves up one.
   // CR-107: v1.2.7 adds the two GLiNER2.5 checkpoints; jqv is a partial row and therefore not in this list.
   const all = v.ranked.map((r) => [r.key, Number(r.main.toFixed(1))]);
-  assert.deepEqual(all, [['jev-1.13.0', 75.4], ['semif-qwen3.5-4b', 74.7], ['djev', 74.3], ['openjev-verdict-1.4', 72.5], ['laya', 70.1],
-    ['open-alternative-jev', 69.8], ['system-one-open', 68.9], ['openjev-razorback16', 67.7], ['simplejev-qwen3.8-27b', 67.3], ['jeff', 66.9], ['kev-0.6b', 66.7],
-    ['openjev-sglang', 66.3], ['openjev-verdict', 66.2], ['gpt-5.6-luna', 66.2], ['open-jev-deberta-v3-large', 64.6], ['simplejev-qwen3.6-35b-a3b', 63.8],
-    ['nimble-9b', 63.7], ['kev-0.5b', 63.1], ['gliner2.5-multi', 63.1], ['kev-4b', 62.2], ['gliner2.5-small', 62.1],
-    ['gemini-3.1-flash-lite', 60.9], ['kev-8b', 58.3],
-    ['deepseek-flash', 57.8], ['system-one-sg', 56.6], ['gliner2', 53.0]]);
-  assert.equal(v.revision, 'v1.2.7');
+  // CR-108: v1.2.8 adds the run-4 systems (all ranked) and jqv's complete re-run; decision-machine-1 has its own class.
+  assert.deepEqual(all, [['jev-1.13.0', 75.4], ['semif-qwen3.5-4b', 74.7], ['djev', 74.3], ['openjev-verdict-1.4', 72.5], ['reflex-4b', 71.7], ['decision-machine-1', 71.5], ['laya', 70.1], ['jqv', 70.1], ['open-alternative-jev', 69.8], ['decider-35b-a3b', 68.9], ['system-one-open', 68.9], ['openjev-razorback16', 67.7], ['simplejev-qwen3.8-27b', 67.3], ['opendecision', 67.0], ['jeff', 66.9], ['kev-0.6b', 66.7], ['openjev-sglang', 66.3], ['openjev-verdict', 66.2], ['gpt-5.6-luna', 66.2], ['decider-2b', 64.6], ['open-jev-deberta-v3-large', 64.6], ['reflex-27b', 64.2], ['jev-local', 63.8], ['simplejev-qwen3.6-35b-a3b', 63.8], ['litjev', 63.7], ['kev-0.5b', 63.1], ['gliner2.5-multi', 63.1], ['kev-4b', 62.2], ['gliner2.5-small', 62.1], ['nimble-9b', 61.8], ['gemini-3.1-flash-lite', 60.9], ['kev-8b', 58.3], ['deepseek-flash', 57.8], ['system-one-sg', 56.6], ['gliner2', 53.0], ['gliner2-large', 50.5]]);
+  assert.equal(v.revision, 'v1.2.8');
   // CR-96: the unit travels with the artifact and names what it is not, so no surface can imply per-token prices.
   assert.equal(v.costUnit.unit, '$ per 1,000 decisions');
   assert.equal(v.costUnit.not_unit, '$ per 1,000 tokens');
@@ -62,11 +58,12 @@ test('the committed v1.2 artifact is the tagged public one and validates; the Sc
   assert.equal(v.ranked.find((r) => r.key === 'gliner2').cls, 'classifier');
   assert.equal(v.ranked.filter((r) => r.key.startsWith('open-alternative-jev')).length, 1);
   assert.equal(v.ranked.find((r) => r.key === 'open-alternative-jev').display, 'open-alternative-jev (Qwen3.5-4B, IkerMoel)');
-  // CR-107: jqv joins the partial rows — its endpoint is the submitter's own machine, so the held-out hard
-  // items were never sent to it and the run covers 425 of 534 decisions.
-  assert.ok(v.partial.length === 4 && v.partial.every((r) => r.rank === null && r.listing === 'partial'));
-  const jqv = v.partial.find((r) => r.key === 'jqv');
-  assert.ok(jqv && jqv.endpointKind === 'demo' && /425 of 534/.test(jqv.footnote));
+  // CR-107 showed jqv as a partial row (425 of 534); CR-108: v1.2.8 re-ran it in full on our GPU, so it is ranked now.
+  assert.ok(v.partial.length === 3 && v.partial.every((r) => r.rank === null && r.listing === 'partial'));
+  const jqv = v.ranked.find((r) => r.key === 'jqv');
+  assert.ok(jqv && jqv.endpointKind === 'gpu' && !/425 of 534/.test(jqv.footnote));
+  const dm = v.ranked.find((r) => r.key === 'decision-machine-1');
+  assert.ok(dm && dm.cls === 'decision-api' && dm.endpointKind === 'api' && dm.p50Adj === dm.p50 && dm.costKind === 'measured' && dm.axes.cost < 100);
   // Needle 3 options-as-tools has a price at all (v1.2 gave it an automatic 100); CR-96 corrected it from $0.0162 to $0.0144.
   const tools = v.partial.find((r) => r.key === 'needle-3-tools');
   assert.ok(tools.usd > 0.014 && tools.usd < 0.0145 && tools.axes.cost < 100 && tools.costKind === 'estimate');
@@ -125,7 +122,7 @@ test('an honorable mention that takes a rank, loses its rule or loses the model 
   a = await clone(); a.honorable_mentions.systems[key].sources = ['classifier.dev'];
   assert.throws(() => validateJevbenchV12(a), /sources/);
   // A row marked honorable_mention with no published entry, and an entry with no row.
-  a = await clone(); Object.assign(a.systems.find((s) => s.key === 'gliner2'), { listing: 'honorable_mention', ranked: false, rank: null });
+  a = await clone(); Object.assign(a.systems.filter((s) => s.listing === 'ranked').at(-1), { listing: 'honorable_mention', ranked: false, rank: null }); // the last-ranked row, so ranks stay 1..N
   assert.throws(() => validateJevbenchV12(a), /must match the rows marked honorable_mention/);
   a = await clone(); delete a.honorable_mentions.systems[key];
   assert.throws(() => validateJevbenchV12(a), /must match the rows marked honorable_mention/);

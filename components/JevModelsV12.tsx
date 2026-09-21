@@ -31,6 +31,7 @@ const TYPE: Record<string, { label: string; v: string }> = {
   // CR-95 (v1.2.2): readers asked for these; neither is a Jev rebuild, so they get their own colour.
   "jev-service": { label: "Service built on Jev", v: "--jev-t-service" },
   classifier: { label: "Zero-shot classifier (not a Jev rebuild)", v: "--jev-t-classifier" },
+  "decision-api": { label: "Closed decision model (API only, not Jev)", v: "--jev-t-api" },
 };
 const typeVar = (cls: string) => ({ ["--jev-t" as string]: `var(${(TYPE[cls] ?? TYPE["llm-baseline"]).v})` });
 const chartName = (r: JevV12Row) => r.key === "gpt-5.6-luna" ? "GPT-5.6 Luna (low)" : r.key.endsWith("-tools") ? "Needle 3, options as tools"

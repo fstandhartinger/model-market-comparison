@@ -8,13 +8,13 @@ import type { JevTopicsView } from "../lib/jevbench-v12-topics.mjs";
 // Colours follow the page's system types; if both picks share a type, B is dashed, darker/lighter and square-marked.
 const AXES: JevAxis[] = ["intelligence", "calibration", "speed", "cost"];
 const AXIS_LABEL: Record<JevAxis, string> = { intelligence: "Intelligence", calibration: "Calibration", speed: "Speed", cost: "Cost" };
-const TYPE_VAR: Record<string, string> = { jev: "--jev-t-jev", "jev-rebuild": "--jev-t-rebuild", "llm-baseline": "--jev-t-llm", "small-tool-model": "--jev-t-tool", "jev-service": "--jev-t-service", classifier: "--jev-t-classifier" };
+const TYPE_VAR: Record<string, string> = { jev: "--jev-t-jev", "jev-rebuild": "--jev-t-rebuild", "llm-baseline": "--jev-t-llm", "small-tool-model": "--jev-t-tool", "jev-service": "--jev-t-service", classifier: "--jev-t-classifier", "decision-api": "--jev-t-api" };
 // Review gate 20260919T233002Z: "Service built on Jev" is a second blue, so a Jev/jev-service pair — the default one —
 // drew two near-identical solid lines (rgb(42,122,213) vs rgb(84,150,214) in light). Pairs from the same colour family get
 // the treatment the page already has for two rows of the same type: B dashed, mixed towards the text colour, square marks.
-const TYPE_FAMILY: Record<string, string> = { jev: "blue", "jev-service": "blue", "jev-rebuild": "orange", "llm-baseline": "green", "small-tool-model": "violet", classifier: "magenta" };
+const TYPE_FAMILY: Record<string, string> = { jev: "blue", "jev-service": "blue", "jev-rebuild": "orange", "llm-baseline": "green", "small-tool-model": "violet", classifier: "magenta", "decision-api": "yellow" };
 const family = (cls: string) => TYPE_FAMILY[cls] ?? cls;
-const TYPE_LABEL: Record<string, string> = { jev: "Jev", "jev-rebuild": "Jev rebuild", "llm-baseline": "instruction model", "small-tool-model": "small tool-calling model", "jev-service": "service built on Jev", classifier: "zero-shot classifier" };
+const TYPE_LABEL: Record<string, string> = { jev: "Jev", "jev-rebuild": "Jev rebuild", "llm-baseline": "instruction model", "small-tool-model": "small tool-calling model", "jev-service": "service built on Jev", classifier: "zero-shot classifier", "decision-api": "closed decision API" };
 const colour = (cls: string) => `rgb(var(${TYPE_VAR[cls] ?? TYPE_VAR["llm-baseline"]}))`;
 const one = (v: number | null) => (v === null ? "—" : v.toFixed(1));
 const pct = (v: number | null) => (v === null ? "—" : `${(v * 100).toFixed(1)}%`);

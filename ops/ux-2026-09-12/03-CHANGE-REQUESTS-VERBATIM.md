@@ -1442,3 +1442,31 @@ Supervisor note (not Florian's words): implemented by the job `~/jobs/jevbench-a
 Claude Opus 5) in an isolated worktree, with the UX loop paused via `paused-until` while iteration 142 was still
 running in `/opt/model-market-comparison`; the pause was released after both hosts verified. The measurement round
 itself is in that job's `RESULT.md`.
+
+## CR-20260921a (JevBench) → CR-108 — publish JevBench v1.2.8
+
+JevBench run-4 measurement round, 21 September 2026. Verbatim source file: `ops/ux-2026-09-12/jevbench/v1.2.8/CR-108.md`:
+
+> Publish the run-4 round of reader-requested additions on the unchanged frozen v1.2 task set: every entrant that could
+> be reached ran all 534 decisions (held-out items included) through its author's own server, one request at a time. jqv
+> is re-run in full on our own GPU from its now-public serving code, so its v1.2.7 partial row becomes a complete,
+> ranked row. decision-machine-1 is a closed decision model behind a production API; it gets its own class ("Closed
+> decision model (API only, not Jev)") instead of being shown as an open Jev rebuild. No earlier measurement, axis, price
+> or rank rule changes.
+>
+> Acceptance:
+>
+> - pin results, public-task and topic artifacts from public JevBench tag `v1.2.8` by SHA-256;
+> - show every new row with its score and rank from the artifact, each name linked to its project;
+> - show decision-machine-1 in the new class with its own legend entry and colour (light and dark);
+> - jqv is ranked and complete (hard coverage 1.0); the "425 of 534" partial note is gone;
+> - leave every earlier row's score untouched;
+> - the "who could not be measured" list drops the systems now measured (Decider 2B, Reflex, OpenDecision, LitJev) and adds
+>   Werr and DIY Jev with their concrete reasons;
+> - preserve the hard-only view, the custom-evaluation offer/toast, labels and scoring rules;
+> - verify both production hosts after deployment, desktop and phone, light and dark.
+
+Supervisor note (not Florian's words): implemented by the job `~/jobs/jevbench-add-requests-20260919` (run 4,
+Claude Opus 5) in an isolated worktree, with the UX loop paused via `paused-until` from 06:00 UTC; the pause is released
+after both hosts verified. The measurement round itself is in that job's `RESULT.md`. Verifier:
+`node ops/ux-2026-09-12/bin/verify-cr-108.mjs ops/ux-2026-09-12/jevbench/v1.2.8/verify-cr-108-expect.json <host>...`.
