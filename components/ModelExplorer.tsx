@@ -605,7 +605,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                       <div data-pane="benchmarks">
                         <div className="mb-1.5 flex items-center justify-between">
                           <span className="text-[11px] uppercase tracking-wide text-gray-500">Benchmarks — {m.display_name}</span>
-                          <Link href={`/models/${encodeURIComponent(m.id)}`} className="text-[11px] text-accent">full detail ↗</Link>
+                          <Link href={`/models/${encodeURIComponent(m.id)}`} className="text-[11px] text-accent">full detail →</Link>
                         </div>
                         <table className="w-full text-xs">
                           <tbody>

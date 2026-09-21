@@ -67,7 +67,7 @@ export function SubscriptionsPanel({ rows, perTask }: { rows: SubscriptionRow[];
         <p>Subscription plans can make the effective cost per task much lower for heavy users. They are not fixed token bundles, though: their session, weekly and other limits vary and are mostly unpublished, so their effective cost per task depends on how much you use them and cannot be stated as one universal number.</p>
         <p>They are also not interchangeable with API access. Account sharing, resale and automation are restricted and rate limits apply, and whether a business may use a plan depends on the provider, the plan, the region and the contract. Team, Enterprise and API access are the safer commercial categories.
           {isCompany && view.hiddenForCompany > 0 && <> With &ldquo;buying for a company&rdquo; set, consumer plans whose terms restrict business use are set aside.</>}
-          {" "}<Link href="/about#subscriptions" className="text-accent underline">How we read the terms ↗</Link></p>
+          {" "}<Link href="/about#subscriptions" className="text-accent underline">How we read the terms →</Link></p>
       </div>
       <Estimate plans={view.plans} perTask={perTask} />
       <h3 className="mt-4 text-xs font-semibold uppercase tracking-wide text-gray-400">Plans · list prices {view.retrieved_at}{isCompany ? " · open to companies" : ""}</h3>

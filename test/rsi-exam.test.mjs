@@ -104,6 +104,8 @@ test('One cohort label map for every surface: the view library owns it, the comp
   // model-page benchmark sheet, its evidence panel, the Benchmaxxing explorer, the radar and the compare
   // and ranking tables still rendered the raw slug ("· grok"). The map moved to lib/benchmark-view.mjs so
   // each display site labels identically; the stored cohort stays raw (none of these may re-key an axis).
+  // Iteration 153 (claude-opus, non-kimi verifier of bc5f3cb): the ranking rows' own " · harness …" line
+  // was the one display site left rendering the raw slug.
   const { cohortLabel } = await import('../lib/benchmark-view.mjs');
   const matrix = await import('../lib/benchmark-matrix.mjs');
   assert.equal(matrix.cohortLabel, cohortLabel, 'the matrix re-exports the same function, never its own copy');
@@ -113,7 +115,7 @@ test('One cohort label map for every surface: the view library owns it, the comp
     'components/BenchmarkEvidence.tsx': ['cohortLabel(axis.cohort)', 'cohortLabel(row.harness)'],
     'components/BenchmaxxExplorer.tsx': ['cohortLabel(p.target.cohort)', 'cohortLabel(data.axis.cohort)', 'cohortLabel(a.cohort)'],
     'components/BenchmarkRadar.tsx': ['cohortLabel(a.cohort)'],
-    'components/BenchmarkRanking.tsx': ['cohortLabel(axis.cohort)', 'cohortLabel(e.cohort)'],
+    'components/BenchmarkRanking.tsx': ['cohortLabel(axis.cohort)', 'cohortLabel(e.cohort)', 'cohortLabel(r.harness)'],
     'components/BenchmarkCompare.tsx': ['cohortLabel(a.cohort)'],
   })) {
     const source = readFileSync(file, 'utf8');

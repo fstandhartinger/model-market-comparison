@@ -74,7 +74,7 @@ export function SheetRows({ modelId, rows }: { modelId: string; rows: SheetRow[]
           <span className="bh-muted hidden text-right text-xs tabular-nums md:block">{a.date}</span>
         </summary>} head={
           <p className="bh-muted text-xs">
-            <Link className="text-accent hover:underline" href={`/benchmarks?benchmark=${encodeURIComponent(a.benchmarkId)}`}>{a.name} {a.suffix ?? a.versionLabel} ↗</Link>
+            <Link className="text-accent hover:underline" href={`/benchmarks?benchmark=${encodeURIComponent(a.benchmarkId)}`}>{a.name} {a.suffix ?? a.versionLabel} →</Link>
             {a.cohort ? ` · ${cohortLabel(a.cohort)}` : ''}{a.description ? ` — ${a.description}` : ''}
           </p>} />
     </li>)}
