@@ -9,6 +9,7 @@ import { readJevbenchV12Topics, jevbenchV12TopicsView } from '../../lib/jevbench
 import { readJevbenchV12Tasks, jevbenchV12TasksView } from '../../lib/jevbench-v12-tasks.mjs';
 import { previewMetadata } from '../../lib/seo';
 import { CustomEvaluationOffer } from '../../components/CustomEvaluationOffer';
+import { jevbenchV12HeldoutView } from '../../lib/jevbench-v12-heldout.mjs';
 
 // CR-92 (Florian 2026-09-19 ~13:20 UTC): JevBench v1.2 final — the JevBench Score (Intelligence, Calibration, Speed, Cost,
 // 25 % each, geometric mean) is the default; the earlier weightings stay as presets. CR-88's WIP banner and noindex are gone and the
@@ -20,6 +21,8 @@ export const metadata: Metadata = previewMetadata({ path: '/jev-models', documen
 const day = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
 const short = (d: string) => d.split(' (')[0].split(', formerly')[0];
 const one = (v: number | null) => (v === null ? '—' : v.toFixed(1));
+const pct = (v: number | null) => (v === null ? '—' : `${(100 * v).toFixed(1)}%`);
+const points = (v: number | null, signed = false) => v === null ? '—' : `${signed && v >= 0 ? '+' : ''}${(100 * v).toFixed(1)}`;
 // Gaps are the difference of the scores as displayed (one decimal), so a reader can check them by eye.
 const gap = (a: number, b: number) => (Math.round(a * 10) - Math.round(b * 10)) / 10;
 const jevCostExample = (view: ReturnType<typeof jevbenchV12View>) => {
@@ -56,7 +59,9 @@ export default async function JevModelsPage() {
   const view = jevbenchV12View(v12);
   const costExample = jevCostExample(view);
   const topics = jevbenchV12TopicsView(await readJevbenchV12Topics(v12.artifact));
-  const tasks = jevbenchV12TasksView(await readJevbenchV12Tasks(v12));
+  const taskData = await readJevbenchV12Tasks(v12);
+  const tasks = jevbenchV12TasksView(taskData);
+  const heldout = jevbenchV12HeldoutView(taskData.artifact);
   const v11 = jevbenchV11View(await readJevbenchV11());
   const [lead] = view.ranked;
   const rankOf = (key: string) => view.ranked.findIndex((r) => r.key === key) + 1;
@@ -106,6 +111,27 @@ export default async function JevModelsPage() {
 
     {/* CR-94: two-system radars — the four score axes and accuracy by subject topic (completes CR-90.3). */}
     <JevRadars ranked={view.ranked} honorable={view.honorable} partial={view.partial} topics={topics} />
+
+    <details id="held-out-diagnostic" className="bh-panel mt-8 max-w-5xl scroll-mt-6 p-5" data-bh-jev-heldout>
+      <summary className="cursor-pointer text-sm font-semibold">Held-out hard-tier detail</summary>
+      <div className="bh-muted mt-4 space-y-3 text-sm">
+        <p>With about 110 items on each side, ordinary noise is roughly ±9 percentage points. Read a system&apos;s public-minus-held-out gap against the field mean ({points(heldout.fieldMeanGap, true)} points across {heldout.fieldN} complete systems): only an outlier against that field is meaningful. &ldquo;Not public&rdquo; does not mean &ldquo;not seen&rdquo;, because held-out items were sent to hosted APIs.</p>
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[760px] text-left text-xs" data-bh-jev-heldout-table>
+            <thead><tr><th className="p-2">System</th><th className="p-2 text-right">Hard public</th><th className="p-2 text-right">Hard held-out</th><th className="p-2 text-right">Public − held-out gap (95% interval)</th><th className="p-2 text-right">Field mean gap</th></tr></thead>
+            <tbody>{heldout.rows.map((r) => <tr key={r.key} className="border-t border-line">
+              <th scope="row" className="p-2 font-medium text-[rgb(var(--text))]">{r.display}{r.partial ? <span className="bh-muted"> (partial)</span> : null}</th>
+              <td className="p-2 text-right tabular-nums">{pct(r.publicAccuracy)} <span className="bh-muted">({r.publicCorrect}/{r.publicN})</span></td>
+              <td className="p-2 text-right tabular-nums">{pct(r.heldoutAccuracy)} <span className="bh-muted">({r.heldoutCorrect}/{r.heldoutN})</span></td>
+              <td className="p-2 text-right tabular-nums">{points(r.gap, true)} points <span className="bh-muted">[{points(r.ciLow, true)}, {points(r.ciHigh, true)}]</span></td>
+              <td className="p-2 text-right tabular-nums">{points(heldout.fieldMeanGap, true)} points</td>
+            </tr>)}</tbody>
+          </table>
+        </div>
+        <p>Accuracy is correct / attempted; invalid responses count as incorrect. The interval is the unpooled two-sample normal 95% interval for a difference in proportions. Partial systems are shown but excluded from the field mean.</p>
+        <p data-bh-jev-training-policy><b className="text-gray-200">Public-split policy.</b> Training on JevBench&apos;s public split is allowed and should be declared with each submission. Rankings continue to use all benchmark items. We report held-out results separately so that specialisation on public tasks is visible. Held-out means not publicly released, not guaranteed unseen: hosted systems receive these tasks during evaluation. We periodically issue fresh tasks to reduce the value of prior exposure.</p>
+      </div>
+    </details>
 
     <section className="mt-8 max-w-4xl text-sm" data-bh-jev-costs>
       {/* CR-96 (2026-09-20): a reader read this column as dollars per 1,000 tokens. Say the unit before anything else. */}

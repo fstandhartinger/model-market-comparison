@@ -32,6 +32,10 @@ USD per 1M tokens.
 
 Explore [benchmark rankings](https://benchmarkheaven.com/benchmarks), compare up to four exact model configurations on [Compare](https://benchmarkheaven.com/compare), or use the standalone [Radar](https://benchmarkheaven.com/radar). Model pages include complete benchmark sheets, source links and dates, missing coverage, and explainable profile signals. Every comparison keeps benchmark versions separate. [Methodology and limitations](docs/benchmark-explorer.md).
 
+### JevBench public and held-out tasks
+
+Training on JevBench's public split is allowed and should be declared with each submission. Rankings continue to use all benchmark items. We report held-out results separately so that specialisation on public tasks is visible. Held-out means not publicly released, not guaranteed unseen: hosted systems receive these tasks during evaluation. We periodically issue fresh tasks to reduce the value of prior exposure.
+
 
 ## Features
 

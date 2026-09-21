@@ -1475,3 +1475,10 @@ Live verification (21 Sep 2026, 06:15–06:20 UTC): both hosts serve revision v1
 (63 per host) three times in a row after the first two attempts ran into the rollout; real-browser check at 1440 px
 and 390 px, light and dark, 8/8 (rows visible, legend present, no horizontal overflow, no page errors). Evidence:
 `/opt/benchmarkheaven/state/ux-evidence/jevbench-v128-cr108/`.
+
+## CR-20260921b (JevBench) → CR-109 — held-out hard-tier diagnostic and split policy
+
+Florian, 21 Sep 2026, verbatim:
+> Genauigkeit und Abstand auf den zurückgehaltenen Aufgaben der harten Stufe in einer Detailansicht zeigen, nicht in der Haupttabelle — so machen wirs.
+
+Approved option A from `/home/flori/jobs/jevbench-contamination-check-20260920/RESULT.md`: add a methodology/detail disclosure, not a main-table column. For every system it shows hard held-out accuracy, public-minus-held-out gap and its 95% interval, both item counts, and the complete-field mean gap. Compute every value from the frozen v1.2.8 per-task answers and totals in repository code. Explain the roughly ±9-point noise at about 110 items per side, that only an outlier against the field is meaningful, and that not public is not necessarily unseen because hosted APIs received held-out items. Use no accusation or contamination label. Publish the public-split training and refresh policy on the page and in README.

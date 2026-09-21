@@ -855,3 +855,11 @@ Link (exact, do not change): https://donate.stripe.com/fZu00i9ro0wmdF88sg1Jm01. 
 - **CR-107.4 Nothing else moved.** The earlier GLiNER2 row stays at 53.0; hard-only view, custom-evaluation offer/toast (including CR-106's timing and tint), labels, prior rows and scoring rules preserved.
 - **CR-107.5 Availability.** OpenDecision joins "Who could not be measured, and why" with its current reason.
 - **CR-107.6 Verify.** Full tests, typecheck and production build; `verify-cr-107.mjs` on both live hosts.
+
+## CR-20260921b checklist — held-out hard-tier detail and split policy (CR-109)
+
+- **CR-109.1 Derived diagnostic.** Repository code derives hard public and held-out correct/attempted counts, accuracies, public-minus-held-out gaps, unpooled normal 95% intervals and the complete-field mean from the frozen v1.2.8 per-task artifact; no displayed result is hand-entered.
+- **CR-109.2 Detail only.** Put the per-system table in a collapsed methodology/detail disclosure, never in the main ranking table. Show both item counts, the interval and field mean on every row; partial systems are visible but excluded from the baseline.
+- **CR-109.3 Neutral reading.** One short paragraph says about 110 items means roughly ±9 points of noise, only a field outlier is meaningful, and hosted APIs received held-out items. No accusation and no contaminated label.
+- **CR-109.4 Policy.** Page and README say training on the public split is allowed and should be declared, held-out results are separate, held-out is not guaranteed unseen, and fresh tasks are issued periodically.
+- **CR-109.5 Verify.** Full tests, typecheck and production build; both live hosts at desktop and phone widths, diagnostic data and policy visible, no horizontal page overflow or browser errors.
