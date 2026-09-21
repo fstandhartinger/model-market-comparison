@@ -6871,6 +6871,75 @@
       ]
     },
     {
+      "id": "mcp-atlas::snapshot-2026-09-21",
+      "name": "MCP Atlas (Scale AI)",
+      "version": "snapshot-2026-09-21",
+      "version_status": "snapshot",
+      "family": "mcp-atlas",
+      "category": "Tool-use",
+      "one_sentence_description": "How reliably a model completes realistic multi-step workflows over real Model Context Protocol servers: discovering the right tool in a noisy tool menu, calling it with correct parameters, recovering from errors and synthesising the results into an accurate final answer.",
+      "scoring": {
+        "metric": "Pass rate in percent over all 1,000 tasks; the published ± is the confidence half-width",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Scale AI runs every listed configuration itself (measured): \"We evaluate the model's response against a ground-truth answer that is split into a list of claims for easier verification via an LLM judge.\" Each claim scores 1 / 0.5 / 0, coverage is the mean of the per-claim scores for a task, and a task passes when coverage is \"75% or higher\" — the ground truth decides, the judge only checks the answer against it. The dataset is 1,000 human-authored tasks over 36 real MCP servers and 220 tools, 3–6 tool calls per task; the 500-task public subset is on Hugging Face and the other 500 are held out. The board value is the pass rate over all 1,000 tasks: for every one of the 20 models the page's own coverage table also lists, its \"Pass Rate % (All 1000)\" column equals this board value exactly, and the separate \"Pass Rate % (Public 500)\" column is never ingested. April 2026 methodology update, in the page's own words: an upgraded scoring judge, retry handling for transient tool errors, the 20-turn limit replaced by \"a tool call budget of 100 max tool calls per task\", and \"We re-scored all leaderboard models.\" The effort setting is part of each model label. The page's \"Key Metrics at a Glance\" card says \"83.6% Top Pass Rate\" while the board's own top row is 88.1 % — the stat card is stale and is never ingested. A footnote \"*Evaluations for these models were run using Fireworks AI for inference\" sits under the coverage table but marks no row in this snapshot. Secondary benchmark, never a Composite input."
+      },
+      "maintainer": "Scale AI",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://labs.scale.com/leaderboard/mcp_atlas",
+      "publication_urls": [
+        {
+          "url": "https://labs.scale.com/leaderboard/mcp_atlas",
+          "type": "official_leaderboard",
+          "role": "Scale Labs leaderboard, methodology, failure analysis and update notes"
+        },
+        {
+          "url": "https://labs.scale.com/leaderboard",
+          "type": "official_leaderboard",
+          "role": "Scale Labs leaderboard index the board is listed on"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-mcp-atlas; review protocol; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "HTML with embedded Next.js flight data",
+        "locator": "entries[] (model, score, confidenceInterval_upper, createdAt, contaminationMessage) — the \"Performance Comparison\" board; the visible table renders the same rows",
+        "version_guard": "Page title \"Scale Labs Leaderboard: MCP Atlas\", exactly one embedded entries array with model and score, and the page's own statements of the metric (\"the percentage of all tasks where the model produces a sufficiently correct final answer\", a pass at coverage \"75% or higher\"), of the scope (\"1,000 human-authored tasks\", \"36 real MCP servers\") and of the April 2026 re-scoring. No public version: this identity freezes the 2026-09-21 snapshot of that methodology. A changed task set, judge, tool-call budget or metric needs a new identity.",
+        "notes": "Same access route and terms as the SWE Atlas and SWE-Bench Pro boards already collected from labs.scale.com: robots.txt allows /leaderboard/ (Disallow: /api/, /studio, /draft/, /maintenance) and the robots-disallowed /api/ is never requested — the whole 34-row board is served inside the page itself. Scale publishes no data licence: only scores with attribution are stored. Exact joins come from data/raw/benchmarks/identity-map.json."
+      },
+      "update_cadence": {
+        "source_schedule": "Models added irregularly by the maintainer; the newest rows on the captured board are dated 2026-09-17.",
+        "check_recommendation": "Daily, at most one capture per source; stop on access restrictions."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; the page states \"Even the best-performing models still fail a large fraction of tasks, leaving meaningful headroom for improvement.\""
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-21",
+      "last_verified": "2026-09-21",
+      "evidence": [
+        {
+          "url": "https://labs.scale.com/leaderboard/mcp_atlas",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-mcp-atlas/3fbd0def41133507de71.gz",
+          "sha256": "419cad8a9e948dceb25a642cbfe5d63ddd8f1916a8ca4cf512d855e97bdc53d4",
+          "fetched_at": "2026-09-21T01:44:31Z",
+          "excerpt": "Scale Labs Leaderboard: MCP Atlas — \"MCP-Atlas evaluates how well language models handle real-world tool use through the Model Context Protocol (MCP)\"; a Performance Comparison board of 34 rows with score ± CI; \"1,000 human-authored tasks\", \"36 real MCP servers\", \"220 tools\"; a task passes at coverage \"75% or higher\"."
+        },
+        {
+          "url": "https://labs.scale.com/robots.txt",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-21-mcp-atlas/labs.scale.com-robots.txt",
+          "sha256": "10e0ba000249136b6a2dc4ce3390375d14b4882f1722e0aa59cc80a20208f38e",
+          "fetched_at": "2026-09-21T01:44:31Z",
+          "excerpt": "User-Agent: * Allow: / — /leaderboard/ pages are permitted (Disallow: /api/, /studio, /draft/, /maintenance)."
+        }
+      ]
+    },
+    {
       "id": "mirrorcode::snapshot-2026-09-18",
       "name": "MirrorCode (Epoch AI, with METR)",
       "version": "snapshot-2026-09-18",

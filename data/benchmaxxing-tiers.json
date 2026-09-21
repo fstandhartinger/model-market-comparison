@@ -303,6 +303,10 @@
     "livebench": {
       "tier": "secondary",
       "reason": "Public official leaderboard whose questions are not published as private or held back anywhere in our verified capture, and which no row of our self-reported corpus quotes (0 of 78 rows, against 41 for Toolathlon-Verified) — public but rarely quoted. The board's contamination-limiting refresh is not a fact our source states: the registry entry records \"no promised publication schedule\", and this release (2026-06-25) predates several models measured on it, so heldout is not claimed."
+    },
+    "mcp-atlas": {
+      "tier": "secondary",
+      "reason": "Half public, half held out: the 500-task public subset is on Hugging Face with the harness on GitHub, the other 500 tasks are not, and Scale runs every row itself. Our self-reported corpus finds one lab quoting MCP-Atlas in release material (StepFun's Step 5 Preview), so it is a public board that is rarely quoted — neither heldout nor a board training teams broadly aim at."
     }
   }
 }

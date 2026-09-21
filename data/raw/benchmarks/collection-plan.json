@@ -4640,6 +4640,55 @@
         "https://toolathlon.xyz/docs/leaderboard",
         "https://toolathlon.xyz/docs/blog/toolathlon-verified"
       ]
+    },
+    {
+      "benchmark_id": "mcp-atlas::snapshot-2026-09-21",
+      "parser": {
+        "kind": "scale_swepro",
+        "require_text": [
+          "<title>Scale Labs Leaderboard: MCP Atlas</title>",
+          "the percentage of all tasks where the model produces a sufficiently correct final answer",
+          "75% or higher.",
+          "1,000 human-authored tasks",
+          "36 real MCP servers",
+          "We re-scored all leaderboard models. All scores here use the updated evaluation methodology."
+        ],
+        "name_field": "model",
+        "value_field": "score",
+        "skip_field": "deprecated",
+        "skip_values": [
+          true
+        ],
+        "context_fields": [
+          "rank",
+          "confidenceInterval_upper",
+          "createdAt",
+          "contaminationMessage"
+        ]
+      },
+      "status": "collected",
+      "reason": "Scale AI runs every listed configuration itself (measured); the label keeps the effort setting, and a row the board marks deprecated is skipped.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-mcp-atlas; review protocol; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "HTML with embedded Next.js flight data",
+        "locator": "entries[] (model, score, confidenceInterval_upper, rank, createdAt, contaminationMessage) — the \"Performance Comparison\" board; the visible table renders the same rows",
+        "version_guard": "Page title \"Scale Labs Leaderboard: MCP Atlas\", exactly one embedded entries array with model and score, and the page's own statements of the metric (\"the percentage of all tasks where the model produces a sufficiently correct final answer\", a pass at coverage \"75% or higher\"), of the scope (\"1,000 human-authored tasks\", \"36 real MCP servers\") and of the April 2026 re-scoring. No public version: this identity freezes the 2026-09-21 snapshot of that methodology. A changed task set, judge, tool-call budget or metric needs a new identity.",
+        "notes": "The board value is the pass rate over all 1,000 tasks. Cross-check at ingestion: the page's own coverage table lists 20 of these models with a \"Pass Rate % (All 1000)\" column, and all 20 equal this board's value exactly; its \"Pass Rate % (Public 500)\" column is never ingested, and neither is the stale \"83.6% Top Pass Rate\" stat card. robots.txt allows /leaderboard/; /api/ is disallowed and never requested. Scale publishes no data licence: only scores with attribution are stored. Exact joins come from data/raw/benchmarks/identity-map.json."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Page title \"Scale Labs Leaderboard: MCP Atlas\", exactly one embedded entries array with model and score, and the page's own statements of the metric (\"the percentage of all tasks where the model produces a sufficiently correct final answer\", a pass at coverage \"75% or higher\"), of the scope (\"1,000 human-authored tasks\", \"36 real MCP servers\") and of the April 2026 re-scoring. No public version: this identity freezes the 2026-09-21 snapshot of that methodology. A changed task set, judge, tool-call budget or metric needs a new identity.",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/mcp_atlas",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-mcp-atlas/3fbd0def41133507de71.gz",
+        "sha256": "3fbd0def41133507de7168c4f302b9c30e3036fd7089a6571c0a2eeab0979297",
+        "retrieved_at": "2026-09-21T01:44:31Z"
+      },
+      "protocol": "MCP Atlas (Scale AI), 2026-09-21 snapshot; pass rate over all 1,000 tasks (500 public + 500 held out), a task passes at ≥ 75 % claim coverage under the April 2026 judge, retry handling and 100 tool-call budget; effort as stated in the source label",
+      "basis": "measured",
+      "minimum_rows": 30,
+      "source_urls": [
+        "https://labs.scale.com/leaderboard/mcp_atlas"
+      ]
     }
   ]
 }

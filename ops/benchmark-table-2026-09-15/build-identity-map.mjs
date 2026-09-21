@@ -4,7 +4,7 @@
 // ops/benchmark-table-2026-09-15/identity-map-review.json. Review the diff of both files before committing.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { identityJoins, parseDeepSweId, parseScaleLabel, parseFrontierCodeId, parseCursorBenchLabel, parseSweBenchProLabel } from '../../lib/coding-identity.mjs';
-import { boardJoins, parseBullshitBenchId, parseApprenticeBenchId, parseValsIndexId, parseOsworld2Id, parseMathArenaLabel, parseWeirdmlV3Label, parseSweRebenchLabel, parseGsoId, parseHyperTauId, parseLisanBenchId, parseVulcanbenchFrontierLabel, parseKernelbenchCudaLabel, parseFrontiersweV2Label, parsePosttrainbenchLabel, parseRsiExamLabel, parseToolathlonVerifiedLabel, parseProgrambenchLabel, livebenchJoins } from '../../lib/board-identity.mjs';
+import { boardJoins, parseBullshitBenchId, parseApprenticeBenchId, parseValsIndexId, parseOsworld2Id, parseMathArenaLabel, parseWeirdmlV3Label, parseSweRebenchLabel, parseGsoId, parseHyperTauId, parseLisanBenchId, parseVulcanbenchFrontierLabel, parseKernelbenchCudaLabel, parseFrontiersweV2Label, parsePosttrainbenchLabel, parseRsiExamLabel, parseToolathlonVerifiedLabel, parseProgrambenchLabel, parseMcpAtlasLabel, livebenchJoins } from '../../lib/board-identity.mjs';
 
 const BOARDS = [
   { prefix: 'deepswe::', parse: parseDeepSweId, basis: 'measured' },
@@ -83,6 +83,12 @@ const BOARDS = [
   // (Gemini 3 Flash); Claude Opus 4.7 xhigh (no catalog configuration) and the effort-less
   // multi-configuration rows are refused (lib/board-identity.mjs).
   { prefix: 'programbench::', parse: parseProgrambenchLabel, join: boardJoins, basis: 'measured' },
+  // 2026-09-21 (iteration 143, CR-30.2): MCP Atlas (Scale Labs), the last collectable board of the
+  // CR-30.2 candidate list. Labels mix slugs and product names with the setting in parentheses; the
+  // board's own spellings (`glm-5p2`, `gpt-5.6 (sol)`) are reviewed name by name in
+  // lib/board-identity.mjs, and a label naming no setting on a multi-configuration family, an
+  // unreviewed setting (`thinking`) or an ambiguous product (`Nemotron 3 Ultra`) joins nothing.
+  { prefix: 'mcp-atlas::', parse: parseMcpAtlasLabel, join: boardJoins, basis: 'measured' },
 ];
 const observations = JSON.parse(readFileSync('data/raw/benchmarks/public-observations.json')).observations;
 const catalog = JSON.parse(readFileSync('data/dataset.json')).models.map(({ id, family_key, variant }) => ({ id, family_key, variant }));

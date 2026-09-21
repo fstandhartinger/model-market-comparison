@@ -38,7 +38,12 @@ const SLUG_BOARDS = ['osworld-2', 'swe-rebench', 'gso', 'hyper-tau-bench', 'lisa
   'livebench',
   // 2026-09-21 (iteration 142, CR-38.1): ProgramBench's own board, product names with the effort tier in
   // parentheses (xhigh/high) and no suffix for the default tier (lib/board-identity.mjs parseProgrambenchLabel).
-  'programbench'];
+  'programbench',
+  // 2026-09-21 (iteration 143, CR-30.2): MCP Atlas (Scale Labs), the last collectable board of the CR-30.2
+  // candidate list. Mixed slug/product-name labels with the setting in parentheses; the board's own
+  // spellings (`glm-5p2`, `gpt-5.6 (sol)`) are reviewed name by name (lib/board-identity.mjs
+  // parseMcpAtlasLabel) and an ambiguous product name (`Nemotron 3 Ultra`) joins nothing.
+  'mcp-atlas'];
 const MIN = { 'deepswe::snapshot-2026-09-15': 60, 'swe-atlas-qna::snapshot-2026-09-15': 20, 'swe-atlas-test-writing::snapshot-2026-09-15': 20, 'swe-atlas-refactoring::snapshot-2026-09-15': 15 };
 
 test('the collector reproduces the committed observations from the committed evidence alone', () => {

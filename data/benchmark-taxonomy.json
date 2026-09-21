@@ -134,7 +134,8 @@
     "swe-atlas-qna": "How well an agent answers deep questions about a real codebase, graded against rubrics by Scale AI.",
     "swe-atlas-test-writing": "Whether an agent writes production-grade tests for real repositories, graded by Scale AI.",
     "swe-atlas-refactoring": "Whether an agent restructures production code while preserving its behaviour, graded by Scale AI.",
-    "aa_agentic_index": "Artificial Analysis' aggregate of its agentic evaluations (one configuration measured per model), relayed by OpenRouter's Benchmarks API."
+    "aa_agentic_index": "Artificial Analysis' aggregate of its agentic evaluations (one configuration measured per model), relayed by OpenRouter's Benchmarks API.",
+    "mcp-atlas": "How reliably a model completes real multi-step workflows over Model Context Protocol servers — finding the right tool, calling it correctly and synthesising the results — run by Scale AI."
   },
   "model_field_rows": [
     {
@@ -331,7 +332,8 @@
     "vals-index-terminal-bench-2.1": "headline",
     "vals-index-vibe-code-bench": "niche",
     "vending-bench": "headline",
-    "weirdml": "community"
+    "weirdml": "community",
+    "mcp-atlas": "niche"
   },
   "aa_input_keys": [
     "deepswe",
@@ -560,6 +562,7 @@
     "vals-index-vibe-code-bench": "capability",
     "vending-bench": "capability",
     "vulcanbench-frontier": "capability",
-    "weirdml": "capability"
+    "weirdml": "capability",
+    "mcp-atlas": "capability"
   }
 }

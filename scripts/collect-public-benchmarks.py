@@ -192,7 +192,9 @@ def parse(source,spec,load_source):
             scan(record)
         # The same Scale Labs board shape serves several leaderboards; the plan names the page identity
         # (SWE Atlas boards share navigation text, so their guard is the page title).
-        if len(arrays)!=1 or spec.get('require_text','swe_bench_pro_public') not in source:raise ValueError('Scale leaderboard source identity changed')
+        required=spec.get('require_text','swe_bench_pro_public')
+        required=[required] if isinstance(required,str) else required
+        if len(arrays)!=1 or any(t not in source for t in required):raise ValueError('Scale leaderboard source identity changed')
         rows=arrays[0]
     elif kind=='terminalbench':
         chunks=[]
