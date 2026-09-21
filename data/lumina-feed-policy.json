@@ -767,6 +767,22 @@
     "benchlm-gertlabs": {
       "decision": "excluded",
       "reason": "2026-09-21 (iteration 157): Gert Labs' rankings page (gertlabs.com/rankings) is a client app that loads its data only from /api/v1/global/rankings, and gertlabs.com/robots.txt disallows /api/ for every user agent — the DesignArena precedent (CR-34.5): not collected without the operator's permission."
+    },
+    "frontiermath": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "frontiermath-tiers-1-3::v2",
+        "frontiermath-tier-4::v2"
+      ],
+      "note": "2026-09-21 (iteration 157): Lumina's versionless FrontierMath family (44 cited values, all aggregator copies or estimates) is Epoch AI's benchmark; the registry carries Epoch's own runs of the current v2 split, Tiers 1–3 and Tier 4, as two identities (same as benchlm-frontiermathv2tiers13 / -tier4)."
+    },
+    "benchlm-tau3bench": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "tau3-banking::1.0.1",
+        "tau3-voice::snapshot-2026-09-10"
+      ],
+      "note": "2026-09-21 (iteration 157): τ³-bench is Sierra's (github.com/sierra-research/tau2-bench); Sierra's own board (taubench.com) publishes it per domain, and the registry carries its banking and voice boards. BenchLM's single τ³-Bench figure per model is an aggregator number and is not collected."
     }
   },
   "host_roles_note": "A host role is a first cut, not a verdict: an evaluator host can relay vendor numbers (cybench.github.io links system cards; artificialanalysis.ai/models pages show lab-reported values). Every family that lands in evaluator_result is therefore read by hand and recorded in family_decisions."
