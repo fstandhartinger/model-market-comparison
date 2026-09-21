@@ -37,6 +37,13 @@ test('the committed v1.2 artifact is the tagged public one and validates; the Sc
   assert.ok(winnow.costKind === 'estimate' && winnow.usd > 0 && /Apache-2.0/.test(winnow.licence));
   assert.equal(winnow.link, 'https://huggingface.co/EldanRing/Winnow-12B');
   assert.match(winnow.footnote, /cannot be independently reproduced/);
+  // CR-116: Zefan Cai's Open-Jev 2B and 9B (added in v1.2.15), named unambiguously apart from the other OpenJev projects.
+  for (const [key, display, rank, main] of [['open-jev-zefan-9b', 'Open-Jev 9B (Zefan Cai)', 44, 56.7], ['open-jev-zefan-2b', 'Open-Jev 2B (Zefan Cai)', 46, 53.8]]) {
+    const r = v.ranked.find((x) => x.key === key);
+    assert.ok(r && r.display === display && r.rank === rank && Number(r.main.toFixed(1)) === main && r.cls === 'jev-rebuild');
+    assert.ok(r.endpointKind === 'gpu' && r.costKind === 'estimate' && r.usd > 0 && r.axes.cost < 100 && /Apache-2.0/.test(r.licence) && /MIT/.test(r.licence));
+    assert.equal(r.link, 'https://github.com/Zefan-Cai/Open-Jev');
+  }
   // CR-96: the unit travels with the artifact and names what it is not, so no surface can imply per-token prices.
   assert.equal(v.costUnit.unit, '$ per 1,000 decisions');
   assert.equal(v.costUnit.not_unit, '$ per 1,000 tokens');

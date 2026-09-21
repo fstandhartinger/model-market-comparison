@@ -1510,3 +1510,12 @@ Ghita asked @airesearch12 to add zerank-2 and more rerankers; Florian replied
 “Good idea, actually / I'll do it right away” and instructed the agent to do it.
 Publish the complete open-weight cohort with one neutral, preregistered adapter,
 public-only calibration, a no-instruction baseline, and preserved prior rows.
+
+# CR-20260921g — Open-Jev 2B and 9B (Zefan Cai) entrant → CR-116
+
+Zefan Cai (@Zefan_Cai) released Open-Jev 2B and 9B, "open-source decision models" inspired by Jev.
+Florian asked @benchmarkheaven under that post whether we have scores. Florian's task: "Measure both
+the 2B and the 9B on the full v1.2 set exactly like every entrant", check whether their training data
+contains our public JevBench items ("allowed, but it must be noted, and our new held-out diagnostic will
+show the effect"), then "Publish (repo tag v1.2.x, page via BH single-writer rule, CR id = max+1, both
+hosts verified)". Name it unambiguously: "Open-Jev 2B (Zefan Cai)" / "Open-Jev 9B (Zefan Cai)".

@@ -913,3 +913,11 @@ Seeded by review gate 20260921T100004Z from the verbatim CR-108 acceptance list 
 - **CR-115.3:** Preserve the preregistered neutral mapping and public-only calibration curves.
 - **CR-115.4:** Record non-zero measured GPU cost and preserve every prior row and rule.
 - **CR-115.5:** Verify both production hosts before replying to Ghita.
+
+## CR-116 — Open-Jev 2B and 9B (Zefan Cai) entrants
+
+- **CR-116.1:** The rows arrived in JevBench v1.2.15 and are carried unchanged by the v1.2.16 artifacts pinned in CR-115 (path fixed in `55436b0`); assert them: Open-Jev 9B (Zefan Cai) 56.7 / #44 and Open-Jev 2B (Zefan Cai) 53.8 / #46, linked to github.com/Zefan-Cai/Open-Jev.
+- **CR-116.2:** Record MIT loader / Apache-2.0 adapters and bases, the remote-GPU endpoint and non-zero estimated cost; the zero-overlap training-data audit is in the JevBench release notes.
+- **CR-116.3:** Both rows appear in the held-out diagnostic under its existing convention (2B 46/111 public vs 48/109 held-out; 9B 66/111 vs 68/109; field of 49 complete systems).
+- **CR-116.4:** Preserve every score, rule and view.
+- **CR-116.5:** Verify both production hosts (`ops/ux-2026-09-12/bin/verify-cr-116.mjs`).
