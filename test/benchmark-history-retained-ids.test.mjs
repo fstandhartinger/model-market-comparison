@@ -41,3 +41,16 @@ test('a configuration that really vanished still gets an estimate', () => {
   assert.equal(out.length, 1);
   assert.equal(out[0].status, 'estimated');
 });
+
+// Iteration 160: a catalog model merged into its twin (`nemotron-3-ultra::default` → `nemotron-3-ultra-550b-a55b`)
+// leaves its board rows unjoined. Retained joined rows keep only the source label, and the label is still published.
+test('a joined row whose catalog model was merged away is not a drop-out while its label is still published', () => {
+  const label = { name: 'nemotron-3-ultra', source_id: 'nemotron-3-ultra' };
+  const old = state([...anchors(1), obs(9, 0.5, { ...label, model_id: 'nemotron-3-ultra::default' })]);
+  const live = [...anchors(1), obs(9, 0.5, label)];
+  assert.deepEqual(datedEstimates(live, registry, [old]), []);
+  // The label no longer on the board: a real drop-out, still estimated.
+  const out = datedEstimates(anchors(1.1), registry, [old]);
+  assert.equal(out.length, 1);
+  assert.equal(out[0].model_id, 'nemotron-3-ultra::default');
+});

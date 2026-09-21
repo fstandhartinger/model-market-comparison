@@ -153,6 +153,15 @@ const FAMILY_ALIASES = {
   "qwen3-235b-a22b-instruct-2507": "qwen3-235b-a22b-2507-instruct",
   "nemotron-nano-3-30b": "nemotron-3-nano-30b-a3b",
   "nemotron-3-nano-30b": "nemotron-3-nano-30b-a3b",
+  // One model each, named with and without the size suffix. OpenRouter lists
+  // nvidia/nemotron-3-ultra-550b-a55b as "Nemotron 3 Ultra" (HF
+  // NVIDIA-Nemotron-3-Ultra-550B-A55B) and nvidia/nemotron-3.5-lightning as
+  // NVIDIA-Nemotron-3.5-Lightning-30B-A3B; Meta's Llama 4 Maverick and Scout are
+  // the 17B-active 128E / 16E instruct models that Bedrock and Azure call "17B".
+  "nemotron-3-ultra": "nemotron-3-ultra-550b-a55b",
+  "nemotron-3.5-lightning-30b-a3b": "nemotron-3.5-lightning",
+  "llama-4-maverick-17b": "llama-4-maverick",
+  "llama-4-scout-17b": "llama-4-scout",
   "devstral-2": "devstral-2-123b",
   "mistral-small-3.2": "mistral-small-3.2-24b",
   // Managed-cloud catalogs write "Kimi K2.5 Thinking" without parentheses, so the
@@ -164,10 +173,11 @@ const FAMILY_ALIASES = {
 const canonFamily = (k) => {
   const exact = FAMILY_ALIASES[k];
   if (exact) return exact;
-  return k
+  const stripped = k
     .replace(/^writer-(palmyra(?:-|$))/, "$1")
     .replace(/^perplexity-(sonar(?:-|$))/, "$1")
     .replace(/^nvidia-(nemotron(?:-|$))/, "$1");
+  return FAMILY_ALIASES[stripped] || stripped;
 };
 
 // OpenRouter-routed providers that genuinely run inference inside a hardware TEE

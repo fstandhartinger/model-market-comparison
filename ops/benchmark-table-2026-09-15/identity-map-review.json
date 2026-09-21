@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-21T20:50:23.145Z",
-  "joined": 1461,
+  "generated_at": "2026-09-21T23:48:45.279Z",
+  "joined": 1457,
   "unmatched": [
     {
       "benchmark_id": "deepswe::snapshot-2026-09-15",
@@ -994,6 +994,11 @@
     },
     {
       "benchmark_id": "chess-puzzles::snapshot-2026-09-18",
+      "source_id": "nemotron-3-ultra",
+      "reason": "family nemotron-3-ultra not in the catalog"
+    },
+    {
+      "benchmark_id": "chess-puzzles::snapshot-2026-09-18",
       "source_id": "MiniMax-M3_none",
       "reason": "family MiniMax-M3_none not in the catalog"
     },
@@ -1839,6 +1844,11 @@
     },
     {
       "benchmark_id": "mystery-game-puzzles::snapshot-2026-09-18",
+      "source_id": "nemotron-3-ultra",
+      "reason": "family nemotron-3-ultra not in the catalog"
+    },
+    {
+      "benchmark_id": "mystery-game-puzzles::snapshot-2026-09-18",
       "source_id": "gpt-5.6-terra_none",
       "reason": "family gpt-5.6-terra_none not in the catalog"
     },
@@ -2286,6 +2296,11 @@
       "benchmark_id": "epoch-gpqa-diamond::snapshot-2026-09-18",
       "source_id": "inkling-small_xhigh",
       "reason": "no catalog configuration inkling-small::xhigh"
+    },
+    {
+      "benchmark_id": "epoch-gpqa-diamond::snapshot-2026-09-18",
+      "source_id": "nemotron-3-ultra",
+      "reason": "family nemotron-3-ultra not in the catalog"
     },
     {
       "benchmark_id": "epoch-gpqa-diamond::snapshot-2026-09-18",
@@ -7781,6 +7796,11 @@
       "benchmark_id": "toolathlon-verified::2026-06-30",
       "source_id": "Qwen3.5 397B-A17B",
       "reason": "setting not stated and qwen3.5-397b-a17b has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "toolathlon-verified::2026-06-30",
+      "source_id": "Nemotron 3 Ultra",
+      "reason": "slug nemotron-3-ultra is not a catalog family"
     },
     {
       "benchmark_id": "toolathlon-verified::2026-06-30",

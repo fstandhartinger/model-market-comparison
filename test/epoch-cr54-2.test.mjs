@@ -106,7 +106,9 @@ test('CR-54.2: Benchmaxxing tiers are deliberate', () => {
 test('CR-54.2: every join re-derives from the slug and lands on an existing configuration', () => {
   const catalog = new Map(json('data/dataset.json').models.map((m) => [m.id, m]));
   const map = json('data/raw/benchmarks/identity-map.json').entries.filter((e) => e.benchmark_id in IDS);
-  assert.equal(map.length, 186, String(map.length));
+  // Iteration 160: 186 → 183, the three `nemotron-3-ultra` rows unjoined once that family merged into
+  // `nemotron-3-ultra-550b-a55b` (single `::reasoning` configuration; the label states no setting).
+  assert.equal(map.length, 183, String(map.length));
   const counts = Object.fromEntries(Object.keys(IDS).map((id) => [id, 0]));
   for (const e of map) {
     counts[e.benchmark_id] += 1;
@@ -118,11 +120,11 @@ test('CR-54.2: every join re-derives from the slug and lands on an existing conf
     assert.match(e.rule, /./, 'every join names its reviewed rule');
   }
   assert.deepEqual(counts, {
-    'chess-puzzles::snapshot-2026-09-18': 58,
-    'mystery-game-puzzles::snapshot-2026-09-18': 37,
+    'chess-puzzles::snapshot-2026-09-18': 57,
+    'mystery-game-puzzles::snapshot-2026-09-18': 36,
     'ebr-bench::snapshot-2026-09-18': 14,
     'mirrorcode::snapshot-2026-09-18': 5,
-    'epoch-gpqa-diamond::snapshot-2026-09-18': 63,
+    'epoch-gpqa-diamond::snapshot-2026-09-18': 62,
     'epoch-swe-bench-verified::snapshot-2026-09-18': 9,
   });
   // Fail closed: dated checkpoint slugs and unstated efforts on multi-configuration families are not rewritten.
@@ -130,8 +132,8 @@ test('CR-54.2: every join re-derives from the slug and lands on an existing conf
   assert.ok(!map.some((e) => e.source_id === 'qwen3-30b-a3b-thinking-2507'));
   const scores = json('data/raw/benchmarks/scores.json').observations;
   const joined = scores.filter((o) => o.benchmark_id in IDS && o.subject.model_id);
-  assert.equal(joined.length, 189, String(joined.length));
-  // 186 reviewed-map rows + MiniMax-M3 on three boards: 'MiniMax-M3' is the catalog display name and
+  assert.equal(joined.length, 186, String(joined.length));
+  // 183 reviewed-map rows + MiniMax-M3 on three boards: 'MiniMax-M3' is the catalog display name and
   // parseDeepSweId fails closed on the case, so only the documented exact-name bridge may join it.
   const mapKeys = new Set(map.map((e) => `${e.benchmark_id}\0${e.source_id}`));
   const bridged = joined.filter((o) => !mapKeys.has(`${o.benchmark_id}\0${o.subject.source_id}`));

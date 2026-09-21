@@ -62,12 +62,13 @@ test('Toolathlon-Verified joins: exact catalog configurations only, the agent co
   assert.deepEqual(parseToolathlonVerifiedLabel('anthropic/claude-opus-5'), { family: null, effort: null }, 'a slug-shaped label is not this board\'s format');
   const map = JSON.parse(readFileSync('data/raw/benchmarks/identity-map.json', 'utf8')).entries
     .filter((e) => e.benchmark_id === 'toolathlon-verified::2026-06-30');
-  assert.equal(map.length, 18, 'eighteen of the twenty-five rows join an exact catalog configuration');
+  // Iteration 160: 18 → 17 — `Nemotron 3 Ultra` states no setting and its family's only configuration is `::reasoning`.
+  assert.equal(map.length, 17, 'seventeen of the twenty-five rows join an exact catalog configuration');
   const ids = new Set(map.map((e) => e.model_id));
   assert.ok(ids.has('kimi-k3::max') && ids.has('deepseek-v4-pro-0813::max') && ids.has('inkling::xhigh'));
-  // The seven refusals: a stated setting the catalog does not hold for that family, or no setting at
-  // all where the family has more than one configuration. None of them is guessed.
-  assert.ok(![...ids].some((id) => /^(glm-5\.3-flash|gemini-3\.5-flash-lite|hy3|inkling-small|kimi-k2\.6|kimi-k2\.5|qwen3\.5-397b-a17b)::/.test(id)));
+  // The eight refusals: a stated setting the catalog does not hold for that family, or no setting at
+  // all where the family has more than one configuration or only a non-default one. None of them is guessed.
+  assert.ok(![...ids].some((id) => /^(glm-5\.3-flash|gemini-3\.5-flash-lite|hy3|inkling-small|kimi-k2\.6|kimi-k2\.5|qwen3\.5-397b-a17b|nemotron-3-ultra(-550b-a55b)?)::/.test(id)));
 });
 
 test('Toolathlon-Verified is registered as its own series, separate from the archived board', () => {
