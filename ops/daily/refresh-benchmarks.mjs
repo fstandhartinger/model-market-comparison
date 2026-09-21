@@ -44,6 +44,47 @@ export function protocolReviewRow(entry) {
     maintainer: entry.maintainer };
 }
 
+// CR-38.1 (iteration-150 follow-up): the AA protocol arm reviews a board's entry only when the
+// field behind it changed in today's captured model-page payload, so the packet may carry the
+// run's own evidence that the maintainer is still publishing — the count of model rows whose
+// value for that field was added or changed today, computed from today's capture against the
+// previously published snapshot. AA's methodology text never says "this board is still
+// reported"; its served payload does (iteration 150: the critic read the text alone and could
+// not settle `status: "active"` for any active board, freezing the AA arm). Values turning null
+// are recorded separately (`removed`): a board being wound down also edits its field, so only
+// added or changed *values* count as affirmative evidence — never the removals.
+export function aaFieldActivity(rootField, changedRows, oldBySourceId) {
+  let added = 0, changedValues = 0, removed = 0;
+  const models = new Set();
+  for (const row of changedRows) {
+    const before = oldBySourceId.get(row.source_id);
+    const had = before ? Object.hasOwn(before.fields ?? {}, rootField) : false;
+    const has = Object.hasOwn(row.fields ?? {}, rootField);
+    const next = has ? row.fields[rootField] : undefined;
+    const previous = had ? before.fields[rootField] : undefined;
+    if (had === has && equal(next, previous)) continue;
+    models.add(row.source_id);
+    if (next == null) { removed++; continue; }
+    if (!had || previous == null) added++; else changedValues++;
+  }
+  return { field: rootField, models: models.size, added, changed: changedValues, removed, affirmative: added + changedValues };
+}
+
+// The activity summary rides the same receipt as the capture it was computed from, so the
+// packet's hash chain is unchanged; its locator states plainly that the text is generated.
+export function aaActivitySource(receipt, activity) {
+  const content = [
+    `Generated activity summary for the maintainer's source field "${activity.field}".`,
+    `This run compared today's captured Artificial Analysis model-page payload (sha256 ${receipt.sha256}, retrieved ${receipt.retrieved_at ?? receipt.fetched_at}) with the previously published snapshot and found ${activity.models} model row(s) whose "${activity.field}" value differs today: ${activity.added} value(s) on model rows that had none before, ${activity.changed} changed value(s), ${activity.removed} value(s) newly null.`,
+    activity.affirmative > 0
+      ? 'A maintainer adding or changing the values it serves for this field is still running and reporting this board.'
+      : 'Today shows no added or changed values (only removals or no change), so this summary does not by itself establish that the board is still being reported.',
+  ].join(' ');
+  return { url: receipt.url, file: receipt.file, sha256: receipt.sha256,
+    retrieved_at: receipt.retrieved_at ?? receipt.fetched_at, published_at: null,
+    locator: `${activity.models} model row(s) changed on the maintainer's board today; generated summary of this run's own capture comparison, not maintainer text`, content };
+}
+
 // Full short sources are supplied. For long pages, only an unchanged, exact previously reviewed
 // protocol passage may establish continuity. A page that publishes its own LLM prompts (MathArena's
 // /arxivmath and /brokenarxiv: "Respond only with a JSON object: {keep: boolean}") is reviewed on its
@@ -63,7 +104,7 @@ export const protocolSourceLocator = (reference) => reference.review_content ===
 
 export const PROTOCOL_REVIEW_CRITERIA = [
   'Check the registry version, benchmark identity, metric, units and description against the actual current primary protocol. If the excerpt cannot establish continuity, report missing evidence. A changed task set, harness, judges, configuration or release version cannot silently reuse the existing identity.',
-  'Check the lifecycle fields (status, version_status, superseded_by) against the same protocol text. `status` records whether the maintainer still reports results for this board: `"active"` means it still publishes them; `"retained"` means the protocol shows the board retired, removed, or replaced going forward, and we keep the values already collected without claiming they are current. `superseded_by` holds **our registry id for the successor board**, not a quotation: check that the protocol names that successor, and do not expect this board\'s protocol passage to establish the successor\'s version — that version is settled by the successor\'s own registry entry and its own evidence. Read status and supersession independently: a board can be superseded in one index and still be reported in another, and a supersession note alone is not a retirement. Report a mismatch when the protocol text contradicts one of these fields, and missing evidence when the excerpt cannot settle it. These fields are the row\'s only statement about whether the board is still live; judge them, and judge nothing else as such a statement.',
+  'Check the lifecycle fields (status, version_status, superseded_by) against the same protocol text. `status` records whether the maintainer still reports results for this board: `"active"` means it still publishes them; `"retained"` means the protocol shows the board retired, removed, or replaced going forward, and we keep the values already collected without claiming they are current. `superseded_by` holds **our registry id for the successor board**, not a quotation: check that the protocol names that successor, and do not expect this board\'s protocol passage to establish the successor\'s version — that version is settled by the successor\'s own registry entry and its own evidence. Read status and supersession independently: a board can be superseded in one index and still be reported in another, and a supersession note alone is not a retirement. Report a mismatch when the protocol text contradicts one of these fields, and missing evidence when the excerpt cannot settle it. These fields are the row\'s only statement about whether the board is still live; judge them, and judge nothing else as such a statement. When the packet additionally carries this run\'s own generated summary of how many model rows\' values for this board\'s source field were added or changed in today\'s captured maintainer payload compared with the previously published snapshot, a nonzero count of added or changed values is affirmative evidence for `status: "active"` for this board only — a maintainer serving new or changed values is still reporting them; that summary settles nothing about the methodology, task set, harness, judges or version, and it can never establish `"retained"`.',
 ];
 
 // One archive can carry several sources, so a member is keyed by URL and member name.
@@ -190,8 +231,12 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
   // Protocol evidence is deliberately separate from result rows. A changed
   // methodology needs a clean review before the existing identity can be reused.
   const protocolCache = new Map();
-  async function protocol(entry) {
-    if (protocolCache.has(entry.id)) return protocolCache.get(entry.id);
+  // `extra.activity` (only set by the AA-field arm below) attaches this run's own
+  // added/changed-value summary; the cache key includes its field so two fields on one
+  // entry each get their own review, and a plain call never reads a field-tagged one.
+  async function protocol(entry, extra = null) {
+    const cacheKey = extra?.activity ? `${entry.id}#${extra.activity.field}` : entry.id;
+    if (protocolCache.has(cacheKey)) return protocolCache.get(cacheKey);
     const references = (entry.evidence ?? []).filter((s) => !s.source_sha256 && !/literal field/.test(s.excerpt ?? ''));
     if (!references.length) references.push({ url: entry.primary_url });
     const sources = [];
@@ -200,11 +245,12 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
       const content = protocolSourceContent(entry.id, reference, await textSource(receipt, reference.recipe));
       sources.push({ ...receipt, content: bounded(content, entry.id), locator: protocolSourceLocator(reference) });
     }
+    if (extra?.activity) sources.push(aaActivitySource(extra.receipt, extra.activity));
     const reviewed = await review({ runDir: evidenceDir, artifactId: `protocol-${entry.id}`, rows: [protocolReviewRow(entry)],
       sources, criteria: PROTOCOL_REVIEW_CRITERIA });
     reviews.push({ scope: entry.id, type: 'protocol', ...reviewed.manifest });
     if (!reviewed.accepted || reviewed.fingerprints.length !== 1) throw new Error(`${entry.id}: protocol not approved: ${reviewed.errors.join('; ')}`);
-    protocolCache.set(entry.id, sources);
+    protocolCache.set(cacheKey, sources);
     entry.last_verified = day;
     return sources;
   }
@@ -224,7 +270,12 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
       // Only the identity whose window holds this snapshot is reviewed; a retained predecessor of a
       // re-versioned field (its passage gone from AA's page) never reads the new snapshot.
       const affected = registry.aa_field_map.filter((m) => fields.has(m.field.split('.')[0]) && aaMappingApplies(m, next.collected_at));
-      for (const mapping of affected) await protocol(registry.entries.find((e) => e.id === mapping.benchmark_id));
+      for (const mapping of affected) {
+        // This arm only runs for a field whose values changed today, so the summary is a real
+        // fact of today's capture. Retained boards never see it: their fields do not change.
+        const activity = aaFieldActivity(mapping.field.split('.')[0], changed, old);
+        await protocol(registry.entries.find((e) => e.id === mapping.benchmark_id), { activity, receipt });
+      }
       const records = flightRecords(html), native = new Map();
       const resolveAll = (v) => { v = resolveFlight(v, records); return Array.isArray(v) ? v.map(resolveAll) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, resolveAll(x)])) : v; };
       for (const record of records.values()) for (const obj of objects(record)) if (obj.id && obj.slug && Object.hasOwn(obj, 'intelligenceIndex')) native.set(obj.id, obj);
