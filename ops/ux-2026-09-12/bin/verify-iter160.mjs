@@ -70,6 +70,8 @@ try {
       await settle(p);
       const box = p.getByLabel('Include results not matched to a catalog model');
       if (await box.count()) { await box.check(); await p.waitForTimeout(800); }
+      await p.getByPlaceholder('Model or creator').fill('Nemotron 3 Ultra');
+      await p.waitForTimeout(800);
       const rank = await p.locator('main').innerText().catch(() => '');
       check(`${tag}: SimpleBench ranking still lists Nemotron 3 Ultra with 41.7 (unmatched)`, /Nemotron 3 Ultra[\s\S]{0,200}41\.7/.test(rank), (rank.match(/[^\n]*Nemotron 3 Ultra[^\n]*\n?[^\n]*/) ?? [''])[0]);
       await p.screenshot({ path: `${OUT}/${tag}-ranking.png` }).catch(() => {});
