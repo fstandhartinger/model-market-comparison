@@ -12,7 +12,11 @@ export function humanVersion(version: string): HumanVersion {
   if (snapshot) return { kind: "snapshot", date: snapshot[1], label: `published ${snapshot[1]}` };
   // A date-only release name (LiveBench `2026-06-25`) reads as the date, never `v2026-06-25`.
   if (/^\d{4}-\d{2}-\d{2}$/.test(version)) return { kind: "semantic", label: version };
-  return { kind: "semantic", label: /^v/i.test(version) ? version : `v${version}` };
+  // Named release identities (`8-needle`, `opt1-102`, `release-v1`) are not semantic
+  // versions. Prefixing them with `v` makes the UI claim a release convention the source
+  // did not publish. Keep the `v` shorthand only for numeric release versions.
+  const numericRelease = /^(?:v)?\d+(?:\.\d+)*$/i.test(version);
+  return { kind: "semantic", label: numericRelease && !/^v/i.test(version) ? `v${version}` : version };
 }
 
 /** Sentence-start form for "Version …" positions: "Published 2026-09-13" or "Version 2". */

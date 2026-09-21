@@ -6461,5 +6461,11 @@ Gates: focused tests 19/19 (registry, lifecycle pin updated for the 8 arxivmath 
 
 | Scope | Status | Evidence | Note |
 |---|---|---|---|
-| CR-113.1–113.5 | implemented | `ops/ux-2026-09-12/jevbench/v1.2.14/`; `ops/ux-2026-09-12/bin/verify-cr-113.mjs` | JevBench v1.2.14 pinned; Winnow-12B Q8 is 72.5 / #5 with licence, endpoint, cost and private-training limitation recorded. Awaiting deployment and both-host verification. |
+| CR-113.1–113.5 | verified | `/opt/benchmarkheaven/state/ux-evidence/review-20260921T183003Z/cr113/`; `ops/ux-2026-09-12/bin/verify-cr-113.mjs` | **Review gate 20260921T183003Z (codex-luna, non-implementer):** v1.2.14 revision, Winnow-12B Q8 72.5 / #5, provenance, cost and preserved rows passed 34/34 across both production hosts; responsive desktop/mobile light/dark supplement passed 16/16 with no page errors or overflow. |
 
+## Review gate 20260921T183003Z — codex-luna
+
+- Scope: post-`REVIEW-20260921T154003Z` commits through `8d28272`, plus the small version-label correction recorded in the gate commit. The detailed report is `REVIEW-20260921T183003Z.md`.
+- Gates: `build-dataset` completed (`844` models / `664` families / `95` providers / `2886` offers; generated timestamps restored), `npm test` **1032 pass / 0 fail / 1 skip**, `tsc` clean, `npm run build` clean, `git diff --check` clean.
+- Independent live evidence: CR-113 `34/34` combined plus responsive `16/16`; iteration 153 `60/60` per host; Context Arena `27/27` per host; Blueprint-Bench `43/43` per host; CR-63.21 `22/22` per host; Fable pass 28 `30/30` per host. Both production hosts reported revision `8d28272…` before the gate fix was pushed.
+- The Context Arena and Blueprint-Bench additions remain **in-progress** at the parent CR rows because their remaining planned-family and source follow-up work is not complete. CR-38.1, CR-62.4, CR-73.5, CR-85.1, CR-85.2, CR-34.5 and the other X6 blockers remain open/in-progress as described in the review. X6 is not passed; `ALL-ACCEPTED` is not appended.

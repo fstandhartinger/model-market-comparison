@@ -6,6 +6,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { isPin } from '../lib/version-pin.mjs';
 import { versionLine } from '../lib/benchmark-matrix.mjs';
+import { humanVersion } from '../lib/version-label.ts';
 
 test('a hash is a pin; a numeric, semantic, dated or snapshot version is not', () => {
   assert.equal(isPin('74221fb'), true, 'the AA Terminal-Bench Hard identity');
@@ -37,6 +38,13 @@ test('the table row prints no "Version" for a pin; the result page names the rev
   const snapshot = { version: 'snapshot-2026-09-10 (unversioned)', asOf: '2026-09-18', freshness: null };
   assert.equal(snapshot.version.startsWith('snapshot-'), true);
   assert.equal(versionLine(snapshot, true), 'values as published on 2026-09-18');
+});
+
+test('named release identities are not given a fabricated v prefix', () => {
+  assert.equal(humanVersion('8-needle').label, '8-needle');
+  assert.equal(humanVersion('opt1-102').label, 'opt1-102');
+  assert.equal(humanVersion('release-v1').label, 'release-v1');
+  assert.equal(humanVersion('4.0').label, 'v4.0');
 });
 
 test('the result page drops the org line when it only repeats the model name', () => {
