@@ -41,10 +41,11 @@ function RowTags({ tags, row }: { tags: Matrix["tags"]; row: MatrixRow }) {
   const extraNames = extra.map((t) => tags[t]?.label ?? t).join(", ");
   return <>
     {ids.slice(0, MATRIX_TAG_CAP).map((t) => <Tag key={t} id={t} tags={tags} row={row} />)}
+    {/* F-155 (pass 29): the revealed chips come before the toggle, so an opened row reads chips → "less", not "less" → chips. */}
+    <span className="bh-matrix-tagcap-extra" data-open={open || undefined}>{extra.map((t) => <Tag key={t} id={t} tags={tags} row={row} />)}</span>
     <button type="button" className="bh-matrix-tagcap" aria-expanded={open}
       title={open ? "Show fewer tags" : `Show ${extra.length} more tag${extra.length === 1 ? "" : "s"}: ${extraNames}`}
       onClick={() => setOpen((v) => !v)}>{open ? "less" : `+${extra.length}`}</button>
-    <span className="bh-matrix-tagcap-extra" data-open={open || undefined}>{extra.map((t) => <Tag key={t} id={t} tags={tags} row={row} />)}</span>
   </>;
 }
 
