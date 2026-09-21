@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { jevbenchV12HeldoutView } from '../lib/jevbench-v12-heldout.mjs';
 
-const artifact = JSON.parse(await readFile(new URL('../ops/ux-2026-09-12/jevbench/v1.2.10/jevbench-v1.2-per-task.json', import.meta.url)));
+const artifact = JSON.parse(await readFile(new URL('../ops/ux-2026-09-12/jevbench/v1.2.14/jevbench-v1.2-per-task.json', import.meta.url)));
 
 test('hard held-out diagnostic recomputes from frozen answers and totals', () => {
   const view = jevbenchV12HeldoutView(artifact);

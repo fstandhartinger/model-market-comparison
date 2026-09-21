@@ -1497,3 +1497,9 @@ Aditya, X DM to @airesearch12, 21 Sep 09:49 (216 followers, joined April 2020), 
 Florian accepted the request:
 
 > Add this https://github.com/isHeSatoshi/smalljev
+# CR-20260921e — Winnow-12B entrant → CR-113
+
+Eldan asked @airesearch12 to benchmark the newly released Winnow-12B Gemma 4
+fine-tune. Florian accepted and asked us to take care of it: full v1.2 run,
+licence and public-item-training disclosure, publication after the single-writer
+lane clears, both hosts verified, then a short result DM.

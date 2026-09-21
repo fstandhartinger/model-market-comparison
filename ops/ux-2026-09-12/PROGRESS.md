@@ -6457,4 +6457,9 @@ Gates: focused tests 19/19 (registry, lifecycle pin updated for the 8 arxivmath 
 - **Live:** `verify-iter155.mjs` 43/43 on each host at `a705424` (after the switchover minute), `/opt/benchmarkheaven/state/ux-evidence/iter155/live/`.
 - **Non-claude review of this iteration's code:** opencode-kimi on `48cd958` + `a705424` — SIGN-OFF, defects none, all 26 values re-derived from the capture (`/opt/benchmarkheaven/state/ux-evidence/iter155/kimi-review-48cd958.txt`).
 - **Next:** (1) after the 2026-09-22 05:17 run: the CR-38.1 receipt, CR-73.5 timing, the CR-85.1 digest; Blueprint-Bench 2 should report `checked_unchanged`. (2) The design gate decides the unmatched-rows widening above. (3) Remaining CR-37.1: Drone-Bench chart data, WebArena-x (low).
+# CR-113 — 2026-09-21: Winnow-12B Q8 entrant
+
+| Scope | Status | Evidence | Note |
+|---|---|---|---|
+| CR-113.1–113.5 | implemented | `ops/ux-2026-09-12/jevbench/v1.2.14/`; `ops/ux-2026-09-12/bin/verify-cr-113.mjs` | JevBench v1.2.14 pinned; Winnow-12B Q8 is 72.5 / #5 with licence, endpoint, cost and private-training limitation recorded. Awaiting deployment and both-host verification. |
 

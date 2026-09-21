@@ -897,3 +897,11 @@ Seeded by review gate 20260921T100004Z from the verbatim CR-108 acceptance list 
 - **CR-112.3:** Describe djev as an inference method on DiffusionGemma, not a separately trained model; treat djev-spark as an alternate structured-read runtime, not a separate checkpoint.
 - **CR-112.4:** Preserve every score, rank, outcome and other system field.
 - **CR-112.5:** Verify the correction on both production hosts after deployment.
+
+## CR-113 — Winnow-12B Q8 entrant
+
+- **CR-113.1:** Pin JevBench v1.2.14 results, per-task and topic artifacts by SHA-256.
+- **CR-113.2:** Publish Winnow-12B Q8 at 72.5 / #5 with its Hugging Face link.
+- **CR-113.3:** Record Apache-2.0 Gemma 4 terms, the remote-GPU endpoint, measured latency, non-zero estimated cost and the private-training audit limitation.
+- **CR-113.4:** Preserve the upstream v1.2.12/v1.2.13 thinking rows, every prior score, the held-out diagnostic, hard-only view and scoring rules.
+- **CR-113.5:** Verify both production hosts after deployment.
