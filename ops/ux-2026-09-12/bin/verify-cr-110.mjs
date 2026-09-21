@@ -18,7 +18,7 @@ for (const host of hosts) {
   if (!certo || certo.listing !== 'ranked' || certo.rank !== 12 || certo.jevbench_score.toFixed(1) !== '68.2') throw new Error(`${host}: Certo rank/score`);
   if (certo.cost.kind !== 'estimate' || !(certo.cost.usd_per_1000 > 0) || certo.licence !== 'MIT') throw new Error(`${host}: Certo provenance/cost`);
   checks += 3;
-  for (const text of ['Certo v1 (AltSlate Labs)', '68.2', 'https://huggingface.co/altslate/certo-decision-model', 'held-out-diagnostic', 'Public-split training policy', 'Hard only', 'custom eval on your data?']) {
+  for (const text of ['Certo v1 (AltSlate Labs)', '68.2', 'https://huggingface.co/altslate/certo-decision-model', 'held-out-diagnostic', 'Public-split policy.', 'Hard only', 'custom eval on your data?']) {
     if (!html.includes(text)) throw new Error(`${host}: missing surface ${text}`);
     checks += 1;
   }
