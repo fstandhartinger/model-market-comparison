@@ -463,8 +463,9 @@ def parse(source,spec,load_source):
     elif kind=='vulcanbench_frontier_csv':
         # VulcanBench Frontier v4 (Morgan Linton): the published board CSV (assets/data/swe-v4-board.csv) is the
         # same table leaderboard.html renders — one row per model x effort column. Guards: the exact 18-column
-        # header, 23 tasks in every row, the stated harness/effort enums and one frozen protocol family. A
-        # renamed/renumbered suite or another protocol family is a different identity and fails closed.
+        # header, 23 tasks in every published row, the stated harness/effort enums and one frozen protocol family
+        # on every row. A renamed/renumbered suite or another protocol family is a different identity and fails
+        # closed.
         parsed=csvrows(source)
         header=['rank','model','lab','harness','effort','best_effort','n','combined_33','combined_33_se','code_quality','passed','mean_minutes','mean_usd','mean_raw_tokens','median_output_tokens','mean_output_tokens','report','protocol']
         if list(parsed[0].keys() if parsed else [])!=header:raise ValueError('VulcanBench Frontier CSV header changed')
@@ -476,12 +477,14 @@ def parse(source,spec,load_source):
             # combined score then has a different denominator, so such a row is withheld rather than compared
             # with the full-suite rows. A row claiming *more* than 23 tasks is a different suite and still
             # fails closed, as does an implausible count of partial rows.
-            if r.get('n')!='23':
-                if not re.fullmatch(r'\d{1,2}',r.get('n') or '') or not 1<=int(r['n'])<23:raise ValueError(f"VulcanBench Frontier row {index}: task count changed ({r.get('n')!r})")
-                partial.append(f"{r.get('model')} [{r.get('effort')}] n={r['n']}");continue
             if r.get('harness') not in ('Codex','Claude Code'):raise ValueError(f"VulcanBench Frontier row {index}: harness {r.get('harness')!r} is not a stated harness")
             if r.get('effort') not in ('low','medium','high','extra-high','max'):raise ValueError(f"VulcanBench Frontier row {index}: effort {r.get('effort')!r} not stated")
             if not r.get('protocol','').startswith('code-quality-maintenance-v3'):raise ValueError(f"VulcanBench Frontier row {index}: protocol family changed ({r.get('protocol')!r})")
+            # The identity guards above apply to every row on the board; only the denominator decides whether a
+            # row may be published beside the full-suite ones.
+            if r.get('n')!='23':
+                if not re.fullmatch(r'\d{1,2}',r.get('n') or '') or not 1<=int(r['n'])<23:raise ValueError(f"VulcanBench Frontier row {index}: task count changed ({r.get('n')!r})")
+                partial.append(f"{r.get('model')} [{r.get('effort')}] n={r['n']}");continue
             rows.append({'name':f"{r['model']} [{r['effort']}]",'id':f"{r['model']} [{r['effort']}]",'combined_33':r['combined_33'],'source_row':index,'harness':r['harness'],
                 'context':{'model':r['model'],'lab':r['lab'],'harness':r['harness'],'effort':r['effort'],'n_tasks':int(r['n']),'tasks_passed':int(r['passed']),
                     'combined_33_se':float(r['combined_33_se']),'code_quality':float(r['code_quality']),'mean_minutes':float(r['mean_minutes']),'mean_usd':float(r['mean_usd']),
