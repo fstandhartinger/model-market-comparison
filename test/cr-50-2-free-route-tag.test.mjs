@@ -36,6 +36,7 @@ test('CR-50.2: degraded, stealth-preview, non-OpenRouter and stale routes are no
   assert.equal(isCurrentFreeRoute(free(), stale), false);
   assert.equal(isCurrentFreeRoute(free(), { snapshotDate: '2026-09-18', generatedAt: '2026-09-21T00:00:00Z' }), true);
   assert.equal(isCurrentFreeRoute(free(), {}), false, 'an unknown snapshot date is unconfirmed');
+  assert.equal(isCurrentFreeRoute(free(), { snapshotDate: '2026-09-23', generatedAt: '2026-09-21T11:43:44.634Z' }), false, 'a snapshot dated after the build is unconfirmed (Codex P2)');
 });
 
 test('CR-50.2: a paid route is never a free route', () => {
