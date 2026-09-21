@@ -1482,3 +1482,9 @@ Florian, 21 Sep 2026, verbatim:
 > Genauigkeit und Abstand auf den zurückgehaltenen Aufgaben der harten Stufe in einer Detailansicht zeigen, nicht in der Haupttabelle — so machen wirs.
 
 Approved option A from `/home/flori/jobs/jevbench-contamination-check-20260920/RESULT.md`: add a methodology/detail disclosure, not a main-table column. For every system it shows hard held-out accuracy, public-minus-held-out gap and its 95% interval, both item counts, and the complete-field mean gap. Compute every value from the frozen v1.2.8 per-task answers and totals in repository code. Explain the roughly ±9-point noise at about 110 items per side, that only an outlier against the field is meaningful, and that not public is not necessarily unseen because hosted APIs received held-out items. Use no accusation or contamination label. Publish the public-split training and refresh policy on the page and in README.
+## CR-20260921c (JevBench) → CR-110 — Certo v1 entrant
+
+Florian's accepted instruction in the existing X DM, 21 Sep 2026, verbatim:
+> Yes, including it in the benchmark
+
+Publish AltSlate Labs' Certo v1 full v1.2 measurement, without changing earlier scores or the frozen task set. Preserve the CR-109 held-out methodology view and split policy. Verify both live hosts before replying to the entrant.

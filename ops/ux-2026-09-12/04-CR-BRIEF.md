@@ -863,3 +863,10 @@ Link (exact, do not change): https://donate.stripe.com/fZu00i9ro0wmdF88sg1Jm01. 
 - **CR-109.3 Neutral reading.** One short paragraph says about 110 items means roughly ±9 points of noise, only a field outlier is meaningful, and hosted APIs received held-out items. No accusation and no contaminated label.
 - **CR-109.4 Policy.** Page and README say training on the public split is allowed and should be declared, held-out results are separate, held-out is not guaranteed unseen, and fresh tasks are issued periodically.
 - **CR-109.5 Verify.** Full tests, typecheck and production build; both live hosts at desktop and phone widths, diagnostic data and policy visible, no horizontal page overflow or browser errors.
+## CR-20260921c checklist — Certo v1 entrant (CR-110)
+
+- **CR-110.1 Pinned release.** Pin the three public artifacts from JevBench tag `v1.2.9` by SHA-256.
+- **CR-110.2 Entrant row.** Certo v1 is linked to its model repository and shown at 68.2, rank #12.
+- **CR-110.3 Honest conditions.** Keep its local-GPU endpoint, MIT licence, measured speed and non-zero estimated cost basis.
+- **CR-110.4 No collateral changes.** Earlier scores, rules, hard view, CR-109 held-out diagnostic and split policy stay intact.
+- **CR-110.5 Verify.** Full tests, typecheck and production build; both live hosts verified before the entrant DM.

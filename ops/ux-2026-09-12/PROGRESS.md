@@ -6321,3 +6321,8 @@ Gates: focused tests 19/19 (registry, lifecycle pin updated for the 8 arxivmath 
 | ID | Requirement (short) | Status | Evidence | Notes |
 |---|---|---|---|---|
 | CR-109.1–109.5 | Derived hard public/held-out detail, neutral interpretation, policy on page + README, live verification | in-progress | `lib/jevbench-v12-heldout.mjs`; `test/jevbench-heldout.test.mjs` | Codex supervisor job; UX loop paused via `/opt/benchmarkheaven/state/ux/paused-until`. Florian's decision is recorded verbatim in the change-request file. |
+## CR-110 — 2026-09-21: Certo v1 entrant
+
+| ID | Requirement (short) | Status | Evidence | Notes |
+|---|---|---|---|---|
+| CR-110.1–110.5 | Pin v1.2.9, add Certo at 68.2/#12, preserve held-out detail, verify both hosts | in-progress | `ops/ux-2026-09-12/jevbench/v1.2.9/`; `ops/ux-2026-09-12/bin/verify-cr-110.mjs` | Florian's prior DM acceptance is recorded verbatim; UX loop paused via `paused-until`. |
