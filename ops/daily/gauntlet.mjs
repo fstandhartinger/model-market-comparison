@@ -102,11 +102,17 @@ function validateRows(rows) {
 // cannot review; three 300 s router timeouts (the 06:07 run that motivated CR-67.3) are evidence that it is unwell,
 // and those stay global. A record without a `role` is treated as global, so an older or truncated log never widens
 // what a route is offered.
+// 2026-09-21 (iteration 156): a bare `fetch failed` — the connection dropped before any answer — costs seconds, not the
+// 600 s a timeout does, so a paid OpenRouter worker gets the same one retry per run for it (global, both roles share
+// the strike). Evidence: in the 12:41 dry run a network episode dropped three paid calls in 45 min; the last producer
+// (GLM, 14:05) was excluded after one drop and every later score batch failed "No supported viable worker model
+// found" — 0/21 changed score rows accepted. Timeouts, empty completions and free router routes stay single-strike.
 const MALFORMED_OUTPUT = /malformed/i;
+const CONNECTION_DROP = /^fetch failed$/i;
 export const WORKER_ROLES = ['producer', 'critic'];
 export function excludedWorkerModels(records, { role = null } = {}) {
   if (role !== null && !WORKER_ROLES.includes(role)) throw new Error(`Unknown worker role ${role}`);
-  const malformed = new Map();
+  const malformed = new Map(), dropped = new Map();
   const excluded = new Set();
   for (const record of records) {
     if (typeof record?.model !== 'string') continue;
@@ -114,6 +120,11 @@ export function excludedWorkerModels(records, { role = null } = {}) {
     const contentOnly = MALFORMED_OUTPUT.test(record.reason ?? '')
       && WORKER_ROLES.includes(record.role) && role !== null && record.role !== role;
     if (contentOnly) continue;
+    if (CONNECTION_DROP.test(record.reason ?? '') && !record.model.startsWith('chutes/')) {
+      dropped.set(record.model, (dropped.get(record.model) ?? 0) + 1);
+      if (dropped.get(record.model) >= 2) excluded.add(record.model);
+      continue;
+    }
     if (!MALFORMED_OUTPUT.test(record.reason ?? '') || record.model.startsWith('chutes/')) { excluded.add(record.model); continue; }
     malformed.set(record.model, (malformed.get(record.model) ?? 0) + 1);
     if (malformed.get(record.model) >= 2) excluded.add(record.model);

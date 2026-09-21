@@ -42,6 +42,24 @@ test('CR-73.4: a content failure is scoped to the role that produced it; transpo
   assert.throws(() => excludedWorkerModels(records, { role: 'reviewer' }), /Unknown worker role/);
 });
 
+test('iteration 156: a paid worker survives one bare connection drop per run; the strike is shared across roles', () => {
+  const GLM = 'z-ai/glm-5.3-flash';
+  const drop = (model, role) => ({ model, role, reason: 'fetch failed' });
+  // The 21 Sep 12:41 run: GLM's single 14:05 drop left no producer for any later score batch.
+  assert.deepEqual(excludedWorkerModels([drop(GLM, 'producer')], { role: 'producer' }), []);
+  assert.deepEqual(excludedWorkerModels([drop(GLM, 'producer')], { role: 'critic' }), []);
+  // A second drop in either role excludes it everywhere for the rest of the run.
+  assert.deepEqual(excludedWorkerModels([drop(GLM, 'producer'), drop(GLM, 'critic')], { role: 'producer' }), [GLM]);
+  assert.deepEqual(excludedWorkerModels([drop(GLM, 'critic'), drop(GLM, 'critic')], { role: 'critic' }), [GLM]);
+  // Drops and malformed answers are separate one-retry allowances; neither lends the other a strike.
+  assert.deepEqual(excludedWorkerModels([drop(PAID, 'critic'), { model: PAID, role: 'critic', reason: 'Malformed critic output: not JSON' }], { role: 'critic' }), []);
+  // Only the bare drop qualifies: timeouts, HTTP errors, empty completions and free router routes stay single-strike.
+  for (const reason of ['The operation was aborted due to timeout', 'Router completion HTTP 500', 'Empty completion', 'fetch failed: ECONNRESET after 600 s']) {
+    assert.deepEqual(excludedWorkerModels([{ model: GLM, role: 'producer', reason }], { role: 'producer' }), [GLM], reason);
+  }
+  assert.deepEqual(excludedWorkerModels([drop(KIMI, 'critic')], { role: 'critic' }), [KIMI]);
+});
+
 test('CR-73.4: the free-route role is explicit, validated and legible on the receipt', () => {
   assert.equal(freeRouteRole(undefined), 'critic');
   assert.equal(freeRouteRole(''), 'critic');
