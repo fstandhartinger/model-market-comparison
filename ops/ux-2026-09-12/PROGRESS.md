@@ -6553,6 +6553,16 @@ Full text: `DESIGN-DIRECTIVES.md` ("Verdict on the live site — pass 29", "Deci
 | CR-117.1–117.5 | implemented | `data/research/mimo-v2.6-pro-2026-09-22.md`; `data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/`; `test/mimo-v26-pro.test.mjs` | Added the official MIT checkpoint identity, exact standard OpenRouter route, current AA measurements, and 17 independently reviewed Xiaomi claims marked `self_reported`. Benchmaxxing has zero qualifying overlaps and therefore no verdict or tag: not enough independent data yet. |
 | CR-117.6 | verified | `9179880`; focused tests 41/41; benchmark registry and score-evidence guards; `tsc --noEmit`; production build; both-host `/api/meta`, model API and live page checks; phone screenshots in `/home/flori/jobs/mimo-v26-pro-20260922/screenshots/mimo/` | Production deployment `x0d2llkvii8ii0jf6vmao5pn` succeeded. Canonical and legacy hosts both serve revision `91798807ecfed2622c64b4bad65b95805d0ae290` with MiMo-V2.6-Pro open, AA Intelligence 46.3, the exact standard OpenRouter offer, and all 17 Xiaomi claims. Model, value-map/Pareto and Benchmaxxing views render live. Eight MiMo draft/photo messages were sent for review; nothing was posted. |
 
+# CR-118 — 2026-09-22: JevBench v1.3.0 scoring release
+
+Seeded by iteration 159 (claude-opus, 2026-09-21 23:40 UTC): the release shipped in `ce2f095` from the codex job
+`~/jobs/jevbench-score-v13-20260922` (gpt-5.6-sol) without ledger rows. Its own checks are in that job's `RESULT.md`.
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| CR-118.1–118.4 | implemented | `ce2f095`; `lib/jevbench-v12-score.mjs`; `ops/ux-2026-09-12/jevbench/v1.3.0/`; `~/jobs/jevbench-score-v13-20260922/RESULT.md` | Implementer: codex gpt-5.6-sol. Chance-corrected tiers (exact chances easy 0.2840, standard 0.3167, judge 0.2922, hard 0.3364), near-chance penalty, unchanged eligibility, page note. |
+| CR-118.5 | implemented | job screenshots `~/jobs/jevbench-score-v13-20260922/screenshots/live/` | Implementer reports both hosts desktop/phone; not yet verified by another engine. |
+
 # CR-119 — 2026-09-22: multimodal JevBench preview
 
 | ID | Status | Evidence | Note |
