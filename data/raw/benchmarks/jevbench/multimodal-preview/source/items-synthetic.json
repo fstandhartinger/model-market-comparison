@@ -1,0 +1,346 @@
+[
+  {
+    "id": "syn-001",
+    "dataset": "JevBench synthetic vision",
+    "source_row": 0,
+    "skill": "damaged parcel",
+    "split": "synthetic_private",
+    "public_label": false,
+    "license": "Generated with Apache-2.0 Z-Image-Turbo; private benchmark artifact",
+    "source_url": "https://chutes.ai/docs/models/vonkaiser-z-image-turbo",
+    "image": "assets/synthetic/damaged-parcel-positive.png",
+    "state": {
+      "image": "assets/synthetic/damaged-parcel-positive.png",
+      "source": "JevBench synthetic spec",
+      "synthetic": true
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Does the image clearly show a damaged parcel, such as a crush, tear, or opening?",
+      "criteria": {
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
+    "gold": "yes",
+    "gold_origin": "generation_spec_confirmed_by_independent_vision",
+    "transformation": "None; generated directly from the recorded spec.",
+    "synthetic": true,
+    "generation": {
+      "model": "Tongyi-MAI/Z-Image-Turbo via Chutes",
+      "seed": 2026092200,
+      "spec_id": "damaged-parcel-positive"
+    },
+    "review": {
+      "status": "accepted_independent_vision",
+      "primary": {
+        "pred": "yes",
+        "latency_s": 1.7620255947113037,
+        "model": "gemini-3.1-flash-lite"
+      },
+      "second_on_disagreement": null,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "syn-002",
+    "dataset": "JevBench synthetic vision",
+    "source_row": 1,
+    "skill": "damaged parcel",
+    "split": "synthetic_private",
+    "public_label": false,
+    "license": "Generated with Apache-2.0 Z-Image-Turbo; private benchmark artifact",
+    "source_url": "https://chutes.ai/docs/models/vonkaiser-z-image-turbo",
+    "image": "assets/synthetic/damaged-parcel-negative.png",
+    "state": {
+      "image": "assets/synthetic/damaged-parcel-negative.png",
+      "source": "JevBench synthetic spec",
+      "synthetic": true
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Does the image clearly show a damaged parcel, such as a crush, tear, or opening?",
+      "criteria": {
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
+    "gold": "no",
+    "gold_origin": "generation_spec_confirmed_by_independent_vision",
+    "transformation": "None; generated directly from the recorded spec.",
+    "synthetic": true,
+    "generation": {
+      "model": "Tongyi-MAI/Z-Image-Turbo via Chutes",
+      "seed": 2026092201,
+      "spec_id": "damaged-parcel-negative"
+    },
+    "review": {
+      "status": "accepted_independent_vision",
+      "primary": {
+        "pred": "no",
+        "latency_s": 1.9183775931596756,
+        "model": "gemini-3.1-flash-lite"
+      },
+      "second_on_disagreement": null,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "syn-003",
+    "dataset": "JevBench synthetic vision",
+    "source_row": 2,
+    "skill": "empty shelf slot",
+    "split": "synthetic_private",
+    "public_label": false,
+    "license": "Generated with Apache-2.0 Z-Image-Turbo; private benchmark artifact",
+    "source_url": "https://chutes.ai/docs/models/vonkaiser-z-image-turbo",
+    "image": "assets/synthetic/empty-shelf-positive.png",
+    "state": {
+      "image": "assets/synthetic/empty-shelf-positive.png",
+      "source": "JevBench synthetic spec",
+      "synthetic": true
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Does the image clearly show an empty shelf slot or conspicuous stock gap?",
+      "criteria": {
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
+    "gold": "yes",
+    "gold_origin": "generation_spec_confirmed_by_independent_vision",
+    "transformation": "None; generated directly from the recorded spec.",
+    "synthetic": true,
+    "generation": {
+      "model": "Tongyi-MAI/Z-Image-Turbo via Chutes",
+      "seed": 2026092202,
+      "spec_id": "empty-shelf-positive"
+    },
+    "review": {
+      "status": "accepted_independent_vision",
+      "primary": {
+        "pred": "yes",
+        "latency_s": 1.8003083989024162,
+        "model": "gemini-3.1-flash-lite"
+      },
+      "second_on_disagreement": null,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "syn-004",
+    "dataset": "JevBench synthetic vision",
+    "source_row": 3,
+    "skill": "safety hazard",
+    "split": "synthetic_private",
+    "public_label": false,
+    "license": "Generated with Apache-2.0 Z-Image-Turbo; private benchmark artifact",
+    "source_url": "https://chutes.ai/docs/models/vonkaiser-z-image-turbo",
+    "image": "assets/synthetic/safety-hazard-positive.png",
+    "state": {
+      "image": "assets/synthetic/safety-hazard-positive.png",
+      "source": "JevBench synthetic spec",
+      "synthetic": true
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Does the image clearly show a safety hazard obstructing a walking path?",
+      "criteria": {
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
+    "gold": "yes",
+    "gold_origin": "generation_spec_confirmed_by_independent_vision",
+    "transformation": "None; generated directly from the recorded spec.",
+    "synthetic": true,
+    "generation": {
+      "model": "Tongyi-MAI/Z-Image-Turbo via Chutes",
+      "seed": 2026092204,
+      "spec_id": "safety-hazard-positive"
+    },
+    "review": {
+      "status": "accepted_independent_vision",
+      "primary": {
+        "pred": "yes",
+        "latency_s": 1.9291834011673927,
+        "model": "gemini-3.1-flash-lite"
+      },
+      "second_on_disagreement": null,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "syn-005",
+    "dataset": "JevBench synthetic vision",
+    "source_row": 4,
+    "skill": "UI error state",
+    "split": "synthetic_private",
+    "public_label": false,
+    "license": "Generated with Apache-2.0 Z-Image-Turbo; private benchmark artifact",
+    "source_url": "https://chutes.ai/docs/models/vonkaiser-z-image-turbo",
+    "image": "assets/synthetic/ui-error-positive.png",
+    "state": {
+      "image": "assets/synthetic/ui-error-positive.png",
+      "source": "JevBench synthetic spec",
+      "synthetic": true
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Does the interface clearly show an error or failed state?",
+      "criteria": {
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
+    "gold": "yes",
+    "gold_origin": "generation_spec_confirmed_by_independent_vision",
+    "transformation": "None; generated directly from the recorded spec.",
+    "synthetic": true,
+    "generation": {
+      "model": "Tongyi-MAI/Z-Image-Turbo via Chutes",
+      "seed": 2026092206,
+      "spec_id": "ui-error-positive"
+    },
+    "review": {
+      "status": "accepted_independent_vision",
+      "primary": {
+        "pred": "yes",
+        "latency_s": 2.1252283677458763,
+        "model": "gemini-3.1-flash-lite"
+      },
+      "second_on_disagreement": null,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "syn-006",
+    "dataset": "JevBench synthetic vision",
+    "source_row": 5,
+    "skill": "UI error state",
+    "split": "synthetic_private",
+    "public_label": false,
+    "license": "Generated with Apache-2.0 Z-Image-Turbo; private benchmark artifact",
+    "source_url": "https://chutes.ai/docs/models/vonkaiser-z-image-turbo",
+    "image": "assets/synthetic/ui-error-negative.png",
+    "state": {
+      "image": "assets/synthetic/ui-error-negative.png",
+      "source": "JevBench synthetic spec",
+      "synthetic": true
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Does the interface clearly show an error or failed state?",
+      "criteria": {
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
+    "gold": "no",
+    "gold_origin": "generation_spec_confirmed_by_independent_vision",
+    "transformation": "None; generated directly from the recorded spec.",
+    "synthetic": true,
+    "generation": {
+      "model": "Tongyi-MAI/Z-Image-Turbo via Chutes",
+      "seed": 2026092207,
+      "spec_id": "ui-error-negative"
+    },
+    "review": {
+      "status": "accepted_independent_vision",
+      "primary": {
+        "pred": "no",
+        "latency_s": 1.5823271870613098,
+        "model": "gemini-3.1-flash-lite"
+      },
+      "second_on_disagreement": null,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "syn-007",
+    "dataset": "JevBench synthetic vision",
+    "source_row": 6,
+    "skill": "acceptable product photo",
+    "split": "synthetic_private",
+    "public_label": false,
+    "license": "Generated with Apache-2.0 Z-Image-Turbo; private benchmark artifact",
+    "source_url": "https://chutes.ai/docs/models/vonkaiser-z-image-turbo",
+    "image": "assets/synthetic/product-photo-positive.png",
+    "state": {
+      "image": "assets/synthetic/product-photo-positive.png",
+      "source": "JevBench synthetic spec",
+      "synthetic": true
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Is this clearly an acceptable ecommerce product photo: sharp, complete, centered, clean background, and well lit?",
+      "criteria": {
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
+    "gold": "yes",
+    "gold_origin": "generation_spec_confirmed_by_independent_vision",
+    "transformation": "None; generated directly from the recorded spec.",
+    "synthetic": true,
+    "generation": {
+      "model": "Tongyi-MAI/Z-Image-Turbo via Chutes",
+      "seed": 2026092208,
+      "spec_id": "product-photo-positive"
+    },
+    "review": {
+      "status": "accepted_independent_vision",
+      "primary": {
+        "pred": "yes",
+        "latency_s": 1.589426688849926,
+        "model": "gemini-3.1-flash-lite"
+      },
+      "second_on_disagreement": null,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "syn-008",
+    "dataset": "JevBench synthetic vision",
+    "source_row": 7,
+    "skill": "acceptable product photo",
+    "split": "synthetic_private",
+    "public_label": false,
+    "license": "Generated with Apache-2.0 Z-Image-Turbo; private benchmark artifact",
+    "source_url": "https://chutes.ai/docs/models/vonkaiser-z-image-turbo",
+    "image": "assets/synthetic/product-photo-negative.png",
+    "state": {
+      "image": "assets/synthetic/product-photo-negative.png",
+      "source": "JevBench synthetic spec",
+      "synthetic": true
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Is this clearly an acceptable ecommerce product photo: sharp, complete, centered, clean background, and well lit?",
+      "criteria": {
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
+    "gold": "no",
+    "gold_origin": "generation_spec_confirmed_by_independent_vision",
+    "transformation": "None; generated directly from the recorded spec.",
+    "synthetic": true,
+    "generation": {
+      "model": "Tongyi-MAI/Z-Image-Turbo via Chutes",
+      "seed": 2026092209,
+      "spec_id": "product-photo-negative"
+    },
+    "review": {
+      "status": "accepted_independent_vision",
+      "primary": {
+        "pred": "no",
+        "latency_s": 1.960888385772705,
+        "model": "gemini-3.1-flash-lite"
+      },
+      "second_on_disagreement": null,
+      "model_authored_gold": false
+    }
+  }
+]

@@ -1,0 +1,10 @@
+frozen visual params: 333.5M (fp32 patch-embed, no_grad forward)
+syn-001 ok
+syn-002 ok
+syn-003 ok
+syn-004 ok
+syn-005 ok
+syn-006 ok
+syn-007 ok
+syn-008 miss
+SUMMARY {"accuracy": 0.875, "by_dataset": {"JevBench synthetic vision": {"correct": 7, "n": 8}}, "correct": 7, "n_items": 8, "p50_s": 0.21634241851279512, "p95_s": 0.25046390702482313, "system": "AlexWortega/openjev 4B v2 BF16 on H200"}

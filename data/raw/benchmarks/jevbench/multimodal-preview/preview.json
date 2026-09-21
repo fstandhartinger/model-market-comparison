@@ -1,0 +1,315 @@
+{
+  "benchmark": "JevBench multimodal preview",
+  "revision": "preview-1",
+  "generated_at": "2026-09-21T22:57:02.516Z",
+  "status": "preview",
+  "notice": "Not part of the JevBench Score. Results may change.",
+  "public_real_items": 128,
+  "held_out_items_published": 0,
+  "counts": {
+    "image_reasoning": 80,
+    "computer_use": 36,
+    "browser_use": 12
+  },
+  "systems": [
+    {
+      "key": "luna",
+      "display": "GPT-5.6 Luna",
+      "skills": {
+        "image_reasoning": {
+          "correct": 62,
+          "n": 80,
+          "accuracy": 0.775,
+          "rank": 1
+        },
+        "computer_use": {
+          "correct": 5,
+          "n": 36,
+          "accuracy": 0.1388888888888889,
+          "rank": 3
+        },
+        "browser_use": {
+          "correct": 9,
+          "n": 12,
+          "accuracy": 0.75,
+          "rank": 3
+        }
+      },
+      "overall": {
+        "correct": 76,
+        "n": 128,
+        "accuracy": 0.59375
+      },
+      "axes": {
+        "intelligence": 59.375,
+        "calibration": null,
+        "speed": 1.468189233278956,
+        "cost": null
+      },
+      "latency_s": 6.13,
+      "cost_per_1000": null,
+      "cost_note": "Not available: this run used a ChatGPT subscription orchestration path, not a metered API.",
+      "rank": 1
+    },
+    {
+      "key": "gemini",
+      "display": "Gemini 3.1 Flash-Lite",
+      "skills": {
+        "image_reasoning": {
+          "correct": 52,
+          "n": 80,
+          "accuracy": 0.65,
+          "rank": 2
+        },
+        "computer_use": {
+          "correct": 10,
+          "n": 36,
+          "accuracy": 0.2777777777777778,
+          "rank": 1
+        },
+        "browser_use": {
+          "correct": 11,
+          "n": 12,
+          "accuracy": 0.9166666666666666,
+          "rank": 1
+        }
+      },
+      "overall": {
+        "correct": 73,
+        "n": 128,
+        "accuracy": 0.5703125
+      },
+      "axes": {
+        "intelligence": 57.03125,
+        "calibration": null,
+        "speed": 7.5,
+        "cost": null
+      },
+      "latency_s": 1.2,
+      "cost_per_1000": null,
+      "cost_note": "Not frozen in the run artifact; no current tariff is retrofitted into this preview.",
+      "rank": 2
+    },
+    {
+      "key": "djev",
+      "display": "djev-dev BF16",
+      "skills": {
+        "image_reasoning": {
+          "correct": 43,
+          "n": 80,
+          "accuracy": 0.5375,
+          "rank": 6
+        },
+        "computer_use": {
+          "correct": 7,
+          "n": 36,
+          "accuracy": 0.19444444444444445,
+          "rank": 2
+        },
+        "browser_use": {
+          "correct": 11,
+          "n": 12,
+          "accuracy": 0.9166666666666666,
+          "rank": 1
+        }
+      },
+      "overall": {
+        "correct": 61,
+        "n": 128,
+        "accuracy": 0.4765625
+      },
+      "axes": {
+        "intelligence": 47.65625,
+        "calibration": null,
+        "speed": 52.63157894736842,
+        "cost": 46.32975093060324
+      },
+      "latency_s": 0.171,
+      "cost_per_1000": 0.14022,
+      "cost_note": "Estimated marginal occupied H200 time at the measured run rate (USD 2.952/hour); excludes loading and idle time.",
+      "rank": 3
+    },
+    {
+      "key": "openjev",
+      "display": "AlexWortega/openjev 4B v2 BF16",
+      "skills": {
+        "image_reasoning": {
+          "correct": 50,
+          "n": 80,
+          "accuracy": 0.625,
+          "rank": 3
+        },
+        "computer_use": {
+          "correct": 1,
+          "n": 36,
+          "accuracy": 0.027777777777777776,
+          "rank": 5
+        },
+        "browser_use": {
+          "correct": 9,
+          "n": 12,
+          "accuracy": 0.75,
+          "rank": 3
+        }
+      },
+      "overall": {
+        "correct": 60,
+        "n": 128,
+        "accuracy": 0.46875
+      },
+      "axes": {
+        "intelligence": 46.875,
+        "calibration": null,
+        "speed": 54.560312462365445,
+        "cost": 46.720512175020765
+      },
+      "latency_s": 0.16495506704086438,
+      "cost_per_1000": 0.1352631549735088,
+      "cost_note": "Estimated marginal occupied H200 time at the measured run rate (USD 2.952/hour); excludes loading and idle time.",
+      "rank": 4
+    },
+    {
+      "key": "decider",
+      "display": "Mapika/decider-2b-vision BF16",
+      "skills": {
+        "image_reasoning": {
+          "correct": 45,
+          "n": 80,
+          "accuracy": 0.5625,
+          "rank": 5
+        },
+        "computer_use": {
+          "correct": 3,
+          "n": 36,
+          "accuracy": 0.08333333333333333,
+          "rank": 4
+        },
+        "browser_use": {
+          "correct": 7,
+          "n": 12,
+          "accuracy": 0.5833333333333334,
+          "rank": 6
+        }
+      },
+      "overall": {
+        "correct": 55,
+        "n": 128,
+        "accuracy": 0.4296875
+      },
+      "axes": {
+        "intelligence": 42.96875,
+        "calibration": null,
+        "speed": 100,
+        "cost": 53.32337787709241
+      },
+      "latency_s": 0.08979476796230301,
+      "cost_per_1000": 0.07363170972908847,
+      "cost_note": "Estimated marginal occupied H200 time at the measured run rate (USD 2.952/hour); excludes loading and idle time.",
+      "rank": 5
+    },
+    {
+      "key": "reflex",
+      "display": "kshetrajna12/reflex 4B BF16",
+      "skills": {
+        "image_reasoning": {
+          "correct": 46,
+          "n": 80,
+          "accuracy": 0.575,
+          "rank": 4
+        },
+        "computer_use": {
+          "correct": 0,
+          "n": 36,
+          "accuracy": 0,
+          "rank": 6
+        },
+        "browser_use": {
+          "correct": 9,
+          "n": 12,
+          "accuracy": 0.75,
+          "rank": 3
+        }
+      },
+      "overall": {
+        "correct": 55,
+        "n": 128,
+        "accuracy": 0.4296875
+      },
+      "axes": {
+        "intelligence": 42.96875,
+        "calibration": null,
+        "speed": 64.28197099926854,
+        "cost": 48.50082056779207
+      },
+      "latency_s": 0.14000815252074972,
+      "cost_per_1000": 0.11480668506701477,
+      "cost_note": "Estimated marginal occupied H200 time at the measured run rate (USD 2.952/hour); excludes loading and idle time.",
+      "rank": 5
+    }
+  ],
+  "synthetic": {
+    "n": 8,
+    "share_of_evaluated": 0.058823529411764705,
+    "rank_worthy": false,
+    "scores": {
+      "luna": {
+        "correct": 7,
+        "n": 8
+      },
+      "gemini": {
+        "correct": 7,
+        "n": 8
+      },
+      "djev": {
+        "correct": 7,
+        "n": 8
+      },
+      "openjev": {
+        "correct": 7,
+        "n": 8
+      },
+      "decider": {
+        "correct": 6,
+        "n": 8
+      },
+      "reflex": {
+        "correct": 7,
+        "n": 8
+      }
+    }
+  },
+  "examples": [
+    {
+      "id": "mm-001",
+      "image": "/jevbench-multimodal-preview/clevr-1.webp",
+      "dataset": "CLEVR-HOPE",
+      "prompt": "Is there a large green shiny thing in front of the red rubber cylinder that is to the left of the purple matte block",
+      "licence": "CC BY 4.0",
+      "source_url": "https://huggingface.co/datasets/user9000/CLEVR-HOPE"
+    },
+    {
+      "id": "mm-021",
+      "image": "/jevbench-multimodal-preview/geometry-0.webp",
+      "dataset": "Geometry3K",
+      "prompt": "Chords $\\overline{A C}$ and $\\overline{D F}$ are equidistant from the center. If the radius of $\\odot G$ is 26 find $A C$",
+      "licence": "MIT",
+      "source_url": "https://huggingface.co/datasets/hiyouga/geometry3k"
+    },
+    {
+      "id": "mm-111",
+      "image": "/jevbench-multimodal-preview/screenspot-337.webp",
+      "dataset": "ScreenSpot",
+      "prompt": "Goal: open the download page Which labelled marker should be clicked?",
+      "licence": "Apache-2.0",
+      "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot"
+    },
+    {
+      "id": "mm-106",
+      "image": "/jevbench-multimodal-preview/mind2web-5.webp",
+      "dataset": "Multimodal-Mind2Web",
+      "prompt": "Browser goal: Rent a truck with the lowest rent with two dozen furniture pads for 100 miles at zip 08817 on April 12 at 2:30 pm rented truck is to be returned to the exact location and date, and the pickup and drop off will be at the nearest location. Next labelled element for action CLICK?",
+      "licence": "CC BY 4.0 Mind2Web annotations; OpenRAIL multimodal release",
+      "source_url": "https://huggingface.co/datasets/osunlp/Multimodal-Mind2Web"
+    }
+  ]
+}

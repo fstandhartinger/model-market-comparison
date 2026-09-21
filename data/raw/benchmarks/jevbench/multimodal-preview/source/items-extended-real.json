@@ -1,0 +1,4746 @@
+[
+  {
+    "id": "mm-001",
+    "dataset": "CLEVR-HOPE",
+    "source_row": 1,
+    "skill": "synthetic spatial scenes",
+    "split": "test_complex_ood",
+    "public_label": true,
+    "license": "CC BY 4.0",
+    "source_url": "https://huggingface.co/datasets/user9000/CLEVR-HOPE",
+    "image": "assets/items/clevr-1.webp",
+    "state": {
+      "image": "assets/items/clevr-1.webp",
+      "source": "CLEVR-HOPE"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Is there a large green shiny thing in front of the red rubber cylinder that is to the left of the purple matte block",
+      "criteria": {
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
+    "gold": "no",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-002",
+    "dataset": "CLEVR-HOPE",
+    "source_row": 11,
+    "skill": "synthetic spatial scenes",
+    "split": "test_complex_ood",
+    "public_label": true,
+    "license": "CC BY 4.0",
+    "source_url": "https://huggingface.co/datasets/user9000/CLEVR-HOPE",
+    "image": "assets/items/clevr-11.webp",
+    "state": {
+      "image": "assets/items/clevr-11.webp",
+      "source": "CLEVR-HOPE"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Do the purple block and the rubber cylinder have the same size",
+      "criteria": {
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
+    "gold": "no",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-003",
+    "dataset": "CLEVR-HOPE",
+    "source_row": 12,
+    "skill": "synthetic spatial scenes",
+    "split": "test_complex_ood",
+    "public_label": true,
+    "license": "CC BY 4.0",
+    "source_url": "https://huggingface.co/datasets/user9000/CLEVR-HOPE",
+    "image": "assets/items/clevr-12.webp",
+    "state": {
+      "image": "assets/items/clevr-12.webp",
+      "source": "CLEVR-HOPE"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Does the matte cylinder have the same color as the matte block",
+      "criteria": {
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
+    "gold": "no",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-004",
+    "dataset": "CLEVR-HOPE",
+    "source_row": 13,
+    "skill": "synthetic spatial scenes",
+    "split": "test_complex_ood",
+    "public_label": true,
+    "license": "CC BY 4.0",
+    "source_url": "https://huggingface.co/datasets/user9000/CLEVR-HOPE",
+    "image": "assets/items/clevr-13.webp",
+    "state": {
+      "image": "assets/items/clevr-13.webp",
+      "source": "CLEVR-HOPE"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "There is a rubber cylinder on the left side of the yellow cube ; does it have the same size as the matte cube",
+      "criteria": {
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
+    "gold": "no",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-005",
+    "dataset": "CLEVR-HOPE",
+    "source_row": 14,
+    "skill": "synthetic spatial scenes",
+    "split": "test_complex_ood",
+    "public_label": true,
+    "license": "CC BY 4.0",
+    "source_url": "https://huggingface.co/datasets/user9000/CLEVR-HOPE",
+    "image": "assets/items/clevr-14.webp",
+    "state": {
+      "image": "assets/items/clevr-14.webp",
+      "source": "CLEVR-HOPE"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "There is a purple rubber object ; is its size the same as the thing that is on the left side of the purple matte cylinder",
+      "criteria": {
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
+    "gold": "no",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-006",
+    "dataset": "CLEVR-HOPE",
+    "source_row": 15,
+    "skill": "synthetic spatial scenes",
+    "split": "test_complex_ood",
+    "public_label": true,
+    "license": "CC BY 4.0",
+    "source_url": "https://huggingface.co/datasets/user9000/CLEVR-HOPE",
+    "image": "assets/items/clevr-15.webp",
+    "state": {
+      "image": "assets/items/clevr-15.webp",
+      "source": "CLEVR-HOPE"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "There is a yellow rubber cylinder left of the tiny green matte ball ; does it have the same size as the metallic thing behind the big purple ball",
+      "criteria": {
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
+    "gold": "yes",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-007",
+    "dataset": "CLEVR-HOPE",
+    "source_row": 16,
+    "skill": "synthetic spatial scenes",
+    "split": "test_complex_ood",
+    "public_label": true,
+    "license": "CC BY 4.0",
+    "source_url": "https://huggingface.co/datasets/user9000/CLEVR-HOPE",
+    "image": "assets/items/clevr-16.webp",
+    "state": {
+      "image": "assets/items/clevr-16.webp",
+      "source": "CLEVR-HOPE"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Do the big metal sphere on the right side of the brown matte cylinder and the block have the same color",
+      "criteria": {
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
+    "gold": "no",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-008",
+    "dataset": "CLEVR-HOPE",
+    "source_row": 17,
+    "skill": "synthetic spatial scenes",
+    "split": "test_complex_ood",
+    "public_label": true,
+    "license": "CC BY 4.0",
+    "source_url": "https://huggingface.co/datasets/user9000/CLEVR-HOPE",
+    "image": "assets/items/clevr-17.webp",
+    "state": {
+      "image": "assets/items/clevr-17.webp",
+      "source": "CLEVR-HOPE"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Do the large matte cylinder and the cylinder that is in front of the green metal cylinder have the same color",
+      "criteria": {
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
+    "gold": "no",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-009",
+    "dataset": "CLEVR-HOPE",
+    "source_row": 18,
+    "skill": "synthetic spatial scenes",
+    "split": "test_complex_ood",
+    "public_label": true,
+    "license": "CC BY 4.0",
+    "source_url": "https://huggingface.co/datasets/user9000/CLEVR-HOPE",
+    "image": "assets/items/clevr-18.webp",
+    "state": {
+      "image": "assets/items/clevr-18.webp",
+      "source": "CLEVR-HOPE"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Is the color of the large thing to the right of the matte sphere the same as the small matte cylinder on the right side of the green rubber cylinder",
+      "criteria": {
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
+    "gold": "yes",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-010",
+    "dataset": "CLEVR-HOPE",
+    "source_row": 19,
+    "skill": "synthetic spatial scenes",
+    "split": "test_complex_ood",
+    "public_label": true,
+    "license": "CC BY 4.0",
+    "source_url": "https://huggingface.co/datasets/user9000/CLEVR-HOPE",
+    "image": "assets/items/clevr-19.webp",
+    "state": {
+      "image": "assets/items/clevr-19.webp",
+      "source": "CLEVR-HOPE"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Are the tiny gray block and the small object in front of the brown matte cylinder made of the same material",
+      "criteria": {
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
+    "gold": "yes",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-011",
+    "dataset": "CLEVR-HOPE",
+    "source_row": 20,
+    "skill": "synthetic spatial scenes",
+    "split": "test_complex_ood",
+    "public_label": true,
+    "license": "CC BY 4.0",
+    "source_url": "https://huggingface.co/datasets/user9000/CLEVR-HOPE",
+    "image": "assets/items/clevr-20.webp",
+    "state": {
+      "image": "assets/items/clevr-20.webp",
+      "source": "CLEVR-HOPE"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Do the large cylinder in front of the big matte cylinder and the cube that is in front of the gray matte block have the same material",
+      "criteria": {
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
+    "gold": "no",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-012",
+    "dataset": "CLEVR-HOPE",
+    "source_row": 22,
+    "skill": "synthetic spatial scenes",
+    "split": "test_complex_ood",
+    "public_label": true,
+    "license": "CC BY 4.0",
+    "source_url": "https://huggingface.co/datasets/user9000/CLEVR-HOPE",
+    "image": "assets/items/clevr-22.webp",
+    "state": {
+      "image": "assets/items/clevr-22.webp",
+      "source": "CLEVR-HOPE"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Do the large gray matte object and the big blue object behind the small red rubber cylinder have the same shape",
+      "criteria": {
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
+    "gold": "yes",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-013",
+    "dataset": "CLEVR-HOPE",
+    "source_row": 23,
+    "skill": "synthetic spatial scenes",
+    "split": "test_complex_ood",
+    "public_label": true,
+    "license": "CC BY 4.0",
+    "source_url": "https://huggingface.co/datasets/user9000/CLEVR-HOPE",
+    "image": "assets/items/clevr-23.webp",
+    "state": {
+      "image": "assets/items/clevr-23.webp",
+      "source": "CLEVR-HOPE"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Is the shape of the blue thing behind the large gray matte cylinder the same as the big gray matte thing",
+      "criteria": {
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
+    "gold": "no",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-014",
+    "dataset": "CLEVR-HOPE",
+    "source_row": 24,
+    "skill": "synthetic spatial scenes",
+    "split": "test_complex_ood",
+    "public_label": true,
+    "license": "CC BY 4.0",
+    "source_url": "https://huggingface.co/datasets/user9000/CLEVR-HOPE",
+    "image": "assets/items/clevr-24.webp",
+    "state": {
+      "image": "assets/items/clevr-24.webp",
+      "source": "CLEVR-HOPE"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Is there a metal thing behind the red matte cylinder that is to the left of the matte thing that is to the right of the big red rubber cylinder",
+      "criteria": {
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
+    "gold": "no",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-015",
+    "dataset": "CLEVR-HOPE",
+    "source_row": 26,
+    "skill": "synthetic spatial scenes",
+    "split": "test_complex_ood",
+    "public_label": true,
+    "license": "CC BY 4.0",
+    "source_url": "https://huggingface.co/datasets/user9000/CLEVR-HOPE",
+    "image": "assets/items/clevr-26.webp",
+    "state": {
+      "image": "assets/items/clevr-26.webp",
+      "source": "CLEVR-HOPE"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "There is a large blue metallic object that is to the left of the big blue cube ; does it have the same shape as the small rubber thing that is in front of the large matte cylinder",
+      "criteria": {
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
+    "gold": "no",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-016",
+    "dataset": "CLEVR-HOPE",
+    "source_row": 29,
+    "skill": "synthetic spatial scenes",
+    "split": "test_complex_ood",
+    "public_label": true,
+    "license": "CC BY 4.0",
+    "source_url": "https://huggingface.co/datasets/user9000/CLEVR-HOPE",
+    "image": "assets/items/clevr-29.webp",
+    "state": {
+      "image": "assets/items/clevr-29.webp",
+      "source": "CLEVR-HOPE"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Does the big green thing behind the large matte cylinder have the same material as the purple thing",
+      "criteria": {
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
+    "gold": "no",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-017",
+    "dataset": "CLEVR-HOPE",
+    "source_row": 30,
+    "skill": "synthetic spatial scenes",
+    "split": "test_complex_ood",
+    "public_label": true,
+    "license": "CC BY 4.0",
+    "source_url": "https://huggingface.co/datasets/user9000/CLEVR-HOPE",
+    "image": "assets/items/clevr-30.webp",
+    "state": {
+      "image": "assets/items/clevr-30.webp",
+      "source": "CLEVR-HOPE"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Is there any other thing that is the same size as the cyan rubber cylinder",
+      "criteria": {
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
+    "gold": "yes",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-018",
+    "dataset": "CLEVR-HOPE",
+    "source_row": 32,
+    "skill": "synthetic spatial scenes",
+    "split": "test_complex_ood",
+    "public_label": true,
+    "license": "CC BY 4.0",
+    "source_url": "https://huggingface.co/datasets/user9000/CLEVR-HOPE",
+    "image": "assets/items/clevr-32.webp",
+    "state": {
+      "image": "assets/items/clevr-32.webp",
+      "source": "CLEVR-HOPE"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Is there any other thing of the same color as the small rubber cylinder",
+      "criteria": {
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
+    "gold": "yes",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-019",
+    "dataset": "CLEVR-HOPE",
+    "source_row": 35,
+    "skill": "synthetic spatial scenes",
+    "split": "test_complex_ood",
+    "public_label": true,
+    "license": "CC BY 4.0",
+    "source_url": "https://huggingface.co/datasets/user9000/CLEVR-HOPE",
+    "image": "assets/items/clevr-35.webp",
+    "state": {
+      "image": "assets/items/clevr-35.webp",
+      "source": "CLEVR-HOPE"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Is there another cyan rubber cylinder of the same size as the cyan matte cylinder",
+      "criteria": {
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
+    "gold": "no",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-020",
+    "dataset": "CLEVR-HOPE",
+    "source_row": 36,
+    "skill": "synthetic spatial scenes",
+    "split": "test_complex_ood",
+    "public_label": true,
+    "license": "CC BY 4.0",
+    "source_url": "https://huggingface.co/datasets/user9000/CLEVR-HOPE",
+    "image": "assets/items/clevr-36.webp",
+    "state": {
+      "image": "assets/items/clevr-36.webp",
+      "source": "CLEVR-HOPE"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Is there another cylinder of the same color as the rubber cylinder",
+      "criteria": {
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
+    "gold": "no",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-021",
+    "dataset": "Geometry3K",
+    "source_row": 0,
+    "skill": "geometry diagrams",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT",
+    "source_url": "https://huggingface.co/datasets/hiyouga/geometry3k",
+    "image": "assets/items/geometry-0.webp",
+    "state": {
+      "image": "assets/items/geometry-0.webp",
+      "source": "Geometry3K"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Chords $\\overline{A C}$ and $\\overline{D F}$ are equidistant from the center. If the radius of $\\odot G$ is 26 find $A C$",
+      "criteria": {
+        "option_0": "57.6",
+        "option_1": "48",
+        "option_2": "52.8",
+        "option_3": "43.2"
+      }
+    },
+    "gold": "option_1",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-022",
+    "dataset": "Geometry3K",
+    "source_row": 1,
+    "skill": "geometry diagrams",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT",
+    "source_url": "https://huggingface.co/datasets/hiyouga/geometry3k",
+    "image": "assets/items/geometry-1.webp",
+    "state": {
+      "image": "assets/items/geometry-1.webp",
+      "source": "Geometry3K"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Find the length of $\\widehat {ZY}$. Round to the nearest hundredth.",
+      "criteria": {
+        "option_0": "8.85",
+        "option_1": "9.85",
+        "option_2": "6.85",
+        "option_3": "7.85"
+      }
+    },
+    "gold": "option_3",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-023",
+    "dataset": "Geometry3K",
+    "source_row": 2,
+    "skill": "geometry diagrams",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT",
+    "source_url": "https://huggingface.co/datasets/hiyouga/geometry3k",
+    "image": "assets/items/geometry-2.webp",
+    "state": {
+      "image": "assets/items/geometry-2.webp",
+      "source": "Geometry3K"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Find the area of the figure to the nearest tenth.",
+      "criteria": {
+        "option_0": "34.21",
+        "option_1": "37.32",
+        "option_2": "27.99",
+        "option_3": "31.1"
+      }
+    },
+    "gold": "option_3",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-024",
+    "dataset": "Geometry3K",
+    "source_row": 3,
+    "skill": "geometry diagrams",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT",
+    "source_url": "https://huggingface.co/datasets/hiyouga/geometry3k",
+    "image": "assets/items/geometry-3.webp",
+    "state": {
+      "image": "assets/items/geometry-3.webp",
+      "source": "Geometry3K"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "If pentagons $A B C D E$ and $P Q R S T$ are similar, find $S R$",
+      "criteria": {
+        "option_0": "4 \\frac { 4 } { 11 }",
+        "option_1": "All listed values",
+        "option_2": "None of the listed values",
+        "option_3": "Cannot be determined"
+      }
+    },
+    "gold": "option_0",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-025",
+    "dataset": "Geometry3K",
+    "source_row": 4,
+    "skill": "geometry diagrams",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT",
+    "source_url": "https://huggingface.co/datasets/hiyouga/geometry3k",
+    "image": "assets/items/geometry-4.webp",
+    "state": {
+      "image": "assets/items/geometry-4.webp",
+      "source": "Geometry3K"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "In $\\triangle PQR$, $\\overline{ST} \\| \\overline{R Q}$ . If  $PS=12.5$, $SR=5$, and $PT=15$, find $TQ$.",
+      "criteria": {
+        "option_0": "8",
+        "option_1": "5",
+        "option_2": "6",
+        "option_3": "7"
+      }
+    },
+    "gold": "option_2",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-026",
+    "dataset": "Geometry3K",
+    "source_row": 5,
+    "skill": "geometry diagrams",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT",
+    "source_url": "https://huggingface.co/datasets/hiyouga/geometry3k",
+    "image": "assets/items/geometry-5.webp",
+    "state": {
+      "image": "assets/items/geometry-5.webp",
+      "source": "Geometry3K"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "$a=14, b=48,$ and $c=50$ find $cosA$",
+      "criteria": {
+        "option_0": "-0.04",
+        "option_1": "2.96",
+        "option_2": "0.96",
+        "option_3": "1.96"
+      }
+    },
+    "gold": "option_2",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-027",
+    "dataset": "Geometry3K",
+    "source_row": 6,
+    "skill": "geometry diagrams",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT",
+    "source_url": "https://huggingface.co/datasets/hiyouga/geometry3k",
+    "image": "assets/items/geometry-6.webp",
+    "state": {
+      "image": "assets/items/geometry-6.webp",
+      "source": "Geometry3K"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "$\\overline{A C}$ is a diagonal of rhombus $A B C D$ If $m \\angle C D E$ is $116,$ what is $m \\angle A C D ?$",
+      "criteria": {
+        "option_0": "52.2",
+        "option_1": "63.8",
+        "option_2": "69.6",
+        "option_3": "58"
+      }
+    },
+    "gold": "option_3",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-028",
+    "dataset": "Geometry3K",
+    "source_row": 7,
+    "skill": "geometry diagrams",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT",
+    "source_url": "https://huggingface.co/datasets/hiyouga/geometry3k",
+    "image": "assets/items/geometry-7.webp",
+    "state": {
+      "image": "assets/items/geometry-7.webp",
+      "source": "Geometry3K"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Use parallelogram $JKLM$ to find $m \\angle KLM$",
+      "criteria": {
+        "option_0": "85.2",
+        "option_1": "78.1",
+        "option_2": "63.9",
+        "option_3": "71"
+      }
+    },
+    "gold": "option_3",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-029",
+    "dataset": "Geometry3K",
+    "source_row": 8,
+    "skill": "geometry diagrams",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT",
+    "source_url": "https://huggingface.co/datasets/hiyouga/geometry3k",
+    "image": "assets/items/geometry-8.webp",
+    "state": {
+      "image": "assets/items/geometry-8.webp",
+      "source": "Geometry3K"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Find the perimeter of the parallelogram.",
+      "criteria": {
+        "option_0": "78",
+        "option_1": "70.2",
+        "option_2": "93.6",
+        "option_3": "85.8"
+      }
+    },
+    "gold": "option_0",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-030",
+    "dataset": "Geometry3K",
+    "source_row": 9,
+    "skill": "geometry diagrams",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT",
+    "source_url": "https://huggingface.co/datasets/hiyouga/geometry3k",
+    "image": "assets/items/geometry-9.webp",
+    "state": {
+      "image": "assets/items/geometry-9.webp",
+      "source": "Geometry3K"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Find x.",
+      "criteria": {
+        "option_0": "Cannot be determined",
+        "option_1": "5 \\sqrt { 3 }",
+        "option_2": "All listed values",
+        "option_3": "None of the listed values"
+      }
+    },
+    "gold": "option_1",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-031",
+    "dataset": "Geometry3K",
+    "source_row": 10,
+    "skill": "geometry diagrams",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT",
+    "source_url": "https://huggingface.co/datasets/hiyouga/geometry3k",
+    "image": "assets/items/geometry-10.webp",
+    "state": {
+      "image": "assets/items/geometry-10.webp",
+      "source": "Geometry3K"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Find $PS$.",
+      "criteria": {
+        "option_0": "11",
+        "option_1": "10",
+        "option_2": "9",
+        "option_3": "8"
+      }
+    },
+    "gold": "option_2",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-032",
+    "dataset": "Geometry3K",
+    "source_row": 11,
+    "skill": "geometry diagrams",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT",
+    "source_url": "https://huggingface.co/datasets/hiyouga/geometry3k",
+    "image": "assets/items/geometry-11.webp",
+    "state": {
+      "image": "assets/items/geometry-11.webp",
+      "source": "Geometry3K"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "In the figure, $m\u22201 = 50$ and $m\u22203 = 60$. Find the measure of $\\angle 8$.",
+      "criteria": {
+        "option_0": "108",
+        "option_1": "132",
+        "option_2": "144",
+        "option_3": "120"
+      }
+    },
+    "gold": "option_3",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-033",
+    "dataset": "Geometry3K",
+    "source_row": 12,
+    "skill": "geometry diagrams",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT",
+    "source_url": "https://huggingface.co/datasets/hiyouga/geometry3k",
+    "image": "assets/items/geometry-12.webp",
+    "state": {
+      "image": "assets/items/geometry-12.webp",
+      "source": "Geometry3K"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Find x",
+      "criteria": {
+        "option_0": "6",
+        "option_1": "3",
+        "option_2": "4",
+        "option_3": "5"
+      }
+    },
+    "gold": "option_2",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-034",
+    "dataset": "Geometry3K",
+    "source_row": 13,
+    "skill": "geometry diagrams",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT",
+    "source_url": "https://huggingface.co/datasets/hiyouga/geometry3k",
+    "image": "assets/items/geometry-13.webp",
+    "state": {
+      "image": "assets/items/geometry-13.webp",
+      "source": "Geometry3K"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Quadrilateral $ABDC$ is a rectangle. If $m\\angle1 = 38$, find $m \\angle 2$",
+      "criteria": {
+        "option_0": "62.4",
+        "option_1": "57.2",
+        "option_2": "52",
+        "option_3": "46.8"
+      }
+    },
+    "gold": "option_2",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-035",
+    "dataset": "Geometry3K",
+    "source_row": 14,
+    "skill": "geometry diagrams",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT",
+    "source_url": "https://huggingface.co/datasets/hiyouga/geometry3k",
+    "image": "assets/items/geometry-14.webp",
+    "state": {
+      "image": "assets/items/geometry-14.webp",
+      "source": "Geometry3K"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "What is the value of $x$ below to the nearest tenth?",
+      "criteria": {
+        "option_0": "20.25",
+        "option_1": "27",
+        "option_2": "24.75",
+        "option_3": "22.5"
+      }
+    },
+    "gold": "option_3",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-036",
+    "dataset": "Geometry3K",
+    "source_row": 15,
+    "skill": "geometry diagrams",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT",
+    "source_url": "https://huggingface.co/datasets/hiyouga/geometry3k",
+    "image": "assets/items/geometry-15.webp",
+    "state": {
+      "image": "assets/items/geometry-15.webp",
+      "source": "Geometry3K"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Find $m\\angle W$",
+      "criteria": {
+        "option_0": "118.8",
+        "option_1": "108",
+        "option_2": "129.6",
+        "option_3": "97.2"
+      }
+    },
+    "gold": "option_1",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-037",
+    "dataset": "Geometry3K",
+    "source_row": 16,
+    "skill": "geometry diagrams",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT",
+    "source_url": "https://huggingface.co/datasets/hiyouga/geometry3k",
+    "image": "assets/items/geometry-16.webp",
+    "state": {
+      "image": "assets/items/geometry-16.webp",
+      "source": "Geometry3K"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Express the ratio of $\\cos B$ as a decimal to the nearest hundredth.",
+      "criteria": {
+        "option_0": "2.38",
+        "option_1": "-0.62",
+        "option_2": "1.38",
+        "option_3": "0.38"
+      }
+    },
+    "gold": "option_3",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-038",
+    "dataset": "Geometry3K",
+    "source_row": 17,
+    "skill": "geometry diagrams",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT",
+    "source_url": "https://huggingface.co/datasets/hiyouga/geometry3k",
+    "image": "assets/items/geometry-17.webp",
+    "state": {
+      "image": "assets/items/geometry-17.webp",
+      "source": "Geometry3K"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Find the measure of $JK$.",
+      "criteria": {
+        "option_0": "34.1",
+        "option_1": "27.9",
+        "option_2": "31",
+        "option_3": "37.2"
+      }
+    },
+    "gold": "option_2",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-039",
+    "dataset": "Geometry3K",
+    "source_row": 18,
+    "skill": "geometry diagrams",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT",
+    "source_url": "https://huggingface.co/datasets/hiyouga/geometry3k",
+    "image": "assets/items/geometry-18.webp",
+    "state": {
+      "image": "assets/items/geometry-18.webp",
+      "source": "Geometry3K"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "For trapezoid $T R S V, M$ and $N$ are midpoints of the legs. If $T R=32$ and $M N=25,$ find $V S$",
+      "criteria": {
+        "option_0": "21.6",
+        "option_1": "19.8",
+        "option_2": "16.2",
+        "option_3": "18"
+      }
+    },
+    "gold": "option_3",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-040",
+    "dataset": "Geometry3K",
+    "source_row": 19,
+    "skill": "geometry diagrams",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT",
+    "source_url": "https://huggingface.co/datasets/hiyouga/geometry3k",
+    "image": "assets/items/geometry-19.webp",
+    "state": {
+      "image": "assets/items/geometry-19.webp",
+      "source": "Geometry3K"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Find $x$ so that each quadrilateral is a parallelogram.",
+      "criteria": {
+        "option_0": "6",
+        "option_1": "3",
+        "option_2": "4",
+        "option_3": "5"
+      }
+    },
+    "gold": "option_2",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-041",
+    "dataset": "ArxivQA",
+    "source_row": 0,
+    "skill": "scientific charts and diagrams",
+    "split": "train",
+    "public_label": true,
+    "license": "CC BY-SA 4.0 (QA; linked evaluation use for paper figures)",
+    "source_url": "https://huggingface.co/datasets/mm-eval/ArxivQA",
+    "image": "assets/items/arxivqa-0.webp",
+    "state": {
+      "image": "assets/items/arxivqa-0.webp",
+      "source": "ArxivQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "In which panel does the fitness appear to increase at the slowest rate during the initial 200 generations?",
+      "criteria": {
+        "A": "Panel (a)",
+        "B": "Panel (b)",
+        "C": "Panel (c)",
+        "D": "Panel (d)"
+      }
+    },
+    "gold": "C",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-042",
+    "dataset": "ArxivQA",
+    "source_row": 1,
+    "skill": "scientific charts and diagrams",
+    "split": "train",
+    "public_label": true,
+    "license": "CC BY-SA 4.0 (QA; linked evaluation use for paper figures)",
+    "source_url": "https://huggingface.co/datasets/mm-eval/ArxivQA",
+    "image": "assets/items/arxivqa-1.webp",
+    "state": {
+      "image": "assets/items/arxivqa-1.webp",
+      "source": "ArxivQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "What can be inferred about the point marked with an asterisk (*) in both graphs?",
+      "criteria": {
+        "A": "It represents the universe with maximum possible matter density.",
+        "B": "It indicates the actual matter density and dark energy density of our universe based on observations.",
+        "C": "It is the theoretical prediction for a universe with no dark energy.",
+        "D": "It represents the minimum matter density for the universe to stop expanding."
+      }
+    },
+    "gold": "B",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-043",
+    "dataset": "ArxivQA",
+    "source_row": 2,
+    "skill": "scientific charts and diagrams",
+    "split": "train",
+    "public_label": true,
+    "license": "CC BY-SA 4.0 (QA; linked evaluation use for paper figures)",
+    "source_url": "https://huggingface.co/datasets/mm-eval/ArxivQA",
+    "image": "assets/items/arxivqa-2.webp",
+    "state": {
+      "image": "assets/items/arxivqa-2.webp",
+      "source": "ArxivQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "What is the trend of \\( \\lg_{10}(T_{\\text{eff}}^4 / K_4) \\) as \\( \\lg_{10}[\\nu_i / (g cm^{-2})] \\) increases?",
+      "criteria": {
+        "A": "It decreases exponentially.",
+        "B": "It remains constant.",
+        "C": "It increases linearly.",
+        "D": "It increases logarithmically."
+      }
+    },
+    "gold": "D",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-044",
+    "dataset": "ArxivQA",
+    "source_row": 3,
+    "skill": "scientific charts and diagrams",
+    "split": "train",
+    "public_label": true,
+    "license": "CC BY-SA 4.0 (QA; linked evaluation use for paper figures)",
+    "source_url": "https://huggingface.co/datasets/mm-eval/ArxivQA",
+    "image": "assets/items/arxivqa-3.webp",
+    "state": {
+      "image": "assets/items/arxivqa-3.webp",
+      "source": "ArxivQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "What is a common trend observed in the middle left and bottom left panels with respect to \\( \\Omega_m \\)?",
+      "criteria": {
+        "A": "As \\( \\Omega_m \\) increases, both \\( h \\) and \\( w_0 \\) decrease.",
+        "B": "As \\( \\Omega_m \\) increases, \\( h \\) increases and \\( w_0 \\) decreases.",
+        "C": "As \\( \\Omega_m \\) increases, \\( h \\) decreases and \\( w_0 \\) increases.",
+        "D": "There is no clear trend observable for \\( h \\) and \\( w_0 \\) with changes in \\( \\Omega_m \\)."
+      }
+    },
+    "gold": "A",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-045",
+    "dataset": "ArxivQA",
+    "source_row": 4,
+    "skill": "scientific charts and diagrams",
+    "split": "train",
+    "public_label": true,
+    "license": "CC BY-SA 4.0 (QA; linked evaluation use for paper figures)",
+    "source_url": "https://huggingface.co/datasets/mm-eval/ArxivQA",
+    "image": "assets/items/arxivqa-4.webp",
+    "state": {
+      "image": "assets/items/arxivqa-4.webp",
+      "source": "ArxivQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "What does the graph indicate about the relationship between the energy (E) and the flux for MGRO J1908+06 as detected by Milagro?",
+      "criteria": {
+        "A": "The flux increases exponentially with energy.",
+        "B": "The flux remains constant regardless of the energy.",
+        "C": "The flux decreases as the energy increases.",
+        "D": "There is no clear relationship between energy and flux as detected by Milagro."
+      }
+    },
+    "gold": "C",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-046",
+    "dataset": "ArxivQA",
+    "source_row": 5,
+    "skill": "scientific charts and diagrams",
+    "split": "train",
+    "public_label": true,
+    "license": "CC BY-SA 4.0 (QA; linked evaluation use for paper figures)",
+    "source_url": "https://huggingface.co/datasets/mm-eval/ArxivQA",
+    "image": "assets/items/arxivqa-5.webp",
+    "state": {
+      "image": "assets/items/arxivqa-5.webp",
+      "source": "ArxivQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "What does the graph represent in the context of particle physics?",
+      "criteria": {
+        "A": "The energy levels of electrons in an atom.",
+        "B": "The distribution of quasiparticles in a superconductor.",
+        "C": "The momentum distribution of phonons at different temperatures.",
+        "D": "The occupation number of axions as a function of momentum and temperature."
+      }
+    },
+    "gold": "D",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-047",
+    "dataset": "ArxivQA",
+    "source_row": 6,
+    "skill": "scientific charts and diagrams",
+    "split": "train",
+    "public_label": true,
+    "license": "CC BY-SA 4.0 (QA; linked evaluation use for paper figures)",
+    "source_url": "https://huggingface.co/datasets/mm-eval/ArxivQA",
+    "image": "assets/items/arxivqa-6.webp",
+    "state": {
+      "image": "assets/items/arxivqa-6.webp",
+      "source": "ArxivQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Which distribution closely follows the numerical solution for the occupation number in the given graph?",
+      "criteria": {
+        "A": "Fermi-Dirac distribution",
+        "B": "Maxwell-Boltzmann distribution",
+        "C": "Bose-Einstein distribution",
+        "D": "Planck distribution"
+      }
+    },
+    "gold": "C",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-048",
+    "dataset": "ArxivQA",
+    "source_row": 7,
+    "skill": "scientific charts and diagrams",
+    "split": "train",
+    "public_label": true,
+    "license": "CC BY-SA 4.0 (QA; linked evaluation use for paper figures)",
+    "source_url": "https://huggingface.co/datasets/mm-eval/ArxivQA",
+    "image": "assets/items/arxivqa-7.webp",
+    "state": {
+      "image": "assets/items/arxivqa-7.webp",
+      "source": "ArxivQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "What can be inferred about the relationship between the flux ratio \\( F_{4.5} / F_{3.6} \\) and the \\( 2.5\\log(F_{4.5}/F_{Ks}) \\) for stars and submillimeter galaxies (SMGs)?",
+      "criteria": {
+        "A": "Stars and SMGs show a positive correlation between \\( F_{4.5} / F_{3.6} \\) and \\( 2.5\\log(F_{4.5}/F_{Ks}) \\).",
+        "B": "Stars have a higher flux ratio \\( F_{4.5} / F_{3.6} \\) compared to SMGs at similar \\( 2.5\\log(F_{4.5}/F_{Ks}) \\) values.",
+        "C": "SMGs show a distinct, separate trend from stars in the graph.",
+        "D": "There is no discernible relationship between the flux ratios for stars or SMGs."
+      }
+    },
+    "gold": "C",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-049",
+    "dataset": "ArxivQA",
+    "source_row": 8,
+    "skill": "scientific charts and diagrams",
+    "split": "train",
+    "public_label": true,
+    "license": "CC BY-SA 4.0 (QA; linked evaluation use for paper figures)",
+    "source_url": "https://huggingface.co/datasets/mm-eval/ArxivQA",
+    "image": "assets/items/arxivqa-8.webp",
+    "state": {
+      "image": "assets/items/arxivqa-8.webp",
+      "source": "ArxivQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "What does the graph suggest about the data points with a \\( 2.5\\log(F_{4.5}/F_{3.6}) \\) value close to zero?",
+      "criteria": {
+        "A": "They correspond predominantly to higher redshift objects.",
+        "B": "They have a higher proportion of stars compared to SMGs.",
+        "C": "They are exclusively associated with one redshift range.",
+        "D": "They are uniformly distributed across all redshift ranges."
+      }
+    },
+    "gold": "B",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-050",
+    "dataset": "ArxivQA",
+    "source_row": 9,
+    "skill": "scientific charts and diagrams",
+    "split": "train",
+    "public_label": true,
+    "license": "CC BY-SA 4.0 (QA; linked evaluation use for paper figures)",
+    "source_url": "https://huggingface.co/datasets/mm-eval/ArxivQA",
+    "image": "assets/items/arxivqa-9.webp",
+    "state": {
+      "image": "assets/items/arxivqa-9.webp",
+      "source": "ArxivQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "What does the dotted line represent in the figure?",
+      "criteria": {
+        "A": "The average flux at 4.5 \u03bcm for galaxies of different masses.",
+        "B": "The flux limit of the survey conducted.",
+        "C": "The predicted flux of galaxies with a mass of 10^12 M\u2609 across various redshifts.",
+        "D": "The boundary beyond which data points are considered outliers."
+      }
+    },
+    "gold": "C",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-051",
+    "dataset": "ArxivQA",
+    "source_row": 10,
+    "skill": "scientific charts and diagrams",
+    "split": "train",
+    "public_label": true,
+    "license": "CC BY-SA 4.0 (QA; linked evaluation use for paper figures)",
+    "source_url": "https://huggingface.co/datasets/mm-eval/ArxivQA",
+    "image": "assets/items/arxivqa-10.webp",
+    "state": {
+      "image": "assets/items/arxivqa-10.webp",
+      "source": "ArxivQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "What does the black waveform in graph b suggest about the system it represents?",
+      "criteria": {
+        "A": "It represents the baseline or equilibrium state of the system.",
+        "B": "It indicates the cumulative effect of the system over time.",
+        "C": "It shows the fundamental frequency of the system's oscillation.",
+        "D": "It is an anomaly in the data that falls outside of the expected behavior."
+      }
+    },
+    "gold": "B",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-052",
+    "dataset": "ArxivQA",
+    "source_row": 11,
+    "skill": "scientific charts and diagrams",
+    "split": "train",
+    "public_label": true,
+    "license": "CC BY-SA 4.0 (QA; linked evaluation use for paper figures)",
+    "source_url": "https://huggingface.co/datasets/mm-eval/ArxivQA",
+    "image": "assets/items/arxivqa-11.webp",
+    "state": {
+      "image": "assets/items/arxivqa-11.webp",
+      "source": "ArxivQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "What can be inferred about the trajectories shown in figure a?",
+      "criteria": {
+        "A": "The trajectories represent a stable system with one equilibrium point.",
+        "B": "The trajectories depict an oscillating system that stabilizes over time.",
+        "C": "The trajectories indicate multiple equilibrium points where the system can rest.",
+        "D": "The trajectories suggest an unstable system with diverging paths."
+      }
+    },
+    "gold": "B",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-053",
+    "dataset": "ArxivQA",
+    "source_row": 12,
+    "skill": "scientific charts and diagrams",
+    "split": "train",
+    "public_label": true,
+    "license": "CC BY-SA 4.0 (QA; linked evaluation use for paper figures)",
+    "source_url": "https://huggingface.co/datasets/mm-eval/ArxivQA",
+    "image": "assets/items/arxivqa-12.webp",
+    "state": {
+      "image": "assets/items/arxivqa-12.webp",
+      "source": "ArxivQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "What does the difference in the trajectory paths between figures a and b suggest about the two systems?",
+      "criteria": {
+        "A": "System a has a higher energy conservation than system b.",
+        "B": "System a represents a discrete time model, while system b represents a continuous time model.",
+        "C": "System b has a stronger damping effect compared to system a.",
+        "D": "System a has a more significant external force applied to it than system b."
+      }
+    },
+    "gold": "C",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-054",
+    "dataset": "ArxivQA",
+    "source_row": 13,
+    "skill": "scientific charts and diagrams",
+    "split": "train",
+    "public_label": true,
+    "license": "CC BY-SA 4.0 (QA; linked evaluation use for paper figures)",
+    "source_url": "https://huggingface.co/datasets/mm-eval/ArxivQA",
+    "image": "assets/items/arxivqa-13.webp",
+    "state": {
+      "image": "assets/items/arxivqa-13.webp",
+      "source": "ArxivQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "As the value of \\( ln(e^2) \\) increases, what happens to the value of \\( ln(ACP) \\)?",
+      "criteria": {
+        "A": "It increases at a constant rate.",
+        "B": "It remains constant.",
+        "C": "It decreases at a constant rate.",
+        "D": "It decreases, approaching a limit."
+      }
+    },
+    "gold": "C",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-055",
+    "dataset": "ArxivQA",
+    "source_row": 14,
+    "skill": "scientific charts and diagrams",
+    "split": "train",
+    "public_label": true,
+    "license": "CC BY-SA 4.0 (QA; linked evaluation use for paper figures)",
+    "source_url": "https://huggingface.co/datasets/mm-eval/ArxivQA",
+    "image": "assets/items/arxivqa-14.webp",
+    "state": {
+      "image": "assets/items/arxivqa-14.webp",
+      "source": "ArxivQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "What is the average value of the parameter '\u03c3' for the spectral lines shown in the figure?",
+      "criteria": {
+        "A": "Around 8.5",
+        "B": "Around 17.8",
+        "C": "Around 20.8",
+        "D": "Around 25.3"
+      }
+    },
+    "gold": "D",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-056",
+    "dataset": "ArxivQA",
+    "source_row": 15,
+    "skill": "scientific charts and diagrams",
+    "split": "train",
+    "public_label": true,
+    "license": "CC BY-SA 4.0 (QA; linked evaluation use for paper figures)",
+    "source_url": "https://huggingface.co/datasets/mm-eval/ArxivQA",
+    "image": "assets/items/arxivqa-15.webp",
+    "state": {
+      "image": "assets/items/arxivqa-15.webp",
+      "source": "ArxivQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "What type of multi-wavelength observations are shown for the astronomical object in the figures?",
+      "criteria": {
+        "A": "Radio, Infrared, Visible, Ultraviolet, and X-ray",
+        "B": "Far-Ultraviolet (FUV), Near-Ultraviolet (NUV), Optical U, g, i, and z bands, and 3.4 micrometers wavelength",
+        "C": "Gamma-ray, X-ray, Visible, Infrared, and Microwave",
+        "D": "Optical B, V, R, and I bands, Far-Infrared, and Submillimeter wavelengths"
+      }
+    },
+    "gold": "B",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-057",
+    "dataset": "ArxivQA",
+    "source_row": 16,
+    "skill": "scientific charts and diagrams",
+    "split": "train",
+    "public_label": true,
+    "license": "CC BY-SA 4.0 (QA; linked evaluation use for paper figures)",
+    "source_url": "https://huggingface.co/datasets/mm-eval/ArxivQA",
+    "image": "assets/items/arxivqa-16.webp",
+    "state": {
+      "image": "assets/items/arxivqa-16.webp",
+      "source": "ArxivQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "According to the graphs, how does the total contribution compare to absorption and emission at around 9 \u03bcm?",
+      "criteria": {
+        "A": "Total contribution is equal to the sum of absorption and emission.",
+        "B": "Total contribution is higher than both absorption and emission.",
+        "C": "Total contribution is lower than absorption but higher than emission.",
+        "D": "Total contribution is equal to absorption but greater than emission."
+      }
+    },
+    "gold": "D",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-058",
+    "dataset": "ArxivQA",
+    "source_row": 17,
+    "skill": "scientific charts and diagrams",
+    "split": "train",
+    "public_label": true,
+    "license": "CC BY-SA 4.0 (QA; linked evaluation use for paper figures)",
+    "source_url": "https://huggingface.co/datasets/mm-eval/ArxivQA",
+    "image": "assets/items/arxivqa-17.webp",
+    "state": {
+      "image": "assets/items/arxivqa-17.webp",
+      "source": "ArxivQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "What trend is observed in the stellar mass (M*) of galaxies as the distance to the nearest filament (dfil) increases, according to the SAMI data presented?",
+      "criteria": {
+        "A": "M* increases then decreases.",
+        "B": "M* decreases then increases.",
+        "C": "M* consistently increases.",
+        "D": "M* consistently decreases."
+      }
+    },
+    "gold": "B",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-059",
+    "dataset": "ArxivQA",
+    "source_row": 18,
+    "skill": "scientific charts and diagrams",
+    "split": "train",
+    "public_label": true,
+    "license": "CC BY-SA 4.0 (QA; linked evaluation use for paper figures)",
+    "source_url": "https://huggingface.co/datasets/mm-eval/ArxivQA",
+    "image": "assets/items/arxivqa-18.webp",
+    "state": {
+      "image": "assets/items/arxivqa-18.webp",
+      "source": "ArxivQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Based on the SAMI data, at what approximate dfil (Mpc) value does the log(M*/Msun) appear to reach its minimum?",
+      "criteria": {
+        "A": "1 Mpc",
+        "B": "2 Mpc",
+        "C": "3 Mpc",
+        "D": "4 Mpc"
+      }
+    },
+    "gold": "C",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-060",
+    "dataset": "ArxivQA",
+    "source_row": 19,
+    "skill": "scientific charts and diagrams",
+    "split": "train",
+    "public_label": true,
+    "license": "CC BY-SA 4.0 (QA; linked evaluation use for paper figures)",
+    "source_url": "https://huggingface.co/datasets/mm-eval/ArxivQA",
+    "image": "assets/items/arxivqa-19.webp",
+    "state": {
+      "image": "assets/items/arxivqa-19.webp",
+      "source": "ArxivQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "What does the clustering of points at the lower left corner of the graph suggest?",
+      "criteria": {
+        "A": "Larger planets have shorter orbital periods.",
+        "B": "Smaller planets tend to have longer orbital periods.",
+        "C": "Smaller planets tend to have shorter orbital periods.",
+        "D": "There is no correlation between planet size and orbital period."
+      }
+    },
+    "gold": "C",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; typed wrapper added mechanically.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-061",
+    "dataset": "FinQA",
+    "source_row": 0,
+    "skill": "documents and tables",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT annotations; CDLA-Permissive-1.0 table data",
+    "source_url": "https://huggingface.co/datasets/bevaya/FinQA",
+    "image": "assets/items/finqa-0.webp",
+    "state": {
+      "image": "assets/items/finqa-0.webp",
+      "source": "FinQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "what is the net change in net revenue during 2015 for entergy corporation?",
+      "criteria": {
+        "option_0": "103.4",
+        "option_1": "84.6",
+        "option_2": "94",
+        "option_3": "112.8"
+      }
+    },
+    "gold": "option_2",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; source table rendered as an image; deterministic distractors added.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-062",
+    "dataset": "FinQA",
+    "source_row": 1,
+    "skill": "documents and tables",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT annotations; CDLA-Permissive-1.0 table data",
+    "source_url": "https://huggingface.co/datasets/bevaya/FinQA",
+    "image": "assets/items/finqa-1.webp",
+    "state": {
+      "image": "assets/items/finqa-1.webp",
+      "source": "FinQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "what percentage of total facilities as measured in square feet are leased?",
+      "criteria": {
+        "option_0": "16.8%",
+        "option_1": "14%",
+        "option_2": "15.4%",
+        "option_3": "12.6%"
+      }
+    },
+    "gold": "option_1",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; source table rendered as an image; deterministic distractors added.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-063",
+    "dataset": "FinQA",
+    "source_row": 2,
+    "skill": "documents and tables",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT annotations; CDLA-Permissive-1.0 table data",
+    "source_url": "https://huggingface.co/datasets/bevaya/FinQA",
+    "image": "assets/items/finqa-2.webp",
+    "state": {
+      "image": "assets/items/finqa-2.webp",
+      "source": "FinQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "what is the percentage change in cash flow hedges in 2011 compare to the 2010?",
+      "criteria": {
+        "option_0": "8.9%",
+        "option_1": "9.9%",
+        "option_2": "10.9%",
+        "option_3": "11.9%"
+      }
+    },
+    "gold": "option_1",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; source table rendered as an image; deterministic distractors added.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-064",
+    "dataset": "FinQA",
+    "source_row": 3,
+    "skill": "documents and tables",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT annotations; CDLA-Permissive-1.0 table data",
+    "source_url": "https://huggingface.co/datasets/bevaya/FinQA",
+    "image": "assets/items/finqa-3.webp",
+    "state": {
+      "image": "assets/items/finqa-3.webp",
+      "source": "FinQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "what portion of total purchase price is related to stock awards?",
+      "criteria": {
+        "option_0": "1.9%",
+        "option_1": "2.9%",
+        "option_2": "3.9%",
+        "option_3": "4.9%"
+      }
+    },
+    "gold": "option_1",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; source table rendered as an image; deterministic distractors added.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-065",
+    "dataset": "FinQA",
+    "source_row": 4,
+    "skill": "documents and tables",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT annotations; CDLA-Permissive-1.0 table data",
+    "source_url": "https://huggingface.co/datasets/bevaya/FinQA",
+    "image": "assets/items/finqa-4.webp",
+    "state": {
+      "image": "assets/items/finqa-4.webp",
+      "source": "FinQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "what was the difference in percentage cumulative total shareholder return on masco common stock versus the s&p 500 index for the five year period ended 2017?",
+      "criteria": {
+        "option_0": "None of the listed values",
+        "option_1": "All listed values",
+        "option_2": "",
+        "option_3": "Cannot be determined"
+      }
+    },
+    "gold": "option_2",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; source table rendered as an image; deterministic distractors added.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-066",
+    "dataset": "FinQA",
+    "source_row": 5,
+    "skill": "documents and tables",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT annotations; CDLA-Permissive-1.0 table data",
+    "source_url": "https://huggingface.co/datasets/bevaya/FinQA",
+    "image": "assets/items/finqa-5.webp",
+    "state": {
+      "image": "assets/items/finqa-5.webp",
+      "source": "FinQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "what was the percentage change in total rental expense under operating leases from july 2 , 2005 to july 1 , 2006?",
+      "criteria": {
+        "option_0": "8%",
+        "option_1": "7%",
+        "option_2": "9%",
+        "option_3": "6%"
+      }
+    },
+    "gold": "option_1",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; source table rendered as an image; deterministic distractors added.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-067",
+    "dataset": "FinQA",
+    "source_row": 6,
+    "skill": "documents and tables",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT annotations; CDLA-Permissive-1.0 table data",
+    "source_url": "https://huggingface.co/datasets/bevaya/FinQA",
+    "image": "assets/items/finqa-6.webp",
+    "state": {
+      "image": "assets/items/finqa-6.webp",
+      "source": "FinQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "what percent of total recourse debt is current?",
+      "criteria": {
+        "option_0": "12%",
+        "option_1": "10%",
+        "option_2": "11%",
+        "option_3": "9%"
+      }
+    },
+    "gold": "option_1",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; source table rendered as an image; deterministic distractors added.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-068",
+    "dataset": "FinQA",
+    "source_row": 7,
+    "skill": "documents and tables",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT annotations; CDLA-Permissive-1.0 table data",
+    "source_url": "https://huggingface.co/datasets/bevaya/FinQA",
+    "image": "assets/items/finqa-7.webp",
+    "state": {
+      "image": "assets/items/finqa-7.webp",
+      "source": "FinQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "what percentage of future minimum rental payments are due in 2018?",
+      "criteria": {
+        "option_0": "13.2%",
+        "option_1": "12%",
+        "option_2": "10.8%",
+        "option_3": "14.4%"
+      }
+    },
+    "gold": "option_1",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; source table rendered as an image; deterministic distractors added.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-069",
+    "dataset": "FinQA",
+    "source_row": 8,
+    "skill": "documents and tables",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT annotations; CDLA-Permissive-1.0 table data",
+    "source_url": "https://huggingface.co/datasets/bevaya/FinQA",
+    "image": "assets/items/finqa-8.webp",
+    "state": {
+      "image": "assets/items/finqa-8.webp",
+      "source": "FinQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "did altria outperform the s&p 500?",
+      "criteria": {
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
+    "gold": "yes",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; source table rendered as an image; deterministic distractors added.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-070",
+    "dataset": "FinQA",
+    "source_row": 9,
+    "skill": "documents and tables",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT annotations; CDLA-Permissive-1.0 table data",
+    "source_url": "https://huggingface.co/datasets/bevaya/FinQA",
+    "image": "assets/items/finqa-9.webp",
+    "state": {
+      "image": "assets/items/finqa-9.webp",
+      "source": "FinQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "what was the change in unrecognized tax benefits from the end of 2014 to the end of 2015?",
+      "criteria": {
+        "option_0": "-31.5",
+        "option_1": "-35",
+        "option_2": "-28",
+        "option_3": "-38.5"
+      }
+    },
+    "gold": "option_1",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; source table rendered as an image; deterministic distractors added.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-071",
+    "dataset": "FinQA",
+    "source_row": 10,
+    "skill": "documents and tables",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT annotations; CDLA-Permissive-1.0 table data",
+    "source_url": "https://huggingface.co/datasets/bevaya/FinQA",
+    "image": "assets/items/finqa-10.webp",
+    "state": {
+      "image": "assets/items/finqa-10.webp",
+      "source": "FinQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "what is the growth rate in the balance of standby letters of credit from 2006 to 2007?",
+      "criteria": {
+        "option_0": "-3.4%",
+        "option_1": "-4.4%",
+        "option_2": "-5.4%",
+        "option_3": "-2.4%"
+      }
+    },
+    "gold": "option_1",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; source table rendered as an image; deterministic distractors added.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-072",
+    "dataset": "FinQA",
+    "source_row": 11,
+    "skill": "documents and tables",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT annotations; CDLA-Permissive-1.0 table data",
+    "source_url": "https://huggingface.co/datasets/bevaya/FinQA",
+    "image": "assets/items/finqa-11.webp",
+    "state": {
+      "image": "assets/items/finqa-11.webp",
+      "source": "FinQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "what is the debt-to-asset ratio?",
+      "criteria": {
+        "option_0": "26.88%",
+        "option_1": "20.16%",
+        "option_2": "22.4%",
+        "option_3": "24.64%"
+      }
+    },
+    "gold": "option_2",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; source table rendered as an image; deterministic distractors added.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-073",
+    "dataset": "FinQA",
+    "source_row": 12,
+    "skill": "documents and tables",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT annotations; CDLA-Permissive-1.0 table data",
+    "source_url": "https://huggingface.co/datasets/bevaya/FinQA",
+    "image": "assets/items/finqa-12.webp",
+    "state": {
+      "image": "assets/items/finqa-12.webp",
+      "source": "FinQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "what portion of the total noncancelable future lease commitments are due in fiscal year of 2019?",
+      "criteria": {
+        "option_0": "22.14%",
+        "option_1": "24.6%",
+        "option_2": "27.06%",
+        "option_3": "29.52%"
+      }
+    },
+    "gold": "option_1",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; source table rendered as an image; deterministic distractors added.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-074",
+    "dataset": "FinQA",
+    "source_row": 13,
+    "skill": "documents and tables",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT annotations; CDLA-Permissive-1.0 table data",
+    "source_url": "https://huggingface.co/datasets/bevaya/FinQA",
+    "image": "assets/items/finqa-13.webp",
+    "state": {
+      "image": "assets/items/finqa-13.webp",
+      "source": "FinQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "was the five year total return of the 2019 peer group greater than the 2018 peer group?",
+      "criteria": {
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
+    "gold": "no",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; source table rendered as an image; deterministic distractors added.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-075",
+    "dataset": "FinQA",
+    "source_row": 14,
+    "skill": "documents and tables",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT annotations; CDLA-Permissive-1.0 table data",
+    "source_url": "https://huggingface.co/datasets/bevaya/FinQA",
+    "image": "assets/items/finqa-14.webp",
+    "state": {
+      "image": "assets/items/finqa-14.webp",
+      "source": "FinQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "what was the percentage change in deferred tax assets and regulatory assets from 2013 to 2014",
+      "criteria": {
+        "option_0": "1.7%",
+        "option_1": "0.7%",
+        "option_2": "3.7%",
+        "option_3": "2.7%"
+      }
+    },
+    "gold": "option_0",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; source table rendered as an image; deterministic distractors added.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-076",
+    "dataset": "FinQA",
+    "source_row": 15,
+    "skill": "documents and tables",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT annotations; CDLA-Permissive-1.0 table data",
+    "source_url": "https://huggingface.co/datasets/bevaya/FinQA",
+    "image": "assets/items/finqa-15.webp",
+    "state": {
+      "image": "assets/items/finqa-15.webp",
+      "source": "FinQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "what was the average net annual change in discounted future net cash flows ( in millions ) for the years 2011 , 2010 , and 2009?",
+      "criteria": {
+        "option_0": "3957.6",
+        "option_1": "3627.8",
+        "option_2": "3298",
+        "option_3": "2968.2"
+      }
+    },
+    "gold": "option_2",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; source table rendered as an image; deterministic distractors added.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-077",
+    "dataset": "FinQA",
+    "source_row": 16,
+    "skill": "documents and tables",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT annotations; CDLA-Permissive-1.0 table data",
+    "source_url": "https://huggingface.co/datasets/bevaya/FinQA",
+    "image": "assets/items/finqa-16.webp",
+    "state": {
+      "image": "assets/items/finqa-16.webp",
+      "source": "FinQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "assuming each continent has the same number of destinations , approximately how many destinations does each continent have?",
+      "criteria": {
+        "option_0": "65",
+        "option_1": "78",
+        "option_2": "58.5",
+        "option_3": "71.5"
+      }
+    },
+    "gold": "option_0",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; source table rendered as an image; deterministic distractors added.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-078",
+    "dataset": "FinQA",
+    "source_row": 17,
+    "skill": "documents and tables",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT annotations; CDLA-Permissive-1.0 table data",
+    "source_url": "https://huggingface.co/datasets/bevaya/FinQA",
+    "image": "assets/items/finqa-17.webp",
+    "state": {
+      "image": "assets/items/finqa-17.webp",
+      "source": "FinQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "what was the average net revenue between 2016 and 2017 in millions",
+      "criteria": {
+        "option_0": "774.67",
+        "option_1": "845.1",
+        "option_2": "704.25",
+        "option_3": "633.83"
+      }
+    },
+    "gold": "option_2",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; source table rendered as an image; deterministic distractors added.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-079",
+    "dataset": "FinQA",
+    "source_row": 18,
+    "skill": "documents and tables",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT annotations; CDLA-Permissive-1.0 table data",
+    "source_url": "https://huggingface.co/datasets/bevaya/FinQA",
+    "image": "assets/items/finqa-18.webp",
+    "state": {
+      "image": "assets/items/finqa-18.webp",
+      "source": "FinQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "the combined amount of accrued interest and penalties related to tax positions taken on our tax returns and included in non-current income taxes payable was what percent of the total ending balance as of november 28 2008?",
+      "criteria": {
+        "option_0": "13.2%",
+        "option_1": "11%",
+        "option_2": "9.9%",
+        "option_3": "12.1%"
+      }
+    },
+    "gold": "option_1",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; source table rendered as an image; deterministic distractors added.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-080",
+    "dataset": "FinQA",
+    "source_row": 19,
+    "skill": "documents and tables",
+    "split": "test",
+    "public_label": true,
+    "license": "MIT annotations; CDLA-Permissive-1.0 table data",
+    "source_url": "https://huggingface.co/datasets/bevaya/FinQA",
+    "image": "assets/items/finqa-19.webp",
+    "state": {
+      "image": "assets/items/finqa-19.webp",
+      "source": "FinQA"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "in 2010 and 2009 , what was the total fair value in billions of assets segregated for the benefit of securities and futures brokerage customers?",
+      "criteria": {
+        "option_0": "68.9",
+        "option_1": "75.79",
+        "option_2": "82.68",
+        "option_3": "62.01"
+      }
+    },
+    "gold": "option_0",
+    "gold_origin": "dataset_label",
+    "transformation": "Question preserved verbatim; source table rendered as an image; deterministic distractors added.",
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-081",
+    "dataset": "ScreenSpot",
+    "source_row": 0,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-0.webp",
+    "state": {
+      "image": "assets/items/screenspot-0.webp",
+      "source": "ScreenSpot",
+      "platform": "windows",
+      "element_type": "icon"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: close Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "E",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; the gold marker is centered on ScreenSpot's labelled target bbox; distractors are deterministic points outside that bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.9479166666666666,
+        0.14444444444444443,
+        0.99375,
+        0.2074074074074074
+      ],
+      "instruction": "close",
+      "file_name": "pc_ede36f9b-1154-4f76-b7f8-c15d7d3f9b6e.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-082",
+    "dataset": "ScreenSpot",
+    "source_row": 1,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-1.webp",
+    "state": {
+      "image": "assets/items/screenspot-1.webp",
+      "source": "ScreenSpot",
+      "platform": "windows",
+      "element_type": "icon"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: minimize this window Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "D",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; the gold marker is centered on ScreenSpot's labelled target bbox; distractors are deterministic points outside that bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.8697916666666666,
+        0.0,
+        0.9072916666666667,
+        0.05555555555555555
+      ],
+      "instruction": "minimize this window",
+      "file_name": "pc_5e09e8e9-7ef6-44be-ad54-aeaeac151897.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-083",
+    "dataset": "ScreenSpot",
+    "source_row": 2,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-2.webp",
+    "state": {
+      "image": "assets/items/screenspot-2.webp",
+      "source": "ScreenSpot",
+      "platform": "windows",
+      "element_type": "text"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: play the solitaire collection Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "C",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; the gold marker is centered on ScreenSpot's labelled target bbox; distractors are deterministic points outside that bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.134375,
+        0.1287037037037037,
+        0.8635416666666667,
+        0.3435185185185185
+      ],
+      "instruction": "play the solitaire collection",
+      "file_name": "pc_2c6dc6ea-fd6f-4cbb-9954-2d6a68610a48.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-084",
+    "dataset": "ScreenSpot",
+    "source_row": 3,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-3.webp",
+    "state": {
+      "image": "assets/items/screenspot-3.webp",
+      "source": "ScreenSpot",
+      "platform": "windows",
+      "element_type": "text"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: open the gallery Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "B",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; the gold marker is centered on ScreenSpot's labelled target bbox; distractors are deterministic points outside that bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.29270833333333335,
+        0.11296296296296296,
+        0.4,
+        0.3055555555555556
+      ],
+      "instruction": "open the gallery",
+      "file_name": "pc_b072d03a-51cb-4dd6-bdeb-152d3fd44e6b.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-085",
+    "dataset": "ScreenSpot",
+    "source_row": 4,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-4.webp",
+    "state": {
+      "image": "assets/items/screenspot-4.webp",
+      "source": "ScreenSpot",
+      "platform": "windows",
+      "element_type": "text"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: adjust the style Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "A",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; the gold marker is centered on ScreenSpot's labelled target bbox; distractors are deterministic points outside that bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.6614583333333334,
+        0.6666666666666666,
+        0.7052083333333333,
+        0.7833333333333333
+      ],
+      "instruction": "adjust the style",
+      "file_name": "pc_ac2d2c5e-fe5a-4233-95b4-2de18ef76a9e.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-086",
+    "dataset": "ScreenSpot",
+    "source_row": 5,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-5.webp",
+    "state": {
+      "image": "assets/items/screenspot-5.webp",
+      "source": "ScreenSpot",
+      "platform": "windows",
+      "element_type": "icon"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: minimize calculator Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "E",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; the gold marker is centered on ScreenSpot's labelled target bbox; distractors are deterministic points outside that bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.7260416666666667,
+        0.11666666666666667,
+        0.7614583333333333,
+        0.17592592592592593
+      ],
+      "instruction": "minimize calculator",
+      "file_name": "pc_f0122b91-3f8b-4510-9a6e-f0239d84b94e.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-087",
+    "dataset": "ScreenSpot",
+    "source_row": 162,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-162.webp",
+    "state": {
+      "image": "assets/items/screenspot-162.webp",
+      "source": "ScreenSpot",
+      "platform": "macos",
+      "element_type": "text"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: check my apple id Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "C",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; the gold marker is centered on ScreenSpot's labelled target bbox; distractors are deterministic points outside that bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.7660687593423019,
+        0.10352422907488987,
+        0.843796711509716,
+        0.19676945668135096
+      ],
+      "instruction": "check my apple id",
+      "file_name": "pc_6f79b56c-2b0f-471d-9f9d-93932c69a0ce.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-088",
+    "dataset": "ScreenSpot",
+    "source_row": 163,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-163.webp",
+    "state": {
+      "image": "assets/items/screenspot-163.webp",
+      "source": "ScreenSpot",
+      "platform": "macos",
+      "element_type": "text"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: view the language & region settings Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "B",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; the gold marker is centered on ScreenSpot's labelled target bbox; distractors are deterministic points outside that bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.7608370702541106,
+        0.2701908957415565,
+        0.851270553064275,
+        0.37812041116005873
+      ],
+      "instruction": "view the language & region settings",
+      "file_name": "pc_6f79b56c-2b0f-471d-9f9d-93932c69a0ce.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-089",
+    "dataset": "ScreenSpot",
+    "source_row": 164,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-164.webp",
+    "state": {
+      "image": "assets/items/screenspot-164.webp",
+      "source": "ScreenSpot",
+      "platform": "macos",
+      "element_type": "text"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: open time machine Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "A",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; the gold marker is centered on ScreenSpot's labelled target bbox; distractors are deterministic points outside that bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.6420029895366218,
+        0.6989720998531571,
+        0.726457399103139,
+        0.8113069016152716
+      ],
+      "instruction": "open time machine",
+      "file_name": "pc_6f79b56c-2b0f-471d-9f9d-93932c69a0ce.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-090",
+    "dataset": "ScreenSpot",
+    "source_row": 165,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-165.webp",
+    "state": {
+      "image": "assets/items/screenspot-165.webp",
+      "source": "ScreenSpot",
+      "platform": "macos",
+      "element_type": "text"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: check desplay settings Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "E",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; the gold marker is centered on ScreenSpot's labelled target bbox; distractors are deterministic points outside that bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.030642750373692077,
+        0.7004405286343612,
+        0.11285500747384156,
+        0.7944199706314243
+      ],
+      "instruction": "check desplay settings",
+      "file_name": "pc_6f79b56c-2b0f-471d-9f9d-93932c69a0ce.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-091",
+    "dataset": "ScreenSpot",
+    "source_row": 166,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-166.webp",
+    "state": {
+      "image": "assets/items/screenspot-166.webp",
+      "source": "ScreenSpot",
+      "platform": "macos",
+      "element_type": "text"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: software update Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "D",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; the gold marker is centered on ScreenSpot's labelled target bbox; distractors are deterministic points outside that bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.02914798206278027,
+        0.5587371512481645,
+        0.11210762331838565,
+        0.6791483113069016
+      ],
+      "instruction": "software update",
+      "file_name": "pc_6f79b56c-2b0f-471d-9f9d-93932c69a0ce.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-092",
+    "dataset": "ScreenSpot",
+    "source_row": 167,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-167.webp",
+    "state": {
+      "image": "assets/items/screenspot-167.webp",
+      "source": "ScreenSpot",
+      "platform": "macos",
+      "element_type": "text"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: switch to desktop Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "C",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; the gold marker is centered on ScreenSpot's labelled target bbox; distractors are deterministic points outside that bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.36716417910447763,
+        0.12197231833910034,
+        0.47761194029850745,
+        0.15916955017301038
+      ],
+      "instruction": "switch to desktop",
+      "file_name": "pc_66906e9c-dc3c-49e9-aaf0-0e7d5efc97db.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-093",
+    "dataset": "ScreenSpot",
+    "source_row": 334,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-334.webp",
+    "state": {
+      "image": "assets/items/screenspot-334.webp",
+      "source": "ScreenSpot",
+      "platform": "ios",
+      "element_type": "icon"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: check the weather Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "A",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; the gold marker is centered on ScreenSpot's labelled target bbox; distractors are deterministic points outside that bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.09449152542372881,
+        0.0475609756097561,
+        0.34915254237288135,
+        0.4091463414634146
+      ],
+      "instruction": "check the weather",
+      "file_name": "mobile_1ca5b944-293a-46a1-af95-eb35bc8a0b2a.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-094",
+    "dataset": "ScreenSpot",
+    "source_row": 335,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-335.webp",
+    "state": {
+      "image": "assets/items/screenspot-335.webp",
+      "source": "ScreenSpot",
+      "platform": "ios",
+      "element_type": "icon"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: view world clock Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "E",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; the gold marker is centered on ScreenSpot's labelled target bbox; distractors are deterministic points outside that bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.37245762711864405,
+        0.04573170731707317,
+        0.6262711864406779,
+        0.2097560975609756
+      ],
+      "instruction": "view world clock",
+      "file_name": "mobile_1ca5b944-293a-46a1-af95-eb35bc8a0b2a.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-095",
+    "dataset": "ScreenSpot",
+    "source_row": 336,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-336.webp",
+    "state": {
+      "image": "assets/items/screenspot-336.webp",
+      "source": "ScreenSpot",
+      "platform": "ios",
+      "element_type": "text"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: open facetime app Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "D",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; the gold marker is centered on ScreenSpot's labelled target bbox; distractors are deterministic points outside that bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.26228813559322034,
+        0.49329268292682926,
+        0.31822033898305085,
+        0.5908536585365853
+      ],
+      "instruction": "open facetime app",
+      "file_name": "mobile_1ca5b944-293a-46a1-af95-eb35bc8a0b2a.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-096",
+    "dataset": "ScreenSpot",
+    "source_row": 337,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-337.webp",
+    "state": {
+      "image": "assets/items/screenspot-337.webp",
+      "source": "ScreenSpot",
+      "platform": "ios",
+      "element_type": "text"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: open the camera Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "C",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; the gold marker is centered on ScreenSpot's labelled target bbox; distractors are deterministic points outside that bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.8203389830508474,
+        0.49146341463414633,
+        0.8711864406779661,
+        0.5926829268292683
+      ],
+      "instruction": "open the camera",
+      "file_name": "mobile_1ca5b944-293a-46a1-af95-eb35bc8a0b2a.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-097",
+    "dataset": "ScreenSpot",
+    "source_row": 338,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-338.webp",
+    "state": {
+      "image": "assets/items/screenspot-338.webp",
+      "source": "ScreenSpot",
+      "platform": "ios",
+      "element_type": "icon"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: menu Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "B",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; the gold marker is centered on ScreenSpot's labelled target bbox; distractors are deterministic points outside that bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.01694915254237288,
+        0.03902439024390244,
+        0.05084745762711865,
+        0.07926829268292683
+      ],
+      "instruction": "menu",
+      "file_name": "mobile_6949b916-64c8-431f-8842-a29a9a557641.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-098",
+    "dataset": "ScreenSpot",
+    "source_row": 339,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-339.webp",
+    "state": {
+      "image": "assets/items/screenspot-339.webp",
+      "source": "ScreenSpot",
+      "platform": "ios",
+      "element_type": "icon"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: select source language Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "A",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; the gold marker is centered on ScreenSpot's labelled target bbox; distractors are deterministic points outside that bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.4563559322033898,
+        0.0475609756097561,
+        0.49533898305084745,
+        0.11768292682926829
+      ],
+      "instruction": "select source language",
+      "file_name": "mobile_6949b916-64c8-431f-8842-a29a9a557641.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-099",
+    "dataset": "ScreenSpot",
+    "source_row": 468,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-468.webp",
+    "state": {
+      "image": "assets/items/screenspot-468.webp",
+      "source": "ScreenSpot",
+      "platform": "android",
+      "element_type": "text"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: set focus time to 60 mins Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "B",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; the gold marker is centered on ScreenSpot's labelled target bbox; distractors are deterministic points outside that bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.2851851851851852,
+        0.71375,
+        0.48518518518518516,
+        0.8020833333333334
+      ],
+      "instruction": "set focus time to 60 mins",
+      "file_name": "mobile_8d5dea76-69b8-4076-82ef-38b2fb8a1b30.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-100",
+    "dataset": "ScreenSpot",
+    "source_row": 469,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-469.webp",
+    "state": {
+      "image": "assets/items/screenspot-469.webp",
+      "source": "ScreenSpot",
+      "platform": "android",
+      "element_type": "text"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: turn on focus mode Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "A",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; the gold marker is centered on ScreenSpot's labelled target bbox; distractors are deterministic points outside that bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.07407407407407407,
+        0.8845833333333334,
+        0.9324074074074075,
+        0.9591666666666666
+      ],
+      "instruction": "turn on focus mode",
+      "file_name": "mobile_8d5dea76-69b8-4076-82ef-38b2fb8a1b30.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-101",
+    "dataset": "ScreenSpot",
+    "source_row": 470,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-470.webp",
+    "state": {
+      "image": "assets/items/screenspot-470.webp",
+      "source": "ScreenSpot",
+      "platform": "android",
+      "element_type": "icon"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: customize focus time Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "E",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; the gold marker is centered on ScreenSpot's labelled target bbox; distractors are deterministic points outside that bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.737037037037037,
+        0.71,
+        0.9629629629629629,
+        0.8033333333333333
+      ],
+      "instruction": "customize focus time",
+      "file_name": "mobile_8d5dea76-69b8-4076-82ef-38b2fb8a1b30.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-102",
+    "dataset": "ScreenSpot",
+    "source_row": 471,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-471.webp",
+    "state": {
+      "image": "assets/items/screenspot-471.webp",
+      "source": "ScreenSpot",
+      "platform": "android",
+      "element_type": "icon"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: check tuesday data details Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "D",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; the gold marker is centered on ScreenSpot's labelled target bbox; distractors are deterministic points outside that bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.17962962962962964,
+        0.36791666666666667,
+        0.2740740740740741,
+        0.5541666666666667
+      ],
+      "instruction": "check tuesday data details",
+      "file_name": "mobile_b012267b-fcd6-4d0c-991a-f2a4afd0a2ff.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-103",
+    "dataset": "ScreenSpot",
+    "source_row": 472,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-472.webp",
+    "state": {
+      "image": "assets/items/screenspot-472.webp",
+      "source": "ScreenSpot",
+      "platform": "android",
+      "element_type": "text"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: display data by week Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "C",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; the gold marker is centered on ScreenSpot's labelled target bbox; distractors are deterministic points outside that bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.48518518518518516,
+        0.16083333333333333,
+        0.9481481481481482,
+        0.23375
+      ],
+      "instruction": "display data by week",
+      "file_name": "mobile_b012267b-fcd6-4d0c-991a-f2a4afd0a2ff.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-104",
+    "dataset": "ScreenSpot",
+    "source_row": 473,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-473.webp",
+    "state": {
+      "image": "assets/items/screenspot-473.webp",
+      "source": "ScreenSpot",
+      "platform": "android",
+      "element_type": "text"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: switch to focus mode Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "B",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; the gold marker is centered on ScreenSpot's labelled target bbox; distractors are deterministic points outside that bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.46574074074074073,
+        0.1,
+        0.9407407407407408,
+        0.15916666666666668
+      ],
+      "instruction": "switch to focus mode",
+      "file_name": "mobile_b012267b-fcd6-4d0c-991a-f2a4afd0a2ff.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-105",
+    "dataset": "Multimodal-Mind2Web",
+    "source_row": 0,
+    "skill": "browser-use element selection",
+    "split": "test_task",
+    "public_label": true,
+    "license": "CC BY 4.0 Mind2Web annotations; OpenRAIL multimodal release",
+    "source_url": "https://huggingface.co/datasets/osunlp/Multimodal-Mind2Web",
+    "image": "assets/items/mind2web-0.webp",
+    "state": {
+      "image": "assets/items/mind2web-0.webp",
+      "source": "Multimodal-Mind2Web",
+      "website": "budget",
+      "domain": "Travel"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Browser goal: Rent a truck with the lowest rent with two dozen furniture pads for 100 miles at zip 08817 on April 12 at 2:30 pm rented truck is to be returned to the exact location and date, and the pickup and drop off will be at the nearest location. Next labelled element for action CLICK?",
+      "criteria": {
+        "A": "Choose element A",
+        "B": "Choose element B",
+        "C": "Choose element C",
+        "D": "Choose element D",
+        "E": "Choose element E"
+      }
+    },
+    "gold": "A",
+    "gold_origin": "dataset_positive_candidate",
+    "transformation": "Original positive element and four dataset negative candidates were boxed and labelled mechanically; screenshot cropped around the positive element.",
+    "source_label": {
+      "action_uid": "73e0e7ed-d784-4b7a-a06c-48324e44ce7b",
+      "operation": "{\"original_op\": \"HOVER\", \"value\": \"\", \"op\": \"CLICK\"}",
+      "positive_backend_node_id": "128"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-106",
+    "dataset": "Multimodal-Mind2Web",
+    "source_row": 1,
+    "skill": "browser-use element selection",
+    "split": "test_task",
+    "public_label": true,
+    "license": "CC BY 4.0 Mind2Web annotations; OpenRAIL multimodal release",
+    "source_url": "https://huggingface.co/datasets/osunlp/Multimodal-Mind2Web",
+    "image": "assets/items/mind2web-1.webp",
+    "state": {
+      "image": "assets/items/mind2web-1.webp",
+      "source": "Multimodal-Mind2Web",
+      "website": "budget",
+      "domain": "Travel"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Browser goal: Rent a truck with the lowest rent with two dozen furniture pads for 100 miles at zip 08817 on April 12 at 2:30 pm rented truck is to be returned to the exact location and date, and the pickup and drop off will be at the nearest location. Next labelled element for action CLICK?",
+      "criteria": {
+        "A": "Choose element A",
+        "B": "Choose element B",
+        "C": "Choose element C",
+        "D": "Choose element D",
+        "E": "Choose element E"
+      }
+    },
+    "gold": "E",
+    "gold_origin": "dataset_positive_candidate",
+    "transformation": "Original positive element and four dataset negative candidates were boxed and labelled mechanically; screenshot cropped around the positive element.",
+    "source_label": {
+      "action_uid": "ea2865e4-2858-478c-bf83-93d576cad774",
+      "operation": "{\"original_op\": \"CLICK\", \"value\": \"\", \"op\": \"CLICK\"}",
+      "positive_backend_node_id": "9780"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-107",
+    "dataset": "Multimodal-Mind2Web",
+    "source_row": 2,
+    "skill": "browser-use element selection",
+    "split": "test_task",
+    "public_label": true,
+    "license": "CC BY 4.0 Mind2Web annotations; OpenRAIL multimodal release",
+    "source_url": "https://huggingface.co/datasets/osunlp/Multimodal-Mind2Web",
+    "image": "assets/items/mind2web-2.webp",
+    "state": {
+      "image": "assets/items/mind2web-2.webp",
+      "source": "Multimodal-Mind2Web",
+      "website": "budget",
+      "domain": "Travel"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Browser goal: Rent a truck with the lowest rent with two dozen furniture pads for 100 miles at zip 08817 on April 12 at 2:30 pm rented truck is to be returned to the exact location and date, and the pickup and drop off will be at the nearest location. Next labelled element for action TYPE?",
+      "criteria": {
+        "A": "Choose element A",
+        "B": "Choose element B",
+        "C": "Choose element C",
+        "D": "Choose element D",
+        "E": "Choose element E"
+      }
+    },
+    "gold": "D",
+    "gold_origin": "dataset_positive_candidate",
+    "transformation": "Original positive element and four dataset negative candidates were boxed and labelled mechanically; screenshot cropped around the positive element.",
+    "source_label": {
+      "action_uid": "c70a5d9b-8777-4ff7-a17d-1f76012e14ba",
+      "operation": "{\"original_op\": \"TYPE\", \"value\": \"08817\", \"op\": \"TYPE\"}",
+      "positive_backend_node_id": "19433"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-108",
+    "dataset": "Multimodal-Mind2Web",
+    "source_row": 3,
+    "skill": "browser-use element selection",
+    "split": "test_task",
+    "public_label": true,
+    "license": "CC BY 4.0 Mind2Web annotations; OpenRAIL multimodal release",
+    "source_url": "https://huggingface.co/datasets/osunlp/Multimodal-Mind2Web",
+    "image": "assets/items/mind2web-3.webp",
+    "state": {
+      "image": "assets/items/mind2web-3.webp",
+      "source": "Multimodal-Mind2Web",
+      "website": "budget",
+      "domain": "Travel"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Browser goal: Rent a truck with the lowest rent with two dozen furniture pads for 100 miles at zip 08817 on April 12 at 2:30 pm rented truck is to be returned to the exact location and date, and the pickup and drop off will be at the nearest location. Next labelled element for action CLICK?",
+      "criteria": {
+        "A": "Choose element A",
+        "B": "Choose element B",
+        "C": "Choose element C",
+        "D": "Choose element D",
+        "E": "Choose element E"
+      }
+    },
+    "gold": "C",
+    "gold_origin": "dataset_positive_candidate",
+    "transformation": "Original positive element and four dataset negative candidates were boxed and labelled mechanically; screenshot cropped around the positive element.",
+    "source_label": {
+      "action_uid": "3e671043-cab2-4e44-a1ce-3ed9de91d16b",
+      "operation": "{\"original_op\": \"CLICK\", \"value\": \"\", \"op\": \"CLICK\"}",
+      "positive_backend_node_id": "28872"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-109",
+    "dataset": "Multimodal-Mind2Web",
+    "source_row": 4,
+    "skill": "browser-use element selection",
+    "split": "test_task",
+    "public_label": true,
+    "license": "CC BY 4.0 Mind2Web annotations; OpenRAIL multimodal release",
+    "source_url": "https://huggingface.co/datasets/osunlp/Multimodal-Mind2Web",
+    "image": "assets/items/mind2web-4.webp",
+    "state": {
+      "image": "assets/items/mind2web-4.webp",
+      "source": "Multimodal-Mind2Web",
+      "website": "budget",
+      "domain": "Travel"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Browser goal: Rent a truck with the lowest rent with two dozen furniture pads for 100 miles at zip 08817 on April 12 at 2:30 pm rented truck is to be returned to the exact location and date, and the pickup and drop off will be at the nearest location. Next labelled element for action CLICK?",
+      "criteria": {
+        "A": "Choose element A",
+        "B": "Choose element B",
+        "C": "Choose element C",
+        "D": "Choose element D",
+        "E": "Choose element E"
+      }
+    },
+    "gold": "B",
+    "gold_origin": "dataset_positive_candidate",
+    "transformation": "Original positive element and four dataset negative candidates were boxed and labelled mechanically; screenshot cropped around the positive element.",
+    "source_label": {
+      "action_uid": "60888ab2-b605-4886-8dac-6ba72b6cde0a",
+      "operation": "{\"original_op\": \"CLICK\", \"value\": \"\", \"op\": \"CLICK\"}",
+      "positive_backend_node_id": "38341"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-110",
+    "dataset": "Multimodal-Mind2Web",
+    "source_row": 5,
+    "skill": "browser-use element selection",
+    "split": "test_task",
+    "public_label": true,
+    "license": "CC BY 4.0 Mind2Web annotations; OpenRAIL multimodal release",
+    "source_url": "https://huggingface.co/datasets/osunlp/Multimodal-Mind2Web",
+    "image": "assets/items/mind2web-5.webp",
+    "state": {
+      "image": "assets/items/mind2web-5.webp",
+      "source": "Multimodal-Mind2Web",
+      "website": "budget",
+      "domain": "Travel"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Browser goal: Rent a truck with the lowest rent with two dozen furniture pads for 100 miles at zip 08817 on April 12 at 2:30 pm rented truck is to be returned to the exact location and date, and the pickup and drop off will be at the nearest location. Next labelled element for action SELECT?",
+      "criteria": {
+        "A": "Choose element A",
+        "B": "Choose element B",
+        "C": "Choose element C",
+        "D": "Choose element D",
+        "E": "Choose element E"
+      }
+    },
+    "gold": "A",
+    "gold_origin": "dataset_positive_candidate",
+    "transformation": "Original positive element and four dataset negative candidates were boxed and labelled mechanically; screenshot cropped around the positive element.",
+    "source_label": {
+      "action_uid": "43809daf-0eb6-40ab-96df-0c2bf143e25c",
+      "operation": "{\"original_op\": \"SELECT\", \"value\": \"02 30 PM\", \"op\": \"SELECT\"}",
+      "positive_backend_node_id": "47746"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-111",
+    "dataset": "ScreenSpot",
+    "source_row": 6,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-6.webp",
+    "state": {
+      "image": "assets/items/screenspot-6.webp",
+      "source": "ScreenSpot",
+      "platform": "windows",
+      "element_type": "icon"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: open the download page Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "D",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; gold is centered on the source target bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.878125,
+        0.012962962962962963,
+        0.928125,
+        0.08518518518518518
+      ],
+      "instruction": "open the download page",
+      "file_name": "pc_354a6cb2-3fe0-4cea-950c-d7f8e01fdf45.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-112",
+    "dataset": "ScreenSpot",
+    "source_row": 7,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-7.webp",
+    "state": {
+      "image": "assets/items/screenspot-7.webp",
+      "source": "ScreenSpot",
+      "platform": "windows",
+      "element_type": "text"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: help menu Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "C",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; gold is centered on the source target bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.0010416666666666667,
+        0.8037037037037037,
+        0.07083333333333333,
+        0.9259259259259259
+      ],
+      "instruction": "help menu",
+      "file_name": "pc_d6b09201-c944-4ad9-a0a2-ff78e8f056ce.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-113",
+    "dataset": "ScreenSpot",
+    "source_row": 8,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-8.webp",
+    "state": {
+      "image": "assets/items/screenspot-8.webp",
+      "source": "ScreenSpot",
+      "platform": "windows",
+      "element_type": "icon"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: save the file Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "B",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; gold is centered on the source target bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.009375,
+        0.0,
+        0.04583333333333333,
+        0.05740740740740741
+      ],
+      "instruction": "save the file",
+      "file_name": "pc_db6b6fa2-11cc-4b06-88cb-22c180f07a3b.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-114",
+    "dataset": "ScreenSpot",
+    "source_row": 168,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-168.webp",
+    "state": {
+      "image": "assets/items/screenspot-168.webp",
+      "source": "ScreenSpot",
+      "platform": "macos",
+      "element_type": "text"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: show screen saver after Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "B",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; gold is centered on the source target bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.258955223880597,
+        0.18079584775086505,
+        0.5201492537313432,
+        0.21626297577854672
+      ],
+      "instruction": "show screen saver after",
+      "file_name": "pc_66906e9c-dc3c-49e9-aaf0-0e7d5efc97db.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-115",
+    "dataset": "ScreenSpot",
+    "source_row": 169,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-169.webp",
+    "state": {
+      "image": "assets/items/screenspot-169.webp",
+      "source": "ScreenSpot",
+      "platform": "macos",
+      "element_type": "text"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: choose the ken burns Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "A",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; gold is centered on the source target bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.07388059701492537,
+        0.36764705882352944,
+        0.20671641791044776,
+        0.49480968858131485
+      ],
+      "instruction": "choose the ken burns",
+      "file_name": "pc_66906e9c-dc3c-49e9-aaf0-0e7d5efc97db.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-116",
+    "dataset": "ScreenSpot",
+    "source_row": 170,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-170.webp",
+    "state": {
+      "image": "assets/items/screenspot-170.webp",
+      "source": "ScreenSpot",
+      "platform": "macos",
+      "element_type": "icon"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: have question Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "E",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; gold is centered on the source target bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.917910447761194,
+        0.9325259515570934,
+        0.9514925373134329,
+        0.9714532871972318
+      ],
+      "instruction": "have question",
+      "file_name": "pc_66906e9c-dc3c-49e9-aaf0-0e7d5efc97db.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-117",
+    "dataset": "ScreenSpot",
+    "source_row": 340,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-340.webp",
+    "state": {
+      "image": "assets/items/screenspot-340.webp",
+      "source": "ScreenSpot",
+      "platform": "ios",
+      "element_type": "icon"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: close the translation Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "E",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; gold is centered on the source target bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.7343220338983051,
+        0.1402439024390244,
+        0.7745762711864407,
+        0.20121951219512196
+      ],
+      "instruction": "close the translation",
+      "file_name": "mobile_6949b916-64c8-431f-8842-a29a9a557641.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-118",
+    "dataset": "ScreenSpot",
+    "source_row": 341,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-341.webp",
+    "state": {
+      "image": "assets/items/screenspot-341.webp",
+      "source": "ScreenSpot",
+      "platform": "ios",
+      "element_type": "icon"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: translate Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "D",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; gold is centered on the source target bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.7122881355932204,
+        0.8579268292682927,
+        0.7559322033898305,
+        0.9207317073170732
+      ],
+      "instruction": "translate",
+      "file_name": "mobile_702eab66-81f1-4aac-a252-37b5f7c3ae68.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-119",
+    "dataset": "ScreenSpot",
+    "source_row": 342,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-342.webp",
+    "state": {
+      "image": "assets/items/screenspot-342.webp",
+      "source": "ScreenSpot",
+      "platform": "ios",
+      "element_type": "icon"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: add a new file Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "C",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; gold is centered on the source target bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.01228813559322034,
+        0.2225609756097561,
+        0.042796610169491524,
+        0.26951219512195124
+      ],
+      "instruction": "add a new file",
+      "file_name": "mobile_a1366f87-f1f1-402c-911a-d239eb60eac8.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-120",
+    "dataset": "ScreenSpot",
+    "source_row": 474,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-474.webp",
+    "state": {
+      "image": "assets/items/screenspot-474.webp",
+      "source": "ScreenSpot",
+      "platform": "android",
+      "element_type": "text"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: open system apps settings Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "A",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; gold is centered on the source target bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.044444444444444446,
+        0.20333333333333334,
+        0.9824074074074074,
+        0.25083333333333335
+      ],
+      "instruction": "open system apps settings",
+      "file_name": "mobile_faa33d8c-ff72-4c74-98df-cb46cc0516aa.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-121",
+    "dataset": "ScreenSpot",
+    "source_row": 475,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-475.webp",
+    "state": {
+      "image": "assets/items/screenspot-475.webp",
+      "source": "ScreenSpot",
+      "platform": "android",
+      "element_type": "text"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: manage home screen shortcuts Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "E",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; gold is centered on the source target bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.06296296296296296,
+        0.3408333333333333,
+        0.9444444444444444,
+        0.41875
+      ],
+      "instruction": "manage home screen shortcuts",
+      "file_name": "mobile_faa33d8c-ff72-4c74-98df-cb46cc0516aa.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-122",
+    "dataset": "ScreenSpot",
+    "source_row": 476,
+    "skill": "computer-use / GUI grounding",
+    "split": "test",
+    "public_label": true,
+    "license": "Apache-2.0",
+    "source_url": "https://huggingface.co/datasets/bevaya/ScreenSpot",
+    "image": "assets/items/screenspot-476.webp",
+    "state": {
+      "image": "assets/items/screenspot-476.webp",
+      "source": "ScreenSpot",
+      "platform": "android",
+      "element_type": "icon"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Goal: back to previous page Which labelled marker should be clicked?",
+      "criteria": {
+        "A": "Click marker A",
+        "B": "Click marker B",
+        "C": "Click marker C",
+        "D": "Click marker D",
+        "E": "Click marker E"
+      }
+    },
+    "gold": "D",
+    "gold_origin": "dataset_bbox_label",
+    "transformation": "Five click markers added mechanically; gold is centered on the source target bbox.",
+    "source_label": {
+      "bbox_xyxy": [
+        0.02962962962962963,
+        0.0575,
+        0.18425925925925926,
+        0.10333333333333333
+      ],
+      "instruction": "back to previous page",
+      "file_name": "mobile_faa33d8c-ff72-4c74-98df-cb46cc0516aa.png"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-123",
+    "dataset": "Multimodal-Mind2Web",
+    "source_row": 6,
+    "skill": "browser-use element selection",
+    "split": "test_task",
+    "public_label": true,
+    "license": "CC BY 4.0 Mind2Web annotations; OpenRAIL multimodal release",
+    "source_url": "https://huggingface.co/datasets/osunlp/Multimodal-Mind2Web",
+    "image": "assets/items/mind2web-6.webp",
+    "state": {
+      "image": "assets/items/mind2web-6.webp",
+      "source": "Multimodal-Mind2Web",
+      "website": "budget",
+      "domain": "Travel"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Browser goal: Rent a truck with the lowest rent with two dozen furniture pads for 100 miles at zip 08817 on April 12 at 2:30 pm rented truck is to be returned to the exact location and date, and the pickup and drop off will be at the nearest location. Next labelled element for action CLICK?",
+      "criteria": {
+        "A": "Choose element A",
+        "B": "Choose element B",
+        "C": "Choose element C",
+        "D": "Choose element D",
+        "E": "Choose element E"
+      }
+    },
+    "gold": "E",
+    "gold_origin": "dataset_positive_candidate",
+    "transformation": "One source positive and four source negatives boxed and labelled mechanically.",
+    "source_label": {
+      "action_uid": "a326bdc3-5d9a-4174-a0b9-61f65c7ebb53",
+      "operation": "{\"original_op\": \"CLICK\", \"value\": \"\", \"op\": \"CLICK\"}",
+      "positive_backend_node_id": "57221"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-124",
+    "dataset": "Multimodal-Mind2Web",
+    "source_row": 7,
+    "skill": "browser-use element selection",
+    "split": "test_task",
+    "public_label": true,
+    "license": "CC BY 4.0 Mind2Web annotations; OpenRAIL multimodal release",
+    "source_url": "https://huggingface.co/datasets/osunlp/Multimodal-Mind2Web",
+    "image": "assets/items/mind2web-7.webp",
+    "state": {
+      "image": "assets/items/mind2web-7.webp",
+      "source": "Multimodal-Mind2Web",
+      "website": "budget",
+      "domain": "Travel"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Browser goal: Rent a truck with the lowest rent with two dozen furniture pads for 100 miles at zip 08817 on April 12 at 2:30 pm rented truck is to be returned to the exact location and date, and the pickup and drop off will be at the nearest location. Next labelled element for action CLICK?",
+      "criteria": {
+        "A": "Choose element A",
+        "B": "Choose element B",
+        "C": "Choose element C",
+        "D": "Choose element D",
+        "E": "Choose element E"
+      }
+    },
+    "gold": "D",
+    "gold_origin": "dataset_positive_candidate",
+    "transformation": "One source positive and four source negatives boxed and labelled mechanically.",
+    "source_label": {
+      "action_uid": "7b0eb3e3-17d9-4793-b85a-92f67764f9f0",
+      "operation": "{\"original_op\": \"CLICK\", \"value\": \"\", \"op\": \"CLICK\"}",
+      "positive_backend_node_id": "66686"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-125",
+    "dataset": "Multimodal-Mind2Web",
+    "source_row": 8,
+    "skill": "browser-use element selection",
+    "split": "test_task",
+    "public_label": true,
+    "license": "CC BY 4.0 Mind2Web annotations; OpenRAIL multimodal release",
+    "source_url": "https://huggingface.co/datasets/osunlp/Multimodal-Mind2Web",
+    "image": "assets/items/mind2web-8.webp",
+    "state": {
+      "image": "assets/items/mind2web-8.webp",
+      "source": "Multimodal-Mind2Web",
+      "website": "budget",
+      "domain": "Travel"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Browser goal: Rent a truck with the lowest rent with two dozen furniture pads for 100 miles at zip 08817 on April 12 at 2:30 pm rented truck is to be returned to the exact location and date, and the pickup and drop off will be at the nearest location. Next labelled element for action CLICK?",
+      "criteria": {
+        "A": "Choose element A",
+        "B": "Choose element B",
+        "C": "Choose element C",
+        "D": "Choose element D",
+        "E": "Choose element E"
+      }
+    },
+    "gold": "C",
+    "gold_origin": "dataset_positive_candidate",
+    "transformation": "One source positive and four source negatives boxed and labelled mechanically.",
+    "source_label": {
+      "action_uid": "2516046b-a3e4-4d49-802e-ae8a37de3822",
+      "operation": "{\"original_op\": \"CLICK\", \"value\": \"\", \"op\": \"CLICK\"}",
+      "positive_backend_node_id": "76151"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-126",
+    "dataset": "Multimodal-Mind2Web",
+    "source_row": 9,
+    "skill": "browser-use element selection",
+    "split": "test_task",
+    "public_label": true,
+    "license": "CC BY 4.0 Mind2Web annotations; OpenRAIL multimodal release",
+    "source_url": "https://huggingface.co/datasets/osunlp/Multimodal-Mind2Web",
+    "image": "assets/items/mind2web-9.webp",
+    "state": {
+      "image": "assets/items/mind2web-9.webp",
+      "source": "Multimodal-Mind2Web",
+      "website": "budget",
+      "domain": "Travel"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Browser goal: Rent a truck with the lowest rent with two dozen furniture pads for 100 miles at zip 08817 on April 12 at 2:30 pm rented truck is to be returned to the exact location and date, and the pickup and drop off will be at the nearest location. Next labelled element for action TYPE?",
+      "criteria": {
+        "A": "Choose element A",
+        "B": "Choose element B",
+        "C": "Choose element C",
+        "D": "Choose element D",
+        "E": "Choose element E"
+      }
+    },
+    "gold": "B",
+    "gold_origin": "dataset_positive_candidate",
+    "transformation": "One source positive and four source negatives boxed and labelled mechanically.",
+    "source_label": {
+      "action_uid": "80dbf05d-11da-46e9-aeb1-f86bc1aea411",
+      "operation": "{\"original_op\": \"TYPE\", \"value\": \"100\", \"op\": \"TYPE\"}",
+      "positive_backend_node_id": "87879"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-127",
+    "dataset": "Multimodal-Mind2Web",
+    "source_row": 10,
+    "skill": "browser-use element selection",
+    "split": "test_task",
+    "public_label": true,
+    "license": "CC BY 4.0 Mind2Web annotations; OpenRAIL multimodal release",
+    "source_url": "https://huggingface.co/datasets/osunlp/Multimodal-Mind2Web",
+    "image": "assets/items/mind2web-10.webp",
+    "state": {
+      "image": "assets/items/mind2web-10.webp",
+      "source": "Multimodal-Mind2Web",
+      "website": "budget",
+      "domain": "Travel"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Browser goal: Rent a truck with the lowest rent with two dozen furniture pads for 100 miles at zip 08817 on April 12 at 2:30 pm rented truck is to be returned to the exact location and date, and the pickup and drop off will be at the nearest location. Next labelled element for action CLICK?",
+      "criteria": {
+        "A": "Choose element A",
+        "B": "Choose element B",
+        "C": "Choose element C",
+        "D": "Choose element D",
+        "E": "Choose element E"
+      }
+    },
+    "gold": "A",
+    "gold_origin": "dataset_positive_candidate",
+    "transformation": "One source positive and four source negatives boxed and labelled mechanically.",
+    "source_label": {
+      "action_uid": "e88a4910-bc7f-43dd-9d5a-a0c3797e3954",
+      "operation": "{\"original_op\": \"CLICK\", \"value\": \"\", \"op\": \"CLICK\"}",
+      "positive_backend_node_id": "99343"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  },
+  {
+    "id": "mm-128",
+    "dataset": "Multimodal-Mind2Web",
+    "source_row": 11,
+    "skill": "browser-use element selection",
+    "split": "test_task",
+    "public_label": true,
+    "license": "CC BY 4.0 Mind2Web annotations; OpenRAIL multimodal release",
+    "source_url": "https://huggingface.co/datasets/osunlp/Multimodal-Mind2Web",
+    "image": "assets/items/mind2web-11.webp",
+    "state": {
+      "image": "assets/items/mind2web-11.webp",
+      "source": "Multimodal-Mind2Web",
+      "website": "budget",
+      "domain": "Travel"
+    },
+    "rubric": {
+      "type": "choice",
+      "instructions": "Browser goal: Rent a truck with the lowest rent with two dozen furniture pads for 100 miles at zip 08817 on April 12 at 2:30 pm rented truck is to be returned to the exact location and date, and the pickup and drop off will be at the nearest location. Next labelled element for action CLICK?",
+      "criteria": {
+        "A": "Choose element A",
+        "B": "Choose element B",
+        "C": "Choose element C",
+        "D": "Choose element D",
+        "E": "Choose element E"
+      }
+    },
+    "gold": "E",
+    "gold_origin": "dataset_positive_candidate",
+    "transformation": "One source positive and four source negatives boxed and labelled mechanically.",
+    "source_label": {
+      "action_uid": "940be696-dff8-431e-814e-1bc486a20fa9",
+      "operation": "{\"original_op\": \"CLICK\", \"value\": \"\", \"op\": \"CLICK\"}",
+      "positive_backend_node_id": "110830"
+    },
+    "review": {
+      "status": "accepted_mechanical",
+      "answer_changed": false,
+      "model_authored_gold": false
+    }
+  }
+]
