@@ -6229,3 +6229,12 @@ Judged live revision `16e8a10` on the canonical host, 1440/390 × light/dark, 12
   MiMo-V2.5-Pro 1186.32, measured), the three successor ids carry no value, no v2.1-scale value appears, the Benchmarks page lists
   GDPval with no overflow or page error (`/opt/benchmarkheaven/state/ux-evidence/iter144-aa-reversion/live-{canonical,legacy}-76c8942/`).
   Needs a non-claude verifier; the real acceptance is the 05:17 run's `aa-benchmark-fields` check reading `updated`.
+
+## Review gate 20260921T032003Z — codex-luna — non-implementer sign-off and source-health hold
+
+- Scope: all commits after `REVIEW-20260920T234002Z.md`, `a23631b..545dac6`. The complete review is in `REVIEW-20260921T032003Z.md`; evidence is under `/opt/benchmarkheaven/state/ux-evidence/review-20260921T032003Z/`.
+- **CR-30.2 / CR-30.3 sign-off:** this non-implementing gate independently re-checked the new MCP Atlas board and the existing three remaining tier-A boards. MCP Atlas is 34 source rows → 15 exact joins and 19 refusals; `verify-cr-30-mcp-atlas.mjs` is 30/30 on both hosts, and `verify-cr-30-remaining.mjs` is 16/16 on both hosts. The four-context live data read confirms the matrix values and refusal cells at desktop/mobile × light/dark. These two rows are now independently verified; their historical implementation attribution is retained.
+- ProgramBench’s 21 source rows and 6 joins/15 refusals, VulcanBench’s single withheld n=22 row, LiveBench’s discovered current bundle, and AA’s non-overlapping re-version windows all pass the focused source/parser tests. LiveBench’s separate DeepSeek slice is 31/31 per host.
+- **CR-38.1 remains open/in progress:** the live `/api/meta` still reports Artificial Analysis as 2026-09-20; the latest unattended run available to this gate stopped before publication on a dirty-checkout guard, and the stale/failing source-health list (including MathArena, FrontierSWE, and unresolved AA protocol review) is not closed. The AA successor identities correctly remain empty until a reviewed snapshot publishes.
+- **CR-85.1 remains open:** the unattended daily publication requirement is still unproven. CR-85.2 remains in progress for its remaining exact-source/category work.
+- X6 remains open for the remaining CR rows and decisions listed in the review. The broad `verify-live-review.mjs` was stopped after hanging before its final JSON; its partial screenshots are not a pass. No `ALL-ACCEPTED` line was appended.
