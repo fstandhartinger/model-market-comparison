@@ -6806,17 +6806,17 @@ Implemented by Claude Code (Opus 5) in the launch-sniper job while the loop was 
 
 | ID | Status | Evidence | Note |
 |---|---|---|---|
-| CR-122.1 | implemented | see COMPARE-PAGE.md | Unknown id kept as "Coming soon" chip + panel; URL keeps it; no value shown. |
-| CR-122.2 | implemented | `test/compare-ids.test.mjs` 10/10 | Case/dot/dash/prefix/date-suffix/vendor-word tolerant; bare family keys resolve. |
-| CR-122.3 | implemented | live tags on both hosts | Title/description/og:image/twitter:image name both models; `/api/og/compare` PNG 1200×630. |
-| CR-122.4 | implemented | full suite (Node 26 strip-types) 1101 pass / 1 skip / 0 fail; tsc + build pass | Live check recorded in COMPARE-PAGE.md. |
+| CR-122.1 | verified | `COMPARE-PAGE.md`; `REVIEW-20260922T221002Z.md`; `live/verification.json` | Unknown id kept as "Coming soon" chip + panel; URL keeps it; no value shown. Independently rechecked on both hosts in all four viewport/theme contexts. |
+| CR-122.2 | verified | `test/compare-ids.test.mjs`; `REVIEW-20260922T221002Z.md` | Case/dot/dash/prefix/date-suffix/vendor-word tolerant; bare family keys resolve. Focused and full tests pass. |
+| CR-122.3 | verified | live metadata/PNG checks; `REVIEW-20260922T221002Z.md` | Title/description/og:image/twitter:image name both models; `/api/og/compare` PNG 1200×630 on both hosts. |
+| CR-122.4 | verified | `REVIEW-20260922T221002Z.md`; full suite/build/tsc | Live unknown-model state, metadata, build and tests independently rechecked. |
 
 # CR-123 — 2026-09-22: Claude Opus 5.5 launch-day ingestion
 
 | ID | Status | Evidence | Note |
 |---|---|---|---|
-| CR-123.1–123.4 | implemented | `data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/` (launch post bytes, system card text layer, critic round r4); `test/claude-opus-5-5.test.mjs` | `claude-opus-5.5::max` with Anthropic's published price and 16 self-reported results (9 launch post, 7 system card Table 8.1.A). Critic `z-ai/glm-5.3-flash` (different family from the producer) passed all 16 with 0 findings after three earlier rounds found unsupported protocol notes — those were corrected (GDPval-AA/AA-Briefcase run by Artificial Analysis, HealthBench Professional length-adjusted, Terminal-Bench-Science 10 trials per task). |
-| CR-123.5 | in-progress | full tests 1105/1105, `tsc --noEmit`, production build | Awaiting production deployment and both-host verification. |
+| CR-123.1–123.4 | verified | `data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/`; `test/claude-opus-5-5.test.mjs`; `REVIEW-20260922T221002Z.md` | `claude-opus-5.5::max` with Anthropic's published price and 16 self-reported results (9 launch post, 7 system card Table 8.1.A). Evidence, basis and exact live model rendering independently rechecked. |
+| CR-123.5 | verified | `REVIEW-20260922T221002Z.md`; `live/verification.json`; full gates | Production deployment and both-host verification complete: Opus 5.5 model page marks vendor results as “developer's claim” in all four viewport/theme contexts. |
 
 # CR-126 — 2026-09-22: GPT-6 Sol and GPT-6 Luna, OpenAI's own launch numbers
 
@@ -6827,9 +6827,9 @@ vendor publishes.
 
 | ID | Status | Evidence | Note |
 |---|---|---|---|
-| CR-126.1–126.2 | implemented | `data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/` (launch-post bytes, two model cards, pricing page, critic rounds r1–r4); `test/gpt-6-sol-luna.test.mjs` | Six self-reported values on five new `openai-…` identities, each joined to the effort configuration OpenAI names: AutomationBench 1.0.6 33.2 % and USD 0.27 per task on `gpt-6-sol::xhigh`, Agents' Last Exam V1 56.4 % and DeepSWE v1.1 68.8 % on `gpt-6-sol::max`, DeepSWE v1.1 66.6 % on `gpt-6-luna::max`, OSWorld 2.0 offline v2026.08.08 60.5 % on `gpt-6-sol::xhigh`. |
-| CR-126.3 | implemented | `data/raw/benchmarks/self-reported-candidates.json` refusals | Seven refusals logged with their reason: five competitor cells (OpenAI states those came from publicly available reports — secondary quotes) and two Luna figures the post gives only as a delta and a ratio. |
-| CR-126.4 | implemented | `data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/manifest.json` | The capture tool's own HTTP 403 receipt for openai.com stays in the manifest next to the retained bytes; `capture_note` records that robots.txt allows the path, that the post was loaded once in the shared desktop Chrome, and that the document response was kept unchanged. |
+| CR-126.1–126.2 | verified | `data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/`; `test/gpt-6-sol-luna.test.mjs`; `REVIEW-20260922T221002Z.md` | Six self-reported values on five new `openai-…` identities, each joined to the effort configuration OpenAI names. Evidence, exact API values and visible basis markers independently rechecked. |
+| CR-126.3 | verified | `data/raw/benchmarks/self-reported-candidates.json`; `REVIEW-20260922T221002Z.md` | Seven refusals retain their reasons; no unsupported competitor or delta/ratio value was added. |
+| CR-126.4 | verified | `data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/manifest.json`; `REVIEW-20260922T221002Z.md` | The capture tool's HTTP 403 receipt and robots/capture note remain retained and validated. |
 | CR-126.5 | verified | `2c47f5eb`; `/home/flori/jobs/bh-launch-ingest-20260922-14247142/live-verification.json`, `page-*.png`, `compare-*.png` | Registry and score-evidence validation clean; full tests 1110 pass / 0 fail / 1 skip (Node 26), `tsc --noEmit` and `npm run build` clean. Live on both hosts at 20:09 UTC, 18/18 API checks each: `/api/models` lists `gpt-6-sol::max`, `gpt-6-sol::xhigh` and `gpt-6-luna::max` with release date and price, and all six observations return their exact value, unit, `basis: self_reported` and the openai.com source. Rendered model pages show every value marked "developer's claim"; the compare page resolves both bare family keys and its evidence panel names the basis and the source. The push waited for the daily transaction's lock rather than overriding it. |
 | — | closed | `ops/ux-2026-09-12/PROGRESS.md` CR-127 | **Taken up as CR-127 by iteration 171 (claude-opus).** Pre-existing, not introduced here: a **collapsed** compare-table cell carries no self-reported marker and labels the cohort "Published board" for every vendor self-report (CR-123's Opus 5.5 rows render the same). The basis is only visible after expanding the row. Worth its own change request. |
 
@@ -6891,9 +6891,9 @@ owes the sign-off.
 
 | ID | Status | Evidence | Note |
 |---|---|---|---|
-| CR-127.1 | implemented | `5618579c`; `test/cr-127-compare-basis.test.mjs`; `ops/ux-2026-09-12/bin/verify-cr-127.mjs`; `/opt/benchmarkheaven/state/ux-evidence/cr127/{canonical,legacy}/` | † with title and screen-reader text on a collapsed vendor-claim cell. 25/25 per host (implementer); needs a non-claude-opus sign-off. |
-| CR-127.2 | implemented | same | "developer's claim" instead of an empty bar track; percentile gated on a measured basis. 25/25 per host (implementer); needs a non-claude-opus sign-off. |
-| CR-127.3 | implemented | same | Compare legend explains †. 25/25 per host (implementer); needs a non-claude-opus sign-off. |
+| CR-127.1 | verified | `5618579c`; `test/cr-127-compare-basis.test.mjs`; `cr127-live/verification.json`; `REVIEW-20260922T221002Z.md` | † with title and screen-reader text on a collapsed vendor-claim cell. Independent mixed-basis check: 40/40 per host/context set. |
+| CR-127.2 | verified | same | "developer's claim" instead of an empty bar track; percentile gated on a measured basis. Independent compare check confirms vendor claims have no bar/tint. |
+| CR-127.3 | verified | same | Compare legend explains † and ‡. Independent compare check confirms both explanations in all eight host/context combinations. |
 
 ### CR-127.4 — the model page's benchmark sheet was showing a preliminary value as a bare number
 
@@ -6935,7 +6935,7 @@ engine, as for CR-127.1–.3.
 
 | ID | Status | Evidence | Note |
 |---|---|---|---|
-| CR-127.4 | implemented | `9a168b4b`; `test/cr-60-union-alpha-preliminary.test.mjs`; `test/fable-pass27.test.mjs`; `ops/ux-2026-09-12/bin/verify-cr-127-4.mjs`; `/opt/benchmarkheaven/state/ux-evidence/cr127-4/{canonical,legacy}/` | ‡ on the model page's sheet, "announced value", the head's ‡ line, and audible marks in both matrix components. 33/33 per host (implementer); needs a non-claude-opus sign-off. |
+| CR-127.4 | verified | `9a168b4b`; `test/cr-60-union-alpha-preliminary.test.mjs`; `cr127-4-live.json`; `REVIEW-20260922T221002Z.md` | ‡ on the model page's sheet, "announced value", the head's ‡ line, and audible marks in both matrix components. Independent Union Alpha check: 32/32 across both hosts and all viewport/theme contexts. |
 
 - **Basis audit (the reason CR-127.4 was found, recorded so nobody repeats it).** Every surface that renders a benchmark
   value was read against the bases the data actually carries. `view.axes` scores hold only `measured` (17,986),
@@ -7119,13 +7119,20 @@ engine, as for CR-127.1–.3.
 
 | ID | Status | Evidence | Note |
 |---|---|---|---|
-| D173.1 | implemented | `4d616cf3`; `lib/format.ts`; `test/counted-plural.test.mjs`; `ops/ux-2026-09-12/bin/verify-iter173.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter173/` | 26 counted surfaces in 15 files read as English at n = 1; the plural wording above one is unchanged. 59/59 per host and a zero-hit 20-page sweep (implementer). Needs a non-claude-opus sign-off. |
+| D173.1 | verified | `4d616cf3`; `lib/format.ts`; `test/counted-plural.test.mjs`; `d173-live/verification.json`; `REVIEW-20260922T221002Z.md` | 26 counted surfaces in 15 files read as English at n = 1; independent API/UI audit passes 100/100 across both hosts and all viewport/theme contexts, with no singular/plural defect or overflow. |
 
-- **Owed to a non-claude-opus engine:** a sign-off on `D173.1` (re-run `verify-iter173.mjs` on both hosts), on top of the
-  `CR-127.1`–`.4` sign-off iteration 171 left. Kimi K3 works for this when codex is unavailable, provided the packet is
-  bounded, read-only and run outside this checkout.
+- **Sign-off completed in Iteration 174:** this review gate re-ran the singular/plural audit independently on both hosts
+  and promoted `D173.1` to `verified`.
 - **Next.** Tomorrow's 05:17 daily is the first unattended run after `CR-127`, `D172` and `D173`; none of the three
   touches data, so the receipt should be unchanged except for the four sources that could not approve a protocol while
   OpenRouter was at 402 — `aa-benchmark-fields`, `livebench::2026-06-25`, `matharena-brokenarxiv::2026-06`,
   `vulcanbench-frontier::4` — plus the `CR-38.1` publication receipt, the `CR-85.1` digest and the `CR-73.5` timing.
   X6's open list is unchanged: `CR-34.5` and `CR-62.4` (Florian), `CR-37.3`, `CR-38.1`, `CR-73.5`, `CR-85.1`, `CR-85.2`.
+
+## Iteration 174 — 2026-09-22 22:10 → 22:31 UTC (codex-luna, review gate)
+
+- **Review scope.** Read the requirements, addendum, change requests, CR brief, ledger, design directives and newest review in the required order. Reviewed every commit after `277216df` through `5db1ebd0`, including CR-122 through CR-127 and D172/D173. No product code or data was changed by this gate.
+- **Gates.** `node scripts/build-dataset.mjs` reports 863 models / 669 families / 94 providers / 2,976 offers; its two generated timestamps were restored and the tree has no dataset diff. `npm test`: 1,132 tests, 1,131 pass / 0 fail / 1 skip. `npx tsc --noEmit -p .` clean. `npm run build` rc 0. Focused changed-area tests: 39/39.
+- **Independent live checks.** Both hosts served revision `5db1ebd0` with matching metadata. Unknown compare state and share metadata were checked on both hosts. The Unicode-normalized hero probe is 8/8; the raw mechanical probe is retained because the DOM uses non-breaking spaces. The mixed measured/self-reported/preliminary compare audit is 40/40 in both hosts × desktop/mobile × light/dark (`/opt/benchmarkheaven/state/ux-evidence/review-20260922T221002Z/cr127-live/`). Union Alpha's preliminary model sheet is 32/32 (`.../cr127-4-live.json`). The singular/plural audit is 100/100 (`.../d173-live/verification.json`). Screenshots were read; no visual, overflow or page-error defect was found.
+- **Status decisions.** As this gate did not implement these changes, CR-122.1–.4, CR-123.1–.5, CR-126.1–.5, CR-127.1–.4 and D173.1 are now `verified`. D172.1–.3 remain `verified` under the earlier Kimi K3 non-implementer sign-off. Evidence and the complete review are in `/opt/benchmarkheaven/state/ux-evidence/review-20260922T221002Z/` and `REVIEW-20260922T221002Z.md`.
+- **Acceptance decision.** X6 is not clear: CR-34.5, CR-37.1/CR-37.3, CR-38.1, CR-62.4, CR-73.5, CR-85.1 and CR-85.2 remain open/in-progress for Florian, source or scheduled-run reasons. `ALL-ACCEPTED` is not appended.
