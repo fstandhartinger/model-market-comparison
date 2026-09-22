@@ -707,6 +707,14 @@
       "website": "https://near.ai",
       "note": "NEAR AI Cloud (Jasnah Inc., DBA NEAR AI, per its website footer, checked 2026-09-17): confidential inference in Intel TDX + NVIDIA GPU TEEs. OpenRouter's provider table lists no headquarters and no serving region is published, so it is excluded from the EU-hosted and non-US filters.",
       "url": "https://near.ai"
+    },
+    "Unbiased": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false,
+      "note": "Circuit & Chisel, Inc., trading as Unbiased (268 Post Road STE 200 PMB 586312, Fairfield, CT 06824; Delaware law), checked 2026-09-22: its Terms & Policies say \"We are headquartered in the United States\" and that personal information \"will necessarily be accessed and processed in the U.S.\"; the team is described as remote-first across the US and Canada. No EU serving region is published, so it is excluded from the EU-hosted and non-US filters. Its only model, Pareto, is a composite the vendor describes as running \"several models on your request\" and keeping the best answer, so the published price buys that ensemble rather than one model. Customer content is not used for training without written consent and is kept no longer than 30 days for abuse prevention.",
+      "url": "https://unbiased.ai/terms/",
+      "website": "https://unbiased.ai"
     }
   },
   "judgments_checked_at": "2026-07-12",
@@ -760,7 +768,8 @@
       "StepFun",
       "Makora",
       "Thinking Machines",
-      "Near AI"
+      "Near AI",
+      "Unbiased"
     ],
     "not_listed": [
       "AWS Bedrock",

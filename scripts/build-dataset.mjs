@@ -287,6 +287,9 @@ function openRouterOrg(model) {
     amazon: "Amazon", microsoft: "Microsoft", perplexity: "Perplexity", writer: "Writer",
     xiaomi: "Xiaomi", "z-ai": "Z.ai", minimax: "MiniMax",
     rekaai: "Reka AI", "anthracite-org": "Anthracite", undi95: "Undi95", gryphe: "Gryphe",
+    // OpenRouter prints no "Vendor: " prefix for Pareto, so without this its lab reads "Other".
+    // Unbiased is the brand Circuit & Chisel, Inc. publishes it under (data/raw/provider-meta.json).
+    unbiased: "Unbiased",
   };
   return authorAliases[author.toLowerCase()] || guessOrg(stripVendor(model.id || ""));
 }
