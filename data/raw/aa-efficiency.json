@@ -3,7 +3,7 @@
   "basis": "measured",
   "interpretation": "benchmark_proxy",
   "caveat": "AA Intelligence Index benchmark token accounting. Ratios are BENCHMARK PROXIES, never typical user I/O usage; usage ratios must come from OpenRouter/Chutes sources.",
-  "collected_at": "2026-09-22T07:41:59.323Z",
+  "collected_at": "2026-09-22T17:32:53.330Z",
   "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
   "data_fields": {
     "tokens_per_task": "intelligenceIndexOutputTokensPerTask {reasoning, answer, output} (measured)",
@@ -13,18 +13,18 @@
   "attempts": [
     {
       "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
-      "fetched_at": "2026-09-22T07:41:58.783Z",
+      "fetched_at": "2026-09-22T17:32:53.139Z",
       "http_status": 200,
-      "bytes": 3861215,
-      "sha256": "c382446fda083b9aa89ecc7235004cbbdd76eadb1b19f3bf413c6e8fef961482"
+      "bytes": 3894129,
+      "sha256": "df98818f64a62c0a9d0780e9f1b33e7bd501d3e65013db4e7e6f1a810ed7b862"
     }
   ],
   "coverage": {
-    "published_rows": 149,
-    "scored_denominator": 647,
+    "published_rows": 154,
+    "scored_denominator": 652,
     "denominator_source": "Leaderboard rows carrying a finite intelligenceIndex inside the same model-page Flight payload"
   },
-  "count": 149,
+  "count": 154,
   "rows": [
     {
       "source_id": "8014c311-fa23-4a4b-8485-8a864db8a113",
@@ -266,6 +266,116 @@
         "basis": "derived",
         "input_output_ratio": 39.34892607326645,
         "reasoning_output_share": 0.5901512753818785
+      }
+    },
+    {
+      "source_id": "2f3c4dc9-a450-4303-8697-0237257cf08f",
+      "slug": "claude-opus-5-5",
+      "name": "Claude Opus 5.5 (Adaptive Reasoning, Max Effort, Default Fallback)",
+      "variant": "max",
+      "tokens_per_task": {
+        "reasoning": 83929.08191267242,
+        "answer": 35236.93384464381,
+        "output": 119166.01575731623
+      },
+      "canonical_token_counts": {
+        "input": 10978320412,
+        "output": 259888331,
+        "answer": 46031341,
+        "reasoning": 213856990
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 42.24245224769249,
+        "reasoning_output_share": 0.7043038351101335
+      }
+    },
+    {
+      "source_id": "f314eade-2232-44bf-a3ab-9b326bc67de6",
+      "slug": "claude-opus-5-5-high",
+      "name": "Claude Opus 5.5 (Adaptive Reasoning, High Effort, Default Fallback)",
+      "variant": "high",
+      "tokens_per_task": {
+        "reasoning": 18236.5871060743,
+        "answer": 17347.4717719098,
+        "output": 35584.058877984105
+      },
+      "canonical_token_counts": {
+        "input": 2619403169,
+        "output": 52515439,
+        "answer": 25542271,
+        "reasoning": 26973168
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 49.878725549642645,
+        "reasoning_output_share": 0.5124931691633777
+      }
+    },
+    {
+      "source_id": "4416ca93-fde6-4b7b-abbc-3a6be109cc3d",
+      "slug": "claude-opus-5-5-low",
+      "name": "Claude Opus 5.5 (Adaptive Reasoning, Low Effort, Default Fallback)",
+      "variant": "low",
+      "tokens_per_task": {
+        "reasoning": 3376.0272567172387,
+        "answer": 6775.2490189060845,
+        "output": 10151.276275623324
+      },
+      "canonical_token_counts": {
+        "input": 661774688,
+        "output": 19566522,
+        "answer": 13946380,
+        "reasoning": 5620142
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 33.821784372306944,
+        "reasoning_output_share": 0.33257170478398185
+      }
+    },
+    {
+      "source_id": "ea9e0da6-169f-43c6-92f5-730a10d6ff8d",
+      "slug": "claude-opus-5-5-medium",
+      "name": "Claude Opus 5.5 (Adaptive Reasoning, Medium Effort, Default Fallback)",
+      "variant": "medium",
+      "tokens_per_task": {
+        "reasoning": 11695.71199538513,
+        "answer": 14049.574900056037,
+        "output": 25745.286895441168
+      },
+      "canonical_token_counts": {
+        "input": 1798544497,
+        "output": 38156195,
+        "answer": 21722760,
+        "reasoning": 16433435
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 47.13636925799336,
+        "reasoning_output_share": 0.45428555692095013
+      }
+    },
+    {
+      "source_id": "df5bf99d-d228-4715-b41b-19ca86118777",
+      "slug": "claude-opus-5-5-xhigh",
+      "name": "Claude Opus 5.5 (Adaptive Reasoning, Xhigh Effort, Default Fallback)",
+      "variant": "xhigh",
+      "tokens_per_task": {
+        "reasoning": 40314.73065457981,
+        "answer": 25352.66441141809,
+        "output": 65667.3950659979
+      },
+      "canonical_token_counts": {
+        "input": 5958172789,
+        "output": 99668308,
+        "answer": 34880987,
+        "reasoning": 64787321
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 59.78001341208682,
+        "reasoning_output_share": 0.6139230985797773
       }
     },
     {

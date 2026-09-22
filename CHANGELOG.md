@@ -4,6 +4,22 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-22 — Claude Opus 5.5: Artificial Analysis's measured numbers (CR-124)
+
+**Same-day refresh of the Artificial Analysis source; no field, path or unit changed.** Artificial Analysis
+published its independent measurements of Claude Opus 5.5 a few hours after launch. Re-running the regular AA
+collector (`node scripts/fetch-live.mjs aa`: API v2 models plus the model-page token-efficiency payload) brings
+all five effort settings AA measured into the catalog as `claude-opus-5.5::max`, `::xhigh`, `::high`,
+`::medium` and `::low` (`basis: measured`), replacing CR-123's hand-curated launch row as announced there.
+AA Intelligence Index: 57.6 (max), 56.0 (xhigh), 53.6 (high), 51.2 (medium), 42.3 (low); with them come AA's
+HLE, SciCode and long-context scores, its reference price (USD 4 / 20 per 1M tokens) and its measured output
+tokens per Intelligence Index task (119,166 at max). AA has not published output speed or time to first token
+for Opus 5.5 yet (served as 0), so both stay null. The same refresh updates AA values for other models that
+changed since this morning's daily run (661 AA models, 154 token-efficiency rows). Anthropic's self-reported
+CR-123 observations are unchanged. AA's per-benchmark model-page fields (`aa-observed-fields.json`, e.g.
+GDPval-AA, Terminal-Bench 4.0, Omniscience) are not part of this change; that snapshot is refreshed by the
+daily pipeline after its protocol review.
+
 ## 2026-09-22 — Claude Opus 5.5: Anthropic's own launch numbers (CR-123)
 
 **New model row, new self-reported observations; nothing moved or removed.** Anthropic announced Claude Opus 5.5
