@@ -18,7 +18,10 @@ test('no benchmark-less twin family is left beside its canonical family', () => 
 
 test('the twins\' offers and Epoch ECI now belong to the canonical family', () => {
   assert.ok(providers('nemotron-3-ultra-550b-a55b::reasoning').has('Azure AI Foundry'));
-  assert.equal(byId.get('nemotron-3-ultra-550b-a55b::reasoning').benchmarks.epoch_eci, 146.27);
+  // Epoch refits ECI (2026-09-22: 146.27 → 146.2), so compare with today's capture rather than a pinned number.
+  const eci = JSON.parse(readFileSync(new URL('../data/raw/epoch-eci.json', import.meta.url), 'utf8')).models.find((m) => m.source_model_name === 'Nemotron 3 Ultra');
+  assert.ok(Number.isFinite(eci?.general));
+  assert.equal(byId.get('nemotron-3-ultra-550b-a55b::reasoning').benchmarks.epoch_eci, eci.general);
   assert.ok(providers('nemotron-3.5-lightning::default').has('TrustedTokens'));
   assert.ok(providers('llama-4-maverick::default').has('AWS Bedrock'));
   assert.ok(providers('llama-4-maverick::default').has('Azure AI Foundry'));
