@@ -136,6 +136,8 @@ test('pauseNotice reads the pause sentence from the live /data/ page, nothing el
   assert.equal(pauseNotice(live), 'Public bulk downloads are paused. Model pages, charts and source attribution remain available.');
   const flight = '[\\"$\\",\\"p\\",null,{\\"className\\":\\"text-muted\\",\\"children\\":\\"Public bulk downloads are paused. Model pages, charts and source attribution remain available.\\"}]';
   assert.equal(pauseNotice(flight), 'Public bulk downloads are paused. Model pages, charts and source attribution remain available.');
+  assert.equal(pauseNotice('<p>Public bulk downloads are paused. Something else.</p>'), 'Public bulk downloads are paused.');
+  assert.equal(pauseNotice('<p>Public bulk downloads are paused soon</p>'), null);
   assert.equal(pauseNotice('<p>Download the ledger manifest</p>'), null);
   assert.equal(pauseNotice(''), null);
 });

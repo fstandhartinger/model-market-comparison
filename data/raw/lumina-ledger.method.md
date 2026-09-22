@@ -41,8 +41,8 @@ CR-39.1, BenchLM's own composites and normalisations, Mercor APEX terms, saturat
 **Paused by Lumina (2026-09-22).** The manifest and all three tables answer HTTP 404, and Lumina's data page
 (`https://luminabench.com/data/`) says: "Public bulk downloads are paused. Model pages, charts and source
 attribution remain available." On a 404 manifest the collector reads that page; only when the sentence is there
-does it record `availability: { state: "paused_by_source", since, checked_at, evidence_url, notice }` in the
-snapshot. The families and the 2026-09-01 ledger stay as they were, and the step still exits non-zero, so the
+does it record `availability: { state: "paused_by_source", since, checked_at, evidence_url, notice,
+manifest_status }` in the snapshot. The exact phrase "Public bulk downloads are paused." is the signal. The families and the 2026-09-01 ledger stay as they were, and the step still exits non-zero, so the
 daily report and collector-health keep saying the feed brings nothing new. The ledger is **not** rebuilt from
 Lumina's model pages: a bulk copy is what Lumina has just stopped offering. The first good manifest removes
 `availability` again.

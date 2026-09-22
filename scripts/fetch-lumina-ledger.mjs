@@ -45,10 +45,14 @@ async function get(file, fromDir) {
 // The last ledger stays; the snapshot records the pause with the page's sentence, and the step still fails so
 // collector-health and the digest keep showing that the feed brings nothing new.
 async function recordPause(previous, manifestError, now) {
-  const response = await fetch(PAUSE_PAGE, { headers: { 'User-Agent': UA, Accept: 'text/html' }, signal: AbortSignal.timeout(60_000) });
-  const html = response.ok ? await response.text() : '';
+  if (!previous) throw manifestError;
+  let html = '';
+  try {
+    const response = await fetch(PAUSE_PAGE, { headers: { 'User-Agent': UA, Accept: 'text/html' }, signal: AbortSignal.timeout(60_000) });
+    if (response.ok) html = await response.text();
+  } catch { throw manifestError; }
   const notice = pauseNotice(html);
-  if (!notice || !previous) throw manifestError;
+  if (!notice) throw manifestError;
   await captureLiveSource(PAUSE_PAGE, html);
   const since = previous.availability?.state === 'paused_by_source' ? previous.availability.since : now;
   await writeJSONAtomic(target, {
