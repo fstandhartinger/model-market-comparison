@@ -1071,19 +1071,16 @@
       "note": "2026-09-22 (iteration 165): the MLS-Bench authors' own board (mls-bench.com/leaderboard, data/SCRAPING.md) is collected daily — 15 rows, 12 exact joins. Lumina's 6 cited values are aggregator copies; StepFun's own Step 5 preview claim stays the separate vendor snapshot stepfun-mls-bench-lite::snapshot-2026-09-20."
     },
     "benchlm-acecyberrangesolved": {
-      "decision": "planned",
-      "collector": "UK AISI / NIST CAISI cyber assessment pages (data/SCRAPING.md)",
-      "note": "NIST page confirmed 200 with Kimi K3 cyber content (checked 2026-09-22)."
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 168, claude-opus): Not a leaderboard: one preliminary UK AISI / CAISI assessment of Kimi K3 (nist.gov, 2026-07-23, updated 2026-08-28). The page gives per-model values only in prose for Kimi K3 and GLM-5.2 (ExploitBench 32 % vs 24 %, ACE 0/41, The Last Ones step 17 vs 11 of 32, 1/10 completions), the U.S. comparators unnamed (\"the most cyber-capable models\"), the rest only in figures; the reasoning setting is not stated and the catalog holds several configurations of both models, so no row could join exactly. Lumina's two values per family are aggregator copies."
     },
     "benchlm-lastonescyberrangecompletion": {
-      "decision": "planned",
-      "collector": "UK AISI / NIST CAISI cyber assessment pages (data/SCRAPING.md)",
-      "note": "NIST page confirmed 200 with Kimi K3 cyber content (checked 2026-09-22)."
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 168, claude-opus): Not a leaderboard: one preliminary UK AISI / CAISI assessment of Kimi K3 (nist.gov, 2026-07-23, updated 2026-08-28). The page gives per-model values only in prose for Kimi K3 and GLM-5.2 (ExploitBench 32 % vs 24 %, ACE 0/41, The Last Ones step 17 vs 11 of 32, 1/10 completions), the U.S. comparators unnamed (\"the most cyber-capable models\"), the rest only in figures; the reasoning setting is not stated and the catalog holds several configurations of both models, so no row could join exactly. Lumina's two values per family are aggregator copies."
     },
     "benchlm-lastonescyberrangesteps": {
-      "decision": "planned",
-      "collector": "UK AISI / NIST CAISI cyber assessment pages (data/SCRAPING.md)",
-      "note": "NIST page confirmed 200 with Kimi K3 cyber content (checked 2026-09-22)."
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 168, claude-opus): Not a leaderboard: one preliminary UK AISI / CAISI assessment of Kimi K3 (nist.gov, 2026-07-23, updated 2026-08-28). The page gives per-model values only in prose for Kimi K3 and GLM-5.2 (ExploitBench 32 % vs 24 %, ACE 0/41, The Last Ones step 17 vs 11 of 32, 1/10 completions), the U.S. comparators unnamed (\"the most cyber-capable models\"), the rest only in figures; the reasoning setting is not stated and the catalog holds several configurations of both models, so no row could join exactly. Lumina's two values per family are aggregator copies."
     },
     "benchlm-sobvalueacc": {
       "decision": "in_registry",
@@ -1101,34 +1098,32 @@
       "note": "2026-09-22 (iteration 167): Surge's own GDP.pdf board runs without tools (README: \"evaluate all 100 held-out tasks, no tools\"), so it is benchlm-gdppdf, not this family. With-tools figures come only from lab cards; none is pinned beyond the existing vendor snapshots."
     },
     "gaia": {
-      "decision": "planned",
-      "collector": "GAIA leaderboard on Hugging Face, low priority (data/SCRAPING.md)",
-      "note": "official GAIA leaderboard on Hugging Face; primary benchmark, low priority."
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 168, claude-opus): GAIA's results dataset (huggingface.co/datasets/gaia-benchmark/results_public, 3,768 test rows, updated 2026-09-22) ranks user-submitted agent systems (\"Shadow Harness V14\", \"SHAPARTNER V11\"), mostly multi-model harnesses whose model_family is free text (\"GPT Claude Grok\") or empty; no row names one catalog model configuration, so nothing could join. Lumina's 13 values are aggregator copies."
     },
     "benchlm-olmocr": {
-      "decision": "planned",
-      "collector": "olmOCR-Bench data on GitHub, low priority (data/SCRAPING.md)",
-      "note": "olmOCR-Bench exists on GitHub (allenai/olmocr bench); 2025-era board, low priority."
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 168, claude-opus): olmOCR-Bench's table (github.com/allenai/olmocr, olmocr/bench/README.md) ranks OCR pipelines and olmOCR releases (Mistral OCR API, Marker 1.10.1, MinerU 2.5.4, Chandra OCR, olmOCR v0.1–v0.4), not catalog LLM configurations. Lumina's 3 values are Lumina estimates."
     },
     "benchlm-spider2lite": {
-      "decision": "planned",
-      "collector": "Spider 2.0 GitHub results, low priority (data/SCRAPING.md)",
-      "note": "Spider 2.0 results live on GitHub; low priority."
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 168, claude-opus): Spider 2.0's leaderboard (spider2-sql.github.io) ranks agent methods (\"QUVI-3 + Claude-Opus-4.6\", \"Genloop's Sentinel Agent v2 Pro\"), not models under a stated setting; no row names one catalog configuration. Lumina's 3 values are Lumina estimates."
     },
     "benchlm-charxivnotools": {
-      "decision": "planned",
-      "collector": "CharXiv leaderboard, low priority (data/SCRAPING.md)",
-      "note": "CharXiv leaderboard live on charxiv.github.io; low priority."
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 168, claude-opus): the maintainers' own board (charxiv.github.io, data/val_result.csv, 96 rows) stops at o3 (high), o4-mini (high) and Claude 3.7 Sonnet — the spring-2025 era, older than arena-hard-auto's excluded board. Current CharXiv numbers are lab-card claims, handled by the charxiv family (vendor_reported). Lumina cites only aggregator copies and estimates for this family."
     },
     "ocrbench-v2": {
       "decision": "planned",
       "collector": "OCRBench-v2 GitHub leaderboard, low priority (data/SCRAPING.md)",
-      "note": "OCRBench-v2 data on GitHub (Yuliang-Liu/MultimodalOCR); low priority."
+      "note": "2026-09-22 (iteration 168, claude-opus): the maintainers' board (99franklin.github.io/ocrbench_v2/, quarterly; 2026.06 private-data tables, English 22 rows) is current (Qwen3.6-35B-A3B, Gemma 4 12B, Nemotron 3 Nano Omni, Gemini 3 Pro Preview) but states no reasoning setting, and nearly every catalog family it names has two or more configurations; only single-default families (MiniCPM-V 4.6, Phi-4-multimodal, Molmo2-8B) could join. Still planned, low."
     },
     "benchlm-vitabench": {
-      "decision": "planned",
-      "collector": "VITA-Bench site, low priority, iteration 158 defer (data/SCRAPING.md)",
-      "note": "VITA-Bench site live (2025 edition); deferred per iteration 158, low priority."
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "vitabench::2026-01-22"
+      ],
+      "note": "2026-09-22 (iteration 168, claude-opus): the VitaBench authors' own leaderboard (vitabench.github.io, last updated 2026-01-22) is collected daily: Cross-Scenarios Avg @4 per model and reasoning section, 26 rows, 8 exact joins (a parenthesis or the non-thinking section states the setting; thinking rows without a level never join)."
     },
     "benchlm-factsparametric": {
       "decision": "planned",

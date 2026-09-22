@@ -97,13 +97,22 @@ def parse(source,spec,load_source):
         for phrase in spec.get('require_text',[]):
             if phrase not in page:raise ValueError('Page statement changed: '+phrase[:80])
         markers=spec.get('value_markers',{})
+        # Opt-in section rows (2026-09-22, VITA-Bench): a one-cell row names the setting of the rows below it
+        # ("Thinking Models"); the same model then appears once per section, so the name becomes "<section>|<model>".
+        # An unknown one-cell row, or a data row before the first section, fails closed.
+        sections=spec.get('section_rows');section=None
         for index,r in enumerate(table[spec.get('header_rows',1):],spec.get('header_rows',1)):
             cells=[text(' '.join(c)) for c in r]
+            if sections is not None and len(cells)==1:
+                if cells[0] not in sections:raise ValueError('Unknown HTML table section: '+cells[0][:80])
+                section=cells[0];continue
             if len(cells)!=spec['width']:continue # Detail/footnote rows have a distinct width.
+            if sections is not None and section is None:raise ValueError('HTML table row before the first section')
+            name=cells[spec['name_column']] if sections is None else section+'|'+cells[spec['name_column']]
             for column,label in spec.get('value_columns',[[spec['value_column'],None]]):
                 raw=' '.join(' '.join(r[column]).split())
                 marked=[meaning for marker,meaning in markers.items() if raw.endswith(marker) and not raw.endswith('*'+marker)]
-                rows.append({'name':cells[spec['name_column']],'value':cells[column], 'source_row':index,'context':{'cells':cells,'configuration':label,'value_column':column,**({'marker':marked[0]} if marked else {})}})
+                rows.append({'name':name,'value':cells[column], 'source_row':index,'context':{'cells':cells,'configuration':label,'value_column':column,**({'section':section} if sections is not None else {}),**({'marker':marked[0]} if marked else {})}})
         if spec.get('unique_names'):
             names=[row['name'] for row in rows]
             if len(set(names))!=len(names):raise ValueError('Duplicate model rows in HTML table')

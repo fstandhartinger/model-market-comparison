@@ -151,6 +151,16 @@
       "quote": "LLM judges grade each proof against a rubric that a model writes from the official solution",
       "field": "scoring.metric",
       "why": "USAMO problems are proofs with no answer key: MathArena's judge models grade each proof 0–7 against a model-written rubric (configs/judges/ in github.com/eth-sri/matharena), so a judge's opinion, not a checkable answer, sets the score."
+    },
+    "surge-gdp-pdf": {
+      "quote": "satisfy every rubric criterion, judged by Gemini 3.5 Flash",
+      "field": "scoring.metric",
+      "why": "A judge model rules each expert-written rubric criterion met or not; the all-pass rate is its ruling, not a check against a reference answer."
+    },
+    "vitabench": {
+      "quote": "--evaluator-llm <model name> # The LLM to use for evaluation.",
+      "field": "evidence.excerpt",
+      "why": "No verifier or reference state decides: an LLM evaluator reads the agent's trajectory and rules each task rubric met or not (the README's --evaluator-llm; the page's rubric-based sliding-window evaluator), with another LLM playing the user."
     }
   },
   "considered_not_judged": {
@@ -167,7 +177,8 @@
     "swe-rebench": "Resolved means the repository's own tests pass after the model's patch.",
     "hyper-tau-bench": "The reward is the built agent's pass rate on τ³-bench tasks; judge models only check whether natural-language assertions in a task's pass criteria hold.",
     "lisanbench": "Chains are validated programmatically against a pinned dictionary (edit distance 1, no repeats); no judge model.",
-    "mcp-atlas": "An LLM judge scores the answer claim by claim against the published ground-truth answer (1 / 0.5 / 0) and a task passes at 75 % coverage — the ground truth still decides; nothing is ranked or rated by preference."
+    "mcp-atlas": "An LLM judge scores the answer claim by claim against the published ground-truth answer (1 / 0.5 / 0) and a task passes at 75 % coverage — the ground truth still decides; nothing is ranked or rated by preference.",
+    "surge-chartography": "Gemini 3.5 Flash only checks whether each answer falls inside the expert-set acceptable range of the golden answer — the ground truth still decides (added 2026-09-22, iteration 168)."
   },
   "freshness": {
     "aa-aime": {

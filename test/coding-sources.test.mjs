@@ -58,6 +58,8 @@ const SLUG_BOARDS = ['osworld-2', 'swe-rebench', 'gso', 'hyper-tau-bench', 'lisa
   // 2026-09-22 (iteration 167, CR-37.1): Interfaze SOB, bare labels under a board-wide "no reasoning" setting
   // (lib/board-identity.mjs parseInterfazeSobLabel).
   'interfaze-sob', 'interfaze-sob-value-accuracy',
+  // 2026-09-22 (iteration 168, CR-37.1): VITA-Bench, "<section>|<label>" (lib/board-identity.mjs parseVitaBenchLabel).
+  'vitabench',
   // 2026-09-19 (iteration 115, CR-54.2): six boards from Epoch AI's Benchmarking Hub ZIP, slug labels joined by
   // the same lib/coding-identity.mjs parseDeepSweId rule as DeepSWE/SimpleQA Verified. math_level_5 and
   // frontiermath_erdos stay excluded; recorded in data/raw/benchmarks/epoch-hub-decisions.json.

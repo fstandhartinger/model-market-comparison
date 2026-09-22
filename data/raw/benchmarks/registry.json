@@ -16348,6 +16348,76 @@
           "excerpt": "Run at temperature 0.0, max output 2,048 tokens, no reasoning/thinking … | 1 | GPT-5.4 | 87.0% | 79.8% | … Models sorted by difficulty-weighted average across all seven metrics"
         }
       ]
+    },
+    {
+      "id": "vitabench::2026-01-22",
+      "name": "VitaBench",
+      "version": "2026-01-22",
+      "version_status": "published",
+      "family": "vitabench",
+      "category": "Tool-use",
+      "one_sentence_description": "Can an agent finish a real-life errand that spans food delivery, restaurant bookings and travel — 66 tools, a simulated customer who changes their mind, and no domain policy to lean on?",
+      "scoring": {
+        "metric": "Cross-Scenarios Avg @4: mean success rate over four runs on the 100 cross-scenario tasks (the paper's main result), graded by the benchmark's rubric-based sliding-window LLM evaluator",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "The board lists thinking and non-thinking runs in separate sections; both are kept, one source row per section and model. Single-scenario scores (Delivery, In-store, OTA) and Pass @4 / Pass ^4 stay in the capture. The 2026-01 update rectified the data and tools and upgraded the evaluator models, so earlier VitaBench numbers (paper, 2025-10) are a different identity."
+      },
+      "maintainer": "Meituan LongCat team (VitaBench authors)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://vitabench.github.io/",
+      "publication_urls": [
+        {
+          "url": "https://vitabench.github.io/",
+          "type": "official_leaderboard",
+          "role": "Leaderboard (thinking and non-thinking sections, four scenarios)"
+        },
+        {
+          "url": "https://github.com/meituan-longcat/vitabench",
+          "type": "github",
+          "role": "Benchmark code, evaluator and README"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-vitabench; python3 ops/daily/public-candidate.py CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "Static HTML table (GitHub Pages)",
+        "locator": "Table 0 of the static project page (\"Leaderboard\"): Rank, Models, then Avg @4 / Pass @4 / Pass ^4 for Cross-Scenarios, Delivery, In-store and OTA; one-cell section rows \"Thinking Models\" and \"Non-thinking Models\" state the reasoning mode of the rows below them. The value is the Cross-Scenarios Avg @4 column (the paper's main result); the source id is \"<section>|<model label>\".",
+        "version_guard": "The page must still state the update date (\"Last updated on 2026-01-22\"), the task set (100 cross-scenario tasks as the main results, 300 single-scenario tasks, 66 tools) and that a dataset refresh updates every leaderboard metric concurrently; table 0 must keep its two header rows (Rank / Models / Cross-Scenarios / Delivery / In-store / OTA, then Avg @4 / Pass @4 / Pass ^4 per scenario), fourteen cells per data row, and exactly the two section rows \"Thinking Models\" and \"Non-thinking Models\"; one row per model within a section. Another update date is a new identity (vitabench::<date>), never a silent update of this one.",
+        "identity_policy": "source_label",
+        "notes": "Maintained by the VitaBench authors (Meituan's LongCat team, whose own LongCat models are on the board); arXiv 2509.26490, ICLR 2026. vitabench.github.io has no robots.txt — scores with attribution to the VitaBench authors and a link to the board. The README states that the 2026-01 update re-ran proprietary and open models with the new evaluator, and that an LLM simulates the user and another grades the run (--user-llm, --evaluator-llm). Joins (lib/board-identity.mjs parseVitaBenchLabel): a parenthesis states the level (\"GPT-5.2 (xhigh)\" → gpt-5.2::xhigh, \"(none)\" → non-reasoning); a row in \"Non-thinking Models\" without one states reasoning off and joins only an exact non-reasoning configuration; a row in \"Thinking Models\" without one states no level and never joins. Not mapped: \"Gemini-3-Pro\"/\"Gemini-3-Flash\" (the catalog holds both a preview and a plain family of that name), models the catalog lacks (LongCat-Flash, Doubao-Seed-1.8). Joins: data/raw/benchmarks/identity-map.json."
+      },
+      "update_cadence": {
+        "source_schedule": "Irregular dataset refreshes (\"we refresh the dataset by correcting errors, replacing outdated samples, and adding new challenging tasks; all leaderboard metrics are updated concurrently\"); last updated 2026-01-22, 26 rows (14 thinking, 12 non-thinking), newest Gemini 3 Flash, GPT-5.2, Claude Opus 4.5, GLM-4.7 and LongCat-Flash-Thinking-2601.",
+        "check_recommendation": "Daily with the ordinary refresh; a new update date is a new identity."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Computed saturation (CR-38.2) applies on build."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://vitabench.github.io/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-vitabench/08ba05f20f9fa97d23d3.gz",
+          "sha256": "7c46e43f57f61016e86d90ab09962d65a2d9569564ff1571e022a02260d98001",
+          "fetched_at": "2026-09-22T10:01:33.865168+00:00",
+          "excerpt": "Last updated on 2026-01-22 … Thinking Models | 1 | Gemini-3-Flash (high) | 32.5 | 63.0 | 7.0 | … Non-thinking Models | … | 14 | GPT-5.2 (none) | 0.8 | …"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/meituan-longcat/vitabench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-vitabench/e219e18fd98ff7edc005.gz",
+          "sha256": "91da910e3705fb9598a06b486cae00df18c585f436b6967e47187a4c3adf5fac",
+          "fetched_at": "2026-09-22T10:02:47.743956+00:00",
+          "excerpt": "[2026-01] An updated version of VitaBench is released with rectified datasets and tools, upgraded evaluation models, and updated metrics … --evaluator-llm <model name> # The LLM to use for evaluation."
+        }
+      ]
     }
   ],
   "aa_field_map": [

@@ -375,6 +375,10 @@
     "interfaze-sob-value-accuracy": {
       "tier": "secondary",
       "reason": "Public dataset and code (huggingface.co/datasets/interfaze-ai/sob, github.com/JigsawStack/sob) scored by exact deterministic checks, not a judge; a vendor's board that labs rarely quote in release posts."
+    },
+    "vitabench": {
+      "tier": "judged",
+      "reason": "An LLM evaluator (--evaluator-llm in github.com/meituan-longcat/vitabench) grades each run against the task's rubrics over sliding windows of the trajectory, with another LLM playing the user; a judge's ruling, not a deterministic check, is the score."
     }
   }
 }

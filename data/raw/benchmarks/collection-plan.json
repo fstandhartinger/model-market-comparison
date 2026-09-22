@@ -5839,6 +5839,62 @@
       "source_urls": [
         "https://interfaze.ai/leaderboards/structured-output-benchmark"
       ]
+    },
+    {
+      "benchmark_id": "vitabench::2026-01-22",
+      "parser": {
+        "kind": "html_table",
+        "table_index": 0,
+        "name_field": "name",
+        "value_field": "value",
+        "name_column": 1,
+        "value_column": 2,
+        "width": 14,
+        "header_contains": [
+          "Rank",
+          "Models",
+          "Cross-Scenarios",
+          "Delivery",
+          "In-store",
+          "OTA"
+        ],
+        "header_rows": 2,
+        "section_rows": [
+          "Thinking Models",
+          "Non-thinking Models"
+        ],
+        "unique_names": true,
+        "require_text": [
+          "Here we present comprehensive evaluation results on VitaBench. Last updated on 2026-01-22 .",
+          "yielding 100 cross-scenario tasks (main results) and 300 single-scenario tasks",
+          "comprising 66 tools",
+          "All leaderboard metrics are updated concurrently to reflect these changes.",
+          "Avg @4 Pass @4 Pass ^4 Avg @4 Pass @4 Pass ^4 Avg @4 Pass @4 Pass ^4 Avg @4 Pass @4 Pass ^4 Thinking Models"
+        ]
+      },
+      "status": "collected",
+      "reason": "VITA-Bench's own leaderboard: every model row, per reasoning section, with its Cross-Scenarios Avg@4.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-vitabench; python3 ops/daily/public-candidate.py CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "Static HTML table (GitHub Pages)",
+        "locator": "Table 0 of the static project page (\"Leaderboard\"): Rank, Models, then Avg @4 / Pass @4 / Pass ^4 for Cross-Scenarios, Delivery, In-store and OTA; one-cell section rows \"Thinking Models\" and \"Non-thinking Models\" state the reasoning mode of the rows below them. The value is the Cross-Scenarios Avg @4 column (the paper's main result); the source id is \"<section>|<model label>\".",
+        "version_guard": "The page must still state the update date (\"Last updated on 2026-01-22\"), the task set (100 cross-scenario tasks as the main results, 300 single-scenario tasks, 66 tools) and that a dataset refresh updates every leaderboard metric concurrently; table 0 must keep its two header rows (Rank / Models / Cross-Scenarios / Delivery / In-store / OTA, then Avg @4 / Pass @4 / Pass ^4 per scenario), fourteen cells per data row, and exactly the two section rows \"Thinking Models\" and \"Non-thinking Models\"; one row per model within a section. Another update date is a new identity (vitabench::<date>), never a silent update of this one.",
+        "notes": "vitabench.github.io has no robots.txt (404 on 2026-09-22); GitHub Pages, one capture per day. Check the shared source cooldown first; stop on 403, 429, challenges or unexpected content."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "The page must still state the update date (\"Last updated on 2026-01-22\"), the task set (100 cross-scenario tasks as the main results, 300 single-scenario tasks, 66 tools) and that a dataset refresh updates every leaderboard metric concurrently; table 0 must keep its two header rows (Rank / Models / Cross-Scenarios / Delivery / In-store / OTA, then Avg @4 / Pass @4 / Pass ^4 per scenario), fourteen cells per data row, and exactly the two section rows \"Thinking Models\" and \"Non-thinking Models\"; one row per model within a section. Another update date is a new identity (vitabench::<date>), never a silent update of this one.",
+      "source": {
+        "url": "https://vitabench.github.io/",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-vitabench/08ba05f20f9fa97d23d3.gz",
+        "sha256": "08ba05f20f9fa97d23d3c072e2d7718c5a0a60eb4807ce56884c3bdbafc97d75",
+        "retrieved_at": "2026-09-22T10:01:33.865168+00:00"
+      },
+      "protocol": "VitaBench (Meituan LongCat team, ICLR 2026): LLM agents solve life-service tasks (food delivery, in-store consumption, online travel) with 66 tools, a simulated user and multi-turn interaction, graded by a rubric-based sliding-window evaluator; four runs per task. Value = Cross-Scenarios Avg @4, the mean success rate over four runs on the 100 cross-scenario tasks (percent). The row's section states its reasoning mode (\"Thinking Models\" / \"Non-thinking Models\"); a parenthesis states a level (\"GPT-5.2 (xhigh)\", \"GPT-5.2 (none)\"). Leaderboard last updated 2026-01-22.",
+      "basis": "measured",
+      "minimum_rows": 20,
+      "source_urls": [
+        "https://vitabench.github.io/"
+      ]
     }
   ]
 }
