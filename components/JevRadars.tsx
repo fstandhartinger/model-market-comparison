@@ -57,11 +57,17 @@ function Radar({ spokes, series, size, id, title, desc }: { spokes: Spoke[]; ser
 }
 
 export function JevRadars({ ranked, honorable, partial, topics }: { ranked: JevV12Row[]; honorable: JevV12Row[]; partial: JevV12Row[]; topics: JevTopicsView }) {
-  const all = [...ranked, ...honorable, ...partial];
-  const first = ranked.find((r) => r.key === "jev-1.13.0") ?? ranked[0];
+  // Topic aggregates are released separately and can lag a results-only addition. Keep every row in the leaderboard,
+  // but offer only rows with pinned topic evidence in this two-radar comparison.
+  const all = [...ranked, ...honorable, ...partial].filter((r) => topics.systems[r.key]);
+  const rankedWithTopics = ranked.filter((r) => topics.systems[r.key]);
+  const honorableWithTopics = honorable.filter((r) => topics.systems[r.key]);
+  const partialWithTopics = partial.filter((r) => topics.systems[r.key]);
+  const first = rankedWithTopics.find((r) => r.key === "jev-1.13.0") ?? rankedWithTopics[0];
   const [a, setA] = useState(first.key);
-  const [b, setB] = useState((ranked.find((r) => r.key !== first.key) ?? ranked[1]).key);
-  const A = all.find((r) => r.key === a) ?? first, B = all.find((r) => r.key === b) ?? ranked[1];
+  const second = rankedWithTopics.find((r) => r.key !== first.key) ?? rankedWithTopics[1];
+  const [b, setB] = useState(second.key);
+  const A = all.find((r) => r.key === a) ?? first, B = all.find((r) => r.key === b) ?? second;
   const same = family(A.cls) === family(B.cls);
   const series: Series[] = [{ name: short(A.display), stroke: colour(A.cls), dashed: false, square: false }, { name: short(B.display), stroke: same ? `color-mix(in srgb, ${colour(B.cls)} 55%, var(--text))` : colour(B.cls), dashed: same, square: true }];
   const pair = [A, B];
@@ -85,9 +91,9 @@ export function JevRadars({ ranked, honorable, partial, topics }: { ranked: JevV
   const pick = (id: string, label: string, value: string, set: (k: string) => void, other: string) => <label className="block min-w-0 flex-1 text-[13px]" htmlFor={id}>
     <span className="bh-muted mb-1 block font-semibold">{label}</span>
     <select id={id} className="bh-input w-full" value={value} onChange={(e) => set(e.target.value)} data-bh-jev12-radar-pick={id.endsWith("a") ? "a" : "b"}>
-      <optgroup label="Ranked">{ranked.filter((r) => r.key !== other).map(option)}</optgroup>
-      {honorable.length > 0 && <optgroup label="Honorable mentions (not ranked)">{honorable.filter((r) => r.key !== other).map(option)}</optgroup>}
-      <optgroup label="Partial runs (not ranked)">{partial.filter((r) => r.key !== other).map(option)}</optgroup>
+      <optgroup label="Ranked">{rankedWithTopics.filter((r) => r.key !== other).map(option)}</optgroup>
+      {honorableWithTopics.length > 0 && <optgroup label="Honorable mentions (not ranked)">{honorableWithTopics.filter((r) => r.key !== other).map(option)}</optgroup>}
+      <optgroup label="Partial runs (not ranked)">{partialWithTopics.filter((r) => r.key !== other).map(option)}</optgroup>
     </select></label>;
   const Swatch = ({ s }: { s: Series }) => <svg width="30" height="12" aria-hidden="true" className="mr-1.5 inline-block align-middle"><line x1="1" y1="6" x2="29" y2="6" stroke={s.stroke} strokeWidth="2.4" strokeDasharray={s.dashed ? "6 4" : undefined} />{s.square ? <rect x="11.5" y="2.5" width="7" height="7" fill={s.stroke} /> : <circle cx="15" cy="6" r="3.8" fill={s.stroke} />}</svg>;
   const scoreText = (r: JevV12Row) => `JevBench Score ${one(r.main)}${r.rank ? ` (#${r.rank})` : r.listing === "honorable_mention" ? " (honorable mention, not ranked)" : " (partial run, not ranked)"}`;
