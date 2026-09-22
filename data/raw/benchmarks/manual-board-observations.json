@@ -1681,19 +1681,739 @@
       },
       "protocol": "Cost per AA Intelligence Index task; source configuration Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; page date retrieved 2026-09-22; AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":3.459110175822289}}\",\"source_unit\":\"USD/task\",\"displayed_value\":3.4591}",
       "comparison_key": null
+    },
+    {
+      "id": "cr128:1849dff309c70a2c8e7f12bb",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "2f339a97-9a0d-499a-9cb5-e0db665bfa25",
+        "name": "GPT-6 Astra (max) [gpt-6-astra]",
+        "model_id": "gpt-6-astra::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 1541.89,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-astra",
+        "retrieved_at": "2026-09-22T22:47:41.802923+00:00",
+        "published_at": null,
+        "sha256": "72aea9d91119a2dbb760b9a09c98fd0e9fd7c171d424a32e06a6a138c1278ad7",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/72aea9d91119a2dbb760.gz",
+        "locator": "GDPval-AA v2.1; GPT-6 Astra (max) [gpt-6-astra]; exact source excerpt: \"gdpval\":1541.89 (page payload, model slug gpt-6-astra)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Astra (max) [gpt-6-astra]; page date retrieved 2026-09-22 (model release 2026-09-03); source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT-6 Astra (max) [gpt-6-astra]\",\"source_quote\":\"\\\"gdpval\\\":1541.89 (page payload, model slug gpt-6-astra)\",\"source_unit\":\"Elo\",\"displayed_value\":1541.89}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:2dc3aa64f4b3bfd7b5e8a299",
+      "benchmark_id": "aa-terminal-bench::4.0-upstream-timeouts",
+      "subject": {
+        "source_id": "2f339a97-9a0d-499a-9cb5-e0db665bfa25",
+        "name": "GPT-6 Astra (max) [gpt-6-astra]",
+        "model_id": "gpt-6-astra::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.590909090909091,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-astra",
+        "retrieved_at": "2026-09-22T22:47:41.802923+00:00",
+        "published_at": null,
+        "sha256": "72aea9d91119a2dbb760b9a09c98fd0e9fd7c171d424a32e06a6a138c1278ad7",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/72aea9d91119a2dbb760.gz",
+        "locator": "Terminal-Bench 4.0 (AA run); GPT-6 Astra (max) [gpt-6-astra]; exact source excerpt: \"terminalBench40\":0.590909090909091 (page payload, model slug gpt-6-astra)"
+      },
+      "protocol": "Terminal-Bench 4.0 (AA run); source configuration GPT-6 Astra (max) [gpt-6-astra]; page date retrieved 2026-09-22 (model release 2026-09-03); source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT-6 Astra (max) [gpt-6-astra]\",\"source_quote\":\"\\\"terminalBench40\\\":0.590909090909091 (page payload, model slug gpt-6-astra)\",\"source_unit\":\"%\",\"displayed_value\":59.09}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:2a2f4cf703cb30fa415f010c",
+      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
+      "subject": {
+        "source_id": "2f339a97-9a0d-499a-9cb5-e0db665bfa25",
+        "name": "GPT-6 Astra (max) [gpt-6-astra]",
+        "model_id": "gpt-6-astra::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.31,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-astra",
+        "retrieved_at": "2026-09-22T22:47:41.802923+00:00",
+        "published_at": null,
+        "sha256": "72aea9d91119a2dbb760b9a09c98fd0e9fd7c171d424a32e06a6a138c1278ad7",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/72aea9d91119a2dbb760.gz",
+        "locator": "GDP.pdf (all-pass); GPT-6 Astra (max) [gpt-6-astra]; exact source excerpt: \"gdpPdfAllPass\":0.31 (page payload, model slug gpt-6-astra)"
+      },
+      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Astra (max) [gpt-6-astra]; page date retrieved 2026-09-22 (model release 2026-09-03); source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT-6 Astra (max) [gpt-6-astra]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.31 (page payload, model slug gpt-6-astra)\",\"source_unit\":\"%\",\"displayed_value\":31}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:04ec49982e9305fbd24c764f",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "2f339a97-9a0d-499a-9cb5-e0db665bfa25",
+        "name": "GPT-6 Astra (max) [gpt-6-astra]",
+        "model_id": "gpt-6-astra::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 1568.86,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-astra",
+        "retrieved_at": "2026-09-22T22:47:41.802923+00:00",
+        "published_at": null,
+        "sha256": "72aea9d91119a2dbb760b9a09c98fd0e9fd7c171d424a32e06a6a138c1278ad7",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/72aea9d91119a2dbb760.gz",
+        "locator": "AA-Briefcase v1.1; GPT-6 Astra (max) [gpt-6-astra]; exact source excerpt: {\"slug\":\"aa-briefcase\",\"score\":1568.86}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Astra (max) [gpt-6-astra]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT-6 Astra (max) [gpt-6-astra]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1568.86}\",\"source_unit\":\"Elo\",\"displayed_value\":1568.86}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:3ffd847ad13a22b217009db4",
+      "benchmark_id": "aa-intelligence-index-cost::4.3.2",
+      "subject": {
+        "source_id": "2f339a97-9a0d-499a-9cb5-e0db665bfa25",
+        "name": "GPT-6 Astra (max) [gpt-6-astra]",
+        "model_id": "gpt-6-astra::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 5324.104027952404,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-astra",
+        "retrieved_at": "2026-09-22T22:47:41.802923+00:00",
+        "published_at": null,
+        "sha256": "72aea9d91119a2dbb760b9a09c98fd0e9fd7c171d424a32e06a6a138c1278ad7",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/72aea9d91119a2dbb760.gz",
+        "locator": "Cost to run AA Intelligence Index (total); GPT-6 Astra (max) [gpt-6-astra]; exact source excerpt: \"intelligenceIndexCost\":{\"total\":5324.104027952404}"
+      },
+      "protocol": "Cost to run AA Intelligence Index (total); source configuration GPT-6 Astra (max) [gpt-6-astra]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT-6 Astra (max) [gpt-6-astra]\",\"source_quote\":\"\\\"intelligenceIndexCost\\\":{\\\"total\\\":5324.104027952404}\",\"source_unit\":\"USD\",\"displayed_value\":5324.1}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:4abcaaacd1ce5f4582315788",
+      "benchmark_id": "aa-intelligence-index-cost-per-task::4.3.2",
+      "subject": {
+        "source_id": "2f339a97-9a0d-499a-9cb5-e0db665bfa25",
+        "name": "GPT-6 Astra (max) [gpt-6-astra]",
+        "model_id": "gpt-6-astra::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 3.2575003134834164,
+      "unit": "USD/task",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-astra",
+        "retrieved_at": "2026-09-22T22:47:41.802923+00:00",
+        "published_at": null,
+        "sha256": "72aea9d91119a2dbb760b9a09c98fd0e9fd7c171d424a32e06a6a138c1278ad7",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/72aea9d91119a2dbb760.gz",
+        "locator": "Cost per AA Intelligence Index task; GPT-6 Astra (max) [gpt-6-astra]; exact source excerpt: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":3.2575003134834164}}"
+      },
+      "protocol": "Cost per AA Intelligence Index task; source configuration GPT-6 Astra (max) [gpt-6-astra]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT-6 Astra (max) [gpt-6-astra]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":3.2575003134834164}}\",\"source_unit\":\"USD/task\",\"displayed_value\":3.2575}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:aad2ac7387f66014fc4621bf",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "e05a4828-0536-4876-870d-a235023f992b",
+        "name": "GPT-6 Astra (high) [gpt-6-astra-high]",
+        "model_id": "gpt-6-astra::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 1484.52,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-astra",
+        "retrieved_at": "2026-09-22T22:47:41.802923+00:00",
+        "published_at": null,
+        "sha256": "72aea9d91119a2dbb760b9a09c98fd0e9fd7c171d424a32e06a6a138c1278ad7",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/72aea9d91119a2dbb760.gz",
+        "locator": "GDPval-AA v2.1; GPT-6 Astra (high) [gpt-6-astra-high]; exact source excerpt: \"gdpval\":1484.52 (page payload, model slug gpt-6-astra-high)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Astra (high) [gpt-6-astra-high]; page date retrieved 2026-09-22 (model release 2026-09-03); source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT-6 Astra (high) [gpt-6-astra-high]\",\"source_quote\":\"\\\"gdpval\\\":1484.52 (page payload, model slug gpt-6-astra-high)\",\"source_unit\":\"Elo\",\"displayed_value\":1484.52}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:80607c3ceb94f60ba470d04e",
+      "benchmark_id": "aa-terminal-bench::4.0-upstream-timeouts",
+      "subject": {
+        "source_id": "e05a4828-0536-4876-870d-a235023f992b",
+        "name": "GPT-6 Astra (high) [gpt-6-astra-high]",
+        "model_id": "gpt-6-astra::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 0.54040404040404,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-astra",
+        "retrieved_at": "2026-09-22T22:47:41.802923+00:00",
+        "published_at": null,
+        "sha256": "72aea9d91119a2dbb760b9a09c98fd0e9fd7c171d424a32e06a6a138c1278ad7",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/72aea9d91119a2dbb760.gz",
+        "locator": "Terminal-Bench 4.0 (AA run); GPT-6 Astra (high) [gpt-6-astra-high]; exact source excerpt: \"terminalBench40\":0.54040404040404 (page payload, model slug gpt-6-astra-high)"
+      },
+      "protocol": "Terminal-Bench 4.0 (AA run); source configuration GPT-6 Astra (high) [gpt-6-astra-high]; page date retrieved 2026-09-22 (model release 2026-09-03); source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT-6 Astra (high) [gpt-6-astra-high]\",\"source_quote\":\"\\\"terminalBench40\\\":0.54040404040404 (page payload, model slug gpt-6-astra-high)\",\"source_unit\":\"%\",\"displayed_value\":54.04}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:713453fec53a741ff5710749",
+      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
+      "subject": {
+        "source_id": "e05a4828-0536-4876-870d-a235023f992b",
+        "name": "GPT-6 Astra (high) [gpt-6-astra-high]",
+        "model_id": "gpt-6-astra::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 0.31,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-astra",
+        "retrieved_at": "2026-09-22T22:47:41.802923+00:00",
+        "published_at": null,
+        "sha256": "72aea9d91119a2dbb760b9a09c98fd0e9fd7c171d424a32e06a6a138c1278ad7",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/72aea9d91119a2dbb760.gz",
+        "locator": "GDP.pdf (all-pass); GPT-6 Astra (high) [gpt-6-astra-high]; exact source excerpt: \"gdpPdfAllPass\":0.31 (page payload, model slug gpt-6-astra-high)"
+      },
+      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Astra (high) [gpt-6-astra-high]; page date retrieved 2026-09-22 (model release 2026-09-03); source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT-6 Astra (high) [gpt-6-astra-high]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.31 (page payload, model slug gpt-6-astra-high)\",\"source_unit\":\"%\",\"displayed_value\":31}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:19aef865bb41c712ff827ab4",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "e05a4828-0536-4876-870d-a235023f992b",
+        "name": "GPT-6 Astra (high) [gpt-6-astra-high]",
+        "model_id": "gpt-6-astra::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 1506.86,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-astra",
+        "retrieved_at": "2026-09-22T22:47:41.802923+00:00",
+        "published_at": null,
+        "sha256": "72aea9d91119a2dbb760b9a09c98fd0e9fd7c171d424a32e06a6a138c1278ad7",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/72aea9d91119a2dbb760.gz",
+        "locator": "AA-Briefcase v1.1; GPT-6 Astra (high) [gpt-6-astra-high]; exact source excerpt: {\"slug\":\"aa-briefcase\",\"score\":1506.86}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Astra (high) [gpt-6-astra-high]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT-6 Astra (high) [gpt-6-astra-high]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1506.86}\",\"source_unit\":\"Elo\",\"displayed_value\":1506.86}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:8c6ab5c669bcf70adbd1679d",
+      "benchmark_id": "aa-intelligence-index-cost::4.3.2",
+      "subject": {
+        "source_id": "e05a4828-0536-4876-870d-a235023f992b",
+        "name": "GPT-6 Astra (high) [gpt-6-astra-high]",
+        "model_id": "gpt-6-astra::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 2925.0106603383074,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-astra",
+        "retrieved_at": "2026-09-22T22:47:41.802923+00:00",
+        "published_at": null,
+        "sha256": "72aea9d91119a2dbb760b9a09c98fd0e9fd7c171d424a32e06a6a138c1278ad7",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/72aea9d91119a2dbb760.gz",
+        "locator": "Cost to run AA Intelligence Index (total); GPT-6 Astra (high) [gpt-6-astra-high]; exact source excerpt: \"intelligenceIndexCost\":{\"total\":2925.0106603383074}"
+      },
+      "protocol": "Cost to run AA Intelligence Index (total); source configuration GPT-6 Astra (high) [gpt-6-astra-high]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT-6 Astra (high) [gpt-6-astra-high]\",\"source_quote\":\"\\\"intelligenceIndexCost\\\":{\\\"total\\\":2925.0106603383074}\",\"source_unit\":\"USD\",\"displayed_value\":2925.01}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:362f0ca77d7610cef8143bc8",
+      "benchmark_id": "aa-intelligence-index-cost-per-task::4.3.2",
+      "subject": {
+        "source_id": "e05a4828-0536-4876-870d-a235023f992b",
+        "name": "GPT-6 Astra (high) [gpt-6-astra-high]",
+        "model_id": "gpt-6-astra::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 1.7252530861048456,
+      "unit": "USD/task",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-astra",
+        "retrieved_at": "2026-09-22T22:47:41.802923+00:00",
+        "published_at": null,
+        "sha256": "72aea9d91119a2dbb760b9a09c98fd0e9fd7c171d424a32e06a6a138c1278ad7",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/72aea9d91119a2dbb760.gz",
+        "locator": "Cost per AA Intelligence Index task; GPT-6 Astra (high) [gpt-6-astra-high]; exact source excerpt: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":1.7252530861048456}}"
+      },
+      "protocol": "Cost per AA Intelligence Index task; source configuration GPT-6 Astra (high) [gpt-6-astra-high]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT-6 Astra (high) [gpt-6-astra-high]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":1.7252530861048456}}\",\"source_unit\":\"USD/task\",\"displayed_value\":1.7253}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:02c6b200651dbffbcb622582",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "a3f8100d-e38f-408b-b0fa-0085dae18dc1",
+        "name": "GPT-6 Astra (low) [gpt-6-astra-low]",
+        "model_id": "gpt-6-astra::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 1365.6,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-astra",
+        "retrieved_at": "2026-09-22T22:47:41.802923+00:00",
+        "published_at": null,
+        "sha256": "72aea9d91119a2dbb760b9a09c98fd0e9fd7c171d424a32e06a6a138c1278ad7",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/72aea9d91119a2dbb760.gz",
+        "locator": "GDPval-AA v2.1; GPT-6 Astra (low) [gpt-6-astra-low]; exact source excerpt: \"gdpval\":1365.6 (page payload, model slug gpt-6-astra-low)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Astra (low) [gpt-6-astra-low]; page date retrieved 2026-09-22 (model release 2026-09-03); source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT-6 Astra (low) [gpt-6-astra-low]\",\"source_quote\":\"\\\"gdpval\\\":1365.6 (page payload, model slug gpt-6-astra-low)\",\"source_unit\":\"Elo\",\"displayed_value\":1365.6}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:0f4208b0914c93647f7d6c7f",
+      "benchmark_id": "aa-terminal-bench::4.0-upstream-timeouts",
+      "subject": {
+        "source_id": "a3f8100d-e38f-408b-b0fa-0085dae18dc1",
+        "name": "GPT-6 Astra (low) [gpt-6-astra-low]",
+        "model_id": "gpt-6-astra::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 0.419191919191919,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-astra",
+        "retrieved_at": "2026-09-22T22:47:41.802923+00:00",
+        "published_at": null,
+        "sha256": "72aea9d91119a2dbb760b9a09c98fd0e9fd7c171d424a32e06a6a138c1278ad7",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/72aea9d91119a2dbb760.gz",
+        "locator": "Terminal-Bench 4.0 (AA run); GPT-6 Astra (low) [gpt-6-astra-low]; exact source excerpt: \"terminalBench40\":0.419191919191919 (page payload, model slug gpt-6-astra-low)"
+      },
+      "protocol": "Terminal-Bench 4.0 (AA run); source configuration GPT-6 Astra (low) [gpt-6-astra-low]; page date retrieved 2026-09-22 (model release 2026-09-03); source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT-6 Astra (low) [gpt-6-astra-low]\",\"source_quote\":\"\\\"terminalBench40\\\":0.419191919191919 (page payload, model slug gpt-6-astra-low)\",\"source_unit\":\"%\",\"displayed_value\":41.92}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:930a3ac6a37e21c609c31010",
+      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
+      "subject": {
+        "source_id": "a3f8100d-e38f-408b-b0fa-0085dae18dc1",
+        "name": "GPT-6 Astra (low) [gpt-6-astra-low]",
+        "model_id": "gpt-6-astra::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 0.304,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-astra",
+        "retrieved_at": "2026-09-22T22:47:41.802923+00:00",
+        "published_at": null,
+        "sha256": "72aea9d91119a2dbb760b9a09c98fd0e9fd7c171d424a32e06a6a138c1278ad7",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/72aea9d91119a2dbb760.gz",
+        "locator": "GDP.pdf (all-pass); GPT-6 Astra (low) [gpt-6-astra-low]; exact source excerpt: \"gdpPdfAllPass\":0.304 (page payload, model slug gpt-6-astra-low)"
+      },
+      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Astra (low) [gpt-6-astra-low]; page date retrieved 2026-09-22 (model release 2026-09-03); source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT-6 Astra (low) [gpt-6-astra-low]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.304 (page payload, model slug gpt-6-astra-low)\",\"source_unit\":\"%\",\"displayed_value\":30.4}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:63d707a38fcd306b6fe05ec3",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "a3f8100d-e38f-408b-b0fa-0085dae18dc1",
+        "name": "GPT-6 Astra (low) [gpt-6-astra-low]",
+        "model_id": "gpt-6-astra::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 1260.6,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-astra",
+        "retrieved_at": "2026-09-22T22:47:41.802923+00:00",
+        "published_at": null,
+        "sha256": "72aea9d91119a2dbb760b9a09c98fd0e9fd7c171d424a32e06a6a138c1278ad7",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/72aea9d91119a2dbb760.gz",
+        "locator": "AA-Briefcase v1.1; GPT-6 Astra (low) [gpt-6-astra-low]; exact source excerpt: {\"slug\":\"aa-briefcase\",\"score\":1260.6}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Astra (low) [gpt-6-astra-low]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT-6 Astra (low) [gpt-6-astra-low]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1260.6}\",\"source_unit\":\"Elo\",\"displayed_value\":1260.6}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:fdff2337c69f4db5e0249383",
+      "benchmark_id": "aa-intelligence-index-cost::4.3.2",
+      "subject": {
+        "source_id": "a3f8100d-e38f-408b-b0fa-0085dae18dc1",
+        "name": "GPT-6 Astra (low) [gpt-6-astra-low]",
+        "model_id": "gpt-6-astra::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 1536.7784368593284,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-astra",
+        "retrieved_at": "2026-09-22T22:47:41.802923+00:00",
+        "published_at": null,
+        "sha256": "72aea9d91119a2dbb760b9a09c98fd0e9fd7c171d424a32e06a6a138c1278ad7",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/72aea9d91119a2dbb760.gz",
+        "locator": "Cost to run AA Intelligence Index (total); GPT-6 Astra (low) [gpt-6-astra-low]; exact source excerpt: \"intelligenceIndexCost\":{\"total\":1536.7784368593284}"
+      },
+      "protocol": "Cost to run AA Intelligence Index (total); source configuration GPT-6 Astra (low) [gpt-6-astra-low]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT-6 Astra (low) [gpt-6-astra-low]\",\"source_quote\":\"\\\"intelligenceIndexCost\\\":{\\\"total\\\":1536.7784368593284}\",\"source_unit\":\"USD\",\"displayed_value\":1536.78}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:6b4e7067a05e32ffd1c5e17f",
+      "benchmark_id": "aa-intelligence-index-cost-per-task::4.3.2",
+      "subject": {
+        "source_id": "a3f8100d-e38f-408b-b0fa-0085dae18dc1",
+        "name": "GPT-6 Astra (low) [gpt-6-astra-low]",
+        "model_id": "gpt-6-astra::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 0.8175139285656057,
+      "unit": "USD/task",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-astra",
+        "retrieved_at": "2026-09-22T22:47:41.802923+00:00",
+        "published_at": null,
+        "sha256": "72aea9d91119a2dbb760b9a09c98fd0e9fd7c171d424a32e06a6a138c1278ad7",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/72aea9d91119a2dbb760.gz",
+        "locator": "Cost per AA Intelligence Index task; GPT-6 Astra (low) [gpt-6-astra-low]; exact source excerpt: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":0.8175139285656057}}"
+      },
+      "protocol": "Cost per AA Intelligence Index task; source configuration GPT-6 Astra (low) [gpt-6-astra-low]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT-6 Astra (low) [gpt-6-astra-low]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":0.8175139285656057}}\",\"source_unit\":\"USD/task\",\"displayed_value\":0.8175}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:367c33d09a878d4978c2e14f",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "e97a4ef5-e817-480e-9595-12f81dc4974f",
+        "name": "GPT-6 Astra (medium) [gpt-6-astra-medium]",
+        "model_id": "gpt-6-astra::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 1467.88,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-astra",
+        "retrieved_at": "2026-09-22T22:47:41.802923+00:00",
+        "published_at": null,
+        "sha256": "72aea9d91119a2dbb760b9a09c98fd0e9fd7c171d424a32e06a6a138c1278ad7",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/72aea9d91119a2dbb760.gz",
+        "locator": "GDPval-AA v2.1; GPT-6 Astra (medium) [gpt-6-astra-medium]; exact source excerpt: \"gdpval\":1467.88 (page payload, model slug gpt-6-astra-medium)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Astra (medium) [gpt-6-astra-medium]; page date retrieved 2026-09-22 (model release 2026-09-03); source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT-6 Astra (medium) [gpt-6-astra-medium]\",\"source_quote\":\"\\\"gdpval\\\":1467.88 (page payload, model slug gpt-6-astra-medium)\",\"source_unit\":\"Elo\",\"displayed_value\":1467.88}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:aef14edc9c623b3803b9507c",
+      "benchmark_id": "aa-terminal-bench::4.0-upstream-timeouts",
+      "subject": {
+        "source_id": "e97a4ef5-e817-480e-9595-12f81dc4974f",
+        "name": "GPT-6 Astra (medium) [gpt-6-astra-medium]",
+        "model_id": "gpt-6-astra::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 0.494949494949495,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-astra",
+        "retrieved_at": "2026-09-22T22:47:41.802923+00:00",
+        "published_at": null,
+        "sha256": "72aea9d91119a2dbb760b9a09c98fd0e9fd7c171d424a32e06a6a138c1278ad7",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/72aea9d91119a2dbb760.gz",
+        "locator": "Terminal-Bench 4.0 (AA run); GPT-6 Astra (medium) [gpt-6-astra-medium]; exact source excerpt: \"terminalBench40\":0.494949494949495 (page payload, model slug gpt-6-astra-medium)"
+      },
+      "protocol": "Terminal-Bench 4.0 (AA run); source configuration GPT-6 Astra (medium) [gpt-6-astra-medium]; page date retrieved 2026-09-22 (model release 2026-09-03); source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT-6 Astra (medium) [gpt-6-astra-medium]\",\"source_quote\":\"\\\"terminalBench40\\\":0.494949494949495 (page payload, model slug gpt-6-astra-medium)\",\"source_unit\":\"%\",\"displayed_value\":49.49}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:312f3fa0804bc3b8877488af",
+      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
+      "subject": {
+        "source_id": "e97a4ef5-e817-480e-9595-12f81dc4974f",
+        "name": "GPT-6 Astra (medium) [gpt-6-astra-medium]",
+        "model_id": "gpt-6-astra::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 0.304,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-astra",
+        "retrieved_at": "2026-09-22T22:47:41.802923+00:00",
+        "published_at": null,
+        "sha256": "72aea9d91119a2dbb760b9a09c98fd0e9fd7c171d424a32e06a6a138c1278ad7",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/72aea9d91119a2dbb760.gz",
+        "locator": "GDP.pdf (all-pass); GPT-6 Astra (medium) [gpt-6-astra-medium]; exact source excerpt: \"gdpPdfAllPass\":0.304 (page payload, model slug gpt-6-astra-medium)"
+      },
+      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Astra (medium) [gpt-6-astra-medium]; page date retrieved 2026-09-22 (model release 2026-09-03); source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT-6 Astra (medium) [gpt-6-astra-medium]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.304 (page payload, model slug gpt-6-astra-medium)\",\"source_unit\":\"%\",\"displayed_value\":30.4}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:4aa0934f8025bcfdb0eed2f2",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "e97a4ef5-e817-480e-9595-12f81dc4974f",
+        "name": "GPT-6 Astra (medium) [gpt-6-astra-medium]",
+        "model_id": "gpt-6-astra::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 1459.22,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-astra",
+        "retrieved_at": "2026-09-22T22:47:41.802923+00:00",
+        "published_at": null,
+        "sha256": "72aea9d91119a2dbb760b9a09c98fd0e9fd7c171d424a32e06a6a138c1278ad7",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/72aea9d91119a2dbb760.gz",
+        "locator": "AA-Briefcase v1.1; GPT-6 Astra (medium) [gpt-6-astra-medium]; exact source excerpt: {\"slug\":\"aa-briefcase\",\"score\":1459.22}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Astra (medium) [gpt-6-astra-medium]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT-6 Astra (medium) [gpt-6-astra-medium]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1459.22}\",\"source_unit\":\"Elo\",\"displayed_value\":1459.22}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:268a9260ded6e81f80c79f25",
+      "benchmark_id": "aa-intelligence-index-cost::4.3.2",
+      "subject": {
+        "source_id": "e97a4ef5-e817-480e-9595-12f81dc4974f",
+        "name": "GPT-6 Astra (medium) [gpt-6-astra-medium]",
+        "model_id": "gpt-6-astra::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 2434.121104657961,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-astra",
+        "retrieved_at": "2026-09-22T22:47:41.802923+00:00",
+        "published_at": null,
+        "sha256": "72aea9d91119a2dbb760b9a09c98fd0e9fd7c171d424a32e06a6a138c1278ad7",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/72aea9d91119a2dbb760.gz",
+        "locator": "Cost to run AA Intelligence Index (total); GPT-6 Astra (medium) [gpt-6-astra-medium]; exact source excerpt: \"intelligenceIndexCost\":{\"total\":2434.121104657961}"
+      },
+      "protocol": "Cost to run AA Intelligence Index (total); source configuration GPT-6 Astra (medium) [gpt-6-astra-medium]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT-6 Astra (medium) [gpt-6-astra-medium]\",\"source_quote\":\"\\\"intelligenceIndexCost\\\":{\\\"total\\\":2434.121104657961}\",\"source_unit\":\"USD\",\"displayed_value\":2434.12}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:d03701d70049b11d7c36bb91",
+      "benchmark_id": "aa-intelligence-index-cost-per-task::4.3.2",
+      "subject": {
+        "source_id": "e97a4ef5-e817-480e-9595-12f81dc4974f",
+        "name": "GPT-6 Astra (medium) [gpt-6-astra-medium]",
+        "model_id": "gpt-6-astra::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 1.5406493220021167,
+      "unit": "USD/task",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-astra",
+        "retrieved_at": "2026-09-22T22:47:41.802923+00:00",
+        "published_at": null,
+        "sha256": "72aea9d91119a2dbb760b9a09c98fd0e9fd7c171d424a32e06a6a138c1278ad7",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/72aea9d91119a2dbb760.gz",
+        "locator": "Cost per AA Intelligence Index task; GPT-6 Astra (medium) [gpt-6-astra-medium]; exact source excerpt: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":1.5406493220021167}}"
+      },
+      "protocol": "Cost per AA Intelligence Index task; source configuration GPT-6 Astra (medium) [gpt-6-astra-medium]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT-6 Astra (medium) [gpt-6-astra-medium]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":1.5406493220021167}}\",\"source_unit\":\"USD/task\",\"displayed_value\":1.5406}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:2dfd2cf0f791b3af14a390a5",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "1f541ef3-913f-4eb2-9d07-0e93c7a9a5e3",
+        "name": "GPT-6 Astra (xhigh) [gpt-6-astra-xhigh]",
+        "model_id": "gpt-6-astra::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 1516.48,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-astra",
+        "retrieved_at": "2026-09-22T22:47:41.802923+00:00",
+        "published_at": null,
+        "sha256": "72aea9d91119a2dbb760b9a09c98fd0e9fd7c171d424a32e06a6a138c1278ad7",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/72aea9d91119a2dbb760.gz",
+        "locator": "GDPval-AA v2.1; GPT-6 Astra (xhigh) [gpt-6-astra-xhigh]; exact source excerpt: \"gdpval\":1516.48 (page payload, model slug gpt-6-astra-xhigh)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Astra (xhigh) [gpt-6-astra-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-03); source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT-6 Astra (xhigh) [gpt-6-astra-xhigh]\",\"source_quote\":\"\\\"gdpval\\\":1516.48 (page payload, model slug gpt-6-astra-xhigh)\",\"source_unit\":\"Elo\",\"displayed_value\":1516.48}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:bb7d2658d38c8d99888dd65b",
+      "benchmark_id": "aa-terminal-bench::4.0-upstream-timeouts",
+      "subject": {
+        "source_id": "1f541ef3-913f-4eb2-9d07-0e93c7a9a5e3",
+        "name": "GPT-6 Astra (xhigh) [gpt-6-astra-xhigh]",
+        "model_id": "gpt-6-astra::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 0.595959595959596,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-astra",
+        "retrieved_at": "2026-09-22T22:47:41.802923+00:00",
+        "published_at": null,
+        "sha256": "72aea9d91119a2dbb760b9a09c98fd0e9fd7c171d424a32e06a6a138c1278ad7",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/72aea9d91119a2dbb760.gz",
+        "locator": "Terminal-Bench 4.0 (AA run); GPT-6 Astra (xhigh) [gpt-6-astra-xhigh]; exact source excerpt: \"terminalBench40\":0.595959595959596 (page payload, model slug gpt-6-astra-xhigh)"
+      },
+      "protocol": "Terminal-Bench 4.0 (AA run); source configuration GPT-6 Astra (xhigh) [gpt-6-astra-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-03); source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT-6 Astra (xhigh) [gpt-6-astra-xhigh]\",\"source_quote\":\"\\\"terminalBench40\\\":0.595959595959596 (page payload, model slug gpt-6-astra-xhigh)\",\"source_unit\":\"%\",\"displayed_value\":59.6}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:b0a22322babb106727323213",
+      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
+      "subject": {
+        "source_id": "1f541ef3-913f-4eb2-9d07-0e93c7a9a5e3",
+        "name": "GPT-6 Astra (xhigh) [gpt-6-astra-xhigh]",
+        "model_id": "gpt-6-astra::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 0.322,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-astra",
+        "retrieved_at": "2026-09-22T22:47:41.802923+00:00",
+        "published_at": null,
+        "sha256": "72aea9d91119a2dbb760b9a09c98fd0e9fd7c171d424a32e06a6a138c1278ad7",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/72aea9d91119a2dbb760.gz",
+        "locator": "GDP.pdf (all-pass); GPT-6 Astra (xhigh) [gpt-6-astra-xhigh]; exact source excerpt: \"gdpPdfAllPass\":0.322 (page payload, model slug gpt-6-astra-xhigh)"
+      },
+      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Astra (xhigh) [gpt-6-astra-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-03); source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT-6 Astra (xhigh) [gpt-6-astra-xhigh]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.322 (page payload, model slug gpt-6-astra-xhigh)\",\"source_unit\":\"%\",\"displayed_value\":32.2}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:bde2b2b4e65e61300d4d43e3",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "1f541ef3-913f-4eb2-9d07-0e93c7a9a5e3",
+        "name": "GPT-6 Astra (xhigh) [gpt-6-astra-xhigh]",
+        "model_id": "gpt-6-astra::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 1543.68,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-astra",
+        "retrieved_at": "2026-09-22T22:47:41.802923+00:00",
+        "published_at": null,
+        "sha256": "72aea9d91119a2dbb760b9a09c98fd0e9fd7c171d424a32e06a6a138c1278ad7",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/72aea9d91119a2dbb760.gz",
+        "locator": "AA-Briefcase v1.1; GPT-6 Astra (xhigh) [gpt-6-astra-xhigh]; exact source excerpt: {\"slug\":\"aa-briefcase\",\"score\":1543.68}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Astra (xhigh) [gpt-6-astra-xhigh]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT-6 Astra (xhigh) [gpt-6-astra-xhigh]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1543.68}\",\"source_unit\":\"Elo\",\"displayed_value\":1543.68}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:5439bb4c83f1ba81bf08f024",
+      "benchmark_id": "aa-intelligence-index-cost::4.3.2",
+      "subject": {
+        "source_id": "1f541ef3-913f-4eb2-9d07-0e93c7a9a5e3",
+        "name": "GPT-6 Astra (xhigh) [gpt-6-astra-xhigh]",
+        "model_id": "gpt-6-astra::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 3802.9799452617394,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-astra",
+        "retrieved_at": "2026-09-22T22:47:41.802923+00:00",
+        "published_at": null,
+        "sha256": "72aea9d91119a2dbb760b9a09c98fd0e9fd7c171d424a32e06a6a138c1278ad7",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/72aea9d91119a2dbb760.gz",
+        "locator": "Cost to run AA Intelligence Index (total); GPT-6 Astra (xhigh) [gpt-6-astra-xhigh]; exact source excerpt: \"intelligenceIndexCost\":{\"total\":3802.9799452617394}"
+      },
+      "protocol": "Cost to run AA Intelligence Index (total); source configuration GPT-6 Astra (xhigh) [gpt-6-astra-xhigh]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT-6 Astra (xhigh) [gpt-6-astra-xhigh]\",\"source_quote\":\"\\\"intelligenceIndexCost\\\":{\\\"total\\\":3802.9799452617394}\",\"source_unit\":\"USD\",\"displayed_value\":3802.98}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:9e0b0db2b0169cdeba06300e",
+      "benchmark_id": "aa-intelligence-index-cost-per-task::4.3.2",
+      "subject": {
+        "source_id": "1f541ef3-913f-4eb2-9d07-0e93c7a9a5e3",
+        "name": "GPT-6 Astra (xhigh) [gpt-6-astra-xhigh]",
+        "model_id": "gpt-6-astra::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 2.308795912269076,
+      "unit": "USD/task",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-astra",
+        "retrieved_at": "2026-09-22T22:47:41.802923+00:00",
+        "published_at": null,
+        "sha256": "72aea9d91119a2dbb760b9a09c98fd0e9fd7c171d424a32e06a6a138c1278ad7",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/72aea9d91119a2dbb760.gz",
+        "locator": "Cost per AA Intelligence Index task; GPT-6 Astra (xhigh) [gpt-6-astra-xhigh]; exact source excerpt: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":2.308795912269076}}"
+      },
+      "protocol": "Cost per AA Intelligence Index task; source configuration GPT-6 Astra (xhigh) [gpt-6-astra-xhigh]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT-6 Astra (xhigh) [gpt-6-astra-xhigh]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":2.308795912269076}}\",\"source_unit\":\"USD/task\",\"displayed_value\":2.3088}",
+      "comparison_key": null
     }
   ],
   "collections": [
     {
       "benchmark_id": "aa-intelligence-index-cost::4.3.2",
       "status": "collected",
-      "source_url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+      "source_url": "https://artificialanalysis.ai/models/gpt-6-astra",
       "reason": "Hash-bound primary source reviewed for CR-128; exact rows retained with the observation."
     },
     {
       "benchmark_id": "aa-intelligence-index-cost-per-task::4.3.2",
       "status": "collected",
-      "source_url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+      "source_url": "https://artificialanalysis.ai/models/gpt-6-astra",
       "reason": "Hash-bound primary source reviewed for CR-128; exact rows retained with the observation."
     }
   ]
