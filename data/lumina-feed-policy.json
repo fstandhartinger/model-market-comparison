@@ -843,6 +843,49 @@
         "matharena-usamo::2026"
       ],
       "note": "2026-09-22 (iteration 162): MathArena's own table of this competition (matharena.ai, data/SCRAPING.md) is collected daily; the proofs are graded by MathArena's LLM judges, so the board is tagged Judged, and MathArena marks the competition Deprecated, so it is retained (frozen, tagged retired). Lumina's cited values are aggregator copies."
+    },
+    "benchlm-hmmt2025": {
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 162): the primary board is MathArena's hmmt--hmmt_feb_2025 table (Deprecated), an older edition of a family the registry carries in its two newer editions (matharena-hmmt::2026-02, matharena-hmmt::2025-11). On 2026-09-22 MathArena flags 44 of its 60 rows as 'Model was released after competition release', including every current model on it, so it adds no clean comparison the newer editions lack (decision first taken in iteration 161)."
+    },
+    "benchlm-bfclv4": {
+      "decision": "planned",
+      "collector": "Berkeley Function Calling Leaderboard data_overall.csv, low priority (data/SCRAPING.md)",
+      "note": "2026-09-22 (iteration 162): the primary board was checked on 2026-09-16 (109 rows, newest models from late 2025 and dated checkpoint labels, little overlap with the current catalog). Lumina cites only BenchLM rows for this family (Qwen3.7, LFM2.5, Mellum2, MiniCPM5 and ZAYA1 models)."
+    },
+    "berkeley-function-calling-leaderboard": {
+      "decision": "planned",
+      "collector": "Berkeley Function Calling Leaderboard data_overall.csv, low priority (data/SCRAPING.md)",
+      "note": "2026-09-22 (iteration 162): the primary board was checked on 2026-09-16 (109 rows, newest models from late 2025 and dated checkpoint labels, little overlap with the current catalog). Lumina cites only BenchLM rows for this family (Qwen3.7, LFM2.5, Mellum2, MiniCPM5 and ZAYA1 models)."
+    },
+    "benchlm-mcpmarkverified": {
+      "decision": "planned",
+      "collector": "MCPMark leaderboard page (mcpmark.ai/leaderboard), low priority (data/SCRAPING.md)",
+      "note": "2026-09-22 (iteration 162): mcpmark.ai robots.txt allows everything; the leaderboard's Next.js payload (page dateModified 2026-09-21) holds 39 model labels whose newest are GPT-5.2 (high), Gemini 3 Pro (high/low), Claude Opus 4.5 (high) and DeepSeek V3.2 — nothing from 2026 — so the board is stale for the current catalog. Lumina cites only BenchLM's bulk export for one model (Kimi K2.7 Code)."
+    },
+    "multi-swe-bench": {
+      "decision": "planned",
+      "collector": "Multi-SWE-bench leaderboard.json (multi-swe-bench/experiments dist branch), low priority (data/SCRAPING.md)",
+      "note": "2026-09-22 (iteration 162): the board's data file holds 299 rows over 8 languages. 289 are the maintainers' MagentLess / MSWE-agent / MopenHands harness rows, run 2025-03-29 to 2026-03-27, whose models stop at Claude 3.7 Sonnet, Gemini 2.5 Pro, Llama 4 Maverick and DeepSeek-R1 plus one vendor fine-tune (CodeArts-MiniMax-M2.5); the other 2026 rows are agent products (CodeArts Agent, InfCode, RepoRepair). Stale for the current catalog. Lumina cites only BenchLM rows for one model (MiniMax M2.7)."
+    },
+    "benchlm-supergpqa": {
+      "decision": "planned",
+      "collector": "SuperGPQA leaderboard (supergpqa.github.io, data in the page's own JS bundle), low priority (data/SCRAPING.md)",
+      "note": "2026-09-22 (iteration 162): the maintainers' leaderboard (supergpqa.github.io) bundles its rows in its JS; its newest model labels are gpt-5.2-thinking / gpt-5.2-pro and gemini-3-pro-preview, with no Kimi, Qwen3.5+, GLM-5 or Claude 4.5+ rows, so it is stale for the current catalog. Lumina cites only BenchLM rows for this family."
+    },
+    "super-gpqa": {
+      "decision": "planned",
+      "collector": "SuperGPQA leaderboard (supergpqa.github.io, data in the page's own JS bundle), low priority (data/SCRAPING.md)",
+      "note": "2026-09-22 (iteration 162): the maintainers' leaderboard (supergpqa.github.io) bundles its rows in its JS; its newest model labels are gpt-5.2-thinking / gpt-5.2-pro and gemini-3-pro-preview, with no Kimi, Qwen3.5+, GLM-5 or Claude 4.5+ rows, so it is stale for the current catalog. Lumina cites only BenchLM rows for this family."
+    },
+    "tau-bench": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "tau2-bench::2",
+        "tau3-banking::1.0.1",
+        "tau3-voice::snapshot-2026-09-10"
+      ],
+      "note": "2026-09-22 (iteration 162): τ-bench is Sierra's; Sierra's own board (taubench.com) publishes τ²-bench and τ³-bench per domain, and the registry carries those boards. Lumina's family states no version or domain: its 37 values are BenchLM leaderboard copies (one figure per model, e.g. GLM-5.2 99.1), an aggregator number that is not collected."
     }
   },
   "host_roles_note": "A host role is a first cut, not a verdict: an evaluator host can relay vendor numbers (cybench.github.io links system cards; artificialanalysis.ai/models pages show lab-reported values). Every family that lands in evaluator_result is therefore read by hand and recorded in family_decisions."
