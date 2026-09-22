@@ -1,0 +1,72 @@
+{
+  "started_at": "2026-09-22T07:55:37.020Z",
+  "mode": "oneshot",
+  "requested_model": "chutes/moonshotai/Kimi-K3-TEE",
+  "producers": [],
+  "qualification": {
+    "id": "chutes/moonshotai/Kimi-K3-TEE",
+    "family": "moonshotai",
+    "free": true,
+    "input_per_1m": 0,
+    "output_per_1m": 0,
+    "context": null,
+    "aa_intelligence_index": 43.6,
+    "aa_source": "exact_variant",
+    "matched_model_ids": [
+      "kimi-k3::max"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "kimi-k3::max",
+        "index": 43.6
+      }
+    ],
+    "transport": "router",
+    "router_model": "fw-kimi-k3",
+    "provider_model": "moonshotai/Kimi-K3-TEE",
+    "reasoning_effort": "max",
+    "allowed_as": "moonshotai/kimi-k3",
+    "healthy": true
+  },
+  "input_sha256": "553cb1237cedc85bbaaf84f6d01dd72e57677ab5172c8f8c6f976dec9902d6ad",
+  "route": "router:fw-kimi-k3",
+  "attempt": 1,
+  "free_route_role": "critic",
+  "free_routes_offered": [
+    "chutes/moonshotai/Kimi-K3-TEE"
+  ],
+  "excluded_models": [
+    "z-ai/glm-5.3-flash",
+    "deepseek/deepseek-v4-flash-0731",
+    "deepseek/deepseek-v4.1-flash"
+  ],
+  "catalog": {
+    "source": "run-cache",
+    "fetched_at": "2026-09-22T07:44:05.255Z"
+  },
+  "reasoning": {
+    "effort": "max"
+  },
+  "response_format_mode": "json_object",
+  "response_schema_sha256": "376bde7986cc2f8fd182f04e745c607933760bea7c306ea6e8e992b7f70be25a",
+  "images": [],
+  "actual_model": "moonshotai/Kimi-K3-TEE",
+  "usage": {
+    "completion_tokens": 2414,
+    "prompt_tokens": 2157,
+    "total_tokens": 4571,
+    "completion_tokens_details": {
+      "reasoning_tokens": 2283,
+      "text_tokens": 131
+    },
+    "cost": 0
+  },
+  "finish_reason": "stop",
+  "transport": "router",
+  "router_model": "fw-kimi-k3",
+  "price_context": "Free route behind the local router (Chutes under the owner's arrangement); cost recorded as $0.",
+  "provider": "chutes (via local router)",
+  "session_id": null,
+  "finished_at": "2026-09-22T07:57:08.271Z",
+  "output_sha256": "ec96e23f62e5bc2387e521582984f18231a6ffb2e01b87f273979902bf643f57"
+}

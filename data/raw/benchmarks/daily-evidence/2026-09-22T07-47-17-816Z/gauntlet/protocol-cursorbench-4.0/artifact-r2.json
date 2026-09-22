@@ -1,0 +1,22 @@
+[
+  {
+    "id": "cursorbench::4.0",
+    "version": "4.0",
+    "version_guard": "Require the page heading CursorBench 4.0. A changed version or task protocol is a new registry identity.",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "CursorBench score",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Cursor publishes one score percentage per model and reasoning-effort configuration; this secondary benchmark is not a Composite input."
+    },
+    "description": "Agent evaluation on ambiguous, multi-file tasks drawn from real Cursor sessions.",
+    "maintainer": "Cursor (Anysphere)"
+  }
+]

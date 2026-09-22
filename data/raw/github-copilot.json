@@ -1,7 +1,7 @@
 {
   "source": "GitHub Copilot (current usage-based billing plus annual-plan legacy request billing)",
-  "collected_at": "2026-09-21",
-  "method": "scripts/fetch-github-copilot-catalog.mjs (2026-09-21): current_models[] = the intersection of the supported-models catalog table (https://docs.github.com/en/copilot/reference/ai-models/supported-models) and the per-token pricing tables (https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing), matched by exact name after footnote markers are removed; Default and Long context tiers are folded into one row (long_context carries the threshold and higher price); promotion end dates come from the pricing footnotes. models[] = the legacy annual-plan multiplier table (https://docs.github.com/en/copilot/reference/copilot-billing/request-based-billing-legacy/model-multipliers-for-annual-plans) with effective USD per request = multiplier × per_premium_request_usd; the page's \"subject to change\" list sets the note. Plan allowances (plans[]) are documented on separate billing pages and keep plans_checked_at. See github-copilot.method.md.",
+  "collected_at": "2026-09-22",
+  "method": "scripts/fetch-github-copilot-catalog.mjs (2026-09-22): current_models[] = the intersection of the supported-models catalog table (https://docs.github.com/en/copilot/reference/ai-models/supported-models) and the per-token pricing tables (https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing), matched by exact name after footnote markers are removed; Default and Long context tiers are folded into one row (long_context carries the threshold and higher price); promotion end dates come from the pricing footnotes. models[] = the legacy annual-plan multiplier table (https://docs.github.com/en/copilot/reference/copilot-billing/request-based-billing-legacy/model-multipliers-for-annual-plans) with effective USD per request = multiplier × per_premium_request_usd; the page's \"subject to change\" list sets the note. Plan allowances (plans[]) are documented on separate billing pages and keep plans_checked_at. See github-copilot.method.md.",
   "pricing_model": "ai_credits_per_token_with_legacy_per_premium_request",
   "ai_credit_usd": 0.01,
   "per_premium_request_usd": 0.04,
@@ -380,6 +380,22 @@
         "output_per_1m_usd": 12,
         "threshold_input_tokens_gt": 200000
       }
+    },
+    {
+      "model_name": "Grok 4.7",
+      "provider_org": "xAI",
+      "release_status": "GA",
+      "category": "Versatile",
+      "input_per_1m_usd": 2,
+      "cached_input_per_1m_usd": 0.5,
+      "output_per_1m_usd": 6,
+      "long_context": {
+        "input_per_1m_usd": 4,
+        "cached_input_per_1m_usd": 1,
+        "output_per_1m_usd": 12,
+        "threshold_input_tokens_gt": 200000
+      },
+      "mapping": "derived"
     }
   ],
   "legacy_scope": "Existing annual Copilot Pro and Copilot Pro+ subscribers who explicitly remained on request-based billing after June 1, 2026.",
@@ -580,7 +596,7 @@
     {
       "name": "Gemini 2.5 Pro",
       "retirement_date": "2026-07-31",
-      "alternative": "Gemini 3.1 Pro"
+      "alternative": "Gemini 3.8 Flash"
     },
     {
       "name": "Gemini 3 Flash",
@@ -593,19 +609,19 @@
       "alternative": "Claude Opus 4.8 (fast mode) (preview)"
     },
     {
-      "name": "GPT-4.1",
-      "retirement_date": "2026-06-01",
-      "alternative": "GPT-5.5"
-    },
-    {
       "name": "GPT-5.2",
-      "retirement_date": "2026-06-01",
+      "retirement_date": "2026-06-05",
       "alternative": "GPT-5.5"
     },
     {
       "name": "GPT-5.2-Codex",
-      "retirement_date": "2026-06-01",
+      "retirement_date": "2026-06-05",
       "alternative": "GPT-5.3-Codex"
+    },
+    {
+      "name": "GPT-4.1",
+      "retirement_date": "2026-06-01",
+      "alternative": "GPT-5.5"
     },
     {
       "name": "Grok Code Fast 1",
@@ -640,12 +656,12 @@
     {
       "name": "Gemini 3 Pro",
       "retirement_date": "2026-03-26",
-      "alternative": "Gemini 3.1 Pro"
+      "alternative": "Gemini 3.8 Flash"
     },
     {
       "name": "Claude Opus 4.1",
       "retirement_date": "2026-02-17",
-      "alternative": "Claude Opus 4.6"
+      "alternative": "Claude Opus 5"
     },
     {
       "name": "GPT-5",
@@ -665,7 +681,7 @@
     {
       "name": "Claude Opus 4",
       "retirement_date": "2025-10-23",
-      "alternative": "Claude Opus 4.6"
+      "alternative": "Claude Opus 5"
     },
     {
       "name": "Claude Sonnet 3.7",
@@ -680,7 +696,7 @@
     {
       "name": "Gemini 2.0 Flash",
       "retirement_date": "2025-10-23",
-      "alternative": "Gemini 2.5 Pro"
+      "alternative": "Gemini 3.8 Flash"
     },
     {
       "name": "o1-mini",
@@ -715,12 +731,14 @@
     "Claude Sonnet 4.6 (2026-09-01)"
   ],
   "response_sha256": {
-    "supported": "7c60dc6fbf945f3976e2b4d7e1cebf0ae7660792b8b35df9083d883c64794046",
-    "pricing": "1116f219a5b7e3cadef9a59d22ddcdd9402e9fd7dd88ac342b28ee33cfe113cf",
-    "multipliers": "7946ea02044bb708612c9be45b95458570cc153bae8eab680781122cc23c1e93"
+    "supported": "508bfd3e5ae37cde5418fa95a1d7b1c5e68413cef532ebdc5be3baf3a141bd0e",
+    "pricing": "08b08863f82f9a0baa59cdcffcd4ba17dd23865ae36637b3366aee85ff394f4c",
+    "multipliers": "ca93576f0278a20d30ed2f2df8473d56c65908be01f1a49cca456499b2e84ba3"
   },
   "diff": {
-    "current_added": [],
+    "current_added": [
+      "Grok 4.7"
+    ],
     "current_removed": [],
     "current_price_changed": [],
     "legacy_added": [],
