@@ -7039,9 +7039,9 @@ engine, as for CR-127.1–.3.
 
 | ID | Status | Evidence | Note |
 |---|---|---|---|
-| D172.1 | implemented | `5e89a8f7`; `data/raw/provider-meta.json`; `data/research/unbiased-and-unnamed-labs-2026-09-22.md`; `test/provider-meta-unbiased.test.mjs`; `ops/ux-2026-09-12/bin/verify-iter172.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter172-d1/` and `/opt/benchmarkheaven/state/ux-evidence/iter172/` | "Unbiased" curated from its own terms: HQ US, out of the EU/non-US filters for a stated reason, Pareto's composite nature disclosed. Implementer verification only; needs a non-claude-opus sign-off. |
-| D172.2 | implemented | `bc830c3e`; `scripts/build-dataset.mjs`; `lib/regions.mjs`; `test/model-lab-attribution.test.mjs`; same evidence dirs | Pareto → Unbiased, SWE-1.7 Lightning Max → Cognition AI, Muse Spark 1.3 Max → Meta; both new labs' home countries documented, so "Model lab based in" can place them. Implementer verification only; needs a non-claude-opus sign-off. |
-| D172.3 | implemented | `cf73a91b`; `scripts/build-dataset.mjs` (`CLOSED_ORGS`); `test/model-lab-attribution.test.mjs`; same evidence dirs | SWE-1.7 Lightning Max no longer claims open weights; Cognition classified as a closed-weights lab from its own launch post and an empty Hugging Face author listing. Implementer verification only; needs a non-claude-opus sign-off. |
+| D172.1 | verified | `5e89a8f7`; `data/raw/provider-meta.json`; `data/research/unbiased-and-unnamed-labs-2026-09-22.md`; `test/provider-meta-unbiased.test.mjs`; `ops/ux-2026-09-12/bin/verify-iter172.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter172-d1/` and `/opt/benchmarkheaven/state/ux-evidence/iter172/` | "Unbiased" curated from its own terms: HQ US, out of the EU/non-US filters for a stated reason, Pareto's composite nature disclosed. **Sign-off (iteration 173, Kimi K3 `chutes/moonshotai/Kimi-K3-TEE`, non-claude, non-implementer, run outside this checkout):** re-ran `verify-iter172.mjs` itself, 77/77 per host, and confirmed the claim from the primary source; evidence re-checked by iteration 173 in `/opt/benchmarkheaven/state/ux-evidence/iter173/d172-signoff-kimi/`. The headquarters sentence, the legal entity, the Delaware clause and the Pareto composite quote all read back out of unbiased.ai's own pages. |
+| D172.2 | verified | `bc830c3e`; `scripts/build-dataset.mjs`; `lib/regions.mjs`; `test/model-lab-attribution.test.mjs`; same evidence dirs | Pareto → Unbiased, SWE-1.7 Lightning Max → Cognition AI, Muse Spark 1.3 Max → Meta; both new labs' home countries documented, so "Model lab based in" can place them. **Sign-off (iteration 173, Kimi K3 `chutes/moonshotai/Kimi-K3-TEE`, non-claude, non-implementer, run outside this checkout):** re-ran `verify-iter172.mjs` itself, 77/77 per host, and confirmed the claim from the primary source; evidence re-checked by iteration 173 in `/opt/benchmarkheaven/state/ux-evidence/iter173/d172-signoff-kimi/`. Each attribution confirmed from the maker's own announcement (unbiased.ai, cognition.com/blog/swe-1-7 with docs.devin.ai, Meta's research post) and against the live `/api/models` rows. |
+| D172.3 | verified | `cf73a91b`; `scripts/build-dataset.mjs` (`CLOSED_ORGS`); `test/model-lab-attribution.test.mjs`; same evidence dirs | SWE-1.7 Lightning Max no longer claims open weights; Cognition classified as a closed-weights lab from its own launch post and an empty Hugging Face author listing. **Sign-off (iteration 173, Kimi K3 `chutes/moonshotai/Kimi-K3-TEE`, non-claude, non-implementer, run outside this checkout):** re-ran `verify-iter172.mjs` itself, 77/77 per host, and confirmed the claim from the primary source; evidence re-checked by iteration 173 in `/opt/benchmarkheaven/state/ux-evidence/iter173/d172-signoff-kimi/`. Re-checked live: the Hugging Face API returns 0 models for author `Cognition` and one unrelated model for `cognition-ai`, and Cognition serves SWE-1.7 only in Devin via Cerebras. |
 
 - **Owed to a non-claude-opus engine:** a sign-off on `D172.1`–`D172.3` (re-run `ops/ux-2026-09-12/bin/verify-iter172.mjs`
   on both hosts and flip the three rows) — on top of the `CR-127.1`–`.4` sign-off iteration 171 left.
@@ -7052,3 +7052,80 @@ engine, as for CR-127.1–.3.
   `livebench::2026-06-25`, `matharena-brokenarxiv::2026-06` and `vulcanbench-frontier::4` are the rows to read in its
   receipt, together with the `CR-38.1` publication receipt, the `CR-85.1` digest and the `CR-73.5` timing. X6's open list
   is unchanged: `CR-34.5` and `CR-62.4` (Florian), `CR-37.3`, `CR-38.1`, `CR-73.5`, `CR-85.1`, `CR-85.2`.
+
+## Iteration 173 — 2026-09-22 21:40 → ~22:25 UTC (claude-opus, work): "1 offers", and D172's owed non-claude sign-off
+
+- **Why these items.** Every CR row is still blocked on Florian (`CR-34.5`, `CR-62.4`), on a source (`CR-37.2` Lumina
+  pause, `CR-37.3`) or on tomorrow's 05:17 unattended run (`CR-38.1`, `CR-73.5`, `CR-85.1`, `CR-85.2`). Two things were
+  unblocked: the sign-off iteration 172 owed to a non-claude-opus engine, and a defect found by reading the product's own
+  numbers — a count that reads "1 offers". Codex/ChatGPT is at its usage limit until 28 Sep, so the sign-off route had to
+  be a non-codex one. Only writer in this checkout (the three other `claude -p` processes run in `~/jobs/`).
+
+- **D173.1 (`4d616cf3`) — an English count never reads "1 offers".** 194 of the 863 published models carry exactly one
+  offer, so their model page said "· 1 offers" in the subtitle and "Token offers by platform · 1 offers" over the route
+  panel; seven providers offer exactly one catalog model ("1 models"); `critpt::snapshot-2026-09-10` opens on its single
+  matched row and said "1 results"; a category group with one benchmark said "1 benchmarks". The same shape sat in the
+  value map, the detailed radar, the shortlist strip, the matrix model picker, the charts table, the pick-from-chart
+  label, the filter sheet's "Show N models" button and the benchmark sheet's two basis sentences — **26 call sites in 15
+  files**, everywhere a number directly governs the noun it counts. `lib/format.ts` gains
+  `counted(n, singular, plural?)` and those surfaces take their noun from it. Two sentences needed verb agreement as
+  well ("1 of 1 published result **is** matched", "1 of 1 value **is an** announced, chart-read figure"); above one the
+  wording is byte-identical, so `CR-127.4`'s live check for "2 of 2 values are announced, chart-read figures (‡)" still
+  reads exactly what it read. No number, no data and no layout changed.
+- **Checked and deliberately left alone** (the count cannot be one with today's data, so a conditional would be
+  untestable): benchmark evidence's `sampleSize` (smallest published sample is 48), the Benchmaxxing report's cohort
+  sizes (`BENCHMAXX_PAIR_MIN_MODELS` = 10), the sheet's "N of 460 registered benchmark versions" and About's tier-board
+  count (the governing noun is the total, never one), and the publication-scope formula, whose counts are fixed at 8
+  runs — that one *was* converted anyway, because it costs nothing and a future board may publish a single run.
+- **Also re-checked, not a defect.** A model page can read "1 offer" in the subtitle and "0 offers" in the panel below:
+  the subtitle counts what the model publishes, the panel counts what the *active global filters* allow, and its own
+  sentence says so. That is the same correct behaviour iteration 172 recorded for `pareto::default`. The verifier
+  therefore tests the panel on `grok-4::default`, whose single offer survives the default privacy filter.
+- **Tests.** `test/counted-plural.test.mjs` (5 tests) lifts `counted()` out of `lib/format.ts` and runs it, evaluates the
+  two agreeing sentences at n = 1 and n > 1, and scans the ten changed files for the exact shape the bug had, so a
+  reintroduced `{n} models` fails. Each assertion was checked to fail on its own mutation (helper made always-plural →
+  3 failures; the model page restored to the bug → 3; the sheet's plural branch reworded → 1). The negative scan found
+  two call sites I had missed (`{matching.length} models`, the comparison-metric option label) — both fixed before the
+  commit. The four existing source pins (`CR-75.2`, `CR-80.2`, `F-110`, `F-156`) were re-pointed at the new expression
+  rather than re-spelled around it.
+- **Gates (tree at the commit):** `npm test` 1132 tests / **1131 pass / 0 fail / 1 skip**; `npx tsc --noEmit -p .` clean;
+  `npm run build` rc 0; `node scripts/build-dataset.mjs` 863 models / 669 families / 94 providers / 2,976 offers with
+  **no data diff** (the two generated timestamps only, restored).
+- **Live (claude-opus, implementer).** `ops/ux-2026-09-12/bin/verify-iter173.mjs` at `4d616cf3`, after the 60 s
+  switchover wait: **59/59 per host** (`/opt/benchmarkheaven/state/ux-evidence/iter173/{canonical,legacy}/`). It first
+  proves from the public API that the counts really are one (`grok-4::default` `offer_count` 1, a provider directory row
+  reading 1, `critpt` one matched row of 13 published), then at 1440×1000 and 390×844 in both themes reads the singular
+  back: "· 1 offer", "Token offers by platform · 1 offer", "1 offer within the active global filters", "1 result",
+  "1 model", and on every page checked asserts that **no** visible text matches `1 <plural noun>`. No page error, no
+  horizontal overflow. A separate 20-page sweep of each host (`scan-plurals.mjs`, `<details>` forced open,
+  visible text only) returns **zero** occurrences on both hosts; the one earlier hit, "Terminal-Bench 2.1 tasks" on
+  `/about`, was a version number, and the regex now requires the 1 not to follow a digit or a dot. Being the
+  implementer, this iteration cannot set its own row `verified`.
+
+- **D172.1–D172.3 signed off by a non-claude-opus engine and promoted to `verified`.** OpenRouter's free `nex-n2.5-pro`
+  refused, so the delegation fell back to **Kimi K3 (`chutes/moonshotai/Kimi-K3-TEE`)** — non-claude, not the
+  implementer — with a read-only packet and no access to this checkout (it ran in `/tmp/iter173-signoff`). It re-ran
+  `verify-iter172.mjs` itself: **77/77 on each host**; and it checked the three claims against primary sources rather
+  than our files, returning **VERDICT: SIGN-OFF** with quotes and URLs. **I re-checked its evidence before accepting it**
+  (a free worker's claim never ships unverified): its Unbiased quotes are in the capture it saved — "We are headquartered
+  in the United States and may use service providers that operate in other countries", "Circuit & Chisel, Inc.",
+  "268 Post Road STE 200 PMB 586312, Fairfield, CT 06824", "laws of the State of Delaware", and on the home page "runs
+  several models on your request" / "keeps the best answer"; Cognition's own launch post says SWE-1.7 "is available today
+  in Devin (Web, Desktop, and CLI) via Cerebras" and offers no weights, and the Hugging Face API confirms author
+  `Cognition` has **0** models and `cognition-ai` exactly one unrelated one (`cognition-ai/Kevin-32B`); Meta's research
+  post announces Muse Spark 1.3 "with max reasoning". The live `/api/models` rows read `Unbiased`, `Cognition AI`,
+  `Meta`, all `open_weights: false`. Packet, verdict, captures and both `verification.json` files are under
+  `/opt/benchmarkheaven/state/ux-evidence/iter173/d172-signoff-kimi/`.
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| D173.1 | implemented | `4d616cf3`; `lib/format.ts`; `test/counted-plural.test.mjs`; `ops/ux-2026-09-12/bin/verify-iter173.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter173/` | 26 counted surfaces in 15 files read as English at n = 1; the plural wording above one is unchanged. 59/59 per host and a zero-hit 20-page sweep (implementer). Needs a non-claude-opus sign-off. |
+
+- **Owed to a non-claude-opus engine:** a sign-off on `D173.1` (re-run `verify-iter173.mjs` on both hosts), on top of the
+  `CR-127.1`–`.4` sign-off iteration 171 left. Kimi K3 works for this when codex is unavailable, provided the packet is
+  bounded, read-only and run outside this checkout.
+- **Next.** Tomorrow's 05:17 daily is the first unattended run after `CR-127`, `D172` and `D173`; none of the three
+  touches data, so the receipt should be unchanged except for the four sources that could not approve a protocol while
+  OpenRouter was at 402 — `aa-benchmark-fields`, `livebench::2026-06-25`, `matharena-brokenarxiv::2026-06`,
+  `vulcanbench-frontier::4` — plus the `CR-38.1` publication receipt, the `CR-85.1` digest and the `CR-73.5` timing.
+  X6's open list is unchanged: `CR-34.5` and `CR-62.4` (Florian), `CR-37.3`, `CR-38.1`, `CR-73.5`, `CR-85.1`, `CR-85.2`.
