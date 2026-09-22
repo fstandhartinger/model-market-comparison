@@ -6880,8 +6880,48 @@ correct by accident rather than by rule, so the rule is now written down (below)
   (27 vendor claims, 67 measured). Screenshot read: "Terminal-Bench v4.0 · Claude Code in --bare mode → 42.0%† /
   developer's claim", measured rows unchanged with their bars.
 
+**Live (claude-opus, implementer):** both hosts served `5618579c` at 20:35 UTC (canonical 20:35:05, legacy ≈ 20:35:2x);
+after the 60 s switchover wait `verify-cr-127.mjs` **25/25 per host**
+(`/opt/benchmarkheaven/state/ux-evidence/cr127/{canonical,legacy}/`): every collapsed cell renders its own basis
+(27 vendor claims and 67 measured cells per context, checked against the API payload, in all four viewport/theme
+combinations), no tinted cell is anything but measured, the legend is collapsed and carries the † line, no horizontal
+overflow, 0 page errors. Screenshots read on both hosts ("Terminal-Bench v4.0 · Claude Code in --bare mode → 42.0 %† /
+developer's claim"). Being the implementer, this iteration cannot set these rows `verified`; a non-claude-opus engine
+owes the sign-off.
+
 | ID | Status | Evidence | Note |
 |---|---|---|---|
-| CR-127.1 | in-progress | `test/cr-127-compare-basis.test.mjs`; `ops/ux-2026-09-12/bin/verify-cr-127.mjs`; `/tmp/cr127-local/` | † with title and screen-reader text on a collapsed vendor-claim cell. Awaiting deployment and both-host verification. |
-| CR-127.2 | in-progress | same | "developer's claim" instead of an empty bar track; percentile gated on a measured basis. Awaiting deployment and both-host verification. |
-| CR-127.3 | in-progress | same | Compare legend explains †. Awaiting deployment and both-host verification. |
+| CR-127.1 | implemented | `5618579c`; `test/cr-127-compare-basis.test.mjs`; `ops/ux-2026-09-12/bin/verify-cr-127.mjs`; `/opt/benchmarkheaven/state/ux-evidence/cr127/{canonical,legacy}/` | † with title and screen-reader text on a collapsed vendor-claim cell. 25/25 per host (implementer); needs a non-claude-opus sign-off. |
+| CR-127.2 | implemented | same | "developer's claim" instead of an empty bar track; percentile gated on a measured basis. 25/25 per host (implementer); needs a non-claude-opus sign-off. |
+| CR-127.3 | implemented | same | Compare legend explains †. 25/25 per host (implementer); needs a non-claude-opus sign-off. |
+
+### CR-127.4 — the model page's benchmark sheet was showing a preliminary value as a bare number
+
+Found while checking which other surfaces carry the basis. CR-60.2's rule — "every surface that shows a preliminary
+value also marks it" — was written for the three *table* components (`BenchmarkMatrix`, `SimpleBenchmarks`,
+`BenchmarkCompare`), and its test enumerates exactly those three. The model page's benchmark sheet renders values too,
+and it was missed: `/models/union-alpha::default` served **52.0 %** and **73.0 %** with no ‡ and the bare words
+"no percentile", so the two chart-read figures read exactly like measured results. Confirmed live on the canonical host
+before the fix (the flight payload spells `"basis":"preliminary"` on both rows).
+
+- The sheet's row renderer (`BenchmarkSheetLazy`) now carries ‡ with its own title and a screen-reader equivalent, and
+  says **"announced value"** where a measured row shows its percentile (it already said "developer's claim" for a
+  vendor row — preliminary fell through to the generic branch). `percentileFor()` ranks measured rows only, so such a
+  row already drew no bar; that half was correct.
+- The sheet head gained the ‡ counterpart of its existing † line (`data-bh-sheet-preliminary-line`).
+- `SimpleBenchmarks` renders both marks but, unlike its Advanced sibling `BenchmarkMatrix`, gave neither a `.sr-only`
+  equivalent — a `title` on a `<sup>` is not announced, so on the Simple view the basis was inaudible. Both marks now
+  carry the same wording the Advanced matrix uses.
+- **Tests:** `test/cr-60-union-alpha-preliminary.test.mjs` grows the surface list to four components, pins the sheet's
+  mark, its "announced value" branch and the head line, requires both marks to be announced in both matrix components,
+  and adds a probe proving Union Alpha's rows really reach the sheet as `preliminary` with a null percentile — without
+  it the source guard could pass on a sheet that never sees one. `test/fable-pass27.test.mjs` pinned the old
+  no-percentile ternary's exact text; F-146's rule is about what a *vendor* row says, so that pin now reads the
+  expression and asserts the mapping instead of one spelling.
+- **Gates (tree before the commit):** `npm test` 1119 tests / 1118 pass / 0 fail / 1 skip, `npx tsc --noEmit -p .`
+  clean, `npm run build` rc 0. `ops/ux-2026-09-12/bin/verify-cr-127-4.mjs` **33/33** locally against the production
+  build; screenshot read.
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| CR-127.4 | in-progress | `test/cr-60-union-alpha-preliminary.test.mjs`; `test/fable-pass27.test.mjs`; `ops/ux-2026-09-12/bin/verify-cr-127-4.mjs`; `/tmp/cr127-4-local/` | ‡ on the model page's sheet, "announced value", the head's ‡ line, and audible marks in both matrix components. Awaiting deployment and both-host verification. |

@@ -31,7 +31,15 @@ test('F-148: the runner-disagreement footnote is two short sentences; each runne
 });
 
 test("F-146 follow-up: a vendor row says developer's claim where a measured row shows its percentile — once, not beside 'no percentile'", () => {
-  assert.match(sheet, /\{a\.basis === 'self_reported' \? "developer's claim" : 'no percentile'\}/);
+  // CR-127.4 (2026-09-22) added a third arm for a preliminary row, which used to fall through to the
+  // bare 'no percentile'. F-146's rule is about what a *vendor* row says, so this reads the expression
+  // rather than one spelling of it: the two mappings F-146 fixed must still hold.
+  const expr = sheet.match(/\{(a\.basis === 'self_reported'[^{}]*)\}\{a\.lowSample/)?.[1];
+  assert.ok(expr, 'the no-percentile label is still chosen from the row basis');
+  const label = (basis) => new Function('a', `return (${expr});`)({ basis });
+  assert.equal(label('self_reported'), "developer's claim");
+  assert.equal(label('measured'), 'no percentile');
+  assert.equal(label('preliminary'), 'announced value');
   assert.match(sheet, /\{a\.pct != null && <span className="bh-muted ml-1 text-xs font-normal">developer&apos;s claim<\/span>\}/, 'the trailing words appear only when a bar is shown instead');
 });
 

@@ -68,9 +68,12 @@ export function SheetRows({ modelId, rows }: { modelId: string; rows: SheetRow[]
           <span className="flex min-w-0 items-center gap-2">
             {a.pct != null
               ? <><span className="h-1.5 min-w-0 flex-1 overflow-hidden rounded-full bg-[rgb(var(--line)/.5)]" aria-hidden="true"><span className="block h-full rounded-full bg-accent" style={{ width: `${Math.max(2, a.pct)}%` }} /></span><span className="w-7 text-right text-xs tabular-nums text-gray-400" title="Percentile among models measured on this benchmark">{Math.round(a.pct)}</span></>
-              : <span className="bh-muted text-xs">{a.basis === 'self_reported' ? "developer's claim" : 'no percentile'}{a.lowSample ? ' · low sample' : ''}</span>}
+              : <span className="bh-muted text-xs">{a.basis === 'self_reported' ? "developer's claim" : a.basis === 'preliminary' ? 'announced value' : 'no percentile'}{a.lowSample ? ' · low sample' : ''}</span>}
           </span>
-          <span className="text-right font-semibold tabular-nums">{a.value ?? '—'}{a.basis === 'self_reported' && <><sup className="bh-muted" title="Self-reported by the developer">†<span className="sr-only"> self-reported by the developer</span></sup>{a.pct != null && <span className="bh-muted ml-1 text-xs font-normal">developer&apos;s claim</span>}</>}</span>
+          {/* CR-127.4: a preliminary value reached this sheet unmarked — CR-60.2 was written for the three
+              table components and the model page's sheet was missed. `percentileFor` ranks measured rows only,
+              so such a row already has no bar; it now also carries the ‡ the rest of the site uses. */}
+          <span className="text-right font-semibold tabular-nums">{a.value ?? '—'}{a.basis === 'self_reported' && <><sup className="bh-muted" title="Self-reported by the developer">†<span className="sr-only"> self-reported by the developer</span></sup>{a.pct != null && <span className="bh-muted ml-1 text-xs font-normal">developer&apos;s claim</span>}</>}{a.basis === 'preliminary' && <sup className="bh-muted" title="Preliminary: announced, read off a chart in a launch post, not independently measured. Shown only; it never enters a score, a ranking or a percentile">‡<span className="sr-only"> preliminary, not independently measured</span></sup>}</span>
           <span className="bh-muted hidden text-right text-xs tabular-nums md:block">{a.date}</span>
         </summary>} head={
           <p className="bh-muted text-xs">

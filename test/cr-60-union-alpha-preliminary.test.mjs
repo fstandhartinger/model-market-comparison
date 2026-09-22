@@ -12,7 +12,8 @@ import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { gunzipSync } from 'node:zlib';
 import { buildBenchmarkMatrix, rowWinners, rowOutliers, rowBars } from '../lib/benchmark-matrix.mjs';
-import { buildBenchmarkView } from '../lib/benchmark-view.mjs';
+import { buildBenchmarkView, latestScores } from '../lib/benchmark-view.mjs';
+import { percentileFor } from '../lib/benchmax.mjs';
 
 const MODEL = 'union-alpha::default';
 const MANUAL_FILE = 'data/raw/benchmarks/manual-observations.json';
@@ -256,8 +257,10 @@ test('the Compare table denies a preliminary value a percentile, a bar and the b
 });
 
 test('every surface that shows a preliminary value also marks it', () => {
-  // Three components render benchmark values; all three must carry the ‡ and say what it means.
-  for (const file of ['components/BenchmarkMatrix.tsx', 'components/SimpleBenchmarks.tsx', 'components/BenchmarkCompare.tsx']) {
+  // CR-127.4 (2026-09-22): this list was written for the three table components and missed the model
+  // page's benchmark sheet, which was rendering Union Alpha's 52.0% and 73.0% as bare numbers — the
+  // probe below proves those rows really do reach it. `BenchmarkSheetLazy` is the sheet's row renderer.
+  for (const file of ['components/BenchmarkMatrix.tsx', 'components/SimpleBenchmarks.tsx', 'components/BenchmarkCompare.tsx', 'components/BenchmarkSheetLazy.tsx']) {
     const src = readFileSync(new URL(`../${file}`, import.meta.url), 'utf8');
     assert.match(src, /‡/, `${file} renders the preliminary mark`);
     assert.match(src, /preliminary/, `${file} explains the mark`);
@@ -269,6 +272,31 @@ test('every surface that shows a preliminary value also marks it', () => {
   const evidence = readFileSync(new URL('../components/BenchmarkEvidence.tsx', import.meta.url), 'utf8');
   assert.match(evidence, /row\.basis === 'preliminary'/, 'the evidence panel special-cases preliminary');
   assert.match(evidence, /Chart-read: announced in a launch post/, 'the evidence panel spells out chart-read');
+  const sheet = readFileSync(new URL('../components/BenchmarkSheetLazy.tsx', import.meta.url), 'utf8');
+  assert.match(sheet, /a\.basis === 'preliminary' && <sup/, "the model page's benchmark sheet carries the mark");
+  assert.match(sheet, /a\.basis === 'preliminary' \? 'announced value'/, 'and says why the row has no percentile');
+  assert.match(readFileSync(new URL('../components/BenchmarkSheet.tsx', import.meta.url), 'utf8'),
+    /data-bh-sheet-preliminary-line/, 'the sheet head explains ‡ the way it already explains †');
+  // Both marks must be audible, not only hoverable: a `title` on a <sup> is not announced.
+  for (const [file, src] of [['components/SimpleBenchmarks.tsx', readFileSync(new URL('../components/SimpleBenchmarks.tsx', import.meta.url), 'utf8')],
+    ['components/BenchmarkMatrix.tsx', readFileSync(new URL('../components/BenchmarkMatrix.tsx', import.meta.url), 'utf8')]]) {
+    assert.match(src, /†<span className="sr-only"> self-reported by the developer<\/span>/, `${file}: † is announced`);
+    assert.match(src, /‡<span className="sr-only"> preliminary, not yet independently measured<\/span>/, `${file}: ‡ is announced`);
+  }
+});
+
+test('the model page really does render Union Alpha\'s preliminary rows', () => {
+  // Without this the guard above could pass on a sheet that never sees a preliminary row.
+  const view = buildBenchmarkView(ds);
+  const rows = view.axes
+    .filter((a) => a.scores.some((r) => r.modelId === MODEL))
+    .map((a) => { const own = a.scores.filter((r) => r.modelId === MODEL); return { name: a.name, shown: latestScores(own)[0] ?? own[0] }; });
+  assert.equal(rows.length, ROWS.length, `the sheet shows ${ROWS.length} rows for ${MODEL}`);
+  for (const r of rows) assert.equal(r.shown.basis, 'preliminary', `${r.name} reaches the sheet as a preliminary value`);
+  // …and `percentileFor` ranks measured rows only, so the sheet's bar is already absent for them.
+  for (const axis of view.axes.filter((a) => a.scores.some((r) => r.modelId === MODEL))) {
+    assert.equal(percentileFor(axis, MODEL), null, `${axis.name}: a preliminary row takes no percentile`);
+  }
 });
 
 // F-123 (Fable pass 23, found live): /benchmarks and the Simple Benchmarks section drew a data bar behind
