@@ -273,6 +273,13 @@ function guessOrg(key) {
   if (key.startsWith("magnum")) return "Anthracite";
   if (key.startsWith("remm")) return "Undi95";
   if (key.startsWith("mythomax")) return "Gryphe";
+  // D172.2: two board-only families used to read "Other". Muse Spark is Meta's (OpenRouter names every
+  // catalog row "Meta: Muse Spark …"; AA scores muse-spark-1.3::max as Meta) — the board's "Max" product
+  // name is what keeps this row in its own family. SWE-1.x is Cognition's (cognition.com/blog/swe-1-7:
+  // "Today, we're launching SWE-1.7, the most capable model we've trained so far"), and the board scores it
+  // under Cognition's own Devin CLI harness.
+  if (key.startsWith("muse-spark")) return "Meta";
+  if (key.startsWith("swe-1.")) return "Cognition AI";
   return "Other";
 }
 

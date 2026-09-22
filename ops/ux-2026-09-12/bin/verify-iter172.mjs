@@ -13,6 +13,8 @@ const OUT = process.argv[3] || '/tmp/verify-iter172';
 await fs.mkdir(OUT, { recursive: true });
 const REV = (await (await fetch(`${BASE}/api/meta`)).json()).revision;
 const MODEL = 'pareto::default';
+// D172.2: every row that used to read "Other" as its lab, with the lab its own maker states.
+const LABS = { 'pareto::default': 'Unbiased', 'swe-1.7-lightning-max::default': 'Cognition AI', 'muse-spark-1.3-max::default': 'Meta' };
 const checks = [];
 const check = (name, ok, detail = '') => checks.push({ name, ok: !!ok, detail });
 const settle = (p) => p.waitForLoadState('networkidle').catch(() => {}).then(() => p.waitForTimeout(1200));
@@ -37,6 +39,14 @@ const models = await get('/api/models');
 const list = models.models ?? models.data ?? models;
 const pareto = (Array.isArray(list) ? list : []).find((m) => m.id === MODEL);
 check('API: Pareto is attributed to Unbiased, not "Other"', pareto?.org === 'Unbiased', pareto && { id: pareto.id, org: pareto.org });
+// D172.2: the two board-only rows that named no lab either.
+for (const [id, org] of Object.entries(LABS).filter(([id]) => id !== MODEL)) {
+  const m = (Array.isArray(list) ? list : []).find((x) => x.id === id);
+  check(`API: ${id} is attributed to ${org}`, m?.org === org, m && { id: m.id, org: m.org });
+}
+check('API: no published model is left without a lab ("Other")',
+  (Array.isArray(list) ? list : []).every((m) => m.org !== 'Other'),
+  (Array.isArray(list) ? list : []).filter((m) => m.org === 'Other').map((m) => m.id));
 const paretoOffers = pareto?.offers ?? pareto?.cheapest_offers ?? [];
 check('API: its only offer is the Unbiased route and it does not pass the EU filter',
   paretoOffers.length > 0 && paretoOffers.every((o) => o.provider === 'Unbiased' && o.eu_hosted === false),
@@ -75,15 +85,18 @@ try {
       const overflow = await p.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
       check(`${tag}: provider explorer has no horizontal overflow`, overflow <= 1, String(overflow));
 
-      await p.goto(`${BASE}/models/${encodeURIComponent(MODEL)}?v=${Date.now()}`, { waitUntil: 'domcontentloaded' });
-      await settle(p);
-      const model = await p.locator('main').innerText().catch(() => '');
-      check(`${tag}: the model page names the lab, not "Other"`, /Unbiased/.test(model) && !/^Other\b/m.test(model), model.split('\n').slice(0, 6).join(' | '));
-      const description = await p.locator('meta[name="description"]').getAttribute('content').catch(() => '');
-      check(`${tag}: the page description reads "Pareto by Unbiased"`, /Pareto by Unbiased/.test(description ?? ''), (description ?? '').slice(0, 90));
-      await p.screenshot({ path: `${OUT}/${tag}-model.png` }).catch(() => {});
-      const overflow2 = await p.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
-      check(`${tag}: model page has no horizontal overflow`, overflow2 <= 1, String(overflow2));
+      let overflow2 = 0;
+      for (const [id, org] of Object.entries(LABS)) {
+        await p.goto(`${BASE}/models/${encodeURIComponent(id)}?v=${Date.now()}`, { waitUntil: 'domcontentloaded' });
+        await settle(p);
+        const model = await p.locator('main').innerText().catch(() => '');
+        check(`${tag}: ${id} names its lab (${org}), not "Other"`, model.includes(org) && !/^Other\b/m.test(model), model.split('\n').slice(0, 6).join(' | '));
+        const description = await p.locator('meta[name="description"]').getAttribute('content').catch(() => '');
+        check(`${tag}: ${id}'s page description reads "… by ${org}"`, new RegExp(`by ${org}`).test(description ?? ''), (description ?? '').slice(0, 90));
+        await p.screenshot({ path: `${OUT}/${tag}-${id.split('::')[0]}.png` }).catch(() => {});
+        overflow2 = Math.max(overflow2, await p.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth));
+      }
+      check(`${tag}: no model page has horizontal overflow`, overflow2 <= 1, String(overflow2));
       check(`${tag}: no page errors`, errors.length === 0, errors.slice(0, 3));
     } finally { await c.close(); }
   }
