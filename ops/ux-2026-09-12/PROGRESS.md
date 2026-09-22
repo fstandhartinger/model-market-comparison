@@ -6719,3 +6719,42 @@ Seeded by iteration 159 (claude-opus, 2026-09-21 23:40 UTC): the release shipped
 | D168.2 | verified | `data/lumina-feed-policy.json`; `data/SCRAPING.md`; same codex logs | 7 Lumina families resolved (1 in_registry, 6 excluded with source evidence); CharXiv reverted to planned after review. codex-luna CLAIM E CONFIRMED on re-review. |
 | D168.3 | verified | `data/benchmark-caveats.json`; live `/api/benchmark-matrix` (`judged` field); same codex log | Judged tag for VitaBench and Surge GDP.pdf, Chartography considered-not-judged. codex-luna CLAIM F CONFIRMED on both hosts. |
 | D168.4 | implemented | `ops/ux-2026-09-12/bin/check-iter168-react418.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter168/react418/` | Clean-context console check: 0 errors on both hosts over 24 contexts; the 091002Z gate's #418 was shared-profile noise. Implementer-run only — a gate may rerun the script. |
+
+### Fable pass 30 — 2026-09-22 ~10:25–11:05 UTC (claude-fable, design authority): what changed since pass 29
+
+Full text: `DESIGN-DIRECTIVES.md` ("Verdict on the live site — pass 30", "Decisions in pass 30", F-157–F-160 completed, Done log rows F-157–F-160).
+
+- **Scope (Florian: Fable sparingly):** the surfaces that changed after pass 29 — `/jev-models` after JevBench v1.3.0 (CR-118, CR-115/116),
+  the noindex `/jev-models/multimodal-preview` (CR-119), the MiMo-V2.6-Pro model page (CR-117.3), and the one-benchmark rankings for the
+  MathArena, ResearchClawBench and other boards added by iterations 157–168. Judged live at `00aa281f` (dataset 10:19 UTC), 1440/390 × light/dark,
+  109 shots + `metrics.json` in `/opt/benchmarkheaven/state/ux-evidence/fable-20260922-pass30/canonical/` (`bin/shoot-fable-pass30.mjs`, the
+  script an earlier Fable session left untracked at 02:43 UTC without a verdict; its shots are kept as `canonical-0243-aborted/`). 0 page errors,
+  no overflow. Simple / Advanced / Guided / Benchmaxxing / model page re-shot as quick views — unchanged since pass 29 apart from the data.
+- **At the bar:** CR-118 as specified (Official subtitle states the chance-corrected rule and the penalty; method panel carries the formula;
+  phone chart unchanged in form); CR-119 as specified (noindex, unlinked, amber warning in both themes, real and synthetic items apart, licensed
+  examples with source and licence, text-only systems "not eligible — not zero"); CR-117.3 (17-of-18 claims line, Cyber Bench conflict in the
+  row's disclosure); the new boards open with F-156's sentence and checkbox count; no glyph misuse.
+- **Fixed by Fable in this pass (four surgical edits, two files, no numbers):** **F-157** the CR-118.4 "What changed in the score" note moves
+  from between the page head and the board (first bar at 1,480 px on a phone; the note duplicated the Official subtitle on desktop) to the
+  board's first child, before "What the run says" — wording and `data-bh-jev-score-change` unchanged; **F-158** the preview's Calibration
+  column (six cells of "Not measured", stated once above the table already) is dropped, the table's minimum width falls to 780 px, and the
+  banner's duplicate "PREVIEW" eyebrow goes (the required sentence stays verbatim); **F-159** the preview's "All real" cell draws the
+  real-item share as a bar (`data-bh-mm-real`, 2 % floor, `md:w-56` column) — a ranking without a chart was the one graphical gap; **F-160** the
+  JevBench eyebrow becomes a `<div>` because `CustomEvaluationOffer` mounts a `<div>` toast into it (dev builds logged the nested-`<p>` error
+  after 6 s; pre-existing since CR-99, production strips the warning).
+- **Decisions:** the CR-118.4 note keeps its wording and moves below the board (placement is design; the ranking is the key message); three rules
+  added to the design-system notes (a column whose every cell says the same thing is a sentence; every ranking draws its headline number; an
+  explanatory note follows what it explains). X4 still met for the default views.
+- **Gates (tree before the commit):** build-dataset 844/664/95/2888 (timestamp-only diff restored), npm test 1081 / 1081 pass / 0 fail
+  (`/tmp/fable30-npm-test.log`), tsc clean; `test/fable-pass30.test.mjs` 4/4; `verify-fable-pass30-design.mjs` **40/40** on a local `next dev`
+  (`…/pass30/local/`, includes a 9 s console check with the toast open).
+- **Live:** after the deploy the same verifier runs on both hosts (`…/pass30/live-canonical/`, `…/pass30/live-legacy/`) — result recorded below.
+- **For the next non-Fable engine:** re-run `bin/verify-fable-pass30-design.mjs` on both hosts and flip the four Done-log rows to `verified`;
+  `verify-cr-118.mjs` and `verify-cr-119`-style checks still apply unchanged.
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| F-157 | implemented | pass-30 commit; `test/fable-pass30.test.mjs`; `ops/ux-2026-09-12/bin/verify-fable-pass30-design.mjs`; `/opt/benchmarkheaven/state/ux-evidence/fable-20260922-pass30/` | Note follows the board. Fable-implemented; needs a non-Fable live re-run. |
+| F-158 | implemented | same | No all-"Not measured" column; banner is the one sentence. Fable-implemented; needs a non-Fable live re-run. |
+| F-159 | implemented | same | Preview ranking draws its share as a bar. Fable-implemented; needs a non-Fable live re-run. |
+| F-160 | implemented | same | Eyebrow is a `<div>`; no nested-`<p>` console error on dev. Fable-implemented; needs a non-Fable live re-run. |

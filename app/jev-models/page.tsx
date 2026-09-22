@@ -81,7 +81,8 @@ export default async function JevModelsPage() {
   const credits = all.filter((r) => !r.key.endsWith('-tools')).sort((a, b) => a.display.localeCompare(b.display));
   return <>
     <header className="bh-page-head">
-      <p className="bh-eyebrow flex flex-nowrap items-center"><span><span className="sm:hidden">JevBench v1.3.0</span><span className="hidden sm:inline">JevBench v1.3.0 · our own benchmark</span></span><CustomEvaluationOffer /></p>
+      {/* F-160 (Fable pass 30): the eyebrow is a div — CustomEvaluationOffer mounts a <div> toast inside it after 6 s, which is invalid inside a <p>. */}
+      <div className="bh-eyebrow flex flex-nowrap items-center"><span><span className="sm:hidden">JevBench v1.3.0</span><span className="hidden sm:inline">JevBench v1.3.0 · our own benchmark</span></span><CustomEvaluationOffer /></div>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">Jev-class models</h1>
       <p className="mt-3 max-w-3xl text-lg" data-bh-jev-own>JevBench is <b>Benchmark Heaven&apos;s own benchmark</b> for Jev-class decision models: state and a bounded rubric in, a typed answer out.</p>
       <p className="bh-muted mt-2 max-w-3xl">Version 1.3.0 measures {all.length} systems on the unchanged {view.decisions} decisions, including {view.tierCounts.hard} hard ones, and ranks them by the <b className="text-gray-200">JevBench Score</b>. Built and run by us, not collected from someone else&apos;s leaderboard; the results describe the tested configurations, not every application.</p>
@@ -93,12 +94,12 @@ export default async function JevModelsPage() {
       </p>
     </header>
 
+    <JevModelsV12Board view={view} tasks={tasks}>
+    {/* F-157 (Fable pass 30): the CR-118.4 note follows the board it explains — the ranking is the key message, the note is its footnote. */}
     <aside className="bh-panel mt-6 max-w-4xl p-4 text-sm" data-bh-jev-score-change>
       <h2 className="font-semibold">What changed in the score</h2>
       <p className="bh-muted mt-1">A system that is cheap and fast but barely better than guessing could rank high; intelligence is now measured above chance, and systems below half-way get a growing penalty. The tasks, Calibration, Speed, Cost and ranking eligibility are unchanged.</p>
     </aside>
-
-    <JevModelsV12Board view={view} tasks={tasks}>
     {lead && <section className="mt-8 max-w-4xl" aria-labelledby="jev12-headline">
       <h2 id="jev12-headline" className="text-xl font-semibold">What the run says (JevBench Score)</h2>
       <ul className="mt-2 list-disc space-y-1.5 pl-5 text-[15px]" data-bh-jev12-findings>

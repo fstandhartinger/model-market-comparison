@@ -16,8 +16,8 @@ export default async function MultimodalPreviewPage() {
   const a: any = await readMultimodalPreview();
   return <>
     <div className="mb-6 rounded-xl border-2 border-amber-500 bg-amber-100 px-5 py-4 text-amber-950 shadow-sm dark:bg-amber-950 dark:text-amber-100" role="note" data-bh-mm-preview-banner>
-      <p className="text-sm font-extrabold uppercase tracking-[.12em]">Preview</p>
-      <p className="mt-1 text-lg font-bold">Preview — multimodal JevBench, results may change; not part of the JevBench Score</p>
+      {/* F-158 (Fable pass 30): the warning sentence is the label; no second "Preview" eyebrow above it. */}
+      <p className="text-lg font-bold">Preview — multimodal JevBench, results may change; not part of the JevBench Score</p>
     </div>
 
     <header className="bh-page-head max-w-5xl">
@@ -31,12 +31,17 @@ export default async function MultimodalPreviewPage() {
       <h2 id="overall-heading" className="text-2xl font-semibold">Overall real-item ranking</h2>
       <p className="bh-muted mt-2 max-w-4xl text-sm">Ranked by correct answers across the 128 public real items. This is a preview accuracy ranking, not the four-axis JevBench Score. Calibration was not measured because these runs returned labels rather than probability distributions.</p>
       <div className="mt-4 overflow-x-auto rounded-xl border border-line">
-        <table className="w-full min-w-[900px] text-left text-sm" data-bh-mm-overall>
-          <thead><tr><th className="p-3">#</th><th className="p-3">System</th><th className="p-3 text-right">All real</th><th className="p-3 text-right">Intelligence</th><th className="p-3 text-right">Calibration</th><th className="p-3 text-right">Speed</th><th className="p-3 text-right">Cost</th><th className="p-3 text-right">USD / 1,000 image decisions</th></tr></thead>
+        <table className="w-full min-w-[780px] text-left text-sm" data-bh-mm-overall>
+          <thead><tr><th className="p-3">#</th><th className="p-3">System</th><th className="p-3 text-right md:w-56">All real</th><th className="p-3 text-right">Intelligence</th><th className="p-3 text-right">Speed</th><th className="p-3 text-right">Cost</th><th className="p-3 text-right">USD / 1,000 image decisions</th></tr></thead>
           <tbody>{a.systems.map((s: any) => <tr key={s.key} className="border-t border-line">
             <td className="p-3 font-bold">{s.rank}</td><th scope="row" className="p-3 font-semibold">{s.display}</th>
-            <td className="p-3 text-right font-bold tabular-nums">{s.overall.correct}/{s.overall.n} · {pct(s.overall.accuracy)}</td>
-            <td className="p-3 text-right tabular-nums">{one(s.axes.intelligence)}</td><td className="p-3 text-right">Not measured</td>
+            {/* F-159 (Fable pass 30): the share of real items answered correctly is drawn as a bar, so the ranking reads at a glance at every width.
+                F-158: Calibration was not measured for any system — the sentence above says so once; a column of "Not measured" is not a column. */}
+            <td className="p-3 text-right font-bold tabular-nums" data-bh-mm-real={s.overall.accuracy.toFixed(4)}>
+              <span className="whitespace-nowrap">{s.overall.correct}/{s.overall.n} · {pct(s.overall.accuracy)}</span>
+              <span className="mt-1.5 block h-1.5 w-full overflow-hidden rounded-full bg-[rgb(var(--line)/.5)]" aria-hidden="true"><span className="block h-full rounded-full bg-accent" style={{ width: `${Math.max(2, s.overall.accuracy * 100)}%` }} /></span>
+            </td>
+            <td className="p-3 text-right tabular-nums">{one(s.axes.intelligence)}</td>
             <td className="p-3 text-right tabular-nums">{one(s.axes.speed)} <span className="bh-muted">({s.latency_s.toFixed(3)} s)</span></td>
             <td className="p-3 text-right tabular-nums">{one(s.axes.cost)}</td><td className="p-3 text-right tabular-nums" title={s.cost_note}>{money(s.cost_per_1000)}</td>
           </tr>)}</tbody>
