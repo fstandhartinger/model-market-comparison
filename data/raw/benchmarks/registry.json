@@ -15412,6 +15412,374 @@
           "excerpt": "MiMo-V2.6-Pro — Toolathlon-verified: 76.9%; Xiaomi launch appendix snapshot 2026-09-22."
         }
       ]
+    },
+    {
+      "id": "matharena-hmmt::2026-02",
+      "name": "HMMT February 2026 (MathArena)",
+      "version": "2026-02",
+      "version_status": "published",
+      "family": "matharena-hmmt",
+      "category": "Math",
+      "one_sentence_description": "The 33 final-answer problems of the February 2026 Harvard-MIT Mathematics Tournament, one of the largest high-school math competitions in the United States, run by MathArena on the contest problems.",
+      "scoring": {
+        "metric": "Accuracy (average performance on the competition) with a 95% confidence interval (normal approximation)",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Run by MathArena (SRI Lab, ETH Zurich, with INSAIT) on 33 problems. MathArena marks this competition Deprecated: it is kept for the record and no longer gains models, so the board is tagged retired. The 95% interval, cost, token counts and the source's own \"released after competition release\" flag stay in each observation's protocol; a flagged model may have seen the problems. Rows scored partly by item-response-theory estimates are not ingested. Editions are separate identities and never averaged. Secondary benchmark, never a Composite input."
+      },
+      "maintainer": "MathArena (SRI Lab, ETH Zurich; INSAIT)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://matharena.ai/",
+      "publication_urls": [
+        {
+          "url": "https://matharena.ai/",
+          "type": "official_leaderboard",
+          "role": "MathArena leaderboard (competition hmmt--hmmt_feb_2026)"
+        },
+        {
+          "url": "https://matharena.ai/competition_tables/hmmt--hmmt_feb_2026",
+          "type": "official_leaderboard",
+          "role": "The leaderboard page's own table endpoint for this competition"
+        },
+        {
+          "url": "https://matharena.ai/competitions",
+          "type": "official_leaderboard",
+          "role": "Competition list with problem counts, model counts, the Deprecated badge and the competition notes"
+        },
+        {
+          "url": "https://huggingface.co/datasets/MathArena/hmmt_feb_2026",
+          "type": "huggingface",
+          "role": "Problems (MathArena dataset)"
+        },
+        {
+          "url": "https://github.com/eth-sri/matharena",
+          "type": "github",
+          "role": "Evaluation code, MIT"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JSON with a rendered HTML table",
+        "identity_policy": "source_label",
+        "locator": "GET https://matharena.ai/competition_tables/hmmt--hmmt_feb_2026 → JSON field \"table\" (rendered leaderboard): one row per model; value = the \"Accuracy (± 95% CI)\" point estimate in percent; the warning sign after a name is MathArena's \"Model was released after competition release\" flag, kept per row; a row whose accuracy cell is marked data-predicted=\"yes\" (\"Includes estimated scores for questions we did not run\", item response theory) is refused, not ingested.",
+        "version_guard": "The competition table must keep exactly the twelve published leaderboard columns (Rank, Model Name, Provider, Accuracy (± 95% CI), Cost, Output Tokens, Input Tokens, Average Retries, Average Time, Open, Parameters, Active Parameters) and exactly 33 problems in its per-problem grid (MathArena's competitions card for HMMT Feb 2026 reads \"33 problems\"). Another edition or problem count is a different identity; editions are never averaged.",
+        "notes": "robots.txt redirects (308) to a 404, so no rules are published; the site has no terms page. MathArena asks to be cited (arXiv 2605.00674): attribute MathArena and link the leaderboard. Model labels are product names with the setting in parentheses; exact joins come from data/raw/benchmarks/identity-map.json (lib/board-identity.mjs, parseMathArenaLabel). Lumina Bench lists this family (benchlm-hmmtfeb2026) with aggregator copies only; this is the primary board."
+      },
+      "update_cadence": {
+        "source_schedule": "None: MathArena marks the competition Deprecated; the table is kept for the record and is not extended.",
+        "check_recommendation": "Daily with the ordinary MathArena refresh; any change to a deprecated table is a reviewed change."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Computed saturation (CR-38.2) applies on build; no saturation claim is recorded here."
+      },
+      "superseded_by": null,
+      "status": "retained",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://matharena.ai/competitions",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-comps/cbfccbac133ffc3bb7a5.gz",
+          "sha256": "30aa42ecf1aba7ab0a6b3d923d344d4b3eec8ec969c71cf1d0d76037c5a1038a",
+          "fetched_at": "2026-09-22T01:06:51.568448+00:00",
+          "excerpt": "<h3 class=\"card__title\">HMMT Feb 2026</h3> <span class=\"competition-card__badge\">Deprecated</span> </div> <p class=\"card__meta\">"
+        },
+        {
+          "url": "https://matharena.ai/competitions",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-comps/cbfccbac133ffc3bb7a5.gz",
+          "sha256": "30aa42ecf1aba7ab0a6b3d923d344d4b3eec8ec969c71cf1d0d76037c5a1038a",
+          "fetched_at": "2026-09-22T01:06:51.568448+00:00",
+          "excerpt": "The Harvard-MIT Mathematics Tournament (HMMT) is one of the largest and most prestigious high school math competitions in the United States."
+        },
+        {
+          "url": "https://matharena.ai/competition_tables/hmmt--hmmt_feb_2026",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-comps/02223488d1ac9d11e89a.gz",
+          "sha256": "d4c3453a5ac09be13e4272ca126a90879d422fad7f80c2926ba0869e6e424885",
+          "fetched_at": "2026-09-22T01:06:40.291103+00:00",
+          "excerpt": "title=\"Average performance of the model on the competition together with a 95% confidence interval obtained with the normal approximation.\">Accuracy (\\u00b1 95% CI)</th>"
+        }
+      ]
+    },
+    {
+      "id": "matharena-hmmt::2025-11",
+      "name": "HMMT November 2025 (MathArena)",
+      "version": "2025-11",
+      "version_status": "published",
+      "family": "matharena-hmmt",
+      "category": "Math",
+      "one_sentence_description": "The 30 final-answer problems of the November 2025 Harvard-MIT Mathematics Tournament, one of the largest high-school math competitions in the United States, run by MathArena on the contest problems.",
+      "scoring": {
+        "metric": "Accuracy (average performance on the competition) with a 95% confidence interval (normal approximation)",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Run by MathArena (SRI Lab, ETH Zurich, with INSAIT) on 30 problems. MathArena marks this competition Deprecated: it is kept for the record and no longer gains models, so the board is tagged retired. The 95% interval, cost, token counts and the source's own \"released after competition release\" flag stay in each observation's protocol; a flagged model may have seen the problems. Rows scored partly by item-response-theory estimates are not ingested. Editions are separate identities and never averaged. Secondary benchmark, never a Composite input."
+      },
+      "maintainer": "MathArena (SRI Lab, ETH Zurich; INSAIT)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://matharena.ai/",
+      "publication_urls": [
+        {
+          "url": "https://matharena.ai/",
+          "type": "official_leaderboard",
+          "role": "MathArena leaderboard (competition hmmt--hmmt_nov_2025)"
+        },
+        {
+          "url": "https://matharena.ai/competition_tables/hmmt--hmmt_nov_2025",
+          "type": "official_leaderboard",
+          "role": "The leaderboard page's own table endpoint for this competition"
+        },
+        {
+          "url": "https://matharena.ai/competitions",
+          "type": "official_leaderboard",
+          "role": "Competition list with problem counts, model counts, the Deprecated badge and the competition notes"
+        },
+        {
+          "url": "https://huggingface.co/datasets/MathArena/hmmt_nov_2025",
+          "type": "huggingface",
+          "role": "Problems (MathArena dataset)"
+        },
+        {
+          "url": "https://github.com/eth-sri/matharena",
+          "type": "github",
+          "role": "Evaluation code, MIT"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JSON with a rendered HTML table",
+        "identity_policy": "source_label",
+        "locator": "GET https://matharena.ai/competition_tables/hmmt--hmmt_nov_2025 → JSON field \"table\" (rendered leaderboard): one row per model; value = the \"Accuracy (± 95% CI)\" point estimate in percent; the warning sign after a name is MathArena's \"Model was released after competition release\" flag, kept per row; a row whose accuracy cell is marked data-predicted=\"yes\" (\"Includes estimated scores for questions we did not run\", item response theory) is refused, not ingested.",
+        "version_guard": "The competition table must keep exactly the twelve published leaderboard columns (Rank, Model Name, Provider, Accuracy (± 95% CI), Cost, Output Tokens, Input Tokens, Average Retries, Average Time, Open, Parameters, Active Parameters) and exactly 30 problems in its per-problem grid (MathArena's competitions card for HMMT Nov 2025 reads \"30 problems\"). Another edition or problem count is a different identity; editions are never averaged.",
+        "notes": "robots.txt redirects (308) to a 404, so no rules are published; the site has no terms page. MathArena asks to be cited (arXiv 2605.00674): attribute MathArena and link the leaderboard. Model labels are product names with the setting in parentheses; exact joins come from data/raw/benchmarks/identity-map.json (lib/board-identity.mjs, parseMathArenaLabel). Lumina Bench lists this family (benchlm-hmmtnov2025) with aggregator copies only; this is the primary board."
+      },
+      "update_cadence": {
+        "source_schedule": "None: MathArena marks the competition Deprecated; the table is kept for the record and is not extended.",
+        "check_recommendation": "Daily with the ordinary MathArena refresh; any change to a deprecated table is a reviewed change."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Computed saturation (CR-38.2) applies on build; no saturation claim is recorded here."
+      },
+      "superseded_by": null,
+      "status": "retained",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://matharena.ai/competitions",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-comps/cbfccbac133ffc3bb7a5.gz",
+          "sha256": "30aa42ecf1aba7ab0a6b3d923d344d4b3eec8ec969c71cf1d0d76037c5a1038a",
+          "fetched_at": "2026-09-22T01:06:51.568448+00:00",
+          "excerpt": "<h3 class=\"card__title\">HMMT Nov 2025</h3> <span class=\"competition-card__badge\">Deprecated</span> </div> <p class=\"card__meta\">"
+        },
+        {
+          "url": "https://matharena.ai/competitions",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-comps/cbfccbac133ffc3bb7a5.gz",
+          "sha256": "30aa42ecf1aba7ab0a6b3d923d344d4b3eec8ec969c71cf1d0d76037c5a1038a",
+          "fetched_at": "2026-09-22T01:06:51.568448+00:00",
+          "excerpt": "The Harvard-MIT Mathematics Tournament (HMMT) is one of the largest and most prestigious high school math competitions in the United States."
+        },
+        {
+          "url": "https://matharena.ai/competition_tables/hmmt--hmmt_nov_2025",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-comps/aa9287d733e27dde3646.gz",
+          "sha256": "0ae31dc990753dcc7a7cd6bf888d24901d943411c384424d703f03d2e033163a",
+          "fetched_at": "2026-09-22T01:06:43.258897+00:00",
+          "excerpt": "title=\"Average performance of the model on the competition together with a 95% confidence interval obtained with the normal approximation.\">Accuracy (\\u00b1 95% CI)</th>"
+        }
+      ]
+    },
+    {
+      "id": "matharena-apex::2025",
+      "name": "Apex 2025 (MathArena)",
+      "version": "2025",
+      "version_status": "published",
+      "family": "matharena-apex",
+      "category": "Math",
+      "one_sentence_description": "Twelve final-answer problems from 2025 competitions that MathArena selected because strong models of the time failed them; the selection is biased against the four models used to choose it (Grok 4, GPT-5, Gemini 2.5 Pro, GLM 4.5).",
+      "scoring": {
+        "metric": "Accuracy (average performance on the competition) with a 95% confidence interval (normal approximation)",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Run by MathArena (SRI Lab, ETH Zurich, with INSAIT) on 12 problems. MathArena marks this competition Deprecated: it is kept for the record and no longer gains models, so the board is tagged retired. The 95% interval, cost, token counts and the source's own \"released after competition release\" flag stay in each observation's protocol; a flagged model may have seen the problems. Rows scored partly by item-response-theory estimates are not ingested. Editions are separate identities and never averaged. Secondary benchmark, never a Composite input."
+      },
+      "maintainer": "MathArena (SRI Lab, ETH Zurich; INSAIT)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://matharena.ai/",
+      "publication_urls": [
+        {
+          "url": "https://matharena.ai/",
+          "type": "official_leaderboard",
+          "role": "MathArena leaderboard (competition apex--apex_2025)"
+        },
+        {
+          "url": "https://matharena.ai/competition_tables/apex--apex_2025",
+          "type": "official_leaderboard",
+          "role": "The leaderboard page's own table endpoint for this competition"
+        },
+        {
+          "url": "https://matharena.ai/competitions",
+          "type": "official_leaderboard",
+          "role": "Competition list with problem counts, model counts, the Deprecated badge and the competition notes"
+        },
+        {
+          "url": "https://huggingface.co/datasets/MathArena/apex_2025",
+          "type": "huggingface",
+          "role": "Problems (MathArena dataset)"
+        },
+        {
+          "url": "https://github.com/eth-sri/matharena",
+          "type": "github",
+          "role": "Evaluation code, MIT"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JSON with a rendered HTML table",
+        "identity_policy": "source_label",
+        "locator": "GET https://matharena.ai/competition_tables/apex--apex_2025 → JSON field \"table\" (rendered leaderboard): one row per model; value = the \"Accuracy (± 95% CI)\" point estimate in percent; the warning sign after a name is MathArena's \"Model was released after competition release\" flag, kept per row; a row whose accuracy cell is marked data-predicted=\"yes\" (\"Includes estimated scores for questions we did not run\", item response theory) is refused, not ingested.",
+        "version_guard": "The competition table must keep exactly the twelve published leaderboard columns (Rank, Model Name, Provider, Accuracy (± 95% CI), Cost, Output Tokens, Input Tokens, Average Retries, Average Time, Open, Parameters, Active Parameters) and exactly 12 problems in its per-problem grid (MathArena's competitions card for Apex reads \"12 problems\"). Another edition or problem count is a different identity; editions are never averaged.",
+        "notes": "robots.txt redirects (308) to a 404, so no rules are published; the site has no terms page. MathArena asks to be cited (arXiv 2605.00674): attribute MathArena and link the leaderboard. Model labels are product names with the setting in parentheses; exact joins come from data/raw/benchmarks/identity-map.json (lib/board-identity.mjs, parseMathArenaLabel). Lumina Bench lists this family (benchlm-apex) with aggregator copies only; this is the primary board."
+      },
+      "update_cadence": {
+        "source_schedule": "None: MathArena marks the competition Deprecated; the table is kept for the record and is not extended.",
+        "check_recommendation": "Daily with the ordinary MathArena refresh; any change to a deprecated table is a reviewed change."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Computed saturation (CR-38.2) applies on build; no saturation claim is recorded here."
+      },
+      "superseded_by": null,
+      "status": "retained",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://matharena.ai/competitions",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-comps/cbfccbac133ffc3bb7a5.gz",
+          "sha256": "30aa42ecf1aba7ab0a6b3d923d344d4b3eec8ec969c71cf1d0d76037c5a1038a",
+          "fetched_at": "2026-09-22T01:06:51.568448+00:00",
+          "excerpt": "<h3 class=\"card__title\">Apex</h3> <span class=\"competition-card__badge\">Deprecated</span> </div> <p class=\"card__meta\">"
+        },
+        {
+          "url": "https://matharena.ai/competitions",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-comps/cbfccbac133ffc3bb7a5.gz",
+          "sha256": "30aa42ecf1aba7ab0a6b3d923d344d4b3eec8ec969c71cf1d0d76037c5a1038a",
+          "fetched_at": "2026-09-22T01:06:51.568448+00:00",
+          "excerpt": "Apex problems are specifically selected such that Grok 4, GPT-5, gemini-2.5-Pro, and GLM 4.5 perform bad, introducing a bias (see blogpost for details)."
+        },
+        {
+          "url": "https://matharena.ai/competition_tables/apex--apex_2025",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-comps/20b28370d9d7f5a15a19.gz",
+          "sha256": "7b38f01969379d2396300baf4ecce582cae097e227de9438339b8106d4e8f65d",
+          "fetched_at": "2026-09-22T01:06:45.975851+00:00",
+          "excerpt": "title=\"Average performance of the model on the competition together with a 95% confidence interval obtained with the normal approximation.\">Accuracy (\\u00b1 95% CI)</th>"
+        }
+      ]
+    },
+    {
+      "id": "matharena-apex-shortlist::2025",
+      "name": "Apex Shortlist 2025 (MathArena)",
+      "version": "2025",
+      "version_status": "published",
+      "family": "matharena-apex-shortlist",
+      "category": "Math",
+      "one_sentence_description": "47 final-answer problems from 2025 competitions on which at least one of two reference models (Grok 4 Fast, GPT-5 mini) got at least one of four attempts wrong, run by MathArena.",
+      "scoring": {
+        "metric": "Accuracy (average performance on the competition) with a 95% confidence interval (normal approximation)",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Run by MathArena (SRI Lab, ETH Zurich, with INSAIT) on 47 problems. MathArena marks this competition Deprecated: it is kept for the record and no longer gains models, so the board is tagged retired. The 95% interval, cost, token counts and the source's own \"released after competition release\" flag stay in each observation's protocol; a flagged model may have seen the problems. Rows scored partly by item-response-theory estimates are not ingested. Editions are separate identities and never averaged. Secondary benchmark, never a Composite input."
+      },
+      "maintainer": "MathArena (SRI Lab, ETH Zurich; INSAIT)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://matharena.ai/",
+      "publication_urls": [
+        {
+          "url": "https://matharena.ai/",
+          "type": "official_leaderboard",
+          "role": "MathArena leaderboard (competition apex--shortlist_2025)"
+        },
+        {
+          "url": "https://matharena.ai/competition_tables/apex--shortlist_2025",
+          "type": "official_leaderboard",
+          "role": "The leaderboard page's own table endpoint for this competition"
+        },
+        {
+          "url": "https://matharena.ai/competitions",
+          "type": "official_leaderboard",
+          "role": "Competition list with problem counts, model counts, the Deprecated badge and the competition notes"
+        },
+        {
+          "url": "https://huggingface.co/datasets/MathArena/apex-shortlist",
+          "type": "huggingface",
+          "role": "Problems (MathArena dataset)"
+        },
+        {
+          "url": "https://github.com/eth-sri/matharena",
+          "type": "github",
+          "role": "Evaluation code, MIT"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JSON with a rendered HTML table",
+        "identity_policy": "source_label",
+        "locator": "GET https://matharena.ai/competition_tables/apex--shortlist_2025 → JSON field \"table\" (rendered leaderboard): one row per model; value = the \"Accuracy (± 95% CI)\" point estimate in percent; the warning sign after a name is MathArena's \"Model was released after competition release\" flag, kept per row; a row whose accuracy cell is marked data-predicted=\"yes\" (\"Includes estimated scores for questions we did not run\", item response theory) is refused, not ingested.",
+        "version_guard": "The competition table must keep exactly the twelve published leaderboard columns (Rank, Model Name, Provider, Accuracy (± 95% CI), Cost, Output Tokens, Input Tokens, Average Retries, Average Time, Open, Parameters, Active Parameters) and exactly 47 problems in its per-problem grid (MathArena's competitions card for Apex Shortlist reads \"47 problems\"). Another edition or problem count is a different identity; editions are never averaged.",
+        "notes": "robots.txt redirects (308) to a 404, so no rules are published; the site has no terms page. MathArena asks to be cited (arXiv 2605.00674): attribute MathArena and link the leaderboard. Model labels are product names with the setting in parentheses; exact joins come from data/raw/benchmarks/identity-map.json (lib/board-identity.mjs, parseMathArenaLabel). Lumina Bench lists this family (benchlm-apexshortlist) with aggregator copies only; this is the primary board."
+      },
+      "update_cadence": {
+        "source_schedule": "None: MathArena marks the competition Deprecated; the table is kept for the record and is not extended.",
+        "check_recommendation": "Daily with the ordinary MathArena refresh; any change to a deprecated table is a reviewed change."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Computed saturation (CR-38.2) applies on build; no saturation claim is recorded here."
+      },
+      "superseded_by": null,
+      "status": "retained",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://matharena.ai/competitions",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-comps/cbfccbac133ffc3bb7a5.gz",
+          "sha256": "30aa42ecf1aba7ab0a6b3d923d344d4b3eec8ec969c71cf1d0d76037c5a1038a",
+          "fetched_at": "2026-09-22T01:06:51.568448+00:00",
+          "excerpt": "<h3 class=\"card__title\">Apex Shortlist</h3> <span class=\"competition-card__badge\">Deprecated</span> </div> <p class=\"card__meta\">"
+        },
+        {
+          "url": "https://matharena.ai/competitions",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-comps/cbfccbac133ffc3bb7a5.gz",
+          "sha256": "30aa42ecf1aba7ab0a6b3d923d344d4b3eec8ec969c71cf1d0d76037c5a1038a",
+          "fetched_at": "2026-09-22T01:06:51.568448+00:00",
+          "excerpt": "This dataset was created by selecting problems from 2025 competitions where at least one model (Grok-4-Fast, GPT-5-mini) had one incorrect attempt among its four attempts."
+        },
+        {
+          "url": "https://matharena.ai/competition_tables/apex--shortlist_2025",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-comps/fa4653a72c5c252f920b.gz",
+          "sha256": "d37d5869354405ee9ec6e1031c0f802283635805f125ef212ef9f4a8bc13ccee",
+          "fetched_at": "2026-09-22T01:06:48.696623+00:00",
+          "excerpt": "title=\"Average performance of the model on the competition together with a 95% confidence interval obtained with the normal approximation.\">Accuracy (\\u00b1 95% CI)</th>"
+        }
+      ]
     }
   ],
   "aa_field_map": [

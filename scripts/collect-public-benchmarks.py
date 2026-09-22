@@ -327,16 +327,29 @@ def parse(source,spec,load_source):
         problems={int(i) for i in re.findall(r'data-problem-index="(\d+)"',data['problem_table'])}
         if problems!=set(range(spec['require_problems'])):raise ValueError(f'MathArena problem count changed: {len(problems)}')
         flag=spec['post_release_flag'];flag_title='Model was released after competition release.'
+        # 2026-09-22 (iteration 161): a row MathArena did not run on every problem shows an accuracy that
+        # "Includes estimated scores for questions we did not run" (item response theory). That is not a
+        # measurement; with `predicted_scores: "reject"` such a row is refused with its reason, otherwise the
+        # unparseable cell fails the board as before.
+        predicted_label='Estimated accuracy using item response theory'
         for index,tr in enumerate(re.findall(r'<tr[^>]*>(.*?)</tr>',data['table'],re.S)[1:]):
-            raw=re.findall(r'<td[^>]*>(.*?)</td>',tr,re.S);cells=[text(c) for c in raw]
+            tds=re.findall(r'<td([^>]*)>(.*?)</td>',tr,re.S);raw=[c for _,c in tds];cells=[text(c) for c in raw]
             if len(cells)!=len(heads):raise ValueError(f'MathArena row {index} width changed')
             flagged=flag in cells[1]
             if flagged and flag_title not in raw[1]:raise ValueError(f'MathArena row {index}: warning sign without the release-date explanation')
             name=' '.join(cells[1].replace(flag,' ').split())
             if not name:raise ValueError(f'MathArena row {index}: missing model name')
-            rows.append({'name':name,'id':name,'accuracy':cells[3],'source_row':index+1,
+            predicted='data-predicted="yes"' in tds[3][0]
+            if predicted!=(predicted_label in raw[3]):raise ValueError(f'MathArena row {index}: estimated-score marker and its explanation disagree')
+            accuracy=cells[3]
+            if predicted:
+                if spec.get('predicted_scores')!='reject':raise ValueError(f'MathArena row {index}: estimated score (item response theory) on a board without a reviewed rule for it')
+                accuracy=None
+            row={'name':name,'id':name,'accuracy':accuracy,'source_row':index+1,
                 'context':{'rank':cells[0],'model':name,'provider':cells[2],'accuracy':cells[3],'cost':cells[4],'output_tokens':cells[5],
-                    'released_after_competition':flagged,'open_weights':cells[9]}})
+                    'released_after_competition':flagged,'open_weights':cells[9]}}
+            if predicted:row['reject_reason']='MathArena did not run this model on every problem; its accuracy includes item-response-theory estimates for the rest, so it is not a measurement.'
+            rows.append(row)
     elif kind=='swe_rebench_window':
         # SWE-rebench (Nebius): the source is our extraction of ONE pinned task window from the captured page
         # (scripts/extract-swe-rebench-window.py). Another window is another task set and another identity. The
@@ -1048,7 +1061,7 @@ def collect(plan,registry,root=Path('.'),evidence=None):
             try:value=numeric(at(row,rule['value_field']))
             except (ValueError,KeyError) as e:raise ValueError(f'{bid} row {index}: {e}') from e
             if value is None:
-                rejected.append({'benchmark_id':bid,'source_id':name,'reason':'No numeric result in source cell; not substituted with zero.'});continue
+                rejected.append({'benchmark_id':bid,'source_id':name,'reason':row.get('reject_reason') or 'No numeric result in source cell; not substituted with zero.'});continue
             scale=rule.get('scale',1);raw_value=value;value*=scale
             lo,hi=entry['scoring']['range']
             if not math.isfinite(value) or lo is not None and value<lo or hi is not None and value>hi:raise ValueError('Score outside registry range: '+bid)

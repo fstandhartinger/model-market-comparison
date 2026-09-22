@@ -44,6 +44,9 @@ const SLUG_BOARDS = ['osworld-2', 'swe-rebench', 'gso', 'hyper-tau-bench', 'lisa
   // 2026-09-21 (iteration 158, CR-37.1): ResearchClawBench's ResearchHarness rows, product names with no setting
   // (lib/board-identity.mjs parseResearchClawBenchLabel).
   'researchclawbench',
+  // 2026-09-22 (iteration 161, CR-37.1): MathArena's deprecated HMMT and Apex competitions, same label rule as
+  // the ArXiv editions (lib/board-identity.mjs parseMathArenaLabel).
+  'matharena-hmmt', 'matharena-apex', 'matharena-apex-shortlist',
   // 2026-09-19 (iteration 115, CR-54.2): six boards from Epoch AI's Benchmarking Hub ZIP, slug labels joined by
   // the same lib/coding-identity.mjs parseDeepSweId rule as DeepSWE/SimpleQA Verified. math_level_5 and
   // frontiermath_erdos stay excluded; recorded in data/raw/benchmarks/epoch-hub-decisions.json.

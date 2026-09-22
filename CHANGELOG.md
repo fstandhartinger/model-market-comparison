@@ -4,6 +4,18 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-22 — MathArena HMMT and Apex competitions (secondary, retired, non-Composite)
+
+Four new registry ids (Math), collected daily from MathArena's own competition tables like the ArXivMath editions:
+`matharena-hmmt::2026-02` (HMMT February 2026, 33 problems, 31 rows), `matharena-hmmt::2025-11` (HMMT November 2025,
+30 problems, 23 rows), `matharena-apex::2025` (12 problems, 48 rows) and `matharena-apex-shortlist::2025` (47
+problems, 38 rows). Values are the published accuracy in percent (`basis: measured`); the 95% interval, cost, tokens
+and MathArena's "released after competition" flag stay in each row's `protocol`. MathArena marks all four
+competitions Deprecated, so the registry lists them `status: "retained"` and the site tags them retired. Three rows
+whose accuracy "includes estimated scores for questions we did not run" (item response theory) are not ingested; they
+appear in `public-observations.json` `rejected` with that reason. 46 rows join a catalog configuration exactly; the
+rest keep the source's own name (`subject.model_id: null`). No path, field or unit changed.
+
 ## 2026-09-21 — Four duplicate catalog models merged
 
 Four models were listed twice: the benchmarked row and a benchmark-less twin that a cloud, EU or Epoch catalog spells

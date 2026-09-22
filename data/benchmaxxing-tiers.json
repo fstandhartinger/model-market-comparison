@@ -335,6 +335,18 @@
     "researchclawbench": {
       "tier": "judged",
       "reason": "An LLM acting as a strict peer reviewer grades each research report against a weighted rubric; the judge's rating is the score."
+    },
+    "matharena-hmmt": {
+      "tier": "headline",
+      "reason": "HMMT's contest problems are public once the tournament is held, and labs quote HMMT in release material — our self-reported corpus (data/raw/benchmarks/self-reported/scout-20260915.jsonl.gz) holds HMMT February 2026 rows from DeepSeek, Moonshot AI, MBZUAI, Alibaba Qwen and Z.ai and HMMT November 2025 rows from Alibaba Qwen and Z.ai — so it is a board a training team can aim at."
+    },
+    "matharena-apex": {
+      "tier": "headline",
+      "reason": "MathArena publishes the twelve Apex problems on Hugging Face, and labs quote it in release material — our self-reported corpus holds MathArena Apex rows from DeepSeek and Nex AGI."
+    },
+    "matharena-apex-shortlist": {
+      "tier": "headline",
+      "reason": "MathArena publishes the 47 Apex Shortlist problems on Hugging Face, and labs quote it in release material — our self-reported corpus holds Apex Shortlist rows from DeepSeek and Motif Technologies."
     }
   }
 }

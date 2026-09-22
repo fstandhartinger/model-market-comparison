@@ -54,5 +54,7 @@ test('MathArena joins: reviewed names only, the parenthesis is the stated settin
   // 2026-09-21 (iteration 154): 11 → 14 — the 2026-09-21 refresh published three new rows (GPT-6 Astra (low),
   // Claude-Fable-5.1 (low), DeepSeek-V4.1-Flash (Max)); each names an existing configuration exactly.
   assert.equal(arxiv.length, 14);
-  assert.ok(!map.some((e) => e.benchmark_id.startsWith('matharena-') && /Think|Grok 4\.5|Qwen3\.6/.test(e.source_id)), 'unreviewed settings and non-default single configurations stay unjoined');
+  // 2026-09-22 (iteration 161): "(Think)" is the unreviewed setting; "Kimi K2 Thinking" (Apex, HMMT Nov 2025) is a
+  // model name, the catalog's single-default kimi-k2-thinking family, and joins.
+  assert.ok(!map.some((e) => e.benchmark_id.startsWith('matharena-') && /\(Think\)|Grok 4\.5|Qwen3\.6/.test(e.source_id)), 'unreviewed settings and non-default single configurations stay unjoined');
 });
