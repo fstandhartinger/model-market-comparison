@@ -16062,6 +16062,156 @@
           "excerpt": "MLS-Bench-Lite is a 30-task subset of the full 140-task suite, spanning all 12 research domains. … Scoring: the main results table in the arXiv paper previously aggregated tasks within each area by geometric mean; switched to arithmetic mean … MLS-Bench adopted by Alibaba (Qwen) Qwen3.8-Max … adopted by Moonshot (Kimi) Kimi K3"
         }
       ]
+    },
+    {
+      "id": "surge-chartography::100-tasks",
+      "name": "Chartography",
+      "version": "100-tasks",
+      "version_status": "published",
+      "family": "surge-chartography",
+      "category": "Vision",
+      "one_sentence_description": "Can a model read the charts professionals rely on — Kaplan-Meier curves, candlesticks, contour maps, Sankey diagrams, Bode plots, wind roses — from the image alone, to an expert-set precision?",
+      "scoring": {
+        "metric": "The board's accuracy: the share of answers inside the expert-set acceptable range of the golden answer, judged per answer by Gemini 3.5 Flash, averaged over the 100 tasks and ten runs per task",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "No tools: the chart is attached inline. The judge sees the question, the golden answer and the response, never the chart. Surge runs every model itself with the published Inspect harness (github.com/surge-ai/chartography); the board shows one row per model and stated setting. A different task set, judge, run count or a tool-enabled run is a new identity. The with-tools figure DeepSeek prints on its V4.1 Flash card stays the separate vendor snapshot deepseek-chartography-w-tools::snapshot-2026-09-10."
+      },
+      "maintainer": "Surge AI (evals team)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://surgehq.ai/benchmarks/chartography",
+      "publication_urls": [
+        {
+          "url": "https://surgehq.ai/benchmarks/chartography",
+          "type": "official_leaderboard",
+          "role": "Leaderboard (accuracy per model and setting)"
+        },
+        {
+          "url": "https://github.com/surge-ai/chartography",
+          "type": "github",
+          "role": "Inspect eval harness and the leaderboard configuration"
+        },
+        {
+          "url": "https://huggingface.co/datasets/surgeai/chartography",
+          "type": "huggingface",
+          "role": "The 100 released tasks"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-surge; python3 ops/daily/public-candidate.py CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "Server-rendered HTML (Webflow CMS list)",
+        "locator": "The server-rendered Webflow page surgehq.ai/benchmarks/chartography: the page's own leaderboard is the single list with class `lead-rank-corecraft-list w-dyn-items` (the other lists on the page are teaser cards for other Surge boards). Each `data-leaderboard-row` holds the brand (`head-rank-table-brand`, e.g. \"Claude\"), the name with the run setting in parentheses (`head-rank-table-name`, e.g. \"Fable 5.1 (Adaptive/Max)\") and the score as `data-score` next to the printed number and a \"%\". The row label is \"<brand> <name>\"; the value is the printed percentage.",
+        "version_guard": "The page must still state \"Chartography is our benchmark for professional chart understanding.\"; exactly one `lead-rank-corecraft-list` list; every row has one brand, one name and one `data-score` equal to its printed number, 0–100, with a \"%\" unit; labels unique. The repository README must still state: the 100-task set, the chart attached inline with no tools, the leaderboard configuration (ten runs per task, Gemini 3.5 Flash as the judge) and the accuracy definition. Another task set, judge, run count or tool setting is a new identity, never a silent update of this one.",
+        "identity_policy": "source_label",
+        "notes": "Maintained by Surge AI's evals team; Surge evaluates every model itself. robots.txt allows /benchmarks/ — scores with attribution to Surge AI and a link to the board. Exact-join policy (lib/board-identity.mjs parseSurgeLabel): the label is \"<brand> <model> (<setting>)\"; \"Adaptive/<level>\" is Anthropic's adaptive reasoning at that effort and joins the catalog's \"Adaptive Reasoning, <level> Effort\" configuration; \"<level> reasoning\" joins that effort for non-Anthropic models, while Anthropic's plain \"High reasoning\" rows (Opus 4.7, Opus 4.8, next to their Adaptive/Max rows) are a different, unexplained mode and never join; \"No reasoning\" joins only a non-reasoning configuration; \"Thinking on\" and \"Auto reasoning\" state no level and never join a multi-configuration family; a row without a setting joins only a single-default family. Names deliberately not mapped: \"DeepSeek V4 Flash Vision (experimental)\" (the catalog splits V4 Flash Vision and V4 Flash Vision Exp), \"Muse Glimmer 30B\" (the catalog's Muse Glimmer states no size), \"Nemotron 3 Nano Omni\" (two catalog families), \"Qwen 3.8 Flash\" and \"Qwen 3.5 Plus\" (no such catalog family). Joins: data/raw/benchmarks/identity-map.json."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated; rows are added as Surge runs new models (the 2026-09-22 capture holds 58 rows, newest Claude Fable 5.1, GPT-5.6 Sol and Gemini 3.8 Flash).",
+        "check_recommendation": "Daily with the ordinary refresh; a changed task set, judge, run count or tool setting is a new identity and needs a reviewed change."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Best score 46.2 (Claude Fable 5.1, Adaptive/Max) on 2026-09-22; the board spans 8.7–46.2. Computed saturation (CR-38.2) applies on build."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://surgehq.ai/benchmarks/chartography",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-surge/9b815c23bd1d27e66be3.gz",
+          "sha256": "5bb8686d712d7b80019f9be14fbb12213faa90755fda23cc457766e69f35f08c",
+          "fetched_at": "2026-09-22T08:23:52.070427+00:00",
+          "excerpt": "Chartography is our benchmark for professional chart understanding. … Leaderboard … Claude Fable 5.1 (Adaptive/Max) 46.2 % … GPT 5.6 Sol (Max reasoning) 45 % …"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/surge-ai/chartography/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-surge/b588ba1f8ab0ce492657.gz",
+          "sha256": "2c1e077772a89439942ebe5210fdaa06e8788a58de3f2dc3c66a31b3ec1d4d9c",
+          "fetched_at": "2026-09-22T08:23:57.767000+00:00",
+          "excerpt": "all 100 tasks defeated at least one of two frontier models … (chart attached inline, no tools) … To match the configuration used in the leaderboard, run the complete task set with ten runs per task and Gemini 3.5 Flash as the judge"
+        }
+      ]
+    },
+    {
+      "id": "surge-gdp-pdf::100-tasks",
+      "name": "GDP.pdf",
+      "version": "100-tasks",
+      "version_status": "published",
+      "family": "surge-gdp-pdf",
+      "category": "Vision",
+      "one_sentence_description": "Can a model answer real professional questions about the PDFs work runs on — manuals, wiring diagrams, filings, forms — so that every rubric criterion an expert wrote is met?",
+      "scoring": {
+        "metric": "The board's all-pass rate: the share of responses that satisfy every rubric criterion, judged by Gemini 3.5 Flash, over the 100 held-out tasks and five runs per task",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "No tools; the PDFs are given to the model. Surge runs every model itself with the published Inspect harness (github.com/surge-ai/gdp-pdf); the README names all_pass/mean as the headline leaderboard number. A different task set, judge, run count or a tool-enabled run is a new identity. Artificial Analysis' own GDP.pdf runs stay aa-gdp-pdf::snapshot-*, StepFun's launch figure stays stepfun-gdp-pdf::snapshot-2026-09-20."
+      },
+      "maintainer": "Surge AI (evals team)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://surgehq.ai/benchmarks/gdp-pdf",
+      "publication_urls": [
+        {
+          "url": "https://surgehq.ai/benchmarks/gdp-pdf",
+          "type": "official_leaderboard",
+          "role": "Leaderboard (all-pass rate per model and setting)"
+        },
+        {
+          "url": "https://github.com/surge-ai/gdp-pdf",
+          "type": "github",
+          "role": "Inspect eval harness and the leaderboard configuration"
+        },
+        {
+          "url": "https://huggingface.co/datasets/surgeai/GDP.pdf",
+          "type": "huggingface",
+          "role": "The released tasks"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-surge; python3 ops/daily/public-candidate.py CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "Server-rendered HTML (Webflow CMS list)",
+        "locator": "The server-rendered Webflow page surgehq.ai/benchmarks/gdp-pdf: the page's own leaderboard is the single list with class `lead-rank-corecraft-list w-dyn-items` (the other lists on the page are teaser cards for other Surge boards). Each `data-leaderboard-row` holds the brand (`head-rank-table-brand`, e.g. \"Claude\"), the name with the run setting in parentheses (`head-rank-table-name`, e.g. \"Fable 5.1 (Adaptive/Max)\") and the score as `data-score` next to the printed number and a \"%\". The row label is \"<brand> <name>\"; the value is the printed percentage.",
+        "version_guard": "The page must still state \"GDP.pdf is a multimodal and reasoning benchmark that takes real-world prompts and PDFs pulled directly from expert professional workflows.\"; exactly one `lead-rank-corecraft-list` list; every row has one brand, one name and one `data-score` equal to its printed number, 0–100, with a \"%\" unit; labels unique. The repository README must still state: the 100 held-out tasks with no tools, all_pass/mean as the headline leaderboard number, and the leaderboard configuration (five runs per task, Gemini 3.5 Flash as the judge). Another task set, judge, run count or tool setting is a new identity, never a silent update of this one.",
+        "identity_policy": "source_label",
+        "notes": "Maintained by Surge AI's evals team; Surge evaluates every model itself. robots.txt allows /benchmarks/ — scores with attribution to Surge AI and a link to the board. Exact-join policy (lib/board-identity.mjs parseSurgeLabel): the label is \"<brand> <model> (<setting>)\"; \"Adaptive/<level>\" is Anthropic's adaptive reasoning at that effort and joins the catalog's \"Adaptive Reasoning, <level> Effort\" configuration; \"<level> reasoning\" joins that effort for non-Anthropic models, while Anthropic's plain \"High reasoning\" rows (Opus 4.7, Opus 4.8, next to their Adaptive/Max rows) are a different, unexplained mode and never join; \"No reasoning\" joins only a non-reasoning configuration; \"Thinking on\" and \"Auto reasoning\" state no level and never join a multi-configuration family; a row without a setting joins only a single-default family. Names deliberately not mapped: \"DeepSeek V4 Flash Vision (experimental)\" (the catalog splits V4 Flash Vision and V4 Flash Vision Exp), \"Muse Glimmer 30B\" (the catalog's Muse Glimmer states no size), \"Nemotron 3 Nano Omni\" (two catalog families), \"Qwen 3.8 Flash\" and \"Qwen 3.5 Plus\" (no such catalog family). Joins: data/raw/benchmarks/identity-map.json."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated; rows are added as Surge runs new models (the 2026-09-22 capture holds 41 rows, newest Claude Fable 5.1 and GPT-5.6 Sol).",
+        "check_recommendation": "Daily with the ordinary refresh; a changed task set, judge, run count or tool setting is a new identity and needs a reviewed change."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Best score 30.7 (GPT-5.6 Sol, Max reasoning) on 2026-09-22; the board spans 2–30.7. Computed saturation (CR-38.2) applies on build."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://surgehq.ai/benchmarks/gdp-pdf",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-surge/d44bb04fd9aa6e63f5c8.gz",
+          "sha256": "6b79fd0f33917d5ea2b623f09f2e41fd92e79b23f59e61ab2d62520adcbf55a4",
+          "fetched_at": "2026-09-22T08:23:55.126460+00:00",
+          "excerpt": "GDP.pdf is a multimodal and reasoning benchmark that takes real-world prompts and PDFs pulled directly from expert professional workflows. … Leaderboard … GPT 5.6 Sol (Max reasoning) 30.7 % …"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/surge-ai/gdp-pdf/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-surge/fda47ebf36bf4299b5d6.gz",
+          "sha256": "fa3311f025e53e5102f2b1ebdc0a1c49d3e04c7f2d9285364e187784f685b5ab",
+          "fetched_at": "2026-09-22T08:24:00.322672+00:00",
+          "excerpt": "# evaluate all 100 held-out tasks, no tools … all_pass/mean (the headline leaderboard number — every rubric criterion satisfied) … run the complete task set with five runs per task and Gemini 3.5 Flash as the judge"
+        }
+      ]
     }
   ],
   "aa_field_map": [

@@ -5614,6 +5614,111 @@
         "https://mls-bench.com/leaderboard",
         "https://raw.githubusercontent.com/Imbernoulli/MLS-Bench/main/README.md"
       ]
+    },
+    {
+      "benchmark_id": "surge-chartography::100-tasks",
+      "parser": {
+        "kind": "surge_benchmark_board",
+        "name_field": "name",
+        "id_field": "id",
+        "value_field": "value",
+        "plain_text_names": true,
+        "method_source": {
+          "url": "https://raw.githubusercontent.com/surge-ai/chartography/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-surge/b588ba1f8ab0ce492657.gz",
+          "sha256": "b588ba1f8ab0ce4926577c8c05312c46d705a85b755d8e8d4ec79a376982852f",
+          "retrieved_at": "2026-09-22T08:23:57.767000+00:00"
+        },
+        "require": {
+          "page_text": [
+            "Chartography is our benchmark for professional chart understanding."
+          ],
+          "method_text": [
+            "all 100 tasks defeated at least one of two frontier models",
+            "Run the eval on the sample task pack (chart attached inline, no tools)",
+            "To match the configuration used in the leaderboard, run the complete task set with ten runs per task and Gemini 3.5 Flash as the judge:",
+            "the fraction of responses whose final answer matches the golden answer, judged by one model-graded call per sample"
+          ],
+          "list_class": "lead-rank-corecraft-list",
+          "board_title": "Chartography"
+        }
+      },
+      "status": "collected",
+      "reason": "Surge AI's own Chartography leaderboard: every model-and-setting row with its accuracy.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-surge; python3 ops/daily/public-candidate.py CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "Server-rendered HTML (Webflow CMS list)",
+        "locator": "The server-rendered Webflow page surgehq.ai/benchmarks/chartography: the page's own leaderboard is the single list with class `lead-rank-corecraft-list w-dyn-items` (the other lists on the page are teaser cards for other Surge boards). Each `data-leaderboard-row` holds the brand (`head-rank-table-brand`, e.g. \"Claude\"), the name with the run setting in parentheses (`head-rank-table-name`, e.g. \"Fable 5.1 (Adaptive/Max)\") and the score as `data-score` next to the printed number and a \"%\". The row label is \"<brand> <name>\"; the value is the printed percentage.",
+        "version_guard": "The page must still state \"Chartography is our benchmark for professional chart understanding.\"; exactly one `lead-rank-corecraft-list` list; every row has one brand, one name and one `data-score` equal to its printed number, 0–100, with a \"%\" unit; labels unique. The repository README must still state: the 100-task set, the chart attached inline with no tools, the leaderboard configuration (ten runs per task, Gemini 3.5 Flash as the judge) and the accuracy definition. Another task set, judge, run count or tool setting is a new identity, never a silent update of this one.",
+        "notes": "robots.txt allows /benchmarks/ (only /testing-or-archived/ and /401 are disallowed); the README is on raw.githubusercontent.com. Check the shared source cooldown first; stop on 403, 429, challenges or unexpected content. One capture per day."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "The page must still state \"Chartography is our benchmark for professional chart understanding.\"; exactly one `lead-rank-corecraft-list` list; every row has one brand, one name and one `data-score` equal to its printed number, 0–100, with a \"%\" unit; labels unique. The repository README must still state: the 100-task set, the chart attached inline with no tools, the leaderboard configuration (ten runs per task, Gemini 3.5 Flash as the judge) and the accuracy definition. Another task set, judge, run count or tool setting is a new identity, never a silent update of this one.",
+      "source": {
+        "url": "https://surgehq.ai/benchmarks/chartography",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-surge/9b815c23bd1d27e66be3.gz",
+        "sha256": "9b815c23bd1d27e66be3b41a7d3b18d69f1505b96d8d21bfc6035c5e9376002e",
+        "retrieved_at": "2026-09-22T08:23:52.070427+00:00"
+      },
+      "protocol": "Chartography (Surge AI): 100 expert-written questions on real professional charts (Kaplan-Meier curves, candlesticks, contour maps, Sankey diagrams, Bode plots and more), the chart attached inline and no tools; each answer is judged against the golden answer and its expert-set acceptable range by one model-graded call (judge Gemini 3.5 Flash; the judge never sees the chart); leaderboard configuration ten runs per task; value = the board's accuracy (mean over tasks and runs, percent) for the row's model and stated setting; Surge runs the models itself",
+      "basis": "measured",
+      "minimum_rows": 40,
+      "source_urls": [
+        "https://surgehq.ai/benchmarks/chartography",
+        "https://raw.githubusercontent.com/surge-ai/chartography/main/README.md"
+      ]
+    },
+    {
+      "benchmark_id": "surge-gdp-pdf::100-tasks",
+      "parser": {
+        "kind": "surge_benchmark_board",
+        "name_field": "name",
+        "id_field": "id",
+        "value_field": "value",
+        "plain_text_names": true,
+        "method_source": {
+          "url": "https://raw.githubusercontent.com/surge-ai/gdp-pdf/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-surge/fda47ebf36bf4299b5d6.gz",
+          "sha256": "fda47ebf36bf4299b5d69288978de80e06fa6a001b8bc75550eb1f38d8e9e148",
+          "retrieved_at": "2026-09-22T08:24:00.322672+00:00"
+        },
+        "require": {
+          "page_text": [
+            "GDP.pdf is a multimodal and reasoning benchmark that takes real-world prompts and PDFs pulled directly from expert professional workflows."
+          ],
+          "method_text": [
+            "evaluate all 100 held-out tasks, no tools",
+            "(the headline leaderboard number — every rubric criterion satisfied)",
+            "To match the configuration used in the leaderboard, run the complete task set with five runs per task and Gemini 3.5 Flash as the judge:"
+          ],
+          "list_class": "lead-rank-corecraft-list",
+          "board_title": "GDP.pdf"
+        }
+      },
+      "status": "collected",
+      "reason": "Surge AI's own GDP.pdf leaderboard: every model-and-setting row with its all-pass rate.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-surge; python3 ops/daily/public-candidate.py CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "Server-rendered HTML (Webflow CMS list)",
+        "locator": "The server-rendered Webflow page surgehq.ai/benchmarks/gdp-pdf: the page's own leaderboard is the single list with class `lead-rank-corecraft-list w-dyn-items` (the other lists on the page are teaser cards for other Surge boards). Each `data-leaderboard-row` holds the brand (`head-rank-table-brand`, e.g. \"Claude\"), the name with the run setting in parentheses (`head-rank-table-name`, e.g. \"Fable 5.1 (Adaptive/Max)\") and the score as `data-score` next to the printed number and a \"%\". The row label is \"<brand> <name>\"; the value is the printed percentage.",
+        "version_guard": "The page must still state \"GDP.pdf is a multimodal and reasoning benchmark that takes real-world prompts and PDFs pulled directly from expert professional workflows.\"; exactly one `lead-rank-corecraft-list` list; every row has one brand, one name and one `data-score` equal to its printed number, 0–100, with a \"%\" unit; labels unique. The repository README must still state: the 100 held-out tasks with no tools, all_pass/mean as the headline leaderboard number, and the leaderboard configuration (five runs per task, Gemini 3.5 Flash as the judge). Another task set, judge, run count or tool setting is a new identity, never a silent update of this one.",
+        "notes": "robots.txt allows /benchmarks/ (only /testing-or-archived/ and /401 are disallowed); the README is on raw.githubusercontent.com. Check the shared source cooldown first; stop on 403, 429, challenges or unexpected content. One capture per day."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "The page must still state \"GDP.pdf is a multimodal and reasoning benchmark that takes real-world prompts and PDFs pulled directly from expert professional workflows.\"; exactly one `lead-rank-corecraft-list` list; every row has one brand, one name and one `data-score` equal to its printed number, 0–100, with a \"%\" unit; labels unique. The repository README must still state: the 100 held-out tasks with no tools, all_pass/mean as the headline leaderboard number, and the leaderboard configuration (five runs per task, Gemini 3.5 Flash as the judge). Another task set, judge, run count or tool setting is a new identity, never a silent update of this one.",
+      "source": {
+        "url": "https://surgehq.ai/benchmarks/gdp-pdf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-surge/d44bb04fd9aa6e63f5c8.gz",
+        "sha256": "d44bb04fd9aa6e63f5c838020028d9100164cf3acebe5327feb9b711c5cda972",
+        "retrieved_at": "2026-09-22T08:23:55.126460+00:00"
+      },
+      "protocol": "GDP.pdf (Surge AI): 100 held-out tasks, each a real professional prompt with its PDF documents, no tools; a response passes only when every rubric criterion is satisfied (all_pass), judged by Gemini 3.5 Flash; leaderboard configuration five runs per task; value = the board's all-pass rate (percent) for the row's model and stated setting; Surge runs the models itself",
+      "basis": "measured",
+      "minimum_rows": 30,
+      "source_urls": [
+        "https://surgehq.ai/benchmarks/gdp-pdf",
+        "https://raw.githubusercontent.com/surge-ai/gdp-pdf/main/README.md"
+      ]
     }
   ]
 }

@@ -1032,6 +1032,41 @@ def parse(source,spec,load_source):
             seen.add(key)
             rows.append({'name':name,'id':key,'value':score,'source_row':index,'harness':harness,
                 'context':{'harness':harness,'stated_effort':effort or 'not stated','board_title':data['title'],'human_sota_reference':human}})
+    elif kind=='surge_benchmark_board':
+        # Surge AI benchmark pages (surgehq.ai/benchmarks/<slug>, Webflow CMS, server-rendered): the page's own leaderboard
+        # is the one `lead-rank-corecraft-list`; every other list on the page is a teaser card for a different Surge board.
+        # Each row: brand (`head-rank-table-brand`, e.g. "Claude"), name with the setting in parentheses
+        # (`head-rank-table-name`, "Fable 5.1 (Adaptive/Max)") and `data-score` = the printed percentage. The page ranks
+        # client-side, so the printed rank is not read. A second own-board list, a changed row shape, a score attribute
+        # that disagrees with the printed number, or a repeated label fails closed.
+        req=spec['require'];page=text(source);readme=text(load_source(spec['method_source']))
+        for phrase in req['page_text']:
+            if phrase not in page:raise ValueError('Surge page no longer states: '+phrase[:80])
+        for phrase in req['method_text']:
+            if phrase not in readme:raise ValueError('Surge README no longer states: '+phrase[:80])
+        starts=[m.start() for m in re.finditer(r'class="'+re.escape(req['list_class'])+r' w-dyn-items"',source)]
+        if len(starts)!=1:raise ValueError(f"Surge: expected one {req['list_class']} list, found {len(starts)}")
+        end=source.find('role="list"',starts[0]+len(req['list_class']))
+        body=source[starts[0]:end if end>0 else len(source)]
+        chunks=body.split('data-leaderboard-row=""')[1:]
+        seen=set()
+        for index,chunk in enumerate(chunks):
+            brand=re.findall(r'class="head-rank-table-brand"><div[^>]*>([^<]*)</div>',chunk)
+            name=re.findall(r'class="head-rank-table-name"><div[^>]*>([^<]*)</div>',chunk)
+            score=re.findall(r'data-score="([^"]*)"[^>]*>([^<]*)</div><div[^>]*>%</div>',chunk)
+            if len(brand)!=1 or len(name)!=1 or len(score)!=1:raise ValueError(f'Surge row {index}: row shape changed')
+            brand,name=html.unescape(brand[0]).strip(),html.unescape(name[0]).strip()
+            if not brand or not name:raise ValueError(f'Surge row {index}: empty label')
+            attr,printed=score[0]
+            try:value=float(attr)
+            except ValueError:raise ValueError(f'Surge {brand} {name}: score {attr!r} unreadable')
+            if printed.strip()!=attr or not 0<=value<=100:raise ValueError(f'Surge {brand} {name}: score {attr!r} / printed {printed!r}')
+            label=f'{brand} {name}'
+            if label in seen:raise ValueError('Surge row repeated: '+label)
+            seen.add(label)
+            setting=re.search(r'\(([^()]*)\)$',name)
+            rows.append({'name':label,'id':label,'value':value,'source_row':index,
+                'context':{'brand':brand,'stated_setting':setting[1] if setting else 'not stated','board':req['board_title']}})
     elif kind=='researchclawbench_board':
         # ResearchClawBench (InternScience): the static leaderboard page loads data/leaderboard.json {tasks, agents,
         # scores, frontier} — scores[agent][task] = {score 0-100, run_id, model, model_display, cost_usd,

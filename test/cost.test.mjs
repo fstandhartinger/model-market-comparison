@@ -177,7 +177,8 @@ test('Composite coverage separates exact inputs from family- or product-attached
   // 2026-09-16 (iteration 81): SWE-rebench's 15 May – 1 Jul 2026 window joins ("Fable 5 [high]") — the seventh.
   // 2026-09-19 (iteration 115, CR-54.2): three Epoch Benchmarking Hub boards join their slugs —
   // Chess Puzzles (0.41), MirrorCode (0.639), GPQA Diamond Epoch run (0.833) — boards eight to ten.
-  assert.equal(fable.benchmark_count, 10);
+  // 2026-09-22 (iteration 167, CR-37.1): Surge AI's Chartography row "Claude Fable 5 (Adaptive/High)" (29.5) — the eleventh.
+  assert.equal(fable.benchmark_count, 11);
   assert.equal(dataset.benchmark_results.observations.filter((o) => o.subject.model_id === fable.id
     && dataset.benchmark_results.registry.find((e) => e.id === o.benchmark_id)?.category === 'Efficiency').length, 4,
     'joined cost rows exist for this configuration and are excluded from #benchmarks');

@@ -1091,14 +1091,12 @@
       "note": "interfaze.ai SOB board current (Gemini 3.1, Sonnet 5 rows; checked 2026-09-22)."
     },
     "benchlm-chartographywithtools": {
-      "decision": "planned",
-      "collector": "Surge HQ Chartography board, low priority (data/SCRAPING.md)",
-      "note": "Surge HQ is an independent evaluator; Chartography board lists current models with GPT-5.6 leading (checked 2026-09-22)."
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 167): Surge's own Chartography board runs without tools (README: \"chart attached inline, no tools\"), so it is benchlm-chartography, not this family. The with-tools figures are lab-card claims (DeepSeek's V4.1 Flash card: deepseek-chartography-w-tools::snapshot-2026-09-10)."
     },
     "benchlm-gdppdfwithtools": {
-      "decision": "planned",
-      "collector": "Surge HQ GDP.pdf board, low priority (data/SCRAPING.md)",
-      "note": "Surge HQ is an independent evaluator; GDP.pdf board exists with a model leaderboard (checked 2026-09-22)."
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 167): Surge's own GDP.pdf board runs without tools (README: \"evaluate all 100 held-out tasks, no tools\"), so it is benchlm-gdppdf, not this family. With-tools figures come only from lab cards; none is pinned beyond the existing vendor snapshots."
     },
     "gaia": {
       "decision": "planned",
@@ -1486,6 +1484,21 @@
     "benchlm-genebenchpro": {
       "decision": "vendor_reported",
       "note": "2026-09-22 (iteration 164, opencode-kimi): OpenAI GeneBench Pro PDF (cdn.openai.com/pdf/21938268-21af-442f-af93-3b2249afb241/genebench-pro.pdf) is the cited primary; numbers enter only via CR-30.1."
+    },
+    "benchlm-chartography": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "surge-chartography::100-tasks"
+      ],
+      "note": "2026-09-22 (iteration 167): Surge AI's own Chartography board (surgehq.ai/benchmarks/chartography): the 100-task set, chart inline, no tools, ten runs per task, Gemini 3.5 Flash judge — the setting this family names."
+    },
+    "benchlm-gdppdf": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "surge-gdp-pdf::100-tasks",
+        "aa-gdp-pdf::snapshot-2026-09-21"
+      ],
+      "note": "2026-09-22 (iteration 167): Surge AI's own GDP.pdf board (surgehq.ai/benchmarks/gdp-pdf): 100 held-out tasks, no tools, all-pass rate, five runs per task; Artificial Analysis' own runs stay aa-gdp-pdf."
     }
   },
   "host_roles_note": "A host role is a first cut, not a verdict: an evaluator host can relay vendor numbers (cybench.github.io links system cards; artificialanalysis.ai/models pages show lab-reported values). Every family that lands in evaluator_result is therefore read by hand and recorded in family_decisions."

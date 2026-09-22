@@ -4,7 +4,7 @@
 // ops/benchmark-table-2026-09-15/identity-map-review.json. Review the diff of both files before committing.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { identityJoins, parseDeepSweId, parseScaleLabel, parseFrontierCodeId, parseCursorBenchLabel, parseSweBenchProLabel } from '../../lib/coding-identity.mjs';
-import { boardJoins, parseBullshitBenchId, parseApprenticeBenchId, parseValsIndexId, parseOsworld2Id, parseMathArenaLabel, parseWeirdmlV3Label, parseSweRebenchLabel, parseGsoId, parseHyperTauId, parseLisanBenchId, parseVulcanbenchFrontierLabel, parseKernelbenchCudaLabel, parseFrontiersweV2Label, parsePosttrainbenchLabel, parseRsiExamLabel, parseToolathlonVerifiedLabel, parseToolathlonArchiveLabel, parseProgrambenchLabel, parseMcpAtlasLabel, livebenchJoins, parseContextArenaId, parseBlueprintBenchLabel, parseLhtbLabel, parseRnEvalsLabel, parseResearchClawBenchLabel, parseMlsBenchLabel } from '../../lib/board-identity.mjs';
+import { boardJoins, parseBullshitBenchId, parseApprenticeBenchId, parseValsIndexId, parseOsworld2Id, parseMathArenaLabel, parseWeirdmlV3Label, parseSweRebenchLabel, parseGsoId, parseHyperTauId, parseLisanBenchId, parseVulcanbenchFrontierLabel, parseKernelbenchCudaLabel, parseFrontiersweV2Label, parsePosttrainbenchLabel, parseRsiExamLabel, parseToolathlonVerifiedLabel, parseToolathlonArchiveLabel, parseProgrambenchLabel, parseMcpAtlasLabel, livebenchJoins, parseContextArenaId, parseBlueprintBenchLabel, parseLhtbLabel, parseRnEvalsLabel, parseResearchClawBenchLabel, parseMlsBenchLabel, parseSurgeLabel } from '../../lib/board-identity.mjs';
 
 const BOARDS = [
   { prefix: 'deepswe::', parse: parseDeepSweId, basis: 'measured' },
@@ -92,6 +92,10 @@ const BOARDS = [
   // 2026-09-22 (iteration 165, CR-37.1): MLS-Bench-Lite, `<Model>|<Harness>` with the effort in the harness parenthesis;
   // a stated effort joins that exact configuration, no parenthesis joins only single-default families.
   { prefix: 'mls-bench-lite::', parse: parseMlsBenchLabel, join: boardJoins, basis: 'measured' },
+  // 2026-09-22 (iteration 167, CR-37.1): Surge AI's Chartography and GDP.pdf boards, `<Brand> <Model> (<setting>)`;
+  // Adaptive/<level> and <level> reasoning join that exact configuration, Claude's plain "High reasoning" never joins.
+  { prefix: 'surge-chartography::', parse: parseSurgeLabel, join: boardJoins, basis: 'measured' },
+  { prefix: 'surge-gdp-pdf::', parse: parseSurgeLabel, join: boardJoins, basis: 'measured' },
   // 2026-09-21 (iteration 158, CR-37.1): ResearchClawBench's ResearchHarness rows, product names without any setting;
   // only single-default-configuration families join.
   { prefix: 'researchclawbench::', parse: parseResearchClawBenchLabel, join: boardJoins, basis: 'measured' },

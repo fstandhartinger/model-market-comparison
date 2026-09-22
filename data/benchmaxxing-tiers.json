@@ -359,6 +359,14 @@
     "mls-bench-lite": {
       "tier": "headline",
       "reason": "Public tasks and scoring code (github.com/Imbernoulli/MLS-Bench, 140 tasks with baselines; arXiv 2605.08678) that labs quote in their own release posts: the repository lists adoption by Alibaba Qwen (Qwen3.8-Max) and Moonshot (Kimi K3, Kimi-K2.7-Code), and StepFun quotes MLS-Bench-Lite for Step 5 preview (stepfun-mls-bench-lite::snapshot-2026-09-20)."
+    },
+    "surge-chartography": {
+      "tier": "judged",
+      "reason": "Each answer is graded by a judge model (Gemini 3.5 Flash) against the golden answer and its expert-set range (github.com/surge-ai/chartography, leaderboard configuration); judge-graded boards stay outside the signal."
+    },
+    "surge-gdp-pdf": {
+      "tier": "judged",
+      "reason": "A response passes only when a judge model (Gemini 3.5 Flash) finds every expert-written rubric criterion satisfied (github.com/surge-ai/gdp-pdf, all_pass/mean); judge-graded boards stay outside the signal."
     }
   }
 }
