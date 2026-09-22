@@ -6807,5 +6807,5 @@ Full text: `DESIGN-DIRECTIVES.md` ("Verdict on the live site — pass 30", "Deci
 | CR-121.1 | implemented | aggregate SHA-256 `36db82655de9319469e9d07c863b082276c18318e9de6053ff1b4956af353a0c`; per-task SHA-256 `b572f5aba3e226b83c560d9b4a9035c17a2813e5a77c3a4527d1662fcb123f7c` | Exact staged v1.3.1 artifacts pinned. |
 | CR-121.2 | implemented | `test/jevbench-v131.test.mjs` | 18 reviewed full rows; Hopper 75.4 / #1. |
 | CR-121.3 | implemented | same focused test | Pending placeholders and private djev work absent. |
-| CR-121.4 | implemented | `lib/jevbench-v12.mjs`; `lib/jevbench-v12-tasks.mjs`; `/jev-models` | Existing views and CR-120 artifact-driven metadata preserved. |
-| CR-121.5 | in-progress | focused 15/15; full `npm test` pass; TypeScript clean; production build pass | Commit, deployment and both-host verification pending. |
+| CR-121.4 | implemented | `lib/jevbench-v12.mjs`; `lib/jevbench-v12-tasks.mjs`; `lib/jevbench-v12-topics.mjs`; `/jev-models` | Existing views and CR-120 artifact-driven metadata preserved; the older pinned topic aggregate remains a validated subset until upstream publishes topics for the new rows. |
+| CR-121.5 | in-progress | focused 15/15 + topic follow-up 5/5; full `npm test` pass; TypeScript clean; production build pass | First deploy exposed the topic subset invariant only during container static generation; fixed and locally rechecked. Follow-up commit, deployment and both-host verification pending. |
