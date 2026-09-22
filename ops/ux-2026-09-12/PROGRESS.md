@@ -7136,3 +7136,15 @@ engine, as for CR-127.1–.3.
 - **Independent live checks.** Both hosts served revision `5db1ebd0` with matching metadata. Unknown compare state and share metadata were checked on both hosts. The Unicode-normalized hero probe is 8/8; the raw mechanical probe is retained because the DOM uses non-breaking spaces. The mixed measured/self-reported/preliminary compare audit is 40/40 in both hosts × desktop/mobile × light/dark (`/opt/benchmarkheaven/state/ux-evidence/review-20260922T221002Z/cr127-live/`). Union Alpha's preliminary model sheet is 32/32 (`.../cr127-4-live.json`). The singular/plural audit is 100/100 (`.../d173-live/verification.json`). Screenshots were read; no visual, overflow or page-error defect was found.
 - **Status decisions.** As this gate did not implement these changes, CR-122.1–.4, CR-123.1–.5, CR-126.1–.5, CR-127.1–.4 and D173.1 are now `verified`. D172.1–.3 remain `verified` under the earlier Kimi K3 non-implementer sign-off. Evidence and the complete review are in `/opt/benchmarkheaven/state/ux-evidence/review-20260922T221002Z/` and `REVIEW-20260922T221002Z.md`.
 - **Acceptance decision.** X6 is not clear: CR-34.5, CR-37.1/CR-37.3, CR-38.1, CR-62.4, CR-73.5, CR-85.1 and CR-85.2 remain open/in-progress for Florian, source or scheduled-run reasons. `ALL-ACCEPTED` is not appended.
+
+## CR-128 — seeded 2026-09-22 (Codex, before score changes)
+
+Seeded from CR-128 in `04-CR-BRIEF.md` after checking `main`: CR-127 was the highest existing CR, so this request is CR-128. Scope is the four families in `/home/flori/jobs/bh-frontier-update-20260922/third-party-scores.json`. No score or application data has been changed in this seed commit.
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| CR-128.1 | open | `/home/flori/jobs/bh-frontier-update-20260922/THIRD-PARTY-SCORES.md`; `third-party-scores.json`; `RESULT.md` | Re-check sourced numbers, exact protocol identity and variant joins; prioritise only genuine Composite-slot inputs; deduplicate exact live rows. |
+| CR-128.2 | open | source captures and row locators to be recorded under CR-128 | Preserve source URL/date/hash, unit and basis; mark vendor claims self-reported; retain fallback and protocol caveats. |
+| CR-128.3 | open | `data/raw/benchmarks/registry.json`; selective evidence/ingest files to be recorded | Add only protocol-matched identities and manual snapshots; use the selective registry pipeline, not the full daily pipeline. |
+| CR-128.4 | open | both-host batch verification receipts to be recorded | Each small publication batch must be checked on both hosts for exact values, identities, basis and caveats. |
+| CR-128.5 | open | full test/build and final both-host receipts to be recorded | Independent different-family review, tests, typecheck, production build and per-family Composite/rank/Pareto/cost report. Do not manufacture Composite inputs. |
