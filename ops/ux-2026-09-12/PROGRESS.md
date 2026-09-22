@@ -7189,7 +7189,8 @@ Seeded from CR-128 in `04-CR-BRIEF.md` after checking `main`: CR-127 was the hig
   is outside the Next.js build graph and changes no file the build reads.
 - **Live (claude-opus, implementer of the verifier).** 101/101 on each host at revision `c49accc1`
   (`/opt/benchmarkheaven/state/ux-evidence/iter175/{canonical,legacy}/`), plus the card and the 390 px light screenshot
-  read by eye.
+  read by eye; re-run after this commit deployed and the 60 s switchover wait, **101/101 per host at `c641d543`**
+  (`/opt/benchmarkheaven/state/ux-evidence/iter175/post-deploy/{canonical,legacy}/`).
 - **Signed off by a non-claude, non-implementing engine.** The delegation ran **Kimi K3
   (`chutes/moonshotai/Kimi-K3-TEE`)** from `/tmp/iter175-signoff` with a read-only packet and no access to this
   checkout. It ran the verifier itself — **101/101 on each host, exit 0, both rounds** — and re-derived claims A–D with
