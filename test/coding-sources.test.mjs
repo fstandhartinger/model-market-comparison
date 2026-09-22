@@ -63,6 +63,8 @@ const SLUG_BOARDS = ['osworld-2', 'swe-rebench', 'gso', 'hyper-tau-bench', 'lisa
   // 2026-09-22 (iteration 169, CR-37.1): MCPMark Verified, model slugs with an optional effort suffix
   // (lib/board-identity.mjs parseMcpmarkVerifiedLabel).
   'mcpmark',
+  // 2026-09-22 (iteration 170, CR-37.1): CharXiv reasoning, product labels (lib/board-identity.mjs parseCharxivLabel).
+  'charxiv-reasoning',
   // 2026-09-19 (iteration 115, CR-54.2): six boards from Epoch AI's Benchmarking Hub ZIP, slug labels joined by
   // the same lib/coding-identity.mjs parseDeepSweId rule as DeepSWE/SimpleQA Verified. math_level_5 and
   // frontiermath_erdos stay excluded; recorded in data/raw/benchmarks/epoch-hub-decisions.json.

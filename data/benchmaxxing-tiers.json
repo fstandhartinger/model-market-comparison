@@ -383,6 +383,10 @@
     "mcpmark": {
       "tier": "secondary",
       "reason": "Public tasks, verify.py scripts and pinned MCP environments in the maintainers' GitHub repository (eval-sys/mcpmark), but no lab release post in our self-reported corpus quotes MCPMark, so it is public yet rarely quoted; each task is decided by its own script, not a judge."
+    },
+    "charxiv-reasoning": {
+      "tier": "judged",
+      "reason": "GPT-4o extracts each final answer from the model's response and scores it 0/1 against the ground-truth answer (README: \"scores graded by GPT-4o\"; rubric in src/constants.py of github.com/princeton-nlp/CharXiv); judge-graded boards stay outside the signal, as for Surge Chartography."
     }
   }
 }

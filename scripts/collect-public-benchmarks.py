@@ -1155,6 +1155,39 @@ def parse(source,spec,load_source):
                 'context':{'actual_model_name':model,'stated_effort':effort or 'not stated','runs':1,'tasks_total':total,
                     'service_success_rates':rates,'avg_execution_time_s':r['avgExecutionTime'],'board_updated_at':updated[1] if updated else None,
                     'page_notes':[n for n in notes if n.startswith(key+' ') or (' and '+key+' ') in n]}})
+    elif kind=='charxiv_val_csv':
+        # CharXiv (Princeton PLI, charxiv.github.io): the leaderboard page renders data/val_result.csv, whose header names
+        # "Overall" twice (reasoning, then descriptive), so the columns are read by position, never by name. Value = the
+        # reasoning Overall on the validation split (1,000 reasoning questions: 440 text-in-chart, 99 text-in-general,
+        # 232 number-in-chart, 229 number-in-general); where a row prints all four type scores they must reproduce it.
+        # The Human and random-baseline rows are not models. A new header, split or question mix is a new identity.
+        req=spec['require'];page=text(load_source(spec['frontend_source']));readme=' '.join(load_source(spec['method_source']).split())
+        for phrase in req['page_text']:
+            if phrase not in page:raise ValueError('CharXiv page no longer states: '+phrase[:80])
+        for phrase in req['method_text']:
+            if phrase not in readme:raise ValueError('CharXiv README no longer states: '+phrase[:80])
+        table=list(csv.reader(io.StringIO(source.strip().lstrip('﻿'))))
+        if not table or table[0]!=req['header']:raise ValueError('CharXiv CSV header changed')
+        weights=req['reasoning_types'];total=sum(weights.values());skip=set(req['baseline_rows']);exceptions=req.get('reviewed_inconsistencies',{})
+        if total!=req['reasoning_questions']:raise ValueError('CharXiv: reviewed question counts do not add up')
+        seen=set();baselines=set()
+        for index,r in enumerate(table[1:],1):
+            if len(r)!=len(req['header']):raise ValueError(f'CharXiv CSV row {index} width changed')
+            name=r[0].strip()
+            if not name or name in seen:raise ValueError('CharXiv CSV row unnamed or repeated: '+name)
+            seen.add(name)
+            if name in skip:baselines.add(name);continue
+            if r[1] not in req['weights']:raise ValueError(f'CharXiv {name!r}: unknown weight class {r[1]!r}')
+            overall=numeric(r[3])
+            if overall is None or not 0<=overall<=100:raise ValueError(f'CharXiv {name!r}: reasoning Overall unreadable')
+            parts=[numeric(r[4+i]) for i in range(len(weights))]
+            if all(p is not None for p in parts):
+                gap=abs(sum(p*w for p,w in zip(parts,weights.values()))/total-overall)
+                if gap>exceptions.get(name,req['weighted_tolerance']):raise ValueError(f'CharXiv {name!r}: type scores do not reproduce the reasoning Overall')
+            rows.append({'name':name,'value':overall,'source_row':index,
+                'context':{'weight':r[1],'size_vision_language_b':r[2],'split':'validation','reasoning_types':dict(zip(weights,[r[4+i] for i in range(len(weights))])),
+                    'descriptive_overall':r[8],**({'source_inconsistency':f'type scores reproduce the Overall only within {exceptions[name]} points'} if name in exceptions else {})}})
+        if baselines!=skip:raise ValueError('CharXiv baseline rows changed: '+', '.join(sorted(skip-baselines)))
     else:raise ValueError('Unknown parser kind '+kind)
     if not isinstance(rows,list) or not rows:raise ValueError('No source result rows')
     return rows

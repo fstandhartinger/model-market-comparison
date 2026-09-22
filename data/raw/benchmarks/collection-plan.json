@@ -5982,6 +5982,98 @@
         "https://mcpmark.ai/leaderboard/verified",
         "https://raw.githubusercontent.com/eval-sys/mcpmark/main/README.md"
       ]
+    },
+    {
+      "benchmark_id": "charxiv-reasoning::val-v1.0",
+      "parser": {
+        "kind": "charxiv_val_csv",
+        "name_field": "name",
+        "value_field": "value",
+        "plain_text_names": true,
+        "method_source": {
+          "url": "https://raw.githubusercontent.com/princeton-nlp/CharXiv/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-charxiv/f6aa799fd28e2a90b5d6.gz",
+          "sha256": "f6aa799fd28e2a90b5d6fe03b51f08583d6c7c42d6edbbfc9cae86975313919a",
+          "retrieved_at": "2026-09-22T11:42:51.366294+00:00"
+        },
+        "frontend_source": {
+          "url": "https://charxiv.github.io/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-charxiv/12da88427b20a9970011.gz",
+          "sha256": "12da88427b20a9970011555ca8bafef0962666f3ea8b5c23d45dfc7e5259d3ae",
+          "retrieved_at": "2026-09-22T11:42:48.825284+00:00"
+        },
+        "require": {
+          "header": [
+            "Model",
+            "Weight",
+            "Size [V/L] (B)",
+            "Overall",
+            "TC",
+            "TG",
+            "NC",
+            "NG",
+            "Overall",
+            "INEX",
+            "ENUM",
+            "PATT",
+            "CNTG",
+            "COMP"
+          ],
+          "page_text": [
+            "Note that all models are evaluated in a zero-shot setting with a set of natural instructions for each question type.",
+            "The numbers below are based on the model performance on the validation set, which consists of 1,000 charts and 5,000 questions in total."
+          ],
+          "method_text": [
+            "*Current Version: v1.0*",
+            "scores graded by GPT-4o"
+          ],
+          "reasoning_types": {
+            "TC": 440,
+            "TG": 99,
+            "NC": 232,
+            "NG": 229
+          },
+          "reasoning_questions": 1000,
+          "weighted_tolerance": 0.006,
+          "reviewed_inconsistencies": {
+            "Pixtral 12B": 0.12
+          },
+          "weights": [
+            "Proprietary",
+            "Open",
+            "Domain-specific"
+          ],
+          "baseline_rows": [
+            "Human",
+            "Random (GPT-4o)"
+          ]
+        }
+      },
+      "status": "collected",
+      "reason": "The CharXiv authors' own leaderboard CSV: every model row with its reasoning accuracy on the validation split.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-charxiv; python3 ops/daily/public-candidate.py CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "CSV (GitHub Pages), rendered by the leaderboard page",
+        "locator": "charxiv.github.io/data/val_result.csv, the file the leaderboard page loads (CsvToHtmlTable csv_path): Model, Weight, Size, then reasoning Overall and its four question types (TC, TG, NC, NG), then descriptive Overall and its five types. The value is column 4, the reasoning Overall (percent correct on the 1,000 validation reasoning questions); descriptive accuracy stays in the protocol.",
+        "version_guard": "The CSV header must stay exactly Model, Weight, Size [V/L] (B), Overall, TC, TG, NC, NG, Overall, INEX, ENUM, PATT, CNTG, COMP (the first Overall is reasoning, the second descriptive; read by position); every row 14 cells, unique model names, weight class Proprietary / Open / Domain-specific, the Human and Random (GPT-4o) baseline rows present and skipped; where a row prints all four reasoning type scores, weighting them 440 / 99 / 232 / 229 (text-in-chart, text-in-general, number-in-chart, number-in-general; 1,000 reasoning questions) must reproduce its reasoning Overall within 0.006 points (Pixtral 12B, a reviewed source inconsistency: within 0.12). The leaderboard page must still say all models are evaluated zero-shot and that the numbers are on the validation set of 1,000 charts and 5,000 questions, and still render data/val_result.csv; the repository README must still state Current Version: v1.0 and that the released evaluations are graded by GPT-4o. Another header, split, question mix or version is a new identity, never a silent update of this one.",
+        "notes": "charxiv.github.io has no robots.txt (404 on 2026-09-22); GitHub Pages, one capture per day. Check the shared source cooldown first; stop on 403, 429, challenges or unexpected content."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "The CSV header must stay exactly Model, Weight, Size [V/L] (B), Overall, TC, TG, NC, NG, Overall, INEX, ENUM, PATT, CNTG, COMP (the first Overall is reasoning, the second descriptive; read by position); every row 14 cells, unique model names, weight class Proprietary / Open / Domain-specific, the Human and Random (GPT-4o) baseline rows present and skipped; where a row prints all four reasoning type scores, weighting them 440 / 99 / 232 / 229 (text-in-chart, text-in-general, number-in-chart, number-in-general; 1,000 reasoning questions) must reproduce its reasoning Overall within 0.006 points (Pixtral 12B, a reviewed source inconsistency: within 0.12). The leaderboard page must still say all models are evaluated zero-shot and that the numbers are on the validation set of 1,000 charts and 5,000 questions, and still render data/val_result.csv; the repository README must still state Current Version: v1.0 and that the released evaluations are graded by GPT-4o. Another header, split, question mix or version is a new identity, never a silent update of this one.",
+      "source": {
+        "url": "https://charxiv.github.io/data/val_result.csv",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-charxiv/11fe8260714bffef6062.gz",
+        "sha256": "11fe8260714bffef6062091524d3f9103e62d704522bea37408de4b7f34607c0",
+        "retrieved_at": "2026-09-22T11:42:46.260239+00:00"
+      },
+      "protocol": "CharXiv v1.0 (Princeton PLI, NeurIPS 2024 Datasets & Benchmarks): multimodal models answer questions about 2,323 real charts from arXiv papers; value = reasoning accuracy (percent) on the validation split's 1,000 reasoning questions (440 text-in-chart, 99 text-in-general, 232 number-in-chart, 229 number-in-general), zero-shot with natural instructions; GPT-4o extracts each final answer and scores it 0/1 against the ground-truth answer. The board names models by product label; a parenthesis states the reasoning level (\"o3 (high)\").",
+      "basis": "measured",
+      "minimum_rows": 80,
+      "source_urls": [
+        "https://charxiv.github.io/data/val_result.csv",
+        "https://charxiv.github.io/",
+        "https://raw.githubusercontent.com/princeton-nlp/CharXiv/main/README.md"
+      ]
     }
   ]
 }

@@ -178,7 +178,8 @@
     "hyper-tau-bench": "The reward is the built agent's pass rate on τ³-bench tasks; judge models only check whether natural-language assertions in a task's pass criteria hold.",
     "lisanbench": "Chains are validated programmatically against a pinned dictionary (edit distance 1, no repeats); no judge model.",
     "mcp-atlas": "An LLM judge scores the answer claim by claim against the published ground-truth answer (1 / 0.5 / 0) and a task passes at 75 % coverage — the ground truth still decides; nothing is ranked or rated by preference.",
-    "surge-chartography": "Gemini 3.5 Flash only checks whether each answer falls inside the expert-set acceptable range of the golden answer — the ground truth still decides (added 2026-09-22, iteration 168)."
+    "surge-chartography": "Gemini 3.5 Flash only checks whether each answer falls inside the expert-set acceptable range of the golden answer — the ground truth still decides (added 2026-09-22, iteration 168).",
+    "charxiv-reasoning": "GPT-4o only extracts the final answer and scores it 0/1 against the ground-truth answer — an equality check, the ground truth decides (added 2026-09-22, iteration 170)."
   },
   "freshness": {
     "aa-aime": {

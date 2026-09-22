@@ -4,7 +4,7 @@
 // ops/benchmark-table-2026-09-15/identity-map-review.json. Review the diff of both files before committing.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { identityJoins, parseDeepSweId, parseScaleLabel, parseFrontierCodeId, parseCursorBenchLabel, parseSweBenchProLabel } from '../../lib/coding-identity.mjs';
-import { boardJoins, parseBullshitBenchId, parseApprenticeBenchId, parseValsIndexId, parseOsworld2Id, parseMathArenaLabel, parseWeirdmlV3Label, parseSweRebenchLabel, parseGsoId, parseHyperTauId, parseLisanBenchId, parseVulcanbenchFrontierLabel, parseKernelbenchCudaLabel, parseFrontiersweV2Label, parsePosttrainbenchLabel, parseRsiExamLabel, parseToolathlonVerifiedLabel, parseToolathlonArchiveLabel, parseProgrambenchLabel, parseMcpAtlasLabel, livebenchJoins, parseContextArenaId, parseBlueprintBenchLabel, parseLhtbLabel, parseRnEvalsLabel, parseResearchClawBenchLabel, parseMlsBenchLabel, parseSurgeLabel, parseInterfazeSobLabel, parseVitaBenchLabel, parseMcpmarkVerifiedLabel } from '../../lib/board-identity.mjs';
+import { boardJoins, parseBullshitBenchId, parseApprenticeBenchId, parseValsIndexId, parseOsworld2Id, parseMathArenaLabel, parseWeirdmlV3Label, parseSweRebenchLabel, parseGsoId, parseHyperTauId, parseLisanBenchId, parseVulcanbenchFrontierLabel, parseKernelbenchCudaLabel, parseFrontiersweV2Label, parsePosttrainbenchLabel, parseRsiExamLabel, parseToolathlonVerifiedLabel, parseToolathlonArchiveLabel, parseProgrambenchLabel, parseMcpAtlasLabel, livebenchJoins, parseContextArenaId, parseBlueprintBenchLabel, parseLhtbLabel, parseRnEvalsLabel, parseResearchClawBenchLabel, parseMlsBenchLabel, parseSurgeLabel, parseInterfazeSobLabel, parseVitaBenchLabel, parseMcpmarkVerifiedLabel, parseCharxivLabel } from '../../lib/board-identity.mjs';
 
 const BOARDS = [
   { prefix: 'deepswe::', parse: parseDeepSweId, basis: 'measured' },
@@ -106,6 +106,9 @@ const BOARDS = [
   // 2026-09-22 (iteration 169, CR-37.1): MCPMark Verified, `<model slug>[-<effort>]`; a stated effort joins that exact
   // configuration, a key without one joins only single-default families (kimi-k2.7-code yes, kimi-k2.6 no).
   { prefix: 'mcpmark::', parse: parseMcpmarkVerifiedLabel, join: boardJoins, basis: 'measured' },
+  // 2026-09-22 (iteration 170, CR-37.1): CharXiv reasoning, product labels with an optional "(<level>)"; a stated level joins
+  // that exact configuration, a label without one joins only single-default families.
+  { prefix: 'charxiv-reasoning::', parse: parseCharxivLabel, join: boardJoins, basis: 'measured' },
   // 2026-09-21 (iteration 158, CR-37.1): ResearchClawBench's ResearchHarness rows, product names without any setting;
   // only single-default-configuration families join.
   { prefix: 'researchclawbench::', parse: parseResearchClawBenchLabel, join: boardJoins, basis: 'measured' },

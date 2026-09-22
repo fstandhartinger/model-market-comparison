@@ -16488,6 +16488,88 @@
           "excerpt": "MCPMark Verified is now the default. The standard tasks in this repository are the Verified set — every environment version-pinned and every verifier stabilized. Results from earlier task versions are deprecated and not directly comparable … `standard` (default) covers the full benchmark (127 tasks today). … Each task ships with an automated `verify.py` for objective, reproducible evaluation"
         }
       ]
+    },
+    {
+      "id": "charxiv-reasoning::val-v1.0",
+      "name": "CharXiv Reasoning",
+      "version": "val-v1.0",
+      "version_status": "published",
+      "family": "charxiv-reasoning",
+      "category": "Vision",
+      "one_sentence_description": "Can a multimodal model reason over the real, messy charts in scientific papers — combining values, trends and labels across a figure — rather than read off templated plots?",
+      "scoring": {
+        "metric": "Reasoning accuracy in percent on the validation split: the share of its 1,000 reasoning questions (one per chart) answered correctly, each final answer extracted and scored 0/1 against the ground truth by GPT-4o",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "The CSV the leaderboard renders prints the reasoning Overall and its four question types (text-in-chart 440, text-in-general 99, number-in-chart 232, number-in-general 229 questions — counts recovered from the board and checked on collection: the weighted types reproduce every fully printed row within 0.006 points, Pixtral 12B within 0.12, a source inconsistency kept in its protocol), then the descriptive Overall (4,000 questions) and its five types; only the reasoning Overall is ingested, descriptive accuracy stays in each row's protocol. Human 80.5, random baseline 10.8 (both skipped). The leaderboard stops at o3 (high), o4 mini (high) and Claude 3.7 Sonnet (spring 2025); newer CharXiv figures are lab-card claims (CharXiv with or without tools), not this board. Secondary benchmark, never a Composite input."
+      },
+      "maintainer": "Princeton Language and Intelligence (princeton-nlp/CharXiv)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://charxiv.github.io/#leaderboard",
+      "publication_urls": [
+        {
+          "url": "https://charxiv.github.io/#leaderboard",
+          "type": "official_leaderboard",
+          "role": "Leaderboard (renders data/val_result.csv)"
+        },
+        {
+          "url": "https://github.com/princeton-nlp/CharXiv",
+          "type": "github",
+          "role": "Evaluation code, prompts and grading rubric (src/constants.py), leaderboard table in the README"
+        },
+        {
+          "url": "https://huggingface.co/datasets/princeton-nlp/CharXiv",
+          "type": "huggingface",
+          "role": "Charts, questions and the released responses and GPT-4o gradings (existing_evaluations)"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-charxiv; python3 ops/daily/public-candidate.py CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "CSV (GitHub Pages), rendered by the leaderboard page",
+        "locator": "charxiv.github.io/data/val_result.csv, the file the leaderboard page loads (CsvToHtmlTable csv_path): Model, Weight, Size, then reasoning Overall and its four question types (TC, TG, NC, NG), then descriptive Overall and its five types. The value is column 4, the reasoning Overall (percent correct on the 1,000 validation reasoning questions); descriptive accuracy stays in the protocol.",
+        "version_guard": "The CSV header must stay exactly Model, Weight, Size [V/L] (B), Overall, TC, TG, NC, NG, Overall, INEX, ENUM, PATT, CNTG, COMP (the first Overall is reasoning, the second descriptive; read by position); every row 14 cells, unique model names, weight class Proprietary / Open / Domain-specific, the Human and Random (GPT-4o) baseline rows present and skipped; where a row prints all four reasoning type scores, weighting them 440 / 99 / 232 / 229 (text-in-chart, text-in-general, number-in-chart, number-in-general; 1,000 reasoning questions) must reproduce its reasoning Overall within 0.006 points (Pixtral 12B, a reviewed source inconsistency: within 0.12). The leaderboard page must still say all models are evaluated zero-shot and that the numbers are on the validation set of 1,000 charts and 5,000 questions, and still render data/val_result.csv; the repository README must still state Current Version: v1.0 and that the released evaluations are graded by GPT-4o. Another header, split, question mix or version is a new identity, never a silent update of this one.",
+        "identity_policy": "source_label",
+        "notes": "Exact-join policy: a parenthesis states the reasoning level (o4 mini (high) joins o4-mini::high; o1 (high) and o3 (high) have no such catalog configuration); a label without one joins only a family the catalog holds as a single default configuration, and a dated label joins its dated release (GPT-4o 240513 → gpt-4o-may-24). Undated labels whose product had several releases in the catalog (Claude 3.5 Sonnet, Gemini 1.5 Pro/Flash, Reka Flash), labels the catalog holds twice (GPT-4o 241120, GPT-4o Mini) and Claude 3.7 Sonnet (reasoning mode not stated) never join. robots.txt: none (404); attribute the CharXiv authors (Princeton PLI) and link the leaderboard. Joins: data/raw/benchmarks/identity-map.json (lib/board-identity.mjs parseCharxivLabel)."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated; rows were added with model releases until spring 2025 (README news 2024-07 to 2025-04; newest rows o3 (high), o4 mini (high), Claude 3.7 Sonnet).",
+        "check_recommendation": "Daily with the ordinary refresh; a changed header, split or question mix is a new identity and needs a reviewed change."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Best reasoning accuracy 78.6 (o3 (high)) against a human 80.5 on 2026-09-22. Computed saturation (CR-38.2) applies on build."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://charxiv.github.io/data/val_result.csv",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-charxiv/11fe8260714bffef6062.gz",
+          "sha256": "c264d10daf6c0fef2a102788bb90781de3e3bb407946cf74bf7722df38bfe998",
+          "fetched_at": "2026-09-22T11:42:46.260239+00:00",
+          "excerpt": "Model,Weight,Size [V/L] (B),Overall,TC,TG,NC,NG,Overall,INEX,ENUM,PATT,CNTG,COMP … Human,N/A,Unknown,80.50,77.27,77.78,84.91,83.41,92.10 … o4 mini (high),Proprietary,Unknown,72.00 … o3 (high),Proprietary,Unknown,78.60 … Claude 3.7 Sonnet,Proprietary,Unknown,64.20"
+        },
+        {
+          "url": "https://charxiv.github.io/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-charxiv/12da88427b20a9970011.gz",
+          "sha256": "4afb6c75ed1355e3e1bb2a37a37a7f701e0f24f3b543ab192d705d7829b9117a",
+          "fetched_at": "2026-09-22T11:42:48.825284+00:00",
+          "excerpt": "We evaluate general-purpose MLLMs on CharXiv and provide a leaderboard for the community to track progress. Note that all models are evaluated in a zero-shot setting with a set of natural instructions for each question type. The numbers below are based on the model performance on the validation set, which consists of 1,000 charts and 5,000 questions in total. … csv_path: 'data/val_result.csv'"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/princeton-nlp/CharXiv/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-charxiv/f6aa799fd28e2a90b5d6.gz",
+          "sha256": "341dd3ae6fca0660ca53acd810c2786547410e13a5b74cfce2f3cc3f2f7d552e",
+          "fetched_at": "2026-09-22T11:42:51.366294+00:00",
+          "excerpt": "*Current Version: v1.0* … We released our evaluation results on all 34 MLLMs that we have tested so far -- this includes all models' responses to CharXiv's challenging questions, scores graded by GPT-4o, as well as aggregated stats."
+        }
+      ]
     }
   ],
   "aa_field_map": [
