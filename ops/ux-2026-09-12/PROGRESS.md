@@ -6951,3 +6951,104 @@ engine, as for CR-127.1–.3.
   `CR-73.5`, `CR-85.1`/`.2` (scheduled runs or external sources) — CR-127 was the last unblocked one. Owed to the next
   non-claude-opus engine: a sign-off on `CR-127.1`–`.4` (re-run `verify-cr-127.mjs` and `verify-cr-127-4.mjs` on both
   hosts and flip the four rows).
+
+
+## Iteration 172 — 2026-09-22 20:50 → ~21:50 UTC (claude-opus, work): the unverified provider and the unnamed labs
+
+- **Why these items.** Every CR row is blocked on Florian (`CR-34.5`, `CR-62.4`), on a source (`CR-37.2` Lumina pause,
+  `CR-37.3`), or on a scheduled unattended run (`CR-38.1`, `CR-73.5`, `CR-85.1`, `CR-85.2`), and `CR-127.1`–`.4` need a
+  **non-claude-opus** sign-off this iteration cannot give itself. What was unblocked came from today's own daily
+  receipt, which names its open item in words: `Neue Anbieter ohne gepruefte Metadaten (nicht in EU-/Nicht-US-Filtern):
+  Unbiased`. Only writer in this checkout.
+- **D172.1 (`5e89a8f7`) — the provider "Unbiased" is curated, so the filters exclude it for a reason.** Since 2026-09-17 a
+  provider new to OpenRouter publishes with `metadata_unverified` instead of failing the refresh: excluded from the
+  EU-hosted and non-US filters, named in the build output and the digest until someone checks it. OpenRouter's provider
+  table gives it **no headquarters**, so the country came from the vendor's own pages (read 2026-09-22, quotes retained in
+  `data/research/unbiased-and-unnamed-labs-2026-09-22.md`): legal entity **Circuit & Chisel, Inc.**, 268 Post Road STE
+  200 PMB 586312, Fairfield CT, Delaware law, and in its privacy section **"We are headquartered in the United States"**
+  with personal information that "will necessarily be accessed and processed in the U.S."; the site describes a
+  remote-first team across the US and Canada. Curated: `country: US`, `eu_hosted: false`, `non_us: false` — no EU serving
+  region is published anywhere, so both filters keep excluding it, now on a checked fact. The note also records the data
+  handling both sources agree on (no training without written consent; customer content kept at most 30 days for abuse
+  prevention — which is why `data_private` stays false and the default privacy filter still hides the price) and
+  **discloses that Pareto is a composite**: the vendor says it "runs several models on your request" and keeps the best
+  answer, so the published price buys that ensemble rather than one model. The EDPO representatives in Brussels and
+  London are GDPR representation, not residency, and were not read as an EU flag. Cross-check re-dated: 96 curated
+  providers, 45 agree, 0 new disagreements, Unbiased joins the 14 rows OpenRouter lists without a headquarters.
+- **D172.2 (`bc830c3e`) — the three rows that named no lab.** `CR-25.4` reserves `Other` for a lab whose home country is
+  not documented and `lib/regions.mjs` never guesses one; these three were in it because nothing *derived* the maker.
+  `pareto::default` (OpenRouter prints no `Vendor: ` prefix, so the author slug was never read) → **Unbiased**;
+  `swe-1.7-lightning-max::default` → **Cognition AI** (cognition.com/blog/swe-1-7: "Today, we're launching SWE-1.7, the
+  most capable model we've trained so far"; the AA Coding Agent Index row is scored under Cognition's own Devin CLI
+  harness; entity "Cognition AI, Inc", terms under California law); `muse-spark-1.3-max::default` → **Meta** (every Muse
+  Spark row in the OpenRouter catalog is named "Meta: Muse Spark …" and AA scores `muse-spark-1.3::max` as Meta). Both
+  new labs' home countries are now in `LAB_COUNTRIES`, so the "Model lab based in" filter can place them instead of
+  dropping them into the guess-free bucket. **Not done deliberately:** re-attaching the Intelligence.ai result to the
+  `muse-spark-1.3` family — the board publishes it at product scope under its own name, the attachment note says so, and
+  moving an observation between variants spawns history estimates. The label was wrong, the attachment was not.
+- **D172.3 (`cf73a91b`) — a model nobody can download is not "open weights".** Found while reading the D172.2
+  screenshots: `swe-1.7-lightning-max::default` wore the green **open weights** badge and passed the "Open models only"
+  filter. The heuristic is closed-by-lab and *open by default* (`CLOSED_ORGS` plus the named `gpt-oss`/`gemma`
+  exceptions), so a lab nobody had classified silently produced an open-weights claim about a proprietary model — this
+  was already true while the row still read "Other", so D172.2 exposed it rather than caused it. Cognition publishes no
+  weights: the launch post offers SWE-1.7 inside Devin only, the board row carries no Hugging Face id, and
+  `huggingface.co/api/models?author=cognition` returns an empty list (checked 2026-09-22). "Cognition AI" joins
+  `CLOSED_ORGS`; the data diff is one boolean. The probe is non-vacuous on both sides — the row has neither AA
+  open-weights metadata nor a Hugging Face repository, so only the lab classification can decide it, and the test also
+  asserts the rule is still open-by-default, so an inverted heuristic cannot make it pass for the wrong reason.
+- **Tests.** `test/provider-meta-unbiased.test.mjs` (4 probes) and `test/model-lab-attribution.test.mjs` (4 probes), every
+  guard checked to fail on its own mutation (curated entry dropped, `eu_hosted` flipped, either org back to "Other", the
+  author alias removed, a lab country removed, the composite sentence removed, the row still unverified, a wrong lab, the open-weights
+  boolean flipped back, the closed-lab entry removed).
+  Both are non-vacuous on the source side: they assert that OpenRouter really publishes no headquarters (if it ever
+  does, the test asks for the country to be re-checked), that the Devin CLI board row and the Intelligence.ai id really
+  exist, and that the catalog really names Muse Spark as Meta's — a relabelled source fails instead of passing quietly.
+  No global "no model may be `Other`" assertion: an unknown new vendor must not break the unattended refresh, which is
+  the whole point of the 2026-09-17 fail-open rule.
+- **Gates (tree before each commit):** `node scripts/build-dataset.mjs` 863 models / 669 families / 94 providers / 2,976
+  offers — the data diff is exactly the one provider row, the two org strings and the re-dated cross-check line;
+  `npm test` 1127 tests / 1126 pass / 0 fail / 1 skip at the last commit (1123/1126 at the earlier two);
+  `npx tsc --noEmit -p .` clean; `npm run build` rc 0 before each push.
+- **Also read, no work needed.** (a) **OpenRouter billing is restored.** `/api/v1/credits` now answers 420.911 credited /
+  402.850 used (≈ USD 18 left; on 21 Sep it was 400.91 / 401.11, i.e. negative), and a bounded live completion on
+  `z-ai/glm-5.3-flash` returned HTTP 200 at 21:13 UTC instead of the 402 every paid worker call has been getting since
+  the 21 Sep 19:11 run. That is the single cause behind today's four stale sources — `aa-benchmark-fields` (never good,
+  11 days), `livebench::2026-06-25` (6), `matharena-brokenarxiv::2026-06` (4), `vulcanbench-frontier::4` (3) — all of
+  which reported `protocol not approved` for want of a worker. Tomorrow's 05:17 run is the first that can approve a
+  protocol again; nothing was refreshed by hand, because what `CR-85.1` and `CR-73.5` are waiting for is an unattended
+  run. Florian was told on 21 Sep and has acted, so no new notification was sent. (b) `pareto::default`'s page says
+  "1 offers" in the header and "Top 0 cheapest providers · No per-token pricing matches the active global filters" in
+  the card. That is the default confidentiality filter (`allowDataTraining: false`) acting on `data_private: false`,
+  which is what Unbiased's own 30-day abuse-prevention retention makes true — correct behaviour, recorded so it is not
+  re-opened as a defect.
+
+- **Live (claude-opus, implementer).** Each commit was watched onto both hosts and verified after the 60 s switchover
+  wait: `5e89a8f7` at 21:08 UTC — `verify-iter172.mjs` **53/53 per host**
+  (`/opt/benchmarkheaven/state/ux-evidence/iter172-d1/{canonical,legacy}/`); `bc830c3e` at 21:16 — **72/72 per host**
+  (`.../iter172/`); `cf73a91b` at 21:27 — **77/77 per host** (`.../iter172-d3/`). The last run is the complete one: the
+  `/api/providers` row for Unbiased is curated (`country US`, `website`, no `metadata_unverified`, all three region flags
+  false, the note carrying the headquarters quote, the dated check and the composite sentence), **no** published provider
+  is left unverified, the three model rows carry their lab in `/api/models`, no published model row is `Other`, Pareto's
+  only offer is the Unbiased route and fails the EU filter, and SWE-1.7 Lightning Max is not open weights. In the UI, at
+  1440×1000 and 390×844 in both themes: the provider directory names Unbiased with `US` and no EU-capable/Non-US badge,
+  the selected provider shows "HQ: US" with the full note and no "not yet verified" placeholder, each of the three model
+  pages prints its lab in the subtitle and in the page description ("… by Unbiased" / "by Cognition AI" / "by Meta"),
+  SWE-1.7 Lightning Max shows no "open weights" badge, no page has horizontal overflow and no context raised a page
+  error. Screenshots read (provider explorer and all three model pages, 16 per host). Being the implementer, this
+  iteration cannot set these rows `verified`.
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| D172.1 | implemented | `5e89a8f7`; `data/raw/provider-meta.json`; `data/research/unbiased-and-unnamed-labs-2026-09-22.md`; `test/provider-meta-unbiased.test.mjs`; `ops/ux-2026-09-12/bin/verify-iter172.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter172-d1/` and `/opt/benchmarkheaven/state/ux-evidence/iter172/` | "Unbiased" curated from its own terms: HQ US, out of the EU/non-US filters for a stated reason, Pareto's composite nature disclosed. Implementer verification only; needs a non-claude-opus sign-off. |
+| D172.2 | implemented | `bc830c3e`; `scripts/build-dataset.mjs`; `lib/regions.mjs`; `test/model-lab-attribution.test.mjs`; same evidence dirs | Pareto → Unbiased, SWE-1.7 Lightning Max → Cognition AI, Muse Spark 1.3 Max → Meta; both new labs' home countries documented, so "Model lab based in" can place them. Implementer verification only; needs a non-claude-opus sign-off. |
+| D172.3 | implemented | `cf73a91b`; `scripts/build-dataset.mjs` (`CLOSED_ORGS`); `test/model-lab-attribution.test.mjs`; same evidence dirs | SWE-1.7 Lightning Max no longer claims open weights; Cognition classified as a closed-weights lab from its own launch post and an empty Hugging Face author listing. Implementer verification only; needs a non-claude-opus sign-off. |
+
+- **Owed to a non-claude-opus engine:** a sign-off on `D172.1`–`D172.3` (re-run `ops/ux-2026-09-12/bin/verify-iter172.mjs`
+  on both hosts and flip the three rows) — on top of the `CR-127.1`–`.4` sign-off iteration 171 left.
+- **Next.** Tomorrow's 05:17 daily is the first unattended refresh after these three. No data effect is expected: the two
+  guesses live in code and the curated row in `provider-meta.json`, so a re-collected catalog keeps all of them, and the
+  receipt's "Neue Anbieter ohne gepruefte Metadaten" line should be gone unless OpenRouter lists another new provider.
+  It is also the first scheduled run since 21 Sep that can approve a source protocol at all, so `aa-benchmark-fields`,
+  `livebench::2026-06-25`, `matharena-brokenarxiv::2026-06` and `vulcanbench-frontier::4` are the rows to read in its
+  receipt, together with the `CR-38.1` publication receipt, the `CR-85.1` digest and the `CR-73.5` timing. X6's open list
+  is unchanged: `CR-34.5` and `CR-62.4` (Florian), `CR-37.3`, `CR-38.1`, `CR-73.5`, `CR-85.1`, `CR-85.2`.
