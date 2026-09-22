@@ -50,6 +50,9 @@ export function CompareLegend() {
     <summary className="cursor-pointer select-none text-gray-400 hover:text-inherit">Legend: marks and tags</summary>
     <dl className="mt-2 grid grid-cols-[auto_1fr] items-baseline gap-x-3 gap-y-1.5">
       <Row id="best-of-variants" term={<span className="whitespace-nowrap">best of variants</span>}>The model&apos;s best measured reasoning variant on that benchmark; the variant is named beside it.</Row>
+      {/* CR-127.3: the compare table shows vendor claims too, so it needs the same † line the matrix legend has —
+          a phone reader cannot reach the mark's own title. */}
+      <Row id="self-reported" term={<span aria-hidden="true">†</span>}>A developer&apos;s own report, not an independent measurement. Here it earns no percentile and no tint: the cell says <span className="whitespace-nowrap">developer&apos;s claim</span> instead of a bar.</Row>
       <Row id="preliminary" term={<span aria-hidden="true">‡</span>}>{PRELIMINARY_NOTE} Here it also earns no percentile and no tint.</Row>
       <Row id="percentile" term={<span className="inline-block h-1 w-7 overflow-hidden rounded-full bg-[rgb(var(--line)/.5)] align-middle" aria-hidden="true"><span className="block h-full w-2/3 rounded-full bg-accent" /></span>}>The value&apos;s percentile among every model we hold for that benchmark — not among the compared models.</Row>
       <Row id="significance" term={<span className="whitespace-nowrap">tinted cell</span>}>The best measured relative position in that row; small differences are not evidence of significance.</Row>

@@ -6831,4 +6831,57 @@ vendor publishes.
 | CR-126.3 | implemented | `data/raw/benchmarks/self-reported-candidates.json` refusals | Seven refusals logged with their reason: five competitor cells (OpenAI states those came from publicly available reports — secondary quotes) and two Luna figures the post gives only as a delta and a ratio. |
 | CR-126.4 | implemented | `data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/manifest.json` | The capture tool's own HTTP 403 receipt for openai.com stays in the manifest next to the retained bytes; `capture_note` records that robots.txt allows the path, that the post was loaded once in the shared desktop Chrome, and that the document response was kept unchanged. |
 | CR-126.5 | verified | `2c47f5eb`; `/home/flori/jobs/bh-launch-ingest-20260922-14247142/live-verification.json`, `page-*.png`, `compare-*.png` | Registry and score-evidence validation clean; full tests 1110 pass / 0 fail / 1 skip (Node 26), `tsc --noEmit` and `npm run build` clean. Live on both hosts at 20:09 UTC, 18/18 API checks each: `/api/models` lists `gpt-6-sol::max`, `gpt-6-sol::xhigh` and `gpt-6-luna::max` with release date and price, and all six observations return their exact value, unit, `basis: self_reported` and the openai.com source. Rendered model pages show every value marked "developer's claim"; the compare page resolves both bare family keys and its evidence panel names the basis and the source. The push waited for the daily transaction's lock rather than overriding it. |
-| — | open | — | Pre-existing, not introduced here: a **collapsed** compare-table cell carries no self-reported marker and labels the cohort "Published board" for every vendor self-report (CR-123's Opus 5.5 rows render the same). The basis is only visible after expanding the row. Worth its own change request. |
+| — | closed | `ops/ux-2026-09-12/PROGRESS.md` CR-127 | **Taken up as CR-127 by iteration 171 (claude-opus).** Pre-existing, not introduced here: a **collapsed** compare-table cell carries no self-reported marker and labels the cohort "Published board" for every vendor self-report (CR-123's Opus 5.5 rows render the same). The basis is only visible after expanding the row. Worth its own change request. |
+
+## CR-127 — 2026-09-22: the collapsed Compare cell says on which basis its number stands
+
+Raised as an open item at the foot of CR-126 by the launch-sniper ingest job: in the Compare table a *collapsed*
+cell rendered a developer's own report exactly like an independent measurement — no mark, no label, just the number
+under a row subtitled "Published board". The basis only appeared after expanding the row, which is not where a
+reader looks first. Every other benchmark surface of ours already marks it: the model page's benchmark sheet
+(`BenchmarkSheetLazy`) prints † and "developer's claim", and the matrix legend (`TableLegend`) carries the sentence
+"A developer's own report, not an independent measurement." Compare was the one table that did not.
+
+**What was checked before changing anything.** The second half of the complaint — the generic "Published board"
+subtitle — is a property of the *axis* (benchmark × harness × configuration), not of the cell: `cohortOf()` falls back
+to that string whenever an observation states neither a harness nor a configuration, and the same axis also carries the
+history-estimate attachment and the axis id used in deep links (`benchmarkId@@cohort@@unit`). Relabelling it would split
+axes and move links for a display problem, so the basis is carried by the cell instead — which is what makes the
+subtitle honest again. The tint was checked too and was **already correct**: `a.stats` is the distribution of the
+measured rows only, so `normalize()` returns null for a vendor claim and `bestInRow` was never true for one. It was
+correct by accident rather than by rule, so the rule is now written down (below).
+
+- **CR-127.1 — the mark.** The collapsed cell renders the house † for `basis === 'self_reported'`, with the title
+  "Self-reported by the developer, not an independent measurement" and a screen-reader equivalent, beside the existing ‡
+  for a preliminary value.
+- **CR-127.2 — where the bar would be.** A cell with no percentile drew an empty bar track, which reads as
+  "percentile 0". It now says why there is none — `developer's claim` for a vendor report, `no percentile` otherwise
+  (plus `· low sample`), the same rule the model page's benchmark sheet uses. The percentile gate was tightened from
+  "not preliminary" to **measured only**: today no axis of ours holds both a measured and a self-reported row, so this
+  changes no pixel, but the day one does, a vendor claim still cannot earn a percentile bar or tie for the tint the
+  legend calls the "best measured relative position".
+- **CR-127.3 — the legend.** `CompareLegend` gained the † line, verbatim the sentence the matrix legend uses plus what
+  is compare-specific ("Here it earns no percentile and no tint…"). A phone reader cannot reach a mark's own `title`;
+  the legend is the only place the mark can be decoded on touch.
+- **Test.** `test/cr-127-compare-basis.test.mjs` (7 probes, each checked to fail on its own guard by mutating the
+  source): the self-reported population really reaches the compare axes; the CR-123/CR-126 launch rows are the case
+  that rendered unmarked and really do sit under the generic cohort; the measured-basis gate keeps every non-measured
+  row out of the percentile **and** is not vacuous (CR-60.2's chart-read Union Alpha rows would normalize without it);
+  a measured row still beats the same model's later, higher vendor claim; and the cell and both legends carry the mark.
+  `test/cr-60-union-alpha-preliminary.test.mjs` pinned the old expression's exact text; its two assertions now read the
+  predicate and the ternary instead of one spelling, so the stricter rule passes and a weaker one would still fail.
+- **Gates (tree before the commit):** `node scripts/build-dataset.mjs` 863 models / 669 families / 94 providers /
+  2,976 offers (timestamp-only diff, restored — this change touches no data), `npm test` 1118 tests / 1117 pass /
+  0 fail / 1 skip, `npx tsc --noEmit -p .` clean, `npm run build` rc 0.
+- **Local:** `ops/ux-2026-09-12/bin/verify-cr-127.mjs` **25/25** against the production build on 127.0.0.1:3111
+  (`/tmp/cr127-local/`). The verifier does not hard-code the expected basis: it recomputes it per cell from the same
+  `/api/benchmark-view?…&collapse=1` payload the page fetches, using the page's own `latestScores` rule, and compares
+  that against the DOM. Selection `claude-opus-5.5::max` + `gpt-6-sol::max` + `claude-fable-5::max` mixes the bases
+  (27 vendor claims, 67 measured). Screenshot read: "Terminal-Bench v4.0 · Claude Code in --bare mode → 42.0%† /
+  developer's claim", measured rows unchanged with their bars.
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| CR-127.1 | in-progress | `test/cr-127-compare-basis.test.mjs`; `ops/ux-2026-09-12/bin/verify-cr-127.mjs`; `/tmp/cr127-local/` | † with title and screen-reader text on a collapsed vendor-claim cell. Awaiting deployment and both-host verification. |
+| CR-127.2 | in-progress | same | "developer's claim" instead of an empty bar track; percentile gated on a measured basis. Awaiting deployment and both-host verification. |
+| CR-127.3 | in-progress | same | Compare legend explains †. Awaiting deployment and both-host verification. |

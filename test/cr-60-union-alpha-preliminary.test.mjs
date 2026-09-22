@@ -237,9 +237,21 @@ test('the Compare table denies a preliminary value a percentile, a bar and the b
   const src = readFileSync(new URL('../components/BenchmarkCompare.tsx', import.meta.url), 'utf8');
   const line = src.split('\n').find((l) => l.includes('const normalized = row'));
   assert.ok(line, 'the normalized expression still exists');
-  assert.match(line, /row\.basis !== 'preliminary'/, 'preliminary is excluded from `normalized`');
+  // CR-127 (2026-09-22) tightened this gate from "not preliminary" to "measured only", so a vendor's
+  // own report is kept out of the percentile and the tint for the same reason. That is strictly
+  // stronger than what CR-65.10 asks for here, so this pin reads the predicate instead of one
+  // spelling of it — a weaker rule that let a preliminary row through would still fail.
+  const predicate = line.match(/row && !row\.lowSample && (.+?) \? normalize\(/)?.[1];
+  assert.ok(predicate, 'the basis gate still guards `normalize`');
+  const admits = (basis) => Boolean(new Function('row', `return (${predicate});`)({ basis, lowSample: false }));
+  assert.equal(admits('preliminary'), false, 'preliminary is excluded from `normalized`');
+  assert.equal(admits('measured'), true, 'a measured value still earns its percentile');
   // `normalized` is the single source of all three: percentile text, bar width and `best`.
-  assert.match(src, /normalized != null && <span className="sr-only">Catalog percentile/, 'percentile still derives from normalized');
+  // CR-127 replaced the empty bar track a cell without a percentile used to draw with a line that says
+  // why there is none; the percentile text and the bar are now the other arm of that same ternary.
+  assert.match(src, /normalized == null\s*\n?\s*\? <span [^>]*data-bh-percentile-note/, 'a cell without a percentile says so');
+  assert.match(src, /<span className="sr-only">Catalog percentile \{Math\.round\(normalized\)\}/, 'percentile still derives from normalized');
+  assert.match(src, /width: `\$\{Math\.max\(2, normalized\)\}%`/, 'the bar still derives from normalized');
   assert.match(src, /const best = cells\.reduce<number \| null>\(\(max, cell\) => cell\.normalized == null/, 'the tint still derives from normalized');
 });
 

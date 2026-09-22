@@ -150,7 +150,12 @@ export function BenchmarkCompare({ initialView, initialPicks, standalone = false
             // earn a catalog percentile, a distribution bar, or the "best measured relative position" tint —
             // all three are derived from `normalized`, which is why the basis is filtered out here and not
             // at each use site.
-            const normalized = row && !row.lowSample && row.basis !== 'preliminary' ? normalize(row.value, a.stats, a.higherBetter) : null;
+            // CR-127.2: a developer's own report is excluded for the same reason, and structurally rather
+            // than by luck. `a.stats` is the distribution of the *measured* rows only, so today every
+            // self-reported row already normalises to null (no axis of ours holds both bases). The moment one
+            // does, a vendor claim would earn a percentile and could tie for a tint the legend calls the "best
+            // measured relative position". Only a measured value may.
+            const normalized = row && !row.lowSample && row.basis === 'measured' ? normalize(row.value, a.stats, a.higherBetter) : null;
             return { id, row, normalized };
           });
           const best = cells.reduce<number | null>((max, cell) => cell.normalized == null ? max : max == null ? cell.normalized : Math.max(max, cell.normalized), null);
@@ -167,7 +172,14 @@ export function BenchmarkCompare({ initialView, initialPicks, standalone = false
                 const bestInRow = best != null && normalized != null && Math.abs(normalized - best) < 0.000001;
                 return <td key={id} className={`min-w-36 align-top ${bestInRow ? 'bg-accent2/10' : ''}`}>
                   {bestInRow && <span className="sr-only">Best measured relative position in this row. </span>}
-                  {row ? <><span className={`block tabular-nums ${bestInRow ? 'font-bold' : 'font-semibold'}`}>{nativeValue(row.value, a.unit)}{row.basis === 'preliminary' && <sup className="bh-muted" title="Preliminary: chart-read. An announced value read off a chart in a launch post, not independently measured. Shown only; it never enters a score, a ranking or a percentile">‡<span className="sr-only"> preliminary, chart-read, not independently measured</span></sup>}</span>{row.variantLabel && (row.bestOf ?? 0) > 1 && <span className="bh-muted block truncate text-[11px]" title={`Best of ${row.bestOf} measured reasoning variants on this benchmark: ${row.variantLabel}`} data-best-variant>best of variants: {row.variantLabel}</span>}<span className="mt-1 block h-1 w-full overflow-hidden rounded-full bg-[rgb(var(--line)/.5)]" aria-hidden="true"><span className="block h-full rounded-full bg-accent" style={{ width: normalized == null ? '0%' : `${Math.max(2, normalized)}%` }} /></span>{normalized != null && <span className="sr-only">Catalog percentile {Math.round(normalized)}.</span>}</> : <span className="block text-xl tabular-nums">—</span>}
+                  {row ? <><span className={`block tabular-nums ${bestInRow ? 'font-bold' : 'font-semibold'}`}>{nativeValue(row.value, a.unit)}{/* CR-127.1: the basis belongs beside the number. Until now only ‡ was shown here, so a
+                    developer's own report was indistinguishable from an independent measurement until the row was
+                    expanded. † and its wording are the marks the model page's benchmark sheet and the matrix legend
+                    already use. */}{row.basis === 'self_reported' && <sup className="bh-muted" data-bh-self-reported title="Self-reported by the developer, not an independent measurement">†<span className="sr-only"> self-reported by the developer</span></sup>}{row.basis === 'preliminary' && <sup className="bh-muted" title="Preliminary: chart-read. An announced value read off a chart in a launch post, not independently measured. Shown only; it never enters a score, a ranking or a percentile">‡<span className="sr-only"> preliminary, chart-read, not independently measured</span></sup>}</span>{row.variantLabel && (row.bestOf ?? 0) > 1 && <span className="bh-muted block truncate text-[11px]" title={`Best of ${row.bestOf} measured reasoning variants on this benchmark: ${row.variantLabel}`} data-best-variant>best of variants: {row.variantLabel}</span>}{/* CR-127.2: a cell with no percentile drew an empty bar track, which reads as "percentile 0".
+                    It now says why there is none, the same way the model page's benchmark sheet does. A vendor claim
+                    never has one: the catalog distribution is measured-only, so `normalize` returns null for it. */}{normalized == null
+                      ? <span className="bh-muted mt-1 block truncate text-[11px]" data-bh-percentile-note title={row.basis === 'self_reported' ? 'The developer published this value; we hold no independent measurement of this benchmark to place it against' : 'No catalog percentile for this value'}>{row.basis === 'self_reported' ? "developer's claim" : 'no percentile'}{row.lowSample ? ' · low sample' : ''}</span>
+                      : <><span className="mt-1 block h-1 w-full overflow-hidden rounded-full bg-[rgb(var(--line)/.5)]" aria-hidden="true"><span className="block h-full rounded-full bg-accent" style={{ width: `${Math.max(2, normalized)}%` }} /></span><span className="sr-only">Catalog percentile {Math.round(normalized)}.</span></>}</> : <span className="block text-xl tabular-nums">—</span>}
                 </td>;
               })}
             </tr>
