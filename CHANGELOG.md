@@ -4,6 +4,17 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-22 — MathArena AIME 2026 (secondary, retired, non-Composite)
+
+One new registry id (Math), collected daily from MathArena's own competition table like the HMMT and Apex boards:
+`matharena-aime::2026` (AIME I and II 2026, 30 problems, 31 rows). Values are the published accuracy in percent
+(`basis: measured`); the 95% interval, cost, tokens and MathArena's "released after competition" flag stay in each
+row's `protocol`. MathArena marks the competition Deprecated, so the registry lists it `status: "retained"` and the
+site tags it retired. One row whose accuracy includes item-response-theory estimates is not ingested (it appears in
+`public-observations.json` `rejected`). 7 rows join a catalog configuration exactly; the rest keep the source's own
+name. It is a different edition from Artificial Analysis's `aa-aime::2025` and is never merged with it. No path,
+field or unit changed.
+
 ## 2026-09-22 — MathArena HMMT and Apex competitions (secondary, retired, non-Composite)
 
 Four new registry ids (Math), collected daily from MathArena's own competition tables like the ArXivMath editions:

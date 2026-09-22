@@ -13,6 +13,8 @@ const BOARDS = {
   'matharena-hmmt::2025-11': { rows: 23, refused: [], joins: 10 },
   'matharena-apex::2025': { rows: 48, refused: [], joins: 16 },
   'matharena-apex-shortlist::2025': { rows: 38, refused: ['Qwen3.5-4B', 'Qwen3.5-2B'], joins: 13 },
+  // 2026-09-22 (iteration 162): AIME 2026, the independent board behind Lumina's aime-2026 family.
+  'matharena-aime::2026': { rows: 31, refused: ['Qwen3.5-4B'], joins: 7 },
 };
 
 test('MathArena competitions: rows, published values, and item-response-theory estimates refused', () => {
@@ -25,7 +27,7 @@ def load(bid):
   e=entries[bid];raw=gzip.decompress(Path(e['source']['file']).read_bytes());assert hashlib.sha256(raw).hexdigest()==e['source']['sha256']
   return raw.decode('utf-8'),e['parser']
 out={}
-for bid in ['matharena-hmmt::2026-02','matharena-hmmt::2025-11','matharena-apex::2025','matharena-apex-shortlist::2025']:
+for bid in ['matharena-hmmt::2026-02','matharena-hmmt::2025-11','matharena-apex::2025','matharena-apex-shortlist::2025','matharena-aime::2026']:
   src,spec=load(bid);rows=m.parse(src,spec,None)
   assert spec['predicted_scores']=='reject'
   out[bid]={'measured':[r['id'] for r in rows if r['accuracy'] is not None],'refused':[r['id'] for r in rows if r['accuracy'] is None],
@@ -42,6 +44,10 @@ try: m.parse(json.dumps(d),spec,None); raise AssertionError('explanation without
 except ValueError as e: assert 'disagree' in str(e)
 d=json.loads(src);d['problem_table']=d['problem_table'].replace('data-problem-index="32"','data-x="32"')
 try: m.parse(json.dumps(d),spec,None); raise AssertionError('33-problem edition accepted with 32')
+except ValueError: pass
+src,spec=load('matharena-aime::2026');assert spec['require_problems']==30
+d=json.loads(src);d['problem_table']=d['problem_table'].replace('data-problem-index="29"','data-x="29"')
+try: m.parse(json.dumps(d),spec,None); raise AssertionError('30-problem edition accepted with 29')
 except ValueError: pass
 # The collector records the refusal with its reason.
 col=m.collect({'entries':[entries['matharena-apex-shortlist::2025']]},json.loads(Path('data/raw/benchmarks/registry.json').read_text()))
@@ -63,6 +69,12 @@ print(json.dumps(out))
   assert.equal(got['matharena-apex-shortlist::2025'].values['GPT-5.5 (xhigh)'], 98.4);
   assert.equal(got['matharena-hmmt::2026-02'].flag['GPT-5.2 (high)'], false);
   assert.equal(got['matharena-hmmt::2026-02'].flag['GPT-5.5 (xhigh)'], true);
+  assert.equal(got['matharena-aime::2026'].values['GPT-5.5 (xhigh)'], 100);
+  assert.equal(got['matharena-aime::2026'].values['GPT-5.4 (xhigh)'], 99.17);
+  assert.equal(got['matharena-aime::2026'].values['Gemini 3.1 Pro Preview'], 98.33);
+  assert.equal(got['matharena-aime::2026'].values['Qwen3-4B-2507-Think'], 82.5);
+  assert.equal(got['matharena-aime::2026'].flag['GPT-5.2 (high)'], false);
+  assert.equal(got['matharena-aime::2026'].flag['Kimi K3 (Think)'], true);
   assert.equal(got.collected, 38);
   assert.deepEqual(got.rejected.map((r) => r.source_id), ['Qwen3.5-4B', 'Qwen3.5-2B']);
 });
@@ -79,6 +91,10 @@ test('MathArena competitions: exact joins only, deprecated boards are retained',
   assert.equal(joined('matharena-hmmt::2026-02', 'Kimi K3 (Think)'), null, 'Think is not a reviewed setting');
   assert.equal(joined('matharena-apex::2025', 'Claude-Opus-4.7 (xhigh)'), null, 'no claude-opus-4.7::xhigh configuration');
   assert.equal(joined('matharena-apex::2025', 'Grok 4'), 'grok-4::default');
+  assert.equal(joined('matharena-aime::2026', 'Gemini 3.1 Pro Preview'), 'gemini-3.1-pro-preview::default');
+  assert.equal(joined('matharena-aime::2026', 'Gemini 3.6 Flash'), null, 'no setting stated and the catalog configuration is high, not default');
+  assert.equal(joined('matharena-aime::2026', 'Claude-Opus-4.6 (High)'), null, 'no claude-opus-4.6::high configuration');
+  assert.equal(joined('matharena-aime::2026', 'DeepSeek-v4-Flash (Max)'), 'deepseek-v4-flash::max');
   // The undated DeepSeek labels are the original V4 releases: MathArena's own model configs say so (codex review).
   assert.equal(joined('matharena-apex::2025', 'DeepSeek-v4-Pro (Max)'), 'deepseek-v4-pro::max');
   const cfgDir = 'data/raw/benchmarks/daily-evidence/2026-09-22-matharena-config';
@@ -95,7 +111,7 @@ test('MathArena competitions: exact joins only, deprecated boards are retained',
     assert.ok(e.evidence.some((p) => /Deprecated/.test(p.excerpt)), `${bid}: the Deprecated badge is quoted`);
   }
   for (const [slug, bid] of [['benchlm-hmmtfeb2026', 'matharena-hmmt::2026-02'], ['benchlm-hmmtnov2025', 'matharena-hmmt::2025-11'],
-    ['benchlm-apex', 'matharena-apex::2025'], ['benchlm-apexshortlist', 'matharena-apex-shortlist::2025']]) {
+    ['benchlm-apex', 'matharena-apex::2025'], ['benchlm-apexshortlist', 'matharena-apex-shortlist::2025'], ['aime-2026', 'matharena-aime::2026']]) {
     assert.deepEqual(policy[slug].benchmark_ids, [bid]);
     assert.equal(policy[slug].decision, 'in_registry');
   }

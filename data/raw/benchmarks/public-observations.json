@@ -279188,6 +279188,750 @@
       },
       "protocol": "Apex Shortlist 2025: 47 problems from 2025 competitions that Grok 4 Fast or GPT-5 mini missed at least once in four attempts (MathArena); accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; not a Composite input.; source row: {\"rank\":\"39\",\"model\":\"Qwen3-4B-2507-Think\",\"provider\":\"Qwen\",\"accuracy\":\"16.49% ± 5.30%\",\"cost\":\"$0.010\",\"output_tokens\":\"32631\",\"released_after_competition\":false,\"open_weights\":\"✔️\"}",
       "comparison_key": null
+    },
+    {
+      "id": "public:e967d589379a4d23c07c6bd0",
+      "benchmark_id": "matharena-aime::2026",
+      "subject": {
+        "source_id": "GPT-5.5 (xhigh)",
+        "name": "GPT-5.5 (xhigh)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 100.0,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/aime--aime_2026",
+        "retrieved_at": "2026-09-22T02:14:52.122555+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-aime/f7d0b3c430c35476c1ef.gz",
+        "sha256": "f7d0b3c430c35476c1ef3ac5535b933a987c524e57fc9d6ed1a64949bf500b9e",
+        "locator": "matharena_table; source row 1; GPT-5.5 (xhigh); field accuracy"
+      },
+      "protocol": "AIME 2026: the 30 problems of AIME I and II 2026 (MathArena); each answer is an integer from 0 to 999; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; not a Composite input.; source row: {\"rank\":\"1\",\"model\":\"GPT-5.5 (xhigh)\",\"provider\":\"OpenAI\",\"accuracy\":\"100.00% ± 0.00%\",\"cost\":\"$0.16\",\"output_tokens\":\"5219\",\"released_after_competition\":true,\"open_weights\":\"❌\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:5ff99fa3e7fc1501ee5972f2",
+      "benchmark_id": "matharena-aime::2026",
+      "subject": {
+        "source_id": "Claude-Opus-4.8 (max)",
+        "name": "Claude-Opus-4.8 (max)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 100.0,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/aime--aime_2026",
+        "retrieved_at": "2026-09-22T02:14:52.122555+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-aime/f7d0b3c430c35476c1ef.gz",
+        "sha256": "f7d0b3c430c35476c1ef3ac5535b933a987c524e57fc9d6ed1a64949bf500b9e",
+        "locator": "matharena_table; source row 2; Claude-Opus-4.8 (max); field accuracy"
+      },
+      "protocol": "AIME 2026: the 30 problems of AIME I and II 2026 (MathArena); each answer is an integer from 0 to 999; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; not a Composite input.; source row: {\"rank\":\"1\",\"model\":\"Claude-Opus-4.8 (max)\",\"provider\":\"Anthropic\",\"accuracy\":\"100.00% ± 0.00%\",\"cost\":\"$0.54\",\"output_tokens\":\"21360\",\"released_after_competition\":true,\"open_weights\":\"❌\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:aa42a4ce7000096e9def8f69",
+      "benchmark_id": "matharena-aime::2026",
+      "subject": {
+        "source_id": "GPT-5.4 (xhigh)",
+        "name": "GPT-5.4 (xhigh)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 99.17,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/aime--aime_2026",
+        "retrieved_at": "2026-09-22T02:14:52.122555+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-aime/f7d0b3c430c35476c1ef.gz",
+        "sha256": "f7d0b3c430c35476c1ef3ac5535b933a987c524e57fc9d6ed1a64949bf500b9e",
+        "locator": "matharena_table; source row 3; GPT-5.4 (xhigh); field accuracy"
+      },
+      "protocol": "AIME 2026: the 30 problems of AIME I and II 2026 (MathArena); each answer is an integer from 0 to 999; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; not a Composite input.; source row: {\"rank\":\"3\",\"model\":\"GPT-5.4 (xhigh)\",\"provider\":\"OpenAI\",\"accuracy\":\"99.17% ± 1.63%\",\"cost\":\"$0.16\",\"output_tokens\":\"10743\",\"released_after_competition\":true,\"open_weights\":\"❌\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:e4c9f5751e1edec484501535",
+      "benchmark_id": "matharena-aime::2026",
+      "subject": {
+        "source_id": "GPT-5.2 (high)",
+        "name": "GPT-5.2 (high)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 98.33,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/aime--aime_2026",
+        "retrieved_at": "2026-09-22T02:14:52.122555+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-aime/f7d0b3c430c35476c1ef.gz",
+        "sha256": "f7d0b3c430c35476c1ef3ac5535b933a987c524e57fc9d6ed1a64949bf500b9e",
+        "locator": "matharena_table; source row 4; GPT-5.2 (high); field accuracy"
+      },
+      "protocol": "AIME 2026: the 30 problems of AIME I and II 2026 (MathArena); each answer is an integer from 0 to 999; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; not a Composite input.; source row: {\"rank\":\"4\",\"model\":\"GPT-5.2 (high)\",\"provider\":\"OpenAI\",\"accuracy\":\"98.33% ± 2.29%\",\"cost\":\"$0.12\",\"output_tokens\":\"8403\",\"released_after_competition\":false,\"open_weights\":\"❌\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:ee97b6ecdb000ffd068f7626",
+      "benchmark_id": "matharena-aime::2026",
+      "subject": {
+        "source_id": "Gemini 3.1 Pro Preview",
+        "name": "Gemini 3.1 Pro Preview",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 98.33,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/aime--aime_2026",
+        "retrieved_at": "2026-09-22T02:14:52.122555+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-aime/f7d0b3c430c35476c1ef.gz",
+        "sha256": "f7d0b3c430c35476c1ef3ac5535b933a987c524e57fc9d6ed1a64949bf500b9e",
+        "locator": "matharena_table; source row 5; Gemini 3.1 Pro Preview; field accuracy"
+      },
+      "protocol": "AIME 2026: the 30 problems of AIME I and II 2026 (MathArena); each answer is an integer from 0 to 999; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; not a Composite input.; source row: {\"rank\":\"4\",\"model\":\"Gemini 3.1 Pro Preview\",\"provider\":\"Google\",\"accuracy\":\"98.33% ± 2.29%\",\"cost\":\"$0.17\",\"output_tokens\":\"14364\",\"released_after_competition\":true,\"open_weights\":\"❌\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:6df5c47f2873eff76b48d397",
+      "benchmark_id": "matharena-aime::2026",
+      "subject": {
+        "source_id": "Step 3.5 Flash",
+        "name": "Step 3.5 Flash",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 96.67,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/aime--aime_2026",
+        "retrieved_at": "2026-09-22T02:14:52.122555+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-aime/f7d0b3c430c35476c1ef.gz",
+        "sha256": "f7d0b3c430c35476c1ef3ac5535b933a987c524e57fc9d6ed1a64949bf500b9e",
+        "locator": "matharena_table; source row 6; Step 3.5 Flash; field accuracy"
+      },
+      "protocol": "AIME 2026: the 30 problems of AIME I and II 2026 (MathArena); each answer is an integer from 0 to 999; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; not a Composite input.; source row: {\"rank\":\"6\",\"model\":\"Step 3.5 Flash\",\"provider\":\"StepFun\",\"accuracy\":\"96.67% ± 3.21%\",\"cost\":\"$0.013\",\"output_tokens\":\"42072\",\"released_after_competition\":false,\"open_weights\":\"✔️\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:5ab8b0cdaa1b9547d092e977",
+      "benchmark_id": "matharena-aime::2026",
+      "subject": {
+        "source_id": "Gemini 3 Flash",
+        "name": "Gemini 3 Flash",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 96.67,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/aime--aime_2026",
+        "retrieved_at": "2026-09-22T02:14:52.122555+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-aime/f7d0b3c430c35476c1ef.gz",
+        "sha256": "f7d0b3c430c35476c1ef3ac5535b933a987c524e57fc9d6ed1a64949bf500b9e",
+        "locator": "matharena_table; source row 7; Gemini 3 Flash; field accuracy"
+      },
+      "protocol": "AIME 2026: the 30 problems of AIME I and II 2026 (MathArena); each answer is an integer from 0 to 999; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; not a Composite input.; source row: {\"rank\":\"6\",\"model\":\"Gemini 3 Flash\",\"provider\":\"Google\",\"accuracy\":\"96.67% ± 3.21%\",\"cost\":\"$0.062\",\"output_tokens\":\"20504\",\"released_after_competition\":false,\"open_weights\":\"❌\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:37dbd4bd39992516a83fcb91",
+      "benchmark_id": "matharena-aime::2026",
+      "subject": {
+        "source_id": "GLM 5",
+        "name": "GLM 5",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 96.67,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/aime--aime_2026",
+        "retrieved_at": "2026-09-22T02:14:52.122555+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-aime/f7d0b3c430c35476c1ef.gz",
+        "sha256": "f7d0b3c430c35476c1ef3ac5535b933a987c524e57fc9d6ed1a64949bf500b9e",
+        "locator": "matharena_table; source row 8; GLM 5; field accuracy"
+      },
+      "protocol": "AIME 2026: the 30 problems of AIME I and II 2026 (MathArena); each answer is an integer from 0 to 999; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; not a Composite input.; source row: {\"rank\":\"6\",\"model\":\"GLM 5\",\"provider\":\"Z.ai\",\"accuracy\":\"96.67% ± 3.21%\",\"cost\":\"$0.075\",\"output_tokens\":\"23541\",\"released_after_competition\":true,\"open_weights\":\"✔️\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:18198d20a3bf293b088c790a",
+      "benchmark_id": "matharena-aime::2026",
+      "subject": {
+        "source_id": "DeepSeek-v4-Pro (Max)",
+        "name": "DeepSeek-v4-Pro (Max)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 96.67,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/aime--aime_2026",
+        "retrieved_at": "2026-09-22T02:14:52.122555+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-aime/f7d0b3c430c35476c1ef.gz",
+        "sha256": "f7d0b3c430c35476c1ef3ac5535b933a987c524e57fc9d6ed1a64949bf500b9e",
+        "locator": "matharena_table; source row 9; DeepSeek-v4-Pro (Max); field accuracy"
+      },
+      "protocol": "AIME 2026: the 30 problems of AIME I and II 2026 (MathArena); each answer is an integer from 0 to 999; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; not a Composite input.; source row: {\"rank\":\"6\",\"model\":\"DeepSeek-v4-Pro (Max)\",\"provider\":\"DeepSeek\",\"accuracy\":\"96.67% ± 3.21%\",\"cost\":\"$0.082\",\"output_tokens\":\"23567\",\"released_after_competition\":true,\"open_weights\":\"✔️\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:dd03b2a31dcbdee7274da462",
+      "benchmark_id": "matharena-aime::2026",
+      "subject": {
+        "source_id": "Gemini 3.6 Flash",
+        "name": "Gemini 3.6 Flash",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 96.67,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/aime--aime_2026",
+        "retrieved_at": "2026-09-22T02:14:52.122555+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-aime/f7d0b3c430c35476c1ef.gz",
+        "sha256": "f7d0b3c430c35476c1ef3ac5535b933a987c524e57fc9d6ed1a64949bf500b9e",
+        "locator": "matharena_table; source row 10; Gemini 3.6 Flash; field accuracy"
+      },
+      "protocol": "AIME 2026: the 30 problems of AIME I and II 2026 (MathArena); each answer is an integer from 0 to 999; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; not a Composite input.; source row: {\"rank\":\"6\",\"model\":\"Gemini 3.6 Flash\",\"provider\":\"Google\",\"accuracy\":\"96.67% ± 4.54%\",\"cost\":\"$0.082\",\"output_tokens\":\"10951\",\"released_after_competition\":true,\"open_weights\":\"❌\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:94ab76c7edb284efa3155777",
+      "benchmark_id": "matharena-aime::2026",
+      "subject": {
+        "source_id": "Kimi K3 (Think)",
+        "name": "Kimi K3 (Think)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 96.67,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/aime--aime_2026",
+        "retrieved_at": "2026-09-22T02:14:52.122555+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-aime/f7d0b3c430c35476c1ef.gz",
+        "sha256": "f7d0b3c430c35476c1ef3ac5535b933a987c524e57fc9d6ed1a64949bf500b9e",
+        "locator": "matharena_table; source row 11; Kimi K3 (Think); field accuracy"
+      },
+      "protocol": "AIME 2026: the 30 problems of AIME I and II 2026 (MathArena); each answer is an integer from 0 to 999; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; not a Composite input.; source row: {\"rank\":\"6\",\"model\":\"Kimi K3 (Think)\",\"provider\":\"Moonshot AI\",\"accuracy\":\"96.67% ± 4.54%\",\"cost\":\"$0.11\",\"output_tokens\":\"7031\",\"released_after_competition\":true,\"open_weights\":\"✔️\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:f9a55d849b14b01cbdc2edf0",
+      "benchmark_id": "matharena-aime::2026",
+      "subject": {
+        "source_id": "Claude-Opus-4.6 (High)",
+        "name": "Claude-Opus-4.6 (High)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 96.67,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/aime--aime_2026",
+        "retrieved_at": "2026-09-22T02:14:52.122555+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-aime/f7d0b3c430c35476c1ef.gz",
+        "sha256": "f7d0b3c430c35476c1ef3ac5535b933a987c524e57fc9d6ed1a64949bf500b9e",
+        "locator": "matharena_table; source row 12; Claude-Opus-4.6 (High); field accuracy"
+      },
+      "protocol": "AIME 2026: the 30 problems of AIME I and II 2026 (MathArena); each answer is an integer from 0 to 999; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; not a Composite input.; source row: {\"rank\":\"6\",\"model\":\"Claude-Opus-4.6 (High)\",\"provider\":\"Anthropic\",\"accuracy\":\"96.67% ± 3.21%\",\"cost\":\"$0.33\",\"output_tokens\":\"13329\",\"released_after_competition\":false,\"open_weights\":\"❌\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:150cdef5159c78e98efed6b3",
+      "benchmark_id": "matharena-aime::2026",
+      "subject": {
+        "source_id": "DeepSeek-v4-Flash (Max)",
+        "name": "DeepSeek-v4-Flash (Max)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 95.83,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/aime--aime_2026",
+        "retrieved_at": "2026-09-22T02:14:52.122555+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-aime/f7d0b3c430c35476c1ef.gz",
+        "sha256": "f7d0b3c430c35476c1ef3ac5535b933a987c524e57fc9d6ed1a64949bf500b9e",
+        "locator": "matharena_table; source row 13; DeepSeek-v4-Flash (Max); field accuracy"
+      },
+      "protocol": "AIME 2026: the 30 problems of AIME I and II 2026 (MathArena); each answer is an integer from 0 to 999; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; not a Composite input.; source row: {\"rank\":\"13\",\"model\":\"DeepSeek-v4-Flash (Max)\",\"provider\":\"DeepSeek\",\"accuracy\":\"95.83% ± 3.58%\",\"cost\":\"$0.009\",\"output_tokens\":\"33588\",\"released_after_competition\":true,\"open_weights\":\"✔️\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:e822f669dc86c2586dc9f46f",
+      "benchmark_id": "matharena-aime::2026",
+      "subject": {
+        "source_id": "Kimi K2.5 (Think)",
+        "name": "Kimi K2.5 (Think)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 95.83,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/aime--aime_2026",
+        "retrieved_at": "2026-09-22T02:14:52.122555+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-aime/f7d0b3c430c35476c1ef.gz",
+        "sha256": "f7d0b3c430c35476c1ef3ac5535b933a987c524e57fc9d6ed1a64949bf500b9e",
+        "locator": "matharena_table; source row 14; Kimi K2.5 (Think); field accuracy"
+      },
+      "protocol": "AIME 2026: the 30 problems of AIME I and II 2026 (MathArena); each answer is an integer from 0 to 999; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; not a Composite input.; source row: {\"rank\":\"13\",\"model\":\"Kimi K2.5 (Think)\",\"provider\":\"Moonshot AI\",\"accuracy\":\"95.83% ± 3.58%\",\"cost\":\"$0.069\",\"output_tokens\":\"22849\",\"released_after_competition\":false,\"open_weights\":\"✔️\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:64d2aa4a98e5d5c42f439b14",
+      "benchmark_id": "matharena-aime::2026",
+      "subject": {
+        "source_id": "GLM 5.1",
+        "name": "GLM 5.1",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 95.83,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/aime--aime_2026",
+        "retrieved_at": "2026-09-22T02:14:52.122555+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-aime/f7d0b3c430c35476c1ef.gz",
+        "sha256": "f7d0b3c430c35476c1ef3ac5535b933a987c524e57fc9d6ed1a64949bf500b9e",
+        "locator": "matharena_table; source row 15; GLM 5.1; field accuracy"
+      },
+      "protocol": "AIME 2026: the 30 problems of AIME I and II 2026 (MathArena); each answer is an integer from 0 to 999; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; not a Composite input.; source row: {\"rank\":\"13\",\"model\":\"GLM 5.1\",\"provider\":\"Z.ai\",\"accuracy\":\"95.83% ± 3.58%\",\"cost\":\"$0.085\",\"output_tokens\":\"26546\",\"released_after_competition\":true,\"open_weights\":\"✔️\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:523e1ac37dcb07daf5c6b969",
+      "benchmark_id": "matharena-aime::2026",
+      "subject": {
+        "source_id": "Kimi K2.6 (Think)",
+        "name": "Kimi K2.6 (Think)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 95.83,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/aime--aime_2026",
+        "retrieved_at": "2026-09-22T02:14:52.122555+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-aime/f7d0b3c430c35476c1ef.gz",
+        "sha256": "f7d0b3c430c35476c1ef3ac5535b933a987c524e57fc9d6ed1a64949bf500b9e",
+        "locator": "matharena_table; source row 16; Kimi K2.6 (Think); field accuracy"
+      },
+      "protocol": "AIME 2026: the 30 problems of AIME I and II 2026 (MathArena); each answer is an integer from 0 to 999; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; not a Composite input.; source row: {\"rank\":\"13\",\"model\":\"Kimi K2.6 (Think)\",\"provider\":\"Moonshot AI\",\"accuracy\":\"95.83% ± 3.58%\",\"cost\":\"$0.09\",\"output_tokens\":\"22722\",\"released_after_competition\":true,\"open_weights\":\"✔️\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:48fc1c446e2a36e02bee529d",
+      "benchmark_id": "matharena-aime::2026",
+      "subject": {
+        "source_id": "Claude-Opus-4.7 (xhigh)",
+        "name": "Claude-Opus-4.7 (xhigh)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 95.83,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/aime--aime_2026",
+        "retrieved_at": "2026-09-22T02:14:52.122555+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-aime/f7d0b3c430c35476c1ef.gz",
+        "sha256": "f7d0b3c430c35476c1ef3ac5535b933a987c524e57fc9d6ed1a64949bf500b9e",
+        "locator": "matharena_table; source row 17; Claude-Opus-4.7 (xhigh); field accuracy"
+      },
+      "protocol": "AIME 2026: the 30 problems of AIME I and II 2026 (MathArena); each answer is an integer from 0 to 999; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; not a Composite input.; source row: {\"rank\":\"13\",\"model\":\"Claude-Opus-4.7 (xhigh)\",\"provider\":\"Anthropic\",\"accuracy\":\"95.83% ± 3.58%\",\"cost\":\"$0.27\",\"output_tokens\":\"10728\",\"released_after_competition\":true,\"open_weights\":\"❌\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:5784a7c09eab9e40280e54f0",
+      "benchmark_id": "matharena-aime::2026",
+      "subject": {
+        "source_id": "Step 3.7 Flash",
+        "name": "Step 3.7 Flash",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 95.0,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/aime--aime_2026",
+        "retrieved_at": "2026-09-22T02:14:52.122555+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-aime/f7d0b3c430c35476c1ef.gz",
+        "sha256": "f7d0b3c430c35476c1ef3ac5535b933a987c524e57fc9d6ed1a64949bf500b9e",
+        "locator": "matharena_table; source row 18; Step 3.7 Flash; field accuracy"
+      },
+      "protocol": "AIME 2026: the 30 problems of AIME I and II 2026 (MathArena); each answer is an integer from 0 to 999; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; not a Composite input.; source row: {\"rank\":\"18\",\"model\":\"Step 3.7 Flash\",\"provider\":\"StepFun\",\"accuracy\":\"95.00% ± 3.90%\",\"cost\":\"$0.015\",\"output_tokens\":\"50365\",\"released_after_competition\":true,\"open_weights\":\"✔️\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:60f9497f654ce03aee0a0a5a",
+      "benchmark_id": "matharena-aime::2026",
+      "subject": {
+        "source_id": "Gemini 3.5 Flash",
+        "name": "Gemini 3.5 Flash",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 95.0,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/aime--aime_2026",
+        "retrieved_at": "2026-09-22T02:14:52.122555+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-aime/f7d0b3c430c35476c1ef.gz",
+        "sha256": "f7d0b3c430c35476c1ef3ac5535b933a987c524e57fc9d6ed1a64949bf500b9e",
+        "locator": "matharena_table; source row 19; Gemini 3.5 Flash; field accuracy"
+      },
+      "protocol": "AIME 2026: the 30 problems of AIME I and II 2026 (MathArena); each answer is an integer from 0 to 999; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; not a Composite input.; source row: {\"rank\":\"18\",\"model\":\"Gemini 3.5 Flash\",\"provider\":\"Google\",\"accuracy\":\"95.00% ± 5.51%\",\"cost\":\"$0.13\",\"output_tokens\":\"13992\",\"released_after_competition\":true,\"open_weights\":\"❌\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:454e537617a3219a2c019a00",
+      "benchmark_id": "matharena-aime::2026",
+      "subject": {
+        "source_id": "Grok 4.1 Fast (Reasoning)",
+        "name": "Grok 4.1 Fast (Reasoning)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 94.17,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/aime--aime_2026",
+        "retrieved_at": "2026-09-22T02:14:52.122555+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-aime/f7d0b3c430c35476c1ef.gz",
+        "sha256": "f7d0b3c430c35476c1ef3ac5535b933a987c524e57fc9d6ed1a64949bf500b9e",
+        "locator": "matharena_table; source row 20; Grok 4.1 Fast (Reasoning); field accuracy"
+      },
+      "protocol": "AIME 2026: the 30 problems of AIME I and II 2026 (MathArena); each answer is an integer from 0 to 999; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; not a Composite input.; source row: {\"rank\":\"20\",\"model\":\"Grok 4.1 Fast (Reasoning)\",\"provider\":\"xAI\",\"accuracy\":\"94.17% ± 4.19%\",\"cost\":\"$0.005\",\"output_tokens\":\"9618\",\"released_after_competition\":false,\"open_weights\":\"❌\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:854bfefebfa3bd37dc07cad7",
+      "benchmark_id": "matharena-aime::2026",
+      "subject": {
+        "source_id": "DeepSeek-v3.2 (Think)",
+        "name": "DeepSeek-v3.2 (Think)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 94.17,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/aime--aime_2026",
+        "retrieved_at": "2026-09-22T02:14:52.122555+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-aime/f7d0b3c430c35476c1ef.gz",
+        "sha256": "f7d0b3c430c35476c1ef3ac5535b933a987c524e57fc9d6ed1a64949bf500b9e",
+        "locator": "matharena_table; source row 21; DeepSeek-v3.2 (Think); field accuracy"
+      },
+      "protocol": "AIME 2026: the 30 problems of AIME I and II 2026 (MathArena); each answer is an integer from 0 to 999; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; not a Composite input.; source row: {\"rank\":\"20\",\"model\":\"DeepSeek-v3.2 (Think)\",\"provider\":\"DeepSeek\",\"accuracy\":\"94.17% ± 4.19%\",\"cost\":\"$0.006\",\"output_tokens\":\"14854\",\"released_after_competition\":false,\"open_weights\":\"✔️\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:f4817f382b6ea117dccc0a96",
+      "benchmark_id": "matharena-aime::2026",
+      "subject": {
+        "source_id": "Qwen3.5-397b-a17b",
+        "name": "Qwen3.5-397b-a17b",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 94.17,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/aime--aime_2026",
+        "retrieved_at": "2026-09-22T02:14:52.122555+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-aime/f7d0b3c430c35476c1ef.gz",
+        "sha256": "f7d0b3c430c35476c1ef3ac5535b933a987c524e57fc9d6ed1a64949bf500b9e",
+        "locator": "matharena_table; source row 22; Qwen3.5-397b-a17b; field accuracy"
+      },
+      "protocol": "AIME 2026: the 30 problems of AIME I and II 2026 (MathArena); each answer is an integer from 0 to 999; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; not a Composite input.; source row: {\"rank\":\"20\",\"model\":\"Qwen3.5-397b-a17b\",\"provider\":\"Qwen\",\"accuracy\":\"94.17% ± 4.19%\",\"cost\":\"$0.075\",\"output_tokens\":\"20797\",\"released_after_competition\":true,\"open_weights\":\"✔️\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:8e444851749beecabe1c2b92",
+      "benchmark_id": "matharena-aime::2026",
+      "subject": {
+        "source_id": "Qwen3.5-35B-A3B",
+        "name": "Qwen3.5-35B-A3B",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 93.33,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/aime--aime_2026",
+        "retrieved_at": "2026-09-22T02:14:52.122555+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-aime/f7d0b3c430c35476c1ef.gz",
+        "sha256": "f7d0b3c430c35476c1ef3ac5535b933a987c524e57fc9d6ed1a64949bf500b9e",
+        "locator": "matharena_table; source row 23; Qwen3.5-35B-A3B; field accuracy"
+      },
+      "protocol": "AIME 2026: the 30 problems of AIME I and II 2026 (MathArena); each answer is an integer from 0 to 999; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; not a Composite input.; source row: {\"rank\":\"23\",\"model\":\"Qwen3.5-35B-A3B\",\"provider\":\"Qwen\",\"accuracy\":\"93.33% ± 4.46%\",\"cost\":\"$0.041\",\"output_tokens\":\"31856\",\"released_after_competition\":true,\"open_weights\":\"✔️\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:e8e828d992b6b2de2b9354b6",
+      "benchmark_id": "matharena-aime::2026",
+      "subject": {
+        "source_id": "Qwen3.5-9B",
+        "name": "Qwen3.5-9B",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 92.5,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/aime--aime_2026",
+        "retrieved_at": "2026-09-22T02:14:52.122555+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-aime/f7d0b3c430c35476c1ef.gz",
+        "sha256": "f7d0b3c430c35476c1ef3ac5535b933a987c524e57fc9d6ed1a64949bf500b9e",
+        "locator": "matharena_table; source row 24; Qwen3.5-9B; field accuracy"
+      },
+      "protocol": "AIME 2026: the 30 problems of AIME I and II 2026 (MathArena); each answer is an integer from 0 to 999; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; not a Composite input.; source row: {\"rank\":\"24\",\"model\":\"Qwen3.5-9B\",\"provider\":\"Qwen\",\"accuracy\":\"92.50% ± 4.71%\",\"cost\":\"$0.005\",\"output_tokens\":\"31184\",\"released_after_competition\":true,\"open_weights\":\"✔️\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:389d9fa388e9e2a4ab5ea4ca",
+      "benchmark_id": "matharena-aime::2026",
+      "subject": {
+        "source_id": "NVIDIA-Nemotron-3-Super",
+        "name": "NVIDIA-Nemotron-3-Super",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 91.67,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/aime--aime_2026",
+        "retrieved_at": "2026-09-22T02:14:52.122555+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-aime/f7d0b3c430c35476c1ef.gz",
+        "sha256": "f7d0b3c430c35476c1ef3ac5535b933a987c524e57fc9d6ed1a64949bf500b9e",
+        "locator": "matharena_table; source row 25; NVIDIA-Nemotron-3-Super; field accuracy"
+      },
+      "protocol": "AIME 2026: the 30 problems of AIME I and II 2026 (MathArena); each answer is an integer from 0 to 999; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; not a Composite input.; source row: {\"rank\":\"25\",\"model\":\"NVIDIA-Nemotron-3-Super\",\"provider\":\"NVIDIA\",\"accuracy\":\"91.67% ± 4.95%\",\"cost\":\"N/A\",\"output_tokens\":\"24114\",\"released_after_competition\":true,\"open_weights\":\"✔️\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:48af58fa31cd65d37d298d7d",
+      "benchmark_id": "matharena-aime::2026",
+      "subject": {
+        "source_id": "Qwen3.5-27B",
+        "name": "Qwen3.5-27B",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 91.67,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/aime--aime_2026",
+        "retrieved_at": "2026-09-22T02:14:52.122555+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-aime/f7d0b3c430c35476c1ef.gz",
+        "sha256": "f7d0b3c430c35476c1ef3ac5535b933a987c524e57fc9d6ed1a64949bf500b9e",
+        "locator": "matharena_table; source row 26; Qwen3.5-27B; field accuracy"
+      },
+      "protocol": "AIME 2026: the 30 problems of AIME I and II 2026 (MathArena); each answer is an integer from 0 to 999; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; not a Composite input.; source row: {\"rank\":\"25\",\"model\":\"Qwen3.5-27B\",\"provider\":\"Qwen\",\"accuracy\":\"91.67% ± 4.95%\",\"cost\":\"$0.047\",\"output_tokens\":\"29363\",\"released_after_competition\":true,\"open_weights\":\"✔️\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:22d90d423f861e2564e591c2",
+      "benchmark_id": "matharena-aime::2026",
+      "subject": {
+        "source_id": "Gemini 3 Pro (preview)",
+        "name": "Gemini 3 Pro (preview)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 91.67,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/aime--aime_2026",
+        "retrieved_at": "2026-09-22T02:14:52.122555+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-aime/f7d0b3c430c35476c1ef.gz",
+        "sha256": "f7d0b3c430c35476c1ef3ac5535b933a987c524e57fc9d6ed1a64949bf500b9e",
+        "locator": "matharena_table; source row 27; Gemini 3 Pro (preview); field accuracy"
+      },
+      "protocol": "AIME 2026: the 30 problems of AIME I and II 2026 (MathArena); each answer is an integer from 0 to 999; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; not a Composite input.; source row: {\"rank\":\"25\",\"model\":\"Gemini 3 Pro (preview)\",\"provider\":\"Google\",\"accuracy\":\"91.67% ± 4.95%\",\"cost\":\"$0.18\",\"output_tokens\":\"14712\",\"released_after_competition\":false,\"open_weights\":\"❌\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:0ea7fc14b546026064bfd239",
+      "benchmark_id": "matharena-aime::2026",
+      "subject": {
+        "source_id": "GLM 5.2",
+        "name": "GLM 5.2",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 90.0,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/aime--aime_2026",
+        "retrieved_at": "2026-09-22T02:14:52.122555+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-aime/f7d0b3c430c35476c1ef.gz",
+        "sha256": "f7d0b3c430c35476c1ef3ac5535b933a987c524e57fc9d6ed1a64949bf500b9e",
+        "locator": "matharena_table; source row 28; GLM 5.2; field accuracy"
+      },
+      "protocol": "AIME 2026: the 30 problems of AIME I and II 2026 (MathArena); each answer is an integer from 0 to 999; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; not a Composite input.; source row: {\"rank\":\"28\",\"model\":\"GLM 5.2\",\"provider\":\"Z.ai\",\"accuracy\":\"90.00% ± 7.59%\",\"cost\":\"$0.076\",\"output_tokens\":\"18424\",\"released_after_competition\":true,\"open_weights\":\"✔️\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:f764d3025d283986c0070d30",
+      "benchmark_id": "matharena-aime::2026",
+      "subject": {
+        "source_id": "Qwen3-30B-A3B-2507-Think",
+        "name": "Qwen3-30B-A3B-2507-Think",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 88.33,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/aime--aime_2026",
+        "retrieved_at": "2026-09-22T02:14:52.122555+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-aime/f7d0b3c430c35476c1ef.gz",
+        "sha256": "f7d0b3c430c35476c1ef3ac5535b933a987c524e57fc9d6ed1a64949bf500b9e",
+        "locator": "matharena_table; source row 30; Qwen3-30B-A3B-2507-Think; field accuracy"
+      },
+      "protocol": "AIME 2026: the 30 problems of AIME I and II 2026 (MathArena); each answer is an integer from 0 to 999; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; not a Composite input.; source row: {\"rank\":\"30\",\"model\":\"Qwen3-30B-A3B-2507-Think\",\"provider\":\"Qwen\",\"accuracy\":\"88.33% ± 5.74%\",\"cost\":\"$0.005\",\"output_tokens\":\"17939\",\"released_after_competition\":false,\"open_weights\":\"✔️\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:20e49c7fb7e44d78ba078a24",
+      "benchmark_id": "matharena-aime::2026",
+      "subject": {
+        "source_id": "QED-Nano",
+        "name": "QED-Nano",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 82.5,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/aime--aime_2026",
+        "retrieved_at": "2026-09-22T02:14:52.122555+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-aime/f7d0b3c430c35476c1ef.gz",
+        "sha256": "f7d0b3c430c35476c1ef3ac5535b933a987c524e57fc9d6ed1a64949bf500b9e",
+        "locator": "matharena_table; source row 31; QED-Nano; field accuracy"
+      },
+      "protocol": "AIME 2026: the 30 problems of AIME I and II 2026 (MathArena); each answer is an integer from 0 to 999; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; not a Composite input.; source row: {\"rank\":\"31\",\"model\":\"QED-Nano\",\"provider\":\"LM-Provers\",\"accuracy\":\"82.50% ± 6.80%\",\"cost\":\"N/A\",\"output_tokens\":\"35191\",\"released_after_competition\":true,\"open_weights\":\"✔️\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:fa40b5adac5c06f03238f54a",
+      "benchmark_id": "matharena-aime::2026",
+      "subject": {
+        "source_id": "Qwen3-4B-2507-Think",
+        "name": "Qwen3-4B-2507-Think",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 82.5,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/aime--aime_2026",
+        "retrieved_at": "2026-09-22T02:14:52.122555+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-aime/f7d0b3c430c35476c1ef.gz",
+        "sha256": "f7d0b3c430c35476c1ef3ac5535b933a987c524e57fc9d6ed1a64949bf500b9e",
+        "locator": "matharena_table; source row 32; Qwen3-4B-2507-Think; field accuracy"
+      },
+      "protocol": "AIME 2026: the 30 problems of AIME I and II 2026 (MathArena); each answer is an integer from 0 to 999; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; not a Composite input.; source row: {\"rank\":\"31\",\"model\":\"Qwen3-4B-2507-Think\",\"provider\":\"Qwen\",\"accuracy\":\"82.50% ± 6.80%\",\"cost\":\"$0.006\",\"output_tokens\":\"21206\",\"released_after_competition\":false,\"open_weights\":\"✔️\"}",
+      "comparison_key": null
     }
   ],
   "collections": [
@@ -279928,6 +280672,12 @@
       "status": "collected",
       "source_url": "https://matharena.ai/competition_tables/apex--shortlist_2025",
       "reason": "38 source results parsed; configurations remain separate; unmatched model identities are retained."
+    },
+    {
+      "benchmark_id": "matharena-aime::2026",
+      "status": "collected",
+      "source_url": "https://matharena.ai/competition_tables/aime--aime_2026",
+      "reason": "31 source results parsed; configurations remain separate; unmatched model identities are retained."
     }
   ],
   "rejected": [
@@ -280294,6 +281044,11 @@
     {
       "benchmark_id": "matharena-apex-shortlist::2025",
       "source_id": "Qwen3.5-2B",
+      "reason": "MathArena did not run this model on every problem; its accuracy includes item-response-theory estimates for the rest, so it is not a measurement."
+    },
+    {
+      "benchmark_id": "matharena-aime::2026",
+      "source_id": "Qwen3.5-4B",
       "reason": "MathArena did not run this model on every problem; its accuracy includes item-response-theory estimates for the rest, so it is not a measurement."
     }
   ]
