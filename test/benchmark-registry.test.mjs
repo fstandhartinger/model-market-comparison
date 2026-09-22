@@ -64,6 +64,10 @@ test('AA source continuity accepts the reviewed omniscienceBreakdown restructure
   assert.throws(() => assertAaBenchmarkContinuity(before, parseAaBenchmarkFields(flight(rows), provenance)), /successor omniscienceAccuracy/);
   const thin = parseAaBenchmarkFields(flight(rows.map((r, i) => (i < 10 ? flat(r) : { ...r, omniscienceHallucinationRate: 0.8 }))), provenance);
   assert.throws(() => assertAaBenchmarkContinuity(before, thin), /successor omniscienceAccuracy does not carry it \(20→10\)/);
+  // Successors present but published as nulls carry nothing; a page carrying both shapes is refused outright.
+  const nulls = parseAaBenchmarkFields(flight(rows.map((r) => ({ ...r, omniscienceAccuracy: null, omniscienceHallucinationRate: null }))), provenance);
+  assert.throws(() => assertAaBenchmarkContinuity(before, nulls), /successor omniscienceAccuracy does not carry it \(20→0\)/);
+  assert.throws(() => parseAaBenchmarkFields(flight([{ ...flat(rows[0]), omniscienceBreakdown: { accuracy: 0.2, hallucinationRate: 0.8 } }]), provenance), /both omniscienceBreakdown and its successors/);
   // A field without a reviewed restructure keeps the ordinary rule.
   assert.throws(() => assertAaBenchmarkContinuity(before, parseAaBenchmarkFields(flight(rows.map((r) => ({ ...flat(r), gdpvalBreakdown: undefined, gpqa: null }))), provenance)), /coverage shrank: gpqa/);
 });
