@@ -6883,7 +6883,7 @@ correct by accident rather than by rule, so the rule is now written down (below)
 **Live (claude-opus, implementer):** both hosts served `5618579c` at 20:35 UTC (canonical 20:35:05, legacy ≈ 20:35:2x);
 after the 60 s switchover wait `verify-cr-127.mjs` **25/25 per host**
 (`/opt/benchmarkheaven/state/ux-evidence/cr127/{canonical,legacy}/`): every collapsed cell renders its own basis
-(27 vendor claims and 67 measured cells per context, checked against the API payload, in all four viewport/theme
+(26 vendor claims and 67 measured cells per context, checked against the API payload, in all four viewport/theme
 combinations), no tinted cell is anything but measured, the legend is collapsed and carries the † line, no horizontal
 overflow, 0 page errors. Screenshots read on both hosts ("Terminal-Bench v4.0 · Claude Code in --bare mode → 42.0 %† /
 developer's claim"). Being the implementer, this iteration cannot set these rows `verified`; a non-claude-opus engine
@@ -6924,4 +6924,30 @@ before the fix (the flight payload spells `"basis":"preliminary"` on both rows).
 
 | ID | Status | Evidence | Note |
 |---|---|---|---|
-| CR-127.4 | in-progress | `test/cr-60-union-alpha-preliminary.test.mjs`; `test/fable-pass27.test.mjs`; `ops/ux-2026-09-12/bin/verify-cr-127-4.mjs`; `/tmp/cr127-4-local/` | ‡ on the model page's sheet, "announced value", the head's ‡ line, and audible marks in both matrix components. Awaiting deployment and both-host verification. |
+**Live (claude-opus, implementer):** both hosts served `9a168b4b` at 20:43 UTC; after the 60 s switchover wait
+`verify-cr-127-4.mjs` **33/33 per host** (`/opt/benchmarkheaven/state/ux-evidence/cr127-4/{canonical,legacy}/`),
+1440/390 × light/dark: both Union Alpha rows carry ‡ with its title and screen-reader text, say "announced value"
+and draw no bar; the sheet head reads "2 of 2 values are announced, chart-read figures (‡): shown only, and never
+entering a score, a ranking or a percentile"; Claude Opus 5.5's sheet still marks its 16 vendor claims with † and
+"developer's claim" and shows no ‡ line; the Advanced matrix's † and ‡ both carry their screen-reader equivalent;
+no horizontal overflow, 0 page errors across the three pages. Screenshots read. Sign-off owed to a non-claude-opus
+engine, as for CR-127.1–.3.
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| CR-127.4 | implemented | `9a168b4b`; `test/cr-60-union-alpha-preliminary.test.mjs`; `test/fable-pass27.test.mjs`; `ops/ux-2026-09-12/bin/verify-cr-127-4.mjs`; `/opt/benchmarkheaven/state/ux-evidence/cr127-4/{canonical,legacy}/` | ‡ on the model page's sheet, "announced value", the head's ‡ line, and audible marks in both matrix components. 33/33 per host (implementer); needs a non-claude-opus sign-off. |
+
+- **Basis audit (the reason CR-127.4 was found, recorded so nobody repeats it).** Every surface that renders a benchmark
+  value was read against the bases the data actually carries. `view.axes` scores hold only `measured` (17,986),
+  `self_reported` (1,430) and `preliminary` (2) — `derived` observations reach the UI through `effectiveBasis` as their
+  `source_basis`, and the matrix's catch-all basis code 2 occurs **zero** times in the built matrix (10,583 measured /
+  372 self-reported / 2 preliminary cells). Surfaces: `BenchmarkMatrix` ✓, `SimpleBenchmarks` ✓ (marks were mute —
+  fixed), `BenchmarkCompare` ✓ (CR-127.1), `BenchmarkSheetLazy` ✓ (‡ missing — fixed), `BenchmarkEvidence` ✓,
+  `/benchmarks/result` ✓ (prints the basis in words), `BenchmarkRadar` and the compare category cards ✓ (measured-only
+  by construction: `latestScores()` defaults to `measured`). Nothing else is unmarked.
+
+- **Next.** Tomorrow's 05:17 daily is the first unattended refresh after CR-127; expect no data effect (this change
+  touches presentation only). The open ledger rows remain `CR-34.5` and `CR-62.4` (Florian), `CR-37.3`, `CR-38.1`,
+  `CR-73.5`, `CR-85.1`/`.2` (scheduled runs or external sources) — CR-127 was the last unblocked one. Owed to the next
+  non-claude-opus engine: a sign-off on `CR-127.1`–`.4` (re-run `verify-cr-127.mjs` and `verify-cr-127-4.mjs` on both
+  hosts and flip the four rows).
