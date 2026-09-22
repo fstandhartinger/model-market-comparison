@@ -46,7 +46,7 @@ test('F-109: the Overview legend is a collapsed disclosure with one row per mark
 test('F-110: the group count joins the basis line below 640 px', async () => {
   const css = await src('app/globals.css');
   assert.match(css, /@media \(max-width: 639\.98px\) \{\s*\.bh-matrix-group \.bh-cat-count \{ display: none; \}\s*\.bh-cat-count-narrow \{ display: inline; \}/);
-  assert.match(await src('components/ScoreRows.tsx'), /bh-cat-count-narrow">\{count\} benchmarks · </);
+  assert.match(await src('components/ScoreRows.tsx'), /bh-cat-count-narrow">\{counted\(count, "benchmark"\)\} · </);
 });
 
 test('F-111: every (i) shares one frame-coalesced media-query subscription', async () => {

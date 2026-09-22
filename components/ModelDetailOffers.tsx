@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef } from "react";
 import type { ClientOffer, ProviderInfo, ClientModel, ClientData } from "../lib/client-model";
 import { offerPrice, priceContext, priceLabel, scopeFromSettings, rankedOffers, scopedCatalogRoutes } from "../lib/cost";
 import { FREE_ROUTE_NOTE, freeRouteLabel, freeRouteTitle, isCurrentFreeRoute, isFreeRoute, isStealthPreview } from "../lib/free-route.mjs";
-import { usdPerM } from "../lib/format";
+import { usdPerM, counted } from "../lib/format";
 import { PriceValue, PriceAssumptions } from "./PriceValue";
 import { useSettings } from "./SettingsContext";
 
@@ -101,9 +101,9 @@ export function ModelDetailOffers({
     // F-08b: the full route list stays on the page, folded — the top-5 table above answers
     // the usual question, and the unfolded list alone was a third of the page.
     <details ref={allRef} id="all-offers" className="card mt-6 min-w-0 overflow-x-auto p-4">
-      <summary className="font-semibold">Token offers by platform · {catalog.length} offers <span className="text-xs font-normal text-gray-500">({priceLabel(s)})</span></summary>
+      <summary className="font-semibold">Token offers by platform · {counted(catalog.length, "offer")} <span className="text-xs font-normal text-gray-500">({priceLabel(s)})</span></summary>
       <PriceAssumptions />
-      <p className="mb-3 text-[11px] text-gray-500">{catalog.length} offers within the active global filters; “—” means the catalog is active but no public token price is available.</p>
+      <p className="mb-3 text-[11px] text-gray-500">{counted(catalog.length, "offer")} within the active global filters; “—” means the catalog is active but no public token price is available.</p>
       {[...byPlatform.entries()].map(([platform, platformOffers]) => (
         <div key={platform} className="mb-4">
           <h3 className="mb-1 text-sm font-medium text-accent">{platform} <span className="text-xs font-normal text-gray-500">({platformOffers.length})</span></h3>

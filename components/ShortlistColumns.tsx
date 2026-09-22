@@ -9,6 +9,7 @@ import { seriesColor } from "./BenchmarkBars";
 import { AaCredit } from "./AaCredit";
 import { EpochCredit } from "./EpochCredit";
 import { GearIcon } from "./GearIcon";
+import { counted } from "../lib/format";
 
 /** CR-33.2: the scores the chart can show. The Main Composite is the default; category composites join
  *  this list too (CR-25.6). */
@@ -69,7 +70,7 @@ export function ShortlistColumns({ data, ids, tableIds, names, onToggle, full = 
   const rangeText = domain && (kind === "zoomed" || kind === "bar") ? `, axis from ${tick(domain[0])} to ${tick(domain[1])}${kind === "zoomed" ? ", not starting at zero" : ""}` : "";
   return <figure className="card mt-4 p-3 sm:p-4" aria-labelledby="bh-shortlist-cols-title" data-shortlist-columns>
     <div className="flex flex-wrap items-center justify-between gap-2">
-      <figcaption id="bh-shortlist-cols-title" className="text-sm font-semibold">{label}<span className="bh-muted ml-2 text-xs font-normal">{measured} of {columns.length} models{kind === "position" ? " · Elo, drawn between the lowest and highest rating" : ""} · <AaCredit /> · <EpochCredit bare /></span></figcaption>
+      <figcaption id="bh-shortlist-cols-title" className="text-sm font-semibold">{label}<span className="bh-muted ml-2 text-xs font-normal">{measured} of {counted(columns.length, "model")}{kind === "position" ? " · Elo, drawn between the lowest and highest rating" : ""} · <AaCredit /> · <EpochCredit bare /></span></figcaption>
       {/* CR-79 (found while verifying): the picker's widest option set its intrinsic width, so at the phone's
           larger-text setting this row was 372 px wide inside a 390 px viewport and pushed the whole page sideways.
           min-w-0 lets it shrink; the select keeps its own width but never wider than the card. */}

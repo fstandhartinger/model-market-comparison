@@ -4,7 +4,7 @@ import Link from "next/link";
 import { compareByScore, hasScoreEvidence, isThinComposite, thinCompositeNote, type ClientData } from "../lib/client-model";
 import { SCORE_PICKER_LABELS, SCORE_LABELS, SCORE_SHORT_LABELS, type ScoreKey } from "../lib/types";
 import { scoreLabel, scoreVersion } from "../lib/score-label";
-import { usdPerM, num, orgColor } from "../lib/format";
+import { usdPerM, num, orgColor, counted } from "../lib/format";
 import { modelPrice, rankedOffers, scopedCatalogOffers, scopedCatalogRoutes, scopeFromSettings, offerPrice, priceContext, priceLabel, type PriceSettings } from "../lib/cost";
 import { FREE_ROUTE_NOTE, NO_PUBLIC_PRICE_NOTE, currentFreeRoutes, freeRouteLabel, freeRouteTitle, isFreeRoute, isStealthPreview } from "../lib/free-route.mjs";
 import { Toggle, NumFilter } from "./ui";
@@ -107,7 +107,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
   const [comparisonTarget, setComparisonTarget] = useState("");
   const [comparisonMetric, setComparisonMetric] = useState("");
   const comparisonMetrics = useMemo(() => [
-    ...(data.comparison?.categories ?? []).map((category) => ({ id: `category:${category.id}`, label: `${category.label} · ${category.benchmarkCount} benchmarks`, values: category.values })),
+    ...(data.comparison?.categories ?? []).map((category) => ({ id: `category:${category.id}`, label: `${category.label} · ${counted(category.benchmarkCount, "benchmark")}`, values: category.values })),
     ...(data.comparison?.axes ?? []).map((axis) => ({ id: `axis:${axis.id}`, label: axis.label, values: axis.values })),
   ], [data.comparison]);
   const chosenComparisonMetric = comparisonMetrics.find((metric) => metric.id === comparisonMetric) ?? null;
@@ -258,7 +258,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
       && (minIntelligence == null || (x.m.scores.aa_intelligence_index != null && x.m.scores.aa_intelligence_index >= minIntelligence))
       && (minCoding == null || (x.m.scores.aa_coding_index != null && x.m.scores.aa_coding_index >= minCoding))).length,
   [pool, maxCost, minScore, minIntelligence, minCoding]);
-  const countLabel = `${rows.length} models${s.advancedFiltersActive || q.trim() || org || comparisonActive ? " · filtered" : ""}`;
+  const countLabel = `${counted(rows.length, "model")}${s.advancedFiltersActive || q.trim() || org || comparisonActive ? " · filtered" : ""}`;
   const unpricedNote = unpricedDropped > 0
     ? <span data-bh-unpriced-excluded title={NO_PUBLIC_PRICE_NOTE}> · {unpricedDropped} without a public price excluded</span>
     : null;
@@ -298,7 +298,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
     </div>
     {comparisonTarget && comparisonMetric && <p role="status" className="mt-2 text-xs text-gray-500">
       {comparisonReference
-        ? <>Showing models above <b className="text-gray-300">{comparisonReference.value.toFixed(Math.abs(comparisonReference.value) < 10 ? 2 : 1)}</b> for this reference{comparisonReference.approximate ? ` (${bridgeDisclosure(comparisonReference)})` : " (measured)"}. Missing values stay unknown and are excluded; {matching.length} models currently qualify.</>
+        ? <>Showing models above <b className="text-gray-300">{comparisonReference.value.toFixed(Math.abs(comparisonReference.value) < 10 ? 2 : 1)}</b> for this reference{comparisonReference.approximate ? ` (${bridgeDisclosure(comparisonReference)})` : " (measured)"}. Missing values stay unknown and are excluded; {counted(matching.length, "model")} currently qualify.</>
         : <>This reference has no comparable result for that choice, so the filter is inactive. Missing values stay unknown.</>}
     </p>}
     {(comparisonTarget || comparisonMetric) && <button type="button" className="mt-2 text-xs text-accent underline" onClick={() => { setComparisonTarget(""); setComparisonMetric(""); }}>Clear comparison</button>}
@@ -460,7 +460,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
               <div><p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-gray-500">Evidence</p><div className="flex flex-wrap gap-2">{evidencePanel}</div></div>
             </div>
             <div className="flex shrink-0 items-center gap-3 border-t border-line bg-panel px-4 py-3">
-              <button type="button" onClick={() => setRefineOpen(false)} className="inline-flex min-h-10 items-center rounded-md bg-accent px-4 text-sm font-semibold text-ink">Show {rows.length} models</button>
+              <button type="button" onClick={() => setRefineOpen(false)} className="inline-flex min-h-10 items-center rounded-md bg-accent px-4 text-sm font-semibold text-ink">Show {counted(rows.length, "model")}</button>
               {refineChanged > 0 && <button type="button" onClick={resetRefine} className="inline-flex min-h-10 items-center rounded-md border border-line px-3 text-sm text-gray-400">Reset</button>}
             </div>
           </div>

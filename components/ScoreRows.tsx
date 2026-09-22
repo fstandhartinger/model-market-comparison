@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { SCORE_SHORT_LABELS, type ScoreKey } from "../lib/types";
 import { rowBars, rowWinners, COMPOSITE_MIN_ROWS, scoreRowSubtitle as subtitleFor } from "../lib/benchmark-matrix.mjs";
+import { counted } from "../lib/format";
 
 /** What `categoryComposite` returns, as much of it as the header needs. */
 export type CompositeSummary = { values: (number | null)[]; rows: { name: string }[]; judgedExcluded?: number; saturated?: { name: string }[]; kind?: "measured" | "judged" };
@@ -62,7 +63,7 @@ export function CategoryHeader({ label, composite, columns, count }: { label: Re
   return <tr className="bh-matrix-group">
     <th scope="rowgroup" className="bh-matrix-stub" title={basis}>
       <span className="bh-cat-head">{label}</span>
-      <span className="bh-cat-basis">{/* CR-63.16: say what the number counts ("7 benchmarks · 2 feed the group score"). F-110: below 640 px the count joins this line. */}{count != null && <span className="bh-cat-count-narrow">{count} benchmarks · </span>}{n >= COMPOSITE_MIN_ROWS ? `${n} feed the group score${composite.saturated?.length ? " (weighted)" : ""}` : "no group score"}<span className="sr-only">. {basis}</span></span>
+      <span className="bh-cat-basis">{/* CR-63.16: say what the number counts ("7 benchmarks · 2 feed the group score"). F-110: below 640 px the count joins this line. */}{count != null && <span className="bh-cat-count-narrow">{counted(count, "benchmark")} · </span>}{n >= COMPOSITE_MIN_ROWS ? `${n} feed the group score${composite.saturated?.length ? " (weighted)" : ""}` : "no group score"}<span className="sr-only">. {basis}</span></span>
     </th>
     {Array.from({ length: columns }, (_, j) => { const v = composite.values[j]; return <td key={j} className={`bh-cat-cell ${j === 0 ? "bh-matrix-lead" : ""}`}>
       {v == null ? <span className="sr-only">No category composite</span>

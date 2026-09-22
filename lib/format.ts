@@ -70,3 +70,11 @@ export type ModelSymbol = "circle" | "square";
 export function modelSymbol(openWeights: boolean): ModelSymbol {
   return openWeights ? "square" : "circle";
 }
+
+/** An English count: "1 offer", "3 offers" — never "1 offers".
+ *  Irregular plurals are given explicitly: counted(n, "family", "families").
+ *  Used wherever a number directly governs the noun it counts; a count that
+ *  reads "N of M …" takes the noun from M, not from N. */
+export function counted(n: number, singular: string, plural = `${singular}s`): string {
+  return `${n} ${n === 1 ? singular : plural}`;
+}

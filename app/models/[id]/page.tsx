@@ -6,7 +6,7 @@ import { SignalValue } from "../../../components/SignalValue";
 import { benchmaxxingLevelInfo } from "../../../lib/benchmaxxing-levels.mjs";
 import { notFound } from "next/navigation";
 import { getDataset } from "../../../lib/data";
-import { num, pct, orgColor, usdPerM } from "../../../lib/format";
+import { num, pct, orgColor, usdPerM, counted } from "../../../lib/format";
 import { clientData } from "../../../lib/client-model";
 import { compositeBenchmaxxingSignals } from "../../../lib/composite-signals";
 import { CompositeScoreValue } from "../../../components/CompositeScoreValue";
@@ -113,7 +113,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
         </div>}
       </div>
       <div className="mt-1 text-sm text-gray-400">
-        {model.org}{model.release_date ? ` · released ${model.release_date}` : ""} · {offers.length} offers
+        {model.org}{model.release_date ? ` · released ${model.release_date}` : ""} · {counted(offers.length, "offer")}
       </div>
       <SpeedLine facts={{ outputTps: model.aa_speed?.output_tps, ttftS: model.aa_speed?.ttft_s, contextTokens: model.aa_metadata?.context_window_tokens }} date={ds.sources.artificialanalysis} />
       {model.manual_notes && <p className="mt-2 max-w-3xl text-xs text-warn/90">{model.manual_notes}</p>}

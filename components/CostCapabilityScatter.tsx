@@ -8,7 +8,7 @@ import {
 import { hasScoreEvidence, type ClientData, type ClientModel } from "../lib/client-model";
 import { SCORE_SHORT_LABELS } from "../lib/types";
 import { scoreChartLabel } from "../lib/score-label";
-import { orgColor } from "../lib/format";
+import { orgColor, counted } from "../lib/format";
 import { modelPrice, scopeFromSettings, priceLabel, type PriceResult, type PriceSettings } from "../lib/cost";
 import { Toggle } from "./ui";
 import { PriceValue, PriceAssumptions, costTick, priceNumber } from "./PriceValue";
@@ -241,9 +241,9 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
     // Every candidate is offered in priority order; placement stops after LABEL_LIMIT names fit.
     const labels = labelCandidates(passing.filter((p) => !advanced || wide || frontierIds.has(p.id)), frontierIds, Number.POSITIVE_INFINITY);
     // F-13: inside Simple's shortlist card the map has no card of its own, one header line.
-    return <div className="bh-value-map" role="img" aria-label={`Score versus adjusted cost value map: ${compactPoints.length} models. Higher scores are further up and cheaper models further right, so the most attractive models sit in the top-right quadrant.`}>
+    return <div className="bh-value-map" role="img" aria-label={`Score versus adjusted cost value map: ${counted(compactPoints.length, "model")}. Higher scores are further up and cheaper models further right, so the most attractive models sit in the top-right quadrant.`}>
       <div className="relative flex items-center justify-end gap-2 lg:mb-1">
-        <span className="text-[11px] text-gray-500"><span title={FRONTIER_GRACE_NOTE}>{advanced && !wide ? "cheaper → right · green line = Pareto frontier" : advanced ? `Value map · ${compactPoints.length} models · cheaper → right · green line = Pareto` : `${compactPoints.length} models · cheaper → right`}</span> · <AaCredit /> · <EpochCredit bare /></span>
+        <span className="text-[11px] text-gray-500"><span title={FRONTIER_GRACE_NOTE}>{advanced && !wide ? "cheaper → right · green line = Pareto frontier" : advanced ? `Value map · ${counted(compactPoints.length, "model")} · cheaper → right · green line = Pareto` : `${counted(compactPoints.length, "model")} · cheaper → right`}</span> · <AaCredit /> · <EpochCredit bare /></span>
         <button type="button" aria-label="Chart settings" aria-expanded={prefsOpen} aria-controls="bh-value-map-settings" data-value-map-settings onClick={() => setPrefsOpen((o) => !o)}
           className="inline-flex h-7 min-h-0 w-7 items-center justify-center rounded-md text-gray-400 hover:bg-accent/10 hover:text-accent">
           <GearIcon />
@@ -288,7 +288,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
       {/* CR-75.2: the home page says what the green line means, in words, right under the chart. */}
       {/* CR-77.3: the sentence stays as Florian phrased it; the small tolerance is named in its tooltip and on /about. */}
       {!advanced && mapPrefs.pareto && pareto.length > 0 && <p className="mt-1 text-xs text-gray-400" data-bh-pareto-caption title={FRONTIER_GRACE_NOTE}>Models on the green line are the most capable in their price range.</p>}
-      {unpricedCount > 0 && <p className="mt-1 text-[11px] text-gray-500" data-bh-unpriced-note title={unpricedNames}>{unpricedCount} models without a public price not plotted.</p>}
+      {unpricedCount > 0 && <p className="mt-1 text-[11px] text-gray-500" data-bh-unpriced-note title={unpricedNames}>{counted(unpricedCount, "model")} without a public price not plotted.</p>}
     </div>;
   }
 
@@ -300,11 +300,11 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
         <Toggle label="Pareto frontier" on={showPareto} set={setShowPareto} />
         <span className="ml-auto text-xs text-gray-500">
           {/* F-18: the count is what the filters allow, so it opens them. */}
-          <button type="button" data-bh-filters-toggle onClick={s.openFilters} className="min-h-0 text-accent underline decoration-dotted underline-offset-2">{points.length} models</button> · cost: cheaper → right{offerScope.restricted ? " · provider-filtered" : ""}</span>
+          <button type="button" data-bh-filters-toggle onClick={s.openFilters} className="min-h-0 text-accent underline decoration-dotted underline-offset-2">{counted(points.length, "model")}</button> · cost: cheaper → right{offerScope.restricted ? " · provider-filtered" : ""}</span>
       </div>
 
       {logX && zeroCount > 0 && <p className="mb-2 text-xs text-amber-300">{zeroCount} zero-cost models cannot appear on a logarithmic axis; switch to linear or open the model price table. Frontier calculations include these models.</p>}
-      {unpricedCount > 0 && <p className="mb-2 text-xs text-gray-400" data-bh-unpriced-note title={unpricedNames}>{unpricedCount} models without a public price not plotted.</p>}
+      {unpricedCount > 0 && <p className="mb-2 text-xs text-gray-400" data-bh-unpriced-note title={unpricedNames}>{counted(unpricedCount, "model")} without a public price not plotted.</p>}
       <div aria-hidden="true" className="card p-4" style={{ height: 580 }}>
         <ResponsiveContainer width="100%" height="100%">
           <ScatterChart accessibilityLayer={false} margin={{ top: 20, right: 40, bottom: 64, left: 30 }}>
@@ -356,7 +356,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
           mouse-only, so every plotted price is listed below with its exact
           inputs reachable through the same PriceValue expansion. */}
       <details className="card mt-4 p-3">
-        <summary className="cursor-pointer text-sm text-gray-300">Model prices and scores (accessible table, {allPoints.length} rows)</summary>
+        <summary className="cursor-pointer text-sm text-gray-300">Model prices and scores (accessible table, {counted(allPoints.length, "row")})</summary>
         <div className="mt-2 max-h-96 overflow-y-auto">
           <table className="dtable w-full text-sm">
             <thead><tr>

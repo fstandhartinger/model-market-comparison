@@ -5,7 +5,7 @@ import {
 } from "recharts";
 import { hasScoreEvidence, type ClientData, type ClientModel } from "../lib/client-model";
 import { SCORE_PICKER_LABELS, SCORE_SHORT_LABELS, type ScoreKey } from "../lib/types";
-import { orgColor } from "../lib/format";
+import { orgColor, counted } from "../lib/format";
 import { FIXED_BLENDS, SCORE_OPTIONS, modelPrice, scopedCatalogOffers, scopeFromSettings, priceContext, priceLabel, type PriceResult, type PriceSettings } from "../lib/cost";
 import { ScoreCostSliders } from "./ShortlistControls";
 import { SIMPLE_LIMIT, activeCostMeasure, costMeasureChoices, topCandidates } from "../lib/value-map.mjs";
@@ -56,7 +56,7 @@ function DotStrip({ label, groups, format, log }: { label: string; groups: { nam
         return (
           <div key={g.name} className="grid grid-cols-[5rem_1fr] items-center gap-2 pt-4">
             <span className="text-xs text-gray-400">{g.name} <span className="text-gray-600">({vals.length})</span></span>
-            <div className="relative h-6 rounded bg-line/40" role="img" aria-label={`${g.name}: ${vals.length} models${mean != null ? `, mean ${format(mean)}` : ", no values"}`}>
+            <div className="relative h-6 rounded bg-line/40" role="img" aria-label={`${g.name}: ${counted(vals.length, "model")}${mean != null ? `, mean ${format(mean)}` : ", no values"}`}>
               {vals.map((v, i) => <span key={i} className="absolute top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/50" style={{ left: `${pos(v)}%` }} />)}
               {mean != null && <>
                 <span className="absolute top-0 h-6 w-0.5 -translate-x-1/2 bg-gray-400" style={{ left: `${pos(mean)}%` }} />
@@ -253,7 +253,7 @@ export function ChartsBoard({ data }: { data: ClientData }) {
           {/* The recharts tooltip is mouse-only, so every plotted price is also
               listed here with its exact inputs via the PriceValue expansion. */}
           <details className="mt-3">
-            <summary className="cursor-pointer text-xs text-gray-400">Plotted model costs (keyboard-accessible table, {cheapest.length} rows, {priceLabel(priceSettings)})</summary>
+            <summary className="cursor-pointer text-xs text-gray-400">Plotted model costs (keyboard-accessible table, {counted(cheapest.length, "row")}, {priceLabel(priceSettings)})</summary>
             <table className="dtable mt-2 w-full text-xs">
               <thead><tr>
                 <th className="px-2 py-1 text-left text-gray-400">Model</th>

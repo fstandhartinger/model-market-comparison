@@ -3,7 +3,7 @@ import { Fragment, useMemo, useState } from "react";
 import { hasScoreEvidence, type ClientData, type ClientModel } from "../lib/client-model";
 import { SCORE_LABELS } from "../lib/types";
 import { scoreLabel, scoreVersion } from "../lib/score-label";
-import { num, orgColor } from "../lib/format";
+import { num, orgColor, counted } from "../lib/format";
 import { rankedOffers, scopeFromSettings, priceContext, priceLabel, type PriceSettings, type PriceResult } from "../lib/cost";
 import { DataBar } from "./ui";
 import { PriceValue, PriceAssumptions, priceNumber } from "./PriceValue";
@@ -301,7 +301,7 @@ export function ProvidersView({ data }: { data: ClientData }) {
             </button>
           </>
         )}
-        <span className="ml-auto text-xs text-gray-500">{shown.length} providers</span>
+        <span className="ml-auto text-xs text-gray-500">{counted(shown.length, "provider")}</span>
       </div>
 
       <PriceAssumptions />

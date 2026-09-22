@@ -14,7 +14,7 @@ test('CR-75.1: section headers above the value-map card (Simple/Guided) and abov
 test('CR-75.2: one sentence under the home value map explains the green line; the top line no longer repeats it', async () => {
   const scatter = await src('components/CostCapabilityScatter.tsx');
   assert.match(scatter, /Models on the green line are the most capable in their price range\./);
-  assert.match(scatter, /advanced \? `Value map · \$\{compactPoints\.length\} models · cheaper → right · green line = Pareto` : `\$\{compactPoints\.length\} models · cheaper → right`/);
+  assert.match(scatter, /advanced \? `Value map · \$\{counted\(compactPoints\.length, "model"\)\} · cheaper → right · green line = Pareto` : `\$\{counted\(compactPoints\.length, "model"\)\} · cheaper → right`/);
   assert.match(scatter, /<AaCredit \/> · <EpochCredit bare \/>/, 'data attribution stays visible');
 });
 

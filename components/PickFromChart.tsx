@@ -3,6 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { SLIDER_MAX, costToSlider, logPosition, nearestHitId, pickChart, sliderToCost } from "../lib/pick-chart.mjs";
 import { formatValue } from "../lib/benchmark-matrix.mjs";
 import { seriesColor, seriesLetter } from "./BenchmarkBars";
+import { counted } from "../lib/format";
 
 type Candidate = { id: string; display_name: string; org: string; scores: Record<string, number | null | undefined>; cost: number | null };
 
@@ -81,7 +82,7 @@ export function PickFromChart({ candidates, score, scoreLabel, ids, onToggle, ma
       {" · "}{full ? `${max} of ${max} columns — remove one to add another` : "click or tap a point to add or remove it"}
     </p>
     <div ref={wrap} style={{ height: H }} className="relative w-full">
-      {width > 0 && <svg width={width} height={H} role="group" aria-label={`${scoreLabel} against adjusted cost per task, log scale. ${ids.length} models selected.`} className="block overflow-visible" onClick={onSvgClick}>
+      {width > 0 && <svg width={width} height={H} role="group" aria-label={`${scoreLabel} against adjusted cost per task, log scale. ${counted(ids.length, "model")} selected.`} className="block overflow-visible" onClick={onSvgClick}>
         {chart.yTicks.map((t) => <g key={`y${t}`}><line x1={M.l} x2={M.l + pw} y1={Y(t)} y2={Y(t)} stroke="rgb(var(--line))" strokeOpacity={0.5} /><text x={M.l - 6} y={Y(t) + 3} textAnchor="end" fontSize={10} fill="var(--muted)">{t}</text></g>)}
         {xTicks.map((t) => <g key={`x${t}`}><line x1={X(t)} x2={X(t)} y1={M.t} y2={M.t + ph} stroke="rgb(var(--line))" strokeOpacity={0.35} /><text x={X(t)} y={H - M.b + 14} textAnchor="middle" fontSize={10} fill="var(--muted)">{tickMoney(t)}</text></g>)}
         <text x={M.l + pw} y={H - 4} textAnchor="end" fontSize={10} fill="var(--muted)">Adjusted cost / task · log scale · cheaper ←</text>

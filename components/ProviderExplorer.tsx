@@ -1,6 +1,7 @@
 "use client";
 import { Fragment, useMemo, useState } from "react";
 import type { ClientData, ClientOffer, ProviderInfo } from "../lib/client-model";
+import { counted } from "../lib/format";
 import { SCORE_LABELS } from "../lib/types";
 import { scoreLabel, scoreVersion } from "../lib/score-label";
 import { useSettings } from "./SettingsContext";
@@ -185,7 +186,7 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
             </tbody>
           </table>
         </div>
-        <p className="mt-1 text-[11px] text-gray-600">{dir.length} providers. Click one to see its models & prices.</p>
+        <p className="mt-1 text-[11px] text-gray-600">{counted(dir.length, "provider")}. Click one to see its models & prices.</p>
       </div>
 
       {/* RIGHT: selected provider's models */}
@@ -196,7 +197,7 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
             <span className="text-xs text-gray-500">{provider.platform !== provider.provider ? provider.platform : ""}</span>
             {flags(provider)}
             {provider.country && <span className="rounded bg-white/5 px-2 py-0.5 text-[11px] text-gray-400">HQ: {provider.country}</span>}
-            <span className="rounded bg-white/5 px-2 py-0.5 text-[11px] text-gray-400">{rows.length} models</span>
+            <span className="rounded bg-white/5 px-2 py-0.5 text-[11px] text-gray-400">{counted(rows.length, "model")}</span>
             <div className="ml-auto flex gap-1 text-xs">
               <button onClick={() => setSort("price")} className={`rounded-md border px-2 py-1 ${sort === "price" ? "border-accent bg-accent/15 text-accent" : "border-line text-gray-400"}`}>Sort by price</button>
               <button onClick={() => setSort("score")} className={`rounded-md border px-2 py-1 ${sort === "score" ? "border-accent bg-accent/15 text-accent" : "border-line text-gray-400"}`}>Sort by score</button>

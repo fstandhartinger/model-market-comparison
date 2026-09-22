@@ -7,6 +7,7 @@ import { humanVersion, versionHeading, versionSuffix } from '../lib/version-labe
 import { RadarHit, RadarTip, TopicRadar, type RadarActive, type RadarSeries } from './TopicRadar';
 import { AaCredit } from './AaCredit';
 import { EpochCredit } from './EpochCredit';
+import { counted } from '../lib/format';
 
 export const SERIES_COLORS = ['var(--radar-1, #5b9dff)', 'var(--radar-2, #7ee0c0)', 'var(--radar-3, #f5b65b)', 'var(--radar-4, #cc9aff)'];
 const DASHES = ['', '9 4', '3 4', '12 4 2 4'];
@@ -83,7 +84,7 @@ export function BenchmarkRadar({ view, axes, picks, axesPicker, axesPickerLabel 
   const detailedAxes = useMemo(() => detailedRadarAxes([...view.axes, ...(view.indexAxes ?? [])], picks, convention), [view, picks, convention]);
   const shown = mode === 'simple' ? axes : detailedAxes;
   const series = seriesFor(view, shown, picks, convention);
-  const ariaLabel = `${mode === 'simple' ? 'Radar' : 'Detailed radar grouped by topic'} for ${series.map((s) => s.name).join(', ')}. ${mode === 'simple' ? shown.map((a, i) => `Axis ${i + 1}: ${a.name}, ${humanVersion(a.version).label}`).join('. ') + '. ' : `${shown.length} benchmarks. `}Each point is focusable and announces its exact value; all values are also in the table below.`;
+  const ariaLabel = `${mode === 'simple' ? 'Radar' : 'Detailed radar grouped by topic'} for ${series.map((s) => s.name).join(', ')}. ${mode === 'simple' ? shown.map((a, i) => `Axis ${i + 1}: ${a.name}, ${humanVersion(a.version).label}`).join('. ') + '. ' : `${counted(shown.length, 'benchmark')}. `}Each point is focusable and announces its exact value; all values are also in the table below.`;
   return <section id="benchmark-radar" className="bh-panel min-w-0 scroll-mt-4 p-5" aria-label="Benchmark radar">
     <div className="flex flex-wrap items-start justify-between gap-3"><div><p className="bh-eyebrow">PERFORMANCE PROFILE</p><h2 className="text-xl font-semibold">Benchmark radar <InfoTip title="How the benchmark radar works" label="the benchmark radar explanation">Percentile (default): each point is the model&apos;s percentile among the models measured on that benchmark, so every axis uses one scale and the best measured model sits on the rim. Native: each benchmark on its published scale; open-ended scores (Elo, Epoch ECI) span the measured range. Missing results stay gaps, never zeroes; hover, tap or focus a point for the published number. The chart zooms to the range the compared models occupy — tick “Full scale” to undo.</InfoTip></h2></div>
       <div className="flex flex-wrap items-center gap-2">
@@ -92,7 +93,7 @@ export function BenchmarkRadar({ view, axes, picks, axesPicker, axesPickerLabel 
         {(['percentile', 'native'] as const).map((c) => <button key={c} type="button" aria-pressed={convention === c} onClick={() => chooseConvention(c)} className={`min-h-9 rounded-md px-3 ${convention === c ? 'bg-accent/15 font-semibold text-accent' : 'bh-muted'}`}>{c === 'percentile' ? 'Percentile' : 'Native'}</button>)}
       </div>
       <div role="group" aria-label="Radar type" className="inline-flex rounded-lg border border-line p-0.5 text-sm">
-        {(['simple', 'detailed'] as const).map((m) => <button key={m} type="button" aria-pressed={mode === m} onClick={() => setMode(m)} className={`min-h-9 rounded-md px-3 ${mode === m ? 'bg-accent/15 font-semibold text-accent' : 'bh-muted'}`}>{m === 'simple' ? `Simple · ${axes.length} axes` : `Detailed · ${detailedAxes.length} benchmarks`}</button>)}
+        {(['simple', 'detailed'] as const).map((m) => <button key={m} type="button" aria-pressed={mode === m} onClick={() => setMode(m)} className={`min-h-9 rounded-md px-3 ${mode === m ? 'bg-accent/15 font-semibold text-accent' : 'bh-muted'}`}>{m === 'simple' ? `Simple · ${axes.length} axes` : `Detailed · ${counted(detailedAxes.length, 'benchmark')}`}</button>)}
       </div>
       {/* F-115 (Fable pass 21): the zoom control belongs with the other chart controls, not on a lone
           right-aligned row above the chart. It only governs the simple radar, so it appears with it. */}

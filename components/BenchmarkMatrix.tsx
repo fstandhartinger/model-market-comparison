@@ -6,6 +6,7 @@ import { SCORE_SHORT_LABELS } from "../lib/types";
 import type { ClientModel } from "../lib/client-model";
 import { rowBars, rowWinners, formatValue, cellHref, chartRows, categoryComposite, versionLine, countBoards, variantLabel, caveatTip, type BenchmarkMatrix as Matrix, type MatrixRow } from "../lib/benchmark-matrix.mjs";
 import { versionSuffix } from "../lib/version-label";
+import { counted } from "../lib/format";
 import { ScoreRowPair, CategoryHeader } from "./ScoreRows";
 import { MODEL_PRESETS, ROW_PRESETS, decodeFilters, encodeFilters, modelsForPreset, pickFilters, rowFilter } from "../lib/presets.mjs";
 import { SETTINGS_DEFAULTS } from "../lib/settings-state";
@@ -216,7 +217,7 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
           onKeyDown={(e) => { if (e.key === "Enter" && matches[0]) { e.preventDefault(); add(matches[0].id); } if (e.key === "Escape") setQ(""); }} />
         {matches.length > 0 && <ul id="bh-matrix-add-list" role="listbox" className="absolute left-0 right-0 top-full z-20 mt-1 grid gap-0.5 rounded-xl border border-line bg-panel p-1 shadow-lg">
           {matches.map((m) => <li key={m.id} role="option" aria-selected={false}><button type="button" className="flex min-h-11 w-full items-center justify-between gap-3 rounded-md px-3 text-left text-sm hover:bg-accent/10" onClick={() => add(m.id)}>
-            <span className="font-medium">{m.display_name}</span><span className="bh-muted text-xs">{m.org} · {m.benchmark_count} benchmarks</span></button></li>)}
+            <span className="font-medium">{m.display_name}</span><span className="bh-muted text-xs">{m.org} · {counted(m.benchmark_count, "benchmark")}</span></button></li>)}
         </ul>}
       </div>}
       <details className="bh-pickpanel bh-disclosure" open={panel === "pick"} onToggle={panelToggle("pick")}>
@@ -252,7 +253,7 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
             <CategoryHeader columns={ids.length} count={g.rows.length} composite={categoryComposite(g.rows, ids.length)} label={
               <button type="button" aria-expanded={open} onClick={() => toggle(g.id)}>
                 <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" className={open ? "rotate-90" : ""}><path d="M4 2l4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                <span>{g.label}</span><span className="bh-cat-count bh-muted tabular text-xs font-normal">{g.rows.length} benchmarks</span>
+                <span>{g.label}</span><span className="bh-cat-count bh-muted tabular text-xs font-normal">{counted(g.rows.length, "benchmark")}</span>
               </button>} />
             {open && g.rows.map(({ row, vals, basis }) => {
               // F-123 (pass 23): a preliminary (‡, chart-read) value is display-only — no bar, no bold, exactly as Compare (F-121).

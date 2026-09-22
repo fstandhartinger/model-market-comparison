@@ -18,7 +18,7 @@ test('F-155: in RowTags the revealed chips precede the "+N / less" toggle', () =
 
 test('F-156: a partly matched board states its published-row count and the checkbox carries the hidden count', () => {
   assert.match(ranking, /const matchedRows = allRows\.length - unmatchedCount;/);
-  assert.match(ranking, /unmatchedCount > 0 \? `\$\{matchedRows\} of \$\{allRows\.length\} published results are matched to catalog models · unit: \$\{axis\.unit\} · \$\{direction\}` : `\$\{matched\} of \$\{view\.models\.length\} catalog configurations have a result · unit: \$\{axis\.unit\} · \$\{direction\}`/);
+  assert.match(ranking, /unmatchedCount > 0 \? `\$\{matchedRows\} of \$\{counted\(allRows\.length, 'published result'\)\} \$\{allRows\.length === 1 \? 'is' : 'are'\} matched to catalog models · unit: \$\{axis\.unit\} · \$\{direction\}` : `\$\{matched\} of \$\{view\.models\.length\} catalog configurations have a result · unit: \$\{axis\.unit\} · \$\{direction\}`/);
   assert.match(ranking, /Include results not matched to a catalog model \(\{unmatchedCount\}\)<\/label>/);
   // the label keeps its prefix so verify-iter155/156's getByLabel(...) substring match still finds it
   assert.match(ranking, /Include results not matched to a catalog model/);

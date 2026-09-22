@@ -49,6 +49,6 @@ test('CR-80.2: an unpriced model sorts by score like everyone; only a cost sort 
 test('CR-80.2: both value-map variants state how many scored models are not plotted, exactly as phrased', () => {
   const notes = scatter.match(/data-bh-unpriced-note/g) ?? [];
   assert.equal(notes.length, 2, 'compact (home) and full (charts) variants each carry the note');
-  assert.match(scatter, /\{unpricedCount\} models without a public price not plotted\./, "Florian's wording");
+  assert.match(scatter, /\{counted\(unpricedCount, "model"\)\} without a public price not plotted\./, "Florian's wording");
   assert.match(scatter, /filter\(\(x\) => x\.price\.value == null \|\| \(x\.price\.value as number\) < 0\)/, 'the count is data-derived, never hard-coded');
 });

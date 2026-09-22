@@ -8,6 +8,7 @@ import { InfoTip } from "./InfoTip";
 import { MultiCombobox, type ComboItem } from "./MultiCombobox";
 import { defaultMinFor, DEFAULT_BLEND, FIXED_BLENDS } from "../lib/cost";
 import { SETTINGS_DEFAULTS } from "../lib/settings-state";
+import { counted } from "../lib/format";
 import { BENCHMAXX_COMPOSITE_WEIGHT } from "../lib/composite.mjs";
 import { REGION_BUCKETS, labBucket } from "../lib/regions.mjs";
 import { providerCompanies } from "../lib/provider-company.mjs";
@@ -340,7 +341,7 @@ function OptionsBody({ providers, families, inline }: { providers: ProviderInfo[
       </div>
       <div className={`flex shrink-0 items-center gap-3 border-t border-line px-4 ${inline ? "py-2" : "bg-panel py-3"}`}>
         {!inline && <button type="button" onClick={closeFilters} className="inline-flex min-h-10 items-center rounded-md bg-accent px-4 text-sm font-semibold text-ink">
-          {s.resultCount != null ? `Show ${s.resultCount} models` : "Show results"}
+          {s.resultCount != null ? `Show ${counted(s.resultCount, "model")}` : "Show results"}
         </button>}
         {active && <button type="button" onClick={reset} className="inline-flex min-h-10 items-center rounded-md border border-line px-3 text-sm text-gray-400 hover:text-gray-200">Reset</button>}
         {/* CR-4.1: filter presets — ours and yours — in the same control as model and row presets (CR-4.2). */}
