@@ -167,7 +167,9 @@ for (const path of ['data/raw/benchmarks/public-observations.json', 'data/raw/be
   // CR-60.2: hand-curated preliminary rows — values a source publishes only inside a picture. They
   // are kept out of public-observations.json because the daily refresh rebuilds that file per
   // benchmark_id from the collector and would delete them; each row names its own model_id.
-  'data/raw/benchmarks/manual-observations.json']) {
+  'data/raw/benchmarks/manual-observations.json',
+  // CR-128: independently sourced third-party board rows are maintained separately from preliminary values.
+  'data/raw/benchmarks/manual-board-observations.json']) {
   let raw;
   try { raw = await read(path); } catch (e) { if (e.code === 'ENOENT' && process.argv.includes('--draft')) continue; throw e; }
   for (const observation of raw.observations) {

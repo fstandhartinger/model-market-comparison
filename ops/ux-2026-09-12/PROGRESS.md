@@ -7143,11 +7143,11 @@ Seeded from CR-128 in `04-CR-BRIEF.md` after checking `main`: CR-127 was the hig
 
 | ID | Status | Evidence | Note |
 |---|---|---|---|
-| CR-128.1 | open | `/home/flori/jobs/bh-frontier-update-20260922/THIRD-PARTY-SCORES.md`; `third-party-scores.json`; `RESULT.md` | Re-check sourced numbers, exact protocol identity and variant joins; prioritise only genuine Composite-slot inputs; deduplicate exact live rows. |
-| CR-128.2 | open | source captures and row locators to be recorded under CR-128 | Preserve source URL/date/hash, unit and basis; mark vendor claims self-reported; retain fallback and protocol caveats. |
-| CR-128.3 | open | `data/raw/benchmarks/registry.json`; selective evidence/ingest files to be recorded | Add only protocol-matched identities and manual snapshots; use the selective registry pipeline, not the full daily pipeline. |
-| CR-128.4 | open | both-host batch verification receipts to be recorded | Each small publication batch must be checked on both hosts for exact values, identities, basis and caveats. |
-| CR-128.5 | open | full test/build and final both-host receipts to be recorded | Independent different-family review, tests, typecheck, production build and per-family Composite/rank/Pareto/cost report. Do not manufacture Composite inputs. |
+| CR-128.1 | in progress | `/home/flori/jobs/bh-frontier-update-20260922/THIRD-PARTY-SCORES.md`; `third-party-scores.json`; `RESULT.md`; `staging/cr128-candidate-audit.json` | Audited all 399 rows against captured primary pages; 72 exact live duplicates and 23 already-consumed profile values excluded. Missing Composite protocols remain unfilled unless exact source evidence exists. |
+| CR-128.2 | in progress | `data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/`; `source-captures/manifest.json`; `staging/cr128-batch-*-rows.json` | Hash-bound source locators retained; measured board rows remain measured, five already-live vendor claims stay self-reported, and AA fallback plus Vals 30/198 caveats are retained. |
+| CR-128.3 | in progress | `registry.json`; `collection-plan.json`; `manual-board-observations.json`; `scripts/ingest-benchmark-scores.mjs` | Selective additions are being published in seven bounded manual-snapshot batches; the full daily refresh is not used. |
+| CR-128.4 | in progress | `/home/flori/jobs/bh-thirdparty-ingest-20260922/job/verification/` | Verify every batch’s exact observation on both production hosts before publishing the next batch. |
+| CR-128.5 | in progress | `/home/flori/jobs/bh-thirdparty-ingest-20260922/RESULT.md` | Different-family frozen-data review, tests, typecheck, production build, final both-host verification and per-family report remain pending. |
 
 ## Iteration 175 — 2026-09-22 22:40 → ~23:15 UTC (claude-opus, work): CR-120 gets the verifier it never had, and its non-implementer sign-off
 

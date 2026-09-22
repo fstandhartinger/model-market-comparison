@@ -17927,6 +17927,122 @@
           "excerpt": "GPT-6 Sol (xhigh) — OSWorld 2.0 offline v2026.08.08 partial reward: 60.5%; OpenAI launch post, 2026-09-22."
         }
       ]
+    },
+    {
+      "id": "aa-intelligence-index-cost::4.3.2",
+      "name": "Cost to run AA Intelligence Index (total)",
+      "version": "4.3.2",
+      "version_status": "published",
+      "family": "aa-intelligence-index-cost",
+      "category": "Other",
+      "one_sentence_description": "Cost to run AA Intelligence Index (total) results published by Artificial Analysis.",
+      "scoring": {
+        "metric": "Total cost to run the AA Intelligence Index v4.3.2",
+        "unit": "USD",
+        "range": [
+          0,
+          null
+        ],
+        "higher_better": false,
+        "notes": "Keep the source's exact board, version, effort and harness separate. The captured source row is retained with each observation; no cross-benchmark normalization is applied."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+      "publication_urls": [
+        {
+          "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and source capture entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "Review the retained primary-source capture and extract the exact named row/configuration; do not infer missing effort or combine nearby benchmark variants.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Exact row for Claude Opus 5.5; Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; quoted field \"intelligenceIndexCost\":{\"total\":8708.197642611496}",
+        "version_guard": "Require source date/version retrieved 2026-09-22; keep this exact benchmark and operator separate from other similarly named boards.",
+        "notes": "One-time manual snapshot for CR-128; refresh only after verifying the source's version and protocol. Source maintainer: Artificial Analysis."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source.",
+        "check_recommendation": "Recheck on a model release or when the board updates; do not imply a source schedule."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+          "sha256": "5a23f228afdb8b1ec808ee2a1978890c2c0a5c24dc7e2522e1e2176053693217",
+          "fetched_at": "2026-09-22T22:47:41.526299+00:00",
+          "source_sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+          "excerpt": "\"intelligenceIndexCost\":{\"total\":8708.197642611496}"
+        }
+      ]
+    },
+    {
+      "id": "aa-intelligence-index-cost-per-task::4.3.2",
+      "name": "Cost per AA Intelligence Index task",
+      "version": "4.3.2",
+      "version_status": "published",
+      "family": "aa-intelligence-index-cost-per-task",
+      "category": "Other",
+      "one_sentence_description": "Cost per AA Intelligence Index task results published by Artificial Analysis.",
+      "scoring": {
+        "metric": "Cost per AA Intelligence Index task",
+        "unit": "USD/task",
+        "range": [
+          0,
+          null
+        ],
+        "higher_better": false,
+        "notes": "Keep the source's exact board, version, effort and harness separate. The captured source row is retained with each observation; no cross-benchmark normalization is applied."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+      "publication_urls": [
+        {
+          "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and source capture entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "Review the retained primary-source capture and extract the exact named row/configuration; do not infer missing effort or combine nearby benchmark variants.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Exact row for Claude Opus 5.5; Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; quoted field \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":5.982012019521066}}",
+        "version_guard": "Require source date/version retrieved 2026-09-22; keep this exact benchmark and operator separate from other similarly named boards.",
+        "notes": "One-time manual snapshot for CR-128; refresh only after verifying the source's version and protocol. Source maintainer: Artificial Analysis."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source.",
+        "check_recommendation": "Recheck on a model release or when the board updates; do not imply a source schedule."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+          "sha256": "5a23f228afdb8b1ec808ee2a1978890c2c0a5c24dc7e2522e1e2176053693217",
+          "fetched_at": "2026-09-22T22:47:41.526299+00:00",
+          "source_sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+          "excerpt": "\"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":5.982012019521066}}"
+        }
+      ]
     }
   ],
   "aa_field_map": [

@@ -4824,7 +4824,7 @@
             65536,
             131072
           ],
-          "mean_tolerance": 1e-09,
+          "mean_tolerance": 1e-9,
           "reasoning_modes": [
             null,
             "enabled",
@@ -5088,7 +5088,7 @@
             "costUsd",
             "categories"
           ],
-          "pct_tolerance": 1e-09,
+          "pct_tolerance": 1e-9,
           "incomplete_pct_tolerance": 0.1
         }
       },
@@ -6074,6 +6074,30 @@
         "https://charxiv.github.io/",
         "https://raw.githubusercontent.com/princeton-nlp/CharXiv/main/README.md"
       ]
+    },
+    {
+      "benchmark_id": "aa-intelligence-index-cost::4.3.2",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Hash-bound primary-source snapshot reviewed for CR-128 on 2026-09-22; exact scores are retained in manual-board-observations.json.",
+      "recipe": {
+        "command": "Review the retained primary-source capture, confirm the named row and benchmark version, then update the manual observation file and evidence hash.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Exact row for Claude Opus 5.5; Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; quoted field \"intelligenceIndexCost\":{\"total\":8708.197642611496}",
+        "version_guard": "Require source date/version retrieved 2026-09-22; keep this exact benchmark and operator separate from other similarly named boards."
+      }
+    },
+    {
+      "benchmark_id": "aa-intelligence-index-cost-per-task::4.3.2",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Hash-bound primary-source snapshot reviewed for CR-128 on 2026-09-22; exact scores are retained in manual-board-observations.json.",
+      "recipe": {
+        "command": "Review the retained primary-source capture, confirm the named row and benchmark version, then update the manual observation file and evidence hash.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Exact row for Claude Opus 5.5; Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; quoted field \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":5.982012019521066}}",
+        "version_guard": "Require source date/version retrieved 2026-09-22; keep this exact benchmark and operator separate from other similarly named boards."
+      }
     }
   ]
 }

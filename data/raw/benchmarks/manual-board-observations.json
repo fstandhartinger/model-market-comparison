@@ -1,0 +1,1700 @@
+{
+  "schema_version": 1,
+  "note": "CR-128 selective source observations. Each number is traceable to the hash-bound primary source in its row; vendor submissions retain self_reported basis.",
+  "observations": [
+    {
+      "id": "cr128:617525c8a03cd77e35896a8a",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "2f3c4dc9-a450-4303-8697-0237257cf08f",
+        "name": "Claude Opus 5.5 (max with fallback) [claude-opus-5-5]",
+        "model_id": "claude-opus-5.5::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 1846.17,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "GDPval-AA v2.1; Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; exact source excerpt: \"gdpval\":1846.17 (page payload, model slug claude-opus-5-5)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; page date retrieved 2026-09-22 (model release 2026-09-22); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (max with fallback) [claude-opus-5-5]\",\"source_quote\":\"\\\"gdpval\\\":1846.17 (page payload, model slug claude-opus-5-5)\",\"source_unit\":\"Elo\",\"displayed_value\":1846.17}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:cb13be4e9422649be7a1216a",
+      "benchmark_id": "aa-terminal-bench::4.0-upstream-timeouts",
+      "subject": {
+        "source_id": "2f3c4dc9-a450-4303-8697-0237257cf08f",
+        "name": "Claude Opus 5.5 (max with fallback) [claude-opus-5-5]",
+        "model_id": "claude-opus-5.5::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.595959595959596,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "Terminal-Bench 4.0 (AA run); Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; exact source excerpt: \"terminalBench40\":0.595959595959596 (page payload, model slug claude-opus-5-5)"
+      },
+      "protocol": "Terminal-Bench 4.0 (AA run); source configuration Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; page date retrieved 2026-09-22 (model release 2026-09-22); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (max with fallback) [claude-opus-5-5]\",\"source_quote\":\"\\\"terminalBench40\\\":0.595959595959596 (page payload, model slug claude-opus-5-5)\",\"source_unit\":\"%\",\"displayed_value\":59.6}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:21b026192ddc5b34b5d08672",
+      "benchmark_id": "aa-scicode::1.0.1",
+      "subject": {
+        "source_id": "2f3c4dc9-a450-4303-8697-0237257cf08f",
+        "name": "Claude Opus 5.5 (max with fallback) [claude-opus-5-5]",
+        "model_id": "claude-opus-5.5::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.668981481481482,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "SciCode (AA); Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; exact source excerpt: \"scicode\":0.668981481481482 (page payload, model slug claude-opus-5-5)"
+      },
+      "protocol": "SciCode (AA); source configuration Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; page date retrieved 2026-09-22 (model release 2026-09-22); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (max with fallback) [claude-opus-5-5]\",\"source_quote\":\"\\\"scicode\\\":0.668981481481482 (page payload, model slug claude-opus-5-5)\",\"source_unit\":\"%\",\"displayed_value\":66.9}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:a7ffa5cdde0dd29b43a43391",
+      "benchmark_id": "aa-hle::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "2f3c4dc9-a450-4303-8697-0237257cf08f",
+        "name": "Claude Opus 5.5 (max with fallback) [claude-opus-5-5]",
+        "model_id": "claude-opus-5.5::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.613531047265987,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "Humanity's Last Exam (AA); Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; exact source excerpt: \"hle\":0.613531047265987 (page payload, model slug claude-opus-5-5)"
+      },
+      "protocol": "Humanity's Last Exam (AA); source configuration Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; page date retrieved 2026-09-22 (model release 2026-09-22); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (max with fallback) [claude-opus-5-5]\",\"source_quote\":\"\\\"hle\\\":0.613531047265987 (page payload, model slug claude-opus-5-5)\",\"source_unit\":\"%\",\"displayed_value\":61.35}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:88a3953a09bd1380645e0b4a",
+      "benchmark_id": "aa-critpt::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "2f3c4dc9-a450-4303-8697-0237257cf08f",
+        "name": "Claude Opus 5.5 (max with fallback) [claude-opus-5-5]",
+        "model_id": "claude-opus-5.5::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.317142857142857,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "CritPt (AA); Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; exact source excerpt: \"critpt\":0.317142857142857 (page payload, model slug claude-opus-5-5)"
+      },
+      "protocol": "CritPt (AA); source configuration Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; page date retrieved 2026-09-22 (model release 2026-09-22); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (max with fallback) [claude-opus-5-5]\",\"source_quote\":\"\\\"critpt\\\":0.317142857142857 (page payload, model slug claude-opus-5-5)\",\"source_unit\":\"%\",\"displayed_value\":31.71}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:a8f4abca3728e8551f878ac3",
+      "benchmark_id": "aa-lcr::1.1",
+      "subject": {
+        "source_id": "2f3c4dc9-a450-4303-8697-0237257cf08f",
+        "name": "Claude Opus 5.5 (max with fallback) [claude-opus-5-5]",
+        "model_id": "claude-opus-5.5::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.846666666666667,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "AA-LCR v1.1; Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; exact source excerpt: \"lcr\":0.846666666666667 (page payload, model slug claude-opus-5-5)"
+      },
+      "protocol": "AA-LCR v1.1; source configuration Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; page date retrieved 2026-09-22 (model release 2026-09-22); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (max with fallback) [claude-opus-5-5]\",\"source_quote\":\"\\\"lcr\\\":0.846666666666667 (page payload, model slug claude-opus-5-5)\",\"source_unit\":\"%\",\"displayed_value\":84.67}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:ea91cd145268cb2d3e434c2c",
+      "benchmark_id": "aa-omniscience::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "2f3c4dc9-a450-4303-8697-0237257cf08f",
+        "name": "Claude Opus 5.5 (max with fallback) [claude-opus-5-5]",
+        "model_id": "claude-opus-5.5::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 46.416666666666664,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "AA-Omniscience; Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; exact source excerpt: \"omniscience\":46.416666666666664 (page payload, model slug claude-opus-5-5)"
+      },
+      "protocol": "AA-Omniscience; source configuration Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; page date retrieved 2026-09-22 (model release 2026-09-22); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (max with fallback) [claude-opus-5-5]\",\"source_quote\":\"\\\"omniscience\\\":46.416666666666664 (page payload, model slug claude-opus-5-5)\",\"source_unit\":\"index (-100..100)\",\"displayed_value\":46.42}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:eea7ebc99c7f6227462ac7e1",
+      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
+      "subject": {
+        "source_id": "2f3c4dc9-a450-4303-8697-0237257cf08f",
+        "name": "Claude Opus 5.5 (max with fallback) [claude-opus-5-5]",
+        "model_id": "claude-opus-5.5::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.262,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "GDP.pdf (all-pass); Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; exact source excerpt: \"gdpPdfAllPass\":0.262 (page payload, model slug claude-opus-5-5)"
+      },
+      "protocol": "GDP.pdf (all-pass); source configuration Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; page date retrieved 2026-09-22 (model release 2026-09-22); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (max with fallback) [claude-opus-5-5]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.262 (page payload, model slug claude-opus-5-5)\",\"source_unit\":\"%\",\"displayed_value\":26.2}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:551c86ba9f1538e1a1edca5a",
+      "benchmark_id": "aa-automationbench::1.0.6",
+      "subject": {
+        "source_id": "2f3c4dc9-a450-4303-8697-0237257cf08f",
+        "name": "Claude Opus 5.5 (max with fallback) [claude-opus-5-5]",
+        "model_id": "claude-opus-5.5::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.6953868128636069,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "AutomationBench-AA (partial score); Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; exact source excerpt: \"automationBenchPartialScore\":0.6953868128636069 (page payload, model slug claude-opus-5-5)"
+      },
+      "protocol": "AutomationBench-AA (partial score); source configuration Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; page date retrieved 2026-09-22 (model release 2026-09-22); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (max with fallback) [claude-opus-5-5]\",\"source_quote\":\"\\\"automationBenchPartialScore\\\":0.6953868128636069 (page payload, model slug claude-opus-5-5)\",\"source_unit\":\"%\",\"displayed_value\":69.54}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:9bc865c9a2fed4db08ad9d4d",
+      "benchmark_id": "aa-mmmu-pro::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "2f3c4dc9-a450-4303-8697-0237257cf08f",
+        "name": "Claude Opus 5.5 (max with fallback) [claude-opus-5-5]",
+        "model_id": "claude-opus-5.5::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.876878612716763,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "MMMU-Pro (AA); Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; exact source excerpt: \"mmmuPro\":0.876878612716763 (page payload, model slug claude-opus-5-5)"
+      },
+      "protocol": "MMMU-Pro (AA); source configuration Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; page date retrieved 2026-09-22 (model release 2026-09-22); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (max with fallback) [claude-opus-5-5]\",\"source_quote\":\"\\\"mmmuPro\\\":0.876878612716763 (page payload, model slug claude-opus-5-5)\",\"source_unit\":\"%\",\"displayed_value\":87.69}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:3349fdad13bef3207c05f5e4",
+      "benchmark_id": "aa-harvey-lab::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "2f3c4dc9-a450-4303-8697-0237257cf08f",
+        "name": "Claude Opus 5.5 (max with fallback) [claude-opus-5-5]",
+        "model_id": "claude-opus-5.5::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.911998842090027,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "Harvey LAB (AA); Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; exact source excerpt: \"harveyLab\":0.911998842090027 (page payload, model slug claude-opus-5-5)"
+      },
+      "protocol": "Harvey LAB (AA); source configuration Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; page date retrieved 2026-09-22 (model release 2026-09-22); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (max with fallback) [claude-opus-5-5]\",\"source_quote\":\"\\\"harveyLab\\\":0.911998842090027 (page payload, model slug claude-opus-5-5)\",\"source_unit\":\"%\",\"displayed_value\":91.2}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:a9d8481d0b87c449a6466f89",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "2f3c4dc9-a450-4303-8697-0237257cf08f",
+        "name": "Claude Opus 5.5 (max with fallback) [claude-opus-5-5]",
+        "model_id": "claude-opus-5.5::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 1821.85,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "AA-Briefcase v1.1; Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; exact source excerpt: {\"slug\":\"aa-briefcase\",\"score\":1821.85}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; page date retrieved 2026-09-22; AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (max with fallback) [claude-opus-5-5]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1821.85}\",\"source_unit\":\"Elo\",\"displayed_value\":1821.85}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:251ae38a218c78309c5a4d40",
+      "benchmark_id": "aa-intelligence-index-cost::4.3.2",
+      "subject": {
+        "source_id": "2f3c4dc9-a450-4303-8697-0237257cf08f",
+        "name": "Claude Opus 5.5 (max with fallback) [claude-opus-5-5]",
+        "model_id": "claude-opus-5.5::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 8708.197642611496,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "Cost to run AA Intelligence Index (total); Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; exact source excerpt: \"intelligenceIndexCost\":{\"total\":8708.197642611496}"
+      },
+      "protocol": "Cost to run AA Intelligence Index (total); source configuration Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; page date retrieved 2026-09-22; AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (max with fallback) [claude-opus-5-5]\",\"source_quote\":\"\\\"intelligenceIndexCost\\\":{\\\"total\\\":8708.197642611496}\",\"source_unit\":\"USD\",\"displayed_value\":8708.2}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:2ee5ffc20e2fc45214f7c4fc",
+      "benchmark_id": "aa-intelligence-index-cost-per-task::4.3.2",
+      "subject": {
+        "source_id": "2f3c4dc9-a450-4303-8697-0237257cf08f",
+        "name": "Claude Opus 5.5 (max with fallback) [claude-opus-5-5]",
+        "model_id": "claude-opus-5.5::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 5.982012019521066,
+      "unit": "USD/task",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "Cost per AA Intelligence Index task; Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; exact source excerpt: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":5.982012019521066}}"
+      },
+      "protocol": "Cost per AA Intelligence Index task; source configuration Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; page date retrieved 2026-09-22; AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (max with fallback) [claude-opus-5-5]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":5.982012019521066}}\",\"source_unit\":\"USD/task\",\"displayed_value\":5.982}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:0278e13b0f1d49be2170bd46",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "f314eade-2232-44bf-a3ab-9b326bc67de6",
+        "name": "Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]",
+        "model_id": "claude-opus-5.5::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 1691.72,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "GDPval-AA v2.1; Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; exact source excerpt: \"gdpval\":1691.72 (page payload, model slug claude-opus-5-5-high)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]\",\"source_quote\":\"\\\"gdpval\\\":1691.72 (page payload, model slug claude-opus-5-5-high)\",\"source_unit\":\"Elo\",\"displayed_value\":1691.72}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:31feda4beb54b94fb60a827e",
+      "benchmark_id": "aa-terminal-bench::4.0-upstream-timeouts",
+      "subject": {
+        "source_id": "f314eade-2232-44bf-a3ab-9b326bc67de6",
+        "name": "Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]",
+        "model_id": "claude-opus-5.5::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 0.565656565656566,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "Terminal-Bench 4.0 (AA run); Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; exact source excerpt: \"terminalBench40\":0.565656565656566 (page payload, model slug claude-opus-5-5-high)"
+      },
+      "protocol": "Terminal-Bench 4.0 (AA run); source configuration Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]\",\"source_quote\":\"\\\"terminalBench40\\\":0.565656565656566 (page payload, model slug claude-opus-5-5-high)\",\"source_unit\":\"%\",\"displayed_value\":56.57}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:66bccd78414cba647c5531c7",
+      "benchmark_id": "aa-scicode::1.0.1",
+      "subject": {
+        "source_id": "f314eade-2232-44bf-a3ab-9b326bc67de6",
+        "name": "Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]",
+        "model_id": "claude-opus-5.5::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 0.604166666666667,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "SciCode (AA); Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; exact source excerpt: \"scicode\":0.604166666666667 (page payload, model slug claude-opus-5-5-high)"
+      },
+      "protocol": "SciCode (AA); source configuration Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]\",\"source_quote\":\"\\\"scicode\\\":0.604166666666667 (page payload, model slug claude-opus-5-5-high)\",\"source_unit\":\"%\",\"displayed_value\":60.42}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:e62cbb44ca8e42e482738ea1",
+      "benchmark_id": "aa-hle::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "f314eade-2232-44bf-a3ab-9b326bc67de6",
+        "name": "Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]",
+        "model_id": "claude-opus-5.5::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 0.555607043558851,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "Humanity's Last Exam (AA); Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; exact source excerpt: \"hle\":0.555607043558851 (page payload, model slug claude-opus-5-5-high)"
+      },
+      "protocol": "Humanity's Last Exam (AA); source configuration Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]\",\"source_quote\":\"\\\"hle\\\":0.555607043558851 (page payload, model slug claude-opus-5-5-high)\",\"source_unit\":\"%\",\"displayed_value\":55.56}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:913f20f4f03a3b9d47cc6dec",
+      "benchmark_id": "aa-critpt::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "f314eade-2232-44bf-a3ab-9b326bc67de6",
+        "name": "Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]",
+        "model_id": "claude-opus-5.5::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 0.308571428571429,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "CritPt (AA); Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; exact source excerpt: \"critpt\":0.308571428571429 (page payload, model slug claude-opus-5-5-high)"
+      },
+      "protocol": "CritPt (AA); source configuration Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]\",\"source_quote\":\"\\\"critpt\\\":0.308571428571429 (page payload, model slug claude-opus-5-5-high)\",\"source_unit\":\"%\",\"displayed_value\":30.86}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:18282d272d35061432c337fa",
+      "benchmark_id": "aa-lcr::1.1",
+      "subject": {
+        "source_id": "f314eade-2232-44bf-a3ab-9b326bc67de6",
+        "name": "Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]",
+        "model_id": "claude-opus-5.5::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 0.826666666666667,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "AA-LCR v1.1; Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; exact source excerpt: \"lcr\":0.826666666666667 (page payload, model slug claude-opus-5-5-high)"
+      },
+      "protocol": "AA-LCR v1.1; source configuration Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]\",\"source_quote\":\"\\\"lcr\\\":0.826666666666667 (page payload, model slug claude-opus-5-5-high)\",\"source_unit\":\"%\",\"displayed_value\":82.67}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:2b0008760bc37ccd53a5c9e9",
+      "benchmark_id": "aa-omniscience::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "f314eade-2232-44bf-a3ab-9b326bc67de6",
+        "name": "Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]",
+        "model_id": "claude-opus-5.5::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 40.63333333333333,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "AA-Omniscience; Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; exact source excerpt: \"omniscience\":40.63333333333333 (page payload, model slug claude-opus-5-5-high)"
+      },
+      "protocol": "AA-Omniscience; source configuration Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]\",\"source_quote\":\"\\\"omniscience\\\":40.63333333333333 (page payload, model slug claude-opus-5-5-high)\",\"source_unit\":\"index (-100..100)\",\"displayed_value\":40.63}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:d00b211861a883d1793d7f05",
+      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
+      "subject": {
+        "source_id": "f314eade-2232-44bf-a3ab-9b326bc67de6",
+        "name": "Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]",
+        "model_id": "claude-opus-5.5::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 0.288,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "GDP.pdf (all-pass); Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; exact source excerpt: \"gdpPdfAllPass\":0.288 (page payload, model slug claude-opus-5-5-high)"
+      },
+      "protocol": "GDP.pdf (all-pass); source configuration Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.288 (page payload, model slug claude-opus-5-5-high)\",\"source_unit\":\"%\",\"displayed_value\":28.8}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:02ae8c3ff6f511c04fd2a85e",
+      "benchmark_id": "aa-automationbench::1.0.6",
+      "subject": {
+        "source_id": "f314eade-2232-44bf-a3ab-9b326bc67de6",
+        "name": "Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]",
+        "model_id": "claude-opus-5.5::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 0.6320677483186213,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "AutomationBench-AA (partial score); Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; exact source excerpt: \"automationBenchPartialScore\":0.6320677483186213 (page payload, model slug claude-opus-5-5-high)"
+      },
+      "protocol": "AutomationBench-AA (partial score); source configuration Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]\",\"source_quote\":\"\\\"automationBenchPartialScore\\\":0.6320677483186213 (page payload, model slug claude-opus-5-5-high)\",\"source_unit\":\"%\",\"displayed_value\":63.21}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:ab58e81ca352ae1ddc195213",
+      "benchmark_id": "aa-mmmu-pro::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "f314eade-2232-44bf-a3ab-9b326bc67de6",
+        "name": "Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]",
+        "model_id": "claude-opus-5.5::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 0.858381502890173,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "MMMU-Pro (AA); Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; exact source excerpt: \"mmmuPro\":0.858381502890173 (page payload, model slug claude-opus-5-5-high)"
+      },
+      "protocol": "MMMU-Pro (AA); source configuration Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]\",\"source_quote\":\"\\\"mmmuPro\\\":0.858381502890173 (page payload, model slug claude-opus-5-5-high)\",\"source_unit\":\"%\",\"displayed_value\":85.84}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:f2604d211f1876bfda34928c",
+      "benchmark_id": "aa-harvey-lab::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "f314eade-2232-44bf-a3ab-9b326bc67de6",
+        "name": "Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]",
+        "model_id": "claude-opus-5.5::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 0.908814589665654,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "Harvey LAB (AA); Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; exact source excerpt: \"harveyLab\":0.908814589665654 (page payload, model slug claude-opus-5-5-high)"
+      },
+      "protocol": "Harvey LAB (AA); source configuration Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]\",\"source_quote\":\"\\\"harveyLab\\\":0.908814589665654 (page payload, model slug claude-opus-5-5-high)\",\"source_unit\":\"%\",\"displayed_value\":90.88}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:5003b364a168dc402e9372c0",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "f314eade-2232-44bf-a3ab-9b326bc67de6",
+        "name": "Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]",
+        "model_id": "claude-opus-5.5::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 1704.5,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "AA-Briefcase v1.1; Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; exact source excerpt: {\"slug\":\"aa-briefcase\",\"score\":1704.5}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; page date retrieved 2026-09-22; AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1704.5}\",\"source_unit\":\"Elo\",\"displayed_value\":1704.5}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:a240a34199eff14994c81708",
+      "benchmark_id": "aa-intelligence-index-cost::4.3.2",
+      "subject": {
+        "source_id": "f314eade-2232-44bf-a3ab-9b326bc67de6",
+        "name": "Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]",
+        "model_id": "claude-opus-5.5::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 2172.4277012236644,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "Cost to run AA Intelligence Index (total); Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; exact source excerpt: \"intelligenceIndexCost\":{\"total\":2172.4277012236644}"
+      },
+      "protocol": "Cost to run AA Intelligence Index (total); source configuration Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; page date retrieved 2026-09-22; AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]\",\"source_quote\":\"\\\"intelligenceIndexCost\\\":{\\\"total\\\":2172.4277012236644}\",\"source_unit\":\"USD\",\"displayed_value\":2172.43}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:2ab8be228949a243aeefe39d",
+      "benchmark_id": "aa-intelligence-index-cost-per-task::4.3.2",
+      "subject": {
+        "source_id": "f314eade-2232-44bf-a3ab-9b326bc67de6",
+        "name": "Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]",
+        "model_id": "claude-opus-5.5::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 1.822504718771704,
+      "unit": "USD/task",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "Cost per AA Intelligence Index task; Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; exact source excerpt: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":1.822504718771704}}"
+      },
+      "protocol": "Cost per AA Intelligence Index task; source configuration Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]; page date retrieved 2026-09-22; AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (high with fallback) [claude-opus-5-5-high]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":1.822504718771704}}\",\"source_unit\":\"USD/task\",\"displayed_value\":1.8225}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:54533b7d056dfd8eceec9764",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "4416ca93-fde6-4b7b-abbc-3a6be109cc3d",
+        "name": "Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]",
+        "model_id": "claude-opus-5.5::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 1223.51,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "GDPval-AA v2.1; Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; exact source excerpt: \"gdpval\":1223.51 (page payload, model slug claude-opus-5-5-low)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]\",\"source_quote\":\"\\\"gdpval\\\":1223.51 (page payload, model slug claude-opus-5-5-low)\",\"source_unit\":\"Elo\",\"displayed_value\":1223.51}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:3c74f08a8ea0a41ef08af92d",
+      "benchmark_id": "aa-terminal-bench::4.0-upstream-timeouts",
+      "subject": {
+        "source_id": "4416ca93-fde6-4b7b-abbc-3a6be109cc3d",
+        "name": "Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]",
+        "model_id": "claude-opus-5.5::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 0.313131313131313,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "Terminal-Bench 4.0 (AA run); Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; exact source excerpt: \"terminalBench40\":0.313131313131313 (page payload, model slug claude-opus-5-5-low)"
+      },
+      "protocol": "Terminal-Bench 4.0 (AA run); source configuration Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]\",\"source_quote\":\"\\\"terminalBench40\\\":0.313131313131313 (page payload, model slug claude-opus-5-5-low)\",\"source_unit\":\"%\",\"displayed_value\":31.31}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:a7d7d41674b29d0641097019",
+      "benchmark_id": "aa-scicode::1.0.1",
+      "subject": {
+        "source_id": "4416ca93-fde6-4b7b-abbc-3a6be109cc3d",
+        "name": "Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]",
+        "model_id": "claude-opus-5.5::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 0.585648148148148,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "SciCode (AA); Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; exact source excerpt: \"scicode\":0.585648148148148 (page payload, model slug claude-opus-5-5-low)"
+      },
+      "protocol": "SciCode (AA); source configuration Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]\",\"source_quote\":\"\\\"scicode\\\":0.585648148148148 (page payload, model slug claude-opus-5-5-low)\",\"source_unit\":\"%\",\"displayed_value\":58.56}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:7cc1e070ea603eb87bc82fd8",
+      "benchmark_id": "aa-hle::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "4416ca93-fde6-4b7b-abbc-3a6be109cc3d",
+        "name": "Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]",
+        "model_id": "claude-opus-5.5::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 0.483317886932345,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "Humanity's Last Exam (AA); Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; exact source excerpt: \"hle\":0.483317886932345 (page payload, model slug claude-opus-5-5-low)"
+      },
+      "protocol": "Humanity's Last Exam (AA); source configuration Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]\",\"source_quote\":\"\\\"hle\\\":0.483317886932345 (page payload, model slug claude-opus-5-5-low)\",\"source_unit\":\"%\",\"displayed_value\":48.33}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:5cbb201eef22eff8fb72aab5",
+      "benchmark_id": "aa-critpt::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "4416ca93-fde6-4b7b-abbc-3a6be109cc3d",
+        "name": "Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]",
+        "model_id": "claude-opus-5.5::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 0.177142857142857,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "CritPt (AA); Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; exact source excerpt: \"critpt\":0.177142857142857 (page payload, model slug claude-opus-5-5-low)"
+      },
+      "protocol": "CritPt (AA); source configuration Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]\",\"source_quote\":\"\\\"critpt\\\":0.177142857142857 (page payload, model slug claude-opus-5-5-low)\",\"source_unit\":\"%\",\"displayed_value\":17.71}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:257ee3d5ba165794ecc44efd",
+      "benchmark_id": "aa-lcr::1.1",
+      "subject": {
+        "source_id": "4416ca93-fde6-4b7b-abbc-3a6be109cc3d",
+        "name": "Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]",
+        "model_id": "claude-opus-5.5::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 0.806666666666667,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "AA-LCR v1.1; Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; exact source excerpt: \"lcr\":0.806666666666667 (page payload, model slug claude-opus-5-5-low)"
+      },
+      "protocol": "AA-LCR v1.1; source configuration Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]\",\"source_quote\":\"\\\"lcr\\\":0.806666666666667 (page payload, model slug claude-opus-5-5-low)\",\"source_unit\":\"%\",\"displayed_value\":80.67}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:1541019fa6dea380d7a610aa",
+      "benchmark_id": "aa-omniscience::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "4416ca93-fde6-4b7b-abbc-3a6be109cc3d",
+        "name": "Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]",
+        "model_id": "claude-opus-5.5::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 38.86666666666667,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "AA-Omniscience; Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; exact source excerpt: \"omniscience\":38.86666666666667 (page payload, model slug claude-opus-5-5-low)"
+      },
+      "protocol": "AA-Omniscience; source configuration Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]\",\"source_quote\":\"\\\"omniscience\\\":38.86666666666667 (page payload, model slug claude-opus-5-5-low)\",\"source_unit\":\"index (-100..100)\",\"displayed_value\":38.87}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:34c167c7e63664ff184b7697",
+      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
+      "subject": {
+        "source_id": "4416ca93-fde6-4b7b-abbc-3a6be109cc3d",
+        "name": "Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]",
+        "model_id": "claude-opus-5.5::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 0.256,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "GDP.pdf (all-pass); Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; exact source excerpt: \"gdpPdfAllPass\":0.256 (page payload, model slug claude-opus-5-5-low)"
+      },
+      "protocol": "GDP.pdf (all-pass); source configuration Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.256 (page payload, model slug claude-opus-5-5-low)\",\"source_unit\":\"%\",\"displayed_value\":25.6}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:a1dd97054b6d940eb71a219a",
+      "benchmark_id": "aa-automationbench::1.0.6",
+      "subject": {
+        "source_id": "4416ca93-fde6-4b7b-abbc-3a6be109cc3d",
+        "name": "Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]",
+        "model_id": "claude-opus-5.5::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 0.5292537042934996,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "AutomationBench-AA (partial score); Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; exact source excerpt: \"automationBenchPartialScore\":0.5292537042934996 (page payload, model slug claude-opus-5-5-low)"
+      },
+      "protocol": "AutomationBench-AA (partial score); source configuration Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]\",\"source_quote\":\"\\\"automationBenchPartialScore\\\":0.5292537042934996 (page payload, model slug claude-opus-5-5-low)\",\"source_unit\":\"%\",\"displayed_value\":52.93}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:9dda6991d4c59e8670f6edba",
+      "benchmark_id": "aa-mmmu-pro::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "4416ca93-fde6-4b7b-abbc-3a6be109cc3d",
+        "name": "Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]",
+        "model_id": "claude-opus-5.5::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 0.846820809248555,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "MMMU-Pro (AA); Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; exact source excerpt: \"mmmuPro\":0.846820809248555 (page payload, model slug claude-opus-5-5-low)"
+      },
+      "protocol": "MMMU-Pro (AA); source configuration Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]\",\"source_quote\":\"\\\"mmmuPro\\\":0.846820809248555 (page payload, model slug claude-opus-5-5-low)\",\"source_unit\":\"%\",\"displayed_value\":84.68}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:2544478e6dedb7c56e436f55",
+      "benchmark_id": "aa-harvey-lab::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "4416ca93-fde6-4b7b-abbc-3a6be109cc3d",
+        "name": "Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]",
+        "model_id": "claude-opus-5.5::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 0.891301201331597,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "Harvey LAB (AA); Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; exact source excerpt: \"harveyLab\":0.891301201331597 (page payload, model slug claude-opus-5-5-low)"
+      },
+      "protocol": "Harvey LAB (AA); source configuration Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]\",\"source_quote\":\"\\\"harveyLab\\\":0.891301201331597 (page payload, model slug claude-opus-5-5-low)\",\"source_unit\":\"%\",\"displayed_value\":89.13}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:491185b6c3fcf040a77a486e",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "4416ca93-fde6-4b7b-abbc-3a6be109cc3d",
+        "name": "Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]",
+        "model_id": "claude-opus-5.5::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 1284.93,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "AA-Briefcase v1.1; Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; exact source excerpt: {\"slug\":\"aa-briefcase\",\"score\":1284.93}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; page date retrieved 2026-09-22; AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1284.93}\",\"source_unit\":\"Elo\",\"displayed_value\":1284.93}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:2d44e37df3560ca64c1c33fc",
+      "benchmark_id": "aa-intelligence-index-cost::4.3.2",
+      "subject": {
+        "source_id": "4416ca93-fde6-4b7b-abbc-3a6be109cc3d",
+        "name": "Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]",
+        "model_id": "claude-opus-5.5::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 860.3337405339145,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "Cost to run AA Intelligence Index (total); Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; exact source excerpt: \"intelligenceIndexCost\":{\"total\":860.3337405339145}"
+      },
+      "protocol": "Cost to run AA Intelligence Index (total); source configuration Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; page date retrieved 2026-09-22; AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]\",\"source_quote\":\"\\\"intelligenceIndexCost\\\":{\\\"total\\\":860.3337405339145}\",\"source_unit\":\"USD\",\"displayed_value\":860.33}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:da9a75bcf5e37645e886950e",
+      "benchmark_id": "aa-intelligence-index-cost-per-task::4.3.2",
+      "subject": {
+        "source_id": "4416ca93-fde6-4b7b-abbc-3a6be109cc3d",
+        "name": "Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]",
+        "model_id": "claude-opus-5.5::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 0.551180473909146,
+      "unit": "USD/task",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "Cost per AA Intelligence Index task; Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; exact source excerpt: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":0.551180473909146}}"
+      },
+      "protocol": "Cost per AA Intelligence Index task; source configuration Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]; page date retrieved 2026-09-22; AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (low with fallback) [claude-opus-5-5-low]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":0.551180473909146}}\",\"source_unit\":\"USD/task\",\"displayed_value\":0.5512}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:5a618fe2edf3acac7f58ad46",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "ea9e0da6-169f-43c6-92f5-730a10d6ff8d",
+        "name": "Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]",
+        "model_id": "claude-opus-5.5::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 1576.2,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "GDPval-AA v2.1; Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; exact source excerpt: \"gdpval\":1576.2 (page payload, model slug claude-opus-5-5-medium)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]\",\"source_quote\":\"\\\"gdpval\\\":1576.2 (page payload, model slug claude-opus-5-5-medium)\",\"source_unit\":\"Elo\",\"displayed_value\":1576.2}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:1a4d470d43cac0db89475c11",
+      "benchmark_id": "aa-terminal-bench::4.0-upstream-timeouts",
+      "subject": {
+        "source_id": "ea9e0da6-169f-43c6-92f5-730a10d6ff8d",
+        "name": "Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]",
+        "model_id": "claude-opus-5.5::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 0.525252525252525,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "Terminal-Bench 4.0 (AA run); Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; exact source excerpt: \"terminalBench40\":0.525252525252525 (page payload, model slug claude-opus-5-5-medium)"
+      },
+      "protocol": "Terminal-Bench 4.0 (AA run); source configuration Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]\",\"source_quote\":\"\\\"terminalBench40\\\":0.525252525252525 (page payload, model slug claude-opus-5-5-medium)\",\"source_unit\":\"%\",\"displayed_value\":52.53}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:9ed8949420b025cfe07a8699",
+      "benchmark_id": "aa-scicode::1.0.1",
+      "subject": {
+        "source_id": "ea9e0da6-169f-43c6-92f5-730a10d6ff8d",
+        "name": "Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]",
+        "model_id": "claude-opus-5.5::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 0.592592592592593,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "SciCode (AA); Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; exact source excerpt: \"scicode\":0.592592592592593 (page payload, model slug claude-opus-5-5-medium)"
+      },
+      "protocol": "SciCode (AA); source configuration Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]\",\"source_quote\":\"\\\"scicode\\\":0.592592592592593 (page payload, model slug claude-opus-5-5-medium)\",\"source_unit\":\"%\",\"displayed_value\":59.26}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:4c0a4014bf74fbfd53772032",
+      "benchmark_id": "aa-hle::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "ea9e0da6-169f-43c6-92f5-730a10d6ff8d",
+        "name": "Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]",
+        "model_id": "claude-opus-5.5::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 0.547265987025023,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "Humanity's Last Exam (AA); Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; exact source excerpt: \"hle\":0.547265987025023 (page payload, model slug claude-opus-5-5-medium)"
+      },
+      "protocol": "Humanity's Last Exam (AA); source configuration Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]\",\"source_quote\":\"\\\"hle\\\":0.547265987025023 (page payload, model slug claude-opus-5-5-medium)\",\"source_unit\":\"%\",\"displayed_value\":54.73}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:5182cffd020200e4c15d69e8",
+      "benchmark_id": "aa-critpt::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "ea9e0da6-169f-43c6-92f5-730a10d6ff8d",
+        "name": "Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]",
+        "model_id": "claude-opus-5.5::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 0.277142857142857,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "CritPt (AA); Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; exact source excerpt: \"critpt\":0.277142857142857 (page payload, model slug claude-opus-5-5-medium)"
+      },
+      "protocol": "CritPt (AA); source configuration Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]\",\"source_quote\":\"\\\"critpt\\\":0.277142857142857 (page payload, model slug claude-opus-5-5-medium)\",\"source_unit\":\"%\",\"displayed_value\":27.71}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:d41fcb7cf9a49921ad1671ad",
+      "benchmark_id": "aa-lcr::1.1",
+      "subject": {
+        "source_id": "ea9e0da6-169f-43c6-92f5-730a10d6ff8d",
+        "name": "Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]",
+        "model_id": "claude-opus-5.5::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 0.843333333333333,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "AA-LCR v1.1; Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; exact source excerpt: \"lcr\":0.843333333333333 (page payload, model slug claude-opus-5-5-medium)"
+      },
+      "protocol": "AA-LCR v1.1; source configuration Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]\",\"source_quote\":\"\\\"lcr\\\":0.843333333333333 (page payload, model slug claude-opus-5-5-medium)\",\"source_unit\":\"%\",\"displayed_value\":84.33}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:5c16b4222ae43ecefa14712a",
+      "benchmark_id": "aa-omniscience::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "ea9e0da6-169f-43c6-92f5-730a10d6ff8d",
+        "name": "Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]",
+        "model_id": "claude-opus-5.5::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 40.31666666666667,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "AA-Omniscience; Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; exact source excerpt: \"omniscience\":40.31666666666667 (page payload, model slug claude-opus-5-5-medium)"
+      },
+      "protocol": "AA-Omniscience; source configuration Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]\",\"source_quote\":\"\\\"omniscience\\\":40.31666666666667 (page payload, model slug claude-opus-5-5-medium)\",\"source_unit\":\"index (-100..100)\",\"displayed_value\":40.32}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:6a6566ba3eae990cbb8d181c",
+      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
+      "subject": {
+        "source_id": "ea9e0da6-169f-43c6-92f5-730a10d6ff8d",
+        "name": "Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]",
+        "model_id": "claude-opus-5.5::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 0.256,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "GDP.pdf (all-pass); Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; exact source excerpt: \"gdpPdfAllPass\":0.256 (page payload, model slug claude-opus-5-5-medium)"
+      },
+      "protocol": "GDP.pdf (all-pass); source configuration Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.256 (page payload, model slug claude-opus-5-5-medium)\",\"source_unit\":\"%\",\"displayed_value\":25.6}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:0bd34cc8971d6b1cf68b4931",
+      "benchmark_id": "aa-automationbench::1.0.6",
+      "subject": {
+        "source_id": "ea9e0da6-169f-43c6-92f5-730a10d6ff8d",
+        "name": "Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]",
+        "model_id": "claude-opus-5.5::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 0.6121742919892179,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "AutomationBench-AA (partial score); Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; exact source excerpt: \"automationBenchPartialScore\":0.6121742919892179 (page payload, model slug claude-opus-5-5-medium)"
+      },
+      "protocol": "AutomationBench-AA (partial score); source configuration Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]\",\"source_quote\":\"\\\"automationBenchPartialScore\\\":0.6121742919892179 (page payload, model slug claude-opus-5-5-medium)\",\"source_unit\":\"%\",\"displayed_value\":61.22}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:dc198f73459d2ac85b15b155",
+      "benchmark_id": "aa-mmmu-pro::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "ea9e0da6-169f-43c6-92f5-730a10d6ff8d",
+        "name": "Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]",
+        "model_id": "claude-opus-5.5::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 0.857225433526012,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "MMMU-Pro (AA); Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; exact source excerpt: \"mmmuPro\":0.857225433526012 (page payload, model slug claude-opus-5-5-medium)"
+      },
+      "protocol": "MMMU-Pro (AA); source configuration Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]\",\"source_quote\":\"\\\"mmmuPro\\\":0.857225433526012 (page payload, model slug claude-opus-5-5-medium)\",\"source_unit\":\"%\",\"displayed_value\":85.72}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:8fbfe63ef0bb5ebc798eec18",
+      "benchmark_id": "aa-harvey-lab::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "ea9e0da6-169f-43c6-92f5-730a10d6ff8d",
+        "name": "Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]",
+        "model_id": "claude-opus-5.5::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 0.902590823563468,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "Harvey LAB (AA); Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; exact source excerpt: \"harveyLab\":0.902590823563468 (page payload, model slug claude-opus-5-5-medium)"
+      },
+      "protocol": "Harvey LAB (AA); source configuration Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]\",\"source_quote\":\"\\\"harveyLab\\\":0.902590823563468 (page payload, model slug claude-opus-5-5-medium)\",\"source_unit\":\"%\",\"displayed_value\":90.26}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:8394c6a825be52924acf2757",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "ea9e0da6-169f-43c6-92f5-730a10d6ff8d",
+        "name": "Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]",
+        "model_id": "claude-opus-5.5::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 1642.05,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "AA-Briefcase v1.1; Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; exact source excerpt: {\"slug\":\"aa-briefcase\",\"score\":1642.05}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; page date retrieved 2026-09-22; AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1642.05}\",\"source_unit\":\"Elo\",\"displayed_value\":1642.05}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:d1dd8ea3073e34611645ab2e",
+      "benchmark_id": "aa-intelligence-index-cost::4.3.2",
+      "subject": {
+        "source_id": "ea9e0da6-169f-43c6-92f5-730a10d6ff8d",
+        "name": "Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]",
+        "model_id": "claude-opus-5.5::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 1626.8112374421187,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "Cost to run AA Intelligence Index (total); Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; exact source excerpt: \"intelligenceIndexCost\":{\"total\":1626.8112374421187}"
+      },
+      "protocol": "Cost to run AA Intelligence Index (total); source configuration Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; page date retrieved 2026-09-22; AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]\",\"source_quote\":\"\\\"intelligenceIndexCost\\\":{\\\"total\\\":1626.8112374421187}\",\"source_unit\":\"USD\",\"displayed_value\":1626.81}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:d7486541dbaaafe8b4581884",
+      "benchmark_id": "aa-intelligence-index-cost-per-task::4.3.2",
+      "subject": {
+        "source_id": "ea9e0da6-169f-43c6-92f5-730a10d6ff8d",
+        "name": "Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]",
+        "model_id": "claude-opus-5.5::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 1.3360093438976588,
+      "unit": "USD/task",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "Cost per AA Intelligence Index task; Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; exact source excerpt: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":1.3360093438976588}}"
+      },
+      "protocol": "Cost per AA Intelligence Index task; source configuration Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]; page date retrieved 2026-09-22; AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (medium with fallback) [claude-opus-5-5-medium]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":1.3360093438976588}}\",\"source_unit\":\"USD/task\",\"displayed_value\":1.336}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:8420ec136339945f88ed7206",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "df5bf99d-d228-4715-b41b-19ca86118777",
+        "name": "Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]",
+        "model_id": "claude-opus-5.5::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 1820.11,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "GDPval-AA v2.1; Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; exact source excerpt: \"gdpval\":1820.11 (page payload, model slug claude-opus-5-5-xhigh)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]\",\"source_quote\":\"\\\"gdpval\\\":1820.11 (page payload, model slug claude-opus-5-5-xhigh)\",\"source_unit\":\"Elo\",\"displayed_value\":1820.11}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:60a8fd2129f9c93a4038c445",
+      "benchmark_id": "aa-terminal-bench::4.0-upstream-timeouts",
+      "subject": {
+        "source_id": "df5bf99d-d228-4715-b41b-19ca86118777",
+        "name": "Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]",
+        "model_id": "claude-opus-5.5::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 0.595959595959596,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "Terminal-Bench 4.0 (AA run); Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; exact source excerpt: \"terminalBench40\":0.595959595959596 (page payload, model slug claude-opus-5-5-xhigh)"
+      },
+      "protocol": "Terminal-Bench 4.0 (AA run); source configuration Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]\",\"source_quote\":\"\\\"terminalBench40\\\":0.595959595959596 (page payload, model slug claude-opus-5-5-xhigh)\",\"source_unit\":\"%\",\"displayed_value\":59.6}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:071018e935c5e4f8fb5ff3d0",
+      "benchmark_id": "aa-scicode::1.0.1",
+      "subject": {
+        "source_id": "df5bf99d-d228-4715-b41b-19ca86118777",
+        "name": "Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]",
+        "model_id": "claude-opus-5.5::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 0.650462962962963,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "SciCode (AA); Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; exact source excerpt: \"scicode\":0.650462962962963 (page payload, model slug claude-opus-5-5-xhigh)"
+      },
+      "protocol": "SciCode (AA); source configuration Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]\",\"source_quote\":\"\\\"scicode\\\":0.650462962962963 (page payload, model slug claude-opus-5-5-xhigh)\",\"source_unit\":\"%\",\"displayed_value\":65.05}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:9c18bfcb64fdd7dcf7a5029b",
+      "benchmark_id": "aa-hle::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "df5bf99d-d228-4715-b41b-19ca86118777",
+        "name": "Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]",
+        "model_id": "claude-opus-5.5::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 0.575069508804449,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "Humanity's Last Exam (AA); Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; exact source excerpt: \"hle\":0.575069508804449 (page payload, model slug claude-opus-5-5-xhigh)"
+      },
+      "protocol": "Humanity's Last Exam (AA); source configuration Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]\",\"source_quote\":\"\\\"hle\\\":0.575069508804449 (page payload, model slug claude-opus-5-5-xhigh)\",\"source_unit\":\"%\",\"displayed_value\":57.51}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:6bd2a51a630d3fdd0ef4cb72",
+      "benchmark_id": "aa-critpt::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "df5bf99d-d228-4715-b41b-19ca86118777",
+        "name": "Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]",
+        "model_id": "claude-opus-5.5::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 0.317142857142857,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "CritPt (AA); Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; exact source excerpt: \"critpt\":0.317142857142857 (page payload, model slug claude-opus-5-5-xhigh)"
+      },
+      "protocol": "CritPt (AA); source configuration Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]\",\"source_quote\":\"\\\"critpt\\\":0.317142857142857 (page payload, model slug claude-opus-5-5-xhigh)\",\"source_unit\":\"%\",\"displayed_value\":31.71}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:c619e4c3c9f13d1465dccc32",
+      "benchmark_id": "aa-lcr::1.1",
+      "subject": {
+        "source_id": "df5bf99d-d228-4715-b41b-19ca86118777",
+        "name": "Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]",
+        "model_id": "claude-opus-5.5::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 0.846666666666667,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "AA-LCR v1.1; Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; exact source excerpt: \"lcr\":0.846666666666667 (page payload, model slug claude-opus-5-5-xhigh)"
+      },
+      "protocol": "AA-LCR v1.1; source configuration Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]\",\"source_quote\":\"\\\"lcr\\\":0.846666666666667 (page payload, model slug claude-opus-5-5-xhigh)\",\"source_unit\":\"%\",\"displayed_value\":84.67}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:dc5ff03643e0db9f6508b71a",
+      "benchmark_id": "aa-omniscience::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "df5bf99d-d228-4715-b41b-19ca86118777",
+        "name": "Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]",
+        "model_id": "claude-opus-5.5::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 42.65,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "AA-Omniscience; Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; exact source excerpt: \"omniscience\":42.65 (page payload, model slug claude-opus-5-5-xhigh)"
+      },
+      "protocol": "AA-Omniscience; source configuration Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]\",\"source_quote\":\"\\\"omniscience\\\":42.65 (page payload, model slug claude-opus-5-5-xhigh)\",\"source_unit\":\"index (-100..100)\",\"displayed_value\":42.65}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:8316f3966bf27ff5f631c6f3",
+      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
+      "subject": {
+        "source_id": "df5bf99d-d228-4715-b41b-19ca86118777",
+        "name": "Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]",
+        "model_id": "claude-opus-5.5::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 0.266,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "GDP.pdf (all-pass); Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; exact source excerpt: \"gdpPdfAllPass\":0.266 (page payload, model slug claude-opus-5-5-xhigh)"
+      },
+      "protocol": "GDP.pdf (all-pass); source configuration Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.266 (page payload, model slug claude-opus-5-5-xhigh)\",\"source_unit\":\"%\",\"displayed_value\":26.6}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:0c6b71b6e9f21e269a6b7541",
+      "benchmark_id": "aa-automationbench::1.0.6",
+      "subject": {
+        "source_id": "df5bf99d-d228-4715-b41b-19ca86118777",
+        "name": "Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]",
+        "model_id": "claude-opus-5.5::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 0.6495283516401527,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "AutomationBench-AA (partial score); Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; exact source excerpt: \"automationBenchPartialScore\":0.6495283516401527 (page payload, model slug claude-opus-5-5-xhigh)"
+      },
+      "protocol": "AutomationBench-AA (partial score); source configuration Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]\",\"source_quote\":\"\\\"automationBenchPartialScore\\\":0.6495283516401527 (page payload, model slug claude-opus-5-5-xhigh)\",\"source_unit\":\"%\",\"displayed_value\":64.95}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:4d3138805eb1ccf26db7f90b",
+      "benchmark_id": "aa-mmmu-pro::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "df5bf99d-d228-4715-b41b-19ca86118777",
+        "name": "Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]",
+        "model_id": "claude-opus-5.5::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 0.865895953757225,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "MMMU-Pro (AA); Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; exact source excerpt: \"mmmuPro\":0.865895953757225 (page payload, model slug claude-opus-5-5-xhigh)"
+      },
+      "protocol": "MMMU-Pro (AA); source configuration Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]\",\"source_quote\":\"\\\"mmmuPro\\\":0.865895953757225 (page payload, model slug claude-opus-5-5-xhigh)\",\"source_unit\":\"%\",\"displayed_value\":86.59}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:ada0044ff00f93bec8f4e570",
+      "benchmark_id": "aa-harvey-lab::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "df5bf99d-d228-4715-b41b-19ca86118777",
+        "name": "Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]",
+        "model_id": "claude-opus-5.5::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 0.912433058329715,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "Harvey LAB (AA); Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; exact source excerpt: \"harveyLab\":0.912433058329715 (page payload, model slug claude-opus-5-5-xhigh)"
+      },
+      "protocol": "Harvey LAB (AA); source configuration Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-17); AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]\",\"source_quote\":\"\\\"harveyLab\\\":0.912433058329715 (page payload, model slug claude-opus-5-5-xhigh)\",\"source_unit\":\"%\",\"displayed_value\":91.24}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:0a8c687d6207a950b3bdbcb4",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "df5bf99d-d228-4715-b41b-19ca86118777",
+        "name": "Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]",
+        "model_id": "claude-opus-5.5::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 1779.5,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "AA-Briefcase v1.1; Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; exact source excerpt: {\"slug\":\"aa-briefcase\",\"score\":1779.5}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; page date retrieved 2026-09-22; AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1779.5}\",\"source_unit\":\"Elo\",\"displayed_value\":1779.5}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:d423b4c20f912beff9afeed3",
+      "benchmark_id": "aa-intelligence-index-cost::4.3.2",
+      "subject": {
+        "source_id": "df5bf99d-d228-4715-b41b-19ca86118777",
+        "name": "Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]",
+        "model_id": "claude-opus-5.5::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 4056.6546786492113,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "Cost to run AA Intelligence Index (total); Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; exact source excerpt: \"intelligenceIndexCost\":{\"total\":4056.6546786492113}"
+      },
+      "protocol": "Cost to run AA Intelligence Index (total); source configuration Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; page date retrieved 2026-09-22; AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]\",\"source_quote\":\"\\\"intelligenceIndexCost\\\":{\\\"total\\\":4056.6546786492113}\",\"source_unit\":\"USD\",\"displayed_value\":4056.65}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:2f0247fc9c67ad955fc41fc4",
+      "benchmark_id": "aa-intelligence-index-cost-per-task::4.3.2",
+      "subject": {
+        "source_id": "df5bf99d-d228-4715-b41b-19ca86118777",
+        "name": "Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]",
+        "model_id": "claude-opus-5.5::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 3.459110175822289,
+      "unit": "USD/task",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T22:47:41.526299+00:00",
+        "published_at": null,
+        "sha256": "d8fae69000dc9c763a16b987995f00530de80a84ed1a0ea92cd4750efc45ccbf",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d8fae69000dc9c763a16.gz",
+        "locator": "Cost per AA Intelligence Index task; Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; exact source excerpt: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":3.459110175822289}}"
+      },
+      "protocol": "Cost per AA Intelligence Index task; source configuration Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]; page date retrieved 2026-09-22; AA labels this variant Default Fallback. source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (xhigh with fallback) [claude-opus-5-5-xhigh]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":3.459110175822289}}\",\"source_unit\":\"USD/task\",\"displayed_value\":3.4591}",
+      "comparison_key": null
+    }
+  ],
+  "collections": [
+    {
+      "benchmark_id": "aa-intelligence-index-cost::4.3.2",
+      "status": "collected",
+      "source_url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+      "reason": "Hash-bound primary source reviewed for CR-128; exact rows retained with the observation."
+    },
+    {
+      "benchmark_id": "aa-intelligence-index-cost-per-task::4.3.2",
+      "status": "collected",
+      "source_url": "https://artificialanalysis.ai/models/claude-opus-5-5",
+      "reason": "Hash-bound primary source reviewed for CR-128; exact rows retained with the observation."
+    }
+  ]
+}
