@@ -4,6 +4,32 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-22 — Claude Opus 5.5: Anthropic's own launch numbers (CR-123)
+
+**New model row, new self-reported observations; nothing moved or removed.** Anthropic announced Claude Opus 5.5
+on 2026-09-22. The catalog gains `claude-opus-5.5::max` — the configuration Anthropic evaluates in (adaptive
+thinking at max effort) — with its published API price (USD 4 input / 20 output / 0.20 cache read / 5 cache write
+per 1M tokens; fast mode at 8 / 40 is a separate product and is not carried). The row is hand-curated in
+`data/raw/manual.json` on launch day and is replaced automatically once a live source carries the family; a
+manual entry may now name its `variant`, so the id matches what the live sources will use.
+
+Sixteen numbers Anthropic publishes about Opus 5.5 enter as `basis: self_reported` on sixteen new
+`anthropic-…` registry identities: nine from the launch post's benchmark table (Terminal-Bench 4.0 66.4,
+FrontierCode v1.1 Main 54.4, CursorBench 4.0 57.8, GDPval-AA v2.1 1846 Elo, AutomationBench 40.0,
+Humanity's Last Exam with tools 67.7, Terminal-Bench-Science 0.1 58.7, OSWorld 2.0 partial 81.8,
+Chartography with tools 89.0) and seven from the system card's Table 8.1.A (SWE-bench Pro 89.9,
+Multilingual 93.9, Multimodal 61.4, HLE without tools 64.4, OSWorld 2.0 strict 48.7, HealthBench
+Professional 65.6, AA-Briefcase v1.1 1822 Elo). They never touch the Composite or a category score,
+keep `comparison_key: null`, and the product shows them with its usual developer-reported marker.
+
+Each row records what the vendor discloses: the effort it was measured at (Terminal-Bench 4.0 at xhigh, the
+rest at max), who ran it (AutomationBench by Zapier; GDPval-AA and AA-Briefcase independently by Artificial
+Analysis), tools on or off for HLE, partial versus strict for OSWorld, that HealthBench Professional's table
+value is the length-adjusted score (raw 77.1), and that production safeguards could route a task to a fallback
+model. Evidence: the launch post's bytes and the system card's text layer, both hashed, under
+`data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/`; a critic from a different model family
+reviewed all 16 rows against those captures.
+
 ## 2026-09-22 — Compare links for models that are not in the data yet (CR-122)
 
 `/compare?model=<id>&model=<id>` now keeps an id the catalog does not have yet: the page names it readably

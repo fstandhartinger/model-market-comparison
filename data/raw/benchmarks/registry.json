@@ -16570,6 +16570,998 @@
           "excerpt": "*Current Version: v1.0* … We released our evaluation results on all 34 MLLMs that we have tested so far -- this includes all models' responses to CharXiv's challenging questions, scores graded by GPT-4o, as well as aggregated stats."
         }
       ]
+    },
+    {
+      "id": "anthropic-terminal-bench-4-0::4.0",
+      "name": "Terminal-Bench 4.0",
+      "version": "4.0",
+      "version_status": "published",
+      "family": "anthropic-terminal-bench-4-0",
+      "category": "Agentic",
+      "one_sentence_description": "Terminal-Bench 4.0 result reported by Anthropic for Claude Opus 5.5 in its 2026-09-22 Claude Opus 5.5 launch post; Anthropic's own run, not an independent measurement.",
+      "scoring": {
+        "metric": "Source-published score",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Anthropic's own result. The printed label is retained at version 4.0; it stays outside measured cohorts and Composite."
+      },
+      "maintainer": "Terminal-Bench",
+      "source_type": "vendor_report",
+      "primary_url": "https://www.anthropic.com/claude-opus-5-5",
+      "publication_urls": [
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5",
+          "type": "vendor_report",
+          "role": "Claude Opus 5.5 launch post with benchmark table and pricing"
+        },
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+          "type": "vendor_report",
+          "role": "Claude Opus 5.5 System Card, Table 8.1.A capability summary and evaluation details"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Anthropic launch post HTML table",
+        "locator": "Launch post benchmark table, row \"Terminal-Bench 4.0\", under \"Opus 5.5\" (first column of: Opus 5.5 | Fable 5.1 | Opus 5 | GPT-6 Astra | GPT-5.6 Sol)",
+        "version_guard": "Require the printed version 4.0.",
+        "notes": "Capture only; preserve self_reported basis; the first numeric column is Claude Opus 5.5."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated.",
+        "check_recommendation": "Check on a revised system card or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/4418b9b4f881510f195f.gz",
+          "sha256": "6fece0a5148dfa8d68a0289cfbc8823fb006061618c0f3411cfb59bcff727e7e",
+          "fetched_at": "2026-09-22T16:55:28.015660+00:00",
+          "excerpt": "Terminal-Bench 4.0: 66.4% | 55.8% | 52.3% | 57.9% | 37.3% (columns: Opus 5.5 | Fable 5.1 | Opus 5 | GPT-6 Astra | GPT-5.6 Sol)"
+        }
+      ]
+    },
+    {
+      "id": "anthropic-frontiercode-v1-1-main::1.1",
+      "name": "FrontierCode v1.1 (Main)",
+      "version": "1.1",
+      "version_status": "published",
+      "family": "anthropic-frontiercode-v1-1-main",
+      "category": "Coding",
+      "one_sentence_description": "FrontierCode v1.1 (Main) result reported by Anthropic for Claude Opus 5.5 in its 2026-09-22 Claude Opus 5.5 launch post; Anthropic's own run, not an independent measurement.",
+      "scoring": {
+        "metric": "Source-published score",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Anthropic's own result. The printed label is retained at version 1.1; it stays outside measured cohorts and Composite."
+      },
+      "maintainer": "Cognition",
+      "source_type": "vendor_report",
+      "primary_url": "https://www.anthropic.com/claude-opus-5-5",
+      "publication_urls": [
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5",
+          "type": "vendor_report",
+          "role": "Claude Opus 5.5 launch post with benchmark table and pricing"
+        },
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+          "type": "vendor_report",
+          "role": "Claude Opus 5.5 System Card, Table 8.1.A capability summary and evaluation details"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Anthropic launch post HTML table",
+        "locator": "Launch post benchmark table, row \"FrontierCode v1.1 (Main)\", under \"Opus 5.5\" (first column of: Opus 5.5 | Fable 5.1 | Opus 5 | GPT-6 Astra | GPT-5.6 Sol)",
+        "version_guard": "Require the printed version 1.1.",
+        "notes": "Capture only; preserve self_reported basis; the first numeric column is Claude Opus 5.5."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated.",
+        "check_recommendation": "Check on a revised system card or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/4418b9b4f881510f195f.gz",
+          "sha256": "6fece0a5148dfa8d68a0289cfbc8823fb006061618c0f3411cfb59bcff727e7e",
+          "fetched_at": "2026-09-22T16:55:28.015660+00:00",
+          "excerpt": "FrontierCode v1.1 (Main): 54.4% | 50.3% | 48.0% | 53.3% | 47.5% (columns: Opus 5.5 | Fable 5.1 | Opus 5 | GPT-6 Astra | GPT-5.6 Sol)"
+        }
+      ]
+    },
+    {
+      "id": "anthropic-cursorbench-4-0::4.0",
+      "name": "CursorBench 4.0",
+      "version": "4.0",
+      "version_status": "published",
+      "family": "anthropic-cursorbench-4-0",
+      "category": "Coding",
+      "one_sentence_description": "CursorBench 4.0 result reported by Anthropic for Claude Opus 5.5 in its 2026-09-22 Claude Opus 5.5 launch post; Anthropic's own run, not an independent measurement.",
+      "scoring": {
+        "metric": "Source-published score",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Anthropic's own result. The printed label is retained at version 4.0; it stays outside measured cohorts and Composite."
+      },
+      "maintainer": "Cursor (Anysphere)",
+      "source_type": "vendor_report",
+      "primary_url": "https://www.anthropic.com/claude-opus-5-5",
+      "publication_urls": [
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5",
+          "type": "vendor_report",
+          "role": "Claude Opus 5.5 launch post with benchmark table and pricing"
+        },
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+          "type": "vendor_report",
+          "role": "Claude Opus 5.5 System Card, Table 8.1.A capability summary and evaluation details"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Anthropic launch post HTML table",
+        "locator": "Launch post benchmark table, row \"CursorBench 4.0\", under \"Opus 5.5\" (first column of: Opus 5.5 | Fable 5.1 | Opus 5 | GPT-6 Astra | GPT-5.6 Sol)",
+        "version_guard": "Require the printed version 4.0.",
+        "notes": "Capture only; preserve self_reported basis; the first numeric column is Claude Opus 5.5."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated.",
+        "check_recommendation": "Check on a revised system card or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/4418b9b4f881510f195f.gz",
+          "sha256": "6fece0a5148dfa8d68a0289cfbc8823fb006061618c0f3411cfb59bcff727e7e",
+          "fetched_at": "2026-09-22T16:55:28.015660+00:00",
+          "excerpt": "CursorBench 4.0: 57.8% | 51.8% | 46.6% | — | 41.7% (columns: Opus 5.5 | Fable 5.1 | Opus 5 | GPT-6 Astra | GPT-5.6 Sol)"
+        }
+      ]
+    },
+    {
+      "id": "anthropic-gdpval-aa-v2-1::2.1",
+      "name": "GDPval-AA v2.1",
+      "version": "2.1",
+      "version_status": "published",
+      "family": "anthropic-gdpval-aa-v2-1",
+      "category": "Agentic",
+      "one_sentence_description": "GDPval-AA v2.1 result reported by Anthropic for Claude Opus 5.5 in its 2026-09-22 Claude Opus 5.5 launch post; Anthropic's own run, not an independent measurement.",
+      "scoring": {
+        "metric": "Source-published Elo rating",
+        "unit": "Elo",
+        "range": [
+          0,
+          null
+        ],
+        "higher_better": true,
+        "notes": "Anthropic's own result. The printed label is retained at version 2.1; it stays outside measured cohorts and Composite."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "vendor_report",
+      "primary_url": "https://www.anthropic.com/claude-opus-5-5",
+      "publication_urls": [
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5",
+          "type": "vendor_report",
+          "role": "Claude Opus 5.5 launch post with benchmark table and pricing"
+        },
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+          "type": "vendor_report",
+          "role": "Claude Opus 5.5 System Card, Table 8.1.A capability summary and evaluation details"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Anthropic launch post HTML table",
+        "locator": "Launch post benchmark table, row \"GDPval-AA v2.1\", under \"Opus 5.5\" (first column of: Opus 5.5 | Fable 5.1 | Opus 5 | GPT-6 Astra | GPT-5.6 Sol)",
+        "version_guard": "Require the printed version 2.1.",
+        "notes": "Capture only; preserve self_reported basis; the first numeric column is Claude Opus 5.5."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated.",
+        "check_recommendation": "Check on a revised system card or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/4418b9b4f881510f195f.gz",
+          "sha256": "6fece0a5148dfa8d68a0289cfbc8823fb006061618c0f3411cfb59bcff727e7e",
+          "fetched_at": "2026-09-22T16:55:28.015660+00:00",
+          "excerpt": "GDPval-AA v2.1: 1846 | 1735 | 1708 | 1542 | 1588 (columns: Opus 5.5 | Fable 5.1 | Opus 5 | GPT-6 Astra | GPT-5.6 Sol)"
+        }
+      ]
+    },
+    {
+      "id": "anthropic-automationbench::snapshot-2026-09-22",
+      "name": "AutomationBench",
+      "version": "snapshot-2026-09-22",
+      "version_status": "snapshot",
+      "family": "anthropic-automationbench",
+      "category": "Agentic",
+      "one_sentence_description": "AutomationBench result reported by Anthropic for Claude Opus 5.5 in its 2026-09-22 Claude Opus 5.5 launch post; Anthropic's own run, not an independent measurement.",
+      "scoring": {
+        "metric": "Source-published score",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Anthropic's own result. The printed label is retained under a dated snapshot because no version was printed; it stays outside measured cohorts and Composite."
+      },
+      "maintainer": "Zapier",
+      "source_type": "vendor_report",
+      "primary_url": "https://www.anthropic.com/claude-opus-5-5",
+      "publication_urls": [
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5",
+          "type": "vendor_report",
+          "role": "Claude Opus 5.5 launch post with benchmark table and pricing"
+        },
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+          "type": "vendor_report",
+          "role": "Claude Opus 5.5 System Card, Table 8.1.A capability summary and evaluation details"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Anthropic launch post HTML table",
+        "locator": "Launch post benchmark table, row \"AutomationBench\", under \"Opus 5.5\" (first column of: Opus 5.5 | Fable 5.1 | Opus 5 | GPT-6 Astra | GPT-5.6 Sol)",
+        "version_guard": "Keep snapshot-2026-09-22; do not infer a version.",
+        "notes": "Capture only; preserve self_reported basis; the first numeric column is Claude Opus 5.5."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated.",
+        "check_recommendation": "Check on a revised system card or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/4418b9b4f881510f195f.gz",
+          "sha256": "6fece0a5148dfa8d68a0289cfbc8823fb006061618c0f3411cfb59bcff727e7e",
+          "fetched_at": "2026-09-22T16:55:28.015660+00:00",
+          "excerpt": "AutomationBench: 40.0% | 31.4% | 26.9% | 41.4% | 28.8% (columns: Opus 5.5 | Fable 5.1 | Opus 5 | GPT-6 Astra | GPT-5.6 Sol)"
+        }
+      ]
+    },
+    {
+      "id": "anthropic-hle-with-tools::snapshot-2026-09-22",
+      "name": "Humanity's Last Exam (with tools)",
+      "version": "snapshot-2026-09-22",
+      "version_status": "snapshot",
+      "family": "anthropic-hle-with-tools",
+      "category": "Knowledge",
+      "one_sentence_description": "Humanity's Last Exam (with tools) result reported by Anthropic for Claude Opus 5.5 in its 2026-09-22 Claude Opus 5.5 launch post; Anthropic's own run, not an independent measurement.",
+      "scoring": {
+        "metric": "Source-published score",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Anthropic's own result. The printed label is retained under a dated snapshot because no version was printed; it stays outside measured cohorts and Composite."
+      },
+      "maintainer": "Center for AI Safety (CAIS) & Scale AI",
+      "source_type": "vendor_report",
+      "primary_url": "https://www.anthropic.com/claude-opus-5-5",
+      "publication_urls": [
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5",
+          "type": "vendor_report",
+          "role": "Claude Opus 5.5 launch post with benchmark table and pricing"
+        },
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+          "type": "vendor_report",
+          "role": "Claude Opus 5.5 System Card, Table 8.1.A capability summary and evaluation details"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Anthropic launch post HTML table",
+        "locator": "Launch post benchmark table, row \"Humanity's Last Exam (with tools)\", under \"Opus 5.5\" (first column of: Opus 5.5 | Fable 5.1 | Opus 5 | GPT-6 Astra | GPT-5.6 Sol)",
+        "version_guard": "Keep snapshot-2026-09-22; do not infer a version.",
+        "notes": "Capture only; preserve self_reported basis; the first numeric column is Claude Opus 5.5."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated.",
+        "check_recommendation": "Check on a revised system card or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/4418b9b4f881510f195f.gz",
+          "sha256": "6fece0a5148dfa8d68a0289cfbc8823fb006061618c0f3411cfb59bcff727e7e",
+          "fetched_at": "2026-09-22T16:55:28.015660+00:00",
+          "excerpt": "Humanity's Last Exam (with tools): 67.7% with tools | 65.6% with tools | 63.6% with tools | 57.2% with tools | — (columns: Opus 5.5 | Fable 5.1 | Opus 5 | GPT-6 Astra | GPT-5.6 Sol)"
+        }
+      ]
+    },
+    {
+      "id": "anthropic-terminal-bench-science-0-1::0.1",
+      "name": "Terminal-Bench-Science 0.1",
+      "version": "0.1",
+      "version_status": "published",
+      "family": "anthropic-terminal-bench-science-0-1",
+      "category": "Science",
+      "one_sentence_description": "Terminal-Bench-Science 0.1 result reported by Anthropic for Claude Opus 5.5 in its 2026-09-22 Claude Opus 5.5 launch post; Anthropic's own run, not an independent measurement.",
+      "scoring": {
+        "metric": "Source-published score",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Anthropic's own result. The printed label is retained at version 0.1; it stays outside measured cohorts and Composite."
+      },
+      "maintainer": "Terminal-Bench-Science (Stanford-led community benchmark)",
+      "source_type": "vendor_report",
+      "primary_url": "https://www.anthropic.com/claude-opus-5-5",
+      "publication_urls": [
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5",
+          "type": "vendor_report",
+          "role": "Claude Opus 5.5 launch post with benchmark table and pricing"
+        },
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+          "type": "vendor_report",
+          "role": "Claude Opus 5.5 System Card, Table 8.1.A capability summary and evaluation details"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Anthropic launch post HTML table",
+        "locator": "Launch post benchmark table, row \"Terminal-Bench-Science 0.1\", under \"Opus 5.5\" (first column of: Opus 5.5 | Fable 5.1 | Opus 5 | GPT-6 Astra | GPT-5.6 Sol)",
+        "version_guard": "Require the printed version 0.1.",
+        "notes": "Capture only; preserve self_reported basis; the first numeric column is Claude Opus 5.5."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated.",
+        "check_recommendation": "Check on a revised system card or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/4418b9b4f881510f195f.gz",
+          "sha256": "6fece0a5148dfa8d68a0289cfbc8823fb006061618c0f3411cfb59bcff727e7e",
+          "fetched_at": "2026-09-22T16:55:28.015660+00:00",
+          "excerpt": "Terminal-Bench-Science 0.1: 58.7% | 52.6% | 29.0% | 64.6% | 22.4% (columns: Opus 5.5 | Fable 5.1 | Opus 5 | GPT-6 Astra | GPT-5.6 Sol)"
+        }
+      ]
+    },
+    {
+      "id": "anthropic-osworld-2-0-partial::2.0",
+      "name": "OSWorld 2.0 (partial score)",
+      "version": "2.0",
+      "version_status": "published",
+      "family": "anthropic-osworld-2-0-partial",
+      "category": "Agentic",
+      "one_sentence_description": "OSWorld 2.0 (partial score) result reported by Anthropic for Claude Opus 5.5 in its 2026-09-22 Claude Opus 5.5 launch post; Anthropic's own run, not an independent measurement.",
+      "scoring": {
+        "metric": "Source-published score",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Anthropic's own result. The printed label is retained at version 2.0; it stays outside measured cohorts and Composite."
+      },
+      "maintainer": "XLANG Lab (The University of Hong Kong)",
+      "source_type": "vendor_report",
+      "primary_url": "https://www.anthropic.com/claude-opus-5-5",
+      "publication_urls": [
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5",
+          "type": "vendor_report",
+          "role": "Claude Opus 5.5 launch post with benchmark table and pricing"
+        },
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+          "type": "vendor_report",
+          "role": "Claude Opus 5.5 System Card, Table 8.1.A capability summary and evaluation details"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Anthropic launch post HTML table",
+        "locator": "Launch post benchmark table, row \"OSWorld 2.0 (partial score)\", under \"Opus 5.5\" (first column of: Opus 5.5 | Fable 5.1 | Opus 5 | GPT-6 Astra | GPT-5.6 Sol)",
+        "version_guard": "Require the printed version 2.0.",
+        "notes": "Capture only; preserve self_reported basis; the first numeric column is Claude Opus 5.5."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated.",
+        "check_recommendation": "Check on a revised system card or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/4418b9b4f881510f195f.gz",
+          "sha256": "6fece0a5148dfa8d68a0289cfbc8823fb006061618c0f3411cfb59bcff727e7e",
+          "fetched_at": "2026-09-22T16:55:28.015660+00:00",
+          "excerpt": "OSWorld 2.0 (partial score): 81.8% partial | 80.7% partial | 74.0% partial | — | — (columns: Opus 5.5 | Fable 5.1 | Opus 5 | GPT-6 Astra | GPT-5.6 Sol)"
+        }
+      ]
+    },
+    {
+      "id": "anthropic-chartography-with-tools::snapshot-2026-09-22",
+      "name": "Chartography (with tools)",
+      "version": "snapshot-2026-09-22",
+      "version_status": "snapshot",
+      "family": "anthropic-chartography-with-tools",
+      "category": "Vision",
+      "one_sentence_description": "Chartography (with tools) result reported by Anthropic for Claude Opus 5.5 in its 2026-09-22 Claude Opus 5.5 launch post; Anthropic's own run, not an independent measurement.",
+      "scoring": {
+        "metric": "Source-published score",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Anthropic's own result. The printed label is retained under a dated snapshot because no version was printed; it stays outside measured cohorts and Composite."
+      },
+      "maintainer": "Surge AI",
+      "source_type": "vendor_report",
+      "primary_url": "https://www.anthropic.com/claude-opus-5-5",
+      "publication_urls": [
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5",
+          "type": "vendor_report",
+          "role": "Claude Opus 5.5 launch post with benchmark table and pricing"
+        },
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+          "type": "vendor_report",
+          "role": "Claude Opus 5.5 System Card, Table 8.1.A capability summary and evaluation details"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Anthropic launch post HTML table",
+        "locator": "Launch post benchmark table, row \"Chartography (with tools)\", under \"Opus 5.5\" (first column of: Opus 5.5 | Fable 5.1 | Opus 5 | GPT-6 Astra | GPT-5.6 Sol)",
+        "version_guard": "Keep snapshot-2026-09-22; do not infer a version.",
+        "notes": "Capture only; preserve self_reported basis; the first numeric column is Claude Opus 5.5."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated.",
+        "check_recommendation": "Check on a revised system card or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/4418b9b4f881510f195f.gz",
+          "sha256": "6fece0a5148dfa8d68a0289cfbc8823fb006061618c0f3411cfb59bcff727e7e",
+          "fetched_at": "2026-09-22T16:55:28.015660+00:00",
+          "excerpt": "Chartography (with tools): 89.0% with tools | 88.4% with tools | 83.4% with tools | — | — (columns: Opus 5.5 | Fable 5.1 | Opus 5 | GPT-6 Astra | GPT-5.6 Sol)"
+        }
+      ]
+    },
+    {
+      "id": "anthropic-swe-bench-pro::snapshot-2026-09-22",
+      "name": "SWE-bench Pro",
+      "version": "snapshot-2026-09-22",
+      "version_status": "snapshot",
+      "family": "anthropic-swe-bench-pro",
+      "category": "Coding",
+      "one_sentence_description": "SWE-bench Pro result reported by Anthropic for Claude Opus 5.5 in its 2026-09-22 Claude Opus 5.5 System Card (PDF, text layer); Anthropic's own run, not an independent measurement.",
+      "scoring": {
+        "metric": "Source-published score",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Anthropic's own result. The printed label is retained under a dated snapshot because no version was printed; it stays outside measured cohorts and Composite."
+      },
+      "maintainer": "Scale AI",
+      "source_type": "vendor_report",
+      "primary_url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+      "publication_urls": [
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5",
+          "type": "vendor_report",
+          "role": "Claude Opus 5.5 launch post with benchmark table and pricing"
+        },
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+          "type": "vendor_report",
+          "role": "Claude Opus 5.5 System Card, Table 8.1.A capability summary and evaluation details"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Anthropic system card PDF (pdftotext -layout text layer)",
+        "locator": "System card Table 8.1.A (page 174), row \"SWE-bench Pro\", under \"Claude Opus 5.5\" (first column of: Claude Opus 5.5 | Claude Opus 5 | Claude Fable 5.1 | GPT-6 Astra)",
+        "version_guard": "Keep snapshot-2026-09-22; do not infer a version.",
+        "notes": "Capture only; preserve self_reported basis; the first numeric column is Claude Opus 5.5."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated.",
+        "check_recommendation": "Check on a revised system card or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/95a7b26f5d4497072d97.gz",
+          "sha256": "a0c0bbcafad4eb6f8b106fb161908f08113d30df301037c1b75b5025c0bbc8ca",
+          "fetched_at": "2026-09-22T16:55:31.262433+00:00",
+          "excerpt": "SWE-bench Pro: SWE-bench Pro 89.9 79.2 81.2 – (columns: Claude Opus 5.5 | Claude Opus 5 | Claude Fable 5.1 | GPT-6 Astra)"
+        }
+      ]
+    },
+    {
+      "id": "anthropic-swe-bench-multilingual::snapshot-2026-09-22",
+      "name": "SWE-bench Multilingual",
+      "version": "snapshot-2026-09-22",
+      "version_status": "snapshot",
+      "family": "anthropic-swe-bench-multilingual",
+      "category": "Coding",
+      "one_sentence_description": "SWE-bench Multilingual result reported by Anthropic for Claude Opus 5.5 in its 2026-09-22 Claude Opus 5.5 System Card (PDF, text layer); Anthropic's own run, not an independent measurement.",
+      "scoring": {
+        "metric": "Source-published score",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Anthropic's own result. The printed label is retained under a dated snapshot because no version was printed; it stays outside measured cohorts and Composite."
+      },
+      "maintainer": "SWE-bench team",
+      "source_type": "vendor_report",
+      "primary_url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+      "publication_urls": [
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5",
+          "type": "vendor_report",
+          "role": "Claude Opus 5.5 launch post with benchmark table and pricing"
+        },
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+          "type": "vendor_report",
+          "role": "Claude Opus 5.5 System Card, Table 8.1.A capability summary and evaluation details"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Anthropic system card PDF (pdftotext -layout text layer)",
+        "locator": "System card Table 8.1.A (page 174), row \"SWE-bench Multilingual\", under \"Claude Opus 5.5\" (first column of: Claude Opus 5.5 | Claude Opus 5 | Claude Fable 5.1 | GPT-6 Astra)",
+        "version_guard": "Keep snapshot-2026-09-22; do not infer a version.",
+        "notes": "Capture only; preserve self_reported basis; the first numeric column is Claude Opus 5.5."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated.",
+        "check_recommendation": "Check on a revised system card or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/95a7b26f5d4497072d97.gz",
+          "sha256": "a0c0bbcafad4eb6f8b106fb161908f08113d30df301037c1b75b5025c0bbc8ca",
+          "fetched_at": "2026-09-22T16:55:31.262433+00:00",
+          "excerpt": "SWE-bench Multilingual: SWE-bench Multilingual 93.9 89.5 89.1 - (columns: Claude Opus 5.5 | Claude Opus 5 | Claude Fable 5.1 | GPT-6 Astra)"
+        }
+      ]
+    },
+    {
+      "id": "anthropic-swe-bench-multimodal::snapshot-2026-09-22",
+      "name": "SWE-bench Multimodal",
+      "version": "snapshot-2026-09-22",
+      "version_status": "snapshot",
+      "family": "anthropic-swe-bench-multimodal",
+      "category": "Coding",
+      "one_sentence_description": "SWE-bench Multimodal result reported by Anthropic for Claude Opus 5.5 in its 2026-09-22 Claude Opus 5.5 System Card (PDF, text layer); Anthropic's own run, not an independent measurement.",
+      "scoring": {
+        "metric": "Source-published score",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Anthropic's own result. The printed label is retained under a dated snapshot because no version was printed; it stays outside measured cohorts and Composite."
+      },
+      "maintainer": "SWE-bench team",
+      "source_type": "vendor_report",
+      "primary_url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+      "publication_urls": [
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5",
+          "type": "vendor_report",
+          "role": "Claude Opus 5.5 launch post with benchmark table and pricing"
+        },
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+          "type": "vendor_report",
+          "role": "Claude Opus 5.5 System Card, Table 8.1.A capability summary and evaluation details"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Anthropic system card PDF (pdftotext -layout text layer)",
+        "locator": "System card Table 8.1.A (page 174), row \"SWE-bench Multimodal\", under \"Claude Opus 5.5\" (first column of: Claude Opus 5.5 | Claude Opus 5 | Claude Fable 5.1 | GPT-6 Astra)",
+        "version_guard": "Keep snapshot-2026-09-22; do not infer a version.",
+        "notes": "Capture only; preserve self_reported basis; the first numeric column is Claude Opus 5.5."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated.",
+        "check_recommendation": "Check on a revised system card or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/95a7b26f5d4497072d97.gz",
+          "sha256": "a0c0bbcafad4eb6f8b106fb161908f08113d30df301037c1b75b5025c0bbc8ca",
+          "fetched_at": "2026-09-22T16:55:31.262433+00:00",
+          "excerpt": "SWE-bench Multimodal: SWE-bench Multimodal 61.4 59.4 54.7 - (columns: Claude Opus 5.5 | Claude Opus 5 | Claude Fable 5.1 | GPT-6 Astra)"
+        }
+      ]
+    },
+    {
+      "id": "anthropic-hle-no-tools::snapshot-2026-09-22",
+      "name": "Humanity's Last Exam (no tools)",
+      "version": "snapshot-2026-09-22",
+      "version_status": "snapshot",
+      "family": "anthropic-hle-no-tools",
+      "category": "Knowledge",
+      "one_sentence_description": "Humanity's Last Exam (no tools) result reported by Anthropic for Claude Opus 5.5 in its 2026-09-22 Claude Opus 5.5 System Card (PDF, text layer); Anthropic's own run, not an independent measurement.",
+      "scoring": {
+        "metric": "Source-published score",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Anthropic's own result. The printed label is retained under a dated snapshot because no version was printed; it stays outside measured cohorts and Composite."
+      },
+      "maintainer": "Center for AI Safety (CAIS) & Scale AI",
+      "source_type": "vendor_report",
+      "primary_url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+      "publication_urls": [
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5",
+          "type": "vendor_report",
+          "role": "Claude Opus 5.5 launch post with benchmark table and pricing"
+        },
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+          "type": "vendor_report",
+          "role": "Claude Opus 5.5 System Card, Table 8.1.A capability summary and evaluation details"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Anthropic system card PDF (pdftotext -layout text layer)",
+        "locator": "System card Table 8.1.A (page 174), row \"Humanity's Last Exam (no tools)\", under \"Claude Opus 5.5\" (first column of: Claude Opus 5.5 | Claude Opus 5 | Claude Fable 5.1 | GPT-6 Astra)",
+        "version_guard": "Keep snapshot-2026-09-22; do not infer a version.",
+        "notes": "Capture only; preserve self_reported basis; the first numeric column is Claude Opus 5.5."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated.",
+        "check_recommendation": "Check on a revised system card or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/95a7b26f5d4497072d97.gz",
+          "sha256": "a0c0bbcafad4eb6f8b106fb161908f08113d30df301037c1b75b5025c0bbc8ca",
+          "fetched_at": "2026-09-22T16:55:31.262433+00:00",
+          "excerpt": "Humanity's Last Exam (no tools): Humanity's Last Exam No tools 64.4 56.6 60.9 – (columns: Claude Opus 5.5 | Claude Opus 5 | Claude Fable 5.1 | GPT-6 Astra)"
+        }
+      ]
+    },
+    {
+      "id": "anthropic-osworld-2-0-strict::2.0",
+      "name": "OSWorld 2.0 (strict pass rate)",
+      "version": "2.0",
+      "version_status": "published",
+      "family": "anthropic-osworld-2-0-strict",
+      "category": "Agentic",
+      "one_sentence_description": "OSWorld 2.0 (strict pass rate) result reported by Anthropic for Claude Opus 5.5 in its 2026-09-22 Claude Opus 5.5 System Card (PDF, text layer); Anthropic's own run, not an independent measurement.",
+      "scoring": {
+        "metric": "Source-published score",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Anthropic's own result. The printed label is retained at version 2.0; it stays outside measured cohorts and Composite."
+      },
+      "maintainer": "XLANG Lab (The University of Hong Kong)",
+      "source_type": "vendor_report",
+      "primary_url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+      "publication_urls": [
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5",
+          "type": "vendor_report",
+          "role": "Claude Opus 5.5 launch post with benchmark table and pricing"
+        },
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+          "type": "vendor_report",
+          "role": "Claude Opus 5.5 System Card, Table 8.1.A capability summary and evaluation details"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Anthropic system card PDF (pdftotext -layout text layer)",
+        "locator": "System card Table 8.1.A (page 174), row \"OSWorld 2.0 (strict pass rate)\", under \"Claude Opus 5.5\" (first column of: Claude Opus 5.5 | Claude Opus 5 | Claude Fable 5.1 | GPT-6 Astra)",
+        "version_guard": "Require the printed version 2.0.",
+        "notes": "Capture only; preserve self_reported basis; the first numeric column is Claude Opus 5.5."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated.",
+        "check_recommendation": "Check on a revised system card or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/95a7b26f5d4497072d97.gz",
+          "sha256": "a0c0bbcafad4eb6f8b106fb161908f08113d30df301037c1b75b5025c0bbc8ca",
+          "fetched_at": "2026-09-22T16:55:31.262433+00:00",
+          "excerpt": "OSWorld 2.0 (strict pass rate): OSWorld 2.0 (partial/strict) 81.8/48.7 74.0/37.2 80.7/42.8 – (columns: Claude Opus 5.5 | Claude Opus 5 | Claude Fable 5.1 | GPT-6 Astra)"
+        }
+      ]
+    },
+    {
+      "id": "anthropic-healthbench-professional::snapshot-2026-09-22",
+      "name": "HealthBench Professional",
+      "version": "snapshot-2026-09-22",
+      "version_status": "snapshot",
+      "family": "anthropic-healthbench-professional",
+      "category": "Knowledge",
+      "one_sentence_description": "HealthBench Professional result reported by Anthropic for Claude Opus 5.5 in its 2026-09-22 Claude Opus 5.5 System Card (PDF, text layer); Anthropic's own run, not an independent measurement.",
+      "scoring": {
+        "metric": "Source-published score",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Anthropic's own result. The printed label is retained under a dated snapshot because no version was printed; it stays outside measured cohorts and Composite."
+      },
+      "maintainer": "OpenAI",
+      "source_type": "vendor_report",
+      "primary_url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+      "publication_urls": [
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5",
+          "type": "vendor_report",
+          "role": "Claude Opus 5.5 launch post with benchmark table and pricing"
+        },
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+          "type": "vendor_report",
+          "role": "Claude Opus 5.5 System Card, Table 8.1.A capability summary and evaluation details"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Anthropic system card PDF (pdftotext -layout text layer)",
+        "locator": "System card Table 8.1.A (page 174), row \"HealthBench Professional\", under \"Claude Opus 5.5\" (first column of: Claude Opus 5.5 | Claude Opus 5 | Claude Fable 5.1 | GPT-6 Astra)",
+        "version_guard": "Keep snapshot-2026-09-22; do not infer a version.",
+        "notes": "Capture only; preserve self_reported basis; the first numeric column is Claude Opus 5.5."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated.",
+        "check_recommendation": "Check on a revised system card or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/95a7b26f5d4497072d97.gz",
+          "sha256": "a0c0bbcafad4eb6f8b106fb161908f08113d30df301037c1b75b5025c0bbc8ca",
+          "fetched_at": "2026-09-22T16:55:31.262433+00:00",
+          "excerpt": "HealthBench Professional: HealthBench Professional 65.6 59.8 62.1 63.4 (columns: Claude Opus 5.5 | Claude Opus 5 | Claude Fable 5.1 | GPT-6 Astra)"
+        }
+      ]
+    },
+    {
+      "id": "anthropic-aa-briefcase-v1-1::1.1",
+      "name": "AA-Briefcase v1.1",
+      "version": "1.1",
+      "version_status": "published",
+      "family": "anthropic-aa-briefcase-v1-1",
+      "category": "Agentic",
+      "one_sentence_description": "AA-Briefcase v1.1 result reported by Anthropic for Claude Opus 5.5 in its 2026-09-22 Claude Opus 5.5 System Card (PDF, text layer); Anthropic's own run, not an independent measurement.",
+      "scoring": {
+        "metric": "Source-published Elo rating",
+        "unit": "Elo",
+        "range": [
+          0,
+          null
+        ],
+        "higher_better": true,
+        "notes": "Anthropic's own result. The printed label is retained at version 1.1; it stays outside measured cohorts and Composite."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "vendor_report",
+      "primary_url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+      "publication_urls": [
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5",
+          "type": "vendor_report",
+          "role": "Claude Opus 5.5 launch post with benchmark table and pricing"
+        },
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+          "type": "vendor_report",
+          "role": "Claude Opus 5.5 System Card, Table 8.1.A capability summary and evaluation details"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-vendor-documents.py URL_LIST.json CAPTURE_DIR",
+        "format": "Anthropic system card PDF (pdftotext -layout text layer)",
+        "locator": "System card Table 8.1.A (page 174), row \"AA-Briefcase v1.1\", under \"Claude Opus 5.5\" (first column of: Claude Opus 5.5 | Claude Opus 5 | Claude Fable 5.1 | GPT-6 Astra)",
+        "version_guard": "Require the printed version 1.1.",
+        "notes": "Capture only; preserve self_reported basis; the first numeric column is Claude Opus 5.5."
+      },
+      "update_cadence": {
+        "source_schedule": "No update schedule stated.",
+        "check_recommendation": "Check on a revised system card or when an independent matching-version result appears."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; false records absence of such a claim, not proof that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/95a7b26f5d4497072d97.gz",
+          "sha256": "a0c0bbcafad4eb6f8b106fb161908f08113d30df301037c1b75b5025c0bbc8ca",
+          "fetched_at": "2026-09-22T16:55:31.262433+00:00",
+          "excerpt": "AA-Briefcase v1.1: AA-Briefcase v1.1 1822 1673 1678 1569 (columns: Claude Opus 5.5 | Claude Opus 5 | Claude Fable 5.1 | GPT-6 Astra)"
+        }
+      ]
     }
   ],
   "aa_field_map": [

@@ -974,11 +974,14 @@ async function build() {
       const key = canonFamily(m.family_key);
       const fam = family(key, m.org || guessOrg(key));
       if (m.family_name) fam.familyName = m.family_name;
-      const rowId = `${key}::default`;
+      // A launch-day entry may name the vendor's evaluated configuration (e.g. `max`), so the row keeps the
+      // id the live sources will use for that configuration once they carry the family.
+      const variant = m.variant || "default";
+      const rowId = `${key}::${variant}`;
       if (![...models.values()].some((r) => r.family_key === key)) {
         models.set(rowId, {
-          id: rowId, family_key: key, family_name: fam.familyName, display_name: m.family_name || fam.familyName,
-          org: m.org || fam.org, variant: "default", open_weights: m.open_weights ?? isOpenWeights(fam.org, key),
+          id: rowId, family_key: key, family_name: fam.familyName, display_name: m.display_name || m.family_name || fam.familyName,
+          org: m.org || fam.org, variant, open_weights: m.open_weights ?? isOpenWeights(fam.org, key),
           release_date: m.release_date || null, benchmarks: {}, aa_reference_price: {}, aa_speed: {},
           offers: [], designarena: {}, copilot: null, manual_notes: m.notes || "",
         });

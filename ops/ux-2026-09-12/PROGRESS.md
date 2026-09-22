@@ -6810,3 +6810,10 @@ Implemented by Claude Code (Opus 5) in the launch-sniper job while the loop was 
 | CR-122.2 | implemented | `test/compare-ids.test.mjs` 10/10 | Case/dot/dash/prefix/date-suffix/vendor-word tolerant; bare family keys resolve. |
 | CR-122.3 | implemented | live tags on both hosts | Title/description/og:image/twitter:image name both models; `/api/og/compare` PNG 1200×630. |
 | CR-122.4 | implemented | full suite (Node 26 strip-types) 1101 pass / 1 skip / 0 fail; tsc + build pass | Live check recorded in COMPARE-PAGE.md. |
+
+# CR-123 — 2026-09-22: Claude Opus 5.5 launch-day ingestion
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| CR-123.1–123.4 | implemented | `data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/` (launch post bytes, system card text layer, critic round r4); `test/claude-opus-5-5.test.mjs` | `claude-opus-5.5::max` with Anthropic's published price and 16 self-reported results (9 launch post, 7 system card Table 8.1.A). Critic `z-ai/glm-5.3-flash` (different family from the producer) passed all 16 with 0 findings after three earlier rounds found unsupported protocol notes — those were corrected (GDPval-AA/AA-Briefcase run by Artificial Analysis, HealthBench Professional length-adjusted, Terminal-Bench-Science 10 trials per task). |
+| CR-123.5 | in-progress | full tests 1105/1105, `tsc --noEmit`, production build | Awaiting production deployment and both-host verification. |

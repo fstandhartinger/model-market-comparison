@@ -86,6 +86,20 @@
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/public-review/swe-bench-multimodal--snapshot-2026-09-10-0-packet.json numbered_candidates; public:01069ccff2c77ff6190f44bc"
     },
     {
+      "id": "public:0149ff45e922c7644677cddc",
+      "observation_sha256": "834449f412942a0be890db27d3ed7b933a46b79565ee7381a6ddbd86b82c6e20",
+      "critic_model": "moonshotai/Kimi-K3-TEE",
+      "producer_models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/review-r2.json",
+      "review_sha256": "82c0e6ce5bc80722a578f5f7edab3126296ad21a2b6e90290b0276a063f6b3a2",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/artifact-r2.json",
+      "review_row": "public:0149ff45e922c7644677cddc",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/packet-r2.md#public:0149ff45e922c7644677cddc"
+    },
+    {
       "id": "public:0151e2742ee7cc0dfebc3890",
       "observation_sha256": "7e9bb6e965dd08d8f8b10e713ad6046bc047fdefb78a89fb0907f9758655f0e0",
       "critic_model": "google/gemini-3.7-flash",
@@ -126,6 +140,20 @@
       "review_row": 102,
       "verdict": "accepted",
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/public-review/mmmu--snapshot-2026-09-10-0-packet.json numbered_candidates; public:01a6f59c163aad32b7f899a8"
+    },
+    {
+      "id": "public:01d32f1a6d35816a84f6462a",
+      "observation_sha256": "0efe758d816128eec043f3b2ded2eb06a608380d37da58f382ed4dbe2d8ab2d8",
+      "critic_model": "moonshotai/Kimi-K3-TEE",
+      "producer_models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/review-r2.json",
+      "review_sha256": "82c0e6ce5bc80722a578f5f7edab3126296ad21a2b6e90290b0276a063f6b3a2",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/artifact-r2.json",
+      "review_row": "public:01d32f1a6d35816a84f6462a",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/packet-r2.md#public:01d32f1a6d35816a84f6462a"
     },
     {
       "id": "public:01f78572e5f010c78f3358cd",
@@ -210,6 +238,20 @@
       "review_row": 44,
       "verdict": "accepted",
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/public-review/swe-bench-verified--snapshot-2026-09-10-0-packet.json numbered_candidates; public:0289fba95d0c662cb2f13888"
+    },
+    {
+      "id": "public:02adc4772197328e98c3b00c",
+      "observation_sha256": "0d4e3cbd61a167e884214907f8b687349525aee0d4bc018b19ecfe6743d5179b",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "deepseek/deepseek-v4-flash-0731"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/review-r1.json",
+      "review_sha256": "c64b25eac9bfe63160f76ed88a70bf910b98b8647b78fd0edc8f5eb12fd5dd79",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/artifact-r1.json",
+      "review_row": "public:02adc4772197328e98c3b00c",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/packet-r1.md#public:02adc4772197328e98c3b00c"
     },
     {
       "id": "public:02b6fc6b746576fe813e7694",
@@ -546,6 +588,20 @@
       "review_row": 154,
       "verdict": "accepted",
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/public-review/mmmu--snapshot-2026-09-10-0-packet.json numbered_candidates; public:08e340a970e4564b227af593"
+    },
+    {
+      "id": "public:08f1ce157a5c2ca15a810800",
+      "observation_sha256": "ccb7f6d099af726662251c5b4d8ce4adb8bd5c5e93f275ced4ebe255c739fc5d",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "deepseek/deepseek-v4-flash-0731"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/review-r1.json",
+      "review_sha256": "c64b25eac9bfe63160f76ed88a70bf910b98b8647b78fd0edc8f5eb12fd5dd79",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/artifact-r1.json",
+      "review_row": "public:08f1ce157a5c2ca15a810800",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/packet-r1.md#public:08f1ce157a5c2ca15a810800"
     },
     {
       "id": "public:0919cd1c8068d7f115fa3e6c",
@@ -4076,6 +4132,20 @@
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/public-review/mmmu--snapshot-2026-09-10-0-packet.json numbered_candidates; public:36071e2f095760d66510d6e8"
     },
     {
+      "id": "public:360b3861f3aacca62916757c",
+      "observation_sha256": "62045512fbdd204bf242b8ece24627f26df4da428bd83ecd3dd7b3797035a1fc",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "deepseek/deepseek-v4-flash-0731"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/review-r1.json",
+      "review_sha256": "c64b25eac9bfe63160f76ed88a70bf910b98b8647b78fd0edc8f5eb12fd5dd79",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/artifact-r1.json",
+      "review_row": "public:360b3861f3aacca62916757c",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/packet-r1.md#public:360b3861f3aacca62916757c"
+    },
+    {
       "id": "public:36178aa5ba56c156018c60f5",
       "observation_sha256": "780b3f951b08611cf400a6692f10d0831112a107c5c91f61d0d4a033e4a2d370",
       "critic_model": "google/gemini-3.7-flash",
@@ -4734,6 +4804,20 @@
       "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json; coverage_checked public:418ff0457ce43eb2a52cad90; effort_runs_json; source row 26; Grok 4.6|medium; field cost"
     },
     {
+      "id": "public:41ab205415ef05b5236025c4",
+      "observation_sha256": "7abaf030a0e9e540f7b57232edffb0d5a5a12ca26ac74aa564089c2d5c16ba8d",
+      "critic_model": "deepseek/deepseek-v4.1-flash",
+      "producer_models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/review-r3.json",
+      "review_sha256": "b53b18aa20ea3d96f751ab0bc305e2d1eeebeb0bce2543f05e709a848e093e23",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/artifact-r3.json",
+      "review_row": "public:41ab205415ef05b5236025c4",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/packet-r3.md#public:41ab205415ef05b5236025c4"
+    },
+    {
       "id": "public:425e210c5d5b25b0bc7f0f00",
       "observation_sha256": "a95f171b8b12e40218c546816fb68ed4301f8303dfe9736336b7ef9d6c611d99",
       "critic_model": "google/gemini-3.7-flash",
@@ -4972,6 +5056,20 @@
       "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json; coverage_checked public:44e3ba3e8337184af044c424; effort_runs_json; source row 79; Claude Sonnet 4.6|max; field new_score"
     },
     {
+      "id": "public:44e7cd159c7a7872cd6a80c9",
+      "observation_sha256": "e6a6b5706491ac26991034f930ca13a429f9c762b59cb15307427be5aefcf5b5",
+      "critic_model": "moonshotai/Kimi-K3-TEE",
+      "producer_models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/review-r2.json",
+      "review_sha256": "82c0e6ce5bc80722a578f5f7edab3126296ad21a2b6e90290b0276a063f6b3a2",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/artifact-r2.json",
+      "review_row": "public:44e7cd159c7a7872cd6a80c9",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/packet-r2.md#public:44e7cd159c7a7872cd6a80c9"
+    },
+    {
       "id": "public:453cf56996d283f905d39fae",
       "observation_sha256": "93d3c8288fa6a86f95cbf0c13a4726de0a535ffd9640e46303ea763311d63690",
       "critic_model": "google/gemini-3.7-flash",
@@ -5040,6 +5138,20 @@
       "review_row": 48,
       "verdict": "accepted",
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/public-review/swe-bench-verified--snapshot-2026-09-10-0-packet.json numbered_candidates; public:461d221d83010023623c5501"
+    },
+    {
+      "id": "public:4630e7e793bce524bea05b9e",
+      "observation_sha256": "f0b70517bc91bc8528386a9712ad50796d4408b30bd0d146068287d7bd884bd6",
+      "critic_model": "moonshotai/Kimi-K3-TEE",
+      "producer_models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/review-r2.json",
+      "review_sha256": "82c0e6ce5bc80722a578f5f7edab3126296ad21a2b6e90290b0276a063f6b3a2",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/artifact-r2.json",
+      "review_row": "public:4630e7e793bce524bea05b9e",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/packet-r2.md#public:4630e7e793bce524bea05b9e"
     },
     {
       "id": "public:4642c4e58b45486bf5ba0429",
@@ -5154,6 +5266,20 @@
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/public-review/swe-bench-verified--snapshot-2026-09-10-0-packet.json numbered_candidates; public:4727ec7e05010d1c8756597f"
     },
     {
+      "id": "public:4764d627b44396cb491b9a07",
+      "observation_sha256": "5443b8d58f0e3f16d628d7a267f839ad649c26bad9a2c09d050588a1476baf80",
+      "critic_model": "moonshotai/Kimi-K3-TEE",
+      "producer_models": [
+        "deepseek/deepseek-v4-flash-0731"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/review-r1.json",
+      "review_sha256": "1c605eb6491dba6f3d5dd6d7cb2040a6176e36ef1c6ed3edccbbfa1d58217751",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/artifact-r1.json",
+      "review_row": "public:4764d627b44396cb491b9a07",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/packet-r1.md#public:4764d627b44396cb491b9a07"
+    },
+    {
       "id": "public:4769c6fe17d1ebb0e77603a1",
       "observation_sha256": "a78ffcb7f895f64714362896318eb6559314bdb3fd581f51ce6c70fdf7535212",
       "critic_model": "deepseek/deepseek-v4-flash-0731",
@@ -5250,6 +5376,20 @@
       "review_row": 202,
       "verdict": "accepted",
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/public-review/arc-agi--1-0-packet.json numbered_candidates; public:47ec1a6706aff19ed542cf22"
+    },
+    {
+      "id": "public:47eeea52a8c32e987563ff01",
+      "observation_sha256": "e70413fc06ca771e0934928eca9cd653d82488528026069d8a12380097fbc24b",
+      "critic_model": "moonshotai/Kimi-K3-TEE",
+      "producer_models": [
+        "deepseek/deepseek-v4-flash-0731"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/review-r1.json",
+      "review_sha256": "1c605eb6491dba6f3d5dd6d7cb2040a6176e36ef1c6ed3edccbbfa1d58217751",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/artifact-r1.json",
+      "review_row": "public:47eeea52a8c32e987563ff01",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/packet-r1.md#public:47eeea52a8c32e987563ff01"
     },
     {
       "id": "public:4801a162c533d806b865eae9",
@@ -5362,6 +5502,20 @@
       "review_row": 173,
       "verdict": "accepted",
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/public-review/arc-agi--1-0-packet.json numbered_candidates; public:49538c8af9c2049328ce236d"
+    },
+    {
+      "id": "public:495fe6bcb854c854a1e9a973",
+      "observation_sha256": "beb8cfa081f5b742c78a9c68ddb6f3811da3c9a7d6dfa7d8242c0815e7ede853",
+      "critic_model": "moonshotai/Kimi-K3-TEE",
+      "producer_models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/review-r2.json",
+      "review_sha256": "82c0e6ce5bc80722a578f5f7edab3126296ad21a2b6e90290b0276a063f6b3a2",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/artifact-r2.json",
+      "review_row": "public:495fe6bcb854c854a1e9a973",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/packet-r2.md#public:495fe6bcb854c854a1e9a973"
     },
     {
       "id": "public:497b64b07b94967b7ae9f6e3",
@@ -6358,6 +6512,20 @@
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/public-review/arc-agi--2-0-packet.json numbered_candidates; public:5526dcd8e6fba922e880b430"
     },
     {
+      "id": "public:5536054ff669e46f8baa9ff1",
+      "observation_sha256": "ef47546c3b9a2e83889590eda879acd493aded4bdaf8f417913993a8c9d9c559",
+      "critic_model": "moonshotai/Kimi-K3-TEE",
+      "producer_models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/review-r2.json",
+      "review_sha256": "82c0e6ce5bc80722a578f5f7edab3126296ad21a2b6e90290b0276a063f6b3a2",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/artifact-r2.json",
+      "review_row": "public:5536054ff669e46f8baa9ff1",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/packet-r2.md#public:5536054ff669e46f8baa9ff1"
+    },
+    {
       "id": "public:55363e1b7ef17a31d61acf32",
       "observation_sha256": "606b3ff89e45daf8ddcbe4e42ec28c9b62241ba091ae57b4479b747b074394f7",
       "critic_model": "google/gemini-3.7-flash",
@@ -6526,6 +6694,20 @@
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/public-review/arc-agi--2-0-packet.json numbered_candidates; public:571f74a45ee9a482f02c9f07"
     },
     {
+      "id": "public:5736109b3e21948d5b2085f1",
+      "observation_sha256": "b5c3676948dd2169b197276a6040525d78303f1e05c7a20affd77f35ecf1c308",
+      "critic_model": "moonshotai/Kimi-K3-TEE",
+      "producer_models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/review-r2.json",
+      "review_sha256": "82c0e6ce5bc80722a578f5f7edab3126296ad21a2b6e90290b0276a063f6b3a2",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/artifact-r2.json",
+      "review_row": "public:5736109b3e21948d5b2085f1",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/packet-r2.md#public:5736109b3e21948d5b2085f1"
+    },
+    {
       "id": "public:5746a9ae4b10bdcc9a477ae8",
       "observation_sha256": "4db66090b60dc0e24b693e51e257d72567ea2ea982b4995d5d8c713be6a18ffd",
       "critic_model": "google/gemini-3.7-flash",
@@ -6664,6 +6846,20 @@
       "review_row": 116,
       "verdict": "accepted",
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/public-review/arc-agi--2-0-packet.json numbered_candidates; public:58d992180c55d83c0411ebc8"
+    },
+    {
+      "id": "public:5934b60b0c0a875dc7fcbc3c",
+      "observation_sha256": "0bd2660142d53ce5a07e8f335ca63bc00583cc565141d26f211484265e291180",
+      "critic_model": "moonshotai/Kimi-K3-TEE",
+      "producer_models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/review-r2.json",
+      "review_sha256": "82c0e6ce5bc80722a578f5f7edab3126296ad21a2b6e90290b0276a063f6b3a2",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/artifact-r2.json",
+      "review_row": "public:5934b60b0c0a875dc7fcbc3c",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/packet-r2.md#public:5934b60b0c0a875dc7fcbc3c"
     },
     {
       "id": "public:595e5a99d4ad81903fc1fd81",
@@ -6862,6 +7058,20 @@
       "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json; coverage_checked public:5c00c91fc2f5340c916bea4b; effort_runs_json; source row 97; GPT-6 Astra|max; field cost"
     },
     {
+      "id": "public:5c9e5db8541b8ab484448eab",
+      "observation_sha256": "b974cf65b53c2a9255009ac21c0fb1b4395318f88c997d326bcc636def171fb1",
+      "critic_model": "moonshotai/Kimi-K3-TEE",
+      "producer_models": [
+        "deepseek/deepseek-v4-flash-0731"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/review-r1.json",
+      "review_sha256": "1c605eb6491dba6f3d5dd6d7cb2040a6176e36ef1c6ed3edccbbfa1d58217751",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/artifact-r1.json",
+      "review_row": "public:5c9e5db8541b8ab484448eab",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/packet-r1.md#public:5c9e5db8541b8ab484448eab"
+    },
+    {
       "id": "public:5d39e40cc88dd207aad4c57b",
       "observation_sha256": "ad6e52228a6cd915ef0e70f73fb57139e38f957199cd9eb93ca25d97402f0fa4",
       "critic_model": "google/gemini-3.7-flash",
@@ -7002,6 +7212,20 @@
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/public-review/swe-bench-verified--snapshot-2026-09-10-0-packet.json numbered_candidates; public:5e99114b11859e8f22f0ab02"
     },
     {
+      "id": "public:5f52c373b86e3e421e76ea49",
+      "observation_sha256": "c774ea82ceb474b42bfa895bdcf6d2f9b66c7ca8f2885497acaa1c7025edc359",
+      "critic_model": "moonshotai/Kimi-K3-TEE",
+      "producer_models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/review-r2.json",
+      "review_sha256": "82c0e6ce5bc80722a578f5f7edab3126296ad21a2b6e90290b0276a063f6b3a2",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/artifact-r2.json",
+      "review_row": "public:5f52c373b86e3e421e76ea49",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/packet-r2.md#public:5f52c373b86e3e421e76ea49"
+    },
+    {
       "id": "public:5f54162ab485cb5b3d265484",
       "observation_sha256": "98c70c5adfca32ec83c8efb59a832d6ae7fc5976ce1f14ad40fa0231e0815d1a",
       "critic_model": "google/gemini-3.7-flash",
@@ -7140,6 +7364,20 @@
       "review_row": 70,
       "verdict": "accepted",
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/public-review/mmmu--snapshot-2026-09-10-0-packet.json numbered_candidates; public:60723e948883df42980bb9be"
+    },
+    {
+      "id": "public:60c20e12a379da517fe01485",
+      "observation_sha256": "8a25d97082883420a6c96d80c1f8a978c5b3364eaf816bb374e3b692cf8afa0e",
+      "critic_model": "moonshotai/Kimi-K3-TEE",
+      "producer_models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/review-r2.json",
+      "review_sha256": "82c0e6ce5bc80722a578f5f7edab3126296ad21a2b6e90290b0276a063f6b3a2",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/artifact-r2.json",
+      "review_row": "public:60c20e12a379da517fe01485",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/packet-r2.md#public:60c20e12a379da517fe01485"
     },
     {
       "id": "public:612dc92739e62853d8873b94",
@@ -7574,6 +7812,20 @@
       "review_row": 93,
       "verdict": "accepted",
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/public-review/arc-agi--1-0-packet.json numbered_candidates; public:66b2fcc76c76f1ab7a86ad25"
+    },
+    {
+      "id": "public:6705e67a9c432e3f10a5700f",
+      "observation_sha256": "a1a4fb4fdc1c0c3fa9388b5a41bc512febbb3d3492d7614ba971121e23e457a1",
+      "critic_model": "deepseek/deepseek-v4.1-flash",
+      "producer_models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/review-r3.json",
+      "review_sha256": "b53b18aa20ea3d96f751ab0bc305e2d1eeebeb0bce2543f05e709a848e093e23",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/artifact-r3.json",
+      "review_row": "public:6705e67a9c432e3f10a5700f",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/packet-r3.md#public:6705e67a9c432e3f10a5700f"
     },
     {
       "id": "public:6709f53d22d0361cecb719de",
@@ -8472,6 +8724,20 @@
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/public-review/mmmu--snapshot-2026-09-10-0-packet.json numbered_candidates; public:754dc3e96f67a8e3b076c200"
     },
     {
+      "id": "public:754e1de67ad82d27cac8eb50",
+      "observation_sha256": "ef73e3cea7d5b116273993185dcbca0eb46a09c1d14f17cf374b8089a0d016fa",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "deepseek/deepseek-v4-flash-0731"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/review-r1.json",
+      "review_sha256": "c64b25eac9bfe63160f76ed88a70bf910b98b8647b78fd0edc8f5eb12fd5dd79",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/artifact-r1.json",
+      "review_row": "public:754e1de67ad82d27cac8eb50",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/packet-r1.md#public:754e1de67ad82d27cac8eb50"
+    },
+    {
       "id": "public:75754d2c8755149dfd3f2d5a",
       "observation_sha256": "3b1ecade8fa1510341956cbd4bf0178ae28653fcd1a7d065e5b08b6ec750a4fa",
       "critic_model": "deepseek/deepseek-v4-flash-0731",
@@ -8526,6 +8792,20 @@
       "review_row": 77,
       "verdict": "accepted",
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/public-review/arc-agi--2-0-packet.json numbered_candidates; public:75c2b98f6919f33f2da38a7a"
+    },
+    {
+      "id": "public:75ed509f35f063c45a09edf0",
+      "observation_sha256": "4cc44dbbb1cc6ef8415ce09d2620ace5cae69ea3b7b3a8bcc429849a0109e95c",
+      "critic_model": "moonshotai/Kimi-K3-TEE",
+      "producer_models": [
+        "deepseek/deepseek-v4-flash-0731"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/review-r1.json",
+      "review_sha256": "1c605eb6491dba6f3d5dd6d7cb2040a6176e36ef1c6ed3edccbbfa1d58217751",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/artifact-r1.json",
+      "review_row": "public:75ed509f35f063c45a09edf0",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/packet-r1.md#public:75ed509f35f063c45a09edf0"
     },
     {
       "id": "public:76000da1148a3c8a15ee739f",
@@ -8778,6 +9058,20 @@
       "review_row": 36,
       "verdict": "accepted",
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/public-review/swe-bench-verified--snapshot-2026-09-10-0-packet.json numbered_candidates; public:7982d08f363ce0d990fc1dcb"
+    },
+    {
+      "id": "public:798a95c4b42aa7e4ff1a8b50",
+      "observation_sha256": "a475a2594bbdd78e574d75c0178685d0605805c04b90c1d7295c471030fd9b70",
+      "critic_model": "moonshotai/Kimi-K3-TEE",
+      "producer_models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/review-r2.json",
+      "review_sha256": "82c0e6ce5bc80722a578f5f7edab3126296ad21a2b6e90290b0276a063f6b3a2",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/artifact-r2.json",
+      "review_row": "public:798a95c4b42aa7e4ff1a8b50",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/packet-r2.md#public:798a95c4b42aa7e4ff1a8b50"
     },
     {
       "id": "public:79cb01a29009cb2fbcbd83a1",
@@ -9394,6 +9688,20 @@
       "review_row": 9,
       "verdict": "accepted",
       "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json; coverage_checked public:836d75dd3745fcb42f54e2f0; effort_runs_json; source row 68; Gemini 3.7 Flash|high; field new_score"
+    },
+    {
+      "id": "public:8397a083504d4c9497bf1935",
+      "observation_sha256": "4d6ac50a3db632e10f59594d30dd5045c490c3fcd1b88f1c47e843d650de750e",
+      "critic_model": "deepseek/deepseek-v4.1-flash",
+      "producer_models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/review-r3.json",
+      "review_sha256": "b53b18aa20ea3d96f751ab0bc305e2d1eeebeb0bce2543f05e709a848e093e23",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/artifact-r3.json",
+      "review_row": "public:8397a083504d4c9497bf1935",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/packet-r3.md#public:8397a083504d4c9497bf1935"
     },
     {
       "id": "public:83b5f6573e777bb7ba6b25f1",
@@ -10348,6 +10656,20 @@
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/public-review/arc-agi--1-0-packet.json numbered_candidates; public:915b71fc56a6038f2a8b40c4"
     },
     {
+      "id": "public:918369c55fa95df6179444a1",
+      "observation_sha256": "93fb2a3e8ea641e782c8afa7298a3db3affec18f47905cb1c3277016b1e9336c",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "deepseek/deepseek-v4-flash-0731"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/review-r1.json",
+      "review_sha256": "c64b25eac9bfe63160f76ed88a70bf910b98b8647b78fd0edc8f5eb12fd5dd79",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/artifact-r1.json",
+      "review_row": "public:918369c55fa95df6179444a1",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/packet-r1.md#public:918369c55fa95df6179444a1"
+    },
+    {
       "id": "public:918a862fe0527c1ec132b8c2",
       "observation_sha256": "a33177c05a9e649329066e455a155db7da4064abb1c0bd49c6cf4c73796a90f9",
       "critic_model": "google/gemini-3.7-flash",
@@ -11062,6 +11384,20 @@
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/public-review/mmmu--snapshot-2026-09-10-0-packet.json numbered_candidates; public:9b8fda1b8c39c7ebe3fb22a5"
     },
     {
+      "id": "public:9c574fdca2ae99ad31c2e5d2",
+      "observation_sha256": "88ed7f648a12d9c07c5a9217d94448f192ec3408eb2352dd0e46c2786d61fc7d",
+      "critic_model": "moonshotai/Kimi-K3-TEE",
+      "producer_models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/review-r2.json",
+      "review_sha256": "82c0e6ce5bc80722a578f5f7edab3126296ad21a2b6e90290b0276a063f6b3a2",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/artifact-r2.json",
+      "review_row": "public:9c574fdca2ae99ad31c2e5d2",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/packet-r2.md#public:9c574fdca2ae99ad31c2e5d2"
+    },
+    {
       "id": "public:9cd554223f0a175d821814f2",
       "observation_sha256": "3e4e9636f1a3b097f2fb9ceeb552794edeb0e208bec6b0460d4156e0eb1136cb",
       "critic_model": "google/gemini-3.7-flash",
@@ -11396,6 +11732,20 @@
       "review_row": 12,
       "verdict": "accepted",
       "evidence_locator": "ops/ux-2026-09-12/research/cursorbench-cost-4.0-batch1-review.json; coverage_checked row 12; html_table; source row 12; Grok 4.6 Extra High; field value"
+    },
+    {
+      "id": "public:a06e951ec88c8a593bd81718",
+      "observation_sha256": "503bdf46397ff76c3f698bf74a51092e282243fe51589029a5c37a601458710b",
+      "critic_model": "deepseek/deepseek-v4.1-flash",
+      "producer_models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/review-r3.json",
+      "review_sha256": "b53b18aa20ea3d96f751ab0bc305e2d1eeebeb0bce2543f05e709a848e093e23",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/artifact-r3.json",
+      "review_row": "public:a06e951ec88c8a593bd81718",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/packet-r3.md#public:a06e951ec88c8a593bd81718"
     },
     {
       "id": "public:a0be3f295e24f37f508eca23",
@@ -11914,6 +12264,20 @@
       "review_row": 56,
       "verdict": "accepted",
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/public-review/arc-agi--1-0-packet.json numbered_candidates; public:a8accb80e2e405a7afbeb929"
+    },
+    {
+      "id": "public:a8bee5afad8bc50e0575961b",
+      "observation_sha256": "486334e4291ee4798d106be5ad3c24b4d766fce7497f56c9638b1879c088348d",
+      "critic_model": "moonshotai/Kimi-K3-TEE",
+      "producer_models": [
+        "deepseek/deepseek-v4-flash-0731"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/review-r1.json",
+      "review_sha256": "1c605eb6491dba6f3d5dd6d7cb2040a6176e36ef1c6ed3edccbbfa1d58217751",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/artifact-r1.json",
+      "review_row": "public:a8bee5afad8bc50e0575961b",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/packet-r1.md#public:a8bee5afad8bc50e0575961b"
     },
     {
       "id": "public:a91f11539c256c3b45e62933",
@@ -12894,6 +13258,20 @@
       "review_row": 50,
       "verdict": "accepted",
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/public-review/mmmu--snapshot-2026-09-10-0-packet.json numbered_candidates; public:b61de2184b91f15c78b65ec1"
+    },
+    {
+      "id": "public:b657a26869313e0c884544bd",
+      "observation_sha256": "e971c76e44b80b1aa9139f6f63d6985d5afe6837b45dbdd7b2eb9f63479b4f3a",
+      "critic_model": "moonshotai/Kimi-K3-TEE",
+      "producer_models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/review-r2.json",
+      "review_sha256": "82c0e6ce5bc80722a578f5f7edab3126296ad21a2b6e90290b0276a063f6b3a2",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/artifact-r2.json",
+      "review_row": "public:b657a26869313e0c884544bd",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/packet-r2.md#public:b657a26869313e0c884544bd"
     },
     {
       "id": "public:b6a509adb468a21f38c2705f",
@@ -14212,6 +14590,20 @@
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/public-review/swe-bench-verified--snapshot-2026-09-10-0-packet.json numbered_candidates; public:ca6e475825e93370f079ddc5"
     },
     {
+      "id": "public:ca87c633b2240b6df743057a",
+      "observation_sha256": "7ad7c7144c8fb5d4cb8884f4b74e955f75705ccbb57fbf197d003009a0573310",
+      "critic_model": "deepseek/deepseek-v4.1-flash",
+      "producer_models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/review-r3.json",
+      "review_sha256": "b53b18aa20ea3d96f751ab0bc305e2d1eeebeb0bce2543f05e709a848e093e23",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/artifact-r3.json",
+      "review_row": "public:ca87c633b2240b6df743057a",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/packet-r3.md#public:ca87c633b2240b6df743057a"
+    },
+    {
       "id": "public:caead30f9c1b0cebb8bbf221",
       "observation_sha256": "7cb746ae33becfb23b468ed3a959d3c686cc3d396cdc97494f19b14b5a49772f",
       "critic_model": "google/gemini-3.7-flash",
@@ -14224,6 +14616,20 @@
       "review_row": 113,
       "verdict": "accepted",
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/public-review/arc-agi--2-0-packet.json numbered_candidates; public:caead30f9c1b0cebb8bbf221"
+    },
+    {
+      "id": "public:caefc0c99d62cb176fcff489",
+      "observation_sha256": "977ba560176e5979855bb7fe007d4b50c9d9815cd168909b3bd6f796195fc224",
+      "critic_model": "deepseek/deepseek-v4.1-flash",
+      "producer_models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/review-r3.json",
+      "review_sha256": "b53b18aa20ea3d96f751ab0bc305e2d1eeebeb0bce2543f05e709a848e093e23",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/artifact-r3.json",
+      "review_row": "public:caefc0c99d62cb176fcff489",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/packet-r3.md#public:caefc0c99d62cb176fcff489"
     },
     {
       "id": "public:cb63e54a1a0f5e832abfb489",
@@ -14336,6 +14742,20 @@
       "review_row": 49,
       "verdict": "accepted",
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/public-review/mmmu--snapshot-2026-09-10-0-packet.json numbered_candidates; public:cc7738f800db00c85a835034"
+    },
+    {
+      "id": "public:cc7c36553515d81f67c94de2",
+      "observation_sha256": "ef629df999ba12c19fef2e86294f8fa2241a9c3d9408d3b17ff7cd1b90e5eec7",
+      "critic_model": "moonshotai/Kimi-K3-TEE",
+      "producer_models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/review-r2.json",
+      "review_sha256": "82c0e6ce5bc80722a578f5f7edab3126296ad21a2b6e90290b0276a063f6b3a2",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/artifact-r2.json",
+      "review_row": "public:cc7c36553515d81f67c94de2",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/packet-r2.md#public:cc7c36553515d81f67c94de2"
     },
     {
       "id": "public:cc99294befc73f80ab7bc732",
@@ -14968,6 +15388,20 @@
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/public-review/mmmu--snapshot-2026-09-10-0-packet.json numbered_candidates; public:d40f1d7d209fbe12e209bd81"
     },
     {
+      "id": "public:d4252844da91095413c40fb0",
+      "observation_sha256": "6ec7b41c2dadf15ac0e358e489963ccd7c61846ceca1fd882637c09271abba17",
+      "critic_model": "moonshotai/Kimi-K3-TEE",
+      "producer_models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/review-r2.json",
+      "review_sha256": "82c0e6ce5bc80722a578f5f7edab3126296ad21a2b6e90290b0276a063f6b3a2",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/artifact-r2.json",
+      "review_row": "public:d4252844da91095413c40fb0",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/packet-r2.md#public:d4252844da91095413c40fb0"
+    },
+    {
       "id": "public:d42f49d84dcfa687796f4aad",
       "observation_sha256": "6c5dfe188e042986dfb937106b51d914ab9013c184b58345e193713b82dc02b1",
       "critic_model": "google/gemini-3.7-flash",
@@ -15190,6 +15624,20 @@
       "review_row": 48,
       "verdict": "accepted",
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/public-review/arc-agi--2-0-packet.json numbered_candidates; public:d661740c834f4cb8bbacca5f"
+    },
+    {
+      "id": "public:d699307ad31df9a05beae10c",
+      "observation_sha256": "63ea43e555d2ecd8ec85824d58ff76724ed11146a1b55379bcee8fca398e97f7",
+      "critic_model": "moonshotai/Kimi-K3-TEE",
+      "producer_models": [
+        "deepseek/deepseek-v4-flash-0731"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/review-r1.json",
+      "review_sha256": "1c605eb6491dba6f3d5dd6d7cb2040a6176e36ef1c6ed3edccbbfa1d58217751",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/artifact-r1.json",
+      "review_row": "public:d699307ad31df9a05beae10c",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/packet-r1.md#public:d699307ad31df9a05beae10c"
     },
     {
       "id": "public:d6ec8eab67505b4e33fef7f1",
@@ -17040,6 +17488,20 @@
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/public-review/arc-agi--2-0-packet.json numbered_candidates; public:f0914035753c5994eb994e6e"
     },
     {
+      "id": "public:f0e2663745f4a46cace82e58",
+      "observation_sha256": "ef2804bc427ba7db98e92215f4759734e4aabc90ecfc20d3a88d67d7205a87f5",
+      "critic_model": "deepseek/deepseek-v4.1-flash",
+      "producer_models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/review-r3.json",
+      "review_sha256": "b53b18aa20ea3d96f751ab0bc305e2d1eeebeb0bce2543f05e709a848e093e23",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/artifact-r3.json",
+      "review_row": "public:f0e2663745f4a46cace82e58",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/packet-r3.md#public:f0e2663745f4a46cace82e58"
+    },
+    {
       "id": "public:f1c8354305071d7a957932e5",
       "observation_sha256": "f3cd5333cf3bbd9fb32652d0ed97735ba9b101236c7228237462ce5b02ef2cb2",
       "critic_model": "deepseek/deepseek-v4-flash-0731",
@@ -17066,6 +17528,20 @@
       "review_row": 127,
       "verdict": "accepted",
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/public-review/mmmu--snapshot-2026-09-10-0-packet.json numbered_candidates; public:f2263484b3e926a3a6a54783"
+    },
+    {
+      "id": "public:f229865e0717b7ae749c0989",
+      "observation_sha256": "ab02d839c79ef640ba0cf728c24320018dd5cbd184aa92bf5f6c768dc581f642",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "deepseek/deepseek-v4-flash-0731"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/review-r1.json",
+      "review_sha256": "c64b25eac9bfe63160f76ed88a70bf910b98b8647b78fd0edc8f5eb12fd5dd79",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/artifact-r1.json",
+      "review_row": "public:f229865e0717b7ae749c0989",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/packet-r1.md#public:f229865e0717b7ae749c0989"
     },
     {
       "id": "public:f244e9225ab1c99ac30ddbae",
@@ -17500,6 +17976,20 @@
       "review_row": 14,
       "verdict": "accepted",
       "evidence_locator": "ops/ux-2026-09-12/research/cursorbench-cost-4.0-batch2-review.json; coverage_checked row 14; html_table; source row 29; Sonnet 5 Extra High; field value"
+    },
+    {
+      "id": "public:f7da903ca4c4fb58d9b78c66",
+      "observation_sha256": "9a6f72d917101dcf8f0c1b1c9f633ed90f447960a4659dfae405390fc2a9a603",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "deepseek/deepseek-v4-flash-0731"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/review-r1.json",
+      "review_sha256": "c64b25eac9bfe63160f76ed88a70bf910b98b8647b78fd0edc8f5eb12fd5dd79",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/artifact-r1.json",
+      "review_row": "public:f7da903ca4c4fb58d9b78c66",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/packet-r1.md#public:f7da903ca4c4fb58d9b78c66"
     },
     {
       "id": "public:f822f912b559556d580da4f4",
@@ -18496,6 +18986,230 @@
       "evidence_locator": "Self-reported release-document tranche A, slice 4 of 4; critic packet rebuildable with ops/ux-2026-09-12/bin/self-reported-critic-packet.mjs; self-reported:cfaaa48d7a4d585a045d"
     },
     {
+      "id": "self-reported:claude-opus-55-aa-briefcase-v1-1",
+      "observation_sha256": "717f325eb6e4ec2a93279ad1159dc501b61d501ec3fd81bd9516a584478b6b2d",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/review-r4.json",
+      "review_sha256": "b2736216794080454d54800eb06b9cced6c50a9ea7bd10fc24ab22016b9dad97",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/artifact-r4.json",
+      "review_row": "self-reported:claude-opus-55-aa-briefcase-v1-1",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/packet-r4.json; self-reported:claude-opus-55-aa-briefcase-v1-1"
+    },
+    {
+      "id": "self-reported:claude-opus-55-automationbench",
+      "observation_sha256": "a2e9452cbaff67b535d74c25717885a963bcedde7c9830141dad17b620884ffa",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/review-r4.json",
+      "review_sha256": "b2736216794080454d54800eb06b9cced6c50a9ea7bd10fc24ab22016b9dad97",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/artifact-r4.json",
+      "review_row": "self-reported:claude-opus-55-automationbench",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/packet-r4.json; self-reported:claude-opus-55-automationbench"
+    },
+    {
+      "id": "self-reported:claude-opus-55-chartography-with-tools",
+      "observation_sha256": "1471fdbcf6dde58f62856e3e387604169607785f0262473a4eb3208eb5c933dc",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/review-r4.json",
+      "review_sha256": "b2736216794080454d54800eb06b9cced6c50a9ea7bd10fc24ab22016b9dad97",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/artifact-r4.json",
+      "review_row": "self-reported:claude-opus-55-chartography-with-tools",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/packet-r4.json; self-reported:claude-opus-55-chartography-with-tools"
+    },
+    {
+      "id": "self-reported:claude-opus-55-cursorbench-4-0",
+      "observation_sha256": "2a05d3c33ab2efbe84cb8e8923cad83dddd0340caeab51d6ccd8c2555bc22c5c",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/review-r4.json",
+      "review_sha256": "b2736216794080454d54800eb06b9cced6c50a9ea7bd10fc24ab22016b9dad97",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/artifact-r4.json",
+      "review_row": "self-reported:claude-opus-55-cursorbench-4-0",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/packet-r4.json; self-reported:claude-opus-55-cursorbench-4-0"
+    },
+    {
+      "id": "self-reported:claude-opus-55-frontiercode-v1-1-main",
+      "observation_sha256": "a832b3914ba6a8db4b095d51513ad25b4c5c8dc6b47d0fabda0fef8ccad49aa8",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/review-r4.json",
+      "review_sha256": "b2736216794080454d54800eb06b9cced6c50a9ea7bd10fc24ab22016b9dad97",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/artifact-r4.json",
+      "review_row": "self-reported:claude-opus-55-frontiercode-v1-1-main",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/packet-r4.json; self-reported:claude-opus-55-frontiercode-v1-1-main"
+    },
+    {
+      "id": "self-reported:claude-opus-55-gdpval-aa-v2-1",
+      "observation_sha256": "ed7c7eb9434b063dfb4aa5143d3cc8d4ed36de2387ae1f6ab80d9dbf0a3c50e6",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/review-r4.json",
+      "review_sha256": "b2736216794080454d54800eb06b9cced6c50a9ea7bd10fc24ab22016b9dad97",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/artifact-r4.json",
+      "review_row": "self-reported:claude-opus-55-gdpval-aa-v2-1",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/packet-r4.json; self-reported:claude-opus-55-gdpval-aa-v2-1"
+    },
+    {
+      "id": "self-reported:claude-opus-55-healthbench-professional",
+      "observation_sha256": "a9f952f7c0ff6f67463e9d49531956f62df3151ac93ad16e4bbcb540f782ae9c",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/review-r4.json",
+      "review_sha256": "b2736216794080454d54800eb06b9cced6c50a9ea7bd10fc24ab22016b9dad97",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/artifact-r4.json",
+      "review_row": "self-reported:claude-opus-55-healthbench-professional",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/packet-r4.json; self-reported:claude-opus-55-healthbench-professional"
+    },
+    {
+      "id": "self-reported:claude-opus-55-hle-no-tools",
+      "observation_sha256": "d65390d37af91a23014ebe5fcd15ccae6c64c1e35f6f1c3b088ebcc968f2d212",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/review-r4.json",
+      "review_sha256": "b2736216794080454d54800eb06b9cced6c50a9ea7bd10fc24ab22016b9dad97",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/artifact-r4.json",
+      "review_row": "self-reported:claude-opus-55-hle-no-tools",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/packet-r4.json; self-reported:claude-opus-55-hle-no-tools"
+    },
+    {
+      "id": "self-reported:claude-opus-55-hle-with-tools",
+      "observation_sha256": "727d69b65d37c3c9df97ccadb2b5ac35b9bfabff231c2e10b0925c7c7a880d27",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/review-r4.json",
+      "review_sha256": "b2736216794080454d54800eb06b9cced6c50a9ea7bd10fc24ab22016b9dad97",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/artifact-r4.json",
+      "review_row": "self-reported:claude-opus-55-hle-with-tools",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/packet-r4.json; self-reported:claude-opus-55-hle-with-tools"
+    },
+    {
+      "id": "self-reported:claude-opus-55-osworld-2-0-partial",
+      "observation_sha256": "99b8b8e61868ffe555ace93f6ab810fd816ca4060079f67e7c21ad38ec407870",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/review-r4.json",
+      "review_sha256": "b2736216794080454d54800eb06b9cced6c50a9ea7bd10fc24ab22016b9dad97",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/artifact-r4.json",
+      "review_row": "self-reported:claude-opus-55-osworld-2-0-partial",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/packet-r4.json; self-reported:claude-opus-55-osworld-2-0-partial"
+    },
+    {
+      "id": "self-reported:claude-opus-55-osworld-2-0-strict",
+      "observation_sha256": "737656309803f082d5587d44aa6494a00d86bafa4256807e221b9e349c718814",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/review-r4.json",
+      "review_sha256": "b2736216794080454d54800eb06b9cced6c50a9ea7bd10fc24ab22016b9dad97",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/artifact-r4.json",
+      "review_row": "self-reported:claude-opus-55-osworld-2-0-strict",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/packet-r4.json; self-reported:claude-opus-55-osworld-2-0-strict"
+    },
+    {
+      "id": "self-reported:claude-opus-55-swe-bench-multilingual",
+      "observation_sha256": "9ed53489f0bab650b504b227a72105536af447744427b92e83e5b4fca017cf32",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/review-r4.json",
+      "review_sha256": "b2736216794080454d54800eb06b9cced6c50a9ea7bd10fc24ab22016b9dad97",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/artifact-r4.json",
+      "review_row": "self-reported:claude-opus-55-swe-bench-multilingual",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/packet-r4.json; self-reported:claude-opus-55-swe-bench-multilingual"
+    },
+    {
+      "id": "self-reported:claude-opus-55-swe-bench-multimodal",
+      "observation_sha256": "11bc273a7f44b99d3f80aa46d46a22f5d3ee892517ee7a5d7db363fd7b1a16b4",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/review-r4.json",
+      "review_sha256": "b2736216794080454d54800eb06b9cced6c50a9ea7bd10fc24ab22016b9dad97",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/artifact-r4.json",
+      "review_row": "self-reported:claude-opus-55-swe-bench-multimodal",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/packet-r4.json; self-reported:claude-opus-55-swe-bench-multimodal"
+    },
+    {
+      "id": "self-reported:claude-opus-55-swe-bench-pro",
+      "observation_sha256": "a1854fc0520b268572bb8fcc9407f0f71a1f5bb8da87ee85a93ea562d9ebf75d",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/review-r4.json",
+      "review_sha256": "b2736216794080454d54800eb06b9cced6c50a9ea7bd10fc24ab22016b9dad97",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/artifact-r4.json",
+      "review_row": "self-reported:claude-opus-55-swe-bench-pro",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/packet-r4.json; self-reported:claude-opus-55-swe-bench-pro"
+    },
+    {
+      "id": "self-reported:claude-opus-55-terminal-bench-4-0",
+      "observation_sha256": "05102eb7fc898887abc2e179898175dcb55ea611defc51d95fd5a2814398779e",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/review-r4.json",
+      "review_sha256": "b2736216794080454d54800eb06b9cced6c50a9ea7bd10fc24ab22016b9dad97",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/artifact-r4.json",
+      "review_row": "self-reported:claude-opus-55-terminal-bench-4-0",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/packet-r4.json; self-reported:claude-opus-55-terminal-bench-4-0"
+    },
+    {
+      "id": "self-reported:claude-opus-55-terminal-bench-science-0-1",
+      "observation_sha256": "f6ac1c041a0f7fb38510ab9f71cfb9180bb818b2a738b93bce9e4df342368921",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/review-r4.json",
+      "review_sha256": "b2736216794080454d54800eb06b9cced6c50a9ea7bd10fc24ab22016b9dad97",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/artifact-r4.json",
+      "review_row": "self-reported:claude-opus-55-terminal-bench-science-0-1",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/packet-r4.json; self-reported:claude-opus-55-terminal-bench-science-0-1"
+    },
+    {
       "id": "self-reported:d1a7b2f000a21a6c96ba",
       "observation_sha256": "397fa31bf941740974d665bf582ac708e077945f6246ee265954a42d70a6bce5",
       "critic_model": "deepseek/deepseek-v4.1-flash",
@@ -18538,6 +19252,272 @@
       "evidence_locator": "Self-reported release-document tranche A, slice 4 of 4; critic packet rebuildable with ops/ux-2026-09-12/bin/self-reported-critic-packet.mjs; self-reported:db9819d3108e5a6b8dec"
     },
     {
+      "id": "self-reported:deepseek-v41-flash-agents-last-exam",
+      "observation_sha256": "43af1cb6644447ce49815194c719eb209b9c72afe865e402c047daadcc2d3705",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-1.json",
+      "review_sha256": "e07d9a75d4ef75177c9075221a41083068cc40fde9e78d895fda847173fe0c28",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-1.json",
+      "review_row": "self-reported:deepseek-v41-flash-agents-last-exam",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-automationbench",
+      "observation_sha256": "c3ae1d568478c97d7444388d6380b047d2aafb3ade344b324e6721ce935276a0",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-1.json",
+      "review_sha256": "e07d9a75d4ef75177c9075221a41083068cc40fde9e78d895fda847173fe0c28",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-1.json",
+      "review_row": "self-reported:deepseek-v41-flash-automationbench",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-babyvision-w-tools",
+      "observation_sha256": "c0d5bbe826f3d6e171521d3fbe082c725ff3a2213b92ac8f094f373014214735",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-1.json",
+      "review_sha256": "e07d9a75d4ef75177c9075221a41083068cc40fde9e78d895fda847173fe0c28",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-1.json",
+      "review_row": "self-reported:deepseek-v41-flash-babyvision-w-tools",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-chartography-w-tools",
+      "observation_sha256": "540d3f064e4d73cc0ae717ee6938e3328849bd7a0fdaf9a783e6303ded57973e",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-1.json",
+      "review_sha256": "e07d9a75d4ef75177c9075221a41083068cc40fde9e78d895fda847173fe0c28",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-1.json",
+      "review_row": "self-reported:deepseek-v41-flash-chartography-w-tools",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-codeforces-rating",
+      "observation_sha256": "820ebf8ccd4336394cb1f6adc6c07d59c4b5f043b7d5fd5f97cbce61ac6cc419",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-1.json",
+      "review_sha256": "e07d9a75d4ef75177c9075221a41083068cc40fde9e78d895fda847173fe0c28",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-1.json",
+      "review_row": "self-reported:deepseek-v41-flash-codeforces-rating",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-cybergym",
+      "observation_sha256": "1b13d92ed1e3f971b390ecd86eec91d411592aae7f0868638efedffb7af9e261",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-1.json",
+      "review_sha256": "e07d9a75d4ef75177c9075221a41083068cc40fde9e78d895fda847173fe0c28",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-1.json",
+      "review_row": "self-reported:deepseek-v41-flash-cybergym",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-deepswe-v1-1",
+      "observation_sha256": "51bcc9a0f90fc6e8db6964774d7df1d1bda5a4a52b19b90baece65d68db86c36",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-1.json",
+      "review_sha256": "e07d9a75d4ef75177c9075221a41083068cc40fde9e78d895fda847173fe0c28",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-1.json",
+      "review_row": "self-reported:deepseek-v41-flash-deepswe-v1-1",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-exploitgym",
+      "observation_sha256": "571bf2bec9ae5eb020afa00a8e715bcb773bf6116304022706fc81ac19ea4c30",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-1.json",
+      "review_sha256": "e07d9a75d4ef75177c9075221a41083068cc40fde9e78d895fda847173fe0c28",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-1.json",
+      "review_row": "self-reported:deepseek-v41-flash-exploitgym",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-gpqa-diamond",
+      "observation_sha256": "204b414baac60dad44ab240368e62d7c6afda587804266868ff96f750d1735a9",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-1.json",
+      "review_sha256": "e07d9a75d4ef75177c9075221a41083068cc40fde9e78d895fda847173fe0c28",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-1.json",
+      "review_row": "self-reported:deepseek-v41-flash-gpqa-diamond",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-hle",
+      "observation_sha256": "f9f350025186dd5b8f65b8a40b4a0370fb9fd83d2c2a90ba149768351fc56b02",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-1.json",
+      "review_sha256": "e07d9a75d4ef75177c9075221a41083068cc40fde9e78d895fda847173fe0c28",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-1.json",
+      "review_row": "self-reported:deepseek-v41-flash-hle",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-hle-w-tools",
+      "observation_sha256": "1a677f622571825be12824ac917b4b2d6a81a120859b716b97af89f0b5da061b",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-2.json",
+      "review_sha256": "0b9ae096751801cedd5812d54e7b45dcb0d24d11f9c3a9d444354b01c10ea4d3",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-2.json",
+      "review_row": "self-reported:deepseek-v41-flash-hle-w-tools",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-matharena-apex",
+      "observation_sha256": "997a105ebc04b4318d73464ea3e280086767173ec869dc3f3ea49296f9794d48",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-2.json",
+      "review_sha256": "0b9ae096751801cedd5812d54e7b45dcb0d24d11f9c3a9d444354b01c10ea4d3",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-2.json",
+      "review_row": "self-reported:deepseek-v41-flash-matharena-apex",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-nl2repo-bench",
+      "observation_sha256": "01e712063869d797c37be7dfa65940f7331708265c3a43348eb375ecd36eee36",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-2.json",
+      "review_sha256": "0b9ae096751801cedd5812d54e7b45dcb0d24d11f9c3a9d444354b01c10ea4d3",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-2.json",
+      "review_row": "self-reported:deepseek-v41-flash-nl2repo-bench",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-programbench-almost-at-1",
+      "observation_sha256": "7427b49f64ceaeb81bbe322a5693c0cd1e547e66d42f5683b55bdd3a153c2117",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-2.json",
+      "review_sha256": "0b9ae096751801cedd5812d54e7b45dcb0d24d11f9c3a9d444354b01c10ea4d3",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-2.json",
+      "review_row": "self-reported:deepseek-v41-flash-programbench-almost-at-1",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-sec-bench-pro",
+      "observation_sha256": "d71cfef2afb66bbe582a8abff89139610f4afd4e906bbc867c1edeba65d0aab1",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-2.json",
+      "review_sha256": "0b9ae096751801cedd5812d54e7b45dcb0d24d11f9c3a9d444354b01c10ea4d3",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-2.json",
+      "review_row": "self-reported:deepseek-v41-flash-sec-bench-pro",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-terminal-bench-v2-1",
+      "observation_sha256": "fbf8d0381fe584ea573908fb16020ad23e81671f04c7f69200ae76b5fe27c5d3",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-2.json",
+      "review_sha256": "0b9ae096751801cedd5812d54e7b45dcb0d24d11f9c3a9d444354b01c10ea4d3",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-2.json",
+      "review_row": "self-reported:deepseek-v41-flash-terminal-bench-v2-1",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-terminal-bench-v3",
+      "observation_sha256": "322e4c24b5af93c2f8edc5c38da7e04683a595b83c93379d50714e5675cfd153",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-2.json",
+      "review_sha256": "0b9ae096751801cedd5812d54e7b45dcb0d24d11f9c3a9d444354b01c10ea4d3",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-2.json",
+      "review_row": "self-reported:deepseek-v41-flash-terminal-bench-v3",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-terminal-bench-v4",
+      "observation_sha256": "a77d51facff5642831385dde1839255e1fb86f3d3abc474e9a53064a18c2e011",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-2.json",
+      "review_sha256": "0b9ae096751801cedd5812d54e7b45dcb0d24d11f9c3a9d444354b01c10ea4d3",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-2.json",
+      "review_row": "self-reported:deepseek-v41-flash-terminal-bench-v4",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
+    },
+    {
+      "id": "self-reported:deepseek-v41-flash-zerobench-main-w-tools",
+      "observation_sha256": "53e198b2b7634934bb0ebe09cb047a6b14cc39b08dd1a789b0184ef1b63558ef",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-2.json",
+      "review_sha256": "0b9ae096751801cedd5812d54e7b45dcb0d24d11f9c3a9d444354b01c10ea4d3",
+      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-2.json",
+      "review_row": "self-reported:deepseek-v41-flash-zerobench-main-w-tools",
+      "verdict": "accepted",
+      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
+    },
+    {
       "id": "self-reported:f317596d7379fbf1e1d2",
       "observation_sha256": "c87b162c3f5d2191c49821a28ecd23057fb859c0eddc12d661bfce74954fb0bd",
       "critic_model": "deepseek/deepseek-v4.1-flash",
@@ -18578,6 +19558,244 @@
       "review_row": "self-reported:fcdf54e5922e03b797e4",
       "verdict": "accepted",
       "evidence_locator": "Self-reported release-document tranche A, slice 4 of 4; critic packet rebuildable with ops/ux-2026-09-12/bin/self-reported-critic-packet.mjs; self-reported:fcdf54e5922e03b797e4"
+    },
+    {
+      "id": "self-reported:mimo-v26-agents-last-exam",
+      "observation_sha256": "26b38b5a6651a69f331879dd1f47dabd51d91084cb7c4f0a935f59f99a5ae16e",
+      "critic_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
+      "producer_models": [
+        "openai/gpt-5.6-sol"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/review-r2.json",
+      "review_sha256": "6052a7d5e89552802c44019df387b6f2cb1f3612137b253fefcc58ba71955a8d",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/artifact-r2.json",
+      "review_row": "self-reported:mimo-v26-agents-last-exam",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/packet-r2.json#self-reported:mimo-v26-agents-last-exam"
+    },
+    {
+      "id": "self-reported:mimo-v26-automationbench-v1-0-6",
+      "observation_sha256": "930a5be578e9280275b57d6af1083a51699db33091bedc61c5a3811503410c55",
+      "critic_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
+      "producer_models": [
+        "openai/gpt-5.6-sol"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/review-r2.json",
+      "review_sha256": "6052a7d5e89552802c44019df387b6f2cb1f3612137b253fefcc58ba71955a8d",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/artifact-r2.json",
+      "review_row": "self-reported:mimo-v26-automationbench-v1-0-6",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/packet-r2.json#self-reported:mimo-v26-automationbench-v1-0-6"
+    },
+    {
+      "id": "self-reported:mimo-v26-cybergym",
+      "observation_sha256": "ed43261313179c55a467132632af2612295d4357ca2a0511c51b3b428ac8b2b5",
+      "critic_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
+      "producer_models": [
+        "openai/gpt-5.6-sol"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/review-r2.json",
+      "review_sha256": "6052a7d5e89552802c44019df387b6f2cb1f3612137b253fefcc58ba71955a8d",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/artifact-r2.json",
+      "review_row": "self-reported:mimo-v26-cybergym",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/packet-r2.json#self-reported:mimo-v26-cybergym"
+    },
+    {
+      "id": "self-reported:mimo-v26-deepswe-v1-1",
+      "observation_sha256": "8b293f5a89e3cba2e529bcc13f3fbe48ef72f31d667235a94ad66b599356fffb",
+      "critic_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
+      "producer_models": [
+        "openai/gpt-5.6-sol"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/review-r2.json",
+      "review_sha256": "6052a7d5e89552802c44019df387b6f2cb1f3612137b253fefcc58ba71955a8d",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/artifact-r2.json",
+      "review_row": "self-reported:mimo-v26-deepswe-v1-1",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/packet-r2.json#self-reported:mimo-v26-deepswe-v1-1"
+    },
+    {
+      "id": "self-reported:mimo-v26-exploitbench",
+      "observation_sha256": "ecbed735522382059ffd0e2ac0f3efaedebb8dcfe5b993beed44c050ee93da10",
+      "critic_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
+      "producer_models": [
+        "openai/gpt-5.6-sol"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/review-r2.json",
+      "review_sha256": "6052a7d5e89552802c44019df387b6f2cb1f3612137b253fefcc58ba71955a8d",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/artifact-r2.json",
+      "review_row": "self-reported:mimo-v26-exploitbench",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/packet-r2.json#self-reported:mimo-v26-exploitbench"
+    },
+    {
+      "id": "self-reported:mimo-v26-exploitgym",
+      "observation_sha256": "bca13cd9f69ee3642decace9827d6efb303fccc656394535739c4026e6ac16e8",
+      "critic_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
+      "producer_models": [
+        "openai/gpt-5.6-sol"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/review-r2.json",
+      "review_sha256": "6052a7d5e89552802c44019df387b6f2cb1f3612137b253fefcc58ba71955a8d",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/artifact-r2.json",
+      "review_row": "self-reported:mimo-v26-exploitgym",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/packet-r2.json#self-reported:mimo-v26-exploitgym"
+    },
+    {
+      "id": "self-reported:mimo-v26-gdpval-aa-2-1",
+      "observation_sha256": "c0c309e982db79a54910dc659b8031e2d92f37ac47f91882d59af9d9c7250147",
+      "critic_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
+      "producer_models": [
+        "openai/gpt-5.6-sol"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/review-r2.json",
+      "review_sha256": "6052a7d5e89552802c44019df387b6f2cb1f3612137b253fefcc58ba71955a8d",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/artifact-r2.json",
+      "review_row": "self-reported:mimo-v26-gdpval-aa-2-1",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/packet-r2.json#self-reported:mimo-v26-gdpval-aa-2-1"
+    },
+    {
+      "id": "self-reported:mimo-v26-jobbench",
+      "observation_sha256": "d232eeed00062e9f85f970bc22b3fc901b6d9a9524e60a2bef54c06b2587fef8",
+      "critic_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
+      "producer_models": [
+        "openai/gpt-5.6-sol"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/review-r2.json",
+      "review_sha256": "6052a7d5e89552802c44019df387b6f2cb1f3612137b253fefcc58ba71955a8d",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/artifact-r2.json",
+      "review_row": "self-reported:mimo-v26-jobbench",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/packet-r2.json#self-reported:mimo-v26-jobbench"
+    },
+    {
+      "id": "self-reported:mimo-v26-mimo-code-bench",
+      "observation_sha256": "a7b70d71ad644b8bd950a8524757b70d08d2eee201cc83156dc3b3a07769a981",
+      "critic_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
+      "producer_models": [
+        "openai/gpt-5.6-sol"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/review-r2.json",
+      "review_sha256": "6052a7d5e89552802c44019df387b6f2cb1f3612137b253fefcc58ba71955a8d",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/artifact-r2.json",
+      "review_row": "self-reported:mimo-v26-mimo-code-bench",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/packet-r2.json#self-reported:mimo-v26-mimo-code-bench"
+    },
+    {
+      "id": "self-reported:mimo-v26-mimo-cyber-bench",
+      "observation_sha256": "eb51f932e1de1141dfc639588aab5d2f9b55fd66e86601b305f50c2f763fcbce",
+      "critic_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
+      "producer_models": [
+        "openai/gpt-5.6-sol"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/review-r2.json",
+      "review_sha256": "6052a7d5e89552802c44019df387b6f2cb1f3612137b253fefcc58ba71955a8d",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/artifact-r2.json",
+      "review_row": "self-reported:mimo-v26-mimo-cyber-bench",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/packet-r2.json#self-reported:mimo-v26-mimo-cyber-bench"
+    },
+    {
+      "id": "self-reported:mimo-v26-mimo-visual-coding",
+      "observation_sha256": "4588e66c2bac8d220bc306310a9d30170b86004f2d55750b330c3afaa313353f",
+      "critic_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
+      "producer_models": [
+        "openai/gpt-5.6-sol"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/review-r2.json",
+      "review_sha256": "6052a7d5e89552802c44019df387b6f2cb1f3612137b253fefcc58ba71955a8d",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/artifact-r2.json",
+      "review_row": "self-reported:mimo-v26-mimo-visual-coding",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/packet-r2.json#self-reported:mimo-v26-mimo-visual-coding"
+    },
+    {
+      "id": "self-reported:mimo-v26-osworld-verified",
+      "observation_sha256": "d3e9f531d8761c3b85e68f220a11baa4f524281c20c27cb3415ea20838820caa",
+      "critic_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
+      "producer_models": [
+        "openai/gpt-5.6-sol"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/review-r2.json",
+      "review_sha256": "6052a7d5e89552802c44019df387b6f2cb1f3612137b253fefcc58ba71955a8d",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/artifact-r2.json",
+      "review_row": "self-reported:mimo-v26-osworld-verified",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/packet-r2.json#self-reported:mimo-v26-osworld-verified"
+    },
+    {
+      "id": "self-reported:mimo-v26-programbench",
+      "observation_sha256": "388b5ef22736e65afe2c380da226671f960751d47608f7e928958b44ae5b1e2d",
+      "critic_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
+      "producer_models": [
+        "openai/gpt-5.6-sol"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/review-r2.json",
+      "review_sha256": "6052a7d5e89552802c44019df387b6f2cb1f3612137b253fefcc58ba71955a8d",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/artifact-r2.json",
+      "review_row": "self-reported:mimo-v26-programbench",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/packet-r2.json#self-reported:mimo-v26-programbench"
+    },
+    {
+      "id": "self-reported:mimo-v26-sec-bench-pro",
+      "observation_sha256": "402184806de676a4f7b92ddf4d7d9145fbff37e12231edc1a629efadfcd0a579",
+      "critic_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
+      "producer_models": [
+        "openai/gpt-5.6-sol"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/review-r2.json",
+      "review_sha256": "6052a7d5e89552802c44019df387b6f2cb1f3612137b253fefcc58ba71955a8d",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/artifact-r2.json",
+      "review_row": "self-reported:mimo-v26-sec-bench-pro",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/packet-r2.json#self-reported:mimo-v26-sec-bench-pro"
+    },
+    {
+      "id": "self-reported:mimo-v26-terminal-bench-2-1",
+      "observation_sha256": "2b980fb4eac0fffd0d153db419486627df6849dfe42d406a42f4ce757039bbb8",
+      "critic_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
+      "producer_models": [
+        "openai/gpt-5.6-sol"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/review-r2.json",
+      "review_sha256": "6052a7d5e89552802c44019df387b6f2cb1f3612137b253fefcc58ba71955a8d",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/artifact-r2.json",
+      "review_row": "self-reported:mimo-v26-terminal-bench-2-1",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/packet-r2.json#self-reported:mimo-v26-terminal-bench-2-1"
+    },
+    {
+      "id": "self-reported:mimo-v26-terminal-bench-4-0",
+      "observation_sha256": "5636345925b9b008fc9a1a65b4f406928bad33912441b2927daf3c0fbd4fb51a",
+      "critic_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
+      "producer_models": [
+        "openai/gpt-5.6-sol"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/review-r2.json",
+      "review_sha256": "6052a7d5e89552802c44019df387b6f2cb1f3612137b253fefcc58ba71955a8d",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/artifact-r2.json",
+      "review_row": "self-reported:mimo-v26-terminal-bench-4-0",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/packet-r2.json#self-reported:mimo-v26-terminal-bench-4-0"
+    },
+    {
+      "id": "self-reported:mimo-v26-toolathlon-verified",
+      "observation_sha256": "8ea8ee3be570be590794ad0f0bd4c821df2c05c0cf05a00cc2f3723bf9bee8bb",
+      "critic_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
+      "producer_models": [
+        "openai/gpt-5.6-sol"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/review-r2.json",
+      "review_sha256": "6052a7d5e89552802c44019df387b6f2cb1f3612137b253fefcc58ba71955a8d",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/artifact-r2.json",
+      "review_row": "self-reported:mimo-v26-toolathlon-verified",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/packet-r2.json#self-reported:mimo-v26-toolathlon-verified"
     },
     {
       "id": "self-reported:step5-aa-briefcase",
@@ -19358,6 +20576,20 @@
       "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/gauntlet/scores-7/packet-r3.md#vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline"
     },
     {
+      "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
+      "observation_sha256": "77e4c8570ea8c8321ea311311f8982b0b33503781b538d8b588c8b3dd1f4da7c",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "deepseek/deepseek-v4-flash-0731"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-2/review-r1.json",
+      "review_sha256": "a5c45dde39169c3943ce712f47687e1432b4a5c339a807e20cee56e46eb79c45",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-2/artifact-r1.json",
+      "review_row": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-2/packet-r1.md#vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline"
+    },
+    {
       "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
       "observation_sha256": "f9906d94a070aee55f8bb2ad9d976ed00392c9d5e2c91a8cd9cc22a2a99a337f",
       "critic_model": "google/gemini-3.7-flash",
@@ -19399,6 +20631,20 @@
       "review_row": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
       "verdict": "accepted",
       "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/gauntlet/scores-7/packet-r3.md#vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail"
+    },
+    {
+      "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+      "observation_sha256": "9fcaf457d5e650be6847b219a40098c4a0202525cefa23eb570d202df92208fd",
+      "critic_model": "z-ai/glm-5.3-flash",
+      "producer_models": [
+        "deepseek/deepseek-v4-flash-0731"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-2/review-r1.json",
+      "review_sha256": "a5c45dde39169c3943ce712f47687e1432b4a5c339a807e20cee56e46eb79c45",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-2/artifact-r1.json",
+      "review_row": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-2/packet-r1.md#vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail"
     },
     {
       "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom",
@@ -19444,132 +20690,6 @@
       "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-19T07-32-48-708Z/gauntlet/scores-7/packet-r3.md#vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom"
     },
     {
-      "id": "public:360b3861f3aacca62916757c",
-      "observation_sha256": "62045512fbdd204bf242b8ece24627f26df4da428bd83ecd3dd7b3797035a1fc",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "deepseek/deepseek-v4-flash-0731"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/review-r1.json",
-      "review_sha256": "c64b25eac9bfe63160f76ed88a70bf910b98b8647b78fd0edc8f5eb12fd5dd79",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/artifact-r1.json",
-      "review_row": "public:360b3861f3aacca62916757c",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/packet-r1.md#public:360b3861f3aacca62916757c"
-    },
-    {
-      "id": "public:f7da903ca4c4fb58d9b78c66",
-      "observation_sha256": "9a6f72d917101dcf8f0c1b1c9f633ed90f447960a4659dfae405390fc2a9a603",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "deepseek/deepseek-v4-flash-0731"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/review-r1.json",
-      "review_sha256": "c64b25eac9bfe63160f76ed88a70bf910b98b8647b78fd0edc8f5eb12fd5dd79",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/artifact-r1.json",
-      "review_row": "public:f7da903ca4c4fb58d9b78c66",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/packet-r1.md#public:f7da903ca4c4fb58d9b78c66"
-    },
-    {
-      "id": "public:918369c55fa95df6179444a1",
-      "observation_sha256": "93fb2a3e8ea641e782c8afa7298a3db3affec18f47905cb1c3277016b1e9336c",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "deepseek/deepseek-v4-flash-0731"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/review-r1.json",
-      "review_sha256": "c64b25eac9bfe63160f76ed88a70bf910b98b8647b78fd0edc8f5eb12fd5dd79",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/artifact-r1.json",
-      "review_row": "public:918369c55fa95df6179444a1",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/packet-r1.md#public:918369c55fa95df6179444a1"
-    },
-    {
-      "id": "public:754e1de67ad82d27cac8eb50",
-      "observation_sha256": "ef73e3cea7d5b116273993185dcbca0eb46a09c1d14f17cf374b8089a0d016fa",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "deepseek/deepseek-v4-flash-0731"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/review-r1.json",
-      "review_sha256": "c64b25eac9bfe63160f76ed88a70bf910b98b8647b78fd0edc8f5eb12fd5dd79",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/artifact-r1.json",
-      "review_row": "public:754e1de67ad82d27cac8eb50",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/packet-r1.md#public:754e1de67ad82d27cac8eb50"
-    },
-    {
-      "id": "public:f229865e0717b7ae749c0989",
-      "observation_sha256": "ab02d839c79ef640ba0cf728c24320018dd5cbd184aa92bf5f6c768dc581f642",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "deepseek/deepseek-v4-flash-0731"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/review-r1.json",
-      "review_sha256": "c64b25eac9bfe63160f76ed88a70bf910b98b8647b78fd0edc8f5eb12fd5dd79",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/artifact-r1.json",
-      "review_row": "public:f229865e0717b7ae749c0989",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/packet-r1.md#public:f229865e0717b7ae749c0989"
-    },
-    {
-      "id": "public:02adc4772197328e98c3b00c",
-      "observation_sha256": "0d4e3cbd61a167e884214907f8b687349525aee0d4bc018b19ecfe6743d5179b",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "deepseek/deepseek-v4-flash-0731"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/review-r1.json",
-      "review_sha256": "c64b25eac9bfe63160f76ed88a70bf910b98b8647b78fd0edc8f5eb12fd5dd79",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/artifact-r1.json",
-      "review_row": "public:02adc4772197328e98c3b00c",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/packet-r1.md#public:02adc4772197328e98c3b00c"
-    },
-    {
-      "id": "public:08f1ce157a5c2ca15a810800",
-      "observation_sha256": "ccb7f6d099af726662251c5b4d8ce4adb8bd5c5e93f275ced4ebe255c739fc5d",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "deepseek/deepseek-v4-flash-0731"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/review-r1.json",
-      "review_sha256": "c64b25eac9bfe63160f76ed88a70bf910b98b8647b78fd0edc8f5eb12fd5dd79",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/artifact-r1.json",
-      "review_row": "public:08f1ce157a5c2ca15a810800",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-1/packet-r1.md#public:08f1ce157a5c2ca15a810800"
-    },
-    {
-      "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
-      "observation_sha256": "9fcaf457d5e650be6847b219a40098c4a0202525cefa23eb570d202df92208fd",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "deepseek/deepseek-v4-flash-0731"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-2/review-r1.json",
-      "review_sha256": "a5c45dde39169c3943ce712f47687e1432b4a5c339a807e20cee56e46eb79c45",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-2/artifact-r1.json",
-      "review_row": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-2/packet-r1.md#vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail"
-    },
-    {
-      "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
-      "observation_sha256": "77e4c8570ea8c8321ea311311f8982b0b33503781b538d8b588c8b3dd1f4da7c",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "deepseek/deepseek-v4-flash-0731"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-2/review-r1.json",
-      "review_sha256": "a5c45dde39169c3943ce712f47687e1432b4a5c339a807e20cee56e46eb79c45",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-2/artifact-r1.json",
-      "review_row": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-2/packet-r1.md#vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline"
-    },
-    {
       "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom",
       "observation_sha256": "00cb2fec7151e9f94bba0569fb22fc05b247570a9a2e9a1b58980889f57b6b68",
       "critic_model": "z-ai/glm-5.3-flash",
@@ -19582,902 +20702,6 @@
       "review_row": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom",
       "verdict": "accepted",
       "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-20T10-13-05-800Z/gauntlet/scores-2/packet-r1.md#vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom"
-    },
-    {
-      "id": "self-reported:deepseek-v41-flash-agents-last-exam",
-      "observation_sha256": "43af1cb6644447ce49815194c719eb209b9c72afe865e402c047daadcc2d3705",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "anthropic/claude-opus-5"
-      ],
-      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-1.json",
-      "review_sha256": "e07d9a75d4ef75177c9075221a41083068cc40fde9e78d895fda847173fe0c28",
-      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-1.json",
-      "review_row": "self-reported:deepseek-v41-flash-agents-last-exam",
-      "verdict": "accepted",
-      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
-    },
-    {
-      "id": "self-reported:deepseek-v41-flash-automationbench",
-      "observation_sha256": "c3ae1d568478c97d7444388d6380b047d2aafb3ade344b324e6721ce935276a0",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "anthropic/claude-opus-5"
-      ],
-      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-1.json",
-      "review_sha256": "e07d9a75d4ef75177c9075221a41083068cc40fde9e78d895fda847173fe0c28",
-      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-1.json",
-      "review_row": "self-reported:deepseek-v41-flash-automationbench",
-      "verdict": "accepted",
-      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
-    },
-    {
-      "id": "self-reported:deepseek-v41-flash-babyvision-w-tools",
-      "observation_sha256": "c0d5bbe826f3d6e171521d3fbe082c725ff3a2213b92ac8f094f373014214735",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "anthropic/claude-opus-5"
-      ],
-      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-1.json",
-      "review_sha256": "e07d9a75d4ef75177c9075221a41083068cc40fde9e78d895fda847173fe0c28",
-      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-1.json",
-      "review_row": "self-reported:deepseek-v41-flash-babyvision-w-tools",
-      "verdict": "accepted",
-      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
-    },
-    {
-      "id": "self-reported:deepseek-v41-flash-chartography-w-tools",
-      "observation_sha256": "540d3f064e4d73cc0ae717ee6938e3328849bd7a0fdaf9a783e6303ded57973e",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "anthropic/claude-opus-5"
-      ],
-      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-1.json",
-      "review_sha256": "e07d9a75d4ef75177c9075221a41083068cc40fde9e78d895fda847173fe0c28",
-      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-1.json",
-      "review_row": "self-reported:deepseek-v41-flash-chartography-w-tools",
-      "verdict": "accepted",
-      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
-    },
-    {
-      "id": "self-reported:deepseek-v41-flash-codeforces-rating",
-      "observation_sha256": "820ebf8ccd4336394cb1f6adc6c07d59c4b5f043b7d5fd5f97cbce61ac6cc419",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "anthropic/claude-opus-5"
-      ],
-      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-1.json",
-      "review_sha256": "e07d9a75d4ef75177c9075221a41083068cc40fde9e78d895fda847173fe0c28",
-      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-1.json",
-      "review_row": "self-reported:deepseek-v41-flash-codeforces-rating",
-      "verdict": "accepted",
-      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
-    },
-    {
-      "id": "self-reported:deepseek-v41-flash-cybergym",
-      "observation_sha256": "1b13d92ed1e3f971b390ecd86eec91d411592aae7f0868638efedffb7af9e261",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "anthropic/claude-opus-5"
-      ],
-      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-1.json",
-      "review_sha256": "e07d9a75d4ef75177c9075221a41083068cc40fde9e78d895fda847173fe0c28",
-      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-1.json",
-      "review_row": "self-reported:deepseek-v41-flash-cybergym",
-      "verdict": "accepted",
-      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
-    },
-    {
-      "id": "self-reported:deepseek-v41-flash-deepswe-v1-1",
-      "observation_sha256": "51bcc9a0f90fc6e8db6964774d7df1d1bda5a4a52b19b90baece65d68db86c36",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "anthropic/claude-opus-5"
-      ],
-      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-1.json",
-      "review_sha256": "e07d9a75d4ef75177c9075221a41083068cc40fde9e78d895fda847173fe0c28",
-      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-1.json",
-      "review_row": "self-reported:deepseek-v41-flash-deepswe-v1-1",
-      "verdict": "accepted",
-      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
-    },
-    {
-      "id": "self-reported:deepseek-v41-flash-exploitgym",
-      "observation_sha256": "571bf2bec9ae5eb020afa00a8e715bcb773bf6116304022706fc81ac19ea4c30",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "anthropic/claude-opus-5"
-      ],
-      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-1.json",
-      "review_sha256": "e07d9a75d4ef75177c9075221a41083068cc40fde9e78d895fda847173fe0c28",
-      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-1.json",
-      "review_row": "self-reported:deepseek-v41-flash-exploitgym",
-      "verdict": "accepted",
-      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
-    },
-    {
-      "id": "self-reported:deepseek-v41-flash-gpqa-diamond",
-      "observation_sha256": "204b414baac60dad44ab240368e62d7c6afda587804266868ff96f750d1735a9",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "anthropic/claude-opus-5"
-      ],
-      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-1.json",
-      "review_sha256": "e07d9a75d4ef75177c9075221a41083068cc40fde9e78d895fda847173fe0c28",
-      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-1.json",
-      "review_row": "self-reported:deepseek-v41-flash-gpqa-diamond",
-      "verdict": "accepted",
-      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
-    },
-    {
-      "id": "self-reported:deepseek-v41-flash-hle",
-      "observation_sha256": "f9f350025186dd5b8f65b8a40b4a0370fb9fd83d2c2a90ba149768351fc56b02",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "anthropic/claude-opus-5"
-      ],
-      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-1.json",
-      "review_sha256": "e07d9a75d4ef75177c9075221a41083068cc40fde9e78d895fda847173fe0c28",
-      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-1.json",
-      "review_row": "self-reported:deepseek-v41-flash-hle",
-      "verdict": "accepted",
-      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 1 covered this exact row."
-    },
-    {
-      "id": "self-reported:deepseek-v41-flash-hle-w-tools",
-      "observation_sha256": "1a677f622571825be12824ac917b4b2d6a81a120859b716b97af89f0b5da061b",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "anthropic/claude-opus-5"
-      ],
-      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-2.json",
-      "review_sha256": "0b9ae096751801cedd5812d54e7b45dcb0d24d11f9c3a9d444354b01c10ea4d3",
-      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-2.json",
-      "review_row": "self-reported:deepseek-v41-flash-hle-w-tools",
-      "verdict": "accepted",
-      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
-    },
-    {
-      "id": "self-reported:deepseek-v41-flash-matharena-apex",
-      "observation_sha256": "997a105ebc04b4318d73464ea3e280086767173ec869dc3f3ea49296f9794d48",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "anthropic/claude-opus-5"
-      ],
-      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-2.json",
-      "review_sha256": "0b9ae096751801cedd5812d54e7b45dcb0d24d11f9c3a9d444354b01c10ea4d3",
-      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-2.json",
-      "review_row": "self-reported:deepseek-v41-flash-matharena-apex",
-      "verdict": "accepted",
-      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
-    },
-    {
-      "id": "self-reported:deepseek-v41-flash-nl2repo-bench",
-      "observation_sha256": "01e712063869d797c37be7dfa65940f7331708265c3a43348eb375ecd36eee36",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "anthropic/claude-opus-5"
-      ],
-      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-2.json",
-      "review_sha256": "0b9ae096751801cedd5812d54e7b45dcb0d24d11f9c3a9d444354b01c10ea4d3",
-      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-2.json",
-      "review_row": "self-reported:deepseek-v41-flash-nl2repo-bench",
-      "verdict": "accepted",
-      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
-    },
-    {
-      "id": "self-reported:deepseek-v41-flash-programbench-almost-at-1",
-      "observation_sha256": "7427b49f64ceaeb81bbe322a5693c0cd1e547e66d42f5683b55bdd3a153c2117",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "anthropic/claude-opus-5"
-      ],
-      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-2.json",
-      "review_sha256": "0b9ae096751801cedd5812d54e7b45dcb0d24d11f9c3a9d444354b01c10ea4d3",
-      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-2.json",
-      "review_row": "self-reported:deepseek-v41-flash-programbench-almost-at-1",
-      "verdict": "accepted",
-      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
-    },
-    {
-      "id": "self-reported:deepseek-v41-flash-sec-bench-pro",
-      "observation_sha256": "d71cfef2afb66bbe582a8abff89139610f4afd4e906bbc867c1edeba65d0aab1",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "anthropic/claude-opus-5"
-      ],
-      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-2.json",
-      "review_sha256": "0b9ae096751801cedd5812d54e7b45dcb0d24d11f9c3a9d444354b01c10ea4d3",
-      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-2.json",
-      "review_row": "self-reported:deepseek-v41-flash-sec-bench-pro",
-      "verdict": "accepted",
-      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
-    },
-    {
-      "id": "self-reported:deepseek-v41-flash-terminal-bench-v2-1",
-      "observation_sha256": "fbf8d0381fe584ea573908fb16020ad23e81671f04c7f69200ae76b5fe27c5d3",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "anthropic/claude-opus-5"
-      ],
-      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-2.json",
-      "review_sha256": "0b9ae096751801cedd5812d54e7b45dcb0d24d11f9c3a9d444354b01c10ea4d3",
-      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-2.json",
-      "review_row": "self-reported:deepseek-v41-flash-terminal-bench-v2-1",
-      "verdict": "accepted",
-      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
-    },
-    {
-      "id": "self-reported:deepseek-v41-flash-terminal-bench-v3",
-      "observation_sha256": "322e4c24b5af93c2f8edc5c38da7e04683a595b83c93379d50714e5675cfd153",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "anthropic/claude-opus-5"
-      ],
-      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-2.json",
-      "review_sha256": "0b9ae096751801cedd5812d54e7b45dcb0d24d11f9c3a9d444354b01c10ea4d3",
-      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-2.json",
-      "review_row": "self-reported:deepseek-v41-flash-terminal-bench-v3",
-      "verdict": "accepted",
-      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
-    },
-    {
-      "id": "self-reported:deepseek-v41-flash-terminal-bench-v4",
-      "observation_sha256": "a77d51facff5642831385dde1839255e1fb86f3d3abc474e9a53064a18c2e011",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "anthropic/claude-opus-5"
-      ],
-      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-2.json",
-      "review_sha256": "0b9ae096751801cedd5812d54e7b45dcb0d24d11f9c3a9d444354b01c10ea4d3",
-      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-2.json",
-      "review_row": "self-reported:deepseek-v41-flash-terminal-bench-v4",
-      "verdict": "accepted",
-      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
-    },
-    {
-      "id": "self-reported:deepseek-v41-flash-zerobench-main-w-tools",
-      "observation_sha256": "53e198b2b7634934bb0ebe09cb047a6b14cc39b08dd1a789b0184ef1b63558ef",
-      "critic_model": "z-ai/glm-5.3-flash",
-      "producer_models": [
-        "anthropic/claude-opus-5"
-      ],
-      "review_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-2.json",
-      "review_sha256": "0b9ae096751801cedd5812d54e7b45dcb0d24d11f9c3a9d444354b01c10ea4d3",
-      "artifact_file": "ops/rebuild-2026-09/evidence/deepseek-v41-flash-2026-09-20-review-artifact-2.json",
-      "review_row": "self-reported:deepseek-v41-flash-zerobench-main-w-tools",
-      "verdict": "accepted",
-      "evidence_locator": "CR-85.2 (Florian, 2026-09-19, ops/ux-2026-09-12/04-CR-BRIEF.md): \"Other primary sources for V4.1 Flash: DeepSeek's release notes/model card (self-reported, mark as vendor-reported) … ingest each with provenance\". Every row is visibly vendor-reported/unverified, stays out of the Composite, and must be replaced by an independently measured matching-version result as soon as one exists. Different-family critic slice 2 covered this exact row."
-    },
-    {
-      "id": "public:5736109b3e21948d5b2085f1",
-      "observation_sha256": "b5c3676948dd2169b197276a6040525d78303f1e05c7a20affd77f35ecf1c308",
-      "critic_model": "moonshotai/Kimi-K3-TEE",
-      "producer_models": [
-        "z-ai/glm-5.3-flash"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/review-r2.json",
-      "review_sha256": "82c0e6ce5bc80722a578f5f7edab3126296ad21a2b6e90290b0276a063f6b3a2",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/artifact-r2.json",
-      "review_row": "public:5736109b3e21948d5b2085f1",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/packet-r2.md#public:5736109b3e21948d5b2085f1"
-    },
-    {
-      "id": "public:4630e7e793bce524bea05b9e",
-      "observation_sha256": "f0b70517bc91bc8528386a9712ad50796d4408b30bd0d146068287d7bd884bd6",
-      "critic_model": "moonshotai/Kimi-K3-TEE",
-      "producer_models": [
-        "z-ai/glm-5.3-flash"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/review-r2.json",
-      "review_sha256": "82c0e6ce5bc80722a578f5f7edab3126296ad21a2b6e90290b0276a063f6b3a2",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/artifact-r2.json",
-      "review_row": "public:4630e7e793bce524bea05b9e",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/packet-r2.md#public:4630e7e793bce524bea05b9e"
-    },
-    {
-      "id": "public:5536054ff669e46f8baa9ff1",
-      "observation_sha256": "ef47546c3b9a2e83889590eda879acd493aded4bdaf8f417913993a8c9d9c559",
-      "critic_model": "moonshotai/Kimi-K3-TEE",
-      "producer_models": [
-        "z-ai/glm-5.3-flash"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/review-r2.json",
-      "review_sha256": "82c0e6ce5bc80722a578f5f7edab3126296ad21a2b6e90290b0276a063f6b3a2",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/artifact-r2.json",
-      "review_row": "public:5536054ff669e46f8baa9ff1",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/packet-r2.md#public:5536054ff669e46f8baa9ff1"
-    },
-    {
-      "id": "public:01d32f1a6d35816a84f6462a",
-      "observation_sha256": "0efe758d816128eec043f3b2ded2eb06a608380d37da58f382ed4dbe2d8ab2d8",
-      "critic_model": "moonshotai/Kimi-K3-TEE",
-      "producer_models": [
-        "z-ai/glm-5.3-flash"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/review-r2.json",
-      "review_sha256": "82c0e6ce5bc80722a578f5f7edab3126296ad21a2b6e90290b0276a063f6b3a2",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/artifact-r2.json",
-      "review_row": "public:01d32f1a6d35816a84f6462a",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/packet-r2.md#public:01d32f1a6d35816a84f6462a"
-    },
-    {
-      "id": "public:44e7cd159c7a7872cd6a80c9",
-      "observation_sha256": "e6a6b5706491ac26991034f930ca13a429f9c762b59cb15307427be5aefcf5b5",
-      "critic_model": "moonshotai/Kimi-K3-TEE",
-      "producer_models": [
-        "z-ai/glm-5.3-flash"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/review-r2.json",
-      "review_sha256": "82c0e6ce5bc80722a578f5f7edab3126296ad21a2b6e90290b0276a063f6b3a2",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/artifact-r2.json",
-      "review_row": "public:44e7cd159c7a7872cd6a80c9",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/packet-r2.md#public:44e7cd159c7a7872cd6a80c9"
-    },
-    {
-      "id": "public:0149ff45e922c7644677cddc",
-      "observation_sha256": "834449f412942a0be890db27d3ed7b933a46b79565ee7381a6ddbd86b82c6e20",
-      "critic_model": "moonshotai/Kimi-K3-TEE",
-      "producer_models": [
-        "z-ai/glm-5.3-flash"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/review-r2.json",
-      "review_sha256": "82c0e6ce5bc80722a578f5f7edab3126296ad21a2b6e90290b0276a063f6b3a2",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/artifact-r2.json",
-      "review_row": "public:0149ff45e922c7644677cddc",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/packet-r2.md#public:0149ff45e922c7644677cddc"
-    },
-    {
-      "id": "public:495fe6bcb854c854a1e9a973",
-      "observation_sha256": "beb8cfa081f5b742c78a9c68ddb6f3811da3c9a7d6dfa7d8242c0815e7ede853",
-      "critic_model": "moonshotai/Kimi-K3-TEE",
-      "producer_models": [
-        "z-ai/glm-5.3-flash"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/review-r2.json",
-      "review_sha256": "82c0e6ce5bc80722a578f5f7edab3126296ad21a2b6e90290b0276a063f6b3a2",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/artifact-r2.json",
-      "review_row": "public:495fe6bcb854c854a1e9a973",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/packet-r2.md#public:495fe6bcb854c854a1e9a973"
-    },
-    {
-      "id": "public:5934b60b0c0a875dc7fcbc3c",
-      "observation_sha256": "0bd2660142d53ce5a07e8f335ca63bc00583cc565141d26f211484265e291180",
-      "critic_model": "moonshotai/Kimi-K3-TEE",
-      "producer_models": [
-        "z-ai/glm-5.3-flash"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/review-r2.json",
-      "review_sha256": "82c0e6ce5bc80722a578f5f7edab3126296ad21a2b6e90290b0276a063f6b3a2",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/artifact-r2.json",
-      "review_row": "public:5934b60b0c0a875dc7fcbc3c",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/packet-r2.md#public:5934b60b0c0a875dc7fcbc3c"
-    },
-    {
-      "id": "public:d4252844da91095413c40fb0",
-      "observation_sha256": "6ec7b41c2dadf15ac0e358e489963ccd7c61846ceca1fd882637c09271abba17",
-      "critic_model": "moonshotai/Kimi-K3-TEE",
-      "producer_models": [
-        "z-ai/glm-5.3-flash"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/review-r2.json",
-      "review_sha256": "82c0e6ce5bc80722a578f5f7edab3126296ad21a2b6e90290b0276a063f6b3a2",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/artifact-r2.json",
-      "review_row": "public:d4252844da91095413c40fb0",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/packet-r2.md#public:d4252844da91095413c40fb0"
-    },
-    {
-      "id": "public:9c574fdca2ae99ad31c2e5d2",
-      "observation_sha256": "88ed7f648a12d9c07c5a9217d94448f192ec3408eb2352dd0e46c2786d61fc7d",
-      "critic_model": "moonshotai/Kimi-K3-TEE",
-      "producer_models": [
-        "z-ai/glm-5.3-flash"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/review-r2.json",
-      "review_sha256": "82c0e6ce5bc80722a578f5f7edab3126296ad21a2b6e90290b0276a063f6b3a2",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/artifact-r2.json",
-      "review_row": "public:9c574fdca2ae99ad31c2e5d2",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/packet-r2.md#public:9c574fdca2ae99ad31c2e5d2"
-    },
-    {
-      "id": "public:b657a26869313e0c884544bd",
-      "observation_sha256": "e971c76e44b80b1aa9139f6f63d6985d5afe6837b45dbdd7b2eb9f63479b4f3a",
-      "critic_model": "moonshotai/Kimi-K3-TEE",
-      "producer_models": [
-        "z-ai/glm-5.3-flash"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/review-r2.json",
-      "review_sha256": "82c0e6ce5bc80722a578f5f7edab3126296ad21a2b6e90290b0276a063f6b3a2",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/artifact-r2.json",
-      "review_row": "public:b657a26869313e0c884544bd",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/packet-r2.md#public:b657a26869313e0c884544bd"
-    },
-    {
-      "id": "public:798a95c4b42aa7e4ff1a8b50",
-      "observation_sha256": "a475a2594bbdd78e574d75c0178685d0605805c04b90c1d7295c471030fd9b70",
-      "critic_model": "moonshotai/Kimi-K3-TEE",
-      "producer_models": [
-        "z-ai/glm-5.3-flash"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/review-r2.json",
-      "review_sha256": "82c0e6ce5bc80722a578f5f7edab3126296ad21a2b6e90290b0276a063f6b3a2",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/artifact-r2.json",
-      "review_row": "public:798a95c4b42aa7e4ff1a8b50",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/packet-r2.md#public:798a95c4b42aa7e4ff1a8b50"
-    },
-    {
-      "id": "public:cc7c36553515d81f67c94de2",
-      "observation_sha256": "ef629df999ba12c19fef2e86294f8fa2241a9c3d9408d3b17ff7cd1b90e5eec7",
-      "critic_model": "moonshotai/Kimi-K3-TEE",
-      "producer_models": [
-        "z-ai/glm-5.3-flash"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/review-r2.json",
-      "review_sha256": "82c0e6ce5bc80722a578f5f7edab3126296ad21a2b6e90290b0276a063f6b3a2",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/artifact-r2.json",
-      "review_row": "public:cc7c36553515d81f67c94de2",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/packet-r2.md#public:cc7c36553515d81f67c94de2"
-    },
-    {
-      "id": "public:60c20e12a379da517fe01485",
-      "observation_sha256": "8a25d97082883420a6c96d80c1f8a978c5b3364eaf816bb374e3b692cf8afa0e",
-      "critic_model": "moonshotai/Kimi-K3-TEE",
-      "producer_models": [
-        "z-ai/glm-5.3-flash"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/review-r2.json",
-      "review_sha256": "82c0e6ce5bc80722a578f5f7edab3126296ad21a2b6e90290b0276a063f6b3a2",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/artifact-r2.json",
-      "review_row": "public:60c20e12a379da517fe01485",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/packet-r2.md#public:60c20e12a379da517fe01485"
-    },
-    {
-      "id": "public:5f52c373b86e3e421e76ea49",
-      "observation_sha256": "c774ea82ceb474b42bfa895bdcf6d2f9b66c7ca8f2885497acaa1c7025edc359",
-      "critic_model": "moonshotai/Kimi-K3-TEE",
-      "producer_models": [
-        "z-ai/glm-5.3-flash"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/review-r2.json",
-      "review_sha256": "82c0e6ce5bc80722a578f5f7edab3126296ad21a2b6e90290b0276a063f6b3a2",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/artifact-r2.json",
-      "review_row": "public:5f52c373b86e3e421e76ea49",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-0/packet-r2.md#public:5f52c373b86e3e421e76ea49"
-    },
-    {
-      "id": "public:5c9e5db8541b8ab484448eab",
-      "observation_sha256": "b974cf65b53c2a9255009ac21c0fb1b4395318f88c997d326bcc636def171fb1",
-      "critic_model": "moonshotai/Kimi-K3-TEE",
-      "producer_models": [
-        "deepseek/deepseek-v4-flash-0731"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/review-r1.json",
-      "review_sha256": "1c605eb6491dba6f3d5dd6d7cb2040a6176e36ef1c6ed3edccbbfa1d58217751",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/artifact-r1.json",
-      "review_row": "public:5c9e5db8541b8ab484448eab",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/packet-r1.md#public:5c9e5db8541b8ab484448eab"
-    },
-    {
-      "id": "public:4764d627b44396cb491b9a07",
-      "observation_sha256": "5443b8d58f0e3f16d628d7a267f839ad649c26bad9a2c09d050588a1476baf80",
-      "critic_model": "moonshotai/Kimi-K3-TEE",
-      "producer_models": [
-        "deepseek/deepseek-v4-flash-0731"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/review-r1.json",
-      "review_sha256": "1c605eb6491dba6f3d5dd6d7cb2040a6176e36ef1c6ed3edccbbfa1d58217751",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/artifact-r1.json",
-      "review_row": "public:4764d627b44396cb491b9a07",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/packet-r1.md#public:4764d627b44396cb491b9a07"
-    },
-    {
-      "id": "public:75ed509f35f063c45a09edf0",
-      "observation_sha256": "4cc44dbbb1cc6ef8415ce09d2620ace5cae69ea3b7b3a8bcc429849a0109e95c",
-      "critic_model": "moonshotai/Kimi-K3-TEE",
-      "producer_models": [
-        "deepseek/deepseek-v4-flash-0731"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/review-r1.json",
-      "review_sha256": "1c605eb6491dba6f3d5dd6d7cb2040a6176e36ef1c6ed3edccbbfa1d58217751",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/artifact-r1.json",
-      "review_row": "public:75ed509f35f063c45a09edf0",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/packet-r1.md#public:75ed509f35f063c45a09edf0"
-    },
-    {
-      "id": "public:d699307ad31df9a05beae10c",
-      "observation_sha256": "63ea43e555d2ecd8ec85824d58ff76724ed11146a1b55379bcee8fca398e97f7",
-      "critic_model": "moonshotai/Kimi-K3-TEE",
-      "producer_models": [
-        "deepseek/deepseek-v4-flash-0731"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/review-r1.json",
-      "review_sha256": "1c605eb6491dba6f3d5dd6d7cb2040a6176e36ef1c6ed3edccbbfa1d58217751",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/artifact-r1.json",
-      "review_row": "public:d699307ad31df9a05beae10c",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/packet-r1.md#public:d699307ad31df9a05beae10c"
-    },
-    {
-      "id": "public:47eeea52a8c32e987563ff01",
-      "observation_sha256": "e70413fc06ca771e0934928eca9cd653d82488528026069d8a12380097fbc24b",
-      "critic_model": "moonshotai/Kimi-K3-TEE",
-      "producer_models": [
-        "deepseek/deepseek-v4-flash-0731"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/review-r1.json",
-      "review_sha256": "1c605eb6491dba6f3d5dd6d7cb2040a6176e36ef1c6ed3edccbbfa1d58217751",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/artifact-r1.json",
-      "review_row": "public:47eeea52a8c32e987563ff01",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/packet-r1.md#public:47eeea52a8c32e987563ff01"
-    },
-    {
-      "id": "public:a8bee5afad8bc50e0575961b",
-      "observation_sha256": "486334e4291ee4798d106be5ad3c24b4d766fce7497f56c9638b1879c088348d",
-      "critic_model": "moonshotai/Kimi-K3-TEE",
-      "producer_models": [
-        "deepseek/deepseek-v4-flash-0731"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/review-r1.json",
-      "review_sha256": "1c605eb6491dba6f3d5dd6d7cb2040a6176e36ef1c6ed3edccbbfa1d58217751",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/artifact-r1.json",
-      "review_row": "public:a8bee5afad8bc50e0575961b",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-1/packet-r1.md#public:a8bee5afad8bc50e0575961b"
-    },
-    {
-      "id": "public:8397a083504d4c9497bf1935",
-      "observation_sha256": "4d6ac50a3db632e10f59594d30dd5045c490c3fcd1b88f1c47e843d650de750e",
-      "critic_model": "deepseek/deepseek-v4.1-flash",
-      "producer_models": [
-        "z-ai/glm-5.3-flash"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/review-r3.json",
-      "review_sha256": "b53b18aa20ea3d96f751ab0bc305e2d1eeebeb0bce2543f05e709a848e093e23",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/artifact-r3.json",
-      "review_row": "public:8397a083504d4c9497bf1935",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/packet-r3.md#public:8397a083504d4c9497bf1935"
-    },
-    {
-      "id": "public:ca87c633b2240b6df743057a",
-      "observation_sha256": "7ad7c7144c8fb5d4cb8884f4b74e955f75705ccbb57fbf197d003009a0573310",
-      "critic_model": "deepseek/deepseek-v4.1-flash",
-      "producer_models": [
-        "z-ai/glm-5.3-flash"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/review-r3.json",
-      "review_sha256": "b53b18aa20ea3d96f751ab0bc305e2d1eeebeb0bce2543f05e709a848e093e23",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/artifact-r3.json",
-      "review_row": "public:ca87c633b2240b6df743057a",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/packet-r3.md#public:ca87c633b2240b6df743057a"
-    },
-    {
-      "id": "public:caefc0c99d62cb176fcff489",
-      "observation_sha256": "977ba560176e5979855bb7fe007d4b50c9d9815cd168909b3bd6f796195fc224",
-      "critic_model": "deepseek/deepseek-v4.1-flash",
-      "producer_models": [
-        "z-ai/glm-5.3-flash"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/review-r3.json",
-      "review_sha256": "b53b18aa20ea3d96f751ab0bc305e2d1eeebeb0bce2543f05e709a848e093e23",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/artifact-r3.json",
-      "review_row": "public:caefc0c99d62cb176fcff489",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/packet-r3.md#public:caefc0c99d62cb176fcff489"
-    },
-    {
-      "id": "public:f0e2663745f4a46cace82e58",
-      "observation_sha256": "ef2804bc427ba7db98e92215f4759734e4aabc90ecfc20d3a88d67d7205a87f5",
-      "critic_model": "deepseek/deepseek-v4.1-flash",
-      "producer_models": [
-        "z-ai/glm-5.3-flash"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/review-r3.json",
-      "review_sha256": "b53b18aa20ea3d96f751ab0bc305e2d1eeebeb0bce2543f05e709a848e093e23",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/artifact-r3.json",
-      "review_row": "public:f0e2663745f4a46cace82e58",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/packet-r3.md#public:f0e2663745f4a46cace82e58"
-    },
-    {
-      "id": "public:a06e951ec88c8a593bd81718",
-      "observation_sha256": "503bdf46397ff76c3f698bf74a51092e282243fe51589029a5c37a601458710b",
-      "critic_model": "deepseek/deepseek-v4.1-flash",
-      "producer_models": [
-        "z-ai/glm-5.3-flash"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/review-r3.json",
-      "review_sha256": "b53b18aa20ea3d96f751ab0bc305e2d1eeebeb0bce2543f05e709a848e093e23",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/artifact-r3.json",
-      "review_row": "public:a06e951ec88c8a593bd81718",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/packet-r3.md#public:a06e951ec88c8a593bd81718"
-    },
-    {
-      "id": "public:41ab205415ef05b5236025c4",
-      "observation_sha256": "7abaf030a0e9e540f7b57232edffb0d5a5a12ca26ac74aa564089c2d5c16ba8d",
-      "critic_model": "deepseek/deepseek-v4.1-flash",
-      "producer_models": [
-        "z-ai/glm-5.3-flash"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/review-r3.json",
-      "review_sha256": "b53b18aa20ea3d96f751ab0bc305e2d1eeebeb0bce2543f05e709a848e093e23",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/artifact-r3.json",
-      "review_row": "public:41ab205415ef05b5236025c4",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/packet-r3.md#public:41ab205415ef05b5236025c4"
-    },
-    {
-      "id": "public:6705e67a9c432e3f10a5700f",
-      "observation_sha256": "a1a4fb4fdc1c0c3fa9388b5a41bc512febbb3d3492d7614ba971121e23e457a1",
-      "critic_model": "deepseek/deepseek-v4.1-flash",
-      "producer_models": [
-        "z-ai/glm-5.3-flash"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/review-r3.json",
-      "review_sha256": "b53b18aa20ea3d96f751ab0bc305e2d1eeebeb0bce2543f05e709a848e093e23",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/artifact-r3.json",
-      "review_row": "public:6705e67a9c432e3f10a5700f",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/gauntlet/scores-2/packet-r3.md#public:6705e67a9c432e3f10a5700f"
-    },
-    {
-      "id": "self-reported:mimo-v26-agents-last-exam",
-      "observation_sha256": "26b38b5a6651a69f331879dd1f47dabd51d91084cb7c4f0a935f59f99a5ae16e",
-      "critic_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
-      "producer_models": [
-        "openai/gpt-5.6-sol"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/review-r2.json",
-      "review_sha256": "6052a7d5e89552802c44019df387b6f2cb1f3612137b253fefcc58ba71955a8d",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/artifact-r2.json",
-      "review_row": "self-reported:mimo-v26-agents-last-exam",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/packet-r2.json#self-reported:mimo-v26-agents-last-exam"
-    },
-    {
-      "id": "self-reported:mimo-v26-automationbench-v1-0-6",
-      "observation_sha256": "930a5be578e9280275b57d6af1083a51699db33091bedc61c5a3811503410c55",
-      "critic_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
-      "producer_models": [
-        "openai/gpt-5.6-sol"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/review-r2.json",
-      "review_sha256": "6052a7d5e89552802c44019df387b6f2cb1f3612137b253fefcc58ba71955a8d",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/artifact-r2.json",
-      "review_row": "self-reported:mimo-v26-automationbench-v1-0-6",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/packet-r2.json#self-reported:mimo-v26-automationbench-v1-0-6"
-    },
-    {
-      "id": "self-reported:mimo-v26-cybergym",
-      "observation_sha256": "ed43261313179c55a467132632af2612295d4357ca2a0511c51b3b428ac8b2b5",
-      "critic_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
-      "producer_models": [
-        "openai/gpt-5.6-sol"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/review-r2.json",
-      "review_sha256": "6052a7d5e89552802c44019df387b6f2cb1f3612137b253fefcc58ba71955a8d",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/artifact-r2.json",
-      "review_row": "self-reported:mimo-v26-cybergym",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/packet-r2.json#self-reported:mimo-v26-cybergym"
-    },
-    {
-      "id": "self-reported:mimo-v26-deepswe-v1-1",
-      "observation_sha256": "8b293f5a89e3cba2e529bcc13f3fbe48ef72f31d667235a94ad66b599356fffb",
-      "critic_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
-      "producer_models": [
-        "openai/gpt-5.6-sol"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/review-r2.json",
-      "review_sha256": "6052a7d5e89552802c44019df387b6f2cb1f3612137b253fefcc58ba71955a8d",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/artifact-r2.json",
-      "review_row": "self-reported:mimo-v26-deepswe-v1-1",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/packet-r2.json#self-reported:mimo-v26-deepswe-v1-1"
-    },
-    {
-      "id": "self-reported:mimo-v26-exploitbench",
-      "observation_sha256": "ecbed735522382059ffd0e2ac0f3efaedebb8dcfe5b993beed44c050ee93da10",
-      "critic_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
-      "producer_models": [
-        "openai/gpt-5.6-sol"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/review-r2.json",
-      "review_sha256": "6052a7d5e89552802c44019df387b6f2cb1f3612137b253fefcc58ba71955a8d",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/artifact-r2.json",
-      "review_row": "self-reported:mimo-v26-exploitbench",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/packet-r2.json#self-reported:mimo-v26-exploitbench"
-    },
-    {
-      "id": "self-reported:mimo-v26-exploitgym",
-      "observation_sha256": "bca13cd9f69ee3642decace9827d6efb303fccc656394535739c4026e6ac16e8",
-      "critic_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
-      "producer_models": [
-        "openai/gpt-5.6-sol"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/review-r2.json",
-      "review_sha256": "6052a7d5e89552802c44019df387b6f2cb1f3612137b253fefcc58ba71955a8d",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/artifact-r2.json",
-      "review_row": "self-reported:mimo-v26-exploitgym",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/packet-r2.json#self-reported:mimo-v26-exploitgym"
-    },
-    {
-      "id": "self-reported:mimo-v26-gdpval-aa-2-1",
-      "observation_sha256": "c0c309e982db79a54910dc659b8031e2d92f37ac47f91882d59af9d9c7250147",
-      "critic_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
-      "producer_models": [
-        "openai/gpt-5.6-sol"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/review-r2.json",
-      "review_sha256": "6052a7d5e89552802c44019df387b6f2cb1f3612137b253fefcc58ba71955a8d",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/artifact-r2.json",
-      "review_row": "self-reported:mimo-v26-gdpval-aa-2-1",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/packet-r2.json#self-reported:mimo-v26-gdpval-aa-2-1"
-    },
-    {
-      "id": "self-reported:mimo-v26-jobbench",
-      "observation_sha256": "d232eeed00062e9f85f970bc22b3fc901b6d9a9524e60a2bef54c06b2587fef8",
-      "critic_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
-      "producer_models": [
-        "openai/gpt-5.6-sol"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/review-r2.json",
-      "review_sha256": "6052a7d5e89552802c44019df387b6f2cb1f3612137b253fefcc58ba71955a8d",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/artifact-r2.json",
-      "review_row": "self-reported:mimo-v26-jobbench",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/packet-r2.json#self-reported:mimo-v26-jobbench"
-    },
-    {
-      "id": "self-reported:mimo-v26-mimo-code-bench",
-      "observation_sha256": "a7b70d71ad644b8bd950a8524757b70d08d2eee201cc83156dc3b3a07769a981",
-      "critic_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
-      "producer_models": [
-        "openai/gpt-5.6-sol"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/review-r2.json",
-      "review_sha256": "6052a7d5e89552802c44019df387b6f2cb1f3612137b253fefcc58ba71955a8d",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/artifact-r2.json",
-      "review_row": "self-reported:mimo-v26-mimo-code-bench",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/packet-r2.json#self-reported:mimo-v26-mimo-code-bench"
-    },
-    {
-      "id": "self-reported:mimo-v26-mimo-cyber-bench",
-      "observation_sha256": "eb51f932e1de1141dfc639588aab5d2f9b55fd66e86601b305f50c2f763fcbce",
-      "critic_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
-      "producer_models": [
-        "openai/gpt-5.6-sol"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/review-r2.json",
-      "review_sha256": "6052a7d5e89552802c44019df387b6f2cb1f3612137b253fefcc58ba71955a8d",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/artifact-r2.json",
-      "review_row": "self-reported:mimo-v26-mimo-cyber-bench",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/packet-r2.json#self-reported:mimo-v26-mimo-cyber-bench"
-    },
-    {
-      "id": "self-reported:mimo-v26-mimo-visual-coding",
-      "observation_sha256": "4588e66c2bac8d220bc306310a9d30170b86004f2d55750b330c3afaa313353f",
-      "critic_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
-      "producer_models": [
-        "openai/gpt-5.6-sol"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/review-r2.json",
-      "review_sha256": "6052a7d5e89552802c44019df387b6f2cb1f3612137b253fefcc58ba71955a8d",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/artifact-r2.json",
-      "review_row": "self-reported:mimo-v26-mimo-visual-coding",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/packet-r2.json#self-reported:mimo-v26-mimo-visual-coding"
-    },
-    {
-      "id": "self-reported:mimo-v26-osworld-verified",
-      "observation_sha256": "d3e9f531d8761c3b85e68f220a11baa4f524281c20c27cb3415ea20838820caa",
-      "critic_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
-      "producer_models": [
-        "openai/gpt-5.6-sol"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/review-r2.json",
-      "review_sha256": "6052a7d5e89552802c44019df387b6f2cb1f3612137b253fefcc58ba71955a8d",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/artifact-r2.json",
-      "review_row": "self-reported:mimo-v26-osworld-verified",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/packet-r2.json#self-reported:mimo-v26-osworld-verified"
-    },
-    {
-      "id": "self-reported:mimo-v26-programbench",
-      "observation_sha256": "388b5ef22736e65afe2c380da226671f960751d47608f7e928958b44ae5b1e2d",
-      "critic_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
-      "producer_models": [
-        "openai/gpt-5.6-sol"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/review-r2.json",
-      "review_sha256": "6052a7d5e89552802c44019df387b6f2cb1f3612137b253fefcc58ba71955a8d",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/artifact-r2.json",
-      "review_row": "self-reported:mimo-v26-programbench",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/packet-r2.json#self-reported:mimo-v26-programbench"
-    },
-    {
-      "id": "self-reported:mimo-v26-sec-bench-pro",
-      "observation_sha256": "402184806de676a4f7b92ddf4d7d9145fbff37e12231edc1a629efadfcd0a579",
-      "critic_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
-      "producer_models": [
-        "openai/gpt-5.6-sol"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/review-r2.json",
-      "review_sha256": "6052a7d5e89552802c44019df387b6f2cb1f3612137b253fefcc58ba71955a8d",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/artifact-r2.json",
-      "review_row": "self-reported:mimo-v26-sec-bench-pro",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/packet-r2.json#self-reported:mimo-v26-sec-bench-pro"
-    },
-    {
-      "id": "self-reported:mimo-v26-terminal-bench-2-1",
-      "observation_sha256": "2b980fb4eac0fffd0d153db419486627df6849dfe42d406a42f4ce757039bbb8",
-      "critic_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
-      "producer_models": [
-        "openai/gpt-5.6-sol"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/review-r2.json",
-      "review_sha256": "6052a7d5e89552802c44019df387b6f2cb1f3612137b253fefcc58ba71955a8d",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/artifact-r2.json",
-      "review_row": "self-reported:mimo-v26-terminal-bench-2-1",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/packet-r2.json#self-reported:mimo-v26-terminal-bench-2-1"
-    },
-    {
-      "id": "self-reported:mimo-v26-terminal-bench-4-0",
-      "observation_sha256": "5636345925b9b008fc9a1a65b4f406928bad33912441b2927daf3c0fbd4fb51a",
-      "critic_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
-      "producer_models": [
-        "openai/gpt-5.6-sol"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/review-r2.json",
-      "review_sha256": "6052a7d5e89552802c44019df387b6f2cb1f3612137b253fefcc58ba71955a8d",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/artifact-r2.json",
-      "review_row": "self-reported:mimo-v26-terminal-bench-4-0",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/packet-r2.json#self-reported:mimo-v26-terminal-bench-4-0"
-    },
-    {
-      "id": "self-reported:mimo-v26-toolathlon-verified",
-      "observation_sha256": "8ea8ee3be570be590794ad0f0bd4c821df2c05c0cf05a00cc2f3723bf9bee8bb",
-      "critic_model": "chutes/deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
-      "producer_models": [
-        "openai/gpt-5.6-sol"
-      ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/review-r2.json",
-      "review_sha256": "6052a7d5e89552802c44019df387b6f2cb1f3612137b253fefcc58ba71955a8d",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/artifact-r2.json",
-      "review_row": "self-reported:mimo-v26-toolathlon-verified",
-      "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-mimo-v26/gauntlet/packet-r2.json#self-reported:mimo-v26-toolathlon-verified"
     }
   ]
 }

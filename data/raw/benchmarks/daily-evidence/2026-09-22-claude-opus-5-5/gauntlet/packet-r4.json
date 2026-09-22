@@ -1,0 +1,422 @@
+{
+  "goal": "Exact-artifact review (round 4): verify all 16 Claude Opus 5.5 vendor-score observations against Anthropic's own documents (captured 2026-09-22).",
+  "criteria": [
+    "Each observation value equals the Claude Opus 5.5 column (first numeric column) of the printed row named in its locator, in the document named by source.url (launch post table or system card Table 8.1.A).",
+    "The benchmark label, printed version, and unit (percent or Elo) match the documents; unversioned labels use dated snapshot-2026-09-22 identities; nothing is invented.",
+    "Every observation has basis self_reported, source URL, published_at 2026-09-22, retrieved_at, sha256 and file.",
+    "Protocol notes are supported by the evidence text (effort settings, xhigh for Terminal-Bench 4.0, Zapier-run AutomationBench, Artificial-Analysis-run GDPval-AA/AA-Briefcase, with/no tools for HLE, partial vs strict for OSWorld 2.0, length-adjusted HealthBench Professional, safeguard fallback models). The standard-configuration sentence comes from the Table 8.1.A caption and the launch-post footnote text.",
+    "Model id convention: catalog row claude-opus-5.5::max is Anthropic's standard evaluation configuration; the Terminal-Bench 4.0 row states xhigh in subject.variant and protocol by design (the catalog has no xhigh row yet). Flag only if that disclosure is missing or wrong.",
+    "Return JSON: {\"artifact_id\",\"artifact_sha256\",\"round\":4,\"verdict\":\"pass\"|\"revise\",\"coverage_checked\":[ids],\"errors_found\":n,\"findings\":[],\"fixed\":[],\"missing_evidence\":[],\"uncertainties\":[]}. Pass only with all 16 ids in coverage_checked, errors_found 0, findings [], missing_evidence []."
+  ],
+  "prior_review": {
+    "round": 3,
+    "verdict": "pass",
+    "resolution": "Round 3 passed with 0 findings. Round 4 changes only the locator wording from column \"X\" to under \"X\" (repository locator convention); values, units, protocols and sources are unchanged. Judge only the current artifact."
+  },
+  "artifact_id": "self-reported:claude-opus-55",
+  "artifact_sha256": "fb03c2cf889d7f5795ff0fbb36d1f165651ac869ed068c9679703b2dd5af1c33",
+  "artifact": [
+    {
+      "id": "self-reported:claude-opus-55-aa-briefcase-v1-1",
+      "benchmark_id": "anthropic-aa-briefcase-v1-1::1.1",
+      "subject": {
+        "source_id": "https://www.anthropic.com/claude-opus-5-5-system-card#Claude-Opus-5.5",
+        "name": "Claude Opus 5.5",
+        "model_id": "claude-opus-5.5::max",
+        "variant": "max effort (adaptive thinking)",
+        "harness": null
+      },
+      "value": 1822,
+      "unit": "Elo",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+        "retrieved_at": "2026-09-22T16:55:31.262433+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "95a7b26f5d4497072d973935ccb674978149f16db396d425b4b544581fcbc728",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/95a7b26f5d4497072d97.gz",
+        "locator": "System card Table 8.1.A (page 174), row \"AA-Briefcase v1.1\", under \"Claude Opus 5.5\" (first column of: Claude Opus 5.5 | Claude Opus 5 | Claude Fable 5.1 | GPT-6 Astra); printed row: AA-Briefcase v1.1 1822 1673 1678 1569"
+      },
+      "protocol": "Vendor-reported by Anthropic for Claude Opus 5.5 in the Claude Opus 5.5 System Card (PDF, text layer), printed as \"AA-Briefcase v1.1\". Standard configuration per Anthropic unless noted otherwise (system card Table 8.1.A caption): adaptive thinking at max effort, default sampling, averaged over five trials; production safeguards enabled (when they intervened, cyber tasks fell back to Claude Opus 4.8 and biology/frontier-LLM tasks to Claude Opus 5). System card Table 8.1.A. Elo at max effort; section 8.14.4: AA-Briefcase v1.1 is developed by Artificial Analysis and \"Evaluations were run independently by Artificial Analysis\". Kept as self_reported because the value is taken from Anthropic's document. No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:claude-opus-55-automationbench",
+      "benchmark_id": "anthropic-automationbench::snapshot-2026-09-22",
+      "subject": {
+        "source_id": "https://www.anthropic.com/claude-opus-5-5#Claude-Opus-5.5",
+        "name": "Claude Opus 5.5",
+        "model_id": "claude-opus-5.5::max",
+        "variant": "max effort (adaptive thinking)",
+        "harness": null
+      },
+      "value": 40,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.anthropic.com/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T16:55:28.015660+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "4418b9b4f881510f195fd0dc2aa3e7ee5d8e3868d954c9e75a66ac8fe860e149",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/4418b9b4f881510f195f.gz",
+        "locator": "Launch post benchmark table, row \"AutomationBench\", under \"Opus 5.5\" (first column of: Opus 5.5 | Fable 5.1 | Opus 5 | GPT-6 Astra | GPT-5.6 Sol); printed row: 40.0% | 31.4% | 26.9% | 41.4% | 28.8%"
+      },
+      "protocol": "Vendor-reported by Anthropic for Claude Opus 5.5 in the Claude Opus 5.5 launch post, printed as \"AutomationBench\". Standard configuration per Anthropic unless noted otherwise (system card Table 8.1.A caption): adaptive thinking at max effort, default sampling, averaged over five trials; production safeguards enabled (when they intervened, cyber tasks fell back to Claude Opus 4.8 and biology/frontier-LLM tasks to Claude Opus 5). Footnote 2: run and reported by Zapier during early access, without fallback models (safeguard interventions counted as failures). No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:claude-opus-55-chartography-with-tools",
+      "benchmark_id": "anthropic-chartography-with-tools::snapshot-2026-09-22",
+      "subject": {
+        "source_id": "https://www.anthropic.com/claude-opus-5-5#Claude-Opus-5.5",
+        "name": "Claude Opus 5.5",
+        "model_id": "claude-opus-5.5::max",
+        "variant": "max effort (adaptive thinking)",
+        "harness": null
+      },
+      "value": 89,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.anthropic.com/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T16:55:28.015660+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "4418b9b4f881510f195fd0dc2aa3e7ee5d8e3868d954c9e75a66ac8fe860e149",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/4418b9b4f881510f195f.gz",
+        "locator": "Launch post benchmark table, row \"Chartography (with tools)\", under \"Opus 5.5\" (first column of: Opus 5.5 | Fable 5.1 | Opus 5 | GPT-6 Astra | GPT-5.6 Sol); printed row: 89.0% with tools | 88.4% with tools | 83.4% with tools | \u2014 | \u2014"
+      },
+      "protocol": "Vendor-reported by Anthropic for Claude Opus 5.5 in the Claude Opus 5.5 launch post, printed as \"Chartography (with tools)\". Standard configuration per Anthropic unless noted otherwise (system card Table 8.1.A caption): adaptive thinking at max effort, default sampling, averaged over five trials; production safeguards enabled (when they intervened, cyber tasks fell back to Claude Opus 4.8 and biology/frontier-LLM tasks to Claude Opus 5). With tools. No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:claude-opus-55-cursorbench-4-0",
+      "benchmark_id": "anthropic-cursorbench-4-0::4.0",
+      "subject": {
+        "source_id": "https://www.anthropic.com/claude-opus-5-5#Claude-Opus-5.5",
+        "name": "Claude Opus 5.5",
+        "model_id": "claude-opus-5.5::max",
+        "variant": "max effort (adaptive thinking)",
+        "harness": null
+      },
+      "value": 57.8,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.anthropic.com/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T16:55:28.015660+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "4418b9b4f881510f195fd0dc2aa3e7ee5d8e3868d954c9e75a66ac8fe860e149",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/4418b9b4f881510f195f.gz",
+        "locator": "Launch post benchmark table, row \"CursorBench 4.0\", under \"Opus 5.5\" (first column of: Opus 5.5 | Fable 5.1 | Opus 5 | GPT-6 Astra | GPT-5.6 Sol); printed row: 57.8% | 51.8% | 46.6% | \u2014 | 41.7%"
+      },
+      "protocol": "Vendor-reported by Anthropic for Claude Opus 5.5 in the Claude Opus 5.5 launch post, printed as \"CursorBench 4.0\". Standard configuration per Anthropic unless noted otherwise (system card Table 8.1.A caption): adaptive thinking at max effort, default sampling, averaged over five trials; production safeguards enabled (when they intervened, cyber tasks fell back to Claude Opus 4.8 and biology/frontier-LLM tasks to Claude Opus 5). Max effort (system card section 8.8: \"Opus 5.5 scored 57.8% on CursorBench at max effort\"). The post separately states 52.5% at default (medium) effort; this row keeps the table value. No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:claude-opus-55-frontiercode-v1-1-main",
+      "benchmark_id": "anthropic-frontiercode-v1-1-main::1.1",
+      "subject": {
+        "source_id": "https://www.anthropic.com/claude-opus-5-5#Claude-Opus-5.5",
+        "name": "Claude Opus 5.5",
+        "model_id": "claude-opus-5.5::max",
+        "variant": "max effort (adaptive thinking)",
+        "harness": null
+      },
+      "value": 54.4,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.anthropic.com/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T16:55:28.015660+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "4418b9b4f881510f195fd0dc2aa3e7ee5d8e3868d954c9e75a66ac8fe860e149",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/4418b9b4f881510f195f.gz",
+        "locator": "Launch post benchmark table, row \"FrontierCode v1.1 (Main)\", under \"Opus 5.5\" (first column of: Opus 5.5 | Fable 5.1 | Opus 5 | GPT-6 Astra | GPT-5.6 Sol); printed row: 54.4% | 50.3% | 48.0% | 53.3% | 47.5%"
+      },
+      "protocol": "Vendor-reported by Anthropic for Claude Opus 5.5 in the Claude Opus 5.5 launch post, printed as \"FrontierCode v1.1 (Main)\". Standard configuration per Anthropic unless noted otherwise (system card Table 8.1.A caption): adaptive thinking at max effort, default sampling, averaged over five trials; production safeguards enabled (when they intervened, cyber tasks fell back to Claude Opus 4.8 and biology/frontier-LLM tasks to Claude Opus 5). Main set, max effort (system card section 8.4: \"At max effort, Opus 5.5 scores 54.4% on Main\"). The post separately states 54.6% at default (medium) effort; this row keeps the table value. No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:claude-opus-55-gdpval-aa-v2-1",
+      "benchmark_id": "anthropic-gdpval-aa-v2-1::2.1",
+      "subject": {
+        "source_id": "https://www.anthropic.com/claude-opus-5-5#Claude-Opus-5.5",
+        "name": "Claude Opus 5.5",
+        "model_id": "claude-opus-5.5::max",
+        "variant": "max effort (adaptive thinking)",
+        "harness": null
+      },
+      "value": 1846,
+      "unit": "Elo",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.anthropic.com/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T16:55:28.015660+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "4418b9b4f881510f195fd0dc2aa3e7ee5d8e3868d954c9e75a66ac8fe860e149",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/4418b9b4f881510f195f.gz",
+        "locator": "Launch post benchmark table, row \"GDPval-AA v2.1\", under \"Opus 5.5\" (first column of: Opus 5.5 | Fable 5.1 | Opus 5 | GPT-6 Astra | GPT-5.6 Sol); printed row: 1846 | 1735 | 1708 | 1542 | 1588"
+      },
+      "protocol": "Vendor-reported by Anthropic for Claude Opus 5.5 in the Claude Opus 5.5 launch post, printed as \"GDPval-AA v2.1\". Standard configuration per Anthropic unless noted otherwise (system card Table 8.1.A caption): adaptive thinking at max effort, default sampling, averaged over five trials; production safeguards enabled (when they intervened, cyber tasks fell back to Claude Opus 4.8 and biology/frontier-LLM tasks to Claude Opus 5). Elo at max effort. System card section 8.14.3: GDPval-AA v2.1 is developed by Artificial Analysis, Elo from blind pairwise comparisons anchored to DeepSeek V4.1 Flash (max) at 1,600, and \"Evaluations were run independently by Artificial Analysis\". Kept as self_reported because the value is taken from Anthropic's document, not from Artificial Analysis's own publication. No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:claude-opus-55-healthbench-professional",
+      "benchmark_id": "anthropic-healthbench-professional::snapshot-2026-09-22",
+      "subject": {
+        "source_id": "https://www.anthropic.com/claude-opus-5-5-system-card#Claude-Opus-5.5",
+        "name": "Claude Opus 5.5",
+        "model_id": "claude-opus-5.5::max",
+        "variant": "max effort (adaptive thinking)",
+        "harness": null
+      },
+      "value": 65.6,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+        "retrieved_at": "2026-09-22T16:55:31.262433+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "95a7b26f5d4497072d973935ccb674978149f16db396d425b4b544581fcbc728",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/95a7b26f5d4497072d97.gz",
+        "locator": "System card Table 8.1.A (page 174), row \"HealthBench Professional\", under \"Claude Opus 5.5\" (first column of: Claude Opus 5.5 | Claude Opus 5 | Claude Fable 5.1 | GPT-6 Astra); printed row: HealthBench Professional 65.6 59.8 62.1 63.4"
+      },
+      "protocol": "Vendor-reported by Anthropic for Claude Opus 5.5 in the Claude Opus 5.5 System Card (PDF, text layer), printed as \"HealthBench Professional\". Standard configuration per Anthropic unless noted otherwise (system card Table 8.1.A caption): adaptive thinking at max effort, default sampling, averaged over five trials; production safeguards enabled (when they intervened, cyber tasks fell back to Claude Opus 4.8 and biology/frontier-LLM tasks to Claude Opus 5). System card Table 8.1.A. Section 8.15.2 shows this is the length-adjusted score (raw score 77.1%). No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:claude-opus-55-hle-no-tools",
+      "benchmark_id": "anthropic-hle-no-tools::snapshot-2026-09-22",
+      "subject": {
+        "source_id": "https://www.anthropic.com/claude-opus-5-5-system-card#Claude-Opus-5.5",
+        "name": "Claude Opus 5.5",
+        "model_id": "claude-opus-5.5::max",
+        "variant": "max effort (adaptive thinking)",
+        "harness": null
+      },
+      "value": 64.4,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+        "retrieved_at": "2026-09-22T16:55:31.262433+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "95a7b26f5d4497072d973935ccb674978149f16db396d425b4b544581fcbc728",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/95a7b26f5d4497072d97.gz",
+        "locator": "System card Table 8.1.A (page 174), row \"Humanity's Last Exam (no tools)\", under \"Claude Opus 5.5\" (first column of: Claude Opus 5.5 | Claude Opus 5 | Claude Fable 5.1 | GPT-6 Astra); printed row: Humanity's Last Exam No tools 64.4 56.6 60.9 \u2013"
+      },
+      "protocol": "Vendor-reported by Anthropic for Claude Opus 5.5 in the Claude Opus 5.5 System Card (PDF, text layer), printed as \"Humanity's Last Exam (no tools)\". Standard configuration per Anthropic unless noted otherwise (system card Table 8.1.A caption): adaptive thinking at max effort, default sampling, averaged over five trials; production safeguards enabled (when they intervened, cyber tasks fell back to Claude Opus 4.8 and biology/frontier-LLM tasks to Claude Opus 5). System card Table 8.1.A, no tools. No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:claude-opus-55-hle-with-tools",
+      "benchmark_id": "anthropic-hle-with-tools::snapshot-2026-09-22",
+      "subject": {
+        "source_id": "https://www.anthropic.com/claude-opus-5-5#Claude-Opus-5.5",
+        "name": "Claude Opus 5.5",
+        "model_id": "claude-opus-5.5::max",
+        "variant": "max effort (adaptive thinking)",
+        "harness": null
+      },
+      "value": 67.7,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.anthropic.com/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T16:55:28.015660+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "4418b9b4f881510f195fd0dc2aa3e7ee5d8e3868d954c9e75a66ac8fe860e149",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/4418b9b4f881510f195f.gz",
+        "locator": "Launch post benchmark table, row \"Humanity's Last Exam (with tools)\", under \"Opus 5.5\" (first column of: Opus 5.5 | Fable 5.1 | Opus 5 | GPT-6 Astra | GPT-5.6 Sol); printed row: 67.7% with tools | 65.6% with tools | 63.6% with tools | 57.2% with tools | \u2014"
+      },
+      "protocol": "Vendor-reported by Anthropic for Claude Opus 5.5 in the Claude Opus 5.5 launch post, printed as \"Humanity's Last Exam (with tools)\". Standard configuration per Anthropic unless noted otherwise (system card Table 8.1.A caption): adaptive thinking at max effort, default sampling, averaged over five trials; production safeguards enabled (when they intervened, cyber tasks fell back to Claude Opus 4.8 and biology/frontier-LLM tasks to Claude Opus 5). With tools; Anthropic applies its own blocklist and transcript screening (system card sections 8.11.1 and 9.2). No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:claude-opus-55-osworld-2-0-partial",
+      "benchmark_id": "anthropic-osworld-2-0-partial::2.0",
+      "subject": {
+        "source_id": "https://www.anthropic.com/claude-opus-5-5#Claude-Opus-5.5",
+        "name": "Claude Opus 5.5",
+        "model_id": "claude-opus-5.5::max",
+        "variant": "max effort (adaptive thinking)",
+        "harness": null
+      },
+      "value": 81.8,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.anthropic.com/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T16:55:28.015660+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "4418b9b4f881510f195fd0dc2aa3e7ee5d8e3868d954c9e75a66ac8fe860e149",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/4418b9b4f881510f195f.gz",
+        "locator": "Launch post benchmark table, row \"OSWorld 2.0 (partial score)\", under \"Opus 5.5\" (first column of: Opus 5.5 | Fable 5.1 | Opus 5 | GPT-6 Astra | GPT-5.6 Sol); printed row: 81.8% partial | 80.7% partial | 74.0% partial | \u2014 | \u2014"
+      },
+      "protocol": "Vendor-reported by Anthropic for Claude Opus 5.5 in the Claude Opus 5.5 launch post, printed as \"OSWorld 2.0 (partial score)\". Standard configuration per Anthropic unless noted otherwise (system card Table 8.1.A caption): adaptive thinking at max effort, default sampling, averaged over five trials; production safeguards enabled (when they intervened, cyber tasks fell back to Claude Opus 4.8 and biology/frontier-LLM tasks to Claude Opus 5). Partial-credit score. System card section 8.13.3: partial score 81.8%, strict pass rate 48.7%; task files and harness configuration differ from earlier releases, so results are not directly comparable to other harness configurations. No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:claude-opus-55-osworld-2-0-strict",
+      "benchmark_id": "anthropic-osworld-2-0-strict::2.0",
+      "subject": {
+        "source_id": "https://www.anthropic.com/claude-opus-5-5-system-card#Claude-Opus-5.5",
+        "name": "Claude Opus 5.5",
+        "model_id": "claude-opus-5.5::max",
+        "variant": "max effort (adaptive thinking)",
+        "harness": null
+      },
+      "value": 48.7,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+        "retrieved_at": "2026-09-22T16:55:31.262433+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "95a7b26f5d4497072d973935ccb674978149f16db396d425b4b544581fcbc728",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/95a7b26f5d4497072d97.gz",
+        "locator": "System card Table 8.1.A (page 174), row \"OSWorld 2.0 (strict pass rate)\", under \"Claude Opus 5.5\" (first column of: Claude Opus 5.5 | Claude Opus 5 | Claude Fable 5.1 | GPT-6 Astra); printed row: OSWorld 2.0 (partial/strict) 81.8/48.7 74.0/37.2 80.7/42.8 \u2013"
+      },
+      "protocol": "Vendor-reported by Anthropic for Claude Opus 5.5 in the Claude Opus 5.5 System Card (PDF, text layer), printed as \"OSWorld 2.0 (strict pass rate)\". Standard configuration per Anthropic unless noted otherwise (system card Table 8.1.A caption): adaptive thinking at max effort, default sampling, averaged over five trials; production safeguards enabled (when they intervened, cyber tasks fell back to Claude Opus 4.8 and biology/frontier-LLM tasks to Claude Opus 5). System card Table 8.1.A, strict pass rate (second value of partial/strict); section 8.13.3 prints strict pass rate 48.7%. No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:claude-opus-55-swe-bench-multilingual",
+      "benchmark_id": "anthropic-swe-bench-multilingual::snapshot-2026-09-22",
+      "subject": {
+        "source_id": "https://www.anthropic.com/claude-opus-5-5-system-card#Claude-Opus-5.5",
+        "name": "Claude Opus 5.5",
+        "model_id": "claude-opus-5.5::max",
+        "variant": "max effort (adaptive thinking)",
+        "harness": null
+      },
+      "value": 93.9,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+        "retrieved_at": "2026-09-22T16:55:31.262433+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "95a7b26f5d4497072d973935ccb674978149f16db396d425b4b544581fcbc728",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/95a7b26f5d4497072d97.gz",
+        "locator": "System card Table 8.1.A (page 174), row \"SWE-bench Multilingual\", under \"Claude Opus 5.5\" (first column of: Claude Opus 5.5 | Claude Opus 5 | Claude Fable 5.1 | GPT-6 Astra); printed row: SWE-bench Multilingual 93.9 89.5 89.1 -"
+      },
+      "protocol": "Vendor-reported by Anthropic for Claude Opus 5.5 in the Claude Opus 5.5 System Card (PDF, text layer), printed as \"SWE-bench Multilingual\". Standard configuration per Anthropic unless noted otherwise (system card Table 8.1.A caption): adaptive thinking at max effort, default sampling, averaged over five trials; production safeguards enabled (when they intervened, cyber tasks fell back to Claude Opus 4.8 and biology/frontier-LLM tasks to Claude Opus 5). System card Table 8.1.A. No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:claude-opus-55-swe-bench-multimodal",
+      "benchmark_id": "anthropic-swe-bench-multimodal::snapshot-2026-09-22",
+      "subject": {
+        "source_id": "https://www.anthropic.com/claude-opus-5-5-system-card#Claude-Opus-5.5",
+        "name": "Claude Opus 5.5",
+        "model_id": "claude-opus-5.5::max",
+        "variant": "max effort (adaptive thinking)",
+        "harness": null
+      },
+      "value": 61.4,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+        "retrieved_at": "2026-09-22T16:55:31.262433+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "95a7b26f5d4497072d973935ccb674978149f16db396d425b4b544581fcbc728",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/95a7b26f5d4497072d97.gz",
+        "locator": "System card Table 8.1.A (page 174), row \"SWE-bench Multimodal\", under \"Claude Opus 5.5\" (first column of: Claude Opus 5.5 | Claude Opus 5 | Claude Fable 5.1 | GPT-6 Astra); printed row: SWE-bench Multimodal 61.4 59.4 54.7 -"
+      },
+      "protocol": "Vendor-reported by Anthropic for Claude Opus 5.5 in the Claude Opus 5.5 System Card (PDF, text layer), printed as \"SWE-bench Multimodal\". Standard configuration per Anthropic unless noted otherwise (system card Table 8.1.A caption): adaptive thinking at max effort, default sampling, averaged over five trials; production safeguards enabled (when they intervened, cyber tasks fell back to Claude Opus 4.8 and biology/frontier-LLM tasks to Claude Opus 5). System card Table 8.1.A. No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:claude-opus-55-swe-bench-pro",
+      "benchmark_id": "anthropic-swe-bench-pro::snapshot-2026-09-22",
+      "subject": {
+        "source_id": "https://www.anthropic.com/claude-opus-5-5-system-card#Claude-Opus-5.5",
+        "name": "Claude Opus 5.5",
+        "model_id": "claude-opus-5.5::max",
+        "variant": "max effort (adaptive thinking)",
+        "harness": null
+      },
+      "value": 89.9,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+        "retrieved_at": "2026-09-22T16:55:31.262433+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "95a7b26f5d4497072d973935ccb674978149f16db396d425b4b544581fcbc728",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/95a7b26f5d4497072d97.gz",
+        "locator": "System card Table 8.1.A (page 174), row \"SWE-bench Pro\", under \"Claude Opus 5.5\" (first column of: Claude Opus 5.5 | Claude Opus 5 | Claude Fable 5.1 | GPT-6 Astra); printed row: SWE-bench Pro 89.9 79.2 81.2 \u2013"
+      },
+      "protocol": "Vendor-reported by Anthropic for Claude Opus 5.5 in the Claude Opus 5.5 System Card (PDF, text layer), printed as \"SWE-bench Pro\". Standard configuration per Anthropic unless noted otherwise (system card Table 8.1.A caption): adaptive thinking at max effort, default sampling, averaged over five trials; production safeguards enabled (when they intervened, cyber tasks fell back to Claude Opus 4.8 and biology/frontier-LLM tasks to Claude Opus 5). System card Table 8.1.A and section 8.2 (average over five trials); the card does not name the SWE-bench Pro split. No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:claude-opus-55-terminal-bench-4-0",
+      "benchmark_id": "anthropic-terminal-bench-4-0::4.0",
+      "subject": {
+        "source_id": "https://www.anthropic.com/claude-opus-5-5#Claude-Opus-5.5",
+        "name": "Claude Opus 5.5",
+        "model_id": "claude-opus-5.5::max",
+        "variant": "xhigh effort",
+        "harness": null
+      },
+      "value": 66.4,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.anthropic.com/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T16:55:28.015660+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "4418b9b4f881510f195fd0dc2aa3e7ee5d8e3868d954c9e75a66ac8fe860e149",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/4418b9b4f881510f195f.gz",
+        "locator": "Launch post benchmark table, row \"Terminal-Bench 4.0\", under \"Opus 5.5\" (first column of: Opus 5.5 | Fable 5.1 | Opus 5 | GPT-6 Astra | GPT-5.6 Sol); printed row: 66.4% | 55.8% | 52.3% | 57.9% | 37.3%"
+      },
+      "protocol": "Vendor-reported by Anthropic for Claude Opus 5.5 in the Claude Opus 5.5 launch post, printed as \"Terminal-Bench 4.0\". Standard configuration per Anthropic unless noted otherwise (system card Table 8.1.A caption): adaptive thinking at max effort, default sampling, averaged over five trials; production safeguards enabled (when they intervened, cyber tasks fell back to Claude Opus 4.8 and biology/frontier-LLM tasks to Claude Opus 5). Footnote 1: reported at xhigh effort (the model's highest score), standard error \u00b12.6 pts. System card section 8.5 prints 66.36% (Claude Code --bare, xhigh) and 64.8% at max effort. No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:claude-opus-55-terminal-bench-science-0-1",
+      "benchmark_id": "anthropic-terminal-bench-science-0-1::0.1",
+      "subject": {
+        "source_id": "https://www.anthropic.com/claude-opus-5-5#Claude-Opus-5.5",
+        "name": "Claude Opus 5.5",
+        "model_id": "claude-opus-5.5::max",
+        "variant": "max effort (adaptive thinking)",
+        "harness": null
+      },
+      "value": 58.7,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www.anthropic.com/claude-opus-5-5",
+        "retrieved_at": "2026-09-22T16:55:28.015660+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "4418b9b4f881510f195fd0dc2aa3e7ee5d8e3868d954c9e75a66ac8fe860e149",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/4418b9b4f881510f195f.gz",
+        "locator": "Launch post benchmark table, row \"Terminal-Bench-Science 0.1\", under \"Opus 5.5\" (first column of: Opus 5.5 | Fable 5.1 | Opus 5 | GPT-6 Astra | GPT-5.6 Sol); printed row: 58.7% | 52.6% | 29.0% | 64.6% | 22.4%"
+      },
+      "protocol": "Vendor-reported by Anthropic for Claude Opus 5.5 in the Claude Opus 5.5 launch post, printed as \"Terminal-Bench-Science 0.1\". Standard configuration per Anthropic unless noted otherwise (system card Table 8.1.A caption): adaptive thinking at max effort, default sampling, averaged over five trials; production safeguards enabled (when they intervened, cyber tasks fell back to Claude Opus 4.8 and biology/frontier-LLM tasks to Claude Opus 5). Footnote 3: standard error \u00b13.5\u20135 pts per model. System card section 8.6: this run averaged 10 trials per task (700 trials), not five. No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null
+    }
+  ],
+  "evidence": {
+    "launch_post (visible text of captured HTML https://www.anthropic.com/claude-opus-5-5; \" | \" separates text nodes; table columns in order: Opus 5.5 | Fable 5.1 | Opus 5 | GPT-6 Astra | GPT-5.6 Sol) \u2014 benchmark table and footnotes": "On our benchmarks, Claude Opus 5.5 leads in agentic coding, computer use, and knowledge work. That said, at these levels of capability we\u2019ve found that benchmark margins have become a less reliable guide to real-world differences. In our own use, the gap between Opus 5.5 and Claude Fable 5.1 is narrower than these scores suggest. | Opus 5.5 | Fable 5.1 | Opus 5 | GPT-6 Astra | GPT-5.6 Sol | Agentic coding | Terminal-Bench 4.0\u00b9 | Agentic coding | Terminal-Bench 4.0\u00b9 | 66.4% | 55.8% | 52.3% | 57.9% | 37.3% | Agentic coding | FrontierCode v1.1 (Main) | Agentic coding | FrontierCode v1.1 (Main) | 54.4% | 50.3% | 48.0% | 53.3% | 47.5% | Agentic coding | CursorBench 4.0 | Agentic coding | CursorBench 4.0 | 57.8% | 51.8% | 46.6% | \u2014 | 41.7% | Knowledge work | GDPval-AA v2.1 | Knowledge work | GDPval-AA v2.1 | 1846 | 1735 | 1708 | 1542 | 1588 | Business workflows | AutomationBench\u00b2 | Business workflows | AutomationBench\u00b2 | 40.0% | 31.4% | 26.9% | 41.4% | 28.8% | Multidisciplinary reasoning | Humanity's Last Exam | Multidisciplinary reasoning | Humanity's Last Exam | 67.7% | with tools | 65.6% | with tools | 63.6% | with tools | 57.2% | with tools | \u2014 | Agentic scientific research | Terminal-Bench-Science 0.1\u00b3 | Agentic scientific research | Terminal-Bench-Science 0.1\u00b3 | 58.7% | 52.6% | 29.0% | 64.6% | 22.4% | Computer use | OSWorld 2.0 | Computer use | OSWorld 2.0 | 81.8% | partial | 80.7% | partial | 74.0% | partial | \u2014 | \u2014 | Visual chart recognition | Chartography | Visual chart recognition | Chartography | 89.0% | with tools | 88.4% | with tools | 83.4% | with tools | \u2014 | \u2014 | Unless otherwise noted, all Claude Opus 5.5 results use adaptive thinking at max effort. Terminal-Bench 4.0 results are reported for Claude Opus 5.5 at xhigh effort and GPT-6 Astra at high effort, as reported by OpenAI; these represent each model\u2019s highest score. Claude Opus 5.5 was evaluated with its production safeguards enabled. When they intervened, cybersecurity tasks were completed by Claude Opus 4.8, and biology and frontier LLM development tasks were completed by Claude Opus 5. This likely reduces Claude Opus 5.5\u2019s performance on these benchmarks. | 1 | Terminal-Bench 4.0: | The standard error is \u00b12.6 pts for Claude Opus 5.5 and \u00b11.6\u20132 pts for the other Claude models. The public leaderboard (5 trials/task, Claude Code harness) reports Claude Opus 5 at 51.8%; our setup reproduces it at 52.3%, within noise. GPT-6 Astra and GPT-5.6 Sol figures are as reported by OpenAI. | 2 | AutomationBench: | AutomationBench results were run and reported by Zapier. These runs were performed without fallback models, so safeguard interventions were considered failures\u2014this resulted in a lower score than Claude Opus 5.5 would achieve in practice. Claude Opus 5.5 results come from Zapier\u2019s own evaluation during early access. Results for Opus 5, GPT-5.6 Sol, and GPT-6 Astra come from Zapier\u2019s public leaderboard. | 3 | Terminal-Bench-Science 0.1: | The standard error is \u00b13.5\u20135 pts per model. The public leaderboard (3 trials/task, Claude Code harness) reports Claude Opus 5 at 30.0%; our setup reproduces it at 29.0%, within noise. The GPT-6 Astra figure is as reported by OpenAI. | ",
+    "launch_post \u2014 coding efficiency text and chart captions": "Opus 5.5 delivers frontier results on agentic coding at a fraction of the cost. At its default effort level on FrontierCode, it beats GPT-6 Astra at roughly 20% of the cost per task. On Terminal Bench 4.0, it matches Astra for about 40% of the cost, while on CursorBench it beats GPT-5.6 Sol by 11 points for about a third of the cost. | Agentic terminal coding | Agentic coding: FrontierCode | Agentic coding: CursorBench | Agentic terminal coding | Agentic coding: FrontierCode | Agentic coding: CursorBench | Terminal-Bench 4.0 | Accuracy vs Cost | Opus 5.5 | Fable 5.1 | Opus 5 | GPT-6 Astra | GPT-5.6 Sol | 0 | 10 | 20 | 30 | 40 | 50 | 60 | 70 | Score (%) | 2 | 5 | 10 | 20 | Cost per attempt (USD, log scale) | low | med | high | xhigh | max | Terminal-Bench 4.0 measures how well a model can complete complex, multi-step professional tasks within a command line interface. Opus 5.5 at default effort beats Opus 5 at max effort for about a fifth of the cost. It matches GPT-6 Astra at about 40% of the cost. | FrontierCode v1.1, main set | Accuracy vs Cost | Opus 5.5 | Fable 5.1 | Opus 5 | GPT-6 Astra | GPT-5.6 Sol | 35 | 40 | 45 | 50 | 55 | 0 | Score (%) | 0.50 | 1 | 2 | 5 | 10 | Cost per task (USD, log scale) | low | med | high | xhigh | max | FrontierCode measures whether an agent\u2019s code changes would be merged. At default effort (medium), Opus 5.5 scores 54.6%, higher than all other models, beating GPT-6 Astra\u2019s top score (53.3%) for about a fifth of the cost per task. | CursorBench 4.0 | Accuracy vs Cost | Opus 5.5 | Fable 5.1 | Opus 5 | GPT-5.6 Sol | 25 | 30 | 35 | 40 | 45 | 50 | 55 | 60 | 0 | Score (%) | 1 | 2 | 5 | 10 | 20 | Cost per task (USD, log scale) | low | med | high | xhigh | max | CursorBench evaluates coding agents on ambiguous, multi-file tasks taken from real Cursor sessions. At default effort (medium), Opus 5.5 scores 52.5%, compared to 51.8% for Fable 5.1 (max) and 46.6% for Opus 5 (max). It beats GPT-5.6 Sol\u2019s top score (41.7%) by 11 points for about a third of the cost per task. | ",
+    "launch_post \u2014 GDPval-AA caption": "Artificial Analysis\u2019s GDPval-AA v2.1 evaluates agents on real-world professional work across 44 occupations. At max effort, Opus 5.5 scores 1846 Elo, where Fable 5.1 scores 1735 and Opus 5 scores 1708. At default effort (medium), Opus 5.5 beats GPT-6 Astra at max effort for about a fifth of the cost per task. | AutomationBench | Accuracy vs Cost | Opus 5.5 | Opus 5 | GPT-6 Astra | GPT-5.6 Sol | 0 | 10 | 20 | 30 | 40 | Score (%) | 0.50 | 1 | 2 | Cost per attempt (USD, log scale) | low | med | high | xhigh | max | ",
+    "launch_post \u2014 pricing": "Pricing | Prices per 1M tokens | Claude Opus 5.5 | Claude Opus 5 | Cache reads | $0.20 | $0.50 | Input tokens | $4 | $5 | Output tokens | $20 | $25 | Cache writes | $5 | $6.25 | Fast mode for Opus 5.5 is also available in Claude Code and the Claude Platform with up to 2.5x speed. It costs $8 per million input tokens and $40 per million output tokens. ",
+    "system_card (pdftotext -layout of https://www.anthropic.com/claude-opus-5-5-system-card) Table 8.1.A": "8.1 Evaluation summary\n\nEvaluation                                                    Claude family models                  Other\n                                                                                                    models\n\n                                                  Claude           Claude         Claude          GPT-6\n                                                  Opus 5.5         Opus 5         Fable 5.1       Astra\n\nSWE-bench Pro                                         89.9             79.2            81.2             \u2013\n\nSWE-bench Multilingual                                93.9            89.5             89.1             -\n\nSWE-bench Multimodal                                   61.4           59.4             54.7             -\n\nFrontierCode v1.1 (Main)                              54.4            48.0            50.3            53.3\n\nTerminal-Bench 4.0                                    66.4            52.3            55.8             57.9\n\nTerminal-Bench-Science 0.1                             58.7           29.0            52.6            64.6\n\nHumanity\u2019s Last Exam            No tools              64.4            56.6            60.9              \u2013\n\n                                With tools             67.7           63.6            65.6            57.2\n\nOSWorld 2.0 (partial/strict)                       81.8/48.7       74.0/37.2       80.7/42.8            \u2013\n\nHealthBench Professional                              65.6            59.8             62.1           63.4\n\nGDPval-AA v2.1                                        1846            1708            1735            1542\n\nAA-Briefcase v1.1                                     1822            1673            1678            1569\n\nAutomationBench                                       40.0            26.9             31.4            41.4\n[Table 8.1.A] Capability evaluation summary. Unless otherwise noted, all Claude Opus 5.5 results use the\nfollowing standard configuration: adaptive thinking at max effort, default sampling settings (temperature,\ntop_p), averaged over five trials. Terminal-Bench 4.0 score is reported at xhigh effort. Context window sizes\nare evaluation dependent and do not exceed 1M tokens. The best score in each row is bolded. Competitor\nfigures are drawn from the respective developers\u2019 published system cards or benchmark leaderboards. See the\nClaude Opus 5 System Card for evaluation details of earlier Claude models.\n\n\n\n\n ",
+    "system_card 8.2": "8.2 SWE-bench Pro, Multilingual, and Multimodal\nSWE-bench tests AI models on real-world software engineering tasks. We report three\nvariants, where each score is an average over five trials:\n\n     \u25cf\u200b SWE-bench Pro16 is composed of problems drawn from actively maintained\n        repositories with large, multi-file diffs. Claude Opus 5.5 achieved 89.9%.\n     \u25cf\u200b SWE-bench Multilingual extends the format to 300 problems across nine\n        programming languages. Opus 5.5 achieved 93.9%.\n     \u25cf\u200b SWE-bench Multimodal17 adds visual context (screenshots and design mockups) to\n        the issue descriptions. Opus 5.5 achieved 61.4%.\n\n\n",
+    "system_card 8.4 FrontierCode": "8.4 FrontierCode\nFrontierCode is an agentic coding benchmark of 150 software engineering tasks created\nby Cognition. Tasks are derived from real pull requests in open-source repositories, such as\nfixing websocket bugs in aiohttp, hardening Prisma\u2019s browser bundle, or extending JSON\nschema linting rules. Each task gives the agent a checked-out repository, an issue\ndescription, and the repository's testing, lint, and style guidelines; the agent then works\nautonomously in a containerized environment with internet access to produce a final\npatch, with no human intervention and no timeout information. Patches are graded against\nblocking functional criteria (primarily held-out unit tests, plus scope and performance\nblockers) plus weighted rubric criteria, including model-graded checks for required test\ncoverage and prohibited implementation patterns. Tasks were authored by maintainers of\nthe underlying repositories and individually reviewed by Cognition researchers, with a\nrandom subset manually solved to verify fairness. We report FrontierCode\u2019s overall score, a\ncomposite measure that grades each patch on blocking functional criteria (held-out unit\ntests) together with weighted code-quality rubric criteria, as mean@5.\n\n\n\n16\n   Deng, X., et al. (2025). SWE-Bench Pro: Can AI agents solve long-horizon software engineering\ntasks? arXiv:2509.16941. https://arxiv.org/abs/2509.16941\n17\n   Yang, J., et al. (2024). SWE-Bench Multimodal: Do AI Systems generalize to visual software\ndomains? arXiv:2410.03859. https://arxiv.org/abs/2410.03859\n\n\n                                                                                             175\nNote: There is a decline in model performance on FrontierCode (Main and Extended) above\nmedium effort. The evaluation is designed around writing mergeable code diffs without\nrequiring human edits, so its grading penalizes out-of-scope changes that may be\nunnecessary, even if they are high quality or helpful. We report the Claude Opus 5.5 scores\non this benchmark without any changes to the official evaluation.\n\nOpus 5.5 ranks first on FrontierCode (Main) with a 54.6% score (each model at its best\nreasoning effort), improving on Claude Opus 5 (53.4%) and leading Claude Fable 5 (53.5%),\nGPT-6 Astra (53.3%), and Claude Fable 5.1 (52.8%). Opus 5.5 also ranks first on FrontierCode\n(Extended) with a 65.3% score, improving on Claude Opus 5 (63.6%) and leading Claude\nFable 5 (64.9%), GPT-6 Astra (64.5%), and Claude Fable 5.1 (63.6%). Opus 5.5\u2019s highest\nFrontierCode scores\u201454.6% on Main and 65.3% on Extended\u2014are at medium effort. Scores\ndecline above medium effort but mostly recover at max, as the note above describes. At max\neffort, Opus 5.5 scores 54.4% on Main and 63.6% on Extended.\n\n\n\n\n[Figure 8.4.A] FrontierCode v1.1 Main score versus average output tokens per task across reasoning effort\nlevels (low, medium, high, xhigh, and max; GPT-6 Astra also at none). Cognition ran the evaluation for every\nmodel shown and reported the results; Claude models were run in Claude Code and GPT models were run in\nCodex CLI. Cognition\u2019s result files report token counts and no cost, so the x-axis shows average output tokens\nper task on a logarithmic scale. The result files carry no uncertainty intervals, so none are shown; Cognition's\npublished plots report error bars. Note that the y-axis begins at 33%, not at zero, so differences between points\nare visually magnified.\n\n\n\n                                                                                                        176\n[Figure 8.4.B] FrontierCode v1.1 Extended score versus average output tokens per task across reasoning effort\nlevels (low, medium, high, xhigh, and max; GPT-6 Astra also at none). Cognition ran the evaluation for every\nmodel shown and reported the results; Claude models were run in Claude Code and GPT models were run in\nCodex CLI. Cognition\u2019s result files report token counts and no cost, so the x-axis shows average output tokens\nper task on a logarithmic scale. The result files carry no uncertainty intervals, so none are shown; Cognition's\npublished plots report error bars. Note that the y-axis begins at 48%, not at zero, so differences between points\nare visually magnified.\n\n\n\n",
+    "system_card 8.5 Terminal-Bench 4.0": "8.5 Terminal-Bench 4.0\nTerminal-Bench 4.0 tests AI models on real-world work in terminal and command line\ncontainerized environments. It comprises a set of 66 tasks, with an emphasis on\nscience-adjacent and frontier engineering problems like computational biology, physics\nsimulation, CAD, formal proofs, and GPU performance work.\n\nPrevious Terminal-Bench versions were very timeout- and resource-sensitive: 4.0 largely\naddresses these issues by increasing timeouts and adaptively bumping up both RAM and\nCPU in a few tasks that could benefit from it. The choice of sandboxing provider might still\nbe a confounding factor in a few tasks, but we expect it to play a significantly smaller role\nthan it did in previous versions. We also found that the upgrade has reduced the\nconfounding role of various harnesses (e.g., CLI memory footprint, compaction strategy,\n\n\n\n\n                                                                                                        177\nand container communication protocol), ultimately making Terminal-Bench a more stable\nand rigorous evaluation.\n\nClaude Opus 5.5 scored 66.36% on Terminal-Bench 4.0 with safeguards enabled; requests\nflagged by the safeguards were answered by a fallback model following the default\nserver-side fallback policy (2.5% of requests, affecting 10% of trials). For comparison,\nClaude Mythos 5.1 scored 60.9% and Claude Fable 5.1 scored 55.8%, whereas Claude Opus 5\nscored 52.3%. Scores are averaged over five trials per task (330 trials) for Opus 5.5, 10 trials\nper task (660 trials) for Claude Mythos 5.1, and 15 trials per task (990 trials) for Opus 5.\nTreating trials as independent, the standard error is \u00b12.6 points for Opus 5.5 and \u00b11.6-2\npoints for the other models. The numbers reported use Claude Code in --bare mode and\nxhigh thinking effort for Opus 5.5 (which at max effort scores 64.8%, within noise of\nxhigh), and max effort for the comparison models.\n\nFor reference, the public leaderboard reports Claude Opus 5 at 51.8% (five trials, using the\nClaude Code harness), within the noise of our internal setup. OpenAI\u2019s GPT-6 Astra\nreported their final Terminal-Bench 4.0 score at 57.9%, scored at high thinking effort (in\ntheir reporting max effort fared slightly lower than high, so we picked their highest\nnumber).\n\n\n",
+    "system_card 8.6 Terminal-Bench-Science": "8.6 Terminal-Bench-Science 0.1\n\nTerminal-Bench-Science is a Stanford-led community benchmark of 70 tasks drawn from\nscientific research workflows, authored and reviewed by scientists and researchers across\nthe life, physical, earth, mathematical, and engineering sciences. Scientific advisors to the\nproject are from MIT, Princeton, University of Washington, Genentech, and Stanford.\n\nTasks are set up as typical agentic problems: an agent CLI works in a self-contained\nenvironment from a natural language instruction and is graded against hidden,\ntask-specific tests on the artifacts it produces.\n\nClaude Opus 5.5 scored 58.7% on Terminal-Bench-Science with safeguards enabled;\nrequests flagged by the safeguards were answered by a fallback model following the default\nserver-side fallback policy (3.9% of requests, affecting 5% of trials). It averaged over 10\ntrials per task (700 trials). Claude Fable 5.1 scored 52.6% (10 trials per task, 700 trials),\nClaude Opus 5 scored 29.0% (12 trials per task, 840 trials), and Claude Fable 5 scored 24.7%\n(10 trials per task, 700 trials). The standard error, clustered by task, is \u00b13.5\u20134.8 points (\u00b14.8\nfor Opus 5.5).\n\n\n\n\n                                                                                          178\nThe numbers reported use Claude Code in --bare mode and max thinking effort. For\nreference, the public leaderboard reports Claude Opus 5 at 30.0% and Claude Fable 5 at\n21.4% (three trials, using the Claude Code harness), all within expected noise of our internal\nsetup. OpenAI reported GPT-6 Astra at 64.6% with max thinking effort.\n\n\n",
+    "system_card 8.8 CursorBench 4.0": "8.8 CursorBench 4.0\nCursorBench 4.019 is Cursor\u2019s agentic coding benchmark. It is composed of coding tasks\ndrawn from real-world Cursor usage, and executed end to end in Cursor\u2019s production agent\nharness. All scores were measured and reported independently by Cursor; per-task costs\nfor Claude Opus 5.5 are our estimates from Cursor's reported token counts at list prices,\nand all other costs are as published by Cursor.\n\nOpus 5.5 scored 57.8% on CursorBench at max effort, 56.0% at xhigh and high, and 52.5%\nat medium. This is the highest score on Cursor\u2019s public leaderboard, 6.0 points above\nClaude Fable 5.1 at max effort (51.8% for $17.28 per task), 11.2 points above Claude Opus 5 at\nmax effort (46.6% for $11.95), and 16.1 points above GPT-5.6 Sol at max effort (41.7% for\n$8.23).\n\nNotably, most of Opus 5.5\u2019s performance is available well below max effort. At high effort,\nOpus 5.5 reaches 56.0% for about $4 per task, above every other model on the leaderboard\nat roughly a quarter of the cost of Claude Fable 5.1 at max effort. At medium effort it scores\n52.5% for about $3 per task, still above Claude Fable 5.1 at max effort and at roughly a\n\n18\n     Proximal (2026). FrontierSWE v2. https://www.frontierswe.com/blog/v2\n19\n     Cursor (2026). CursorBench. https://cursor.com/cursorbench\n\n\n                                                                                           179\nquarter of the cost of Claude Opus 5 at max effort. Costs for Opus 5.5 are estimated from\nthe token counts Cursor reported at list prices. All other scores and costs are as published\nby Cursor.\n\nNote that previous system cards reported older versions of CursorBench, so the scores are\nnot comparable.\n\n\n\n\n[Figure 8.8.A] CursorBench v4.0 score versus average cost per task across reasoning effort levels. Cursor\nexecuted the evaluation end to end in its production agent harness and independently measured and reported\nthe scores. For models other than Claude Opus 5.5, the scores and costs per task are as Cursor published them\non its public leaderboard in September 2026. Opus 5.5\u2019s scores are from a result file Cursor sent directly to us,\nand its cost per task is computed by us from the mean token counts in that file at list prices ($4 per million\nuncached input tokens, $5 per million five-minute cache-write tokens, $0.20 per million cache-read tokens,\nand $20 per million output tokens). Every model is shown at five reasoning effort levels (low, medium, high,\nxhigh, and max), except for Grok 4.6, which is shown at four (low, medium, high, and xhigh). Neither source\nincludes uncertainty intervals, so none are shown. Note that the y-axis begins at 23%, not at zero, so\ndifferences between points are visually magnified.\n\n\n\n",
+    "system_card 8.11.1 HLE": "8.11.1 Humanity\u2019s Last Exam\nHumanity\u2019s Last Exam (HLE)20 is a multimodal benchmark comprising 2,500 questions\nacross dozens of subjects. The questions were written and reviewed by subject-matter\nexperts, kept only if frontier LLMs could not answer them, and designed not to be quickly\nanswerable via internet search.\n\nWe tested Claude Opus 5.5 in two configurations: (1) reasoning-only without tools and (2)\nwith web search, web fetch, programmatic tool calling, and code execution. In all runs,\nthinking was set to auto and the total tokens used across contexts was capped at 1M.\nContext compaction was not used for these results. Claude Opus 4.6 served as the model\ngrader.\n\nTo guard against result contamination in the tools variant, we blocklist sources known to\ndiscuss HLE for both the searcher and fetcher (see Appendix 9.2). We also screen every\ncorrectly answered transcript with text rules for signs of HLE-specific sources and use\nClaude Opus 5 to review each flagged transcript. Confirmed cheating cases are re-graded\nas incorrect.\n\n\n\n\n20\n     Phan, L., et al. (2025). Humanity\u2019s Last Exam. arXiv:2501.14249. https://arxiv.org/abs/2501.14249\n\n\n                                                                                                 184\n[Figure 8.11.1.A] Humanity\u2019s Last Exam (HLE, with tools) reasoning effort scaling. Accuracy on HLE as\nreasoning effort scales from low to max against average cost per task (log scale). Costs are billed assuming a\nperfect cache hit rate and with web search fees excluded.\n\n\n\n\n                                                                                                         185\n[Figure 8.11.1.B] Humanity\u2019s Last Exam (HLE, no tools) test-time compute scaling. Accuracy on HLE as\nreasoning effort scales from low to max against average cost per task (log scale). Costs are billed assuming a\nperfect cache hit rate and with web search fees excluded.\n\n\n",
+    "system_card 8.13.1 Chartography (first 3000 chars)": "8.13.1 Chartography\nChartography23 is a chart-understanding benchmark from Surge AI covering a set of 100\ntasks on specialized chart types rarely evaluated in existing benchmarks. These include\nKaplan\u2013Meier charts, candlestick charts, contour maps, wind rose diagrams, Sankey\ndiagrams, Bode plots, and 3D surface plots. Because different chart types can be read to\ndifferent degrees of precision, each answer is graded against an acceptable range set by\nexperts for that specific chart rather than a single fixed tolerance.\n\nThe model is configured with adaptive thinking and max effort enabled in all runs. It is\nevaluated with and without tools. When evaluated with tools, the model is provided with a\n\n23\n  Surge AI (2026). Chartography: A benchmark for professional chart understanding. Surge AI.\nhttps://surgehq.ai/blog/chartography\n\n\n                                                                                           199\ncontainer, with the image file and standard libraries installed, and an image cropping tool.\nOur internal grading implementation of Chartography matches the tasks and\nexpert-determined acceptable answer ranges in the official repository.24 In order to ensure\ncomparable grading across models, we follow the Surge AI Leaderboard in using Gemini 3.5\nFlash as a grader; previous system cards showed slightly lower scores due to using Claude\nSonnet 4.6 as a judge only for Claude models.\n\nClaude Opus 5.5 achieved a score of 64.4% without tools and 89.0% with tools. Claude Fable\n5.1 scored 44.8% and 88.4%, whereas Claude Opus 5 achieved scores of 29.8% and 83.4%,\nrespectively.\n\n\n\n\n[Figure 8.13.1.A] Chartography scores. Claude models are evaluated with adaptive thinking and max effort, with\nand without tools. Scores are averaged over five runs. Shown with 95% CI. Gemini 3.8 Flash and GPT-5.6 Sol\nscores as publicly reported by Surge AI, evaluated without tools.\n\nWithout tools, Claude Opus 5.5 shows step-function improvement in raw visual reasoning\ncapabilities, outperforming Claude Fable 5.1 by a wide margin.\n\n\n\n\n24\n  Surge AI (2026). Chartography [Code repository]. GitHub.\nhttps://github.com/surge-ai/chartography\n\n\n                                                                                                      200\n[Figure 8.13.1.B] Chartography scores, without tools. Models are evaluated with adaptive thinking at various\neffort levels. We use the effort parameter to adjust the amount of test-time compute spent. Scores are averaged\nover five runs at each effort level. Shown with 95% CI.\n\nGiven access to tools, Claude Opus 5.5 Pareto-dominates prior Claude models on the\nscore\u2013cost frontier.\n\n\n\n\n                                                                                                      201\n[Figure 8.13.1.C] Chartography scores, with tools. Models are evaluated with adaptive thinking at various effort\nlevels. We use the effort parameter to adjust the amount of test-time compute spent. Scores are averaged over\nfive runs at each ef",
+    "system_card 8.13.3 OSWorld 2.0": "8.13.3 OSWorld 2.0\nOSWorld 2.027 is a benchmark of 108 long-horizon computer use tasks in which an agent\noperates a live Ubuntu virtual machine via screenshots and mouse and keyboard actions.\nEach task is graded against a set of weighted checkpoints. We report two metrics: the\npartial score (mean per-task credit across checkpoints) and the strict pass rate (the fraction\nof tasks with every checkpoint satisfied), each as pass@1 averaged over five independent\nruns. We used the benchmark's default settings of 1080p resolution and a maximum of 500\naction steps per task at maximum reasoning effort. For tasks that require a model grader,\nwe used Claude Opus 4.8.\n\nSince the Claude Fable 5.1 and Claude Mythos 5.1 System Card, we have updated this\nevaluation in two ways. First, we updated to the September 10, 2026 versions of the\n\n27\n  Yuan, M., et al. (2026). OSWorld 2.0: Benchmarking computer use agents on long-horizon\nreal-world tasks. arXiv:2606.29537. https://arxiv.org/abs/2606.29537\n\n\n                                                                                                       205\nbenchmark\u2019s task files, task assets, and companion web applications. Second, we changed\nhow the agent harness manages context: instead of discarding older screenshots once a\nfixed number had accumulated, the agent now retains every screenshot and uses the\nClaude API\u2019s server-side context management, which compacts the conversation once it\nexceeds 100k tokens. All models in this section were evaluated under the same updated\nconfiguration.\n\nClaude Opus 5.5 achieved a partial score of 81.8% and a strict pass rate of 48.7%.\nRe-evaluated under the same conditions, Claude Fable 5.1 scored 80.7% partial and 42.8%\nstrict pass, and Claude Opus 5 scored 74.0% partial and 37.2% strict pass. Because both the\ntask files and the harness configuration differ, these results supersede the OSWorld 2.0\nfigures in the Claude Fable 5.1 and Claude Mythos 5.1 System Card and are not directly\ncomparable to results reported on earlier releases of the benchmark or obtained with other\nharness configurations.\n\n\n\n\n[Figure 8.13.3.A] OSWorld 2.0 scores across models. Bars show the partial score and strict pass rate at max\neffort, with 95% confidence intervals over five runs.\n\n\n\n\n                                                                                                       206\n[Figure 8.13.3.B] OSWorld 2.0 price versus performance for Claude Opus 5.5, Claude Opus 5, and Claude Fable\n5.1. Each point is one reasoning effort setting (levels differ by model), placed at its mean cost per task at API list\nprices for input, output, and prompt caching. Scores are partial-credit scores from the OSWorld 2.0 graders,\naveraged over five runs.\n\n\n\n\n                                                                                                             207\n[Figure 8.13.3.C] OSWorld 2.0 price versus strict pass rate for Claude Opus 5.5, Claude Opus 5, and Claude\nFable 5.1. Each point is one reasoning effort setting (levels differ by model), placed at its mean cost per task at\nAPI list prices for input, output, and prompt caching. Strict pass rate counts a task only when every checkpoint\nis satisfied, averaged over five runs.\n\n\n\n",
+    "system_card 8.14.3/8.14.4 GDPval-AA and AA-Briefcase": "8.14.3 GDPval-AA\nGDPval-AA v2.1, developed by Artificial Analysis, is an independent evaluation framework\nthat tests AI models on economically valuable, real-world professional tasks. The\nbenchmark uses 220 tasks from OpenAI\u2019s GDPval gold database28 spanning 44 occupations\nacross nine major industries. Tasks mirror actual professional work products, including\ndocuments, slides, diagrams, and spreadsheets. Models are given shell access and web\nbrowsing capabilities in an agentic loop to solve tasks, and performance is measured via Elo\nratings derived from blind pairwise comparisons of model outputs, anchored to DeepSeek\nV4.1 Flash (max) at 1,600.\n\nClaude Opus 5.5 holds the top two leaderboard spots, with Elo 1846 at max effort and 1820\nat xhigh effort, ahead of Claude Fable 5.1 at max (1735) and Claude Opus 5 at max (1708), as\nwell as all non-Claude models. xhigh achieves similar performance as max while using\nabout 51% fewer output tokens. Evaluations were run independently by Artificial Analysis.\n\n28\n  Patwardhan, T., et al. (2025). GDPval: Evaluating AI model performance on real-world economically\nvaluable tasks. arXiv:2510.04374. https://arxiv.org/abs/2510.04374\n\n\n                                                                                           209\n8.14.4 AA-Briefcase\nAA-Briefcase v1.1, developed by Artificial Analysis, is a new benchmark for long-horizon\nknowledge work on complex projects built by industry experts. Models work through\nmulti-week projects with many linked tasks and thousands of input source files; grading\ncombines rubric scoring and pairwise judging via a panel of frontier models to measure\nverifiable task success, analytical quality, and presentation quality.\n\nClaude Opus 5.5 holds the top three leaderboard spots, with Elo 1822 at max effort, 1780 at\nxhigh effort, and 1705 at high effort, ahead of Claude Fable 5.1 at max (1678) and Claude\nOpus 5 at max (1673). It leads Claude Fable 5.1 on both analytical quality Elo and\npresentation Elo. xhigh achieves similar performance as max while using about 41% fewer\noutput tokens. Evaluations were run independently by Artificial Analysis.\n\n\n",
+    "system_card 8.14.6 AutomationBench": "8.14.6 AutomationBench\nAutomationBench29 is a benchmark from Zapier that measures whether an agent can\ncomplete a realistic end-to-end business workflow. Tasks are derived from real customer\nworkflow patterns across sales, marketing, operations, support, finance, and HR. Each task\nplaces the agent inside a simulated company, with dozens of REST API endpoints spanning\n47 apps (CRM, Slack, Google Workspace, etc.). The agent is given a single natural language\ninstruction. It must then autonomously discover the right endpoints via search; make\n\n29\n  Shepard, D., and Salimans, R. (2026). AutomationBench. arXiv:2604.18934.\nhttps://arxiv.org/abs/2604.18934\n\n\n                                                                                                        211\ndozens of sequential, interdependent API calls; consult and obey layered business policy\ndocuments; and correctly avoid deliberately planted distractions. Grading is pass/fail for\neach task and is based on meeting all of the deterministic assertions on simulated app state\n(e.g., the correct CRM updates were all applied).\n\nOn AutomationBench\u2019s leaderboard, which measures performance on a private held-out\nevaluation set, Claude Opus 5.5 at max effort scored 40.0%, a substantial gain over Claude\nFable 5.1 at max effort at 31.4%, and Claude Opus 5 at 26.9%.\n\n\n\n\n[Figure 8.14.6.A] AutomationBench task-cost scores. Claude Opus 5.5 outperforms Claude Opus 5 across effort\nlevels. Claude Opus 5.5\u2019s cost per task is Anthropic's calculation from Zapier's recorded token counts at list\nprices with prompt caching. Other models' costs, including Claude Opus 5, are as published on Zapier's\nAutomationBench leaderboard (release 1.0.6).\n\n\n\n",
+    "system_card 8.15.2 HealthBench Professional": "8.15.2 HealthBench Professional results\nOn HealthBench Professional, Claude Opus 5.5 achieved a raw score of 77.1%, ahead of\nClaude Opus 5 at 73.4%, Claude Fable 5.1 at 74.2%, and Claude Sonnet 5 at 62.4%. After\n\n\n\n                                                                                                        213\nlength adjustment, which penalizes verbose model responses, Claude Opus 5.5 achieved a\nscore of 65.6%.\n\n\n\n\n[Figure 8.15.2.A] HealthBench Professional raw and length-adjusted scores. All Claude models used adaptive\nthinking at max effort. Claude Opus 4.8 was the grader model. Claude Opus 5.5 was run with safety classifiers\nenabled and a refusal fallback to Claude Opus 5. Scores were averaged over five trials. No tools or customized\nsystem prompts were provided to any model. Length-adjusted scores were calculated using the method\npublished in the HealthBench Professional paper. Shown with 95% CI.\n\n\n\n"
+  }
+}

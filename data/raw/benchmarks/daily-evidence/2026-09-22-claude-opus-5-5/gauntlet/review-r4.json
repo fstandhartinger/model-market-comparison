@@ -1,0 +1,35 @@
+{
+  "artifact_id": "self-reported:claude-opus-55",
+  "artifact_sha256": "fb03c2cf889d7f5795ff0fbb36d1f165651ac869ed068c9679703b2dd5af1c33",
+  "round": 4,
+  "verdict": "pass",
+  "coverage_checked": [
+    "self-reported:claude-opus-55-aa-briefcase-v1-1",
+    "self-reported:claude-opus-55-automationbench",
+    "self-reported:claude-opus-55-chartography-with-tools",
+    "self-reported:claude-opus-55-cursorbench-4-0",
+    "self-reported:claude-opus-55-frontiercode-v1-1-main",
+    "self-reported:claude-opus-55-gdpval-aa-v2-1",
+    "self-reported:claude-opus-55-healthbench-professional",
+    "self-reported:claude-opus-55-hle-no-tools",
+    "self-reported:claude-opus-55-hle-with-tools",
+    "self-reported:claude-opus-55-osworld-2-0-partial",
+    "self-reported:claude-opus-55-osworld-2-0-strict",
+    "self-reported:claude-opus-55-swe-bench-multilingual",
+    "self-reported:claude-opus-55-swe-bench-multimodal",
+    "self-reported:claude-opus-55-swe-bench-pro",
+    "self-reported:claude-opus-55-terminal-bench-4-0",
+    "self-reported:claude-opus-55-terminal-bench-science-0-1"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "missing_evidence": [],
+  "uncertainties": [
+    "Values, units, labels, versions, basis, URLs, sha256/file, published_at and retrieved_at fields verified present and internally consistent across all 16; every quoted first-column value matches the printed row (e.g., AA-Briefcase 1822, AutomationBench 40.0%, GDPval-AA 1846, OSWorld strict 48.7 as second component of 81.8/48.7, TB4.0 66.4%, TB-Science 58.7%).",
+    "Cross-checks passed: system-card column order (Opus 5.5 | Opus 5 | Fable 5.1 | Astra) reconciles with launch-post order and with sections 8.2, 8.4, 8.5, 8.6, 8.8, 8.13.1, 8.13.3, 8.14.3/4, 8.14.6, 8.15.2 (e.g., Fable 5.1 GDPval 1735, AutomationBench 31.4%, strict 42.8%).",
+    "Protocol claims spot-verified: max-effort quotes (57.8% CursorBench, 54.4% Main, 40.0% AutomationBench, 1846/1822 Elo), xhigh for TB4.0 with 66.36%/64.8% disclosure, 10-trial TB-Science disclosure, length-adjusted HealthBench (raw 77.1%), HLE blocklist/screening, OSWorld comparability caveat, Artificial Analysis independence statements, Zapier footnote, fallback-model sentence matching launch-post text.",
+    "Page marker '174' for Table 8.1.A is not printed in the supplied 8.1 excerpt (row verified by content); publication dates rest on the stated 2026-09-22 capture, as no date appears in the visible text; sha256 values accepted as recorded, not recomputable here.",
+    "Minor print normalizations, judged consistent rather than errors: launch-post qualifier rows print the qualifier in the cell ('89.0% with tools', '81.8% partial') where the catalog writes 'Chartography (with tools)' etc.; the OSWorld-strict locator names the row '(strict pass rate)' while the printed label is '(partial/strict)', but the quoted printed row discloses the compound cell; footnote 3's '±3.5–5 pts' and section 8.6's '±3.5–4.8' differ slightly between documents, and the observation quotes each source verbatim."
+  ]
+}

@@ -1,0 +1,28 @@
+[
+  {
+    "url": "https://www.anthropic.com/claude-opus-5-5",
+    "retrieved_at": "2026-09-22T16:55:28.015660+00:00",
+    "status": 200,
+    "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/4418b9b4f881510f195f.gz",
+    "sha256": "4418b9b4f881510f195fd0dc2aa3e7ee5d8e3868d954c9e75a66ac8fe860e149",
+    "bytes": 621415,
+    "evidence": "original_bytes",
+    "document_sha256": "4418b9b4f881510f195fd0dc2aa3e7ee5d8e3868d954c9e75a66ac8fe860e149",
+    "document_bytes": 621415,
+    "final_url": "https://www.anthropic.com/claude-opus-5-5"
+  },
+  {
+    "url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+    "retrieved_at": "2026-09-22T16:55:31.262433+00:00",
+    "status": 200,
+    "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/95a7b26f5d4497072d97.gz",
+    "sha256": "95a7b26f5d4497072d973935ccb674978149f16db396d425b4b544581fcbc728",
+    "bytes": 456835,
+    "evidence": "pdf_text_layer",
+    "document_sha256": "7311c9c6bbb16d012f1c12c7418b05949fcf7ae3e30d2c40f22050074b2a7378",
+    "document_bytes": 17795106,
+    "final_url": "https://www-cdn.anthropic.com/fc1b44717c85dc068bc6ba5024219938094694bd/Claude%20Opus%205.5%20System%20Card.pdf",
+    "extraction": "pdftotext -layout pdftotext version 22.02.0",
+    "pages": 230
+  }
+]

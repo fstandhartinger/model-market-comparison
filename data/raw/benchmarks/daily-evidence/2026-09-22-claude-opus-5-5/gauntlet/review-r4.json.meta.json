@@ -1,0 +1,71 @@
+{
+  "started_at": "2026-09-22T17:25:45.096Z",
+  "mode": "critic",
+  "requested_model": "z-ai/glm-5.3-flash",
+  "producers": [
+    "anthropic/claude-opus-5"
+  ],
+  "qualification": {
+    "id": "z-ai/glm-5.3-flash",
+    "family": "z-ai",
+    "free": false,
+    "input_per_1m": 0.15,
+    "output_per_1m": 0.5,
+    "context": 1310720,
+    "aa_intelligence_index": 41.8,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "glm-5.3-flash::default"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "glm-5.3-flash::default",
+        "index": 41.8
+      }
+    ]
+  },
+  "input_sha256": "f2543e592a466dd259a41cea343f124b082a5804a6bc09c03af461dff589d3a3",
+  "route": "openrouter",
+  "attempt": 1,
+  "free_route_role": "critic",
+  "free_routes_offered": [],
+  "excluded_models": [],
+  "catalog": {
+    "source": "fetched",
+    "fetched_at": "2026-09-22T17:25:45.024Z"
+  },
+  "reasoning": null,
+  "response_format_mode": "json_object",
+  "response_schema_sha256": "376bde7986cc2f8fd182f04e745c607933760bea7c306ea6e8e992b7f70be25a",
+  "images": [],
+  "actual_model": "z-ai/glm-5.3-flash",
+  "usage": {
+    "prompt_tokens": 19647,
+    "completion_tokens": 13655,
+    "total_tokens": 33302,
+    "cost": 0.0096768045,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.00977455,
+      "upstream_inference_prompt_cost": 0.00294705,
+      "upstream_inference_completions_cost": 0.0068275
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 12675,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "finish_reason": "stop",
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "provider": "CoreWeave",
+  "session_id": null,
+  "finished_at": "2026-09-22T17:26:52.283Z",
+  "output_sha256": "b2736216794080454d54800eb06b9cced6c50a9ea7bd10fc24ab22016b9dad97"
+}

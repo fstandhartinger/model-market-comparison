@@ -5,6 +5,16 @@
   "notes": "GLM 5.2 is live on OpenRouter (z-ai/glm-5.2, real Z.AI pricing) and ships MIT open weights (HuggingFace zai-org/GLM-5.2). Its current benchmark evidence is sourced from Artificial Analysis (Coding and Intelligence), the AA Coding Agent Index, and both DesignArena boards; no manual score is used. GPT-5.6 Sol/Terra/Luna hand-curated offers were removed 2026-07-10 and are sourced live from OpenRouter plus AA.",
   "models": [
     {
+      "family_key": "claude-opus-5.5",
+      "family_name": "Claude Opus 5.5",
+      "display_name": "Claude Opus 5.5 (Adaptive Reasoning, Max Effort)",
+      "variant": "max",
+      "org": "Anthropic",
+      "open_weights": false,
+      "release_date": "2026-09-22",
+      "notes": "Announced by Anthropic on 2026-09-22 (https://www.anthropic.com/claude-opus-5-5). Added by hand on launch day so its self-reported benchmark numbers can be shown before the live sources carry it. The row is Anthropic's standard evaluation configuration (adaptive thinking at max effort, API id claude-opus-5-5). Once Artificial Analysis publishes the family, its rows replace this one automatically. Price: USD 4 input / 20 output / 0.20 cache read / 5 cache write per 1M tokens, from the launch post's pricing table (retrieved 2026-09-22)."
+    },
+    {
       "family_key": "union-alpha",
       "family_name": "Union Alpha",
       "org": "Union Alpha",
@@ -14,6 +24,23 @@
     }
   ],
   "offers": [
+    {
+      "family_key": "claude-opus-5.5",
+      "source": "Anthropic API (launch-post pricing)",
+      "provider": "Anthropic",
+      "platform": "Anthropic",
+      "input_per_1m": 4,
+      "output_per_1m": 20,
+      "cache_read_per_1m": 0.2,
+      "cache_write_per_1m": 5,
+      "region": "global",
+      "unit": "per_1m_token",
+      "eu_hosted": false,
+      "non_us": false,
+      "or_provider_slug": "anthropic",
+      "data_private": false,
+      "notes": "Official Anthropic API price for claude-opus-5-5 from the launch post's pricing table (https://www.anthropic.com/claude-opus-5-5, retrieved 2026-09-22): input USD 4, output USD 20, cache reads USD 0.20, cache writes USD 5 per 1M tokens. Fast mode (USD 8 / 40) is a separate product and not included. Stays until the live Anthropic/OpenRouter collection carries the model itself."
+    },
     {
       "family_key": "union-alpha",
       "source": "OpenRouter",
