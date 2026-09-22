@@ -15992,6 +15992,76 @@
           "excerpt": "The rubric must map a student's proof to an integer score from **0 to 7**."
         }
       ]
+    },
+    {
+      "id": "mls-bench-lite::30-tasks",
+      "name": "MLS-Bench-Lite",
+      "version": "30-tasks",
+      "version_status": "published",
+      "family": "mls-bench-lite",
+      "category": "Coding",
+      "one_sentence_description": "AI agents get a fixed ML research scaffold with strong baselines and must invent one algorithmic change — a loss, optimizer, sampler or training procedure — whose gain holds across settings, seeds, datasets and scales; Lite is the 30-task subset over all 12 research domains.",
+      "scoring": {
+        "metric": "The board's MLS-Bench-Lite score: the paper's normalized task metric, averaged (arithmetic mean) over the 30 Lite tasks, each agent run under Harbor with a 5-hour exploration budget",
+        "unit": "points",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Each task scores the agent's change against the task's own reproduced baselines (leaderboard.csv in each task directory) with the same scripts, parsers, seeds and resource limits; the README states the paper switched from a geometric to an arithmetic mean in 2026-05 with rankings unchanged. The board shows one bar per model and harness (Claude Code, Codex, Kimi-Code) with the stated effort, and a \"Human SOTA\" reference computed from the reproduced human baselines (44.66 on 2026-09-22), kept in each row's protocol. A different subset or scoring is a new identity. StepFun's own Step 5 preview figure stays the separate vendor snapshot stepfun-mls-bench-lite::snapshot-2026-09-20."
+      },
+      "maintainer": "MLS-Bench authors (Imbernoulli/MLS-Bench)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://mls-bench.com/leaderboard",
+      "publication_urls": [
+        {
+          "url": "https://mls-bench.com/leaderboard",
+          "type": "official_leaderboard",
+          "role": "Leaderboard (MLS-Bench-Lite score per model and harness)"
+        },
+        {
+          "url": "https://github.com/Imbernoulli/MLS-Bench",
+          "type": "github",
+          "role": "Tasks, baselines, scoring code, Harbor runtime and the Lite task list"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-mls-bench; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "Next.js flight payload (JSON in the server-rendered page)",
+        "locator": "The Next.js flight payload of mls-bench.com/leaderboard (the `self.__next_f.push([1, \"...\"])` chunks the page streams with its HTML): one chart object {title: \"MLS-Bench Lite\", humanSota, data}; `data[]` rows {key, name, effort, score, color, logo, gradient}, where key = \"<model name>|<harness>\" (e.g. \"Claude Opus 5|Claude Code (max effort)\") — the bars the leaderboard renders. The value is score, the row's MLS-Bench-Lite score.",
+        "version_guard": "The leaderboard must still state \"MLS-Bench-Lite Score. The evaluation is based on Harbor with a 5-hour exploration budget for each agent.\"; exactly one chart object with the keys title, humanSota and data and the title \"MLS-Bench Lite\"; the reviewed row schema; each key \"<name>|<harness>\" with a harness parenthesis that agrees with the stated effort (one of max, xhigh, high, medium, low or none); scores 0–100; unique keys. The repository README must still describe MLS-Bench-Lite as the 30-task subset of the 140-task suite over all 12 research domains and the arithmetic-mean aggregation. Another task subset or scoring is a new identity, never a silent update of this one.",
+        "identity_policy": "source_label",
+        "notes": "Maintained by the MLS-Bench authors (github.com/Imbernoulli/MLS-Bench; arXiv 2605.08678). The board names each row by model product name, harness and stated effort; it does not say who ran each row, and the repository notes that Qwen (Qwen3.8-Max) and Moonshot (Kimi K3, Kimi-K2.7-Code) adopted the benchmark for their own launches. Exact-join policy: a stated effort joins that exact catalog configuration; a row without an effort joins only a family the catalog holds as a single default configuration; the Claude Fable 5 row ran \"with fallback\" in Claude Code (the fallback model is not named), so it never joins; \"DeepSeek-V4 Pro Preview\" names a preview the catalog does not hold. robots.txt 404 (conventional access) — scores with attribution to the MLS-Bench authors and a link to the board. Joins: data/raw/benchmarks/identity-map.json (lib/board-identity.mjs parseMlsBenchLabel)."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated; rows are added as new models are run (the 2026-09-22 capture holds 15 rows, newest Claude Fable 5.1 and Qwen3.8-Max-0902).",
+        "check_recommendation": "Daily with the ordinary refresh; a changed task subset or scoring is a new identity and needs a reviewed change."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Best score 50.3 (Claude Fable 5.1, Claude Code max effort) on 2026-09-22, against a human SOTA reference of 44.66; the board spans 24.4–50.3. Computed saturation (CR-38.2) applies on build."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://mls-bench.com/leaderboard",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/c7e3934636b87819424c.gz",
+          "sha256": "2d9959a04c240e2849e48817461fda4f71ca1f4efef4796f528ea2ac7c578f6d",
+          "fetched_at": "2026-09-22T05:03:43.731594+00:00",
+          "excerpt": "Leaderboard — MLS-Bench-Lite Score. The evaluation is based on Harbor with a 5-hour exploration budget for each agent. … {\"title\":\"MLS-Bench Lite\",\"humanSota\":44.66,\"data\":[{\"key\":\"Claude Fable 5.1|Claude Code (max effort)\",\"effort\":\"max\",\"score\":50.3} …"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Imbernoulli/MLS-Bench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/d1bd5f205f6100e01df8.gz",
+          "sha256": "188e23dfa3ade939119b61ddf8934ae72b6f879a224753b86cab4674d1911fcf",
+          "fetched_at": "2026-09-22T05:03:46.322990+00:00",
+          "excerpt": "MLS-Bench-Lite is a 30-task subset of the full 140-task suite, spanning all 12 research domains. … Scoring: the main results table in the arXiv paper previously aggregated tasks within each area by geometric mean; switched to arithmetic mean … MLS-Bench adopted by Alibaba (Qwen) Qwen3.8-Max … adopted by Moonshot (Kimi) Kimi K3"
+        }
+      ]
     }
   ],
   "aa_field_map": [

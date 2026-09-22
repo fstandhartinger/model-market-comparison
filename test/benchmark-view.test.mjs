@@ -112,8 +112,9 @@ test('actual source adapter keeps all version identities, values and dated legac
   // to 625 KB in iteration 114 (CR-82.3/82.4: VulcanBench Frontier v4 and four KernelBench-CUDA problem axes), and
   // to 650 KB for CR-98's 40 explicitly versioned/vendor-snapshot Step-5 rows (no catalog-wide score rows leak in), and
   // to 675 KB for CR-85.2's 19 DeepSeek-V4.1-Flash model-card axes, and to 700 KB for CR-117's 17
-  // MiMo-V2.6-Pro launch axes (axis metadata only; each carries one vendor row).
-  assert.ok(JSON.stringify(selected).length < 700_000, 'initial benchmark payload bounded to selected models');
+  // MiMo-V2.6-Pro launch axes (axis metadata only; each carries one vendor row), and to 725 KB in iteration 165
+  // (CR-37.1: MLS-Bench-Lite joins as seven harness-cohort axes, ~1 KB of axis metadata each; 699.5 → 707.0 KB).
+  assert.ok(JSON.stringify(selected).length < 725_000, 'initial benchmark payload bounded to selected models');
   assert.equal(JSON.stringify(ds), before);
 });
 

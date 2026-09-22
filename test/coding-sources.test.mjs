@@ -49,6 +49,9 @@ const SLUG_BOARDS = ['osworld-2', 'swe-rebench', 'gso', 'hyper-tau-bench', 'lisa
   'matharena-hmmt', 'matharena-apex', 'matharena-apex-shortlist',
   // 2026-09-22 (iteration 162, CR-37.1): MathArena's deprecated AIME 2026, same label rule.
   'matharena-aime', 'matharena-usamo',
+  // 2026-09-22 (iteration 165, CR-37.1): MLS-Bench-Lite, product names with the effort in the harness parenthesis
+  // (lib/board-identity.mjs parseMlsBenchLabel).
+  'mls-bench-lite',
   // 2026-09-19 (iteration 115, CR-54.2): six boards from Epoch AI's Benchmarking Hub ZIP, slug labels joined by
   // the same lib/coding-identity.mjs parseDeepSweId rule as DeepSWE/SimpleQA Verified. math_level_5 and
   // frontiermath_erdos stay excluded; recorded in data/raw/benchmarks/epoch-hub-decisions.json.

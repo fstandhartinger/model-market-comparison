@@ -1000,6 +1000,38 @@ def parse(source,spec,load_source):
                     'requirements_judged_most':most,'tokens_used':m['tokensUsed'] or None,'cost_usd':m['costUsd'],
                     'repeat_runs':data['runCount'],'run_finished_at':data['runFinishedAt'],'judge_model_stated':data['judgeModel'],
                     'stated_effort':'not stated'}})
+    elif kind=='mls_bench_lite_board':
+        # MLS-Bench-Lite (the MLS-Bench authors, mls-bench.com/leaderboard): the Next.js page streams its chart data in the
+        # server-rendered flight payload as one object {title, humanSota, data}; each data row {key, name, effort, score, ...}
+        # is one model under one harness, `key` = "<name>|<harness>". The value is the row's MLS-Bench-Lite score (the paper's
+        # normalized task metric, arithmetic mean over the 30-task Lite subset, Harbor, 5-hour budget per agent). The harness
+        # parenthesis must agree with the stated effort; a changed title, row schema or unreviewed effort fails closed.
+        req=spec['require'];page=text(source);readme=text(load_source(spec['method_source']))
+        for phrase in req['page_text']:
+            if phrase not in page:raise ValueError('MLS-Bench leaderboard no longer states: '+phrase[:80])
+        for phrase in req['method_text']:
+            if phrase not in readme:raise ValueError('MLS-Bench README no longer states: '+phrase[:80])
+        flight=''.join(json.loads(chunk) for chunk in re.findall(r'self\.__next_f\.push\(\[1,("(?:[^"\\]|\\.)*")\]\)',source))
+        starts=[m.start() for m in re.finditer(r'\{"data":\[\{"key":',flight)]
+        if len(starts)!=1:raise ValueError(f'MLS-Bench: expected one board object, found {len(starts)}')
+        data,_=json.JSONDecoder().raw_decode(flight,starts[0])
+        if set(data)!=set(req['board_keys']) or data['title']!=req['title']:raise ValueError(f"MLS-Bench board changed: {sorted(data)} {data.get('title')!r}")
+        human=data['humanSota']
+        if not isinstance(human,(int,float)) or not 0<human<=100:raise ValueError('MLS-Bench: human SOTA reference unreadable')
+        seen=set()
+        for index,r in enumerate(data['data']):
+            if not isinstance(r,dict) or set(r)!=set(req['row_keys']):raise ValueError(f'MLS-Bench row {index} schema changed')
+            name,key,effort,score=r['name'],r['key'],r['effort'],r['score']
+            if not isinstance(key,str) or not key.startswith(name+'|') or key.count('|')!=1:raise ValueError(f'MLS-Bench row {index}: key {key!r} is not "<name>|<harness>"')
+            harness=key.split('|',1)[1].strip()
+            if effort not in req['efforts']:raise ValueError(f'MLS-Bench {key!r}: unreviewed effort {effort!r}')
+            paren=re.search(r'\(([^()]*)\)$',harness)
+            if bool(effort)!=bool(paren) or effort and not re.match(re.escape(effort)+r'\b',paren[1]):raise ValueError(f'MLS-Bench {key!r}: harness does not agree with effort {effort!r}')
+            if isinstance(score,bool) or not isinstance(score,(int,float)) or not 0<=score<=100:raise ValueError(f'MLS-Bench {key!r}: score unreadable')
+            if key in seen:raise ValueError('MLS-Bench row repeated: '+key)
+            seen.add(key)
+            rows.append({'name':name,'id':key,'value':score,'source_row':index,'harness':harness,
+                'context':{'harness':harness,'stated_effort':effort or 'not stated','board_title':data['title'],'human_sota_reference':human}})
     elif kind=='researchclawbench_board':
         # ResearchClawBench (InternScience): the static leaderboard page loads data/leaderboard.json {tasks, agents,
         # scores, frontier} — scores[agent][task] = {score 0-100, run_id, model, model_display, cost_usd,

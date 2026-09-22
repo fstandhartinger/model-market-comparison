@@ -5541,6 +5541,79 @@
       "source_urls": [
         "https://matharena.ai/"
       ]
+    },
+    {
+      "benchmark_id": "mls-bench-lite::30-tasks",
+      "parser": {
+        "kind": "mls_bench_lite_board",
+        "name_field": "name",
+        "id_field": "id",
+        "value_field": "value",
+        "harness_field": "harness",
+        "plain_text_names": true,
+        "method_source": {
+          "url": "https://raw.githubusercontent.com/Imbernoulli/MLS-Bench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/d1bd5f205f6100e01df8.gz",
+          "sha256": "d1bd5f205f6100e01df8220b6ba5d703ba0dbf1623014c53bcc5317871485ee3",
+          "retrieved_at": "2026-09-22T05:03:46.322990+00:00"
+        },
+        "require": {
+          "page_text": [
+            "MLS-Bench-Lite Score. The evaluation is based on Harbor with a 5-hour exploration budget for each agent."
+          ],
+          "method_text": [
+            "MLS-Bench-Lite is a 30-task subset of the full 140-task suite, spanning all 12 research domains.",
+            "switched to arithmetic mean for easier comparison with the per-task numbers"
+          ],
+          "board_keys": [
+            "title",
+            "humanSota",
+            "data"
+          ],
+          "title": "MLS-Bench Lite",
+          "row_keys": [
+            "key",
+            "name",
+            "effort",
+            "score",
+            "color",
+            "logo",
+            "gradient"
+          ],
+          "efforts": [
+            "",
+            "max",
+            "xhigh",
+            "high",
+            "medium",
+            "low"
+          ]
+        }
+      },
+      "status": "collected",
+      "reason": "The MLS-Bench authors' own MLS-Bench-Lite board: every model-and-harness row with its stated effort and Lite score.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-mls-bench; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "Next.js flight payload (JSON in the server-rendered page)",
+        "locator": "The Next.js flight payload of mls-bench.com/leaderboard (the `self.__next_f.push([1, \"...\"])` chunks the page streams with its HTML): one chart object {title: \"MLS-Bench Lite\", humanSota, data}; `data[]` rows {key, name, effort, score, color, logo, gradient}, where key = \"<model name>|<harness>\" (e.g. \"Claude Opus 5|Claude Code (max effort)\") — the bars the leaderboard renders. The value is score, the row's MLS-Bench-Lite score.",
+        "version_guard": "The leaderboard must still state \"MLS-Bench-Lite Score. The evaluation is based on Harbor with a 5-hour exploration budget for each agent.\"; exactly one chart object with the keys title, humanSota and data and the title \"MLS-Bench Lite\"; the reviewed row schema; each key \"<name>|<harness>\" with a harness parenthesis that agrees with the stated effort (one of max, xhigh, high, medium, low or none); scores 0–100; unique keys. The repository README must still describe MLS-Bench-Lite as the 30-task subset of the 140-task suite over all 12 research domains and the arithmetic-mean aggregation. Another task subset or scoring is a new identity, never a silent update of this one.",
+        "notes": "robots.txt 404 (conventional access); repository public. Check the shared source cooldown first; stop on 403, 429, challenges or unexpected content. One capture per day."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "The leaderboard must still state \"MLS-Bench-Lite Score. The evaluation is based on Harbor with a 5-hour exploration budget for each agent.\"; exactly one chart object with the keys title, humanSota and data and the title \"MLS-Bench Lite\"; the reviewed row schema; each key \"<name>|<harness>\" with a harness parenthesis that agrees with the stated effort (one of max, xhigh, high, medium, low or none); scores 0–100; unique keys. The repository README must still describe MLS-Bench-Lite as the 30-task subset of the 140-task suite over all 12 research domains and the arithmetic-mean aggregation. Another task subset or scoring is a new identity, never a silent update of this one.",
+      "source": {
+        "url": "https://mls-bench.com/leaderboard",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/c7e3934636b87819424c.gz",
+        "sha256": "c7e3934636b87819424c9ce1a01f11b49f9ea0f98cc6b81f0f6c12a3a1ea8379",
+        "retrieved_at": "2026-09-22T05:03:43.731594+00:00"
+      },
+      "protocol": "MLS-Bench-Lite (MLS-Bench authors): 30 ML-research tasks over 12 domains; each agent gets a fixed research scaffold with strong baselines and must make one algorithmic change inside a constrained edit surface, run under Harbor with a 5-hour exploration budget; each task is scored by the paper's normalized task metric against the task's reproduced baselines and the board averages the 30 tasks (arithmetic mean); value = the board's MLS-Bench-Lite score for the row's model, harness and stated effort; the board does not say who ran each row",
+      "basis": "measured",
+      "minimum_rows": 12,
+      "source_urls": [
+        "https://mls-bench.com/leaderboard",
+        "https://raw.githubusercontent.com/Imbernoulli/MLS-Bench/main/README.md"
+      ]
     }
   ]
 }

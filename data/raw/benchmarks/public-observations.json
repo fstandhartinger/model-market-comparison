@@ -280148,6 +280148,516 @@
       },
       "protocol": "USAMO 2026: the six proof problems of the 2026 USA Mathematical Olympiad (MathArena); each proof is graded 0–7 by MathArena's LLM judges against a rubric generated from the official solution; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; judged; not a Composite input.; source row: {\"rank\":\"9\",\"model\":\"GLM 5\",\"provider\":\"Z.ai\",\"accuracy\":\"35.12% ± 19.10%\",\"cost\":\"$0.24\",\"output_tokens\":\"76404\",\"released_after_competition\":false,\"open_weights\":\"✔️\"}",
       "comparison_key": null
+    },
+    {
+      "id": "public:a959cca3376e146432f9e732",
+      "benchmark_id": "mls-bench-lite::30-tasks",
+      "subject": {
+        "source_id": "Claude Fable 5.1|Claude Code (max effort)",
+        "name": "Claude Fable 5.1",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code (max effort)"
+      },
+      "value": 50.3,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://mls-bench.com/leaderboard",
+        "retrieved_at": "2026-09-22T05:03:43.731594+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/c7e3934636b87819424c.gz",
+        "sha256": "c7e3934636b87819424c9ce1a01f11b49f9ea0f98cc6b81f0f6c12a3a1ea8379",
+        "locator": "mls_bench_lite_board; source row 0; Claude Fable 5.1|Claude Code (max effort); field value"
+      },
+      "protocol": "MLS-Bench-Lite (MLS-Bench authors): 30 ML-research tasks over 12 domains; each agent gets a fixed research scaffold with strong baselines and must make one algorithmic change inside a constrained edit surface, run under Harbor with a 5-hour exploration budget; each task is scored by the paper's normalized task metric against the task's reproduced baselines and the board averages the 30 tasks (arithmetic mean); value = the board's MLS-Bench-Lite score for the row's model, harness and stated effort; the board does not say who ran each row; source row: {\"harness\":\"Claude Code (max effort)\",\"stated_effort\":\"max\",\"board_title\":\"MLS-Bench Lite\",\"human_sota_reference\":44.66}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/Imbernoulli/MLS-Bench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/d1bd5f205f6100e01df8.gz",
+          "sha256": "d1bd5f205f6100e01df8220b6ba5d703ba0dbf1623014c53bcc5317871485ee3",
+          "retrieved_at": "2026-09-22T05:03:46.322990+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:0308968a29eac258f6f8afbc",
+      "benchmark_id": "mls-bench-lite::30-tasks",
+      "subject": {
+        "source_id": "Qwen3.8-Max-0902|Claude Code",
+        "name": "Qwen3.8-Max-0902",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 50.1,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://mls-bench.com/leaderboard",
+        "retrieved_at": "2026-09-22T05:03:43.731594+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/c7e3934636b87819424c.gz",
+        "sha256": "c7e3934636b87819424c9ce1a01f11b49f9ea0f98cc6b81f0f6c12a3a1ea8379",
+        "locator": "mls_bench_lite_board; source row 1; Qwen3.8-Max-0902|Claude Code; field value"
+      },
+      "protocol": "MLS-Bench-Lite (MLS-Bench authors): 30 ML-research tasks over 12 domains; each agent gets a fixed research scaffold with strong baselines and must make one algorithmic change inside a constrained edit surface, run under Harbor with a 5-hour exploration budget; each task is scored by the paper's normalized task metric against the task's reproduced baselines and the board averages the 30 tasks (arithmetic mean); value = the board's MLS-Bench-Lite score for the row's model, harness and stated effort; the board does not say who ran each row; source row: {\"harness\":\"Claude Code\",\"stated_effort\":\"not stated\",\"board_title\":\"MLS-Bench Lite\",\"human_sota_reference\":44.66}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/Imbernoulli/MLS-Bench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/d1bd5f205f6100e01df8.gz",
+          "sha256": "d1bd5f205f6100e01df8220b6ba5d703ba0dbf1623014c53bcc5317871485ee3",
+          "retrieved_at": "2026-09-22T05:03:46.322990+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:d894116323a9f5467e04fcaa",
+      "benchmark_id": "mls-bench-lite::30-tasks",
+      "subject": {
+        "source_id": "Claude Fable 5|Claude Code (max effort, with fallback)",
+        "name": "Claude Fable 5",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code (max effort, with fallback)"
+      },
+      "value": 49.9,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://mls-bench.com/leaderboard",
+        "retrieved_at": "2026-09-22T05:03:43.731594+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/c7e3934636b87819424c.gz",
+        "sha256": "c7e3934636b87819424c9ce1a01f11b49f9ea0f98cc6b81f0f6c12a3a1ea8379",
+        "locator": "mls_bench_lite_board; source row 2; Claude Fable 5|Claude Code (max effort, with fallback); field value"
+      },
+      "protocol": "MLS-Bench-Lite (MLS-Bench authors): 30 ML-research tasks over 12 domains; each agent gets a fixed research scaffold with strong baselines and must make one algorithmic change inside a constrained edit surface, run under Harbor with a 5-hour exploration budget; each task is scored by the paper's normalized task metric against the task's reproduced baselines and the board averages the 30 tasks (arithmetic mean); value = the board's MLS-Bench-Lite score for the row's model, harness and stated effort; the board does not say who ran each row; source row: {\"harness\":\"Claude Code (max effort, with fallback)\",\"stated_effort\":\"max\",\"board_title\":\"MLS-Bench Lite\",\"human_sota_reference\":44.66}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/Imbernoulli/MLS-Bench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/d1bd5f205f6100e01df8.gz",
+          "sha256": "d1bd5f205f6100e01df8220b6ba5d703ba0dbf1623014c53bcc5317871485ee3",
+          "retrieved_at": "2026-09-22T05:03:46.322990+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:878ca785668281126742ca29",
+      "benchmark_id": "mls-bench-lite::30-tasks",
+      "subject": {
+        "source_id": "Claude Opus 5|Claude Code (max effort)",
+        "name": "Claude Opus 5",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code (max effort)"
+      },
+      "value": 49.8,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://mls-bench.com/leaderboard",
+        "retrieved_at": "2026-09-22T05:03:43.731594+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/c7e3934636b87819424c.gz",
+        "sha256": "c7e3934636b87819424c9ce1a01f11b49f9ea0f98cc6b81f0f6c12a3a1ea8379",
+        "locator": "mls_bench_lite_board; source row 3; Claude Opus 5|Claude Code (max effort); field value"
+      },
+      "protocol": "MLS-Bench-Lite (MLS-Bench authors): 30 ML-research tasks over 12 domains; each agent gets a fixed research scaffold with strong baselines and must make one algorithmic change inside a constrained edit surface, run under Harbor with a 5-hour exploration budget; each task is scored by the paper's normalized task metric against the task's reproduced baselines and the board averages the 30 tasks (arithmetic mean); value = the board's MLS-Bench-Lite score for the row's model, harness and stated effort; the board does not say who ran each row; source row: {\"harness\":\"Claude Code (max effort)\",\"stated_effort\":\"max\",\"board_title\":\"MLS-Bench Lite\",\"human_sota_reference\":44.66}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/Imbernoulli/MLS-Bench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/d1bd5f205f6100e01df8.gz",
+          "sha256": "d1bd5f205f6100e01df8220b6ba5d703ba0dbf1623014c53bcc5317871485ee3",
+          "retrieved_at": "2026-09-22T05:03:46.322990+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:55110180098193a48eac357a",
+      "benchmark_id": "mls-bench-lite::30-tasks",
+      "subject": {
+        "source_id": "Kimi K3|Kimi-Code (max)",
+        "name": "Kimi K3",
+        "model_id": null,
+        "variant": null,
+        "harness": "Kimi-Code (max)"
+      },
+      "value": 48.3,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://mls-bench.com/leaderboard",
+        "retrieved_at": "2026-09-22T05:03:43.731594+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/c7e3934636b87819424c.gz",
+        "sha256": "c7e3934636b87819424c9ce1a01f11b49f9ea0f98cc6b81f0f6c12a3a1ea8379",
+        "locator": "mls_bench_lite_board; source row 4; Kimi K3|Kimi-Code (max); field value"
+      },
+      "protocol": "MLS-Bench-Lite (MLS-Bench authors): 30 ML-research tasks over 12 domains; each agent gets a fixed research scaffold with strong baselines and must make one algorithmic change inside a constrained edit surface, run under Harbor with a 5-hour exploration budget; each task is scored by the paper's normalized task metric against the task's reproduced baselines and the board averages the 30 tasks (arithmetic mean); value = the board's MLS-Bench-Lite score for the row's model, harness and stated effort; the board does not say who ran each row; source row: {\"harness\":\"Kimi-Code (max)\",\"stated_effort\":\"max\",\"board_title\":\"MLS-Bench Lite\",\"human_sota_reference\":44.66}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/Imbernoulli/MLS-Bench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/d1bd5f205f6100e01df8.gz",
+          "sha256": "d1bd5f205f6100e01df8220b6ba5d703ba0dbf1623014c53bcc5317871485ee3",
+          "retrieved_at": "2026-09-22T05:03:46.322990+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:5bcb7cd96f97b5a0656fcf82",
+      "benchmark_id": "mls-bench-lite::30-tasks",
+      "subject": {
+        "source_id": "GPT 5.6 Sol|Codex (max)",
+        "name": "GPT 5.6 Sol",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex (max)"
+      },
+      "value": 46.2,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://mls-bench.com/leaderboard",
+        "retrieved_at": "2026-09-22T05:03:43.731594+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/c7e3934636b87819424c.gz",
+        "sha256": "c7e3934636b87819424c9ce1a01f11b49f9ea0f98cc6b81f0f6c12a3a1ea8379",
+        "locator": "mls_bench_lite_board; source row 5; GPT 5.6 Sol|Codex (max); field value"
+      },
+      "protocol": "MLS-Bench-Lite (MLS-Bench authors): 30 ML-research tasks over 12 domains; each agent gets a fixed research scaffold with strong baselines and must make one algorithmic change inside a constrained edit surface, run under Harbor with a 5-hour exploration budget; each task is scored by the paper's normalized task metric against the task's reproduced baselines and the board averages the 30 tasks (arithmetic mean); value = the board's MLS-Bench-Lite score for the row's model, harness and stated effort; the board does not say who ran each row; source row: {\"harness\":\"Codex (max)\",\"stated_effort\":\"max\",\"board_title\":\"MLS-Bench Lite\",\"human_sota_reference\":44.66}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/Imbernoulli/MLS-Bench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/d1bd5f205f6100e01df8.gz",
+          "sha256": "d1bd5f205f6100e01df8220b6ba5d703ba0dbf1623014c53bcc5317871485ee3",
+          "retrieved_at": "2026-09-22T05:03:46.322990+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:2a3b9178c20131b4afad3df9",
+      "benchmark_id": "mls-bench-lite::30-tasks",
+      "subject": {
+        "source_id": "Claude Opus 4.8|Claude Code (max effort)",
+        "name": "Claude Opus 4.8",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code (max effort)"
+      },
+      "value": 42.8,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://mls-bench.com/leaderboard",
+        "retrieved_at": "2026-09-22T05:03:43.731594+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/c7e3934636b87819424c.gz",
+        "sha256": "c7e3934636b87819424c9ce1a01f11b49f9ea0f98cc6b81f0f6c12a3a1ea8379",
+        "locator": "mls_bench_lite_board; source row 6; Claude Opus 4.8|Claude Code (max effort); field value"
+      },
+      "protocol": "MLS-Bench-Lite (MLS-Bench authors): 30 ML-research tasks over 12 domains; each agent gets a fixed research scaffold with strong baselines and must make one algorithmic change inside a constrained edit surface, run under Harbor with a 5-hour exploration budget; each task is scored by the paper's normalized task metric against the task's reproduced baselines and the board averages the 30 tasks (arithmetic mean); value = the board's MLS-Bench-Lite score for the row's model, harness and stated effort; the board does not say who ran each row; source row: {\"harness\":\"Claude Code (max effort)\",\"stated_effort\":\"max\",\"board_title\":\"MLS-Bench Lite\",\"human_sota_reference\":44.66}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/Imbernoulli/MLS-Bench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/d1bd5f205f6100e01df8.gz",
+          "sha256": "d1bd5f205f6100e01df8220b6ba5d703ba0dbf1623014c53bcc5317871485ee3",
+          "retrieved_at": "2026-09-22T05:03:46.322990+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:5756d0e2df31c43d527c36f0",
+      "benchmark_id": "mls-bench-lite::30-tasks",
+      "subject": {
+        "source_id": "Qwen3.8-Max|Claude Code",
+        "name": "Qwen3.8-Max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 41,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://mls-bench.com/leaderboard",
+        "retrieved_at": "2026-09-22T05:03:43.731594+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/c7e3934636b87819424c.gz",
+        "sha256": "c7e3934636b87819424c9ce1a01f11b49f9ea0f98cc6b81f0f6c12a3a1ea8379",
+        "locator": "mls_bench_lite_board; source row 7; Qwen3.8-Max|Claude Code; field value"
+      },
+      "protocol": "MLS-Bench-Lite (MLS-Bench authors): 30 ML-research tasks over 12 domains; each agent gets a fixed research scaffold with strong baselines and must make one algorithmic change inside a constrained edit surface, run under Harbor with a 5-hour exploration budget; each task is scored by the paper's normalized task metric against the task's reproduced baselines and the board averages the 30 tasks (arithmetic mean); value = the board's MLS-Bench-Lite score for the row's model, harness and stated effort; the board does not say who ran each row; source row: {\"harness\":\"Claude Code\",\"stated_effort\":\"not stated\",\"board_title\":\"MLS-Bench Lite\",\"human_sota_reference\":44.66}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/Imbernoulli/MLS-Bench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/d1bd5f205f6100e01df8.gz",
+          "sha256": "d1bd5f205f6100e01df8220b6ba5d703ba0dbf1623014c53bcc5317871485ee3",
+          "retrieved_at": "2026-09-22T05:03:46.322990+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:bf3a7381cf0c08af9ca8d64b",
+      "benchmark_id": "mls-bench-lite::30-tasks",
+      "subject": {
+        "source_id": "GLM 5.2|Claude Code (max effort)",
+        "name": "GLM 5.2",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code (max effort)"
+      },
+      "value": 40.4,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://mls-bench.com/leaderboard",
+        "retrieved_at": "2026-09-22T05:03:43.731594+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/c7e3934636b87819424c.gz",
+        "sha256": "c7e3934636b87819424c9ce1a01f11b49f9ea0f98cc6b81f0f6c12a3a1ea8379",
+        "locator": "mls_bench_lite_board; source row 8; GLM 5.2|Claude Code (max effort); field value"
+      },
+      "protocol": "MLS-Bench-Lite (MLS-Bench authors): 30 ML-research tasks over 12 domains; each agent gets a fixed research scaffold with strong baselines and must make one algorithmic change inside a constrained edit surface, run under Harbor with a 5-hour exploration budget; each task is scored by the paper's normalized task metric against the task's reproduced baselines and the board averages the 30 tasks (arithmetic mean); value = the board's MLS-Bench-Lite score for the row's model, harness and stated effort; the board does not say who ran each row; source row: {\"harness\":\"Claude Code (max effort)\",\"stated_effort\":\"max\",\"board_title\":\"MLS-Bench Lite\",\"human_sota_reference\":44.66}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/Imbernoulli/MLS-Bench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/d1bd5f205f6100e01df8.gz",
+          "sha256": "d1bd5f205f6100e01df8220b6ba5d703ba0dbf1623014c53bcc5317871485ee3",
+          "retrieved_at": "2026-09-22T05:03:46.322990+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:b338ef30ed4e1e6d804e460d",
+      "benchmark_id": "mls-bench-lite::30-tasks",
+      "subject": {
+        "source_id": "GPT-5.5|Codex (xhigh)",
+        "name": "GPT-5.5",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex (xhigh)"
+      },
+      "value": 35.5,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://mls-bench.com/leaderboard",
+        "retrieved_at": "2026-09-22T05:03:43.731594+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/c7e3934636b87819424c.gz",
+        "sha256": "c7e3934636b87819424c9ce1a01f11b49f9ea0f98cc6b81f0f6c12a3a1ea8379",
+        "locator": "mls_bench_lite_board; source row 9; GPT-5.5|Codex (xhigh); field value"
+      },
+      "protocol": "MLS-Bench-Lite (MLS-Bench authors): 30 ML-research tasks over 12 domains; each agent gets a fixed research scaffold with strong baselines and must make one algorithmic change inside a constrained edit surface, run under Harbor with a 5-hour exploration budget; each task is scored by the paper's normalized task metric against the task's reproduced baselines and the board averages the 30 tasks (arithmetic mean); value = the board's MLS-Bench-Lite score for the row's model, harness and stated effort; the board does not say who ran each row; source row: {\"harness\":\"Codex (xhigh)\",\"stated_effort\":\"xhigh\",\"board_title\":\"MLS-Bench Lite\",\"human_sota_reference\":44.66}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/Imbernoulli/MLS-Bench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/d1bd5f205f6100e01df8.gz",
+          "sha256": "d1bd5f205f6100e01df8220b6ba5d703ba0dbf1623014c53bcc5317871485ee3",
+          "retrieved_at": "2026-09-22T05:03:46.322990+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:ef3c58975b879c412d544cb8",
+      "benchmark_id": "mls-bench-lite::30-tasks",
+      "subject": {
+        "source_id": "Kimi K2.7 Code|Kimi-Code",
+        "name": "Kimi K2.7 Code",
+        "model_id": null,
+        "variant": null,
+        "harness": "Kimi-Code"
+      },
+      "value": 35.1,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://mls-bench.com/leaderboard",
+        "retrieved_at": "2026-09-22T05:03:43.731594+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/c7e3934636b87819424c.gz",
+        "sha256": "c7e3934636b87819424c9ce1a01f11b49f9ea0f98cc6b81f0f6c12a3a1ea8379",
+        "locator": "mls_bench_lite_board; source row 10; Kimi K2.7 Code|Kimi-Code; field value"
+      },
+      "protocol": "MLS-Bench-Lite (MLS-Bench authors): 30 ML-research tasks over 12 domains; each agent gets a fixed research scaffold with strong baselines and must make one algorithmic change inside a constrained edit surface, run under Harbor with a 5-hour exploration budget; each task is scored by the paper's normalized task metric against the task's reproduced baselines and the board averages the 30 tasks (arithmetic mean); value = the board's MLS-Bench-Lite score for the row's model, harness and stated effort; the board does not say who ran each row; source row: {\"harness\":\"Kimi-Code\",\"stated_effort\":\"not stated\",\"board_title\":\"MLS-Bench Lite\",\"human_sota_reference\":44.66}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/Imbernoulli/MLS-Bench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/d1bd5f205f6100e01df8.gz",
+          "sha256": "d1bd5f205f6100e01df8220b6ba5d703ba0dbf1623014c53bcc5317871485ee3",
+          "retrieved_at": "2026-09-22T05:03:46.322990+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:9125fac704e08c942272904a",
+      "benchmark_id": "mls-bench-lite::30-tasks",
+      "subject": {
+        "source_id": "Qwen3.7-Max|Claude Code",
+        "name": "Qwen3.7-Max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 31.7,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://mls-bench.com/leaderboard",
+        "retrieved_at": "2026-09-22T05:03:43.731594+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/c7e3934636b87819424c.gz",
+        "sha256": "c7e3934636b87819424c9ce1a01f11b49f9ea0f98cc6b81f0f6c12a3a1ea8379",
+        "locator": "mls_bench_lite_board; source row 11; Qwen3.7-Max|Claude Code; field value"
+      },
+      "protocol": "MLS-Bench-Lite (MLS-Bench authors): 30 ML-research tasks over 12 domains; each agent gets a fixed research scaffold with strong baselines and must make one algorithmic change inside a constrained edit surface, run under Harbor with a 5-hour exploration budget; each task is scored by the paper's normalized task metric against the task's reproduced baselines and the board averages the 30 tasks (arithmetic mean); value = the board's MLS-Bench-Lite score for the row's model, harness and stated effort; the board does not say who ran each row; source row: {\"harness\":\"Claude Code\",\"stated_effort\":\"not stated\",\"board_title\":\"MLS-Bench Lite\",\"human_sota_reference\":44.66}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/Imbernoulli/MLS-Bench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/d1bd5f205f6100e01df8.gz",
+          "sha256": "d1bd5f205f6100e01df8220b6ba5d703ba0dbf1623014c53bcc5317871485ee3",
+          "retrieved_at": "2026-09-22T05:03:46.322990+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:da0fa640640f6fd4262aa2c1",
+      "benchmark_id": "mls-bench-lite::30-tasks",
+      "subject": {
+        "source_id": "Claude Sonnet 5|Claude Code (max effort)",
+        "name": "Claude Sonnet 5",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code (max effort)"
+      },
+      "value": 31.4,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://mls-bench.com/leaderboard",
+        "retrieved_at": "2026-09-22T05:03:43.731594+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/c7e3934636b87819424c.gz",
+        "sha256": "c7e3934636b87819424c9ce1a01f11b49f9ea0f98cc6b81f0f6c12a3a1ea8379",
+        "locator": "mls_bench_lite_board; source row 12; Claude Sonnet 5|Claude Code (max effort); field value"
+      },
+      "protocol": "MLS-Bench-Lite (MLS-Bench authors): 30 ML-research tasks over 12 domains; each agent gets a fixed research scaffold with strong baselines and must make one algorithmic change inside a constrained edit surface, run under Harbor with a 5-hour exploration budget; each task is scored by the paper's normalized task metric against the task's reproduced baselines and the board averages the 30 tasks (arithmetic mean); value = the board's MLS-Bench-Lite score for the row's model, harness and stated effort; the board does not say who ran each row; source row: {\"harness\":\"Claude Code (max effort)\",\"stated_effort\":\"max\",\"board_title\":\"MLS-Bench Lite\",\"human_sota_reference\":44.66}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/Imbernoulli/MLS-Bench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/d1bd5f205f6100e01df8.gz",
+          "sha256": "d1bd5f205f6100e01df8220b6ba5d703ba0dbf1623014c53bcc5317871485ee3",
+          "retrieved_at": "2026-09-22T05:03:46.322990+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:3fc046a640b9cb575d5731fe",
+      "benchmark_id": "mls-bench-lite::30-tasks",
+      "subject": {
+        "source_id": "Kimi K2.6|Kimi-Code",
+        "name": "Kimi K2.6",
+        "model_id": null,
+        "variant": null,
+        "harness": "Kimi-Code"
+      },
+      "value": 26.7,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://mls-bench.com/leaderboard",
+        "retrieved_at": "2026-09-22T05:03:43.731594+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/c7e3934636b87819424c.gz",
+        "sha256": "c7e3934636b87819424c9ce1a01f11b49f9ea0f98cc6b81f0f6c12a3a1ea8379",
+        "locator": "mls_bench_lite_board; source row 13; Kimi K2.6|Kimi-Code; field value"
+      },
+      "protocol": "MLS-Bench-Lite (MLS-Bench authors): 30 ML-research tasks over 12 domains; each agent gets a fixed research scaffold with strong baselines and must make one algorithmic change inside a constrained edit surface, run under Harbor with a 5-hour exploration budget; each task is scored by the paper's normalized task metric against the task's reproduced baselines and the board averages the 30 tasks (arithmetic mean); value = the board's MLS-Bench-Lite score for the row's model, harness and stated effort; the board does not say who ran each row; source row: {\"harness\":\"Kimi-Code\",\"stated_effort\":\"not stated\",\"board_title\":\"MLS-Bench Lite\",\"human_sota_reference\":44.66}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/Imbernoulli/MLS-Bench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/d1bd5f205f6100e01df8.gz",
+          "sha256": "d1bd5f205f6100e01df8220b6ba5d703ba0dbf1623014c53bcc5317871485ee3",
+          "retrieved_at": "2026-09-22T05:03:46.322990+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:243e2f9eebb12ed597df05dc",
+      "benchmark_id": "mls-bench-lite::30-tasks",
+      "subject": {
+        "source_id": "DeepSeek-V4 Pro Preview|Claude Code",
+        "name": "DeepSeek-V4 Pro Preview",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 24.4,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://mls-bench.com/leaderboard",
+        "retrieved_at": "2026-09-22T05:03:43.731594+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/c7e3934636b87819424c.gz",
+        "sha256": "c7e3934636b87819424c9ce1a01f11b49f9ea0f98cc6b81f0f6c12a3a1ea8379",
+        "locator": "mls_bench_lite_board; source row 14; DeepSeek-V4 Pro Preview|Claude Code; field value"
+      },
+      "protocol": "MLS-Bench-Lite (MLS-Bench authors): 30 ML-research tasks over 12 domains; each agent gets a fixed research scaffold with strong baselines and must make one algorithmic change inside a constrained edit surface, run under Harbor with a 5-hour exploration budget; each task is scored by the paper's normalized task metric against the task's reproduced baselines and the board averages the 30 tasks (arithmetic mean); value = the board's MLS-Bench-Lite score for the row's model, harness and stated effort; the board does not say who ran each row; source row: {\"harness\":\"Claude Code\",\"stated_effort\":\"not stated\",\"board_title\":\"MLS-Bench Lite\",\"human_sota_reference\":44.66}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/Imbernoulli/MLS-Bench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/d1bd5f205f6100e01df8.gz",
+          "sha256": "d1bd5f205f6100e01df8220b6ba5d703ba0dbf1623014c53bcc5317871485ee3",
+          "retrieved_at": "2026-09-22T05:03:46.322990+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
     }
   ],
   "collections": [
@@ -280900,6 +281410,12 @@
       "status": "collected",
       "source_url": "https://matharena.ai/competition_tables/usamo--usamo_2026",
       "reason": "9 source results parsed; configurations remain separate; unmatched model identities are retained."
+    },
+    {
+      "benchmark_id": "mls-bench-lite::30-tasks",
+      "status": "collected",
+      "source_url": "https://mls-bench.com/leaderboard",
+      "reason": "15 source results parsed; configurations remain separate; unmatched model identities are retained."
     }
   ],
   "rejected": [

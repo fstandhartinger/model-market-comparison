@@ -355,6 +355,10 @@
     "matharena-usamo": {
       "tier": "judged",
       "reason": "LLM judges grade each proof against a rubric that a model writes from the official solution (MathArena's configs/judges/main_judge.yaml and grading_scheme_creator.yaml); a judge's reading of the proof, not a checkable answer, sets the score, and three of the judge models are graded on the same board."
+    },
+    "mls-bench-lite": {
+      "tier": "headline",
+      "reason": "Public tasks and scoring code (github.com/Imbernoulli/MLS-Bench, 140 tasks with baselines; arXiv 2605.08678) that labs quote in their own release posts: the repository lists adoption by Alibaba Qwen (Qwen3.8-Max) and Moonshot (Kimi K3, Kimi-K2.7-Code), and StepFun quotes MLS-Bench-Lite for Step 5 preview (stepfun-mls-bench-lite::snapshot-2026-09-20)."
     }
   }
 }

@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-22T02:23:34.543Z",
-  "joined": 1514,
+  "generated_at": "2026-09-22T05:06:36.531Z",
+  "joined": 1526,
   "unmatched": [
     {
       "benchmark_id": "deepswe::snapshot-2026-09-15",
@@ -9530,6 +9530,21 @@
     {
       "benchmark_id": "react-native-evals::91-evals",
       "source_id": "Nemotron-Nano",
+      "reason": "label is not a catalog model slug"
+    },
+    {
+      "benchmark_id": "mls-bench-lite::30-tasks",
+      "source_id": "Claude Fable 5|Claude Code (max effort, with fallback)",
+      "reason": "setting max effort, with fallback is not a reviewed setting"
+    },
+    {
+      "benchmark_id": "mls-bench-lite::30-tasks",
+      "source_id": "Kimi K2.6|Kimi-Code",
+      "reason": "setting not stated and kimi-k2.6 has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "mls-bench-lite::30-tasks",
+      "source_id": "DeepSeek-V4 Pro Preview|Claude Code",
       "reason": "label is not a catalog model slug"
     },
     {

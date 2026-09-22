@@ -895,18 +895,12 @@
       "note": "2026-09-22 (iteration 164, opencode-kimi): frontierbench.ai serves the same Terminal-Bench 4.0 board as tbench.ai (both 200, identical rows)."
     },
     "benchlm-codeforces": {
-      "decision": "in_registry",
-      "benchmark_ids": [
-        "deepseek-codeforces-rating::snapshot-2026-09-10"
-      ],
-      "note": "2026-09-22 (iteration 164, opencode-kimi): Codeforces family mapped to the registry snapshot."
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 165, non-kimi review by codex-luna, applied by claude-opus; ux-evidence/iter165-cr37-1-review/): Lumina's 24 values are all BenchLM estimates. Codeforces ratings are published only by labs — e.g. the DeepSeek-V4.1-Flash card row, held as the vendor snapshot deepseek-codeforces-rating::snapshot-2026-09-10, which is one lab's claim, not an independent board. Numbers enter only via CR-30.1."
     },
     "benchlm-exploitbench": {
-      "decision": "in_registry",
-      "benchmark_ids": [
-        "xiaomi-exploitbench::snapshot-2026-09-22"
-      ],
-      "note": "2026-09-22 (iteration 164, opencode-kimi): exploitbench.ai is Cloudflare-gated (403); the registry snapshot is the primary value source."
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 165, non-kimi review by codex-luna, applied by claude-opus; ux-evidence/iter165-cr37-1-review/): Lumina cites only aggregator copies and estimates. The one committed figure is Xiaomi's own MiMo-V2.6 launch table (vendor snapshot xiaomi-exploitbench::snapshot-2026-09-22), not an independent board; exploitbench.ai answers 403 (Cloudflare) and is not collected. Numbers enter only via CR-30.1."
     },
     "benchlm-gpqa": {
       "decision": "in_registry",
@@ -918,67 +912,40 @@
       "note": "2026-09-22 (iteration 164, opencode-kimi): Lumina uses the GPQA Diamond subset; full-set GPQA rows stay estimates and are never ingested."
     },
     "benchlm-simpleqa": {
-      "decision": "in_registry",
-      "benchmark_ids": [
-        "simpleqa-verified::snapshot-2026-09-16"
-      ],
-      "note": "2026-09-22 (iteration 164, opencode-kimi): only the verified variant is registry-backed."
+      "decision": "excluded",
+      "note": "2026-09-22 (iteration 165, non-kimi review by codex-luna, applied by claude-opus; ux-evidence/iter165-cr37-1-review/): plain SimpleQA (OpenAI, 2024): 36 of Lumina's 39 values are BenchLM estimates and 3 aggregator copies; no maintained independent board exists for this question set. SimpleQA Verified (simpleqa-verified::snapshot-2026-09-16, run by Epoch AI) is a different, cleaned question set and is never merged with it."
     },
     "simpleqa": {
-      "decision": "in_registry",
-      "benchmark_ids": [
-        "simpleqa-verified::snapshot-2026-09-16"
-      ],
-      "note": "2026-09-22 (iteration 164, opencode-kimi): mapped to the verified variant; plain SimpleQA stays aggregator-only."
+      "decision": "excluded",
+      "note": "2026-09-22 (iteration 165, non-kimi review by codex-luna, applied by claude-opus; ux-evidence/iter165-cr37-1-review/): plain SimpleQA (OpenAI): Lumina's 2 values are aggregator copies; no maintained independent board exists for this question set. SimpleQA Verified (simpleqa-verified::snapshot-2026-09-16) is a different, cleaned question set and is never merged with it."
     },
     "benchlm-draco": {
-      "decision": "in_registry",
-      "benchmark_ids": [
-        "stepfun-draco::snapshot-2026-09-20"
-      ],
-      "note": "2026-09-22 (iteration 164, opencode-kimi): StepFun board; the Anthropic-card DRACO claim stays on the vendor route."
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 165, non-kimi review by codex-luna, applied by claude-opus; ux-evidence/iter165-cr37-1-review/): Lumina cites the Anthropic Claude Opus 5 System Card (https://www-cdn.anthropic.com/c5fbac3f0b1280a933ebd26d3cb8bb9f5bdeaf48/Claude%20Opus%205%20System%20Card.pdf), section 8.10.4 DRACO. StepFun's own figure is a separate vendor snapshot (stepfun-draco::snapshot-2026-09-20); neither is an independent board. Numbers enter only via CR-30.1."
     },
     "benchlm-officeqa": {
-      "decision": "in_registry",
-      "benchmark_ids": [
-        "stepfun-officeqa-pro::snapshot-2026-09-20"
-      ],
-      "note": "2026-09-22 (iteration 164, opencode-kimi): only the Pro variant is registry-backed; the Anthropic-card OfficeQA claim stays on the vendor route."
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 165, non-kimi review by codex-luna, applied by claude-opus; ux-evidence/iter165-cr37-1-review/): OfficeQA (not OfficeQA Pro, the harder 133-question subset held as stepfun-officeqa-pro::snapshot-2026-09-20): Lumina cites the Anthropic Claude Opus 5 System Card (https://www-cdn.anthropic.com/c5fbac3f0b1280a933ebd26d3cb8bb9f5bdeaf48/Claude%20Opus%205%20System%20Card.pdf), section 8.13.1, which reports OfficeQA and OfficeQA Pro separately. Numbers enter only via CR-30.1."
     },
     "benchlm-toolathlonverifiedpass3": {
-      "decision": "in_registry",
-      "benchmark_ids": [
-        "toolathlon-verified::2026-06-30"
-      ],
-      "note": "2026-09-22 (iteration 164, opencode-kimi): auxiliary Toolathlon-Verified metrics join the Pass@1 board."
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 165, non-kimi review by codex-luna, applied by claude-opus; ux-evidence/iter165-cr37-1-review/): Toolathlon-Verified Pass@3 is a different metric from the board's ranked Pass@1 (toolathlon-verified::2026-06-30); Lumina cites the Anthropic Claude Opus 5 System Card (https://www-cdn.anthropic.com/c5fbac3f0b1280a933ebd26d3cb8bb9f5bdeaf48/Claude%20Opus%205%20System%20Card.pdf), section 8.13.6. Numbers enter only via CR-30.1."
     },
     "benchlm-toolathlonverifiedpass3all": {
-      "decision": "in_registry",
-      "benchmark_ids": [
-        "toolathlon-verified::2026-06-30"
-      ],
-      "note": "2026-09-22 (iteration 164, opencode-kimi): auxiliary Toolathlon-Verified metrics join the Pass@1 board."
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 165, non-kimi review by codex-luna, applied by claude-opus; ux-evidence/iter165-cr37-1-review/): Toolathlon-Verified Pass³ (all three runs pass) is a different metric from the board's ranked Pass@1 (toolathlon-verified::2026-06-30); Lumina cites the Anthropic Claude Opus 5 System Card (https://www-cdn.anthropic.com/c5fbac3f0b1280a933ebd26d3cb8bb9f5bdeaf48/Claude%20Opus%205%20System%20Card.pdf), section 8.13.6. Numbers enter only via CR-30.1."
     },
     "benchlm-toolathlonverifiedavgturns": {
-      "decision": "in_registry",
-      "benchmark_ids": [
-        "toolathlon-verified::2026-06-30"
-      ],
-      "note": "2026-09-22 (iteration 164, opencode-kimi): auxiliary Toolathlon-Verified metrics join the Pass@1 board."
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 165, non-kimi review by codex-luna, applied by claude-opus; ux-evidence/iter165-cr37-1-review/): average assistant turns is not the board's ranked Pass@1 score (toolathlon-verified::2026-06-30); Lumina cites the Anthropic Claude Opus 5 System Card (https://www-cdn.anthropic.com/c5fbac3f0b1280a933ebd26d3cb8bb9f5bdeaf48/Claude%20Opus%205%20System%20Card.pdf), section 8.13.6. Numbers enter only via CR-30.1."
     },
     "benchlm-mcpatlasclaimcoverage": {
-      "decision": "in_registry",
-      "benchmark_ids": [
-        "mcp-atlas::snapshot-2026-09-21"
-      ],
-      "note": "2026-09-22 (iteration 164, opencode-kimi): Scale board; claim-coverage rows are the board pass rate."
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 165, non-kimi review by codex-luna, applied by claude-opus; ux-evidence/iter165-cr37-1-review/): mean claim coverage is a different metric from the pass rate Scale's board ranks (mcp-atlas::snapshot-2026-09-21); Lumina cites the Anthropic Claude Opus 5 System Card (https://www-cdn.anthropic.com/c5fbac3f0b1280a933ebd26d3cb8bb9f5bdeaf48/Claude%20Opus%205%20System%20Card.pdf), section 8.13.2, which reports both (85.8 % pass rate, 89.1 % mean claim coverage for Opus 5). Numbers enter only via CR-30.1."
     },
     "benchlm-arxivmathjune2026withtools": {
-      "decision": "in_registry",
-      "benchmark_ids": [
-        "matharena-arxivmath::2026-06"
-      ],
-      "note": "2026-09-22 (iteration 164, opencode-kimi): MathArena June 2026 ArXivMath board; the Anthropic-card \"with tools\" claim stays on the vendor route."
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 165, non-kimi review by codex-luna, applied by claude-opus; ux-evidence/iter165-cr37-1-review/): the with-tools protocol differs from MathArena's June 2026 ArXivMath board (matharena-arxivmath::2026-06, no tools); Lumina cites the Anthropic Claude Opus 5 System Card (https://www-cdn.anthropic.com/c5fbac3f0b1280a933ebd26d3cb8bb9f5bdeaf48/Claude%20Opus%205%20System%20Card.pdf), section 8.8, which reports Opus 5 at 90.8 % without tools and 91.3 % with tools (max effort, four runs per problem); only the no-tools protocol matches the board. Numbers enter only via CR-30.1."
     },
     "arena-hard-auto": {
       "decision": "excluded",
@@ -1097,9 +1064,11 @@
       "reason": "2026-09-22 (iteration 164, opencode-kimi): paper-only (arXiv 2601.18137): no maintained primary leaderboard with values."
     },
     "benchlm-mlsbenchlite": {
-      "decision": "planned",
-      "collector": "MLS-Bench Lite, mls-bench.com (data/SCRAPING.md)",
-      "note": "mls-bench.com is a live Next.js board with embedded Flight data and current 2026 models (checked 2026-09-22)."
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "mls-bench-lite::30-tasks"
+      ],
+      "note": "2026-09-22 (iteration 165): the MLS-Bench authors' own board (mls-bench.com/leaderboard, data/SCRAPING.md) is collected daily — 15 rows, 12 exact joins. Lumina's 6 cited values are aggregator copies; StepFun's own Step 5 preview claim stays the separate vendor snapshot stepfun-mls-bench-lite::snapshot-2026-09-20."
     },
     "benchlm-acecyberrangesolved": {
       "decision": "planned",
@@ -1423,20 +1392,20 @@
       "note": "2026-09-22 (iteration 164, opencode-kimi): OpenAI HealthBench page (openai.com/index/healthbench/) is the cited primary; it 403s our fetcher, so ingestion needs the capture lane."
     },
     "benchlm-medxpertqamm": {
-      "decision": "vendor_reported",
-      "note": "2026-09-22 (iteration 164, opencode-kimi): Meta Muse Spark methodology URL (ai.meta.com/static-resource/muse-spark-eval-methodology) answers 400 as of 2026-09-22; re-verify before ingestion."
+      "decision": "undecided",
+      "note": "2026-09-22 (iteration 165, non-kimi review by codex-luna, applied by claude-opus; ux-evidence/iter165-cr37-1-review/): no committed capture of a card containing this benchmark: the cited Meta Muse Spark methodology URL (ai.meta.com/static-resource/muse-spark-eval-methodology) answered HTTP 400 on 2026-09-22. Undecided until an exact card or other primary evidence is pinned."
     },
     "benchlm-medxpertqatext": {
-      "decision": "vendor_reported",
-      "note": "2026-09-22 (iteration 164, opencode-kimi): Meta Muse Spark methodology URL (ai.meta.com/static-resource/muse-spark-eval-methodology) answers 400 as of 2026-09-22; re-verify before ingestion."
+      "decision": "undecided",
+      "note": "2026-09-22 (iteration 165, non-kimi review by codex-luna, applied by claude-opus; ux-evidence/iter165-cr37-1-review/): no committed capture of a card containing this benchmark: the cited Meta Muse Spark methodology URL (ai.meta.com/static-resource/muse-spark-eval-methodology) answered HTTP 400 on 2026-09-22. Undecided until an exact card or other primary evidence is pinned."
     },
     "benchlm-frontierscienceresearch": {
-      "decision": "vendor_reported",
-      "note": "2026-09-22 (iteration 164, opencode-kimi): Meta Muse Spark methodology URL (ai.meta.com/static-resource/muse-spark-eval-methodology) answers 400 as of 2026-09-22; re-verify before ingestion."
+      "decision": "undecided",
+      "note": "2026-09-22 (iteration 165, non-kimi review by codex-luna, applied by claude-opus; ux-evidence/iter165-cr37-1-review/): no committed capture of a card containing this benchmark: the cited Meta Muse Spark methodology URL (ai.meta.com/static-resource/muse-spark-eval-methodology) answered HTTP 400 on 2026-09-22. Undecided until an exact card or other primary evidence is pinned."
     },
     "benchlm-ipho2025theory": {
-      "decision": "vendor_reported",
-      "note": "2026-09-22 (iteration 164, opencode-kimi): Meta Muse Spark methodology URL (ai.meta.com/static-resource/muse-spark-eval-methodology) answers 400 as of 2026-09-22; re-verify before ingestion."
+      "decision": "undecided",
+      "note": "2026-09-22 (iteration 165, non-kimi review by codex-luna, applied by claude-opus; ux-evidence/iter165-cr37-1-review/): no committed capture of a card containing this benchmark: the cited Meta Muse Spark methodology URL (ai.meta.com/static-resource/muse-spark-eval-methodology) answered HTTP 400 on 2026-09-22. Undecided until an exact card or other primary evidence is pinned."
     },
     "benchlm-vstar": {
       "decision": "vendor_reported",
@@ -1483,16 +1452,16 @@
       "note": "2026-09-22 (iteration 164, opencode-kimi): Kimi-K2.7-Code card (huggingface.co/moonshotai/Kimi-K2.7-Code) names Kimi Claw 247 (checked 2026-09-22)."
     },
     "benchlm-mmlupro": {
-      "decision": "vendor_reported",
-      "note": "2026-09-22 (iteration 164, opencode-kimi): MMLU-Pro / MMLU-ProX are self-reported on lab cards; the claims pass pins the exact card and table."
+      "decision": "undecided",
+      "note": "2026-09-22 (iteration 165, non-kimi review by codex-luna, applied by claude-opus; ux-evidence/iter165-cr37-1-review/): the iteration-164 note named no card or table. MMLU-Pro is self-reported on many lab cards, but no exact card is pinned and no independent board is collected; undecided until one is."
     },
     "benchlm-mmluprox": {
-      "decision": "vendor_reported",
-      "note": "2026-09-22 (iteration 164, opencode-kimi): MMLU-Pro / MMLU-ProX are self-reported on lab cards; the claims pass pins the exact card and table."
+      "decision": "undecided",
+      "note": "2026-09-22 (iteration 165, non-kimi review by codex-luna, applied by claude-opus; ux-evidence/iter165-cr37-1-review/): the iteration-164 note named no card or table. MMLU-ProX is self-reported on lab cards, but no exact card is pinned; undecided until one is."
     },
     "benchlm-mmmlu": {
-      "decision": "vendor_reported",
-      "note": "2026-09-22 (iteration 164, opencode-kimi): OpenAI MMMLU HF dataset page (huggingface.co/datasets/openai/MMMLU) is the cited primary; numbers enter only via CR-30.1."
+      "decision": "undecided",
+      "note": "2026-09-22 (iteration 165, non-kimi review by codex-luna, applied by claude-opus; ux-evidence/iter165-cr37-1-review/): the iteration-164 note cited OpenAI's MMMLU dataset page on Hugging Face, which holds the questions, not model results; no exact vendor card is pinned. Undecided until one is."
     },
     "benchlm-multiloko": {
       "decision": "undecided",
@@ -1500,7 +1469,7 @@
     },
     "benchlm-chinesesimpleqa": {
       "decision": "undecided",
-      "note": "2026-09-22 (iteration 164, opencode-kimi): Lumina cites only a BenchLM aggregator page; the underlying card is not pinned yet (DeepSeek V4.1-series long-context claims are the candidate)."
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Lumina cites only a BenchLM aggregator page; the underlying card is not pinned yet (DeepSeek V4.1-series card claims are the candidate; corrected 2026-09-22, iteration 165: ChineseSimpleQA is a short-form factuality set, not long-context)."
     },
     "benchlm-corpusqa1m": {
       "decision": "undecided",
