@@ -5089,7 +5089,7 @@
             "categories"
           ],
           "pct_tolerance": 1e-09,
-            "incomplete_pct_tolerance": 0.1
+          "incomplete_pct_tolerance": 0.1
         }
       },
       "status": "collected",
@@ -5488,6 +5488,56 @@
       "protocol": "AIME 2026: the 30 problems of AIME I and II 2026 (MathArena); each answer is an integer from 0 to 999; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; not a Composite input.",
       "basis": "measured",
       "minimum_rows": 31,
+      "source_urls": [
+        "https://matharena.ai/"
+      ]
+    },
+    {
+      "benchmark_id": "matharena-usamo::2026",
+      "parser": {
+        "kind": "matharena_table",
+        "name_field": "name",
+        "id_field": "id",
+        "value_field": "accuracy",
+        "plain_text_names": true,
+        "require_header": [
+          "Rank",
+          "Model Name",
+          "Provider",
+          "Accuracy (± 95% CI)",
+          "Cost",
+          "Output Tokens",
+          "Input Tokens",
+          "Average Retries",
+          "Average Time",
+          "Open",
+          "Parameters",
+          "Active Parameters"
+        ],
+        "require_problems": 6,
+        "post_release_flag": "⚠️",
+        "predicted_scores": "reject"
+      },
+      "status": "collected",
+      "reason": "MathArena serves the USAMO 2026 (MathArena) leaderboard as JSON; one row per model, the setting stays part of the label. Proofs are graded by MathArena's LLM judges, so the board is Judged. The competition is marked Deprecated (frozen); it is collected as the primary board behind Lumina's aggregator-only family usamo-2026.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JSON with a rendered HTML table",
+        "locator": "GET https://matharena.ai/competition_tables/usamo--usamo_2026 → JSON field \"table\" (rendered leaderboard): one row per model; value = the \"Accuracy (± 95% CI)\" point estimate in percent; the warning sign after a name is MathArena's \"Model was released after competition release\" flag, kept per row; a row whose accuracy cell is marked data-predicted=\"yes\" (\"Includes estimated scores for questions we did not run\", item response theory) is refused, not ingested.",
+        "version_guard": "The competition table must keep exactly the twelve published leaderboard columns (Rank, Model Name, Provider, Accuracy (± 95% CI), Cost, Output Tokens, Input Tokens, Average Retries, Average Time, Open, Parameters, Active Parameters) and exactly 6 problems in its per-problem grid (MathArena's competitions card for USAMO 2026 reads \"6 problems\"). Another edition or problem count is a different identity; editions are never averaged.",
+        "notes": "Measured by MathArena. The confidence interval, cost, tokens and the released-after-competition flag are kept in each observation's protocol, never as separate scores."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "The competition table must keep exactly the twelve published leaderboard columns (Rank, Model Name, Provider, Accuracy (± 95% CI), Cost, Output Tokens, Input Tokens, Average Retries, Average Time, Open, Parameters, Active Parameters) and exactly 6 problems in its per-problem grid (MathArena's competitions card for USAMO 2026 reads \"6 problems\"). Another edition or problem count is a different identity; editions are never averaged.",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/usamo--usamo_2026",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-usamo/2c6f85fa189ac482d54d.gz",
+        "sha256": "2c6f85fa189ac482d54d597e1cbbe64803cda65cd85e78add44087d94799756b",
+        "retrieved_at": "2026-09-22T02:22:17.009018+00:00"
+      },
+      "protocol": "USAMO 2026: the six proof problems of the 2026 USA Mathematical Olympiad (MathArena); each proof is graded 0–7 by MathArena's LLM judges against a rubric generated from the official solution; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; judged; not a Composite input.",
+      "basis": "measured",
+      "minimum_rows": 9,
       "source_urls": [
         "https://matharena.ai/"
       ]

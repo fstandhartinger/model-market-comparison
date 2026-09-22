@@ -146,6 +146,11 @@
       "quote": "an LLM acting as a strict peer reviewer grades each report against an expert-curated weighted rubric",
       "field": "scoring.metric",
       "why": "The research report is rated against rubric criteria by a judge model; the original paper is the reference, but a judge's reading of the report — not a checkable answer — decides the score."
+    },
+    "matharena-usamo": {
+      "quote": "LLM judges grade each proof against a rubric that a model writes from the official solution",
+      "field": "scoring.metric",
+      "why": "USAMO problems are proofs with no answer key: MathArena's judge models grade each proof 0–7 against a model-written rubric (configs/judges/ in github.com/eth-sri/matharena), so a judge's opinion, not a checkable answer, sets the score."
     }
   },
   "considered_not_judged": {

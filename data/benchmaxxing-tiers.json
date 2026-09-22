@@ -350,7 +350,11 @@
     },
     "matharena-aime": {
       "tier": "headline",
-      "reason": "AIME's contest problems are public once the exam is held (MathArena publishes the 30 AIME 2026 problems on Hugging Face), and labs quote AIME 2026 in release material — our self-reported corpus (data/raw/benchmarks/self-reported/scout-20260915.jsonl.gz) holds AIME 2026 rows from Moonshot AI, Z.ai and Alibaba Qwen — so it is a board a training team can aim at."
+      "reason": "AIME's contest problems are public once the exam is held (MathArena publishes the 30 AIME 2026 problems on Hugging Face), and labs quote AIME 2026 in release material — our self-reported corpus (data/raw/benchmarks/self-reported/scout-20260915.jsonl.gz) holds AIME 2026 rows from Moonshot AI (Kimi K2.6 card) and Z.ai (GLM-5.2 card) and, written \"AIME26\", from Alibaba Qwen (Qwen3.6-27B card) — so it is a board a training team can aim at."
+    },
+    "matharena-usamo": {
+      "tier": "judged",
+      "reason": "LLM judges grade each proof against a rubric that a model writes from the official solution (MathArena's configs/judges/main_judge.yaml and grading_scheme_creator.yaml); a judge's reading of the proof, not a checkable answer, sets the score, and three of the judge models are graded on the same board."
     }
   }
 }

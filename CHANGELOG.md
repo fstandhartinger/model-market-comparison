@@ -4,6 +4,14 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-22 — MathArena USAMO 2026 (judged, secondary, retired, non-Composite)
+
+One new registry id (Math): `matharena-usamo::2026` (the six proof problems of USAMO 2026, 9 rows), from MathArena's
+own competition table. Proofs are graded 0–7 by MathArena's LLM judges against a model-written rubric (MathArena's
+`configs/judges/`), so the rows carry the `Judged` tag and never average with task-accuracy rows; three judge models
+are also graded on the board, which the registry notes say. MathArena marks the competition Deprecated, so it is
+`status: "retained"` (tagged retired). 4 rows join a catalog configuration exactly. No path, field or unit changed.
+
 ## 2026-09-22 — MathArena AIME 2026 (secondary, retired, non-Composite)
 
 One new registry id (Math), collected daily from MathArena's own competition table like the HMMT and Apex boards:

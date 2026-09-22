@@ -15,6 +15,8 @@ const BOARDS = {
   'matharena-apex-shortlist::2025': { rows: 38, refused: ['Qwen3.5-4B', 'Qwen3.5-2B'], joins: 13 },
   // 2026-09-22 (iteration 162): AIME 2026, the independent board behind Lumina's aime-2026 family.
   'matharena-aime::2026': { rows: 31, refused: ['Qwen3.5-4B'], joins: 7 },
+  // USAMO 2026: proofs graded by MathArena's LLM judges, so the board is Judged.
+  'matharena-usamo::2026': { rows: 9, refused: [], joins: 4 },
 };
 
 test('MathArena competitions: rows, published values, and item-response-theory estimates refused', () => {
@@ -27,7 +29,7 @@ def load(bid):
   e=entries[bid];raw=gzip.decompress(Path(e['source']['file']).read_bytes());assert hashlib.sha256(raw).hexdigest()==e['source']['sha256']
   return raw.decode('utf-8'),e['parser']
 out={}
-for bid in ['matharena-hmmt::2026-02','matharena-hmmt::2025-11','matharena-apex::2025','matharena-apex-shortlist::2025','matharena-aime::2026']:
+for bid in ['matharena-hmmt::2026-02','matharena-hmmt::2025-11','matharena-apex::2025','matharena-apex-shortlist::2025','matharena-aime::2026','matharena-usamo::2026']:
   src,spec=load(bid);rows=m.parse(src,spec,None)
   assert spec['predicted_scores']=='reject'
   out[bid]={'measured':[r['id'] for r in rows if r['accuracy'] is not None],'refused':[r['id'] for r in rows if r['accuracy'] is None],
@@ -75,6 +77,8 @@ print(json.dumps(out))
   assert.equal(got['matharena-aime::2026'].values['Qwen3-4B-2507-Think'], 82.5);
   assert.equal(got['matharena-aime::2026'].flag['GPT-5.2 (high)'], false);
   assert.equal(got['matharena-aime::2026'].flag['Kimi K3 (Think)'], true);
+  assert.equal(got['matharena-usamo::2026'].values['GPT-5.5 (xhigh)'], 98.21);
+  assert.equal(got['matharena-usamo::2026'].values['GLM 5'], 35.12);
   assert.equal(got.collected, 38);
   assert.deepEqual(got.rejected.map((r) => r.source_id), ['Qwen3.5-4B', 'Qwen3.5-2B']);
 });
@@ -95,6 +99,8 @@ test('MathArena competitions: exact joins only, deprecated boards are retained',
   assert.equal(joined('matharena-aime::2026', 'Gemini 3.6 Flash'), null, 'no setting stated and the catalog configuration is high, not default');
   assert.equal(joined('matharena-aime::2026', 'Claude-Opus-4.6 (High)'), null, 'no claude-opus-4.6::high configuration');
   assert.equal(joined('matharena-aime::2026', 'DeepSeek-v4-Flash (Max)'), 'deepseek-v4-flash::max');
+  assert.equal(joined('matharena-usamo::2026', 'DeepSeek-v4-Pro (Max)'), 'deepseek-v4-pro::max');
+  assert.equal(joined('matharena-usamo::2026', 'Kimi K2.6 (Think)'), null, 'Think is not a reviewed setting');
   // The undated DeepSeek labels are the original V4 releases: MathArena's own model configs say so (codex review).
   assert.equal(joined('matharena-apex::2025', 'DeepSeek-v4-Pro (Max)'), 'deepseek-v4-pro::max');
   const cfgDir = 'data/raw/benchmarks/daily-evidence/2026-09-22-matharena-config';
@@ -111,8 +117,25 @@ test('MathArena competitions: exact joins only, deprecated boards are retained',
     assert.ok(e.evidence.some((p) => /Deprecated/.test(p.excerpt)), `${bid}: the Deprecated badge is quoted`);
   }
   for (const [slug, bid] of [['benchlm-hmmtfeb2026', 'matharena-hmmt::2026-02'], ['benchlm-hmmtnov2025', 'matharena-hmmt::2025-11'],
-    ['benchlm-apex', 'matharena-apex::2025'], ['benchlm-apexshortlist', 'matharena-apex-shortlist::2025'], ['aime-2026', 'matharena-aime::2026']]) {
+    ['benchlm-apex', 'matharena-apex::2025'], ['benchlm-apexshortlist', 'matharena-apex-shortlist::2025'], ['aime-2026', 'matharena-aime::2026'], ['usamo-2026', 'matharena-usamo::2026']]) {
     assert.deepEqual(policy[slug].benchmark_ids, [bid]);
     assert.equal(policy[slug].decision, 'in_registry');
   }
+});
+
+test('MathArena USAMO 2026: judged, and the grading method is quoted from MathArena configuration', () => {
+  const registry = JSON.parse(readFileSync('data/raw/benchmarks/registry.json', 'utf8')).entries;
+  const e = registry.find((r) => r.id === 'matharena-usamo::2026');
+  const caveats = JSON.parse(readFileSync('data/benchmark-caveats.json', 'utf8'));
+  assert.ok(e.scoring.metric.includes(caveats.judged['matharena-usamo'].quote));
+  const tiers = JSON.parse(readFileSync('data/benchmaxxing-tiers.json', 'utf8'));
+  assert.equal(JSON.stringify(tiers).includes('"matharena-usamo":{"tier":"judged"'), true);
+  const body = (f) => gunzipSync(readFileSync(f)).toString();
+  const dir = 'data/raw/benchmarks/daily-evidence/2026-09-22-matharena-usamo';
+  for (const p of e.evidence.filter((x) => x.file.startsWith(dir))) {
+    assert.ok(body(p.file).replace(/\s+/g, ' ').includes(p.excerpt.replace(/\s+/g, ' ')), `${p.file}: excerpt is in the capture`);
+  }
+  const all = readdirSync(dir).filter((f) => f.endsWith('.gz')).map((f) => body(`${dir}/${f}`));
+  assert.ok(all.some((c) => /judge_configs:\s*- judges\/main_judge/.test(c) && /n_problems: 6/.test(c)), 'usamo_2026.yaml names the main judge');
+  assert.ok(all.some((c) => /gemini\/gemini-31-pro\s/.test(c) && /anthropic\/opus_46/.test(c) && /openai\/gpt-54/.test(c)), 'main_judge.yaml names the three judge models');
 });

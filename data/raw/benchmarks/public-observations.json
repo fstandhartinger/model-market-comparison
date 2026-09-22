@@ -279932,6 +279932,222 @@
       },
       "protocol": "AIME 2026: the 30 problems of AIME I and II 2026 (MathArena); each answer is an integer from 0 to 999; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; not a Composite input.; source row: {\"rank\":\"31\",\"model\":\"Qwen3-4B-2507-Think\",\"provider\":\"Qwen\",\"accuracy\":\"82.50% ± 6.80%\",\"cost\":\"$0.006\",\"output_tokens\":\"21206\",\"released_after_competition\":false,\"open_weights\":\"✔️\"}",
       "comparison_key": null
+    },
+    {
+      "id": "public:8d45f2fdd662ed9ba4eac99f",
+      "benchmark_id": "matharena-usamo::2026",
+      "subject": {
+        "source_id": "GPT-5.5 (xhigh)",
+        "name": "GPT-5.5 (xhigh)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 98.21,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/usamo--usamo_2026",
+        "retrieved_at": "2026-09-22T02:22:17.009018+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-usamo/2c6f85fa189ac482d54d.gz",
+        "sha256": "2c6f85fa189ac482d54d597e1cbbe64803cda65cd85e78add44087d94799756b",
+        "locator": "matharena_table; source row 1; GPT-5.5 (xhigh); field accuracy"
+      },
+      "protocol": "USAMO 2026: the six proof problems of the 2026 USA Mathematical Olympiad (MathArena); each proof is graded 0–7 by MathArena's LLM judges against a rubric generated from the official solution; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; judged; not a Composite input.; source row: {\"rank\":\"1\",\"model\":\"GPT-5.5 (xhigh)\",\"provider\":\"OpenAI\",\"accuracy\":\"98.21% ± 5.30%\",\"cost\":\"$0.79\",\"output_tokens\":\"26399\",\"released_after_competition\":true,\"open_weights\":\"❌\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:afecfd0c6340d70004717c61",
+      "benchmark_id": "matharena-usamo::2026",
+      "subject": {
+        "source_id": "GPT-5.4 (xhigh)",
+        "name": "GPT-5.4 (xhigh)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 95.24,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/usamo--usamo_2026",
+        "retrieved_at": "2026-09-22T02:22:17.009018+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-usamo/2c6f85fa189ac482d54d.gz",
+        "sha256": "2c6f85fa189ac482d54d597e1cbbe64803cda65cd85e78add44087d94799756b",
+        "locator": "matharena_table; source row 2; GPT-5.4 (xhigh); field accuracy"
+      },
+      "protocol": "USAMO 2026: the six proof problems of the 2026 USA Mathematical Olympiad (MathArena); each proof is graded 0–7 by MathArena's LLM judges against a rubric generated from the official solution; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; judged; not a Composite input.; source row: {\"rank\":\"2\",\"model\":\"GPT-5.4 (xhigh)\",\"provider\":\"OpenAI\",\"accuracy\":\"95.24% ± 8.52%\",\"cost\":\"$0.86\",\"output_tokens\":\"56878\",\"released_after_competition\":false,\"open_weights\":\"❌\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:d5484d9a6e4f42cf01cd84d5",
+      "benchmark_id": "matharena-usamo::2026",
+      "subject": {
+        "source_id": "Gemini 3.1 Pro Preview",
+        "name": "Gemini 3.1 Pro Preview",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 74.4,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/usamo--usamo_2026",
+        "retrieved_at": "2026-09-22T02:22:17.009018+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-usamo/2c6f85fa189ac482d54d.gz",
+        "sha256": "2c6f85fa189ac482d54d597e1cbbe64803cda65cd85e78add44087d94799756b",
+        "locator": "matharena_table; source row 3; Gemini 3.1 Pro Preview; field accuracy"
+      },
+      "protocol": "USAMO 2026: the six proof problems of the 2026 USA Mathematical Olympiad (MathArena); each proof is graded 0–7 by MathArena's LLM judges against a rubric generated from the official solution; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; judged; not a Composite input.; source row: {\"rank\":\"3\",\"model\":\"Gemini 3.1 Pro Preview\",\"provider\":\"Google\",\"accuracy\":\"74.40% ± 17.46%\",\"cost\":\"$0.37\",\"output_tokens\":\"30598\",\"released_after_competition\":false,\"open_weights\":\"❌\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:a73c14647b22c204eee9e0cd",
+      "benchmark_id": "matharena-usamo::2026",
+      "subject": {
+        "source_id": "DeepSeek-v4-Pro (Max)",
+        "name": "DeepSeek-v4-Pro (Max)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 60.71,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/usamo--usamo_2026",
+        "retrieved_at": "2026-09-22T02:22:17.009018+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-usamo/2c6f85fa189ac482d54d.gz",
+        "sha256": "2c6f85fa189ac482d54d597e1cbbe64803cda65cd85e78add44087d94799756b",
+        "locator": "matharena_table; source row 4; DeepSeek-v4-Pro (Max); field accuracy"
+      },
+      "protocol": "USAMO 2026: the six proof problems of the 2026 USA Mathematical Olympiad (MathArena); each proof is graded 0–7 by MathArena's LLM judges against a rubric generated from the official solution; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; judged; not a Composite input.; source row: {\"rank\":\"4\",\"model\":\"DeepSeek-v4-Pro (Max)\",\"provider\":\"DeepSeek\",\"accuracy\":\"60.71% ± 19.54%\",\"cost\":\"$0.50\",\"output_tokens\":\"143526\",\"released_after_competition\":true,\"open_weights\":\"✔️\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:a36ce77347dc09e43eab8869",
+      "benchmark_id": "matharena-usamo::2026",
+      "subject": {
+        "source_id": "Kimi K2.6 (Think)",
+        "name": "Kimi K2.6 (Think)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 51.19,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/usamo--usamo_2026",
+        "retrieved_at": "2026-09-22T02:22:17.009018+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-usamo/2c6f85fa189ac482d54d.gz",
+        "sha256": "2c6f85fa189ac482d54d597e1cbbe64803cda65cd85e78add44087d94799756b",
+        "locator": "matharena_table; source row 5; Kimi K2.6 (Think); field accuracy"
+      },
+      "protocol": "USAMO 2026: the six proof problems of the 2026 USA Mathematical Olympiad (MathArena); each proof is graded 0–7 by MathArena's LLM judges against a rubric generated from the official solution; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; judged; not a Composite input.; source row: {\"rank\":\"5\",\"model\":\"Kimi K2.6 (Think)\",\"provider\":\"Moonshot AI\",\"accuracy\":\"51.19% ± 20.00%\",\"cost\":\"$0.25\",\"output_tokens\":\"63178\",\"released_after_competition\":true,\"open_weights\":\"✔️\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:803a4f9c344ae37298abd3f4",
+      "benchmark_id": "matharena-usamo::2026",
+      "subject": {
+        "source_id": "Claude-Opus-4.6 (High)",
+        "name": "Claude-Opus-4.6 (High)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 47.02,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/usamo--usamo_2026",
+        "retrieved_at": "2026-09-22T02:22:17.009018+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-usamo/2c6f85fa189ac482d54d.gz",
+        "sha256": "2c6f85fa189ac482d54d597e1cbbe64803cda65cd85e78add44087d94799756b",
+        "locator": "matharena_table; source row 6; Claude-Opus-4.6 (High); field accuracy"
+      },
+      "protocol": "USAMO 2026: the six proof problems of the 2026 USA Mathematical Olympiad (MathArena); each proof is graded 0–7 by MathArena's LLM judges against a rubric generated from the official solution; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; judged; not a Composite input.; source row: {\"rank\":\"6\",\"model\":\"Claude-Opus-4.6 (High)\",\"provider\":\"Anthropic\",\"accuracy\":\"47.02% ± 19.97%\",\"cost\":\"$2.21\",\"output_tokens\":\"87828\",\"released_after_competition\":false,\"open_weights\":\"❌\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:024856caec49cac12ae65d3e",
+      "benchmark_id": "matharena-usamo::2026",
+      "subject": {
+        "source_id": "Step 3.5 Flash",
+        "name": "Step 3.5 Flash",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 44.64,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/usamo--usamo_2026",
+        "retrieved_at": "2026-09-22T02:22:17.009018+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-usamo/2c6f85fa189ac482d54d.gz",
+        "sha256": "2c6f85fa189ac482d54d597e1cbbe64803cda65cd85e78add44087d94799756b",
+        "locator": "matharena_table; source row 7; Step 3.5 Flash; field accuracy"
+      },
+      "protocol": "USAMO 2026: the six proof problems of the 2026 USA Mathematical Olympiad (MathArena); each proof is graded 0–7 by MathArena's LLM judges against a rubric generated from the official solution; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; judged; not a Composite input.; source row: {\"rank\":\"7\",\"model\":\"Step 3.5 Flash\",\"provider\":\"StepFun\",\"accuracy\":\"44.64% ± 19.89%\",\"cost\":\"$0.037\",\"output_tokens\":\"124206\",\"released_after_competition\":false,\"open_weights\":\"✔️\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:d350ce9607c33b2fcf20952b",
+      "benchmark_id": "matharena-usamo::2026",
+      "subject": {
+        "source_id": "Qwen3.5-397b-a17b",
+        "name": "Qwen3.5-397b-a17b",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 36.31,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/usamo--usamo_2026",
+        "retrieved_at": "2026-09-22T02:22:17.009018+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-usamo/2c6f85fa189ac482d54d.gz",
+        "sha256": "2c6f85fa189ac482d54d597e1cbbe64803cda65cd85e78add44087d94799756b",
+        "locator": "matharena_table; source row 8; Qwen3.5-397b-a17b; field accuracy"
+      },
+      "protocol": "USAMO 2026: the six proof problems of the 2026 USA Mathematical Olympiad (MathArena); each proof is graded 0–7 by MathArena's LLM judges against a rubric generated from the official solution; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; judged; not a Composite input.; source row: {\"rank\":\"8\",\"model\":\"Qwen3.5-397b-a17b\",\"provider\":\"Qwen\",\"accuracy\":\"36.31% ± 19.24%\",\"cost\":\"$0.12\",\"output_tokens\":\"33356\",\"released_after_competition\":false,\"open_weights\":\"✔️\"}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:ce0e1f6806927dbcad142ae8",
+      "benchmark_id": "matharena-usamo::2026",
+      "subject": {
+        "source_id": "GLM 5",
+        "name": "GLM 5",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 35.12,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/usamo--usamo_2026",
+        "retrieved_at": "2026-09-22T02:22:17.009018+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-usamo/2c6f85fa189ac482d54d.gz",
+        "sha256": "2c6f85fa189ac482d54d597e1cbbe64803cda65cd85e78add44087d94799756b",
+        "locator": "matharena_table; source row 9; GLM 5; field accuracy"
+      },
+      "protocol": "USAMO 2026: the six proof problems of the 2026 USA Mathematical Olympiad (MathArena); each proof is graded 0–7 by MathArena's LLM judges against a rubric generated from the official solution; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; the competition is deprecated (frozen) at MathArena; judged; not a Composite input.; source row: {\"rank\":\"9\",\"model\":\"GLM 5\",\"provider\":\"Z.ai\",\"accuracy\":\"35.12% ± 19.10%\",\"cost\":\"$0.24\",\"output_tokens\":\"76404\",\"released_after_competition\":false,\"open_weights\":\"✔️\"}",
+      "comparison_key": null
     }
   ],
   "collections": [
@@ -280678,6 +280894,12 @@
       "status": "collected",
       "source_url": "https://matharena.ai/competition_tables/aime--aime_2026",
       "reason": "31 source results parsed; configurations remain separate; unmatched model identities are retained."
+    },
+    {
+      "benchmark_id": "matharena-usamo::2026",
+      "status": "collected",
+      "source_url": "https://matharena.ai/competition_tables/usamo--usamo_2026",
+      "reason": "9 source results parsed; configurations remain separate; unmatched model identities are retained."
     }
   ],
   "rejected": [
