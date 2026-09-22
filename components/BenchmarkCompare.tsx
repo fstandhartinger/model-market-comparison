@@ -10,7 +10,7 @@ import { SpeedTable } from './SpeedContext';
 import { ComparePicker } from './ComparePicker';
 import { formatNative } from '../lib/benchmark-matrix.mjs';
 import { CompareLegend } from './TableLegend';
-import { COMING_SOON_LINE, resolveCompareIds, type CompareEntry } from '../lib/compare-ids.mjs';
+import { resolveCompareIds, type CompareEntry } from '../lib/compare-ids.mjs';
 
 // CR-63.6: the same formatting as the Benchmarks page (fractions as %, USD with $, Elo named).
 const nativeValue = (value: number, unit: string | null) => formatNative(value, unit);
@@ -99,7 +99,7 @@ export function BenchmarkCompare({ initialView, initialPicks, standalone = false
         {/* CR-122: an id that is not in the catalog yet keeps its place in the selection, visibly unmeasured. */}
         {pending.map((entry) => <div key={entry.id} role="listitem" data-bh-pending-model={entry.id} className="flex min-w-0 max-w-full items-center gap-1.5 rounded-lg border border-dashed border-line px-2 py-1.5 text-sm">
           <span className="h-2 w-2 shrink-0 rounded-full border border-dashed border-line" />
-          <span className="min-w-0 max-w-[12rem] truncate font-medium">{entry.name}</span>
+          <span className="min-w-0 max-w-[12rem] truncate font-medium" title={`${entry.org ? `Announced by ${entry.org}. ` : ''}The id in this link is “${entry.id}”; the page shows its numbers as soon as a model is collected under it.`}>{entry.name}</span>
           <span className="bh-badge shrink-0 text-[10px]">Coming soon</span>
           <button type="button" className="ml-1 min-h-0 rounded px-1 text-lg leading-none text-gray-400 hover:text-accent" onClick={() => setPending((old) => old.filter((p) => p.id !== entry.id))} aria-label={`Remove ${entry.name}`}>×</button>
         </div>)}
@@ -112,11 +112,11 @@ export function BenchmarkCompare({ initialView, initialPicks, standalone = false
     {pending.length > 0 && <section className="bh-panel border-dashed p-5" aria-label="Models not measured yet" data-bh-coming-soon>
       <p className="bh-eyebrow">NOT MEASURED YET</p>
       <h2 className="text-xl font-semibold">{pending.map((p) => p.name).join(' · ')}</h2>
-      <p className="bh-muted mt-2 max-w-3xl text-sm">{COMING_SOON_LINE} {pending.length === 1 ? `${pending[0].name} is not in our data yet` : 'These models are not in our data yet'}
-        {pending.length === 1 && pending[0].org ? ` (announced as ${pending[0].org}; the id in this link is “${pending[0].id}”)` : ''}
-        , so this page shows no score for {pending.length === 1 ? 'it' : 'them'} — we never estimate one. Benchmark Heaven collects every published result daily with its source, date and basis.
-        {picks.length > 0 ? ` The models already measured are compared below as usual.` : ''}</p>
-      <p className="bh-muted mt-2 max-w-3xl text-sm">Keep this link: it is the permanent comparison URL. As soon as {pending.length === 1 ? 'this model' : 'these models'} {pending.length === 1 ? 'is' : 'are'} collected under that id, the same page shows the real numbers — nothing to re-share.</p>
+      {/* F-166 (Fable pass 31): the page head already carries the one-line "not measured yet" sentence (app/compare/page.tsx);
+          this panel says only what the head does not: no score is estimated, and the link is permanent. The id and the announcing
+          organisation sit in the chip's title, not in the copy. */}
+      <p className="bh-muted mt-2 max-w-3xl text-sm">{pending.length === 1 ? `${pending[0].name} is` : 'These models are'} not in our data yet, so this page shows no score for {pending.length === 1 ? 'it' : 'them'} — we never estimate one.{picks.length > 0 ? ' The models already measured are compared below as usual.' : ''}</p>
+      <p className="bh-muted mt-2 max-w-3xl text-sm">Keep this link: as soon as {pending.length === 1 ? 'this model is' : 'these models are'} collected, the same URL shows the real numbers.</p>
       <p className="mt-3 text-sm"><Link className="text-accent hover:underline" href="/benchmarks">See how results are collected →</Link></p>
     </section>}
     <div className="min-w-0" aria-busy={busy}><BenchmarkRadar view={view} axes={selectedAxes} picks={displayPicks} axesPickerLabel={`Simple radar · ${axesIds.length} of 8 axes`} axesPicker={<><div className="mt-2 flex flex-wrap items-center justify-between gap-2"><p className="bh-muted text-sm">Choose 3–8 axes. Every option names one benchmark version and evaluation group. Unmeasured selections remain empty.</p><button type="button" className="bh-button px-3" disabled={axesIds.join('|') === defaults.join('|')} onClick={() => setAxes(defaults)}>Reset to recommended axes</button></div><div className="bh-collapsible-grid mt-4 grid max-h-80 gap-2 overflow-y-auto">{radarPool.map((a) => <label key={a.id} className="flex items-start gap-2 rounded p-2 text-sm hover:bg-accent/5"><input type="checkbox" className="mt-1" checked={axesIds.includes(a.id)} disabled={axesIds.length >= 8 && !axesIds.includes(a.id)} onChange={(e) => setAxes((old) => e.target.checked ? [...old, a.id].slice(0, 8) : old.filter((id) => id !== a.id))} /><span>{a.name}<span className="bh-muted block text-xs">{versionHeading(a.version)} · {cohortLabel(a.cohort)} · {a.stats.n} measured peers</span></span></label>)}</div></>} /></div>
