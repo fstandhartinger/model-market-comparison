@@ -102,7 +102,7 @@ test('CR-37.2: every reviewed decision names a Lumina family and, for in_registr
   const slugs = new Set(snapshot.families.map((f) => f.slug));
   const ids = new Set(registry.entries.map((e) => e.id));
   const dataset = readFileSync(new URL('../data/dataset.json', import.meta.url), 'utf8');
-  const allowed = new Set(['in_registry', 'on_hold', 'excluded', 'planned', 'vendor_reported']);
+  const allowed = new Set(['in_registry', 'on_hold', 'excluded', 'planned', 'vendor_reported', 'undecided']);
   for (const [slug, d] of Object.entries(committedPolicy.family_decisions)) {
     assert.ok(slugs.has(slug), `${slug} is not a Lumina family`);
     assert.ok(allowed.has(d.decision), `${slug}: decision ${d.decision}`);

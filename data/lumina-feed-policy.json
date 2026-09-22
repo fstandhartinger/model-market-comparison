@@ -886,6 +886,637 @@
         "tau3-voice::snapshot-2026-09-10"
       ],
       "note": "2026-09-22 (iteration 162): τ-bench is Sierra's; Sierra's own board (taubench.com) publishes τ²-bench and τ³-bench per domain, and the registry carries those boards. Lumina's family states no version or domain: its 37 values are BenchLM leaderboard copies (one figure per model, e.g. GLM-5.2 99.1), an aggregator number that is not collected."
+    },
+    "benchlm-frontierbench": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "terminal-bench::4.0"
+      ],
+      "note": "2026-09-22 (iteration 164, opencode-kimi): frontierbench.ai serves the same Terminal-Bench 4.0 board as tbench.ai (both 200, identical rows)."
+    },
+    "benchlm-codeforces": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "deepseek-codeforces-rating::snapshot-2026-09-10"
+      ],
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Codeforces family mapped to the registry snapshot."
+    },
+    "benchlm-exploitbench": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "xiaomi-exploitbench::snapshot-2026-09-22"
+      ],
+      "note": "2026-09-22 (iteration 164, opencode-kimi): exploitbench.ai is Cloudflare-gated (403); the registry snapshot is the primary value source."
+    },
+    "benchlm-gpqa": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "aa-gpqa-diamond::snapshot-2026-09-10",
+        "deepseek-gpqa-diamond::snapshot-2026-09-10",
+        "openrouter-gpqa-diamond::snapshot-2026-09-15"
+      ],
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Lumina uses the GPQA Diamond subset; full-set GPQA rows stay estimates and are never ingested."
+    },
+    "benchlm-simpleqa": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "simpleqa-verified::snapshot-2026-09-16"
+      ],
+      "note": "2026-09-22 (iteration 164, opencode-kimi): only the verified variant is registry-backed."
+    },
+    "simpleqa": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "simpleqa-verified::snapshot-2026-09-16"
+      ],
+      "note": "2026-09-22 (iteration 164, opencode-kimi): mapped to the verified variant; plain SimpleQA stays aggregator-only."
+    },
+    "benchlm-draco": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "stepfun-draco::snapshot-2026-09-20"
+      ],
+      "note": "2026-09-22 (iteration 164, opencode-kimi): StepFun board; the Anthropic-card DRACO claim stays on the vendor route."
+    },
+    "benchlm-officeqa": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "stepfun-officeqa-pro::snapshot-2026-09-20"
+      ],
+      "note": "2026-09-22 (iteration 164, opencode-kimi): only the Pro variant is registry-backed; the Anthropic-card OfficeQA claim stays on the vendor route."
+    },
+    "benchlm-toolathlonverifiedpass3": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "toolathlon-verified::2026-06-30"
+      ],
+      "note": "2026-09-22 (iteration 164, opencode-kimi): auxiliary Toolathlon-Verified metrics join the Pass@1 board."
+    },
+    "benchlm-toolathlonverifiedpass3all": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "toolathlon-verified::2026-06-30"
+      ],
+      "note": "2026-09-22 (iteration 164, opencode-kimi): auxiliary Toolathlon-Verified metrics join the Pass@1 board."
+    },
+    "benchlm-toolathlonverifiedavgturns": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "toolathlon-verified::2026-06-30"
+      ],
+      "note": "2026-09-22 (iteration 164, opencode-kimi): auxiliary Toolathlon-Verified metrics join the Pass@1 board."
+    },
+    "benchlm-mcpatlasclaimcoverage": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "mcp-atlas::snapshot-2026-09-21"
+      ],
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Scale board; claim-coverage rows are the board pass rate."
+    },
+    "benchlm-arxivmathjune2026withtools": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "matharena-arxivmath::2026-06"
+      ],
+      "note": "2026-09-22 (iteration 164, opencode-kimi): MathArena June 2026 ArXivMath board; the Anthropic-card \"with tools\" claim stays on the vendor route."
+    },
+    "arena-hard-auto": {
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 164, opencode-kimi): the leaderboard is dormant: newest rows are the 2025-04 era (gpt-4.1, gemma-3, qwen3-235b); no 2026 updates."
+    },
+    "benchlm-agieval": {
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 164, opencode-kimi): saturated classic: no primary host maintains a current board; 2026-era reporting moved to successor suites."
+    },
+    "benchlm-aime2024": {
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 164, opencode-kimi): older edition: AIME 2024 is superseded by AIME 2025/2026; the primary host no longer curates it."
+    },
+    "benchlm-bbh": {
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 164, opencode-kimi): saturated classic: no current primary board; successor reasoning suites carry 2026 reporting."
+    },
+    "benchlm-benchcadvision2code": {
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 164, opencode-kimi): paper-only (arXiv 2605.10865): no maintained primary leaderboard with values."
+    },
+    "benchlm-benchcadvision2codewithtools": {
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 164, opencode-kimi): paper-only (arXiv 2605.10865): no maintained primary leaderboard with values."
+    },
+    "bigcodebench": {
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 164, opencode-kimi): official leaderboard frozen at the 2024 era (202 entries; newest Llama-3 / Claude-3 / DeepSeek-V2); stale for the current catalog."
+    },
+    "benchlm-ceval": {
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 164, opencode-kimi): saturated classic: no current primary board; successor Chinese suites carry 2026 reporting."
+    },
+    "benchlm-cluewsc": {
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 164, opencode-kimi): saturated classic: no current primary board."
+    },
+    "benchlm-cmath": {
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 164, opencode-kimi): saturated classic: no current primary board."
+    },
+    "benchlm-cmmlu": {
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 164, opencode-kimi): saturated classic: no current primary board."
+    },
+    "benchlm-drop": {
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 164, opencode-kimi): saturated classic: no current primary board."
+    },
+    "benchlm-gmmlu": {
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 164, opencode-kimi): saturated classic: no current primary board."
+    },
+    "benchlm-gsm8k": {
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 164, opencode-kimi): saturated classic: no current primary board."
+    },
+    "benchlm-hellaswag": {
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 164, opencode-kimi): saturated classic: no current primary board."
+    },
+    "benchlm-humaneval": {
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 164, opencode-kimi): saturated classic: no current primary board."
+    },
+    "benchlm-ifeval": {
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 164, opencode-kimi): saturated classic: no current primary board."
+    },
+    "benchlm-math500": {
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 164, opencode-kimi): saturated classic: no current primary board."
+    },
+    "benchlm-mathbenchmark": {
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 164, opencode-kimi): saturated classic: no current primary board."
+    },
+    "benchlm-mgsm": {
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 164, opencode-kimi): saturated classic: no current primary board."
+    },
+    "benchlm-milu": {
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 164, opencode-kimi): no maintained primary leaderboard; no 2026-era primary reporting located."
+    },
+    "benchlm-mmlu": {
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 164, opencode-kimi): saturated classic: no current primary board; successor knowledge suites carry 2026 reporting."
+    },
+    "benchlm-refcocoavg": {
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 164, opencode-kimi): averaged 2014-era grounding benchmark; no current primary board."
+    },
+    "benchlm-triviaqa": {
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 164, opencode-kimi): saturated classic: no current primary board."
+    },
+    "video-mmmu": {
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 164, opencode-kimi): project page gone (404, 2026-09-22); no active primary board."
+    },
+    "benchlm-videomme": {
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 164, opencode-kimi): 2024 benchmark with a stagnant board; 2026-era Video-MME coverage is handled through vendor-card families."
+    },
+    "benchlm-vulcanbench": {
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 164, opencode-kimi): Lumina lists the retired v3 suite on a different scale; the live Frontier v4 board is already in the registry as vulcanbench-frontier::4."
+    },
+    "benchlm-winogrande": {
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 164, opencode-kimi): saturated classic: no current primary board."
+    },
+    "benchlm-deepplanning": {
+      "decision": "excluded",
+      "reason": "2026-09-22 (iteration 164, opencode-kimi): paper-only (arXiv 2601.18137): no maintained primary leaderboard with values."
+    },
+    "benchlm-mlsbenchlite": {
+      "decision": "planned",
+      "collector": "MLS-Bench Lite, mls-bench.com (data/SCRAPING.md)",
+      "note": "mls-bench.com is a live Next.js board with embedded Flight data and current 2026 models (checked 2026-09-22)."
+    },
+    "benchlm-acecyberrangesolved": {
+      "decision": "planned",
+      "collector": "UK AISI / NIST CAISI cyber assessment pages (data/SCRAPING.md)",
+      "note": "NIST page confirmed 200 with Kimi K3 cyber content (checked 2026-09-22)."
+    },
+    "benchlm-lastonescyberrangecompletion": {
+      "decision": "planned",
+      "collector": "UK AISI / NIST CAISI cyber assessment pages (data/SCRAPING.md)",
+      "note": "NIST page confirmed 200 with Kimi K3 cyber content (checked 2026-09-22)."
+    },
+    "benchlm-lastonescyberrangesteps": {
+      "decision": "planned",
+      "collector": "UK AISI / NIST CAISI cyber assessment pages (data/SCRAPING.md)",
+      "note": "NIST page confirmed 200 with Kimi K3 cyber content (checked 2026-09-22)."
+    },
+    "benchlm-sobvalueacc": {
+      "decision": "planned",
+      "collector": "Interfaze Structured Output Benchmark, low priority (data/SCRAPING.md)",
+      "note": "interfaze.ai SOB board current (Gemini 3.1, Sonnet 5 rows; checked 2026-09-22)."
+    },
+    "benchlm-chartographywithtools": {
+      "decision": "planned",
+      "collector": "Surge HQ Chartography board, low priority (data/SCRAPING.md)",
+      "note": "Surge HQ is an independent evaluator; Chartography board lists current models with GPT-5.6 leading (checked 2026-09-22)."
+    },
+    "benchlm-gdppdfwithtools": {
+      "decision": "planned",
+      "collector": "Surge HQ GDP.pdf board, low priority (data/SCRAPING.md)",
+      "note": "Surge HQ is an independent evaluator; GDP.pdf board exists with a model leaderboard (checked 2026-09-22)."
+    },
+    "gaia": {
+      "decision": "planned",
+      "collector": "GAIA leaderboard on Hugging Face, low priority (data/SCRAPING.md)",
+      "note": "official GAIA leaderboard on Hugging Face; primary benchmark, low priority."
+    },
+    "benchlm-olmocr": {
+      "decision": "planned",
+      "collector": "olmOCR-Bench data on GitHub, low priority (data/SCRAPING.md)",
+      "note": "olmOCR-Bench exists on GitHub (allenai/olmocr bench); 2025-era board, low priority."
+    },
+    "benchlm-spider2lite": {
+      "decision": "planned",
+      "collector": "Spider 2.0 GitHub results, low priority (data/SCRAPING.md)",
+      "note": "Spider 2.0 results live on GitHub; low priority."
+    },
+    "benchlm-charxivnotools": {
+      "decision": "planned",
+      "collector": "CharXiv leaderboard, low priority (data/SCRAPING.md)",
+      "note": "CharXiv leaderboard live on charxiv.github.io; low priority."
+    },
+    "ocrbench-v2": {
+      "decision": "planned",
+      "collector": "OCRBench-v2 GitHub leaderboard, low priority (data/SCRAPING.md)",
+      "note": "OCRBench-v2 data on GitHub (Yuliang-Liu/MultimodalOCR); low priority."
+    },
+    "benchlm-vitabench": {
+      "decision": "planned",
+      "collector": "VITA-Bench site, low priority, iteration 158 defer (data/SCRAPING.md)",
+      "note": "VITA-Bench site live (2025 edition); deferred per iteration 158, low priority."
+    },
+    "benchlm-factsparametric": {
+      "decision": "planned",
+      "collector": "Google FACTS, Kaggle-hosted suite, terms unclear (data/SCRAPING.md)",
+      "note": "Google FACTS is a Kaggle-hosted suite; terms unclear; CR-38.1 row already planned."
+    },
+    "benchlm-healthbench": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Anthropic Claude Opus 5 System Card (captured 2026-09-16, document sha256 0950dae1…) names these benchmarks; numbers enter only via CR-30.1."
+    },
+    "benchlm-healthbenchlengthadjusted": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Anthropic Claude Opus 5 System Card (captured 2026-09-16, document sha256 0950dae1…) names these benchmarks; numbers enter only via CR-30.1."
+    },
+    "benchlm-healthbenchprofessionalraw": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Anthropic Claude Opus 5 System Card (captured 2026-09-16, document sha256 0950dae1…) names these benchmarks; numbers enter only via CR-30.1."
+    },
+    "benchlm-organicchemistryv2": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Anthropic Claude Opus 5 System Card (captured 2026-09-16, document sha256 0950dae1…) names these benchmarks; numbers enter only via CR-30.1."
+    },
+    "benchlm-proteindesign": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Anthropic Claude Opus 5 System Card (captured 2026-09-16, document sha256 0950dae1…) names these benchmarks; numbers enter only via CR-30.1."
+    },
+    "benchlm-proteingymhard": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Anthropic Claude Opus 5 System Card (captured 2026-09-16, document sha256 0950dae1…) names these benchmarks; numbers enter only via CR-30.1."
+    },
+    "benchlm-protocolstroubleshooting": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Anthropic Claude Opus 5 System Card (captured 2026-09-16, document sha256 0950dae1…) names these benchmarks; numbers enter only via CR-30.1."
+    },
+    "benchlm-protocolsunderstanding": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Anthropic Claude Opus 5 System Card (captured 2026-09-16, document sha256 0950dae1…) names these benchmarks; numbers enter only via CR-30.1."
+    },
+    "benchlm-riemannbench": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Anthropic Claude Opus 5 System Card (captured 2026-09-16, document sha256 0950dae1…) names these benchmarks; numbers enter only via CR-30.1."
+    },
+    "benchlm-riemannbenchwithtools": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Anthropic Claude Opus 5 System Card (captured 2026-09-16, document sha256 0950dae1…) names these benchmarks; numbers enter only via CR-30.1."
+    },
+    "benchlm-singlecellbench": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Anthropic Claude Opus 5 System Card (captured 2026-09-16, document sha256 0950dae1…) names these benchmarks; numbers enter only via CR-30.1."
+    },
+    "benchlm-spatialbenchverified": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Anthropic Claude Opus 5 System Card (captured 2026-09-16, document sha256 0950dae1…) names these benchmarks; numbers enter only via CR-30.1."
+    },
+    "benchlm-multiagentbrowsecompprerelease": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Anthropic Claude Opus 5 System Card (captured 2026-09-16, document sha256 0950dae1…) names these benchmarks; numbers enter only via CR-30.1."
+    },
+    "benchlm-imo2026": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Anthropic Claude Opus 5 System Card (captured 2026-09-16, document sha256 0950dae1…) names these benchmarks; numbers enter only via CR-30.1."
+    },
+    "benchlm-legalagentbenchallpass": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Anthropic Claude Opus 5 System Card (captured 2026-09-16, document sha256 0950dae1…) names these benchmarks; numbers enter only via CR-30.1."
+    },
+    "benchlm-legalagentbenchcriterionpass": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Anthropic Claude Opus 5 System Card (captured 2026-09-16, document sha256 0950dae1…) names these benchmarks; numbers enter only via CR-30.1."
+    },
+    "benchlm-legalagentbenchheldoutallpass": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Anthropic Claude Opus 5 System Card (captured 2026-09-16, document sha256 0950dae1…) names these benchmarks; numbers enter only via CR-30.1."
+    },
+    "benchlm-legalagentbenchheldoutcriterionpass": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Anthropic Claude Opus 5 System Card (captured 2026-09-16, document sha256 0950dae1…) names these benchmarks; numbers enter only via CR-30.1."
+    },
+    "benchlm-ai2dtest": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Qwen 3.6 launch card (qwen.ai/blog?id=qwen3.6) is JS-rendered; the claims pass uses the rendering-capable capture lane."
+    },
+    "benchlm-aineedle": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Qwen 3.6 launch card (qwen.ai/blog?id=qwen3.6) is JS-rendered; the claims pass uses the rendering-capable capture lane."
+    },
+    "benchlm-ccocr": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Qwen 3.6 launch card (qwen.ai/blog?id=qwen3.6) is JS-rendered; the claims pass uses the rendering-capable capture lane."
+    },
+    "benchlm-countbench": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Qwen 3.6 launch card (qwen.ai/blog?id=qwen3.6) is JS-rendered; the claims pass uses the rendering-capable capture lane."
+    },
+    "benchlm-dynamath": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Qwen 3.6 launch card (qwen.ai/blog?id=qwen3.6) is JS-rendered; the claims pass uses the rendering-capable capture lane."
+    },
+    "benchlm-include": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Qwen 3.6 launch card (qwen.ai/blog?id=qwen3.6) is JS-rendered; the claims pass uses the rendering-capable capture lane."
+    },
+    "benchlm-maxife": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Qwen 3.6 launch card (qwen.ai/blog?id=qwen3.6) is JS-rendered; the claims pass uses the rendering-capable capture lane."
+    },
+    "benchlm-mcptasks": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Qwen 3.6 launch card (qwen.ai/blog?id=qwen3.6) is JS-rendered; the claims pass uses the rendering-capable capture lane."
+    },
+    "benchlm-mlvuavg": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Qwen 3.6 launch card (qwen.ai/blog?id=qwen3.6) is JS-rendered; the claims pass uses the rendering-capable capture lane."
+    },
+    "benchlm-mmanswerbench": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Qwen 3.6 launch card (qwen.ai/blog?id=qwen3.6) is JS-rendered; the claims pass uses the rendering-capable capture lane."
+    },
+    "benchlm-mmlongbenchdoc": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Qwen 3.6 launch card (qwen.ai/blog?id=qwen3.6) is JS-rendered; the claims pass uses the rendering-capable capture lane."
+    },
+    "benchlm-mmluredux": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Qwen 3.6 launch card (qwen.ai/blog?id=qwen3.6) is JS-rendered; the claims pass uses the rendering-capable capture lane."
+    },
+    "benchlm-mstar": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Qwen 3.6 launch card (qwen.ai/blog?id=qwen3.6) is JS-rendered; the claims pass uses the rendering-capable capture lane."
+    },
+    "benchlm-nova63": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Qwen 3.6 launch card (qwen.ai/blog?id=qwen3.6) is JS-rendered; the claims pass uses the rendering-capable capture lane."
+    },
+    "benchlm-odinw13": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Qwen 3.6 launch card (qwen.ai/blog?id=qwen3.6) is JS-rendered; the claims pass uses the rendering-capable capture lane."
+    },
+    "benchlm-polymath": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Qwen 3.6 launch card (qwen.ai/blog?id=qwen3.6) is JS-rendered; the claims pass uses the rendering-capable capture lane."
+    },
+    "benchlm-qwenclawbench": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Qwen 3.6 launch card (qwen.ai/blog?id=qwen3.6) is JS-rendered; the claims pass uses the rendering-capable capture lane."
+    },
+    "benchlm-qwenwebbench": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Qwen 3.6 launch card (qwen.ai/blog?id=qwen3.6) is JS-rendered; the claims pass uses the rendering-capable capture lane."
+    },
+    "benchlm-videommenosub": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Qwen 3.6 launch card (qwen.ai/blog?id=qwen3.6) is JS-rendered; the claims pass uses the rendering-capable capture lane."
+    },
+    "benchlm-videommewithsub": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Qwen 3.6 launch card (qwen.ai/blog?id=qwen3.6) is JS-rendered; the claims pass uses the rendering-capable capture lane."
+    },
+    "benchlm-wideresearch": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Qwen 3.6 launch card (qwen.ai/blog?id=qwen3.6) is JS-rendered; the claims pass uses the rendering-capable capture lane."
+    },
+    "benchlm-babyvisionpython": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Kimi K3 card (kimi.com/blog/kimi-k3) names these benchmarks (checked 2026-09-22)."
+    },
+    "benchlm-deckbench": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Kimi K3 card (kimi.com/blog/kimi-k3) names these benchmarks (checked 2026-09-22)."
+    },
+    "benchlm-mathvisionpython": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Kimi K3 card (kimi.com/blog/kimi-k3) names these benchmarks (checked 2026-09-22)."
+    },
+    "benchlm-omnidocbench": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Kimi K3 card (kimi.com/blog/kimi-k3) names these benchmarks (checked 2026-09-22)."
+    },
+    "benchlm-perceptionbench": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Kimi K3 card (kimi.com/blog/kimi-k3) names these benchmarks (checked 2026-09-22)."
+    },
+    "benchlm-spreadsheetbench2": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Kimi K3 card (kimi.com/blog/kimi-k3) names these benchmarks (checked 2026-09-22)."
+    },
+    "benchlm-worldvqaforceanswer": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Kimi K3 card (kimi.com/blog/kimi-k3) names these benchmarks (checked 2026-09-22)."
+    },
+    "benchlm-zerobenchpython": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Kimi K3 card (kimi.com/blog/kimi-k3) names these benchmarks (checked 2026-09-22)."
+    },
+    "benchlm-mmvu": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Kimi K2.5 card (kimi.com/blog/kimi-k2-5.html) names MMVU (checked 2026-09-22)."
+    },
+    "benchlm-bankertoolbench": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): MiniMax M3 card (huggingface.co/MiniMaxAI/MiniMax-M3) carries these in its benchmark figure; the numbers are image-based and the arXiv report (2606.13392) is the extraction route."
+    },
+    "benchlm-gdpvalrubrics": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): MiniMax M3 card (huggingface.co/MiniMaxAI/MiniMax-M3) carries these in its benchmark figure; the numbers are image-based and the arXiv report (2606.13392) is the extraction route."
+    },
+    "benchlm-kernelbenchhard": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): MiniMax M3 card (huggingface.co/MiniMaxAI/MiniMax-M3) carries these in its benchmark figure; the numbers are image-based and the arXiv report (2606.13392) is the extraction route."
+    },
+    "benchlm-svgbench": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): MiniMax M3 card (huggingface.co/MiniMaxAI/MiniMax-M3) carries these in its benchmark figure; the numbers are image-based and the arXiv report (2606.13392) is the extraction route."
+    },
+    "benchlm-vibev2": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): MiniMax M3 card (huggingface.co/MiniMaxAI/MiniMax-M3) carries these in its benchmark figure; the numbers are image-based and the arXiv report (2606.13392) is the extraction route."
+    },
+    "benchlm-mmclawbench": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): MiniMax M2.7 news page (minimax.io/news/minimax-m27-en) carries VIBE-Pro in page text; remaining tables are JS-rendered."
+    },
+    "benchlm-mlebenchlite": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): MiniMax M2.7 news page (minimax.io/news/minimax-m27-en) carries VIBE-Pro in page text; remaining tables are JS-rendered."
+    },
+    "benchlm-vibepro": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): MiniMax M2.7 news page (minimax.io/news/minimax-m27-en) carries VIBE-Pro in page text; remaining tables are JS-rendered."
+    },
+    "benchlm-aime2025arcee": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Arcee Trinity-Large-Thinking HF card (huggingface.co/arcee-ai/Trinity-Large-Thinking) has the AIME25 / MMLU-Pro / SWE-bench Verified table (mini-swe-agent-v2); the cited blog page itself carries no table."
+    },
+    "benchlm-mmluproarcee": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Arcee Trinity-Large-Thinking HF card (huggingface.co/arcee-ai/Trinity-Large-Thinking) has the AIME25 / MMLU-Pro / SWE-bench Verified table (mini-swe-agent-v2); the cited blog page itself carries no table."
+    },
+    "benchlm-sweverifiedarcee": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Arcee Trinity-Large-Thinking HF card (huggingface.co/arcee-ai/Trinity-Large-Thinking) has the AIME25 / MMLU-Pro / SWE-bench Verified table (mini-swe-agent-v2); the cited blog page itself carries no table."
+    },
+    "benchlm-mmmupropython": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): OpenAI GPT-5.4 mini/nano page (openai.com/index/introducing-gpt-5-4-mini-and-nano) is the cited primary; it 403s our fetcher, so ingestion needs the capture lane."
+    },
+    "benchlm-graphwalksbfs128k": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): OpenAI GPT-5.4 mini/nano page (openai.com/index/introducing-gpt-5-4-mini-and-nano) is the cited primary; it 403s our fetcher, so ingestion needs the capture lane."
+    },
+    "benchlm-mrcrv2-128-256": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): OpenAI GPT-5.4 mini/nano page (openai.com/index/introducing-gpt-5-4-mini-and-nano) is the cited primary; it 403s our fetcher, so ingestion needs the capture lane."
+    },
+    "benchlm-mrcrv2-64-128": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): OpenAI GPT-5.4 mini/nano page (openai.com/index/introducing-gpt-5-4-mini-and-nano) is the cited primary; it 403s our fetcher, so ingestion needs the capture lane."
+    },
+    "healthbench-hard": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): OpenAI HealthBench page (openai.com/index/healthbench/) is the cited primary; it 403s our fetcher, so ingestion needs the capture lane."
+    },
+    "benchlm-medxpertqamm": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Meta Muse Spark methodology URL (ai.meta.com/static-resource/muse-spark-eval-methodology) answers 400 as of 2026-09-22; re-verify before ingestion."
+    },
+    "benchlm-medxpertqatext": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Meta Muse Spark methodology URL (ai.meta.com/static-resource/muse-spark-eval-methodology) answers 400 as of 2026-09-22; re-verify before ingestion."
+    },
+    "benchlm-frontierscienceresearch": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Meta Muse Spark methodology URL (ai.meta.com/static-resource/muse-spark-eval-methodology) answers 400 as of 2026-09-22; re-verify before ingestion."
+    },
+    "benchlm-ipho2025theory": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Meta Muse Spark methodology URL (ai.meta.com/static-resource/muse-spark-eval-methodology) answers 400 as of 2026-09-22; re-verify before ingestion."
+    },
+    "benchlm-vstar": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Z.AI GLM-5V docs (docs.z.ai/guides/vlm/glm-5v-turbo) are JS-rendered; the claims pass uses the rendering capture lane."
+    },
+    "benchlm-mmsearchplus": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Z.AI GLM-5V docs (docs.z.ai/guides/vlm/glm-5v-turbo) are JS-rendered; the claims pass uses the rendering capture lane."
+    },
+    "terminal-bench-21-provider": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): DeepSeek updates page (api-docs.deepseek.com/updates) text carries Terminal-Bench and LiveCodeBench (checked 2026-09-22)."
+    },
+    "benchlm-livecodebenchpass1cot": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): DeepSeek updates page (api-docs.deepseek.com/updates) text carries Terminal-Bench and LiveCodeBench (checked 2026-09-22)."
+    },
+    "benchlm-ctirealm": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Sakana Fugu cyber release page (sakana.ai/fugu-cyber-release) names CTI-REALM (checked 2026-09-22)."
+    },
+    "benchlm-mkqa11": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Liquid LFM 2.5 retrievers blog (liquid.ai/blog/lfm2-5-retrievers) names MKQA and NanoBEIR (checked 2026-09-22)."
+    },
+    "benchlm-nanobeirmultilingual": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Liquid LFM 2.5 retrievers blog (liquid.ai/blog/lfm2-5-retrievers) names MKQA and NanoBEIR (checked 2026-09-22)."
+    },
+    "benchlm-liquidextractjsonvalidity": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): LiquidAI LFM2.5-VL-1.6B-Extract card (huggingface.co/LiquidAI/LFM2.5-VL-1.6B-Extract) carries JSON-validity, schema-F1 and VLM-judge metrics (checked 2026-09-22)."
+    },
+    "benchlm-liquidextractschemaf1": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): LiquidAI LFM2.5-VL-1.6B-Extract card (huggingface.co/LiquidAI/LFM2.5-VL-1.6B-Extract) carries JSON-validity, schema-F1 and VLM-judge metrics (checked 2026-09-22)."
+    },
+    "benchlm-liquidextractvlmjudge": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): LiquidAI LFM2.5-VL-1.6B-Extract card (huggingface.co/LiquidAI/LFM2.5-VL-1.6B-Extract) carries JSON-validity, schema-F1 and VLM-judge metrics (checked 2026-09-22)."
+    },
+    "benchlm-kimiclaw247": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Kimi-K2.7-Code card (huggingface.co/moonshotai/Kimi-K2.7-Code) names Kimi Claw 247 (checked 2026-09-22)."
+    },
+    "benchlm-mmlupro": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): MMLU-Pro / MMLU-ProX are self-reported on lab cards; the claims pass pins the exact card and table."
+    },
+    "benchlm-mmluprox": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): MMLU-Pro / MMLU-ProX are self-reported on lab cards; the claims pass pins the exact card and table."
+    },
+    "benchlm-mmmlu": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): OpenAI MMMLU HF dataset page (huggingface.co/datasets/openai/MMMLU) is the cited primary; numbers enter only via CR-30.1."
+    },
+    "benchlm-multiloko": {
+      "decision": "undecided",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Lumina cites only a BenchLM aggregator page; the underlying primary host is not identified yet."
+    },
+    "benchlm-chinesesimpleqa": {
+      "decision": "undecided",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Lumina cites only a BenchLM aggregator page; the underlying card is not pinned yet (DeepSeek V4.1-series long-context claims are the candidate)."
+    },
+    "benchlm-corpusqa1m": {
+      "decision": "undecided",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Lumina cites only a BenchLM aggregator page; the underlying card is not pinned yet (DeepSeek V4.1-series long-context claims are the candidate)."
+    },
+    "benchlm-mrcr1m": {
+      "decision": "undecided",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): Lumina cites only a BenchLM aggregator page; the underlying card is not pinned yet (DeepSeek V4.1-series long-context claims are the candidate)."
+    },
+    "benchlm-frontierscience": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): OpenAI frontierscience page (openai.com/index/frontierscience/) is the cited primary; it 403s our fetcher, so ingestion needs the capture lane."
+    },
+    "benchlm-genebenchpro": {
+      "decision": "vendor_reported",
+      "note": "2026-09-22 (iteration 164, opencode-kimi): OpenAI GeneBench Pro PDF (cdn.openai.com/pdf/21938268-21af-442f-af93-3b2249afb241/genebench-pro.pdf) is the cited primary; numbers enter only via CR-30.1."
     }
   },
   "host_roles_note": "A host role is a first cut, not a verdict: an evaluator host can relay vendor numbers (cybench.github.io links system cards; artificialanalysis.ai/models pages show lab-reported values). Every family that lands in evaluator_result is therefore read by hand and recorded in family_decisions."
