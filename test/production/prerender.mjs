@@ -5,7 +5,7 @@ import test from 'node:test';
 // Run explicitly after npm run build (without DATABASE_URL). This tests the
 // production artifact, not a source-code spelling of the cache policy.
 const manifest = JSON.parse(readFileSync('.next/prerender-manifest.json', 'utf8'));
-for (const route of ['/', '/about', '/charts', '/compare', '/eu', '/gateways', '/provider-explorer', '/providers', '/scatter', '/benchmaxxing', '/radar']) {
+for (const route of ['/', '/about', '/charts', '/eu', '/gateways', '/provider-explorer', '/providers', '/scatter', '/benchmaxxing', '/radar']) {
   test(`bundled catalog ${route} is rendered once at build time`, () => {
     assert.ok(manifest.routes[route], `${route} must not repeat catalog SSR per request`);
     assert.equal(manifest.routes[route].initialRevalidateSeconds, false);
@@ -21,6 +21,18 @@ for (const route of ['/', '/about', '/charts', '/compare', '/eu', '/gateways', '
 // since 2026-09-14. The exception is recorded here rather than silently dropped: if the route ever
 // becomes static again, this test fails and whoever did it must re-check the share URL and the CLS
 // measurement before changing the assertion.
+// CR-122 (2026-09-22): `/compare` left the list above for the same reason. A compare link is posted under a
+// model-release announcement seconds after it appears, so its title, description and preview image must name
+// the two models in the URL — including one that is not in the data yet. Reading `searchParams` on the server
+// is what makes that possible and what makes the route dynamic. The heavy catalog data still arrives through
+// `/api/page-data/compare`, so this does not reintroduce per-request catalog SSR.
+test('/compare is server-rendered per request by design (CR-122 launch links name both models in the preview)', () => {
+  assert.equal(manifest.routes['/compare'], undefined,
+    '/compare must stay dynamic: its link preview is built from the shared URL on the server');
+  assert.match(readFileSync('app/compare/page.tsx', 'utf8'), /generateMetadata[\s\S]*searchParams/,
+    'the reason it is dynamic is that the preview tags are built from the URL on the server');
+});
+
 test('/benchmarks is server-rendered per request by design (CR-2.5 share URL, CR-1.11 no layout shift)', () => {
   assert.equal(manifest.routes['/benchmarks'], undefined,
     '/benchmarks must stay dynamic: it seeds its first render from the shared URL on the server');

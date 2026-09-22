@@ -41,6 +41,13 @@ row has `id` `<key>::best-of[::<version>]`, `boards` (the board ids it stands fo
 variants: [{ id, benchmarkId, cohort, version }], pick: { <modelId>: <variant index> } }` naming the exact run behind
 every value. The per-run results are unchanged in `/api/benchmark-scores` and the dataset.
 
+### `GET /api/og/compare`
+
+`?model=<id>&model=<id>` (up to 4; same ids as `/compare`). The 1200×630 PNG link-preview image of a comparison:
+each model with its AA Intelligence Index, or "Coming soon" for an id that is not in the catalog yet. Ids are matched
+like the Compare page does (exact catalog id, then case/dot/dash/prefix-tolerant; see `lib/compare-ids.mjs`). Added
+2026-09-22 (CR-122).
+
 ### `GET /api/benchmark-scores`
 
 Filters: `benchmark_id`, `model_id`, `basis` (`measured`, `self_reported`, `derived`),

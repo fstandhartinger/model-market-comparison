@@ -4,6 +4,15 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-22 — Compare links for models that are not in the data yet (CR-122)
+
+`/compare?model=<id>&model=<id>` now keeps an id the catalog does not have yet: the page names it readably
+(`gpt-6-sol` → "GPT-6 Sol"), marks it "Coming soon — numbers land here as soon as they are published" and keeps it
+in the URL, so the same link shows real numbers once the model is collected. Ids are matched tolerantly (case,
+dots/dashes, `vendor/` prefix, date suffix, bare family key such as `claude-opus-5`). Shared links get their own
+title, description and preview image (new `GET /api/og/compare?model=…&model=…`, 1200×630 PNG). `/compare` is now
+rendered per request. No data, path, field or unit changed.
+
 ## 2026-09-22 — Lumina Bench ledger paused by Lumina
 
 `data/raw/lumina-ledger.json` gains an optional top-level `availability` object (`state: "paused_by_source"`,

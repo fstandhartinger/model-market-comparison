@@ -1551,3 +1551,15 @@ Audit and improve `/jev-models`: page-specific title, description, canonical, Op
 data; useful sections for open alternatives, self-hosting/EU/GDPR context, scoring and submissions without claiming
 third-party GDPR compliance. Preserve the multimodal preview's noindex status. Test, build, deploy, verify both
 production hosts and document current Google positions from read-only Serper results. No X post.
+
+## CR-20260922d — launch links to Compare before a model is in the data → CR-122
+
+Florian, 22 Sep 2026 (launch-sniper job, relayed by the job brief), verbatim goal:
+> We want to post links like `https://benchmarkheaven.com/compare?...<modelA>...<modelB>` under model-release
+> tweets the second a new model (e.g. "GPT-6 Sol", "Claude Opus 5.5") is announced — BEFORE that model exists in
+> the site's data. The compare URL with two model ids must then work: show the known model normally plus a clear
+> "coming soon — numbers land here as soon as they are published" state for the unknown id (with a readable name
+> derived from the id, e.g. gpt-6-sol → "GPT-6 Sol"), and correct link-preview/OG tags (title/description/og:image
+> mention both models; X card must render). When the model is later added to the data under that id, the same URL
+> must show real numbers automatically. [...] if cheap, add alias tolerance so that when the model is later ingested
+> under a slightly different id the link still resolves (e.g. normalise case/dots/dashes).

@@ -10,6 +10,7 @@ import { SpeedTable } from './SpeedContext';
 import { ComparePicker } from './ComparePicker';
 import { formatNative } from '../lib/benchmark-matrix.mjs';
 import { CompareLegend } from './TableLegend';
+import { COMING_SOON_LINE, resolveCompareIds, type CompareEntry } from '../lib/compare-ids.mjs';
 
 // CR-63.6: the same formatting as the Benchmarks page (fractions as %, USD with $, Elo named).
 const nativeValue = (value: number, unit: string | null) => formatNative(value, unit);
@@ -32,11 +33,17 @@ export function BenchmarkCompare({ initialView, initialPicks, standalone = false
   const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
   const [busy, setBusy] = useState(false), [error, setError] = useState(''), [retry, setRetry] = useState(0);
   const [loadedKey, setLoadedKey] = useState(initialPicks.join('|'));
+  // CR-122: ids the link names that the catalog does not have yet (a model announced minutes ago).
+  const [pending, setPending] = useState<CompareEntry[]>([]);
   useEffect(() => {
     // CR-36.2: a shared link may name any reasoning variant; it opens as that model's single entry.
-    const repOf = new Map((initialView.families ?? []).flatMap((f) => f.variants.map((v) => [v, f.id] as const)));
-    const incoming = new URLSearchParams(location.search).getAll('model').map((id) => repOf.get(id)).filter((id): id is string => !!id);
-    if (incoming.length) setPicks([...new Set(incoming)].slice(0, 4));
+    // CR-122: id spellings are tolerated (case, dots, dashes, vendor prefix) and an unknown id is kept
+    // as a "coming soon" entry instead of being dropped, so a launch link stays valid before ingestion.
+    const raw = new URLSearchParams(location.search).getAll('model');
+    if (!raw.length) return;
+    const { picks: known, pending: unknown } = resolveCompareIds(raw, initialView.families ?? []);
+    setPending(unknown);
+    setPicks(known);
   }, [initialView.families]);
   useEffect(() => {
     if (picks.join('|') === loadedKey && !retry) return;
@@ -45,10 +52,12 @@ export function BenchmarkCompare({ initialView, initialPicks, standalone = false
     const q = new URLSearchParams(); picks.forEach((id) => q.append('model', id));
     fetch(`/api/benchmark-view?${q}&collapse=1`, { signal: controller.signal }).then((r) => { if (!r.ok) throw new Error('Benchmark data could not be loaded.'); return r.json(); }).then((data) => {
       setView((old) => ({ ...data, families: data.families ?? old.families })); setLoadedKey(picks.join('|')); setBusy(false);
-      history.replaceState(null, '', `${location.pathname}${picks.length ? `?${q}` : ''}`);
+      // CR-122: a pending id stays in the shared URL; it resolves to real numbers as soon as it is ingested.
+      const shared = new URLSearchParams(); picks.forEach((id) => shared.append('model', id)); pending.forEach((p) => shared.append('model', p.id));
+      history.replaceState(null, '', `${location.pathname}${picks.length || pending.length ? `?${shared}` : ''}`);
     }).catch((e) => { if (e.name !== 'AbortError') { setError(e.message); setBusy(false); } });
     return () => controller.abort();
-  }, [picks, retry, loadedKey]);
+  }, [picks, retry, loadedKey, pending]);
   // CR-36.2: which variant stands behind each best-of value, per selected model (chip tooltip).
   const variantSummary = useMemo(() => new Map(picks.map((id) => {
     const counts = new Map<string, number>();
@@ -75,7 +84,7 @@ export function BenchmarkCompare({ initialView, initialPicks, standalone = false
 
   return <div className="space-y-6">
     <section className="bh-panel p-4 sm:p-5" aria-label="Model selection">
-      <div className="flex flex-wrap items-center justify-between gap-2"><h2 className="text-lg font-semibold">Compare models</h2><span className="bh-badge">{picks.length} / 4 selected</span></div>
+      <div className="flex flex-wrap items-center justify-between gap-2"><h2 className="text-lg font-semibold">Compare models</h2><span className="bh-badge">{picks.length + pending.length} / 4 selected</span></div>
       <p className="bh-muted mt-1 text-sm">One entry per model: each benchmark shows the best of its reasoning variants and names the variant. Benchmark evidence stays visible regardless of price filters.</p>
       <div className="mt-3 flex flex-wrap items-center gap-2" role="list" aria-label="Selected models">
         {picks.map((id, slot) => {
@@ -87,11 +96,29 @@ export function BenchmarkCompare({ initialView, initialPicks, standalone = false
             <button type="button" className="ml-1 min-h-0 rounded px-1 text-lg leading-none text-gray-400 hover:text-accent" onClick={() => setPicks((old) => old.filter((pick) => pick !== chosen.id))} aria-label={`Remove ${chosen.name}`}>×</button>
           </div>;
         })}
-        <ComparePicker families={view.families ?? []} picks={picks} onPick={(id) => setPicks((old) => old.includes(id) ? old : [...old, id].slice(0, 4))} />
+        {/* CR-122: an id that is not in the catalog yet keeps its place in the selection, visibly unmeasured. */}
+        {pending.map((entry) => <div key={entry.id} role="listitem" data-bh-pending-model={entry.id} className="flex min-w-0 max-w-full items-center gap-1.5 rounded-lg border border-dashed border-line px-2 py-1.5 text-sm">
+          <span className="h-2 w-2 shrink-0 rounded-full border border-dashed border-line" />
+          <span className="min-w-0 max-w-[12rem] truncate font-medium">{entry.name}</span>
+          <span className="bh-badge shrink-0 text-[10px]">Coming soon</span>
+          <button type="button" className="ml-1 min-h-0 rounded px-1 text-lg leading-none text-gray-400 hover:text-accent" onClick={() => setPending((old) => old.filter((p) => p.id !== entry.id))} aria-label={`Remove ${entry.name}`}>×</button>
+        </div>)}
+        <ComparePicker families={view.families ?? []} picks={picks} onPick={(id) => setPicks((old) => old.includes(id) ? old : [...old, id].slice(0, Math.max(1, 4 - pending.length)))} />
       </div>
-      <div role="status" className="min-h-6 pt-2 text-sm bh-muted">{busy ? 'Updating benchmark evidence; results still show the previous models…' : error ? error : `${picks.length} models selected. ${visibleAxes.length} evaluation rows in the full comparison.`}</div>
+      <div role="status" className="min-h-6 pt-2 text-sm bh-muted">{busy ? 'Updating benchmark evidence; results still show the previous models…' : error ? error : `${picks.length} model${picks.length === 1 ? '' : 's'} selected${pending.length ? `, ${pending.length} not measured yet` : ''}. ${visibleAxes.length} evaluation rows in the full comparison.`}</div>
       {error && <button className="bh-button" onClick={() => setRetry((n) => n + 1)}>Retry loading</button>}
     </section>
+    {/* CR-122 (launch links): the announced model is named and marked as unmeasured — no value is shown or implied. */}
+    {pending.length > 0 && <section className="bh-panel border-dashed p-5" aria-label="Models not measured yet" data-bh-coming-soon>
+      <p className="bh-eyebrow">NOT MEASURED YET</p>
+      <h2 className="text-xl font-semibold">{pending.map((p) => p.name).join(' · ')}</h2>
+      <p className="bh-muted mt-2 max-w-3xl text-sm">{COMING_SOON_LINE} {pending.length === 1 ? `${pending[0].name} is not in our data yet` : 'These models are not in our data yet'}
+        {pending.length === 1 && pending[0].org ? ` (announced as ${pending[0].org}; the id in this link is “${pending[0].id}”)` : ''}
+        , so this page shows no score for {pending.length === 1 ? 'it' : 'them'} — we never estimate one. Benchmark Heaven collects every published result daily with its source, date and basis.
+        {picks.length > 0 ? ` The models already measured are compared below as usual.` : ''}</p>
+      <p className="bh-muted mt-2 max-w-3xl text-sm">Keep this link: it is the permanent comparison URL. As soon as {pending.length === 1 ? 'this model' : 'these models'} {pending.length === 1 ? 'is' : 'are'} collected under that id, the same page shows the real numbers — nothing to re-share.</p>
+      <p className="mt-3 text-sm"><Link className="text-accent hover:underline" href="/benchmarks">See how results are collected →</Link></p>
+    </section>}
     <div className="min-w-0" aria-busy={busy}><BenchmarkRadar view={view} axes={selectedAxes} picks={displayPicks} axesPickerLabel={`Simple radar · ${axesIds.length} of 8 axes`} axesPicker={<><div className="mt-2 flex flex-wrap items-center justify-between gap-2"><p className="bh-muted text-sm">Choose 3–8 axes. Every option names one benchmark version and evaluation group. Unmeasured selections remain empty.</p><button type="button" className="bh-button px-3" disabled={axesIds.join('|') === defaults.join('|')} onClick={() => setAxes(defaults)}>Reset to recommended axes</button></div><div className="bh-collapsible-grid mt-4 grid max-h-80 gap-2 overflow-y-auto">{radarPool.map((a) => <label key={a.id} className="flex items-start gap-2 rounded p-2 text-sm hover:bg-accent/5"><input type="checkbox" className="mt-1" checked={axesIds.includes(a.id)} disabled={axesIds.length >= 8 && !axesIds.includes(a.id)} onChange={(e) => setAxes((old) => e.target.checked ? [...old, a.id].slice(0, 8) : old.filter((id) => id !== a.id))} /><span>{a.name}<span className="bh-muted block text-xs">{versionHeading(a.version)} · {cohortLabel(a.cohort)} · {a.stats.n} measured peers</span></span></label>)}</div></>} /></div>
     {displayPicks.length > 0 && <section className="bh-panel p-5" aria-label="Benchmark category snapshots">
       <div className="flex flex-wrap items-start justify-between gap-3"><div><p className="bh-eyebrow">RELEASE-STYLE SNAPSHOT</p><h2 className="text-xl font-semibold">Where each model is strongest</h2></div><span className="bh-badge">Measured results only</span></div>

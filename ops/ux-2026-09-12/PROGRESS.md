@@ -6799,3 +6799,14 @@ Full text: `DESIGN-DIRECTIVES.md` ("Verdict on the live site — pass 30", "Deci
 | CR-120.3 | implemented | `dfd4c2d7`; live JSON-LD parsed on both hosts | WebPage, Dataset and FAQ graph uses visible page answers and artifact values. |
 | CR-120.4 | implemented | `dfd4c2d7`; 8 live browser contexts, no errors/overflow | Open alternatives, self-hosting/EU/GDPR, scoring and submission content; neutral jev-router disclosure. |
 | CR-120.5 | implemented | focused 4/4; Node 22 full suite 1091 pass / 1 skip / 0 fail; tsc/build pass; live revision on both hosts | X/LinkedIn/Slack/Telegram/iMessage crawler-equivalent fetches passed. Lighthouse SEO 100, performance 60. Search Console account has no access to the property, so sitemap was not submitted. |
+
+## CR-122 — launch links: Compare with a not-yet-ingested model (2026-09-22)
+
+Implemented by Claude Code (Opus 5) in the launch-sniper job while the loop was paused (`paused-until`, owner note in `/opt/benchmarkheaven/state/ux/paused-by`). Evidence: `/home/flori/jobs/launch-sniper-20260922/COMPARE-PAGE.md` and `examples/compare-*.png`.
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| CR-122.1 | implemented | see COMPARE-PAGE.md | Unknown id kept as "Coming soon" chip + panel; URL keeps it; no value shown. |
+| CR-122.2 | implemented | `test/compare-ids.test.mjs` 10/10 | Case/dot/dash/prefix/date-suffix/vendor-word tolerant; bare family keys resolve. |
+| CR-122.3 | implemented | live tags on both hosts | Title/description/og:image/twitter:image name both models; `/api/og/compare` PNG 1200×630. |
+| CR-122.4 | implemented | full suite (Node 26 strip-types) 1101 pass / 1 skip / 0 fail; tsc + build pass | Live check recorded in COMPARE-PAGE.md. |
