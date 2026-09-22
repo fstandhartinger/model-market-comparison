@@ -4,6 +4,14 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-22 — Lumina Bench ledger paused by Lumina
+
+`data/raw/lumina-ledger.json` gains an optional top-level `availability` object (`state: "paused_by_source"`,
+`since`, `checked_at`, `evidence_url`, `notice`, `manifest_status`) while Lumina's bulk downloads are paused
+(its data page: "Public bulk downloads are paused."). `families` and `ledger` are unchanged — they still describe
+the 2026-09-01 ledger. The field disappears when the downloads return. No value on the site came from Lumina, so
+no score changes.
+
 ## 2026-09-22 — MathArena USAMO 2026 (judged, secondary, retired, non-Composite)
 
 One new registry id (Math): `matharena-usamo::2026` (the six proof problems of USAMO 2026, 9 rows), from MathArena's

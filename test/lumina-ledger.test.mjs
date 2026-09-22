@@ -128,3 +128,23 @@ test('CR-38.4: the Lumina feed carries no result values', () => {
   walk(snapshot);
   for (const k of ['score', 'value', 'normalizedScore', 'values']) assert.ok(!keys.has(k), `the feed must not keep ${k}`);
 });
+
+// 2026-09-22: Lumina paused its bulk downloads. Only the data page's own sentence makes a 404 a pause.
+test('pauseNotice reads the pause sentence from the live /data/ page, nothing else', async () => {
+  const { pauseNotice } = await import('../lib/lumina-ledger.mjs');
+  const live = '<p class="text-muted">Public bulk downloads are paused. Model pages, charts and source attribution remain available.</p><a href="/methodology">';
+  assert.equal(pauseNotice(live), 'Public bulk downloads are paused. Model pages, charts and source attribution remain available.');
+  const flight = '[\\"$\\",\\"p\\",null,{\\"className\\":\\"text-muted\\",\\"children\\":\\"Public bulk downloads are paused. Model pages, charts and source attribution remain available.\\"}]';
+  assert.equal(pauseNotice(flight), 'Public bulk downloads are paused. Model pages, charts and source attribution remain available.');
+  assert.equal(pauseNotice('<p>Download the ledger manifest</p>'), null);
+  assert.equal(pauseNotice(''), null);
+});
+
+test('the committed snapshot records the pause and still carries the last ledger', () => {
+  const snapshot = JSON.parse(readFileSync(new URL('../data/raw/lumina-ledger.json', import.meta.url), 'utf8'));
+  if (!snapshot.availability) return; // downloads back: the collector drops the field on the next good manifest
+  assert.equal(snapshot.availability.state, 'paused_by_source');
+  assert.match(snapshot.availability.notice, /^Public bulk downloads are paused\./);
+  assert.equal(snapshot.availability.evidence_url, 'https://luminabench.com/data/');
+  assert.ok(snapshot.families.length >= 400, 'the paused feed keeps the last ledger, it does not empty it');
+});

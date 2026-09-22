@@ -22,7 +22,7 @@ import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { writeJSONAtomic } from '../lib/snapshot.mjs';
 import { captureLiveSource } from '../lib/live-source.mjs';
-import { LEDGER_BASE, MANIFEST_FILE, TABLES, parseManifest, tableRows, familyIndex, diffFamilies, summarize, CLASS_MEANING } from '../lib/lumina-ledger.mjs';
+import { LEDGER_BASE, MANIFEST_FILE, PAUSE_PAGE, pauseNotice, TABLES, parseManifest, tableRows, familyIndex, diffFamilies, summarize, CLASS_MEANING } from '../lib/lumina-ledger.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const target = join(root, 'data/raw/lumina-ledger.json');
@@ -37,13 +37,32 @@ async function get(file, fromDir) {
   const url = LEDGER_BASE + file;
   const response = await fetch(url, { headers: { 'User-Agent': UA, Accept: 'application/json' }, signal: AbortSignal.timeout(180_000) });
   if ([401, 403, 429].includes(response.status)) throw new Error(`${url}: HTTP ${response.status} — stop, do not retry`);
-  if (!response.ok) throw new Error(`${url}: HTTP ${response.status}`);
+  if (!response.ok) throw Object.assign(new Error(`${url}: HTTP ${response.status}`), { status: response.status });
   return response.text();
+}
+
+// A 404 manifest is a pause only when Lumina's own data page says so (lib/lumina-ledger.mjs → pauseNotice).
+// The last ledger stays; the snapshot records the pause with the page's sentence, and the step still fails so
+// collector-health and the digest keep showing that the feed brings nothing new.
+async function recordPause(previous, manifestError, now) {
+  const response = await fetch(PAUSE_PAGE, { headers: { 'User-Agent': UA, Accept: 'text/html' }, signal: AbortSignal.timeout(60_000) });
+  const html = response.ok ? await response.text() : '';
+  const notice = pauseNotice(html);
+  if (!notice || !previous) throw manifestError;
+  await captureLiveSource(PAUSE_PAGE, html);
+  const since = previous.availability?.state === 'paused_by_source' ? previous.availability.since : now;
+  await writeJSONAtomic(target, {
+    ...previous,
+    availability: { state: 'paused_by_source', since, checked_at: now, evidence_url: PAUSE_PAGE, notice, manifest_status: manifestError.status },
+  });
+  throw new Error(`Lumina paused its public bulk downloads (since ${since.slice(0, 10)}: "${notice}"); ledger of ${previous.ledger.generated_at} kept, not rebuilt from model pages`);
 }
 
 export function report(snapshot, policy) {
   const { counts, byClass } = summarize(snapshot.families, policy);
   const lines = [`# Lumina Bench feed — ${snapshot.families.length} families, ledger generated ${snapshot.ledger.generated_at}, checked ${snapshot.checked_at}`, ''];
+  const paused = snapshot.availability?.state === 'paused_by_source' ? snapshot.availability : null;
+  if (paused) lines.push(`**Paused by Lumina since ${paused.since.slice(0, 10)}** (last checked ${paused.checked_at.slice(0, 10)}, ${paused.evidence_url}): "${paused.notice}"`, '');
   for (const [c, n] of Object.entries(counts).sort((a, b) => b[1] - a[1])) lines.push(`- **${c}** ${n} — ${CLASS_MEANING[c] || ''}`);
   const unclassified = Object.keys(snapshot.unclassified_hosts || {});
   if (unclassified.length) lines.push('', `Hosts needing a role in data/lumina-feed-policy.json: ${unclassified.join(', ')}`);
@@ -73,11 +92,14 @@ async function main() {
   const fromDir = args.includes('--from-dir') ? args[args.indexOf('--from-dir') + 1] : null;
   const now = new Date().toISOString();
 
-  const manifestText = await get(MANIFEST_FILE, fromDir);
+  let manifestText;
+  try { manifestText = await get(MANIFEST_FILE, fromDir); }
+  catch (error) { if (fromDir || error.status !== 404) throw error; return recordPause(previous, error, now); }
   const manifest = parseManifest(manifestText);
   if (!fromDir) await captureLiveSource(LEDGER_BASE + MANIFEST_FILE, manifestText);
   if (previous && previous.ledger.source_data_hash === manifest.sourceDataHash) {
-    await writeJSONAtomic(target, { ...previous, checked_at: now });
+    const { availability, ...rest } = previous;
+    await writeJSONAtomic(target, { ...rest, checked_at: now });
     console.log(`Lumina ledger unchanged (sourceDataHash ${manifest.sourceDataHash.slice(0, 12)}, generated ${manifest.generatedAt}); no table fetched`);
     return;
   }

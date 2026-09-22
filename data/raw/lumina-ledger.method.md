@@ -37,3 +37,12 @@ CR-39.1, BenchLM's own composites and normalisations, Mercor APEX terms, saturat
 64 vendor-reported only, 164 whose every cited value is an aggregator page or a Lumina estimate. 12,533 of 15,598 results cite benchlm.ai.
 
 `node scripts/fetch-lumina-ledger.mjs --report` prints the current reading.
+
+**Paused by Lumina (2026-09-22).** The manifest and all three tables answer HTTP 404, and Lumina's data page
+(`https://luminabench.com/data/`) says: "Public bulk downloads are paused. Model pages, charts and source
+attribution remain available." On a 404 manifest the collector reads that page; only when the sentence is there
+does it record `availability: { state: "paused_by_source", since, checked_at, evidence_url, notice }` in the
+snapshot. The families and the 2026-09-01 ledger stay as they were, and the step still exits non-zero, so the
+daily report and collector-health keep saying the feed brings nothing new. The ledger is **not** rebuilt from
+Lumina's model pages: a bulk copy is what Lumina has just stopped offering. The first good manifest removes
+`availability` again.
