@@ -16212,6 +16212,142 @@
           "excerpt": "# evaluate all 100 held-out tasks, no tools … all_pass/mean (the headline leaderboard number — every rubric criterion satisfied) … run the complete task set with five runs per task and Gemini 3.5 Flash as the judge"
         }
       ]
+    },
+    {
+      "id": "interfaze-sob::text-image-audio",
+      "name": "SOB (Structured Output Benchmark)",
+      "version": "text-image-audio",
+      "version_status": "published",
+      "family": "interfaze-sob",
+      "category": "Instruction-following",
+      "one_sentence_description": "Can a model fill a JSON Schema correctly from text, OCR-ed documents and meeting transcripts — valid JSON, every required path, the right types and, above all, the right values — with reasoning switched off?",
+      "scoring": {
+        "metric": "Overall: the schema-difficulty-weighted average of the seven SOB metrics (Value Accuracy, Faithfulness, JSON Pass, Path Recall, Structure Coverage, Type Safety, Perfect Response) over text, image and audio records",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Structural metrics sit near the ceiling (JSON Pass 84–99 %), so Overall spans only 73.2–87.0 on 2026-09-22; Value Accuracy is kept as its own identity interfaze-sob-value-accuracy::text-image-audio. No reasoning; the page names five reasoning-locked models that ran at their lowest setting."
+      },
+      "maintainer": "Interfaze (JigsawStack)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+      "publication_urls": [
+        {
+          "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+          "type": "official_leaderboard",
+          "role": "Leaderboard (seven metrics and Overall per model)"
+        },
+        {
+          "url": "https://github.com/JigsawStack/sob",
+          "type": "github",
+          "role": "Benchmark code"
+        },
+        {
+          "url": "https://huggingface.co/datasets/interfaze-ai/sob",
+          "type": "huggingface",
+          "role": "Dataset"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-interfaze-sob; python3 ops/daily/public-candidate.py CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "Server-rendered HTML table",
+        "locator": "Table 0 of the server-rendered page (\"Full breakdown\"): Rank, Model, Overall, Value Acc, Faithfulness, JSON Pass, Path Recall, Structure, Type Safety, Perfect — one row per model, values printed as percentages. The same table is published as Markdown at https://interfaze.ai/leaderboards/structured-output-benchmark.md.",
+        "version_guard": "The page must still state the overall ranking rule (difficulty-weighted average of the seven metrics), the run setting (temperature 0.0, max output 2,048 tokens, no reasoning/thinking), the reasoning-locked list (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview, DS-R1-Distill-32B at their lowest reasoning), the three record sets (HotpotQA 5,000 / olmOCR-bench 209 / AMI 115), the Value Accuracy definition and the schema weights (easy 1.0, medium 2.0, hard 3.0); table 0's header must read Rank / Model / Overall / Value Acc / Faithfulness / JSON Pass / Path Recall / Structure / Type Safety / Perfect, ten cells per row, one row per model. Another record set, weighting or run setting is a new identity, never a silent update of this one.",
+        "identity_policy": "source_label",
+        "notes": "Maintained by Interfaze, a model vendor that lists its own model on the board beside the others it runs; paper arXiv 2604.25359. robots.txt allows the page — scores with attribution to Interfaze and a link to the board. Every row states the same setting, no reasoning, except the page's named reasoning-locked models (lowest reasoning, never joined); so a row joins only the catalog's exact non-reasoning configuration of an exactly named product (lib/board-identity.mjs parseInterfazeSobLabel). Abbreviated names are not mapped (Qwen3.5-35B, Qwen3-235B, Qwen3-30B, Nemotron-3-Nano-30B, Gemma-4-31B, DS-R1-Distill-32B), nor Anthropic rows (the catalog holds Claude's non-reasoning runs per effort, the board states none), nor models the catalog lacks (Interfaze, Kimi-2.6's spelling, Schematron-8B, IBM-Granite-4.0). Joins: data/raw/benchmarks/identity-map.json."
+      },
+      "update_cadence": {
+        "source_schedule": "Periodic refreshes (\"open a PR with the metric breakdown and we'll add it to the next refresh\"); the 2026-09-22 capture holds 29 models, newest GPT-5.5, Claude Sonnet 5 and Claude Opus 4.7.",
+        "check_recommendation": "Daily with the ordinary refresh; another record set, weighting or run setting is a new identity."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Computed saturation (CR-38.2) applies on build."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+          "sha256": "6d7879a36923dc342d78074da29d62c104fdce3e888251456a9de5e4efc3f7b3",
+          "fetched_at": "2026-09-22T08:36:40.960057+00:00",
+          "excerpt": "Run at temperature 0.0, max output 2,048 tokens, no reasoning/thinking … | 1 | GPT-5.4 | 87.0% | 79.8% | … Models sorted by difficulty-weighted average across all seven metrics"
+        }
+      ]
+    },
+    {
+      "id": "interfaze-sob-value-accuracy::text-image-audio",
+      "name": "SOB Value Accuracy",
+      "version": "text-image-audio",
+      "version_status": "published",
+      "family": "interfaze-sob-value-accuracy",
+      "category": "Instruction-following",
+      "one_sentence_description": "When a model extracts structured data into a JSON Schema, how many of the leaf values are exactly right?",
+      "scoring": {
+        "metric": "Value Accuracy: exact leaf-value match against the verified ground truth, schema-difficulty-weighted, over text, image and audio records; missing paths count as wrong",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "The metric Interfaze calls the one production systems care about; spans 66.7–82.0 on 2026-09-22. Same run as interfaze-sob::text-image-audio (no reasoning; five reasoning-locked models at their lowest setting)."
+      },
+      "maintainer": "Interfaze (JigsawStack)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+      "publication_urls": [
+        {
+          "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+          "type": "official_leaderboard",
+          "role": "Leaderboard (seven metrics and Overall per model)"
+        },
+        {
+          "url": "https://github.com/JigsawStack/sob",
+          "type": "github",
+          "role": "Benchmark code"
+        },
+        {
+          "url": "https://huggingface.co/datasets/interfaze-ai/sob",
+          "type": "huggingface",
+          "role": "Dataset"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-interfaze-sob; python3 ops/daily/public-candidate.py CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "Server-rendered HTML table",
+        "locator": "Table 0 of the server-rendered page (\"Full breakdown\"): Rank, Model, Overall, Value Acc, Faithfulness, JSON Pass, Path Recall, Structure, Type Safety, Perfect — one row per model, values printed as percentages. The same table is published as Markdown at https://interfaze.ai/leaderboards/structured-output-benchmark.md.",
+        "version_guard": "The page must still state the overall ranking rule (difficulty-weighted average of the seven metrics), the run setting (temperature 0.0, max output 2,048 tokens, no reasoning/thinking), the reasoning-locked list (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview, DS-R1-Distill-32B at their lowest reasoning), the three record sets (HotpotQA 5,000 / olmOCR-bench 209 / AMI 115), the Value Accuracy definition and the schema weights (easy 1.0, medium 2.0, hard 3.0); table 0's header must read Rank / Model / Overall / Value Acc / Faithfulness / JSON Pass / Path Recall / Structure / Type Safety / Perfect, ten cells per row, one row per model. Another record set, weighting or run setting is a new identity, never a silent update of this one.",
+        "identity_policy": "source_label",
+        "notes": "Maintained by Interfaze, a model vendor that lists its own model on the board beside the others it runs; paper arXiv 2604.25359. robots.txt allows the page — scores with attribution to Interfaze and a link to the board. Every row states the same setting, no reasoning, except the page's named reasoning-locked models (lowest reasoning, never joined); so a row joins only the catalog's exact non-reasoning configuration of an exactly named product (lib/board-identity.mjs parseInterfazeSobLabel). Abbreviated names are not mapped (Qwen3.5-35B, Qwen3-235B, Qwen3-30B, Nemotron-3-Nano-30B, Gemma-4-31B, DS-R1-Distill-32B), nor Anthropic rows (the catalog holds Claude's non-reasoning runs per effort, the board states none), nor models the catalog lacks (Interfaze, Kimi-2.6's spelling, Schematron-8B, IBM-Granite-4.0). Joins: data/raw/benchmarks/identity-map.json."
+      },
+      "update_cadence": {
+        "source_schedule": "Periodic refreshes (\"open a PR with the metric breakdown and we'll add it to the next refresh\"); the 2026-09-22 capture holds 29 models, newest GPT-5.5, Claude Sonnet 5 and Claude Opus 4.7.",
+        "check_recommendation": "Daily with the ordinary refresh; another record set, weighting or run setting is a new identity."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Computed saturation (CR-38.2) applies on build."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+          "sha256": "6d7879a36923dc342d78074da29d62c104fdce3e888251456a9de5e4efc3f7b3",
+          "fetched_at": "2026-09-22T08:36:40.960057+00:00",
+          "excerpt": "Run at temperature 0.0, max output 2,048 tokens, no reasoning/thinking … | 1 | GPT-5.4 | 87.0% | 79.8% | … Models sorted by difficulty-weighted average across all seven metrics"
+        }
+      ]
     }
   ],
   "aa_field_map": [

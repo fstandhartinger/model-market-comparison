@@ -367,6 +367,14 @@
     "surge-gdp-pdf": {
       "tier": "judged",
       "reason": "A response passes only when a judge model (Gemini 3.5 Flash) finds every expert-written rubric criterion satisfied (github.com/surge-ai/gdp-pdf, all_pass/mean); judge-graded boards stay outside the signal."
+    },
+    "interfaze-sob": {
+      "tier": "secondary",
+      "reason": "Public dataset and code (huggingface.co/datasets/interfaze-ai/sob, github.com/JigsawStack/sob) scored by exact deterministic checks, not a judge; a vendor's board that labs rarely quote in release posts."
+    },
+    "interfaze-sob-value-accuracy": {
+      "tier": "secondary",
+      "reason": "Public dataset and code (huggingface.co/datasets/interfaze-ai/sob, github.com/JigsawStack/sob) scored by exact deterministic checks, not a judge; a vendor's board that labs rarely quote in release posts."
     }
   }
 }

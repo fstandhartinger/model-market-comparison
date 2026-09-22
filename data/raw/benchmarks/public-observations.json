@@ -284024,6 +284024,1398 @@
           "locator": "method_source"
         }
       ]
+    },
+    {
+      "id": "public:615f6434d0c98b56ccb9b3a0",
+      "benchmark_id": "interfaze-sob::text-image-audio",
+      "subject": {
+        "source_id": "GPT-5.4",
+        "name": "GPT-5.4",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 87.0,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 1; GPT-5.4; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Overall, the difficulty-weighted average of the seven metrics (percent); source row: {\"cells\":[\"1\",\"GPT-5.4\",\"87.0%\",\"79.8%\",\"86.9%\",\"99.3%\",\"98.8%\",\"98.1%\",\"99.3%\",\"46.9%\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:1d5836cd0278b18f2913899e",
+      "benchmark_id": "interfaze-sob::text-image-audio",
+      "subject": {
+        "source_id": "Gemini-3.1-Pro",
+        "name": "Gemini-3.1-Pro",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 86.9,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 2; Gemini-3.1-Pro; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Overall, the difficulty-weighted average of the seven metrics (percent); source row: {\"cells\":[\"2\",\"Gemini-3.1-Pro\",\"86.9%\",\"82.0%\",\"87.6%\",\"96.6%\",\"96.0%\",\"95.8%\",\"96.6%\",\"54.2%\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:86d7be792f8fcdefa8110612",
+      "benchmark_id": "interfaze-sob::text-image-audio",
+      "subject": {
+        "source_id": "GLM-5.1",
+        "name": "GLM-5.1",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 86.6,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 3; GLM-5.1; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Overall, the difficulty-weighted average of the seven metrics (percent); source row: {\"cells\":[\"3\",\"GLM-5.1\",\"86.6%\",\"80.6%\",\"87.2%\",\"97.5%\",\"96.9%\",\"96.7%\",\"97.5%\",\"49.8%\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:662e8b594a693c05cdf528e8",
+      "benchmark_id": "interfaze-sob::text-image-audio",
+      "subject": {
+        "source_id": "Claude-Opus-4.7",
+        "name": "Claude-Opus-4.7",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 86.4,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 4; Claude-Opus-4.7; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Overall, the difficulty-weighted average of the seven metrics (percent); source row: {\"cells\":[\"4\",\"Claude-Opus-4.7\",\"86.4%\",\"78.7%\",\"87.7%\",\"99.3%\",\"98.8%\",\"98.3%\",\"99.3%\",\"42.4%\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:8b18455afd29250ff5cd9462",
+      "benchmark_id": "interfaze-sob::text-image-audio",
+      "subject": {
+        "source_id": "Claude-Sonnet-5",
+        "name": "Claude-Sonnet-5",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 86.2,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 5; Claude-Sonnet-5; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Overall, the difficulty-weighted average of the seven metrics (percent); source row: {\"cells\":[\"5\",\"Claude-Sonnet-5\",\"86.2%\",\"79.3%\",\"86.8%\",\"98.4%\",\"97.8%\",\"97.4%\",\"98.3%\",\"45.8%\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:f8444e3bce8940ed745876f6",
+      "benchmark_id": "interfaze-sob::text-image-audio",
+      "subject": {
+        "source_id": "GLM-4.7",
+        "name": "GLM-4.7",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 86.1,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 6; GLM-4.7; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Overall, the difficulty-weighted average of the seven metrics (percent); source row: {\"cells\":[\"6\",\"GLM-4.7\",\"86.1%\",\"80.4%\",\"86.8%\",\"96.5%\",\"95.9%\",\"95.7%\",\"96.5%\",\"50.8%\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:eb97a97fa0e49287bf8f6eb6",
+      "benchmark_id": "interfaze-sob::text-image-audio",
+      "subject": {
+        "source_id": "Qwen3.5-35B",
+        "name": "Qwen3.5-35B",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 86.1,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 7; Qwen3.5-35B; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Overall, the difficulty-weighted average of the seven metrics (percent); source row: {\"cells\":[\"7\",\"Qwen3.5-35B\",\"86.1%\",\"80.1%\",\"86.3%\",\"96.9%\",\"96.2%\",\"96.0%\",\"96.9%\",\"50.0%\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:3dede6cbc05607e6a5cc83fd",
+      "benchmark_id": "interfaze-sob::text-image-audio",
+      "subject": {
+        "source_id": "Interfaze",
+        "name": "Interfaze",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 86.0,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 8; Interfaze; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Overall, the difficulty-weighted average of the seven metrics (percent); source row: {\"cells\":[\"8\",\"Interfaze\",\"86.0%\",\"80.5%\",\"86.1%\",\"96.6%\",\"96.1%\",\"95.6%\",\"96.6%\",\"50.7%\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:801bedee13ea198835931be5",
+      "benchmark_id": "interfaze-sob::text-image-audio",
+      "subject": {
+        "source_id": "GPT-5.5",
+        "name": "GPT-5.5",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 86.0,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 9; GPT-5.5; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Overall, the difficulty-weighted average of the seven metrics (percent); source row: {\"cells\":[\"9\",\"GPT-5.5\",\"86.0%\",\"79.5%\",\"86.8%\",\"97.8%\",\"97.1%\",\"96.8%\",\"97.8%\",\"46.4%\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:c736a3a2da18efd297747f13",
+      "benchmark_id": "interfaze-sob::text-image-audio",
+      "subject": {
+        "source_id": "Gemini-2.5-Flash",
+        "name": "Gemini-2.5-Flash",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 86.0,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 10; Gemini-2.5-Flash; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Overall, the difficulty-weighted average of the seven metrics (percent); source row: {\"cells\":[\"10\",\"Gemini-2.5-Flash\",\"86.0%\",\"79.6%\",\"85.6%\",\"97.2%\",\"96.7%\",\"96.1%\",\"97.2%\",\"49.8%\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:2fe690cbcb0d5fa6357e106d",
+      "benchmark_id": "interfaze-sob::text-image-audio",
+      "subject": {
+        "source_id": "Qwen3-235B",
+        "name": "Qwen3-235B",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 85.7,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 11; Qwen3-235B; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Overall, the difficulty-weighted average of the seven metrics (percent); source row: {\"cells\":[\"11\",\"Qwen3-235B\",\"85.7%\",\"78.6%\",\"85.4%\",\"97.8%\",\"97.0%\",\"96.8%\",\"97.8%\",\"46.3%\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:d4b8297de7cfd2d561ffc9c1",
+      "benchmark_id": "interfaze-sob::text-image-audio",
+      "subject": {
+        "source_id": "Claude-Sonnet-4.6",
+        "name": "Claude-Sonnet-4.6",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 85.4,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 12; Claude-Sonnet-4.6; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Overall, the difficulty-weighted average of the seven metrics (percent); source row: {\"cells\":[\"12\",\"Claude-Sonnet-4.6\",\"85.4%\",\"77.9%\",\"85.8%\",\"97.9%\",\"97.5%\",\"96.9%\",\"97.9%\",\"44.2%\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:adb30d9f48d87fe0680ca274",
+      "benchmark_id": "interfaze-sob::text-image-audio",
+      "subject": {
+        "source_id": "Claude-Opus-4.6",
+        "name": "Claude-Opus-4.6",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 85.3,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 13; Claude-Opus-4.6; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Overall, the difficulty-weighted average of the seven metrics (percent); source row: {\"cells\":[\"13\",\"Claude-Opus-4.6\",\"85.3%\",\"77.9%\",\"86.0%\",\"97.7%\",\"97.3%\",\"96.8%\",\"97.7%\",\"43.7%\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:90dc90b9335a62e4ccfd4b52",
+      "benchmark_id": "interfaze-sob::text-image-audio",
+      "subject": {
+        "source_id": "DeepSeek-V4-Pro",
+        "name": "DeepSeek-V4-Pro",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 85.3,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 14; DeepSeek-V4-Pro; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Overall, the difficulty-weighted average of the seven metrics (percent); source row: {\"cells\":[\"14\",\"DeepSeek-V4-Pro\",\"85.3%\",\"79.6%\",\"85.8%\",\"96.0%\",\"95.2%\",\"95.3%\",\"96.0%\",\"49.0%\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:f311c7a31cdbfe11c39d34e0",
+      "benchmark_id": "interfaze-sob::text-image-audio",
+      "subject": {
+        "source_id": "Kimi-2.6",
+        "name": "Kimi-2.6",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 85.3,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 15; Kimi-2.6; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Overall, the difficulty-weighted average of the seven metrics (percent); source row: {\"cells\":[\"15\",\"Kimi-2.6\",\"85.3%\",\"79.1%\",\"85.6%\",\"96.4%\",\"95.8%\",\"95.4%\",\"96.4%\",\"48.2%\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:f3015902a66c03211f173142",
+      "benchmark_id": "interfaze-sob::text-image-audio",
+      "subject": {
+        "source_id": "GPT-4.1",
+        "name": "GPT-4.1",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 85.0,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 16; GPT-4.1; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Overall, the difficulty-weighted average of the seven metrics (percent); source row: {\"cells\":[\"16\",\"GPT-4.1\",\"85.0%\",\"78.3%\",\"85.3%\",\"96.9%\",\"96.3%\",\"95.9%\",\"96.9%\",\"45.4%\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:78d7e78ac86a99af6a716b9f",
+      "benchmark_id": "interfaze-sob::text-image-audio",
+      "subject": {
+        "source_id": "GPT-5",
+        "name": "GPT-5",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 84.9,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 17; GPT-5; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Overall, the difficulty-weighted average of the seven metrics (percent); source row: {\"cells\":[\"17\",\"GPT-5\",\"84.9%\",\"76.9%\",\"85.9%\",\"98.3%\",\"97.8%\",\"97.2%\",\"98.3%\",\"39.8%\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:3e0039d106dff996faa8c9c1",
+      "benchmark_id": "interfaze-sob::text-image-audio",
+      "subject": {
+        "source_id": "Gemma-3-27B",
+        "name": "Gemma-3-27B",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 84.7,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 18; Gemma-3-27B; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Overall, the difficulty-weighted average of the seven metrics (percent); source row: {\"cells\":[\"18\",\"Gemma-3-27B\",\"84.7%\",\"77.7%\",\"84.2%\",\"96.9%\",\"96.1%\",\"95.8%\",\"96.9%\",\"45.4%\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:ead2806828deef76ef77183b",
+      "benchmark_id": "interfaze-sob::text-image-audio",
+      "subject": {
+        "source_id": "Qwen3-30B",
+        "name": "Qwen3-30B",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 84.2,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 19; Qwen3-30B; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Overall, the difficulty-weighted average of the seven metrics (percent); source row: {\"cells\":[\"19\",\"Qwen3-30B\",\"84.2%\",\"75.3%\",\"83.2%\",\"98.3%\",\"97.4%\",\"97.0%\",\"98.3%\",\"40.1%\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:affb77ab296c9c60ff752dac",
+      "benchmark_id": "interfaze-sob::text-image-audio",
+      "subject": {
+        "source_id": "Nemotron-3-Nano-30B",
+        "name": "Nemotron-3-Nano-30B",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 84.1,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 20; Nemotron-3-Nano-30B; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Overall, the difficulty-weighted average of the seven metrics (percent); source row: {\"cells\":[\"20\",\"Nemotron-3-Nano-30B\",\"84.1%\",\"74.7%\",\"81.7%\",\"98.7%\",\"97.5%\",\"97.1%\",\"98.7%\",\"40.0%\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:d9003922a5ebf8c2ee732448",
+      "benchmark_id": "interfaze-sob::text-image-audio",
+      "subject": {
+        "source_id": "GPT-5-Mini",
+        "name": "GPT-5-Mini",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 83.5,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 21; GPT-5-Mini; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Overall, the difficulty-weighted average of the seven metrics (percent); source row: {\"cells\":[\"21\",\"GPT-5-Mini\",\"83.5%\",\"75.1%\",\"83.7%\",\"97.2%\",\"96.6%\",\"96.0%\",\"97.2%\",\"38.8%\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:b03c4a9857ca27dc63399fec",
+      "benchmark_id": "interfaze-sob::text-image-audio",
+      "subject": {
+        "source_id": "Gemma-4-31B",
+        "name": "Gemma-4-31B",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 83.3,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 22; Gemma-4-31B; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Overall, the difficulty-weighted average of the seven metrics (percent); source row: {\"cells\":[\"22\",\"Gemma-4-31B\",\"83.3%\",\"77.8%\",\"84.3%\",\"94.3%\",\"93.4%\",\"93.4%\",\"94.3%\",\"46.1%\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:8395b3b218abb05eee776715",
+      "benchmark_id": "interfaze-sob::text-image-audio",
+      "subject": {
+        "source_id": "Gemini-3-Flash-Preview",
+        "name": "Gemini-3-Flash-Preview",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 83.3,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 23; Gemini-3-Flash-Preview; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Overall, the difficulty-weighted average of the seven metrics (percent); source row: {\"cells\":[\"23\",\"Gemini-3-Flash-Preview\",\"83.3%\",\"77.3%\",\"83.1%\",\"93.9%\",\"93.5%\",\"92.9%\",\"93.9%\",\"48.4%\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:5ae2ea543d87e08927785d8d",
+      "benchmark_id": "interfaze-sob::text-image-audio",
+      "subject": {
+        "source_id": "Schematron-8B",
+        "name": "Schematron-8B",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 83.2,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 24; Schematron-8B; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Overall, the difficulty-weighted average of the seven metrics (percent); source row: {\"cells\":[\"24\",\"Schematron-8B\",\"83.2%\",\"73.1%\",\"80.7%\",\"98.7%\",\"97.6%\",\"96.9%\",\"98.7%\",\"37.0%\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:dd3d4b00c4f847bd59855111",
+      "benchmark_id": "interfaze-sob::text-image-audio",
+      "subject": {
+        "source_id": "IBM-Granite-4.0",
+        "name": "IBM-Granite-4.0",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 83.2,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 25; IBM-Granite-4.0; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Overall, the difficulty-weighted average of the seven metrics (percent); source row: {\"cells\":[\"25\",\"IBM-Granite-4.0\",\"83.2%\",\"73.6%\",\"81.2%\",\"98.3%\",\"96.5%\",\"96.7%\",\"98.3%\",\"38.1%\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:7003f2969f7b775792a4d5b9",
+      "benchmark_id": "interfaze-sob::text-image-audio",
+      "subject": {
+        "source_id": "Phi-4",
+        "name": "Phi-4",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 83.1,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 26; Phi-4; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Overall, the difficulty-weighted average of the seven metrics (percent); source row: {\"cells\":[\"26\",\"Phi-4\",\"83.1%\",\"78.7%\",\"84.9%\",\"96.9%\",\"96.1%\",\"96.1%\",\"96.9%\",\"45.2%\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:ccd1098e052c0c4c5cb3aac2",
+      "benchmark_id": "interfaze-sob::text-image-audio",
+      "subject": {
+        "source_id": "DS-R1-Distill-32B",
+        "name": "DS-R1-Distill-32B",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 82.7,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 27; DS-R1-Distill-32B; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Overall, the difficulty-weighted average of the seven metrics (percent); source row: {\"cells\":[\"27\",\"DS-R1-Distill-32B\",\"82.7%\",\"74.7%\",\"81.9%\",\"96.0%\",\"94.5%\",\"94.7%\",\"96.0%\",\"41.1%\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:cab950cd93d18a6f388b5b13",
+      "benchmark_id": "interfaze-sob::text-image-audio",
+      "subject": {
+        "source_id": "Ministral-3-14B",
+        "name": "Ministral-3-14B",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 77.8,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 28; Ministral-3-14B; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Overall, the difficulty-weighted average of the seven metrics (percent); source row: {\"cells\":[\"28\",\"Ministral-3-14B\",\"77.8%\",\"70.0%\",\"77.3%\",\"90.6%\",\"89.8%\",\"89.6%\",\"90.6%\",\"36.8%\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:a496fd076a76862d8eea356c",
+      "benchmark_id": "interfaze-sob::text-image-audio",
+      "subject": {
+        "source_id": "GPT-OSS-20B",
+        "name": "GPT-OSS-20B",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 73.2,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 29; GPT-OSS-20B; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Overall, the difficulty-weighted average of the seven metrics (percent); source row: {\"cells\":[\"29\",\"GPT-OSS-20B\",\"73.2%\",\"66.7%\",\"73.0%\",\"84.5%\",\"83.8%\",\"83.6%\",\"84.5%\",\"36.2%\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:81750b33be5ad039548be641",
+      "benchmark_id": "interfaze-sob-value-accuracy::text-image-audio",
+      "subject": {
+        "source_id": "GPT-5.4",
+        "name": "GPT-5.4",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 79.8,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 1; GPT-5.4; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Value Accuracy, the exact leaf-value match against the verified ground truth (percent); source row: {\"cells\":[\"1\",\"GPT-5.4\",\"87.0%\",\"79.8%\",\"86.9%\",\"99.3%\",\"98.8%\",\"98.1%\",\"99.3%\",\"46.9%\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:dd98244813734ab12a27129f",
+      "benchmark_id": "interfaze-sob-value-accuracy::text-image-audio",
+      "subject": {
+        "source_id": "Gemini-3.1-Pro",
+        "name": "Gemini-3.1-Pro",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 82.0,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 2; Gemini-3.1-Pro; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Value Accuracy, the exact leaf-value match against the verified ground truth (percent); source row: {\"cells\":[\"2\",\"Gemini-3.1-Pro\",\"86.9%\",\"82.0%\",\"87.6%\",\"96.6%\",\"96.0%\",\"95.8%\",\"96.6%\",\"54.2%\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:0654b0effea81f42151651e0",
+      "benchmark_id": "interfaze-sob-value-accuracy::text-image-audio",
+      "subject": {
+        "source_id": "GLM-5.1",
+        "name": "GLM-5.1",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 80.6,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 3; GLM-5.1; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Value Accuracy, the exact leaf-value match against the verified ground truth (percent); source row: {\"cells\":[\"3\",\"GLM-5.1\",\"86.6%\",\"80.6%\",\"87.2%\",\"97.5%\",\"96.9%\",\"96.7%\",\"97.5%\",\"49.8%\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:70c7ad36bff82456f20d03cc",
+      "benchmark_id": "interfaze-sob-value-accuracy::text-image-audio",
+      "subject": {
+        "source_id": "Claude-Opus-4.7",
+        "name": "Claude-Opus-4.7",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 78.7,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 4; Claude-Opus-4.7; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Value Accuracy, the exact leaf-value match against the verified ground truth (percent); source row: {\"cells\":[\"4\",\"Claude-Opus-4.7\",\"86.4%\",\"78.7%\",\"87.7%\",\"99.3%\",\"98.8%\",\"98.3%\",\"99.3%\",\"42.4%\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:02dfe59848abf1774bd56d4d",
+      "benchmark_id": "interfaze-sob-value-accuracy::text-image-audio",
+      "subject": {
+        "source_id": "Claude-Sonnet-5",
+        "name": "Claude-Sonnet-5",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 79.3,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 5; Claude-Sonnet-5; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Value Accuracy, the exact leaf-value match against the verified ground truth (percent); source row: {\"cells\":[\"5\",\"Claude-Sonnet-5\",\"86.2%\",\"79.3%\",\"86.8%\",\"98.4%\",\"97.8%\",\"97.4%\",\"98.3%\",\"45.8%\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:4c4f3eef981e9f7e2b1a897f",
+      "benchmark_id": "interfaze-sob-value-accuracy::text-image-audio",
+      "subject": {
+        "source_id": "GLM-4.7",
+        "name": "GLM-4.7",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 80.4,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 6; GLM-4.7; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Value Accuracy, the exact leaf-value match against the verified ground truth (percent); source row: {\"cells\":[\"6\",\"GLM-4.7\",\"86.1%\",\"80.4%\",\"86.8%\",\"96.5%\",\"95.9%\",\"95.7%\",\"96.5%\",\"50.8%\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:e7c902c75b3e7150e8acbe23",
+      "benchmark_id": "interfaze-sob-value-accuracy::text-image-audio",
+      "subject": {
+        "source_id": "Qwen3.5-35B",
+        "name": "Qwen3.5-35B",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 80.1,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 7; Qwen3.5-35B; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Value Accuracy, the exact leaf-value match against the verified ground truth (percent); source row: {\"cells\":[\"7\",\"Qwen3.5-35B\",\"86.1%\",\"80.1%\",\"86.3%\",\"96.9%\",\"96.2%\",\"96.0%\",\"96.9%\",\"50.0%\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:6b5ecf85ebbcf895637bf699",
+      "benchmark_id": "interfaze-sob-value-accuracy::text-image-audio",
+      "subject": {
+        "source_id": "Interfaze",
+        "name": "Interfaze",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 80.5,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 8; Interfaze; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Value Accuracy, the exact leaf-value match against the verified ground truth (percent); source row: {\"cells\":[\"8\",\"Interfaze\",\"86.0%\",\"80.5%\",\"86.1%\",\"96.6%\",\"96.1%\",\"95.6%\",\"96.6%\",\"50.7%\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:56febcadbd6cff8d5925efdd",
+      "benchmark_id": "interfaze-sob-value-accuracy::text-image-audio",
+      "subject": {
+        "source_id": "GPT-5.5",
+        "name": "GPT-5.5",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 79.5,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 9; GPT-5.5; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Value Accuracy, the exact leaf-value match against the verified ground truth (percent); source row: {\"cells\":[\"9\",\"GPT-5.5\",\"86.0%\",\"79.5%\",\"86.8%\",\"97.8%\",\"97.1%\",\"96.8%\",\"97.8%\",\"46.4%\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:197174563f48ea0370bf6252",
+      "benchmark_id": "interfaze-sob-value-accuracy::text-image-audio",
+      "subject": {
+        "source_id": "Gemini-2.5-Flash",
+        "name": "Gemini-2.5-Flash",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 79.6,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 10; Gemini-2.5-Flash; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Value Accuracy, the exact leaf-value match against the verified ground truth (percent); source row: {\"cells\":[\"10\",\"Gemini-2.5-Flash\",\"86.0%\",\"79.6%\",\"85.6%\",\"97.2%\",\"96.7%\",\"96.1%\",\"97.2%\",\"49.8%\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:5f70a0b9cbac848529a8c225",
+      "benchmark_id": "interfaze-sob-value-accuracy::text-image-audio",
+      "subject": {
+        "source_id": "Qwen3-235B",
+        "name": "Qwen3-235B",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 78.6,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 11; Qwen3-235B; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Value Accuracy, the exact leaf-value match against the verified ground truth (percent); source row: {\"cells\":[\"11\",\"Qwen3-235B\",\"85.7%\",\"78.6%\",\"85.4%\",\"97.8%\",\"97.0%\",\"96.8%\",\"97.8%\",\"46.3%\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:60b3fcaa62cdd4cea514f941",
+      "benchmark_id": "interfaze-sob-value-accuracy::text-image-audio",
+      "subject": {
+        "source_id": "Claude-Sonnet-4.6",
+        "name": "Claude-Sonnet-4.6",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 77.9,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 12; Claude-Sonnet-4.6; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Value Accuracy, the exact leaf-value match against the verified ground truth (percent); source row: {\"cells\":[\"12\",\"Claude-Sonnet-4.6\",\"85.4%\",\"77.9%\",\"85.8%\",\"97.9%\",\"97.5%\",\"96.9%\",\"97.9%\",\"44.2%\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:567cd57e9d86bcffd615fb34",
+      "benchmark_id": "interfaze-sob-value-accuracy::text-image-audio",
+      "subject": {
+        "source_id": "Claude-Opus-4.6",
+        "name": "Claude-Opus-4.6",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 77.9,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 13; Claude-Opus-4.6; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Value Accuracy, the exact leaf-value match against the verified ground truth (percent); source row: {\"cells\":[\"13\",\"Claude-Opus-4.6\",\"85.3%\",\"77.9%\",\"86.0%\",\"97.7%\",\"97.3%\",\"96.8%\",\"97.7%\",\"43.7%\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:eba8ef834eac4c66d1ec5dab",
+      "benchmark_id": "interfaze-sob-value-accuracy::text-image-audio",
+      "subject": {
+        "source_id": "DeepSeek-V4-Pro",
+        "name": "DeepSeek-V4-Pro",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 79.6,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 14; DeepSeek-V4-Pro; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Value Accuracy, the exact leaf-value match against the verified ground truth (percent); source row: {\"cells\":[\"14\",\"DeepSeek-V4-Pro\",\"85.3%\",\"79.6%\",\"85.8%\",\"96.0%\",\"95.2%\",\"95.3%\",\"96.0%\",\"49.0%\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:02e84645341b87fbbbfb429f",
+      "benchmark_id": "interfaze-sob-value-accuracy::text-image-audio",
+      "subject": {
+        "source_id": "Kimi-2.6",
+        "name": "Kimi-2.6",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 79.1,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 15; Kimi-2.6; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Value Accuracy, the exact leaf-value match against the verified ground truth (percent); source row: {\"cells\":[\"15\",\"Kimi-2.6\",\"85.3%\",\"79.1%\",\"85.6%\",\"96.4%\",\"95.8%\",\"95.4%\",\"96.4%\",\"48.2%\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:eb92f924088bb9cb3140d53d",
+      "benchmark_id": "interfaze-sob-value-accuracy::text-image-audio",
+      "subject": {
+        "source_id": "GPT-4.1",
+        "name": "GPT-4.1",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 78.3,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 16; GPT-4.1; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Value Accuracy, the exact leaf-value match against the verified ground truth (percent); source row: {\"cells\":[\"16\",\"GPT-4.1\",\"85.0%\",\"78.3%\",\"85.3%\",\"96.9%\",\"96.3%\",\"95.9%\",\"96.9%\",\"45.4%\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:5bbec688a2bf6b865162a10a",
+      "benchmark_id": "interfaze-sob-value-accuracy::text-image-audio",
+      "subject": {
+        "source_id": "GPT-5",
+        "name": "GPT-5",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 76.9,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 17; GPT-5; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Value Accuracy, the exact leaf-value match against the verified ground truth (percent); source row: {\"cells\":[\"17\",\"GPT-5\",\"84.9%\",\"76.9%\",\"85.9%\",\"98.3%\",\"97.8%\",\"97.2%\",\"98.3%\",\"39.8%\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:5b4b605820179b5454fd84b5",
+      "benchmark_id": "interfaze-sob-value-accuracy::text-image-audio",
+      "subject": {
+        "source_id": "Gemma-3-27B",
+        "name": "Gemma-3-27B",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 77.7,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 18; Gemma-3-27B; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Value Accuracy, the exact leaf-value match against the verified ground truth (percent); source row: {\"cells\":[\"18\",\"Gemma-3-27B\",\"84.7%\",\"77.7%\",\"84.2%\",\"96.9%\",\"96.1%\",\"95.8%\",\"96.9%\",\"45.4%\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:731ee79bd21e84b2c4c999cf",
+      "benchmark_id": "interfaze-sob-value-accuracy::text-image-audio",
+      "subject": {
+        "source_id": "Qwen3-30B",
+        "name": "Qwen3-30B",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 75.3,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 19; Qwen3-30B; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Value Accuracy, the exact leaf-value match against the verified ground truth (percent); source row: {\"cells\":[\"19\",\"Qwen3-30B\",\"84.2%\",\"75.3%\",\"83.2%\",\"98.3%\",\"97.4%\",\"97.0%\",\"98.3%\",\"40.1%\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:a992ec83c8c6bb14b81f2fbd",
+      "benchmark_id": "interfaze-sob-value-accuracy::text-image-audio",
+      "subject": {
+        "source_id": "Nemotron-3-Nano-30B",
+        "name": "Nemotron-3-Nano-30B",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 74.7,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 20; Nemotron-3-Nano-30B; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Value Accuracy, the exact leaf-value match against the verified ground truth (percent); source row: {\"cells\":[\"20\",\"Nemotron-3-Nano-30B\",\"84.1%\",\"74.7%\",\"81.7%\",\"98.7%\",\"97.5%\",\"97.1%\",\"98.7%\",\"40.0%\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:78ccb33857c54ffd80956f30",
+      "benchmark_id": "interfaze-sob-value-accuracy::text-image-audio",
+      "subject": {
+        "source_id": "GPT-5-Mini",
+        "name": "GPT-5-Mini",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 75.1,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 21; GPT-5-Mini; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Value Accuracy, the exact leaf-value match against the verified ground truth (percent); source row: {\"cells\":[\"21\",\"GPT-5-Mini\",\"83.5%\",\"75.1%\",\"83.7%\",\"97.2%\",\"96.6%\",\"96.0%\",\"97.2%\",\"38.8%\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:8821102ee8fe959543fff890",
+      "benchmark_id": "interfaze-sob-value-accuracy::text-image-audio",
+      "subject": {
+        "source_id": "Gemma-4-31B",
+        "name": "Gemma-4-31B",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 77.8,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 22; Gemma-4-31B; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Value Accuracy, the exact leaf-value match against the verified ground truth (percent); source row: {\"cells\":[\"22\",\"Gemma-4-31B\",\"83.3%\",\"77.8%\",\"84.3%\",\"94.3%\",\"93.4%\",\"93.4%\",\"94.3%\",\"46.1%\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:0089dbf67e9d434be80f2253",
+      "benchmark_id": "interfaze-sob-value-accuracy::text-image-audio",
+      "subject": {
+        "source_id": "Gemini-3-Flash-Preview",
+        "name": "Gemini-3-Flash-Preview",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 77.3,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 23; Gemini-3-Flash-Preview; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Value Accuracy, the exact leaf-value match against the verified ground truth (percent); source row: {\"cells\":[\"23\",\"Gemini-3-Flash-Preview\",\"83.3%\",\"77.3%\",\"83.1%\",\"93.9%\",\"93.5%\",\"92.9%\",\"93.9%\",\"48.4%\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:8ec7d9d0d83a5401d401e9ff",
+      "benchmark_id": "interfaze-sob-value-accuracy::text-image-audio",
+      "subject": {
+        "source_id": "Schematron-8B",
+        "name": "Schematron-8B",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 73.1,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 24; Schematron-8B; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Value Accuracy, the exact leaf-value match against the verified ground truth (percent); source row: {\"cells\":[\"24\",\"Schematron-8B\",\"83.2%\",\"73.1%\",\"80.7%\",\"98.7%\",\"97.6%\",\"96.9%\",\"98.7%\",\"37.0%\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:649ade0a045c26598eaad83c",
+      "benchmark_id": "interfaze-sob-value-accuracy::text-image-audio",
+      "subject": {
+        "source_id": "IBM-Granite-4.0",
+        "name": "IBM-Granite-4.0",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 73.6,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 25; IBM-Granite-4.0; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Value Accuracy, the exact leaf-value match against the verified ground truth (percent); source row: {\"cells\":[\"25\",\"IBM-Granite-4.0\",\"83.2%\",\"73.6%\",\"81.2%\",\"98.3%\",\"96.5%\",\"96.7%\",\"98.3%\",\"38.1%\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:fc8193a2ab2c4ba2de36fd45",
+      "benchmark_id": "interfaze-sob-value-accuracy::text-image-audio",
+      "subject": {
+        "source_id": "Phi-4",
+        "name": "Phi-4",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 78.7,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 26; Phi-4; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Value Accuracy, the exact leaf-value match against the verified ground truth (percent); source row: {\"cells\":[\"26\",\"Phi-4\",\"83.1%\",\"78.7%\",\"84.9%\",\"96.9%\",\"96.1%\",\"96.1%\",\"96.9%\",\"45.2%\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:795faddec58f32a7aa95b6c8",
+      "benchmark_id": "interfaze-sob-value-accuracy::text-image-audio",
+      "subject": {
+        "source_id": "DS-R1-Distill-32B",
+        "name": "DS-R1-Distill-32B",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 74.7,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 27; DS-R1-Distill-32B; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Value Accuracy, the exact leaf-value match against the verified ground truth (percent); source row: {\"cells\":[\"27\",\"DS-R1-Distill-32B\",\"82.7%\",\"74.7%\",\"81.9%\",\"96.0%\",\"94.5%\",\"94.7%\",\"96.0%\",\"41.1%\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:77e68f036d7cf0b35596e4fe",
+      "benchmark_id": "interfaze-sob-value-accuracy::text-image-audio",
+      "subject": {
+        "source_id": "Ministral-3-14B",
+        "name": "Ministral-3-14B",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 70.0,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 28; Ministral-3-14B; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Value Accuracy, the exact leaf-value match against the verified ground truth (percent); source row: {\"cells\":[\"28\",\"Ministral-3-14B\",\"77.8%\",\"70.0%\",\"77.3%\",\"90.6%\",\"89.8%\",\"89.6%\",\"90.6%\",\"36.8%\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:7b5aac34d7c713cb72d56612",
+      "benchmark_id": "interfaze-sob-value-accuracy::text-image-audio",
+      "subject": {
+        "source_id": "GPT-OSS-20B",
+        "name": "GPT-OSS-20B",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 66.7,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "locator": "html_table; source row 29; GPT-OSS-20B; field value"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Value Accuracy, the exact leaf-value match against the verified ground truth (percent); source row: {\"cells\":[\"29\",\"GPT-OSS-20B\",\"73.2%\",\"66.7%\",\"73.0%\",\"84.5%\",\"83.8%\",\"83.6%\",\"84.5%\",\"36.2%\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
     }
   ],
   "collections": [
@@ -284794,6 +286186,18 @@
       "status": "collected",
       "source_url": "https://surgehq.ai/benchmarks/gdp-pdf",
       "reason": "41 source results parsed; configurations remain separate; unmatched model identities are retained."
+    },
+    {
+      "benchmark_id": "interfaze-sob::text-image-audio",
+      "status": "collected",
+      "source_url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+      "reason": "29 source results parsed; configurations remain separate; unmatched model identities are retained."
+    },
+    {
+      "benchmark_id": "interfaze-sob-value-accuracy::text-image-audio",
+      "status": "collected",
+      "source_url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+      "reason": "29 source results parsed; configurations remain separate; unmatched model identities are retained."
     }
   ],
   "rejected": [

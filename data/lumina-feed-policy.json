@@ -1086,9 +1086,11 @@
       "note": "NIST page confirmed 200 with Kimi K3 cyber content (checked 2026-09-22)."
     },
     "benchlm-sobvalueacc": {
-      "decision": "planned",
-      "collector": "Interfaze Structured Output Benchmark, low priority (data/SCRAPING.md)",
-      "note": "interfaze.ai SOB board current (Gemini 3.1, Sonnet 5 rows; checked 2026-09-22)."
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "interfaze-sob-value-accuracy::text-image-audio"
+      ],
+      "note": "2026-09-22 (iteration 167): Interfaze's own SOB leaderboard (interfaze.ai/leaderboards/structured-output-benchmark) is collected daily; its Value Acc column is this family (29 rows, 5 exact non-reasoning joins), the board's Overall is kept beside it as interfaze-sob::text-image-audio."
     },
     "benchlm-chartographywithtools": {
       "decision": "vendor_reported",

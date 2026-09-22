@@ -5719,6 +5719,126 @@
         "https://surgehq.ai/benchmarks/gdp-pdf",
         "https://raw.githubusercontent.com/surge-ai/gdp-pdf/main/README.md"
       ]
+    },
+    {
+      "benchmark_id": "interfaze-sob::text-image-audio",
+      "parser": {
+        "kind": "html_table",
+        "table_index": 0,
+        "name_field": "name",
+        "value_field": "value",
+        "name_column": 1,
+        "value_column": 2,
+        "width": 10,
+        "header_contains": [
+          "Rank",
+          "Model",
+          "Overall",
+          "Value Acc",
+          "Faithfulness",
+          "JSON Pass",
+          "Path Recall",
+          "Structure",
+          "Type Safety",
+          "Perfect"
+        ],
+        "header_rows": 1,
+        "unique_names": true,
+        "require_text": [
+          "Models sorted by difficulty-weighted average across all seven metrics",
+          "Run at temperature 0.0, max output 2,048 tokens, no reasoning/thinking, so the score reflects pure structured-output capability.",
+          "These models cannot have reasoning fully turned off, so they ran in their lowest-reasoning configuration.",
+          "API only exposes a minimum reasoning effort, not a full disable. Gemini-3.1-Pro",
+          "Gemini-3.1-Pro, Gemini-3-Flash-Preview Thinking is built in and can be set to its lowest budget but not switched off.",
+          "DS-R1-Distill-32B Chain-of-thought is intrinsic to the model",
+          "Text HotpotQA context passages 5,000 Image olmOCR-bench documents 209 Audio AMI Meeting Corpus conversations 115",
+          "Value Accuracy Exact leaf-value match against the verified ground truth.",
+          "(easy = 1.0, medium = 2.0, hard = 3.0)"
+        ]
+      },
+      "status": "collected",
+      "reason": "Interfaze's SOB leaderboard: every model row with its Overall score.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-interfaze-sob; python3 ops/daily/public-candidate.py CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "Server-rendered HTML table",
+        "locator": "Table 0 of the server-rendered page (\"Full breakdown\"): Rank, Model, Overall, Value Acc, Faithfulness, JSON Pass, Path Recall, Structure, Type Safety, Perfect — one row per model, values printed as percentages. The same table is published as Markdown at https://interfaze.ai/leaderboards/structured-output-benchmark.md. The value is the Overall column.",
+        "version_guard": "The page must still state the overall ranking rule (difficulty-weighted average of the seven metrics), the run setting (temperature 0.0, max output 2,048 tokens, no reasoning/thinking), the reasoning-locked list (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview, DS-R1-Distill-32B at their lowest reasoning), the three record sets (HotpotQA 5,000 / olmOCR-bench 209 / AMI 115), the Value Accuracy definition and the schema weights (easy 1.0, medium 2.0, hard 3.0); table 0's header must read Rank / Model / Overall / Value Acc / Faithfulness / JSON Pass / Path Recall / Structure / Type Safety / Perfect, ten cells per row, one row per model. Another record set, weighting or run setting is a new identity, never a silent update of this one.",
+        "notes": "robots.txt allows the leaderboard (only /auth, /dashboard, /playground and /api are disallowed). Check the shared source cooldown first; stop on 403, 429, challenges or unexpected content. One capture per day."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "The page must still state the overall ranking rule (difficulty-weighted average of the seven metrics), the run setting (temperature 0.0, max output 2,048 tokens, no reasoning/thinking), the reasoning-locked list (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview, DS-R1-Distill-32B at their lowest reasoning), the three record sets (HotpotQA 5,000 / olmOCR-bench 209 / AMI 115), the Value Accuracy definition and the schema weights (easy 1.0, medium 2.0, hard 3.0); table 0's header must read Rank / Model / Overall / Value Acc / Faithfulness / JSON Pass / Path Recall / Structure / Type Safety / Perfect, ten cells per row, one row per model. Another record set, weighting or run setting is a new identity, never a silent update of this one.",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Overall, the difficulty-weighted average of the seven metrics (percent)",
+      "basis": "measured",
+      "minimum_rows": 20,
+      "source_urls": [
+        "https://interfaze.ai/leaderboards/structured-output-benchmark"
+      ]
+    },
+    {
+      "benchmark_id": "interfaze-sob-value-accuracy::text-image-audio",
+      "parser": {
+        "kind": "html_table",
+        "table_index": 0,
+        "name_field": "name",
+        "value_field": "value",
+        "name_column": 1,
+        "value_column": 3,
+        "width": 10,
+        "header_contains": [
+          "Rank",
+          "Model",
+          "Overall",
+          "Value Acc",
+          "Faithfulness",
+          "JSON Pass",
+          "Path Recall",
+          "Structure",
+          "Type Safety",
+          "Perfect"
+        ],
+        "header_rows": 1,
+        "unique_names": true,
+        "require_text": [
+          "Models sorted by difficulty-weighted average across all seven metrics",
+          "Run at temperature 0.0, max output 2,048 tokens, no reasoning/thinking, so the score reflects pure structured-output capability.",
+          "These models cannot have reasoning fully turned off, so they ran in their lowest-reasoning configuration.",
+          "API only exposes a minimum reasoning effort, not a full disable. Gemini-3.1-Pro",
+          "Gemini-3.1-Pro, Gemini-3-Flash-Preview Thinking is built in and can be set to its lowest budget but not switched off.",
+          "DS-R1-Distill-32B Chain-of-thought is intrinsic to the model",
+          "Text HotpotQA context passages 5,000 Image olmOCR-bench documents 209 Audio AMI Meeting Corpus conversations 115",
+          "Value Accuracy Exact leaf-value match against the verified ground truth.",
+          "(easy = 1.0, medium = 2.0, hard = 3.0)"
+        ]
+      },
+      "status": "collected",
+      "reason": "Interfaze's SOB leaderboard: every model row with its Value Accuracy.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-interfaze-sob; python3 ops/daily/public-candidate.py CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "Server-rendered HTML table",
+        "locator": "Table 0 of the server-rendered page (\"Full breakdown\"): Rank, Model, Overall, Value Acc, Faithfulness, JSON Pass, Path Recall, Structure, Type Safety, Perfect — one row per model, values printed as percentages. The same table is published as Markdown at https://interfaze.ai/leaderboards/structured-output-benchmark.md. The value is the Value Acc column.",
+        "version_guard": "The page must still state the overall ranking rule (difficulty-weighted average of the seven metrics), the run setting (temperature 0.0, max output 2,048 tokens, no reasoning/thinking), the reasoning-locked list (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview, DS-R1-Distill-32B at their lowest reasoning), the three record sets (HotpotQA 5,000 / olmOCR-bench 209 / AMI 115), the Value Accuracy definition and the schema weights (easy 1.0, medium 2.0, hard 3.0); table 0's header must read Rank / Model / Overall / Value Acc / Faithfulness / JSON Pass / Path Recall / Structure / Type Safety / Perfect, ten cells per row, one row per model. Another record set, weighting or run setting is a new identity, never a silent update of this one.",
+        "notes": "robots.txt allows the leaderboard (only /auth, /dashboard, /playground and /api are disallowed). Check the shared source cooldown first; stop on 403, 429, challenges or unexpected content. One capture per day."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "The page must still state the overall ranking rule (difficulty-weighted average of the seven metrics), the run setting (temperature 0.0, max output 2,048 tokens, no reasoning/thinking), the reasoning-locked list (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview, DS-R1-Distill-32B at their lowest reasoning), the three record sets (HotpotQA 5,000 / olmOCR-bench 209 / AMI 115), the Value Accuracy definition and the schema weights (easy 1.0, medium 2.0, hard 3.0); table 0's header must read Rank / Model / Overall / Value Acc / Faithfulness / JSON Pass / Path Recall / Structure / Type Safety / Perfect, ten cells per row, one row per model. Another record set, weighting or run setting is a new identity, never a silent update of this one.",
+      "source": {
+        "url": "https://interfaze.ai/leaderboards/structured-output-benchmark",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-interfaze-sob/9055391cd8f9f4b23006.gz",
+        "sha256": "9055391cd8f9f4b23006ade07715da60c8ec9107dd97112606cef19843d7b6d1",
+        "retrieved_at": "2026-09-22T08:36:40.960057+00:00"
+      },
+      "protocol": "Structured Output Benchmark (Interfaze): each model fills a JSON Schema from a text-normalised context — 5,000 HotpotQA passages, 209 olmOCR-bench documents, 115 AMI meeting transcripts; a record whose JSON fails to parse zeroes its semantic metrics, missing paths count as wrong, and schemas are weighted easy 1 / medium 2 / hard 3; temperature 0.0, max output 2,048 tokens, no reasoning/thinking (GPT-5, GPT-5-Mini, Gemini-3.1-Pro, Gemini-3-Flash-Preview and DS-R1-Distill-32B cannot switch reasoning off and ran at their lowest reasoning setting); Interfaze runs every model itself and also lists its own model; value = Value Accuracy, the exact leaf-value match against the verified ground truth (percent)",
+      "basis": "measured",
+      "minimum_rows": 20,
+      "source_urls": [
+        "https://interfaze.ai/leaderboards/structured-output-benchmark"
+      ]
     }
   ]
 }
