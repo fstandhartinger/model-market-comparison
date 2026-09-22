@@ -7,14 +7,13 @@ import { JEVBENCH_V12_TOPICS_ARTIFACT, JEVBENCH_V12_TOPICS_SHA256, readJevbenchV
 
 const clone = async () => JSON.parse(await readFile(JEVBENCH_V12_TOPICS_ARTIFACT, 'utf8'));
 
-test('the committed topic artifact is pinned, validates and contains only published systems', async () => {
+test('the committed topic artifact is the pinned one, validates and covers every v1.2 system', async () => {
   const v12 = await readJevbenchV12();
   const t = await readJevbenchV12Topics(v12.artifact);
   assert.equal(t.sha256, JEVBENCH_V12_TOPICS_SHA256);
   const view = jevbenchV12TopicsView(t);
   const v = jevbenchV12View(v12);
-  const published = new Set([...v.ranked, ...v.honorable, ...v.partial].map((r) => r.key));
-  assert.ok(Object.keys(view.systems).length > 0 && Object.keys(view.systems).every((key) => published.has(key)));
+  assert.deepEqual(Object.keys(view.systems).sort(), [...v.ranked, ...v.honorable, ...v.partial].map((r) => r.key).sort());
   assert.equal(view.topics.reduce((s, x) => s + x.n, 0), v.decisions);
   assert.ok(view.topics.length >= 6 && view.topics.length <= 9 && view.topics.every((x) => x.n >= view.minAttempted && x.short));
   // spot values (jevbench repo RESULTS-v1.2.md, "Accuracy by subject topic")
@@ -24,12 +23,12 @@ test('the committed topic artifact is pinned, validates and contains only publis
   assert.ok(view.systems['needle-3'].safety_security.attempted < view.minAttempted);
 });
 
-test('a topic accuracy that does not recompute, an unknown system, item-level content or a thin topic fails', async () => {
+test('a topic accuracy that does not recompute, a missing system, item-level content or a thin topic fails', async () => {
   const v12 = (await readJevbenchV12()).artifact;
   let a = await clone(); a.systems['jev-1.13.0'].topics.math.accuracy += 0.01;
   assert.throws(() => validateJevbenchV12Topics(a, v12), /does not recompute/);
-  a = await clone(); a.systems.unknown = a.systems.djev;
-  assert.throws(() => validateJevbenchV12Topics(a, v12), /non-empty subset/);
+  a = await clone(); delete a.systems.djev;
+  assert.throws(() => validateJevbenchV12Topics(a, v12), /exactly the v1.2 systems/);
   a = await clone(); a.systems['jev-1.13.0'].predictions = [];
   assert.throws(() => validateJevbenchV12Topics(a, v12), /item-level/);
   a = await clone(); a.topics[0].items = ['x'];
