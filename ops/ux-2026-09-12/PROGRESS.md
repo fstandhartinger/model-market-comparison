@@ -6794,11 +6794,11 @@ Full text: `DESIGN-DIRECTIVES.md` ("Verdict on the live site — pass 30", "Deci
 
 | ID | Status | Evidence | Note |
 |---|---|---|---|
-| CR-120.1 | implemented | `dfd4c2d7`; live metadata fetches on both hosts | Page-specific canonical/search/social metadata; multimodal noindex invariant retained live. |
-| CR-120.2 | implemented | `dfd4c2d7`; live PNG 1200×630 / 51,224 bytes on both hosts | Top-five board generated directly from the current JevBench artifact. |
-| CR-120.3 | implemented | `dfd4c2d7`; live JSON-LD parsed on both hosts | WebPage, Dataset and FAQ graph uses visible page answers and artifact values. |
-| CR-120.4 | implemented | `dfd4c2d7`; 8 live browser contexts, no errors/overflow | Open alternatives, self-hosting/EU/GDPR, scoring and submission content; neutral jev-router disclosure. |
-| CR-120.5 | implemented | focused 4/4; Node 22 full suite 1091 pass / 1 skip / 0 fail; tsc/build pass; live revision on both hosts | X/LinkedIn/Slack/Telegram/iMessage crawler-equivalent fetches passed. Lighthouse SEO 100, performance 60. Search Console account has no access to the property, so sitemap was not submitted. |
+| CR-120.1 | verified | `dfd4c2d7`; `ops/ux-2026-09-12/bin/verify-cr-120.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter175/{canonical,legacy}/verification.json`; `/opt/benchmarkheaven/state/ux-evidence/iter175/cr120-signoff-kimi/` | Page-specific canonical/search/social metadata; multimodal noindex invariant retained live. **Sign-off (iteration 175, Kimi K3 `chutes/moonshotai/Kimi-K3-TEE`, non-claude, non-implementer, run from `/tmp/iter175-signoff` with no access to this checkout):** ran `ops/ux-2026-09-12/bin/verify-cr-120.mjs` itself, **101/101 on each host** at revision `c49accc1`, and re-derived the claim from the live artifact rather than our files. Evidence `/opt/benchmarkheaven/state/ux-evidence/iter175/`. Re-read by hand: canonical `https://benchmarkheaven.com/jev-models` on **both** hosts, `twitter:card=summary_large_image`, `og:image` 1200×630, the preview page `noindex, nofollow`, absent from the 685-URL sitemap (the only `multimodal` entry is the model page `phi-4-multimodal-instruct`) and unlinked from `/jev-models`. |
+| CR-120.2 | verified | `dfd4c2d7`; `ops/ux-2026-09-12/bin/verify-cr-120.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter175/{canonical,legacy}/verification.json`; `/opt/benchmarkheaven/state/ux-evidence/iter175/cr120-signoff-kimi/` | Top-five board generated directly from the current JevBench artifact. **Sign-off (iteration 175, Kimi K3 `chutes/moonshotai/Kimi-K3-TEE`, non-claude, non-implementer, run from `/tmp/iter175-signoff` with no access to this checkout):** ran `ops/ux-2026-09-12/bin/verify-cr-120.mjs` itself, **101/101 on each host** at revision `c49accc1`, and re-derived the claim from the live artifact rather than our files. Evidence `/opt/benchmarkheaven/state/ux-evidence/iter175/`. The card is now checked by its **content**, not its size: the PNG is thresholded and OCRed, and it must read back the artifact's own revision, date, 52 systems, 534 decisions and the five ranked rows with their one-decimal scores (#1 Jev 1.13.0 74.4 … #5 reflex 4B 70.3). A stale cached card fails. |
+| CR-120.3 | verified | `dfd4c2d7`; `ops/ux-2026-09-12/bin/verify-cr-120.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter175/{canonical,legacy}/verification.json`; `/opt/benchmarkheaven/state/ux-evidence/iter175/cr120-signoff-kimi/` | WebPage, Dataset and FAQ graph uses visible page answers and artifact values. **Sign-off (iteration 175, Kimi K3 `chutes/moonshotai/Kimi-K3-TEE`, non-claude, non-implementer, run from `/tmp/iter175-signoff` with no access to this checkout):** ran `ops/ux-2026-09-12/bin/verify-cr-120.mjs` itself, **101/101 on each host** at revision `c49accc1`, and re-derived the claim from the live artifact rather than our files. Evidence `/opt/benchmarkheaven/state/ux-evidence/iter175/`. `Dataset.dateModified` equals the artifact's own `generated_utc` (2026-09-21T22:55:40+00:00), and the declared distribution URL was re-fetched and serves that same revision; every FAQ question is also visible text on the page. |
+| CR-120.4 | verified | `dfd4c2d7`; `ops/ux-2026-09-12/bin/verify-cr-120.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter175/{canonical,legacy}/verification.json`; `/opt/benchmarkheaven/state/ux-evidence/iter175/cr120-signoff-kimi/` | Open alternatives, self-hosting/EU/GDPR, scoring and submission content; neutral jev-router disclosure. **Sign-off (iteration 175, Kimi K3 `chutes/moonshotai/Kimi-K3-TEE`, non-claude, non-implementer, run from `/tmp/iter175-signoff` with no access to this checkout):** ran `ops/ux-2026-09-12/bin/verify-cr-120.mjs` itself, **101/101 on each host** at revision `c49accc1`, and re-derived the claim from the live artifact rather than our files. Evidence `/opt/benchmarkheaven/state/ux-evidence/iter175/`. The rendered body is scanned for a GDPR-compliance claim about a third party and must instead carry the honest caveat; jev-router.com must read "self-hosted open decision models" with the authors' neutrality disclosure. Checked in all four viewport/theme contexts per host. |
+| CR-120.5 | verified | `ops/ux-2026-09-12/bin/verify-cr-120.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter175/`; `npm test`; `npx tsc --noEmit -p .`; `node scripts/build-dataset.mjs` | X/LinkedIn/Slack/Telegram/iMessage crawler-equivalent fetches passed. Lighthouse SEO 100, performance 60. Search Console account has no access to the property, so sitemap was not submitted. **Sign-off (iteration 175, Kimi K3 `chutes/moonshotai/Kimi-K3-TEE`, non-claude, non-implementer, run from `/tmp/iter175-signoff` with no access to this checkout):** ran `ops/ux-2026-09-12/bin/verify-cr-120.mjs` itself, **101/101 on each host** at revision `c49accc1`, and re-derived the claim from the live artifact rather than our files. Evidence `/opt/benchmarkheaven/state/ux-evidence/iter175/`. CR-120 shipped with its evidence inside the implementing job's folder and **no committed verifier**, so nobody else could re-check it; iteration 175 wrote one and mutation-tested each class of assertion before trusting it (`/opt/benchmarkheaven/state/ux-evidence/iter175/mutation/`). |
 
 ## CR-122 — launch links: Compare with a not-yet-ingested model (2026-09-22)
 
@@ -7148,3 +7148,64 @@ Seeded from CR-128 in `04-CR-BRIEF.md` after checking `main`: CR-127 was the hig
 | CR-128.3 | open | `data/raw/benchmarks/registry.json`; selective evidence/ingest files to be recorded | Add only protocol-matched identities and manual snapshots; use the selective registry pipeline, not the full daily pipeline. |
 | CR-128.4 | open | both-host batch verification receipts to be recorded | Each small publication batch must be checked on both hosts for exact values, identities, basis and caveats. |
 | CR-128.5 | open | full test/build and final both-host receipts to be recorded | Independent different-family review, tests, typecheck, production build and per-family Composite/rank/Pareto/cost report. Do not manufacture Composite inputs. |
+
+## Iteration 175 — 2026-09-22 22:40 → ~23:15 UTC (claude-opus, work): CR-120 gets the verifier it never had, and its non-implementer sign-off
+
+- **Why this item.** Every open CR row is blocked on Florian (`CR-34.5`, `CR-62.4`), on a source (`CR-37.2` Lumina pause,
+  `CR-37.3`) or on tomorrow's 05:17 unattended run (`CR-38.1`, `CR-73.5`, `CR-85.1`, `CR-85.2`); codex/ChatGPT is at its
+  usage limit until 28 Sep. The one thing genuinely unblocked was the row set nobody could sign off: **`CR-120.1`–`.5`
+  stood at `implemented`** because CR-120 shipped from a separate job (`dfd4c2d7`, launch-sniper) whose only evidence
+  lives in that job's folder, with **no committed verifier** — so no second engine could re-check it and the X6 audit
+  could never clear. **A second writer is active in this checkout** (`cr128-writer.lock`, the third-party score ingest
+  that pushed `c49accc1` "Seed CR-128 third-party score ingest" at 22:42). This iteration therefore deliberately touched
+  **no product code, no data and no test**: one new ops script and the ledger, staged by path.
+
+- **`ops/ux-2026-09-12/bin/verify-cr-120.mjs` — the missing verifier (101 checks per host).** It derives every
+  expectation from the **live** published artifact (`/api/jevbench/v1.2`), never from this checkout, so a
+  non-implementing engine can copy the single file anywhere and run it. Coverage: CR-120.1 title/description length and
+  content, canonical (both hosts must name the canonical host), fourteen OG/X tags, the multimodal preview's
+  `noindex, nofollow`, its absence from the sitemap and from the page's links; CR-120.2 the preview image; CR-120.3 the
+  JSON-LD graph against the artifact; CR-120.4 the four search-intent answers in the rendered body; CR-120.5 the four
+  viewport/theme contexts.
+- **The preview card is checked by its content, not its size.** A "1200×630 PNG exists" assertion passes on a card that
+  is months stale. The PNG is inverted, thresholded and read with tesseract, and the OCR must contain the artifact's own
+  revision and scoring date, its system and decision counts, and each of the five ranked rows as one contiguous run —
+  `#1 Jev 1.13.0 74.4`, `#2 SemIf 73.1`, `#3 djev 73.0`, `#4 Winnow-12B Q8 71.2`, `#5 reflex 4B 70.3`. Letters are
+  folded (OCR reads `SemIf` as `Semlif`); **digits are compared exactly**, so a wrong number cannot fold into a right one.
+- **Mutation-tested before it was trusted** (`/opt/benchmarkheaven/state/ux-evidence/iter175/mutation/`): shifting every
+  expected score by 0.1 fails all five row checks; renaming the expected revision fails 10 checks across metadata, the
+  card and the JSON-LD; planting the preview URL in the sitemap fails exactly the exclusion check; the
+  GDPR-claim regex was run against four claim sentences (all caught) and the two honest caveat sentences (no false
+  positive).
+- **A defect in the first draft of the verifier, found by reading its own output.** `art.tiers` maps each tier straight
+  to a number (`{easy: 72, standard: 96, judge: 146, hard: 220}`), not to an object, so the first reducer produced
+  `decisions: 0` — and the four decision-count assertions were written as `decisions === 0 || …`, i.e. **vacuously
+  passing**. Both the reducer and the guards were fixed: the count is now a hard precondition that throws on a shape
+  change, and the four checks compare against the real 534. Mutating the count to 541 now fails all four, and Kimi's
+  second round re-ran the corrected script.
+- **Gates (tree at the commit):** `npm test` 1132 tests / **1131 pass / 0 fail / 1 skip**; `npx tsc --noEmit -p .` clean;
+  `node scripts/build-dataset.mjs` 863 models / 669 families / 94 providers / 2,976 offers with **no data diff** (the two
+  generated timestamps only, restored). `npm run build` was not re-run: this commit adds one standalone ops script that
+  is outside the Next.js build graph and changes no file the build reads.
+- **Live (claude-opus, implementer of the verifier).** 101/101 on each host at revision `c49accc1`
+  (`/opt/benchmarkheaven/state/ux-evidence/iter175/{canonical,legacy}/`), plus the card and the 390 px light screenshot
+  read by eye.
+- **Signed off by a non-claude, non-implementing engine.** The delegation ran **Kimi K3
+  (`chutes/moonshotai/Kimi-K3-TEE`)** from `/tmp/iter175-signoff` with a read-only packet and no access to this
+  checkout. It ran the verifier itself — **101/101 on each host, exit 0, both rounds** — and re-derived claims A–D with
+  its own `curl`/`python3`/`node`: the canonical/X-card/1200×630 tags, the preview's `noindex, nofollow` and its absence
+  from the 685-URL sitemap, its **own** download and **own** OCR of the card against its **own** top five computed from
+  `/api/jevbench/v1.2` (52 systems, 72+146+96+220 = 534 decisions), and the Dataset `dateModified` against the API's
+  `generated_utc` with the distribution URL re-fetched. **VERDICT: SIGN-OFF.** I re-checked its evidence before
+  accepting it: its `verification.json` files carry `decisions: 534` and timestamps of its own runs, its `mine/`
+  directory holds the captures it took, and every value it quotes matches what I read independently. `CR-120.1`–`.5`
+  are therefore `verified`.
+- **Also checked, not a defect.** The sitemap's single `multimodal` hit is the model page
+  `/models/phi-4-multimodal-instruct`, not the noindex preview — a naive grep makes this look like a CR-120.1 violation,
+  so the verifier and the packet both say so explicitly. The page's visible eyebrow, its metadata, its JSON-LD and the
+  preview card all name the same revision `v1.3.0`; there is no stale-version split between the head and the body.
+- **Next.** Tomorrow's 05:17 daily is the first unattended run after `CR-127`, `D172`, `D173` and the CR-128 ingest; the
+  rows to read in its receipt are `aa-benchmark-fields`, `livebench::2026-06-25`, `matharena-brokenarxiv::2026-06` and
+  `vulcanbench-frontier::4`, plus the `CR-38.1` publication receipt, the `CR-85.1` digest and the `CR-73.5` timing.
+  X6's open list loses CR-120 and is otherwise unchanged: `CR-34.5` and `CR-62.4` (Florian), `CR-37.3`, `CR-38.1`,
+  `CR-73.5`, `CR-85.1`, `CR-85.2`.
