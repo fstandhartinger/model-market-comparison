@@ -6748,13 +6748,13 @@ Full text: `DESIGN-DIRECTIVES.md` ("Verdict on the live site — pass 30", "Deci
 - **Gates (tree before the commit):** build-dataset 844/664/95/2888 (timestamp-only diff restored), npm test 1081 / 1081 pass / 0 fail
   (`/tmp/fable30-npm-test.log`), tsc clean; `test/fable-pass30.test.mjs` 4/4; `verify-fable-pass30-design.mjs` **40/40** on a local `next dev`
   (`…/pass30/local/`, includes a 9 s console check with the toast open).
-- **Live:** after the deploy the same verifier runs on both hosts (`…/pass30/live-canonical/`, `…/pass30/live-legacy/`) — result recorded below.
+- **Live (claude-fable, implementer):** both hosts served `b385107a` at 10:54 UTC (canonical 10:54:06, legacy 10:54:26); after the 60 s switchover wait `verify-fable-pass30-design.mjs` **40/40 per host** (`…/pass30/live-canonical/`, `…/pass30/live-legacy/`, `live-*.log`): note below the chart and above "What the run says" with the CR-118.4 sentence verbatim; banner text equals the required sentence; no Calibration header, no constant "Not measured" cell; every bar within 1.5 points of its accuracy, first bar widest, bars inside the 390 viewport; 0 page errors, 0 overflow, 1440/390 × light/dark. Eyeballed `live-canonical/mobile_dark-jev-note.png` and `desktop_dark-mm-table.png`.
 - **For the next non-Fable engine:** re-run `bin/verify-fable-pass30-design.mjs` on both hosts and flip the four Done-log rows to `verified`;
   `verify-cr-118.mjs` and `verify-cr-119`-style checks still apply unchanged.
 
 | ID | Status | Evidence | Note |
 |---|---|---|---|
-| F-157 | implemented | pass-30 commit; `test/fable-pass30.test.mjs`; `ops/ux-2026-09-12/bin/verify-fable-pass30-design.mjs`; `/opt/benchmarkheaven/state/ux-evidence/fable-20260922-pass30/` | Note follows the board. Fable-implemented; needs a non-Fable live re-run. |
+| F-157 | implemented | `b385107a`; `test/fable-pass30.test.mjs`; `ops/ux-2026-09-12/bin/verify-fable-pass30-design.mjs`; `/opt/benchmarkheaven/state/ux-evidence/fable-20260922-pass30/` | Note follows the board. Fable-implemented; needs a non-Fable live re-run. |
 | F-158 | implemented | same | No all-"Not measured" column; banner is the one sentence. Fable-implemented; needs a non-Fable live re-run. |
 | F-159 | implemented | same | Preview ranking draws its share as a bar. Fable-implemented; needs a non-Fable live re-run. |
 | F-160 | implemented | same | Eyebrow is a `<div>`; no nested-`<p>` console error on dev. Fable-implemented; needs a non-Fable live re-run. |
