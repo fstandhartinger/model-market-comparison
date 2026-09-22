@@ -16418,6 +16418,76 @@
           "excerpt": "[2026-01] An updated version of VitaBench is released with rectified datasets and tools, upgraded evaluation models, and updated metrics … --evaluator-llm <model name> # The LLM to use for evaluation."
         }
       ]
+    },
+    {
+      "id": "mcpmark::verified",
+      "name": "MCPMark Verified",
+      "version": "verified",
+      "version_status": "published",
+      "family": "mcpmark",
+      "category": "Tool-use",
+      "one_sentence_description": "AI agents complete realistic multi-step tasks through Model Context Protocol servers for Notion, GitHub, a filesystem, Postgres and a Playwright browser, each checked by the task's own verification script; Verified is the maintainers' version-pinned, stabilized 127-task set.",
+      "scoring": {
+        "metric": "Pass@1 in percent: the share of the 127 Verified tasks a single run of the model passes, each task decided by its automated verify.py",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Single run per model (the page: \"Single-run evaluation (run-1) only; Pass@4 and Pass^4 are not applicable.\"). The 127 tasks split 30 filesystem, 23 GitHub, 28 Notion, 25 Playwright and 21 Postgres; the board's per-service success rates weighted by these counts reproduce every row's Pass@1 (checked on collection), and they are kept in each row's protocol. MCP server versions are pinned (GitHub MCP Server v0.15.0, Notion MCP Server 1.9.1, README 21 Jan). The page states that kimi-k2-7-code's filesystem scores come from its second recorded run; the README's own \"kimi-k2.7 reaches 81.1%\" is the first run (103/127), the board's 81.89 % the published one (104/127) — the board value is ingested. Results on the pre-Verified task versions (the legacy board) are deprecated by the maintainers and are not comparable. Secondary benchmark, never a Composite input."
+      },
+      "maintainer": "EVAL SYS (eval-sys/mcpmark)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://mcpmark.ai/leaderboard/verified",
+      "publication_urls": [
+        {
+          "url": "https://mcpmark.ai/leaderboard/verified",
+          "type": "official_leaderboard",
+          "role": "Verified leaderboard (Pass@1 per model and setting, per-service success rates)"
+        },
+        {
+          "url": "https://github.com/eval-sys/mcpmark",
+          "type": "github",
+          "role": "Tasks, verify.py per task, pinned MCP environments and the evaluation pipeline"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-mcpmark; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "Next.js flight payload (JSON in the server-rendered page)",
+        "locator": "The Next.js flight payload of mcpmark.ai/leaderboard/verified (the `self.__next_f.push([1, \"...\"])` chunks the page streams with its HTML): one table object {columns: [filesystem, github, notion, playwright, postgres], data}; `data[]` rows {key, name, actualModelName, rank, passAtOne {avg, std}, avgSuccessRate, servicesSuccessRate, avgExecutionTime, perRunCost, passAtFour, passHatFour, sota, sotaFlags}, where key = name = the model slug plus an optional \"-<effort>\" (e.g. \"gpt-5-6-sol-max\" for actualModelName \"gpt-5.6-sol\"). The value is passAtOne.avg × 100, the row's single-run Pass@1 over the 127 Verified tasks.",
+        "version_guard": "The page must still state \"MCPMark Verified is a stabilized, version-pinned subset of MCPMark's standard tasks for more reliable and reproducible MCP evaluation.\" and \"Single-run evaluation (run-1) only; Pass@4 and Pass^4 are not applicable.\"; exactly one table object with the keys columns and data and the five services filesystem, github, notion, playwright, postgres in that order; the reviewed row schema; each key = the slug of actualModelName, optionally followed by \"-<effort>\" (max, xhigh, high, medium or low); passAtOne.avg = avgSuccessRate with std 0 (one run); the five service success rates weighted by 30 / 23 / 28 / 25 / 21 tasks must reproduce Pass@1 over 127 tasks within 0.0006; unique keys. The repository README must still say the standard tasks are the Verified set and that the standard suite covers 127 tasks. Another task set or count is a new identity, never a silent update of this one.",
+        "identity_policy": "source_label",
+        "notes": "Maintained by EVAL SYS (github.com/eval-sys/mcpmark; arXiv 2509.24002). The board names each row by model slug and stated effort; it does not say who ran each row, and two rows (claude-opus-4-8-max, kimi-k2-6) are marked scores-only (no per-task results or trajectories). Exact-join policy: a stated effort joins that exact catalog configuration; a key without an effort joins only a family the catalog holds as a single default configuration (kimi-k2.7-code joins; kimi-k2.6 has two configurations and stays unjoined). \"deepseek-v4-pro\" is the April 2026 release: the board was last updated 2026-07-20, before DeepSeek V4 Pro 0813 existed. The legacy board (mcpmark.ai/leaderboard, last updated 2025-12-15, pre-Verified task versions) is deprecated by the maintainers (\"not directly comparable\") and is not collected. robots.txt allows all — scores with attribution to EVAL SYS and a link to the board. Joins: data/raw/benchmarks/identity-map.json (lib/board-identity.mjs parseMcpmarkVerifiedLabel)."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated; rows are added as models are run (the page's \"Updated at 07/20/2026 16:05:27\" on the 2026-09-22 capture, 8 rows, newest GPT-5.6 Sol, Claude Fable 5 and Kimi K3).",
+        "check_recommendation": "Daily with the ordinary refresh; a changed task set or count is a new identity and needs a reviewed change."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Best Pass@1 96.06 % (kimi-k3-max) on 2026-09-22; the board spans 71.65–96.06 %. Computed saturation (CR-38.2) applies on build."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://mcpmark.ai/leaderboard/verified",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mcpmark/0257d023a52ce88f5bf1.gz",
+          "sha256": "b7c2a6de630d3e8b4a5e2891dcc08ada7550d05dfcb0b650ab00e2b45e08c41c",
+          "fetched_at": "2026-09-22T11:04:24.666572+00:00",
+          "excerpt": "Verified Leaderboard — MCPMark Verified is a stabilized, version-pinned subset of MCPMark's standard tasks for more reliable and reproducible MCP evaluation. Single-run evaluation (run-1) only; Pass@4 and Pass^4 are not applicable. … Updated at 07/20/2026 16:05:27 … {\"columns\":[\"filesystem\",\"github\",\"notion\",\"playwright\",\"postgres\"],\"data\":[{\"actualModelName\":\"kimi-k3\",\"avgSuccessRate\":0.9606,\"key\":\"kimi-k3-max\",\"passAtOne\":{\"avg\":0.9606,\"std\":0} …"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/eval-sys/mcpmark/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mcpmark/e2ee62a1eb2780863c6e.gz",
+          "sha256": "661ad914ca94321ff336c2122f5e08029714262bb87998758fae88df88ec840c",
+          "fetched_at": "2026-09-22T11:04:27.478427+00:00",
+          "excerpt": "MCPMark Verified is now the default. The standard tasks in this repository are the Verified set — every environment version-pinned and every verifier stabilized. Results from earlier task versions are deprecated and not directly comparable … `standard` (default) covers the full benchmark (127 tasks today). … Each task ships with an automated `verify.py` for objective, reproducible evaluation"
+        }
+      ]
     }
   ],
   "aa_field_map": [

@@ -5895,6 +5895,93 @@
       "source_urls": [
         "https://vitabench.github.io/"
       ]
+    },
+    {
+      "benchmark_id": "mcpmark::verified",
+      "parser": {
+        "kind": "mcpmark_verified_board",
+        "name_field": "name",
+        "id_field": "id",
+        "value_field": "value",
+        "scale": 100,
+        "plain_text_names": true,
+        "method_source": {
+          "url": "https://raw.githubusercontent.com/eval-sys/mcpmark/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mcpmark/e2ee62a1eb2780863c6e.gz",
+          "sha256": "e2ee62a1eb2780863c6ee17d82267b4097070e544243da4a29de0ece119fbc91",
+          "retrieved_at": "2026-09-22T11:04:27.478427+00:00"
+        },
+        "require": {
+          "page_text": [
+            "MCPMark Verified is a stabilized, version-pinned subset of MCPMark's standard tasks for more reliable and reproducible MCP evaluation.",
+            "Single-run evaluation (run-1) only; Pass@4 and Pass^4 are not applicable."
+          ],
+          "method_text": [
+            "The standard tasks in this repository are the Verified set",
+            "`standard` (default) covers the full benchmark (127 tasks today)."
+          ],
+          "service_tasks": {
+            "filesystem": 30,
+            "github": 23,
+            "notion": 28,
+            "playwright": 25,
+            "postgres": 21
+          },
+          "tasks_total": 127,
+          "weighted_tolerance": 0.0006,
+          "row_keys": [
+            "actualModelName",
+            "avgExecutionTime",
+            "avgSuccessRate",
+            "key",
+            "name",
+            "passAtFour",
+            "passAtOne",
+            "passHatFour",
+            "perRunCost",
+            "rank",
+            "servicesSuccessRate",
+            "sota",
+            "sotaFlags"
+          ],
+          "efforts": [
+            "",
+            "max",
+            "xhigh",
+            "high",
+            "medium",
+            "low"
+          ],
+          "row_notes": [
+            "kimi-k2-7-code filesystem scores come from its second recorded run (published here as run-1); all other services use the first run.",
+            "claude-opus-4-8-max and kimi-k2-6 are scores-only entries—per-task results and trajectories are unavailable."
+          ]
+        }
+      },
+      "status": "collected",
+      "reason": "EVAL SYS's own MCPMark Verified board: every model-and-setting row with its single-run Pass@1 over the 127 Verified tasks.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-mcpmark; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "Next.js flight payload (JSON in the server-rendered page)",
+        "locator": "The Next.js flight payload of mcpmark.ai/leaderboard/verified (the `self.__next_f.push([1, \"...\"])` chunks the page streams with its HTML): one table object {columns: [filesystem, github, notion, playwright, postgres], data}; `data[]` rows {key, name, actualModelName, rank, passAtOne {avg, std}, avgSuccessRate, servicesSuccessRate, avgExecutionTime, perRunCost, passAtFour, passHatFour, sota, sotaFlags}, where key = name = the model slug plus an optional \"-<effort>\" (e.g. \"gpt-5-6-sol-max\" for actualModelName \"gpt-5.6-sol\"). The value is passAtOne.avg × 100, the row's single-run Pass@1 over the 127 Verified tasks.",
+        "version_guard": "The page must still state \"MCPMark Verified is a stabilized, version-pinned subset of MCPMark's standard tasks for more reliable and reproducible MCP evaluation.\" and \"Single-run evaluation (run-1) only; Pass@4 and Pass^4 are not applicable.\"; exactly one table object with the keys columns and data and the five services filesystem, github, notion, playwright, postgres in that order; the reviewed row schema; each key = the slug of actualModelName, optionally followed by \"-<effort>\" (max, xhigh, high, medium or low); passAtOne.avg = avgSuccessRate with std 0 (one run); the five service success rates weighted by 30 / 23 / 28 / 25 / 21 tasks must reproduce Pass@1 over 127 tasks within 0.0006; unique keys. The repository README must still say the standard tasks are the Verified set and that the standard suite covers 127 tasks. Another task set or count is a new identity, never a silent update of this one.",
+        "notes": "robots.txt allows all; repository public. Check the shared source cooldown first; stop on 403, 429, challenges or unexpected content. One capture per day."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "The page must still state \"MCPMark Verified is a stabilized, version-pinned subset of MCPMark's standard tasks for more reliable and reproducible MCP evaluation.\" and \"Single-run evaluation (run-1) only; Pass@4 and Pass^4 are not applicable.\"; exactly one table object with the keys columns and data and the five services filesystem, github, notion, playwright, postgres in that order; the reviewed row schema; each key = the slug of actualModelName, optionally followed by \"-<effort>\" (max, xhigh, high, medium or low); passAtOne.avg = avgSuccessRate with std 0 (one run); the five service success rates weighted by 30 / 23 / 28 / 25 / 21 tasks must reproduce Pass@1 over 127 tasks within 0.0006; unique keys. The repository README must still say the standard tasks are the Verified set and that the standard suite covers 127 tasks. Another task set or count is a new identity, never a silent update of this one.",
+      "source": {
+        "url": "https://mcpmark.ai/leaderboard/verified",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mcpmark/0257d023a52ce88f5bf1.gz",
+        "sha256": "0257d023a52ce88f5bf17acd97c9ee68153f10b44977de5faaa7d2136879b746",
+        "retrieved_at": "2026-09-22T11:04:24.666572+00:00"
+      },
+      "protocol": "MCPMark Verified (EVAL SYS): 127 version-pinned tasks over five MCP servers (30 filesystem, 23 GitHub, 28 Notion, 25 Playwright, 21 Postgres) in isolated environments, each task decided by its own automated verify.py; one run per model (run-1); value = the board's Pass@1 (passAtOne.avg) × 100 for the row's model and stated setting; the board does not say who ran each row",
+      "basis": "measured",
+      "minimum_rows": 7,
+      "source_urls": [
+        "https://mcpmark.ai/leaderboard/verified",
+        "https://raw.githubusercontent.com/eval-sys/mcpmark/main/README.md"
+      ]
     }
   ]
 }

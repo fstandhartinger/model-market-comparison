@@ -859,9 +859,11 @@
       "note": "2026-09-22 (iteration 162): the primary board was checked on 2026-09-16 (109 rows, newest models from late 2025 and dated checkpoint labels, little overlap with the current catalog). Lumina cites only BenchLM rows for this family (Qwen3.7, LFM2.5, Mellum2, MiniCPM5 and ZAYA1 models)."
     },
     "benchlm-mcpmarkverified": {
-      "decision": "planned",
-      "collector": "MCPMark leaderboard page (mcpmark.ai/leaderboard), low priority (data/SCRAPING.md)",
-      "note": "2026-09-22 (iteration 162): mcpmark.ai robots.txt allows everything; the leaderboard's Next.js payload (page dateModified 2026-09-21) holds 39 model labels whose newest are GPT-5.2 (high), Gemini 3 Pro (high/low), Claude Opus 4.5 (high) and DeepSeek V3.2 — nothing from 2026 — so the board is stale for the current catalog. Lumina cites only BenchLM's bulk export for one model (Kimi K2.7 Code)."
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "mcpmark::verified"
+      ],
+      "note": "2026-09-22 (iteration 169, claude-opus): iteration 162 read only the legacy board (mcpmark.ai/leaderboard, pre-Verified task versions, last updated 2025-12-15, deprecated by the maintainers). The current board is mcpmark.ai/leaderboard/verified (updated 2026-07-20: Kimi K3, GPT-5.5, GPT-5.6 Sol, Claude Fable 5, Claude Opus 4.8, DeepSeek V4 Pro), collected daily: single-run Pass@1 over the 127 Verified tasks, 8 rows, 7 exact joins (the key's effort suffix states the setting; kimi-k2-6 states none on a two-configuration family)."
     },
     "multi-swe-bench": {
       "decision": "planned",

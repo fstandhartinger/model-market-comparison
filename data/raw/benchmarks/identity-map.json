@@ -13241,6 +13241,55 @@
       "reviewed_at": "2026-09-22"
     },
     {
+      "benchmark_id": "mcpmark::verified",
+      "source_id": "kimi-k3-max",
+      "model_id": "kimi-k3::max",
+      "rule": "label states model kimi-k3 and setting max; exact catalog configuration kimi-k3::max",
+      "reviewed_at": "2026-09-22"
+    },
+    {
+      "benchmark_id": "mcpmark::verified",
+      "source_id": "gpt-5-5-xhigh",
+      "model_id": "gpt-5.5::xhigh",
+      "rule": "label states model gpt-5.5 and setting xhigh; exact catalog configuration gpt-5.5::xhigh",
+      "reviewed_at": "2026-09-22"
+    },
+    {
+      "benchmark_id": "mcpmark::verified",
+      "source_id": "gpt-5-6-sol-max",
+      "model_id": "gpt-5.6-sol::max",
+      "rule": "label states model gpt-5.6-sol and setting max; exact catalog configuration gpt-5.6-sol::max",
+      "reviewed_at": "2026-09-22"
+    },
+    {
+      "benchmark_id": "mcpmark::verified",
+      "source_id": "claude-fable-5-max",
+      "model_id": "claude-fable-5::max",
+      "rule": "label states model claude-fable-5 and setting max; exact catalog configuration claude-fable-5::max",
+      "reviewed_at": "2026-09-22"
+    },
+    {
+      "benchmark_id": "mcpmark::verified",
+      "source_id": "kimi-k2-7-code",
+      "model_id": "kimi-k2.7-code::default",
+      "rule": "label names kimi-k2.7-code without a setting; the catalog has exactly one configuration, the default (kimi-k2.7-code::default)",
+      "reviewed_at": "2026-09-22"
+    },
+    {
+      "benchmark_id": "mcpmark::verified",
+      "source_id": "claude-opus-4-8-max",
+      "model_id": "claude-opus-4.8::max",
+      "rule": "label states model claude-opus-4.8 and setting max; exact catalog configuration claude-opus-4.8::max",
+      "reviewed_at": "2026-09-22"
+    },
+    {
+      "benchmark_id": "mcpmark::verified",
+      "source_id": "deepseek-v4-pro-max",
+      "model_id": "deepseek-v4-pro::max",
+      "rule": "label states model deepseek-v4-pro and setting max; exact catalog configuration deepseek-v4-pro::max",
+      "reviewed_at": "2026-09-22"
+    },
+    {
       "benchmark_id": "researchclawbench::40-tasks",
       "source_id": "MiMo-V2-Pro",
       "model_id": "mimo-v2-pro::default",

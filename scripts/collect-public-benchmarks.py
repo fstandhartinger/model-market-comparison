@@ -1111,6 +1111,50 @@ def parse(source,spec,load_source):
             rows.append({'name':found[1],'value':sum(scores)/len(scores),'source_row':index,'harness':'ResearchHarness',
                 'context':{'agent':agent,'tasks_scored':len(scores),'tasks_total':len(data['tasks']),
                     'mean_cost_usd':round(sum(costs)/len(costs),4) if costs else None,'latest_run_date':max(dates) if dates else None,'stated_effort':'not stated','view':'Pass@1'}})
+    elif kind=='mcpmark_verified_board':
+        # MCPMark Verified (EVAL SYS, mcpmark.ai/leaderboard/verified): the Next.js page streams its table in the
+        # server-rendered flight payload as one object {columns, data}; columns are the five MCP services and each data row
+        # is one model at one setting, `key` = the model slug (`actualModelName` with dots as dashes) plus an optional
+        # `-<effort>`. Single-run evaluation: the value is passAtOne.avg (= avgSuccessRate, std 0), the share of the 127
+        # standard (Verified) tasks the run passed. The per-service success rates, weighted by the reviewed task count of
+        # each service, must reproduce it — another task set is a new identity, never a silent update. The legacy board
+        # (mcpmark.ai/leaderboard, pre-Verified task versions) is deprecated by the maintainers and is not read.
+        req=spec['require'];page=text(source);readme=' '.join(load_source(spec['method_source']).split())
+        for phrase in req['page_text']:
+            if phrase not in page:raise ValueError('MCPMark Verified page no longer states: '+phrase[:80])
+        for phrase in req['method_text']:
+            if phrase not in readme:raise ValueError('MCPMark README no longer states: '+phrase[:80])
+        flight=''.join(json.loads(chunk) for chunk in re.findall(r'self\.__next_f\.push\(\[1,("(?:[^"\\]|\\.)*")\]\)',source))
+        starts=[m.start() for m in re.finditer(r'\{"columns":\[',flight)]
+        if len(starts)!=1:raise ValueError(f'MCPMark Verified: expected one board object, found {len(starts)}')
+        data,_=json.JSONDecoder().raw_decode(flight,starts[0])
+        tasks=req['service_tasks'];total=sum(tasks.values())
+        if set(data)!={'columns','data'} or data['columns']!=list(tasks):raise ValueError(f"MCPMark Verified board changed: {sorted(data)} {data.get('columns')!r}")
+        if total!=req['tasks_total']:raise ValueError('MCPMark Verified: reviewed task counts do not add up')
+        updated=re.search(r'Updated at (\d\d/\d\d/\d{4} \d\d:\d\d:\d\d)',page)
+        notes=[n for n in req.get('row_notes',[]) if n in page]
+        seen=set()
+        for index,r in enumerate(data['data']):
+            if not isinstance(r,dict) or set(r)!=set(req['row_keys']):raise ValueError(f'MCPMark Verified row {index} schema changed')
+            key,model=r['key'],r['actualModelName']
+            if r['name']!=key or not isinstance(model,str) or not model:raise ValueError(f'MCPMark Verified row {index}: name/key/model unreadable')
+            slug=re.sub(r'[^a-z0-9]+','-',model.lower()).strip('-')
+            effort=key[len(slug)+1:] if key.startswith(slug+'-') else '' if key==slug else None
+            if effort is None or effort not in req['efforts']:raise ValueError(f'MCPMark Verified {key!r}: key is not <{slug}>[-<reviewed effort>]')
+            p1=r['passAtOne'];avg=r['avgSuccessRate']
+            if not isinstance(p1,dict) or set(p1)!={'avg','std'} or p1['avg']!=avg or p1['std']!=0:raise ValueError(f'MCPMark Verified {key!r}: not a single-run Pass@1')
+            if isinstance(avg,bool) or not isinstance(avg,(int,float)) or not 0<=avg<=1:raise ValueError(f'MCPMark Verified {key!r}: Pass@1 unreadable')
+            services=r['servicesSuccessRate']
+            if not isinstance(services,dict) or set(services)!=set(tasks):raise ValueError(f'MCPMark Verified {key!r}: services changed')
+            rates={s:services[s].get('avgSuccessRate') for s in tasks}
+            if any(isinstance(v,bool) or not isinstance(v,(int,float)) or not 0<=v<=1 for v in rates.values()):raise ValueError(f'MCPMark Verified {key!r}: service rate unreadable')
+            if abs(sum(rates[s]*tasks[s] for s in tasks)/total-avg)>req['weighted_tolerance']:raise ValueError(f'MCPMark Verified {key!r}: service rates do not reproduce Pass@1 over {total} tasks')
+            if key in seen:raise ValueError('MCPMark Verified row repeated: '+key)
+            seen.add(key)
+            rows.append({'name':key,'id':key,'value':avg,'source_row':index,
+                'context':{'actual_model_name':model,'stated_effort':effort or 'not stated','runs':1,'tasks_total':total,
+                    'service_success_rates':rates,'avg_execution_time_s':r['avgExecutionTime'],'board_updated_at':updated[1] if updated else None,
+                    'page_notes':[n for n in notes if n.startswith(key+' ') or (' and '+key+' ') in n]}})
     else:raise ValueError('Unknown parser kind '+kind)
     if not isinstance(rows,list) or not rows:raise ValueError('No source result rows')
     return rows

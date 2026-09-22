@@ -286040,6 +286040,334 @@
       },
       "protocol": "VitaBench (Meituan LongCat team, ICLR 2026): LLM agents solve life-service tasks (food delivery, in-store consumption, online travel) with 66 tools in multi-turn conversations with shifting user intent, graded by a rubric-based sliding-window evaluator (the README's run command takes a --user-llm and an --evaluator-llm). Value = Cross-Scenarios Avg @4 on the 100 cross-scenario tasks (percent); the page does not define @4 in words — by the column name it is the average over four trials. The row's section states its reasoning mode (\"Thinking Models\" / \"Non-thinking Models\"); a parenthesis states a level (\"GPT-5.2 (xhigh)\", \"GPT-5.2 (none)\"). Leaderboard last updated 2026-01-22.; source row: {\"cells\":[\"14\",\"GPT-5.2 (none)\",\"0.8\",\"3.0\",\"0.0\",\"24.8\",\"55.0\",\"3.0\",\"18.2\",\"47.5\",\"1.0\",\"4.5\",\"14.0\",\"0.0\"],\"configuration\":null,\"value_column\":2,\"section\":\"Non-thinking Models\"}",
       "comparison_key": null
+    },
+    {
+      "id": "public:960a606e8c82e551a38cc7e9",
+      "benchmark_id": "mcpmark::verified",
+      "subject": {
+        "source_id": "kimi-k3-max",
+        "name": "kimi-k3-max",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 96.06,
+      "unit": "percent",
+      "basis": "derived",
+      "source": {
+        "url": "https://mcpmark.ai/leaderboard/verified",
+        "retrieved_at": "2026-09-22T11:04:24.666572+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mcpmark/0257d023a52ce88f5bf1.gz",
+        "sha256": "0257d023a52ce88f5bf17acd97c9ee68153f10b44977de5faaa7d2136879b746",
+        "locator": "mcpmark_verified_board; source row 0; kimi-k3-max; field value"
+      },
+      "protocol": "MCPMark Verified (EVAL SYS): 127 version-pinned tasks over five MCP servers (30 filesystem, 23 GitHub, 28 Notion, 25 Playwright, 21 Postgres) in isolated environments, each task decided by its own automated verify.py; one run per model (run-1); value = the board's Pass@1 (passAtOne.avg) × 100 for the row's model and stated setting; the board does not say who ran each row; source row: {\"actual_model_name\":\"kimi-k3\",\"stated_effort\":\"max\",\"runs\":1,\"tasks_total\":127,\"service_success_rates\":{\"filesystem\":0.9333,\"github\":0.9565,\"notion\":0.9286,\"playwright\":1,\"postgres\":1},\"avg_execution_time_s\":793.8786,\"board_updated_at\":\"07/20/2026 16:05:27\",\"page_notes\":[]}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.9606
+        ]
+      },
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/eval-sys/mcpmark/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mcpmark/e2ee62a1eb2780863c6e.gz",
+          "sha256": "e2ee62a1eb2780863c6ee17d82267b4097070e544243da4a29de0ece119fbc91",
+          "retrieved_at": "2026-09-22T11:04:27.478427+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:8581a3945d7d4311b2f8271f",
+      "benchmark_id": "mcpmark::verified",
+      "subject": {
+        "source_id": "gpt-5-5-xhigh",
+        "name": "gpt-5-5-xhigh",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 92.91,
+      "unit": "percent",
+      "basis": "derived",
+      "source": {
+        "url": "https://mcpmark.ai/leaderboard/verified",
+        "retrieved_at": "2026-09-22T11:04:24.666572+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mcpmark/0257d023a52ce88f5bf1.gz",
+        "sha256": "0257d023a52ce88f5bf17acd97c9ee68153f10b44977de5faaa7d2136879b746",
+        "locator": "mcpmark_verified_board; source row 1; gpt-5-5-xhigh; field value"
+      },
+      "protocol": "MCPMark Verified (EVAL SYS): 127 version-pinned tasks over five MCP servers (30 filesystem, 23 GitHub, 28 Notion, 25 Playwright, 21 Postgres) in isolated environments, each task decided by its own automated verify.py; one run per model (run-1); value = the board's Pass@1 (passAtOne.avg) × 100 for the row's model and stated setting; the board does not say who ran each row; source row: {\"actual_model_name\":\"gpt-5.5\",\"stated_effort\":\"xhigh\",\"runs\":1,\"tasks_total\":127,\"service_success_rates\":{\"filesystem\":0.8667,\"github\":0.9565,\"notion\":0.8929,\"playwright\":0.96,\"postgres\":1},\"avg_execution_time_s\":582.0796,\"board_updated_at\":\"07/20/2026 16:05:27\",\"page_notes\":[]}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.9291
+        ]
+      },
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/eval-sys/mcpmark/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mcpmark/e2ee62a1eb2780863c6e.gz",
+          "sha256": "e2ee62a1eb2780863c6ee17d82267b4097070e544243da4a29de0ece119fbc91",
+          "retrieved_at": "2026-09-22T11:04:27.478427+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:d1344dcfde393bcb776c7892",
+      "benchmark_id": "mcpmark::verified",
+      "subject": {
+        "source_id": "gpt-5-6-sol-max",
+        "name": "gpt-5-6-sol-max",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 92.91,
+      "unit": "percent",
+      "basis": "derived",
+      "source": {
+        "url": "https://mcpmark.ai/leaderboard/verified",
+        "retrieved_at": "2026-09-22T11:04:24.666572+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mcpmark/0257d023a52ce88f5bf1.gz",
+        "sha256": "0257d023a52ce88f5bf17acd97c9ee68153f10b44977de5faaa7d2136879b746",
+        "locator": "mcpmark_verified_board; source row 2; gpt-5-6-sol-max; field value"
+      },
+      "protocol": "MCPMark Verified (EVAL SYS): 127 version-pinned tasks over five MCP servers (30 filesystem, 23 GitHub, 28 Notion, 25 Playwright, 21 Postgres) in isolated environments, each task decided by its own automated verify.py; one run per model (run-1); value = the board's Pass@1 (passAtOne.avg) × 100 for the row's model and stated setting; the board does not say who ran each row; source row: {\"actual_model_name\":\"gpt-5.6-sol\",\"stated_effort\":\"max\",\"runs\":1,\"tasks_total\":127,\"service_success_rates\":{\"filesystem\":0.9,\"github\":0.9565,\"notion\":0.8571,\"playwright\":1,\"postgres\":0.9524},\"avg_execution_time_s\":557.7371,\"board_updated_at\":\"07/20/2026 16:05:27\",\"page_notes\":[]}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.9291
+        ]
+      },
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/eval-sys/mcpmark/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mcpmark/e2ee62a1eb2780863c6e.gz",
+          "sha256": "e2ee62a1eb2780863c6ee17d82267b4097070e544243da4a29de0ece119fbc91",
+          "retrieved_at": "2026-09-22T11:04:27.478427+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:5014264875baae5d80f23871",
+      "benchmark_id": "mcpmark::verified",
+      "subject": {
+        "source_id": "claude-fable-5-max",
+        "name": "claude-fable-5-max",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 86.61,
+      "unit": "percent",
+      "basis": "derived",
+      "source": {
+        "url": "https://mcpmark.ai/leaderboard/verified",
+        "retrieved_at": "2026-09-22T11:04:24.666572+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mcpmark/0257d023a52ce88f5bf1.gz",
+        "sha256": "0257d023a52ce88f5bf17acd97c9ee68153f10b44977de5faaa7d2136879b746",
+        "locator": "mcpmark_verified_board; source row 3; claude-fable-5-max; field value"
+      },
+      "protocol": "MCPMark Verified (EVAL SYS): 127 version-pinned tasks over five MCP servers (30 filesystem, 23 GitHub, 28 Notion, 25 Playwright, 21 Postgres) in isolated environments, each task decided by its own automated verify.py; one run per model (run-1); value = the board's Pass@1 (passAtOne.avg) × 100 for the row's model and stated setting; the board does not say who ran each row; source row: {\"actual_model_name\":\"claude-fable-5\",\"stated_effort\":\"max\",\"runs\":1,\"tasks_total\":127,\"service_success_rates\":{\"filesystem\":0.9,\"github\":0.8261,\"notion\":0.8214,\"playwright\":0.92,\"postgres\":0.8571},\"avg_execution_time_s\":311.8711,\"board_updated_at\":\"07/20/2026 16:05:27\",\"page_notes\":[]}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.8661
+        ]
+      },
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/eval-sys/mcpmark/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mcpmark/e2ee62a1eb2780863c6e.gz",
+          "sha256": "e2ee62a1eb2780863c6ee17d82267b4097070e544243da4a29de0ece119fbc91",
+          "retrieved_at": "2026-09-22T11:04:27.478427+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:4f3eb2dd1e329e9132e46634",
+      "benchmark_id": "mcpmark::verified",
+      "subject": {
+        "source_id": "kimi-k2-7-code",
+        "name": "kimi-k2-7-code",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 81.89,
+      "unit": "percent",
+      "basis": "derived",
+      "source": {
+        "url": "https://mcpmark.ai/leaderboard/verified",
+        "retrieved_at": "2026-09-22T11:04:24.666572+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mcpmark/0257d023a52ce88f5bf1.gz",
+        "sha256": "0257d023a52ce88f5bf17acd97c9ee68153f10b44977de5faaa7d2136879b746",
+        "locator": "mcpmark_verified_board; source row 4; kimi-k2-7-code; field value"
+      },
+      "protocol": "MCPMark Verified (EVAL SYS): 127 version-pinned tasks over five MCP servers (30 filesystem, 23 GitHub, 28 Notion, 25 Playwright, 21 Postgres) in isolated environments, each task decided by its own automated verify.py; one run per model (run-1); value = the board's Pass@1 (passAtOne.avg) × 100 for the row's model and stated setting; the board does not say who ran each row; source row: {\"actual_model_name\":\"kimi-k2.7-code\",\"stated_effort\":\"not stated\",\"runs\":1,\"tasks_total\":127,\"service_success_rates\":{\"filesystem\":0.7667,\"github\":0.7391,\"notion\":0.8571,\"playwright\":0.84,\"postgres\":0.9048},\"avg_execution_time_s\":403.8857,\"board_updated_at\":\"07/20/2026 16:05:27\",\"page_notes\":[\"kimi-k2-7-code filesystem scores come from its second recorded run (published here as run-1); all other services use the first run.\"]}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.8189
+        ]
+      },
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/eval-sys/mcpmark/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mcpmark/e2ee62a1eb2780863c6e.gz",
+          "sha256": "e2ee62a1eb2780863c6ee17d82267b4097070e544243da4a29de0ece119fbc91",
+          "retrieved_at": "2026-09-22T11:04:27.478427+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:dcb474d6a03c9cc4de3fdafd",
+      "benchmark_id": "mcpmark::verified",
+      "subject": {
+        "source_id": "claude-opus-4-8-max",
+        "name": "claude-opus-4-8-max",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 76.38000000000001,
+      "unit": "percent",
+      "basis": "derived",
+      "source": {
+        "url": "https://mcpmark.ai/leaderboard/verified",
+        "retrieved_at": "2026-09-22T11:04:24.666572+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mcpmark/0257d023a52ce88f5bf1.gz",
+        "sha256": "0257d023a52ce88f5bf17acd97c9ee68153f10b44977de5faaa7d2136879b746",
+        "locator": "mcpmark_verified_board; source row 5; claude-opus-4-8-max; field value"
+      },
+      "protocol": "MCPMark Verified (EVAL SYS): 127 version-pinned tasks over five MCP servers (30 filesystem, 23 GitHub, 28 Notion, 25 Playwright, 21 Postgres) in isolated environments, each task decided by its own automated verify.py; one run per model (run-1); value = the board's Pass@1 (passAtOne.avg) × 100 for the row's model and stated setting; the board does not say who ran each row; source row: {\"actual_model_name\":\"claude-opus-4.8\",\"stated_effort\":\"max\",\"runs\":1,\"tasks_total\":127,\"service_success_rates\":{\"filesystem\":0.8667,\"github\":0.5652,\"notion\":0.7857,\"playwright\":0.68,\"postgres\":0.9048},\"avg_execution_time_s\":null,\"board_updated_at\":\"07/20/2026 16:05:27\",\"page_notes\":[\"claude-opus-4-8-max and kimi-k2-6 are scores-only entries—per-task results and trajectories are unavailable.\"]}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.7638
+        ]
+      },
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/eval-sys/mcpmark/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mcpmark/e2ee62a1eb2780863c6e.gz",
+          "sha256": "e2ee62a1eb2780863c6ee17d82267b4097070e544243da4a29de0ece119fbc91",
+          "retrieved_at": "2026-09-22T11:04:27.478427+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:72934c7540bc4e04e1bad30d",
+      "benchmark_id": "mcpmark::verified",
+      "subject": {
+        "source_id": "kimi-k2-6",
+        "name": "kimi-k2-6",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 72.83,
+      "unit": "percent",
+      "basis": "derived",
+      "source": {
+        "url": "https://mcpmark.ai/leaderboard/verified",
+        "retrieved_at": "2026-09-22T11:04:24.666572+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mcpmark/0257d023a52ce88f5bf1.gz",
+        "sha256": "0257d023a52ce88f5bf17acd97c9ee68153f10b44977de5faaa7d2136879b746",
+        "locator": "mcpmark_verified_board; source row 6; kimi-k2-6; field value"
+      },
+      "protocol": "MCPMark Verified (EVAL SYS): 127 version-pinned tasks over five MCP servers (30 filesystem, 23 GitHub, 28 Notion, 25 Playwright, 21 Postgres) in isolated environments, each task decided by its own automated verify.py; one run per model (run-1); value = the board's Pass@1 (passAtOne.avg) × 100 for the row's model and stated setting; the board does not say who ran each row; source row: {\"actual_model_name\":\"kimi-k2.6\",\"stated_effort\":\"not stated\",\"runs\":1,\"tasks_total\":127,\"service_success_rates\":{\"filesystem\":0.7,\"github\":0.6087,\"notion\":0.7321,\"playwright\":0.76,\"postgres\":0.8571},\"avg_execution_time_s\":null,\"board_updated_at\":\"07/20/2026 16:05:27\",\"page_notes\":[\"claude-opus-4-8-max and kimi-k2-6 are scores-only entries—per-task results and trajectories are unavailable.\"]}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.7283
+        ]
+      },
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/eval-sys/mcpmark/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mcpmark/e2ee62a1eb2780863c6e.gz",
+          "sha256": "e2ee62a1eb2780863c6ee17d82267b4097070e544243da4a29de0ece119fbc91",
+          "retrieved_at": "2026-09-22T11:04:27.478427+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:140291ccd4b5ce402ab51ee3",
+      "benchmark_id": "mcpmark::verified",
+      "subject": {
+        "source_id": "deepseek-v4-pro-max",
+        "name": "deepseek-v4-pro-max",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 71.65,
+      "unit": "percent",
+      "basis": "derived",
+      "source": {
+        "url": "https://mcpmark.ai/leaderboard/verified",
+        "retrieved_at": "2026-09-22T11:04:24.666572+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mcpmark/0257d023a52ce88f5bf1.gz",
+        "sha256": "0257d023a52ce88f5bf17acd97c9ee68153f10b44977de5faaa7d2136879b746",
+        "locator": "mcpmark_verified_board; source row 7; deepseek-v4-pro-max; field value"
+      },
+      "protocol": "MCPMark Verified (EVAL SYS): 127 version-pinned tasks over five MCP servers (30 filesystem, 23 GitHub, 28 Notion, 25 Playwright, 21 Postgres) in isolated environments, each task decided by its own automated verify.py; one run per model (run-1); value = the board's Pass@1 (passAtOne.avg) × 100 for the row's model and stated setting; the board does not say who ran each row; source row: {\"actual_model_name\":\"deepseek-v4-pro\",\"stated_effort\":\"max\",\"runs\":1,\"tasks_total\":127,\"service_success_rates\":{\"filesystem\":0.7667,\"github\":0.4783,\"notion\":0.7143,\"playwright\":0.72,\"postgres\":0.9048},\"avg_execution_time_s\":147.9836,\"board_updated_at\":\"07/20/2026 16:05:27\",\"page_notes\":[]}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.7165
+        ]
+      },
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/eval-sys/mcpmark/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mcpmark/e2ee62a1eb2780863c6e.gz",
+          "sha256": "e2ee62a1eb2780863c6ee17d82267b4097070e544243da4a29de0ece119fbc91",
+          "retrieved_at": "2026-09-22T11:04:27.478427+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
     }
   ],
   "collections": [
@@ -286828,6 +287156,12 @@
       "status": "collected",
       "source_url": "https://vitabench.github.io/",
       "reason": "26 source results parsed; configurations remain separate; unmatched model identities are retained."
+    },
+    {
+      "benchmark_id": "mcpmark::verified",
+      "status": "collected",
+      "source_url": "https://mcpmark.ai/leaderboard/verified",
+      "reason": "8 source results parsed; configurations remain separate; unmatched model identities are retained."
     }
   ],
   "rejected": [
