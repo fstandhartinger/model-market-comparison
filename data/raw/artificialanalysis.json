@@ -3,10 +3,10 @@
   "endpoint": "https://artificialanalysis.ai/api/v2/data/llms/models",
   "metadata_endpoint": "https://artificialanalysis.ai/leaderboards/models",
   "collected_at": "2026-09-22",
-  "count": 661,
+  "count": 673,
   "metadata_sync": {
-    "api_count": 661,
-    "leaderboard_count": 661,
+    "api_count": 673,
+    "leaderboard_count": 673,
     "missing_model_ids": [],
     "max_allowed_rollout_lag": 4,
     "note": "Missing leaderboard metadata is explicit and remains null; only a bounded publication lag is tolerated."
@@ -95,9 +95,9 @@
         "price_1m_input_tokens": 4,
         "price_1m_output_tokens": 20
       },
-      "median_output_tokens_per_second": 0,
-      "median_time_to_first_token_seconds": 0,
-      "median_time_to_first_answer_token": 0,
+      "median_output_tokens_per_second": 97.79,
+      "median_time_to_first_token_seconds": 124.278,
+      "median_time_to_first_answer_token": 124.278,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -144,9 +144,9 @@
         "price_1m_input_tokens": 4,
         "price_1m_output_tokens": 20
       },
-      "median_output_tokens_per_second": 0,
-      "median_time_to_first_token_seconds": 0,
-      "median_time_to_first_answer_token": 0,
+      "median_output_tokens_per_second": 67.242,
+      "median_time_to_first_token_seconds": 12.189,
+      "median_time_to_first_answer_token": 12.189,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -396,9 +396,9 @@
         "price_1m_input_tokens": 4,
         "price_1m_output_tokens": 20
       },
-      "median_output_tokens_per_second": 0,
-      "median_time_to_first_token_seconds": 0,
-      "median_time_to_first_answer_token": 0,
+      "median_output_tokens_per_second": 78.327,
+      "median_time_to_first_token_seconds": 7.24,
+      "median_time_to_first_answer_token": 7.24,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -864,6 +864,55 @@
         "huggingface_url": null,
         "openrouter_api_id": null,
         "context_window_tokens": 1000000
+      }
+    },
+    {
+      "id": "c50ea08c-88c0-4eb7-85b8-27f2bbf6d527",
+      "name": "GPT-6 Sol (max)",
+      "slug": "gpt-6-sol",
+      "release_date": "2026-09-22",
+      "model_creator": {
+        "id": "e67e56e3-15cd-43db-b679-da4660a69f41",
+        "name": "OpenAI",
+        "slug": "openai"
+      },
+      "evaluations": {
+        "artificial_analysis_intelligence_index": 47.5,
+        "artificial_analysis_coding_index": null,
+        "artificial_analysis_math_index": null,
+        "mmlu_pro": null,
+        "gpqa": null,
+        "hle": 0.479,
+        "livecodebench": null,
+        "scicode": 0.576,
+        "math_500": null,
+        "aime": null,
+        "aime_25": null,
+        "ifbench": null,
+        "lcr": 0.836666666666667,
+        "terminalbench_hard": null,
+        "terminalbench_v2_1": null,
+        "tau2": null,
+        "tau_banking": null
+      },
+      "pricing": {
+        "price_1m_blended_3_to_1": 4,
+        "price_1m_input_tokens": 2,
+        "price_1m_output_tokens": 10
+      },
+      "median_output_tokens_per_second": 0,
+      "median_time_to_first_token_seconds": 0,
+      "median_time_to_first_answer_token": 0,
+      "metadata": {
+        "deprecated": false,
+        "is_reasoning": true,
+        "is_open_weights": false,
+        "commercial_allowed": null,
+        "license_name": null,
+        "license_url": null,
+        "huggingface_url": null,
+        "openrouter_api_id": null,
+        "context_window_tokens": 872000
       }
     },
     {
@@ -1505,6 +1554,55 @@
       }
     },
     {
+      "id": "da2642fe-9f73-4788-b5af-24edcd55b37e",
+      "name": "GPT-6 Sol (xhigh)",
+      "slug": "gpt-6-sol-xhigh",
+      "release_date": "2026-09-22",
+      "model_creator": {
+        "id": "e67e56e3-15cd-43db-b679-da4660a69f41",
+        "name": "OpenAI",
+        "slug": "openai"
+      },
+      "evaluations": {
+        "artificial_analysis_intelligence_index": 44.1,
+        "artificial_analysis_coding_index": null,
+        "artificial_analysis_math_index": null,
+        "mmlu_pro": null,
+        "gpqa": null,
+        "hle": 0.463,
+        "livecodebench": null,
+        "scicode": 0.551,
+        "math_500": null,
+        "aime": null,
+        "aime_25": null,
+        "ifbench": null,
+        "lcr": 0.813333333333333,
+        "terminalbench_hard": null,
+        "terminalbench_v2_1": null,
+        "tau2": null,
+        "tau_banking": null
+      },
+      "pricing": {
+        "price_1m_blended_3_to_1": 4,
+        "price_1m_input_tokens": 2,
+        "price_1m_output_tokens": 10
+      },
+      "median_output_tokens_per_second": 0,
+      "median_time_to_first_token_seconds": 0,
+      "median_time_to_first_answer_token": 0,
+      "metadata": {
+        "deprecated": false,
+        "is_reasoning": true,
+        "is_open_weights": false,
+        "commercial_allowed": null,
+        "license_name": null,
+        "license_url": null,
+        "huggingface_url": null,
+        "openrouter_api_id": null,
+        "context_window_tokens": 872000
+      }
+    },
+    {
       "id": "d998db47-9b67-4727-a2bb-2e1261020ac0",
       "name": "GPT-5.6 Sol (xhigh)",
       "slug": "gpt-5-6-sol-xhigh",
@@ -1730,6 +1828,55 @@
       }
     },
     {
+      "id": "52eebe3e-6ede-4e46-92db-c5dea49fc410",
+      "name": "GPT-6 Sol (high)",
+      "slug": "gpt-6-sol-high",
+      "release_date": "2026-09-22",
+      "model_creator": {
+        "id": "e67e56e3-15cd-43db-b679-da4660a69f41",
+        "name": "OpenAI",
+        "slug": "openai"
+      },
+      "evaluations": {
+        "artificial_analysis_intelligence_index": 42.8,
+        "artificial_analysis_coding_index": null,
+        "artificial_analysis_math_index": null,
+        "mmlu_pro": null,
+        "gpqa": null,
+        "hle": 0.441,
+        "livecodebench": null,
+        "scicode": 0.549,
+        "math_500": null,
+        "aime": null,
+        "aime_25": null,
+        "ifbench": null,
+        "lcr": 0.836666666666667,
+        "terminalbench_hard": null,
+        "terminalbench_v2_1": null,
+        "tau2": null,
+        "tau_banking": null
+      },
+      "pricing": {
+        "price_1m_blended_3_to_1": 4,
+        "price_1m_input_tokens": 2,
+        "price_1m_output_tokens": 10
+      },
+      "median_output_tokens_per_second": 0,
+      "median_time_to_first_token_seconds": 0,
+      "median_time_to_first_answer_token": 0,
+      "metadata": {
+        "deprecated": false,
+        "is_reasoning": true,
+        "is_open_weights": false,
+        "commercial_allowed": null,
+        "license_name": null,
+        "license_url": null,
+        "huggingface_url": null,
+        "openrouter_api_id": null,
+        "context_window_tokens": 872000
+      }
+    },
+    {
       "id": "8afc250d-b538-45a2-812a-4605f4ffd87e",
       "name": "GPT-5.6 Sol (high)",
       "slug": "gpt-5-6-sol-high",
@@ -1812,9 +1959,9 @@
         "price_1m_input_tokens": 4,
         "price_1m_output_tokens": 20
       },
-      "median_output_tokens_per_second": 0,
-      "median_time_to_first_token_seconds": 0,
-      "median_time_to_first_answer_token": 0,
+      "median_output_tokens_per_second": 73.011,
+      "median_time_to_first_token_seconds": 10.435,
+      "median_time_to_first_answer_token": 10.435,
       "metadata": {
         "deprecated": false,
         "is_reasoning": true,
@@ -2289,6 +2436,55 @@
             "reason": "Field absent from current AA leaderboard; retained from last published metadata."
           }
         }
+      }
+    },
+    {
+      "id": "780a4a85-17ff-4175-a8dd-ebca4823e61b",
+      "name": "GPT-6 Sol (medium)",
+      "slug": "gpt-6-sol-medium",
+      "release_date": "2026-09-22",
+      "model_creator": {
+        "id": "e67e56e3-15cd-43db-b679-da4660a69f41",
+        "name": "OpenAI",
+        "slug": "openai"
+      },
+      "evaluations": {
+        "artificial_analysis_intelligence_index": 39.8,
+        "artificial_analysis_coding_index": null,
+        "artificial_analysis_math_index": null,
+        "mmlu_pro": null,
+        "gpqa": null,
+        "hle": 0.41,
+        "livecodebench": null,
+        "scicode": 0.538,
+        "math_500": null,
+        "aime": null,
+        "aime_25": null,
+        "ifbench": null,
+        "lcr": 0.823333333333333,
+        "terminalbench_hard": null,
+        "terminalbench_v2_1": null,
+        "tau2": null,
+        "tau_banking": null
+      },
+      "pricing": {
+        "price_1m_blended_3_to_1": 4,
+        "price_1m_input_tokens": 2,
+        "price_1m_output_tokens": 10
+      },
+      "median_output_tokens_per_second": 0,
+      "median_time_to_first_token_seconds": 0,
+      "median_time_to_first_answer_token": 0,
+      "metadata": {
+        "deprecated": false,
+        "is_reasoning": true,
+        "is_open_weights": false,
+        "commercial_allowed": null,
+        "license_name": null,
+        "license_url": null,
+        "huggingface_url": null,
+        "openrouter_api_id": null,
+        "context_window_tokens": 872000
       }
     },
     {
@@ -2975,6 +3171,55 @@
             "reason": "Field absent from current AA leaderboard; retained from last published metadata."
           }
         }
+      }
+    },
+    {
+      "id": "6fb13851-40ce-4bda-ad3f-6b38e0c5daa7",
+      "name": "GPT-6 Luna (max)",
+      "slug": "gpt-6-luna",
+      "release_date": "2026-09-22",
+      "model_creator": {
+        "id": "e67e56e3-15cd-43db-b679-da4660a69f41",
+        "name": "OpenAI",
+        "slug": "openai"
+      },
+      "evaluations": {
+        "artificial_analysis_intelligence_index": 37.3,
+        "artificial_analysis_coding_index": null,
+        "artificial_analysis_math_index": null,
+        "mmlu_pro": null,
+        "gpqa": null,
+        "hle": 0.385,
+        "livecodebench": null,
+        "scicode": 0.546,
+        "math_500": null,
+        "aime": null,
+        "aime_25": null,
+        "ifbench": null,
+        "lcr": 0.833333333333333,
+        "terminalbench_hard": null,
+        "terminalbench_v2_1": null,
+        "tau2": null,
+        "tau_banking": null
+      },
+      "pricing": {
+        "price_1m_blended_3_to_1": 0.2,
+        "price_1m_input_tokens": 0.1,
+        "price_1m_output_tokens": 0.5
+      },
+      "median_output_tokens_per_second": 0,
+      "median_time_to_first_token_seconds": 0,
+      "median_time_to_first_answer_token": 0,
+      "metadata": {
+        "deprecated": false,
+        "is_reasoning": true,
+        "is_open_weights": false,
+        "commercial_allowed": null,
+        "license_name": null,
+        "license_url": null,
+        "huggingface_url": null,
+        "openrouter_api_id": null,
+        "context_window_tokens": 1000000
       }
     },
     {
@@ -3690,6 +3935,104 @@
       }
     },
     {
+      "id": "01459872-433a-4ab2-8e99-7083162172eb",
+      "name": "GPT-6 Sol (low)",
+      "slug": "gpt-6-sol-low",
+      "release_date": "2026-09-22",
+      "model_creator": {
+        "id": "e67e56e3-15cd-43db-b679-da4660a69f41",
+        "name": "OpenAI",
+        "slug": "openai"
+      },
+      "evaluations": {
+        "artificial_analysis_intelligence_index": 33.9,
+        "artificial_analysis_coding_index": null,
+        "artificial_analysis_math_index": null,
+        "mmlu_pro": null,
+        "gpqa": null,
+        "hle": 0.349,
+        "livecodebench": null,
+        "scicode": 0.502,
+        "math_500": null,
+        "aime": null,
+        "aime_25": null,
+        "ifbench": null,
+        "lcr": 0.793333333333333,
+        "terminalbench_hard": null,
+        "terminalbench_v2_1": null,
+        "tau2": null,
+        "tau_banking": null
+      },
+      "pricing": {
+        "price_1m_blended_3_to_1": 4,
+        "price_1m_input_tokens": 2,
+        "price_1m_output_tokens": 10
+      },
+      "median_output_tokens_per_second": 0,
+      "median_time_to_first_token_seconds": 0,
+      "median_time_to_first_answer_token": 0,
+      "metadata": {
+        "deprecated": false,
+        "is_reasoning": true,
+        "is_open_weights": false,
+        "commercial_allowed": null,
+        "license_name": null,
+        "license_url": null,
+        "huggingface_url": null,
+        "openrouter_api_id": null,
+        "context_window_tokens": 872000
+      }
+    },
+    {
+      "id": "19813eb2-460a-475c-af65-810bb8660fec",
+      "name": "GPT-6 Luna (xhigh)",
+      "slug": "gpt-6-luna-xhigh",
+      "release_date": "2026-09-22",
+      "model_creator": {
+        "id": "e67e56e3-15cd-43db-b679-da4660a69f41",
+        "name": "OpenAI",
+        "slug": "openai"
+      },
+      "evaluations": {
+        "artificial_analysis_intelligence_index": 33.9,
+        "artificial_analysis_coding_index": null,
+        "artificial_analysis_math_index": null,
+        "mmlu_pro": null,
+        "gpqa": null,
+        "hle": 0.343,
+        "livecodebench": null,
+        "scicode": 0.517,
+        "math_500": null,
+        "aime": null,
+        "aime_25": null,
+        "ifbench": null,
+        "lcr": 0.8,
+        "terminalbench_hard": null,
+        "terminalbench_v2_1": null,
+        "tau2": null,
+        "tau_banking": null
+      },
+      "pricing": {
+        "price_1m_blended_3_to_1": 0.2,
+        "price_1m_input_tokens": 0.1,
+        "price_1m_output_tokens": 0.5
+      },
+      "median_output_tokens_per_second": 0,
+      "median_time_to_first_token_seconds": 0,
+      "median_time_to_first_answer_token": 0,
+      "metadata": {
+        "deprecated": false,
+        "is_reasoning": true,
+        "is_open_weights": false,
+        "commercial_allowed": null,
+        "license_name": null,
+        "license_url": null,
+        "huggingface_url": null,
+        "openrouter_api_id": null,
+        "context_window_tokens": 1000000
+      }
+    },
+    {
       "id": "6b79f899-e3c0-45f6-923c-243faccdb2fc",
       "name": "GPT-5.5 (medium)",
       "slug": "gpt-5-5-medium",
@@ -4298,6 +4641,55 @@
         "huggingface_url": null,
         "openrouter_api_id": null,
         "context_window_tokens": 262144
+      }
+    },
+    {
+      "id": "7d1229bc-deea-4717-ba5b-f59a35d991e3",
+      "name": "GPT-6 Luna (high)",
+      "slug": "gpt-6-luna-high",
+      "release_date": "2026-09-22",
+      "model_creator": {
+        "id": "e67e56e3-15cd-43db-b679-da4660a69f41",
+        "name": "OpenAI",
+        "slug": "openai"
+      },
+      "evaluations": {
+        "artificial_analysis_intelligence_index": 32.1,
+        "artificial_analysis_coding_index": null,
+        "artificial_analysis_math_index": null,
+        "mmlu_pro": null,
+        "gpqa": null,
+        "hle": 0.329,
+        "livecodebench": null,
+        "scicode": 0.503,
+        "math_500": null,
+        "aime": null,
+        "aime_25": null,
+        "ifbench": null,
+        "lcr": 0.793333333333333,
+        "terminalbench_hard": null,
+        "terminalbench_v2_1": null,
+        "tau2": null,
+        "tau_banking": null
+      },
+      "pricing": {
+        "price_1m_blended_3_to_1": 0.2,
+        "price_1m_input_tokens": 0.1,
+        "price_1m_output_tokens": 0.5
+      },
+      "median_output_tokens_per_second": 0,
+      "median_time_to_first_token_seconds": 0,
+      "median_time_to_first_answer_token": 0,
+      "metadata": {
+        "deprecated": false,
+        "is_reasoning": true,
+        "is_open_weights": false,
+        "commercial_allowed": null,
+        "license_name": null,
+        "license_url": null,
+        "huggingface_url": null,
+        "openrouter_api_id": null,
+        "context_window_tokens": 1000000
       }
     },
     {
@@ -5083,6 +5475,55 @@
       }
     },
     {
+      "id": "36667da0-9222-4967-adbb-f7efa15ad213",
+      "name": "GPT-6 Luna (medium)",
+      "slug": "gpt-6-luna-medium",
+      "release_date": "2026-09-22",
+      "model_creator": {
+        "id": "e67e56e3-15cd-43db-b679-da4660a69f41",
+        "name": "OpenAI",
+        "slug": "openai"
+      },
+      "evaluations": {
+        "artificial_analysis_intelligence_index": 29.5,
+        "artificial_analysis_coding_index": null,
+        "artificial_analysis_math_index": null,
+        "mmlu_pro": null,
+        "gpqa": null,
+        "hle": 0.283,
+        "livecodebench": null,
+        "scicode": 0.509,
+        "math_500": null,
+        "aime": null,
+        "aime_25": null,
+        "ifbench": null,
+        "lcr": 0.783333333333333,
+        "terminalbench_hard": null,
+        "terminalbench_v2_1": null,
+        "tau2": null,
+        "tau_banking": null
+      },
+      "pricing": {
+        "price_1m_blended_3_to_1": 0.2,
+        "price_1m_input_tokens": 0.1,
+        "price_1m_output_tokens": 0.5
+      },
+      "median_output_tokens_per_second": 0,
+      "median_time_to_first_token_seconds": 0,
+      "median_time_to_first_answer_token": 0,
+      "metadata": {
+        "deprecated": false,
+        "is_reasoning": true,
+        "is_open_weights": false,
+        "commercial_allowed": null,
+        "license_name": null,
+        "license_url": null,
+        "huggingface_url": null,
+        "openrouter_api_id": null,
+        "context_window_tokens": 1000000
+      }
+    },
+    {
       "id": "69534bed-2ffd-4235-832b-e20a810333ab",
       "name": "Qwen3.7 Max",
       "slug": "qwen3-7-max",
@@ -5593,6 +6034,55 @@
         "huggingface_url": null,
         "openrouter_api_id": null,
         "context_window_tokens": 512000
+      }
+    },
+    {
+      "id": "d3e20e76-9e1a-45b6-b809-ad6aa37430cf",
+      "name": "GPT-6 Sol (Non-reasoning)",
+      "slug": "gpt-6-sol-non-reasoning",
+      "release_date": "2026-09-22",
+      "model_creator": {
+        "id": "e67e56e3-15cd-43db-b679-da4660a69f41",
+        "name": "OpenAI",
+        "slug": "openai"
+      },
+      "evaluations": {
+        "artificial_analysis_intelligence_index": 28.1,
+        "artificial_analysis_coding_index": null,
+        "artificial_analysis_math_index": null,
+        "mmlu_pro": null,
+        "gpqa": null,
+        "hle": 0.184,
+        "livecodebench": null,
+        "scicode": 0.473,
+        "math_500": null,
+        "aime": null,
+        "aime_25": null,
+        "ifbench": null,
+        "lcr": 0.64,
+        "terminalbench_hard": null,
+        "terminalbench_v2_1": null,
+        "tau2": null,
+        "tau_banking": null
+      },
+      "pricing": {
+        "price_1m_blended_3_to_1": 4,
+        "price_1m_input_tokens": 2,
+        "price_1m_output_tokens": 10
+      },
+      "median_output_tokens_per_second": 0,
+      "median_time_to_first_token_seconds": 0,
+      "median_time_to_first_answer_token": 0,
+      "metadata": {
+        "deprecated": false,
+        "is_reasoning": false,
+        "is_open_weights": false,
+        "commercial_allowed": null,
+        "license_name": null,
+        "license_url": null,
+        "huggingface_url": null,
+        "openrouter_api_id": null,
+        "context_window_tokens": 872000
       }
     },
     {
@@ -10564,6 +11054,55 @@
       }
     },
     {
+      "id": "bf9708d8-933d-44f6-affa-b696a7a650c9",
+      "name": "GPT-6 Luna (low)",
+      "slug": "gpt-6-luna-low",
+      "release_date": "2026-09-22",
+      "model_creator": {
+        "id": "e67e56e3-15cd-43db-b679-da4660a69f41",
+        "name": "OpenAI",
+        "slug": "openai"
+      },
+      "evaluations": {
+        "artificial_analysis_intelligence_index": 20.9,
+        "artificial_analysis_coding_index": null,
+        "artificial_analysis_math_index": null,
+        "mmlu_pro": null,
+        "gpqa": null,
+        "hle": 0.203,
+        "livecodebench": null,
+        "scicode": 0.469,
+        "math_500": null,
+        "aime": null,
+        "aime_25": null,
+        "ifbench": null,
+        "lcr": 0.74,
+        "terminalbench_hard": null,
+        "terminalbench_v2_1": null,
+        "tau2": null,
+        "tau_banking": null
+      },
+      "pricing": {
+        "price_1m_blended_3_to_1": 0.2,
+        "price_1m_input_tokens": 0.1,
+        "price_1m_output_tokens": 0.5
+      },
+      "median_output_tokens_per_second": 0,
+      "median_time_to_first_token_seconds": 0,
+      "median_time_to_first_answer_token": 0,
+      "metadata": {
+        "deprecated": false,
+        "is_reasoning": true,
+        "is_open_weights": false,
+        "commercial_allowed": null,
+        "license_name": null,
+        "license_url": null,
+        "huggingface_url": null,
+        "openrouter_api_id": null,
+        "context_window_tokens": 1000000
+      }
+    },
+    {
       "id": "6e2a2572-ed8d-4616-8d7d-68d125fc8ee7",
       "name": "DeepSeek V4 Pro 0424 (Non-reasoning)",
       "slug": "deepseek-v4-pro-0424-non-reasoning",
@@ -12625,6 +13164,55 @@
             "reason": "Field absent from current AA leaderboard; retained from last published metadata."
           }
         }
+      }
+    },
+    {
+      "id": "63cb48ea-0b0c-4e07-8ded-6d28dec4fa28",
+      "name": "GPT-6 Luna (Non-reasoning)",
+      "slug": "gpt-6-luna-non-reasoning",
+      "release_date": "2026-09-22",
+      "model_creator": {
+        "id": "e67e56e3-15cd-43db-b679-da4660a69f41",
+        "name": "OpenAI",
+        "slug": "openai"
+      },
+      "evaluations": {
+        "artificial_analysis_intelligence_index": 18.3,
+        "artificial_analysis_coding_index": null,
+        "artificial_analysis_math_index": null,
+        "mmlu_pro": null,
+        "gpqa": null,
+        "hle": 0.086,
+        "livecodebench": null,
+        "scicode": 0.431,
+        "math_500": null,
+        "aime": null,
+        "aime_25": null,
+        "ifbench": null,
+        "lcr": 0.396666666666667,
+        "terminalbench_hard": null,
+        "terminalbench_v2_1": null,
+        "tau2": null,
+        "tau_banking": null
+      },
+      "pricing": {
+        "price_1m_blended_3_to_1": 0.2,
+        "price_1m_input_tokens": 0.1,
+        "price_1m_output_tokens": 0.5
+      },
+      "median_output_tokens_per_second": 0,
+      "median_time_to_first_token_seconds": 0,
+      "median_time_to_first_answer_token": 0,
+      "metadata": {
+        "deprecated": false,
+        "is_reasoning": false,
+        "is_open_weights": false,
+        "commercial_allowed": null,
+        "license_name": null,
+        "license_url": null,
+        "huggingface_url": null,
+        "openrouter_api_id": null,
+        "context_window_tokens": 1000000
       }
     },
     {

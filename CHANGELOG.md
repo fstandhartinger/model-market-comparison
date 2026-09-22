@@ -4,6 +4,20 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-22 — GPT-6 Sol and GPT-6 Luna measured by Artificial Analysis; Opus 5.5 speed (CR-125)
+
+**Selective same-day refresh of the Artificial Analysis and OpenRouter price sources; no field, path or unit changed.**
+Re-running `node scripts/fetch-live.mjs aa` and `node scripts/fetch-live.mjs or-prices` (the regular collectors,
+outside the daily schedule) brings OpenAI's GPT-6 Sol and GPT-6 Luna, released 2026-09-22, into the catalog with
+Artificial Analysis's independent measurements (`basis: measured`): `gpt-6-sol::max/xhigh/high/medium/low/non-reasoning`
+(AA Intelligence Index 47.5 / 44.1 / 42.8 / 39.8 / 33.9 / 28.1) and `gpt-6-luna::…` (37.3 / 33.9 / 32.1 / 29.5 / 20.9 /
+18.3), each with AA's HLE, SciCode and long-context scores and AA's reference price (Sol USD 2 / 10, Luna USD 0.10 /
+0.50 per 1M tokens). OpenRouter now lists `openai/gpt-6-sol`, `openai/gpt-6-luna` (plus their `-pro` SKUs) and
+`anthropic/claude-opus-5.5`, so these models get live provider offers. AA now also publishes speed for Claude Opus 5.5
+at xhigh / high / medium / low (97.8 / 67.2 / 78.3 / 73.0 output tokens per second; max still unpublished and null).
+AA has not yet published token-efficiency (tokens per task) for GPT-6 Sol or Luna; those fields stay null. The
+Opus 5.5 launch test now checks the Anthropic launch-price offer alongside the new OpenRouter endpoints.
+
 ## 2026-09-22 — Claude Opus 5.5: Artificial Analysis's measured numbers (CR-124)
 
 **Same-day refresh of the Artificial Analysis source; no field, path or unit changed.** Artificial Analysis

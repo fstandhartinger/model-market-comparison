@@ -14,7 +14,9 @@ test('CR-123: Claude Opus 5.5 is in the catalog at its evaluated configuration a
   assert.equal(model.release_date, '2026-09-22');
   assert.equal(model.open_weights, false);
   // Launch-post pricing table: input 4, output 20, cache read 0.20, cache write 5 per 1M tokens.
-  assert.deepEqual(model.offers.map((offer) => [offer.input_per_1m, offer.output_per_1m, offer.cache_read_per_1m, offer.cache_write_per_1m]),
+  // CR-125: once OpenRouter lists the model its endpoints join the launch-post offer; the Anthropic row keeps the list price.
+  const anthropic = model.offers.filter((offer) => offer.platform === 'Anthropic');
+  assert.deepEqual(anthropic.map((offer) => [offer.input_per_1m, offer.output_per_1m, offer.cache_read_per_1m, offer.cache_write_per_1m]),
     [[4, 20, 0.2, 5]]);
 });
 
