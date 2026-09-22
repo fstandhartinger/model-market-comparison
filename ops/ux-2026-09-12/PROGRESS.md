@@ -6799,13 +6799,3 @@ Full text: `DESIGN-DIRECTIVES.md` ("Verdict on the live site — pass 30", "Deci
 | CR-120.3 | implemented | `dfd4c2d7`; live JSON-LD parsed on both hosts | WebPage, Dataset and FAQ graph uses visible page answers and artifact values. |
 | CR-120.4 | implemented | `dfd4c2d7`; 8 live browser contexts, no errors/overflow | Open alternatives, self-hosting/EU/GDPR, scoring and submission content; neutral jev-router disclosure. |
 | CR-120.5 | implemented | focused 4/4; Node 22 full suite 1091 pass / 1 skip / 0 fail; tsc/build pass; live revision on both hosts | X/LinkedIn/Slack/Telegram/iMessage crawler-equivalent fetches passed. Lighthouse SEO 100, performance 60. Search Console account has no access to the property, so sitemap was not submitted. |
-
-## CR-121 — JevBench v1.3.1 round-4 additions (2026-09-22)
-
-| ID | Status | Evidence | Note |
-|---|---|---|---|
-| CR-121.1 | implemented | aggregate SHA-256 `36db82655de9319469e9d07c863b082276c18318e9de6053ff1b4956af353a0c`; per-task SHA-256 `b572f5aba3e226b83c560d9b4a9035c17a2813e5a77c3a4527d1662fcb123f7c` | Exact staged v1.3.1 artifacts pinned. |
-| CR-121.2 | implemented | `test/jevbench-v131.test.mjs` | 18 reviewed full rows; Hopper 75.4 / #1. |
-| CR-121.3 | implemented | same focused test | Pending placeholders and private djev work absent. |
-| CR-121.4 | implemented | `lib/jevbench-v12.mjs`; `lib/jevbench-v12-tasks.mjs`; `/jev-models` | Existing views and CR-120 artifact-driven metadata preserved. |
-| CR-121.5 | in-progress | focused 15/15; full `npm test` pass; TypeScript clean; production build pass | Commit, deployment and both-host verification pending. |

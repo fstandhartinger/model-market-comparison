@@ -1551,11 +1551,3 @@ Audit and improve `/jev-models`: page-specific title, description, canonical, Op
 data; useful sections for open alternatives, self-hosting/EU/GDPR context, scoring and submissions without claiming
 third-party GDPR compliance. Preserve the multimodal preview's noindex status. Test, build, deploy, verify both
 production hosts and document current Google positions from read-only Serper results. No X post.
-
-## CR-20260922d — JevBench v1.3.1 round-4 rows → CR-121
-
-Florian asked to clear the queued JevBench submissions in parallel, publish all independently reviewed rows together
-once, use scoring v1.3.0 on the unchanged frozen v1.2 task set, and exclude all private djev work. Publish the exact
-v1.3.1 aggregate and per-task artifacts: 18 new complete rows, non-zero cost bases, licences, endpoint conditions and
-overlap audits retained. Reflex 0.8B and typed-engine remain withheld pending review. Tag the Benchmark Heaven release,
-deploy, and verify both production hosts under the single-writer rule.
