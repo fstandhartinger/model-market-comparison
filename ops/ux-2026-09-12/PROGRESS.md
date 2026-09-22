@@ -7210,3 +7210,61 @@ Seeded from CR-128 in `04-CR-BRIEF.md` after checking `main`: CR-127 was the hig
   `vulcanbench-frontier::4`, plus the `CR-38.1` publication receipt, the `CR-85.1` digest and the `CR-73.5` timing.
   X6's open list loses CR-120 and is otherwise unchanged: `CR-34.5` and `CR-62.4` (Florian), `CR-37.3`, `CR-38.1`,
   `CR-73.5`, `CR-85.1`, `CR-85.2`.
+
+## Iteration 176 — 2026-09-22 22:55 → ~00:30 UTC (claude-fable, design pass 31): the Compare page and the model pages after the launch-day ingests
+
+- **Scope (Florian: Fable sparingly — what changed since pass 30).** The Compare page for launch-day models — mixed measured / self-reported (†) /
+  preliminary (‡) rows (CR-127) and the "not measured yet" state for a link naming an unknown id (CR-122) — and the launch-day model pages
+  (CR-123–CR-126: Claude Opus 5.5, GPT-6 Sol/Luna with the vendors' own numbers; Union Alpha with two chart-read values, CR-127.4), plus
+  D172/D173. Live revision `857d96cc`, dataset 21:20 UTC, canonical host, 1440/390 × light/dark: 89 shots + `metrics.json` in
+  `/opt/benchmarkheaven/state/ux-evidence/fable-20260922-pass31/canonical/` (`bin/shoot-fable-pass31.mjs`; a first run whose DOM helper crashed
+  on SVG text is kept as `…/canonical-run1-geomfail/`). Simple, Advanced and the Fable 5.1 model page re-shot as quick views: unchanged apart
+  from the data. Only writer in this checkout (other 2026-09-22 jobs work in their own clones under `/home/flori/jobs/*/repo`; `origin/main`
+  had no foreign commit at push time).
+- **Verdict.** CR-122 and CR-127 read as specified: 26 vendor values print † and "developer's claim" under the number, 65 measured cells keep
+  tint and bar, none of the vendor cells is tinted or barred; the launch link keeps the unknown id as a dashed "Coming soon" chip and the share
+  card names both models with no number for the pending one; each launch-day page states its claim count in one line; 0 page errors, no
+  overflow, no "1 <plural>" anywhere. Six things not at the bar (full text in `DESIGN-DIRECTIVES.md`, "Verdict … pass 31"):
+  **F-161** Claude Opus 5.5's page opened on "Composite **100.0**" from one input and Union Alpha's on "**50.0**" from none, while the Overview
+  tags the first "◔ Thin data · 1/7" and shows the second a dash; **F-162** "Top 0 cheapest providers" on Union Alpha (one free stealth-preview
+  offer, no price — F-145 covered zero offers only) followed by a line blaming the filters; **F-166** the "not measured yet" panel (101 words)
+  repeated the head's sentence and printed the raw id; **F-163** (open) "Where each model is strongest" says "No measured result" 44 times for
+  two launch-day models; **F-164** (open) the status line counts 26 vendor claims as "evaluation rows" without saying so; **F-165** (open, data
+  part → CR-128.1) two rows called "SWE-bench Multilingual" (vendor-prefixed identities, cohort "Published board") with nothing in the sub-line
+  saying whose run each is.
+- **Fixed by Fable in this pass (`8937dcbb`; three components, one page, no numbers):** **F-161** `compositeInputs = coverage + attached`;
+  at 0 the card is the heading and one sentence (`data-bh-no-composite`) — no number, dominance line, radar or caption; below 3 the number
+  wears the Overview's `bh-thin-tag` beside it (`data-bh-composite-thin`, title = `thinCompositeNote`), rendered as a sibling of
+  `data-bh-composite-value` so every verifier reading the value still reads a bare number (`CompositeScoreValue` gains a `tag` prop).
+  **F-162** heading "Providers" and no filter line when `top.length === 0`; the CR-60.3 free-preview sentence and F-145's zero-offer card are
+  unchanged. **F-166** the panel is two sentences the head does not say plus the link; id and organisation move into the pending chip's `title`;
+  `COMING_SOON_LINE` stays exported (the head's `compareDescription` is its one occurrence), no longer imported by the component.
+- **Decisions:** a page never prints a score its own table withholds (the Overview's `hasScoreEvidence`/`isThinComposite` are the site's
+  rules); a heading never counts to zero (extends F-145); a panel says what its head does not (extends F-142). Three rules added to the
+  design-system notes. F-163/F-164 are medium Compare edits for the next work iteration (claude-opus — Kimi stalls on TSX); F-165's data part
+  is CR-128.1's identity work. X4 still met for the default views.
+- **Gates (tree at `8937dcbb`):** `node scripts/build-dataset.mjs` 863 / 669 / 94 / 2,976 with **no data diff** (two timestamps only, restored);
+  `npm test` 1136 tests / **1136 pass / 0 fail** (`/tmp/fable31-npm-test.log`; `test/fable-pass31.test.mjs` 5/5); `npx tsc --noEmit -p .`
+  clean; `npm run build` rc 0 (`/tmp/fable31-build.log`). Local `next dev`: `verify-fable-pass31-design.mjs` 40/44, the four misses were the
+  verifier reading the tag's sr-only text as visible text (fixed in the script before the commit; screenshots in `…/pass31/local/` read by eye:
+  Union Alpha "Providers" + one-sentence Composite card, Opus 5.5 "100.0 ◔ Thin data · 1/7", the two-sentence panel).
+- **Live (claude-fable, implementer):** both hosts served `8937dcbb` by 23:46 UTC (dataset 21:20 UTC unchanged); after the switchover wait
+  `verify-fable-pass31-design.mjs` **44/44 per host** (`…/pass31/live-canonical/`, `…/pass31/live-legacy/`, `live-*.log`, each with
+  `verification.json`): Union Alpha reads "Providers" + the free-preview sentence and a one-sentence Composite card with no number, no `svg`, no
+  caption; Claude Opus 5.5 reads "100.0" with "◔ Thin data · 1/7" on the same line (title and sr-only = the Overview's note) and "Top 3 cheapest
+  providers" with the filter line; Claude Fable 5.1 (high) has neither tag nor sentence; the launch link's head carries the one-line sentence,
+  the panel is two muted sentences plus the link without the raw id, the chip title reads "Announced by OpenAI. The id in this link is
+  “gpt-7-sol”…"; 0 page errors, no overflow, 1440/390 × light/dark. Screenshots read by eye (`desktop_light-union.png`, `mobile_dark-opus55.png`,
+  `mobile_light-compare-unknown.png`). Being the implementer, this pass cannot set its own rows `verified`.
+- **For the next non-Fable engine:** re-run `bin/verify-fable-pass31-design.mjs` on both hosts and flip the three Done-log rows and the
+  ledger rows below to `verified`; then take **F-163** and **F-164** (`DESIGN-DIRECTIVES.md`, "Directives (pass 31)") and hand **F-165**'s data
+  part to CR-128.1. `verify-cr-122.mjs`-style checks, `verify-cr-127.mjs`, `verify-cr-127-4.mjs` and `verify-fable-pass26.mjs` still apply.
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| F-161 | implemented | `8937dcbb`; `test/fable-pass31.test.mjs`; `ops/ux-2026-09-12/bin/verify-fable-pass31-design.mjs`; `/opt/benchmarkheaven/state/ux-evidence/fable-20260922-pass31/{canonical,local,live-canonical,live-legacy}/` | Thin Composite wears "◔ Thin data · n/7" beside the number; no input → one sentence, no number/radar. Fable-implemented; needs a non-Fable live run. |
+| F-162 | implemented | same | "Providers", never "Top 0 cheapest providers"; no filter line without a ranked list. Fable-implemented; needs a non-Fable live run. |
+| F-163 | open | `DESIGN-DIRECTIVES.md` F-163 | Compare snapshot cards: a model with no measured result anywhere leaves the cards, named in one line; one status per card line. `[judgment]`, claude-opus. |
+| F-164 | open | `DESIGN-DIRECTIVES.md` F-164 | Compare status line carries the per-model vendor-claim count (generated, never pinned). `[judgment]`, claude-opus. |
+| F-165 | open | `DESIGN-DIRECTIVES.md` F-165; CR-128.1 | Same-name rows say whose run they are: launch rows join the board's identity where the protocol matches, otherwise the cohort names the runner; Compare drops the default "Published board" sub-line. Data part → CR-128.1. |
+| F-166 | implemented | same as F-161 | "Not measured yet" panel: two sentences the head does not say; id/org in the chip title. Fable-implemented; needs a non-Fable live run. |
