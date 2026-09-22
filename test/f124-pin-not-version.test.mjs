@@ -58,3 +58,12 @@ test('the result page drops the org line when it only repeats the model name', (
   // F-124 on the same page: the eyebrow must not headline a pin.
   assert.match(src, /isPin\(ax\.version\)/, 'the eyebrow asks whether the version is a pin');
 });
+
+// 2026-09-22 (iteration 169): only a release `v` before a digit is dropped in "Version …" — MCPMark's `verified` read "Version erified".
+test('the version heading keeps a word that starts with v', async () => {
+  const { versionHeading } = await import('../lib/version-label.ts');
+  assert.equal(versionHeading('verified'), 'Version verified');
+  assert.equal(versionHeading('v2'), 'Version 2');
+  assert.equal(versionHeading('4.0'), 'Version 4.0');
+  assert.match(readFileSync(new URL('../components/BenchmarkMatrix.tsx', import.meta.url), 'utf8'), /suffix\.replace\(\/\^v\(\?=\\d\)\/i, ""\)/);
+});

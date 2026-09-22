@@ -267,7 +267,7 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
                   {/* F-105 (pass 19): a best-of row's name-line tag already names its versions and agents, so the "Version …"
                       sub-line is skipped there; the sentence saying what "best of" means lives in the footnote, on the
                       hover and on each value's result page, not as a third line under the name. */}
-                  {(() => { const suffix = row.bestOf ? "" : versionSuffix(row.name, String(row.version ?? "")), w = row.freshness?.taskWindow; const sub = [suffix ? `Version ${suffix.replace(/^v/i, "")}` : null, w?.from ? (w.to && w.to !== w.from ? `tasks from ${w.from} to ${w.to}` : `tasks from ${w.from}`) : null].filter(Boolean).join(" · "); return sub ? <span className="bh-matrix-sub">{sub}</span> : null; })()}
+                  {(() => { const suffix = row.bestOf ? "" : versionSuffix(row.name, String(row.version ?? "")), w = row.freshness?.taskWindow; const sub = [suffix ? `Version ${suffix.replace(/^v(?=\d)/i, "")}` : null, w?.from ? (w.to && w.to !== w.from ? `tasks from ${w.from} to ${w.to}` : `tasks from ${w.from}`) : null].filter(Boolean).join(" · "); return sub ? <span className="bh-matrix-sub">{sub}</span> : null; })()}
                   <span className="bh-matrix-desc" title={[row.bestOf ? BEST_OF_NOTE : null, row.description, versionLine(row), row.sourceChange?.note].filter(Boolean).join(" — ")} data-best-of-note={row.bestOf ? "hover" : undefined}>{row.higherBetter === false ? "Lower is better. " : ""}{row.description}</span>
                 </th>
                 {vals.map((v, j) => {

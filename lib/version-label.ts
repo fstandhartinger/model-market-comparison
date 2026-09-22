@@ -23,7 +23,7 @@ export function humanVersion(version: string): HumanVersion {
 export function versionHeading(version: string): string {
   const v = humanVersion(version);
   if (v.kind === "pin") return `Pinned revision ${version.toLowerCase()}`;
-  return v.kind === "snapshot" ? `Published ${v.date}` : `Version ${version.replace(/^v/i, "")}`;
+  return v.kind === "snapshot" ? `Published ${v.date}` : `Version ${version.replace(/^v(?=\d)/i, "")}`;
 }
 
 /** F-61: the version as a suffix after a benchmark name — or nothing when the name already
