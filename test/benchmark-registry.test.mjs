@@ -51,6 +51,23 @@ test('AA source continuity rejects field loss even when model count is unchanged
   assert.doesNotThrow(() => assertAaBenchmarkContinuity(before, before));
 });
 
+test('AA source continuity accepts the reviewed omniscienceBreakdown restructure only while its successors carry it', () => {
+  const rows = Array.from({ length: 20 }, (_, i) => ({ ...row, id: `00000000-0000-4000-8000-${String(i).padStart(12, '0')}`, slug: `m${i}`, name: `M ${i}`,
+    effort: null, briefcaseBreakdown: null }));
+  const before = parseAaBenchmarkFields(flight(rows.map((r) => ({ ...r, omniscienceBreakdown: { accuracy: 0.2, hallucinationRate: 0.8 } }))), provenance);
+  const flat = (r) => ({ ...r, omniscienceAccuracy: 0.2, omniscienceHallucinationRate: 0.8 });
+  const after = parseAaBenchmarkFields(flight(rows.map(flat)), provenance);
+  assert.equal(after.rows[0].fields.omniscienceAccuracy, 0.2);
+  assert.deepEqual(assertAaBenchmarkContinuity(before, after).find((d) => d.field === 'omniscienceBreakdown'),
+    { field: 'omniscienceBreakdown', measure: 'retired', from: 20, to: 0, successors: ['omniscienceAccuracy', 'omniscienceHallucinationRate'] });
+  // Retired without its successors, or with them on too few rows, still fails closed.
+  assert.throws(() => assertAaBenchmarkContinuity(before, parseAaBenchmarkFields(flight(rows), provenance)), /successor omniscienceAccuracy/);
+  const thin = parseAaBenchmarkFields(flight(rows.map((r, i) => (i < 10 ? flat(r) : { ...r, omniscienceHallucinationRate: 0.8 }))), provenance);
+  assert.throws(() => assertAaBenchmarkContinuity(before, thin), /successor omniscienceAccuracy does not carry it \(20→10\)/);
+  // A field without a reviewed restructure keeps the ordinary rule.
+  assert.throws(() => assertAaBenchmarkContinuity(before, parseAaBenchmarkFields(flight(rows.map((r) => ({ ...flat(r), gdpvalBreakdown: undefined, gpqa: null }))), provenance)), /coverage shrank: gpqa/);
+});
+
 test('accepted registry is complete and exact version lookup never falls back to family', async () => {
   const registry = validateBenchmarkRegistry(JSON.parse(await readFile(new URL('../data/raw/benchmarks/registry.json', import.meta.url))));
   const old = benchmarkById(registry, 'aa-coding-agent-index::1.4');
