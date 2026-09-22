@@ -47,7 +47,7 @@ test('CharXiv joins: a stated level joins exactly, a dated label its release, am
   assert.deepEqual(parseCharxivLabel('o4 mini (high)'), { family: 'o4-mini', effort: 'high' });
   assert.deepEqual(parseCharxivLabel('GPT-4o 240513'), { family: 'gpt-4o-may-24', effort: null });
   assert.deepEqual(parseCharxivLabel('GPT 4.1 mini'), { family: 'gpt-4.1-mini', effort: null });
-  for (const label of ['Claude 3.5 Sonnet', 'Claude 3.7 Sonnet', 'GPT-4o 241120', 'GPT-4o Mini', 'Gemini 1.5 Pro', 'Reka Flash', 'MiniCPM-V2.6 (Upsize)']) {
+  for (const label of ['Claude 3.5 Sonnet', 'Claude 3.7 Sonnet', 'GPT-4o 241120', 'GPT-4o Mini', 'Gemini 1.5 Pro', 'Reka Flash', 'Reka Edge', 'MiniCPM-V2.6 (Upsize)']) {
     assert.equal(parseCharxivLabel(label).family, null, label);
   }
   const catalog = [
