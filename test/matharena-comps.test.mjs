@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
+import { gunzipSync } from 'node:zlib';
 import { parseMathArenaLabel } from '../lib/board-identity.mjs';
 
 // 2026-09-22 (iteration 161, CR-37.1): MathArena's HMMT and Apex competitions, the primary boards behind
@@ -78,6 +79,14 @@ test('MathArena competitions: exact joins only, deprecated boards are retained',
   assert.equal(joined('matharena-hmmt::2026-02', 'Kimi K3 (Think)'), null, 'Think is not a reviewed setting');
   assert.equal(joined('matharena-apex::2025', 'Claude-Opus-4.7 (xhigh)'), null, 'no claude-opus-4.7::xhigh configuration');
   assert.equal(joined('matharena-apex::2025', 'Grok 4'), 'grok-4::default');
+  // The undated DeepSeek labels are the original V4 releases: MathArena's own model configs say so (codex review).
+  assert.equal(joined('matharena-apex::2025', 'DeepSeek-v4-Pro (Max)'), 'deepseek-v4-pro::max');
+  const cfgDir = 'data/raw/benchmarks/daily-evidence/2026-09-22-matharena-config';
+  const configs = readdirSync(cfgDir).filter((f) => f.endsWith('.gz')).map((f) => gunzipSync(readFileSync(`${cfgDir}/${f}`)).toString());
+  for (const [label, repo] of [['DeepSeek-v4-Pro (Max)', 'deepseek-ai/DeepSeek-V4-Pro'], ['DeepSeek-v4-Flash (Max)', 'deepseek-ai/DeepSeek-V4-Flash']]) {
+    const cfg = configs.find((c) => c.includes(`human_readable_id: ${label}`));
+    assert.ok(cfg && cfg.includes('date: "2026-04-24"') && new RegExp(`huggingface_id: ${repo}\\s*$`, 'm').test(cfg), label);
+  }
   const registry = JSON.parse(readFileSync('data/raw/benchmarks/registry.json', 'utf8')).entries;
   const policy = JSON.parse(readFileSync('data/lumina-feed-policy.json', 'utf8')).family_decisions;
   for (const bid of Object.keys(BOARDS)) {

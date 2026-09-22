@@ -16,6 +16,11 @@ exec 9>"$STATE/tick.lock"; flock -n 9 || exit 0
 if [ -f "$STATE/paused-until" ] && [ "$(date +%s)" -lt "$(cat "$STATE/paused-until")" ]; then
   echo "$(date -u +%FT%TZ) paused for launch sprint until $(date -u -d @$(cat "$STATE/paused-until") +%H:%MZ)"; exit 0
 fi
+# 2026-09-22: a running iteration (and any other writer) is stopped at push time while the daily
+# transaction holds its lock; installed before every early return so a running iteration is covered too.
+if [ ! -e "$REPO/.git/hooks/pre-push" ]; then
+  ln -s "$WS/bin/pre-push-daily-guard.sh" "$REPO/.git/hooks/pre-push" 2>/dev/null || true
+fi
 # An iteration is still running?
 if [ -f "$STATE/running" ]; then
   pid=$(awk '{print $4}' "$STATE/running")
@@ -38,10 +43,6 @@ fi
 # 2026-09-17: the daily refresh publishes from this checkout and aborts if main moves or the tree is dirty
 # during its run (05:17 → up to 3 h, plus manual recovery runs). Start nothing while it holds its lock.
 DAILY_LOCK=/opt/benchmarkheaven-daily/state/run.lock
-# 2026-09-22: iterations already running (and other writers) are stopped at push time instead.
-if [ ! -e "$REPO/.git/hooks/pre-push" ]; then
-  ln -s "$WS/bin/pre-push-daily-guard.sh" "$REPO/.git/hooks/pre-push" 2>/dev/null || true
-fi
 if [ -e "$DAILY_LOCK" ] && ! flock -n "$DAILY_LOCK" true 2>/dev/null; then
   echo "$(date -u +%FT%TZ) daily refresh running (run.lock held) — not starting an iteration"
   exit 0
