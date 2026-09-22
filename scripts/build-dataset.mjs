@@ -372,7 +372,12 @@ function familyDisplay(key) {
 }
 
 // Open-weights heuristic.
-const CLOSED_ORGS = new Set(["Anthropic", "OpenAI", "Google", "xAI", "Amazon"]);
+// D172.3: the heuristic calls a model open-weights unless its lab is known to publish none, so a lab nobody had
+// classified made SWE-1.7 Lightning Max wear the "open weights" badge and pass the "Open models only" filter.
+// Cognition publishes no weights: its launch post offers SWE-1.7 only inside Devin (cognition.com/blog/swe-1-7),
+// the board row carries no Hugging Face id, and huggingface.co/api/models?author=cognition returned an empty list
+// (checked 2026-09-22). gpt-oss and gemma stay the named exceptions to this same "closed by default" rule.
+const CLOSED_ORGS = new Set(["Anthropic", "OpenAI", "Google", "xAI", "Amazon", "Cognition AI"]);
 const CLOSED_FAMILY_RE = /^(command(?:-|$)|sonar(?:-|$)|palmyra(?:-|$)|magistral-medium(?:-|$)|codestral(?:-|$)|mistral-medium-(?:3|3\.1)(?:-|$)|mistral-large$|mai(?:-|$)|composer(?:-|$)|raptor-mini(?:-|$)|yoda(?:-|$))/;
 const isOpenWeights = (org, key) => {
   if (key.includes("gpt-oss") || key.includes("gemma")) return true;

@@ -44,6 +44,11 @@ for (const [id, org] of Object.entries(LABS).filter(([id]) => id !== MODEL)) {
   const m = (Array.isArray(list) ? list : []).find((x) => x.id === id);
   check(`API: ${id} is attributed to ${org}`, m?.org === org, m && { id: m.id, org: m.org });
 }
+// D172.3: a lab that publishes no weights must not hand its model the open-weights badge or the "Open models only" filter.
+{
+  const swe = (Array.isArray(list) ? list : []).find((m) => m.id === 'swe-1.7-lightning-max::default');
+  check('API: SWE-1.7 Lightning Max is not published as open weights', swe?.open_weights === false, swe && { id: swe.id, open_weights: swe.open_weights });
+}
 check('API: no published model is left without a lab ("Other")',
   (Array.isArray(list) ? list : []).every((m) => m.org !== 'Other'),
   (Array.isArray(list) ? list : []).filter((m) => m.org === 'Other').map((m) => m.id));
@@ -93,6 +98,9 @@ try {
         check(`${tag}: ${id} names its lab (${org}), not "Other"`, model.includes(org) && !/^Other\b/m.test(model), model.split('\n').slice(0, 6).join(' | '));
         const description = await p.locator('meta[name="description"]').getAttribute('content').catch(() => '');
         check(`${tag}: ${id}'s page description reads "… by ${org}"`, new RegExp(`by ${org}`).test(description ?? ''), (description ?? '').slice(0, 90));
+        if (id === 'swe-1.7-lightning-max::default') {
+          check(`${tag}: ${id} carries no "open weights" badge`, !/open weights/i.test(model), model.split('\n').slice(0, 6).join(' | '));
+        }
         await p.screenshot({ path: `${OUT}/${tag}-${id.split('::')[0]}.png` }).catch(() => {});
         overflow2 = Math.max(overflow2, await p.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth));
       }

@@ -58,3 +58,16 @@ test("D172.2: the labs these rows name have a documented home country, so the la
   assert.equal(LAB_COUNTRIES.Other, undefined);
   assert.equal(labBucket("Other"), "Other");
 });
+
+test("D172.3: Cognition publishes no weights, so SWE-1.7 Lightning Max loses the open-weights badge", async () => {
+  const model = row("swe-1.7-lightning-max::default");
+  assert.equal(model.open_weights, false, "a model served only inside Devin must not read as open weights");
+  // Non-vacuous: nothing else could have decided it. The row carries no AA open-weights metadata and no
+  // Hugging Face repository, and the heuristic's default is open — only the lab's classification says no.
+  assert.equal(model.aa_metadata?.is_open_weights ?? null, null);
+  assert.equal(model.aa_metadata?.huggingface_url ?? null, null);
+  const build = await readFile(new URL("../scripts/build-dataset.mjs", import.meta.url), "utf8");
+  const closed = build.match(/const CLOSED_ORGS = new Set\(\[([^\]]*)\]\)/)?.[1] ?? "";
+  assert.ok(closed.includes('"Cognition AI"'), closed);
+  assert.match(build, /return !CLOSED_ORGS\.has\(org\);/, "the rule is still closed-by-lab, open by default");
+});
