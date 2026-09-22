@@ -22,24 +22,24 @@ test('the committed v1.2 artifact is the tagged public one and validates; the Sc
   // CR-115 (v1.2.16, published by ~/jobs/jevbench-rerankers-20260921): adds the reranker class (zerank-2, Qwen3-Reranker-4B,
   // mxbai-rerank-base-v2, GTE Reranker ModernBERT-base, bge-reranker-v2-m3) and carries v1.2.15's Open-Jev (Zefan Cai) 2B/9B;
   // every earlier row keeps its score and order (re-pinned in iteration 158, which found this pin not updated).
-  assert.equal(all.length, 48);
-  assert.deepEqual(all.slice(0, 5), [['jev-1.13.0', 74.4], ['semif-qwen3.5-4b', 73.1], ['djev', 73.0], ['winnow-12b', 71.2], ['reflex-4b', 70.3]]);
-  assert.equal(v.revision, 'v1.3.0');
+  assert.equal(all.length, 66);
+  assert.deepEqual(all.slice(0, 5), [['hopper', 75.4], ['jev-1.13.0', 74.4], ['jobe-qwen3.5-4b', 73.4], ['semif-qwen3.5-4b', 73.1], ['djev', 73.0]]);
+  assert.equal(v.revision, 'v1.3.1');
   const certo = v.ranked.find((r) => r.key === 'certo');
-  assert.ok(certo && certo.rank === 48 && Number(certo.main.toFixed(1)) === 0.0 && certo.cls === 'jev-rebuild');
+  assert.ok(certo && certo.rank === 66 && Number(certo.main.toFixed(1)) === 0.0 && certo.cls === 'jev-rebuild');
   assert.ok(certo.endpointKind === 'gpu' && certo.costKind === 'estimate' && certo.usd > 0 && certo.licence === 'MIT');
   const smalljev = v.ranked.find((r) => r.key === 'smalljev');
-  assert.ok(smalljev && smalljev.rank === 40 && Number(smalljev.main.toFixed(1)) === 27.4 && smalljev.cls === 'jev-rebuild');
+  assert.ok(smalljev && smalljev.rank === 54 && Number(smalljev.main.toFixed(1)) === 27.4 && smalljev.cls === 'jev-rebuild');
   assert.ok(smalljev.endpointKind === 'gpu' && smalljev.costKind === 'estimate' && smalljev.usd > 0 && smalljev.licence === 'Apache-2.0');
   assert.equal(smalljev.link, 'https://github.com/isHeSatoshi/smalljev');
   assert.match(smalljev.footnote, /public benchmark-directed development is disclosed/);
   const winnow = v.ranked.find((r) => r.key === 'winnow-12b');
-  assert.ok(winnow && winnow.rank === 4 && Number(winnow.main.toFixed(1)) === 71.2 && winnow.endpointKind === 'gpu');
+  assert.ok(winnow && winnow.rank === 7 && Number(winnow.main.toFixed(1)) === 71.2 && winnow.endpointKind === 'gpu');
   assert.ok(winnow.costKind === 'estimate' && winnow.usd > 0 && /Apache-2.0/.test(winnow.licence));
   assert.equal(winnow.link, 'https://huggingface.co/EldanRing/Winnow-12B');
   assert.match(winnow.footnote, /cannot be independently reproduced/);
   // CR-116: Zefan Cai's Open-Jev 2B and 9B (added in v1.2.15), named unambiguously apart from the other OpenJev projects.
-  for (const [key, display, rank, main] of [['open-jev-zefan-9b', 'Open-Jev 9B (Zefan Cai)', 30, 55.0], ['open-jev-zefan-2b', 'Open-Jev 2B (Zefan Cai)', 34, 51.3]]) {
+  for (const [key, display, rank, main] of [['open-jev-zefan-9b', 'Open-Jev 9B (Zefan Cai)', 42, 55.0], ['open-jev-zefan-2b', 'Open-Jev 2B (Zefan Cai)', 46, 51.3]]) {
     const r = v.ranked.find((x) => x.key === key);
     assert.ok(r && r.display === display && r.rank === rank && Number(r.main.toFixed(1)) === main && r.cls === 'jev-rebuild');
     assert.ok(r.endpointKind === 'gpu' && r.costKind === 'estimate' && r.usd > 0 && r.axes.cost < 100 && /Apache-2.0/.test(r.licence) && /MIT/.test(r.licence));
