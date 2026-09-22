@@ -420,7 +420,12 @@ function attachEpochEci(modelRows, epochEci) {
   }
   const mapped = [], unmatched = [], ambiguous = [];
   for (const source of epochEci.models || []) {
-    const familyKey = normalizeFamily(source.source_model_name, source.organization || undefined).familyKey;
+    let familyKey = normalizeFamily(source.source_model_name, source.organization || undefined).familyKey;
+    // Epoch spells some Qwen releases "Qwen 3.8 Max" where every other source (and Epoch's own "Qwen3.8 Max (0902)",
+    // "Qwen3.7-Max") writes "Qwen3.8"; only a Qwen name that finds no family as written is retried without the space.
+    if (!rowsByFamily.has(familyKey) && /^Qwen \d/.test(source.source_model_name)) {
+      familyKey = normalizeFamily(source.source_model_name.replace(/^Qwen (\d)/, "Qwen$1"), source.organization || undefined).familyKey;
+    }
     const familyRows = rowsByFamily.get(familyKey) || [];
     if (!familyRows.length) { unmatched.push(source.source_model_name); continue; }
     const target = deterministicFamilyRepresentative(familyKey, familyRows);
