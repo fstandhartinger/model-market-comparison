@@ -6794,8 +6794,8 @@ Full text: `DESIGN-DIRECTIVES.md` ("Verdict on the live site — pass 30", "Deci
 
 | ID | Status | Evidence | Note |
 |---|---|---|---|
-| CR-120.1 | implemented | `app/jev-models/page.tsx`; `test/jevbench-seo.test.mjs`; live verification pending | Page-specific canonical/search/social metadata; multimodal noindex invariant retained. |
-| CR-120.2 | implemented | `app/jev-models/opengraph-image.tsx`; local 1200×630 render; live verification pending | Top-five board generated directly from the current JevBench artifact. |
-| CR-120.3 | implemented | `app/jev-models/page.tsx`; local prerender inspected; live verification pending | WebPage, Dataset and FAQ graph uses visible page answers and artifact values. |
-| CR-120.4 | implemented | `app/jev-models/page.tsx`; local 390 px browser check, no overflow; live verification pending | Open alternatives, self-hosting/EU/GDPR, scoring and submission content; neutral jev-router disclosure. |
-| CR-120.5 | in-progress | focused 4/4; Node 22 full suite 1091 pass / 1 skip / 0 fail; tsc/build pass; deployment pending | Node 20 cannot load five pre-existing direct `.ts` test imports; the supported strip-types run is green. Rankings captured via Serper; live checks/report pending. |
+| CR-120.1 | implemented | `dfd4c2d7`; live metadata fetches on both hosts | Page-specific canonical/search/social metadata; multimodal noindex invariant retained live. |
+| CR-120.2 | implemented | `dfd4c2d7`; live PNG 1200×630 / 51,224 bytes on both hosts | Top-five board generated directly from the current JevBench artifact. |
+| CR-120.3 | implemented | `dfd4c2d7`; live JSON-LD parsed on both hosts | WebPage, Dataset and FAQ graph uses visible page answers and artifact values. |
+| CR-120.4 | implemented | `dfd4c2d7`; 8 live browser contexts, no errors/overflow | Open alternatives, self-hosting/EU/GDPR, scoring and submission content; neutral jev-router disclosure. |
+| CR-120.5 | implemented | focused 4/4; Node 22 full suite 1091 pass / 1 skip / 0 fail; tsc/build pass; live revision on both hosts | X/LinkedIn/Slack/Telegram/iMessage crawler-equivalent fetches passed. Lighthouse SEO 100, performance 60. Search Console account has no access to the property, so sitemap was not submitted. |
