@@ -1,0 +1,41 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+
+const page = await readFile(new URL('../app/jev-models/page.tsx', import.meta.url), 'utf8');
+const image = await readFile(new URL('../app/jev-models/opengraph-image.tsx', import.meta.url), 'utf8');
+const preview = await readFile(new URL('../app/jev-models/multimodal-preview/page.tsx', import.meta.url), 'utf8');
+const sitemap = await readFile(new URL('../app/sitemap.ts', import.meta.url), 'utf8');
+
+test('CR-120 metadata is artifact-driven and complete for large link cards', () => {
+  assert.match(page, /generateMetadata\(\)/);
+  assert.match(page, /alternates: \{ canonical: '\/jev-models' \}/);
+  assert.match(page, /card: 'summary_large_image'/);
+  assert.match(page, /width: 1200, height: 630/);
+  assert.match(page, /view\.revision/);
+  assert.match(page, /view\.decisions/);
+});
+
+test('CR-120 generated image is a current top-five 1200 by 630 board', () => {
+  assert.match(image, /export const size = \{ width: 1200, height: 630 \}/);
+  assert.match(image, /readJevbenchV12/);
+  assert.match(image, /view\.ranked\.slice\(0, 5\)/);
+  assert.match(image, /view\.revision/);
+  assert.match(image, /view\.generated/);
+  assert.match(image, /view\.decisions/);
+});
+
+test('CR-120 visible FAQ and schema cover the requested intent without a GDPR claim', () => {
+  for (const phrase of ['What are open-source alternatives to Jev?', 'Which Jev-class models can I self-host in the EU', 'How is JevBench scored?', 'How do I submit my model?']) assert.match(page, new RegExp(phrase.replace(/[?]/g, '\\?')));
+  assert.match(page, /'@type': 'Dataset'/);
+  assert.match(page, /'@type': 'FAQPage'/);
+  assert.match(page, /self-hosted open decision models/);
+  assert.match(page, /run by the authors of this benchmark/);
+  assert.match(page, /does not by itself make a deployment GDPR-compliant/);
+  assert.doesNotMatch(page, /(?:is|are|fully) GDPR[- ]compliant/i);
+});
+
+test('CR-120 preserves the multimodal preview noindex and sitemap exclusion', () => {
+  assert.match(preview, /robots: \{ index: false, follow: false/);
+  assert.doesNotMatch(sitemap, /multimodal-preview/);
+});

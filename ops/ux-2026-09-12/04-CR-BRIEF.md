@@ -946,3 +946,11 @@ Seeded by review gate 20260921T100004Z from the verbatim CR-108 acceptance list 
 - **CR-119.3 Honest eligibility and axes.** Image-capable completed systems are ranked; text-only systems are “not eligible,” never zero. Calibration and unavailable prices remain explicitly unmeasured. This is not the JevBench Score.
 - **CR-119.4 Content and examples.** Explain image reasoning, computer use and browser use, methodology and limitations. Show only public licensed examples with source attribution; keep synthetic results separate and non-rank-worthy.
 - **CR-119.5 Verify and deliver.** Focused tests, typecheck and production build; both production hosts at 1440×1200 and 390×844, light and dark, without page overflow or browser errors; send Florian the URL with a live screenshot.
+
+## CR-120 — Jev models SEO and link previews
+
+- **CR-120.1 Metadata and indexability.** Give `/jev-models` a concise search title/description, canonical, complete Open Graph and X large-card tags; keep `/jev-models/multimodal-preview` noindex, unlinked and out of the sitemap.
+- **CR-120.2 Generated preview.** A dedicated 1200×630 image shows the current top five, JevBench version/date, system and decision counts, and regenerates from the current results artifact during every board publish/build.
+- **CR-120.3 Structured data.** Publish honest WebPage, Dataset and visible FAQ structured data with current artifact values and the JSON distribution.
+- **CR-120.4 Search intent.** Concisely answer open alternatives, self-hosting/EU/GDPR, scoring and submission questions; never claim another service is GDPR-compliant. Describe jev-router.com only as “self-hosted open decision models” with the authors' neutrality disclosure.
+- **CR-120.5 Verify.** Focused tests, complete tests/typecheck/production build, live metadata/image/schema and browser checks on both production hosts; record Serper rankings, Lighthouse baseline and sitemap submission status. No X post.

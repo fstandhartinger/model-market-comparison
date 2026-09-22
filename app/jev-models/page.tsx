@@ -7,7 +7,6 @@ import { JevCostsDisclosure } from '../../components/JevCostsDisclosure';
 import { JevRadars } from '../../components/JevRadars';
 import { readJevbenchV12Topics, jevbenchV12TopicsView } from '../../lib/jevbench-v12-topics.mjs';
 import { readJevbenchV12Tasks, jevbenchV12TasksView } from '../../lib/jevbench-v12-tasks.mjs';
-import { previewMetadata } from '../../lib/seo';
 import { CustomEvaluationOffer } from '../../components/CustomEvaluationOffer';
 import { jevbenchV12HeldoutView } from '../../lib/jevbench-v12-heldout.mjs';
 
@@ -15,8 +14,27 @@ import { jevbenchV12HeldoutView } from '../../lib/jevbench-v12-heldout.mjs';
 // 25 % each, geometric mean) is the default; the earlier weightings stay as presets. CR-88's WIP banner and noindex are gone and the
 // page is back in the menu and sitemap (Florian approved the result). Every number is read from the committed v1.2 artifact
 // (lib/jevbench-v12.mjs recomputes each one); v1.0 stays published at /jev-models/v1.
-export const metadata: Metadata = previewMetadata({ path: '/jev-models', documentTitle: 'Jev-class decision models — JevBench v1.3.0', title: 'Jev-class models — JevBench v1.3.0 | Benchmark Heaven',
-  description: 'Our own benchmark of typed-decision models: Jev, its open rebuilds and instruction models on the JevBench Score — Intelligence, Calibration, Speed and Cost, 25 % each, geometric mean.' });
+export async function generateMetadata(): Promise<Metadata> {
+  const view = jevbenchV12View(await readJevbenchV12());
+  const systems = view.ranked.length + view.honorable.length + view.partial.length;
+  const lead = view.ranked[0];
+  const description = `${systems} Jev-class systems tested on ${view.decisions} decisions. ${short(lead.display)} leads JevBench ${view.revision} with ${one(lead.main)}; compare open-source, self-hostable and hosted options.`;
+  const image = `/jev-models/opengraph-image?v=${encodeURIComponent(view.revision)}`;
+  return {
+    title: `Jev alternatives & benchmark — JevBench ${view.revision}`,
+    description,
+    alternates: { canonical: '/jev-models' },
+    openGraph: {
+      type: 'website', siteName: 'Benchmark Heaven', locale: 'en_US', url: '/jev-models',
+      title: `JevBench ${view.revision}: Jev alternatives ranked`, description,
+      images: [{ url: image, width: 1200, height: 630, alt: `Top of the JevBench ${view.revision} leaderboard` }],
+    },
+    twitter: {
+      card: 'summary_large_image', site: '@benchmarkheaven', creator: '@benchmarkheaven',
+      title: `JevBench ${view.revision}: Jev alternatives ranked`, description, images: [image],
+    },
+  };
+}
 
 const day = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
 const short = (d: string) => d.split(' (')[0].split(', formerly')[0];
@@ -79,7 +97,54 @@ export default async function JevModelsPage() {
   const [topHonorable] = view.honorable;
   const notMeasured = currentNotMeasured;
   const credits = all.filter((r) => !r.key.endsWith('-tools')).sort((a, b) => a.display.localeCompare(b.display));
+  const openAlternatives = view.ranked.filter((r) => r.cls === 'jev-rebuild' && r.open === 'yes').slice(0, 4);
+  const faq = [
+    {
+      question: 'What are open-source alternatives to Jev?',
+      answer: `JevBench ${view.revision} includes open implementations such as ${openAlternatives.map((r) => short(r.display)).join(', ')}. The leaderboard links each tested project and records its code and model licences.`,
+    },
+    {
+      question: 'Which Jev-class models can I self-host in the EU or use for a GDPR-sensitive workload?',
+      answer: 'Open entrants with released code or weights can be deployed on infrastructure you choose, including EU infrastructure. That can support a data-residency plan, but a model licence or EU server location does not by itself make a deployment GDPR-compliant; the controller must assess the complete processing setup.',
+    },
+    {
+      question: 'How is JevBench scored?',
+      answer: `JevBench ${view.revision} combines chance-corrected Intelligence, Calibration, Speed and Cost with equal 25% weights using a geometric mean. The current board uses ${view.decisions} decisions, including ${view.tierCounts.hard} hard decisions, and applies a growing penalty below 50 Intelligence.`,
+    },
+    {
+      question: 'How do I submit my model?',
+      answer: 'Open an issue in the JevBench repository with a reproducible endpoint or runnable code, the exact model and licence, and any public-task training disclosure. New entrants are measured with the same harness and published in a new version.',
+    },
+  ];
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebPage', '@id': 'https://benchmarkheaven.com/jev-models#page',
+        url: 'https://benchmarkheaven.com/jev-models', name: `Jev alternatives and benchmark — JevBench ${view.revision}`,
+        description: `Independent comparison of ${all.length} Jev-class systems across ${view.decisions} decisions.`,
+        dateModified: view.generated, isPartOf: { '@id': 'https://benchmarkheaven.com/#website' },
+        mainEntity: { '@id': 'https://benchmarkheaven.com/jev-models#dataset' },
+      },
+      {
+        '@type': 'Dataset', '@id': 'https://benchmarkheaven.com/jev-models#dataset',
+        name: `JevBench ${view.revision} results`,
+        description: `Measured JevBench results for ${all.length} Jev-class systems on ${view.decisions} typed decisions.`,
+        url: 'https://benchmarkheaven.com/jev-models', dateModified: view.generated,
+        creator: { '@type': 'Organization', name: 'Benchmark Heaven', url: 'https://benchmarkheaven.com' },
+        license: 'https://github.com/fstandhartinger/jevbench/blob/main/LICENSE',
+        isAccessibleForFree: true,
+        variableMeasured: ['JevBench Score', 'Intelligence', 'Calibration', 'Speed', 'Cost'],
+        distribution: [{ '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: 'https://benchmarkheaven.com/api/jevbench/v1.2' }],
+      },
+      {
+        '@type': 'FAQPage', '@id': 'https://benchmarkheaven.com/jev-models#faq',
+        mainEntity: faq.map((item) => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer } })),
+      },
+    ],
+  };
   return <>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, '\\u003c') }} />
     <header className="bh-page-head">
       {/* F-160 (Fable pass 30): the eyebrow is a div — CustomEvaluationOffer mounts a <div> toast inside it after 6 s, which is invalid inside a <p>. */}
       <div className="bh-eyebrow flex flex-nowrap items-center"><span><span className="sm:hidden">JevBench v1.3.0</span><span className="hidden sm:inline">JevBench v1.3.0 · our own benchmark</span></span><CustomEvaluationOffer /></div>
@@ -117,6 +182,30 @@ export default async function JevModelsPage() {
 
     {/* CR-94: two-system radars — the four score axes and accuracy by subject topic (completes CR-90.3). */}
     <JevRadars ranked={view.ranked} honorable={view.honorable} partial={view.partial} topics={topics} />
+
+    <section className="mt-10 max-w-5xl" aria-labelledby="jev-alternatives-heading" data-bh-jev-seo-guide>
+      <h2 id="jev-alternatives-heading" className="text-2xl font-semibold">Jev alternatives, open source and self-hosting</h2>
+      <p className="bh-muted mt-2 max-w-4xl">The table above compares the tested systems, not marketing claims. These are the practical answers readers most often need before choosing a Jev-class decision model.</p>
+      <div className="mt-5 grid gap-4 md:grid-cols-2">
+        <article className="bh-panel p-5">
+          <h3 className="text-lg font-semibold">What are open-source alternatives to Jev?</h3>
+          <p className="bh-muted mt-2 text-sm">The highest-ranked open entrants in this run are {openAlternatives.map((r, i) => <span key={r.key}>{i ? ', ' : ''}<a className="text-accent underline" href={r.link ?? JEVBENCH_REPO} target="_blank" rel="noopener noreferrer">{short(r.display)}</a> (#{r.rank}, {one(r.main)})</span>)}. “Open” here means the tested row publishes code or weights; check the licence and exact configuration in the board before adopting one.</p>
+        </article>
+        <article className="bh-panel p-5">
+          <h3 className="text-lg font-semibold">Which Jev-class models can I self-host in the EU or use for GDPR-sensitive work?</h3>
+          <p className="bh-muted mt-2 text-sm">Open entrants with released code or weights can run on infrastructure you choose, including EU infrastructure. That can support data residency, but neither open source nor an EU server makes a deployment GDPR-compliant by itself. Assess your data, contracts, retention, subprocessors and security for the complete setup. See Benchmark Heaven&apos;s broader <a className="text-accent underline" href="/eu">EU-hosting comparison</a>.</p>
+          <p className="bh-muted mt-2 text-sm"><a className="text-accent underline" href="https://jev-router.com" target="_blank" rel="noopener noreferrer">jev-router.com</a> offers self-hosted open decision models. Neutrality disclosure: it is run by the authors of this benchmark; it receives no scoring advantage and is not a ranked entrant.</p>
+        </article>
+        <article className="bh-panel p-5">
+          <h3 className="text-lg font-semibold">How is JevBench scored?</h3>
+          <p className="bh-muted mt-2 text-sm">The official score is the geometric mean of chance-corrected Intelligence, Calibration, Speed and Cost, weighted 25% each. Version {view.revision} uses {view.decisions} decisions ({view.tierCounts.hard} hard) and penalises systems below 50 Intelligence. Open <a className="text-accent underline" href="#method">Method and tiers</a> for the exact rules, or inspect the <a className="text-accent underline" href={JEVBENCH_REPO}>MIT-licensed harness and public tasks</a>.</p>
+        </article>
+        <article className="bh-panel p-5">
+          <h3 className="text-lg font-semibold">How do I submit my model?</h3>
+          <p className="bh-muted mt-2 text-sm">Open an issue in the <a className="text-accent underline" href={`${JEVBENCH_REPO}/issues`} target="_blank" rel="noopener noreferrer">JevBench repository</a> with a reproducible endpoint or runnable code, the exact model and licence, and whether public JevBench items were used during development. New entrants use the same frozen harness and appear in a new version. For private data, see the <a className="text-accent underline" href="/jev-models/custom-evaluation">custom evaluation options</a>.</p>
+        </article>
+      </div>
+    </section>
 
     <details id="held-out-diagnostic" className="bh-panel mt-8 max-w-5xl scroll-mt-6 p-5" data-bh-jev-heldout>
       <summary className="cursor-pointer text-sm font-semibold">Held-out hard-tier detail</summary>

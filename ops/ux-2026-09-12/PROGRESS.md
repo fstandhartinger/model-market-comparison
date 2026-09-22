@@ -6789,3 +6789,13 @@ Full text: `DESIGN-DIRECTIVES.md` ("Verdict on the live site — pass 30", "Deci
 | D170.2 | verified | `6e7b2af8`; same codex dir (`prompt2.txt`, `codex2.log`, `final2.txt`) | Reka Edge refusal documented and pinned; "only lab-card claims" reworded. codex-luna pass 2 CLAIM H CONFIRMED — SIGN-OFF. |
 
 - **codex-luna pass 2 (`6e7b2af8`): CLAIM H CONFIRMED — SIGN-OFF**; D170.1/D170.2 → verified. **Next:** tomorrow's 05:17 daily is the first unattended refresh of CharXiv (expect `checked_unchanged`) with MCPMark, VitaBench, the CR-38.1 receipt, CR-73.5 timing and CR-85.1 digest. D168.4 still wants a non-claude rerun of `check-iter168-react418.mjs`. CR-37.1's 13 `planned` families: LiveCodeBench (v5/v6/Pro), BFCL (v4), SuperGPQA, Multi-SWE-bench, OCRBench v2, WebArena (+Verified), FACTS — all checked stale or setting-less; the remaining value is small.
+
+## CR-120 — Jev models SEO and link previews (2026-09-22)
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| CR-120.1 | implemented | `app/jev-models/page.tsx`; `test/jevbench-seo.test.mjs`; live verification pending | Page-specific canonical/search/social metadata; multimodal noindex invariant retained. |
+| CR-120.2 | implemented | `app/jev-models/opengraph-image.tsx`; local 1200×630 render; live verification pending | Top-five board generated directly from the current JevBench artifact. |
+| CR-120.3 | implemented | `app/jev-models/page.tsx`; local prerender inspected; live verification pending | WebPage, Dataset and FAQ graph uses visible page answers and artifact values. |
+| CR-120.4 | implemented | `app/jev-models/page.tsx`; local 390 px browser check, no overflow; live verification pending | Open alternatives, self-hosting/EU/GDPR, scoring and submission content; neutral jev-router disclosure. |
+| CR-120.5 | in-progress | focused 4/4; Node 22 full suite 1091 pass / 1 skip / 0 fail; tsc/build pass; deployment pending | Node 20 cannot load five pre-existing direct `.ts` test imports; the supported strip-types run is green. Rankings captured via Serper; live checks/report pending. |

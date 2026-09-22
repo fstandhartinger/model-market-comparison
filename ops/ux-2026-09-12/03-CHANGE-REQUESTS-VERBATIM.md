@@ -1538,3 +1538,16 @@ public, licensed examples only; keep held-out content private; compute every num
 artifacts; report real and synthetic items separately; exclude image-incapable text-only systems rather than scoring
 them zero; disclose unavailable axes rather than inventing values; verify both production hosts at desktop and phone
 widths in light and dark; send Florian the URL with a screenshot. This preview is not part of the JevBench Score.
+
+## CR-20260922c — Jev models SEO and link previews → CR-120
+
+Florian, 22 Sep 2026, verbatim:
+> can you check if our jev-models page of benchmarkheaven is actually well positioned SEO-wise? I think
+> we should improve the link preview / url preview and make sure this page also has good SEO basics regarding google
+> search terms like jev alternative, jev open source, jev eu hosted, jev gdpr, jev benchmark and related terms.
+
+Audit and improve `/jev-models`: page-specific title, description, canonical, Open Graph/X large-card metadata and a
+1200×630 leaderboard preview regenerated from the current board artifact; honest WebPage, Dataset and FAQ structured
+data; useful sections for open alternatives, self-hosting/EU/GDPR context, scoring and submissions without claiming
+third-party GDPR compliance. Preserve the multimodal preview's noindex status. Test, build, deploy, verify both
+production hosts and document current Google positions from read-only Serper results. No X post.
