@@ -5889,7 +5889,7 @@
         "sha256": "08ba05f20f9fa97d23d3c072e2d7718c5a0a60eb4807ce56884c3bdbafc97d75",
         "retrieved_at": "2026-09-22T10:01:33.865168+00:00"
       },
-      "protocol": "VitaBench (Meituan LongCat team, ICLR 2026): LLM agents solve life-service tasks (food delivery, in-store consumption, online travel) with 66 tools, a simulated user and multi-turn interaction, graded by a rubric-based sliding-window evaluator; four runs per task. Value = Cross-Scenarios Avg @4, the mean success rate over four runs on the 100 cross-scenario tasks (percent). The row's section states its reasoning mode (\"Thinking Models\" / \"Non-thinking Models\"); a parenthesis states a level (\"GPT-5.2 (xhigh)\", \"GPT-5.2 (none)\"). Leaderboard last updated 2026-01-22.",
+      "protocol": "VitaBench (Meituan LongCat team, ICLR 2026): LLM agents solve life-service tasks (food delivery, in-store consumption, online travel) with 66 tools in multi-turn conversations with shifting user intent, graded by a rubric-based sliding-window evaluator (the README's run command takes a --user-llm and an --evaluator-llm). Value = Cross-Scenarios Avg @4 on the 100 cross-scenario tasks (percent); the page does not define @4 in words — by the column name it is the average over four trials. The row's section states its reasoning mode (\"Thinking Models\" / \"Non-thinking Models\"); a parenthesis states a level (\"GPT-5.2 (xhigh)\", \"GPT-5.2 (none)\"). Leaderboard last updated 2026-01-22.",
       "basis": "measured",
       "minimum_rows": 20,
       "source_urls": [

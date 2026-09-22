@@ -1110,8 +1110,9 @@
       "reason": "2026-09-22 (iteration 168, claude-opus): Spider 2.0's leaderboard (spider2-sql.github.io) ranks agent methods (\"QUVI-3 + Claude-Opus-4.6\", \"Genloop's Sentinel Agent v2 Pro\"), not models under a stated setting; no row names one catalog configuration. Lumina's 3 values are Lumina estimates."
     },
     "benchlm-charxivnotools": {
-      "decision": "excluded",
-      "reason": "2026-09-22 (iteration 168, claude-opus): the maintainers' own board (charxiv.github.io, data/val_result.csv, 96 rows) stops at o3 (high), o4-mini (high) and Claude 3.7 Sonnet — the spring-2025 era, older than arena-hard-auto's excluded board. Current CharXiv numbers are lab-card claims, handled by the charxiv family (vendor_reported). Lumina cites only aggregator copies and estimates for this family."
+      "decision": "planned",
+      "collector": "CharXiv maintainers' CSV (charxiv.github.io/data/val_result.csv), low priority (data/SCRAPING.md)",
+      "note": "2026-09-22 (iteration 168, corrected after codex-luna's review): the maintainers' own board (96 rows) stops at o3 (high), o4-mini (high) and Claude 3.7 Sonnet (spring 2025), but its rows state settings and some join the catalog exactly (o4-mini (high) → o4-mini::high), so age alone is no reason to exclude it — same rule as BFCL/MCPMark. Current CharXiv numbers are lab-card claims (charxiv family, vendor_reported)."
     },
     "ocrbench-v2": {
       "decision": "planned",
