@@ -38,6 +38,10 @@ fi
 # 2026-09-17: the daily refresh publishes from this checkout and aborts if main moves or the tree is dirty
 # during its run (05:17 → up to 3 h, plus manual recovery runs). Start nothing while it holds its lock.
 DAILY_LOCK=/opt/benchmarkheaven-daily/state/run.lock
+# 2026-09-22: iterations already running (and other writers) are stopped at push time instead.
+if [ ! -e "$REPO/.git/hooks/pre-push" ]; then
+  ln -s "$WS/bin/pre-push-daily-guard.sh" "$REPO/.git/hooks/pre-push" 2>/dev/null || true
+fi
 if [ -e "$DAILY_LOCK" ] && ! flock -n "$DAILY_LOCK" true 2>/dev/null; then
   echo "$(date -u +%FT%TZ) daily refresh running (run.lock held) — not starting an iteration"
   exit 0
