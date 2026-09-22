@@ -4,6 +4,35 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-22 — GPT-6 Sol and GPT-6 Luna: OpenAI's own launch numbers (CR-126)
+
+**Six new self-reported observations; no field, path or unit changed, and no existing value touched.** OpenAI
+announced GPT-6 Sol and GPT-6 Luna on 2026-09-22 and published a handful of results for them in the launch post.
+The catalog rows, the live price and Artificial Analysis's measured scores for both families arrived with CR-125;
+this change adds what only the vendor publishes.
+
+Six numbers OpenAI prints as text about its own two new models enter as `basis: self_reported` on five new
+`openai-…` registry identities, each joined to the reasoning-effort configuration the post names: AutomationBench
+1.0.6 33.2 % and the published USD 0.27 cost per task on `gpt-6-sol::xhigh` (the cost is a separate Efficiency
+axis, `openai-automationbench-cost::1.0.6`), Agents' Last Exam V1 56.4 % and DeepSWE v1.1 68.8 % on
+`gpt-6-sol::max`, DeepSWE v1.1 66.6 % on `gpt-6-luna::max`, and OSWorld 2.0 offline (release v2026.08.08, partial
+reward) 60.5 % on `gpt-6-sol::xhigh`. A lab's own run of a public benchmark is a different implementation from the
+board's, so these identities stay separate from `osworld-2::v2026.08.08`, `aa-automationbench::1.0.6` and every
+other operator's run, and none of them enters the Composite or a category score.
+
+Everything the post does not measure itself stays out, with its reason recorded in the refusals: every competitor
+cell (OpenAI states competitor scores were taken from publicly available reports, which makes them secondary
+quotes), GPT-6 Luna's AutomationBench and OSWorld figures (only a percentage-point change and a cost ratio are
+printed) and the FrontierCode, factuality and alignment figures (charts with no printed datapoint values).
+
+Evidence is the launch post's own bytes plus the two model cards and the pricing page, each with its hash. The two
+model cards confirm the API ids `gpt-6-sol` and `gpt-6-luna`, the 1,050,000-token context window, 128,000 max
+output tokens and the published Standard short-context price the live sources also carry (Sol USD 2 / 10, Luna
+USD 0.10 / 0.50 per 1M tokens). `scripts/capture-vendor-documents.py` receives HTTP 403 from openai.com although
+`https://openai.com/robots.txt` allows the path; its receipt stays in the run manifest, and the post was loaded
+once in the shared desktop Chrome with the document response retained unchanged. A critic from a different model
+family reviewed all six rows.
+
 ## 2026-09-22 — GPT-6 Sol and GPT-6 Luna measured by Artificial Analysis; Opus 5.5 speed (CR-125)
 
 **Selective same-day refresh of the Artificial Analysis and OpenRouter price sources; no field, path or unit changed.**

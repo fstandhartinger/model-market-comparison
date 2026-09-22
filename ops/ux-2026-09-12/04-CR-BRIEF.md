@@ -969,3 +969,31 @@ Seeded by review gate 20260921T100004Z from the verbatim CR-108 acceptance list 
 - **CR-123.3 Vendor results.** Ingest the 16 numbers Anthropic publishes for Opus 5.5 — nine from the launch post's benchmark table, seven more from the system card's Table 8.1.A — as `basis: self_reported` under their own `anthropic-…` identities, each with source URL, retrieval date, printed row and column, and the capture's hash. They never enter the Composite or a category score.
 - **CR-123.4 Disclose what the vendor discloses.** Each row records the effort setting it was measured at (Terminal-Bench 4.0 at xhigh, everything else at max), who ran it (AutomationBench by Zapier, GDPval-AA and AA-Briefcase independently by Artificial Analysis), the tool configuration (HLE with/without tools), partial versus strict OSWorld scoring, that HealthBench Professional's table value is the length-adjusted score, and that safeguards could hand a task to a fallback model.
 - **CR-123.5 Verify.** Registry and score-evidence validation, an independent critic round from a different model family, full tests, typecheck and production build; both production hosts must list the model and show the numbers marked as reported by the developer.
+
+## CR-126 — GPT-6 Sol and GPT-6 Luna launch: OpenAI's own numbers, on launch day
+
+- **CR-126.1 Exact configurations, no effort alias.** OpenAI names the reasoning effort for every number it publishes,
+  and Artificial Analysis published the same families' effort configurations the same day (CR-125), so each claim joins
+  the configuration it was measured at: `gpt-6-sol::xhigh`, `gpt-6-sol::max`, `gpt-6-luna::max`. Nothing is attached to
+  a neighbouring effort. The bare `gpt-6-sol` / `gpt-6-luna` ids that launch replies link to resolve to these families.
+- **CR-126.2 Vendor results.** Ingest the six numbers OpenAI prints as text about its own two new models as
+  `basis: self_reported` under their own `openai-…` identities, each with source URL, retrieval date, the printed
+  sentence or table cell, and the capture's hash: Sol (xhigh) AutomationBench 1.0.6 33.2 % at USD 0.27 per task,
+  Sol (max) Agents' Last Exam V1 56.4 %, Sol (max) DeepSWE v1.1 68.8 %, Luna (max) DeepSWE v1.1 66.6 %, Sol (xhigh)
+  OSWorld 2.0 offline (v2026.08.08 release, partial reward) 60.5 %. A lab's own run of a public benchmark is a different
+  implementation from the board's, so these five identities are separate from `osworld-2::v2026.08.08`,
+  `aa-automationbench::1.0.6` and every other operator's run, and none of them enters the Composite or a category score.
+- **CR-126.3 Refuse what the post does not measure.** Every competitor cell of the same post stays out and is logged
+  with its reason: OpenAI's closing note says competitor scores were taken from publicly available reports, which makes
+  them secondary quotes. Also refused: GPT-6 Luna's AutomationBench and OSWorld figures (only a percentage-point change
+  and a cost ratio are printed), and FrontierCode, the factuality evaluation and the alignment evaluations (charts with
+  no printed datapoint values). A graph estimate is not a claim.
+- **CR-126.4 Evidence access.** `scripts/capture-vendor-documents.py` gets HTTP 403 from openai.com although
+  `https://openai.com/robots.txt` allows the path. The post was therefore loaded once in the shared desktop Chrome and
+  the bytes the server returned for the document request were retained unchanged; the run manifest records the method
+  next to the tool's own 403 receipt. No challenge was solved, bypassed or replayed. The two model cards and the
+  pricing page were captured by the normal tool, and they confirm the price and context window the live sources carry
+  (Sol USD 2 / 10, Luna USD 0.10 / 0.50 per 1M tokens, 1,050,000-token context, 128,000 max output tokens).
+- **CR-126.5 Verify.** Registry and score-evidence validation, an independent critic round from a different model
+  family, full tests, typecheck and production build; both production hosts must list the two models and show the
+  numbers marked as reported by the developer.

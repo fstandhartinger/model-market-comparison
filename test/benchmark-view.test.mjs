@@ -114,8 +114,10 @@ test('actual source adapter keeps all version identities, values and dated legac
   // to 675 KB for CR-85.2's 19 DeepSeek-V4.1-Flash model-card axes, and to 700 KB for CR-117's 17
   // MiMo-V2.6-Pro launch axes (axis metadata only; each carries one vendor row), and to 725 KB in iteration 165
   // (CR-37.1: MLS-Bench-Lite joins as seven harness-cohort axes, ~1 KB of axis metadata each; 699.5 → 707.0 KB), and
-  // to 740 KB for CR-123's 16 Claude Opus 5.5 launch axes (707.0 → 716.6 KB; axis metadata only, one vendor row each).
-  assert.ok(JSON.stringify(selected).length < 740_000, 'initial benchmark payload bounded to selected models');
+  // to 740 KB for CR-123's 16 Claude Opus 5.5 launch axes (707.0 → 716.6 KB; axis metadata only, one vendor row each),
+  // and to 750 KB for CR-126's five GPT-6 Sol/Luna launch axes (719.4 → 727.2 KB; four capability axes with one or
+  // two vendor rows each, plus the AutomationBench cost-per-task axis).
+  assert.ok(JSON.stringify(selected).length < 750_000, 'initial benchmark payload bounded to selected models');
   assert.equal(JSON.stringify(ds), before);
 });
 

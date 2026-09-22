@@ -1,0 +1,179 @@
+{
+  "goal": "Adversarial review of 6 self-reported observations taken from OpenAI's GPT-6 Sol and Luna launch post (2026-09-22). Judge only the frozen artifact below against the readable text of the captured document, which is included in full.",
+  "criteria": [
+    "Every value, unit, model name and reasoning effort in the artifact appears exactly like that in evidence.openai_launch_post_text.",
+    "Every observation is basis self_reported, comparison_key null, and carries the exact source URL, retrieval time, publication date, sha256 and a locator naming the section and the printed sentence or table cell.",
+    "No value is read from a chart: the post's figures print no datapoint values. Any artifact row whose number cannot be found as printed text is an error.",
+    "No competitor value is in the artifact. OpenAI's closing note says competitor scores were taken from publicly available reports, which makes them secondary quotes; they must stay out.",
+    "Printed benchmark versions are preserved in benchmark_id: AutomationBench 1.0.6, Agents' Last Exam V1, DeepSWE v1.1, OSWorld 2.0 offline release v2026.08.08.",
+    "The cost row is the absolute USD amount $0.27 printed in the table's 'Cost per task' column for GPT-6 Sol (xhigh), unit USD, not a percentage.",
+    "Return verdict pass only with all 6 ids in coverage_checked, errors_found 0, findings [], missing_evidence [] and fixed []. Otherwise return verdict revise and name the exact problem per id."
+  ],
+  "response_format": {
+    "artifact_id": "self-reported:gpt-6-sol-openai-automationbench-1-0-6",
+    "artifact_sha256": "<the artifact_sha256 from this packet>",
+    "round": 1,
+    "verdict": "pass|revise",
+    "coverage_checked": [
+      "<every observation id you actually checked>"
+    ],
+    "errors_found": 0,
+    "findings": [],
+    "fixed": [],
+    "missing_evidence": [],
+    "uncertainties": []
+  },
+  "artifact_sha256": "389ec7e924c5402a79aa5fea6e0f9bfc04060c4eacf222c678ae35bc5bef98e8",
+  "artifact": [
+    {
+      "id": "self-reported:gpt-6-luna-openai-deepswe-v1-1",
+      "benchmark_id": "openai-deepswe-v1-1::1.1",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#gpt-6-luna",
+        "name": "GPT-6 Luna",
+        "model_id": "gpt-6-luna::default",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 66.6,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Section \"Coding\": \"GPT-6 Luna at max effort scores 66.6%\""
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Luna at max reasoning effort, printed as \"DeepSWE v1.1\". OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:gpt-6-sol-openai-agents-last-exam-v1",
+      "benchmark_id": "openai-agents-last-exam::v1",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#gpt-6-sol",
+        "name": "GPT-6 Sol",
+        "model_id": "gpt-6-sol::default",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 56.4,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Section \"Professional work\": \"On Agents' Last Exam, which evaluates agents on complex professional workflows, GPT-6 Sol at max effort scores 56.4%\"; caption \"In Agents' Last Exam V1\""
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Sol at max reasoning effort, printed as \"Agents' Last Exam\" version V1. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:gpt-6-sol-openai-automationbench-1-0-6",
+      "benchmark_id": "openai-automationbench::1.0.6",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#gpt-6-sol",
+        "name": "GPT-6 Sol",
+        "model_id": "gpt-6-sol::default",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 33.2,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Section \"Professional work\", table \"Model (and effort) | Score | Cost per task\", row \"GPT-6 Sol (xhigh)\", column \"Score\": 33.2%"
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Sol at xhigh reasoning effort, printed as \"AutomationBench 1.0.6\" (47 tools across sales, marketing, operations, support, finance and HR). OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:gpt-6-sol-openai-automationbench-1-0-6-cost",
+      "benchmark_id": "openai-automationbench-cost::1.0.6",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#gpt-6-sol",
+        "name": "GPT-6 Sol",
+        "model_id": "gpt-6-sol::default",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 0.27,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Section \"Professional work\", table \"Model (and effort) | Score | Cost per task\", row \"GPT-6 Sol (xhigh)\", column \"Cost per task\": $0.27"
+      },
+      "protocol": "Vendor-reported by OpenAI as GPT-6 Sol's cost per AutomationBench 1.0.6 task at xhigh reasoning effort, the only absolute USD amount printed in that column. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:gpt-6-sol-openai-deepswe-v1-1",
+      "benchmark_id": "openai-deepswe-v1-1::1.1",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#gpt-6-sol",
+        "name": "GPT-6 Sol",
+        "model_id": "gpt-6-sol::default",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 68.8,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Section \"Coding\": \"On DeepSWE v1.1 ... GPT-6 Sol at max effort scores 68.8%\""
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Sol at max reasoning effort, printed as \"DeepSWE v1.1\". OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:gpt-6-sol-openai-osworld-2-offline",
+      "benchmark_id": "openai-osworld-2-offline::v2026.08.08",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#gpt-6-sol",
+        "name": "GPT-6 Sol",
+        "model_id": "gpt-6-sol::default",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 60.5,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Section \"Computer use\": \"On OSWorld 2.0 offline, GPT-6 Sol at xhigh effort achieves a similar score to Claude Opus 5 at medium effort—60.5% versus 60.3%\"; caption \"We report the partial reward on the offline set from the v2026.08.08 release\""
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Sol at xhigh reasoning effort: partial reward on the OSWorld 2.0 offline set, release v2026.08.08. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null
+    }
+  ],
+  "evidence": {
+    "source_url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+    "retained_file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+    "retained_sha256_of_content": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+    "openai_launch_post_text": "Earlier this month, we introduced GPT‑6 Astra, the most intelligent and aligned model in the world. While the most demanding and important projects still call for Astra’s full depth, work happens at different scales, rhythms, and budgets.\nThat’s why we’re expanding the GPT‑6 universe with GPT‑6 Sol and GPT‑6 Luna. GPT‑6 Astra introduced a new generation of intelligence—these models help distribute the benefits of that intelligence by advancing the frontier on cost efficiency. We trained GPT‑6 Sol and Luna with similar methods as GPT‑6 Astra, bringing the advances behind Astra’s state-of-the-art performance in professional work, factuality, coding, computer use, and alignment to faster, more affordable models.\nThe GPT‑6 models lead across the cost–intelligence curve, combining exceptional capabilities at every tier with infrastructure that delivers them efficiently at scale. Improvements in caching and inference let us serve these models at lower cost, and we’re passing those savings directly on to users and customers by reducing API prices for Sol and Luna by 50% compared with their GPT‑5.6 promotional pricing. Together, these improvements make advanced AI practical for more everyday tasks and applications at scale.\nGPT‑6 API pricing\nModel\n| Input\n| Output\n| Price reduction\n|\nGPT‑6 Solvs. GPT‑5.6 Sol\n| $4 → $2\n| $20 → $10\n| 50% cheaper\n|\nGPT‑6 Lunavs. GPT‑5.6 Luna\n| $0.20 → $0.10\n| $1.20 → $0.50\n| 50% cheaper\n|\nPrices are per 1 million tokens.\nGPT‑6 Astra continues to be our best model across the board. Choose it when you want the best results and an uncompromising experience.\nA step up across the model family\nGPT‑6 Sol and Luna bring intelligence upgrades and cost efficiency to the models you already know and use across capabilities most useful for getting complex work done.\nProfessional work\nGPT‑6 Sol can take on difficult work tasks while giving you more room to iterate with higher usage limits and lower cost, offering more intelligence and better results versus similarly priced competitor models.\nOn AutomationBench, a test of business workflows across apps, GPT‑6 Sol at xhigh effort outperforms Claude Opus 5 at max effort at just 9% of Opus 5’s cost per task. At high effort, GPT‑6 Luna improves on its predecessor by 5.4 percentage points at 58% lower cost per task.\nIn AutomationBench 1.0.6⁠(opens in a new window), AI agents are tested on end-to-end workflows using 47 tools across sales, marketing, operations, support, finance, and HR. The datapoint for Claude Fable 5.1 understates its actual cost, as it omits the cost of the Opus 5 fallbacks, which occurred on ~40% of tasks.\nGPT‑6 Sol also exceeds Claude Fable 5.1 at far lower cost, and even bests low-effort GPT‑6 Astra.\nModel (and effort)\n| Score\n| Cost per task\n|\nGPT‑6 Sol (xhigh)\n| 33.2%\n| $0.27\n|\nGPT‑6 Astra (low)\n| 30.3%\n| 3.9x GPT‑6 Sol\n|\nClaude Opus 5 (max)\n| 26.9%\n| 11.1x GPT‑6 Sol\n|\nClaude Fable 5.1 w/ Opus 5 Fallback (max)\n| 31.4%\n| >8.9x GPT‑6 Sol\n(fallback cost not reported)\n|\nOn Agents’ Last Exam, which evaluates agents on complex professional workflows, GPT‑6 Sol at max effort scores 56.4%, above Claude Opus 5’s highest score in the evaluation at 60% lower cost per task.\nIn Agents’ Last Exam V1⁠(opens in a new window), AI agents are evaluated on long-horizon, economically valuable tasks spanning 55 sub-industries, covering most major fields of professional work performed on a computer.\nFactuality\nThe usefulness of an answer depends on getting the facts right, and we’re continuing to make progress on factual reliability. On our internal factuality evaluation, which is based on de-identified real-world conversations where users flagged mistakes by our models, GPT‑6 Sol makes about half as many mistakes as its predecessor, approaching Astra-level reliability at much lower cost. GPT‑6 Luna also improves substantially; at higher effort levels it matches GPT‑5.6 Sol at about a hundredth its cost.\nHere we evaluate factuality on de-identified ChatGPT conversations where users had flagged a factual error from a prior model. These error-inducing conversations are not representative of typical usage, where factual errors are more rare. Scores are not controlled for length; however, our verbosity sweeps showed almost no dependence on answer length.\nCoding\nThis year, coding agents have begun tackling tasks with more complexity, scope, and duration than ever before. At OpenAI, our internal usage has grown exponentially. Valued at API prices, daily token usage has exceeded $600 for the median researcher and $7,000 for researchers at the 90th percentile (Research acceleration: The view inside OpenAI⁠). As coding agents take on longer and more demanding tasks, the cost of sustained use matters more. GPT‑6 Sol and Luna combine strong coding performance with lower API prices, giving developers more room to iterate and teams the confidence to be more ambitious about what they ask Codex to take on.\nOn FrontierCode, which evaluates whether coding agents produce changes ready to merge into real codebases, GPT‑6 Sol improves substantially over GPT‑5.6 Sol, and is able to match Claude Fable 5.1 xhigh at much lower cost.\nIn FrontierCode 1.1 Main⁠(opens in a new window), AI agents write code that’s graded not only on correctness but also “mergeability”: e.g., test quality, scope discipline, code style, and adherence to codebase standards.\nOn DeepSWE v1.1, which tests performance on complex software-engineering tasks in real codebases, GPT‑6 Sol at max effort scores 68.8%, within 1.1 percentage points of Claude Fable 5’s highest score in the evaluation—69.9% at xhigh effort—at approximately 80% lower cost per task.\nGPT‑6 Luna at max effort scores 66.6%, comparable to Claude Opus 5 and Fable 5 at medium effort. In these comparisons, Luna costs 93% less per task than Opus 5 and 96% less than Fable 5.\nIn DeepSWE 1.1⁠(opens in a new window), AI agents solve original, long-horizon software engineering tasks.\nComputer use\nWhile GPT‑6 Astra remains the world’s best model for computer use, GPT‑6 Sol and Luna offer more cost-efficient performance than their predecessors. On OSWorld 2.0 offline, GPT‑6 Sol at xhigh effort achieves a similar score to Claude Opus 5 at medium effort—60.5% versus 60.3%—at approximately 80% lower cost per task. GPT‑6 Luna (max) is able to exceed GPT‑5.6 Sol (medium) at one tenth of its cost.\nIn OSWorld 2.0⁠(opens in a new window), AI agents attempt long-horizon computer-use workflows spanning everyday and professional tasks. We report the partial reward on the offline set from the v2026.08.08 release.\nCollaboration style\nWe’ve also brought GPT‑6 Astra’s improved communication style to Sol and Luna, which we think will be especially noticeable in technical and coding conversations. Expect to see more clarity, less jargon, fewer odd turns of phrase, fewer low-value details, and slightly shorter answers overall without losing substance.\nPrompt\nWebsite’s looking clean! Could we use a Bento Box design style and add a slider between the pages in the top right? You may need to dive into the React..\nGPT-5.6 Sol\nAbsolutely. I can get the bento feel and the top-right sliding page switcher without pulling in React—the interaction is small enough to stay fast and smooth in the current site. I’m reshaping all four pages around that system now.\nDone — open the live site.\nIt now has a colorful bento-box layout across all four pages and an animated top-right Home / Play / Place / Taste slider. React wasn’t necessary; native page transitions keep it lightweight and smooth.\nThe built-in image tool created the food artwork. Prompt: “An energetic gouache-and-ink editorial illustration celebrating dumplings and spicy noodles, with bright colors, steam, spice, and no text or logos.”\nGPT-6 Sol\nI’ll reshape the pages into a bento grid and turn the top-right links into a sliding page switcher. I’ll keep the existing site and check whether that interaction needs React before changing its setup.\nThe updated site is live. Every page now has a playful bento layout, and the top-right page switcher slides between sections. I checked it on desktop and narrow mobile screens, including browser back navigation. The existing site didn’t need React for this.\nAlthough style is subjective, we prefer GPT‑6 Sol’s reply here. It doesn’t jump to conclusions as quickly, spends less time reiterating details that might be obvious to the asker (e.g., that the website has four pages), uses less vague language (e.g., “bento feel”, “reshaping… around that system”), is more forthcoming with what it did and didn’t check, and doesn’t unnecessarily share implementation details like its image tool prompt.\nImproving caching for agents and long conversations\nAlongside lower token prices, we’re helping developers building on GPT‑6 save more on the context their applications reuse. We’ve improved prompt caching for GPT‑6 to deliver higher cache hit rates by default, helping agents reuse more context, respond faster, and benefit from discounts of 90% on cached input-token reads.\nDevelopers also have more ways to measure and optimize their caching performance:\nMonitor and diagnose. The Prompt Caching Dashboard⁠(opens in a new window) shows how much input is cached and how that changes over time. The diagnostics tool⁠(opens in a new window) helps explain missed opportunities for caching and what to fix.\nAdjust reasoning effort and tool availability without breaking cache. Increase reasoning effort⁠(opens in a new window) for harder tasks or lower it for simpler follow-ups, and enable or disable tools⁠(opens in a new window) as your agent’s needs change. Both controls now preserve earlier context for cache reuse.\nOptimize which prefixes get cached. Explicit breakpoints let developers choose where cached prompt prefixes end. This gives developers more control over cache reuse and can improve performance.\nGitHub reports that, over the past several months, these improvements have reduced the share of prompt tokens requiring fresh processing by more than 50% across billions of requests to OpenAI models, helping Copilot respond faster.\nContinuing to improve alignment\nGPT‑6 Sol and Luna build on the alignment work introduced with Astra, our most aligned model to date. In our alignment evaluations, both Sol and Luna show improvements over their GPT‑5.6 counterparts, including lower rates of misleading claims about their coding work.\nThe evaluations below deliberately test challenging situations and do not measure failure rates in typical use. See the system card⁠(opens in a new window) for the full results.\nCoding deceptionBroken searchReviewer bypassWarning circumventionUnauthorized interaction\nAvailability\nGPT‑6 Sol and GPT‑6 Luna are available in ChatGPT Work and Codex starting today for all Plus, Pro, Business, Enterprise, and Edu users. Free and Go users can access GPT‑6 Luna in the desktop app. These models are not yet available in Chat. In the OpenAI API, they are available as gpt-6-sol and gpt-6-luna.\nTo keep service stable for everyone, we plan to roll out these models in ChatGPT gradually throughout the day. If you don’t see the new models in ChatGPT Work or Codex, please try again later.\nEvaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc. Evaluations of competitor models were taken from publicly available reports. Scores for Claude Fable 5 were reported when scores for Claude Fable 5.1 were unavailable.\nAuthor\nOpenAI"
+  }
+}

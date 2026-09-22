@@ -1563,3 +1563,20 @@ Florian, 22 Sep 2026 (launch-sniper job, relayed by the job brief), verbatim goa
 > mention both models; X card must render). When the model is later added to the data under that id, the same URL
 > must show real numbers automatically. [...] if cheap, add alias tolerance so that when the model is later ingested
 > under a slightly different id the link still resolves (e.g. normalise case/dots/dashes).
+
+## CR-20260922e — ingest a model's self-reported numbers on launch day → CR-126
+
+Launch sniper job brief, 22 Sep 2026 (the standing instruction the sniper fills in for every detected model
+launch; first run: OpenAI's GPT-6 Sol and Luna), verbatim goal:
+> Goal: be among the first sites to show this model's **self-reported** benchmark numbers.
+> 1. Find the official announcement / blog post / model card / system card / pricing page of the vendor [...]
+>    Extract every benchmark number the vendor publishes for the new model (and the comparison numbers they give
+>    for other models only if we need them), plus official API pricing (input/output per 1M tokens) and release date.
+> 2. Add them to Benchmark Heaven's data following the repository's own process [...] Every number must carry:
+>    source URL, date, and basis = **vendor self-reported** (clearly distinguishable from independently measured
+>    numbers on the site). No number without a source. Do not invent or estimate.
+> 3. Use the model id convention already in the data (family_key::variant). If the site has a compare page that
+>    supports a "coming soon" state for unknown ids, make sure the new id matches what launch replies linked to
+>    [...] or add an alias.
+> 4. Deploy through the normal path and verify live on BOTH hosts that serve benchmarkheaven.com.
+

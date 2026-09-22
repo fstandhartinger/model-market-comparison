@@ -1,0 +1,58 @@
+[
+  {
+    "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+    "retrieved_at": "2026-09-22T18:33:57.984389+00:00",
+    "status": "source_unreachable",
+    "reason": "HTTP Error 403: Forbidden"
+  },
+  {
+    "url": "https://developers.openai.com/api/docs/models/gpt-6-sol.md",
+    "retrieved_at": "2026-09-22T18:34:00.535361+00:00",
+    "status": 200,
+    "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/5566589803b6f0ac79c0.gz",
+    "sha256": "5566589803b6f0ac79c00125a7c1af9291e46d5724c1c414f932d36ab92a8ad0",
+    "bytes": 3991,
+    "evidence": "original_bytes",
+    "document_sha256": "5566589803b6f0ac79c00125a7c1af9291e46d5724c1c414f932d36ab92a8ad0",
+    "document_bytes": 3991,
+    "final_url": "https://developers.openai.com/api/docs/models/gpt-6-sol.md"
+  },
+  {
+    "url": "https://developers.openai.com/api/docs/models/gpt-6-luna.md",
+    "retrieved_at": "2026-09-22T18:34:03.368702+00:00",
+    "status": 200,
+    "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/561a86af72eced9a76a4.gz",
+    "sha256": "561a86af72eced9a76a4e3a96c45ae7fff7782732514a8429b55ebddb4404945",
+    "bytes": 4019,
+    "evidence": "original_bytes",
+    "document_sha256": "561a86af72eced9a76a4e3a96c45ae7fff7782732514a8429b55ebddb4404945",
+    "document_bytes": 4019,
+    "final_url": "https://developers.openai.com/api/docs/models/gpt-6-luna.md"
+  },
+  {
+    "url": "https://developers.openai.com/api/docs/pricing.md",
+    "retrieved_at": "2026-09-22T18:34:06.044509+00:00",
+    "status": 200,
+    "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/3046f29bd4b5081fa537.gz",
+    "sha256": "3046f29bd4b5081fa53706e544bb56032bc85426ad77eab9f35872bcaedf5561",
+    "bytes": 23950,
+    "evidence": "original_bytes",
+    "document_sha256": "3046f29bd4b5081fa53706e544bb56032bc85426ad77eab9f35872bcaedf5561",
+    "document_bytes": 23950,
+    "final_url": "https://developers.openai.com/api/docs/pricing.md"
+  },
+  {
+    "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+    "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+    "status": 200,
+    "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+    "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+    "bytes": 847681,
+    "evidence": "original_bytes",
+    "document_sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+    "document_bytes": 847681,
+    "final_url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+    "capture_method": "desktop_chrome_cdp",
+    "capture_note": "scripts/capture-vendor-documents.py received HTTP 403 for this path (first receipt in this manifest): openai.com answers a plain HTTP client with a challenge page even though https://openai.com/robots.txt allows it ('User-agent: *  Allow: /', only /microsoft-for-startups/ is disallowed). The page was therefore opened once in the shared desktop Chrome (CDP 9333, one tab, closed afterwards) and the bytes the server returned for the document request were retained unchanged via Network.getResponseBody \u2014 no challenge was solved, bypassed or replayed, and no downloaded JavaScript was executed here. Capture tool: jobs/bh-launch-ingest-20260922-14247142/cdp_capture.py."
+  }
+]

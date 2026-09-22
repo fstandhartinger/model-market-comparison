@@ -1,0 +1,22 @@
+{ 
+  "artifact_id": "self-reported:gpt-6-sol-openai-automationbench-1-0-6",
+  "artifact_sha256": "2b14e0d1250dab61c720940d05f591b0b3fdb306d9260b4dc269ce65153f0af4",
+  "round": 7,
+  "verdict": "pass",
+  "coverage_checked": [
+    "self-reported:gpt-6-luna-openai-deepswe-v1-1",
+    "self-reported:gpt-6-sol-openai-agents-last-exam-v1",
+    "self-reported:gpt-6-sol-openai-automationbench-1-0-6",
+    "self-reported:gpt-6-sol-openai-automationbench-1-0-6-cost",
+    "self-reported:gpt-6-sol-openai-deepswe-v1-1",
+    "self-reported:gpt-6-sol-openai-osworld-2-offline"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "missing_evidence": [],
+  "uncertainties": [
+    "retrieved_at (2026-09-22T18:36:59.118516+00:00) is identical on all six rows and uncontradicted, but the packet supplies no independent retrieval log to confirm exactness.",
+    "Artifact subject names and the table-row quote use ASCII hyphen (\"GPT-6 Sol\") where the post prints U+2011 (\"GPT‑6 Sol\"); prose-sentence quotes preserve the original. Treated as display convention, not a defect."
+  ]
+}

@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "observations": [
+    {
+      "id": "self-reported:gpt-6-luna-openai-deepswe-v1-1",
+      "benchmark_id": "openai-deepswe-v1-1::1.1",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#gpt-6-luna",
+        "name": "GPT-6 Luna",
+        "model_id": "gpt-6-luna::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 66.6,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, section \"Coding\", row \"DeepSWE v1.1, the sentence naming the model and its effort\", under \"the printed percentage in that sentence\"; printed paragraph: \"GPT‑6 Luna at max effort scores 66.6%, comparable to Claude Opus 5 and Fable 5 at medium effort. In these comparisons, Luna costs 93% less per task than Opus 5 and 96% less than Fable 5.\""
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Luna at max reasoning effort, printed as \"DeepSWE v1.1\". OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null,
+      "join_note": "The launch post names the exact reasoning effort, and Artificial Analysis published the same family's effort configurations the same day, so this claim joins the configuration it was measured at (max) and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-sol-openai-agents-last-exam-v1",
+      "benchmark_id": "openai-agents-last-exam::v1",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#gpt-6-sol",
+        "name": "GPT-6 Sol",
+        "model_id": "gpt-6-sol::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 56.4,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, section \"Professional work\", row \"Agents' Last Exam V1, the sentence naming the model and its effort\", under \"the printed percentage in that sentence\"; printed sentence: \"On Agents’ Last Exam, which evaluates agents on complex professional workflows, GPT‑6 Sol at max effort scores 56.4%, above Claude Opus 5’s highest score in the evaluation at 60% lower cost per task.\" Figure caption: \"In Agents’ Last Exam V1\"."
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Sol at max reasoning effort, printed as \"Agents' Last Exam\" version V1. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null,
+      "join_note": "The launch post names the exact reasoning effort, and Artificial Analysis published the same family's effort configurations the same day, so this claim joins the configuration it was measured at (max) and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-sol-openai-automationbench-1-0-6",
+      "benchmark_id": "openai-automationbench::1.0.6",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#gpt-6-sol",
+        "name": "GPT-6 Sol",
+        "model_id": "gpt-6-sol::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 33.2,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, section \"Professional work\", the table with header \"Model (and effort) | Score | Cost per task\" (figure caption: \"In AutomationBench 1.0.6\"), row \"AutomationBench 1.0.6, printed model row GPT-6 Sol (xhigh)\", under \"Score\"; printed row: GPT-6 Sol (xhigh) | 33.2% | $0.27"
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Sol at xhigh reasoning effort, printed as \"AutomationBench 1.0.6\" (47 tools across sales, marketing, operations, support, finance and HR). OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null,
+      "join_note": "The launch post names the exact reasoning effort, and Artificial Analysis published the same family's effort configurations the same day, so this claim joins the configuration it was measured at (xhigh) and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-sol-openai-automationbench-1-0-6-cost",
+      "benchmark_id": "openai-automationbench-cost::1.0.6",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#gpt-6-sol",
+        "name": "GPT-6 Sol",
+        "model_id": "gpt-6-sol::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 0.27,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, section \"Professional work\", the table with header \"Model (and effort) | Score | Cost per task\" (figure caption: \"In AutomationBench 1.0.6\"), row \"AutomationBench 1.0.6 cost per task, printed model row GPT-6 Sol (xhigh)\", under \"Cost per task\"; printed row: GPT-6 Sol (xhigh) | 33.2% | $0.27. The other rows of this column print a multiple of GPT-6 Sol's cost, not an absolute amount, and are refused."
+      },
+      "protocol": "Vendor-reported by OpenAI as GPT-6 Sol's cost per AutomationBench 1.0.6 task at xhigh reasoning effort, the only absolute USD amount printed in that column. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null,
+      "join_note": "The launch post names the exact reasoning effort, and Artificial Analysis published the same family's effort configurations the same day, so this claim joins the configuration it was measured at (xhigh) and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-sol-openai-deepswe-v1-1",
+      "benchmark_id": "openai-deepswe-v1-1::1.1",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#gpt-6-sol",
+        "name": "GPT-6 Sol",
+        "model_id": "gpt-6-sol::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 68.8,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, section \"Coding\", row \"DeepSWE v1.1, the sentence naming the model and its effort\", under \"the printed percentage in that sentence\"; printed sentence: \"On DeepSWE v1.1, which tests performance on complex software-engineering tasks in real codebases, GPT‑6 Sol at max effort scores 68.8%, within 1.1 percentage points of Claude Fable 5’s highest score in the evaluation—69.9% at xhigh effort—at approximately 80% lower cost per task.\""
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Sol at max reasoning effort, printed as \"DeepSWE v1.1\". OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null,
+      "join_note": "The launch post names the exact reasoning effort, and Artificial Analysis published the same family's effort configurations the same day, so this claim joins the configuration it was measured at (max) and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-sol-openai-osworld-2-offline",
+      "benchmark_id": "openai-osworld-2-offline::v2026.08.08",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#gpt-6-sol",
+        "name": "GPT-6 Sol",
+        "model_id": "gpt-6-sol::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 60.5,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, section \"Computer use\", row \"OSWorld 2.0 offline (v2026.08.08 release), the sentence naming the model and its effort\", under \"the first printed percentage in that sentence, which belongs to the OpenAI model it names\"; printed sentence: \"On OSWorld 2.0 offline, GPT‑6 Sol at xhigh effort achieves a similar score to Claude Opus 5 at medium effort—60.5% versus 60.3%—at approximately 80% lower cost per task.\" Figure caption: \"We report the partial reward on the offline set from the v2026.08.08 release.\""
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Sol at xhigh reasoning effort: partial reward on the OSWorld 2.0 offline set, release v2026.08.08. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null,
+      "join_note": "The launch post names the exact reasoning effort, and Artificial Analysis published the same family's effort configurations the same day, so this claim joins the configuration it was measured at (xhigh) and never an effort alias."
+    }
+  ]
+}

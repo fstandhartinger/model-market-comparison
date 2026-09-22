@@ -6817,3 +6817,17 @@ Implemented by Claude Code (Opus 5) in the launch-sniper job while the loop was 
 |---|---|---|---|
 | CR-123.1–123.4 | implemented | `data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/` (launch post bytes, system card text layer, critic round r4); `test/claude-opus-5-5.test.mjs` | `claude-opus-5.5::max` with Anthropic's published price and 16 self-reported results (9 launch post, 7 system card Table 8.1.A). Critic `z-ai/glm-5.3-flash` (different family from the producer) passed all 16 with 0 findings after three earlier rounds found unsupported protocol notes — those were corrected (GDPval-AA/AA-Briefcase run by Artificial Analysis, HealthBench Professional length-adjusted, Terminal-Bench-Science 10 trials per task). |
 | CR-123.5 | in-progress | full tests 1105/1105, `tsc --noEmit`, production build | Awaiting production deployment and both-host verification. |
+
+# CR-126 — 2026-09-22: GPT-6 Sol and GPT-6 Luna, OpenAI's own launch numbers
+
+Implemented by Claude Code (Opus 5) in the launch-sniper ingest job `bh-launch-ingest-20260922-14247142` while the
+loop was paused (`paused-until`, owner note in `/opt/benchmarkheaven/state/ux/paused-by`). The catalog rows, the live
+price and AA's measured numbers for the two families arrived separately in CR-125; this change adds what only the
+vendor publishes.
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| CR-126.1–126.2 | implemented | `data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/` (launch-post bytes, two model cards, pricing page, critic rounds r1–r4); `test/gpt-6-sol-luna.test.mjs` | Six self-reported values on five new `openai-…` identities, each joined to the effort configuration OpenAI names: AutomationBench 1.0.6 33.2 % and USD 0.27 per task on `gpt-6-sol::xhigh`, Agents' Last Exam V1 56.4 % and DeepSWE v1.1 68.8 % on `gpt-6-sol::max`, DeepSWE v1.1 66.6 % on `gpt-6-luna::max`, OSWorld 2.0 offline v2026.08.08 60.5 % on `gpt-6-sol::xhigh`. |
+| CR-126.3 | implemented | `data/raw/benchmarks/self-reported-candidates.json` refusals | Seven refusals logged with their reason: five competitor cells (OpenAI states those came from publicly available reports — secondary quotes) and two Luna figures the post gives only as a delta and a ratio. |
+| CR-126.4 | implemented | `data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/manifest.json` | The capture tool's own HTTP 403 receipt for openai.com stays in the manifest next to the retained bytes; `capture_note` records that robots.txt allows the path, that the post was loaded once in the shared desktop Chrome, and that the document response was kept unchanged. |
+| CR-126.5 | in-progress | registry + score-evidence validation clean; full tests (Node 26), `tsc --noEmit` and `npm run build` clean | Awaiting production deployment and both-host verification. |
