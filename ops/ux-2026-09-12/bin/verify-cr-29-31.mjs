@@ -104,8 +104,21 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
     check(`${tag} CR-29.3 a tag is readable text (not colour only) with an explanation`, /^(top|low)/i.test(sr.trim()) && !!(await tagEl.getAttribute('title')), sr);
     await tagEl.scrollIntoViewIfNeeded(); await page.locator('#benchmarks .bh-matrix-wrap').screenshot({ path: `${OUT}/${tag}-outliers.png` }).catch(() => {});
   }
+  // 2026-09-23 (iteration 180): this asserted the rule in the visible footnote, which is where it
+  // lived until F-122 deliberately moved the tag lines into one collapsed "Legend: marks and tags"
+  // disclosure to get the footnote down from 18–20 lines. The requirement is that the rule is stated
+  // and reachable on the page without navigating, so either location satisfies it — read live, the
+  // legend says "top low The gap to the next model is at least twice the spread of the models in
+  // between." What is still refused is the rule being absent, or only in a `title` a phone cannot reach.
   const foot = await page.locator('#benchmarks p', { hasText: 'Bold is best in row' }).innerText().catch(() => '');
-  check(`${tag} CR-29.3 footnote states the tag rule`, /top.*low.*twice the spread/.test(foot), foot.slice(0, 200));
+  // The legend is closed on load (F-122), and `innerText` of a closed <details> is just its summary.
+  // Open it, read what a reader gets after that one click, and put it back — asserting `textContent`
+  // instead would pass on text no one can reach.
+  const legendBox = page.locator('#benchmarks details').first();
+  const legend = await legendBox.evaluate((d) => { const was = d.open; d.open = true; const t = d.innerText; d.open = was; return t; }).catch(() => '');
+  const ruleText = `${foot} ${legend}`.replace(/\s+/g, ' ');
+  const statesRule = /top/i.test(ruleText) && /low/i.test(ruleText) && /twice the spread/i.test(ruleText);
+  check(`${tag} CR-29.3 the tag rule is stated on the page (footnote or its legend)`, statesRule, ruleText.slice(0, 220));
   check(`${tag} no page errors`, !errors.length, errors);
   await context.close();
 }

@@ -33,8 +33,13 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
   check(`${tag} CR-18.1 default = floor(score of the cheapest listed model), or the 65 floor`, anchor && (value === Math.max(65, Math.floor(anchor.score))), { value, anchor });
   check(`${tag} CR-18.3 every listed row passes the slider value (table uses the same floor)`, r.length > 0 && r.every((x) => x.score != null && x.score >= value), { rows: r.length, below: r.filter((x) => !(x.score >= value)).slice(0, 3) });
   check(`${tag} CR-18.1 the cheapest listed model is on screen (on the Pareto line: nothing cheaper passes)`, !!anchor && anchor.score >= value, anchor);
-  const summary = await page.locator('text=/models pass/').first().innerText().catch(() => '');
-  check(`${tag} CR-18.3 summary reports passing models`, /\d+ models pass/.test(summary), summary);
+  // 2026-09-23 (iteration 180): `text=/models pass/` resolves to the narrowest node containing the
+  // phrase, which since the copy became "25 of 30 models pass · 5 below your score line" is a span
+  // reading only "models pass" — so the count was outside the element this read and the check failed
+  // on a page that states it. Read from the containing block, and accept either form of the sentence.
+  const summary = await page.locator('text=/models pass/').first()
+    .evaluate((el) => (el.closest('p,div,section') ?? el).innerText.replace(/\s+/g, ' ').trim()).catch(() => '');
+  check(`${tag} CR-18.3 summary reports how many models pass`, /\d+(\s+of\s+\d+)?\s+models pass/.test(summary), summary.slice(0, 200));
 
   // CR-29.1/29.2: two-line label naming the Main Composite Score; aria label and (i) say the same.
   const sub = await page.locator('[data-min-score-sub]').first().innerText().catch(() => '');
