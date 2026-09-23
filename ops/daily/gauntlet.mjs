@@ -133,10 +133,12 @@ function validateRows(rows) {
 const MALFORMED_OUTPUT = /malformed/i;
 const CONNECTION_DROP = /^fetch failed$/i;
 export const WORKER_ROLES = ['producer', 'critic'];
+/** The most `worker-runner.mjs` accepts; anything above it is rejected before the call is made. */
+export const WORKER_MAX_TOKENS_CEILING = 32768;
 /** Completion-token bound per role; the reasoning is at the call site in `defaultRunner`. */
 export function workerMaxTokens(role) {
   if (!WORKER_ROLES.includes(role)) throw new Error(`Unknown worker role ${role}`);
-  return role === 'critic' ? 32768 : 16384;
+  return role === 'critic' ? WORKER_MAX_TOKENS_CEILING : 16384;
 }
 export function excludedWorkerModels(records, { role = null } = {}) {
   if (role !== null && !WORKER_ROLES.includes(role)) throw new Error(`Unknown worker role ${role}`);
@@ -160,7 +162,7 @@ export function excludedWorkerModels(records, { role = null } = {}) {
   return [...excluded];
 }
 
-export async function defaultRunner(args, { attempt = 1 } = {}) {
+export async function defaultRunner(args, { attempt = 1, maxTokens = null } = {}) {
   const state = process.env.BH_STATE;
   const role = args.includes('--critic') ? 'critic' : 'producer';
   const failedFile = state ? join(state, 'unavailable-models.jsonl') : null;
@@ -187,7 +189,11 @@ export async function defaultRunner(args, { attempt = 1 } = {}) {
     // 16,384 deliberately — it took one length failure on the same run, but it is the paid role and the
     // OpenRouter balance is thin ($15.91 on 2026-09-23); raise it on evidence, not symmetry. Measured tail since then: producers up to ~310 s and DeepSeek critics
     // 120–160 s (2026-09-14/15), which is why the unattended default is DEFAULT_WORKER_TIMEOUT_SECONDS (600 s).
-    const { stdout, stderr } = await exec('bash', [WORKER_SH, '--max-tokens', String(workerMaxTokens(role)), '--timeout', String(workerTimeout), ...args], {
+    const cap = maxTokens ?? workerMaxTokens(role);
+    if (!Number.isInteger(cap) || cap < 1 || cap > WORKER_MAX_TOKENS_CEILING) {
+      throw new Error(`maxTokens must be an integer from 1 to ${WORKER_MAX_TOKENS_CEILING}`);
+    }
+    const { stdout, stderr } = await exec('bash', [WORKER_SH, '--max-tokens', String(cap), '--timeout', String(workerTimeout), ...args], {
       cwd: REPO, env: { ...process.env, BH_WORKER_REASONING_EFFORT: 'low', BH_WORKER_DISABLE_OPTIONAL_REASONING: '0', BH_WORKER_MAX_PRICE_PER_1M: '4',
         // CR-73.4: the attempt index rides along so the receipt can state which try it was.
         BH_WORKER_ATTEMPT: String(Number.isInteger(attempt) && attempt > 0 ? attempt : 1),
@@ -223,9 +229,27 @@ async function recordInvalidModel(meta, role, reason, runner) {
 // round-3 producer had already reported "match". The call is retried once in place; the strike is recorded
 // by the first failure, so a route that drops twice is still excluded and the retry cannot loop.
 const CONNECTION_DROP_CALL = /(^|: )fetch failed$/i;
+// 2026-09-23 (iteration 182): a completion cut off at the cap is not a bad answer, it is no answer, and
+// the round that asked for it ended. D179 gave the critic the runner's maximum and left the producer at
+// 16,384 "deliberately … raise it on evidence, not symmetry". This is that evidence, from the 09:57
+// unattended run that published: two producer calls returned `completion_tokens: 16384` exactly and were
+// discarded (`workers/worker-failure-1790158254112-218278.json`, prompt 32,957, $0.00858; and
+// `…-1790158265110-225592.json`, prompt 10,781, $0.00663) — paid for, and worth nothing. The default cap
+// is unchanged, so an ordinary producer call still costs what it costs; only a call that demonstrably
+// ran into the cap is asked again with the runner's maximum, and only once. The first failure is still a
+// strike, so the retry goes to the next viable route rather than back to the one that overran.
+const LENGTH_CUT_CALL = /incomplete completion \(length\)/i;
 async function callWorker(runner, args, options) {
   try { return await runner(args, options); }
-  catch (error) { if (!CONNECTION_DROP_CALL.test(error?.message ?? '')) throw error; return runner(args, options); }
+  catch (error) {
+    const message = error?.message ?? '';
+    if (CONNECTION_DROP_CALL.test(message)) return runner(args, options);
+    // `options.maxTokens` set means this *is* the retry: a second cut is a real failure.
+    if (LENGTH_CUT_CALL.test(message) && !options?.maxTokens) {
+      return runner(args, { ...options, maxTokens: WORKER_MAX_TOKENS_CEILING });
+    }
+    throw error;
+  }
 }
 
 // Owner-side receipt verification: the sidecar hash must match the out file bytes.

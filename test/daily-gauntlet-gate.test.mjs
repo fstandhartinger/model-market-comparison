@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdtemp, readFile, writeFile, rm } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
-import { reviewArtifact, sha256 } from '../ops/daily/gauntlet.mjs';
+import { reviewArtifact, sha256, WORKER_MAX_TOKENS_CEILING } from '../ops/daily/gauntlet.mjs';
 const rows = [{ id: 'fixture:1', value: 42 }];
 const sources = [{ url: 'https://example.test/primary', sha256: sha256('fixture:1 = 42'), fetched_at: '2026-01-01', locator: 'fixture:1', content: 'fixture:1 = 42' }];
 async function mockRunner(args) {
@@ -187,6 +187,52 @@ test('a dropped connection costs the call, not the review round', async () => {
     assert.equal(critics, 2, 'the critic call was retried in place');
     assert.equal(result.manifest.rounds_used, 1, 'the drop did not spend a round');
     assert.deepEqual(result.fingerprints.map((r) => r.id), ['fixture:1']);
+  } finally { await rm(dir, { recursive: true, force: true }); }
+});
+
+test('a producer cut off at the cap is asked again with the runner\'s maximum, once', async () => {
+  // 2026-09-23 (iteration 182): two producer calls on the 09:57 unattended run returned exactly
+  // `completion_tokens: 16384` and were discarded, each one paid for. The cap stays where D179 left it;
+  // only the call that ran into it is repeated with the runner's maximum.
+  const dir = await mkdtemp(join(tmpdir(), 'bh-gauntlet-length-'));
+  try {
+    let producers = 0;
+    const caps = [];
+    const runner = async (args, options) => {
+      if (!args.includes('--critic')) {
+        producers++;
+        caps.push(options?.maxTokens ?? null);
+        if (producers === 1) throw new Error('z-ai/glm-5.3-flash: Incomplete completion (length)');
+      }
+      await mockRunner(args);
+      const path = args[args.indexOf('--out') + 1];
+      if (!args.includes('--critic')) {
+        const body = JSON.stringify({ rows: [{ id: 'fixture:1', status: 'match', note: 'exact synthetic source value' }] }) + '\n';
+        await writeFile(path, body);
+        const meta = JSON.parse(await readFile(path + '.meta.json')); meta.output_sha256 = sha256(body);
+        await writeFile(path + '.meta.json', JSON.stringify(meta));
+      }
+    };
+    const result = await reviewArtifact({ runDir: dir, artifactId: 'length', rows, sources, criteria: ['Verify exact value against the supplied fixture source'], runner });
+    assert.equal(producers, 2, 'the producer call was retried in place');
+    assert.deepEqual(caps, [null, WORKER_MAX_TOKENS_CEILING], 'the first call keeps the default cap, the retry gets the ceiling');
+    assert.equal(result.manifest.rounds_used, 1, 'the cut did not spend a round');
+    assert.deepEqual(result.fingerprints.map((r) => r.id), ['fixture:1']);
+  } finally { await rm(dir, { recursive: true, force: true }); }
+});
+
+test('a second cut at the ceiling is a real failure, not an endless retry', async () => {
+  const dir = await mkdtemp(join(tmpdir(), 'bh-gauntlet-length2-'));
+  try {
+    let producers = 0;
+    const runner = async (args) => {
+      if (!args.includes('--critic')) { producers++; throw new Error('z-ai/glm-5.3-flash: Incomplete completion (length)'); }
+      return mockRunner(args);
+    };
+    const result = await reviewArtifact({ runDir: dir, artifactId: 'length2', rows, sources, criteria: ['Verify values'], runner, maxRounds: 2 });
+    assert.equal(result.accepted, false);
+    assert.equal(producers, 4, 'two rounds, each retried exactly once');
+    assert.ok(result.errors.some((e) => /Incomplete completion/.test(e)), result.errors);
   } finally { await rm(dir, { recursive: true, force: true }); }
 });
 
