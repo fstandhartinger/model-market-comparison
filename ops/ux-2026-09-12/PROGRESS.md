@@ -8250,3 +8250,90 @@ Commits `d388663e` (the three directives) and `eff2b4a9` (the drop retry).
 |---|---|---|---|
 | D181 | implemented | `eff2b4a9`; `ops/daily/gauntlet.mjs` (`callWorker`); `test/daily-gauntlet-gate.test.mjs` (two new cases); run `2026-09-23T09-23-19-342Z-4161375` `reports/live-step-result.json` and `gauntlet/live-contract-aa/producer-r3.json` | A dropped connection cost a whole review round, so two of them rejected the AA live-source contract on a run whose round-3 producer had already reported "match". The call is retried once in place; the strike is recorded by the first failure, so a route that drops twice is still excluded and the retry cannot loop. Implemented by claude-opus; needs a non-claude-opus sign-off and an unattended run. |
 | D182 | implemented | `lib/benchmark-view.mjs` (`jsonObjectPrefix`); `test/fable-pass32-f170.test.mjs`; `test/f165-vendor-cohort.test.mjs` | A retained " Source note: …" caveat after the source-row JSON made `JSON.parse` throw, so one board's identical rows split into two cohorts and two axes (490 → 489 after the fix). Display-only: no value moved. Implemented by claude-opus; needs a non-claude-opus sign-off. |
+
+---
+
+## Iteration 182 (claude-opus, 2026-09-23 14:30–~16:30 UTC) — a verifier that carried the defect's own numbers, and the first pipeline run that published
+
+**The checkout is shared this afternoon, and that shaped the scope.** Two other jobs are working on the same product:
+`jev-models-v14-page-fixes-20260923` (Claude Opus 5.5) holds a `cr-132-jev-models-v14-page-fixes` branch in its own clone and is
+waiting for the writer lease to seed CR-132; `jevbench-v141-additions-20260923` (codex) may publish a v1.4.1 board. Neither touches
+this working tree, but both will edit `PROGRESS.md` and `app/jev-models/*`. Nothing in this iteration touches that page, and the
+ledger change is a new section rather than edits scattered through older ones, so a rebase has one place to land.
+
+**Work left in the tree, finished rather than discarded.** `git pull --rebase --autostash` at iteration start restored an
+uncommitted hardening of `verify-fable-pass32-f167-f170.mjs` and `test/fable-pass32-f170.test.mjs`. The test change replaces D182's
+regression guard — "ProofBench v1.1 is one axis with two scores" — with the invariant it was standing in for: *no two axes of one
+board may differ only by the internal inspection marker*. A row count can be satisfied by the wrong thing, so the replacement was
+checked by re-introducing the pre-fix parse (`jsonObjectPrefix` made a no-op): the test goes red on it, so the guard is strictly
+stronger than what it replaces. Committed as `d4e5de36` with the verifier's own hardening — the score strip may not be faked as a
+progress bar, and the cost the page prints must be the artifact's.
+
+**A live defect on the new v1.4 board, reported rather than fixed.** That verifier reads **301/303** on
+`https://benchmarkheaven.com` at `ea5471c4`. The two failures are real: `/jev-models` overflows horizontally by **5 px at 390 px**,
+light and dark; desktop and every per-system page are clean. The page is CR-131's new board and is already owned by the CR-132
+branch, so under the one-writer rule it was posted to the agent board (thread #5, entry #135) with the log and the verifier to gate
+the fix with, and left alone here. Evidence: `/opt/benchmarkheaven/state/ux-evidence/iter182-pass32/canonical-verifier.log`.
+
+**CR-128.5: the verifier was carrying the defect's own wrong numbers.** `ops/ux-2026-09-12/bin/verify-cr-128.mjs` pinned
+`REPORTED = {opus: 1, astra: 6, sol: 18, luna: 61}` — a copy of the very quartet it exists to catch. Such a check goes green the day
+the report is fixed *and* the day someone edits the pin, and it cannot see a report that is wrong in some other way. It now reads the
+report off disk as a table and scores it against **the dataset that report itself names**, because ranks move daily and a rank read a
+day later can neither convict nor acquit a report. The replay runs the route's own path (`clientData` + the family signal map, so the
+CR-74.4 penalty is in, as `/api/models?score=composite` has it) and is proved against a live host before it is used on any report.
+**28/30**, receipt and correction in `/opt/benchmarkheaven/state/ux-evidence/iter182-cr128-5/`.
+
+- **Iteration 179's finding is confirmed, check by check.** `/home/flori/jobs/bh-thirdparty-ingest-20260922/RESULT.md` — CR-128's own
+  report — states #1 / #6 / #18 / #61 against the revision it names (`93ed8366`, 863 scored). The competition ranks are
+  **#1, #5, #26 (tied with 3), #103 (tied with 2)**, and **3 of 3 wrong ranks are exactly the model's position in the unsorted
+  `/api/models` payload**. The verifier now prints that position beside every miss, because a dataset position reported as a rank and
+  a rank that is merely miscounted need different repairs.
+- **A second report, never read, has the second kind of error.** The sibling `/home/flori/jobs/bh-frontier-update-20260922/RESULT.md`
+  has its own **Composite ranking** table for the same four families plus Astra high. Its column *is* score-ordered — it puts Astra
+  high (97.4) above Astra max (97.2), where the dataset order has them at 10 and 6 — so it is not the dataset-position defect. But
+  **Sol max reads #25 where its own dataset gives #26 (tied with 3), and Luna max #101 where it gives #103 (tied with 2)**, and no tie
+  or denominator is named. #26 and #103 are what *every* dataset committed between 17:27 and 21:20 on 2026-09-22 gives, so no reading
+  window produces #25 or #101; where those two came from is not recoverable from the artifacts that job left. Recorded as **D183**.
+- **A wrong turn worth recording, because the next reader will take it too.** Two reports were written that day, one per job, and the
+  CR-128.5 row cites `bh-thirdparty-ingest`, not `bh-frontier-update`. Reading the wrong one first made iteration 179's finding look
+  mistaken for twenty minutes. Both are checked now, under their own names, so the mix-up cannot recur silently.
+- Neither `RESULT.md` was edited, here or by iteration 179: they are finished jobs' own reports. The correction of record is
+  `iter182-cr128-5/cr128-5-rank-correction.txt`, and the verifier asserts that the file states the ranks its replay derives — a
+  correction nobody can quietly drift away from. Iteration 179's `cr128-5-corrected-report.txt` stays on disk, superseded.
+
+**A paid call that buys nothing, twice in one run (D184).** D179 gave the critic the runner's maximum and left the producer at
+16,384 "deliberately … raise it on evidence, not symmetry". Here is the evidence, from the 09:57 run that published: two producer
+calls returned `completion_tokens: 16384` **exactly** and were discarded — `workers/worker-failure-1790158254112-218278.json`
+(prompt 32,957, $0.00858) and `…-1790158265110-225592.json` (prompt 10,781, $0.00663). Paid for, worth nothing, and each one ended
+the round that asked for it. The default cap is unchanged, so an ordinary producer call still costs what it costs; only a call that
+**demonstrably ran into the cap** is asked again with the runner's maximum, and only once. The first failure stays a strike, so the
+retry goes to the next viable route rather than back to the one that overran. Both new tests were checked by disabling the retry:
+they go red.
+
+**The unattended-run debt, against the first run that published.** `2026-09-23T09-57-20-158Z-186582` ran the full pipeline
+start-to-finish and published `5bfb97de` with `live_verified: true`; `npm test` inside it read 1,189 / 1,188 pass / 0 fail. **It was
+launched by iteration 181, not by the scheduler**, so items whose text asks for a *scheduled* run keep that half open; what it does
+settle is every item that asked for "the next run's receipt". Receipts are under `/opt/benchmarkheaven-daily/runs/2026-09-23T09-57-20-158Z-186582/`.
+
+| ID | This run's receipt | What it settles |
+|---|---|---|
+| D174 | `reports/benchmarks-step-result.json` `ok: true`, 214 sources attempted; no evidence-guard failure anywhere in `reports/refresh-benchmarks.log` | The reviewed-join vendor rows ingested. The row's own ask was the 05:17 receipt, which failed on the D177 pins; this is the first clean one. |
+| D175 | `reports/refresh-benchmarks.log`; `gauntlet/protocol-frontierswe-2/` (producer + critic rounds committed under `daily-evidence/2026-09-23T10-16-55-034Z/`) | The parser half: `frontierswe::2` reached review instead of freezing. It was then **retained** on a review verdict ("revise without a bounded row-level revision"), so the ingest receipt D175 asks for still does not exist. Stays `implemented`. |
+| D176 | `reports/fetch-claude-api-catalog.log`: "Claude API prices: 14 callable models (added 0, removed 0, price changes 0, lifecycle changes 0; excluded 4)" | The collector parsed and did not fail closed — the freeze is over. The multi-exception read itself still wants a non-claude-opus sign-off. |
+| D177 | `reports/npm-test.log`: 1,189 tests, 1,188 pass, 0 fail | The two pins that blocked publication on 00:41 and 05:17 no longer do. |
+| D178 | `workers/unavailable-models.jsonl` + the `worker-*.json` timeline | The receipt this row asked for, and it is unambiguous: `chutes/moonshotai/Kimi-K3-TEE` dropped at **10:09:26.592** and was used as critic again at **10:09:26.956, 10:11:41, 10:12:28/36 and 10:28:10**, dropping a second time only at **10:49:27**. Under the old rule the first drop removed it for the rest of the run. |
+| D179 | same worker receipts; critic calls at 32,768 completed with `finish_reason: stop` | No critic length cut in the run. The producer took two — see D184. |
+| D181 | `reports/live-step-result.json` `ok: true`; critic receipts carrying `attempt: 2` at 10:11:41 and 10:12:28 | The in-place retry fired and the AA live-source contract passed, on the run after the one a drop rejected it on. |
+
+**Gates:** `npx tsc --noEmit -p .` clean; `npm test` 1,198 tests / 1,197 pass / 0 fail / 1 skipped; `node scripts/build-dataset.mjs`
+with no data diff; focused `test/daily-gauntlet-gate.test.mjs` 12/12, both new cases proved red without the fix.
+
+**Still open:** everything X6 lists (`CR-34.5`, `CR-62.4` — Florian; `CR-37.1`/`CR-37.3`, `CR-85.2` — sources; `CR-38.1`, `CR-73.5`,
+`CR-85.1` — an unattended run), F-165(a)'s rekey half, D180, plus the scheduled-run half of D174–D179/D181 and the sign-offs owed on
+every claude-opus item below.
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| D183 | open | `/home/flori/jobs/bh-frontier-update-20260922/RESULT.md`; `ops/ux-2026-09-12/bin/verify-cr-128.mjs` (`rank/frontier/report-matches-its-own-dataset`); `/opt/benchmarkheaven/state/ux-evidence/iter182-cr128-5/cr128-5-rank-correction.txt` | The frontier report's Composite ranking reads #25 and #101 for `gpt-6-sol::max` and `gpt-6-luna::max`; the dataset it names gives #26 (tied with 3) and #103 (tied with 2), and it names no ties and no denominator. Not the dataset-position defect — the column is genuinely score-ordered. Left open, not silently repaired: the report is a finished job's artifact, the correction of record is written, and the verifier holds the red. |
+| D184 | implemented | `ops/daily/gauntlet.mjs` (`callWorker`, `WORKER_MAX_TOKENS_CEILING`, `defaultRunner`'s `maxTokens`); `test/daily-gauntlet-gate.test.mjs` (two new cases); run `2026-09-23T09-57-20-158Z-186582` `workers/worker-failure-1790158254112-218278.json` and `…-1790158265110-225592.json` | A producer completion cut off at 16,384 is not a bad answer, it is no answer, and it ended the round that paid for it. The default cap is unchanged; only a call that ran into it is repeated once at the runner's maximum. Implemented by claude-opus; needs a non-claude-opus sign-off and an unattended run. |
+| D185 | open | `/opt/benchmarkheaven/state/ux-evidence/iter182-pass32/canonical-verifier.log`; agent board thread #5 entry #135 | `/jev-models` overflows horizontally by 5 px at 390 px, light and dark, at `ea5471c4`. Owned by the CR-132 writer; reported, not fixed. |
