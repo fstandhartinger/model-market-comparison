@@ -13,15 +13,23 @@ const results = [];
 const check = (name, ok, detail) => { results.push({ name, ok: !!ok, detail }); console.log(`${ok ? 'PASS' : 'FAIL'} ${name} ${detail ?? ''}`); };
 const scoreOrder = () => {
   const ths = [...document.querySelectorAll('thead th')];
-  const idx = ths.findIndex((th) => /^Score/i.test(th.innerText.trim()));
-  const sort = idx >= 0 ? ths[idx].getAttribute('aria-sort') : null;
-  const vals = [...(ths[idx]?.closest('table') ?? document).querySelectorAll('tbody tr')] /* iteration 53: scoped to the ranking table — Simple now has a second (benchmarks) table */.map((tr) => {
-    const td = tr.children[idx];
+  // 2026-09-23 (iteration 180): this was `/^Score/`, and the column has since been renamed
+  // "Capability Score", so the check silently found no column at all and reported `idx -1, n 0` —
+  // a false regression on CR-8.1, which is R1.1 itself. The column is identified by what it is
+  // rather than by how it is currently spelled: the sorted score column is the one carrying
+  // `aria-sort`, and "Score" is matched on a word boundary so a prefix rename cannot hide it.
+  const scoreCell = (th) => /\bscore\b/i.test(th.innerText.trim());
+  const idx = ths.findIndex((th) => scoreCell(th) && th.getAttribute('aria-sort'));
+  const fallback = ths.findIndex(scoreCell);
+  const column = idx >= 0 ? idx : fallback;
+  const sort = column >= 0 ? ths[column].getAttribute('aria-sort') : null;
+  const vals = [...(ths[column]?.closest('table') ?? document).querySelectorAll('tbody tr')] /* iteration 53: scoped to the ranking table — Simple now has a second (benchmarks) table */.map((tr) => {
+    const td = tr.children[column];
     const m = td?.innerText.match(/\d+(\.\d+)?/);
     return m ? Number(m[0]) : null;
   }).filter((v) => v != null);
   const desc = vals.every((v, i) => i === 0 || vals[i - 1] >= v);
-  return { idx, sort, n: vals.length, desc, head: vals.slice(0, 5) };
+  return { idx: column, label: column >= 0 ? ths[column].innerText.replace(/\s+/g, ' ').trim().slice(0, 40) : null, sort, n: vals.length, desc, head: vals.slice(0, 5) };
 };
 const VPS = [['desktop', { width: 1440, height: 1000 }], ['mobile390', { width: 390, height: 844 }], ['mobile360', { width: 360, height: 780 }]];
 for (const theme of ['light', 'dark']) for (const [kind, vp] of VPS) {
@@ -64,8 +72,16 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of VPS) {
     const moreList = await p.evaluate(() => [...document.querySelectorAll('header details[open] a')].map((a) => a.getAttribute('href')));
     check(`${tag} CR-6.1 More opens and lists the rest without a duplicate Benchmarks`, moreList.length >= 5 && !moreList.includes('/benchmarks'), moreList.join(','));
     await p.screenshot({ path: `${OUT}/${tag}-more-open.png` });
+    // 2026-09-23 (iteration 180): Escape closes the menu and the click that followed re-opened it, so
+    // the next step tried to click a tab underneath the open panel and Playwright retried until it
+    // timed out — reported as "<a href=\"/compare\"> from the header subtree intercepts pointer
+    // events", which reads like a layout defect and is not one. The menu is closed here by state and
+    // the close is asserted, so a real one-way menu would still fail.
     await p.keyboard.press('Escape');
-    await p.locator('header summary').filter({ visible: true }).first().click();
+    await p.evaluate(() => document.querySelectorAll('header details[open]').forEach((d) => { d.open = false; }));
+    await p.waitForTimeout(150);
+    const stillOpen = await p.locator('header details[open]').count();
+    check(`${tag} CR-6.1 More closes again`, stillOpen === 0, `${stillOpen} still open`);
   }
 
   // CR-8.1 — Simple then Advanced, fresh load
@@ -73,6 +89,11 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of VPS) {
     const s = await p.evaluate(scoreOrder);
     check(`${tag} CR-8.1 Simple opens aria-sort=descending on Score, values descending`, s.sort === 'descending' && s.desc && s.n > 0, JSON.stringify(s));
     await p.screenshot({ path: `${OUT}/${tag}-simple.png` });
+    // The tab strip is reached from the top of the page; from a scrolled position Playwright parks it
+    // under the sticky header and retries the click until it times out. Checked live on 2026-09-23:
+    // from the top, `document.elementFromPoint` at the tab's centre is the tab itself in every context.
+    await p.evaluate(() => window.scrollTo(0, 0));
+    await p.waitForTimeout(200);
     await p.getByRole('tab', { name: 'Advanced' }).click();
     await p.waitForTimeout(800);
     const a = await p.evaluate(scoreOrder);
