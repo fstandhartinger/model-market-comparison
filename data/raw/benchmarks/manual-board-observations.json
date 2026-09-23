@@ -7115,6 +7115,198 @@
       },
       "protocol": "Vals: RSI Index; source configuration openai/gpt-6-astra; page date page \"Updated 9/21/2026\"; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"openai/gpt-6-astra\",\"source_quote\":\"\\\"Claude Opus 5 places third overall at 32.10%, and GPT-6 Astra fourth at 29.03%.\\\"\",\"source_unit\":\"%\",\"displayed_value\":29.03}",
       "comparison_key": null
+    },
+    {
+      "id": "cr128:b98ef73839af20db3618b2c3",
+      "benchmark_id": "epoch-gpqa-diamond::snapshot-2026-09-18",
+      "subject": {
+        "source_id": "gpt-6-astra_max",
+        "name": "gpt-6-astra_max",
+        "model_id": "gpt-6-astra::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.9436026936026937,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/eci_benchmarks.csv",
+        "retrieved_at": "2026-09-22T21:03:51.820574+00:00",
+        "published_at": null,
+        "sha256": "1bb9d35fbcf31f43e8880db2dc7da0a4f70cda6f3448e1f6b6fa51e12a1d2d7d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/1bb9d35fbcf31f43e888.gz",
+        "locator": "Epoch: GPQA diamond; gpt-6-astra_max; exact source excerpt: GPQA diamond,...,GPT-6 Astra,gpt-6-astra_max,performance=0.9436026936026937 (source column empty = Epoch-run)"
+      },
+      "protocol": "Epoch: GPQA diamond; source configuration gpt-6-astra_max; page date CSV \"Updated Sep. 22, 2026\"; Epoch note: the source says OpenAI provided pre-release access; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"gpt-6-astra_max\",\"source_quote\":\"GPQA diamond,...,GPT-6 Astra,gpt-6-astra_max,performance=0.9436026936026937 (source column empty = Epoch-run)\",\"source_unit\":\"%\",\"displayed_value\":94.36}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:f770139bc17be4ca581ee407",
+      "benchmark_id": "otis-mock-aime::2024-2025",
+      "subject": {
+        "source_id": "gpt-6-astra_max",
+        "name": "gpt-6-astra_max",
+        "model_id": "gpt-6-astra::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 1,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/eci_benchmarks.csv",
+        "retrieved_at": "2026-09-22T21:03:51.820574+00:00",
+        "published_at": null,
+        "sha256": "1bb9d35fbcf31f43e8880db2dc7da0a4f70cda6f3448e1f6b6fa51e12a1d2d7d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/1bb9d35fbcf31f43e888.gz",
+        "locator": "Epoch: OTIS Mock AIME 2024-2025; gpt-6-astra_max; exact source excerpt: OTIS Mock AIME 2024-2025,...,GPT-6 Astra,gpt-6-astra_max,performance=1.0 (source column empty = Epoch-run)"
+      },
+      "protocol": "Epoch: OTIS Mock AIME 2024-2025; source configuration gpt-6-astra_max; page date CSV \"Updated Sep. 22, 2026\"; Epoch note: the source says OpenAI provided pre-release access; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"gpt-6-astra_max\",\"source_quote\":\"OTIS Mock AIME 2024-2025,...,GPT-6 Astra,gpt-6-astra_max,performance=1.0 (source column empty = Epoch-run)\",\"source_unit\":\"%\",\"displayed_value\":100}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:03bb726c1259417c9b8ac499",
+      "benchmark_id": "chess-puzzles::snapshot-2026-09-18",
+      "subject": {
+        "source_id": "gpt-6-astra_max",
+        "name": "gpt-6-astra_max",
+        "model_id": "gpt-6-astra::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.7053872053872053,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/eci_benchmarks.csv",
+        "retrieved_at": "2026-09-22T21:03:51.820574+00:00",
+        "published_at": null,
+        "sha256": "1bb9d35fbcf31f43e8880db2dc7da0a4f70cda6f3448e1f6b6fa51e12a1d2d7d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/1bb9d35fbcf31f43e888.gz",
+        "locator": "Epoch: Chess Puzzles; gpt-6-astra_max; exact source excerpt: Chess Puzzles,...,GPT-6 Astra,gpt-6-astra_max,performance=0.7053872053872053 (source column empty = Epoch-run)"
+      },
+      "protocol": "Epoch: Chess Puzzles; source configuration gpt-6-astra_max; page date CSV \"Updated Sep. 22, 2026\"; Epoch note: the source says OpenAI provided pre-release access; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"gpt-6-astra_max\",\"source_quote\":\"Chess Puzzles,...,GPT-6 Astra,gpt-6-astra_max,performance=0.7053872053872053 (source column empty = Epoch-run)\",\"source_unit\":\"%\",\"displayed_value\":70.54}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:f78b50349512951b52ed3239",
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "subject": {
+        "source_id": "gpt-6-astra_none",
+        "name": "gpt-6-astra_none",
+        "model_id": null,
+        "variant": "none",
+        "harness": null
+      },
+      "value": 0.976,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/eci_benchmarks.csv",
+        "retrieved_at": "2026-09-22T21:03:51.820574+00:00",
+        "published_at": null,
+        "sha256": "1bb9d35fbcf31f43e8880db2dc7da0a4f70cda6f3448e1f6b6fa51e12a1d2d7d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/1bb9d35fbcf31f43e888.gz",
+        "locator": "Epoch: FrontierMath-Tier-4-v2-Private; gpt-6-astra_none; exact source excerpt: FrontierMath-Tier-4-v2-Private,...,GPT-6 Astra,gpt-6-astra_none,performance=0.976 (source column empty = Epoch-run)"
+      },
+      "protocol": "Epoch: FrontierMath-Tier-4-v2-Private; source configuration gpt-6-astra_none; page date CSV \"Updated Sep. 22, 2026\"; Epoch note: the source says OpenAI provided pre-release access; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"gpt-6-astra_none\",\"source_quote\":\"FrontierMath-Tier-4-v2-Private,...,GPT-6 Astra,gpt-6-astra_none,performance=0.976 (source column empty = Epoch-run)\",\"source_unit\":\"%\",\"displayed_value\":97.6}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:4571469592278ecb48384f9b",
+      "benchmark_id": "mystery-game-puzzles::snapshot-2026-09-18",
+      "subject": {
+        "source_id": "gpt-6-astra_max",
+        "name": "gpt-6-astra_max",
+        "model_id": "gpt-6-astra::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.8237497246089448,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/eci_benchmarks.csv",
+        "retrieved_at": "2026-09-22T21:03:51.820574+00:00",
+        "published_at": null,
+        "sha256": "1bb9d35fbcf31f43e8880db2dc7da0a4f70cda6f3448e1f6b6fa51e12a1d2d7d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/1bb9d35fbcf31f43e888.gz",
+        "locator": "Epoch: Mystery Game Puzzles; gpt-6-astra_max; exact source excerpt: Mystery Game Puzzles,...,GPT-6 Astra,gpt-6-astra_max,performance=0.8237497246089448 (source column empty = Epoch-run)"
+      },
+      "protocol": "Epoch: Mystery Game Puzzles; source configuration gpt-6-astra_max; page date CSV \"Updated Sep. 22, 2026\"; Epoch note: the source says OpenAI provided pre-release access; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"gpt-6-astra_max\",\"source_quote\":\"Mystery Game Puzzles,...,GPT-6 Astra,gpt-6-astra_max,performance=0.8237497246089448 (source column empty = Epoch-run)\",\"source_unit\":\"%\",\"displayed_value\":82.37}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:f4789eff68547d3a1055d817",
+      "benchmark_id": "frontiercode::1.1",
+      "subject": {
+        "source_id": "Claude Opus 5.5",
+        "name": "Claude Opus 5.5",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 54.6,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://cognition.com/frontiercode",
+        "retrieved_at": "2026-09-22T21:03:46.330111+00:00",
+        "published_at": null,
+        "sha256": "4b20185c223296122d3f9c07d8be6d279764bbe62fcce6057c52496bfd52e6d4",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/4b20185c223296122d3f.gz",
+        "locator": "FrontierCode 1.1 (Main), Cognition; Claude Opus 5.5 (config not shown on page); exact source excerpt: {\"@type\":\"ListItem\",\"position\":1,\"name\":\"Claude Opus 5.5\",\"description\":\"Score 54.6%\"}"
+      },
+      "protocol": "FrontierCode 1.1 (Main), Cognition; source configuration Claude Opus 5.5 (config not shown on page); page date changelog \"Sep 22, 2026: Added GPT-6 Sol and GPT-6 Luna. Added Claude Opus 5.5.\"; source row: {\"model\":\"Claude Opus 5.5\",\"config\":\"Claude Opus 5.5 (config not shown on page)\",\"source_quote\":\"{\\\"@type\\\":\\\"ListItem\\\",\\\"position\\\":1,\\\"name\\\":\\\"Claude Opus 5.5\\\",\\\"description\\\":\\\"Score 54.6%\\\"}\",\"source_unit\":\"%\",\"displayed_value\":54.6}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:769006c9280fa7a5d6bc0d31",
+      "benchmark_id": "frontiercode::1.1",
+      "subject": {
+        "source_id": "GPT-6 Astra",
+        "name": "GPT-6 Astra",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 53.3,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://cognition.com/frontiercode",
+        "retrieved_at": "2026-09-22T21:03:46.330111+00:00",
+        "published_at": null,
+        "sha256": "4b20185c223296122d3f9c07d8be6d279764bbe62fcce6057c52496bfd52e6d4",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/4b20185c223296122d3f.gz",
+        "locator": "FrontierCode 1.1 (Main), Cognition; GPT-6 Astra (config not shown on page); exact source excerpt: {\"@type\":\"ListItem\",\"position\":4,\"name\":\"GPT-6 Astra\",\"description\":\"Score 53.3%\"}"
+      },
+      "protocol": "FrontierCode 1.1 (Main), Cognition; source configuration GPT-6 Astra (config not shown on page); page date changelog \"Sep 22, 2026: Added GPT-6 Sol and GPT-6 Luna. Added Claude Opus 5.5.\"; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT-6 Astra (config not shown on page)\",\"source_quote\":\"{\\\"@type\\\":\\\"ListItem\\\",\\\"position\\\":4,\\\"name\\\":\\\"GPT-6 Astra\\\",\\\"description\\\":\\\"Score 53.3%\\\"}\",\"source_unit\":\"%\",\"displayed_value\":53.3}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:cf08f221cacd27378803934e",
+      "benchmark_id": "frontiercode::1.1",
+      "subject": {
+        "source_id": "GPT-6 Sol",
+        "name": "GPT-6 Sol",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 49.3,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://cognition.com/frontiercode",
+        "retrieved_at": "2026-09-22T21:03:46.330111+00:00",
+        "published_at": null,
+        "sha256": "4b20185c223296122d3f9c07d8be6d279764bbe62fcce6057c52496bfd52e6d4",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/4b20185c223296122d3f.gz",
+        "locator": "FrontierCode 1.1 (Main), Cognition; GPT-6 Sol (config not shown on page); exact source excerpt: {\"@type\":\"ListItem\",\"position\":7,\"name\":\"GPT-6 Sol\",\"description\":\"Score 49.3%\"}"
+      },
+      "protocol": "FrontierCode 1.1 (Main), Cognition; source configuration GPT-6 Sol (config not shown on page); page date changelog \"Sep 22, 2026: Added GPT-6 Sol and GPT-6 Luna. Added Claude Opus 5.5.\"; source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (config not shown on page)\",\"source_quote\":\"{\\\"@type\\\":\\\"ListItem\\\",\\\"position\\\":7,\\\"name\\\":\\\"GPT-6 Sol\\\",\\\"description\\\":\\\"Score 49.3%\\\"}\",\"source_unit\":\"%\",\"displayed_value\":49.3}",
+      "comparison_key": null
     }
   ],
   "collections": [
