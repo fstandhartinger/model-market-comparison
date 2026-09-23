@@ -11,6 +11,8 @@ import { ComparePicker } from './ComparePicker';
 import { formatNative } from '../lib/benchmark-matrix.mjs';
 import { CompareLegend } from './TableLegend';
 import { resolveCompareIds, type CompareEntry } from '../lib/compare-ids.mjs';
+import { claimProfiles, claimsSummaryClause, compareClaimsSentence, unmeasuredNoticeLine } from '../lib/compare-claims.mjs';
+import { counted } from '../lib/format';
 
 // CR-63.6: the same formatting as the Benchmarks page (fractions as %, USD with $, Elo named).
 const nativeValue = (value: number, unit: string | null) => formatNative(value, unit);
@@ -70,7 +72,10 @@ export function BenchmarkCompare({ initialView, initialPicks, standalone = false
   const displayPicks = loadedKey !== picks.join('|') ? loadedKey.split('|').filter(Boolean) : picks;
   const visibleAxes = view.axes.filter((a) => (!category || a.category === category) && (!axisSearch || `${a.name} ${a.version} ${a.cohort}`.toLowerCase().includes(axisSearch.toLowerCase())) && (showEmpty || a.scores.some((r) => r.modelId && displayPicks.includes(r.modelId))));
   const categories = [...new Set(view.axes.map((a) => a.category))].sort();
-  const categorySnapshots = categories.map((name) => {
+  // F-164: what the table's rows are based on, per selected model, computed from the rows it renders.
+  const profiles = claimProfiles(visibleAxes, displayPicks, view.models);
+  const claimsSentence = compareClaimsSentence(profiles), claimsSummary = claimsSummaryClause(profiles);
+  const allSnapshots = categories.map((name) => {
     const axes = visibleAxes.filter((axis) => axis.category === name);
     const models = displayPicks.map((id) => {
       const normalized = axes.map((axis) => {
@@ -80,7 +85,15 @@ export function BenchmarkCompare({ initialView, initialPicks, standalone = false
       return { id, name: view.models.find((model) => model.id === id)?.name || id, measured: normalized.length, average: normalized.length ? normalized.reduce((sum, value) => sum + value, 0) / normalized.length : null };
     });
     return { name, axes, models };
-  }).filter((snapshot) => snapshot.axes.length && snapshot.models.some((model) => model.measured));
+  });
+  // F-163: a model with nothing measured in any topic was listed in every card with an empty bar and
+  // "No measured result" — twelve identical rows for a launch-day model whose values are all the
+  // developer's own. It leaves the cards; one generated line under the intro names it and says what
+  // its values are. The count is the cards' own `measured`, so line and cards cannot disagree.
+  const unmeasuredIds = displayPicks.filter((id) => !allSnapshots.some((snapshot) => snapshot.models.find((model) => model.id === id)?.measured));
+  const unmeasuredLine = unmeasuredNoticeLine(profiles.filter((profile) => unmeasuredIds.includes(profile.id)));
+  const categorySnapshots = allSnapshots.map((snapshot) => ({ ...snapshot, models: snapshot.models.filter((model) => !unmeasuredIds.includes(model.id)) }))
+    .filter((snapshot) => snapshot.axes.length && snapshot.models.some((model) => model.measured));
 
   return <div className="space-y-6">
     <section className="bh-panel p-4 sm:p-5" aria-label="Model selection">
@@ -105,7 +118,12 @@ export function BenchmarkCompare({ initialView, initialPicks, standalone = false
         </div>)}
         <ComparePicker families={view.families ?? []} picks={picks} onPick={(id) => setPicks((old) => old.includes(id) ? old : [...old, id].slice(0, Math.max(1, 4 - pending.length)))} />
       </div>
-      <div role="status" className="min-h-6 pt-2 text-sm bh-muted">{busy ? 'Updating benchmark evidence; results still show the previous models…' : error ? error : `${picks.length} model${picks.length === 1 ? '' : 's'} selected${pending.length ? `, ${pending.length} not measured yet` : ''}. ${visibleAxes.length} evaluation rows in the full comparison.`}</div>
+      {/* F-164: the row count alone let a launch-day model's vendor claims pass for evaluations. The
+          live region now qualifies it with the totals; the per-model clauses follow underneath, where
+          a long sentence is read once instead of announced on every selection change. Both are
+          generated from the same rows the table below renders. */}
+      <div role="status" className="min-h-6 pt-2 text-sm bh-muted">{busy ? 'Updating benchmark evidence; results still show the previous models…' : error ? error : `${counted(picks.length, 'model')} selected${pending.length ? `, ${pending.length} not measured yet` : ''}. ${counted(visibleAxes.length, 'evaluation row')} in the full comparison${claimsSummary}.`}</div>
+      {!busy && !error && claimsSentence && <p className="bh-muted mt-1 text-sm" data-bh-compare-claims>{claimsSentence}</p>}
       {error && <button className="bh-button" onClick={() => setRetry((n) => n + 1)}>Retry loading</button>}
     </section>
     {/* CR-122 (launch links): the announced model is named and marked as unmeasured — no value is shown or implied. */}
@@ -123,12 +141,17 @@ export function BenchmarkCompare({ initialView, initialPicks, standalone = false
     {displayPicks.length > 0 && <section className="bh-panel p-5" aria-label="Benchmark category snapshots">
       <div className="flex flex-wrap items-start justify-between gap-3"><div><p className="bh-eyebrow">RELEASE-STYLE SNAPSHOT</p><h2 className="text-xl font-semibold">Where each model is strongest</h2></div><span className="bh-badge">Measured results only</span></div>
       <p className="bh-muted mt-2 max-w-3xl text-sm">Each card averages the selected model&apos;s independently measured benchmark positions within one topic. The 0–100 scale is relative to the collected peer range for each exact benchmark; it is not a new score and missing results are excluded.</p>
-      {!categorySnapshots.length ? <div className="bh-empty mt-4">No measured benchmark rows match the current selection.</div> : <div className="mt-4 max-h-[1400px] overflow-y-auto pr-1"><div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">{categorySnapshots.map((snapshot) => <article key={snapshot.name} className="rounded-xl border border-line p-4">
+      {/* F-163: the models that have nothing to average, named once instead of in every card. */}
+      {unmeasuredLine && <p className="bh-muted mt-2 max-w-3xl text-sm" data-bh-snapshot-unmeasured>{unmeasuredLine}</p>}
+      {!categorySnapshots.length ? (unmeasuredLine ? null : <div className="bh-empty mt-4">No measured benchmark rows match the current selection.</div>) : <div className="mt-4 max-h-[1400px] overflow-y-auto pr-1"><div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">{categorySnapshots.map((snapshot) => <article key={snapshot.name} className="rounded-xl border border-line p-4">
         <div className="flex items-baseline justify-between gap-3"><h3 className="font-semibold">{snapshot.name}</h3><span className="bh-muted text-xs">{snapshot.axes.length} benchmark{snapshot.axes.length === 1 ? '' : 's'}</span></div>
-        <ul className="mt-4 space-y-3">{snapshot.models.map((model) => <li key={model.id}>
-          <div className="flex items-baseline justify-between gap-3 text-sm"><span className="min-w-0 truncate">{model.name}</span><span className="tabular font-semibold">{model.average == null ? 'No measured result' : `${model.average.toFixed(0)} / 100`}</span></div>
-          <div className="mt-1 h-2 overflow-hidden rounded-full bg-line" role="progressbar" aria-label={`${model.name} relative ${snapshot.name} position`} aria-valuemin={0} aria-valuemax={100} aria-valuenow={model.average == null ? undefined : Math.round(model.average)}>{/* CR-63.17: each model keeps its own series colour (chips, radar legend). */}<div className="h-full rounded-full" style={{ width: model.average == null ? '0%' : `${model.average}%`, background: SERIES_COLORS[Math.max(0, displayPicks.indexOf(model.id))] }} /></div>
-          <p className="bh-muted mt-1 text-xs">{model.measured ? `${model.measured} of ${snapshot.axes.length} benchmark${snapshot.axes.length === 1 ? '' : 's'} measured` : 'No measured result in this topic'}</p>
+        {/* F-163 (b): a model measured elsewhere but not in this topic is one muted line. A bar needs a
+            value (F-84) and a row says its status once (F-146): the empty track and the repeated
+            "No measured result" above it are both gone. */}
+        <ul className="mt-4 space-y-3">{snapshot.models.map((model) => model.average == null ? <li key={model.id} className="flex items-baseline justify-between gap-3 text-sm bh-muted" data-bh-snapshot-none><span className="min-w-0 truncate">{model.name}</span><span className="shrink-0">No measured result in this topic</span></li> : <li key={model.id}>
+          <div className="flex items-baseline justify-between gap-3 text-sm"><span className="min-w-0 truncate">{model.name}</span><span className="tabular font-semibold">{`${model.average.toFixed(0)} / 100`}</span></div>
+          <div className="mt-1 h-2 overflow-hidden rounded-full bg-line" role="progressbar" aria-label={`${model.name} relative ${snapshot.name} position`} aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(model.average)}>{/* CR-63.17: each model keeps its own series colour (chips, radar legend). */}<div className="h-full rounded-full" style={{ width: `${model.average}%`, background: SERIES_COLORS[Math.max(0, displayPicks.indexOf(model.id))] }} /></div>
+          <p className="bh-muted mt-1 text-xs">{`${model.measured} of ${counted(snapshot.axes.length, 'benchmark')} measured`}</p>
         </li>)}</ul>
       </article>)}</div></div>}
     </section>}
