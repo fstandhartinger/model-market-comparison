@@ -12,7 +12,7 @@ import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { join, relative, isAbsolute, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { observationDigest } from '../../lib/benchmark-score-evidence.mjs';
+import { observationDigest, unjoined } from '../../lib/benchmark-score-evidence.mjs';
 import { writeJSONAtomic } from '../../lib/snapshot.mjs';
 import { vendorFamily } from '../rebuild-2026-09/bin/worker-policy.mjs';
 
@@ -78,6 +78,21 @@ export function batchRows(rows, { batchRows: maxRows, batchBytesCap } = GAUNTLET
   if (current.length) batches.push(current);
   return batches;
 }
+
+/** D174 (2026-09-23): the form of a row that a *value* approval binds.
+ *
+ *  A reviewed identity join only sets `subject.model_id`, and it is reviewed on its own receipt
+ *  (`verifyIdentityReview` in lib/benchmark-score-evidence.mjs). The value guard therefore looks the
+ *  approval up under `observationDigest(unjoined(o))` for any row carrying `identity_review`. The
+ *  daily hands this gate the rows as the draft ingest built them — already joined — so an approval
+ *  minted here was bound to a digest the ingest never computes, and the row was refused as
+ *  "Unreviewed vendor score" the first day its source was re-captured (the 2026-09-23 00:41 run,
+ *  CursorBench "Fable 5.1 Max": the board moved it from rank 1 to 5, which alone changes the digest).
+ *  The critic reads the artifact, and `benchmark-score-evidence.mjs` re-hashes the row it finds
+ *  there against the same approved form, so both the artifact and the fingerprint have to use it —
+ *  changing only the fingerprint moves the failure one line down. Rows without a reviewed join, and
+ *  every non-observation artifact (live contracts, benchmark identities), are untouched. */
+export const approvedForm = (row) => (row && typeof row === 'object' && row.identity_review ? unjoined(row) : row);
 
 function validateRows(rows) {
   if (!Array.isArray(rows)) throw new Error('rows must be an array');
@@ -368,7 +383,8 @@ export async function reviewArtifact({
   const reviews = [], quarantined = [], errors = [], receipts = [];
   const producerFamilies = new Set(producerModels.map(vendorFamily));
   let producers = [...producerModels];
-  let current = [...(Array.isArray(rows) ? rows : [])];
+  // D174: review and fingerprint the form the ingest guard approves (see approvedForm above).
+  let current = (Array.isArray(rows) ? rows : []).map(approvedForm);
   let cachedProducer = null;
   let acceptedRound = null, producerFlagged = new Map(), terminalError = null, attemptsUsed = 0;
   const producerDisputed = new Set(); // every row a parsed producer audit flagged in any round (kept even if the critic then fails)
