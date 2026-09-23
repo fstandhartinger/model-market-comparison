@@ -7631,3 +7631,47 @@ four of which wait on exactly the unattended publication D174 and D175 unblock.
 bounded row-level revision", plus `z-ai/glm-5.3-flash: Incomplete completion (length)` and three rounds of "No supported viable worker model
 found". Every other recent run shows 0–4 of these, so this is a one-run spike in a stochastic subsystem, not a standing defect — but the
 "Incomplete completion (length)" is the known max-tokens symptom and is worth a look if it recurs.
+
+---
+
+## Iteration 180 (claude-opus, 2026-09-23 ~06:50–07:00 UTC) — the publish gate was two stale pins, not a pipeline fault
+
+The **05:17 unattended run collected everything and published nothing**: its isolated `npm test` failed
+(`/opt/benchmarkheaven-daily/runs/2026-09-23T05-17-01-481Z-2810297/reports/npm-test.log`) on two assertions that today's live
+sources outgrew. Both were re-derived from the primary source before anything moved; neither was a collector bug.
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| D177 | implemented | `41eb1ced`; `data/raw/claude-code.json`; `test/dataset.test.mjs`; `test/mimo-v26-pro.test.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter180-publish-gate/` | The two pins that blocked publication, each replaced against the live page/API rather than relaxed. Implemented by claude-opus — needs a non-claude-opus verifier and the next run's receipt. |
+
+**1. Claude Opus 5.5 joined Anthropic's pricing table.** `https://platform.claude.com/docs/en/about-claude/pricing` lists it at
+`$4 / MTok` input, `$20 / MTok` output, `$5` (5 m) and `$8` (1 h) cache writes, `$0.20 / MTok` cache read — the page's own footnote
+says Opus 5.5 cache hits are `0.05x` of base input, beside Fable 5.1/Mythos 5.1's `0.025x` — and `$2 / $10` batch. So the first-party
+catalog holds **14** callable models, not 13. `scripts/fetch-claude-api-catalog.mjs` was run here: its diff is *`added: ["Claude Opus 5.5"]`
+and nothing else* — 0 price changes, 0 lifecycle changes, 0 removals. The pin moved 13 → 14 **with the prices and the new cache-read
+exception asserted**, so the guard still trips on an unreviewed catalog change instead of drifting.
+
+This is also the first **live** exercise of D176's multi-exception parser outside the daily runner: the page that froze Anthropic prices
+since ~2026-09-21 now parses, and the snapshot moved for the first time since. D176 stays `implemented` — iteration 178 (claude-opus)
+wrote it and this is claude-opus again; the daily `fetch-claude-api-catalog.log` receipt is still its stated proof.
+
+The rebuild retired the manual `Anthropic API (launch-post pricing)` offer for Opus 5.5 in favour of the collected
+`Anthropic API / Claude Code` one — **exactly as that manual row's own note foresaw** ("Stays until the live Anthropic/OpenRouter
+collection carries the model itself"), at identical prices. Dataset totals are unchanged (863 / 669 / 94 / 2 976): Opus 5.5 was already
+a model, it just stopped depending on a hand-entered price.
+
+**2. MiMo-V2.6-Pro gained a second OpenRouter route.** `https://openrouter.ai/api/v1/models/xiaomi/mimo-v2.6-pro/endpoints` returns two
+endpoints since today — `DeepInfra | xiaomi/mimo-v2.6-pro-20260921` (fp8, 1 048 576 ctx, 943 718 max completion) beside Xiaomi's own
+(fp8, 1 048 576 ctx, 131 072 max completion) — at the *same* prices, `$0.435 / $0.87 / $0.0036`. CR-117's test pinned
+`offers.map(or_model_id) === ['xiaomi/mimo-v2.6-pro']`, i.e. a single-offer array, which is a live fact that grows with provider
+adoption. The test now asserts the requirement it was written for — **every** route carries the exact standard identity *and* canonical
+slug (`[...new Set(...)]`, so a borrowed identity on any route still fails) — and keeps the pinned figures on Xiaomi's first-party route.
+That is strictly stronger per route than the old array pin and no longer breaks when a provider joins.
+
+**Gates:** `node scripts/build-dataset.mjs` 863 models / 669 families / 94 providers / 2 976 offers; `npm test` 1 159 tests, 1 158 pass,
+0 fail, 1 skipped; `npx tsc --noEmit -p .` clean; `npm run build` clean (18 602 observations). Pushed `41eb1ced` at 06:55 UTC — **before**
+the 07:17 catch-up took the writer lock, so that run clones a main whose gate can pass.
+
+**What the 07:17 catch-up now proves or refutes** — its receipt is still the stated proof for `D174`, `D175` and `D176`, and it is the
+first run able to reach publication since the pins broke. Note D175's own prediction: the FrontierSWE arm should ingest 16 rows, two of
+them new, and one of the two is **Claude Opus 5.5** — the same model that arrived in the Anthropic catalog this morning.
