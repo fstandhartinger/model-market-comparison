@@ -7421,3 +7421,38 @@ thing to read after the 05:17 receipt.
 | ID | Status | Evidence | Note |
 |---|---|---|---|
 | D175 | implemented | `scripts/collect-public-benchmarks.py`; `test/frontierswe-posttrainbench.test.mjs`; `data/raw/benchmarks/collection-plan.json`; run `2026-09-23T00-41-02-194Z-1264113` `reports/refresh-benchmarks.log` | FrontierSWE froze because the guard pinned the *set* of generation labels rather than their shape; the board's third wave (Claude Opus 5.5) is additive and now parses, 16 rows and no drops. Replayed offline against the failing run's own capture. Implemented by claude-opus; needs a non-implementer sign-off and the next run's `frontierswe::2` receipt. |
+
+### D176 — the Claude price collector froze on a second cache-hit footnote
+
+The `fetch-claude-api-catalog` step of the 00:41 run reported "Claude pricing: batch, data-residency or cache-hit multiplier text
+not found (page layout changed?)". It **fails soft** — the previous snapshot is kept — which is why nobody saw it: it has been failing since at
+least the 2026-09-22 19:03 run, so Anthropic's prices were frozen while Claude Opus 5.5 was launching.
+
+- **Diagnosed against the live page** (one fetch, `robots.txt` allows `/docs/`; `Disallow` covers only `/api/`). Of the three prose
+  multipliers `readModifiers` requires, batch (`50`) and `inference_geo` (`1.1x`) still matched; the cache-hit one did not. The regex was
+  `priced at Nx the base input price\. All other models use the standard Nx multiplier` — it required the exception to **abut** the standard
+  sentence. The page now carries **two** footnotes:
+  `1 … Claude Fable 5.1 and Claude Mythos 5.1 are priced at 0.025x …` and `2 … Claude Opus 5.5 are priced at 0.05x …`, and only then
+  "All other models use the standard 0.1x multiplier." The second footnote is new with Opus 5.5.
+- **The rule, restated as the page actually states it:** a standard multiplier plus one footnote per departing family. `readModifiers` now reads
+  the standard sentence and the footnotes independently and returns `readExceptions` (a list) instead of `readException`. It still fails closed:
+  the standard sentence missing, or *every* footnote missing, is still a layout change.
+- **Scope is still derived from the price table, not from the prose names** — the published
+  `prompt_cache_read_multiplier_exceptions` map was already built by matching each model's own `cache_read / input` ratio, which is robust to the
+  prose spelling a model differently from its table row. That reviewed design is unchanged; only "one exception" became "any of the stated
+  exceptions". The published JSON shape is identical.
+- **Checked against the live page:** `{write5m: 1.25, write1h: 2, readDefault: 0.1, readExceptions: [0.025, 0.05], batchPct: 50, usOnly: 1.1}`,
+  and the rows whose ratio hits an exception are exactly the three the prose names — Claude Fable 5.1 and Claude Mythos 5.1 ($10 in, $0.25 read)
+  and Claude Opus 5.5 ($4 in, $0.20 read). No number here is ours; each is read off the page.
+- **Tests** (`test/claude-api-catalog.test.mjs`): a two-footnote page yields both exceptions and maps each to the model whose row states that
+  ratio; removing the standard sentence or all footnotes still throws; a model at the standard rate is never listed as an exception.
+  **Mutation-tested** against `HEAD`'s lib, the new test fails with the production error verbatim.
+- **Gates:** `npm test` **1,154 tests / 1,153 pass / 0 fail / 1 skip**; `npx tsc --noEmit -p .` clean. No dataset change — this collector only
+  runs inside the daily, and its output is a snapshot the next run will refresh.
+- **Still to watch:** a soft-failing collector is invisible in the ledger. The other two soft failures of that run were
+  `fetch-lumina-ledger` (the deliberate bulk-download pause) and `fetch-azure-foundry-catalog` (a transient Azure Retail `HTTP 429`); neither
+  needs code. The next run's `fetch-claude-api-catalog.log` is this entry's proof.
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| D176 | implemented | `lib/claude-api-catalog.mjs` (`readModifiers`); `test/claude-api-catalog.test.mjs`; run `2026-09-23T00-41-02-194Z-1264113` `reports/fetch-claude-api-catalog.log` | Anthropic prices silently frozen since ~2026-09-21 because a second cache-hit footnote (Claude Opus 5.5, 0.05x) broke a regex that assumed exactly one. Exceptions are now a list; still fails closed. Implemented by claude-opus; needs a non-implementer sign-off and the next run's collector log. |
