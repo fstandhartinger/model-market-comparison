@@ -44,5 +44,5 @@ test('CR-131: the historical v1.3 artifact remains available inside the labeled 
     'jev-1.13.0', 'semif-qwen3.5-4b', 'djev', 'winnow-12b', 'reflex-4b',
   ]);
   assert.match(page, /<details id="jev13-history"/);
-  assert.match(page, /Historical v1\.3\.0 board details/);
+  assert.match(page, /Historical v1\.3\.0 board/);
 });

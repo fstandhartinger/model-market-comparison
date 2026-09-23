@@ -50,3 +50,4 @@ export function jevbenchV14View(input: { artifact: JevV14Artifact; sha256: strin
   ranked: JevV14System[]; unranked: JevV14System[]; systems: JevV14System[];
   rankedCount: number; publicDecisions: number; sealedDecisions: number; totalDecisions: number;
 };
+export function jevV14RowNote(footnote: string | null | undefined): string | null;

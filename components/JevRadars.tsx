@@ -20,10 +20,10 @@ const one = (v: number | null) => (v === null ? "—" : v.toFixed(1));
 const pct = (v: number | null) => (v === null ? "—" : `${(v * 100).toFixed(1)}%`);
 const short = (d: string) => d.split(" (")[0].split(", formerly")[0];
 
-type Series = { name: string; stroke: string; dashed: boolean; square: boolean };
-type Spoke = { key: string; lines: string[]; values: (number | null)[]; texts: string[]; thin: boolean[] };
+export type Series = { name: string; stroke: string; dashed: boolean; square: boolean };
+export type Spoke = { key: string; lines: string[]; values: (number | null)[]; texts: string[]; thin: boolean[] };
 
-function Radar({ spokes, series, size, id, title, desc }: { spokes: Spoke[]; series: Series[]; size: { w: number; h: number; r: number }; id: string; title: string; desc: string }) {
+export function Radar({ spokes, series, size, id, title, desc }: { spokes: Spoke[]; series: Series[]; size: { w: number; h: number; r: number }; id: string; title: string; desc: string }) {
   const cx = size.w / 2, cy = size.h / 2 + 4, R = size.r;
   const at = (i: number, v: number) => { const a = -Math.PI / 2 + (2 * Math.PI * i) / spokes.length; return [cx + (R * v / 100) * Math.cos(a), cy + (R * v / 100) * Math.sin(a)]; };
   const ring = (v: number) => spokes.map((_, i) => at(i, v).join(",")).join(" ");
@@ -75,7 +75,7 @@ function topicSpokesFor(pair: JevV12Row[], topics: JevTopicsView): Spoke[] {
   }));
 }
 
-const Swatch = ({ s }: { s: Series }) => <svg width="30" height="12" aria-hidden="true" className="mr-1.5 inline-block align-middle"><line x1="1" y1="6" x2="29" y2="6" stroke={s.stroke} strokeWidth="2.4" strokeDasharray={s.dashed ? "6 4" : undefined} />{s.square ? <rect x="11.5" y="2.5" width="7" height="7" fill={s.stroke} /> : <circle cx="15" cy="6" r="3.8" fill={s.stroke} />}</svg>;
+export const Swatch = ({ s }: { s: Series }) => <svg width="30" height="12" aria-hidden="true" className="mr-1.5 inline-block align-middle"><line x1="1" y1="6" x2="29" y2="6" stroke={s.stroke} strokeWidth="2.4" strokeDasharray={s.dashed ? "6 4" : undefined} />{s.square ? <rect x="11.5" y="2.5" width="7" height="7" fill={s.stroke} /> : <circle cx="15" cy="6" r="3.8" fill={s.stroke} />}</svg>;
 
 /** F-167: the hub's topic radar for one fixed pair — the system's own page, where there is nothing to pick.
  *  Same `Radar`, same thin-spoke rule and the hub's one caption sentence; `topics.systems` must hold both keys. */
