@@ -8517,4 +8517,12 @@ CR-133 records Florian's request to prepare the Image Jev v0.1 candidate for pri
 444 items split 265 public / 179 sealed: 294 licensed real-core items and a separate 150-item synthetic everyday-photo
 track. It reports aggregates only. `jevbench-v14-release2` was checked inactive before implementation. The update keeps
 `/jev-models/multimodal-preview` noindex, unlinked, and outside the sitemap; it does not approve or announce a release.
-Final implementation, verification, both-host receipts and review delivery will be recorded after the live checks.
+Implementation and live verification are complete; detailed receipts follow.
+
+### CR-133 implementation and live evidence
+
+- **Commit / deployment:** `77d3aae4dbba65d3feea5a09ead1eaaa7987d137`, Sandy deployment `qv5pcgk8uohvqblj0h90sa5l` (`finished`).
+- **Gates:** focused preview tests 6/6; full suite 1,218 passed / 0 failed / 1 skipped; typecheck and production build clean. Local browser checked 360×800, 390×844, 1440×900 with no horizontal overflow and no page errors.
+- **Both hosts:** canonical and legacy preview routes return 200, identical rendered HTML hash `ff14b99ed9095a07337b9a7fb8144b77bc015e80b60ad48594016f1150529755`, and `/api/meta` reports the deployed revision. Both set robots and Googlebot to `noindex, nofollow`; zero route self/navigation links; zero sitemap entries.
+- **Sealed-data check:** scanned 179 sealed records and 493 nontrivial sealed strings/identifiers against each live page; zero matches. Evidence in `/home/flori/jobs/image-jev-bench-continue-20260923/site-live-verification.json`.
+- **Release status:** CR-133's preview is live for Florian's review only. The candidate is not an approved release; no public announcement was made. Independent scoring critique remains incomplete after three `Incomplete completion (length)` results, so the scorer verdict is still open.
