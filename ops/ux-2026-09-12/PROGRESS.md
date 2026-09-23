@@ -7349,6 +7349,18 @@ CR-127 was the highest request on `main` when this was seeded. Scope is the four
 | F-164 | implemented | same | 87/87 per host live. The clauses sit under the live region, not inside it (five lines → three at 390 px); decision recorded above. |
 | D174 | implemented | `add47ca9`; `ops/daily/gauntlet.mjs` (`approvedForm`); `test/d174-gauntlet-approved-form.test.mjs`; `/opt/benchmarkheaven-daily/runs/2026-09-23T00-41-02-194Z-1264113/reports/benchmarks-step-result.json` | The daily gauntlet fingerprinted a self-reported row in its **joined** form; the evidence guard looks it up **unjoined**, so every reviewed-join vendor row failed the ingest the day its source was re-captured. `reviewArtifact` now normalises its rows once, before the artifact is frozen, so critic and fingerprint see the approved form. Implemented by claude-opus; needs a non-implementer sign-off and the 05:17 receipt. |
 
+### Regression check after the launch-day ingests — `verify-cr-127.mjs` was failing on data, not on a defect
+
+Run on the deployed tree as a regression check for the F-163/F-164 edit, `bin/verify-cr-127.mjs` came back **21/25** on both hosts: four
+"a measured value says it has no percentile" on Vals ProofBench, Public Benefits Bench and BioMysteryBench. Not caused by this iteration and not
+a product defect — the CR-128 ingest added boards where the catalog holds **one** measured peer (`stats.n === 1`, or `n === 2` with one distinct
+value), and `normalize()` returns null there by design, so the cell says "no percentile" exactly as CR-127.2 prescribes. The check assumed every
+measured cell earns a bar. Its expectation now follows the page's own placeability rule and states the other half as well (an unplaceable value
+must not draw a bar, must not stay silent, and must not take the best-measured tint). Live after the patch (`f98f9045`): **25/25 per host**
+(`/opt/benchmarkheaven/state/ux-evidence/iter177/cr127-regression{,-legacy}/`), `verify-cr-127-4.mjs` **33/33**; mutation-tested — declaring
+every row unplaceable fails 8 checks, calling a single-peer axis placeable fails exactly the 4 Vals rows. **A verifier that a data change makes
+wrong is worth reading before it is re-run**: the next ingest of a thin board would have produced the same false alarm.
+
 ### D174 — what the next iteration has to read
 
 - **The fix, replayed against the failing run's own capture (no model calls):** with `approvedForm`, the gauntlet's fingerprint for
