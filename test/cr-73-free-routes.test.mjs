@@ -11,7 +11,7 @@ import { mkdtemp, writeFile, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { excludedWorkerModels } from '../ops/daily/gauntlet.mjs';
+import { excludedWorkerModels, workerMaxTokens } from '../ops/daily/gauntlet.mjs';
 import { freeRouteRole, routeLabel, freeRouterCandidates, selectModel } from '../ops/rebuild-2026-09/bin/worker-policy.mjs';
 
 const KIMI = 'chutes/moonshotai/Kimi-K3-TEE';
@@ -174,4 +174,14 @@ test('CR-73.4: live CLI — the producer stays paid, the critic takes the health
     assert.equal(fallbackMeta.route, 'openrouter');
     assert.deepEqual(fallbackMeta.free_routes_offered, []);
   } finally { await rm(dir, { recursive: true, force: true }); }
+});
+
+test('iteration 180: the critic gets the runner\'s maximum completion bound, the paid producer does not', () => {
+  // "Incomplete completion (length)" is the 8,192-token failure one step later: the 05:17 run on 2026-09-23
+  // lost z-ai/glm-5.3-flash to it twice as critic. A critic writes a verdict per row for a batch of up to 15
+  // rows, after reasoning, and CR-73.4 sends that round to the free route first — so the headroom is both
+  // needed there and cheapest there. The producer is the paid role and stays where its own evidence put it.
+  assert.equal(workerMaxTokens('critic'), 32768); // worker-runner.mjs rejects anything above this
+  assert.equal(workerMaxTokens('producer'), 16384);
+  assert.throws(() => workerMaxTokens('reviewer'), /Unknown worker role/);
 });

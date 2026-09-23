@@ -133,6 +133,11 @@ function validateRows(rows) {
 const MALFORMED_OUTPUT = /malformed/i;
 const CONNECTION_DROP = /^fetch failed$/i;
 export const WORKER_ROLES = ['producer', 'critic'];
+/** Completion-token bound per role; the reasoning is at the call site in `defaultRunner`. */
+export function workerMaxTokens(role) {
+  if (!WORKER_ROLES.includes(role)) throw new Error(`Unknown worker role ${role}`);
+  return role === 'critic' ? 32768 : 16384;
+}
 export function excludedWorkerModels(records, { role = null } = {}) {
   if (role !== null && !WORKER_ROLES.includes(role)) throw new Error(`Unknown worker role ${role}`);
   const malformed = new Map(), dropped = new Map();
@@ -173,9 +178,16 @@ export async function defaultRunner(args, { attempt = 1 } = {}) {
   try {
     // 16,384 completion tokens: on 2026-09-13 both DeepSeek producers spent all 8,192 on
     // reasoning for the 16.6k-token or_efficiency contract packet and never wrote an answer,
-    // which blocked publication. Measured tail since then: producers up to ~310 s and DeepSeek critics
+    // which blocked publication.
+    // 2026-09-23 (iteration 180): the critic gets the runner's maximum, 32,768. "Incomplete completion
+    // (length)" is the same failure one step later — the 05:17 run lost `z-ai/glm-5.3-flash` to it twice
+    // as critic — and a critic has the longer job of the two: a per-row verdict for a batch of up to 15
+    // rows, after reasoning. A cap is not a spend, and it is cheapest exactly here: CR-73.4 sends the
+    // critic round to the free route first, so the extra headroom is usually free. The producer stays at
+    // 16,384 deliberately — it took one length failure on the same run, but it is the paid role and the
+    // OpenRouter balance is thin ($15.91 on 2026-09-23); raise it on evidence, not symmetry. Measured tail since then: producers up to ~310 s and DeepSeek critics
     // 120–160 s (2026-09-14/15), which is why the unattended default is DEFAULT_WORKER_TIMEOUT_SECONDS (600 s).
-    const { stdout, stderr } = await exec('bash', [WORKER_SH, '--max-tokens', '16384', '--timeout', String(workerTimeout), ...args], {
+    const { stdout, stderr } = await exec('bash', [WORKER_SH, '--max-tokens', String(workerMaxTokens(role)), '--timeout', String(workerTimeout), ...args], {
       cwd: REPO, env: { ...process.env, BH_WORKER_REASONING_EFFORT: 'low', BH_WORKER_DISABLE_OPTIONAL_REASONING: '0', BH_WORKER_MAX_PRICE_PER_1M: '4',
         // CR-73.4: the attempt index rides along so the receipt can state which try it was.
         BH_WORKER_ATTEMPT: String(Number.isInteger(attempt) && attempt > 0 ? attempt : 1),
