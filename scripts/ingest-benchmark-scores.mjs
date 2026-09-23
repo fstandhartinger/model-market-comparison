@@ -224,6 +224,22 @@ for (const path of ['data/raw/benchmarks/public-observations.json', 'data/raw/be
       model_id: observation.subject?.model_id ?? null, reason: observation.withdrawn_reason,
       withheld: true, locator: observation.source?.locator ?? null });
   }
+  // D186: a board that restates one of its own row labels without changing the measurement has not withdrawn
+  // anything and has not published a second identity. The row keeps its public ID and value and follows the new
+  // label; its previous label is recorded in the source file with both captures, and republished here as a
+  // withheld rejection carrying the *old* locator — otherwise the retained history states read the old label's
+  // absence as "no longer published" and bridge the same measurement back as an estimate. Only the locator may
+  // suppress it: a model_id here would withhold every retained value of that benchmark × model pair.
+  for (const restatement of raw.source_label_restatements || []) {
+    const row = observations.find((o) => o.id === restatement.id);
+    if (!row || row.benchmark_id !== restatement.benchmark_id || row.subject.source_id !== restatement.to) {
+      throw new Error(`Label restatement does not name a published row under its new label: ${restatement.id}`);
+    }
+    if (!restatement.from || restatement.from === restatement.to || !restatement.reason || !restatement.previous_locator
+      || !restatement.previous_source?.sha256 || !restatement.first_seen?.sha256) throw new Error(`Label restatement is incomplete: ${restatement.id}`);
+    rejected.push({ benchmark_id: restatement.benchmark_id, source_id: restatement.from, model_id: null,
+      reason: restatement.reason, withheld: true, locator: restatement.previous_locator });
+  }
   for (const c of raw.collections || []) if (!collections.some((old) => old.benchmark_id === c.benchmark_id)) collections.push(c);
 }
 for (const e of registry.entries) if (!collections.some((c) => c.benchmark_id === e.id)) collections.push({ benchmark_id: e.id,

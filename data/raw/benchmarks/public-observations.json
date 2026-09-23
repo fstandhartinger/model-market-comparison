@@ -251768,8 +251768,8 @@
       "id": "public:166ad482b48375ffcde7daff",
       "benchmark_id": "mcp-atlas::snapshot-2026-09-21",
       "subject": {
-        "source_id": "Nemotron 3 Ultra (xHigh)",
-        "name": "Nemotron 3 Ultra (xHigh)",
+        "source_id": "Nemotron 3 Ultra (thinking)",
+        "name": "Nemotron 3 Ultra (thinking)",
         "model_id": null,
         "variant": null,
         "harness": null
@@ -251779,11 +251779,11 @@
       "basis": "measured",
       "source": {
         "url": "https://labs.scale.com/leaderboard/mcp_atlas",
-        "retrieved_at": "2026-09-21T01:44:31Z",
+        "retrieved_at": "2026-09-22T07:50:26Z",
         "published_at": null,
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-21-mcp-atlas/3fbd0def41133507de71.gz",
-        "sha256": "3fbd0def41133507de7168c4f302b9c30e3036fd7089a6571c0a2eeab0979297",
-        "locator": "scale_swepro; source row 25; Nemotron 3 Ultra (xHigh); field score"
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22T07-47-17-816Z/55e7d57be35dae9b8f12.gz",
+        "sha256": "55e7d57be35dae9b8f127d96b090a9e0b29b145bdf24c298377177ee1ce26e6e",
+        "locator": "scale_swepro; source row 25; Nemotron 3 Ultra (thinking); field score"
       },
       "protocol": "MCP Atlas (Scale AI), 2026-09-21 snapshot; pass rate over all 1,000 tasks (500 public + 500 held out), a task passes at ≥ 75 % claim coverage under the April 2026 judge, retry handling and 100 tool-call budget; effort as stated in the source label; rank=18; confidenceInterval_upper=3; createdAt=2026-09-17T15:00:58.000Z; contaminationMessage=",
       "comparison_key": null
@@ -291926,6 +291926,28 @@
       "benchmark_id": "matharena-aime::2026",
       "source_id": "Qwen3.5-4B",
       "reason": "MathArena did not run this model on every problem; its accuracy includes item-response-theory estimates for the rest, so it is not a measurement."
+    }
+  ],
+  "source_label_restatements": [
+    {
+      "id": "public:166ad482b48375ffcde7daff",
+      "benchmark_id": "mcp-atlas::snapshot-2026-09-21",
+      "from": "Nemotron 3 Ultra (xHigh)",
+      "to": "Nemotron 3 Ultra (thinking)",
+      "reason": "MCP Atlas restated this row's own effort label on 2026-09-22 without re-running it: between the two captures below exactly one field of exactly one of the board's 34 rows differs (row 25's model label), while score 63.1, rank 18, confidenceInterval_upper 3 and createdAt 2026-09-17T15:00:58.000Z are unchanged, and the 2026-09-23 capture repeats the new label. The published row therefore keeps its public ID and value under the new label; the previous label is withheld so the retained states cannot republish the same measurement as a 'no longer published' estimate.",
+      "previous_locator": "scale_swepro; source row 25; Nemotron 3 Ultra (xHigh); field score",
+      "previous_source": {
+        "url": "https://labs.scale.com/leaderboard/mcp_atlas",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-21T07-46-30-273Z/79cb9827e491d881a8df.gz",
+        "sha256": "79cb9827e491d881a8dff2138a68f0703fa61785486f436d15d5deb12b214c3b",
+        "retrieved_at": "2026-09-21T07:49:46Z"
+      },
+      "first_seen": {
+        "url": "https://labs.scale.com/leaderboard/mcp_atlas",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22T07-47-17-816Z/55e7d57be35dae9b8f12.gz",
+        "sha256": "55e7d57be35dae9b8f127d96b090a9e0b29b145bdf24c298377177ee1ce26e6e",
+        "retrieved_at": "2026-09-22T07:50:26Z"
+      }
     }
   ]
 }
