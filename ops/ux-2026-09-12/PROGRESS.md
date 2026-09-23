@@ -7919,3 +7919,10 @@ generated timestamps.
 Worth flagging for whoever reconciles the two: **their push landed inside the unattended run's window** (the 06:58 run was in its benchmark phase
 and held the writer lock). It did not collide this time, but a push to `main` while a run is preparing to publish is exactly what makes that run's
 own push non-fast-forward, which is why the pre-push hook refuses it for this workstream.
+
+**Their work was spot-checked live rather than assumed, since it is already serving on both hosts** (no ledger row is claimed here — CR-129 is
+that job's, and this is one engine checking another's shipped work): `/jev-models/laya` returns 200 at 1440 and 390 px with the system's own H1,
+a self-canonical, `WebPage,BreadcrumbList` JSON-LD **only** — no `Product`/`AggregateRating`, as their commit states — no horizontal overflow and
+no page errors; `/jev-models/multimodal-preview` still carries `noindex, nofollow` and no canonical, so CR-120.1's exclusion survived; and the
+sitemap holds **54** `/jev-models` URLs (the hub, `/v1` and 52 systems, matching the artifact's 52 rows) with the preview absent. Their three
+claims hold.
