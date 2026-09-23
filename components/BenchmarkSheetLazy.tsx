@@ -60,8 +60,11 @@ export function SheetRows({ modelId, rows }: { modelId: string; rows: SheetRow[]
   return <ul className="divide-y divide-[rgb(var(--line))]">
     {rows.map((a) => <li key={a.axisId}>
       <LazyEvidenceRow modelId={modelId} axisId={a.axisId} summary={<summary className="grid min-h-0 list-none grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 !min-h-0 !py-1.5 text-sm md:grid-cols-[minmax(0,3fr)_minmax(0,2fr)_6.5rem_5.5rem]">
-          {/* F-69: below md the name takes its own line and wraps; identifying text never truncates (design-system rule). */}
-          <span className="col-span-2 min-w-0 md:col-span-1 md:truncate">
+          {/* F-69: below md the name takes its own line and wraps; identifying text never truncates (design-system rule).
+              F-170: at md+ the cell used to `truncate`, so at 1440 the long names ("Artificial Analysis Coding Agent
+              Index v1.5") ended in an ellipsis — the one place the sheet broke that rule. The cell wraps at every
+              width instead, and the title keeps the full name reachable for a cropped tooltip-less reader. */}
+          <span className="col-span-2 min-w-0 md:col-span-1" title={a.suffix ? `${a.name} ${a.suffix}` : a.name}>
             <span aria-hidden="true" className="bh-row-chevron mr-1 group-open:rotate-90">›</span>
             <span className="font-medium">{a.name}</span>{a.suffix && <> <span className="bh-muted text-xs">{a.suffix}</span></>}
           </span>

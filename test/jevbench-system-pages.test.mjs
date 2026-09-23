@@ -6,6 +6,7 @@ import { readJevbenchV12, jevbenchV12View } from '../lib/jevbench-v12.mjs';
 const page = await readFile(new URL('../app/jev-models/[system]/page.tsx', import.meta.url), 'utf8');
 const hub = await readFile(new URL('../app/jev-models/page.tsx', import.meta.url), 'utf8');
 const sitemap = await readFile(new URL('../app/sitemap.ts', import.meta.url), 'utf8');
+const board = await readFile(new URL('../components/JevModelsV12.tsx', import.meta.url), 'utf8');
 
 test('CR-129 the current artifact really has semif-qwen3.5-4b and laya (the two Trends queries this targets)', async () => {
   const view = jevbenchV12View(await readJevbenchV12());
@@ -50,9 +51,12 @@ test('CR-129 sitemap gets one entry per JevBench system and still excludes multi
   assert.doesNotMatch(sitemap, /multimodal-preview/);
 });
 
-test('CR-129 the hub page links out to the new per-system pages, including semif and laya', () => {
-  assert.match(hub, /\/jev-models\/\$\{r\.key\}/);
-  assert.match(hub, /Browse every JevBench system/);
+test('CR-129 the board links out to the new per-system pages, including semif and laya', () => {
+  // F-169 (Fable pass 32): the hub's list of 52 links is gone; a system is reached from the row that
+  // names it, so the template these pins follow moved from the page to the board component.
+  assert.match(board, /href=\{`\/jev-models\/\$\{r\.key\}`\}/);
+  assert.doesNotMatch(hub, /Browse every JevBench system/);
+  assert.doesNotMatch(hub, /data-bh-jev-system-links/);
 });
 
 test('CR-129 the hub HTML actually contains links for semif-qwen3.5-4b and laya once rendered data is substituted', async () => {
@@ -63,5 +67,5 @@ test('CR-129 the hub HTML actually contains links for semif-qwen3.5-4b and laya 
   const all = [...view.ranked, ...view.honorable, ...view.partial];
   assert.ok(all.some((r) => r.key === 'semif-qwen3.5-4b'));
   assert.ok(all.some((r) => r.key === 'laya'));
-  assert.doesNotMatch(hub, /jev-models\/\[system\]/); // sanity: no literal dynamic-segment text leaked into the hub
+  assert.doesNotMatch(board, /jev-models\/\[system\]/); // sanity: no literal dynamic-segment text leaked into the board
 });

@@ -56,14 +56,53 @@ function Radar({ spokes, series, size, id, title, desc }: { spokes: Spoke[]; ser
   </svg>;
 }
 
+// F-167 (Fable pass 32): the per-system page draws the same topic radar for a fixed pair, so the two
+// derivations the hub does — the pair's colours and the topic spokes — are computed here once and used
+// by both. `JevPairRadar` below is the hub's second figure with the selects removed.
+function pairSeries(A: JevV12Row, B: JevV12Row): Series[] {
+  const same = family(A.cls) === family(B.cls);
+  return [{ name: short(A.display), stroke: colour(A.cls), dashed: false, square: false },
+    { name: short(B.display), stroke: same ? `color-mix(in srgb, ${colour(B.cls)} 55%, var(--text))` : colour(B.cls), dashed: same, square: true }];
+}
+
+function topicSpokesFor(pair: JevV12Row[], topics: JevTopicsView): Spoke[] {
+  const cells = pair.map((r) => topics.systems[r.key]);
+  return topics.topics.map((t) => ({
+    key: t.key, lines: t.short.split(" ").reduce<string[]>((ls, w) => (ls.length && (ls[ls.length - 1] + " " + w).length <= 13 ? [...ls.slice(0, -1), `${ls[ls.length - 1]} ${w}`] : [...ls, w]), []),
+    thin: cells.map((c) => c[t.key].attempted < topics.minAttempted),
+    values: cells.map((c) => (c[t.key].accuracy === null ? null : c[t.key].accuracy! * 100)),
+    texts: cells.map((c) => (c[t.key].attempted < topics.minAttempted ? `n=${c[t.key].attempted}` : pct(c[t.key].accuracy))),
+  }));
+}
+
+const Swatch = ({ s }: { s: Series }) => <svg width="30" height="12" aria-hidden="true" className="mr-1.5 inline-block align-middle"><line x1="1" y1="6" x2="29" y2="6" stroke={s.stroke} strokeWidth="2.4" strokeDasharray={s.dashed ? "6 4" : undefined} />{s.square ? <rect x="11.5" y="2.5" width="7" height="7" fill={s.stroke} /> : <circle cx="15" cy="6" r="3.8" fill={s.stroke} />}</svg>;
+
+/** F-167: the hub's topic radar for one fixed pair — the system's own page, where there is nothing to pick.
+ *  Same `Radar`, same thin-spoke rule and the hub's one caption sentence; `topics.systems` must hold both keys. */
+export function JevPairRadar({ a, b, topics }: { a: JevV12Row; b: JevV12Row; topics: JevTopicsView }) {
+  if (!topics.systems[a.key] || !topics.systems[b.key]) return null;
+  const pair = [a, b], series = pairSeries(a, b), spokes = topicSpokesFor(pair, topics);
+  const desc = `Accuracy by subject topic, ${series[0].name} vs ${series[1].name}. ` + topics.topics.map((t, i) => `${t.label} (${t.n} items): ${spokes[i].texts[0]} vs ${spokes[i].texts[1]}`).join("; ") + ".";
+  const anyThin = spokes.some((sp) => sp.thin.some(Boolean));
+  return <figure className="min-w-0" data-bh-jev-system-radar={a.key}>
+    <ul className="mb-1 space-y-1 text-[13px]" aria-label="Legend" data-bh-jev-system-radar-legend>
+      {pair.map((r, k) => <li key={r.key}><Swatch s={series[k]} /><b>{short(r.display)}</b></li>)}
+    </ul>
+    <Radar spokes={spokes} series={series} size={{ w: 460, h: 370, r: 100 }} id={`jev-system-radar-${a.key}`} title="Radar: accuracy by subject topic, this system and the reference" desc={desc} />
+    <figcaption className="bh-muted space-y-1 text-[12px]">
+      <span className="block">Share of each topic&apos;s decisions answered correctly, all tiers together — compare the two systems within a topic, not topics with each other.</span>
+      {anyThin && <span className="block" data-bh-jev-system-radar-thin>Grey “n=…”: fewer than {topics.minAttempted} items of that topic were answered — too few to plot.</span>}
+    </figcaption>
+  </figure>;
+}
+
 export function JevRadars({ ranked, honorable, partial, topics }: { ranked: JevV12Row[]; honorable: JevV12Row[]; partial: JevV12Row[]; topics: JevTopicsView }) {
   const all = [...ranked, ...honorable, ...partial];
   const first = ranked.find((r) => r.key === "jev-1.13.0") ?? ranked[0];
   const [a, setA] = useState(first.key);
   const [b, setB] = useState((ranked.find((r) => r.key !== first.key) ?? ranked[1]).key);
   const A = all.find((r) => r.key === a) ?? first, B = all.find((r) => r.key === b) ?? ranked[1];
-  const same = family(A.cls) === family(B.cls);
-  const series: Series[] = [{ name: short(A.display), stroke: colour(A.cls), dashed: false, square: false }, { name: short(B.display), stroke: same ? `color-mix(in srgb, ${colour(B.cls)} 55%, var(--text))` : colour(B.cls), dashed: same, square: true }];
+  const series = pairSeries(A, B);
   const pair = [A, B];
   const min = topics.minAttempted;
   const axisSpokes: Spoke[] = AXES.map((k) => ({
@@ -72,12 +111,7 @@ export function JevRadars({ ranked, honorable, partial, topics }: { ranked: JevV
     texts: pair.map((r) => (r.axes[k] === null ? "none (0)" : one(r.axes[k]))),
   }));
   const cells = pair.map((r) => topics.systems[r.key]);
-  const topicSpokes: Spoke[] = topics.topics.map((t) => ({
-    key: t.key, lines: t.short.split(" ").reduce<string[]>((ls, w) => (ls.length && (ls[ls.length - 1] + " " + w).length <= 13 ? [...ls.slice(0, -1), `${ls[ls.length - 1]} ${w}`] : [...ls, w]), []),
-    thin: cells.map((c) => c[t.key].attempted < min),
-    values: cells.map((c) => (c[t.key].accuracy === null ? null : c[t.key].accuracy! * 100)),
-    texts: cells.map((c) => (c[t.key].attempted < min ? `n=${c[t.key].attempted}` : pct(c[t.key].accuracy))),
-  }));
+  const topicSpokes = topicSpokesFor(pair, topics);
   // CR-97: an honorable mention keeps every number, so it stays selectable here — it is simply never labelled with a rank.
   const notRanked = (r: JevV12Row) => (r.ranked ? "" : r.listing === "honorable_mention" ? " (honorable mention)" : " (partial)");
   const option = (r: JevV12Row) => <option key={r.key} value={r.key}>{r.rank ? `${r.rank}. ` : ""}{short(r.display)}{notRanked(r)}</option>;
@@ -89,7 +123,6 @@ export function JevRadars({ ranked, honorable, partial, topics }: { ranked: JevV
       {honorable.length > 0 && <optgroup label="Honorable mentions (not ranked)">{honorable.filter((r) => r.key !== other).map(option)}</optgroup>}
       <optgroup label="Partial runs (not ranked)">{partial.filter((r) => r.key !== other).map(option)}</optgroup>
     </select></label>;
-  const Swatch = ({ s }: { s: Series }) => <svg width="30" height="12" aria-hidden="true" className="mr-1.5 inline-block align-middle"><line x1="1" y1="6" x2="29" y2="6" stroke={s.stroke} strokeWidth="2.4" strokeDasharray={s.dashed ? "6 4" : undefined} />{s.square ? <rect x="11.5" y="2.5" width="7" height="7" fill={s.stroke} /> : <circle cx="15" cy="6" r="3.8" fill={s.stroke} />}</svg>;
   const scoreText = (r: JevV12Row) => `JevBench Score ${one(r.main)}${r.rank ? ` (#${r.rank})` : r.listing === "honorable_mention" ? " (honorable mention, not ranked)" : " (partial run, not ranked)"}`;
   const axisDesc = `${series[0].name} vs ${series[1].name}. ` + AXES.map((k, i) => `${AXIS_LABEL[k]}: ${axisSpokes[i].texts[0]} vs ${axisSpokes[i].texts[1]}`).join("; ") + ".";
   const topicDesc = `Accuracy by subject topic, ${series[0].name} vs ${series[1].name}. ` + topics.topics.map((t, i) => `${t.label} (${t.n} items): ${topicSpokes[i].texts[0]} vs ${topicSpokes[i].texts[1]}`).join("; ") + ".";

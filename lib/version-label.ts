@@ -26,12 +26,30 @@ export function versionHeading(version: string): string {
   return v.kind === "snapshot" ? `Published ${v.date}` : `Version ${version.replace(/^v(?=\d)/i, "")}`;
 }
 
+/** A version token appears in a name when it stands there as its own word — "4.0" inside
+ *  "Terminal-Bench v4.0 (AA…)" counts (the release "v" is part of the marker, not of the token),
+ *  "1.1" inside "1.10" does not. */
+function tokenInName(token: string, name: string): boolean {
+  const escaped = token.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return new RegExp(`(^|[^A-Za-z0-9])v?${escaped}($|[^A-Za-z0-9.])`, "i").test(name);
+}
+
 /** F-61: the version as a suffix after a benchmark name — or nothing when the name already
  *  carries it ("AA-LCR v1.1", "GDPval-AA v2", "Terminal-Bench v4.0 (AA)") or the version is a
- *  retention snapshot (the date column says that). Word-bounded so "v2" does not hide inside "v2.1". */
+ *  retention snapshot (the date column says that). Word-bounded so "v2" does not hide inside "v2.1".
+ *  F-170: the exact-label test only catches a name that spells the version the way we render it, so
+ *  "Terminal-Bench 4.0" still carried "v4.0" and "Terminal-Bench v4.0 (AA, upstream timeouts)" carried
+ *  a machine-shaped "4.0-upstream-timeouts". A version whose every token (split on `-`/`_`, `.`-groups
+ *  kept whole, a leading `v` stripped) the name already says as a word adds nothing and is dropped; a
+ *  version with one token the name lacks prints in full, as before. Measured against the whole
+ *  registry when this landed: 38 sub-lines go, all of them the name's own version repeated, and no
+ *  axis loses a version the reader could not already read off the name. */
 export function versionSuffix(name: string, version: string): string | null {
   const v = humanVersion(version);
   if (v.kind === "snapshot" || v.kind === "pin") return null;
   const escaped = v.label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  return new RegExp(`(^|[\\s(])${escaped}(?=$|[\\s)])`, "i").test(name) ? null : v.label;
+  if (new RegExp(`(^|[\\s(])${escaped}(?=$|[\\s)])`, "i").test(name)) return null;
+  const tokens = version.split(/[-_]+/).map((token) => token.replace(/^v(?=\d)/i, "")).filter(Boolean);
+  if (tokens.length > 0 && tokens.every((token) => tokenInName(token, name))) return null;
+  return v.label;
 }

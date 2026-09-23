@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import type { JevAxis, JevTier12, JevV12Row, JevV12View } from "../lib/jevbench-v12.mjs";
 import type { JevTaskScope, JevTasksView } from "../lib/jevbench-v12-tasks.mjs";
@@ -62,6 +63,14 @@ export function CostUnitNote({ view, className = "", full = false }: { view: Jev
       ? <>💲 <b className="text-gray-200">{view.costUnit.unit}</b>, not {view.costUnit.not_unit}. {view.costUnit.worked_example}</>
       : <>💲 <b className="text-gray-200">{view.costUnit.unit}</b>, not {notUnit} — one decision ≈ {Math.round(view.costUnit.mean_input_tokens_per_decision_jev)} input tokens.</>}
   </span>;
+}
+
+// F-169 (Fable pass 32): a reader who wants one system reaches it from its own row, so the board row's
+// name is the internal link to `/jev-models/<key>` — the page that carries that system's number, its
+// axes and the external project link. The row no longer carries the outbound link itself; it stays on
+// the system page and, for a marked system, in the † notes disclosure below the table.
+function SystemLink({ r, children, className = "" }: { r: JevV12Row; children: ReactNode; className?: string }) {
+  return <Link href={`/jev-models/${r.key}`} className={`underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent hover:decoration-current ${className}`} title={r.display} data-bh-jev-system-row-link={r.key}>{children}</Link>;
 }
 
 function ProjectLink({ r, children, className = "" }: { r: JevV12Row; children: ReactNode; className?: string }) {
@@ -221,7 +230,7 @@ function Table({ view, rows, honorableRows, partialRows, w, scope }: { view: Jev
   const R = ({ r }: { r: Row }) => <tr data-bh-jev12-row={r.key} data-bh-jev12-ranked={r.ranked ? "1" : "0"} className={r.ranked ? "" : "bh-jev11-partial"}>
     <td className="bh-muted tabular">{r.rank ?? ""}{!d.official && r.rank !== null && <Delta d={r.delta} />}</td>
     <th scope="row" className="bh-jev-sticky text-left font-normal"><span className="bh-muted block text-[11px] leading-tight">by {r.author}</span>
-      <span className="block font-semibold leading-snug"><ProjectLink r={r}>{short(r.display)}</ProjectLink>{r.footnote ? <sup><a href={`#jev12-note-${r.key}`} className="no-underline" title={firstSentence(r.footnote)} aria-label={`Note on ${short(r.display)}`} onClick={openNotes}>†</a></sup> : null}</span>
+      <span className="block font-semibold leading-snug"><SystemLink r={r}>{short(r.display)}</SystemLink>{r.footnote ? <sup><a href={`#jev12-note-${r.key}`} className="no-underline" title={firstSentence(r.footnote)} aria-label={`Note on ${short(r.display)}`} onClick={openNotes}>†</a></sup> : null}</span>
       {(() => { const cfg = r.display.slice(short(r.display).length).replace(/^[ ,]*\(?|\)$/g, ""); return cfg && cfg !== r.author ? <span className="bh-muted block text-[11px] leading-tight">{cfg}</span> : null; })()}
       {!r.ranked && <span className="bh-thin-tag mt-1 inline-block" title={r.notRankedBecause ?? (r.footnote ? firstSentence(r.footnote) : undefined)}>{NOT_RANKED[r.listing]} · not ranked</span>}</th>
     <td className="tabular"><b className="text-lg" data-bh-jevc-cell-score>{one(r.score)}</b>{!d.official && <span className="bh-muted block text-[11px]" data-bh-jevc-cell-official>official {one(r.official)}</span>}</td>
@@ -267,7 +276,7 @@ function Table({ view, rows, honorableRows, partialRows, w, scope }: { view: Jev
     {/* F-152 (Fable pass 28): the † notes are a closed disclosure — a row's † opens it and lands on its entry; the first sentence is the †'s title. */}
     {notes.length > 0 && <details id="jev12-notes" className="mt-2 text-xs" data-bh-jev12-notes>
       <summary className="cursor-pointer text-accent">† Notes on {notes.length} marked systems — how each was run</summary>
-      <ul className="bh-muted mt-2 space-y-1">{notes.map((r) => <li key={r.key} id={`jev12-note-${r.key}`}>† <b className="text-gray-200">{short(r.display)}</b>: {r.footnote}</li>)}</ul>
+      <ul className="bh-muted mt-2 space-y-1">{notes.map((r) => <li key={r.key} id={`jev12-note-${r.key}`}>† <b className="text-gray-200"><ProjectLink r={r}>{short(r.display)}</ProjectLink></b>: {r.footnote}</li>)}</ul>
     </details>}
   </section>;
 }
@@ -297,7 +306,7 @@ function HonorableMentions({ view, rows }: { view: JevV12View; rows: Row[] }) {
       const base = d ? jev(d.runs_on_key) : null;
       return <article key={r.key} className="bh-panel mt-3 p-4" data-bh-jev12-honorable-row={r.key}>
         <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-          <h3 className="text-lg font-semibold"><ProjectLink r={r}>{short(r.display)}</ProjectLink>
+          <h3 className="text-lg font-semibold"><SystemLink r={r}>{short(r.display)}</SystemLink>
             <span className="bh-thin-tag ml-2 align-middle" data-bh-jev12-honorable-tag>no rank</span></h3>
           <p className="tabular text-sm"><b className="text-lg" data-bh-jev12-honorable-score={r.main.toFixed(3)}>{one(r.main)}</b> {SCORE_NAME}
             {base && <span className="bh-muted"> · {short(base.display)} (#{base.rank}) scores {one(base.main)}</span>}</p>
