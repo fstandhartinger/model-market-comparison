@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "note": "CR-128 selective source observations. Each number is traceable to the hash-bound primary source in its row; vendor submissions retain self_reported basis.",
+  "note": "CR-128 selective source observations. Each number is traceable to the hash-bound primary source in its row; vendor submissions retain self_reported basis. Rows under withdrawn_observations are retained evidence that is deliberately not published; each carries its own withdrawn_reason.",
   "observations": [
     {
       "id": "cr128:617525c8a03cd77e35896a8a",
@@ -7117,126 +7117,6 @@
       "comparison_key": null
     },
     {
-      "id": "cr128:b98ef73839af20db3618b2c3",
-      "benchmark_id": "epoch-gpqa-diamond::snapshot-2026-09-18",
-      "subject": {
-        "source_id": "gpt-6-astra_max",
-        "name": "gpt-6-astra_max",
-        "model_id": "gpt-6-astra::max",
-        "variant": "max",
-        "harness": null
-      },
-      "value": 0.9436026936026937,
-      "unit": "fraction",
-      "basis": "measured",
-      "source": {
-        "url": "https://epoch.ai/data/eci_benchmarks.csv",
-        "retrieved_at": "2026-09-22T21:03:51.820574+00:00",
-        "published_at": null,
-        "sha256": "1bb9d35fbcf31f43e8880db2dc7da0a4f70cda6f3448e1f6b6fa51e12a1d2d7d",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/1bb9d35fbcf31f43e888.gz",
-        "locator": "Epoch: GPQA diamond; gpt-6-astra_max; exact source excerpt: GPQA diamond,...,GPT-6 Astra,gpt-6-astra_max,performance=0.9436026936026937 (source column empty = Epoch-run)"
-      },
-      "protocol": "Epoch: GPQA diamond; source configuration gpt-6-astra_max; page date CSV \"Updated Sep. 22, 2026\"; Epoch note: the source says OpenAI provided pre-release access; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"gpt-6-astra_max\",\"source_quote\":\"GPQA diamond,...,GPT-6 Astra,gpt-6-astra_max,performance=0.9436026936026937 (source column empty = Epoch-run)\",\"source_unit\":\"%\",\"displayed_value\":94.36}",
-      "comparison_key": null
-    },
-    {
-      "id": "cr128:f770139bc17be4ca581ee407",
-      "benchmark_id": "otis-mock-aime::2024-2025",
-      "subject": {
-        "source_id": "gpt-6-astra_max",
-        "name": "gpt-6-astra_max",
-        "model_id": "gpt-6-astra::max",
-        "variant": "max",
-        "harness": null
-      },
-      "value": 1,
-      "unit": "fraction",
-      "basis": "measured",
-      "source": {
-        "url": "https://epoch.ai/data/eci_benchmarks.csv",
-        "retrieved_at": "2026-09-22T21:03:51.820574+00:00",
-        "published_at": null,
-        "sha256": "1bb9d35fbcf31f43e8880db2dc7da0a4f70cda6f3448e1f6b6fa51e12a1d2d7d",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/1bb9d35fbcf31f43e888.gz",
-        "locator": "Epoch: OTIS Mock AIME 2024-2025; gpt-6-astra_max; exact source excerpt: OTIS Mock AIME 2024-2025,...,GPT-6 Astra,gpt-6-astra_max,performance=1.0 (source column empty = Epoch-run)"
-      },
-      "protocol": "Epoch: OTIS Mock AIME 2024-2025; source configuration gpt-6-astra_max; page date CSV \"Updated Sep. 22, 2026\"; Epoch note: the source says OpenAI provided pre-release access; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"gpt-6-astra_max\",\"source_quote\":\"OTIS Mock AIME 2024-2025,...,GPT-6 Astra,gpt-6-astra_max,performance=1.0 (source column empty = Epoch-run)\",\"source_unit\":\"%\",\"displayed_value\":100}",
-      "comparison_key": null
-    },
-    {
-      "id": "cr128:03bb726c1259417c9b8ac499",
-      "benchmark_id": "chess-puzzles::snapshot-2026-09-18",
-      "subject": {
-        "source_id": "gpt-6-astra_max",
-        "name": "gpt-6-astra_max",
-        "model_id": "gpt-6-astra::max",
-        "variant": "max",
-        "harness": null
-      },
-      "value": 0.7053872053872053,
-      "unit": "fraction",
-      "basis": "measured",
-      "source": {
-        "url": "https://epoch.ai/data/eci_benchmarks.csv",
-        "retrieved_at": "2026-09-22T21:03:51.820574+00:00",
-        "published_at": null,
-        "sha256": "1bb9d35fbcf31f43e8880db2dc7da0a4f70cda6f3448e1f6b6fa51e12a1d2d7d",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/1bb9d35fbcf31f43e888.gz",
-        "locator": "Epoch: Chess Puzzles; gpt-6-astra_max; exact source excerpt: Chess Puzzles,...,GPT-6 Astra,gpt-6-astra_max,performance=0.7053872053872053 (source column empty = Epoch-run)"
-      },
-      "protocol": "Epoch: Chess Puzzles; source configuration gpt-6-astra_max; page date CSV \"Updated Sep. 22, 2026\"; Epoch note: the source says OpenAI provided pre-release access; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"gpt-6-astra_max\",\"source_quote\":\"Chess Puzzles,...,GPT-6 Astra,gpt-6-astra_max,performance=0.7053872053872053 (source column empty = Epoch-run)\",\"source_unit\":\"%\",\"displayed_value\":70.54}",
-      "comparison_key": null
-    },
-    {
-      "id": "cr128:f78b50349512951b52ed3239",
-      "benchmark_id": "frontiermath-tier-4::v2",
-      "subject": {
-        "source_id": "gpt-6-astra_none",
-        "name": "gpt-6-astra_none",
-        "model_id": null,
-        "variant": "none",
-        "harness": null
-      },
-      "value": 0.976,
-      "unit": "fraction",
-      "basis": "measured",
-      "source": {
-        "url": "https://epoch.ai/data/eci_benchmarks.csv",
-        "retrieved_at": "2026-09-22T21:03:51.820574+00:00",
-        "published_at": null,
-        "sha256": "1bb9d35fbcf31f43e8880db2dc7da0a4f70cda6f3448e1f6b6fa51e12a1d2d7d",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/1bb9d35fbcf31f43e888.gz",
-        "locator": "Epoch: FrontierMath-Tier-4-v2-Private; gpt-6-astra_none; exact source excerpt: FrontierMath-Tier-4-v2-Private,...,GPT-6 Astra,gpt-6-astra_none,performance=0.976 (source column empty = Epoch-run)"
-      },
-      "protocol": "Epoch: FrontierMath-Tier-4-v2-Private; source configuration gpt-6-astra_none; page date CSV \"Updated Sep. 22, 2026\"; Epoch note: the source says OpenAI provided pre-release access; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"gpt-6-astra_none\",\"source_quote\":\"FrontierMath-Tier-4-v2-Private,...,GPT-6 Astra,gpt-6-astra_none,performance=0.976 (source column empty = Epoch-run)\",\"source_unit\":\"%\",\"displayed_value\":97.6}",
-      "comparison_key": null
-    },
-    {
-      "id": "cr128:4571469592278ecb48384f9b",
-      "benchmark_id": "mystery-game-puzzles::snapshot-2026-09-18",
-      "subject": {
-        "source_id": "gpt-6-astra_max",
-        "name": "gpt-6-astra_max",
-        "model_id": "gpt-6-astra::max",
-        "variant": "max",
-        "harness": null
-      },
-      "value": 0.8237497246089448,
-      "unit": "fraction",
-      "basis": "measured",
-      "source": {
-        "url": "https://epoch.ai/data/eci_benchmarks.csv",
-        "retrieved_at": "2026-09-22T21:03:51.820574+00:00",
-        "published_at": null,
-        "sha256": "1bb9d35fbcf31f43e8880db2dc7da0a4f70cda6f3448e1f6b6fa51e12a1d2d7d",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/1bb9d35fbcf31f43e888.gz",
-        "locator": "Epoch: Mystery Game Puzzles; gpt-6-astra_max; exact source excerpt: Mystery Game Puzzles,...,GPT-6 Astra,gpt-6-astra_max,performance=0.8237497246089448 (source column empty = Epoch-run)"
-      },
-      "protocol": "Epoch: Mystery Game Puzzles; source configuration gpt-6-astra_max; page date CSV \"Updated Sep. 22, 2026\"; Epoch note: the source says OpenAI provided pre-release access; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"gpt-6-astra_max\",\"source_quote\":\"Mystery Game Puzzles,...,GPT-6 Astra,gpt-6-astra_max,performance=0.8237497246089448 (source column empty = Epoch-run)\",\"source_unit\":\"%\",\"displayed_value\":82.37}",
-      "comparison_key": null
-    },
-    {
       "id": "cr128:f4789eff68547d3a1055d817",
       "benchmark_id": "frontiercode::1.1",
       "subject": {
@@ -7307,6 +7187,133 @@
       },
       "protocol": "FrontierCode 1.1 (Main), Cognition; source configuration GPT-6 Sol (config not shown on page); page date changelog \"Sep 22, 2026: Added GPT-6 Sol and GPT-6 Luna. Added Claude Opus 5.5.\"; source row fields (normalized serialization): {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (config not shown on page)\",\"source_quote\":\"{\\\"@type\\\":\\\"ListItem\\\",\\\"position\\\":7,\\\"name\\\":\\\"GPT-6 Sol\\\",\\\"description\\\":\\\"Score 49.3%\\\"}\",\"source_unit\":\"%\",\"displayed_value\":49.3} Source note: the changelog says GPT-6 Luna was added, but Luna is not in the published static top-10 list; no score is inferred for Luna.",
       "comparison_key": null
+    }
+  ],
+  "withdrawn_observations": [
+    {
+      "id": "cr128:b98ef73839af20db3618b2c3",
+      "benchmark_id": "epoch-gpqa-diamond::snapshot-2026-09-18",
+      "subject": {
+        "source_id": "gpt-6-astra_max",
+        "name": "gpt-6-astra_max",
+        "model_id": "gpt-6-astra::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.9436026936026937,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/eci_benchmarks.csv",
+        "retrieved_at": "2026-09-22T21:03:51.820574+00:00",
+        "published_at": null,
+        "sha256": "1bb9d35fbcf31f43e8880db2dc7da0a4f70cda6f3448e1f6b6fa51e12a1d2d7d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/1bb9d35fbcf31f43e888.gz",
+        "locator": "Epoch: GPQA diamond; gpt-6-astra_max; exact source excerpt: GPQA diamond,...,GPT-6 Astra,gpt-6-astra_max,performance=0.9436026936026937 (source column empty = Epoch-run)"
+      },
+      "protocol": "Epoch: GPQA diamond; source configuration gpt-6-astra_max; page date CSV \"Updated Sep. 22, 2026\"; Epoch note: the source says OpenAI provided pre-release access; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"gpt-6-astra_max\",\"source_quote\":\"GPQA diamond,...,GPT-6 Astra,gpt-6-astra_max,performance=0.9436026936026937 (source column empty = Epoch-run)\",\"source_unit\":\"%\",\"displayed_value\":94.36}",
+      "comparison_key": null,
+      "withdrawn_reason": "D180 (2026-09-23): withdrawn from publication. The value is the `performance` column of https://epoch.ai/data/eci_benchmarks.csv, which is Epoch's chance-normalised ECI input statistic, not the \"Best score (across scorers)\" each of these registry identities declares as its metric. Proven offline against the two retained captures: for GPQA Diamond all 180 configurations present in both files disagree, and 130 of them equal (best - 0.25) / (1 - 0.25) exactly; the implied baseline is 0.25 for GPQA Diamond (four choices), 0.0496 for Chess Puzzles and 0.0922 for Mystery Game Puzzles - a per-benchmark chance baseline, not a refit or a rounding. Three of these rows were published beside the hub export's own row for the same configuration, so one board carried two different measured values. The underlying Epoch runs stay published through the hub-export rows; nothing is lost. Re-admitting any of these needs its own versioned registry identity for the ECI statistic, not this one."
+    },
+    {
+      "id": "cr128:f770139bc17be4ca581ee407",
+      "benchmark_id": "otis-mock-aime::2024-2025",
+      "subject": {
+        "source_id": "gpt-6-astra_max",
+        "name": "gpt-6-astra_max",
+        "model_id": "gpt-6-astra::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 1,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/eci_benchmarks.csv",
+        "retrieved_at": "2026-09-22T21:03:51.820574+00:00",
+        "published_at": null,
+        "sha256": "1bb9d35fbcf31f43e8880db2dc7da0a4f70cda6f3448e1f6b6fa51e12a1d2d7d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/1bb9d35fbcf31f43e888.gz",
+        "locator": "Epoch: OTIS Mock AIME 2024-2025; gpt-6-astra_max; exact source excerpt: OTIS Mock AIME 2024-2025,...,GPT-6 Astra,gpt-6-astra_max,performance=1.0 (source column empty = Epoch-run)"
+      },
+      "protocol": "Epoch: OTIS Mock AIME 2024-2025; source configuration gpt-6-astra_max; page date CSV \"Updated Sep. 22, 2026\"; Epoch note: the source says OpenAI provided pre-release access; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"gpt-6-astra_max\",\"source_quote\":\"OTIS Mock AIME 2024-2025,...,GPT-6 Astra,gpt-6-astra_max,performance=1.0 (source column empty = Epoch-run)\",\"source_unit\":\"%\",\"displayed_value\":100}",
+      "comparison_key": null,
+      "withdrawn_reason": "D180 (2026-09-23): withdrawn from publication. The value is the `performance` column of https://epoch.ai/data/eci_benchmarks.csv, which is Epoch's chance-normalised ECI input statistic, not the \"Best score (across scorers)\" each of these registry identities declares as its metric. Proven offline against the two retained captures: for GPQA Diamond all 180 configurations present in both files disagree, and 130 of them equal (best - 0.25) / (1 - 0.25) exactly; the implied baseline is 0.25 for GPQA Diamond (four choices), 0.0496 for Chess Puzzles and 0.0922 for Mystery Game Puzzles - a per-benchmark chance baseline, not a refit or a rounding. Three of these rows were published beside the hub export's own row for the same configuration, so one board carried two different measured values. The underlying Epoch runs stay published through the hub-export rows; nothing is lost. Re-admitting any of these needs its own versioned registry identity for the ECI statistic, not this one."
+    },
+    {
+      "id": "cr128:03bb726c1259417c9b8ac499",
+      "benchmark_id": "chess-puzzles::snapshot-2026-09-18",
+      "subject": {
+        "source_id": "gpt-6-astra_max",
+        "name": "gpt-6-astra_max",
+        "model_id": "gpt-6-astra::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.7053872053872053,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/eci_benchmarks.csv",
+        "retrieved_at": "2026-09-22T21:03:51.820574+00:00",
+        "published_at": null,
+        "sha256": "1bb9d35fbcf31f43e8880db2dc7da0a4f70cda6f3448e1f6b6fa51e12a1d2d7d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/1bb9d35fbcf31f43e888.gz",
+        "locator": "Epoch: Chess Puzzles; gpt-6-astra_max; exact source excerpt: Chess Puzzles,...,GPT-6 Astra,gpt-6-astra_max,performance=0.7053872053872053 (source column empty = Epoch-run)"
+      },
+      "protocol": "Epoch: Chess Puzzles; source configuration gpt-6-astra_max; page date CSV \"Updated Sep. 22, 2026\"; Epoch note: the source says OpenAI provided pre-release access; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"gpt-6-astra_max\",\"source_quote\":\"Chess Puzzles,...,GPT-6 Astra,gpt-6-astra_max,performance=0.7053872053872053 (source column empty = Epoch-run)\",\"source_unit\":\"%\",\"displayed_value\":70.54}",
+      "comparison_key": null,
+      "withdrawn_reason": "D180 (2026-09-23): withdrawn from publication. The value is the `performance` column of https://epoch.ai/data/eci_benchmarks.csv, which is Epoch's chance-normalised ECI input statistic, not the \"Best score (across scorers)\" each of these registry identities declares as its metric. Proven offline against the two retained captures: for GPQA Diamond all 180 configurations present in both files disagree, and 130 of them equal (best - 0.25) / (1 - 0.25) exactly; the implied baseline is 0.25 for GPQA Diamond (four choices), 0.0496 for Chess Puzzles and 0.0922 for Mystery Game Puzzles - a per-benchmark chance baseline, not a refit or a rounding. Three of these rows were published beside the hub export's own row for the same configuration, so one board carried two different measured values. The underlying Epoch runs stay published through the hub-export rows; nothing is lost. Re-admitting any of these needs its own versioned registry identity for the ECI statistic, not this one."
+    },
+    {
+      "id": "cr128:f78b50349512951b52ed3239",
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "subject": {
+        "source_id": "gpt-6-astra_none",
+        "name": "gpt-6-astra_none",
+        "model_id": null,
+        "variant": "none",
+        "harness": null
+      },
+      "value": 0.976,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/eci_benchmarks.csv",
+        "retrieved_at": "2026-09-22T21:03:51.820574+00:00",
+        "published_at": null,
+        "sha256": "1bb9d35fbcf31f43e8880db2dc7da0a4f70cda6f3448e1f6b6fa51e12a1d2d7d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/1bb9d35fbcf31f43e888.gz",
+        "locator": "Epoch: FrontierMath-Tier-4-v2-Private; gpt-6-astra_none; exact source excerpt: FrontierMath-Tier-4-v2-Private,...,GPT-6 Astra,gpt-6-astra_none,performance=0.976 (source column empty = Epoch-run)"
+      },
+      "protocol": "Epoch: FrontierMath-Tier-4-v2-Private; source configuration gpt-6-astra_none; page date CSV \"Updated Sep. 22, 2026\"; Epoch note: the source says OpenAI provided pre-release access; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"gpt-6-astra_none\",\"source_quote\":\"FrontierMath-Tier-4-v2-Private,...,GPT-6 Astra,gpt-6-astra_none,performance=0.976 (source column empty = Epoch-run)\",\"source_unit\":\"%\",\"displayed_value\":97.6}",
+      "comparison_key": null,
+      "withdrawn_reason": "D180 (2026-09-23): withdrawn from publication. The value is the `performance` column of https://epoch.ai/data/eci_benchmarks.csv, which is Epoch's chance-normalised ECI input statistic, not the \"Best score (across scorers)\" each of these registry identities declares as its metric. Proven offline against the two retained captures: for GPQA Diamond all 180 configurations present in both files disagree, and 130 of them equal (best - 0.25) / (1 - 0.25) exactly; the implied baseline is 0.25 for GPQA Diamond (four choices), 0.0496 for Chess Puzzles and 0.0922 for Mystery Game Puzzles - a per-benchmark chance baseline, not a refit or a rounding. Three of these rows were published beside the hub export's own row for the same configuration, so one board carried two different measured values. The underlying Epoch runs stay published through the hub-export rows; nothing is lost. Re-admitting any of these needs its own versioned registry identity for the ECI statistic, not this one."
+    },
+    {
+      "id": "cr128:4571469592278ecb48384f9b",
+      "benchmark_id": "mystery-game-puzzles::snapshot-2026-09-18",
+      "subject": {
+        "source_id": "gpt-6-astra_max",
+        "name": "gpt-6-astra_max",
+        "model_id": "gpt-6-astra::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.8237497246089448,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/eci_benchmarks.csv",
+        "retrieved_at": "2026-09-22T21:03:51.820574+00:00",
+        "published_at": null,
+        "sha256": "1bb9d35fbcf31f43e8880db2dc7da0a4f70cda6f3448e1f6b6fa51e12a1d2d7d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/1bb9d35fbcf31f43e888.gz",
+        "locator": "Epoch: Mystery Game Puzzles; gpt-6-astra_max; exact source excerpt: Mystery Game Puzzles,...,GPT-6 Astra,gpt-6-astra_max,performance=0.8237497246089448 (source column empty = Epoch-run)"
+      },
+      "protocol": "Epoch: Mystery Game Puzzles; source configuration gpt-6-astra_max; page date CSV \"Updated Sep. 22, 2026\"; Epoch note: the source says OpenAI provided pre-release access; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"gpt-6-astra_max\",\"source_quote\":\"Mystery Game Puzzles,...,GPT-6 Astra,gpt-6-astra_max,performance=0.8237497246089448 (source column empty = Epoch-run)\",\"source_unit\":\"%\",\"displayed_value\":82.37}",
+      "comparison_key": null,
+      "withdrawn_reason": "D180 (2026-09-23): withdrawn from publication. The value is the `performance` column of https://epoch.ai/data/eci_benchmarks.csv, which is Epoch's chance-normalised ECI input statistic, not the \"Best score (across scorers)\" each of these registry identities declares as its metric. Proven offline against the two retained captures: for GPQA Diamond all 180 configurations present in both files disagree, and 130 of them equal (best - 0.25) / (1 - 0.25) exactly; the implied baseline is 0.25 for GPQA Diamond (four choices), 0.0496 for Chess Puzzles and 0.0922 for Mystery Game Puzzles - a per-benchmark chance baseline, not a refit or a rounding. Three of these rows were published beside the hub export's own row for the same configuration, so one board carried two different measured values. The underlying Epoch runs stay published through the hub-export rows; nothing is lost. Re-admitting any of these needs its own versioned registry identity for the ECI statistic, not this one."
     }
   ],
   "collections": [

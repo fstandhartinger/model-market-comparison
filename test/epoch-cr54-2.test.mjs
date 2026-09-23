@@ -135,11 +135,14 @@ test('CR-54.2: every join re-derives from the slug and lands on an existing conf
   const legacyJoined = joined.filter((o) => !o.id.startsWith('cr128:'));
   const cr128Rows = joined.filter((o) => o.id.startsWith('cr128:'));
   assert.equal(legacyJoined.length, 186, String(legacyJoined.length));
-  assert.deepEqual(cr128Rows.map((o) => [o.benchmark_id.split('::')[0], o.subject.source_id, o.subject.model_id]).sort(), [
-    ['chess-puzzles', 'gpt-6-astra_max', 'gpt-6-astra::max'],
-    ['epoch-gpqa-diamond', 'gpt-6-astra_max', 'gpt-6-astra::max'],
-    ['mystery-game-puzzles', 'gpt-6-astra_max', 'gpt-6-astra::max'],
-  ]);
+  // D180 (2026-09-23): these three rows were withdrawn. They carried `performance` from
+  // https://epoch.ai/data/eci_benchmarks.csv — Epoch's chance-normalised ECI input statistic — on
+  // identities whose declared metric is the hub export's "Best score (across scorers)", so each of
+  // these boards published two different measured values for one configuration. The rows stay in
+  // `manual-board-observations.json` under `withdrawn_observations` with their reason and evidence;
+  // `test/d180-cross-source-conflicts.test.mjs` holds the invariant. Epoch's own runs of these three
+  // boards remain published through the hub-export rows this suite counts above.
+  assert.deepEqual(cr128Rows.map((o) => [o.benchmark_id.split('::')[0], o.subject.source_id, o.subject.model_id]).sort(), []);
   // 183 reviewed-map rows + MiniMax-M3 on three boards: 'MiniMax-M3' is the catalog display name and
   // parseDeepSweId fails closed on the case, so only the documented exact-name bridge may join it.
   const mapKeys = new Set(map.map((e) => `${e.benchmark_id}\0${e.source_id}`));

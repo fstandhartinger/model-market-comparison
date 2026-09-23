@@ -215,6 +215,15 @@ for (const path of ['data/raw/benchmarks/public-observations.json', 'data/raw/be
     observations.push(observation);
   }
   rejected.push(...(raw.rejected || []));
+  // D180: a row we ingested and then found to belong to another identity is withdrawn, not deleted.
+  // It stays in its file with its evidence and its reason, and is republished here as a withheld
+  // rejection so the retained history states cannot bring its value back as a bridged estimate.
+  for (const observation of raw.withdrawn_observations || []) {
+    if (!observation.withdrawn_reason) throw new Error(`Withdrawn observation has no reason: ${observation.id}`);
+    rejected.push({ benchmark_id: observation.benchmark_id, source_id: observation.subject?.source_id ?? null,
+      model_id: observation.subject?.model_id ?? null, reason: observation.withdrawn_reason,
+      withheld: true, locator: observation.source?.locator ?? null });
+  }
   for (const c of raw.collections || []) if (!collections.some((old) => old.benchmark_id === c.benchmark_id)) collections.push(c);
 }
 for (const e of registry.entries) if (!collections.some((c) => c.benchmark_id === e.id)) collections.push({ benchmark_id: e.id,
