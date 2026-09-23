@@ -1613,3 +1613,35 @@ Verbatim from `/home/flori/jobs/jev-models-v14-page-fixes-20260923/PROMPT.md`:
 >
 > Process: Benchmark Heaven CR process (CR id = max+1, single writer). If jevbench-v14-release2 still holds the writer lease, coordinate via the agent board (`agent-board`), and take the lease as soon as it's free — this CR goes before the SEO push (tell jevbench-seo-hn-push on the board) and before jev-models-evergreen-preview's version-pinned route. Keep link previews evergreen (no ranks/scores in OG). Tests + typecheck + build; verify both hosts live.
 > Telegram to Florian when live (plain English, German is fine too since he wrote German): what changed, with 2–3 screenshots (`notify now --requested --photo`), including one mobile portrait.
+
+
+## CR-20260923d — multimodal JevBench v0.1 review preview
+
+Florian, 23 Sep 2026, via `/home/flori/jobs/image-jev-bench-continue-20260923/PROMPT.md`:
+
+> Continue the multimodal ("Image Jev") JevBench toward a real release. Freeze public and SEALED parts at about
+> 60/40 from day one, balance difficulty, run eligible image-capable systems on all items, reuse the text v1.4
+> scoring method unless a documented reason says otherwise, and preserve the SEALED set: never publish its content
+> or use it for training; publish aggregates only. Include an everyday photo decisions track using the public promo
+> images only in the public part and newly generated, label-checked situations in the sealed part. Disclose the
+> synthetic share and djev-spark's inference-only exposure to the promo images. After `jevbench-v14-release2` is
+> inactive, update the existing multimodal preview through the CR process while keeping it noindex and unlinked.
+> Prepare a private review artifact, then send Florian a plain-English Telegram with the ranking and open questions.
+> Do not publish/index it or post anywhere; Florian decides the release.
+
+## CR-133 — multimodal JevBench v0.1 review preview
+
+- **CR-133.1 Aggregate-only preview.** Replace the stale preview dataset with results derived from the frozen v0.1
+  candidate artifacts. Show the full and per-track rankings, public/sealed aggregate accuracy, run coverage, API
+  exposure, limitations and method. Never publish sealed IDs, prompts, images, labels, predictions or per-item rows.
+- **CR-133.2 Track and split disclosure.** State the real licensed core and synthetic everyday-photo track separately;
+  disclose counts, approximate 60/40 split, synthetic share, public/sealed separation, djev-spark's prior
+  inference-only exposure to public promo images, and that its new sealed photo result is the independent measure.
+- **CR-133.3 Private review status.** Keep the route prominently labelled preview, `noindex, nofollow`, unlinked from
+  navigation and absent from the sitemap. This is a private review candidate, not an approved JevBench release or
+  JevBench Score. Do not publish or post a release announcement; Florian decides whether the top-five candidate is
+  accepted.
+- **CR-133.4 Verify.** Require focused tests, full suite, typecheck and production build; local desktop/mobile browser
+  checks; and live verification on `benchmarkheaven.com` and `model-market-comparison.app.mintapis.com` after
+  `systemctl --user is-active jevbench-v14-release2` reports inactive. Keep a private review artifact and report the
+  ranking and open questions to Florian in plain English.

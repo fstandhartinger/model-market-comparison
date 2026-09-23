@@ -8510,3 +8510,11 @@ withdrawn, 0 still served.
 One process note worth keeping: the first re-run of `verify-cr-54-2` reported 48/51 from a `verification.json` the run had
 never written — the script had died on a duplicate import and left the previous file in place. A verifier's output
 directory is cleared before a re-run for that reason; an unchanged receipt is not evidence that nothing changed.
+
+## CR-133 — seeded 2026-09-23 (Codex)
+
+CR-133 records Florian's request to prepare the Image Jev v0.1 candidate for private review. The current candidate has
+444 items split 265 public / 179 sealed: 294 licensed real-core items and a separate 150-item synthetic everyday-photo
+track. It reports aggregates only. `jevbench-v14-release2` was checked inactive before implementation. The update keeps
+`/jev-models/multimodal-preview` noindex, unlinked, and outside the sitemap; it does not approve or announce a release.
+Final implementation, verification, both-host receipts and review delivery will be recorded after the live checks.

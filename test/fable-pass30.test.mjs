@@ -1,7 +1,7 @@
 // Fable pass 30 (2026-09-22): the surfaces that changed after pass 29 — the JevBench page after v1.3.0 (CR-118) and the multimodal
 // preview (CR-119). F-157: the "What changed in the score" note follows the board it explains instead of standing between the page
 // head and the ranking. F-158: the preview's ranking has no column whose every cell reads "Not measured", and the warning banner
-// carries the required sentence once. F-159: the preview's overall ranking draws each system's real-item share as a bar.
+// carries the candidate/release-pending label. F-159: the preview exposes the frozen public/sealed aggregates and top-five cut.
 // Source-level pins, like test/fable-pass29.test.mjs.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -21,19 +21,21 @@ test('F-157: the CR-118.4 note is rendered inside the board, after the ranking c
   assert.equal(jev.match(/data-bh-jev-score-change/g).length, 1, 'exactly one note');
 });
 
-test('F-158: the preview banner is the one required sentence; the ranking has no Calibration column', () => {
-  assert.match(mm, /data-bh-mm-preview-banner>\s*\{\/\*[^]*?\*\/\}\s*<p className="text-lg font-bold">Preview — multimodal JevBench, results may change; not part of the JevBench Score<\/p>/);
-  assert.doesNotMatch(mm, /uppercase tracking-\[\.12em\]">Preview<\/p>/, 'no second "Preview" eyebrow inside the banner');
-  assert.doesNotMatch(mm, /<th className="p-3 text-right">Calibration<\/th>/, 'no Calibration column');
-  assert.doesNotMatch(mm, /<td className="p-3 text-right">Not measured<\/td>/, 'no constant "Not measured" cell');
-  assert.match(mm, /Calibration was not measured because these runs returned labels rather than probability distributions\./, 'the sentence above the table still says it');
+test('F-158: the candidate preview banner is clear, multi-axis results are labelled, and noindex remains', () => {
+  assert.match(mm, /data-bh-mm-preview-banner/);
+  assert.match(mm, /Preview — Image JevBench v0\.1 candidate; not part of the JevBench Score/);
+  assert.match(mm, /Calibration<\/th>/, 'calibration is a measured candidate axis');
+  assert.match(mm, /Results and the release decision remain under review/);
   assert.match(mm, /robots: \{ index: false, follow: false/, 'CR-119.1 noindex unchanged');
 });
 
-test('F-159: the "All real" cell carries the share as a bar (width = accuracy %, floor 2 %) and exposes the value', () => {
-  assert.match(mm, /data-bh-mm-real=\{s\.overall\.accuracy\.toFixed\(4\)\}/);
-  assert.match(mm, /<span className="block h-full rounded-full bg-accent" style=\{\{ width: `\$\{Math\.max\(2, s\.overall\.accuracy \* 100\)\}%` \}\} \/>/);
-  assert.match(mm, /aria-hidden="true"/, 'the bar is decorative; the number is the accessible value');
+test('F-159: the candidate rankings show public and sealed aggregates, receipt coverage and the top-five review cut', () => {
+  assert.match(mm, /data-bh-mm-ranking=\{track\}/);
+  assert.match(mm, /Public accuracy/);
+  assert.match(mm, /Sealed accuracy/);
+  assert.match(mm, /Cost coverage/);
+  assert.match(mm, /Current top five by candidate composite/);
+  assert.match(mm, /data-bh-djev-spark-sealed-photo/);
 });
 
 test('F-160: the JevBench eyebrow that hosts CustomEvaluationOffer is a <div>, not a <p> (the offer mounts a <div> toast inside it)', () => {

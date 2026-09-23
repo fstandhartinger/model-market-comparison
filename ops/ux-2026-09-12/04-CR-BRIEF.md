@@ -1034,3 +1034,12 @@ Source: CR-20260923c in `03-CHANGE-REQUESTS-VERBATIM.md`. Ordered by Florian bef
 - **CR-132.2 Row notes.** A † marker only where a row has a row-specific note (not the shared provenance every row carries); note reachable by tap/click and tooltip; marker never wraps alone.
 - **CR-132.3 v1.3 sections.** Restore the v1.3 hero bar chart with v1.4 scores, and move findings, alternatives/FAQ, costs, availability, method/tiers, limits and credit out of the collapsed history, reading v1.4 data. v1.3-only material (weightings, per-task grid, topic radars, held-out diagnostic) stays in the labelled history.
 - **CR-132.4 Mobile/desktop QA.** 390×844, 360×800 and 1440 px, light and dark, both hosts: no page overflow, table usable (sticky name column), radars legible, no orphaned markers; screenshots saved. OG/X metadata stays evergreen.
+
+## CR-133 — multimodal JevBench v0.1 review preview
+
+Source: CR-20260923d in `03-CHANGE-REQUESTS-VERBATIM.md`; candidate artifacts and full methodology are in `/home/flori/jobs/image-jev-bench-continue-20260923/`.
+
+- **CR-133.1 Aggregate-only results.** Use the frozen candidate artifacts for full, core and everyday-photo rankings, public/sealed aggregate accuracy, coverage, API exposure and method. No sealed item-level content, IDs, golds, prompts, images, or predictions may appear in the repository's public site data or rendered page.
+- **CR-133.2 Honest tracks and exposure.** Report licensed real core and synthetic everyday-photo track separately; disclose 444 total items (265 public / 179 sealed), 294 core (176 / 118), 150 everyday-photo (89 / 61), 33.78% synthetic overall, and that the entire everyday track is synthetic. Explain that djev-spark saw the 100 public promo images during inference-only video evaluation and show its new sealed-photo result separately.
+- **CR-133.3 Review-only route.** Preserve the route as a prominent noindex preview, with no navigation links and no sitemap entry. This work does not approve or announce a public JevBench release; the top five remain subject to Florian's decision.
+- **CR-133.4 Validation and delivery.** Focused and full tests, typecheck, production build, local browser checks, then both-host live verification after `jevbench-v14-release2` is inactive. Provide a private review artifact and a plain-English Telegram with current ranking and unresolved decisions. Record commit, tests/build, live checks, and message receipt in the job result.
