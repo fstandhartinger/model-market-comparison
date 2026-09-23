@@ -7901,3 +7901,21 @@ is wrong, so they are left red with what is known, rather than repaired into gre
 
 Recorded this way deliberately: an unrepaired red with a narrowed cause is cheaper for the next engine than a green that was bought by editing the
 test, and far cheaper than a fresh rediscovery.
+
+### Iteration 180, part 9 — a second writer on main, recorded rather than raced
+
+At 07:26 UTC another session pushed **`2aecd9b9` "CR-129: add per-system JevBench pages (SEO)"** (author `fstandhartinger`, trailer
+`Co-Authored-By: Claude Sonnet 5`) from a checkout that is not this one — it is absent from this tree's history, and the live site was already
+serving it when a verifier printed the revision back. It adds `app/jev-models/[system]/page.tsx`, a hub link block, one sitemap entry per system
+and `test/jevbench-system-pages.test.mjs`, and touches no data. This is the same pattern as the CR-128 ingest job iteration 179 found: a separate
+job with its own scope, not a competing writer inside this checkout.
+
+Handled by the addendum's rule — **do not race it**: this iteration's 17 commits were rebased onto it rather than pushed over it, the one overlap
+(both added a 2026-09-23 `CHANGELOG.md` entry at the top) was resolved by **keeping both entries**, and nothing of theirs was reverted or edited.
+Gates re-run on the rebased tree: `npm test` **1,174 tests / 1,173 pass / 0 fail / 1 skip** (the extra 8 are their new suite, which passes beside
+this iteration's changes), `npx tsc --noEmit -p .` clean, `npm run build` rc 0, `build-dataset` reproducing the dataset with no diff but its two
+generated timestamps.
+
+Worth flagging for whoever reconciles the two: **their push landed inside the unattended run's window** (the 06:58 run was in its benchmark phase
+and held the writer lock). It did not collide this time, but a push to `main` while a run is preparing to publish is exactly what makes that run's
+own push non-fast-forward, which is why the pre-push hook refuses it for this workstream.
