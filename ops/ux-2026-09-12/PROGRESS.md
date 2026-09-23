@@ -8070,3 +8070,15 @@ re-pinned here. Recorded with the exact values so the re-pin is a reading, not a
 Codex was not used: it has been at its usage limit since 2026-09-22 and the self-heal prompt repeats that. Nothing here was flipped to `verified`
 by its own implementer: F-161/F-162/F-166 were Fable's and are verified by claude-opus; CR-128.5's correction was claude-opus's and is signed off
 by Kimi; D177–D180 are claude-opus's own and stay `implemented` or `open`.
+
+### Iteration 180, part 13 — the repair agent is working in this checkout; uncommitted files left alone
+
+At 08:33 UTC, `git status` in `/opt/model-market-comparison` shows three files modified that this iteration did **not** touch:
+`ops/daily/daily.mjs`, `ops/daily/publish-gate.mjs` and `test/daily-publish-gate.test.mjs`. That is the self-heal repair agent launched at
+08:23:46 (`/opt/benchmarkheaven-daily/state/self-heal-repair-job/`, Sonnet, two-hour timeout), working on exactly the refused push diagnosed in
+part 11 — the files are the publish path and its gate.
+
+Handled by the standing rule: **not staged, not committed, not reverted.** Everything this iteration committed after that point was staged by
+path and is `ops/ux-2026-09-12/PROGRESS.md` only. Whoever reads this next should expect that work to arrive as its own commit, and should read
+`state/self-heal-repair-job/OUTPUT.md` before touching the publish path — part 11's note that the single push is a deliberate safety property,
+not an omission, is the thing that agent most needs and is least likely to infer from the logs alone.
