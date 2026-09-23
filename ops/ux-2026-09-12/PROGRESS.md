@@ -7156,11 +7156,11 @@ CR-129 (per-system JevBench pages) is the highest request reference on `main`; C
 
 | ID | Status | Evidence | Note |
 |---|---|---|---|
-| CR-130.1 | open | `ops/ux-2026-09-12/04-CR-BRIEF.md` | Preserve the public v1.3.0 artifact, 52 systems, 534 decisions and exact top five; no private or held-out data. |
-| CR-130.2 | open | `/home/flori/jobs/jev-models-linkpreview-20260923/cards-before.png`; `before-og.png` | Redesign the 1200×630 card for smaller previews; show `benchmarkheaven.com`, title, counts and all top-five names/scores without clipping. |
-| CR-130.3 | open | `/home/flori/jobs/jev-models-linkpreview-20260923/live-before-verification.json` | Keep search description; shorten OG/X description; add PNG MIME type, secure URL and alt metadata; bump artwork cache token. |
-| CR-130.4 | open | `test/` focused regression; `npm test`; `npx tsc --noEmit -p .`; `npm run build` | Check artifact-derived numbers, metadata, full suite, typecheck and production build. |
-| CR-130.5 | open | `/home/flori/jobs/jev-models-linkpreview-20260923/` | Verify both hosts and seven bot agents, crawler access and image headers; save before/after platform-style screenshots and send the requested Telegram photo. |
+| CR-130.1 | implemented | `/home/flori/jobs/jev-models-linkpreview-20260923/live-after-verification.json` | Confirmed the public v1.3.0 artifact only: 52 systems, 534 decisions, and the exact five names/scores; no private or held-out data. |
+| CR-130.2 | implemented | `/home/flori/jobs/jev-models-linkpreview-20260923/{before-og.png,after.png,cards-before.png,cards-after.png,mobile-cards-before.png,mobile-cards-after.png,realserp-before.png,realserp-after.png}` | Redesigned the 1200×630 card; branding, counts, and all five rows remain readable in the 320 px preview, with no clipping. Platform frames are labeled visual approximations. |
+| CR-130.3 | implemented | `app/jev-models/page.tsx`; `app/jev-models/opengraph-image.tsx`; `/home/flori/jobs/jev-models-linkpreview-20260923/live-after-verification.json` | Kept the full search description; set a concise 69-character social description; added PNG MIME, secure URL, dimensions, and image alt metadata; artwork token is `v1.3.0-og3`. |
+| CR-130.4 | implemented | `test/jev-models-link-preview.test.mjs`; `/home/flori/jobs/jev-models-linkpreview-20260923/{npm-test-node22-hotfix.log,typecheck-hotfix.log,production-build-hotfix.log}` | Focused regression passed 4/4; full corpus passed 1,204, with 1 skipped; TypeScript check and production build passed. |
+| CR-130.5 | implemented | `/home/flori/jobs/jev-models-linkpreview-20260923/{live-after-verification.json,cards-before.png,cards-after.png,realserp-before.png,realserp-after.png}` | Both hosts passed all 98 live checks across seven bot user agents; image fetches were cached 1200×630 PNGs in 5–12 ms. Robots/noindex and compressed-page/head limits passed. Requested Telegram photo notification sent; see `RESULT.md`. |
 
 ## Iteration 179 — 2026-09-23 04:10 → ~05:05 UTC (claude-opus, work): CR-128 audited from the primary artifacts, and the rank that was not a rank
 
