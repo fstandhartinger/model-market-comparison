@@ -61,8 +61,8 @@ export async function gatedPublish({ home, work, runDir, env = process.env, comm
   if (!installed) {
     if (required) return { published: false, gate, error: `BH_GATE_REQUIRED=1 but no gate at ${gatePath(home)}` };
     const sha = await commit();
-    await push(sha);
-    return { published: true, commit: sha, gate: { ...gate, decision: assessVerdict(null, { required }) } };
+    const pushed = await push(sha);
+    return { published: true, commit: pushed ?? sha, gate: { ...gate, decision: assessVerdict(null, { required }) } };
   }
   const first = await run('precommit', { home, work, env, timeoutMs });
   gate.stages.push(first);
@@ -79,6 +79,6 @@ export async function gatedPublish({ home, work, runDir, env = process.env, comm
   gate.decision = assessVerdict(verdict, { datasetSha256, commit: sha, required });
   gate.dataset_sha256 = datasetSha256;
   if (!second.ok || !gate.decision.ok) return { published: false, commit: sha, gate, error: `publish gate refused: ${gate.decision.ok ? second.log.split('\n').filter(Boolean).at(-1) : gate.decision.reason}` };
-  await push(sha);
-  return { published: true, commit: sha, gate };
+  const pushed = await push(sha, datasetSha256);
+  return { published: true, commit: pushed ?? sha, gate };
 }

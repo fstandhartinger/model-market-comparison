@@ -366,11 +366,12 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
           await git('commit-data', ['-c', `user.name=${userName}`, '-c', `user.email=${userEmail}`, 'commit', '-m', full ? `Refresh Benchmark Heaven data ${day}\n\nSource-backed daily gauntlet and build/tests/typecheck passed.\n\n${COMMIT_TRAILER}` : `Refresh Benchmark Heaven prices ${day}\n\nPrices-only run: OpenRouter and provider catalogs; benchmark and efficiency sources unchanged. Build/tests/typecheck and the publish gate passed.\n\n${COMMIT_TRAILER}`], work);
           return git('candidate-commit', ['rev-parse', 'HEAD'], work);
         },
-        push: async () => {
+        push: async (_sha, datasetSha256) => {
           const remoteUrl = await git('remote-url', ['remote', 'get-url', 'origin']);
-          // The staging commit descends from the fetched origin/main base. If origin moved,
-          // this normal push fails non-fast-forward and the candidate remains isolated.
-          await git('push-data', ['push', remoteUrl, 'HEAD:refs/heads/main'], work);
+          // The staging commit descends from the fetched origin/main base. If a concurrent writer
+          // (e.g. the UX workstream) pushed to origin/main first, withPushRetry reconciles it —
+          // but only ever pushes the exact bytes the gate already verified (datasetSha256 below).
+          return withPushRetry({ git, remoteUrl, work, verifyDatasetSha256: datasetSha256 });
         },
       });
       report.gate = { ...gated.gate, verdict: gated.gate.verdict ? { verdict: gated.gate.verdict.verdict, dataset_sha256: gated.gate.verdict.dataset_sha256, commit: gated.gate.verdict.commit ?? null, reasons: (gated.gate.verdict.reasons || []).slice(0, 5), decided_at: gated.gate.verdict.decided_at ?? null } : null };
@@ -479,6 +480,46 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
   await executeNotifications({ context, stateDir: join(home, 'state'), dryRun }).catch((e) => console.error(`NOTIFICATION FAILED: ${redact(e.message)}`));
   console.log(summary);
   return report;
+}
+
+// A concurrent writer (e.g. the UX workstream) can push to origin/main while this run's build,
+// tests and gate were still running. A plain push then fails non-fast-forward even though the
+// candidate commit itself is fine. Fetch the new tip and rebase the staging commit onto it, then
+// retry — bounded so a real content conflict fails the run instead of looping or guessing a
+// resolution. Returns the sha that was actually pushed (may differ from the pre-rebase local HEAD).
+//
+// A rebase git calls "clean" (no reported conflict) is not automatically safe to publish: if the
+// concurrent commit touched data/dataset.json itself on lines that don't overlap the candidate's
+// patch, git merges both silently and the result is bytes the gate never saw — only the commit's
+// *parent* is guaranteed unchanged, not always its tree. So after every rebase this re-hashes
+// data/dataset.json in the working tree and refuses to push unless it still matches the exact
+// bytes the gate's PASS verdict was bound to (verifyDatasetSha256, from gatedPublish's own hash);
+// a mismatch resets back to the pre-rebase commit and fails loud rather than publish unreviewed
+// content. Skipped when verifyDatasetSha256 is not given (gate not installed/required).
+const NON_FAST_FORWARD_PUSH = /\[rejected\]|non-fast-forward|fetch first/i;
+export async function withPushRetry({ git, remoteUrl, work, attempts = 5, verifyDatasetSha256 = null }) {
+  for (let attempt = 1; attempt <= attempts; attempt++) {
+    try {
+      await git('push-data', ['push', remoteUrl, 'HEAD:refs/heads/main'], work);
+      return await git('push-data-rev', ['rev-parse', 'HEAD'], work);
+    } catch (error) {
+      if (attempt === attempts || !NON_FAST_FORWARD_PUSH.test(error.message)) throw error;
+      await git('push-data-fetch', ['fetch', remoteUrl, 'main'], work);
+      try {
+        await git('push-data-rebase', ['rebase', 'FETCH_HEAD'], work);
+      } catch (rebaseError) {
+        await git('push-data-rebase-abort', ['rebase', '--abort'], work).catch(() => {});
+        throw new Error(`push-data: rebase conflict on attempt ${attempt} (real content conflict, not a race): ${rebaseError.message}`);
+      }
+      if (verifyDatasetSha256) {
+        const actual = hash(await readFile(join(work, 'data/dataset.json')));
+        if (actual !== verifyDatasetSha256) {
+          await git('push-data-rebase-undo', ['reset', '--hard', 'ORIG_HEAD'], work).catch(() => {});
+          throw new Error(`push-data: rebase attempt ${attempt} silently merged a concurrent data/dataset.json change — gate-verified ${verifyDatasetSha256.slice(0, 12)}, working tree now ${actual.slice(0, 12)}; refusing to push content the gate never saw`);
+        }
+      }
+    }
+  }
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {

@@ -4,9 +4,23 @@ import assert from 'node:assert/strict';
 import { mkdtemp, mkdir, writeFile, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { execFileSync } from 'node:child_process';
+import { execFile, execFileSync } from 'node:child_process';
+import { promisify } from 'node:util';
 import { createHash } from 'node:crypto';
 import { assessVerdict, gatedPublish, gateRequirement } from '../ops/daily/publish-gate.mjs';
+import { withPushRetry } from '../ops/daily/daily.mjs';
+
+const execAsync = promisify(execFile);
+// Mirrors daily.mjs's git(name, args, cwd) contract: resolves with stdout, rejects with an Error
+// whose message carries stdout+stderr+message (withPushRetry pattern-matches on it).
+const realGit = async (name, args, cwd) => {
+  try {
+    const { stdout } = await execAsync('git', args, { cwd, encoding: 'utf8' });
+    return stdout.trim();
+  } catch (error) {
+    throw new Error(`${name} FAILED: ${[error.stdout, error.stderr, error.message].filter(Boolean).join('\n')}`);
+  }
+};
 
 // Stub gate: stage 1 writes a marker; stage 2 writes a verdict for HEAD as STUB_GATE says.
 const STUB = `import { execFileSync } from 'node:child_process';
@@ -129,4 +143,106 @@ test('CR-66.4: build, test, typecheck and prerender steps run without the produc
     assert.ok(line?.trimEnd().endsWith('isolatedEnvironment);'), `${step} uses the isolated environment`);
   }
   assert.match(src, /env: isolatedEnvironment,/, 'the publish gate runs isolated too');
+});
+
+async function raceFixture(seedDataset = '{"v":0}\n') {
+  const dir = await mkdtemp(join(tmpdir(), 'bh-push-race-'));
+  const remote = join(dir, 'remote.git'), work = join(dir, 'work'), other = join(dir, 'other');
+  await execAsync('git', ['init', '--bare', '-q', '-b', 'main', remote]);
+  const init = async (cwd) => {
+    await mkdir(cwd, { recursive: true });
+    const git = (...args) => execFileSync('git', args, { cwd, encoding: 'utf8' }).trim();
+    git('init', '-q', '-b', 'main'); git('config', 'user.email', 'fixture@example.test'); git('config', 'user.name', 'fixture');
+    return git;
+  };
+  const git0 = await init(join(dir, 'seed'));
+  await mkdir(join(dir, 'seed/data'), { recursive: true });
+  await writeFile(join(dir, 'seed/data/dataset.json'), seedDataset);
+  git0('add', '.'); git0('commit', '-q', '-m', 'base');
+  git0('remote', 'add', 'origin', remote); git0('push', '-q', 'origin', 'main');
+  execFileSync('git', ['clone', '-q', remote, work]);
+  execFileSync('git', ['clone', '-q', remote, other]);
+  for (const cwd of [work, other]) { execFileSync('git', ['config', 'user.email', 'fixture@example.test'], { cwd }); execFileSync('git', ['config', 'user.name', 'fixture'], { cwd }); }
+  return { dir, remote, work, other };
+}
+const datasetHash = (buf) => createHash('sha256').update(buf).digest('hex');
+
+test('Push retry: a concurrent writer that pushes first is reconciled by fetch + rebase, not a failed run', async () => {
+  const { dir, remote, work, other } = await raceFixture();
+  try {
+    // The "UX workstream" writer lands an unrelated commit on origin/main first.
+    await writeFile(join(other, 'writer-note.txt'), 'concurrent write\n');
+    execFileSync('git', ['add', '.'], { cwd: other });
+    execFileSync('git', ['commit', '-q', '-m', 'concurrent writer commit'], { cwd: other });
+    execFileSync('git', ['push', '-q', 'origin', 'main'], { cwd: other });
+
+    // Meanwhile this run's staging clone, based on the old tip, made its own candidate commit.
+    await writeFile(join(work, 'data/dataset.json'), '{"v":1}\n');
+    execFileSync('git', ['add', '.'], { cwd: work });
+    execFileSync('git', ['commit', '-q', '-m', 'daily refresh candidate'], { cwd: work });
+    const verifyDatasetSha256 = datasetHash(await readFile(join(work, 'data/dataset.json')));
+
+    const finalSha = await withPushRetry({ git: realGit, remoteUrl: remote, work, verifyDatasetSha256 });
+
+    const remoteHead = execFileSync('git', ['rev-parse', 'main'], { cwd: remote, encoding: 'utf8' }).trim();
+    assert.equal(finalSha, remoteHead, 'withPushRetry returns the actually-pushed (rebased) sha');
+    const log = execFileSync('git', ['log', '--format=%s', 'main'], { cwd: remote, encoding: 'utf8' });
+    assert.deepEqual(log.trim().split('\n'), ['daily refresh candidate', 'concurrent writer commit', 'base'], 'linear history: rebase, not a merge or a lost commit');
+    const dataset = execFileSync('git', ['show', 'main:data/dataset.json'], { cwd: remote, encoding: 'utf8' });
+    assert.equal(dataset, '{"v":1}\n', 'the rebase only changed the parent, not the candidate tree, and the gate-verified hash still matched');
+  } finally { await rm(dir, { recursive: true, force: true }); }
+});
+
+test('Push retry: a real content conflict aborts the rebase and fails the run instead of guessing a resolution', async () => {
+  const { dir, remote, work, other } = await raceFixture();
+  try {
+    await writeFile(join(other, 'data/dataset.json'), '{"v":"other"}\n');
+    execFileSync('git', ['add', '.'], { cwd: other });
+    execFileSync('git', ['commit', '-q', '-m', 'concurrent writer touches the same file'], { cwd: other });
+    execFileSync('git', ['push', '-q', 'origin', 'main'], { cwd: other });
+
+    await writeFile(join(work, 'data/dataset.json'), '{"v":"candidate"}\n');
+    execFileSync('git', ['add', '.'], { cwd: work });
+    execFileSync('git', ['commit', '-q', '-m', 'daily refresh candidate'], { cwd: work });
+
+    await assert.rejects(withPushRetry({ git: realGit, remoteUrl: remote, work }), /rebase conflict/);
+
+    const status = execFileSync('git', ['status', '--porcelain=v2', '--branch'], { cwd: work, encoding: 'utf8' });
+    assert.doesNotMatch(status, /rebasing/i, 'the aborted rebase leaves the staging checkout usable, not stuck mid-rebase');
+    const remoteHead = execFileSync('git', ['rev-parse', 'main'], { cwd: remote, encoding: 'utf8' }).trim();
+    const otherHead = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: other, encoding: 'utf8' }).trim();
+    assert.equal(remoteHead, otherHead, 'a genuine conflict never pushes a guessed resolution');
+  } finally { await rm(dir, { recursive: true, force: true }); }
+});
+
+// The UX workstream's own review of this failure (ops/ux-2026-09-12/PROGRESS.md, "declines to
+// rebase by design, not by omission") flagged that a git-clean rebase is not automatically a
+// safe one to publish: if the concurrent commit also touches data/dataset.json on lines that
+// don't textually overlap, git merges both without reporting a conflict — and the result is
+// bytes the gate never reviewed. verifyDatasetSha256 exists to catch exactly this.
+test('Push retry: a clean rebase that silently absorbed a concurrent dataset.json edit is refused, not published', async () => {
+  const seed = ['{', '  "a": 0,', '  "b": 0,', '  "c": 0,', '  "d": 0', '}', ''].join('\n');
+  const { dir, remote, work, other } = await raceFixture(seed);
+  try {
+    // Concurrent writer edits a line far from the candidate's edit — git will merge this cleanly.
+    const otherEdit = seed.replace('"b": 0', '"b": 9');
+    await writeFile(join(other, 'data/dataset.json'), otherEdit);
+    execFileSync('git', ['add', '.'], { cwd: other });
+    execFileSync('git', ['commit', '-q', '-m', 'concurrent writer edits a distant line'], { cwd: other });
+    execFileSync('git', ['push', '-q', 'origin', 'main'], { cwd: other });
+
+    const candidate = seed.replace('"d": 0', '"d": 9');
+    await writeFile(join(work, 'data/dataset.json'), candidate);
+    execFileSync('git', ['add', '.'], { cwd: work });
+    execFileSync('git', ['commit', '-q', '-m', 'daily refresh candidate'], { cwd: work });
+    const verifyDatasetSha256 = datasetHash(Buffer.from(candidate));
+
+    await assert.rejects(withPushRetry({ git: realGit, remoteUrl: remote, work, verifyDatasetSha256 }), /silently merged/);
+
+    const remoteHead = execFileSync('git', ['rev-parse', 'main'], { cwd: remote, encoding: 'utf8' }).trim();
+    const otherHead = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: other, encoding: 'utf8' }).trim();
+    assert.equal(remoteHead, otherHead, 'the merged-but-unverified content never reached main');
+    const status = execFileSync('git', ['status', '--porcelain=v2', '--branch'], { cwd: work, encoding: 'utf8' });
+    assert.doesNotMatch(status, /rebasing/i, 'the staging checkout is reset back to a clean, usable state');
+  } finally { await rm(dir, { recursive: true, force: true }); }
 });
