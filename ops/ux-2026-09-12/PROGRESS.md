@@ -7871,7 +7871,7 @@ The sweep's last two verifiers did not end in a harness repair. `verify-cr-54-2`
 
 | ID | Status | Evidence | Note |
 |---|---|---|---|
-| D180 | open | `ops/ux-2026-09-12/bin/verify-cr-54-2.mjs` (matrix vs retained raw store, 186/189 + a grown row count); `/api/benchmark-scores?benchmark_id=epoch-gpqa-diamond::snapshot-2026-09-18` | Deliberately not fixed here: it is an identity decision on CR-128 data, and a publication was in flight. |
+| D180 | verified | `/opt/benchmarkheaven/state/ux-evidence/iter185-d180-signoff-kimi/` (Kimi K3 sign-off, ACCEPTED: `verify-cr-54-2` 52/52, `verify-cr-128` 31/33 with the two known D183 reds, the arithmetic re-derived from the two primary captures, and the retained hub-export row 0.9577020202020202 still served on both hosts); `ops/ux-2026-09-12/bin/verify-cr-54-2.mjs` (matrix vs retained raw store, 186/189 + a grown row count); `/api/benchmark-scores?benchmark_id=epoch-gpqa-diamond::snapshot-2026-09-18` | Deliberately not fixed here: it is an identity decision on CR-128 data, and a publication was in flight. |
 
 **What it is.** Scanning the dataset for a model with two *differing* measured values on one board: **9 pairs, and 4 of them involve a `cr128:`
 row.** Those four are all the same shape — the CR-128 third-party ingest (retrieved `2026-09-22T21:03:51Z`) added a second measured value for
@@ -8470,6 +8470,7 @@ off, together with CR-132.1–.4.
 | CR-131.6 | open | verified | 43/43 independent live Space receipt by a different engine than the publisher. |
 | CR-131.7 | open | verified | The sealed scan repeated against the live Space, with a positive control, zero matches. |
 | D180 | open | implemented | Decided against the two captures and fixed; needs a non-claude-opus sign-off. |
+| D180 | implemented | verified | Iteration 185: ACCEPTED by Kimi K3 (non-claude, non-implementer), which re-ran both verifiers (52/52 and 31/33 with the two known reds) and re-derived the arithmetic from the primary captures. |
 | D185 | open | implemented | 14/14 unclipped width receipt on both hosts; needs a non-claude sign-off with CR-132. |
 
 ### Still open after this iteration
@@ -8651,6 +8652,33 @@ would catch a withdrawal that swept up its neighbours. Two dataset checks close 
 restated label appears as a history estimate, and the sibling boards' own estimates are still there (19 of them
 vanished while the withheld locator was matched across boards, so their survival is part of the receipt).
 
+### Part 5 — D180's sign-off, and the one number it sharpened
+
+The same non-claude engine was given D180 separately (`/tmp/iter185-signoff-b`, evidence
+`/opt/benchmarkheaven/state/ux-evidence/iter185-d180-signoff-kimi/`): **ACCEPTED**, and it did more than re-run
+the receipts.
+
+- `verify-cr-54-2.mjs` **52/52 · 0 failed**, with the store back at its pre-CR-128 shape (728 observations, 186
+  joined). `verify-cr-128.mjs` **31/33**, and it quoted both reds verbatim — they are D183's finished report
+  tables, not the site. Both hosts: 299/299 published rows identical, 5 withdrawn rows, 0 still served.
+- **It re-derived the arithmetic from the two primary captures and refined iteration 184's wording.** Of the 180
+  GPQA Diamond configurations present in both files, **0 equal** the hub export's "Best score" column, and 130
+  equal `(best − 0.25) / 0.75` to 1e-6 — but only **101 are bitwise equal**; the other 29 differ by at most
+  2.220e-16, the same transform at float64 precision, stable across three arithmetic orderings and the inverse
+  direction. So "130 agree exactly" is exact at 1e-6, not bitwise, and the ledger says so now. It also
+  characterised the remaining 50: they mismatch materially in a pattern consistent with the four-day gap between
+  the 22 September CSV and the 18 September hub capture (no same-day hub capture is retained), which is
+  characterised rather than re-proven.
+- It confirmed what must *stay* published: the single `gpt-6-astra_max` row each host serves on that identity is
+  the retained hub-export row `public:f3047a4b5d69ed13d2d9db96` at **0.9577020202020202**, sourced from
+  `2026-09-18-epoch-hub/epoch-gpqa_diamond.csv.gz` with the locator naming the Best-score field. The withdrawn ECI
+  value 0.9436026936026937 is served nowhere, and `(0.9577020202020202 − 0.25)/0.75` reproduces it bitwise.
+- Process note worth keeping: the packet's step 1 gave the wrong argument order for `verify-cr-54-2.mjs` (it takes
+  `<base> <outDir>`), and the signer reported the resulting `TypeError: Failed to parse URL from …/api/meta`
+  verbatim before re-running it correctly, instead of quietly reporting a red. The glob in step 2 also found zero
+  captures because `2026-09-22-cr128-third-party/` has no `manifest.json`; it located the capture through the
+  withdrawn rows' own recorded provenance and hash-checked it.
+
 ### Gates and evidence
 
 `node scripts/build-dataset.mjs` clean (865 models, 670 families, 96 providers, 3,032 offers); `npm test`
@@ -8666,12 +8694,13 @@ estimate multiset before/after, because a count alone hides an equal-sized swap.
 | D185 | implemented | verified | Same sign-off: `verify-d185-width.mjs` 14/14 across 320→1440 px on both hosts, run by the signer. |
 | D186 | — | implemented | MCP Atlas label restatement recorded, ingest guard added, estimate regression closed; needs a non-claude sign-off. |
 | D187 | — | implemented | Six retracted KernelBench values withdrawn; withheld-locator scope corrected; needs a non-claude sign-off. |
+| D180 | implemented | verified | Separate non-claude sign-off: ACCEPTED, with the arithmetic re-derived from the primary captures and "130 exactly" sharpened to 130 at 1e-6 / 101 bitwise. |
 
 ### Still open after this iteration
 
 `CR-34.5`, `CR-62.4` (Florian's decisions), `CR-37.1`/`CR-37.3`, `CR-85.2` (sources), `CR-38.1`, `CR-73.5`,
 `CR-85.1` (an unattended run), F-165(a)'s rekey half, D183, the scheduled-run half of D174–D179/D181, the
-non-claude sign-offs still owed on D180, D186 and D187, and CR-133 (codex's, in flight). Because X6's list is not
+non-claude sign-offs still owed on D186 and D187 (D180's arrived — see part 5), and CR-133 (codex's, in flight). Because X6's list is not
 clear, no acceptance marker is appended.
 
 **Two source follow-ups this iteration deliberately did not take**, both recorded here so the next writer has the
