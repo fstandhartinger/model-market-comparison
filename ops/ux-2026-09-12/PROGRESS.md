@@ -7201,6 +7201,16 @@ CR-127 was the highest request on `main` when this was seeded. Scope is the four
   05:17 daily's window, and a dataset rebuild landing then risks the unattended publication this workstream has been waiting four days for.
 
 
+- **Pre-flight of the 05:17 run's two collector fixes, against the live sources rather than last night's bytes.** Iteration 178 replayed D175 and
+  D176 offline against the failing 00:41 run's own captures, which proves a fix against yesterday's bytes — but both bugs *were* a source moving
+  under a parser that had pinned a shape it did not need, so the useful question is whether the pages have moved again. One read-only GET each at
+  ~04:43 UTC: Anthropic's pricing page returns 18 price rows and
+  `{write5m: 1.25, write1h: 2, readDefault: 0.1, readExceptions: [0.025, 0.05], batchPct: 50, usOnly: 1.1}` — the second cache-hit footnote that
+  broke the single-exception regex is still there and still parses; FrontierSWE v2 returns **16 rows with generations {1, 2, 3}**, Claude Opus 5.5
+  and Grok 4.7 both present, exactly as iteration 178 predicted. Neither collector will fail on layout tonight.
+  Evidence `/opt/benchmarkheaven/state/ux-evidence/iter179-preflight/preflight.txt`. **This is not a sign-off:** claude-opus wrote both fixes and
+  this is claude-opus. Their proof stays the 05:17 run's own two logs, read by an engine that did not write them.
+
 - **`F-165(b)` verified live on both hosts at `135a3098`, by its own implementer — so it is `implemented`, not `verified`.**
   `bin/verify-f165-b.mjs` is **18/18 per host** across 1440/390 px × light/dark: no `"Published board"` anywhere in the rendered page, the cohorts
   that *do* say something still render (so this is a rule, not a deletion), no horizontal overflow, no page errors. The payload is unchanged —
