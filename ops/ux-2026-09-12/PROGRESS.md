@@ -7765,3 +7765,32 @@ measured rather than guessed, so the next pass reads 25 rows and not 96. `ops/ux
 - **One thing the rendering made visible while checking it:** the same underlying board is spelled three ways across vendor entries — `Terminal
   Bench 4.0` (Xiaomi), `Terminal-Bench 4.0` (Anthropic, Vals), `Terminal-Bench v4` (DeepSeek's family). Not a collision and not fixed here, because
   a registry rename is the identity work; recorded so the rekey pass treats spelling as noise rather than evidence.
+
+### Iteration 180, part 5 — a finding, measured and deliberately not acted on: every publish-gate failure in the retained history is a pin meeting live-source churn
+
+This iteration fixed today's two blocking pins (D177), but two of them in one run is a pattern, so it was checked rather than assumed. Across
+every retained run in `/opt/benchmarkheaven-daily/runs` that reached its isolated `npm test`, **four runs failed that gate, and all four failed
+on a literal pinned to a value or a population that a live source legitimately moved**:
+
+| Run | Assertion | What the source did |
+|---|---|---|
+| 2026-09-20 07:24 | `test/dataset.test.mjs:449` `33.7 !== 34` | AA re-scored GLM-5.2's Intelligence Index |
+| 2026-09-22 05:17 | `benchmaxxing-capability-only.test.mjs:17` `epoch-eci has a kind` | a new board arrived with no taxonomy kind |
+| 2026-09-22 05:17 | `catalog-twin-families.test.mjs:21` `146.2 !== 146.27` | Epoch refit its ECI — the known "never pin an ECI value" trap |
+| 2026-09-23 05:17 | `dataset.test.mjs:370` `14 !== 13`, `mimo-v26-pro.test.mjs:19` | Anthropic shipped Opus 5.5; DeepInfra joined MiMo |
+
+**Not one of the four was a data defect.** Each was the world changing and a test saying so — which is the gate doing something useful. What is
+disproportionate is the *consequence*: a single stale literal discards the entire day's publication, including every unrelated freshly collected
+row, and the failure is only legible to whoever later opens `reports/npm-test.log`. Today that cost the 00:41 and 05:17 runs, and only a self-heal
+retry at 06:58 got another attempt in.
+
+**Deliberately not changed here, with the reason.** The obvious move — make source-value pins non-blocking — is the wrong one written down
+carelessly: those pins are part of how this repo keeps a number honest, and two of the four above (a new board with no taxonomy kind, a
+second provider route) are exactly the kind of change that *should* stop and be read by someone. The proportionate change is to separate
+**"what is about to publish is wrong"** (provenance validation, the hash-bound gate, the build guards — hard fail, unchanged) from **"a pinned
+expectation aged"**, and to make the second one loud rather than silent: name the failing assertions in the run receipt's first line and in the
+failure notification, so the repair is minutes rather than the next agent's reading. That touches the publish gate's policy and the notifier, so it
+belongs in its own iteration with its own review — not in the last half hour of this one, beside a run that is trying to publish.
+
+Two cheap pieces of it are already true and worth keeping in mind for that pass: the failing assertion is always in `reports/npm-test.log` under
+`✖ failing tests`, and `daily-state.json` already carries a `failure_streak` (2 before this morning's fixes) that nothing currently escalates on.
