@@ -160,3 +160,47 @@ test('CR-67.3: one malformed answer from a paid worker earns one retry; timeouts
   ]);
   assert.deepEqual(excluded.sort(), ['chutes/moonshotai/Kimi-K3-TEE', 'deepseek/deepseek-v4-flash-0731', 'deepseek/deepseek-v4.1-flash']);
 });
+
+test('a dropped connection costs the call, not the review round', async () => {
+  // 2026-09-23 (iteration 181): on the 09:23 unattended run one `fetch failed` on the critic call ended
+  // round 2 and another ended round 3, so the AA contract was rejected and nothing was published — while
+  // the round-3 producer had already reported "match". The call is retried once in place instead.
+  const dir = await mkdtemp(join(tmpdir(), 'bh-gauntlet-drop-'));
+  try {
+    let critics = 0, drops = 0;
+    const runner = async (args) => {
+      if (args.includes('--critic')) {
+        critics++;
+        if (critics === 1) { drops++; throw new Error('chutes/moonshotai/Kimi-K3-TEE: fetch failed'); }
+      }
+      await mockRunner(args);
+      const path = args[args.indexOf('--out') + 1];
+      if (!args.includes('--critic')) {
+        const body = JSON.stringify({ rows: [{ id: 'fixture:1', status: 'match', note: 'exact synthetic source value' }] }) + '\n';
+        await writeFile(path, body);
+        const meta = JSON.parse(await readFile(path + '.meta.json')); meta.output_sha256 = sha256(body);
+        await writeFile(path + '.meta.json', JSON.stringify(meta));
+      }
+    };
+    const result = await reviewArtifact({ runDir: dir, artifactId: 'drop', rows, sources, criteria: ['Verify exact value against the supplied fixture source'], runner });
+    assert.equal(drops, 1);
+    assert.equal(critics, 2, 'the critic call was retried in place');
+    assert.equal(result.manifest.rounds_used, 1, 'the drop did not spend a round');
+    assert.deepEqual(result.fingerprints.map((r) => r.id), ['fixture:1']);
+  } finally { await rm(dir, { recursive: true, force: true }); }
+});
+
+test('a second drop is a real failure, not an endless retry', async () => {
+  const dir = await mkdtemp(join(tmpdir(), 'bh-gauntlet-drop2-'));
+  try {
+    let critics = 0;
+    const runner = async (args) => {
+      if (args.includes('--critic')) { critics++; throw new Error('chutes/moonshotai/Kimi-K3-TEE: fetch failed'); }
+      return mockRunner(args);
+    };
+    const result = await reviewArtifact({ runDir: dir, artifactId: 'drop2', rows, sources, criteria: ['Verify values'], runner, maxRounds: 2 });
+    assert.equal(result.accepted, false);
+    assert.equal(critics, 4, 'two rounds, each retried exactly once');
+    assert.ok(result.errors.some((e) => /fetch failed/.test(e)), result.errors);
+  } finally { await rm(dir, { recursive: true, force: true }); }
+});

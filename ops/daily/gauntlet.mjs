@@ -215,6 +215,19 @@ async function recordInvalidModel(meta, role, reason, runner) {
   await appendFile(join(process.env.BH_STATE, 'unavailable-models.jsonl'), JSON.stringify({ model: meta.requested_model ?? meta.actual_model, actual_model: meta.actual_model, role, at: new Date().toISOString(), reason }) + '\n');
 }
 
+// 2026-09-23 (iteration 181): a review round is not spent on a dropped connection. The exclusion policy
+// already treats a bare `fetch failed` as seconds lost rather than an answer given (see CONNECTION_DROP
+// above), but the round that made the call still ended. Measured on the 09:23 unattended run: the AA
+// contract's round 1 failed on a malformed producer audit, then one drop on the critic call ended round 2
+// and another ended round 3, so a core source was rejected and the day published nothing — although the
+// round-3 producer had already reported "match". The call is retried once in place; the strike is recorded
+// by the first failure, so a route that drops twice is still excluded and the retry cannot loop.
+const CONNECTION_DROP_CALL = /(^|: )fetch failed$/i;
+async function callWorker(runner, args, options) {
+  try { return await runner(args, options); }
+  catch (error) { if (!CONNECTION_DROP_CALL.test(error?.message ?? '')) throw error; return runner(args, options); }
+}
+
 // Owner-side receipt verification: the sidecar hash must match the out file bytes.
 async function readWorkerReceipt(outPath) {
   const text = await readFile(outPath, 'utf8');
@@ -457,7 +470,7 @@ export async function reviewArtifact({
         producerOut = join(dir, `producer-r${round}.json`);
         const producerSchema = join(dir, `producer-schema-r${round}.json`);
         await writeJSONAtomic(producerSchema, producerResponseSchema([...rowIds]));
-        await runner(['--json', '--file', packetPath, '--out', producerOut, PRODUCER_TASK], { attempt: round });
+        await callWorker(runner, ['--json', '--file', packetPath, '--out', producerOut, PRODUCER_TASK], { attempt: round });
         producer = await readWorkerReceipt(producerOut);
         try { auditFlagged = parseProducerAudit(producer.text, rowIds); }
         catch (error) { if (objectionSignal(producer.text)) objections++; await recordInvalidModel(producer.meta, 'producer', error.message, runner); throw error; }
@@ -477,7 +490,7 @@ export async function reviewArtifact({
       await writeFile(criticPacketPath, buildPacket({ artifactId: id, artifactSha256, round, producers, criteria: criteriaNorm, rows: current, sources: sourceList, limits, layout }) + '\nExecuted producer receipt (identity and qualification only): ' + JSON.stringify({ actual_model: producer.meta.actual_model, qualification: producer.meta.qualification, output_sha256: producer.meta.output_sha256 }) + '\n');
       const criticSchema = join(dir, `critic-schema-r${round}.json`);
       await writeJSONAtomic(criticSchema, criticResponseSchema(id, artifactSha256, round, [...rowIds, ...criteriaNorm.map((c) => c.id)]));
-      await runner(['--critic', '--producer', producers.join(','), '--file', criticPacketPath, '--out', criticOut, CRITIC_TASK], { attempt: round });
+      await callWorker(runner, ['--critic', '--producer', producers.join(','), '--file', criticPacketPath, '--out', criticOut, CRITIC_TASK], { attempt: round });
       const critic = await readWorkerReceipt(criticOut);
       if (producers.some((m) => vendorFamily(m) === vendorFamily(critic.meta.actual_model)) || vendorFamily(critic.meta.actual_model) === vendorFamily(producer.meta.actual_model)) {
         throw new Error(`Critic ${critic.meta.actual_model} is not from a different vendor family than every producer`);
