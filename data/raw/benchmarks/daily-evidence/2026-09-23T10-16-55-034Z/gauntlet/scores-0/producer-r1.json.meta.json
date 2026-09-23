@@ -1,0 +1,78 @@
+{
+  "started_at": "2026-09-23T11:46:20.465Z",
+  "mode": "oneshot",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "producers": [],
+  "qualification": {
+    "id": "deepseek/deepseek-v4.1-flash",
+    "family": "deepseek",
+    "free": false,
+    "input_per_1m": 0.3,
+    "output_per_1m": 1.2,
+    "context": 1048576,
+    "aa_intelligence_index": 39.5,
+    "aa_source": "exact_family_slug",
+    "matched_model_ids": [
+      "deepseek-v4.1-flash::max"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "deepseek-v4.1-flash::max",
+        "index": 39.5
+      }
+    ]
+  },
+  "input_sha256": "854de063d47316b964dd4d1762b8d7ec48891e99173bd296f7ad3f1081ecbc33",
+  "route": "openrouter",
+  "attempt": 1,
+  "free_route_role": "critic",
+  "free_routes_offered": [
+    "chutes/moonshotai/Kimi-K3-TEE"
+  ],
+  "excluded_models": [
+    "z-ai/glm-5.3-flash",
+    "chutes/moonshotai/Kimi-K3-TEE",
+    "deepseek/deepseek-v4-flash-0731"
+  ],
+  "catalog": {
+    "source": "run-cache",
+    "fetched_at": "2026-09-23T10:00:44.077Z"
+  },
+  "reasoning": {
+    "effort": "low",
+    "exclude": true
+  },
+  "response_format_mode": "json_object",
+  "response_schema_sha256": "376bde7986cc2f8fd182f04e745c607933760bea7c306ea6e8e992b7f70be25a",
+  "images": [],
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "usage": {
+    "prompt_tokens": 16752,
+    "completion_tokens": 4296,
+    "total_tokens": 21048,
+    "cost": 0.01000448064,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 256,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.010105536,
+      "upstream_inference_prompt_cost": 0.004950336,
+      "upstream_inference_completions_cost": 0.0051552
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 2648,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "finish_reason": "stop",
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "provider": "Together",
+  "session_id": null,
+  "finished_at": "2026-09-23T11:46:50.375Z",
+  "output_sha256": "b8aa8af8c76df09a808e6992e7e2177a187db93165a763324276a025db259c32"
+}

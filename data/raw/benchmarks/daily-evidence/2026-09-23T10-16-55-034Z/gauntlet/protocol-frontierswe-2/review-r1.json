@@ -1,0 +1,41 @@
+```json
+{
+  "artifact_id": "protocol-frontierswe-2",
+  "artifact_sha256": "7cdaa67acaa750ff474a35f2b4cebe20d9b679963175aea41ae0b259ebda2403",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["frontierswe::2", "c1", "c2"],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "blocker",
+      "location": "frontierswe::2 scoring.notes / version_guard — 'proximus is uniform across the main board's 14 rows'",
+      "evidence": "SOURCE 1 leaderboard excerpt lists exactly 10 ranked rows (GPT-6 Astra through Inkling) under the 'All' leaderboard; the model filter and coverage views list 16 models. No excerpt of the site shows a 14-row main board.",
+      "repair": "Correct the row count to the number actually published on the main board per the primary source (10 rows shown in the leaderboard excerpt; 16 models selectable), or cite the specific view establishing 14 rows. The version_guard text must not assert a row count the source contradicts."
+    },
+    {
+      "id": "F2",
+      "severity": "major",
+      "location": "frontierswe::2 scoring.notes — 'the relay CSV ... restates 12 overlapping rows byte-exactly and states the per-model effort'",
+      "evidence": "SOURCE 6 (frontierswe_external.csv) contains 13 data rows, not 12, and several of them (Claude Fable 5.1, GPT-5.6, Grok 4.6, Claude Opus 5, Claude Fable 5, Gemini 3.8 Flash) do not appear in the SOURCE 1 leaderboard excerpt, so 'every relayed Name is on the board' cannot be established from the packet. Additionally, the CSV header has no reasoning-effort column; only one row's Notes mention 'max reasoning effort', so the CSV does not 'state the per-model effort' for every row.",
+      "repair": "Restate the overlap count as 13 (or the verifiable overlap with the visible leaderboard), weaken 'byte-exactly' to rounded restatement (e.g., site 65.5% vs CSV 0.6550757455882352), and reword the effort claim: per-model effort is stated by the blog ('maximum reasoning effort') and only partially by a CSV note, not by a CSV column."
+    },
+    {
+      "id": "F3",
+      "severity": "minor",
+      "location": "frontierswe::2 scoring.notes — 'the site additionally shows an Other Harnesses view for per-model harness coverage'",
+      "evidence": "The SOURCE 1 excerpt shows Leaderboard / Per provider / Best / Recent / All tabs and no 'Other Harnesses' view; no supplied source evidences this feature.",
+      "repair": "Remove or reword this claim, or cite a source excerpt that shows the view."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Row hashes and artifact hash are owner-computed; I cannot recompute or verify transport/qualification checks (producer receipt is identity/qualification only).",
+    "The leaderboard excerpt may be truncated below row 10; the exact full-board row count cannot be settled from the excerpt alone, but no supplied evidence supports 14.",
+    "Version identity (v2, 34 tasks, 5 trials, 20-hour budget, mean@5, proximus) is corroborated by SOURCES 1, 2, 5; blog table values for some models (e.g., Fable 5.1 56.29%) differ from current leaderboard values, consistent with leaderboard additions after publication (changelog), not a version conflict.",
+    "Status 'active' is supported by the changelog (Sep 22, 2026 addition) and a current leaderboard; superseded_by null is consistent with no retirement language in any source."
+  ],
+  "missing_evidence": []
+}
+```

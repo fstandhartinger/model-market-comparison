@@ -1,0 +1,18 @@
+{
+  "artifact_id": "protocol-matharena-brokenarxiv-2026-06",
+  "artifact_sha256": "d2fd2c7f7831fdf00dafb311ead46c7d97d19434167f2b3ea479c1e33c66b629",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["matharena-brokenarxiv::2026-06", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-computed SHA-256 hashes (artifact and per-row) and transport/qualification checks cannot be executed by this reviewer; treated as owner-executed per packet scope, not as missing source evidence.",
+    "The unit \"percent\" and range [0,100] for the Accuracy metric are not literally transcribed in the supplied excerpts; they are consistent with the metric description (average performance with a 95% CI) but the excerpt does not state a unit explicitly.",
+    "The packet carries no generated summary of added/changed model values in today's captured payload, so criterion c2's affirmative-evidence clause is inapplicable; status:\"active\" rests on the protocol text alone (BrokenArXiv 06/2026 is not marked Deprecated and the board still publishes scores).",
+    "The BrokenArXiv 08/2026 edition exists with a different grading scale (0–3), but the row covers only the 06/2026 edition as a separate identity, so this is not a mismatch for this row; the version_guard's twelve-column and 54-problem checks were verified against SOURCE 2 (12 columns listed) and SOURCE 1 (54 problems for BrokenArXiv 06/2026).",
+    "SOURCE 3 confirms the 0–2 LLM-judge grading claimed in scoring.notes; the page's LLM prompts are noted as not supplied and are not required for the claimed fields."
+  ],
+  "missing_evidence": []
+}

@@ -1,0 +1,20 @@
+```json
+{
+  "artifact_id": "scores-3",
+  "artifact_sha256": "a9f2aa3c7a4826b43dc8027ee65c7730c8de337d8867d83ebc5ae20817f4c9ac",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["public:555dc11c8c4cd2ca770419c8","public:d2e3470ed0550d3da248dfee","public:b44cce6342de9cc8903664d8","public:20fb43ccec990698aa7d9565","public:5e73b93f7a5261b979a47326","public:977ea26330c03544b6b6161b","public:e9bdf440b017d87027693fb3","public:c4b80538c1f6470d5865ebe2","public:20a4bce7816584167555137e","public:dbf68e78cf6afcd8a14a2538","public:1eaf61fc41201691fabf3d4a","public:f1c8354305071d7a957932e5","public:64ec147eb5ffe2e08bee3051","public:cf39fecd0171ce90446bdd4c","public:a25379b2f3f231dd590d3532","c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Could not recompute row SHA-256 bindings or the artifact file hash; relied on owner-computed values as instructed.",
+    "basis 'self_reported' is the producer's classification of publisher-published scores; the source page does not explicitly state a measured vs self_reported basis term, so this is an interpretive mapping, not a verbatim source field. Values themselves are exact transcriptions.",
+    "published_at is null on all rows; the page provides no per-row publication date, only a retrieval timestamp and changelog entries, so no missing value is imputed.",
+    "Protocol text in rows is truncated relative to the full protocol excerpt, but the retained portions match the source excerpt exactly.",
+    "Subject effort configurations (e.g., 'Max', 'Extra High', 'Low') appear only as part of the published row names; the source provides no separate configuration field (configuration:null), and rows correctly leave comparison_key null rather than inventing one."
+  ],
+  "missing_evidence": []
+}
+```

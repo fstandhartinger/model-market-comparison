@@ -1,0 +1,28 @@
+{
+  "artifact_id": "protocol-vals-index-code-migration-2",
+  "artifact_sha256": "e3f40700a1ece2363890ef029a7615ba5ef0ee0da15414280d84e2ffc286c92f",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["vals-index-code-migration::2", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "row vals-index-code-migration::2, scoring.notes",
+      "evidence": "The notes assert 'Vals AI publishes accuracy with a standard error per model' and describe the board as an 'independent evaluator, secondary benchmark, not a Composite input'. The SOURCE 1 excerpt contains no statement about standard errors per model, no 'independent evaluator' designation, and no 'Composite' terminology; the page calls Code Migration 'A private benchmark' within the coding bucket. These transcription claims cannot be verified against the supplied primary evidence.",
+      "repair": "Either supply a source excerpt that supports the standard-error, independent-evaluator, and non-Composite claims, or revise the notes to omit the unverifiable assertions."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "The excerpt is a bounded projection of the full page; fields not shown in the excerpt (e.g., possible standard-error display in the results table) could exist but cannot be confirmed from the packet.",
+    "Owner hash and transport/qualification checks were not executable by me; the per-row and artifact SHA-256 bindings were taken as owner-computed values, not recomputed.",
+    "SOURCE 2 (robots.txt) establishes crawlability only and was not relevant to any criterion."
+  ],
+  "missing_evidence": [
+    "vals-index-code-migration::2 scoring.notes: primary source support for the claim that Vals AI publishes accuracy with a standard error per model (SOURCE 1 excerpt shows no such statement)",
+    "vals-index-code-migration::2 scoring.notes: primary source support for 'independent evaluator, secondary benchmark, not a Composite input' (SOURCE 1 excerpt contains no such designation)"
+  ],
+  "notes_summary": "Core identity fields verified against SOURCE 1: benchmark identity 'Vals Index', Version 2, metric Code Migration accuracy in percent with range [0,100], description 'Porting projects to another language, including COBOL modernization.', subset methodology (50 of 120 CLI tasks plus all 10 COBOL tasks, weighted 75/25) all match the 8/13/2026 v2 release notes and Methodology text. Lifecycle fields (c2) are consistent: page updated 9/22/2026 with current Code Migration leaderboard results and the coding bucket definition, supporting status=active, version_status=published, superseded_by=null."
+}

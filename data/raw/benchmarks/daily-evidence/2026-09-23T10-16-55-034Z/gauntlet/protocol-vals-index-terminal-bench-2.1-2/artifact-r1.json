@@ -1,0 +1,22 @@
+[
+  {
+    "id": "vals-index-terminal-bench-2.1::2",
+    "version": "2",
+    "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Terminal-Bench 2.1 accuracy",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Coding sector component. Vals' own run: never join with aa-terminal-bench::2.1 or terminal-bench::4.0. Vals AI publishes accuracy with a standard error per model; independent evaluator, secondary benchmark, not a Composite input."
+    },
+    "description": "Command-line interface problem solving, as run by Vals AI.",
+    "maintainer": "Vals AI"
+  }
+]

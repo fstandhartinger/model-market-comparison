@@ -80,7 +80,8 @@
       "batch_input_per_1m_usd": 2,
       "batch_output_per_1m_usd": 10,
       "mapping": "derived",
-      "model_id_source": "derived from the pricing-table name; not listed in the deprecations table"
+      "model_id_source": "derived from the pricing-table name; not listed in the deprecations table",
+      "tentative_retirement": "Not sooner than September 22, 2027"
     },
     {
       "model_name": "Claude Opus 5",
@@ -263,14 +264,12 @@
     "Claude Haiku 3.5 (retired, except on Bedrock and Google Cloud)"
   ],
   "response_sha256": {
-    "pricing": "ce8f41919cb8c3683232bfabb33a088c326e9283430a1a6f6e0dd49ac078ce6d",
-    "deprecations": "23c5bec3e8a67576b8ff8a1d352810d7268f82d74fbcae2f7481a3aaad75dc72",
-    "enterprise": "752311ce72380467470bf1204076b9908c2cdb41984a5e18f719b57ccfcac12b"
+    "pricing": "06bf7f6f2a895a4e52fce9e96b2f673e1309652c7852faf41dff74ff8d568a9a",
+    "deprecations": "a7eb97c510d79fe099b3f73b2afc46b135a209978278093c94f56f9a06b065c8",
+    "enterprise": "5bade8a0dab834b1124a5d3e122488c1bc4f379191842004e0ae984d0248648d"
   },
   "diff": {
-    "added": [
-      "Claude Opus 5.5"
-    ],
+    "added": [],
     "removed": [],
     "price_changed": [],
     "lifecycle_changed": [],

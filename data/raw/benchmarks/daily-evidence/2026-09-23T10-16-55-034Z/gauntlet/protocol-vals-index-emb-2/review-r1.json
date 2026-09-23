@@ -1,0 +1,18 @@
+{
+  "artifact_id": "protocol-vals-index-emb-2",
+  "artifact_sha256": "d8060eb505c1b9df61e48ef020a4ef65afe38eec002238d7be40246489b94280",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["vals-index-emb::2", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row-bound SHA-256, artifact SHA-256, and source SHA-256 values are owner-computed and cannot be recomputed by this read-only review; treated as binding per packet terms.",
+    "Source 1 excerpt is a bounded exact excerpt of the full page; the complete response was not available, but the excerpt contains the protocol fields required by c1 and c2 (identity 'Vals Index', 'Version 2', Updated 9/22/2026, EMB description, accuracy percentage scores, live leaderboard of 22 models).",
+    "The row's scoring note that Vals AI publishes accuracy 'with a standard error per model' is not directly visible in the supplied excerpt; it is not contradicted by the excerpt and is not a field required for verification by c1/c2.",
+    "The scoring notes' claims ('independent evaluator, secondary benchmark, not a Composite input') are registry-side annotations; the excerpt does not explicitly address evaluator independence, but the page does show EMB as a standalone component benchmark feeding the index, consistent with 'secondary benchmark'.",
+    "Continuity of harness/judges/configuration is judged against the excerpt's update log: v2 (8/13/2026) added EMB in place of CorpFin, matching the artifact's version '2' identity; no evidence of a later task-set or version change after 9/22/2026 update."
+  ],
+  "missing_evidence": []
+}

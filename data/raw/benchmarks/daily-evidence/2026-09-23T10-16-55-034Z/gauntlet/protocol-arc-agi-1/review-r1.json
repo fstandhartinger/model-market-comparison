@@ -1,0 +1,34 @@
+{
+  "artifact_id": "protocol-arc-agi-1",
+  "artifact_sha256": "f18ac10676a1140d92f001ae20cf7e8b60e01f94e3265184d194ed2d9c520855",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["arc-agi::1", "c1", "c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "blocker",
+      "location": "row arc-agi::1, scoring.metric/unit",
+      "evidence": "The artifact claims metric 'Semi-private exact grid task solution rate' with unit 'percent' and range [0,100]. The primary excerpt (SOURCE 1, arcprize.org/leaderboard) contains no text establishing this metric name, unit, or range; it only references cost-per-task and performance. Per c1, if the excerpt cannot establish continuity, missing evidence must be reported, and missing relevant values fail the row.",
+      "repair": "Obtain a primary excerpt or owner-verified projection that transcribes the metric name, unit, and range for ARC-AGI-1, or correct the scoring block to match the current protocol text."
+    },
+    {
+      "id": "f2",
+      "severity": "major",
+      "location": "row arc-agi::1, version/version_guard",
+      "evidence": "The artifact claims version '1'. SOURCE 1 names the board 'ARC-AGI-1' as a leaderboard entry in the ARC-AGI Series, but the excerpt does not transcribe a registry version number or release/version identifier for the protocol. c1 requires checking registry version and benchmark identity against the primary protocol; identity (ARC-AGI-1 board, maintainer ARC Prize, Inc., passive fluid intelligence description, cost-per-task scatter) is corroborated, but the version value itself is not established by the excerpt.",
+      "repair": "Supply primary evidence binding version '1' to the current protocol text, or annotate the version field with the excerpt-supported identity only."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Criterion c2: SOURCE 1 still lists ARC-AGI-1 as a selectable leaderboard with a scatter plot of score vs cost-per-task, which is consistent with status 'active', version_status 'published', and superseded_by null; the packet carries no run-generated add/change summary, so 'active' rests on the excerpt alone, which supports but does not explicitly state ongoing maintainer reporting. ARC-AGI-2/3 appearing alongside does not contradict the lifecycle fields per the read-supersession-independently rule.",
+    "Artifact-level SHA-256 and per-row canonical hashes are owner-computed; I cannot recompute them. Transport/qualification checks were executed by the producer receipt (identity and qualification only) and are outside my verification scope."
+  ],
+  "missing_evidence": [
+    "arc-agi::1 scoring.metric: exact metric string 'Semi-private exact grid task solution rate' not present in SOURCE 1 excerpt",
+    "arc-agi::1 scoring.unit/range: percent and [0,100] not present in SOURCE 1 excerpt",
+    "arc-agi::1 version '1': no primary text binding the registry version number for ARC-AGI-1"
+  ]
+}

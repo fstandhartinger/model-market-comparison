@@ -1,0 +1,21 @@
+```json
+{
+  "artifact_id": "protocol-arc-agi-3",
+  "artifact_sha256": "95716ef98d721e5a0c3f9c69bd5024d97b8aa40916a61e38fdf901ea9069d450",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["arc-agi::3", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row hash binding relies on the owner-provided per-row SHA-256; I cannot recompute hashes or verify the artifact file digest.",
+    "The metric label 'Semi-private interactive game action efficiency' contains the qualifier 'Semi-private'; the excerpts confirm interactive action efficiency relative to the median human baseline and cost-per-task leaderboard framing, but do not explicitly use the term 'semi-private'. The label is not contradicted by the sources.",
+    "The row's notes ('median human actions', '115% per-level cap', aggregate bound not assumed from the cap) match SOURCE 1's scoring updates (baseline moved from 2nd-best to median per level; per-level cap raised from 100% to 115%); the source states only a marginal aggregate increase (+0.5pp), consistent with the note that the final aggregate bound is not assumed from the cap.",
+    "c2 status='active' is supported by SOURCE 2 showing ARC-AGI-3 as a live leaderboard section the maintainer currently reports, plus SOURCE 1's ongoing scoring updates; no successor board is named in either source, consistent with superseded_by=null. No packet run-summary of added/changed maintainer values was supplied, so affirmative-evidence path under c2 was not available; the protocol-text evidence suffices.",
+    "version_status='published' is inferred from the sources treating ARC-AGI-3 as the current official benchmark (contrast with leaderboard note that 'preview' results are unofficial); no explicit 'published' status string appears in the sources.",
+    "Producer receipt covers identity/qualification only; executed hash and transport checks are the owner's responsibility and were not (and cannot be) performed by me."
+  ],
+  "missing_evidence": []
+}
+```

@@ -1,0 +1,200 @@
+{
+  "artifact_id": "scores-0",
+  "rounds_used": 2,
+  "rows": {
+    "total": 12,
+    "accepted": [
+      "public:2474c4a079c2fb72cac51789",
+      "public:dc8c8b2c767a924a53b4a2be",
+      "public:bc13d16018fe984e3060c2c8",
+      "public:f06d895fc7015b9c22af5a49",
+      "public:00178b85ca3d786877465b43",
+      "public:29689487dfe2d8d37d472691",
+      "public:def10141df6aee515ac64fe5",
+      "public:030876edf5852a3b6597246b",
+      "public:b4df6f7e1deceef7cbec1078",
+      "public:0070b9bb2c99e7a1975dea1b",
+      "public:b015e575be48de0a4ffbe771",
+      "public:d4b3efc4ff2ba218ed3ccc8e"
+    ],
+    "quarantined": []
+  },
+  "producer_flagged": [],
+  "criteria": [
+    "c1"
+  ],
+  "coverage": {
+    "producer": {
+      "complete": true,
+      "model": "deepseek/deepseek-v4.1-flash",
+      "rows_covered": 12
+    },
+    "critic": [
+      {
+        "round": 2,
+        "verdict": "pass",
+        "coverage_complete": true,
+        "missing_rows": [],
+        "missing_criteria": []
+      }
+    ],
+    "final": {
+      "rows_covered": 12,
+      "criteria_covered": 1,
+      "complete": true
+    }
+  },
+  "receipts": [
+    {
+      "round": 1,
+      "role": "producer",
+      "reused_from_round": null,
+      "requested_model": "deepseek/deepseek-v4.1-flash",
+      "model": "deepseek/deepseek-v4.1-flash",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0.01000448064,
+      "out": "data/raw/benchmarks/daily-evidence/2026-09-23T10-16-55-034Z/gauntlet/scores-0/producer-r1.json",
+      "output_sha256": "b8aa8af8c76df09a808e6992e7e2177a187db93165a763324276a025db259c32",
+      "qualification": {
+        "id": "deepseek/deepseek-v4.1-flash",
+        "family": "deepseek",
+        "free": false,
+        "input_per_1m": 0.3,
+        "output_per_1m": 1.2,
+        "context": 1048576,
+        "aa_intelligence_index": 39.5,
+        "aa_source": "exact_family_slug",
+        "matched_model_ids": [
+          "deepseek-v4.1-flash::max"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "deepseek-v4.1-flash::max",
+            "index": 39.5
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 16752,
+        "completion_tokens": 4296,
+        "total_tokens": 21048,
+        "cost": 0.01000448064,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 256,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.010105536,
+          "upstream_inference_prompt_cost": 0.004950336,
+          "upstream_inference_completions_cost": 0.0051552
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 2648,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    },
+    {
+      "round": 2,
+      "role": "producer",
+      "reused_from_round": 1,
+      "requested_model": "deepseek/deepseek-v4.1-flash",
+      "model": "deepseek/deepseek-v4.1-flash",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0,
+      "out": "data/raw/benchmarks/daily-evidence/2026-09-23T10-16-55-034Z/gauntlet/scores-0/producer-r1.json",
+      "output_sha256": "b8aa8af8c76df09a808e6992e7e2177a187db93165a763324276a025db259c32",
+      "qualification": {
+        "id": "deepseek/deepseek-v4.1-flash",
+        "family": "deepseek",
+        "free": false,
+        "input_per_1m": 0.3,
+        "output_per_1m": 1.2,
+        "context": 1048576,
+        "aa_intelligence_index": 39.5,
+        "aa_source": "exact_family_slug",
+        "matched_model_ids": [
+          "deepseek-v4.1-flash::max"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "deepseek-v4.1-flash::max",
+            "index": 39.5
+          }
+        ]
+      },
+      "usage": null,
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    },
+    {
+      "round": 2,
+      "role": "critic",
+      "requested_model": "z-ai/glm-5.3-flash",
+      "model": "z-ai/glm-5.3-flash",
+      "route": "openrouter",
+      "attempt": 2,
+      "cost_usd": 0.0018276093,
+      "out": "data/raw/benchmarks/daily-evidence/2026-09-23T10-16-55-034Z/gauntlet/scores-0/review-r2.json",
+      "output_sha256": "14c44d718a10e706641f1f942e56d184c258b7f9b6a2f5ade7210f339d8eec3e",
+      "qualification": {
+        "id": "z-ai/glm-5.3-flash",
+        "family": "z-ai",
+        "free": false,
+        "input_per_1m": 0.15,
+        "output_per_1m": 0.5,
+        "context": 1310720,
+        "aa_intelligence_index": 41.8,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "glm-5.3-flash::default"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "glm-5.3-flash::default",
+            "index": 41.8
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 17407,
+        "completion_tokens": 998,
+        "total_tokens": 18405,
+        "cost": 0.0018276093,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.00184607,
+          "upstream_inference_prompt_cost": 0.00156663,
+          "upstream_inference_completions_cost": 0.00027944
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 275,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    }
+  ]
+}

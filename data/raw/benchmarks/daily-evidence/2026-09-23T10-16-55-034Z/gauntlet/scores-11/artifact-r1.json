@@ -1,0 +1,170 @@
+[
+  {
+    "id": "public:b83b7471fcccebebcbb1472c",
+    "benchmark_id": "vals-index-terminal-bench-2.1::2",
+    "subject": {
+      "source_id": "anthropic/claude-opus-5-5",
+      "name": "anthropic/claude-opus-5-5",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 87.64,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-23T10:22:17.532564+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-23T10-16-55-034Z/b0c283142fa3096a0360.gz",
+      "sha256": "b0c283142fa3096a03609ea708da09652e59f1503f5f9a2ef2d06626da1b626f",
+      "locator": "astro_props; source row 0; anthropic/claude-opus-5-5; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component terminal_bench_2_1; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"terminal_bench_2_1\",\"accuracy\":87.64,\"stderr\":1.716,\"cost_per_test\":0.448666,\"latency\":383.079,\"compute_effort\":\"high\",\"reasoning_effort\":null,\"max_output_tokens\":128000,\"provider\":\"Anthropic\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:e46d445f460a04fb84ab21ef",
+    "benchmark_id": "vals-index-terminal-bench-2.1::2",
+    "subject": {
+      "source_id": "openai/gpt-6-sol",
+      "name": "openai/gpt-6-sol",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 83.146,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-23T10:22:17.532564+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-23T10-16-55-034Z/b0c283142fa3096a0360.gz",
+      "sha256": "b0c283142fa3096a03609ea708da09652e59f1503f5f9a2ef2d06626da1b626f",
+      "locator": "astro_props; source row 5; openai/gpt-6-sol; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component terminal_bench_2_1; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"terminal_bench_2_1\",\"accuracy\":83.146,\"stderr\":1.297,\"cost_per_test\":0.373024,\"latency\":298.876,\"compute_effort\":null,\"reasoning_effort\":\"max\",\"max_output_tokens\":128000,\"provider\":\"OpenAI\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:ac6ec29297b7d303bb7d9973",
+    "benchmark_id": "vals-index-terminal-bench-2.1::2",
+    "subject": {
+      "source_id": "xiaomi/mimo-v2.6-flash",
+      "name": "xiaomi/mimo-v2.6-flash",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 76.404,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-23T10:22:17.532564+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-23T10-16-55-034Z/b0c283142fa3096a0360.gz",
+      "sha256": "b0c283142fa3096a03609ea708da09652e59f1503f5f9a2ef2d06626da1b626f",
+      "locator": "astro_props; source row 15; xiaomi/mimo-v2.6-flash; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component terminal_bench_2_1; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"terminal_bench_2_1\",\"accuracy\":76.404,\"stderr\":1.716,\"cost_per_test\":0.02332,\"latency\":809.733,\"compute_effort\":null,\"reasoning_effort\":null,\"max_output_tokens\":128000,\"provider\":\"Xiaomi\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:9bbf5523324e487f7f7f0ba7",
+    "benchmark_id": "vals-index-terminal-bench-2.1::2",
+    "subject": {
+      "source_id": "grok/grok-4.7",
+      "name": "grok/grok-4.7",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 73.408,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-23T10:22:17.532564+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-23T10-16-55-034Z/b0c283142fa3096a0360.gz",
+      "sha256": "b0c283142fa3096a03609ea708da09652e59f1503f5f9a2ef2d06626da1b626f",
+      "locator": "astro_props; source row 20; grok/grok-4.7; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component terminal_bench_2_1; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"terminal_bench_2_1\",\"accuracy\":73.408,\"stderr\":1.498,\"cost_per_test\":1.076601,\"latency\":797.952,\"compute_effort\":null,\"reasoning_effort\":\"xhigh\",\"max_output_tokens\":null,\"provider\":\"SpaceXAI\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:26f2bc63012756e87552fe78",
+    "benchmark_id": "vals-index-terminal-bench-2.1::2",
+    "subject": {
+      "source_id": "openai/gpt-6-luna",
+      "name": "openai/gpt-6-luna",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 73.034,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-23T10:22:17.532564+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-23T10-16-55-034Z/b0c283142fa3096a0360.gz",
+      "sha256": "b0c283142fa3096a03609ea708da09652e59f1503f5f9a2ef2d06626da1b626f",
+      "locator": "astro_props; source row 21; openai/gpt-6-luna; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component terminal_bench_2_1; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"terminal_bench_2_1\",\"accuracy\":73.034,\"stderr\":1.716,\"cost_per_test\":0.029222,\"latency\":425.094,\"compute_effort\":null,\"reasoning_effort\":\"max\",\"max_output_tokens\":128000,\"provider\":\"OpenAI\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:a85ddd84dee05308832afcd6",
+    "benchmark_id": "vals-index-terminal-bench-2.1::2",
+    "subject": {
+      "source_id": "xiaomi/mimo-v2.6-pro",
+      "name": "xiaomi/mimo-v2.6-pro",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 67.79,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-23T10:22:17.532564+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-23T10-16-55-034Z/b0c283142fa3096a0360.gz",
+      "sha256": "b0c283142fa3096a03609ea708da09652e59f1503f5f9a2ef2d06626da1b626f",
+      "locator": "astro_props; source row 31; xiaomi/mimo-v2.6-pro; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component terminal_bench_2_1; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"terminal_bench_2_1\",\"accuracy\":67.79,\"stderr\":1.873,\"cost_per_test\":0.072656,\"latency\":939.123,\"compute_effort\":null,\"reasoning_effort\":null,\"max_output_tokens\":128000,\"provider\":\"Xiaomi\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:f5fbbf15dfc501d136b2a491",
+    "benchmark_id": "vals-index-terminal-bench-2.1::2",
+    "subject": {
+      "source_id": "ant/ling-3.0-flash-af-rc3",
+      "name": "ant/ling-3.0-flash-af-rc3",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 50.187,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-23T10:22:17.532564+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-23T10-16-55-034Z/b0c283142fa3096a0360.gz",
+      "sha256": "b0c283142fa3096a03609ea708da09652e59f1503f5f9a2ef2d06626da1b626f",
+      "locator": "astro_props; source row 52; ant/ling-3.0-flash-af-rc3; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component terminal_bench_2_1; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"terminal_bench_2_1\",\"accuracy\":50.187,\"stderr\":1.35,\"cost_per_test\":0.043393,\"latency\":833.528,\"compute_effort\":null,\"reasoning_effort\":null,\"max_output_tokens\":131072,\"provider\":\"Ant\"}",
+    "comparison_key": null
+  }
+]

@@ -1,0 +1,20 @@
+```json
+{
+  "artifact_id": "protocol-weirdml-3",
+  "artifact_sha256": "45b47912bb1a5efb5e68deb5bb62da976000ba1fb6d47f209576d61ff90779bf",
+  "round": 2,
+  "verdict": "pass",
+  "coverage_checked": ["weirdml::3", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-executed SHA-256 and transport/qualification checks could not be independently re-executed by this read-only reviewer; row binding via owner-computed sha256=b8cf0013c7a9c169c9dcd2cc9ee6db68ae5efc9e22ceabc7312edb894aa5debc was accepted as supplied.",
+    "Both source excerpts are bounded/truncated captures of the live pages; the scoring formula (80% normalized area under the average best-so-far effective-score line on a 500k–50M log token axis plus 20% of final value, per-configuration run averaging, equal task weighting with hinted/hintless twins at half weight) matches SOURCE 2 verbatim, but the row's version_guard items (schema_version=1, mode real, exactly 11 valid-run configurations requirement, finite scores with two-value intervals, never reading excluded_models) are the artifact's own fail-closed guard, not protocol text, and were checked only for consistency, not transcription.",
+    "The row's notes list specific harnesses (codex_cli, claude_code, gemini_cli, opencode) that the truncated excerpts do not show; the excerpts confirm a 'Harness / Tool' column exists (SOURCE 1) but not the enumerated values, so this descriptive list could not be verified against primary text.",
+    "No run-level benchmark observation values were supplied in this packet, so per-row numeric value/unit checks against primary fields were not applicable; only identity, protocol, and lifecycle fields were verifiable.",
+    "No packet summary of added/changed maintainer payload values was supplied; 'active' status rests on the live published summary table (SOURCE 1, retrieved 2026-09-23) still rendering the board, which the criteria treat as the maintainer still publishing."
+  ],
+  "missing_evidence": []
+}
+```

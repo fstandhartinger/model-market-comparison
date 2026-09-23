@@ -1,0 +1,16 @@
+{
+  "artifact_id": "protocol-vals-index-finance-agent-2",
+  "artifact_sha256": "b903d3b0ee22f50b9f62cb1d519b87c1fa0f063898bfc079c0434ca64c7033f1",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["vals-index-finance-agent::2", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Row hash binding (8a06bb05...) and transport/qualification checks are owner-executed; I verified field content against SOURCE 1 only and cannot recompute hashes.",
+    "The run-level summary of added/changed model values in today's captured maintainer payload is not present in this packet; status:active was instead affirmed from the primary protocol page itself (Updated 9/22/2026, current leaderboard of 22 models published), which the criteria permit; this summary is not required for the pass.",
+    "SOURCE 1 is an excerpt of the full page; the excerpt does establish benchmark identity, version, finance component description and lifecycle, but full-page continuity beyond the excerpt was not independently verifiable."
+  ],
+  "missing_evidence": []
+}

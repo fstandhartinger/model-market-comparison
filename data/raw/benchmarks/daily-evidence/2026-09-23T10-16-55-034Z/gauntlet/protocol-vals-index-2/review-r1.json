@@ -1,0 +1,19 @@
+```json
+{
+  "artifact_id": "protocol-vals-index-2",
+  "artifact_sha256": "a1d39fff071d33c216d8dd9104f25314424cb58d6af55ba83c8383ebf825d8a2",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["vals-index::2", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Owner-side hash verification of artifact/row/source SHA-256 values and transport/qualification checks are executed by the owner; I compared fields against the supplied excerpt text only and cannot execute hashes or fetches.",
+    "SOURCE 1 is a bounded exact excerpt; it establishes identity (metadata 'Vals Index', 'Version 2'), metric (ACCURACY), formula (8.0*Finance + 5.6*Coding + 1.2*Legal)/14.8, units (percent, e.g. 69.69%) and a 9/22/2026 update date with live leaderboard, which suffices for c1/c2; deeper continuity (harness/judge details) is not stated on the page itself.",
+    "The packet does not include this run's generated added/changed-values summary; that summary is optional affirmative evidence for status:'active' and its absence is not a defect, since the protocol text (updated 9/22/2026 with published results and current leaderboard) independently supports active.",
+    "The scoring notes' 'independent evaluator, secondary benchmark, not a Composite input' characterization is producer-provided context; the excerpt neither confirms nor contradicts it, and it is not one of the fields c1/c2 require to be settled by the protocol text beyond identity/metric/units/description, which match."
+  ],
+  "missing_evidence": []
+}
+```

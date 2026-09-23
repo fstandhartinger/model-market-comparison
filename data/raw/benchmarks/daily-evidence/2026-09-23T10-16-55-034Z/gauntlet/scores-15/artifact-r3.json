@@ -1,0 +1,316 @@
+[
+  {
+    "id": "public:360b3861f3aacca62916757c",
+    "benchmark_id": "weirdml::3",
+    "subject": {
+      "source_id": "gpt-6-astra-xhigh-openrouter",
+      "name": "GPT-6 Astra (xhigh)",
+      "model_id": "gpt-6-astra::xhigh",
+      "variant": null,
+      "harness": null
+    },
+    "value": 42.220231363636366,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://htihle.github.io/assets/data/weirdml_v3.json",
+      "retrieved_at": "2026-09-23T10:24:41.108070+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-23T10-16-55-034Z/8599fd88e6d83c8e145b.gz",
+      "sha256": "8599fd88e6d83c8e145b2bf4c72effe2fd5b335cc2e4b758d35ad9c08c8cd46d",
+      "locator": "weirdml_v3_json; source row 0; gpt-6-astra-xhigh-openrouter; field score"
+    },
+    "protocol": "Effective score across the 11 tasks: 80% normalized area under the average best-so-far effective-score line on a log token axis (500k–50M) plus 20% of its final value; runs averaged per configuration, tasks weighted equally (hinted/hintless twins half weight each); effective scores include normalization and hint penalties, they are not raw accuracy.; source row: {\"agent\":\"codex_cli\",\"harness\":[{\"name\":\"codex_cli\",\"version\":\"0.154.0\"}],\"reasoning_effort\":\"xhigh\",\"open_weights\":false,\"runs\":76,\"interval_95\":[0.4019133178239843,0.4415915353257975],\"mean_api_cost_usd\":27.85400378787879,\"mean_output_tokens\":153241.35606060605,\"mean_final_best\":0.5404530212121212}",
+    "comparison_key": null,
+    "source_basis": "measured",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.4222023136363636
+      ]
+    },
+    "join_note": "Reviewed identity map 2026-09-18: label states model gpt-6-astra and setting xhigh; exact catalog configuration gpt-6-astra::xhigh"
+  },
+  {
+    "id": "public:f7da903ca4c4fb58d9b78c66",
+    "benchmark_id": "weirdml::3",
+    "subject": {
+      "source_id": "fable-5.1",
+      "name": "Claude Fable 5.1 (xhigh)",
+      "model_id": "claude-fable-5.1::xhigh",
+      "variant": null,
+      "harness": null
+    },
+    "value": 25.970212727272727,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://htihle.github.io/assets/data/weirdml_v3.json",
+      "retrieved_at": "2026-09-23T10:24:41.108070+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-23T10-16-55-034Z/8599fd88e6d83c8e145b.gz",
+      "sha256": "8599fd88e6d83c8e145b2bf4c72effe2fd5b335cc2e4b758d35ad9c08c8cd46d",
+      "locator": "weirdml_v3_json; source row 1; fable-5.1; field score"
+    },
+    "protocol": "Effective score across the 11 tasks: 80% normalized area under the average best-so-far effective-score line on a log token axis (500k–50M) plus 20% of its final value; runs averaged per configuration, tasks weighted equally (hinted/hintless twins half weight each); effective scores include normalization and hint penalties, they are not raw accuracy.; source row: {\"agent\":\"claude_code\",\"harness\":[{\"name\":\"claude_code\",\"version\":\"2.1.270\"}],\"reasoning_effort\":\"xhigh\",\"open_weights\":false,\"runs\":75,\"interval_95\":[0.24550793045160685,0.27367498026838094],\"mean_api_cost_usd\":31.934821818181817,\"mean_output_tokens\":251090.16363636364,\"mean_final_best\":0.4352721909090909}",
+    "comparison_key": null,
+    "source_basis": "measured",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.2597021272727273
+      ]
+    },
+    "join_note": "Reviewed identity map 2026-09-18: label states model claude-fable-5.1 and setting xhigh; exact catalog configuration claude-fable-5.1::xhigh"
+  },
+  {
+    "id": "public:19807704624f6d690c4f4ae1",
+    "benchmark_id": "weirdml::3",
+    "subject": {
+      "source_id": "opus-5",
+      "name": "Claude Opus 5 (xhigh)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 19.01117537878788,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://htihle.github.io/assets/data/weirdml_v3.json",
+      "retrieved_at": "2026-09-23T10:24:41.108070+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-23T10-16-55-034Z/8599fd88e6d83c8e145b.gz",
+      "sha256": "8599fd88e6d83c8e145b2bf4c72effe2fd5b335cc2e4b758d35ad9c08c8cd46d",
+      "locator": "weirdml_v3_json; source row 2; opus-5; field score"
+    },
+    "protocol": "Effective score across the 11 tasks: 80% normalized area under the average best-so-far effective-score line on a log token axis (500k–50M) plus 20% of its final value; runs averaged per configuration, tasks weighted equally (hinted/hintless twins half weight each); effective scores include normalization and hint penalties, they are not raw accuracy.; source row: {\"agent\":\"claude_code\",\"harness\":[{\"name\":\"claude_code\",\"version\":\"2.1.270\"}],\"reasoning_effort\":\"xhigh\",\"open_weights\":false,\"runs\":60,\"interval_95\":[0.1717991920562741,0.20790482417820352],\"mean_api_cost_usd\":25.262239242424243,\"mean_output_tokens\":288399.0734848485,\"mean_final_best\":0.325382071969697}",
+    "comparison_key": null,
+    "source_basis": "measured",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.19011175378787878
+      ]
+    }
+  },
+  {
+    "id": "public:c55c037e87b0a97e67eddefc",
+    "benchmark_id": "weirdml::3",
+    "subject": {
+      "source_id": "fable-5",
+      "name": "Claude Fable 5 (xhigh)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 15.52890606060606,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://htihle.github.io/assets/data/weirdml_v3.json",
+      "retrieved_at": "2026-09-23T10:24:41.108070+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-23T10-16-55-034Z/8599fd88e6d83c8e145b.gz",
+      "sha256": "8599fd88e6d83c8e145b2bf4c72effe2fd5b335cc2e4b758d35ad9c08c8cd46d",
+      "locator": "weirdml_v3_json; source row 3; fable-5; field score"
+    },
+    "protocol": "Effective score across the 11 tasks: 80% normalized area under the average best-so-far effective-score line on a log token axis (500k–50M) plus 20% of its final value; runs averaged per configuration, tasks weighted equally (hinted/hintless twins half weight each); effective scores include normalization and hint penalties, they are not raw accuracy.; source row: {\"agent\":\"claude_code\",\"harness\":[{\"name\":\"claude_code\",\"version\":\"2.1.270\"}],\"reasoning_effort\":\"xhigh\",\"open_weights\":false,\"runs\":43,\"interval_95\":[0.13378927454874928,0.1763228394583531],\"mean_api_cost_usd\":52.85594424242424,\"mean_output_tokens\":299279.25303030305,\"mean_final_best\":0.27753344242424244}",
+    "comparison_key": null,
+    "source_basis": "measured",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.1552890606060606
+      ]
+    }
+  },
+  {
+    "id": "public:918369c55fa95df6179444a1",
+    "benchmark_id": "weirdml::3",
+    "subject": {
+      "source_id": "gpt-5.6-sol-xhigh-openrouter",
+      "name": "GPT-5.6 Sol (xhigh)",
+      "model_id": "gpt-5.6-sol::xhigh",
+      "variant": null,
+      "harness": null
+    },
+    "value": 14.992224545454548,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://htihle.github.io/assets/data/weirdml_v3.json",
+      "retrieved_at": "2026-09-23T10:24:41.108070+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-23T10-16-55-034Z/8599fd88e6d83c8e145b.gz",
+      "sha256": "8599fd88e6d83c8e145b2bf4c72effe2fd5b335cc2e4b758d35ad9c08c8cd46d",
+      "locator": "weirdml_v3_json; source row 4; gpt-5.6-sol-xhigh-openrouter; field score"
+    },
+    "protocol": "Effective score across the 11 tasks: 80% normalized area under the average best-so-far effective-score line on a log token axis (500k–50M) plus 20% of its final value; runs averaged per configuration, tasks weighted equally (hinted/hintless twins half weight each); effective scores include normalization and hint penalties, they are not raw accuracy.; source row: {\"agent\":\"codex_cli\",\"harness\":[{\"name\":\"codex_cli\",\"version\":\"0.154.0\"}],\"reasoning_effort\":\"xhigh\",\"open_weights\":false,\"runs\":75,\"interval_95\":[0.1354565655182275,0.16419835633632318],\"mean_api_cost_usd\":6.2785709090909085,\"mean_output_tokens\":116059.40000000001,\"mean_final_best\":0.21448963636363635}",
+    "comparison_key": null,
+    "source_basis": "measured",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.14992224545454547
+      ]
+    },
+    "join_note": "Reviewed identity map 2026-09-18: label states model gpt-5.6-sol and setting xhigh; exact catalog configuration gpt-5.6-sol::xhigh"
+  },
+  {
+    "id": "public:754e1de67ad82d27cac8eb50",
+    "benchmark_id": "weirdml::3",
+    "subject": {
+      "source_id": "gemini-3.8-flash-aistudio-high",
+      "name": "Gemini 3.8 Flash (high)",
+      "model_id": "gemini-3.8-flash::high",
+      "variant": null,
+      "harness": null
+    },
+    "value": 7.378749090909091,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://htihle.github.io/assets/data/weirdml_v3.json",
+      "retrieved_at": "2026-09-23T10:24:41.108070+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-23T10-16-55-034Z/8599fd88e6d83c8e145b.gz",
+      "sha256": "8599fd88e6d83c8e145b2bf4c72effe2fd5b335cc2e4b758d35ad9c08c8cd46d",
+      "locator": "weirdml_v3_json; source row 5; gemini-3.8-flash-aistudio-high; field score"
+    },
+    "protocol": "Effective score across the 11 tasks: 80% normalized area under the average best-so-far effective-score line on a log token axis (500k–50M) plus 20% of its final value; runs averaged per configuration, tasks weighted equally (hinted/hintless twins half weight each); effective scores include normalization and hint penalties, they are not raw accuracy.; source row: {\"agent\":\"gemini_cli\",\"harness\":[{\"name\":\"gemini_cli\",\"version\":\"0.59.0\"}],\"reasoning_effort\":\"high\",\"open_weights\":false,\"runs\":75,\"interval_95\":[0.0628395958516055,0.08428401828600197],\"mean_api_cost_usd\":3.9440827272727272,\"mean_output_tokens\":156102.65454545454,\"mean_final_best\":0.14574070909090908}",
+    "comparison_key": null,
+    "source_basis": "measured",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.07378749090909091
+      ]
+    },
+    "join_note": "Reviewed identity map 2026-09-18: label states model gemini-3.8-flash and setting high; exact catalog configuration gemini-3.8-flash::high"
+  },
+  {
+    "id": "public:4a3fe7a47f41f98d26239396",
+    "benchmark_id": "weirdml::3",
+    "subject": {
+      "source_id": "kimi-k3-fireworks-high-kimi-code",
+      "name": "Kimi K3 (high, Kimi Code)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 7.2688651515151514,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://htihle.github.io/assets/data/weirdml_v3.json",
+      "retrieved_at": "2026-09-23T10:24:41.108070+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-23T10-16-55-034Z/8599fd88e6d83c8e145b.gz",
+      "sha256": "8599fd88e6d83c8e145b2bf4c72effe2fd5b335cc2e4b758d35ad9c08c8cd46d",
+      "locator": "weirdml_v3_json; source row 6; kimi-k3-fireworks-high-kimi-code; field score"
+    },
+    "protocol": "Effective score across the 11 tasks: 80% normalized area under the average best-so-far effective-score line on a log token axis (500k–50M) plus 20% of its final value; runs averaged per configuration, tasks weighted equally (hinted/hintless twins half weight each); effective scores include normalization and hint penalties, they are not raw accuracy.; source row: {\"agent\":\"kimi_code\",\"harness\":[{\"name\":\"kimi_code\",\"version\":\"2.0.0\"}],\"reasoning_effort\":\"high\",\"open_weights\":true,\"runs\":44,\"interval_95\":[0.05662547278900971,0.08879033801159081],\"mean_api_cost_usd\":20.019839393939392,\"mean_output_tokens\":209828.75757575757,\"mean_final_best\":0.15664525757575756}",
+    "comparison_key": null,
+    "source_basis": "measured",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.07268865151515151
+      ]
+    }
+  },
+  {
+    "id": "public:02adc4772197328e98c3b00c",
+    "benchmark_id": "weirdml::3",
+    "subject": {
+      "source_id": "opus-4.5",
+      "name": "Claude Opus 4.5 (high)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 6.5148765151515144,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://htihle.github.io/assets/data/weirdml_v3.json",
+      "retrieved_at": "2026-09-23T10:24:41.108070+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-23T10-16-55-034Z/8599fd88e6d83c8e145b.gz",
+      "sha256": "8599fd88e6d83c8e145b2bf4c72effe2fd5b335cc2e4b758d35ad9c08c8cd46d",
+      "locator": "weirdml_v3_json; source row 7; opus-4.5; field score"
+    },
+    "protocol": "Effective score across the 11 tasks: 80% normalized area under the average best-so-far effective-score line on a log token axis (500k–50M) plus 20% of its final value; runs averaged per configuration, tasks weighted equally (hinted/hintless twins half weight each); effective scores include normalization and hint penalties, they are not raw accuracy.; source row: {\"agent\":\"claude_code\",\"harness\":[{\"name\":\"claude_code\",\"version\":\"2.1.270\"}],\"reasoning_effort\":\"high\",\"open_weights\":false,\"runs\":42,\"interval_95\":[0.04851002935044223,0.08172020281026282],\"mean_api_cost_usd\":8.70339090909091,\"mean_output_tokens\":82594.66666666667,\"mean_final_best\":0.07125567424242425}",
+    "comparison_key": null,
+    "source_basis": "measured",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.06514876515151515
+      ]
+    }
+  },
+  {
+    "id": "public:f229865e0717b7ae749c0989",
+    "benchmark_id": "weirdml::3",
+    "subject": {
+      "source_id": "deepseek-v4.1-flash-novita-high-opencode",
+      "name": "DeepSeek V4.1 Flash (high, Novita)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 5.946331818181818,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://htihle.github.io/assets/data/weirdml_v3.json",
+      "retrieved_at": "2026-09-23T10:24:41.108070+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-23T10-16-55-034Z/8599fd88e6d83c8e145b.gz",
+      "sha256": "8599fd88e6d83c8e145b2bf4c72effe2fd5b335cc2e4b758d35ad9c08c8cd46d",
+      "locator": "weirdml_v3_json; source row 8; deepseek-v4.1-flash-novita-high-opencode; field score"
+    },
+    "protocol": "Effective score across the 11 tasks: 80% normalized area under the average best-so-far effective-score line on a log token axis (500k–50M) plus 20% of its final value; runs averaged per configuration, tasks weighted equally (hinted/hintless twins half weight each); effective scores include normalization and hint penalties, they are not raw accuracy.; source row: {\"agent\":\"opencode\",\"harness\":[{\"name\":\"opencode\",\"version\":\"1.18.30\"}],\"reasoning_effort\":\"high\",\"open_weights\":true,\"runs\":30,\"interval_95\":[0.03994552980668086,0.07880285195313831],\"mean_api_cost_usd\":0.7370795454545455,\"mean_output_tokens\":323336.0681818182,\"mean_final_best\":0.11577238636363636}",
+    "comparison_key": null,
+    "source_basis": "measured",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.05946331818181818
+      ]
+    }
+  },
+  {
+    "id": "public:08f1ce157a5c2ca15a810800",
+    "benchmark_id": "weirdml::3",
+    "subject": {
+      "source_id": "gpt-5.6-luna-xhigh-openrouter",
+      "name": "GPT-5.6 Luna (xhigh)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 5.157952272727273,
+    "unit": "percent",
+    "basis": "derived",
+    "source": {
+      "url": "https://htihle.github.io/assets/data/weirdml_v3.json",
+      "retrieved_at": "2026-09-23T10:24:41.108070+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-23T10-16-55-034Z/8599fd88e6d83c8e145b.gz",
+      "sha256": "8599fd88e6d83c8e145b2bf4c72effe2fd5b335cc2e4b758d35ad9c08c8cd46d",
+      "locator": "weirdml_v3_json; source row 9; gpt-5.6-luna-xhigh-openrouter; field score"
+    },
+    "protocol": "Effective score across the 11 tasks: 80% normalized area under the average best-so-far effective-score line on a log token axis (500k–50M) plus 20% of its final value; runs averaged per configuration, tasks weighted equally (hinted/hintless twins half weight each); effective scores include normalization and hint penalties, they are not raw accuracy.; source row: {\"agent\":\"codex_cli\",\"harness\":[{\"name\":\"codex_cli\",\"version\":\"0.154.0\"}],\"reasoning_effort\":\"xhigh\",\"open_weights\":false,\"runs\":52,\"interval_95\":[0.03650005563278502,0.06663835722067712],\"mean_api_cost_usd\":0.735415909090909,\"mean_output_tokens\":99310.64393939394,\"mean_final_best\":0.09344040909090909}",
+    "comparison_key": null,
+    "source_basis": "measured",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.051579522727272724
+      ]
+    }
+  }
+]

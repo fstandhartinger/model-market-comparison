@@ -1,0 +1,30 @@
+```json
+{
+  "artifact_id": "protocol-arc-agi-2",
+  "artifact_sha256": "a6113549f6eb3d1d6a238a6fe0f3d783e477854e09142d35328b3f6ec41062bd",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["arc-agi::2", "c1", "c2"],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "major",
+      "location": "row arc-agi::2 scoring.metric / scoring.unit (c1)",
+      "evidence": "SOURCE 1 (arcprize.org/leaderboard, retrieved 2026-09-23) describes the page as a scatter plot of 'cost-per-task and performance' and confirms ARC-AGI-2 as a passive fluid intelligence benchmark, but the excerpt nowhere states the metric name 'Semi-private exact grid task solution rate' or a percent unit. c1 requires the metric and units to be verified against the actual primary protocol text; the excerpt cannot establish them. Description and identity (ARC-AGI-2, passive fluid intelligence) are supported by the excerpt ('ARC-AGI-1 and 2) which measured passive fluid intelligence', cost-per-task axis).",
+      "repair": "Obtain the primary protocol/leaderboard passage that names the semi-private exact grid task solution rate metric and its percent unit, and re-verify scoring.metric and scoring.unit against it before reissue. Do not fill from memory."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Could not recompute row or artifact hashes; relied on owner-computed canonical SHA-256 values.",
+    "version_status 'published' is not contradicted by the excerpt (notes mention some 'preview' results exist, which does not settle the board's own status); treated as not falsified rather than affirmatively verified.",
+    "superseded_by null is consistent with the excerpt showing ARC-AGI-2 still listed alongside ARC-AGI-3; a supersession note elsewhere in the maintainer site would not appear in this excerpt.",
+    "status 'active' is supported by the live ARC-AGI-2 leaderboard navigation and current ARC Prize 2026 content, but no run-summary delta was supplied in the packet; continuity of harness/judges/configuration beyond the leaderboard text could not be fully established from the excerpt."
+  ],
+  "missing_evidence": [
+    "arc-agi::2 scoring.metric 'Semi-private exact grid task solution rate': primary passage naming this metric is absent from SOURCE 1 excerpt",
+    "arc-agi::2 scoring.unit 'percent': primary passage stating the unit is absent from SOURCE 1 excerpt"
+  ]
+}
+```

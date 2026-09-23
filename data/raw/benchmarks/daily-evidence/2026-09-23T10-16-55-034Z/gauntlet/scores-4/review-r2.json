@@ -1,0 +1,18 @@
+{
+  "artifact_id": "scores-4",
+  "artifact_sha256": "237551451c8e997f3014c8122a2485ab3dfc9d67c3d7c9f8e64fa420f49ce1fb",
+  "round": 2,
+  "verdict": "pass",
+  "coverage_checked": ["public:faab3b240bc0ed8ea528faaa","public:99a40920e5ea73460d9a0dbc","public:99dd554d23b5241cbd3a0e9a","public:4663ac6a22aa05da61dbea82","public:d1ab68ef753235cc7ce29b27","public:ed2bfd02e514848b88146b8d","public:30ac7d4eb95df34e209e5377","c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Could not recompute row SHA-256 hashes or artifact hash; relied on owner-supplied per-row canonical hashes for binding.",
+    "Row public:30ac7d4eb95df34e209e5377 renders value as 16 while the primary field is '16.0 %'; treated as numerically identical formatting, not a transcription error.",
+    "published_at is null on all rows; the source page does not publish per-row dates (only changelog entries), so no row-level publication date is claimed or expected.",
+    "Source page includes page-level statistics/variance caveats; basis 'self_reported' reflects that scores are published by the benchmark owner, which matches the source's own reporting.",
+    "Could not independently verify transport/qualification checks; those are owner-executed per the review instructions (producer receipt was identity/qualification only)."
+  ],
+  "missing_evidence": []
+}

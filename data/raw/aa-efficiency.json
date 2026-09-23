@@ -3,7 +3,7 @@
   "basis": "measured",
   "interpretation": "benchmark_proxy",
   "caveat": "AA Intelligence Index benchmark token accounting. Ratios are BENCHMARK PROXIES, never typical user I/O usage; usage ratios must come from OpenRouter/Chutes sources.",
-  "collected_at": "2026-09-22T18:45:34.983Z",
+  "collected_at": "2026-09-23T09:57:55.637Z",
   "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
   "data_fields": {
     "tokens_per_task": "intelligenceIndexOutputTokensPerTask {reasoning, answer, output} (measured)",
@@ -13,18 +13,18 @@
   "attempts": [
     {
       "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
-      "fetched_at": "2026-09-22T18:45:34.314Z",
+      "fetched_at": "2026-09-23T09:57:55.427Z",
       "http_status": 200,
-      "bytes": 3904781,
-      "sha256": "31f732f8babaab2710dee4e54ca3ca05f497c98f51984a8c9ef5625b7c073a93"
+      "bytes": 3997137,
+      "sha256": "2c25becf8833e77b7166d348f75612ef25e0ce58f6424d5a4614ab829ec5a9ac"
     }
   ],
   "coverage": {
-    "published_rows": 154,
-    "scored_denominator": 652,
+    "published_rows": 166,
+    "scored_denominator": 664,
     "denominator_source": "Leaderboard rows carrying a finite intelligenceIndex inside the same model-page Flight payload"
   },
-  "count": 154,
+  "count": 166,
   "rows": [
     {
       "source_id": "8014c311-fa23-4a4b-8485-8a864db8a113",
@@ -1828,6 +1828,270 @@
         "basis": "derived",
         "input_output_ratio": 24.653076680380764,
         "reasoning_output_share": 0.5078039841309666
+      }
+    },
+    {
+      "source_id": "6fb13851-40ce-4bda-ad3f-6b38e0c5daa7",
+      "slug": "gpt-6-luna",
+      "name": "GPT-6 Luna (max)",
+      "variant": "max",
+      "tokens_per_task": {
+        "reasoning": 39300.266611129686,
+        "answer": 11236.769990239749,
+        "output": 50537.03660136944
+      },
+      "canonical_token_counts": {
+        "input": 3133100768,
+        "output": 145021668,
+        "answer": 16315244,
+        "reasoning": 128706424
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 21.604363066628085,
+        "reasoning_output_share": 0.7776527721861859
+      }
+    },
+    {
+      "source_id": "7d1229bc-deea-4717-ba5b-f59a35d991e3",
+      "slug": "gpt-6-luna-high",
+      "name": "GPT-6 Luna (high)",
+      "variant": "high",
+      "tokens_per_task": {
+        "reasoning": 12800.233510622893,
+        "answer": 6970.838179045675,
+        "output": 19771.07168966857
+      },
+      "canonical_token_counts": {
+        "input": 1335412150,
+        "output": 46947199,
+        "answer": 11853850,
+        "reasoning": 35093349
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 28.444980285192308,
+        "reasoning_output_share": 0.6474223406570162
+      }
+    },
+    {
+      "source_id": "bf9708d8-933d-44f6-affa-b696a7a650c9",
+      "slug": "gpt-6-luna-low",
+      "name": "GPT-6 Luna (low)",
+      "variant": "low",
+      "tokens_per_task": {
+        "reasoning": 514.9441302130821,
+        "answer": 1538.9312493273987,
+        "output": 2053.875379540481
+      },
+      "canonical_token_counts": {
+        "input": 194793004,
+        "output": 8129067,
+        "answer": 3757726,
+        "reasoning": 4371341
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 23.962529033159647,
+        "reasoning_output_share": 0.2507182934966054
+      }
+    },
+    {
+      "source_id": "36667da0-9222-4967-adbb-f7efa15ad213",
+      "slug": "gpt-6-luna-medium",
+      "name": "GPT-6 Luna (medium)",
+      "variant": "medium",
+      "tokens_per_task": {
+        "reasoning": 6222.294135012362,
+        "answer": 5004.975178562384,
+        "output": 11227.269313574747
+      },
+      "canonical_token_counts": {
+        "input": 850506601,
+        "output": 28447041,
+        "answer": 9776874,
+        "reasoning": 18670167
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 29.897893457530433,
+        "reasoning_output_share": 0.554212601588622
+      }
+    },
+    {
+      "source_id": "63cb48ea-0b0c-4e07-8ded-6d28dec4fa28",
+      "slug": "gpt-6-luna-non-reasoning",
+      "name": "GPT-6 Luna (Non-reasoning)",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 0,
+        "answer": 3665.1343472261233,
+        "output": 3665.1343472261233
+      },
+      "canonical_token_counts": {
+        "input": 908117293,
+        "output": 6882998,
+        "answer": 6882998,
+        "reasoning": 0
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 131.9363005771613,
+        "reasoning_output_share": 0
+      }
+    },
+    {
+      "source_id": "19813eb2-460a-475c-af65-810bb8660fec",
+      "slug": "gpt-6-luna-xhigh",
+      "name": "GPT-6 Luna (xhigh)",
+      "variant": "xhigh",
+      "tokens_per_task": {
+        "reasoning": 18653.77356093282,
+        "answer": 8534.890607968291,
+        "output": 27188.66416890111
+      },
+      "canonical_token_counts": {
+        "input": 1960270772,
+        "output": 68351665,
+        "answer": 13162289,
+        "reasoning": 55189376
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 28.679195627494956,
+        "reasoning_output_share": 0.6860864309129739
+      }
+    },
+    {
+      "source_id": "c50ea08c-88c0-4eb7-85b8-27f2bbf6d527",
+      "slug": "gpt-6-sol",
+      "name": "GPT-6 Sol (max)",
+      "variant": "max",
+      "tokens_per_task": {
+        "reasoning": 21023.570912006136,
+        "answer": 10214.117618168617,
+        "output": 31237.688530174753
+      },
+      "canonical_token_counts": {
+        "input": 2551222824,
+        "output": 76941371,
+        "answer": 14230403,
+        "reasoning": 62710968
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 33.158010974356046,
+        "reasoning_output_share": 0.673019416647872
+      }
+    },
+    {
+      "source_id": "52eebe3e-6ede-4e46-92db-c5dea49fc410",
+      "slug": "gpt-6-sol-high",
+      "name": "GPT-6 Sol (high)",
+      "variant": "high",
+      "tokens_per_task": {
+        "reasoning": 4988.562388472668,
+        "answer": 5243.879033068356,
+        "output": 10232.441421541025
+      },
+      "canonical_token_counts": {
+        "input": 938877531,
+        "output": 25283626,
+        "answer": 9598056,
+        "reasoning": 15685570
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 37.133816605260655,
+        "reasoning_output_share": 0.4875241580148114
+      }
+    },
+    {
+      "source_id": "01459872-433a-4ab2-8e99-7083162172eb",
+      "slug": "gpt-6-sol-low",
+      "name": "GPT-6 Sol (low)",
+      "variant": "low",
+      "tokens_per_task": {
+        "reasoning": 696.8563159920149,
+        "answer": 2661.129451300584,
+        "output": 3357.985767292599
+      },
+      "canonical_token_counts": {
+        "input": 337864127,
+        "output": 8906355,
+        "answer": 6222454,
+        "reasoning": 2683901
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 37.93517404145692,
+        "reasoning_output_share": 0.2075221172107172
+      }
+    },
+    {
+      "source_id": "780a4a85-17ff-4175-a8dd-ebca4823e61b",
+      "slug": "gpt-6-sol-medium",
+      "name": "GPT-6 Sol (medium)",
+      "variant": "medium",
+      "tokens_per_task": {
+        "reasoning": 2354.9801610398354,
+        "answer": 4123.399325450569,
+        "output": 6478.379486490405
+      },
+      "canonical_token_counts": {
+        "input": 598190085,
+        "output": 15792138,
+        "answer": 8116577,
+        "reasoning": 7675561
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 37.8789803508556,
+        "reasoning_output_share": 0.36351377160766196
+      }
+    },
+    {
+      "source_id": "d3e20e76-9e1a-45b6-b809-ad6aa37430cf",
+      "slug": "gpt-6-sol-non-reasoning",
+      "name": "GPT-6 Sol (Non-reasoning)",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 0,
+        "answer": 4912.460193383309,
+        "output": 4912.460193383309
+      },
+      "canonical_token_counts": {
+        "input": 1097070665,
+        "output": 8276096,
+        "answer": 8276096,
+        "reasoning": 0
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 132.5589583542772,
+        "reasoning_output_share": 0
+      }
+    },
+    {
+      "source_id": "da2642fe-9f73-4788-b5af-24edcd55b37e",
+      "slug": "gpt-6-sol-xhigh",
+      "name": "GPT-6 Sol (xhigh)",
+      "variant": "xhigh",
+      "tokens_per_task": {
+        "reasoning": 9299.825851500813,
+        "answer": 6712.95796218151,
+        "output": 16012.783813682323
+      },
+      "canonical_token_counts": {
+        "input": 1305425345,
+        "output": 40331917,
+        "answer": 11195990,
+        "reasoning": 29135927
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 32.3670542364748,
+        "reasoning_output_share": 0.5807750831903732
       }
     },
     {

@@ -1,0 +1,18 @@
+{
+  "artifact_id": "protocol-vals-index-vibe-code-bench-2",
+  "artifact_sha256": "6454cf99059ad8414187061c54540eb9222e52e13ff65e8243d3448821b424b1",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["vals-index-vibe-code-bench::2", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Source 1 shows 'Vals Index ... Version 2' and lists Vibe Code Bench ('End-to-end app-building tasks') in the coding bucket of the current protocol, supporting the row's identity, version guard, and description; I cannot independently verify the owner's SHA-256 hashes (artifact, row, source), which is an execution limitation, not missing evidence.",
+    "The row notes claim 'Vals AI publishes accuracy with a standard error per model' and 'not a Composite input'; the Source 1 excerpt neither confirms nor contradicts these statements (no standard-error display and no mention of any 'Composite' appear in the excerpt). These claims are outside the c1/c2 required fields (identity, metric, units, description, lifecycle), so they are noted as unverified wording rather than failures.",
+    "The excerpt is bounded; full page content beyond the excerpt could contain additional protocol detail, but everything required by c1 and c2 is settled by the supplied text.",
+    "status 'active' is supported: the page (updated 9/22/2026, Version 2) publishes current results and lists Vibe Code Bench as a live coding-bucket component with published standalone scores. No packet summary of added/changed maintainer values was provided; that affirmative evidence is optional and its absence is not a gap.",
+    "superseded_by null is consistent: the protocol names no successor to Vibe Code Bench (it remains in the coding bucket); the 5/4/2026 and 8/13/2026 updates change bucket weights, not VCB's retirement."
+  ],
+  "missing_evidence": []
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "id": "terminal-bench::4.0",
+    "version": "4.0",
+    "version_guard": "Verify the published version 4.0 before reading results.",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run",
+      "unit": "percent",
+      "range": [
+        null,
+        null
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "description": "A benchmark to measure and evolve with the frontier of agent work, whose homepage leaderboard reports resolution rate on Terminal-Bench 4.0 tasks.",
+    "maintainer": "Stanford / Harbor / Laude Institute"
+  }
+]
