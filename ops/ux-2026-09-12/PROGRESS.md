@@ -8911,12 +8911,12 @@ CR-135 publishes the already-scored JevBench v1.4.1 aggregate after CR-134. GitH
 
 | ID | Status | Evidence | Notes |
 |---|---|---|---|
-| CR-135.1 | implemented | `/home/flori/jobs/jevbench-v141-additions-20260923/FINAL-ARTIFACT-RECEIPT.json`; `/home/flori/jobs/jevbench-v141-additions-20260923/SITE-PUBLISH-RECEIPT.json`; GitHub release | Exact 82-system aggregate is live; all 76 earlier scores and axes are unchanged; no item-level data is published. |
-| CR-135.2 | implemented | `app/api/jevbench/v1.4.1/route.ts`; `/home/flori/jobs/jevbench-v141-additions-20260923/SITE-PUBLISH-RECEIPT.json` | Separate hash-header v1.4.1 API is live; v1.4.0 API bytes and hash header remain unchanged. |
-| CR-135.3 | implemented | `app/jev-models/page.tsx`; `app/jev-models/v1.4.1/page.tsx`; `/home/flori/jobs/jevbench-v141-additions-20260923/SITE-PUBLISH-RECEIPT.json` | Current page defaults to v1.4.1, the exact share pin is live, evergreen metadata is retained, and `/jev-models/v1.4` remains pinned to v1.4.0. |
-| CR-135.4 | implemented | `/home/flori/jobs/jevbench-v141-additions-20260923/AGGREGATE-VERIFICATION-RECEIPT.json`; `/home/flori/jobs/jevbench-v141-additions-20260923/SITE-PUBLISH-RECEIPT.json` | No new row entered the top five; its order is unchanged; publish proceeded without a preview hold. |
-| CR-135.5 | implemented | `/home/flori/jobs/jevbench-v141-additions-20260923/INTEGRITY.md`; `/home/flori/jobs/jevbench-v141-additions-20260923/SITE-PUBLISH-RECEIPT.json`; `/home/flori/jobs/jevbench-v141-additions-20260923/SITE-SEALED-LEAK-SCAN-LIVE.json` | Build and full suite passed; 15 route checks across three hosts passed; both API hashes, row counts, top five, and live sealed scan passed. Independent chart QA is recorded in agent-board thread #7 entry #255. |
-| CR-135.6 | implemented | `/home/flori/jobs/jevbench-v141-additions-20260923/AUTHOR-MESSAGES.md`; `/home/flori/jobs/jevbench-v141-additions-20260923/RESULT.md`; `/home/flori/jobs/jevbench-v141-additions-20260923/TELEGRAM-RECEIPT.json` | Five author messages remain unsent drafts; Florian's requested result update was sent in English and receipted. |
+| CR-135.1 | verified | `/home/flori/jobs/jevbench-v141-additions-20260923/FINAL-ARTIFACT-RECEIPT.json`; `/home/flori/jobs/jevbench-v141-additions-20260923/SITE-PUBLISH-RECEIPT.json`; GitHub release | Exact 82-system aggregate is live; all 76 earlier scores and axes are unchanged; no item-level data is published. |
+| CR-135.2 | verified | `app/api/jevbench/v1.4.1/route.ts`; `/home/flori/jobs/jevbench-v141-additions-20260923/SITE-PUBLISH-RECEIPT.json` | Separate hash-header v1.4.1 API is live; v1.4.0 API bytes and hash header remain unchanged. |
+| CR-135.3 | verified | `app/jev-models/page.tsx`; `app/jev-models/v1.4.1/page.tsx`; `/home/flori/jobs/jevbench-v141-additions-20260923/SITE-PUBLISH-RECEIPT.json` | Current page defaults to v1.4.1, the exact share pin is live, evergreen metadata is retained, and `/jev-models/v1.4` remains pinned to v1.4.0. |
+| CR-135.4 | verified | `/home/flori/jobs/jevbench-v141-additions-20260923/AGGREGATE-VERIFICATION-RECEIPT.json`; `/home/flori/jobs/jevbench-v141-additions-20260923/SITE-PUBLISH-RECEIPT.json` | No new row entered the top five; its order is unchanged; publish proceeded without a preview hold. |
+| CR-135.5 | verified | `/home/flori/jobs/jevbench-v141-additions-20260923/INTEGRITY.md`; `/home/flori/jobs/jevbench-v141-additions-20260923/SITE-PUBLISH-RECEIPT.json`; `/home/flori/jobs/jevbench-v141-additions-20260923/SITE-SEALED-LEAK-SCAN-LIVE.json` | Build and full suite passed; 15 route checks across three hosts passed; both API hashes, row counts, top five, and live sealed scan passed. Independent chart QA is recorded in agent-board thread #7 entry #255. |
+| CR-135.6 | verified | `/home/flori/jobs/jevbench-v141-additions-20260923/AUTHOR-MESSAGES.md`; `/home/flori/jobs/jevbench-v141-additions-20260923/RESULT.md`; `/home/flori/jobs/jevbench-v141-additions-20260923/TELEGRAM-RECEIPT.json` | Five author messages remain unsent drafts; Florian's requested result update was sent in English and receipted. |
 
 ## Review gate 20260923T215003Z — codex-luna
 
@@ -9056,3 +9056,54 @@ unchanged); `npm test` 1,235 passed / 0 failed / 1 skipped; `npx tsc --noEmit -p
 `CR-73.5`, `CR-85.1` (an unattended run), D183, the scheduled-run half of D174–D179/D181/D184, the
 F-165(a) application above, CR-133's scoring critique, CR-136.1–.4/.6 (the SEO job's lane), and the
 non-claude sign-offs still owed on D184, CR-135 and F-165(b).
+
+### CR-135 — independent sign-off (same iteration)
+
+CR-135 was Codex work, and the `codex-luna` review gate of 2026-09-23T21:50Z could not supply the
+non-implementer sign-off the ledger requires. This iteration's engine is `claude-opus`, a different
+engine from the implementer, so it can. The claims were re-derived from what the hosts serve, not
+read from the release job's own receipts: `ops/ux-2026-09-12/bin/verify-cr-135-signoff.mjs`,
+**36/36 on both production hosts**, evidence
+`/opt/benchmarkheaven/state/ux-evidence/iter187-cr135-signoff/`.
+
+What was re-derived, independently of the release job:
+
+- Both artifacts were fetched and hashed. The served bytes hash to the `x-content-sha256` header
+  that came with them — a header is worth nothing otherwise — and to the digests CR-135 published:
+  v1.4.0 `006ebff5…fb50fb517`, v1.4.1 `e6754863…d98092cd`.
+- v1.4.1 serves 82 systems, 77 ranked, and is **strictly additive**: six keys added
+  (`decision-2b`, `decision-fast`, `jev-omni`, `lev-350m`,
+  `mghafiri-qwen3.5-0.8b-decision-model`, `spark-s1-4b-v6`), none removed.
+- **No score of the 76 earlier systems moved** — `jevbench_score`, `public_accuracy`,
+  `sealed_accuracy` and the public-minus-sealed gap are identical in both artifacts — and the axis
+  and tier weights are byte-identical. 65 of 76 *ranks* did shift, which is what inserting six
+  systems does to positions; the receipt records that rather than asserting nothing changed, so it
+  cannot be read as claiming more than it proves.
+- The top five and their order are unchanged (`jev-1.13.0`, `jevk5-v02`, `hopper`, `winnow-12b`,
+  `reflex-4b`), so CR-135.4's "no preview hold was needed" holds.
+- Aggregate-only was checked **structurally, not by field name**: every leaf under
+  `sealed_aggregate` is a number or a short label, no array anywhere approaches the 308 sealed
+  items, and no `items`/`responses`/`predictions`/`per_item` array exists on any system.
+- `/jev-models` presents v1.4.1, `/jev-models/v1.4` still presents v1.4.0, `/jev-models/v1.4.1`
+  presents v1.4.1, and the current page's description and Open Graph text make no rank or score
+  claim, so the preview stays evergreen across the next release.
+- **The sealed scan was repeated independently.** All 308 sealed ids and 260 distinctive phrases
+  from `frozen/sealed-v1.4.jsonl` were scanned against five public surfaces (both hosts' v1.4.1
+  API, the v1.4.0 API, and both hosts' `/jev-models`): **zero matches**, with a positive control
+  confirming the scanner finds what it is given. No sealed value was printed or stored — only
+  counts: `iter187-cr135-signoff/sealed-scan.json`.
+- CR-135.6's substance was checked rather than taken on trust: every number in Florian's Telegram
+  message (receipt 14598) — six systems with their ranks and scores, "82 systems; 77 ranked", "the
+  top five is unchanged" — matches the live artifact exactly. The author messages are preserved as
+  drafts and marked unsent.
+
+| ID | From | To | Why |
+|---|---|---|---|
+| CR-135.1 | implemented | verified | 82 systems / 77 ranked live on both hosts, strictly additive, no earlier score moved, aggregate-only proved structurally. |
+| CR-135.2 | implemented | verified | Both APIs' served bytes hash to their own header and to the published digest; v1.4.0 is unchanged. |
+| CR-135.3 | implemented | verified | Current page on v1.4.1, `/v1.4` still pinned to v1.4.0, `/v1.4.1` live, preview metadata carries no rank or score claim. |
+| CR-135.4 | implemented | verified | Top five and order identical between the two artifacts on both hosts. |
+| CR-135.5 | implemented | verified | Independent 308-id / 260-phrase sealed scan across five public surfaces, zero matches with a positive control; route checks re-run on both hosts. |
+| CR-135.6 | implemented | verified | Drafts preserved and unsent; Florian's message and receipt retained, and every number in it re-derived from the live artifact. **Limit stated:** that no author was contacted is a negative this receipt cannot prove; it rests on the drafts file and the release job's record. |
+
+`verify-cr-135-signoff.mjs` takes `[outDir] [host …]`.
