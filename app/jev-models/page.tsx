@@ -173,6 +173,9 @@ export default async function JevModelsPage() {
         <a className="text-accent underline" href="/api/jevbench/v1.4" data-bh-jev-sha={v14.sha256}>results JSON</a> <span className="whitespace-nowrap">sha256 <code title={v14.sha256}>{v14.sha256.slice(0, 12)}…</code></span> ·{' '}
         <a className="text-accent underline" href="/jev-models/v1" data-bh-jev-v1-link>v1.0 results</a>
       </p>
+      <p className="mt-3 max-w-3xl text-sm" data-bh-jev-version-share-row>
+        <a className="text-accent underline" href="/jev-models/v1.4" data-bh-jev-version-share>Share this version</a>
+      </p>
     </header>
 
     <JevModelsV14Board artifact={v14.artifact} sha256={v14.sha256} />

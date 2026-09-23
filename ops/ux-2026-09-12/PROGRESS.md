@@ -8899,8 +8899,8 @@ Florian requested an evergreen preview for the changing `/jev-models` URL, a sha
 
 | ID | Status | Seed note |
 |---|---|---|
-| CR-134.1 | open | Keep the changing board's title, description, Open Graph/X image and alt evergreen. |
-| CR-134.2 | open | Render the exact frozen version pin and add the “Share this version” link. |
-| CR-134.3 | open | Keep model-detail previews rank- and score-free unless an exact frozen release is selected. |
-| CR-134.4 | open | Test metadata and verify the live, pinned and detail URLs on both hosts with all three scraper agents. |
-| CR-134.5 | open | Document cache limits and Meta refresh steps; notify Florian once after both hosts are verified. |
+| CR-134.1 | implemented | `app/jev-models/page.tsx`; `app/jev-models/opengraph-image.tsx`; focused tests; `/home/flori/jobs/jev-models-evergreen-preview-20260923/CR-134-review-round1-glm-final.json` | Preserved stable live title, description, `og4` image and generic alt. Independent different-family review passed; local bot HTML confirmed no rank, score, count or “leads at” claim. |
+| CR-134.2 | implemented | `app/jev-models/v1.4/page.tsx`; `lib/jevbench-v14.mjs`; frozen artifact SHA `006ebff534221d913abe3195f87efeea420698ce0ab207beeb89dc3fb50fb517`; focused tests; reviewer receipt above | Added static `/jev-models/v1.4` from the hash-checked v1.4.0 artifact and visible “Share this version” links. The live page remains static. Frozen top five in metadata comes only from v1.4.0. |
+| CR-134.3 | implemented | `app/jev-models/[system]/page.tsx`; focused tests; reviewer receipt above | Existing dynamic model-detail metadata remains name-only and has no live rank or score claim. |
+| CR-134.4 | in progress | `build.log`; `test-full-tsx.log`; `focused-final.log`; `prerender-final.log`; `tsc-final.log`; `local-preview-verification.json`; screenshots and critic receipt in `/home/flori/jobs/jev-models-evergreen-preview-20260923/` | Local build, tests, typecheck and mobile checks pass. Both-host production scraper checks are pending deployment. |
+| CR-134.5 | in progress | `/home/flori/jobs/jev-models-evergreen-preview-20260923/OUTPUT.md` | Cache limits and Meta Sharing Debugger steps are drafted. Final live verification and the single requested Telegram are pending. |

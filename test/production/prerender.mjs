@@ -5,8 +5,8 @@ import test from 'node:test';
 // Run explicitly after npm run build (without DATABASE_URL). This tests the
 // production artifact, not a source-code spelling of the cache policy.
 const manifest = JSON.parse(readFileSync('.next/prerender-manifest.json', 'utf8'));
-for (const route of ['/', '/about', '/charts', '/eu', '/gateways', '/provider-explorer', '/providers', '/scatter', '/benchmaxxing', '/radar']) {
-  test(`bundled catalog ${route} is rendered once at build time`, () => {
+for (const route of ['/', '/about', '/charts', '/eu', '/gateways', '/provider-explorer', '/providers', '/scatter', '/benchmaxxing', '/radar', '/jev-models', '/jev-models/v1.4']) {
+  test(`public page ${route} is rendered once at build time`, () => {
     assert.ok(manifest.routes[route], `${route} must not repeat catalog SSR per request`);
     assert.equal(manifest.routes[route].initialRevalidateSeconds, false);
   });
