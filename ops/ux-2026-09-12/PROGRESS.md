@@ -7162,6 +7162,20 @@ CR-129 (per-system JevBench pages) is the highest request reference on `main`; C
 | CR-130.4 | implemented | `test/jev-models-link-preview.test.mjs`; `/home/flori/jobs/jev-models-linkpreview-20260923/{npm-test-node22-hotfix.log,typecheck-hotfix.log,production-build-hotfix.log}` | Focused regression passed 4/4; full corpus passed 1,204, with 1 skipped; TypeScript check and production build passed. |
 | CR-130.5 | implemented | `/home/flori/jobs/jev-models-linkpreview-20260923/{live-after-verification.json,cards-before.png,cards-after.png,realserp-before.png,realserp-after.png}` | Both hosts passed all 98 live checks across seven bot user agents; all 14 image requests were cache hits for the 59,276-byte 1200×630 PNG and returned in under 100 ms. Robots/noindex and compressed-page/head limits passed. Requested Telegram photo notification sent; see `RESULT.md`. |
 
+## CR-131 — seeded 2026-09-23 (Codex)
+
+CR-130 is complete on `main` at `b0b77191`. Re-read the CR brief and PROGRESS ledger at that revision; CR-130 is the highest numbered request, so CR-131 is max+1. The approved v1.4.0 release artifact and exact top five were verified before seeding. All checklist rows are open before any code change.
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| CR-131.1 | open | `/home/flori/jobs/jevbench-v14-release2-20260923/INTEGRITY.md`; JevBench tag `v1.4.0` | Serve only the pinned v1.4 aggregate artifact; include all approved rows, no private djev rows or new entrants, no sealed item-level data. |
+| CR-131.2 | open | `/home/flori/jobs/jevbench-v14-release2-20260923/CR-131-DRAFT.md` | Make the default board v1.4; exactly 76 systems / 71 ranked, with exposure flags and existing disclosures. |
+| CR-131.3 | open | `/home/flori/jobs/jevbench-v14-release2-20260923/PAGE-V14-SECTION.md` | State the approved formulas, gates and transparency notes. |
+| CR-131.4 | open | `/home/flori/jobs/jev-models-evergreen-preview-20260923/PROMPT.md` | Keep changing-page and model-detail social previews evergreen; pinned-version preview is a queued follow-up. |
+| CR-131.5 | open | `test/` | Test the v1.4 page/API and run the full suite, typecheck and production build. |
+| CR-131.6 | open | `https://benchmarkheaven.com/jev-models`; `https://model-market-comparison.app.mintapis.com/jev-models`; Hugging Face Space | Publish after code gates, verify both hosts and the live-API Space. |
+| CR-131.7 | open | `/home/flori/jobs/jevbench-v14-release2-20260923/INTEGRITY.md` | Repeat the local-only sealed-data scan after publication and record release evidence. |
+
 ## Iteration 179 — 2026-09-23 04:10 → ~05:05 UTC (claude-opus, work): CR-128 audited from the primary artifacts, and the rank that was not a rank
 
 - **Why this.** The CR-128 ingest job (`bh-thirdparty-ingest-20260922`, codex/gpt-6-luna) **finished at 03:59** and its `RESULT.md` hands the ledger

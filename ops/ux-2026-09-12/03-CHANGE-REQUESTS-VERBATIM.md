@@ -1584,3 +1584,16 @@ launch; first run: OpenAI's GPT-6 Sol and Luna), verbatim goal:
 
 Florian, 23 Sep 2026, verbatim:
 > Fix the link preview for the jev-models page.
+
+## CR-20260923b — publish JevBench v1.4 on Benchmark Heaven → CR-131
+
+Florian, 23 Sep 2026, verbatim excerpt from `/home/flori/jobs/jevbench-v14-release2-20260923/PROMPT.md`:
+> Release JevBench v1.4 with the scoring Florian chose, then prepare release posts and tell the teams.
+>
+> Publish: repo release/tag v1.4.0; Benchmark Heaven /jev-models via the change-request process (CR id = max+1, single writer, tests + build, verify both hosts), including a clear "What changed in v1.4" section on the page; the Hugging Face Space reads the live API — verify it shows v1.4. Verify the public top 5 is exactly the approved one before and after publishing; if anything differs, stop and message Florian.
+>
+> The sealed items stay sealed (only aggregates are published, never item text or golds).
+>
+> Do not add any new third-party entrant in this release. If the Sandy execution or sealed-data integrity check fails, stop before publishing and message Florian.
+
+Approved formula details and the exact top five are recorded in the same job prompt. Florian's separately queued 23 Sep evergreen-preview request is recorded in `/home/flori/jobs/jev-models-evergreen-preview-20260923/PROMPT.md`; CR-131 must not publish changing ranks or scores in the live board's Open Graph/X preview.
