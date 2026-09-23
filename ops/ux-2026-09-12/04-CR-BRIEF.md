@@ -1056,7 +1056,7 @@ Source: CR-20260923e in `03-CHANGE-REQUESTS-VERBATIM.md`.
 
 ## CR-135 — JevBench v1.4.1 public board and API
 
-Source: CR-20260923f in `03-CHANGE-REQUESTS-VERBATIM.md`; final aggregate and receipts are in `/home/flori/jobs/jevbench-v141-additions-20260923/`. The public GitHub release/tag v1.4.1 is already live at `https://github.com/fstandhartinger/jevbench/releases/tag/v1.4.1`; verify it and publish the site data next.
+Source: CR-20260923f in `03-CHANGE-REQUESTS-VERBATIM.md`; final aggregate and receipts are in `/home/flori/jobs/jevbench-v141-additions-20260923/`. GitHub release/tag v1.4.1 and the Benchmark Heaven site are live. CR-135 application commit `918c820d63b290027f927c1c4087224b279472d9` is deployed on all three configured hostnames; full receipt: `/home/flori/jobs/jevbench-v141-additions-20260923/SITE-PUBLISH-RECEIPT.json`.
 
 - **CR-135.1 Exact aggregate artifact.** Publish only `jevbench-v1.4.1-results.json` (82 systems, 77 ranked) with SHA-256 `e6754863056503fe2b010410fc7111df884ac1f9ce4449aa369aab61d98092cd`. Preserve all 76 v1.4.0 axes and scores unchanged. Include the six new rows; their `api_flag` values are false. Do not add per-item outputs or sealed IDs/text/golds/predictions.
 - **CR-135.2 Versioned API.** Add `/api/jevbench/v1.4.1` serving the exact frozen aggregate artifact and SHA-256 response header. Preserve `/api/jevbench/v1.4` byte-for-byte as the v1.4.0 API.
@@ -1065,4 +1065,4 @@ Source: CR-20260923f in `03-CHANGE-REQUESTS-VERBATIM.md`; final aggregate and re
 - **CR-135.5 Release and API verification.** Keep the GitHub tag/release live and verify its commit and artifact hash. Run focused tests, full suite, typecheck, dataset build and production build as required by the main brief. Verify `/jev-models`, `/jev-models/v1.4.1`, the preserved `/jev-models/v1.4`, and both API routes on `benchmarkheaven.com` and `model-market-comparison.app.mintapis.com`; confirm identical v1.4.1 API bytes/hash, 82 systems, 77 ranked and unchanged top-five order.
 - **CR-135.6 Integrity and delivery.** Scan the final source, public page and both API responses for all 308 sealed IDs and 308 distinctive phrases; record zero matches without printing matched values. Preserve the one-message-per-author drafts in `AUTHOR-MESSAGES.md` and do not send authors. Send Florian the result table, top-five impact and publication status in plain English; retain the Telegram receipt.
 
-The approved Capability/cost charts and scatter/3D views are a separate follow-on CR after this data release; the chart patch was not part of CR-134.
+The approved Capability/cost charts, two scatterplots, and lazy 3D view were included in CR-135 below the existing page content. The ImageJev example cards and updated noindex WIP preview remain outside CR-135 in the page-image job; the context-length table/chart remains queued for its own follow-on CR. Coordinate the next page slot through the agent board.
