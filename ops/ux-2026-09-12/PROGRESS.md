@@ -7334,7 +7334,8 @@ CR-127 was the highest request on `main` when this was seeded. Scope is the four
   (`observationDigest(reviewed) !== observationDigest(approvedForm)`) reads the row out of the critic artifact, so the artifact must carry the
   same unjoined form — changing only the fingerprint moves the failure one line down. Filed as **D174**.
 
-- **Next.** `D174` first — it blocks `CR-38.1`, `CR-73.5` and `CR-85.1`, all of which wait on an unattended run that publishes. Then a non-Fable,
+- **Next.** `D174` was implemented in this iteration after all (commit `add47ca9`, section below) — the 05:17 run is its live proof and it
+  unblocks `CR-38.1`, `CR-73.5` and `CR-85.1`, which all wait on an unattended run that publishes. Then a non-Fable,
   non-implementing engine runs `bin/verify-f163-f164.mjs` on both hosts and flips `F-163`/`F-164`. `F-165`'s data half stays with CR-128.1.
   X6's open list is unchanged apart from CR-120: `CR-34.5`, `CR-62.4` (Florian), `CR-37.1`/`CR-37.3`, `CR-38.1`, `CR-73.5`, `CR-85.1`, `CR-85.2`,
   plus `D174`.
@@ -7346,4 +7347,21 @@ CR-127 was the highest request on `main` when this was seeded. Scope is the four
 | F-166 | verified | same | same run. |
 | F-163 | implemented | `ee6c2748`; `lib/compare-claims.mjs`; `test/fable-pass31-compare.test.mjs`; `ops/ux-2026-09-12/bin/verify-f163-f164.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter177/{local,canonical-f163,legacy-f163}/verification.json` | 87/87 per host live. Implemented by claude-opus; needs a non-implementer live run. Fable's pinned 16/17 · 5/6 · "<900 px" are obsolete after the CR-128 ingest — re-derive, never pin. |
 | F-164 | implemented | same | 87/87 per host live. The clauses sit under the live region, not inside it (five lines → three at 390 px); decision recorded above. |
-| D174 | open | `/opt/benchmarkheaven-daily/runs/2026-09-23T00-41-02-194Z-1264113/reports/benchmarks-step-result.json`; `ops/daily/gauntlet.mjs:526`; `lib/benchmark-score-evidence.mjs:61,90` | The daily gauntlet fingerprints a self-reported row in its **joined** form; the evidence guard looks it up **unjoined**. Every reviewed-join vendor row fails the ingest the day its source is re-captured — the daily has published nothing since. Fix both the artifact and the fingerprint. |
+| D174 | implemented | `add47ca9`; `ops/daily/gauntlet.mjs` (`approvedForm`); `test/d174-gauntlet-approved-form.test.mjs`; `/opt/benchmarkheaven-daily/runs/2026-09-23T00-41-02-194Z-1264113/reports/benchmarks-step-result.json` | The daily gauntlet fingerprinted a self-reported row in its **joined** form; the evidence guard looks it up **unjoined**, so every reviewed-join vendor row failed the ingest the day its source was re-captured. `reviewArtifact` now normalises its rows once, before the artifact is frozen, so critic and fingerprint see the approved form. Implemented by claude-opus; needs a non-implementer sign-off and the 05:17 receipt. |
+
+### D174 — what the next iteration has to read
+
+- **The fix, replayed against the failing run's own capture (no model calls):** with `approvedForm`, the gauntlet's fingerprint for
+  `public:a6733a51ed77c54d4c74c4b0` is `44c4e6cd…` — exactly the digest `verifyScoreEvidence` asks for; the digest it stored on 2026-09-23 was
+  `f5a3cb1f…` (the joined form). **217 of the 18,602 rows in `scores.json` carry a reviewed identity join** (FrontierCode 68 + its cost board 68,
+  CursorBench 39 + 39, SWE-bench Pro 3), so this was not one unlucky row: any of them re-captured on a given day stopped that day's publication.
+- **Tests:** `test/d174-gauntlet-approved-form.test.mjs` reproduces the production refusal on a synthetic row of the same shape, proves the
+  approved form is accepted, proves that fixing **only** the fingerprint fails one line later at the artifact comparison
+  (`benchmark-score-evidence.mjs:90`), and proves the guard was not widened — a re-captured or edited row still needs a fresh approval.
+- **Not verified end to end.** A `gated-run.sh --dry-run` would have proved it against live sources, but it takes `state/run.lock` and the
+  2026-09-23 00:41 run needed 1 h 33 min; started at 03:25 it could still have held the lock at **05:17** and cost the day's scheduled run
+  altogether. The 05:17 run is therefore the proof: read
+  `/opt/benchmarkheaven-daily/runs/<today>/reports/{summary.txt,benchmarks-step-result.json}` and the publication receipt. If `ok: false`
+  returns, diff the run's `work/data/raw/benchmarks/score-approvals.json` fingerprint for the failing id against
+  `observationDigest(unjoined(row))` of the same row in the run's `public-observations.json` — the same two-line check that found this.
+  Four steps failed in that run; the ingest is the one that stopped publication, and the other three were not diagnosed here.
