@@ -7712,3 +7712,38 @@ what that sign-off does and does not cover, is in the CR-128.5 row.
 subject. That id is live, scores 77.35524582853246 and ranks #72 — so the script would have printed a real rank for the wrong model, one character
 from the right one, and a reviewer comparing only the shape of the output would have seen four plausible ranks. It was caught by pinning the
 Composite beside each rank and comparing on the score: 77.36 is not 69.06. Any future rank claim in this workstream should carry the value it ranks.
+
+### Iteration 180, part 3 — the gauntlet's empty-pool failure, fixed on its own evidence
+
+Iteration 179 diagnosed the 00:41 run's ~50 quarantined rows as **pool exhaustion** and named the two fixable causes, but deliberately did not
+touch the worker policy twenty minutes before the 05:17 run. The receipt it was waiting for is not in yet, but the policy needed no receipt: the
+same failure reproduced twice more today, and the third time it was still reproducing while this iteration watched it.
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| D178 | implemented | `84f4fa92`; `ops/daily/gauntlet.mjs` (`excludedWorkerModels`); `test/cr-73-free-routes.test.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter180-worker-drop/three-runs-unavailable-models.txt` | The free critic was excluded by a single dropped connection. Needs a non-claude-opus verifier and the next run's `workers/unavailable-models.jsonl`. |
+| D179 | implemented | `3de161b4`; `ops/daily/gauntlet.mjs` (`workerMaxTokens`); `test/cr-73-free-routes.test.mjs` | Critic completions were cut off at 16,384 tokens. Same verification debt. |
+
+**D178 — a seconds-long connection drop cost the run its only free critic, three times in one day.** A paid route has survived one bare
+`fetch failed` per run since iteration 156, on the reasoning that a dropped connection costs seconds where a timeout costs 600 s. The free routes
+were excluded from that allowance by an older rule (`1c394a3`) — but that rule was written about *timeouts and slow max-effort calls*, and the
+drop is neither. The cost is now measured rather than argued, from the three runs' own
+`workers/unavailable-models.jsonl`: `chutes/moonshotai/Kimi-K3-TEE` as critic took **3 drops at 00:41, 1 at 05:17 and 2 at 06:58**, and each time
+the **first** one removed it for the rest of the run. It is the free critic CR-73.4 designates and, for several producers, the only
+different-family critic on the whitelist — which is why its removal is what empties the pool, and why the 00:41 run's nine failed score batches
+(55 rows) reported "No supported viable worker model found" **from round 2** rather than round 1. Everything else stays a single strike: timeouts,
+HTTP errors, empty completions and malformed answers, for free and paid routes alike; the drop allowance lends no strike to a malformed answer;
+the second drop in either role still excludes the route everywhere. Each of those is pinned in the test, including the globality that used to be
+proven with a single drop and is now proven with two.
+
+**D179 — "Incomplete completion (length)" is the 2026-09-13 failure one step later.** The 05:17 run lost `z-ai/glm-5.3-flash` to it **twice as
+critic**, and a critic has the longer job: a verdict per row for a batch of up to 15 rows, after reasoning. The critic now gets 32,768 completion
+tokens — the maximum `worker-runner.mjs` accepts — and the producer stays at 16,384. **Only the critic, and the reason is money, not symmetry:** a
+cap is a bound rather than a spend, and CR-73.4 sends the critic round to the free route first, so the headroom is usually free; the producer is the
+paid role and took one length failure on the same run, which it can have when it has its own evidence. The bound is an exported function, so the
+test pins the policy and not a spelling inside a command line.
+
+**OpenRouter balance, measured again because it bounds every decision above:** `total_credits 420.9112268 / total_usage 405.815253763` at
+07:17 UTC = **$15.10 left**, against iteration 179's $15.91 three hours and three runs earlier. About $0.27 a run, so roughly two weeks at today's
+cadence. Not an alert today and not a publication risk today, but it is the reason D179 was scoped to the free role, and it belongs in the final
+Telegram (X7) as a decision Florian will have to make before it empties.
