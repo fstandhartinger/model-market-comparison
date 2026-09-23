@@ -100,7 +100,7 @@ function Bar({ row }: { row: JevV14System }) {
 }
 
 /** The v1.3 page's hero bar chart, restored with the v1.4 scores: every system, top 20 open, the rest one tap away. */
-function ScoreChart({ ranked, unranked, publicDecisions, sealedDecisions }: { ranked: JevV14System[]; unranked: JevV14System[]; publicDecisions: number; sealedDecisions: number }) {
+function ScoreChart({ revision, ranked, unranked, publicDecisions, sealedDecisions }: { revision: string; ranked: JevV14System[]; unranked: JevV14System[]; publicDecisions: number; sealedDecisions: number }) {
   const all = [...ranked, ...unranked];
   const types = Object.keys(JEV_TYPE_LABEL).filter((t) => all.some((r) => r.class === t));
   const header = <div className="mt-4 hidden grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_19rem] gap-x-2 text-[11px] sm:grid" aria-hidden="true">
@@ -109,7 +109,7 @@ function ScoreChart({ ranked, unranked, publicDecisions, sealedDecisions }: { ra
   </div>;
   const rest = all.slice(CHART_TOP);
   return <figure className="bh-panel mt-6 p-4 sm:p-5" data-bh-jev14-chart aria-labelledby="jev14-chart-title">
-    <p className="bh-eyebrow">JevBench v1.4.0 · {publicDecisions} public + {sealedDecisions} sealed decisions per system</p>
+    <p className="bh-eyebrow">JevBench {revision} · {publicDecisions} public + {sealedDecisions} sealed decisions per system</p>
     <h2 id="jev14-chart-title" className="mt-1 text-xl font-bold leading-snug sm:text-2xl">JevBench Score: {ranked.length} ranked systems</h2>
     <p className="bh-muted mt-1 text-sm"><span className="bh-jevc-official mr-2">Official</span>Intelligence, Calibration, Speed and Cost, each 0–100 — equal-weight harmonic mean, with the generalization and Jev-class gates. <a href="#jev14-changes" className="text-accent underline">What changed in v1.4 ↓</a></p>
     {header}
@@ -153,10 +153,10 @@ export function JevModelsV14Board({ artifact, sha256, children }: { artifact: Je
   const publicDecisions = artifact.tiers.easy + artifact.tiers.standard + artifact.tiers.judge + artifact.tiers.hard;
   const sealedDecisions = artifact.tiers.sealed;
   return <section className="mt-8" aria-labelledby="jev14-board" data-bh-jevbench-v14>
-    <h2 id="jev14-board" className="sr-only">JevBench v1.4.0 ranking</h2>
+    <h2 id="jev14-board" className="sr-only">JevBench {artifact.revision} ranking</h2>
     <p className="bh-muted mt-1 max-w-5xl text-sm">{ranked.length} ranked systems and {unranked.length} unranked rows, measured on {publicDecisions} public decisions plus {sealedDecisions} sealed decisions. The sealed text and answers remain private; only system-level aggregates appear here.</p>
 
-    <ScoreChart ranked={ranked} unranked={unranked} publicDecisions={publicDecisions} sealedDecisions={sealedDecisions} />
+    <ScoreChart revision={artifact.revision} ranked={ranked} unranked={unranked} publicDecisions={publicDecisions} sealedDecisions={sealedDecisions} />
 
     <JevCompareV14 rows={rows.map(compareRow)} sealedDecisions={sealedDecisions} hardDecisions={artifact.tiers.hard} />
 
@@ -193,6 +193,6 @@ export function JevModelsV14Board({ artifact, sha256, children }: { artifact: Je
       <ul className="bh-muted mt-2 space-y-1">{notes.map((row) => <li key={row.key} id={`jev14-note-${row.key}`}>† <b className="text-gray-200">{row.display}</b>: {noteOf.get(row.key)}</li>)}</ul>
       <p className="bh-muted mt-2">Rows without a † have no note beyond the shared provenance: every row was measured or re-run with its recorded recipe, and deviations are in its run manifest.</p>
     </details>
-    <p className="bh-muted mt-2 text-xs">Artifact: <a className="text-accent underline" href="/api/jevbench/v1.4">v1.4 results JSON</a> · SHA-256 <code title={sha256}>{sha256.slice(0, 12)}…</code> · <a className="text-accent underline" href="https://github.com/fstandhartinger/jevbench/releases/tag/v1.4.0">JevBench v1.4.0 release and method</a></p>
+    <p className="bh-muted mt-2 text-xs">Artifact: <a className="text-accent underline" href={`/api/jevbench/${artifact.revision.slice(1)}`}>{artifact.revision} results JSON</a> · SHA-256 <code title={sha256}>{sha256.slice(0, 12)}…</code> · <a className="text-accent underline" href={`https://github.com/fstandhartinger/jevbench/releases/tag/${artifact.revision}`}>JevBench {artifact.revision} release and method</a></p>
   </section>;
 }

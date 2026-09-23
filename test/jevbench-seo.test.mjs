@@ -15,7 +15,7 @@ test('CR-131 changing board metadata stays evergreen and complete for large link
   assert.match(metadata, /width: 1200, height: 630/);
   assert.match(metadata, /JevBench by Benchmark Heaven/);
   assert.doesNotMatch(metadata, /view\.revision|view\.decisions|rank|score|\bleads at\b/i);
-  assert.match(page, /href="\/jev-models\/v1\.4" data-bh-jev-version-share>Share this version/);
+  assert.match(page, /href="\/jev-models\/v1\.4\.1" data-bh-jev-version-share>Share this version/);
 });
 
 test('CR-131 generated image is an evergreen 1200 by 630 JevBench card', () => {

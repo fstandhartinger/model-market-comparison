@@ -13,7 +13,7 @@ const [page, css, sheet, report, jev] = await Promise.all([
 ]);
 
 test('F-147: the eyebrow carries the current JevBench version and the pill text is never smaller than 10 px', () => {
-  assert.match(page, /<div className="bh-eyebrow flex flex-nowrap items-center"><span><span className="sm:hidden">JevBench v1\.4\.0<\/span><span className="hidden sm:inline">JevBench v1\.4\.0 · our own benchmark<\/span><\/span><CustomEvaluationOffer \/>/);
+  assert.match(page, /<div className="bh-eyebrow flex flex-nowrap items-center"><span><span className="sm:hidden">JevBench \{v14\.revision\}<\/span><span className="hidden sm:inline">JevBench \{v14\.revision\} · our own benchmark<\/span><\/span><CustomEvaluationOffer \/>/);
   const phone = css.match(/@media \(max-width: 639px\) \{\s*\.bh-custom-evaluation-badge \{[^}]*\}/)?.[0];
   assert.ok(phone, 'the phone rule for the badge exists');
   assert.match(phone, /font-size: 10px; line-height: 14px/);

@@ -27,14 +27,14 @@ test('CR-131 API is pinned to the approved aggregate-only v1.4 artifact', () => 
   assert.doesNotMatch(JSON.stringify(artifact), /"(?:item_id|item_text|question_text|gold|expected|prediction|predicted|per_item|item_results)"\s*:/i);
 });
 
-test('CR-131 API returns the pinned bytes and integrity header', () => {
+test('CR-131 API returns the pinned bytes and integrity header', async () => {
   assert.match(route, /dynamic = 'force-static'/);
   assert.match(route, /new Uint8Array\(bytes\)/);
   assert.match(route, /'X-Content-SHA256': sha256/);
   assert.match(route, /readJevbenchV14\(\)/);
 });
 
-test('CR-131 v1.4 board explains the scoring and required exposure disclosures', () => {
+test('CR-131 v1.4 board explains the scoring and required exposure disclosures', async () => {
   assert.match(board, /What changed in v1\.4/);
   assert.match(board, /I = 0\.8 × I_v1\.3 \+ 0\.2 × I_sealed/);
   assert.match(board, /C = C_v1\.3 \+ \(C_v1\.4 − C_v1\.3\) × min\(1, 0\.2 \/ 0\.35\)/);
@@ -46,5 +46,7 @@ test('CR-131 v1.4 board explains the scoring and required exposure disclosures',
   assert.match(board, /Hopper's public-half development and JevK5's public-set selection/);
   assert.match(board, /system-level aggregates appear here/);
   assert.match(page, /<JevModelsV14Board artifact=\{v14\.artifact\} sha256=\{v14\.sha256\} \/>/);
-  assert.match(page, /\/api\/jevbench\/v1\.4/);
+  const pinnedPage = await readFile(new URL('../app/jev-models/v1.4/page.tsx', import.meta.url), 'utf8');
+  assert.match(pinnedPage, /readJevbenchV14\(\)/);
+  assert.match(board, /href=\{`\/api\/jevbench\/\$\{artifact\.revision\.slice\(1\)\}`\}/);
 });

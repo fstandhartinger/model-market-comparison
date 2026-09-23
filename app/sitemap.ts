@@ -3,7 +3,7 @@ import { getDataset } from "../lib/data";
 import { SITE_URL } from "../lib/seo";
 import { readJevbenchV12, jevbenchV12View } from "../lib/jevbench-v12.mjs";
 
-const PAGES = ["/", "/benchmarks", "/compare", "/benchmaxxing", "/charts", "/scatter", "/eu", "/jev-models", "/jev-models/v1", "/providers", "/provider-explorer", "/gateways", "/about", "/privacy", "/terms", "/impressum"];
+const PAGES = ["/", "/benchmarks", "/compare", "/benchmaxxing", "/charts", "/scatter", "/eu", "/jev-models", "/jev-models/v1", "/jev-models/v1.4", "/jev-models/v1.4.1", "/providers", "/provider-explorer", "/gateways", "/about", "/privacy", "/terms", "/impressum"];
 
 // CR-62.2: the public pages plus one page per model family (the family URL resolves to its model page).
 // CR-129 (2026-09-23): one entry per JevBench system, the same way. The multimodal preview track is not
