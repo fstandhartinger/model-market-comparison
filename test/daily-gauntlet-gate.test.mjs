@@ -250,6 +250,24 @@ test('a second cut at the ceiling is a real failure, not an endless retry', asyn
   } finally { await rm(dir, { recursive: true, force: true }); }
 });
 
+test('a producer error that is not a cap cut is not retried: the extra call would be paid for nothing', async () => {
+  // D184 buys round survival for a completion that stopped because it hit the cap. Kimi K3's
+  // sign-off of D184 found that nothing pinned the other direction: broadening the retry to fire on
+  // any producer error would still pass, because no case had a producer throw something else.
+  const dir = await mkdtemp(join(tmpdir(), 'bh-gauntlet-nonlength-'));
+  try {
+    let producers = 0;
+    const runner = async (args) => {
+      if (!args.includes('--critic')) { producers++; throw new Error('z-ai/glm-5.3-flash: malformed worker output'); }
+      return mockRunner(args);
+    };
+    const result = await reviewArtifact({ runDir: dir, artifactId: 'nonlength', rows, sources, criteria: ['Verify values'], runner, maxRounds: 2 });
+    assert.equal(result.accepted, false);
+    assert.equal(producers, 2, 'one call per round: only a cap cut earns the second attempt');
+    assert.ok(result.errors.some((e) => /malformed worker output/.test(e)), result.errors);
+  } finally { await rm(dir, { recursive: true, force: true }); }
+});
+
 test('a second drop is a real failure, not an endless retry', async () => {
   const dir = await mkdtemp(join(tmpdir(), 'bh-gauntlet-drop2-'));
   try {

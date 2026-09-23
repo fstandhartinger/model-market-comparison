@@ -8262,7 +8262,7 @@ Commits `d388663e` (the three directives) and `eff2b4a9` (the drop retry).
 
 | ID | Status | Evidence | Note |
 |---|---|---|---|
-| D181 | implemented | `eff2b4a9`; `ops/daily/gauntlet.mjs` (`callWorker`); `test/daily-gauntlet-gate.test.mjs` (two new cases); run `2026-09-23T09-23-19-342Z-4161375` `reports/live-step-result.json` and `gauntlet/live-contract-aa/producer-r3.json` | A dropped connection cost a whole review round, so two of them rejected the AA live-source contract on a run whose round-3 producer had already reported "match". The call is retried once in place; the strike is recorded by the first failure, so a route that drops twice is still excluded and the retry cannot loop. Implemented by claude-opus; needs a non-claude-opus sign-off and an unattended run. |
+| D181 | implemented | `eff2b4a9`; `ops/daily/gauntlet.mjs` (`callWorker`); `test/daily-gauntlet-gate.test.mjs` (two new cases); run `2026-09-23T09-23-19-342Z-4161375` `reports/live-step-result.json` and `gauntlet/live-contract-aa/producer-r3.json` | A dropped connection cost a whole review round, so two of them rejected the AA live-source contract on a run whose round-3 producer had already reported "match". The call is retried once in place; the strike is recorded by the first failure, so a route that drops twice is still excluded and the retry cannot loop. Implemented by claude-opus. **Non-claude sign-off done** (Kimi K3, iteration 187, with its own mutation checks on /tmp copies): `/opt/benchmarkheaven/state/ux-evidence/iter187-d184-signoff/`. It found that nothing pinned the converse — a broadened retry passed the suite — which iteration 187 covered in `test/daily-gauntlet-gate.test.mjs`. **Still owed: the unattended run.** |
 | D182 | implemented | `lib/benchmark-view.mjs` (`jsonObjectPrefix`); `test/fable-pass32-f170.test.mjs`; `test/f165-vendor-cohort.test.mjs` | A retained " Source note: …" caveat after the source-row JSON made `JSON.parse` throw, so one board's identical rows split into two cohorts and two axes (490 → 489 after the fix). Display-only: no value moved. Implemented by claude-opus; needs a non-claude-opus sign-off. |
 
 ---
@@ -9107,3 +9107,31 @@ What was re-derived, independently of the release job:
 | CR-135.6 | implemented | verified | Drafts preserved and unsent; Florian's message and receipt retained, and every number in it re-derived from the live artifact. **Limit stated:** that no author was contacted is a negative this receipt cannot prove; it rests on the drafts file and the release job's record. |
 
 `verify-cr-135-signoff.mjs` takes `[outDir] [host …]`.
+
+### D184 — non-claude sign-off done; the unattended run is still owed
+
+Kimi K3 (non-claude, non-implementer) signed off D184 after reading `ops/daily/gauntlet.mjs`,
+`worker-policy.mjs`, `worker-runner.mjs`, the test file and both D184 commits, and running its own
+mutation checks **on copies under `/tmp`, leaving this repository untouched**. Evidence:
+`/opt/benchmarkheaven/state/ux-evidence/iter187-d184-signoff/`.
+
+It confirmed each half independently: the retry fires only on `/incomplete completion \(length\)/i`,
+which `worker-policy.mjs` emits exactly when `finish_reason === 'length'`, so timeouts, malformed
+output and transport errors rethrow unretried; it is bounded to one attempt, because the retry sets
+`options.maxTokens` and the condition requires it to be absent, and it returns `runner(...)` directly
+rather than re-entering `callWorker`; the critic is excluded because `workerMaxTokens('critic')`
+already equals the ceiling; the strike is appended before the error reaches `callWorker`, so the
+retry re-reads the exclusion list and goes to the next route; and the producer default is still
+16,384 — the D184 diff only renamed the critic constant.
+
+**It also found a real gap, and this iteration closed it.** Broadening the retry to fire on *any*
+producer error, while keeping the critic gate, survived the whole suite: no case had a producer
+throw something that was not a cap cut, so nothing pinned that direction. That is a test-coverage
+nuance rather than a defect in the shipped code, and it is now covered —
+`test/daily-gauntlet-gate.test.mjs`, "a producer error that is not a cap cut is not retried". The
+case was mutation-checked: with the retry broadened it is the only test that goes red (14/15), and
+with `gauntlet.mjs` restored byte-for-byte the suite is 15/15. No product code changed.
+
+| ID | Status | Why |
+|---|---|---|
+| D184 | implemented (sign-off done, unattended run still owed) | Kimi K3 non-claude sign-off with its own mutation checks; the scheduled-run half of the evidence is unchanged and still open. |
