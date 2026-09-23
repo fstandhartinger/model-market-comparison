@@ -75,6 +75,26 @@ test('D188: VulcanBench notes name every protocol family the board actually publ
   assert.ok(published.includes(`code-quality-maintenance-v${range[2]}`), `no board row uses v${range[2]}`);
 });
 
+test('D188: every date the VulcanBench guard annotates is a date the board prints', async () => {
+  const page = (await visibleText(newestCapture('https://vulcanbench.com/leaderboard.html'))).replace(/\s+/g, ' ');
+  const guard = entry('vulcanbench-frontier::4').how_to_collect.version_guard;
+  const dates = [...new Set(guard.match(/\d{4}-\d{2}-\d{2}/g) ?? [])];
+  assert.ok(dates.length, 'the guard annotates the withheld-row exception with a date');
+  for (const date of dates) {
+    assert.ok(page.includes(date), `the guard cites ${date}, which the board's own page never prints (it says "${(page.match(/Updated \d{4}-\d{2}-\d{2}/) ?? ['—'])[0]}")`);
+  }
+});
+
+test('D188: the Terminal-Bench range is the one its own metrics schema declares', async () => {
+  const text = await visibleText(newestCapture('https://www.tbench.ai/'), 'next-rsc');
+  const schema = text.match(/\\"accuracy\\":\{\\"type\\":\\"number\\",\\"maximum\\":(\d+),\\"minimum\\":(\d+)\}/);
+  assert.ok(schema, 'the page declares the accuracy bounds in its metrics schema');
+  const scoring = entry('terminal-bench::4.0').scoring;
+  assert.deepEqual(scoring.range, [Number(schema[2]), Number(schema[1])],
+    'the registry range must be the schema bounds, not [null, null]');
+  assert.equal(scoring.unit, 'percent');
+});
+
 test('D188: the Terminal-Bench maintainer is the attribution its own page prints', async () => {
   const page = newestCapture('https://www.tbench.ai/');
   const text = (await visibleText(page, 'next-rsc')).replace(/\s+/g, ' ');

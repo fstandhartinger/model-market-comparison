@@ -12726,8 +12726,8 @@
         "metric": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run",
         "unit": "percent",
         "range": [
-          null,
-          null
+          0,
+          100
         ],
         "higher_better": true,
         "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
@@ -14003,7 +14003,7 @@
         "format": "CSV",
         "identity_policy": "source_label",
         "locator": "GET /assets/data/swe-v4-board.csv → one row per model × effort; value = combined_33 (the Combined score column leaderboard.html renders).",
-        "version_guard": "Exact 18-column header (rank … protocol); every published row must state n=23, a harness in {Codex, Claude Code}, an effort in {low, medium, high, extra-high, max} and a protocol starting code-quality-maintenance-v3. A different task count, column set, protocol family or renamed suite is a different identity and fails closed. A row the board judges on fewer than its 23 tasks — the v3.7 protocol withholds a task's Code quality score, marked with the board's own \"§\" footnote (2026-09-21: GPT-5.6 Sol at max, 22 of 23) — has a different denominator and is withheld rather than compared; more than three such rows, or any count outside 1..22, still fails closed.",
+        "version_guard": "Exact 18-column header (rank … protocol); every published row must state n=23, a harness in {Codex, Claude Code}, an effort in {low, medium, high, extra-high, max} and a protocol starting code-quality-maintenance-v3. A different task count, column set, protocol family or renamed suite is a different identity and fails closed. A row the board judges on fewer than its 23 tasks — the v3.7 protocol withholds a task's Code quality score, marked with the board's own \"§\" footnote (the board’s 2026-09-19 update: GPT-5.6 Sol at max, 22 of 23) — has a different denominator and is withheld rather than compared; more than three such rows, or any count outside 1..22, still fails closed.",
         "notes": "robots.txt of vulcanbench.com explicitly welcomes every crawler and AI answer engine (“everything here is meant to be read, indexed, and cited”); the task repos are open-source (v4-suite GitHub organisation, Apache-2.0). Flagged for ingestion by Florian’s X bookmark intake (CR-82.3; post 2098909653149401222)."
       },
       "update_cadence": {
