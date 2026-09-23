@@ -195,7 +195,7 @@ and the counts line under it keeps the page honest (P4).
 
 ## Directives (pass 32)
 
-### F-167 — The per-system JevBench page draws its number `[judgment]` — open
+### F-167 — The per-system JevBench page draws its number `[judgment]` — implemented (iteration 181), live 287/287 per host at `eff2b4a9`
 
 *Where:* `app/jev-models/[system]/page.tsx`; `components/JevRadars.tsx` (export a fixed-pair radar); a new client component (e.g.
 `components/JevSystemCharts.tsx`) for the strip and the bands. Data: the fields the page already reads plus `readJevbenchV12Topics` as the hub
@@ -217,7 +217,7 @@ strip element), 4 axis cards with 3 or 4 bands, every number on the page equal t
 the reference named once in a caption, no panning at 390, 0 page errors, no overflow; `test/jevbench-system-pages.test.mjs` and
 `verify-fable-pass32-design.mjs` still pass; `git diff --stat` touches no `lib/jevbench-v12*` file and no artifact.
 
-### F-169 — A system is reached from its row; the link farm goes `[judgment]` — open
+### F-169 — A system is reached from its row; the link farm goes `[judgment]` — implemented (iteration 181), live 287/287 per host at `eff2b4a9`
 
 *Where:* `components/JevModelsV12.tsx` (row `R`, the name span at the `ProjectLink`; the honorable card's `h3`), `app/jev-models/page.tsx`
 (the `data-bh-jev-system-links` section), `test/jevbench-system-pages.test.mjs` (its two hub pins).
@@ -231,7 +231,7 @@ pin that asserted the external href on the name.
 honorable, 3 partial) plus the honorable card's; the phone page is shorter by the block's 1,488 px; `/jev-models/multimodal-preview` still
 `noindex`; the four verifiers above pass; `test/jevbench-system-pages.test.mjs` passes as amended.
 
-### F-170 — No registry id or fallback string as a sub-line; sheet names wrap `[mechanical]` — open
+### F-170 — No registry id or fallback string as a sub-line; sheet names wrap `[mechanical]` — implemented (iteration 181), live 287/287 per host at `eff2b4a9`
 
 *Where:* `lib/version-label.ts` (`versionSuffix`), `lib/benchmark-view.mjs` (`cohortSubLabel`, the `configuration` fallback at line 54), the
 model page's benchmark sheet (`components/BenchmarkSheet.tsx` and the row it renders: the rule that cuts the name with an ellipsis at 1440).
