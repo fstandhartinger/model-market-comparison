@@ -7902,6 +7902,18 @@ is wrong, so they are left red with what is known, rather than repaired into gre
 Recorded this way deliberately: an unrepaired red with a narrowed cause is cheaper for the next engine than a green that was bought by editing the
 test, and far cheaper than a fresh rediscovery.
 
+**Two more found after that note was written, both repaired (`ae793589`), both again the harness.** `verify-cr-103` was not failing a check — it
+was **dying before any of its 27 checks reported**, on a `waitForSelector` of 9 s for a toast phase the component starts on a **16 s** timer
+(`components/CustomEvaluationOffer.tsx`). Watched live, the toast opens and holds `phase="open"` well past 12 s, exactly as the component says.
+With the wait extended it then failed at 320 px, reporting the toast as hanging off the bottom of the screen — rect bottom 814 against a bound of
+**800 hardcoded from the context's own viewport option**, while the emulated page reports `innerHeight` **830**: the toast sits its 16 px inset
+above the real bottom edge, clipped by nothing. Measured against the page's own `innerWidth`/`innerHeight` it is **27/27 on both hosts**, both
+themes, both phone widths.
+
+That makes **five repaired harnesses and two left red** out of seventeen sampled. The pattern in all five is one thing: a number copied into the
+test that the product never promised to keep — a column's spelling, a node's boundary, a viewport constant, a stopwatch shorter than the
+animation it waits for, a prose sentence that a design pass moved. None of them was the page.
+
 ### Iteration 180, part 9 — a second writer on main, recorded rather than raced
 
 At 07:26 UTC another session pushed **`2aecd9b9` "CR-129: add per-system JevBench pages (SEO)"** (author `fstandhartinger`, trailer
