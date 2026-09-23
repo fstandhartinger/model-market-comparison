@@ -10,7 +10,7 @@ import { readJevbenchV12Tasks, jevbenchV12TasksView } from '../../lib/jevbench-v
 import { CustomEvaluationOffer } from '../../components/CustomEvaluationOffer';
 import { jevbenchV12HeldoutView } from '../../lib/jevbench-v12-heldout.mjs';
 
-const OG_ART_REVISION = 'og2'; // Bump when the card artwork changes, even when the results revision stays fixed.
+const OG_ART_REVISION = 'og3'; // Bump when the card artwork changes, even when the results revision stays fixed.
 
 // CR-92 (Florian 2026-09-19 ~13:20 UTC): JevBench v1.2 final — the JevBench Score (Intelligence, Calibration, Speed, Cost,
 // 25 % each, geometric mean) is the default; the earlier weightings stay as presets. CR-88's WIP banner and noindex are gone and the

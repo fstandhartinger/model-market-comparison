@@ -38,7 +38,7 @@ test('CR-130.2: social description stays compact while the SEO description remai
 });
 
 test('CR-130.3: both card metadata formats point to the versioned absolute HTTPS PNG', () => {
-  assert.match(page, /const OG_ART_REVISION = 'og2'; \/\/ Bump when the card artwork changes/);
+  assert.match(page, /const OG_ART_REVISION = 'og3'; \/\/ Bump when the card artwork changes/);
   assert.match(page, /https:\/\/benchmarkheaven\.com\/jev-models\/opengraph-image\?v=\$\{encodeURIComponent\(view\.revision\)\}-\$\{OG_ART_REVISION\}/);
   assert.match(page, /type: 'image\/png', secureUrl: image, width: 1200, height: 630, alt: imageAlt/);
   assert.match(page, /twitter:[\s\S]*images: \[\{ url: image, alt: imageAlt \}\]/);
@@ -50,8 +50,8 @@ test('CR-130.4: card is 1200×630, names the domain and gives rows readable type
   assert.match(image, /benchmarkheaven\.com/);
   assert.match(image, />JevBench Score<\/div>/);
   assert.match(image, /JevBench \{view\.revision\} · \{date\} · \{systems\} systems · \{view\.decisions\} decisions/);
-  assert.match(image, /fontSize: 30, fontWeight: 600/);
-  assert.match(image, /fontSize: 34, fontWeight: 700/);
-  assert.match(image, /fontSize: 40, fontWeight: 800/);
+  assert.match(image, /fontSize: 36, fontWeight: 600/);
+  assert.match(image, /fontSize: 38, fontWeight: 700/);
+  assert.match(image, /fontSize: 44, fontWeight: 800/);
   assert.match(image, /view\.ranked\.slice\(0, 5\)/);
 });
