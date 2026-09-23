@@ -302,6 +302,9 @@ test('D188: a refused single-row artifact says every row is disputed and quotes 
     assert.match(named, /all 1 row disputed, nothing left to publish/);
     assert.match(named, /\[major\] row fixture:1 scoring\.notes → Update the notes to the protocol family the board CSV actually carries/);
     assert.doesNotMatch(named, /without a bounded row-level revision/);
+    // source-health.md clips the reason at 160 characters, so the field to repair has to be
+    // inside that clip, not behind the shape sentence.
+    assert.match(named.slice(0, 160), /row fixture:1 scoring\.notes/);
 
     // A minor-only revise names no droppable row; that is a different situation and says so.
     const minor = await refusalReason({ dir, artifactId: 'reason-minor', findings: [

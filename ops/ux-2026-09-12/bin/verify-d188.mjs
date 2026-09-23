@@ -52,7 +52,9 @@ const visible = async (receipt, recipe) => (await exec('python3',
 const vulcanRows = (await body(newest('https://vulcanbench.com/assets/data/swe-v4-board.csv'))).trim().split('\n');
 const vulcanHead = vulcanRows[0].split(',');
 const vulcanProtocols = [...new Set(vulcanRows.slice(1).map((line) => line.split(',')[vulcanHead.indexOf('protocol')]))].sort();
-const tbenchText = (await visible(newest('https://www.tbench.ai/'), 'next-rsc')).replace(/\s+/g, ' ');
+const tbenchRaw = await visible(newest('https://www.tbench.ai/'), 'next-rsc');
+const tbenchText = tbenchRaw.replace(/\s+/g, ' ');
+const vulcanPage = (await visible(newest('https://vulcanbench.com/leaderboard.html'))).replace(/\s+/g, ' ');
 const liveHead = (await body(newest('https://livebench.ai/table_2026_06_25.csv'))).split('\n')[0].split(',');
 const liveCategories = JSON.parse(await body(newest('https://livebench.ai/categories_2026_06_25.json')));
 const liveBundle = captures.filter((receipt) => /livebench\.ai\/static\/js\/main\..*\.js$/.test(receipt.url));
@@ -99,6 +101,12 @@ for (const host of HOSTS) {
         && vulcanProtocols.includes(`code-quality-maintenance-v${range[2]}`), { stated: range[0], published: vulcanProtocols });
       check(scope, 'the stale v3.6 upper bound is gone', range[2] !== '3.6', range[0]);
     }
+    const guard = vulcan.how_to_collect?.version_guard ?? '';
+    const guardDates = [...new Set(guard.match(/\d{4}-\d{2}-\d{2}/g) ?? [])];
+    check(scope, 'the guard annotates its exception with a date', guardDates.length > 0, guardDates);
+    check(scope, 'every date the guard cites is one the board prints',
+      guardDates.every((date) => vulcanPage.includes(date)),
+      { cited: guardDates, board: (vulcanPage.match(/Updated \d{4}-\d{2}-\d{2}/) ?? ['—'])[0] });
     check(scope, 'vulcanbench notes quote the board sentence',
       (vulcan.scoring?.notes ?? '').includes('v3.4 to v3.7 apply the same rubric, controls, gates and judges to each population'),
       vulcan.scoring?.notes?.slice(-220));
@@ -115,6 +123,11 @@ for (const host of HOSTS) {
     check(scope, 'that excerpt resolves against the retained capture',
       carried.length === 1 && tbenchText.includes(carried[0].excerpt.replace(/\s+/g, ' ').trim()), carried[0]?.excerpt);
     check(scope, 'it is read with the recipe the page needs', carried[0]?.recipe === 'next-rsc', carried[0]?.recipe);
+    const schema = tbenchRaw.match(/\\"accuracy\\":\{\\"type\\":\\"number\\",\\"maximum\\":(\d+),\\"minimum\\":(\d+)\}/);
+    check(scope, 'the page declares its accuracy bounds', !!schema, schema?.[0]);
+    check(scope, 'the served range is the schema bounds, not [null, null]',
+      !!schema && Array.isArray(tbench.scoring?.range) && tbench.scoring.range[0] === Number(schema[2]) && tbench.scoring.range[1] === Number(schema[1]),
+      { served: tbench.scoring?.range, schema: schema ? [Number(schema[2]), Number(schema[1])] : null });
   }
 
   // ---- LiveBench: the notes describe the files the release really publishes

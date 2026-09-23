@@ -602,7 +602,9 @@ export async function reviewArtifact({
           const shape = disputedAll ? `all ${rowIds.size} row${rowIds.size === 1 ? '' : 's'} disputed, nothing left to publish`
             : minorOnly ? 'only minor findings, no row-level revision to apply'
             : `no bounded row-level revision${artifactWide ? ' (artifact-wide finding)' : ''}`;
-          errors.push(`round ${round}: ${review.verdict} — ${shape}: ${findingSummary(review)}${missingRows.length ? `; uncovered rows ${missingRows.join(',')}` : ''}${missingCriteria.length ? `; uncovered criteria ${missingCriteria.join(',')}` : ''}`);
+          // Finding first, shape second: `source-health.md` clips the reason at 160 characters,
+          // and the field to repair has to survive that clip.
+          errors.push(`round ${round}: ${review.verdict} — ${findingSummary(review)} — ${shape}${missingRows.length ? `; uncovered rows ${missingRows.join(',')}` : ''}${missingCriteria.length ? `; uncovered criteria ${missingCriteria.join(',')}` : ''}`);
           if (round === maxRounds || (!missingRows.length && !missingCriteria.length)) terminalError = new Error('review cannot be revised safely');
         }
       }

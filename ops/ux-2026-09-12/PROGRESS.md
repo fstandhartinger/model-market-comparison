@@ -7444,8 +7444,8 @@ Test `test/f165-cohort-sublabel.test.mjs`; live verifier `ops/ux-2026-09-12/bin/
 |---|---|---|---|
 | F-161 | verified | `8937dcbb`; `test/fable-pass31.test.mjs`; `ops/ux-2026-09-12/bin/verify-fable-pass31-design.mjs`; `/opt/benchmarkheaven/state/ux-evidence/fable-20260922-pass31/{canonical,local,live-canonical,live-legacy}/` | Thin Composite wears "◔ Thin data · n/7" beside the number; no input → one sentence, no number/radar. Fable-implemented; needs a non-Fable live run. **Iteration 180 (claude-opus, non-Fable, non-implementer): verified live.** `verify-fable-pass31-design.mjs` **44/44 on each host** at `d8a821ab`, desktop 1440 and mobile 390 in light and dark, with the overflow and page-error checks in every state; evidence `/opt/benchmarkheaven/state/ux-evidence/iter180-fable31/{benchmarkheaven,model-market-comparison}/`. |
 | F-162 | verified | same | "Providers", never "Top 0 cheapest providers"; no filter line without a ranked list. Fable-implemented; needs a non-Fable live run. **Iteration 180 (claude-opus, non-Fable, non-implementer): verified live.** `verify-fable-pass31-design.mjs` **44/44 on each host** at `d8a821ab`, desktop 1440 and mobile 390 in light and dark, with the overflow and page-error checks in every state; evidence `/opt/benchmarkheaven/state/ux-evidence/iter180-fable31/{benchmarkheaven,model-market-comparison}/`. |
-| F-163 | open | `DESIGN-DIRECTIVES.md` F-163 | Compare snapshot cards: a model with no measured result anywhere leaves the cards, named in one line; one status per card line. `[judgment]`, claude-opus. |
-| F-164 | open | `DESIGN-DIRECTIVES.md` F-164 | Compare status line carries the per-model vendor-claim count (generated, never pinned). `[judgment]`, claude-opus. |
+| F-163 | verified | `DESIGN-DIRECTIVES.md` F-163 | Compare snapshot cards: a model with no measured result anywhere leaves the cards, named in one line; one status per card line. `[judgment]`, claude-opus. **Superseded row:** this is the pass-31 hand-off entry; the item was implemented and verified — see the `F-163` row in the iteration 177 done-log (`ee6c2748`, independent Codex-Luna recheck 87/87 per host). |
+| F-164 | verified | `DESIGN-DIRECTIVES.md` F-164 | Compare status line carries the per-model vendor-claim count (generated, never pinned). `[judgment]`, claude-opus. **Superseded row:** the pass-31 hand-off entry; see the `F-164` row in the iteration 177 done-log (same 87/87 per-host recheck). |
 | F-165 | in-progress | `135a3098`, `58226b0f`; `lib/benchmark-view.mjs` (`cohortSubLabel`, `vendorRunner`); `test/f165-cohort-sublabel.test.mjs`, `test/f165-vendor-cohort.test.mjs`; `ops/ux-2026-09-12/bin/verify-f165-b.mjs`, `bin/verify-f165-a.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter180-f165a/`; `/opt/benchmarkheaven/state/ux-evidence/iter179-f165b/{canonical,legacy}/`; `/opt/benchmarkheaven/state/ux-evidence/iter179-cr128/f165-live-name-collisions.txt` | **(b) presentation: implemented and live 18/18 per host at `135a3098`** — Compare no longer prints the default `"Published board"` sub-line, and the rule lives once in `lib/benchmark-view.mjs` for Compare, the matrix and the ranking page. Implemented by claude-opus, so it needs a non-claude-opus sign-off before it is `verified`. **(a) data: open** — a vendor launch row's cohort must name the runner, and where the protocol matches the board's own it must join the board's identity. Fully specified in the iteration 179 entry, including the 97-of-839 extraction rule and the three hazards (axis ids move, historical estimates re-attach, and `test/cr-127-compare-basis.test.mjs:37–38` asserts the opposite on purpose). **(a) label half: implemented in `58226b0f` (iteration 180), rekey half still open.** A launch row's cohort now ends with `Vendor-reported by <vendor>`; measured as Compare composes its sub-line, the collisions go from 4 groups / 9 axes to 0, and the live before-receipt shows the defect at both widths and both themes (`iter180-f165a/before/verification.json`, 18/28 — three pairs of rendered rows reading `AA-Briefcase v1.1`, `GDPval-AA v2.1` and `DeepSWE v1.1` identically). **Live at `d04bdc69`: 34/34 per host by claude-opus (iteration 180 part 12), and independently re-run by Kimi K3 — 34/34 canonical, 31/34 legacy with three checks that did not reproduce in nine later loads (part 14, a partial render under load). Re-run on an idle box before closing.** Implemented by claude-opus, so it needs a clean non-claude-opus run of `bin/verify-f165-a.mjs` on both hosts. **Still open:** the first clause — a launch row joining the board's own identity where the protocol matches it (`swe-bench-multilingual`, not `anthropic-swe-bench-multilingual`) — which is a per-row protocol match against each capture, not a label. The label half makes the pair legible meanwhile; it does not decide the identity question. |
 | F-166 | verified | same as F-161 | "Not measured yet" panel: two sentences the head does not say; id/org in the chip title. Fable-implemented; needs a non-Fable live run. **Iteration 180 (claude-opus, non-Fable, non-implementer): verified live.** `verify-fable-pass31-design.mjs` **44/44 on each host** at `d8a821ab`, desktop 1440 and mobile 390 in light and dark, with the overflow and page-error checks in every state; evidence `/opt/benchmarkheaven/state/ux-evidence/iter180-fable31/{benchmarkheaven,model-market-comparison}/`. |
 
@@ -8368,8 +8368,9 @@ every claude-opus item below.
 | D183 | open | `/home/flori/jobs/bh-frontier-update-20260922/RESULT.md`; `ops/ux-2026-09-12/bin/verify-cr-128.mjs` (`rank/frontier/report-matches-its-own-dataset`); `/opt/benchmarkheaven/state/ux-evidence/iter182-cr128-5/cr128-5-rank-correction.txt` | The frontier report's Composite ranking reads #25 and #101 for `gpt-6-sol::max` and `gpt-6-luna::max`; the dataset it names gives #26 (tied with 3) and #103 (tied with 2), and it names no ties and no denominator. Not the dataset-position defect — the column is genuinely score-ordered. Left open, not silently repaired: the report is a finished job's artifact, the correction of record is written, and the verifier holds the red. |
 | D184 | implemented | `ops/daily/gauntlet.mjs` (`callWorker`, `WORKER_MAX_TOKENS_CEILING`, `defaultRunner`'s `maxTokens`); `test/daily-gauntlet-gate.test.mjs` (two new cases); run `2026-09-23T09-57-20-158Z-186582` `workers/worker-failure-1790158254112-218278.json` and `…-1790158265110-225592.json` | A producer completion cut off at 16,384 is not a bad answer, it is no answer, and it ended the round that paid for it. The default cap is unchanged; only a call that ran into it is repeated once at the runner's maximum, the critic is held out (already at the ceiling), and the strike stands so the retry goes to the next route. **Both observed cuts spent 16,384 of 16,384 on reasoning at `effort: low`**, so this buys round survival, not writing room. Implemented by claude-opus; needs a non-claude-opus sign-off and an unattended run. |
 | D185 | verified | `/opt/benchmarkheaven/state/ux-evidence/iter185-signoff-kimi/d185/verification.json` (14/14 per host, 320→1440 px, run by Kimi K3 as part of the iteration 185 sign-off); `/opt/benchmarkheaven/state/ux-evidence/iter184-d185/verification.json`; `/opt/benchmarkheaven/state/ux-evidence/iter182-pass32/{canonical-verifier.log,hub-width-sweep.txt}`; agent board thread #5 | `/jev-models` needs 385 px of layout width, so it overflows anything between the 375 and 390 px breakpoints — a 390 px desktop window with a classic scrollbar lays out at 380 and overflows by 5 px. **No phone width overflows** (320 → −10, 360 → +1, 375 → −2, 390 → −5, 414 → −10 with scrollbars hidden); the first posting of this said "mobile overflow" and was wrong. Separately, long project URLs in the † notes do not break at 320 px. Owned by the CR-132 writer; reported, not fixed. |
-| D186 | implemented | `data/raw/benchmarks/public-observations.json` (`source_label_restatements`); `scripts/ingest-benchmark-scores.mjs`; `data/raw/benchmarks/collection-plan.json`; `data/SCRAPING.md`; `test/d186-source-label-restatement.test.mjs` | MCP Atlas renamed row 25 "Nemotron 3 Ultra (xHigh)" → "(thinking)" on 2026-09-22 without re-running it (one field of one of 34 rows differs between the two captures; score 63.1, rank 18, CI upper 3 and createdAt unchanged). The row keeps its public ID and value under the new label; the old label is republished as a withheld rejection so the retained states cannot bridge the same measurement back — without that the estimate count grew by 18. Implemented by claude-opus; needs a non-claude sign-off. |
-| D187 | implemented | `data/raw/benchmarks/public-observations.json` (`withdrawn_observations`); `lib/benchmark-history.mjs` (`datedEstimates` locator scope); `lib/benchmark-scores.mjs`; `test/d187-kernelbench-retracted.test.mjs`; `test/coding-sources.test.mjs` | kernelbench.com re-adjudicated six runs on 2026-09-22 — same run ids, still `clean`, but `correct: true` + a `peak_fraction` became `correct: false` + `peak_fraction: null`, so the board publishes no value for those cells while we served all six as measured (106.27 and 103.67 among them). Withdrawn with their evidence and withheld from the bridge. The withheld-locator scope had to be fixed with it: the KernelBench locator is row-numbered per board, so one withholding removed 19 legitimate estimates on the other three boards, while OpenRouter's `own_data row …` locator must still reach its cost twin. Implemented by claude-opus; needs a non-claude sign-off. The `deepseek-nsa` arm still fails its coverage guard by design — see iteration 185. |
+| D186 | verified | `data/raw/benchmarks/public-observations.json` (`source_label_restatements`); `scripts/ingest-benchmark-scores.mjs`; `data/raw/benchmarks/collection-plan.json`; `data/SCRAPING.md`; `test/d186-source-label-restatement.test.mjs` | MCP Atlas renamed row 25 "Nemotron 3 Ultra (xHigh)" → "(thinking)" on 2026-09-22 without re-running it (one field of one of 34 rows differs between the two captures; score 63.1, rank 18, CI upper 3 and createdAt unchanged). The row keeps its public ID and value under the new label; the old label is republished as a withheld rejection so the retained states cannot bridge the same measurement back — without that the estimate count grew by 18. Implemented by claude-opus; needs a non-claude sign-off. **Sign-off (iteration 186, Kimi K3 `chutes/moonshotai/Kimi-K3-TEE`, non-claude, non-implementer, from `/tmp/iter186-signoff`): ACCEPTED** — `verify-d186-d187.mjs` **30/30, 0 failed** on both hosts, plus its own outside checks: a full unfiltered scan of all 18,607 served observations on each host finds 106.27 and 103.67 zero times, the sibling boards keep 14/14/12 and their 48 history estimates, and MCP Atlas serves 34 rows with one "Nemotron 3 Ultra (thinking)" at 63.1 and none of the old label. Evidence `/opt/benchmarkheaven/state/ux-evidence/iter186-d186-d187-signoff-kimi/`. |
+| D187 | verified | `data/raw/benchmarks/public-observations.json` (`withdrawn_observations`); `lib/benchmark-history.mjs` (`datedEstimates` locator scope); `lib/benchmark-scores.mjs`; `test/d187-kernelbench-retracted.test.mjs`; `test/coding-sources.test.mjs` | kernelbench.com re-adjudicated six runs on 2026-09-22 — same run ids, still `clean`, but `correct: true` + a `peak_fraction` became `correct: false` + `peak_fraction: null`, so the board publishes no value for those cells while we served all six as measured (106.27 and 103.67 among them). Withdrawn with their evidence and withheld from the bridge. The withheld-locator scope had to be fixed with it: the KernelBench locator is row-numbered per board, so one withholding removed 19 legitimate estimates on the other three boards, while OpenRouter's `own_data row …` locator must still reach its cost twin. Implemented by claude-opus; needs a non-claude sign-off. The `deepseek-nsa` arm still fails its coverage guard by design — see iteration 185. **Sign-off (iteration 186, Kimi K3 `chutes/moonshotai/Kimi-K3-TEE`, non-claude, non-implementer, from `/tmp/iter186-signoff`): ACCEPTED** — `verify-d186-d187.mjs` **30/30, 0 failed** on both hosts, plus its own outside checks: a full unfiltered scan of all 18,607 served observations on each host finds 106.27 and 103.67 zero times, the sibling boards keep 14/14/12 and their 48 history estimates, and MCP Atlas serves 34 rows with one "Nemotron 3 Ultra (thinking)" at 63.1 and none of the old label. Evidence `/opt/benchmarkheaven/state/ux-evidence/iter186-d186-d187-signoff-kimi/`. |
+| D188 | implemented | `ops/daily/gauntlet.mjs` (`findingSummary`, the split refusal reason); `data/raw/benchmarks/registry.json` (`vulcanbench-frontier::4`, `terminal-bench::4.0`, `livebench::2026-06-25`); `ops/ux-2026-09-12/bin/replay-protocol-review.mjs` (`discovered_from` resolution); `ops/ux-2026-09-12/bin/verify-d188.mjs`; `test/d188-protocol-notes-match-source.test.mjs`; `test/daily-gauntlet-gate.test.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter186-d188/` | Twelve boards were frozen in the daily protocol review — LiveBench since 17 Sep — behind "revise without a bounded row-level revision", which is false: every protocol review is a single-row artifact, so a critic naming that one row gives `drops.size === rowIds.size` and falls into the branch that says no row was named. Refusal is unchanged; the reason now separates the three cases and carries the critic’s own repair. With it readable the findings turn out to be ours: VulcanBench’s notes named a protocol family (v3.4–v3.6) the board had grown past (five v3.7 rows), its guard cited a date the board never printed, Terminal-Bench’s packet carried no excerpt naming the maintainer it claims and its range was [null, null] against the page’s own minimum 0 / maximum 100 schema, and LiveBench’s notes opened with a README comparison no source establishes. All repaired against the captures; **both VulcanBench and Terminal-Bench replay to `accepted`, one fingerprint, zero errors** on the run’s own manifest. **LiveBench stays frozen and says why**: its packet carries no protocol prose at all, so five of its fields can never be established from the current evidence set — it needs a reviewed prose source, not a wording change. Live **58/58 per host** at `4b7845a9`. Implemented by claude-opus; needs a non-claude sign-off. |
 
 **CR-132 (/jev-models v1.4 page fixes, 23 Sep 2026, Claude Opus 5.5, job `jev-models-v14-page-fixes-20260923`).** Live on both hosts at `c6e7cb9e`.
 Cause of "† note on every row": the v1.4 artifact gives all 76 systems a footnote, most of it shared provenance ("already on the live v1.3.0 board", "re-run on a throwaway RunPod pod …"), so `footnote &&` was always true. `jevV14RowNote` drops the shared segments: 66 rows keep a real note. The marker now sits next to the last word of the name inside a no-wrap span and opens in place. CR-131 had not deleted the v1.3 sections; it moved all of them into the collapsed history. The bar chart, the four-radar compare and the evergreen sections are back on the v1.4 data, and the v1.3-only material stays in the history. The same change fixes the 5 px overflow at 390 px with classic scrollbars reported by iteration 182 (the long eyebrow; the short phone label is back) and makes long URLs and module names wrap at 320 px.
@@ -8724,3 +8725,169 @@ measurement rather than the symptom:
    HTTP 403**, none of which has ever collected (`Last OK: —`). These were ingested manually with retained captures
    (CR-126.4 records the 403), so the daily attempt is noise that hides a real failure; whether they belong in the
    daily plan at all is a plan decision, not a fix.
+
+## Iteration 186 — 2026-09-23 18:05 → ~20:00 UTC (claude-opus, work): twelve boards were frozen behind a sentence that blamed the harness
+
+### Why this, and not a CR row
+
+Every CR row is still blocked where iteration 185 left it: on Florian (`CR-34.5`, `CR-62.4`), on a source
+(`CR-37.3`, `CR-85.2`) or on an unattended run (`CR-38.1`, `CR-73.5`, `CR-85.1`). So this iteration read the daily
+receipt instead, and `reports/source-health.md` of run `2026-09-23T09-57-20-158Z-186582` says **32 failing sources**
+while the run itself reports `STATUS: ok`. Of those 32, twelve carry one of two variants of the same sentence:
+
+    <board>: protocol not approved: round 1: revise without a bounded row-level revision
+
+LiveBench has carried it since **17 September**, MathArena BrokenArXiv since the 18th, VulcanBench and
+Terminal-Bench since the 20th, ARC-AGI and FrontierSWE since the 21st, and four Vals Index boards joined **today**.
+Each of those boards is served from its last good capture and quietly ages while the summary stays green.
+
+### Part 1 — the sentence is false, and that is why it sat for a week
+
+`reviewArtifact` drops the disputed rows and continues only while `drops.size < rowIds.size`. **Every protocol
+review is a single-row artifact** (`refresh-benchmarks.mjs` calls `review({ rows: [protocolReviewRow(entry)] })`),
+so a critic that names that one row produces `drops.size === rowIds.size === 1`, which is not `<`, and the branch
+that fires is the one whose message says no row was named. A minor-only finding lands in the same place for a
+different reason: `droppableRows` skips `minor` by design. In both cases the critic *had* named the row and written
+a repair, and the reason string threw that away.
+
+Fixed in `ops/daily/gauntlet.mjs` (`29475c3b`) without changing a single verdict, terminal condition or
+fingerprint — only the reason, which now separates the three situations and carries the critic's own two most
+severe findings (location → repair, clipped) into the one line the daily summary and `source-health.md` print:
+
+    round 1: revise — all 1 row disputed, nothing left to publish: [major] row vulcanbench-frontier::4
+    scoring.notes → Update the notes to describe the frozen protocol family as code-quality-maintenance-v3.4
+    through v3.7 …
+
+The finding comes before the shape sentence on purpose: `ops/daily/source-health.mjs` clips the reason at 160
+characters, so the field to repair has to survive the clip. `test/daily-gauntlet-gate.test.mjs` pins all three
+cases apart (every row disputed / minor-only / genuinely artifact-wide, whose wording is unchanged), asserts in
+each that the artifact is still refused, and asserts that the location survives the 160-character clip.
+
+### Part 2 — with the reason readable, the findings are ours, and they are right
+
+Read against the retained captures, the critics were not noisy. Our own registry text had drifted. Three entries
+repaired (`44d0a194`, `4b7845a9`), each checked against the capture rather than against the critic's word:
+
+| Entry | What the entry said | What the source says | Repair |
+|---|---|---|---|
+| `vulcanbench-frontier::4` | Code quality judged "under one frozen protocol family (code-quality-maintenance-v3.4–v3.6)" | today's `swe-v4-board.csv` publishes 29 rows under four protocols, **five of them v3.7** (GPT-5.6 Sol at max/extra-high/high/medium/low, ranks 12, 13, 14, 17, 23), and the leaderboard now writes "v3.4 to v3.7 apply the same rubric, controls, gates and judges to each population" | notes state and quote the board's own range; the same entry's `version_guard` already knew about v3.7 |
+| `vulcanbench-frontier::4` (round 2) | `version_guard`: "(2026-09-21: GPT-5.6 Sol at max, 22 of 23)" | the board says "Updated 2026-09-19"; the § footnote and "22 of 23" are its words, the date is not | cite the board's date |
+| `terminal-bench::4.0` | `maintainer: "Stanford / Harbor / Laude Institute"` | the page's footer does print "Hosted by Stanford / Harbor / Laude Institute" — but the page is 135 kB, far past the 60 kB review bound, so the packet carries only the two recorded excerpts and **neither mentioned any of the three** | a third excerpt carries the attribution (resolves against today's capture and the 20 Sep one) |
+| `terminal-bench::4.0` (round 2) | `scoring.range: [null, null]` with `unit: "percent"` | the page's own `metrics_schema` declares accuracy as a number with **minimum 0, maximum 100** | `[0, 100]`, as 182 other entries already carry |
+| `livebench::2026-06-25` | notes opened "The website release selector is newer than the README (which still calls 2025-04-25 current)" | no source in the packet establishes it; it is a note about a registration decision, and the operative rule does not need it | removed, and replaced with what the release actually publishes: per-task columns with **no overall column**, a **seven-category** map, the overall therefore being the mean of the seven category means, and the site's own bundle hardcoding **grok-3-thinking 72** and **grok-3 58** instead of that mean — the same two literals `scripts/collect-public-benchmarks.py` already fails closed on |
+
+### Part 3 — replayed, not argued
+
+`ops/ux-2026-09-12/bin/replay-protocol-review.mjs` runs the real producer/critic gauntlet offline against the run's
+own manifest (`BH_REPLAY_MANIFEST=data/raw/benchmarks/daily-evidence/2026-09-23T10-16-55-034Z/manifest.json`).
+Both repaired arms now **approve: accepted, one fingerprint, zero errors** — `vulcanbench-frontier::4` and
+`terminal-bench::4.0`. Both of the round-2 findings above came out of that loop, which is the point of running it:
+each was the critic or the producer being right about something the first repair had left.
+
+**LiveBench could not be replayed at all** before this iteration: the harness resolved evidence by the URL recorded
+in the entry, and LiveBench's protocol evidence is a module script whose filename changes with every deploy (the
+entry still named `main.04358d6f.js`, two deploys old). The harness now follows `discovered_from` exactly as the
+daily path does. With that, LiveBench's **critic round is clean and confirms every repaired claim**, and the
+producer stops at the honest remainder: `unit`, `range`, `higher_better`, `description` and `maintainer` are
+established by **no excerpt in the packet**, because livebench.ai serves a JavaScript shell (SOURCE 2 is literally
+"You need to enable JavaScript to run this app.") and the release files carry no prose. That arm needs a reviewed
+prose source — the LiveBench README or the paper — added to its evidence. It is not a wording problem and it was
+not papered over; it stays frozen until someone adds that source.
+
+### Part 4 — receipts
+
+- `ops/ux-2026-09-12/bin/verify-d188.mjs`, **58/58 per host** at `4b7845a9`
+  (`/opt/benchmarkheaven/state/ux-evidence/iter186-d188-post/verification.json`; the 50/50 run at `44d0a194` is
+  under `…/iter186-d188/`, before the guard-date and range checks were added). Nothing in it is typed: the protocol range is re-derived from the board CSV's own `protocol`
+  column, the attribution from the page text, the category count and the absence of an overall column from the
+  release files, the two overrides from the collector's guard *and* from the live bundle — and then both hosts are
+  required to serve exactly that, with every row of all three boards still matching the repository's value.
+- `test/d188-protocol-notes-match-source.test.mjs` (5 cases) keeps it honest offline and is refresh-proof: it reads
+  the newest retained capture of each source the entry itself names, so tomorrow's refresh does not redden it while
+  the next real drift does — a v3.8 protocol, a guard date the board never printed, a range that stops matching the
+  schema, an overall column or an eighth category at LiveBench, a renamed host. All five were proved red on the
+  pre-repair registry.
+- `test/protocol-source-recipes.test.mjs` pinned the Terminal-Bench excerpt count at two; it now asserts that each
+  required subject is carried and each excerpt resolves through the recipe, which is what that test was for.
+
+### Part 5 — the rest of the 32, measured rather than summarised
+
+Left open with the finding written down, so the next writer starts from the measurement:
+
+- **Registry text the packet cannot support (same class, not repaired here).** `arc-agi::1` (blocker: the metric
+  name, percent unit and [0,100] range are not in the arcprize.org leaderboard excerpt; major: version "1" is not
+  bound to protocol text), `arc-agi::2` (the same metric/unit finding), `frontierswe::2` (blocker: the notes claim
+  "the main board's 14 rows" where the excerpt shows 10 of 16 selectable; major: "restates 12 overlapping rows
+  byte-exactly" is 13 and rounded, not byte-exact — site 65.5 % vs CSV 0.6550757455882352; minor: an "Other
+  Harnesses view" no excerpt shows), `kernelbench-cuda-megaqwen-decode::rtx-pro-6000` (major: metric/notes vs
+  problem 03's geomean-speedup-against-the-frozen-eager-anchor protocol), `vals-index-code-migration::2` (major:
+  standard-error, independent-evaluator and non-Composite claims unsupported).
+- **Clean critic round, every row flagged by the producer** — `matharena-brokenarxiv::2026-06`, `vals-index-emb::2`,
+  `vals-index-vibe-code-bench::2`, `vals-index-legal-research::2`. Same reading needed, from the producer's audit
+  rather than the critic's findings.
+- **The recorded excerpt is no longer in the page** (`methodology passage changed or unavailable in a large primary
+  page`): `aa-benchmark-fields` via `aa-briefcase::1.1` (failing since 11 Sep, **never** collected), `frontiercode::1.1`
+  and `frontiercode-cost::1.1` (since the 22nd). A different repair: re-cut the excerpt against today's page.
+- **Transport and identity:** seven `anthropic-…` identities at "Response exceeds 12MB bound" and five `openai-…` at
+  HTTP 403 (iteration 185 already recorded that these have never collected and are a plan decision, not a fix);
+  `swe-bench-pro-public::snapshot-2026-09-10` "Scale leaderboard source identity changed"; the KernelBench and MCP
+  Atlas rows, which are D186/D187 and are handled.
+
+### Part 6 — the 05:17 scheduled run, for the CR-38.1 / CR-85.1 record
+
+It failed again this morning, the **fourth consecutive day** it has published nothing, and each day for a different
+reason: 21 Sep `push-data` non-fast-forward, 22 Sep `npm-test`, 23 Sep `npm-test` (two pinned literals that ordinary
+source growth moved — Claude Opus 5.5 joining the pricing table, 13 → 14, and a second MiMo route). Today's
+publication `5bfb97de` came from the 09:57 self-heal retry, not from cron. **The push race is already fixed** — a
+previous iteration landed `withPushRetry` at 08:38 today (`55543977`), after the 06:58 run had died on exactly that
+race with the misleading last line `push-data FAILED: [bh-gate] verdict PASS…`; the run report shows a single
+`push-data` step and no `push-data-fetch`, because the retry did not exist yet. Tomorrow's 05:17 is the first
+scheduled run that has it. This iteration changed nothing there; it is recorded so the next reader does not
+re-diagnose it.
+
+### Part 7 — the non-claude sign-off D186 and D187 were owed
+
+Delegated to Kimi K3 (`chutes/moonshotai/Kimi-K3-TEE`, non-claude, non-implementer) from a `/tmp` scratch dir:
+**ACCEPTED**. Evidence `/opt/benchmarkheaven/state/ux-evidence/iter186-d186-d187-signoff-kimi/`.
+
+- It ran `verify-d186-d187.mjs` itself: **30/30, 0 failed**, both hosts at `c0b33a65`, and broke the tally down by
+  scope (4 repo, 12 per host, 2 dataset).
+- Three checks of its own, outside the verifier. The deepseek-nsa board serves **8** rows on both hosts and none of
+  the six retracted labels; a **full unfiltered scan of all 18,607 served observations on both hosts** finds
+  **106.27 zero times and 103.67 zero times anywhere**. The three sibling boards keep 14/14/12 on both hosts,
+  matching the repository — nothing was swept up. MCP Atlas serves **34** rows, exactly one "Nemotron 3 Ultra
+  (thinking)" at **63.1**, zero of the old label.
+- One more it added itself: the four KernelBench boards hold 8/14/12/14 = **48** history estimates, matching the
+  verifier's own `kernelbenchEstimates`, and none of the seven withdrawn-or-restated labels appears as an estimate.
+- **It found a real error in my packet and said so instead of working around it silently.** My step-2 example used
+  `?benchmark=…`; the API's filter is `benchmark_id=`, and an unknown parameter is *ignored* — `?benchmark=…` returns
+  `total: 18607`, the whole set, which would have passed a sloppier "the value is not in this response" check for the
+  wrong reason. It re-ran with `benchmark_id=` **and** scanned the unfiltered set so an ignored filter could not hide
+  a row. That trap is worth keeping: on this API a mistyped filter is a silent false pass, not an error.
+- What it states it could not check: the provenance of the retained captures beyond the verifier's digest recompute,
+  the "exactly one field of one of 34 rows differs" claim (it confirmed the served outcome, not the capture
+  analysis), the arithmetic of every history estimate, and any host beyond the two.
+
+### Gates
+
+`node scripts/build-dataset.mjs` clean (865 models, 670 families, 96 providers, 3,032 offers); `npm test`
+**1,218 pass / 0 fail / 1 skipped** (1,219 tests); `npx tsc --noEmit -p .` clean; `npm run build` rc 0 including the
+prebuild score/evidence guard. Both dataset diffs were read leaf by leaf: the first is the two timestamps plus three
+registry fields, the second the two timestamps plus two registry fields. **No score moved, on either.**
+
+### Status changes
+
+| ID | From | To | Why |
+|---|---|---|---|
+| D186 | implemented | verified | Kimi K3 (non-claude, non-implementer) re-ran the receipt 30/30 and confirmed the served outcome independently on both hosts — 34 rows, one "Nemotron 3 Ultra (thinking)" at 63.1, the old label absent and never a history estimate. Part 7. |
+| D187 | implemented | verified | Same sign-off: 30/30, the six retracted values absent from a full 18,607-row scan of both hosts, the three sibling boards still at 14/14/12 and their 48 estimates intact. Part 7. |
+| D188 | — | implemented | The refusal reason, three repaired registry entries, two arms replayed to acceptance, 58/58 per host. claude-opus work; needs a non-claude sign-off. |
+| F-163 | open (stale duplicate) | verified | The pass-31 hand-off row still read `open` while the item's own done-log row (iteration 177, `ee6c2748`, Codex-Luna 87/87 per host) read `verified`. Ledger repair only; no code or claim changed. |
+| F-164 | open (stale duplicate) | verified | Same stale duplicate, same done-log row. |
+
+### Still open after this iteration
+
+`CR-34.5`, `CR-62.4` (Florian's decisions), `CR-37.3`, `CR-85.2` (sources), `CR-38.1`, `CR-73.5`, `CR-85.1` (an
+unattended run — tomorrow's 05:17 is the first with the push retry), F-165(a)'s rekey half, D183, the scheduled-run
+half of D174–D179/D181/D184, the non-claude sign-offs owed on D184 and now D188 (D186 and D187 are paid — part 7), and
+the nine benchmark arms of part 5. Because X6's list is not clear, no acceptance marker is appended.
