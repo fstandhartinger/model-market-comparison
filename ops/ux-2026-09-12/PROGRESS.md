@@ -7824,3 +7824,42 @@ costs a review gate the time to rediscover that the page was right, and one that
 `verify-*.mjs` in `ops/ux-2026-09-12/bin/`; the nine that were clean here are `verify-cr-1` (108/108), `verify-cr-35` (72/72), `verify-cr-19-25`
 (53/53), `verify-cr-32-33` (44/44), `verify-cr-28-1` (14/14), `verify-cr-2-5-perf` (28/28), `verify-cr-presets` (88/88), `verify-f163-f164`
 (87/87) and `verify-f165-b` (18/18), plus `verify-cr-127` 25/25 and `verify-cr-127-4` 33/33 as the F-165(a) baseline.
+
+### Iteration 180, part 7 — D180: four boards carry two different measured values for one configuration, under one dated snapshot
+
+The sweep's last two verifiers did not end in a harness repair. `verify-cr-54-2` is **187/189 byte-exact**, and its two failures are a real finding.
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| D180 | open | `ops/ux-2026-09-12/bin/verify-cr-54-2.mjs` (matrix vs retained raw store, 186/189 + a grown row count); `/api/benchmark-scores?benchmark_id=epoch-gpqa-diamond::snapshot-2026-09-18` | Deliberately not fixed here: it is an identity decision on CR-128 data, and a publication was in flight. |
+
+**What it is.** Scanning the dataset for a model with two *differing* measured values on one board: **9 pairs, and 4 of them involve a `cr128:`
+row.** Those four are all the same shape — the CR-128 third-party ingest (retrieved `2026-09-22T21:03:51Z`) added a second measured value for
+`gpt-6-astra::max` beside a `public:` row retrieved `2026-09-18T23:49:00Z`, on a board identity **dated 2026-09-18**:
+
+| Board | 18 Sep public row | 22 Sep `cr128:` row |
+|---|---|---|
+| `epoch-gpqa-diamond::snapshot-2026-09-18` | 0.9577020202020202 | 0.9436026936026937 |
+| `chess-puzzles::snapshot-2026-09-18` | 0.72 | 0.7053872053872053 |
+| `mystery-game-puzzles::snapshot-2026-09-18` | 0.84 | 0.8237497246089448 |
+| `scale-drug-discovery-bench::snapshot-2026-09-22` | — (same shape, 22 Sep board) | — |
+
+Both rows name the same source configuration (`gpt-6-astra_max`) and the same board; they differ only in `subject.variant` (`null` vs `"max"`),
+which `cohortOf` does not read, so they land on **one axis** and `latestScores` shows the newer one. The consequence is not cosmetic: the site
+currently publishes Epoch's 22 Sep CSV value **under an identity that says it is the 18 Sep snapshot**, while the retained raw store still holds
+the 18 Sep value — which is exactly what `verify-cr-54-2` reports as a byte-exactness mismatch.
+
+**Why this is a finding and not churn.** A dated snapshot identity is supposed to mean one thing; CR-128.3's own rule is that every row carries a
+versioned registry identity, and this workstream's standing rule is that a clean ingestion is strictly additive. Two different measurements of one
+configuration under one snapshot date is neither. Epoch does refit and re-publish — that is ordinary — but then the new values belong to a **new
+snapshot identity** (`snapshot-2026-09-22`), or the superseded rows need a supersession record, the way a withdrawn public row does.
+
+**The other five pairs are not this.** All five are `aa-coding-agent-index::1.4`, where one model legitimately has several measured rows because
+the board runs several harnesses; they are separated by `subject.harness`, and the "best of" rule the legend publishes is exactly about them.
+They were checked before being set aside, so the four above are not four of nine but four of four.
+
+**What the next pass has to decide** (not decidable from the numbers alone): whether the 22 Sep Epoch values are a re-publication of the same
+snapshot — in which case the 18 Sep rows are superseded and must be recorded as such — or a new snapshot, in which case they need their own dated
+identity and the 18 Sep rows stay as history. Read Epoch's own page date beside both captures before choosing; both captures are retained.
+Until then `verify-cr-54-2`'s two failures are **correct and should stay red** — the first, "728 observations" against 731, is an ordinary pinned
+count that grew and can be re-pinned once the rows above are settled, not before.
