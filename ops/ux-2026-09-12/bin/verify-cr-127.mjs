@@ -29,13 +29,25 @@ const settle = (p) => p.waitForLoadState('networkidle').catch(() => {}).then(() 
 // --- expected bases, from the payload the page itself loads ---
 const view = await (await fetch(`${BASE}/api/benchmark-view?${QUERY}&collapse=1&v=${Date.now()}`)).json();
 const picks = view.picks ?? PICKS;
-const expected = new Map(); // axisId -> [basis|null per pick]
+const expected = new Map(); // axisId -> [{ basis, placeable, lowSample }|null per pick]
 for (const a of view.axes) {
   const rows = latestScores(a.scores, 'all');
-  expected.set(a.id, picks.map((id) => rows.find((r) => r.modelId === id)?.basis ?? null));
+  expected.set(a.id, picks.map((id) => {
+    const row = rows.find((r) => r.modelId === id);
+    if (!row) return null;
+    // 2026-09-23: this check used to require a percentile bar behind every measured value. Since the
+    // CR-128 third-party ingest the catalog also carries boards with a single measured peer (Vals
+    // ProofBench, Public Benefits Bench, BioMysteryBench: stats.n === 1, or n === 2 with one value),
+    // and `normalize()` returns null for those by design — the cell then says "no percentile", which
+    // is CR-127.2's own rule, not a defect. The expectation now follows the same placeability rule
+    // the page uses, so a real regression still fails and an unplaceable row no longer does.
+    const s = a.stats;
+    const placeable = !row.lowSample && Number.isFinite(row.value) && !!s && s.n >= 2 && s.min !== s.max && a.higherBetter != null;
+    return { basis: row.basis, placeable, lowSample: !!row.lowSample };
+  }));
 }
-const selfCount = [...expected.values()].flat().filter((b) => b === 'self_reported').length;
-const measuredCount = [...expected.values()].flat().filter((b) => b === 'measured').length;
+const selfCount = [...expected.values()].flat().filter((e) => e?.basis === 'self_reported').length;
+const measuredCount = [...expected.values()].flat().filter((e) => e?.basis === 'measured').length;
 check(`API: the selection really mixes bases (${selfCount} vendor claims, ${measuredCount} measured)`, selfCount >= 10 && measuredCount >= 10, { selfCount, measuredCount });
 
 // --- UI ---
@@ -90,7 +102,7 @@ try {
         const exp = expected.get(r.axisId);
         if (!exp || r.cells.length !== exp.length) { wrong.push({ axisId: r.axisId, why: 'no expectation or column count', cells: r.cells.length, exp: exp?.length }); continue; }
         r.cells.forEach((cell, i) => {
-          const basis = exp[i];
+          const e = exp[i], basis = e?.basis ?? null;
           if (basis == null) { if (!cell.empty) wrong.push({ axisId: r.axisId, i, why: 'expected no value', cell }); return; }
           if (basis === 'self_reported') {
             sawSelf++;
@@ -103,13 +115,17 @@ try {
           } else if (basis === 'measured') {
             sawMeasured++;
             if (cell.mark) wrong.push({ axisId: r.axisId, i, why: 'a measured value was marked as a vendor claim', cell });
-            else if (cell.note) wrong.push({ axisId: r.axisId, i, why: 'a measured value says it has no percentile', cell });
-            else if (!cell.bar) wrong.push({ axisId: r.axisId, i, why: 'a measured value drew no percentile bar', cell });
+            else if (e.placeable && cell.note) wrong.push({ axisId: r.axisId, i, why: 'a placeable measured value says it has no percentile', cell });
+            else if (e.placeable && !cell.bar) wrong.push({ axisId: r.axisId, i, why: 'a measured value drew no percentile bar', cell });
+            else if (!e.placeable && cell.bar) wrong.push({ axisId: r.axisId, i, why: 'a value no peer range places drew a percentile bar', cell });
+            else if (!e.placeable && !cell.note) wrong.push({ axisId: r.axisId, i, why: 'a value with no percentile says nothing where the bar would be', cell });
           }
         });
       }
       check(`${tag}: every collapsed cell renders its own basis (${sawSelf} vendor claims, ${sawMeasured} measured)`, wrong.length === 0 && sawSelf >= 10 && sawMeasured >= 10, { wrong: wrong.slice(0, 6), sawSelf, sawMeasured });
-      check(`${tag}: no tinted cell is anything but measured`, read.rows.every((r) => r.cells.every((cell, i) => !cell.tinted || expected.get(r.axisId)?.[i] === 'measured')), read.rows.filter((r) => r.cells.some((cell, i) => cell.tinted && expected.get(r.axisId)?.[i] !== 'measured')).slice(0, 3));
+      // A tint means "best measured relative position", so it needs a position: measured *and* placeable.
+      const tintOk = (cell, e) => !cell.tinted || (e?.basis === 'measured' && e.placeable);
+      check(`${tag}: no tinted cell is anything but a placeable measured value`, read.rows.every((r) => r.cells.every((cell, i) => tintOk(cell, expected.get(r.axisId)?.[i]))), read.rows.filter((r) => r.cells.some((cell, i) => !tintOk(cell, expected.get(r.axisId)?.[i]))).slice(0, 3));
 
       check(`${tag}: the Compare legend is collapsed and explains †`, read.legendOpen === false && read.legendHasSelf && read.legendMark === '†'
         && /A developer's own report, not an independent measurement\./.test(read.legendText ?? '')
