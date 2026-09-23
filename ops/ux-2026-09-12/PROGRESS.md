@@ -7747,3 +7747,21 @@ test pins the policy and not a spelling inside a command line.
 07:17 UTC = **$15.10 left**, against iteration 179's $15.91 three hours and three runs earlier. About $0.27 a run, so roughly two weeks at today's
 cadence. Not an alert today and not a publication risk today, but it is the reason D179 was scoped to the free role, and it belongs in the final
 Telegram (X7) as a decision Florian will have to make before it empties.
+
+### Iteration 180, part 4 — what the open half of F-165(a) actually has to decide
+
+The rekey clause ("where the protocol matches the board's own, the row joins the board's identity") was left open, but the *search space* is now
+measured rather than guessed, so the next pass reads 25 rows and not 96. `ops/ux-2026-09-12/bin/f165a-rekey-candidates.mjs` (output in
+`/opt/benchmarkheaven/state/ux-evidence/iter180-f165a/rekey-candidates.txt`) pairs each vendor-scoped board against the registry:
+
+- **96 vendor-scoped boards. 25 have any independent counterpart at all; 71 have none.** Those 71 — `stepfun-stepcodebench`,
+  `xiaomi-mimo-cyber-bench`, `deepseek-exploitgym` and the rest — have nothing in the registry to join, so they stay separate identities. That is a
+  finding rather than a gap, and it means the rekey question is 26 % the size it looked.
+- **A shared family or display name is a candidate, never a join.** Several of the 25 are a *different snapshot identity of the same board*
+  (`anthropic-swe-bench-multilingual::snapshot-2026-09-22` beside `swe-bench-multilingual::snapshot-2026-09-10`), so joining would also mean
+  choosing which version identity the vendor's run belongs to — a second decision the label half does not have to make. Two more are cross-operator
+  (`anthropic-terminal-bench-4-0::4.0` and `deepseek-terminal-bench-v4::4.0` both point at Vals' `vals-terminal-bench-4-0`), which is precisely the
+  case CR-128.1 refused to join on a name. The protocol still has to be read per row against the capture.
+- **One thing the rendering made visible while checking it:** the same underlying board is spelled three ways across vendor entries — `Terminal
+  Bench 4.0` (Xiaomi), `Terminal-Bench 4.0` (Anthropic, Vals), `Terminal-Bench v4` (DeepSeek's family). Not a collision and not fixed here, because
+  a registry rename is the identity work; recorded so the rekey pass treats spelling as noise rather than evidence.
