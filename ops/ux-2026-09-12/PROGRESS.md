@@ -7794,3 +7794,33 @@ belongs in its own iteration with its own review — not in the last half hour o
 
 Two cheap pieces of it are already true and worth keeping in mind for that pass: the failing assertion is always in `reports/npm-test.log` under
 `✖ failing tests`, and `daily-state.json` already carries a `failure_streak` (2 before this morning's fixes) that nothing currently escalates on.
+
+### Iteration 180, part 6 — a verifier sweep while the lock was held: three harnesses were red on pages that are right
+
+With the writer lock held by the 06:58 run, the iteration spent the wait running the committed requirement verifiers against the live site
+rather than idling. **Twelve were run; nine passed unchanged; three were red, and not one of the three was the page.** All three are repaired,
+re-run on both hosts, and committed (`a17b1672`, `a01bcf7e`). Receipts in `/opt/benchmarkheaven/state/ux-evidence/iter180-regression/`.
+
+| Verifier | Was | What it actually found | Now |
+|---|---|---|---|
+| `verify-cr-6-8` | 4 failures + a 30 s timeout | `/^Score/` no longer matches the renamed **"Capability Score"** column, so it reported `idx -1, n 0, head []` — an empty table — on **R1.1 itself**; then it clicked a tab under a menu it had left open and blamed the header for intercepting the click | **66/66** per host |
+| `verify-cr-18-29` | 56/60 | `text=/models pass/` resolves to the narrowest node, which since the copy became "25 of 30 models pass" reads only "models pass" — the count was outside the element it read | **60/60** per host |
+| `verify-cr-29-31` | 48/52 | asserted the outlier-tag rule in the visible footnote, where it lived until **F-122** moved the tag lines into the collapsed "Legend: marks and tags" | **52/52** per host |
+
+**Each was checked against the page before the harness was touched**, because a red verifier is exactly as likely to be a real regression:
+R1.1 holds live — the header reads `Capability Score ▼ (i) (Main Composite)` with `aria-sort="descending"` and values 100.0, 97.2, 97.2, 94.9,
+94.1 over 25 Simple and 234 Advanced rows; the Simple summary says "25 of 30 models pass · 5 below your score line"; the legend says "top low
+The gap to the next model is at least twice the spread of the models in between." The repairs assert those facts, not the strings that used to
+carry them.
+
+**Two lessons this cost, worth the record.** The "sticky header intercepts pointer events" message reads like a layout defect and was not one —
+in a clean 390 px context with `isMobile` and touch, `document.elementFromPoint` at the Advanced tab's own centre is the tab, and both click and
+tap select it; the harness had opened the header's More menu, pressed Escape, then clicked the summary again, re-opening it. And `innerText` of a
+**closed** `<details>` is only its summary, so the first repair of CR-29.3 still failed; it now opens the disclosure, reads it, and closes it
+again — asserting `textContent` instead would have passed on text no reader can reach.
+
+**The wider point for the X6 audit:** 3 of 12 sampled harnesses had drifted behind deliberate, accepted changes. A stale verifier that fails
+costs a review gate the time to rediscover that the page was right, and one that passes vacuously costs more than that. There are **216**
+`verify-*.mjs` in `ops/ux-2026-09-12/bin/`; the nine that were clean here are `verify-cr-1` (108/108), `verify-cr-35` (72/72), `verify-cr-19-25`
+(53/53), `verify-cr-32-33` (44/44), `verify-cr-28-1` (14/14), `verify-cr-2-5-perf` (28/28), `verify-cr-presets` (88/88), `verify-f163-f164`
+(87/87) and `verify-f165-b` (18/18), plus `verify-cr-127` 25/25 and `verify-cr-127-4` 33/33 as the F-165(a) baseline.
