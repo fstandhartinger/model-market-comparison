@@ -64,6 +64,22 @@ for (const a of axes) { const k = `${a.category}\u0000${a.name}\u0000${subline(a
 const payloadCollisions = [...grouped].filter(([, ids]) => ids.length > 1).map(([k, ids]) => `${k.split('\u0000').join(' | ')} -> ${ids.join(', ')}`);
 check('payload/no-two-axes-read-the-same', payloadCollisions.length === 0, payloadCollisions.slice(0, 5));
 
+// Moving a cohort moves the axis id, and axis ids are what /api/benchmark-view and /api/benchmaxxing
+// take as `?axis=`. The move must be clean: the new id resolves, and the id it replaced must 404
+// rather than quietly resolve to something else. Both forms are derived from the payload — the old
+// one by removing exactly what the rule added.
+const axisUrl = (route, id) => `${BASE}/api/${route}?axis=${encodeURIComponent(id)}`;
+const status = async (route, id) => (await fetch(axisUrl(route, id))).status;
+const sample = launch.slice(0, 3);
+for (const a of sample) {
+  const before = String(a.cohort).replace(/(^| · )Vendor-reported by [^·]+$/, '') || 'Published board';
+  const staleId = `${a.benchmarkId}@@${encodeURIComponent(before)}@@${a.unit}`;
+  const live = await Promise.all(['benchmark-view', 'benchmaxxing'].map((r) => status(r, a.id)));
+  const stale = await Promise.all(['benchmark-view', 'benchmaxxing'].map((r) => status(r, staleId)));
+  check(`axis-id/${a.benchmarkId}/current-id-resolves`, live.every((c) => c === 200), { id: a.id, live });
+  check(`axis-id/${a.benchmarkId}/replaced-id-404s`, stale.every((c) => c === 404), { staleId, stale });
+}
+
 const browser = await chromium.launch();
 try {
   for (const width of [1440, 390]) {
