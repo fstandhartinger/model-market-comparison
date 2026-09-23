@@ -7201,6 +7201,23 @@ CR-127 was the highest request on `main` when this was seeded. Scope is the four
   05:17 daily's window, and a dataset rebuild landing then risks the unattended publication this workstream has been waiting four days for.
 
 
+- **The previous entry's loose thread, closed enough to act on: the 00:41 run's ~50 quarantined rows are not an empty account.** Memory of this
+  workstream is that "No supported viable worker model found" from round 1, together with `HTTP 402` in `unavailable-models.jsonl`, means the
+  OpenRouter balance is gone. That is **not** this. The run's `workers/unavailable-models.jsonl` holds **nine** disqualifications and no 402 at all,
+  in four distinct kinds: 3× `Malformed producer audit: missing rows array` (`deepseek/deepseek-v4.1-flash` as producer), 3× `fetch failed`
+  (`chutes/moonshotai/Kimi-K3-TEE` as critic — the known transient), 2× `Incomplete completion (length)` (the known max-tokens symptom) and 1×
+  `Critic round does not match the packet round`. The OpenRouter account answers `total_credits 420.91 / total_usage 405.00`, so **$15.91 remains** —
+  low and worth watching, but not the failure.
+  **What actually happened** is pool exhaustion, and it reads like a selection bug only because of where the error is thrown.
+  `ops/rebuild-2026-09/bin/worker-policy.mjs:166` raises `No supported viable worker model found` once the ranked pool has no candidate left that is
+  un-excluded, inside the price ceiling, above the AA floor, on `FLORIAN_ALLOWED_SCHEDULED_WORKERS` *and* — for a critic — from a different vendor
+  family than every producer. Nine disqualifications against a whitelist that small empties it, which is why the message appears from **round 2**
+  rather than round 1, and why it hit 9 batches (55 rows: 15+15+8+7+5+2+1+1+1) at once instead of one.
+  **Not changed here, deliberately:** the two fixable causes are documented knowledge (a critic wants a retry on `fetch failed`, and score-approval
+  critics want 32,768 max-tokens), but re-tuning the gauntlet's worker policy twenty minutes before the 05:17 run is the one change most likely to
+  cost the publication that D174, D175, D176, `CR-38.1`, `CR-73.5` and `CR-85.1` are all waiting on. It is the first thing to pick up **after**
+  tonight's receipt, and the diagnosis above is what it needs.
+
 - **Pre-flight of the 05:17 run's two collector fixes, against the live sources rather than last night's bytes.** Iteration 178 replayed D175 and
   D176 offline against the failing 00:41 run's own captures, which proves a fix against yesterday's bytes — but both bugs *were* a source moving
   under a parser that had pinned a shape it did not need, so the useful question is whether the pages have moved again. One read-only GET each at
