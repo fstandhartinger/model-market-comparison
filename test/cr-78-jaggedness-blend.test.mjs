@@ -155,8 +155,10 @@ test('CR-78.3: the three level changes from the simulation, and Hy3 moving down'
   const aaSnapshot = JSON.parse(src('data/raw/benchmarks/aa-observed-fields.json')).collected_at;
   const pinned = aaSnapshot === '2026-09-10T21:47:16.627Z';
   if (!pinned) t.diagnostic(`CR-78.3 point pins were written for AA snapshot 2026-09-10T21:47:16.627Z; data is ${aaSnapshot} — re-pin due`);
+  // CR-128 (2026-09-23): independent Opus/GPT-6 rows on existing boards move the catalog jaggedness mean to 13.24;
+  // Muse Spark's unchanged inputs now blend to 17.48, so its pin follows the rounded current result.
   const expected = [
-    { id: 'muse-spark-1.1::xhigh', gap: 15.2, score: 18.0, before: 'strong', after: 'strong' },     // 11.69 → 14.03 → 18.08 → 17.87
+    { id: 'muse-spark-1.1::xhigh', gap: 15.2, score: 17.5, before: 'strong', after: 'strong' },     // 11.69 → 14.03 → 18.08 → 17.87 before CR-128; 17.48 after
     { id: 'qwen3.7-max::default', gap: 5.4, score: 6.7, before: 'light', after: 'medium' },         // 5.38 → 6.78 → 6.56
     { id: 'gemini-3.6-flash::high', gap: 5.0, score: 6.0, before: 'light' },                        // 5.05 → 6.09 → 5.92 (0.08 under the medium line)
     { id: 'hy3::default', gap: 5.8, score: 5.1, before: 'light', after: 'light' },                  // 5.82 → 4.22 → 4.20 → 5.13

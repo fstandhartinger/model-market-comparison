@@ -132,11 +132,18 @@ test('CR-54.2: every join re-derives from the slug and lands on an existing conf
   assert.ok(!map.some((e) => e.source_id === 'qwen3-30b-a3b-thinking-2507'));
   const scores = json('data/raw/benchmarks/scores.json').observations;
   const joined = scores.filter((o) => o.benchmark_id in IDS && o.subject.model_id);
-  assert.equal(joined.length, 186, String(joined.length));
+  const legacyJoined = joined.filter((o) => !o.id.startsWith('cr128:'));
+  const cr128Rows = joined.filter((o) => o.id.startsWith('cr128:'));
+  assert.equal(legacyJoined.length, 186, String(legacyJoined.length));
+  assert.deepEqual(cr128Rows.map((o) => [o.benchmark_id.split('::')[0], o.subject.source_id, o.subject.model_id]).sort(), [
+    ['chess-puzzles', 'gpt-6-astra_max', 'gpt-6-astra::max'],
+    ['epoch-gpqa-diamond', 'gpt-6-astra_max', 'gpt-6-astra::max'],
+    ['mystery-game-puzzles', 'gpt-6-astra_max', 'gpt-6-astra::max'],
+  ]);
   // 183 reviewed-map rows + MiniMax-M3 on three boards: 'MiniMax-M3' is the catalog display name and
   // parseDeepSweId fails closed on the case, so only the documented exact-name bridge may join it.
   const mapKeys = new Set(map.map((e) => `${e.benchmark_id}\0${e.source_id}`));
-  const bridged = joined.filter((o) => !mapKeys.has(`${o.benchmark_id}\0${o.subject.source_id}`));
+  const bridged = legacyJoined.filter((o) => !mapKeys.has(`${o.benchmark_id}\0${o.subject.source_id}`));
   assert.deepEqual(bridged.map((o) => [o.benchmark_id.split('::')[0], o.subject.source_id]).sort(), [
     ['chess-puzzles', 'MiniMax-M3'], ['epoch-gpqa-diamond', 'MiniMax-M3'], ['mystery-game-puzzles', 'MiniMax-M3'],
   ]);
@@ -145,7 +152,7 @@ test('CR-54.2: every join re-derives from the slug and lands on an existing conf
     assert.match(o.join_note, /^Exact display name, unique default catalog configuration/, o.id);
   }
   const entryByKey = new Map(map.map((e) => [`${e.benchmark_id}\0${e.source_id}`, e]));
-  for (const o of joined.filter((x) => !bridged.includes(x))) {
+  for (const o of legacyJoined.filter((x) => !bridged.includes(x))) {
     const entry = entryByKey.get(`${o.benchmark_id}\0${o.subject.source_id}`);
     assert.ok(entry?.reviewed_at, `${o.id} has a per-entry review date`);
     assert.match(o.join_note, new RegExp(`^Reviewed identity map ${entry.reviewed_at}: `), o.id);

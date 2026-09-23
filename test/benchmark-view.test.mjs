@@ -117,7 +117,8 @@ test('actual source adapter keeps all version identities, values and dated legac
   // to 740 KB for CR-123's 16 Claude Opus 5.5 launch axes (707.0 → 716.6 KB; axis metadata only, one vendor row each),
   // and to 750 KB for CR-126's five GPT-6 Sol/Luna launch axes (719.4 → 727.2 KB; four capability axes with one or
   // two vendor rows each, plus the AutomationBench cost-per-task axis).
-  assert.ok(JSON.stringify(selected).length < 750_000, 'initial benchmark payload bounded to selected models');
+  // CR-128 adds 27 independently sourced benchmark axes; selected model score rows remain bounded.
+  assert.ok(JSON.stringify(selected).length < 800_000, 'initial benchmark payload bounded to selected models');
   assert.equal(JSON.stringify(ds), before);
 });
 

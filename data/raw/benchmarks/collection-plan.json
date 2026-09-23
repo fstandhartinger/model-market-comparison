@@ -4824,7 +4824,7 @@
             65536,
             131072
           ],
-          "mean_tolerance": 1e-9,
+          "mean_tolerance": 1e-09,
           "reasoning_modes": [
             null,
             "enabled",
@@ -5088,7 +5088,7 @@
             "costUsd",
             "categories"
           ],
-          "pct_tolerance": 1e-9,
+          "pct_tolerance": 1e-09,
           "incomplete_pct_tolerance": 0.1
         }
       },
@@ -6373,6 +6373,30 @@
         "format": "Captured leaderboard HTML/JSON",
         "locator": "Exact row for Claude Opus 5.5; anthropic/claude-opus-5-5; quoted field \"Claude Opus 5.5 leads the index at 37.13%, followed by Claude Fable 5.1 at 35.03%.\"",
         "version_guard": "Require source date/version page \"Updated 9/21/2026\"; keep this exact benchmark and operator separate from other similarly named boards."
+      }
+    },
+    {
+      "benchmark_id": "vals-code-migration::snapshot-2026-09-21",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Hash-bound primary-source snapshot reviewed for CR-128 on 2026-09-22; exact standalone-board scores are retained in manual-board-observations.json.",
+      "recipe": {
+        "command": "Review the retained primary-source capture, confirm the standalone board, source date, named model and configuration, then update the manual observation file and evidence hash.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Vals: Code Migration; source model GPT-6 Astra; source date page \"Updated 9/21/2026\"; standalone board (not Vals Index v2).",
+        "version_guard": "Require the standalone /benchmarks/code-migration page and its \"Updated 9/21/2026\" marker; never join to vals-index-code-migration::2."
+      }
+    },
+    {
+      "benchmark_id": "vals-emb::snapshot-2026-09-21",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Hash-bound primary-source snapshot reviewed for CR-128 on 2026-09-22; exact standalone-board scores are retained in manual-board-observations.json.",
+      "recipe": {
+        "command": "Review the retained primary-source capture, confirm the standalone board, source date, named model and configuration, then update the manual observation file and evidence hash.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Vals: Excel Modeling Benchmark; source model Claude Opus 5.5; source date page \"Updated 9/21/2026\"; standalone board (not Vals Index v2).",
+        "version_guard": "Require the standalone /benchmarks/emb page and its \"Updated 9/21/2026\" marker; never join to vals-index-emb::2."
       }
     }
   ]
