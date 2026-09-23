@@ -7193,10 +7193,62 @@ CR-127 was the highest request on `main` when this was seeded. Scope is the four
   is a registry `name` change plus `build-dataset` and a live re-read. **Deliberately not started here:** it would have had to be pushed inside the
   05:17 daily's window, and a dataset rebuild landing then risks the unattended publication this workstream has been waiting four days for.
 
-- **Gates.** `npm test` **1,154 tests / 1,153 pass / 0 fail / 1 skip**; `npx tsc --noEmit -p .` clean; `node scripts/validate-benchmark-scores.mjs`
-  18,602 observations / 189 source files / 1,430 verified self-reported. `build-dataset` was **not** re-run: this commit changes no data file and no
-  dataset script — it adds one verifier under `ops/` and ledger text — so rebuilding would only have churned the two generated timestamps beside a
-  running test suite, which is the exact trap recorded under D175.
+
+- **`F-165(b)` verified live on both hosts at `135a3098`, by its own implementer — so it is `implemented`, not `verified`.**
+  `bin/verify-f165-b.mjs` is **18/18 per host** across 1440/390 px × light/dark: no `"Published board"` anywhere in the rendered page, the cohorts
+  that *do* say something still render (so this is a rule, not a deletion), no horizontal overflow, no page errors. The payload is unchanged —
+  every axis still carries its cohort string — which is the check that proves axis ids did not move.
+  Evidence `/opt/benchmarkheaven/state/ux-evidence/iter179-f165b/{canonical,legacy}/`.
+- **No regression on the surfaces this touches.** At `135a3098`: `verify-cr-127.mjs` 25/25 (canonical), `verify-cr-127-4.mjs` 33/33 per host,
+  `verify-f163-f164.mjs` 87/87, `verify-fable-pass31-design.mjs` 44/44 on the legacy host and 44/44 on the canonical host **on re-run**. The
+  canonical host's first pass-31 run scored 43/44 on `desktop_dark: no page errors`, and the detail is two `502` resource errors — the same
+  transient edge burst iteration 177 recorded in the same context, not a page defect. Recorded rather than quietly dropped.
+
+### F-165 — half shipped, half specified
+
+`DESIGN-DIRECTIVES.md` splits F-165 in two. **(b), the presentation half, is implemented in `135a3098`**; **(a), the data half, is specified
+here and stays open.** They were separated deliberately: (b) cannot move a number or an id, and (a) moves the strings that axis ids and historical
+estimates are keyed on — which is not something to land 45 minutes before the 05:17 daily.
+
+**(b) — shipped.** Compare printed `Published board` under every benchmark name. That is the default `cohortOf` (`lib/benchmark-view.mjs:28`)
+assigns to any axis with no harness and no stated configuration, so it is noise on every row *and* it hides the rows that differ. The matrix
+(`benchmark-matrix.mjs:503`) and the ranking page (`app/benchmarks/result/page.tsx:161`) had each already dropped it with their own inline copy of
+the rule; `cohortSubLabel` puts it in one place beside `cohortLabel`, and Compare's row sub-line, evidence-panel header and radar axis picker now
+call it. Display-only: the cohort on the axis is untouched, so axis ids do not move and no `PAGE_DATA_SHAPE` bump is involved.
+Test `test/f165-cohort-sublabel.test.mjs`; live verifier `ops/ux-2026-09-12/bin/verify-f165-b.mjs`.
+
+**(a) — what the next engine needs, so it is one pass and not a discovery exercise.**
+
+- *Where.* `cohortOf` at `lib/benchmark-view.mjs:28`. A vendor launch row has `subject.harness === null` and no `; source row: ` segment in its
+  protocol, so it falls through to `'Published board'` — the same default as the board's own measured rows. That collision is the whole defect.
+- *The extraction rule, measured rather than assumed.* Of **839** `self_reported` observations in `scores.json`, exactly **97** protocols match
+  `^Vendor-reported by ([A-Za-z0-9 .&-]+?) for ` — StepFun 40, DeepSeek 19, Xiaomi 17, Anthropic 16, OpenAI 5. Those are the launch-post identities
+  F-165 names. The other **742** are board submissions, not launch posts, and must keep the default: widening the rule to "every `self_reported`
+  row" would relabel them wrongly.
+- *Hazard 1 — axis ids move.* `benchmark-view.mjs:147` builds the axis id as `${b.id}@@${encodeURIComponent(g.cohort)}@@${g.unit}`. Changing a
+  cohort changes that id, and axis ids are what compare-axis selections and saved bookmarks carry. This needs a `PAGE_DATA_SHAPE` bump
+  (`lib/page-data.ts:23`, currently `"cr68.5"`) and a check of every store that persists an axis id.
+- *Hazard 2 — historical estimates re-attach.* `benchmark-view.mjs:218–222` attaches a dated estimate by matching `a.cohort === e.cohort`, and
+  falls back to `a.cohort === 'Published board'` when the estimate carries no cohort. Moving a vendor row off the default can detach its estimates
+  or spawn new ones — the same trap that has bitten this repo before. Check the estimate count and the dataset diff size either side of the change,
+  not just the suite.
+- *Hazard 3 — an existing test asserts the opposite, on purpose.* `test/cr-127-compare-basis.test.mjs:37–38` asserts that a vendor-claim row **is**
+  on the generic `"Published board"` cohort, because CR-127's finding was that the sub-line does not distinguish the rows so the basis has to be
+  carried by the cell. F-165's own Accept list requires that test to pass. (a) contradicts its assertion while honouring its intent, so the test
+  must be rewritten to its intent — the cell still carries the basis — and not simply re-pinned to the new string.
+- *The first clause of (a) is a data rekey, not a label.* "Where a vendor's launch number was produced on the board's own protocol, the row joins
+  the board's identity (`swe-bench-multilingual`, not `anthropic-swe-bench-multilingual`) with basis `self_reported`." That needs a per-row protocol
+  match against the captured source, one row at a time, and belongs with CR-128.1's identity work — no row joins on a name resemblance.
+- *Accept.* F-165's own list: no two rows in one category share name + sub-line; every vendor-only row's sub-line names the runner; measured rows
+  from the board's own publication have no `"Published board"` sub-line (**(b) does this**); `verify-cr-127.mjs` and
+  `test/cr-127-compare-basis.test.mjs` pass; and CR-128's per-family report states which launch rows joined an existing identity and which stayed
+  separate, with the protocol reason.
+
+- **Gates.** After both commits: `node scripts/build-dataset.mjs` 863 models / 669 families / 94 providers / 2,976 offers, with the two generated
+  timestamps restored and **no data diff**; `npm test` **1,158 tests / 1,157 pass / 0 fail / 1 skip**; `npx tsc --noEmit -p .` clean;
+  `npm run build` rc 0; `node scripts/validate-benchmark-scores.mjs` 18,602 observations / 189 source files / 1,430 verified self-reported.
+  The first commit (`66dbdc00`, the CR-128 audit) touched no data file and no dataset script, so `build-dataset` was deliberately not run beside
+  its test suite — the trap recorded under D175.
 
 - **Next.** (1) Read the 05:17 run's receipts: they prove or refute D174, D175 and D176 together, as the previous entry sets out — and they are the
   only thing `CR-38.1`, `CR-73.5`, `CR-85.1` are waiting for. (2) `F-165`'s registry rename, after that run has pushed. (3) Re-report CR-128.5's four
@@ -7320,7 +7372,7 @@ CR-127 was the highest request on `main` when this was seeded. Scope is the four
 | F-162 | implemented | same | "Providers", never "Top 0 cheapest providers"; no filter line without a ranked list. Fable-implemented; needs a non-Fable live run. |
 | F-163 | open | `DESIGN-DIRECTIVES.md` F-163 | Compare snapshot cards: a model with no measured result anywhere leaves the cards, named in one line; one status per card line. `[judgment]`, claude-opus. |
 | F-164 | open | `DESIGN-DIRECTIVES.md` F-164 | Compare status line carries the per-model vendor-claim count (generated, never pinned). `[judgment]`, claude-opus. |
-| F-165 | open | `DESIGN-DIRECTIVES.md` F-165; CR-128.1; `/opt/benchmarkheaven/state/ux-evidence/iter179-cr128/f165-live-name-collisions.txt` | Same-name rows say whose run they are: launch rows join the board's identity where the protocol matches, otherwise the cohort names the runner; Compare drops the default "Published board" sub-line. **Iteration 179 pinned the live case and the exact data behind it.** On `claude-opus-5.5::max` the sheet prints ›Terminal-Bench 4.0 · 61.6% (Vals' run, measured) directly beside ›Terminal-Bench 4.0 v4.0 · developer's claim 66.4%† — the basis marker separates them, nothing says the 61.6% is Vals'. Cause is the registry `name`, not the component: **7 CR-128 boards share a display name with another registry entry** — `vals-terminal-bench-4-0::snapshot-2026-09-21` ('Terminal-Bench 4.0', shared with `anthropic-terminal-bench-4-0::4.0` and `deepseek-terminal-bench-v4::4.0`), `vals-programbench::snapshot-2026-09-21` ('ProgramBench', shared with `programbench::1` and `xiaomi-programbench::snapshot-2026-09-22`), plus `aa-automationbench::1.0.6`, `aa-briefcase::1.1`, `aa-gdp-pdf::snapshot-2026-09-21`, `aa-gdpval::2.1` and `aa-lcr::1.1` against their vendor mirrors. The same ingest already set the precedent it did not apply here: `vals-code-migration` and `vals-emb` read 'Code Migration (standalone Vals board, 2026-09-21 snapshot)'. Fix is a registry `name` change on the colliding entries + `build-dataset` + live re-read; **not started here** — it lands inside the 05:17 daily's push window and a data rebuild pushed at that moment risks the unattended publication. |
+| F-165 | in-progress | `135a3098`; `lib/benchmark-view.mjs` (`cohortSubLabel`); `test/f165-cohort-sublabel.test.mjs`; `ops/ux-2026-09-12/bin/verify-f165-b.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter179-f165b/{canonical,legacy}/`; `/opt/benchmarkheaven/state/ux-evidence/iter179-cr128/f165-live-name-collisions.txt` | **(b) presentation: implemented and live 18/18 per host at `135a3098`** — Compare no longer prints the default `"Published board"` sub-line, and the rule lives once in `lib/benchmark-view.mjs` for Compare, the matrix and the ranking page. Implemented by claude-opus, so it needs a non-claude-opus sign-off before it is `verified`. **(a) data: open** — a vendor launch row's cohort must name the runner, and where the protocol matches the board's own it must join the board's identity. Fully specified in the iteration 179 entry, including the 97-of-839 extraction rule and the three hazards (axis ids move, historical estimates re-attach, and `test/cr-127-compare-basis.test.mjs:37–38` asserts the opposite on purpose). Until (a) lands, two same-named rows on one sheet still differ only by their basis marker. |
 | F-166 | implemented | same as F-161 | "Not measured yet" panel: two sentences the head does not say; id/org in the chip title. Fable-implemented; needs a non-Fable live run. |
 
 ## Iteration 177 — 2026-09-23 02:20 → ~04:00 UTC (claude-opus, work): the Compare page says which values are not measurements, and why the daily stopped publishing
