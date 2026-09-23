@@ -8001,6 +8001,20 @@ failure, and two writers editing the publish step at once is the thing the one-w
 or the next iteration, does not spend its time rediscovering it. If it is still unfixed at the next tick, it is the highest-value change available:
 four days of collected data have now been discarded by four unrelated one-line causes.
 
+**Read before changing it, because the code is not missing the retry — it declines to do it.** `ops/daily/daily.mjs:368–374` pushes once:
+
+```js
+// The staging commit descends from the fetched origin/main base. If origin moved,
+// this normal push fails non-fast-forward and the candidate remains isolated.
+await git('push-data', ['push', remoteUrl, 'HEAD:refs/heads/main'], work);
+```
+
+That is a deliberate safety property — the data commit is never rebased onto work the publish gate did not see — and the self-heal repair prompt's
+belief that "a git push non-fast-forward retry in `ops/daily/daily.mjs`" is already in place does **not** match this path. So the fix is not
+"restore a retry", it is a decision: whether a refused push should **fetch, rebase the data commit, re-run the gate against the rebased tree, and
+push once more**. Re-running the gate is the part that keeps the safety property, and it is why this is a design change rather than a one-liner —
+and why it was left to the agent that owns the failure rather than done here in passing.
+
 The run's other receipts, for the rows that were waiting on them:
 - **D174** — `benchmarks-step-result.json` is `ok: true` and the two-line digest step ran; the run did not fail on an unreviewed vendor score. Its
   stated proof was "the run must publish", which it did not, for the reason above. **Still `implemented`, not verified.**
