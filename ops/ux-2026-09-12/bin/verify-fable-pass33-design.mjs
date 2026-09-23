@@ -40,14 +40,18 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
       const t = txt(await st.textContent());
       check('F-176', `${tag} 3D status is silent when ready (or names a failure)`, t === '' || /could not/i.test(t), { t });
       check('F-176', `${tag} no "ready" announcement`, !/view ready/i.test(t), { t });
-      const capText = txt(await p.locator('[data-bh-jevc-chart]').first().evaluate((el) => el.closest('section, figure, div')?.parentElement?.innerText || '').catch(() => ''));
-      check('F-176', `${tag} (b) no library licence sentence beside the chart`, !/three\.js r\d+ is included/i.test(capText), { hit: (capText.match(/three\.js[^.]*\./) || [''])[0] });
+      const cap = p.locator('[data-bh-jev14-capability-suite]').first();
+      const capPresent = (await cap.count()) > 0;
+      const capText = capPresent ? txt(await cap.evaluate((el) => el.textContent || '')) : '';
+      check('F-176', `${tag} (b) capability suite present to judge`, capPresent, {});
+      check('F-176', `${tag} (b) no library licence sentence beside the chart`, capPresent && !/three\.js r\d+ is included/i.test(capText), { hit: (capText.match(/three\.js[^.]*\./) || [''])[0] });
       await p.screenshot({ path: `${OUT}/${tag}-f176-3d.png` });
     } else check('F-176', `${tag} 3D status element present`, false, {});
   }
   // F-172 / F-173 / F-174 / F-175 on the hub
-  const hub = await p.evaluate(() => {
-    const t = (el) => (el ? el.innerText.replace(/\s+/g, ' ').trim() : '');
+  const wantHub = !ONLY || ['F-172', 'F-173', 'F-174', 'F-175'].includes(ONLY);
+  const hub = !wantHub ? null : await p.evaluate(() => {
+    const t = (el) => (el ? String(el.innerText ?? el.textContent ?? '').replace(/\s+/g, ' ').trim() : '');
     const rows = [...document.querySelectorAll('[data-bh-jev14-row]')];
     const rowLinks = rows.filter((r) => r.querySelector('th a[href^="/jev-models/"]')).length;
     const bars = [...document.querySelectorAll('[data-bh-jev14-bar]')];
@@ -60,22 +64,24 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
     const h = (re) => { const el = [...document.querySelectorAll('main h2, main h3')].find((x) => re.test(t(x))); return el ? Math.round(el.getBoundingClientRect().top + scrollY) : null; };
     return { rows: rows.length, rowLinks, bars: bars.length, barLinks, firstBar, sizeMentions, dashLabels: dashLabels.slice(0, 6), changedY: h(/^What changed in v1\.4/), tableY: h(/^Axes, accuracy, latency and cost/), sw: document.documentElement.scrollWidth, cw: document.documentElement.clientWidth };
   });
-  check('F-172', `${tag} every board row name links to its page`, hub.rows > 0 && hub.rowLinks === hub.rows, { rows: hub.rows, rowLinks: hub.rowLinks });
-  check('F-172', `${tag} bar-chart names link to the system page`, hub.bars > 0 && hub.barLinks === hub.bars, { bars: hub.bars, barLinks: hub.barLinks });
-  if (mobile) check('F-173', `${tag} first ranked bar inside the first 844 px`, hub.firstBar != null && hub.firstBar < 844, { firstBar: hub.firstBar });
-  check('F-173', `${tag} the head states the decision count once`, hub.sizeMentions <= 1, { sizeMentions: hub.sizeMentions });
-  check('F-174', `${tag} no radar label ends in a dash on the default pair`, hub.dashLabels.length === 0, { dashLabels: hub.dashLabels });
-  check('F-175', `${tag} "What changed in v1.4" follows the table`, hub.changedY != null && hub.tableY != null && hub.changedY > hub.tableY, { changedY: hub.changedY, tableY: hub.tableY });
-  check('F-173', `${tag} no horizontal page overflow`, hub.sw <= hub.cw + 1, { sw: hub.sw, cw: hub.cw });
+  if (hub) {
+    check('F-172', `${tag} every board row name links to its page`, hub.rows > 0 && hub.rowLinks === hub.rows, { rows: hub.rows, rowLinks: hub.rowLinks });
+    check('F-172', `${tag} bar-chart names link to the system page`, hub.bars > 0 && hub.barLinks === hub.bars, { bars: hub.bars, barLinks: hub.barLinks });
+    if (mobile) check('F-173', `${tag} first ranked bar inside the first 844 px`, hub.firstBar != null && hub.firstBar < 844, { firstBar: hub.firstBar });
+    check('F-173', `${tag} the head states the decision count once`, hub.sizeMentions <= 1, { sizeMentions: hub.sizeMentions });
+    check('F-174', `${tag} no radar label ends in a dash on the default pair`, hub.dashLabels.length === 0, { dashLabels: hub.dashLabels });
+    check('F-175', `${tag} "What changed in v1.4" follows the table`, hub.changedY != null && hub.tableY != null && hub.changedY > hub.tableY, { changedY: hub.changedY, tableY: hub.tableY });
+    check('F-173', `${tag} no horizontal page overflow`, hub.sw <= hub.cw + 1, { sw: hub.sw, cw: hub.cw });
+  }
   // F-171 leaf pages
-  for (const key of ['jevk5-v02', 'hopper', 'jev-1.13.0']) {
+  if (!ONLY || ONLY === 'F-171') for (const key of ['jevk5-v02', 'hopper', 'jev-1.13.0']) {
     const r = await goto(p, `${BASE}/jev-models/${key}`); await p.waitForLoadState('networkidle').catch(() => {});
     check('F-171', `${tag} /jev-models/${key} is 200`, r && r.status() === 200, { status: r && r.status() });
-    const g = await p.evaluate(() => { const t = (el) => (el ? el.innerText.replace(/\s+/g, ' ').trim() : ''); const s = document.querySelector('[data-bh-jev-system-score]'); return { score: t(s).slice(0, 160), strip: !!document.querySelector('[data-bh-jev-system-strip]'), bands: document.querySelectorAll('[data-bh-jev-system-band]').length, radar: !!document.querySelector('[data-bh-jev-system-radar]'), h1: t(document.querySelector('main h1')) }; });
+    const g = await p.evaluate(() => { const t = (el) => (el ? String(el.innerText ?? el.textContent ?? '').replace(/\s+/g, ' ').trim() : ''); const s = document.querySelector('[data-bh-jev-system-score]'); return { score: t(s).slice(0, 160), strip: !!document.querySelector('[data-bh-jev-system-strip]'), bands: document.querySelectorAll('[data-bh-jev-system-band]').length, radar: !!document.querySelector('[data-bh-jev-system-radar]'), h1: t(document.querySelector('main h1')) }; });
     check('F-171', `${tag} ${key} score panel names the board's release`, /v1\.4/.test(g.score) && !/v1\.3\.0/.test(g.score), { score: g.score });
     check('F-171', `${tag} ${key} draws its number (strip, bands, radar)`, g.strip && g.bands >= 3 && g.radar, g);
   }
-  check('F-171', `${tag} no page errors`, errors.length === 0, { errors: errors.slice(0, 3) });
+  if (!ONLY || ONLY === 'F-171') check('F-171', `${tag} no page errors`, errors.length === 0, { errors: errors.slice(0, 3) });
   await c.close();
 }
 await b.close();

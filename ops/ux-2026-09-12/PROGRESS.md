@@ -9191,3 +9191,57 @@ with `gauntlet.mjs` restored byte-for-byte the suite is 15/15. No product code c
 | F-175 | open | `…/pass33/canonical/metrics.json` (heads y: compare 1,639 · note 3,169 · table 3,502) | "What changed in v1.4" before the table. |
 | F-178 | open | CR-136 draft files in the tree; `/home/flori/jobs/jevbench-seo-hn-push-20260923/LOCAL-ALTERNATIVES-{DESKTOP,MOBILE}.png` | Judged from the draft, not live; to be re-judged once CR-136 is live. |
 | F-179 | open | `curl -s https://benchmarkheaven.com/jev-models \| wc -c` = 6,846,480; 741,801 bytes before `data-bh-jev13-history` | Historical board ships closed. |
+
+## Iteration 189 — 2026-09-23 23:10 → ~00:10 UTC (claude-opus, work): F-176(a) verified, and the pass-33 acceptance gate could not see what it judged (D189)
+
+- **Scope.** Pass 33 left one job for the next non-Fable engine — `ONLY=F-176 node
+  ops/ux-2026-09-12/bin/verify-fable-pass33-design.mjs <host> <out>` on both hosts, then flip the F-176(a) rows. Doing it
+  surfaced two defects in the gate itself, and the gate is the acceptance criterion for F-171–F-176, so it was repaired
+  first. **Another writer held the product surface throughout:** the CR-136 SEO job (codex,
+  `jevbench-seo-hn-push-20260923`) had 16 paths uncommitted at the start and grew to 19 during the iteration, adding
+  `app/globals.css`, `components/JevModelsV14.tsx` and `components/JevCompareV14.tsx`. Nothing here touches any of them;
+  everything committed is staged by path. Live revision `6714f8d4` on both hosts (= HEAD at start), dataset 18:39 UTC.
+- **D189 — the F-176(b) check passed on empty text while the sentence was live.** The gate scoped it to
+  `[data-bh-jevc-chart]`, an attribute only `components/JevModelsV11.tsx` and `JevModelsV12.tsx` carry; the v1.4 capability
+  suite never does. The locator therefore resolved to an unrelated chart, `.closest(…)?.parentElement?.innerText` did not
+  contain the caption, the `.catch(() => '')` turned a miss into `''`, and `!/three\.js r\d+ is included/` read PASS. The
+  sentence was on the live page the whole time: `curl -s https://benchmarkheaven.com/jev-models` contains
+  "three.js r128 is included under its MIT license." and one `data-bh-jevc-chart`. Now scoped to
+  `[data-bh-jev14-capability-suite]` — the element `components/JevCapabilityChart.tsx` actually renders around the caption —
+  with a separate check that states the container was found, so an absent suite fails instead of passing.
+- **D189 — and the gate died before three of its four contexts.** Its evaluate helper was
+  `el.innerText.replace(…)`; the F-174 sweep passes SVG `<text>`/`<tspan>` nodes, which expose `textContent` but not
+  `innerText`, so the first hub evaluate threw `Cannot read properties of undefined (reading 'replace')` and killed the
+  process after `desktop_light`. Both helpers now fall back to `textContent`. The hub evaluate and the F-171 leaf loop also
+  ran regardless of `ONLY` — that unguarded hub block was the crash site for `ONLY=F-176`; both are gated now, so one group
+  no longer pays another group's page cost or its bugs.
+- **F-176(a) — verified on both hosts.** `ONLY=F-176` at `6714f8d4`, 1440/390 × light/dark: the (a) checks are **8/8 per
+  host** (the live region ends empty after the panel scrolls into view; no "ready" announcement). The same runs hold (b)
+  **red 4/4 per host**, each quoting `three.js r128 is included under its MIT license.` — the gate is now honest about an
+  open directive instead of green about a wrong one. 12/16 per host overall, exit 1 by design.
+  Evidence `/opt/benchmarkheaven/state/ux-evidence/iter189-f176/{canonical,mintapis}/` (`verification-F-176.json`, four
+  screenshots each).
+- **F-176(b) left open, with the reason written under the directive.** The licence line may only leave the caption in the
+  same change that adds it to the Credit disclosure — removing it alone would drop an attribution the MIT licence requires.
+  `components/JevCapabilityChart.tsx` is free, but the Credit disclosure is `<details id="credit">` in
+  `app/jev-models/page.tsx`, held uncommitted by the SEO job; staging it would have committed that job's CR-136 work. Left
+  for the CR-136 author or the first engine that holds the hub page. F-171–F-175 are blocked the same way now that
+  `JevModelsV14.tsx` and `JevCompareV14.tsx` are in the other writer's working set.
+- **Pins.** `test/f176-gate-scope.test.mjs` (4/4) pins the gate behaviourally, not by spelling: it resolves the (b)
+  selector against `JevCapabilityChart.tsx` and fails if the gate judges an attribute that component does not render, and
+  it evaluates each extracted text helper against an SVG-shaped node (`{textContent}` only) and an HTML-shaped one.
+  **Mutation-checked:** against the pre-repair gate restored byte-for-byte, all four go red (0 pass / 4 fail); against the
+  repaired gate, 4/4 green, and the file was restored to the repaired version (`git diff --stat` unchanged at 20/14).
+- **Not done, and why.** D183 stays open by the standing decision (the wrong ranks are in a finished job's own
+  `RESULT.md`, the correction of record is written, and `verify-cr-128.mjs` holds the red on purpose). CR-37.1 cannot move
+  while Lumina's bulk downloads are deliberately paused. CR-34.5/CR-62.4 need Florian; CR-38.1/CR-73.5/CR-85.1 and the
+  scheduled halves of D174–D179/D181/D184 need an unattended run; CR-136.1–.4/.6 are the SEO job's lane.
+- **Gates.** `npx tsc --noEmit -p .` clean; `node --test test/f176-gate-scope.test.mjs` 4/4;
+  `node --test test/fable-pass33.test.mjs` 1/1. No dataset or product code changed in this iteration (the only source file
+  touched is a verifier under `ops/`), so `build-dataset` was not re-run. Full-suite note below.
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| F-176(a) | implemented → **verified** | `/opt/benchmarkheaven/state/ux-evidence/iter189-f176/{canonical,mintapis}/verification-F-176.json` | 8/8 (a) checks per host at `6714f8d4`, 1440/390 × light/dark, non-Fable engine. |
+| F-176(b) | open | same receipts (red 4/4 per host, quoting the live sentence); `components/JevCapabilityChart.tsx:218`; `app/jev-models/page.tsx` `<details id="credit">` | Blocked by the one-writer rule, not by difficulty: the two halves must land together and the Credit half is held. |
+| D189 | fixed (verified by its own run) | `ops/ux-2026-09-12/bin/verify-fable-pass33-design.mjs`; `test/f176-gate-scope.test.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter189-f176/` | The F-176(b) gate passed on empty text while the sentence was live, and the gate crashed on SVG text before three of four contexts. Both repaired; the repair is proved by the check now reading FAIL on both hosts for a defect that is really there. |
