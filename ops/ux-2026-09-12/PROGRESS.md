@@ -9236,6 +9236,17 @@ with `gauntlet.mjs` restored byte-for-byte the suite is 15/15. No product code c
   `RESULT.md`, the correction of record is written, and `verify-cr-128.mjs` holds the red on purpose). CR-37.1 cannot move
   while Lumina's bulk downloads are deliberately paused. CR-34.5/CR-62.4 need Florian; CR-38.1/CR-73.5/CR-85.1 and the
   scheduled halves of D174–D179/D181/D184 need an unattended run; CR-136.1–.4/.6 are the SEO job's lane.
+- **The repaired gate, proved end-to-end across every group (not just the one it was run for).** A full run with no `ONLY`
+  on `benchmarkheaven.com` at `6714f8d4` completes all four contexts and **82 checks, 28 passed**, where before the repair
+  it died after one context — `…/iter189-f176/canonical-allgroups/verification.json`. It now reproduces mechanically, with
+  numbers, every open F-17x finding pass 33 judged by eye: F-172 `rows 82 / rowLinks 0` and `bars 82 / barLinks 0`; F-173
+  `firstBar 910` at 390 (> 844) and `sizeMentions 2` in the head; F-175 `changedY 3169 < tableY 3502` at 1440 (5,073 <
+  5,786 at 390); F-171 `jevk5-v02` and `hopper` **404** in all four contexts and `jev-1.13.0` still reading "JevBench
+  v1.3.0 score 74.4 Rank #1 of 48 ranked systems". **F-174 is the one that matters for the repair:** its label sweep is the
+  code that was throwing, and it now returns real SVG text — `["Adversarial100% · —", "100% · —", "· —", "Ambiguous79% ·
+  —", "79% · —", "· —"]` — so the `textContent` fallback is confirmed against the live DOM, not only against the unit
+  pin's synthetic node. F-176(a) passes in every context here too. One host is enough for this baseline: the F-17x
+  directives are host-independent and both hosts serve the same revision; F-176(a) itself was verified on both.
 - **Gates.** `npx tsc --noEmit -p .` clean; `node --test test/f176-gate-scope.test.mjs` 4/4;
   `node --test test/fable-pass33.test.mjs` 1/1. No dataset or product code changed in this iteration (the only source file
   touched is a verifier under `ops/`), so `build-dataset` was not re-run. Full-suite note below.
