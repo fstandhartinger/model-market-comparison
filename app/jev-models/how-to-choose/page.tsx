@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { readJevbenchSeoData } from '../../../lib/jevbench-seo.mjs';
 import { jevIntentMetadata } from '../../../lib/jevbench-seo-metadata';
-import { costBasisLabel, DatasetFaqJsonLd, JevFaq, JevIntentLinks, one, opennessLabel, percent, usdPerThousand, type SeoRow } from '../../../components/JevBenchSeoBlocks';
+import { costBasisLabel, DatasetFaqJsonLd, JevFaq, JevIntentLinks, JevRowLink, one, opennessLabel, percent, usdPerThousand, type SeoRow } from '../../../components/JevBenchSeoBlocks';
 
 const PATH = '/jev-models/how-to-choose';
 const TITLE = 'How to choose a Jev-class model — JevBench by Benchmark Heaven';
@@ -55,21 +55,21 @@ export default async function HowToChooseJevModelPage() {
     <div className="mt-6 grid gap-4 md:grid-cols-2">
       <section className="bh-panel p-5" aria-labelledby="chooser-accuracy">
         <p className="bh-eyebrow">Most accurate (sealed-set accuracy)</p>
-        <h2 id="chooser-accuracy" className="mt-1 text-xl font-semibold"><Link className="text-accent underline" href={`/jev-models/${encodeURIComponent(accurate.key)}`}>{accurate.display}</Link></h2>
+        <h2 id="chooser-accuracy" className="mt-1 text-xl font-semibold"><JevRowLink row={accurate} /></h2>
         <p className="mt-2 text-3xl font-bold tabular-nums">{percent(accurate.sealed_accuracy)}</p>
         <p className="bh-muted mt-2 text-sm">Published sealed-set accuracy in {data.artifact.revision}. The JevBench Score is a separate composite.</p>
       </section>
 
       <section className="bh-panel p-5" aria-labelledby="chooser-speed">
         <p className="bh-eyebrow">Fastest (Speed axis)</p>
-        <h2 id="chooser-speed" className="mt-1 text-xl font-semibold"><Link className="text-accent underline" href={`/jev-models/${encodeURIComponent(fastest.key)}`}>{fastest.display}</Link></h2>
+        <h2 id="chooser-speed" className="mt-1 text-xl font-semibold"><JevRowLink row={fastest} /></h2>
         <p className="mt-2 text-3xl font-bold tabular-nums">{one(fastest.axes.speed)}<span className="bh-muted ml-2 text-sm font-normal">/ 100 benchmark score</span></p>
         <p className="bh-muted mt-2 text-sm">This is the published Speed axis. Use the row’s latency conditions when estimating real performance; it is not a universal wall-clock guarantee.</p>
       </section>
 
       <section className="bh-panel p-5" aria-labelledby="chooser-cost">
         <p className="bh-eyebrow">Cheapest per decision (Cost axis)</p>
-        <h2 id="chooser-cost" className="mt-1 text-xl font-semibold"><Link className="text-accent underline" href={`/jev-models/${encodeURIComponent(cheapest.key)}`}>{cheapest.display}</Link></h2>
+        <h2 id="chooser-cost" className="mt-1 text-xl font-semibold"><JevRowLink row={cheapest} /></h2>
         <p className="mt-2 text-3xl font-bold tabular-nums">{one(cheapest.axes.cost)}<span className="bh-muted ml-2 text-sm font-normal">/ 100 benchmark score</span></p>
         <p className="mt-2 text-sm">Published cost: {usdPerThousand(cheapest.cost?.usd_per_1000)} <span className="bh-muted">({costBasisLabel(cheapest.cost?.kind)})</span></p>
         <p className="bh-muted mt-2 text-sm">Cost axis is a comparison score. The row’s cost basis distinguishes measured, estimated and announced values.</p>
@@ -86,7 +86,7 @@ export default async function HowToChooseJevModelPage() {
       <h2 id="self-hostable-rows" className="text-2xl font-semibold">Systems with explicit self-hosting evidence</h2>
       <ul className="mt-4 grid gap-3 md:grid-cols-2">
         {openRows.map((row) => <li className="bh-panel p-4" key={row.key}>
-          <p className="font-semibold"><Link className="text-accent underline" href={`/jev-models/${encodeURIComponent(row.key)}`}>{row.display}</Link> <span className="bh-muted text-sm">· rank {row.rank}</span></p>
+          <p className="font-semibold"><JevRowLink row={row} /> <span className="bh-muted text-sm">· rank {row.rank}</span></p>
           <p className="bh-muted mt-1 text-sm">{opennessLabel(row)} · {row.licence}</p>
           <p className="mt-2 text-sm"><a className="text-accent underline" href={row.repo!}>Published repository or weights</a></p>
         </li>)}

@@ -80,3 +80,17 @@ test('chooser and comparison copy uses reader-facing metric labels', () => {
   assert.doesNotMatch(chooser, /sealed_accuracy aggregate/);
   assert.doesNotMatch(compare, /sealed_accuracy aggregate/);
 });
+
+test('dynamic chooser and open-row links target stable anchors in the live v1.4.1 board', () => {
+  const chooser = readFileSync(new URL('../app/jev-models/how-to-choose/page.tsx', import.meta.url), 'utf8');
+  const alternatives = readFileSync(new URL('../app/jev-models/alternatives/page.tsx', import.meta.url), 'utf8');
+  const links = readFileSync(new URL('../components/JevBenchSeoBlocks.tsx', import.meta.url), 'utf8');
+  const board = readFileSync(new URL('../components/JevModelsV14.tsx', import.meta.url), 'utf8');
+  assert.match(links, /href=\{`\/jev-models#jev14-row-\$\{encodeURIComponent\(row\.key\)\}`\}/);
+  assert.match(board, /id=\{`jev14-row-\$\{row\.key\}`\}/);
+  assert.match(chooser, /<JevRowLink row=\{accurate\}/);
+  assert.match(chooser, /<JevRowLink row=\{fastest\}/);
+  assert.match(chooser, /<JevRowLink row=\{cheapest\}/);
+  assert.match(chooser, /<JevRowLink row=\{row\}/);
+  assert.match(alternatives, /<JevRowLink row=\{row\}/);
+});

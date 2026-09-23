@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { JevScoreBar } from '../../../components/JevModelsV14';
 import { readJevbenchSeoData } from '../../../lib/jevbench-seo.mjs';
 import { jevIntentMetadata } from '../../../lib/jevbench-seo-metadata';
-import { costBasisLabel, DatasetFaqJsonLd, JevFaq, JevIntentLinks, one, percent, type SeoRow } from '../../../components/JevBenchSeoBlocks';
+import { costBasisLabel, DatasetFaqJsonLd, JevFaq, JevIntentLinks, JevRowLink, one, percent, type SeoRow } from '../../../components/JevBenchSeoBlocks';
 import type { JevV14System } from '../../../lib/jevbench-v14.mjs';
 
 const PATH = '/jev-models/alternatives';
@@ -91,7 +91,7 @@ export default async function JevAlternativesPage() {
       <p className="bh-muted mt-2 max-w-3xl">These rows have explicit openness, license and repository fields in the published artifact. “Open” is the board’s status; read the linked source and exact terms before deploying a system.</p>
       <ul className="mt-4 grid gap-3 md:grid-cols-2">
         {openRows.map((row) => <li className="bh-panel p-4" key={row.key}>
-          <p className="font-semibold"><Link className="text-accent underline" href={`/jev-models/${encodeURIComponent(row.key)}`}>{row.display}</Link> <span className="bh-muted text-sm">· rank {row.rank}</span></p>
+          <p className="font-semibold"><JevRowLink row={row} /> <span className="bh-muted text-sm">· rank {row.rank}</span></p>
           <p className="bh-muted mt-1 text-sm">{row.licence}</p>
           <p className="mt-2 text-sm"><a className="text-accent underline" href={row.repo!}>Published repository or weights</a></p>
       <p className="bh-muted mt-1 text-xs">Sealed-set accuracy: {percent(row.sealed_accuracy)} · {one(row.axes.speed)} Speed axis</p>

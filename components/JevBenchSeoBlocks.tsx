@@ -129,5 +129,5 @@ export function JevBoardIntentLinks() {
 }
 
 export function JevRowLink({ row, children }: { row: SeoRow; children?: ReactNode }) {
-  return <Link className="text-accent underline" href={`/jev-models/${encodeURIComponent(row.key)}`}>{children ?? row.display}</Link>;
+  return <Link className="text-accent underline" href={`/jev-models#jev14-row-${encodeURIComponent(row.key)}`}>{children ?? row.display}</Link>;
 }

@@ -55,7 +55,7 @@ function CostValue({ row }: { row: JevV14System }) {
 
 function Row({ row, note }: { row: JevV14System; note: string | null }) {
   const rankLabel = row.rank ?? '—';
-  return <tr data-bh-jev14-row={row.key} data-bh-jev14-ranked={row.ranked ? '1' : '0'} className={row.ranked ? '' : 'bh-jev11-partial'}>
+  return <tr id={`jev14-row-${row.key}`} data-bh-jev14-row={row.key} data-bh-jev14-ranked={row.ranked ? '1' : '0'} className={row.ranked ? '' : 'bh-jev11-partial'}>
     <td className="bh-muted tabular">{rankLabel}</td>
     <th scope="row" className="bh-jev-sticky text-left font-normal"><SystemName row={row} note={note} />
       {!row.ranked && <span className="bh-thin-tag mt-1 inline-block" title={row.not_ranked_because ?? undefined}>{row.listing.replace(/_/g, ' ')} · not ranked</span>}
