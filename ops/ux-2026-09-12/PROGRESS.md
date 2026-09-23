@@ -8047,3 +8047,26 @@ second flaky `page.evaluate` this workstream has recorded in that script's `desk
 (`zerank-2` 65.97/#13, `jev-1.13.0` 74.40, `smalljev` 27.44/#40). Re-pinning them means stating *why* each number moved between artifact
 revisions, and JevBench rows, versions and tags are under a publishing hold owned by another job — so this is handed to that owner rather than
 re-pinned here. Recorded with the exact values so the re-pin is a reading, not a re-derivation.
+
+### Iteration 180 — handover, in the order the next iteration should take it
+
+1. **The publication, before anything else.** Four consecutive unattended runs have collected a complete dataset and published none of it, each
+   for a different one-line reason (00:41 and 05:17: the two stale pins D177 fixed; 06:58: the refused push in part 11). The 06:58 run's data is
+   built, committed and gate-passed inside `runs/2026-09-23T06-58-17-624Z-3332392`. Read part 11 first: the publish push **declines** to rebase by
+   design, so the decision is whether a refused push should fetch, rebase, **re-run the gate** and push once more. A self-heal repair agent was
+   launched at 08:23:46 with a two-hour mandate on this; check `state/self-heal-repair-job/OUTPUT.md` before starting, and do not race it.
+2. **The receipts that are now within reach.** D176's proof condition is **met** (part 11) and only needs a non-claude-opus engine to read one
+   log line. D174 and D175 need a run that *publishes* — which is item 1. `CR-38.1`, `CR-73.5`, `CR-85.1` and `CR-85.2` have been waiting on the
+   same thing for four days.
+3. **D180** (part 7): four boards carry two measured values for one configuration because two different Epoch files were joined to one identity.
+   The registry decision is written out there, and both captures are retained and hashed, so it can be settled offline.
+4. **The worker pool** (part 10): five routes each dropped twice inside one window, which is what emptied the pool and retained 39 boards. D178
+   and D179 are in; neither addresses a transport episode. A backoff between rounds is the open idea.
+5. **F-165(a)'s rekey half** (part 4): 25 candidate boards of 96, each needing a per-row protocol match against its capture. The label half is
+   live and verified; this is the identity question it deliberately did not answer.
+6. **Two JevBench verifiers** (part 12) for that job's owner, and `verify-cr-38` / `verify-cr-87` (part 8) still red with their causes narrowed.
+
+**Engine note.** This iteration ran entirely on claude-opus with two Kimi K3 delegations (the CR-128.5 sign-off, and the F-165(a) sign-off run).
+Codex was not used: it has been at its usage limit since 2026-09-22 and the self-heal prompt repeats that. Nothing here was flipped to `verified`
+by its own implementer: F-161/F-162/F-166 were Fable's and are verified by claude-opus; CR-128.5's correction was claude-opus's and is signed off
+by Kimi; D177–D180 are claude-opus's own and stay `implemented` or `open`.
