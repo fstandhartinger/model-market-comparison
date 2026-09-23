@@ -10,6 +10,8 @@ import { readJevbenchV12Tasks, jevbenchV12TasksView } from '../../lib/jevbench-v
 import { CustomEvaluationOffer } from '../../components/CustomEvaluationOffer';
 import { jevbenchV12HeldoutView } from '../../lib/jevbench-v12-heldout.mjs';
 
+const OG_ART_REVISION = 'og2'; // Bump when the card artwork changes, even when the results revision stays fixed.
+
 // CR-92 (Florian 2026-09-19 ~13:20 UTC): JevBench v1.2 final — the JevBench Score (Intelligence, Calibration, Speed, Cost,
 // 25 % each, geometric mean) is the default; the earlier weightings stay as presets. CR-88's WIP banner and noindex are gone and the
 // page is back in the menu and sitemap (Florian approved the result). Every number is read from the committed v1.2 artifact
@@ -19,19 +21,22 @@ export async function generateMetadata(): Promise<Metadata> {
   const systems = view.ranked.length + view.honorable.length + view.partial.length;
   const lead = view.ranked[0];
   const description = `${systems} Jev-class systems tested on ${view.decisions} decisions. ${short(lead.display)} leads JevBench ${view.revision} with ${one(lead.main)}; compare open-source, self-hostable and hosted options.`;
-  const image = `/jev-models/opengraph-image?v=${encodeURIComponent(view.revision)}`;
+  const socialDescription = `JevBench ${view.revision}: ${systems} systems, ${view.decisions} decisions. ${short(lead.display)} leads at ${one(lead.main)}.`;
+  const imageAlt = `JevBench ${view.revision} top five: ${view.ranked.slice(0, 5).map((row) => `#${row.rank} ${short(row.display)} ${one(row.main)}`).join('; ')}. ${systems} systems, ${view.decisions} decisions. Benchmark Heaven.`;
+  const image = `https://benchmarkheaven.com/jev-models/opengraph-image?v=${encodeURIComponent(view.revision)}-${OG_ART_REVISION}`;
   return {
     title: `Jev alternatives & benchmark — JevBench ${view.revision}`,
     description,
     alternates: { canonical: '/jev-models' },
     openGraph: {
       type: 'website', siteName: 'Benchmark Heaven', locale: 'en_US', url: '/jev-models',
-      title: `JevBench ${view.revision}: Jev alternatives ranked`, description,
-      images: [{ url: image, width: 1200, height: 630, alt: `Top of the JevBench ${view.revision} leaderboard` }],
+      title: `JevBench ${view.revision}: Jev alternatives ranked`, description: socialDescription,
+      images: [{ url: image, type: 'image/png', secureUrl: image, width: 1200, height: 630, alt: imageAlt }],
     },
     twitter: {
       card: 'summary_large_image', site: '@benchmarkheaven', creator: '@benchmarkheaven',
-      title: `JevBench ${view.revision}: Jev alternatives ranked`, description, images: [image],
+      title: `JevBench ${view.revision}: Jev alternatives ranked`, description: socialDescription,
+      images: [{ url: image, alt: imageAlt }],
     },
   };
 }
