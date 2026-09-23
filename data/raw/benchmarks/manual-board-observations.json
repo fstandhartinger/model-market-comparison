@@ -4273,19 +4273,1891 @@
       },
       "protocol": "Cost per AA Intelligence Index task; source configuration GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":0.5318962692390143}}\",\"source_unit\":\"USD/task\",\"displayed_value\":0.5319}",
       "comparison_key": null
+    },
+    {
+      "id": "cr128:f97361c801f67947b8af53db",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "6fb13851-40ce-4bda-ad3f-6b38e0c5daa7",
+        "name": "GPT-6 Luna (max) [gpt-6-luna]",
+        "model_id": "gpt-6-luna::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 1367.09,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "GDPval-AA v2.1; GPT-6 Luna (max) [gpt-6-luna]; exact source excerpt: \"gdpval\":1367.09 (page payload, model slug gpt-6-luna)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Luna (max) [gpt-6-luna]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (max) [gpt-6-luna]\",\"source_quote\":\"\\\"gdpval\\\":1367.09 (page payload, model slug gpt-6-luna)\",\"source_unit\":\"Elo\",\"displayed_value\":1367.09}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:47b4aba2c84ff101facf0e20",
+      "benchmark_id": "aa-terminal-bench::4.0-upstream-timeouts",
+      "subject": {
+        "source_id": "6fb13851-40ce-4bda-ad3f-6b38e0c5daa7",
+        "name": "GPT-6 Luna (max) [gpt-6-luna]",
+        "model_id": "gpt-6-luna::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.126262626262626,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "Terminal-Bench 4.0 (AA run); GPT-6 Luna (max) [gpt-6-luna]; exact source excerpt: \"terminalBench40\":0.126262626262626 (page payload, model slug gpt-6-luna)"
+      },
+      "protocol": "Terminal-Bench 4.0 (AA run); source configuration GPT-6 Luna (max) [gpt-6-luna]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (max) [gpt-6-luna]\",\"source_quote\":\"\\\"terminalBench40\\\":0.126262626262626 (page payload, model slug gpt-6-luna)\",\"source_unit\":\"%\",\"displayed_value\":12.63}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:c3dc645d8014b43fa16d812c",
+      "benchmark_id": "aa-scicode::1.0.1",
+      "subject": {
+        "source_id": "6fb13851-40ce-4bda-ad3f-6b38e0c5daa7",
+        "name": "GPT-6 Luna (max) [gpt-6-luna]",
+        "model_id": "gpt-6-luna::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.546296296296296,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "SciCode (AA); GPT-6 Luna (max) [gpt-6-luna]; exact source excerpt: \"scicode\":0.546296296296296 (page payload, model slug gpt-6-luna)"
+      },
+      "protocol": "SciCode (AA); source configuration GPT-6 Luna (max) [gpt-6-luna]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (max) [gpt-6-luna]\",\"source_quote\":\"\\\"scicode\\\":0.546296296296296 (page payload, model slug gpt-6-luna)\",\"source_unit\":\"%\",\"displayed_value\":54.63}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:e7f4236c43fa4ab087f50d08",
+      "benchmark_id": "aa-hle::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "6fb13851-40ce-4bda-ad3f-6b38e0c5daa7",
+        "name": "GPT-6 Luna (max) [gpt-6-luna]",
+        "model_id": "gpt-6-luna::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.385078776645042,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "Humanity's Last Exam (AA); GPT-6 Luna (max) [gpt-6-luna]; exact source excerpt: \"hle\":0.385078776645042 (page payload, model slug gpt-6-luna)"
+      },
+      "protocol": "Humanity's Last Exam (AA); source configuration GPT-6 Luna (max) [gpt-6-luna]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (max) [gpt-6-luna]\",\"source_quote\":\"\\\"hle\\\":0.385078776645042 (page payload, model slug gpt-6-luna)\",\"source_unit\":\"%\",\"displayed_value\":38.51}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:6f0a1242af2507ad5cbd8565",
+      "benchmark_id": "aa-critpt::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "6fb13851-40ce-4bda-ad3f-6b38e0c5daa7",
+        "name": "GPT-6 Luna (max) [gpt-6-luna]",
+        "model_id": "gpt-6-luna::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.194285714285714,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "CritPt (AA); GPT-6 Luna (max) [gpt-6-luna]; exact source excerpt: \"critpt\":0.194285714285714 (page payload, model slug gpt-6-luna)"
+      },
+      "protocol": "CritPt (AA); source configuration GPT-6 Luna (max) [gpt-6-luna]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (max) [gpt-6-luna]\",\"source_quote\":\"\\\"critpt\\\":0.194285714285714 (page payload, model slug gpt-6-luna)\",\"source_unit\":\"%\",\"displayed_value\":19.43}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:4f2ce46a461a357e9415854f",
+      "benchmark_id": "aa-lcr::1.1",
+      "subject": {
+        "source_id": "6fb13851-40ce-4bda-ad3f-6b38e0c5daa7",
+        "name": "GPT-6 Luna (max) [gpt-6-luna]",
+        "model_id": "gpt-6-luna::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.833333333333333,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "AA-LCR v1.1; GPT-6 Luna (max) [gpt-6-luna]; exact source excerpt: \"lcr\":0.833333333333333 (page payload, model slug gpt-6-luna)"
+      },
+      "protocol": "AA-LCR v1.1; source configuration GPT-6 Luna (max) [gpt-6-luna]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (max) [gpt-6-luna]\",\"source_quote\":\"\\\"lcr\\\":0.833333333333333 (page payload, model slug gpt-6-luna)\",\"source_unit\":\"%\",\"displayed_value\":83.33}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:423c6a8ede7cb612640167ea",
+      "benchmark_id": "aa-omniscience::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "6fb13851-40ce-4bda-ad3f-6b38e0c5daa7",
+        "name": "GPT-6 Luna (max) [gpt-6-luna]",
+        "model_id": "gpt-6-luna::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.65,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "AA-Omniscience; GPT-6 Luna (max) [gpt-6-luna]; exact source excerpt: \"omniscience\":0.65 (page payload, model slug gpt-6-luna)"
+      },
+      "protocol": "AA-Omniscience; source configuration GPT-6 Luna (max) [gpt-6-luna]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (max) [gpt-6-luna]\",\"source_quote\":\"\\\"omniscience\\\":0.65 (page payload, model slug gpt-6-luna)\",\"source_unit\":\"index (-100..100)\",\"displayed_value\":0.65}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:bae1297bccd0429572a11be7",
+      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
+      "subject": {
+        "source_id": "6fb13851-40ce-4bda-ad3f-6b38e0c5daa7",
+        "name": "GPT-6 Luna (max) [gpt-6-luna]",
+        "model_id": "gpt-6-luna::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.204,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "GDP.pdf (all-pass); GPT-6 Luna (max) [gpt-6-luna]; exact source excerpt: \"gdpPdfAllPass\":0.204 (page payload, model slug gpt-6-luna)"
+      },
+      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Luna (max) [gpt-6-luna]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (max) [gpt-6-luna]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.204 (page payload, model slug gpt-6-luna)\",\"source_unit\":\"%\",\"displayed_value\":20.4}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:277ad6b0f6158e376f794ded",
+      "benchmark_id": "aa-automationbench::1.0.6",
+      "subject": {
+        "source_id": "6fb13851-40ce-4bda-ad3f-6b38e0c5daa7",
+        "name": "GPT-6 Luna (max) [gpt-6-luna]",
+        "model_id": "gpt-6-luna::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.5316814034483175,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "AutomationBench-AA (partial score); GPT-6 Luna (max) [gpt-6-luna]; exact source excerpt: \"automationBenchPartialScore\":0.5316814034483175 (page payload, model slug gpt-6-luna)"
+      },
+      "protocol": "AutomationBench-AA (partial score); source configuration GPT-6 Luna (max) [gpt-6-luna]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (max) [gpt-6-luna]\",\"source_quote\":\"\\\"automationBenchPartialScore\\\":0.5316814034483175 (page payload, model slug gpt-6-luna)\",\"source_unit\":\"%\",\"displayed_value\":53.17}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:70821b824b708a92cc1c18a9",
+      "benchmark_id": "aa-mmmu-pro::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "6fb13851-40ce-4bda-ad3f-6b38e0c5daa7",
+        "name": "GPT-6 Luna (max) [gpt-6-luna]",
+        "model_id": "gpt-6-luna::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.755491329479769,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "MMMU-Pro (AA); GPT-6 Luna (max) [gpt-6-luna]; exact source excerpt: \"mmmuPro\":0.755491329479769 (page payload, model slug gpt-6-luna)"
+      },
+      "protocol": "MMMU-Pro (AA); source configuration GPT-6 Luna (max) [gpt-6-luna]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (max) [gpt-6-luna]\",\"source_quote\":\"\\\"mmmuPro\\\":0.755491329479769 (page payload, model slug gpt-6-luna)\",\"source_unit\":\"%\",\"displayed_value\":75.55}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:1c483431571fb98b140faf82",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "6fb13851-40ce-4bda-ad3f-6b38e0c5daa7",
+        "name": "GPT-6 Luna (max) [gpt-6-luna]",
+        "model_id": "gpt-6-luna::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 1299.23,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "AA-Briefcase v1.1; GPT-6 Luna (max) [gpt-6-luna]; exact source excerpt: {\"slug\":\"aa-briefcase\",\"score\":1299.23}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Luna (max) [gpt-6-luna]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (max) [gpt-6-luna]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1299.23}\",\"source_unit\":\"Elo\",\"displayed_value\":1299.23}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:e21ad2f96f063496388cc329",
+      "benchmark_id": "aa-intelligence-index-cost::4.3.2",
+      "subject": {
+        "source_id": "6fb13851-40ce-4bda-ad3f-6b38e0c5daa7",
+        "name": "GPT-6 Luna (max) [gpt-6-luna]",
+        "model_id": "gpt-6-luna::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 122.38887234474213,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "Cost to run AA Intelligence Index (total); GPT-6 Luna (max) [gpt-6-luna]; exact source excerpt: \"intelligenceIndexCost\":{\"total\":122.38887234474213}"
+      },
+      "protocol": "Cost to run AA Intelligence Index (total); source configuration GPT-6 Luna (max) [gpt-6-luna]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (max) [gpt-6-luna]\",\"source_quote\":\"\\\"intelligenceIndexCost\\\":{\\\"total\\\":122.38887234474213}\",\"source_unit\":\"USD\",\"displayed_value\":122.39}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:e17e914af5c9a733018c23a7",
+      "benchmark_id": "aa-intelligence-index-cost-per-task::4.3.2",
+      "subject": {
+        "source_id": "6fb13851-40ce-4bda-ad3f-6b38e0c5daa7",
+        "name": "GPT-6 Luna (max) [gpt-6-luna]",
+        "model_id": "gpt-6-luna::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.06809498628701058,
+      "unit": "USD/task",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "Cost per AA Intelligence Index task; GPT-6 Luna (max) [gpt-6-luna]; exact source excerpt: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":0.06809498628701058}}"
+      },
+      "protocol": "Cost per AA Intelligence Index task; source configuration GPT-6 Luna (max) [gpt-6-luna]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (max) [gpt-6-luna]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":0.06809498628701058}}\",\"source_unit\":\"USD/task\",\"displayed_value\":0.0681}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:b61517226d5d28b6f93cc530",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "7d1229bc-deea-4717-ba5b-f59a35d991e3",
+        "name": "GPT-6 Luna (high) [gpt-6-luna-high]",
+        "model_id": "gpt-6-luna::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 1290.37,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "GDPval-AA v2.1; GPT-6 Luna (high) [gpt-6-luna-high]; exact source excerpt: \"gdpval\":1290.37 (page payload, model slug gpt-6-luna-high)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Luna (high) [gpt-6-luna-high]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (high) [gpt-6-luna-high]\",\"source_quote\":\"\\\"gdpval\\\":1290.37 (page payload, model slug gpt-6-luna-high)\",\"source_unit\":\"Elo\",\"displayed_value\":1290.37}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:b6c074e9f3cbe6c92d51919f",
+      "benchmark_id": "aa-terminal-bench::4.0-upstream-timeouts",
+      "subject": {
+        "source_id": "7d1229bc-deea-4717-ba5b-f59a35d991e3",
+        "name": "GPT-6 Luna (high) [gpt-6-luna-high]",
+        "model_id": "gpt-6-luna::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 0.0454545454545455,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "Terminal-Bench 4.0 (AA run); GPT-6 Luna (high) [gpt-6-luna-high]; exact source excerpt: \"terminalBench40\":0.0454545454545455 (page payload, model slug gpt-6-luna-high)"
+      },
+      "protocol": "Terminal-Bench 4.0 (AA run); source configuration GPT-6 Luna (high) [gpt-6-luna-high]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (high) [gpt-6-luna-high]\",\"source_quote\":\"\\\"terminalBench40\\\":0.0454545454545455 (page payload, model slug gpt-6-luna-high)\",\"source_unit\":\"%\",\"displayed_value\":4.55}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:5cf77225c52598e4141bb264",
+      "benchmark_id": "aa-scicode::1.0.1",
+      "subject": {
+        "source_id": "7d1229bc-deea-4717-ba5b-f59a35d991e3",
+        "name": "GPT-6 Luna (high) [gpt-6-luna-high]",
+        "model_id": "gpt-6-luna::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 0.503472222222222,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "SciCode (AA); GPT-6 Luna (high) [gpt-6-luna-high]; exact source excerpt: \"scicode\":0.503472222222222 (page payload, model slug gpt-6-luna-high)"
+      },
+      "protocol": "SciCode (AA); source configuration GPT-6 Luna (high) [gpt-6-luna-high]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (high) [gpt-6-luna-high]\",\"source_quote\":\"\\\"scicode\\\":0.503472222222222 (page payload, model slug gpt-6-luna-high)\",\"source_unit\":\"%\",\"displayed_value\":50.35}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:32a5876076fd9e0c9e8cd3d7",
+      "benchmark_id": "aa-hle::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "7d1229bc-deea-4717-ba5b-f59a35d991e3",
+        "name": "GPT-6 Luna (high) [gpt-6-luna-high]",
+        "model_id": "gpt-6-luna::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 0.329471733086191,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "Humanity's Last Exam (AA); GPT-6 Luna (high) [gpt-6-luna-high]; exact source excerpt: \"hle\":0.329471733086191 (page payload, model slug gpt-6-luna-high)"
+      },
+      "protocol": "Humanity's Last Exam (AA); source configuration GPT-6 Luna (high) [gpt-6-luna-high]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (high) [gpt-6-luna-high]\",\"source_quote\":\"\\\"hle\\\":0.329471733086191 (page payload, model slug gpt-6-luna-high)\",\"source_unit\":\"%\",\"displayed_value\":32.95}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:72641ab9527368d9e1510845",
+      "benchmark_id": "aa-critpt::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "7d1229bc-deea-4717-ba5b-f59a35d991e3",
+        "name": "GPT-6 Luna (high) [gpt-6-luna-high]",
+        "model_id": "gpt-6-luna::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 0.154285714285714,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "CritPt (AA); GPT-6 Luna (high) [gpt-6-luna-high]; exact source excerpt: \"critpt\":0.154285714285714 (page payload, model slug gpt-6-luna-high)"
+      },
+      "protocol": "CritPt (AA); source configuration GPT-6 Luna (high) [gpt-6-luna-high]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (high) [gpt-6-luna-high]\",\"source_quote\":\"\\\"critpt\\\":0.154285714285714 (page payload, model slug gpt-6-luna-high)\",\"source_unit\":\"%\",\"displayed_value\":15.43}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:a80e4dc7374c71d80674c33e",
+      "benchmark_id": "aa-lcr::1.1",
+      "subject": {
+        "source_id": "7d1229bc-deea-4717-ba5b-f59a35d991e3",
+        "name": "GPT-6 Luna (high) [gpt-6-luna-high]",
+        "model_id": "gpt-6-luna::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 0.793333333333333,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "AA-LCR v1.1; GPT-6 Luna (high) [gpt-6-luna-high]; exact source excerpt: \"lcr\":0.793333333333333 (page payload, model slug gpt-6-luna-high)"
+      },
+      "protocol": "AA-LCR v1.1; source configuration GPT-6 Luna (high) [gpt-6-luna-high]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (high) [gpt-6-luna-high]\",\"source_quote\":\"\\\"lcr\\\":0.793333333333333 (page payload, model slug gpt-6-luna-high)\",\"source_unit\":\"%\",\"displayed_value\":79.33}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:4f0e719f80724741d7031cdd",
+      "benchmark_id": "aa-omniscience::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "7d1229bc-deea-4717-ba5b-f59a35d991e3",
+        "name": "GPT-6 Luna (high) [gpt-6-luna-high]",
+        "model_id": "gpt-6-luna::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": -5.5,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "AA-Omniscience; GPT-6 Luna (high) [gpt-6-luna-high]; exact source excerpt: \"omniscience\":-5.5 (page payload, model slug gpt-6-luna-high)"
+      },
+      "protocol": "AA-Omniscience; source configuration GPT-6 Luna (high) [gpt-6-luna-high]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (high) [gpt-6-luna-high]\",\"source_quote\":\"\\\"omniscience\\\":-5.5 (page payload, model slug gpt-6-luna-high)\",\"source_unit\":\"index (-100..100)\",\"displayed_value\":-5.5}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:dbbeb0ee0b84861a78f3d663",
+      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
+      "subject": {
+        "source_id": "7d1229bc-deea-4717-ba5b-f59a35d991e3",
+        "name": "GPT-6 Luna (high) [gpt-6-luna-high]",
+        "model_id": "gpt-6-luna::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 0.138,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "GDP.pdf (all-pass); GPT-6 Luna (high) [gpt-6-luna-high]; exact source excerpt: \"gdpPdfAllPass\":0.138 (page payload, model slug gpt-6-luna-high)"
+      },
+      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Luna (high) [gpt-6-luna-high]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (high) [gpt-6-luna-high]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.138 (page payload, model slug gpt-6-luna-high)\",\"source_unit\":\"%\",\"displayed_value\":13.8}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:12032796337803a666d9fd3c",
+      "benchmark_id": "aa-automationbench::1.0.6",
+      "subject": {
+        "source_id": "7d1229bc-deea-4717-ba5b-f59a35d991e3",
+        "name": "GPT-6 Luna (high) [gpt-6-luna-high]",
+        "model_id": "gpt-6-luna::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 0.4782449139916615,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "AutomationBench-AA (partial score); GPT-6 Luna (high) [gpt-6-luna-high]; exact source excerpt: \"automationBenchPartialScore\":0.4782449139916615 (page payload, model slug gpt-6-luna-high)"
+      },
+      "protocol": "AutomationBench-AA (partial score); source configuration GPT-6 Luna (high) [gpt-6-luna-high]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (high) [gpt-6-luna-high]\",\"source_quote\":\"\\\"automationBenchPartialScore\\\":0.4782449139916615 (page payload, model slug gpt-6-luna-high)\",\"source_unit\":\"%\",\"displayed_value\":47.82}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:6132eb834a8627a4da2dbcde",
+      "benchmark_id": "aa-mmmu-pro::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "7d1229bc-deea-4717-ba5b-f59a35d991e3",
+        "name": "GPT-6 Luna (high) [gpt-6-luna-high]",
+        "model_id": "gpt-6-luna::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 0.74393063583815,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "MMMU-Pro (AA); GPT-6 Luna (high) [gpt-6-luna-high]; exact source excerpt: \"mmmuPro\":0.74393063583815 (page payload, model slug gpt-6-luna-high)"
+      },
+      "protocol": "MMMU-Pro (AA); source configuration GPT-6 Luna (high) [gpt-6-luna-high]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (high) [gpt-6-luna-high]\",\"source_quote\":\"\\\"mmmuPro\\\":0.74393063583815 (page payload, model slug gpt-6-luna-high)\",\"source_unit\":\"%\",\"displayed_value\":74.39}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:2eb22afbe8e4e45d4079893c",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "7d1229bc-deea-4717-ba5b-f59a35d991e3",
+        "name": "GPT-6 Luna (high) [gpt-6-luna-high]",
+        "model_id": "gpt-6-luna::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 1176.49,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "AA-Briefcase v1.1; GPT-6 Luna (high) [gpt-6-luna-high]; exact source excerpt: {\"slug\":\"aa-briefcase\",\"score\":1176.49}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Luna (high) [gpt-6-luna-high]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (high) [gpt-6-luna-high]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1176.49}\",\"source_unit\":\"Elo\",\"displayed_value\":1176.49}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:2d4f8bf0df53e8b1dbe4b1c7",
+      "benchmark_id": "aa-intelligence-index-cost::4.3.2",
+      "subject": {
+        "source_id": "7d1229bc-deea-4717-ba5b-f59a35d991e3",
+        "name": "GPT-6 Luna (high) [gpt-6-luna-high]",
+        "model_id": "gpt-6-luna::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 47.64405609667092,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "Cost to run AA Intelligence Index (total); GPT-6 Luna (high) [gpt-6-luna-high]; exact source excerpt: \"intelligenceIndexCost\":{\"total\":47.64405609667092}"
+      },
+      "protocol": "Cost to run AA Intelligence Index (total); source configuration GPT-6 Luna (high) [gpt-6-luna-high]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (high) [gpt-6-luna-high]\",\"source_quote\":\"\\\"intelligenceIndexCost\\\":{\\\"total\\\":47.64405609667092}\",\"source_unit\":\"USD\",\"displayed_value\":47.64}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:b401c3f426c195542f8197cc",
+      "benchmark_id": "aa-intelligence-index-cost-per-task::4.3.2",
+      "subject": {
+        "source_id": "7d1229bc-deea-4717-ba5b-f59a35d991e3",
+        "name": "GPT-6 Luna (high) [gpt-6-luna-high]",
+        "model_id": "gpt-6-luna::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 0.02861964876935845,
+      "unit": "USD/task",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "Cost per AA Intelligence Index task; GPT-6 Luna (high) [gpt-6-luna-high]; exact source excerpt: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":0.02861964876935845}}"
+      },
+      "protocol": "Cost per AA Intelligence Index task; source configuration GPT-6 Luna (high) [gpt-6-luna-high]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (high) [gpt-6-luna-high]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":0.02861964876935845}}\",\"source_unit\":\"USD/task\",\"displayed_value\":0.0286}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:e3442f8df615bc028cb1c0e0",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "bf9708d8-933d-44f6-affa-b696a7a650c9",
+        "name": "GPT-6 Luna (low) [gpt-6-luna-low]",
+        "model_id": "gpt-6-luna::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 992.26,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "GDPval-AA v2.1; GPT-6 Luna (low) [gpt-6-luna-low]; exact source excerpt: \"gdpval\":992.26 (page payload, model slug gpt-6-luna-low)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Luna (low) [gpt-6-luna-low]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (low) [gpt-6-luna-low]\",\"source_quote\":\"\\\"gdpval\\\":992.26 (page payload, model slug gpt-6-luna-low)\",\"source_unit\":\"Elo\",\"displayed_value\":992.26}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:a6aa44083e06e5d0b4f718fc",
+      "benchmark_id": "aa-terminal-bench::4.0-upstream-timeouts",
+      "subject": {
+        "source_id": "bf9708d8-933d-44f6-affa-b696a7a650c9",
+        "name": "GPT-6 Luna (low) [gpt-6-luna-low]",
+        "model_id": "gpt-6-luna::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 0,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "Terminal-Bench 4.0 (AA run); GPT-6 Luna (low) [gpt-6-luna-low]; exact source excerpt: \"terminalBench40\":0 (page payload, model slug gpt-6-luna-low)"
+      },
+      "protocol": "Terminal-Bench 4.0 (AA run); source configuration GPT-6 Luna (low) [gpt-6-luna-low]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (low) [gpt-6-luna-low]\",\"source_quote\":\"\\\"terminalBench40\\\":0 (page payload, model slug gpt-6-luna-low)\",\"source_unit\":\"%\",\"displayed_value\":0}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:e4825aaaa697cf3592a763c7",
+      "benchmark_id": "aa-scicode::1.0.1",
+      "subject": {
+        "source_id": "bf9708d8-933d-44f6-affa-b696a7a650c9",
+        "name": "GPT-6 Luna (low) [gpt-6-luna-low]",
+        "model_id": "gpt-6-luna::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 0.46875,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "SciCode (AA); GPT-6 Luna (low) [gpt-6-luna-low]; exact source excerpt: \"scicode\":0.46875 (page payload, model slug gpt-6-luna-low)"
+      },
+      "protocol": "SciCode (AA); source configuration GPT-6 Luna (low) [gpt-6-luna-low]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (low) [gpt-6-luna-low]\",\"source_quote\":\"\\\"scicode\\\":0.46875 (page payload, model slug gpt-6-luna-low)\",\"source_unit\":\"%\",\"displayed_value\":46.88}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:4fe0c2175a0aad19723e45dc",
+      "benchmark_id": "aa-hle::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "bf9708d8-933d-44f6-affa-b696a7a650c9",
+        "name": "GPT-6 Luna (low) [gpt-6-luna-low]",
+        "model_id": "gpt-6-luna::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 0.202502316960148,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "Humanity's Last Exam (AA); GPT-6 Luna (low) [gpt-6-luna-low]; exact source excerpt: \"hle\":0.202502316960148 (page payload, model slug gpt-6-luna-low)"
+      },
+      "protocol": "Humanity's Last Exam (AA); source configuration GPT-6 Luna (low) [gpt-6-luna-low]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (low) [gpt-6-luna-low]\",\"source_quote\":\"\\\"hle\\\":0.202502316960148 (page payload, model slug gpt-6-luna-low)\",\"source_unit\":\"%\",\"displayed_value\":20.25}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:2e44c646560a80085354266c",
+      "benchmark_id": "aa-critpt::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "bf9708d8-933d-44f6-affa-b696a7a650c9",
+        "name": "GPT-6 Luna (low) [gpt-6-luna-low]",
+        "model_id": "gpt-6-luna::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 0.0257142857142857,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "CritPt (AA); GPT-6 Luna (low) [gpt-6-luna-low]; exact source excerpt: \"critpt\":0.0257142857142857 (page payload, model slug gpt-6-luna-low)"
+      },
+      "protocol": "CritPt (AA); source configuration GPT-6 Luna (low) [gpt-6-luna-low]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (low) [gpt-6-luna-low]\",\"source_quote\":\"\\\"critpt\\\":0.0257142857142857 (page payload, model slug gpt-6-luna-low)\",\"source_unit\":\"%\",\"displayed_value\":2.57}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:a2b96a8102f1827a28f56cf6",
+      "benchmark_id": "aa-lcr::1.1",
+      "subject": {
+        "source_id": "bf9708d8-933d-44f6-affa-b696a7a650c9",
+        "name": "GPT-6 Luna (low) [gpt-6-luna-low]",
+        "model_id": "gpt-6-luna::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 0.74,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "AA-LCR v1.1; GPT-6 Luna (low) [gpt-6-luna-low]; exact source excerpt: \"lcr\":0.74 (page payload, model slug gpt-6-luna-low)"
+      },
+      "protocol": "AA-LCR v1.1; source configuration GPT-6 Luna (low) [gpt-6-luna-low]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (low) [gpt-6-luna-low]\",\"source_quote\":\"\\\"lcr\\\":0.74 (page payload, model slug gpt-6-luna-low)\",\"source_unit\":\"%\",\"displayed_value\":74}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:0ffceed20fa3a2d832a72e1d",
+      "benchmark_id": "aa-omniscience::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "bf9708d8-933d-44f6-affa-b696a7a650c9",
+        "name": "GPT-6 Luna (low) [gpt-6-luna-low]",
+        "model_id": "gpt-6-luna::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": -9.166666666666666,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "AA-Omniscience; GPT-6 Luna (low) [gpt-6-luna-low]; exact source excerpt: \"omniscience\":-9.166666666666666 (page payload, model slug gpt-6-luna-low)"
+      },
+      "protocol": "AA-Omniscience; source configuration GPT-6 Luna (low) [gpt-6-luna-low]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (low) [gpt-6-luna-low]\",\"source_quote\":\"\\\"omniscience\\\":-9.166666666666666 (page payload, model slug gpt-6-luna-low)\",\"source_unit\":\"index (-100..100)\",\"displayed_value\":-9.17}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:e852edfa54398a57334d8252",
+      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
+      "subject": {
+        "source_id": "bf9708d8-933d-44f6-affa-b696a7a650c9",
+        "name": "GPT-6 Luna (low) [gpt-6-luna-low]",
+        "model_id": "gpt-6-luna::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 0.064,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "GDP.pdf (all-pass); GPT-6 Luna (low) [gpt-6-luna-low]; exact source excerpt: \"gdpPdfAllPass\":0.064 (page payload, model slug gpt-6-luna-low)"
+      },
+      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Luna (low) [gpt-6-luna-low]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (low) [gpt-6-luna-low]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.064 (page payload, model slug gpt-6-luna-low)\",\"source_unit\":\"%\",\"displayed_value\":6.4}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:06652f1a2ec640d25fe4d3bf",
+      "benchmark_id": "aa-automationbench::1.0.6",
+      "subject": {
+        "source_id": "bf9708d8-933d-44f6-affa-b696a7a650c9",
+        "name": "GPT-6 Luna (low) [gpt-6-luna-low]",
+        "model_id": "gpt-6-luna::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 0.12049187272690505,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "AutomationBench-AA (partial score); GPT-6 Luna (low) [gpt-6-luna-low]; exact source excerpt: \"automationBenchPartialScore\":0.12049187272690505 (page payload, model slug gpt-6-luna-low)"
+      },
+      "protocol": "AutomationBench-AA (partial score); source configuration GPT-6 Luna (low) [gpt-6-luna-low]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (low) [gpt-6-luna-low]\",\"source_quote\":\"\\\"automationBenchPartialScore\\\":0.12049187272690505 (page payload, model slug gpt-6-luna-low)\",\"source_unit\":\"%\",\"displayed_value\":12.05}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:3c1803d5e9e393635b506367",
+      "benchmark_id": "aa-mmmu-pro::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "bf9708d8-933d-44f6-affa-b696a7a650c9",
+        "name": "GPT-6 Luna (low) [gpt-6-luna-low]",
+        "model_id": "gpt-6-luna::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 0.703468208092486,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "MMMU-Pro (AA); GPT-6 Luna (low) [gpt-6-luna-low]; exact source excerpt: \"mmmuPro\":0.703468208092486 (page payload, model slug gpt-6-luna-low)"
+      },
+      "protocol": "MMMU-Pro (AA); source configuration GPT-6 Luna (low) [gpt-6-luna-low]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (low) [gpt-6-luna-low]\",\"source_quote\":\"\\\"mmmuPro\\\":0.703468208092486 (page payload, model slug gpt-6-luna-low)\",\"source_unit\":\"%\",\"displayed_value\":70.35}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:d6f776518458e3a1245b2720",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "bf9708d8-933d-44f6-affa-b696a7a650c9",
+        "name": "GPT-6 Luna (low) [gpt-6-luna-low]",
+        "model_id": "gpt-6-luna::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 724.99,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "AA-Briefcase v1.1; GPT-6 Luna (low) [gpt-6-luna-low]; exact source excerpt: {\"slug\":\"aa-briefcase\",\"score\":724.99}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Luna (low) [gpt-6-luna-low]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (low) [gpt-6-luna-low]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":724.99}\",\"source_unit\":\"Elo\",\"displayed_value\":724.99}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:30a6e5fc16945499ea555ab4",
+      "benchmark_id": "aa-intelligence-index-cost::4.3.2",
+      "subject": {
+        "source_id": "bf9708d8-933d-44f6-affa-b696a7a650c9",
+        "name": "GPT-6 Luna (low) [gpt-6-luna-low]",
+        "model_id": "gpt-6-luna::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 10.62059085074317,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "Cost to run AA Intelligence Index (total); GPT-6 Luna (low) [gpt-6-luna-low]; exact source excerpt: \"intelligenceIndexCost\":{\"total\":10.62059085074317}"
+      },
+      "protocol": "Cost to run AA Intelligence Index (total); source configuration GPT-6 Luna (low) [gpt-6-luna-low]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (low) [gpt-6-luna-low]\",\"source_quote\":\"\\\"intelligenceIndexCost\\\":{\\\"total\\\":10.62059085074317}\",\"source_unit\":\"USD\",\"displayed_value\":10.62}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:a3db7ca590dbc2accedcfb02",
+      "benchmark_id": "aa-intelligence-index-cost-per-task::4.3.2",
+      "subject": {
+        "source_id": "bf9708d8-933d-44f6-affa-b696a7a650c9",
+        "name": "GPT-6 Luna (low) [gpt-6-luna-low]",
+        "model_id": "gpt-6-luna::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 0.004483809259539013,
+      "unit": "USD/task",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "Cost per AA Intelligence Index task; GPT-6 Luna (low) [gpt-6-luna-low]; exact source excerpt: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":0.004483809259539013}}"
+      },
+      "protocol": "Cost per AA Intelligence Index task; source configuration GPT-6 Luna (low) [gpt-6-luna-low]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (low) [gpt-6-luna-low]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":0.004483809259539013}}\",\"source_unit\":\"USD/task\",\"displayed_value\":0.0045}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:d27199aa1dc15f7c5fc7cdfa",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "36667da0-9222-4967-adbb-f7efa15ad213",
+        "name": "GPT-6 Luna (medium) [gpt-6-luna-medium]",
+        "model_id": "gpt-6-luna::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 1218.31,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "GDPval-AA v2.1; GPT-6 Luna (medium) [gpt-6-luna-medium]; exact source excerpt: \"gdpval\":1218.31 (page payload, model slug gpt-6-luna-medium)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Luna (medium) [gpt-6-luna-medium]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (medium) [gpt-6-luna-medium]\",\"source_quote\":\"\\\"gdpval\\\":1218.31 (page payload, model slug gpt-6-luna-medium)\",\"source_unit\":\"Elo\",\"displayed_value\":1218.31}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:e5ea465eb7b1913ba15372aa",
+      "benchmark_id": "aa-terminal-bench::4.0-upstream-timeouts",
+      "subject": {
+        "source_id": "36667da0-9222-4967-adbb-f7efa15ad213",
+        "name": "GPT-6 Luna (medium) [gpt-6-luna-medium]",
+        "model_id": "gpt-6-luna::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 0.0252525252525253,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "Terminal-Bench 4.0 (AA run); GPT-6 Luna (medium) [gpt-6-luna-medium]; exact source excerpt: \"terminalBench40\":0.0252525252525253 (page payload, model slug gpt-6-luna-medium)"
+      },
+      "protocol": "Terminal-Bench 4.0 (AA run); source configuration GPT-6 Luna (medium) [gpt-6-luna-medium]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (medium) [gpt-6-luna-medium]\",\"source_quote\":\"\\\"terminalBench40\\\":0.0252525252525253 (page payload, model slug gpt-6-luna-medium)\",\"source_unit\":\"%\",\"displayed_value\":2.53}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:fcfb73cf80a5ff824d0f44cc",
+      "benchmark_id": "aa-scicode::1.0.1",
+      "subject": {
+        "source_id": "36667da0-9222-4967-adbb-f7efa15ad213",
+        "name": "GPT-6 Luna (medium) [gpt-6-luna-medium]",
+        "model_id": "gpt-6-luna::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 0.509259259259259,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "SciCode (AA); GPT-6 Luna (medium) [gpt-6-luna-medium]; exact source excerpt: \"scicode\":0.509259259259259 (page payload, model slug gpt-6-luna-medium)"
+      },
+      "protocol": "SciCode (AA); source configuration GPT-6 Luna (medium) [gpt-6-luna-medium]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (medium) [gpt-6-luna-medium]\",\"source_quote\":\"\\\"scicode\\\":0.509259259259259 (page payload, model slug gpt-6-luna-medium)\",\"source_unit\":\"%\",\"displayed_value\":50.93}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:01f0b0ee99352f710f8db485",
+      "benchmark_id": "aa-hle::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "36667da0-9222-4967-adbb-f7efa15ad213",
+        "name": "GPT-6 Luna (medium) [gpt-6-luna-medium]",
+        "model_id": "gpt-6-luna::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 0.282669138090825,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "Humanity's Last Exam (AA); GPT-6 Luna (medium) [gpt-6-luna-medium]; exact source excerpt: \"hle\":0.282669138090825 (page payload, model slug gpt-6-luna-medium)"
+      },
+      "protocol": "Humanity's Last Exam (AA); source configuration GPT-6 Luna (medium) [gpt-6-luna-medium]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (medium) [gpt-6-luna-medium]\",\"source_quote\":\"\\\"hle\\\":0.282669138090825 (page payload, model slug gpt-6-luna-medium)\",\"source_unit\":\"%\",\"displayed_value\":28.27}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:73030040427e5850d42f096f",
+      "benchmark_id": "aa-critpt::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "36667da0-9222-4967-adbb-f7efa15ad213",
+        "name": "GPT-6 Luna (medium) [gpt-6-luna-medium]",
+        "model_id": "gpt-6-luna::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 0.105714285714286,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "CritPt (AA); GPT-6 Luna (medium) [gpt-6-luna-medium]; exact source excerpt: \"critpt\":0.105714285714286 (page payload, model slug gpt-6-luna-medium)"
+      },
+      "protocol": "CritPt (AA); source configuration GPT-6 Luna (medium) [gpt-6-luna-medium]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (medium) [gpt-6-luna-medium]\",\"source_quote\":\"\\\"critpt\\\":0.105714285714286 (page payload, model slug gpt-6-luna-medium)\",\"source_unit\":\"%\",\"displayed_value\":10.57}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:e00ccb08d39313554211ee2e",
+      "benchmark_id": "aa-lcr::1.1",
+      "subject": {
+        "source_id": "36667da0-9222-4967-adbb-f7efa15ad213",
+        "name": "GPT-6 Luna (medium) [gpt-6-luna-medium]",
+        "model_id": "gpt-6-luna::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 0.783333333333333,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "AA-LCR v1.1; GPT-6 Luna (medium) [gpt-6-luna-medium]; exact source excerpt: \"lcr\":0.783333333333333 (page payload, model slug gpt-6-luna-medium)"
+      },
+      "protocol": "AA-LCR v1.1; source configuration GPT-6 Luna (medium) [gpt-6-luna-medium]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (medium) [gpt-6-luna-medium]\",\"source_quote\":\"\\\"lcr\\\":0.783333333333333 (page payload, model slug gpt-6-luna-medium)\",\"source_unit\":\"%\",\"displayed_value\":78.33}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:056b5ebc3122efe4159ee2f5",
+      "benchmark_id": "aa-omniscience::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "36667da0-9222-4967-adbb-f7efa15ad213",
+        "name": "GPT-6 Luna (medium) [gpt-6-luna-medium]",
+        "model_id": "gpt-6-luna::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": -5.05,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "AA-Omniscience; GPT-6 Luna (medium) [gpt-6-luna-medium]; exact source excerpt: \"omniscience\":-5.05 (page payload, model slug gpt-6-luna-medium)"
+      },
+      "protocol": "AA-Omniscience; source configuration GPT-6 Luna (medium) [gpt-6-luna-medium]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (medium) [gpt-6-luna-medium]\",\"source_quote\":\"\\\"omniscience\\\":-5.05 (page payload, model slug gpt-6-luna-medium)\",\"source_unit\":\"index (-100..100)\",\"displayed_value\":-5.05}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:2a9adc7ea8da1f8576042d3c",
+      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
+      "subject": {
+        "source_id": "36667da0-9222-4967-adbb-f7efa15ad213",
+        "name": "GPT-6 Luna (medium) [gpt-6-luna-medium]",
+        "model_id": "gpt-6-luna::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 0.14,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "GDP.pdf (all-pass); GPT-6 Luna (medium) [gpt-6-luna-medium]; exact source excerpt: \"gdpPdfAllPass\":0.14 (page payload, model slug gpt-6-luna-medium)"
+      },
+      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Luna (medium) [gpt-6-luna-medium]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (medium) [gpt-6-luna-medium]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.14 (page payload, model slug gpt-6-luna-medium)\",\"source_unit\":\"%\",\"displayed_value\":14}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:b576b03bf5034d30fa8c8f3b",
+      "benchmark_id": "aa-automationbench::1.0.6",
+      "subject": {
+        "source_id": "36667da0-9222-4967-adbb-f7efa15ad213",
+        "name": "GPT-6 Luna (medium) [gpt-6-luna-medium]",
+        "model_id": "gpt-6-luna::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 0.4046136879135791,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "AutomationBench-AA (partial score); GPT-6 Luna (medium) [gpt-6-luna-medium]; exact source excerpt: \"automationBenchPartialScore\":0.4046136879135791 (page payload, model slug gpt-6-luna-medium)"
+      },
+      "protocol": "AutomationBench-AA (partial score); source configuration GPT-6 Luna (medium) [gpt-6-luna-medium]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (medium) [gpt-6-luna-medium]\",\"source_quote\":\"\\\"automationBenchPartialScore\\\":0.4046136879135791 (page payload, model slug gpt-6-luna-medium)\",\"source_unit\":\"%\",\"displayed_value\":40.46}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:c85882845d67bc5cf447e737",
+      "benchmark_id": "aa-mmmu-pro::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "36667da0-9222-4967-adbb-f7efa15ad213",
+        "name": "GPT-6 Luna (medium) [gpt-6-luna-medium]",
+        "model_id": "gpt-6-luna::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 0.730057803468208,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "MMMU-Pro (AA); GPT-6 Luna (medium) [gpt-6-luna-medium]; exact source excerpt: \"mmmuPro\":0.730057803468208 (page payload, model slug gpt-6-luna-medium)"
+      },
+      "protocol": "MMMU-Pro (AA); source configuration GPT-6 Luna (medium) [gpt-6-luna-medium]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (medium) [gpt-6-luna-medium]\",\"source_quote\":\"\\\"mmmuPro\\\":0.730057803468208 (page payload, model slug gpt-6-luna-medium)\",\"source_unit\":\"%\",\"displayed_value\":73.01}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:4dbbb4a4a4e53bf8bb76d080",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "36667da0-9222-4967-adbb-f7efa15ad213",
+        "name": "GPT-6 Luna (medium) [gpt-6-luna-medium]",
+        "model_id": "gpt-6-luna::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 1063.32,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "AA-Briefcase v1.1; GPT-6 Luna (medium) [gpt-6-luna-medium]; exact source excerpt: {\"slug\":\"aa-briefcase\",\"score\":1063.32}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Luna (medium) [gpt-6-luna-medium]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (medium) [gpt-6-luna-medium]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1063.32}\",\"source_unit\":\"Elo\",\"displayed_value\":1063.32}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:55a6c4e0311df70c835e0629",
+      "benchmark_id": "aa-intelligence-index-cost::4.3.2",
+      "subject": {
+        "source_id": "36667da0-9222-4967-adbb-f7efa15ad213",
+        "name": "GPT-6 Luna (medium) [gpt-6-luna-medium]",
+        "model_id": "gpt-6-luna::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 31.161297561474555,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "Cost to run AA Intelligence Index (total); GPT-6 Luna (medium) [gpt-6-luna-medium]; exact source excerpt: \"intelligenceIndexCost\":{\"total\":31.161297561474555}"
+      },
+      "protocol": "Cost to run AA Intelligence Index (total); source configuration GPT-6 Luna (medium) [gpt-6-luna-medium]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (medium) [gpt-6-luna-medium]\",\"source_quote\":\"\\\"intelligenceIndexCost\\\":{\\\"total\\\":31.161297561474555}\",\"source_unit\":\"USD\",\"displayed_value\":31.16}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:f12015936fbd17e9a955d190",
+      "benchmark_id": "aa-intelligence-index-cost-per-task::4.3.2",
+      "subject": {
+        "source_id": "36667da0-9222-4967-adbb-f7efa15ad213",
+        "name": "GPT-6 Luna (medium) [gpt-6-luna-medium]",
+        "model_id": "gpt-6-luna::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 0.01725359419426588,
+      "unit": "USD/task",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "Cost per AA Intelligence Index task; GPT-6 Luna (medium) [gpt-6-luna-medium]; exact source excerpt: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":0.01725359419426588}}"
+      },
+      "protocol": "Cost per AA Intelligence Index task; source configuration GPT-6 Luna (medium) [gpt-6-luna-medium]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (medium) [gpt-6-luna-medium]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":0.01725359419426588}}\",\"source_unit\":\"USD/task\",\"displayed_value\":0.0173}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:0888f233a1d5602623b90960",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "63cb48ea-0b0c-4e07-8ded-6d28dec4fa28",
+        "name": "GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]",
+        "model_id": "gpt-6-luna::non-reasoning",
+        "variant": "non-reasoning",
+        "harness": null
+      },
+      "value": 1034.03,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "GDPval-AA v2.1; GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; exact source excerpt: \"gdpval\":1034.03 (page payload, model slug gpt-6-luna-non-reasoning)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]\",\"source_quote\":\"\\\"gdpval\\\":1034.03 (page payload, model slug gpt-6-luna-non-reasoning)\",\"source_unit\":\"Elo\",\"displayed_value\":1034.03}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:19634be45554053343e82f75",
+      "benchmark_id": "aa-terminal-bench::4.0-upstream-timeouts",
+      "subject": {
+        "source_id": "63cb48ea-0b0c-4e07-8ded-6d28dec4fa28",
+        "name": "GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]",
+        "model_id": "gpt-6-luna::non-reasoning",
+        "variant": "non-reasoning",
+        "harness": null
+      },
+      "value": 0.0151515151515152,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "Terminal-Bench 4.0 (AA run); GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; exact source excerpt: \"terminalBench40\":0.0151515151515152 (page payload, model slug gpt-6-luna-non-reasoning)"
+      },
+      "protocol": "Terminal-Bench 4.0 (AA run); source configuration GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]\",\"source_quote\":\"\\\"terminalBench40\\\":0.0151515151515152 (page payload, model slug gpt-6-luna-non-reasoning)\",\"source_unit\":\"%\",\"displayed_value\":1.52}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:80b9e979b11af6038dad4576",
+      "benchmark_id": "aa-scicode::1.0.1",
+      "subject": {
+        "source_id": "63cb48ea-0b0c-4e07-8ded-6d28dec4fa28",
+        "name": "GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]",
+        "model_id": "gpt-6-luna::non-reasoning",
+        "variant": "non-reasoning",
+        "harness": null
+      },
+      "value": 0.430555555555556,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "SciCode (AA); GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; exact source excerpt: \"scicode\":0.430555555555556 (page payload, model slug gpt-6-luna-non-reasoning)"
+      },
+      "protocol": "SciCode (AA); source configuration GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]\",\"source_quote\":\"\\\"scicode\\\":0.430555555555556 (page payload, model slug gpt-6-luna-non-reasoning)\",\"source_unit\":\"%\",\"displayed_value\":43.06}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:898efc2c4e019fd3b0658216",
+      "benchmark_id": "aa-hle::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "63cb48ea-0b0c-4e07-8ded-6d28dec4fa28",
+        "name": "GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]",
+        "model_id": "gpt-6-luna::non-reasoning",
+        "variant": "non-reasoning",
+        "harness": null
+      },
+      "value": 0.0857275254865616,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "Humanity's Last Exam (AA); GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; exact source excerpt: \"hle\":0.0857275254865616 (page payload, model slug gpt-6-luna-non-reasoning)"
+      },
+      "protocol": "Humanity's Last Exam (AA); source configuration GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]\",\"source_quote\":\"\\\"hle\\\":0.0857275254865616 (page payload, model slug gpt-6-luna-non-reasoning)\",\"source_unit\":\"%\",\"displayed_value\":8.57}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:e704ee59e3caff4b66e159b0",
+      "benchmark_id": "aa-critpt::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "63cb48ea-0b0c-4e07-8ded-6d28dec4fa28",
+        "name": "GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]",
+        "model_id": "gpt-6-luna::non-reasoning",
+        "variant": "non-reasoning",
+        "harness": null
+      },
+      "value": 0.0114285714285714,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "CritPt (AA); GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; exact source excerpt: \"critpt\":0.0114285714285714 (page payload, model slug gpt-6-luna-non-reasoning)"
+      },
+      "protocol": "CritPt (AA); source configuration GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]\",\"source_quote\":\"\\\"critpt\\\":0.0114285714285714 (page payload, model slug gpt-6-luna-non-reasoning)\",\"source_unit\":\"%\",\"displayed_value\":1.14}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:249fb97e9da9cffc93657e6b",
+      "benchmark_id": "aa-lcr::1.1",
+      "subject": {
+        "source_id": "63cb48ea-0b0c-4e07-8ded-6d28dec4fa28",
+        "name": "GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]",
+        "model_id": "gpt-6-luna::non-reasoning",
+        "variant": "non-reasoning",
+        "harness": null
+      },
+      "value": 0.396666666666667,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "AA-LCR v1.1; GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; exact source excerpt: \"lcr\":0.396666666666667 (page payload, model slug gpt-6-luna-non-reasoning)"
+      },
+      "protocol": "AA-LCR v1.1; source configuration GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]\",\"source_quote\":\"\\\"lcr\\\":0.396666666666667 (page payload, model slug gpt-6-luna-non-reasoning)\",\"source_unit\":\"%\",\"displayed_value\":39.67}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:b6e98ffcc8aff84ca59d9188",
+      "benchmark_id": "aa-omniscience::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "63cb48ea-0b0c-4e07-8ded-6d28dec4fa28",
+        "name": "GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]",
+        "model_id": "gpt-6-luna::non-reasoning",
+        "variant": "non-reasoning",
+        "harness": null
+      },
+      "value": -21.9,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "AA-Omniscience; GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; exact source excerpt: \"omniscience\":-21.9 (page payload, model slug gpt-6-luna-non-reasoning)"
+      },
+      "protocol": "AA-Omniscience; source configuration GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]\",\"source_quote\":\"\\\"omniscience\\\":-21.9 (page payload, model slug gpt-6-luna-non-reasoning)\",\"source_unit\":\"index (-100..100)\",\"displayed_value\":-21.9}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:de3b38e6ceffb3479ec740b4",
+      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
+      "subject": {
+        "source_id": "63cb48ea-0b0c-4e07-8ded-6d28dec4fa28",
+        "name": "GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]",
+        "model_id": "gpt-6-luna::non-reasoning",
+        "variant": "non-reasoning",
+        "harness": null
+      },
+      "value": 0.054,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "GDP.pdf (all-pass); GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; exact source excerpt: \"gdpPdfAllPass\":0.054 (page payload, model slug gpt-6-luna-non-reasoning)"
+      },
+      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.054 (page payload, model slug gpt-6-luna-non-reasoning)\",\"source_unit\":\"%\",\"displayed_value\":5.4}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:929fca1f50055436dbc1b30f",
+      "benchmark_id": "aa-automationbench::1.0.6",
+      "subject": {
+        "source_id": "63cb48ea-0b0c-4e07-8ded-6d28dec4fa28",
+        "name": "GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]",
+        "model_id": "gpt-6-luna::non-reasoning",
+        "variant": "non-reasoning",
+        "harness": null
+      },
+      "value": 0.09141771078680867,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "AutomationBench-AA (partial score); GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; exact source excerpt: \"automationBenchPartialScore\":0.09141771078680867 (page payload, model slug gpt-6-luna-non-reasoning)"
+      },
+      "protocol": "AutomationBench-AA (partial score); source configuration GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]\",\"source_quote\":\"\\\"automationBenchPartialScore\\\":0.09141771078680867 (page payload, model slug gpt-6-luna-non-reasoning)\",\"source_unit\":\"%\",\"displayed_value\":9.14}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:0bbd988c75317ebd6233ded7",
+      "benchmark_id": "aa-mmmu-pro::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "63cb48ea-0b0c-4e07-8ded-6d28dec4fa28",
+        "name": "GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]",
+        "model_id": "gpt-6-luna::non-reasoning",
+        "variant": "non-reasoning",
+        "harness": null
+      },
+      "value": 0.532369942196532,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "MMMU-Pro (AA); GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; exact source excerpt: \"mmmuPro\":0.532369942196532 (page payload, model slug gpt-6-luna-non-reasoning)"
+      },
+      "protocol": "MMMU-Pro (AA); source configuration GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]\",\"source_quote\":\"\\\"mmmuPro\\\":0.532369942196532 (page payload, model slug gpt-6-luna-non-reasoning)\",\"source_unit\":\"%\",\"displayed_value\":53.24}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:221a7698a0b56671ab45d2f6",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "63cb48ea-0b0c-4e07-8ded-6d28dec4fa28",
+        "name": "GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]",
+        "model_id": "gpt-6-luna::non-reasoning",
+        "variant": "non-reasoning",
+        "harness": null
+      },
+      "value": 892.14,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "AA-Briefcase v1.1; GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; exact source excerpt: {\"slug\":\"aa-briefcase\",\"score\":892.14}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":892.14}\",\"source_unit\":\"Elo\",\"displayed_value\":892.14}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:89cf7d417e1a1a24317fc821",
+      "benchmark_id": "aa-intelligence-index-cost::4.3.2",
+      "subject": {
+        "source_id": "63cb48ea-0b0c-4e07-8ded-6d28dec4fa28",
+        "name": "GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]",
+        "model_id": "gpt-6-luna::non-reasoning",
+        "variant": "non-reasoning",
+        "harness": null
+      },
+      "value": 19.22646990457973,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "Cost to run AA Intelligence Index (total); GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; exact source excerpt: \"intelligenceIndexCost\":{\"total\":19.22646990457973}"
+      },
+      "protocol": "Cost to run AA Intelligence Index (total); source configuration GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]\",\"source_quote\":\"\\\"intelligenceIndexCost\\\":{\\\"total\\\":19.22646990457973}\",\"source_unit\":\"USD\",\"displayed_value\":19.23}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:dba24f3d04291fba7575e3aa",
+      "benchmark_id": "aa-intelligence-index-cost-per-task::4.3.2",
+      "subject": {
+        "source_id": "63cb48ea-0b0c-4e07-8ded-6d28dec4fa28",
+        "name": "GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]",
+        "model_id": "gpt-6-luna::non-reasoning",
+        "variant": "non-reasoning",
+        "harness": null
+      },
+      "value": 0.01112449676670144,
+      "unit": "USD/task",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "Cost per AA Intelligence Index task; GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; exact source excerpt: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":0.01112449676670144}}"
+      },
+      "protocol": "Cost per AA Intelligence Index task; source configuration GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (Non-reasoning) [gpt-6-luna-non-reasoning]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":0.01112449676670144}}\",\"source_unit\":\"USD/task\",\"displayed_value\":0.0111}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:db5fcd5003fc405df18f48e5",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "19813eb2-460a-475c-af65-810bb8660fec",
+        "name": "GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]",
+        "model_id": "gpt-6-luna::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 1296.78,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "GDPval-AA v2.1; GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; exact source excerpt: \"gdpval\":1296.78 (page payload, model slug gpt-6-luna-xhigh)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]\",\"source_quote\":\"\\\"gdpval\\\":1296.78 (page payload, model slug gpt-6-luna-xhigh)\",\"source_unit\":\"Elo\",\"displayed_value\":1296.78}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:80e3fca3f72cb4b9fa82936e",
+      "benchmark_id": "aa-terminal-bench::4.0-upstream-timeouts",
+      "subject": {
+        "source_id": "19813eb2-460a-475c-af65-810bb8660fec",
+        "name": "GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]",
+        "model_id": "gpt-6-luna::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 0.0808080808080808,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "Terminal-Bench 4.0 (AA run); GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; exact source excerpt: \"terminalBench40\":0.0808080808080808 (page payload, model slug gpt-6-luna-xhigh)"
+      },
+      "protocol": "Terminal-Bench 4.0 (AA run); source configuration GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]\",\"source_quote\":\"\\\"terminalBench40\\\":0.0808080808080808 (page payload, model slug gpt-6-luna-xhigh)\",\"source_unit\":\"%\",\"displayed_value\":8.08}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:bc345a34067c1da4054bae7b",
+      "benchmark_id": "aa-scicode::1.0.1",
+      "subject": {
+        "source_id": "19813eb2-460a-475c-af65-810bb8660fec",
+        "name": "GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]",
+        "model_id": "gpt-6-luna::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 0.517361111111111,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "SciCode (AA); GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; exact source excerpt: \"scicode\":0.517361111111111 (page payload, model slug gpt-6-luna-xhigh)"
+      },
+      "protocol": "SciCode (AA); source configuration GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]\",\"source_quote\":\"\\\"scicode\\\":0.517361111111111 (page payload, model slug gpt-6-luna-xhigh)\",\"source_unit\":\"%\",\"displayed_value\":51.74}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:12d90c7e2aa31caeba68fee2",
+      "benchmark_id": "aa-hle::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "19813eb2-460a-475c-af65-810bb8660fec",
+        "name": "GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]",
+        "model_id": "gpt-6-luna::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 0.343373493975904,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "Humanity's Last Exam (AA); GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; exact source excerpt: \"hle\":0.343373493975904 (page payload, model slug gpt-6-luna-xhigh)"
+      },
+      "protocol": "Humanity's Last Exam (AA); source configuration GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]\",\"source_quote\":\"\\\"hle\\\":0.343373493975904 (page payload, model slug gpt-6-luna-xhigh)\",\"source_unit\":\"%\",\"displayed_value\":34.34}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:30962f4c5c1014bae27c5e89",
+      "benchmark_id": "aa-critpt::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "19813eb2-460a-475c-af65-810bb8660fec",
+        "name": "GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]",
+        "model_id": "gpt-6-luna::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 0.174285714285714,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "CritPt (AA); GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; exact source excerpt: \"critpt\":0.174285714285714 (page payload, model slug gpt-6-luna-xhigh)"
+      },
+      "protocol": "CritPt (AA); source configuration GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]\",\"source_quote\":\"\\\"critpt\\\":0.174285714285714 (page payload, model slug gpt-6-luna-xhigh)\",\"source_unit\":\"%\",\"displayed_value\":17.43}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:eb1487bab3378dbbde89e4d2",
+      "benchmark_id": "aa-lcr::1.1",
+      "subject": {
+        "source_id": "19813eb2-460a-475c-af65-810bb8660fec",
+        "name": "GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]",
+        "model_id": "gpt-6-luna::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 0.8,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "AA-LCR v1.1; GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; exact source excerpt: \"lcr\":0.8 (page payload, model slug gpt-6-luna-xhigh)"
+      },
+      "protocol": "AA-LCR v1.1; source configuration GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]\",\"source_quote\":\"\\\"lcr\\\":0.8 (page payload, model slug gpt-6-luna-xhigh)\",\"source_unit\":\"%\",\"displayed_value\":80}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:297c8f756bec210202e71b4f",
+      "benchmark_id": "aa-omniscience::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "19813eb2-460a-475c-af65-810bb8660fec",
+        "name": "GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]",
+        "model_id": "gpt-6-luna::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": -1.8333333333333333,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "AA-Omniscience; GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; exact source excerpt: \"omniscience\":-1.8333333333333333 (page payload, model slug gpt-6-luna-xhigh)"
+      },
+      "protocol": "AA-Omniscience; source configuration GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]\",\"source_quote\":\"\\\"omniscience\\\":-1.8333333333333333 (page payload, model slug gpt-6-luna-xhigh)\",\"source_unit\":\"index (-100..100)\",\"displayed_value\":-1.83}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:04f491c758f457879458e75e",
+      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
+      "subject": {
+        "source_id": "19813eb2-460a-475c-af65-810bb8660fec",
+        "name": "GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]",
+        "model_id": "gpt-6-luna::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 0.168,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "GDP.pdf (all-pass); GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; exact source excerpt: \"gdpPdfAllPass\":0.168 (page payload, model slug gpt-6-luna-xhigh)"
+      },
+      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.168 (page payload, model slug gpt-6-luna-xhigh)\",\"source_unit\":\"%\",\"displayed_value\":16.8}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:5d551919ab6bde9723023124",
+      "benchmark_id": "aa-automationbench::1.0.6",
+      "subject": {
+        "source_id": "19813eb2-460a-475c-af65-810bb8660fec",
+        "name": "GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]",
+        "model_id": "gpt-6-luna::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 0.47800686767566575,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "AutomationBench-AA (partial score); GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; exact source excerpt: \"automationBenchPartialScore\":0.47800686767566575 (page payload, model slug gpt-6-luna-xhigh)"
+      },
+      "protocol": "AutomationBench-AA (partial score); source configuration GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]\",\"source_quote\":\"\\\"automationBenchPartialScore\\\":0.47800686767566575 (page payload, model slug gpt-6-luna-xhigh)\",\"source_unit\":\"%\",\"displayed_value\":47.8}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:d90a17d52d29c7f0109ec08a",
+      "benchmark_id": "aa-mmmu-pro::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "19813eb2-460a-475c-af65-810bb8660fec",
+        "name": "GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]",
+        "model_id": "gpt-6-luna::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 0.752601156069364,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "MMMU-Pro (AA); GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; exact source excerpt: \"mmmuPro\":0.752601156069364 (page payload, model slug gpt-6-luna-xhigh)"
+      },
+      "protocol": "MMMU-Pro (AA); source configuration GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]\",\"source_quote\":\"\\\"mmmuPro\\\":0.752601156069364 (page payload, model slug gpt-6-luna-xhigh)\",\"source_unit\":\"%\",\"displayed_value\":75.26}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:434179c2b8ffaedd323760c7",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "19813eb2-460a-475c-af65-810bb8660fec",
+        "name": "GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]",
+        "model_id": "gpt-6-luna::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 1216.68,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "AA-Briefcase v1.1; GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; exact source excerpt: {\"slug\":\"aa-briefcase\",\"score\":1216.68}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1216.68}\",\"source_unit\":\"Elo\",\"displayed_value\":1216.68}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:e9caf32dbc8b51ca9618eba4",
+      "benchmark_id": "aa-intelligence-index-cost::4.3.2",
+      "subject": {
+        "source_id": "19813eb2-460a-475c-af65-810bb8660fec",
+        "name": "GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]",
+        "model_id": "gpt-6-luna::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 66.37178077523583,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "Cost to run AA Intelligence Index (total); GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; exact source excerpt: \"intelligenceIndexCost\":{\"total\":66.37178077523583}"
+      },
+      "protocol": "Cost to run AA Intelligence Index (total); source configuration GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]\",\"source_quote\":\"\\\"intelligenceIndexCost\\\":{\\\"total\\\":66.37178077523583}\",\"source_unit\":\"USD\",\"displayed_value\":66.37}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:ee0e218195cf2196b3e596b8",
+      "benchmark_id": "aa-intelligence-index-cost-per-task::4.3.2",
+      "subject": {
+        "source_id": "19813eb2-460a-475c-af65-810bb8660fec",
+        "name": "GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]",
+        "model_id": "gpt-6-luna::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 0.041708771594451556,
+      "unit": "USD/task",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-luna",
+        "retrieved_at": "2026-09-22T22:47:42.324143+00:00",
+        "published_at": null,
+        "sha256": "a9b2a3dc90eb3afb7cc51bc7a19fbaf7e317d5bf7bf9fed6a8182499511bf035",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/a9b2a3dc90eb3afb7cc5.gz",
+        "locator": "Cost per AA Intelligence Index task; GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; exact source excerpt: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":0.041708771594451556}}"
+      },
+      "protocol": "Cost per AA Intelligence Index task; source configuration GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":0.041708771594451556}}\",\"source_unit\":\"USD/task\",\"displayed_value\":0.0417}",
+      "comparison_key": null
     }
   ],
   "collections": [
     {
       "benchmark_id": "aa-intelligence-index-cost::4.3.2",
       "status": "collected",
-      "source_url": "https://artificialanalysis.ai/models/gpt-6-sol",
+      "source_url": "https://artificialanalysis.ai/models/gpt-6-luna",
       "reason": "Hash-bound primary source reviewed for CR-128; exact rows retained with the observation."
     },
     {
       "benchmark_id": "aa-intelligence-index-cost-per-task::4.3.2",
       "status": "collected",
-      "source_url": "https://artificialanalysis.ai/models/gpt-6-sol",
+      "source_url": "https://artificialanalysis.ai/models/gpt-6-luna",
       "reason": "Hash-bound primary source reviewed for CR-128; exact rows retained with the observation."
     }
   ]
