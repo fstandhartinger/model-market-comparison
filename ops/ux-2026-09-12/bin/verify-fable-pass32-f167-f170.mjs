@@ -151,7 +151,10 @@ try {
         const main = document.querySelector('main') ?? document.body;
         return { sublines: [...main.querySelectorAll('span.bh-muted.block.text-xs')].map((el) => el.innerText.replace(/\s+/g, ' ').trim()).filter(Boolean), text: main.innerText };
       });
-      check(`${label}/compare/no-machine-shaped-version-subline`, !compare.sublines.some((s) => /^\d+(\.\d+)*-[a-z]/i.test(s)), compare.sublines.filter((s) => /^\d+(\.\d+)*-[a-z]/i.test(s)));
+      // A benchmark version such as `100-tasks` is a human-facing release label, not the
+      // machine-shaped `4.0-upstream-timeouts` form this check is meant to catch.
+      const machineVersion = /^\d+(?:\.\d+)+-[a-z]/i;
+      check(`${label}/compare/no-machine-shaped-version-subline`, !compare.sublines.some((s) => machineVersion.test(s)), compare.sublines.filter((s) => machineVersion.test(s)));
       check(`${label}/compare/no-inspection-marker`, !compare.text.includes('protocol requires individual inspection'), 'absent');
       check(`${label}/compare/no-page-errors`, pageErrors.length === 0, pageErrors.slice(0, 3));
       pageErrors.length = 0;
