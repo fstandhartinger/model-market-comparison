@@ -7881,3 +7881,23 @@ export gives Astra `mean_score` **and** "Best score" as 0.9577 while the ECI CSV
 either, which is what makes "same measurement, one identity" the claim that has to be proven rather than assumed.
 Until then `verify-cr-54-2`'s two failures are **correct and should stay red** — the first, "728 observations" against 731, is an ordinary pinned
 count that grew and can be re-pinned once the rows above are settled, not before.
+
+### Iteration 180, part 8 — two verifiers left red on purpose, narrowed but not decided
+
+Repairing a harness is only right when the page has been checked first. Two of the sweep's reds were **not** checked far enough to say which side
+is wrong, so they are left red with what is known, rather than repaired into green or waved through.
+
+- **`verify-cr-38` — 64/85, five distinct checks × four contexts.** Three of the five are the same moved-copy family already repaired elsewhere in
+  this sweep ("a category composite states that a saturated benchmark weighs half" → `n: 0`, and two footnote checks whose text F-122 moved into
+  the collapsed legend), so they are very likely harness drift — but CR-38.1 is an **open X6 row**, and green-ing its verifier by editing the
+  verifier is exactly the move that would make that row look finished when it is not. The other two need a real look:
+  "rows name their version and when the results were read" reports **67 of 128** rows, and "F-98 the Simple table shows only the caveat tags, not
+  the editorial tiers" reports the tags it found as `["source_changed","retired",…]`. Neither was investigated here.
+- **`verify-cr-87` — 80/84 on both a desktop and a phone, light and dark.** The failing check is the custom-weights deep link
+  `/jev-models?w=50-10-20-20`. Probed live, **three of its four conjuncts are right**: `data-bh-jevc-chart="custom"`, the not-default badge is
+  present, and the title reads "Custom weights (50:10:20:20) — not the official JevBench Score". What fails is the comparison of the **ranked bar
+  order** against the verifier's own recomputation from the artifact — so either the page ranks a custom weighting wrongly or the recomputation
+  does, and which one it is was not established. That is a real either/or on a ranking a reader can reach by URL, and it should be settled next.
+
+Recorded this way deliberately: an unrepaired red with a narrowed cause is cheaper for the next engine than a green that was bought by editing the
+test, and far cheaper than a fresh rediscovery.
