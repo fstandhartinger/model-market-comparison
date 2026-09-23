@@ -7463,3 +7463,31 @@ carrying the corrected protocol sentence and none carrying the stale "tagged v2"
 D176 cannot be proven from the live site — their proof is the next daily run's `refresh-benchmarks.log` (no `BENCHMARK RETAINED frontierswe::2`)
 and `fetch-claude-api-catalog.log` (no layout-change error). **Both are implemented, not verified**, and this iteration implemented them, so
 neither may be flipped here.
+
+### Next — one receipt now proves three items
+
+`D174`, `D175` and `D176` were all implemented against the **same failing run** (`2026-09-23T00-41-02-194Z-1264113`) and all three are proven or
+refuted by the next unattended run's own reports. Read that run before starting anything else:
+
+- **D174** (publication blocker): `reports/refresh-benchmarks.log` must not end `DAILY BENCHMARKS FAILED … Unreviewed vendor score`, and the run
+  must publish. If `ok: false` returns, the two-line digest check is written out in the D174 section above.
+- **D175** (FrontierSWE frozen): the same log must **not** contain `BENCHMARK RETAINED frontierswe::2`. Expect the arm to ingest **16** rows, two
+  of them new — **Claude Opus 5.5** and **Grok 4.7**. That is a row-set growth on a board whose `minimum_rows` is 14; it is additive and no row
+  was dropped, but it is the first refresh since the arm unfroze, so read the candidate diff rather than assuming.
+- **D176** (Anthropic prices frozen): `reports/fetch-claude-api-catalog.log` must not contain "multiplier text not found". The snapshot should
+  move for the first time since ~2026-09-21 — expect Claude Opus 5.5 to arrive with a `0.05x` cache-read exception beside Fable 5.1's `0.025x`.
+
+All three were implemented by claude-opus in this iteration, so **none may be flipped to `verified` by claude-opus** — they need the receipt *and*
+a non-implementer.
+
+**Do not touch CR-128.** The `bh-thirdparty-ingest-20260922` codex job that owns it is still running in this checkout (one-writer rule); the
+03:10 review reopened `CR-128.1`–`.5` and the required work — regenerating every batch receipt from the repaired rows and getting a clean critic
+PASS — belongs to that writer. This iteration stayed out of `scores.json`'s CR-128 rows entirely and staged every commit by path.
+
+X6's open list is otherwise unchanged: `CR-34.5`, `CR-62.4` (Florian), `CR-37.1`/`CR-37.3`, `CR-38.1`, `CR-73.5`, `CR-85.1`, `CR-85.2` — the last
+four of which wait on exactly the unattended publication D174 and D175 unblock.
+
+**One loose thread, not chased here:** the 00:41 run quarantined ~50 rows across nine `score-batch-*` gauntlets, 30 of them for "revise without a
+bounded row-level revision", plus `z-ai/glm-5.3-flash: Incomplete completion (length)` and three rounds of "No supported viable worker model
+found". Every other recent run shows 0–4 of these, so this is a one-run spike in a stochastic subsystem, not a standing defect — but the
+"Incomplete completion (length)" is the known max-tokens symptom and is worth a look if it recurs.
