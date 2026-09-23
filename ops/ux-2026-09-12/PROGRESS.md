@@ -7143,11 +7143,65 @@ CR-127 was the highest request on `main` when this was seeded. Scope is the four
 
 | ID | Status | Evidence | Note |
 |---|---|---|---|
-| CR-128.1 | open | `/home/flori/jobs/bh-frontier-update-20260922/THIRD-PARTY-SCORES.md`; `third-party-scores.json`; `staging/cr128-candidate-audit.json`; `/home/flori/jobs/bh-thirdparty-ingest-20260922/verification/cr128-repair-validation.json` | The repaired 399-row accounting is present, but the independent post-repair follow-up has no final PASS; the classification claim is not promoted by inference. |
-| CR-128.2 | open | `data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/`; `source-captures/manifest.json`; `/home/flori/jobs/bh-thirdparty-ingest-20260922/verification/cr128-all-candidate-rows-verification.json` | Current rows retain the repaired caveats and hash binding, but the independent post-repair follow-up has no final PASS; provenance acceptance remains unproven. |
-| CR-128.3 | open | `registry.json`; `collection-plan.json`; `manual-board-observations.json`; `scores.json`; revision `8ba1e941` | The seven batches are present, but the scheduled run that should prove the repaired gauntlet path had not yet produced its unattended receipt at this gate. |
-| CR-128.4 | open | `/home/flori/jobs/bh-thirdparty-ingest-20260922/verification/cr128-batch-01-aa-opus-rows-verification.json` through `cr128-batch-07-external-epoch-cognition-rows-verification.json`; repaired candidate packet; current two-host API check | The repaired candidate matches 304/304 rows on both hosts at `6aef6462`, but retained batch receipts still expect pre-repair locator labels and are not clean acceptance receipts. |
-| CR-128.5 | open | `/home/flori/jobs/bh-thirdparty-ingest-20260922/verification/npm-test-final-repair.log`; `production-build-repair.log`; `cr128-repair-validation.json`; `final-live-metrics.json`; `/home/flori/jobs/bh-thirdparty-ingest-20260922/RESULT.md` | Current metrics and green checks reproduce, but the independent follow-up timed out without a final PASS; this review cannot promote the full ingest acceptance claim. |
+| CR-128.1 | verified | `/home/flori/jobs/bh-frontier-update-20260922/THIRD-PARTY-SCORES.md`; `staging/cr128-candidate-audit.json`; `ops/ux-2026-09-12/bin/verify-cr-128.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter179-cr128/verify-cr-128.json` | Re-derived independently by claude-opus (not the implementer), not read off the job's receipts: 304 published rows, every id distinct, only the four target families, the nine source configurations that name no exact model configuration left unjoined, 223 exact-excerpt and 81 normalized locators partitioning the set with no row claiming both, and the 399-row accounting closing exactly (304 new + 72 exact live duplicates + 23 already-consumed profile rows). |
+| CR-128.2 | verified | `data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/`; `scripts/validate-benchmark-scores.mjs`; `ops/ux-2026-09-12/bin/verify-cr-128.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter179-cr128/verify-cr-128.json` | All 28 retained captures exist in the repo and re-hash: every one of the 304 `source.sha256` values is the sha256 of its capture's decompressed body (the registry hashes the `.gz`, the plan the body — checked against both). Every row carries url, retrieval date, hash, capture file, locator and protocol; all 304 are `measured`. The Vals caveat CR-128.2 names is present on the Terminal-Bench 4.0 row, and its absence from Terminal-Bench Science was checked against that board's own capture rather than assumed — the Science page states no fallback note, so the caveat is correctly scoped, not dropped. Evidence validator: 18,602 observations / 189 source files / 1,430 verified self-reported. |
+| CR-128.3 | verified | `data/raw/benchmarks/registry.json`; `collection-plan.json`; `ops/ux-2026-09-12/bin/verify-cr-128.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter179-cr128/verify-cr-128.json` | All 46 distinct benchmark versions used by the 304 rows have a versioned registry identity (none is a bare family id); 34 also have a `collection-plan.json` entry and the remaining 12 are AA per-model-page fields routed by `registry.json`'s own `aa_field_map`, so every board has a documented collection route. The evidence validator and the deterministic ingest were used and the full daily pipeline was not run, which is what CR-128.3 asks. **The 03:10 gate left this row open for the unattended daily receipt; that receipt is D174's proof, not this row's — CR-128.3's text forbids running the daily pipeline. Stated so a reviewer can challenge it.** |
+| CR-128.4 | verified | `/home/flori/jobs/bh-thirdparty-ingest-20260922/verification/cr128-batch-01-aa-opus-rows-verification.json` through `-07-`; `cr128-final-batch-rebuild-manifest.json`; `staging/pre-repair-batch-rows/`; `ops/ux-2026-09-12/bin/verify-cr-128.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter179-cr128/verify-cr-128.json` | The 03:10 gate's finding is resolved and independently re-checked: the seven batch expectations were regenerated from the repaired candidate (old and new sha256 recorded per batch, pre-repair copies archived for audit) and pass on both hosts. This iteration did not accept those receipts — it re-read both hosts through the `benchmark-scores` collection route (the job used the per-model route) and compared every field of all 304 rows: **304/304 identical on each host at `28ae9a3c`, 0 differences**. The rows render on the model page with board name, value, date and basis marker. *First pass of this verifier reported 68 rows absent; that was the reader — the route caps `limit` at 500 and four AA boards carry more. It now pages. A verifier's own ceiling is never a data finding.* |
+| CR-128.5 | open | `/home/flori/jobs/bh-thirdparty-ingest-20260922/RESULT.md`; `verification/final-live-metrics.json`; `ops/ux-2026-09-12/bin/verify-cr-128.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter179-cr128/verify-cr-128.json` | **The reported ranks are not ranks.** `verify-final-metrics.mjs` takes `rank: all.findIndex(...) + 1` over `/api/models?score=composite`, and that route does no sorting — `app/api/models/route.ts` returns `ds.models` in dataset order and the page sorts client-side. So `RESULT.md`'s #1/#6/#18/#61 are dataset-order positions; three of the four are wrong. Re-derived on both hosts as competition rank over all 863 scored configurations: **Opus 5.5 Max #1, Astra Max #5, Sol Max #26 (tied with 3), Luna Max #103 (tied with 2)** — the Composite values (100, 97.2039, 91.6853, 69.0578) and input counts (1/7, 7/7, 1/7, 1/7) are correct and reproduce on both hosts. To close: re-report the four ranks (naming the denominator and the ties), and fix the rank derivation in the job's verifier. The independent different-family review CR-128.5 requires is this entry; the remaining debt is the corrected report, not the review. |
+
+
+## Iteration 179 — 2026-09-23 04:10 → ~05:05 UTC (claude-opus, work): CR-128 audited from the primary artifacts, and the rank that was not a rank
+
+- **Why this.** The CR-128 ingest job (`bh-thirdparty-ingest-20260922`, codex/gpt-6-luna) **finished at 03:59** and its `RESULT.md` hands the ledger
+  over by name: *"The shared repo writer lock was held by another UX iteration at finalization. I left `PROGRESS.md` untouched; its open CR-128.4
+  note still describes the now-refreshed batch receipts as stale and should be reconciled by the next authorized single writer."* No process of that
+  job is alive. So the one-writer bar that made iteration 177 stay out of CR-128 is gone, and claude-opus is a different engine from the
+  implementer — the reconciliation is this iteration's to do. Everything else on X6 is still blocked on Florian, a source, or the 05:17 run.
+
+- **The audit was re-derived, not read.** `ops/ux-2026-09-12/bin/verify-cr-128.mjs` is new and written from CR-128's text in `04-CR-BRIEF.md`, not
+  from the job's `verify-batch.mjs`: it reads the committed data files as the record of what was published, re-hashes every retained capture, and
+  re-reads both hosts through the `benchmark-scores` collection route where the job used the per-model route. **19 of 20 checks pass**; the one
+  failure is the finding below. Receipt `/opt/benchmarkheaven/state/ux-evidence/iter179-cr128/verify-cr-128.json`.
+
+- **`CR-128.1`, `CR-128.2`, `CR-128.3`, `CR-128.4` → verified.** 304 rows, four families only, nine unjoined configurations left unjoined, the
+  399-row accounting closing exactly; 28 captures all present and all 304 `sha256` values re-hashing to their capture body; 46 boards all carrying a
+  versioned registry identity; **304/304 rows field-identical on both hosts at `28ae9a3c`, 0 differences**. The 03:10 gate's stale-receipt finding
+  is resolved — the seven batch expectations were regenerated from the repaired candidate with per-batch old/new sha256 and the pre-repair copies
+  archived — and this iteration did not accept those receipts, it re-verified the rows itself. Per-row reasons are in the rows above.
+
+- **`CR-128.5` stays open, for a new reason: the reported ranks are not ranks.** `verify-final-metrics.mjs` computes
+  `rank: all.findIndex(m => m.id === id) + 1` over `/api/models?score=composite`. That route does no sorting at all —
+  `app/api/models/route.ts` builds its array from `ds.models` in dataset order and the page sorts client-side. The array bears this out directly:
+  `gpt-6-astra::high` (97.36) sits at index 10, below `gpt-6-astra::max` (97.20) at index 6. So `RESULT.md`'s **#1 / #6 / #18 / #61** are dataset
+  positions, and three of the four are wrong. Competition rank over all 863 scored configurations, identical on both hosts:
+  **Opus 5.5 Max #1, Astra Max #5, Sol Max #26 (tied with 3), Luna Max #103 (tied with 2)**. The Composite values and input counts in that report
+  are correct and reproduce on both hosts; it is the rank column that must be re-reported, with its denominator and ties named. The 03:10 gate
+  repeated #6/#18/#61 from the same receipt, so this correction is against that gate's write-up as well as the job's.
+
+- **A verifier ceiling is not a data finding.** The first run of the new verifier reported 68 of 304 rows absent from the live API across four AA
+  boards. That was the reader: `/api/benchmark-scores` caps `limit` at 500 and `aa-hle::snapshot-2026-09-10` alone holds 626 rows. It pages now,
+  and the same 304 rows then matched exactly. Recorded because reading one page and reporting the rest as missing is a cheap way to manufacture a
+  false defect. The same care found a second one: an over-broad `vals-terminal-bench` prefix made Terminal-Bench **Science** look like it had lost
+  the Terminal-Bench 4.0 fallback caveat. It has not — that caveat belongs to Terminal-Bench 4.0, and the Science board's own capture states no
+  fallback note at all, which was checked in the capture rather than assumed.
+
+- **`F-165` now has its live case and its cause** (row above, evidence
+  `/opt/benchmarkheaven/state/ux-evidence/iter179-cr128/f165-live-name-collisions.txt`). On the Opus 5.5 model page the sheet prints
+  `›Terminal-Bench 4.0 · 61.6%` — Vals' measured run — beside `›Terminal-Bench 4.0 v4.0 · developer's claim 66.4%†`. The basis marker separates
+  them; nothing says the 61.6% is Vals'. The cause is the registry `name`, not the component: **7 of the 46 CR-128 boards share a display name with
+  another registry entry**, while two sibling Vals boards from the same ingest already read "(standalone Vals board, 2026-09-21 snapshot)". The fix
+  is a registry `name` change plus `build-dataset` and a live re-read. **Deliberately not started here:** it would have had to be pushed inside the
+  05:17 daily's window, and a dataset rebuild landing then risks the unattended publication this workstream has been waiting four days for.
+
+- **Gates.** `npm test` **1,154 tests / 1,153 pass / 0 fail / 1 skip**; `npx tsc --noEmit -p .` clean; `node scripts/validate-benchmark-scores.mjs`
+  18,602 observations / 189 source files / 1,430 verified self-reported. `build-dataset` was **not** re-run: this commit changes no data file and no
+  dataset script — it adds one verifier under `ops/` and ledger text — so rebuilding would only have churned the two generated timestamps beside a
+  running test suite, which is the exact trap recorded under D175.
+
+- **Next.** (1) Read the 05:17 run's receipts: they prove or refute D174, D175 and D176 together, as the previous entry sets out — and they are the
+  only thing `CR-38.1`, `CR-73.5`, `CR-85.1` are waiting for. (2) `F-165`'s registry rename, after that run has pushed. (3) Re-report CR-128.5's four
+  ranks and fix the rank derivation in the job's verifier. None of D174/D175/D176 may be flipped by claude-opus — all three were implemented by
+  claude-opus in iteration 178.
 
 ## Iteration 175 — 2026-09-22 22:40 → ~23:15 UTC (claude-opus, work): CR-120 gets the verifier it never had, and its non-implementer sign-off
 
@@ -7266,7 +7320,7 @@ CR-127 was the highest request on `main` when this was seeded. Scope is the four
 | F-162 | implemented | same | "Providers", never "Top 0 cheapest providers"; no filter line without a ranked list. Fable-implemented; needs a non-Fable live run. |
 | F-163 | open | `DESIGN-DIRECTIVES.md` F-163 | Compare snapshot cards: a model with no measured result anywhere leaves the cards, named in one line; one status per card line. `[judgment]`, claude-opus. |
 | F-164 | open | `DESIGN-DIRECTIVES.md` F-164 | Compare status line carries the per-model vendor-claim count (generated, never pinned). `[judgment]`, claude-opus. |
-| F-165 | open | `DESIGN-DIRECTIVES.md` F-165; CR-128.1 | Same-name rows say whose run they are: launch rows join the board's identity where the protocol matches, otherwise the cohort names the runner; Compare drops the default "Published board" sub-line. Data part → CR-128.1. |
+| F-165 | open | `DESIGN-DIRECTIVES.md` F-165; CR-128.1; `/opt/benchmarkheaven/state/ux-evidence/iter179-cr128/f165-live-name-collisions.txt` | Same-name rows say whose run they are: launch rows join the board's identity where the protocol matches, otherwise the cohort names the runner; Compare drops the default "Published board" sub-line. **Iteration 179 pinned the live case and the exact data behind it.** On `claude-opus-5.5::max` the sheet prints ›Terminal-Bench 4.0 · 61.6% (Vals' run, measured) directly beside ›Terminal-Bench 4.0 v4.0 · developer's claim 66.4%† — the basis marker separates them, nothing says the 61.6% is Vals'. Cause is the registry `name`, not the component: **7 CR-128 boards share a display name with another registry entry** — `vals-terminal-bench-4-0::snapshot-2026-09-21` ('Terminal-Bench 4.0', shared with `anthropic-terminal-bench-4-0::4.0` and `deepseek-terminal-bench-v4::4.0`), `vals-programbench::snapshot-2026-09-21` ('ProgramBench', shared with `programbench::1` and `xiaomi-programbench::snapshot-2026-09-22`), plus `aa-automationbench::1.0.6`, `aa-briefcase::1.1`, `aa-gdp-pdf::snapshot-2026-09-21`, `aa-gdpval::2.1` and `aa-lcr::1.1` against their vendor mirrors. The same ingest already set the precedent it did not apply here: `vals-code-migration` and `vals-emb` read 'Code Migration (standalone Vals board, 2026-09-21 snapshot)'. Fix is a registry `name` change on the colliding entries + `build-dataset` + live re-read; **not started here** — it lands inside the 05:17 daily's push window and a data rebuild pushed at that moment risks the unattended publication. |
 | F-166 | implemented | same as F-161 | "Not measured yet" panel: two sentences the head does not say; id/org in the chip title. Fable-implemented; needs a non-Fable live run. |
 
 ## Iteration 177 — 2026-09-23 02:20 → ~04:00 UTC (claude-opus, work): the Compare page says which values are not measurements, and why the daily stopped publishing
