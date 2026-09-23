@@ -7446,7 +7446,7 @@ Test `test/f165-cohort-sublabel.test.mjs`; live verifier `ops/ux-2026-09-12/bin/
 | F-162 | verified | same | "Providers", never "Top 0 cheapest providers"; no filter line without a ranked list. Fable-implemented; needs a non-Fable live run. **Iteration 180 (claude-opus, non-Fable, non-implementer): verified live.** `verify-fable-pass31-design.mjs` **44/44 on each host** at `d8a821ab`, desktop 1440 and mobile 390 in light and dark, with the overflow and page-error checks in every state; evidence `/opt/benchmarkheaven/state/ux-evidence/iter180-fable31/{benchmarkheaven,model-market-comparison}/`. |
 | F-163 | verified | `DESIGN-DIRECTIVES.md` F-163 | Compare snapshot cards: a model with no measured result anywhere leaves the cards, named in one line; one status per card line. `[judgment]`, claude-opus. **Superseded row:** this is the pass-31 hand-off entry; the item was implemented and verified — see the `F-163` row in the iteration 177 done-log (`ee6c2748`, independent Codex-Luna recheck 87/87 per host). |
 | F-164 | verified | `DESIGN-DIRECTIVES.md` F-164 | Compare status line carries the per-model vendor-claim count (generated, never pinned). `[judgment]`, claude-opus. **Superseded row:** the pass-31 hand-off entry; see the `F-164` row in the iteration 177 done-log (same 87/87 per-host recheck). |
-| F-165 | in-progress | `135a3098`, `58226b0f`; `lib/benchmark-view.mjs` (`cohortSubLabel`, `vendorRunner`); `test/f165-cohort-sublabel.test.mjs`, `test/f165-vendor-cohort.test.mjs`; `ops/ux-2026-09-12/bin/verify-f165-b.mjs`, `bin/verify-f165-a.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter180-f165a/`; `/opt/benchmarkheaven/state/ux-evidence/iter179-f165b/{canonical,legacy}/`; `/opt/benchmarkheaven/state/ux-evidence/iter179-cr128/f165-live-name-collisions.txt` | **(b) presentation: implemented and live 18/18 per host at `135a3098`** — Compare no longer prints the default `"Published board"` sub-line, and the rule lives once in `lib/benchmark-view.mjs` for Compare, the matrix and the ranking page. Implemented by claude-opus, so it needs a non-claude-opus sign-off before it is `verified`. **(a) data: open** — a vendor launch row's cohort must name the runner, and where the protocol matches the board's own it must join the board's identity. Fully specified in the iteration 179 entry, including the 97-of-839 extraction rule and the three hazards (axis ids move, historical estimates re-attach, and `test/cr-127-compare-basis.test.mjs:37–38` asserts the opposite on purpose). **(a) label half: implemented in `58226b0f` (iteration 180), rekey half still open.** A launch row's cohort now ends with `Vendor-reported by <vendor>`; measured as Compare composes its sub-line, the collisions go from 4 groups / 9 axes to 0, and the live before-receipt shows the defect at both widths and both themes (`iter180-f165a/before/verification.json`, 18/28 — three pairs of rendered rows reading `AA-Briefcase v1.1`, `GDPval-AA v2.1` and `DeepSWE v1.1` identically). **Live at `d04bdc69`: 34/34 per host by claude-opus (iteration 180 part 12), and independently re-run by Kimi K3 — 34/34 canonical, 31/34 legacy with three checks that did not reproduce in nine later loads (part 14, a partial render under load). Re-run on an idle box before closing.** Implemented by claude-opus, so it needs a clean non-claude-opus run of `bin/verify-f165-a.mjs` on both hosts. **Still open:** the first clause — a launch row joining the board's own identity where the protocol matches it (`swe-bench-multilingual`, not `anthropic-swe-bench-multilingual`) — which is a per-row protocol match against each capture, not a label. The label half makes the pair legible meanwhile; it does not decide the identity question. |
+| F-165 | in-progress | `135a3098`, `58226b0f`; `lib/benchmark-view.mjs` (`cohortSubLabel`, `vendorRunner`); `test/f165-cohort-sublabel.test.mjs`, `test/f165-vendor-cohort.test.mjs`; `ops/ux-2026-09-12/bin/verify-f165-b.mjs`, `bin/verify-f165-a.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter180-f165a/`; `/opt/benchmarkheaven/state/ux-evidence/iter179-f165b/{canonical,legacy}/`; `/opt/benchmarkheaven/state/ux-evidence/iter179-cr128/f165-live-name-collisions.txt` | **(b) presentation: implemented and live 18/18 per host at `135a3098`** — Compare no longer prints the default `"Published board"` sub-line, and the rule lives once in `lib/benchmark-view.mjs` for Compare, the matrix and the ranking page. Implemented by claude-opus, so it needs a non-claude-opus sign-off before it is `verified`. **(a) data: open** — a vendor launch row's cohort must name the runner, and where the protocol matches the board's own it must join the board's identity. Fully specified in the iteration 179 entry, including the 97-of-839 extraction rule and the three hazards (axis ids move, historical estimates re-attach, and `test/cr-127-compare-basis.test.mjs:37–38` asserts the opposite on purpose). **(a) label half: implemented in `58226b0f` (iteration 180), rekey half still open.** A launch row's cohort now ends with `Vendor-reported by <vendor>`; measured as Compare composes its sub-line, the collisions go from 4 groups / 9 axes to 0, and the live before-receipt shows the defect at both widths and both themes (`iter180-f165a/before/verification.json`, 18/28 — three pairs of rendered rows reading `AA-Briefcase v1.1`, `GDPval-AA v2.1` and `DeepSWE v1.1` identically). **Live at `d04bdc69`: 34/34 per host by claude-opus (iteration 180 part 12), and independently re-run by Kimi K3 — 34/34 canonical, 31/34 legacy with three checks that did not reproduce in nine later loads (part 14, a partial render under load). Re-run on an idle box before closing.** Implemented by claude-opus, so it needs a clean non-claude-opus run of `bin/verify-f165-a.mjs` on both hosts. **(a) rekey half: decided in iteration 187.** The per-row protocol match is made for all 97 launch rows on 96 vendor-scoped boards, by the rule the rows themselves state: 95 stay separate (94 carry their own "No independent reproduction is claimed"; 71 boards have no counterpart at all), and exactly two — `anthropic-aa-briefcase-v1-1::1.1` and `anthropic-gdpval-aa-v2-1::2.1` — join Artificial Analysis's own boards, which the system card says AA ran. `anthropic-terminal-bench-4-0::4.0` is the counter-example that keeps the rule honest: a measured same-name counterpart on Vals AI's board, a different runner, 66.4 against 61.616, stays separate. **Application still open:** the join moves a published number between boards, and `lib/benchmark-score-evidence.mjs` binds every self-reported vendor score to a producer/critic approval whose `identity_review` exception covers `subject.model_id` only, so the build refuses an unreviewed `benchmark_id` rekey. It needs a gauntlet approval for the two rows or a reviewed extension of `identity_review`. Rule, receipt and guard: `ops/ux-2026-09-12/bin/f165a-rule.mjs`, `bin/verify-f165-a-rekey.mjs` (28/28 both hosts), `test/f165a-vendor-reprint.test.mjs`, `/opt/benchmarkheaven/state/ux-evidence/iter187-f165a-rekey/`. |
 | F-166 | verified | same as F-161 | "Not measured yet" panel: two sentences the head does not say; id/org in the chip title. Fable-implemented; needs a non-Fable live run. **Iteration 180 (claude-opus, non-Fable, non-implementer): verified live.** `verify-fable-pass31-design.mjs` **44/44 on each host** at `d8a821ab`, desktop 1440 and mobile 390 in light and dark, with the overflow and page-error checks in every state; evidence `/opt/benchmarkheaven/state/ux-evidence/iter180-fable31/{benchmarkheaven,model-market-comparison}/`. |
 
 ## Iteration 177 — 2026-09-23 02:20 → ~04:00 UTC (claude-opus, work): the Compare page says which values are not measurements, and why the daily stopped publishing
@@ -8370,7 +8370,7 @@ every claude-opus item below.
 | D185 | verified | `/opt/benchmarkheaven/state/ux-evidence/iter185-signoff-kimi/d185/verification.json` (14/14 per host, 320→1440 px, run by Kimi K3 as part of the iteration 185 sign-off); `/opt/benchmarkheaven/state/ux-evidence/iter184-d185/verification.json`; `/opt/benchmarkheaven/state/ux-evidence/iter182-pass32/{canonical-verifier.log,hub-width-sweep.txt}`; agent board thread #5 | `/jev-models` needs 385 px of layout width, so it overflows anything between the 375 and 390 px breakpoints — a 390 px desktop window with a classic scrollbar lays out at 380 and overflows by 5 px. **No phone width overflows** (320 → −10, 360 → +1, 375 → −2, 390 → −5, 414 → −10 with scrollbars hidden); the first posting of this said "mobile overflow" and was wrong. Separately, long project URLs in the † notes do not break at 320 px. Owned by the CR-132 writer; reported, not fixed. |
 | D186 | verified | `data/raw/benchmarks/public-observations.json` (`source_label_restatements`); `scripts/ingest-benchmark-scores.mjs`; `data/raw/benchmarks/collection-plan.json`; `data/SCRAPING.md`; `test/d186-source-label-restatement.test.mjs` | MCP Atlas renamed row 25 "Nemotron 3 Ultra (xHigh)" → "(thinking)" on 2026-09-22 without re-running it (one field of one of 34 rows differs between the two captures; score 63.1, rank 18, CI upper 3 and createdAt unchanged). The row keeps its public ID and value under the new label; the old label is republished as a withheld rejection so the retained states cannot bridge the same measurement back — without that the estimate count grew by 18. Implemented by claude-opus; needs a non-claude sign-off. **Sign-off (iteration 186, Kimi K3 `chutes/moonshotai/Kimi-K3-TEE`, non-claude, non-implementer, from `/tmp/iter186-signoff`): ACCEPTED** — `verify-d186-d187.mjs` **30/30, 0 failed** on both hosts, plus its own outside checks: a full unfiltered scan of all 18,607 served observations on each host finds 106.27 and 103.67 zero times, the sibling boards keep 14/14/12 and their 48 history estimates, and MCP Atlas serves 34 rows with one "Nemotron 3 Ultra (thinking)" at 63.1 and none of the old label. Evidence `/opt/benchmarkheaven/state/ux-evidence/iter186-d186-d187-signoff-kimi/`. |
 | D187 | verified | `data/raw/benchmarks/public-observations.json` (`withdrawn_observations`); `lib/benchmark-history.mjs` (`datedEstimates` locator scope); `lib/benchmark-scores.mjs`; `test/d187-kernelbench-retracted.test.mjs`; `test/coding-sources.test.mjs` | kernelbench.com re-adjudicated six runs on 2026-09-22 — same run ids, still `clean`, but `correct: true` + a `peak_fraction` became `correct: false` + `peak_fraction: null`, so the board publishes no value for those cells while we served all six as measured (106.27 and 103.67 among them). Withdrawn with their evidence and withheld from the bridge. The withheld-locator scope had to be fixed with it: the KernelBench locator is row-numbered per board, so one withholding removed 19 legitimate estimates on the other three boards, while OpenRouter's `own_data row …` locator must still reach its cost twin. Implemented by claude-opus; needs a non-claude sign-off. The `deepseek-nsa` arm still fails its coverage guard by design — see iteration 185. **Sign-off (iteration 186, Kimi K3 `chutes/moonshotai/Kimi-K3-TEE`, non-claude, non-implementer, from `/tmp/iter186-signoff`): ACCEPTED** — `verify-d186-d187.mjs` **30/30, 0 failed** on both hosts, plus its own outside checks: a full unfiltered scan of all 18,607 served observations on each host finds 106.27 and 103.67 zero times, the sibling boards keep 14/14/12 and their 48 history estimates, and MCP Atlas serves 34 rows with one "Nemotron 3 Ultra (thinking)" at 63.1 and none of the old label. Evidence `/opt/benchmarkheaven/state/ux-evidence/iter186-d186-d187-signoff-kimi/`. |
-| D188 | implemented | `ops/daily/gauntlet.mjs` (`findingSummary`, the split refusal reason); `data/raw/benchmarks/registry.json` (`vulcanbench-frontier::4`, `terminal-bench::4.0`, `livebench::2026-06-25`); `ops/ux-2026-09-12/bin/replay-protocol-review.mjs` (`discovered_from` resolution); `ops/ux-2026-09-12/bin/verify-d188.mjs`; `test/d188-protocol-notes-match-source.test.mjs`; `test/daily-gauntlet-gate.test.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter186-d188/` | Twelve boards were frozen in the daily protocol review — LiveBench since 17 Sep — behind "revise without a bounded row-level revision", which is false: every protocol review is a single-row artifact, so a critic naming that one row gives `drops.size === rowIds.size` and falls into the branch that says no row was named. Refusal is unchanged; the reason now separates the three cases and carries the critic’s own repair. With it readable the findings turn out to be ours: VulcanBench’s notes named a protocol family (v3.4–v3.6) the board had grown past (five v3.7 rows), its guard cited a date the board never printed, Terminal-Bench’s packet carried no excerpt naming the maintainer it claims and its range was [null, null] against the page’s own minimum 0 / maximum 100 schema, and LiveBench’s notes opened with a README comparison no source establishes. All repaired against the captures; **both VulcanBench and Terminal-Bench replay to `accepted`, one fingerprint, zero errors** on the run’s own manifest (`/opt/benchmarkheaven/state/ux-evidence/iter186-d188/replay/`). **LiveBench stays frozen and says why**: its packet carries no protocol prose at all, so five of its fields can never be established from the current evidence set — it needs a reviewed prose source, not a wording change. Live **58/58 per host** at `4b7845a9` and again at `962095b2` (`…/iter186-d188-head/`). Implemented by claude-opus; needs a non-claude sign-off. |
+| D188 | verified | `ops/daily/gauntlet.mjs` (`findingSummary`, the split refusal reason); `data/raw/benchmarks/registry.json` (`vulcanbench-frontier::4`, `terminal-bench::4.0`, `livebench::2026-06-25`); `ops/ux-2026-09-12/bin/replay-protocol-review.mjs` (`discovered_from` resolution); `ops/ux-2026-09-12/bin/verify-d188.mjs`; `test/d188-protocol-notes-match-source.test.mjs`; `test/daily-gauntlet-gate.test.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter186-d188/` | Twelve boards were frozen in the daily protocol review — LiveBench since 17 Sep — behind "revise without a bounded row-level revision", which is false: every protocol review is a single-row artifact, so a critic naming that one row gives `drops.size === rowIds.size` and falls into the branch that says no row was named. Refusal is unchanged; the reason now separates the three cases and carries the critic’s own repair. With it readable the findings turn out to be ours: VulcanBench’s notes named a protocol family (v3.4–v3.6) the board had grown past (five v3.7 rows), its guard cited a date the board never printed, Terminal-Bench’s packet carried no excerpt naming the maintainer it claims and its range was [null, null] against the page’s own minimum 0 / maximum 100 schema, and LiveBench’s notes opened with a README comparison no source establishes. All repaired against the captures; **both VulcanBench and Terminal-Bench replay to `accepted`, one fingerprint, zero errors** on the run’s own manifest (`/opt/benchmarkheaven/state/ux-evidence/iter186-d188/replay/`). **LiveBench stays frozen and says why**: its packet carries no protocol prose at all, so five of its fields can never be established from the current evidence set — it needs a reviewed prose source, not a wording change. Live **58/58 per host** at `4b7845a9` and again at `962095b2` (`…/iter186-d188-head/`). Implemented by claude-opus; needs a non-claude sign-off. |
 
 **CR-132 (/jev-models v1.4 page fixes, 23 Sep 2026, Claude Opus 5.5, job `jev-models-v14-page-fixes-20260923`).** Live on both hosts at `c6e7cb9e`.
 Cause of "† note on every row": the v1.4 artifact gives all 76 systems a footnote, most of it shared provenance ("already on the live v1.3.0 board", "re-run on a throwaway RunPod pod …"), so `footnote &&` was always true. `jevV14RowNote` drops the shared segments: 66 rows keep a real note. The marker now sits next to the last word of the name inside a no-wrap span and opens in place. CR-131 had not deleted the v1.3 sections; it moved all of them into the collapsed history. The bar chart, the four-radar compare and the evergreen sections are back on the v1.4 data, and the v1.3-only material stays in the history. The same change fixes the 5 px overflow at 390 px with classic scrollbars reported by iteration 182 (the long eyebrow; the short phone label is back) and makes long URLs and module names wrap at 320 px.
@@ -8882,7 +8882,7 @@ registry fields, the second the two timestamps plus two registry fields. **No sc
 |---|---|---|---|
 | D186 | implemented | verified | Kimi K3 (non-claude, non-implementer) re-ran the receipt 30/30 and confirmed the served outcome independently on both hosts — 34 rows, one "Nemotron 3 Ultra (thinking)" at 63.1, the old label absent and never a history estimate. Part 7. |
 | D187 | implemented | verified | Same sign-off: 30/30, the six retracted values absent from a full 18,607-row scan of both hosts, the three sibling boards still at 14/14/12 and their 48 estimates intact. Part 7. |
-| D188 | — | implemented | The refusal reason, three repaired registry entries, two arms replayed to acceptance, 58/58 per host. claude-opus work; needs a non-claude sign-off. |
+| D188 | — | verified | The refusal reason, three repaired registry entries, two arms replayed to acceptance, 58/58 per host. claude-opus work; Kimi K3 non-claude sign-off, iteration 187. |
 | F-163 | open (stale duplicate) | verified | The pass-31 hand-off row still read `open` while the item's own done-log row (iteration 177, `ee6c2748`, Codex-Luna 87/87 per host) read `verified`. Ledger repair only; no code or claim changed. |
 | F-164 | open (stale duplicate) | verified | Same stale duplicate, same done-log row. |
 
@@ -8951,3 +8951,108 @@ post-deploy rankings and ledger update are complete.
 | CR-136.4 | open | `/home/flori/jobs/jevbench-seo-hn-push-20260923/CR-SCOPE.md` | SEO metadata, JSON-LD, sitemap, internal links and missing v1.4-backed detail routes |
 | CR-136.5 | implemented | `/home/flori/jobs/jevbench-seo-hn-push-20260923/HF-PUBLISH-RECEIPT.json` | Hugging Face app reads v1.4.1; card and reciprocal board/GitHub links verified |
 | CR-136.6 | open | `/home/flori/jobs/jevbench-seo-hn-push-20260923/CR-SCOPE.md` | Validation, dual-host deployment, Serper ledgers, loop release and final delivery |
+
+
+## Iteration 187 (claude-opus) — F-165(a): the rekey half is decided, and D188 is signed off
+
+Another writer (the JevBench SEO job) seeded CR-136 into this checkout at the start of this
+iteration and is implementing it in `app/jev-models/**`, `components/JevBench*`,
+`lib/jevbench-seo*`. This iteration stayed out of that lane entirely and announced so on the agent
+board (thread #3, entry #294). Nothing here touches a CR-136 file, and nothing here changes any
+published number: the working tree carried no `data/` change at all.
+
+### F-165(a) — the open first clause, now answered for every row
+
+The open clause was *"a launch row joining the board's own identity where the protocol matches it
+(`swe-bench-multilingual`, not `anthropic-swe-bench-multilingual`) — a per-row protocol match
+against each capture, not a label."* That match is now made for all 97 launch rows on 96
+vendor-scoped boards.
+
+**The rule is the rows' own sentence.** Every vendor launch row our ingest writes ends *"Replace
+with an independently measured matching-version result when available."* So a row joins exactly
+when all three hold, and the rule is re-derived from the data, with no board id hard-coded:
+
+1. a counterpart board (same benchmark, not itself vendor-scoped) holds a `measured` row for the
+   same model configuration — the independent result is *available*;
+2. the vendor row's own protocol names that counterpart's registry `maintainer` as having run the
+   evaluation — so it is the *same* measurement, not a second one by someone else;
+3. the vendor's printed value is that measured value at the precision the vendor printed — the two
+   numbers are one number.
+
+**Condition (1) alone is deliberately not enough, and the dataset contains the proof.**
+`anthropic-terminal-bench-4-0::4.0` *does* have a measured same-name counterpart
+(`vals-terminal-bench-4-0::snapshot-2026-09-21`, maintainer Vals AI). It stays separate: Anthropic
+names its own harness (Claude Code `--bare`, xhigh) and never Vals AI, and prints 66.4 where Vals
+measured 61.616. A different runner and a different number are two results. A name match is a
+candidate, never a join — which is exactly what the clause asked to be decided per row.
+
+**The decision.** 95 of 97 rows stay separate. Of those, 94 carry their own *"No independent
+reproduction is claimed"* and 71 of the 96 boards have no counterpart at all — that is a finding,
+not a gap. Exactly two rows meet all three conditions:
+
+| vendor row | value | joins | measured | runner the vendor names |
+|---|---|---|---|---|
+| `anthropic-aa-briefcase-v1-1::1.1` | 1822 Elo | `aa-briefcase::1.1` | 1821.85 | Artificial Analysis |
+| `anthropic-gdpval-aa-v2-1::2.1` | 1846 Elo | `aa-gdpval::2.1` | 1846.17 | Artificial Analysis |
+
+Both system-card sections say in so many words *"Evaluations were run independently by Artificial
+Analysis"*, and Artificial Analysis maintains both counterpart boards. The configurations match
+exactly, not just by name: Anthropic's *"production safeguards enabled … fell back to Opus 4.8 /
+Opus 5"* is AA's *"Claude Opus 5.5 (max with fallback)"*, and GDPval's anchor (DeepSeek V4.1 Flash
+(max) at 1,600) is the counterpart entry's own stated scoring. The rows were written before CR-128
+ingested AA's own publication; the condition they set for themselves became true then.
+
+**The cost, measured:** `claude-opus-5.5::max` reads 43 capability benchmarks where 41 distinct
+evaluations stand behind it — one AA evaluation is credited twice, once under AA's board and once
+under Anthropic's reprint of it.
+
+**Why the join is recorded and not applied.** Applying it moves a published number onto another
+board, and `lib/benchmark-score-evidence.mjs` binds every self-reported vendor score to a
+producer/critic approval over the observation's own digest. The one documented exception is a
+reviewed `identity_review`, which *"changes only `subject.model_id`"*. A `benchmark_id` rekey has
+no approved path, and the build refuses it (`Unreviewed vendor score: …`) — correctly. So the join
+needs either a fresh gauntlet approval for the two rows or a reviewed extension of
+`identity_review` to benchmark identity. Both are reviewed changes; neither is something an
+unattended iteration slips in, least of all while the site is taking Hacker News traffic. The
+decision is therefore landed with a guard, and the application stays open.
+
+Two design alternatives were worked out and rejected on the evidence, so a reviewer need not redo
+them: *withdrawing* the two rows was measured end to end in a scratch worktree (build green, 865
+models / 670 families unchanged, historical estimates 1696 → 1696 with the withheld locators, the
+only numerator change `claude-opus-5.5::max` 43 → 41) but it drops two of CR-123's sixteen
+Anthropic claims, so it was reverted; and `superseded_by` is the version-lifecycle field (`v2 →
+v2.1`, paired with `status: retained`), not a "same evaluation, different reprinter" link, so
+reusing it would itself be a reviewed design change.
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| F-165(a) rekey half | open (decided, application blocked on a vendor-score approval) | `ops/ux-2026-09-12/bin/f165a-rule.mjs`, `bin/verify-f165-a-rekey.mjs`; `test/f165a-vendor-reprint.test.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter187-f165a-rekey/` | 28/28 per the receipt on both hosts. 95 of 97 rows stay separate; the 2 pending joins are named and pinned, so a new launch ingest that creates a third fails the suite instead of rotting. |
+
+`verify-f165-a-rekey.mjs` takes `[outDir] [host …]` (out dir first, as the other verifiers do).
+
+### D188 — verified
+
+Kimi K3 (non-claude, non-implementer) re-ran `verify-d188.mjs` and signed it off: **29 checks per
+host, 0 failures, 58 total** — and corrected this iteration's packet, which had expected 58 *per*
+host. It confirmed the verifier re-derives every expectation from the newest retained primary
+captures rather than comparing against a pasted string, that it fetches both hosts live, and that
+it proves no observation value moved. Its own spot-check re-derived `vulcanbench-frontier::4` from
+the source CSV (18 columns, 29 rows, protocol values v3.4–v3.7) and found the quoted sentence and
+the `Updated 2026-09-19` date in the leaderboard capture, with the `§` footnote matching the single
+`n=22` row. It also checked both repair commits are ancestors of the served revision `73aa5074`.
+
+| ID | From | To | Why |
+|---|---|---|---|
+| D188 | implemented | verified | Kimi K3 sign-off, non-claude and non-implementer: 29/29 per host, re-derived from the primary captures, with an independent spot-check of one board. Evidence `/opt/benchmarkheaven/state/ux-evidence/iter187-d188-signoff/`. |
+
+### Gates
+
+`node scripts/build-dataset.mjs` green (865 models, 670 families, 96 providers, 3,032 offers —
+unchanged); `npm test` 1,235 passed / 0 failed / 1 skipped; `npx tsc --noEmit -p .` clean.
+
+### Still open after this iteration
+
+`CR-34.5`, `CR-62.4` (Florian's decisions), `CR-37.1`/`CR-37.3`, `CR-85.2` (sources), `CR-38.1`,
+`CR-73.5`, `CR-85.1` (an unattended run), D183, the scheduled-run half of D174–D179/D181/D184, the
+F-165(a) application above, CR-133's scoring critique, CR-136.1–.4/.6 (the SEO job's lane), and the
+non-claude sign-offs still owed on D184, CR-135 and F-165(b).
