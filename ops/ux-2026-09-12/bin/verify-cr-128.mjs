@@ -197,64 +197,181 @@ check('live/hosts-agree-on-revision',
   hostResults.map((r) => `${r.host} → ${r.revision}`).join('; '));
 
 // ---------------------------------------------------------------- CR-128.5: the reported ranks
-// `/api/models` does no sorting — it returns `ds.models` in dataset order and the page sorts client
-// side. So a model's index in that array is not its rank, and a release report that takes one is
-// stating a dataset position. Rank here is the competition rank: 1 + the number of configurations
-// scoring strictly higher, with ties named.
-const REPORTED = { 'claude-opus-5.5::max': 1, 'gpt-6-astra::max': 6, 'gpt-6-sol::max': 18, 'gpt-6-luna::max': 61 };
+// The target is a report on disk, read as a table — never a copy of its numbers written here. An
+// earlier form of this file pinned `{opus: 1, astra: 6, sol: 18, luna: 61}`, which is the defect's
+// own wrong quartet: a verifier that carries the number it is meant to catch goes green the day the
+// report is fixed *and* the day someone edits the pin.
+//
+// Rank is re-derived from the dataset each report names, never from today's: ranks move daily, and a
+// rank read a day later can neither convict nor acquit a report. `/api/models?score=composite` is the
+// site's default composite — the CR-74.4 Benchmaxxing penalty included — so the replay goes through
+// the same path the route does (clientData + the family signal map), and `rank/replay-reproduces-this-host`
+// proves the replay against the live payload before it is trusted against any report.
+const CORRECTION = '/opt/benchmarkheaven/state/ux-evidence/iter182-cr128-5/cr128-5-rank-correction.txt';
+// CR-128's own report, and the sibling frontier report whose numbers the same job produced. Both are
+// checked: the rank column is the same kind of claim in both, and only one of them was ever read.
+const REPORTS = [
+  { id: 'cr128', path: '/home/flori/jobs/bh-thirdparty-ingest-20260922/RESULT.md', heading: '## Final live metrics', labelCol: 0, rankCol: 3, compositeCol: 1 },
+  { id: 'frontier', path: '/home/flori/jobs/bh-frontier-update-20260922/RESULT.md', heading: '**Composite ranking:**', labelCol: 1, rankCol: 0, compositeCol: 2 },
+];
+
+const { execFileSync } = await import('node:child_process');
+const { clientData } = await import(`${REPO}/lib/client-model.ts`);
+const { buildBenchmarkView } = await import(`${REPO}/lib/benchmark-view.mjs`);
+const { benchmaxxingFamilySignals } = await import(`${REPO}/lib/benchmax.mjs`);
+
+// The site's default Composite over an arbitrary dataset, as `/api/models?score=composite` returns it.
+const rankerFor = (ds) => {
+  const view = buildBenchmarkView(ds);
+  const familyOf = new Map(view.models.map((m) => [m.id, m.family ?? m.id]));
+  const byFamily = new Map(benchmaxxingFamilySignals(view).reports.map(([id, r]) => [familyOf.get(id) ?? id, r.score ?? null]));
+  const signals = new Map(ds.models.map((m) => [m.id, byFamily.get(m.family_key) ?? null]));
+  const rows = clientData(ds, {}, signals).models.map((m) => ({ id: m.id, score: m.scores.composite ?? 50 }));
+  const scored = rows.filter((r) => Number.isFinite(r.score));
+  return {
+    of: scored.length,
+    at: (id) => {
+      const me = scored.find((r) => r.id === id);
+      return me && {
+        score: me.score,
+        rank: scored.filter((r) => r.score > me.score).length + 1,
+        tied: scored.filter((r) => r.score === me.score).length - 1,
+        position: rows.findIndex((r) => r.id === id) + 1,
+        of: scored.length,
+      };
+    },
+  };
+};
+const datasetAt = (sha) => JSON.parse(execFileSync('bash', ['-c', `git show ${sha}:data/dataset.json`],
+  { cwd: REPO, encoding: 'utf8', maxBuffer: 1 << 28 }));
+// A report states either the revision it verified or the dataset stamp it read; both resolve to a commit.
+const commitForStamp = (stamp) => {
+  const log = execFileSync('git', ['log', '--format=%H', '--since', '2026-09-15', '--', 'data/dataset.json'],
+    { cwd: REPO, encoding: 'utf8', maxBuffer: 1 << 22 }).trim().split('\n').filter(Boolean);
+  for (const sha of log) {
+    // `generated_at` sits ~9 MB from the end of a 42 MB dataset; the report drops the milliseconds.
+    const tail = execFileSync('bash', ['-c', `git show ${sha}:data/dataset.json | tail -c 20000000`],
+      { cwd: REPO, encoding: 'utf8', maxBuffer: 1 << 26 });
+    if (tail.includes(`"generated_at": "${stamp.replace(/Z$/, '')}`)) return sha;
+  }
+  return null;
+};
+
+// One live reading per host, used for the frontier/cost half and to resolve a report's labels.
 const rankReadings = [];
 for (const host of hosts) {
   const list = await getJson(`${host}/api/models?score=composite`);
-  const scored = (list.models ?? []).filter((m) => Number.isFinite(m.score));
-  const reading = {};
-  for (const id of Object.keys(REPORTED)) {
-    const row = scored.find((m) => m.id === id);
-    if (!row) { reading[id] = null; continue; }
-    reading[id] = {
-      composite: row.score,
-      competition_rank: scored.filter((m) => m.score > row.score).length + 1,
-      tied_with: scored.filter((m) => m.score === row.score).length - 1,
-      dataset_order_index: (list.models ?? []).findIndex((m) => m.id === id) + 1,
-      reported_as: REPORTED[id],
-    };
-  }
-  rankReadings.push({ host, scored: scored.length, reading });
+  rankReadings.push({ host, models: list.models ?? [], scored: (list.models ?? []).filter((m) => Number.isFinite(m.score)).length, reading: {} });
 }
+// "Sol max" matches GPT-6 Sol and GPT-5.6 Sol alike, so the report's own Composite decides between
+// them: a label resolves only when exactly one configuration of that name also carries the value the
+// report prints beside it. A moved score leaves the label unresolved rather than guessed at.
+const resolveLabel = (label, composite) => {
+  const all = rankReadings[0]?.models ?? [];
+  const words = String(label).toLowerCase().split(/\s+/).filter(Boolean);
+  const variant = words.at(-1);
+  const named = all.filter((m) => String(m.variant ?? '').toLowerCase() === variant
+    && words.slice(0, -1).every((w) => `${m.family_name ?? ''} ${m.display_name ?? ''}`.toLowerCase().includes(w)));
+  if (named.length === 1) return named[0].id;
+  const byValue = named.filter((m) => Number.isFinite(m.score) && Math.abs(m.score - composite) < 0.05);
+  return byValue.length === 1 ? byValue[0].id : null;
+};
+
+// The replay is worth nothing unless it reproduces a host this verifier can see for itself.
+const today = rankerFor(JSON.parse(fs.readFileSync(path.join(REPO, 'data/dataset.json'), 'utf8')));
+const liveScored = rankReadings[0].models.filter((m) => Number.isFinite(m.score));
+const replayDrift = liveScored.filter((m) => m.id.endsWith('::max') || m.id.endsWith('::high'))
+  .slice(0, 40)
+  .filter((m) => today.at(m.id)?.rank !== liveScored.filter((x) => x.score > m.score).length + 1);
+check('rank/replay-reproduces-this-host', replayDrift.length === 0,
+  replayDrift.length === 0 ? `${rankReadings[0].host}: 40 sampled configurations rank the same in the replay of data/dataset.json`
+    : replayDrift.slice(0, 3).map((m) => `${m.id}: live #${liveScored.filter((x) => x.score > m.score).length + 1}, replay #${today.at(m.id)?.rank}`).join('; '));
+
+const reportFindings = [];
+for (const spec of REPORTS) {
+  const text = fs.existsSync(spec.path) ? fs.readFileSync(spec.path, 'utf8') : '';
+  check(`rank/${spec.id}/report-is-on-disk`, text.length > 0, spec.path);
+  if (!text) continue;
+  // The table is read as a table: the rows after its heading, up to the first line that is not a
+  // table row, so a second table in the same file cannot be mistaken for it.
+  const rows = [];
+  for (const line of (text.split(spec.heading)[1] ?? '').split('\n')) {
+    const trimmed = line.trim();
+    if (!trimmed.startsWith('|')) { if (rows.length) break; continue; }
+    const cells = trimmed.split('|').slice(1, -1).map((c) => c.trim());
+    const rank = cells[spec.rankCol]?.match(/^#(\d+)$/)?.[1];
+    const composite = Number(cells[spec.compositeCol]);
+    if (rank && Number.isFinite(composite)) rows.push({ reported_rank: Number(rank), label: cells[spec.labelCol], composite });
+  }
+  // The dataset the report itself names: a verification revision, else a `generated_at` stamp.
+  const sha = text.match(/verification revision:\*\*\s*`([0-9a-f]{40})`/)?.[1]
+    ?? (text.match(/dataset\s+(\d{4}-\d{2}-\d{2}T[\d:.]+Z)/)?.[1] ? commitForStamp(text.match(/dataset\s+(\d{4}-\d{2}-\d{2}T[\d:.]+Z)/)[1]) : null);
+  check(`rank/${spec.id}/report-table-and-dataset-found`, rows.length >= 4 && !!sha,
+    `${rows.length} ranked rows against ${sha?.slice(0, 8) ?? 'no dataset'}; ${rows.map((r) => `#${r.reported_rank} ${r.label} ${r.composite}`).join(' | ')}`);
+  if (!rows.length || !sha) continue;
+  const ranker = rankerFor(datasetAt(sha));
+  const resolved = rows.map((r) => ({ ...r, id: resolveLabel(r.label, r.composite), }))
+    .map((r) => ({ ...r, truth: r.id ? ranker.at(r.id) : null }));
+  check(`rank/${spec.id}/labels-resolve-to-one-configuration-each`, resolved.every((r) => r.truth),
+    resolved.map((r) => `${r.label}→${r.id ?? 'UNRESOLVED'}`).join(', '));
+  const off = resolved.filter((r) => !r.truth || r.truth.rank !== r.reported_rank);
+  // An unresolved row counts as a miss: a rank nobody could attach to a configuration is not a checked
+  // rank. Each miss names the model's position in the unsorted payload beside the true rank, because the
+  // two failure modes need different repairs: a dataset position reported as a rank, or a miscount.
+  check(`rank/${spec.id}/report-matches-its-own-dataset`, off.length === 0,
+    off.length === 0 ? `all ${resolved.length} reported ranks are the competition rank of ${sha.slice(0, 8)} (${ranker.of} scored)`
+      : off.map((r) => !r.truth ? `${r.label}: unresolved` : `${r.label}: report #${r.reported_rank}, competition rank #${r.truth.rank} of ${r.truth.of}${r.truth.tied ? ` (tied with ${r.truth.tied})` : ''}, dataset position ${r.truth.position}`).join('; '));
+  reportFindings.push({ report: spec.path, dataset_commit: sha, scored: ranker.of, rows: resolved });
+}
+// The correction of record has to state the same numbers this replay derives, or it is not a record.
+const correction = fs.existsSync(CORRECTION) ? fs.readFileSync(CORRECTION, 'utf8') : '';
+const stated = reportFindings.flatMap((f) => f.rows.filter((r) => r.truth).map((r) => ({ id: r.id, rank: `#${r.truth.rank}` })));
+const missing = stated.filter(({ id, rank }) => !correction.split('\n').some((l) => l.includes(id) && l.includes(rank)));
+check('rank/correction-of-record-states-the-derived-ranks', correction.length > 0 && missing.length === 0,
+  correction.length === 0 ? `${CORRECTION} is missing`
+    : missing.length ? `not stated: ${missing.map((m) => `${m.id} ${m.rank}`).join(', ')}`
+      : `${stated.length} derived ranks stated in ${CORRECTION}`);
+
 // CR-128.5 also asks for Pareto position and cost per task per family. Both are re-derived here from
 // each host's own payload, using the site's own frontier definition (lib/pareto.mjs + the value map's
 // grace) so the report states the same frontier a reader sees, not a second opinion about it.
 const { paretoFrontier } = await import(`${REPO}/lib/pareto.mjs`);
 const { frontierGrace } = await import(`${REPO}/lib/value-map.mjs`);
 const COST_ID = 'aa-intelligence-index-cost-per-task::4.3.2';
+const subjects = [...new Set(reportFindings.flatMap((f) => f.rows.map((r) => r.id)).filter(Boolean))];
 for (const reading of rankReadings) {
-  const list = await getJson(`${reading.host}/api/models?score=composite`);
-  const priced = (list.models ?? []).filter((m) => Number.isFinite(m.score) && Number.isFinite(m.cost_blended_10to1))
+  const priced = reading.models.filter((m) => Number.isFinite(m.score) && Number.isFinite(m.cost_blended_10to1))
     .map((m) => ({ id: m.id, x: m.cost_blended_10to1, y: m.score }));
   const grace = frontierGrace(priced.map((p) => p.y));
   const frontier = paretoFrontier(priced, { grace }).map((p) => p.id);
   reading.frontier_size = frontier.length;
-  for (const id of Object.keys(REPORTED)) {
-    if (!reading.reading[id]) continue;
+  const scored = reading.models.filter((m) => Number.isFinite(m.score));
+  for (const id of subjects) {
+    const live = scored.find((m) => m.id === id);
+    if (!live) { reading.reading[id] = null; continue; }
     const detail = await getJson(`${reading.host}/api/models/${encodeURIComponent(id)}`);
     const costRows = (detail.benchmark_observations ?? [])
       .filter((o) => o.benchmark_id === COST_ID && o.basis === 'measured' && o.unit === 'USD/task');
-    reading.reading[id].on_frontier = frontier.includes(id);
-    reading.reading[id].frontier_position = frontier.indexOf(id) >= 0 ? frontier.indexOf(id) + 1 : null;
-    reading.reading[id].aa_cost_per_task_usd = costRows.length === 1 ? costRows[0].value : null;
-    reading.reading[id].aa_cost_observation_count = costRows.length;
+    reading.reading[id] = {
+      composite: live.score,
+      competition_rank: scored.filter((m) => m.score > live.score).length + 1,
+      tied_with: scored.filter((m) => m.score === live.score).length - 1,
+      dataset_order_index: reading.models.findIndex((m) => m.id === id) + 1,
+      on_frontier: frontier.includes(id),
+      frontier_position: frontier.indexOf(id) >= 0 ? frontier.indexOf(id) + 1 : null,
+      aa_cost_per_task_usd: costRows.length === 1 ? costRows[0].value : null,
+      aa_cost_observation_count: costRows.length,
+    };
   }
+  delete reading.models;
 }
 check('report/one-measured-cost-per-task-per-family',
-  rankReadings.every((r) => Object.values(r.reading).every((v) => !v || v.aa_cost_observation_count === 1)),
+  rankReadings.every((r) => Object.values(r.reading).every((v) => v && v.aa_cost_observation_count === 1)),
   rankReadings.map((r) => Object.entries(r.reading).map(([id, v]) => `${id}:${v?.aa_cost_observation_count}`).join(' ')).join(' | '));
 
 const [first, ...rest] = rankReadings;
 check('rank/hosts-agree', rest.every((r) => JSON.stringify(r.reading) === JSON.stringify(first.reading)),
   `${rankReadings.length} hosts read the same composite ranks`);
-const wrong = Object.entries(first.reading).filter(([, v]) => v && v.competition_rank !== v.reported_as);
-check('rank/release-report-matches-the-composite-rank', wrong.length === 0,
-  wrong.length === 0 ? 'every reported rank is the competition rank'
-    : wrong.map(([id, v]) => `${id}: reported #${v.reported_as} (dataset-order index ${v.dataset_order_index}), competition rank #${v.competition_rank}`).join('; '));
 
 // ---------------------------------------------------------------- report
 const passed = checks.filter((c) => c.ok).length;
@@ -265,6 +382,7 @@ const receipt = {
   candidate_rows: candidate.length,
   hosts: hostResults,
   ranks: rankReadings,
+  report_rank_findings: reportFindings,
   checks,
   passed,
   total: checks.length,
