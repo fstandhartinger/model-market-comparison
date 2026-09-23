@@ -8082,3 +8082,26 @@ Handled by the standing rule: **not staged, not committed, not reverted.** Every
 path and is `ops/ux-2026-09-12/PROGRESS.md` only. Whoever reads this next should expect that work to arrive as its own commit, and should read
 `state/self-heal-repair-job/OUTPUT.md` before touching the publish path — part 11's note that the single push is a deliberate safety property,
 not an omission, is the thing that agent most needs and is least likely to infer from the logs alone.
+
+### Iteration 180, part 14 — the independent F-165(a) run, including the part of it that failed
+
+Kimi K3 ran `verify-f165-a.mjs` against both hosts from `/tmp/f165a-signoff` with no repository access
+(`/opt/benchmarkheaven/state/ux-evidence/iter180-f165a/kimi-signoff/`). Reported as it came back, not as it was hoped:
+
+- **canonical `https://benchmarkheaven.com`: 34/34**, verified_at 08:32:46Z — a clean independent confirmation.
+- **legacy `https://model-market-comparison.app.mintapis.com`: 31/34**, verified_at 08:33:10Z, failing `1440-dark/rows-read`
+  ("**0 benchmark rows rendered**"), `1440-dark/launch-rows-name-their-runner` (empty, which follows from zero rows) and
+  `390-light/no-horizontal-overflow` (**322 px**).
+
+**Chased rather than waved away, because 322 px is not a rounding error.** The legacy host was re-run immediately: **34/34**. Then the exact
+failing context was loaded **three times per host** with request logging: document overflow **−10 px on all six loads**, **69 rows on all six**,
+and the only elements past the viewport are the `.bh-table` and its caption at x=479 inside `.bh-table-wrap overflow-x-auto` — a table that scrolls
+inside its wrapper by design, which is why the document does not overflow. Several loads did log **failed `_rsc=` prefetch requests** on both
+hosts, and a page whose payload never arrives renders exactly Kimi's pair of symptoms at once: no rows, and an unconstrained table.
+
+So: **a partial render under load, not a layout defect** — three heavy browser jobs and the repair agent were sharing this box at 08:33. Two
+things follow, and both belong in the record rather than in a rounded-up "verified": F-165(a)'s independent receipt is **34/34 canonical and
+31/34 legacy with three checks that did not reproduce in nine subsequent loads**, which is weaker than the CR-128.5 sign-off and should be
+re-run on an idle box before anyone calls the row closed; and the intermittent `_rsc` prefetch failures are worth a look of their own, since
+this is the second time this iteration that a browser check produced a symptom explained by a payload that never arrived (part 12's pass-31
+`page.evaluate` null).
