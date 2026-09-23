@@ -18507,6 +18507,876 @@
           "excerpt": "\"🥇 🕹️ GPT-6-Astra-Max | 68.3 ± 2.0\""
         }
       ]
+    },
+    {
+      "id": "vals-biomysterybench::snapshot-2026-09-21",
+      "name": "BioMysteryBench",
+      "version": "snapshot-2026-09-21",
+      "version_status": "snapshot",
+      "family": "vals-biomysterybench",
+      "category": "Science",
+      "one_sentence_description": "BioMysteryBench results published by Vals AI.",
+      "scoring": {
+        "metric": "Source-reported score for Vals: BioMysteryBench",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Keep the source's exact board, version, effort and harness separate. The captured source row is retained with each observation; no cross-benchmark normalization is applied."
+      },
+      "maintainer": "Vals AI",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://www.vals.ai/benchmarks/biomysterybench",
+      "publication_urls": [
+        {
+          "url": "https://www.vals.ai/benchmarks/biomysterybench",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and source capture entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "Review the retained primary-source capture and extract the exact named row/configuration; do not infer missing effort or combine nearby benchmark variants.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Exact row for GPT-6 Astra; openai/gpt-6-astra (Vals: reasoning_effort max); quoted field \"overall\":{\"openai/gpt-6-astra\":{\"accuracy\":79.259,...,\"cost_per_test\":1.719326}}",
+        "version_guard": "Require source date/version page \"Updated 9/21/2026\"; keep this exact benchmark and operator separate from other similarly named boards.",
+        "notes": "One-time manual snapshot for CR-128; refresh only after verifying the source's version and protocol. Source maintainer: Vals AI."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source.",
+        "check_recommendation": "Recheck on a model release or when the board updates; do not imply a source schedule."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://www.vals.ai/benchmarks/biomysterybench",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/aa86d1b5b70c620306b4.gz",
+          "sha256": "5be8580aab628c267ff80a97cd0cb31abf76834d80ffe4612d4003ecfdd6ddda",
+          "fetched_at": "2026-09-22T21:04:10.757142+00:00",
+          "source_sha256": "aa86d1b5b70c620306b4556996220cee5d89ace98fe9c6f2414275971b572cd3",
+          "excerpt": "\"overall\":{\"openai/gpt-6-astra\":{\"accuracy\":79.259,...,\"cost_per_test\":1.719326}}"
+        }
+      ]
+    },
+    {
+      "id": "vals-cua-bench::snapshot-2026-09-18",
+      "name": "CUA-bench",
+      "version": "snapshot-2026-09-18",
+      "version_status": "snapshot",
+      "family": "vals-cua-bench",
+      "category": "Agentic",
+      "one_sentence_description": "CUA-bench results published by Vals AI.",
+      "scoring": {
+        "metric": "Source-reported score for Vals: CUA-bench",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Keep the source's exact board, version, effort and harness separate. The captured source row is retained with each observation; no cross-benchmark normalization is applied."
+      },
+      "maintainer": "Vals AI",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://www.vals.ai/benchmarks/cua_bench",
+      "publication_urls": [
+        {
+          "url": "https://www.vals.ai/benchmarks/cua_bench",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and source capture entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "Review the retained primary-source capture and extract the exact named row/configuration; do not infer missing effort or combine nearby benchmark variants.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Exact row for GPT-6 Astra; openai/gpt-6-astra (Vals: reasoning_effort max); quoted field \"overall\":{\"openai/gpt-6-astra\":{\"accuracy\":19.166667,...,\"cost_per_test\":2059.279636}}",
+        "version_guard": "Require source date/version page \"Updated 9/18/2026\"; keep this exact benchmark and operator separate from other similarly named boards.",
+        "notes": "One-time manual snapshot for CR-128; refresh only after verifying the source's version and protocol. Source maintainer: Vals AI."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source.",
+        "check_recommendation": "Recheck on a model release or when the board updates; do not imply a source schedule."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://www.vals.ai/benchmarks/cua_bench",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/d12539796d37a02c6776.gz",
+          "sha256": "9b2203b5b395f3bdb0ecd20280e0c74ce3c254fd13e32f233d7f09de2d957192",
+          "fetched_at": "2026-09-22T21:04:16.803900+00:00",
+          "source_sha256": "d12539796d37a02c67767dfbe099e710919c10727dbab6da7608f21a5581cdc7",
+          "excerpt": "\"overall\":{\"openai/gpt-6-astra\":{\"accuracy\":19.166667,...,\"cost_per_test\":2059.279636}}"
+        }
+      ]
+    },
+    {
+      "id": "vals-ioi::snapshot-2026-09-21",
+      "name": "IOI",
+      "version": "snapshot-2026-09-21",
+      "version_status": "snapshot",
+      "family": "vals-ioi",
+      "category": "Math",
+      "one_sentence_description": "IOI results published by Vals AI.",
+      "scoring": {
+        "metric": "Source-reported score for Vals: IOI",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Keep the source's exact board, version, effort and harness separate. The captured source row is retained with each observation; no cross-benchmark normalization is applied."
+      },
+      "maintainer": "Vals AI",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://www.vals.ai/benchmarks/ioi",
+      "publication_urls": [
+        {
+          "url": "https://www.vals.ai/benchmarks/ioi",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and source capture entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "Review the retained primary-source capture and extract the exact named row/configuration; do not infer missing effort or combine nearby benchmark variants.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Exact row for GPT-6 Astra; openai/gpt-6-astra (Vals: reasoning_effort max); quoted field \"overall\":{\"openai/gpt-6-astra\":{\"accuracy\":100.0,...,\"cost_per_test\":6.495051}}",
+        "version_guard": "Require source date/version page \"Updated 9/21/2026\"; keep this exact benchmark and operator separate from other similarly named boards.",
+        "notes": "One-time manual snapshot for CR-128; refresh only after verifying the source's version and protocol. Source maintainer: Vals AI."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source.",
+        "check_recommendation": "Recheck on a model release or when the board updates; do not imply a source schedule."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://www.vals.ai/benchmarks/ioi",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/88d6ac5ba7f0933734b7.gz",
+          "sha256": "3213833e7445e116f37a113f7f9d383e794cf217204e88dcc8627564d1797c0e",
+          "fetched_at": "2026-09-22T21:04:21.371255+00:00",
+          "source_sha256": "88d6ac5ba7f0933734b7d78a51799ca893f334c41e549cc7f1a89fd1bb23672f",
+          "excerpt": "\"overall\":{\"openai/gpt-6-astra\":{\"accuracy\":100.0,...,\"cost_per_test\":6.495051}}"
+        }
+      ]
+    },
+    {
+      "id": "vals-medscribe::snapshot-2026-09-21",
+      "name": "MedScribe",
+      "version": "snapshot-2026-09-21",
+      "version_status": "snapshot",
+      "family": "vals-medscribe",
+      "category": "Knowledge",
+      "one_sentence_description": "MedScribe results published by Vals AI.",
+      "scoring": {
+        "metric": "Source-reported score for Vals: MedScribe",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Keep the source's exact board, version, effort and harness separate. The captured source row is retained with each observation; no cross-benchmark normalization is applied."
+      },
+      "maintainer": "Vals AI",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://www.vals.ai/benchmarks/medscribe",
+      "publication_urls": [
+        {
+          "url": "https://www.vals.ai/benchmarks/medscribe",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and source capture entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "Review the retained primary-source capture and extract the exact named row/configuration; do not infer missing effort or combine nearby benchmark variants.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Exact row for Claude Opus 5.5; anthropic/claude-opus-5-5 (Vals: compute_effort max); quoted field \"overall\":{\"anthropic/claude-opus-5-5\":{\"accuracy\":91.43,...,\"cost_per_test\":1.154156}}",
+        "version_guard": "Require source date/version page \"Updated 9/21/2026\"; keep this exact benchmark and operator separate from other similarly named boards.",
+        "notes": "One-time manual snapshot for CR-128; refresh only after verifying the source's version and protocol. Source maintainer: Vals AI."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source.",
+        "check_recommendation": "Recheck on a model release or when the board updates; do not imply a source schedule."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://www.vals.ai/benchmarks/medscribe",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/2d8731d106e7a6f30347.gz",
+          "sha256": "78e261cb995f34e1e77aa853d379935008c546eb14942ca280cfdba00a798448",
+          "fetched_at": "2026-09-22T21:04:23.916482+00:00",
+          "source_sha256": "2d8731d106e7a6f30347523c97f0e742f809d85cbff890b77c6eac83b4d42fe8",
+          "excerpt": "\"overall\":{\"anthropic/claude-opus-5-5\":{\"accuracy\":91.43,...,\"cost_per_test\":1.154156}}"
+        }
+      ]
+    },
+    {
+      "id": "vals-mysterymechanism::snapshot-2026-09-21",
+      "name": "MysteryMechanism",
+      "version": "snapshot-2026-09-21",
+      "version_status": "snapshot",
+      "family": "vals-mysterymechanism",
+      "category": "Science",
+      "one_sentence_description": "MysteryMechanism results published by Vals AI.",
+      "scoring": {
+        "metric": "Source-reported score for Vals: MysteryMechanism",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Keep the source's exact board, version, effort and harness separate. The captured source row is retained with each observation; no cross-benchmark normalization is applied."
+      },
+      "maintainer": "Vals AI",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://www.vals.ai/benchmarks/mysterymechanism",
+      "publication_urls": [
+        {
+          "url": "https://www.vals.ai/benchmarks/mysterymechanism",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and source capture entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "Review the retained primary-source capture and extract the exact named row/configuration; do not infer missing effort or combine nearby benchmark variants.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Exact row for GPT-6 Astra; openai/gpt-6-astra (Vals: reasoning_effort max); quoted field \"overall\":{\"openai/gpt-6-astra\":{\"accuracy\":53.153,...,\"cost_per_test\":1.770411}}",
+        "version_guard": "Require source date/version page \"Updated 9/21/2026\"; keep this exact benchmark and operator separate from other similarly named boards.",
+        "notes": "One-time manual snapshot for CR-128; refresh only after verifying the source's version and protocol. Source maintainer: Vals AI."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source.",
+        "check_recommendation": "Recheck on a model release or when the board updates; do not imply a source schedule."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://www.vals.ai/benchmarks/mysterymechanism",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/2caef6972ae38cca27f6.gz",
+          "sha256": "11427b1b6f6e858b30e4ab2dba081f83c11345dc9da894ae318d7e1d519352b6",
+          "fetched_at": "2026-09-22T21:04:26.544728+00:00",
+          "source_sha256": "2caef6972ae38cca27f6375b7ff2fcedeb6ebf274f0e34775235e3b06a1cfc81",
+          "excerpt": "\"overall\":{\"openai/gpt-6-astra\":{\"accuracy\":53.153,...,\"cost_per_test\":1.770411}}"
+        }
+      ]
+    },
+    {
+      "id": "vals-programbench::snapshot-2026-09-21",
+      "name": "ProgramBench",
+      "version": "snapshot-2026-09-21",
+      "version_status": "snapshot",
+      "family": "vals-programbench",
+      "category": "Coding",
+      "one_sentence_description": "ProgramBench results published by Vals AI.",
+      "scoring": {
+        "metric": "Source-reported score for Vals: ProgramBench",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Keep the source's exact board, version, effort and harness separate. The captured source row is retained with each observation; no cross-benchmark normalization is applied."
+      },
+      "maintainer": "Vals AI",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://www.vals.ai/benchmarks/programbench",
+      "publication_urls": [
+        {
+          "url": "https://www.vals.ai/benchmarks/programbench",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and source capture entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "Review the retained primary-source capture and extract the exact named row/configuration; do not infer missing effort or combine nearby benchmark variants.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Exact row for Claude Opus 5.5; anthropic/claude-opus-5-5 (Vals: compute_effort max); quoted field \"overall\":{\"anthropic/claude-opus-5-5\":{\"accuracy\":18.5,...,\"cost_per_test\":42.65866}}",
+        "version_guard": "Require source date/version page \"Updated 9/21/2026\"; keep this exact benchmark and operator separate from other similarly named boards.",
+        "notes": "One-time manual snapshot for CR-128; refresh only after verifying the source's version and protocol. Source maintainer: Vals AI."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source.",
+        "check_recommendation": "Recheck on a model release or when the board updates; do not imply a source schedule."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://www.vals.ai/benchmarks/programbench",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/196fe30dddb97c0ed9c7.gz",
+          "sha256": "4b9a243ce5f94e0644b71bb7cefe5184aaf99b62f7c7e2d6af8066121065c140",
+          "fetched_at": "2026-09-22T21:04:29.100062+00:00",
+          "source_sha256": "196fe30dddb97c0ed9c7c4f9b919776911aaa74cf16cd26bd499d7f6903f73c0",
+          "excerpt": "\"overall\":{\"anthropic/claude-opus-5-5\":{\"accuracy\":18.5,...,\"cost_per_test\":42.65866}}"
+        }
+      ]
+    },
+    {
+      "id": "vals-proofbench-v1-1::1.1",
+      "name": "ProofBench v1.1",
+      "version": "1.1",
+      "version_status": "published",
+      "family": "vals-proofbench-v1-1",
+      "category": "Math",
+      "one_sentence_description": "ProofBench v1.1 results published by Vals AI.",
+      "scoring": {
+        "metric": "Source-reported score for Vals: ProofBench v1.1",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Keep the source's exact board, version, effort and harness separate. The captured source row is retained with each observation; no cross-benchmark normalization is applied."
+      },
+      "maintainer": "Vals AI",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://www.vals.ai/benchmarks/proof_bench",
+      "publication_urls": [
+        {
+          "url": "https://www.vals.ai/benchmarks/proof_bench",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and source capture entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "Review the retained primary-source capture and extract the exact named row/configuration; do not infer missing effort or combine nearby benchmark variants.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Exact row for Claude Opus 5.5; anthropic/claude-opus-5-5 (Vals: compute_effort max); quoted field \"overall\":{\"anthropic/claude-opus-5-5\":{\"accuracy\":100.0,...,\"cost_per_test\":0.924063}}",
+        "version_guard": "Require source date/version page \"Updated 9/21/2026\"; keep this exact benchmark and operator separate from other similarly named boards.",
+        "notes": "One-time manual snapshot for CR-128; refresh only after verifying the source's version and protocol. Source maintainer: Vals AI."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source.",
+        "check_recommendation": "Recheck on a model release or when the board updates; do not imply a source schedule."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://www.vals.ai/benchmarks/proof_bench",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/ab65f95a39427a605f1a.gz",
+          "sha256": "f6ec06882edda09118cc12162066a90f2c98b888c9a071189e73938bf517ad3f",
+          "fetched_at": "2026-09-22T21:04:32.175485+00:00",
+          "source_sha256": "ab65f95a39427a605f1ad7da7355bc377ab193717ce5ed49f8714394c515ac2d",
+          "excerpt": "\"overall\":{\"anthropic/claude-opus-5-5\":{\"accuracy\":100.0,...,\"cost_per_test\":0.924063}}"
+        }
+      ]
+    },
+    {
+      "id": "vals-public-benefits-bench-v1-1::1.1",
+      "name": "Public Benefits Bench v1.1",
+      "version": "1.1",
+      "version_status": "published",
+      "family": "vals-public-benefits-bench-v1-1",
+      "category": "Knowledge",
+      "one_sentence_description": "Public Benefits Bench v1.1 results published by Vals AI.",
+      "scoring": {
+        "metric": "Source-reported score for Vals: Public Benefits Bench v1.1",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Keep the source's exact board, version, effort and harness separate. The captured source row is retained with each observation; no cross-benchmark normalization is applied."
+      },
+      "maintainer": "Vals AI",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://www.vals.ai/benchmarks/public-benefits-bench",
+      "publication_urls": [
+        {
+          "url": "https://www.vals.ai/benchmarks/public-benefits-bench",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and source capture entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "Review the retained primary-source capture and extract the exact named row/configuration; do not infer missing effort or combine nearby benchmark variants.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Exact row for Claude Opus 5.5; anthropic/claude-opus-5-5 (Vals: compute_effort max); quoted field \"overall\":{\"anthropic/claude-opus-5-5\":{\"accuracy\":70.636,...,\"cost_per_test\":5.285453}}",
+        "version_guard": "Require source date/version page \"Updated 9/21/2026\"; keep this exact benchmark and operator separate from other similarly named boards.",
+        "notes": "One-time manual snapshot for CR-128; refresh only after verifying the source's version and protocol. Source maintainer: Vals AI."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source.",
+        "check_recommendation": "Recheck on a model release or when the board updates; do not imply a source schedule."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://www.vals.ai/benchmarks/public-benefits-bench",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/de064fb3a5e312fcc471.gz",
+          "sha256": "8ee0440d41619ed95c963fd430042ab8d5987ccda579a397f4b763b4801352f3",
+          "fetched_at": "2026-09-22T21:04:35.526130+00:00",
+          "source_sha256": "de064fb3a5e312fcc4711a792ad408ff0d9eac6cbc04caf513d201d7a14cf86c",
+          "excerpt": "\"overall\":{\"anthropic/claude-opus-5-5\":{\"accuracy\":70.636,...,\"cost_per_test\":5.285453}}"
+        }
+      ]
+    },
+    {
+      "id": "vals-sre-bench::snapshot-2026-09-22",
+      "name": "SRE Bench",
+      "version": "snapshot-2026-09-22",
+      "version_status": "snapshot",
+      "family": "vals-sre-bench",
+      "category": "Agentic",
+      "one_sentence_description": "SRE Bench results published by Vals AI.",
+      "scoring": {
+        "metric": "Source-reported score for Vals: SRE Bench",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Keep the source's exact board, version, effort and harness separate. The captured source row is retained with each observation; no cross-benchmark normalization is applied."
+      },
+      "maintainer": "Vals AI",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://www.vals.ai/benchmarks/srebench",
+      "publication_urls": [
+        {
+          "url": "https://www.vals.ai/benchmarks/srebench",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and source capture entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "Review the retained primary-source capture and extract the exact named row/configuration; do not infer missing effort or combine nearby benchmark variants.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Exact row for GPT-6 Astra; openai/gpt-6-astra (Vals: reasoning_effort max); quoted field \"overall\":{\"openai/gpt-6-astra\":{\"accuracy\":56.87,...,\"cost_per_test\":13.502894}}",
+        "version_guard": "Require source date/version page \"Updated n/a\"; keep this exact benchmark and operator separate from other similarly named boards.",
+        "notes": "One-time manual snapshot for CR-128; refresh only after verifying the source's version and protocol. Source maintainer: Vals AI."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source.",
+        "check_recommendation": "Recheck on a model release or when the board updates; do not imply a source schedule."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://www.vals.ai/benchmarks/srebench",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/9cfa55d825acb781a9d3.gz",
+          "sha256": "8879d30ad4da702460235abe91fee6af9535f5b06a794ce1d17adbd55b409f84",
+          "fetched_at": "2026-09-22T21:04:42.797438+00:00",
+          "source_sha256": "9cfa55d825acb781a9d3b3df0c1e8e88f76969a4d0dcb7a322e58d68c7b0c3ae",
+          "excerpt": "\"overall\":{\"openai/gpt-6-astra\":{\"accuracy\":56.87,...,\"cost_per_test\":13.502894}}"
+        }
+      ]
+    },
+    {
+      "id": "vals-terminal-bench-4-0::snapshot-2026-09-21",
+      "name": "Terminal-Bench 4.0",
+      "version": "snapshot-2026-09-21",
+      "version_status": "snapshot",
+      "family": "vals-terminal-bench-4-0",
+      "category": "Agentic",
+      "one_sentence_description": "Terminal-Bench 4.0 results published by Vals AI.",
+      "scoring": {
+        "metric": "Source-reported score for Vals: Terminal-Bench 4.0",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Keep the source's exact board, version, effort and harness separate. The captured source row is retained with each observation; no cross-benchmark normalization is applied."
+      },
+      "maintainer": "Vals AI",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://www.vals.ai/benchmarks/terminal-bench-4",
+      "publication_urls": [
+        {
+          "url": "https://www.vals.ai/benchmarks/terminal-bench-4",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and source capture entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "Review the retained primary-source capture and extract the exact named row/configuration; do not infer missing effort or combine nearby benchmark variants.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Exact row for Claude Opus 5.5; anthropic/claude-opus-5-5 (Vals: compute_effort max); quoted field \"overall\":{\"anthropic/claude-opus-5-5\":{\"accuracy\":61.616,...,\"cost_per_test\":13.471345}}",
+        "version_guard": "Require source date/version page \"Updated 9/21/2026\"; keep this exact benchmark and operator separate from other similarly named boards.",
+        "notes": "One-time manual snapshot for CR-128; refresh only after verifying the source's version and protocol. Source maintainer: Vals AI."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source.",
+        "check_recommendation": "Recheck on a model release or when the board updates; do not imply a source schedule."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://www.vals.ai/benchmarks/terminal-bench-4",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/7abb730a63430f86627c.gz",
+          "sha256": "32f57505432cebaed1e9ec5b02c1f22c41fee19e51552bffb99fa48a5e20b54c",
+          "fetched_at": "2026-09-22T21:04:42.941740+00:00",
+          "source_sha256": "7abb730a63430f86627c4faef862f7f8fb1014d54c4d2c2bd154c97656e3ac50",
+          "excerpt": "\"overall\":{\"anthropic/claude-opus-5-5\":{\"accuracy\":61.616,...,\"cost_per_test\":13.471345}}"
+        }
+      ]
+    },
+    {
+      "id": "vals-terminal-bench-science::snapshot-2026-09-21",
+      "name": "Terminal-Bench Science",
+      "version": "snapshot-2026-09-21",
+      "version_status": "snapshot",
+      "family": "vals-terminal-bench-science",
+      "category": "Agentic",
+      "one_sentence_description": "Terminal-Bench Science results published by Vals AI.",
+      "scoring": {
+        "metric": "Source-reported score for Vals: Terminal-Bench Science",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Keep the source's exact board, version, effort and harness separate. The captured source row is retained with each observation; no cross-benchmark normalization is applied."
+      },
+      "maintainer": "Vals AI",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://www.vals.ai/benchmarks/terminal-bench-science",
+      "publication_urls": [
+        {
+          "url": "https://www.vals.ai/benchmarks/terminal-bench-science",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and source capture entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "Review the retained primary-source capture and extract the exact named row/configuration; do not infer missing effort or combine nearby benchmark variants.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Exact row for GPT-6 Astra; openai/gpt-6-astra (Vals: reasoning_effort max); quoted field \"overall\":{\"openai/gpt-6-astra\":{\"accuracy\":65.714,...,\"cost_per_test\":15.795618}}",
+        "version_guard": "Require source date/version page \"Updated 9/21/2026\"; keep this exact benchmark and operator separate from other similarly named boards.",
+        "notes": "One-time manual snapshot for CR-128; refresh only after verifying the source's version and protocol. Source maintainer: Vals AI."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source.",
+        "check_recommendation": "Recheck on a model release or when the board updates; do not imply a source schedule."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://www.vals.ai/benchmarks/terminal-bench-science",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/62eef2487a924e1a2db0.gz",
+          "sha256": "c9e15928b382b3de63159140bee5e8615fedca7a11036a26e60b0086f116c64f",
+          "fetched_at": "2026-09-22T21:04:45.477970+00:00",
+          "source_sha256": "62eef2487a924e1a2db0c468fa0522b63fcb1d53526261f600e529e71b5f7e49",
+          "excerpt": "\"overall\":{\"openai/gpt-6-astra\":{\"accuracy\":65.714,...,\"cost_per_test\":15.795618}}"
+        }
+      ]
+    },
+    {
+      "id": "vals-time-horizon-index-ksp::snapshot-2026-09-14",
+      "name": "Time Horizon Index: KSP",
+      "version": "snapshot-2026-09-14",
+      "version_status": "snapshot",
+      "family": "vals-time-horizon-index-ksp",
+      "category": "Agentic",
+      "one_sentence_description": "Time Horizon Index: KSP results published by Vals AI.",
+      "scoring": {
+        "metric": "Source-reported score for Vals: Time Horizon Index: KSP",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Keep the source's exact board, version, effort and harness separate. The captured source row is retained with each observation; no cross-benchmark normalization is applied."
+      },
+      "maintainer": "Vals AI",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://www.vals.ai/benchmarks/time_horizon_index",
+      "publication_urls": [
+        {
+          "url": "https://www.vals.ai/benchmarks/time_horizon_index",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and source capture entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "Review the retained primary-source capture and extract the exact named row/configuration; do not infer missing effort or combine nearby benchmark variants.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Exact row for GPT-6 Astra; openai/gpt-6-astra (Vals: reasoning_effort max); quoted field \"overall\":{\"openai/gpt-6-astra\":{\"accuracy\":90.5,...,\"cost_per_test\":4206.58511}}",
+        "version_guard": "Require source date/version page \"Updated 9/14/2026\"; keep this exact benchmark and operator separate from other similarly named boards.",
+        "notes": "One-time manual snapshot for CR-128; refresh only after verifying the source's version and protocol. Source maintainer: Vals AI."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source.",
+        "check_recommendation": "Recheck on a model release or when the board updates; do not imply a source schedule."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://www.vals.ai/benchmarks/time_horizon_index",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/f826956cf1575ea0666d.gz",
+          "sha256": "00dbd206a53507e041120fbbc816354a6702aaad84b3c53679a7012334012639",
+          "fetched_at": "2026-09-22T21:04:48.055355+00:00",
+          "source_sha256": "f826956cf1575ea0666d879d18e2b887d41a89a085f42c89249e0297e359e699",
+          "excerpt": "\"overall\":{\"openai/gpt-6-astra\":{\"accuracy\":90.5,...,\"cost_per_test\":4206.58511}}"
+        }
+      ]
+    },
+    {
+      "id": "vals-vibe-code-bench-1-100::snapshot-2026-09-22",
+      "name": "Vibe Code Bench 1-100",
+      "version": "snapshot-2026-09-22",
+      "version_status": "snapshot",
+      "family": "vals-vibe-code-bench-1-100",
+      "category": "Coding",
+      "one_sentence_description": "Vibe Code Bench 1-100 results published by Vals AI.",
+      "scoring": {
+        "metric": "Source-reported score for Vals: Vibe Code Bench 1-100",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Keep the source's exact board, version, effort and harness separate. The captured source row is retained with each observation; no cross-benchmark normalization is applied."
+      },
+      "maintainer": "Vals AI",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://www.vals.ai/benchmarks/vcb-1-100",
+      "publication_urls": [
+        {
+          "url": "https://www.vals.ai/benchmarks/vcb-1-100",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and source capture entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "Review the retained primary-source capture and extract the exact named row/configuration; do not infer missing effort or combine nearby benchmark variants.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Exact row for Claude Opus 5.5; anthropic/claude-opus-5-5 (Vals: compute_effort max); quoted field \"overall\":{\"anthropic/claude-opus-5-5\":{\"accuracy\":30.361,...,\"cost_per_test\":44.115239}}",
+        "version_guard": "Require source date/version page \"Updated 9/22/2026\"; keep this exact benchmark and operator separate from other similarly named boards.",
+        "notes": "One-time manual snapshot for CR-128; refresh only after verifying the source's version and protocol. Source maintainer: Vals AI."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source.",
+        "check_recommendation": "Recheck on a model release or when the board updates; do not imply a source schedule."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://www.vals.ai/benchmarks/vcb-1-100",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/b73c45a49b2871ceca0c.gz",
+          "sha256": "4227bb43680bf403b1bfb11dd4adc88a1bf415dd8d816e19c76857014f003611",
+          "fetched_at": "2026-09-22T21:04:53.297128+00:00",
+          "source_sha256": "b73c45a49b2871ceca0ccf2fa154f4ddcf5e846d933fd4334c28b3f5531af9b2",
+          "excerpt": "\"overall\":{\"anthropic/claude-opus-5-5\":{\"accuracy\":30.361,...,\"cost_per_test\":44.115239}}"
+        }
+      ]
+    },
+    {
+      "id": "vals-vibe-code-bench::1.1",
+      "name": "Vibe Code Bench v1.1",
+      "version": "1.1",
+      "version_status": "published",
+      "family": "vals-vibe-code-bench",
+      "category": "Coding",
+      "one_sentence_description": "Vibe Code Bench v1.1 results published by Vals AI.",
+      "scoring": {
+        "metric": "Source-reported score for Vals: Vibe Code Bench v1.1",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Keep the source's exact board, version, effort and harness separate. The captured source row is retained with each observation; no cross-benchmark normalization is applied."
+      },
+      "maintainer": "Vals AI",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://www.vals.ai/benchmarks/vibe-code",
+      "publication_urls": [
+        {
+          "url": "https://www.vals.ai/benchmarks/vibe-code",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and source capture entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "Review the retained primary-source capture and extract the exact named row/configuration; do not infer missing effort or combine nearby benchmark variants.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Exact row for Claude Opus 5.5; anthropic/claude-opus-5-5 (Vals: compute_effort max); quoted field \"overall\":{\"anthropic/claude-opus-5-5\":{\"accuracy\":90.294,...,\"cost_per_test\":35.774773}}",
+        "version_guard": "Require source date/version page \"Updated 9/21/2026\"; keep this exact benchmark and operator separate from other similarly named boards.",
+        "notes": "One-time manual snapshot for CR-128; refresh only after verifying the source's version and protocol. Source maintainer: Vals AI."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source.",
+        "check_recommendation": "Recheck on a model release or when the board updates; do not imply a source schedule."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://www.vals.ai/benchmarks/vibe-code",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/95b9dc3269598ed575af.gz",
+          "sha256": "010b7d63058ff09522ed997461e438bbb20783e88edaab4e2ca98480d1a7726a",
+          "fetched_at": "2026-09-22T21:04:56.113548+00:00",
+          "source_sha256": "95b9dc3269598ed575af42024847ae11e40eb247b5555f1613b2da653b227a3f",
+          "excerpt": "\"overall\":{\"anthropic/claude-opus-5-5\":{\"accuracy\":90.294,...,\"cost_per_test\":35.774773}}"
+        }
+      ]
+    },
+    {
+      "id": "vals-rsi-index::snapshot-2026-09-21",
+      "name": "RSI Index",
+      "version": "snapshot-2026-09-21",
+      "version_status": "snapshot",
+      "family": "vals-rsi-index",
+      "category": "Reasoning",
+      "one_sentence_description": "RSI Index results published by Vals AI.",
+      "scoring": {
+        "metric": "Source-reported score for Vals: RSI Index",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Keep the source's exact board, version, effort and harness separate. The captured source row is retained with each observation; no cross-benchmark normalization is applied."
+      },
+      "maintainer": "Vals AI",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://www.vals.ai/benchmarks/rsi_index",
+      "publication_urls": [
+        {
+          "url": "https://www.vals.ai/benchmarks/rsi_index",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and source capture entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "Review the retained primary-source capture and extract the exact named row/configuration; do not infer missing effort or combine nearby benchmark variants.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Exact row for Claude Opus 5.5; anthropic/claude-opus-5-5; quoted field \"Claude Opus 5.5 leads the index at 37.13%, followed by Claude Fable 5.1 at 35.03%.\"",
+        "version_guard": "Require source date/version page \"Updated 9/21/2026\"; keep this exact benchmark and operator separate from other similarly named boards.",
+        "notes": "One-time manual snapshot for CR-128; refresh only after verifying the source's version and protocol. Source maintainer: Vals AI."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source.",
+        "check_recommendation": "Recheck on a model release or when the board updates; do not imply a source schedule."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://www.vals.ai/benchmarks/rsi_index",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/daf99d9a76b8e910212f.gz",
+          "sha256": "3a51dc78fe91af6ce558f46ef0a755d81af2ebaeee0aabf4dae3ca691ce1a7c5",
+          "fetched_at": "2026-09-22T21:04:37.292680+00:00",
+          "source_sha256": "daf99d9a76b8e910212fa3abb1408c9cf88afb1beeb76e586fa1ad90e02d4f90",
+          "excerpt": "\"Claude Opus 5.5 leads the index at 37.13%, followed by Claude Fable 5.1 at 35.03%.\""
+        }
+      ]
     }
   ],
   "aa_field_map": [
