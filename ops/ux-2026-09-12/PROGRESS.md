@@ -8892,3 +8892,15 @@ registry fields, the second the two timestamps plus two registry fields. **No sc
 unattended run — tomorrow's 05:17 is the first with the push retry), F-165(a)'s rekey half, D183, the scheduled-run
 half of D174–D179/D181/D184, the non-claude sign-offs owed on D184 and now D188 (D186 and D187 are paid — part 7), and
 the nine benchmark arms of part 5. Because X6's list is not clear, no acceptance marker is appended.
+
+## CR-134 — seeded 2026-09-23 (Codex)
+
+Florian requested an evergreen preview for the changing `/jev-models` URL, a shareable exact-version URL whose preview may contain only frozen release claims, stable model-detail previews, both-host scraper verification, a cache-refresh note, and one English Telegram after the live checks. The existing CR-131 live metadata and no-number branded card already satisfy the evergreen rule and must be preserved. The latest published JevBench artifact at seeding is v1.4.0, SHA-256 `006ebff534221d913abe3195f87efeea420698ce0ab207beeb89dc3fb50fb517`. The separate Image Jev preview remains private, noindex, unlinked, and unreleased.
+
+| ID | Status | Seed note |
+|---|---|---|
+| CR-134.1 | open | Keep the changing board's title, description, Open Graph/X image and alt evergreen. |
+| CR-134.2 | open | Render the exact frozen version pin and add the “Share this version” link. |
+| CR-134.3 | open | Keep model-detail previews rank- and score-free unless an exact frozen release is selected. |
+| CR-134.4 | open | Test metadata and verify the live, pinned and detail URLs on both hosts with all three scraper agents. |
+| CR-134.5 | open | Document cache limits and Meta refresh steps; notify Florian once after both hosts are verified. |

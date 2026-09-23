@@ -1645,3 +1645,18 @@ Florian, 23 Sep 2026, via `/home/flori/jobs/image-jev-bench-continue-20260923/PR
   checks; and live verification on `benchmarkheaven.com` and `model-market-comparison.app.mintapis.com` after
   `systemctl --user is-active jevbench-v14-release2` reports inactive. Keep a private review artifact and report the
   ranking and open questions to Florian in plain English.
+
+## CR-20260923e — evergreen Jev-models previews → CR-134
+
+Florian, 23 Sep 2026, verbatim request from `/home/flori/jobs/jev-models-evergreen-preview-20260923/PROMPT.md`:
+
+> Make the /jev-models link preview evergreen (Florian, 23 Sep)
+>
+> Problem: X, WhatsApp, LinkedIn, Slack etc. cache link previews for days per URL. /jev-models currently puts the live top 5 and scores into og:title/og:description/og:image(+alt) (v1.3.0: "Jev 1.13.0 leads at 74.4", SemIf #2, djev #3...). After every leaderboard update, shared links keep showing old rankings — wrong claims under our name.
+>
+> Do (via the Benchmark Heaven CR process: CR id = max+1, single writer; WAIT until units jevbench-v14-release2 is inactive and the writer lease is free — check, don't poll tightly; `systemd-run --on-active` or a short sleep loop at >= 5 min is fine):
+> 1. /jev-models (the live, changing URL): evergreen preview — no ranks, no scores, no "leads at", no system count that changes often. E.g. title "JevBench — Jev alternatives ranked on accuracy, calibration, speed and cost", image = branded card without numbers. Keep good SEO title/description text (coordinate with the SEO push job /home/flori/jobs/jevbench-seo-hn-push-20260923; its CRs must follow the same rule).
+> 2. Version-pinned URLs (e.g. /jev-models/v1.4 or ?version=1.4.0) may carry that version's frozen top 5 in the preview, because they never change. Add a "Share this version" link on the page that uses the pinned URL. If such a route doesn't exist, create it rendering the frozen release data.
+> 3. Same rule for model detail pages (/jev-models/<system>): no rank numbers in previews (rank changes); scores only on version-pinned URLs.
+> 4. Test: fetch as Twitterbot/WhatsApp/facebookexternalhit user agents on both hosts; verify metas. Note in OUTPUT.md that already-cached previews on X/WhatsApp can't be purged by us (X card validator is gone; FB/WhatsApp re-scrape only via the Meta Sharing Debugger, which needs a login — list the steps for Florian, don't log in).
+> 5. One plain-English Telegram when live.
