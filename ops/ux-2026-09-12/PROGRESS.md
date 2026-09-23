@@ -8315,7 +8315,17 @@ calls returned `completion_tokens: 16384` **exactly** and were discarded — `wo
 the round that asked for it. The default cap is unchanged, so an ordinary producer call still costs what it costs; only a call that
 **demonstrably ran into the cap** is asked again with the runner's maximum, and only once. The first failure stays a strike, so the
 retry goes to the next viable route rather than back to the one that overran. Both new tests were checked by disabling the retry:
-they go red.
+they go red, and a third holds the critic out of it — D179 already put the critic at the ceiling, so retrying *its* length cut would
+buy the same room twice and pay twice.
+
+**What those two receipts actually say, because it bounds what this fix can do.** Both were `z-ai/glm-5.3-flash`, and both spent
+**16,384 of 16,384 completion tokens on reasoning** — `completion_tokens_details.reasoning_tokens: 16384`, at
+`reasoning: {effort: 'low', exclude: true}`. Neither ran out of room to *write*; both ran away thinking and never started. So the
+value of this retry is that **the round survives on the next viable route**, not that the same model would have finished with more
+room — and a reader should not expect the raised ceiling to rescue a runaway. The ceiling is a bound, not a spend: a route that
+answers stops long before it. The sharper follow-up this exposes is the route itself — a producer that burns its whole budget on
+reasoning at `effort: low` twice in one run is a bad producer route, and nothing currently says so beyond the one strike it earns
+per failure. Not fixed here: it is a worker-selection policy change, and this iteration already touched the daily path once.
 
 **The unattended-run debt, against the first run that published.** `2026-09-23T09-57-20-158Z-186582` ran the full pipeline
 start-to-finish and published `5bfb97de` with `live_verified: true`; `npm test` inside it read 1,189 / 1,188 pass / 0 fail. **It was
@@ -8324,7 +8334,7 @@ settle is every item that asked for "the next run's receipt". Receipts are under
 
 | ID | This run's receipt | What it settles |
 |---|---|---|
-| D174 | `reports/benchmarks-step-result.json` `ok: true`, 214 sources attempted; no evidence-guard failure anywhere in `reports/refresh-benchmarks.log` | The reviewed-join vendor rows ingested. The row's own ask was the 05:17 receipt, which failed on the D177 pins; this is the first clean one. |
+| D174 | `reports/benchmarks-step-result.json` `ok: true`, 214 sources attempted | The benchmark step passed in a run that went on to publish. Stated narrowly on purpose: the row asked for the 05:17 receipt, and 05:17's benchmark step was also `ok: true` — it died later, at the test gate, on the D177 pins. So what this run adds is the first `ok: true` benchmark step inside a run that reached publication, not a new sighting of the bug being absent. The sign-off is still owed. |
 | D175 | `reports/refresh-benchmarks.log`; `gauntlet/protocol-frontierswe-2/` (producer + critic rounds committed under `daily-evidence/2026-09-23T10-16-55-034Z/`) | The parser half: `frontierswe::2` reached review instead of freezing. It was then **retained** on a review verdict ("revise without a bounded row-level revision"), so the ingest receipt D175 asks for still does not exist. Stays `implemented`. |
 | D176 | `reports/fetch-claude-api-catalog.log`: "Claude API prices: 14 callable models (added 0, removed 0, price changes 0, lifecycle changes 0; excluded 4)" | The collector parsed and did not fail closed — the freeze is over. The multi-exception read itself still wants a non-claude-opus sign-off. |
 | D177 | `reports/npm-test.log`: 1,189 tests, 1,188 pass, 0 fail | The two pins that blocked publication on 00:41 and 05:17 no longer do. |
@@ -8342,5 +8352,5 @@ every claude-opus item below.
 | ID | Status | Evidence | Note |
 |---|---|---|---|
 | D183 | open | `/home/flori/jobs/bh-frontier-update-20260922/RESULT.md`; `ops/ux-2026-09-12/bin/verify-cr-128.mjs` (`rank/frontier/report-matches-its-own-dataset`); `/opt/benchmarkheaven/state/ux-evidence/iter182-cr128-5/cr128-5-rank-correction.txt` | The frontier report's Composite ranking reads #25 and #101 for `gpt-6-sol::max` and `gpt-6-luna::max`; the dataset it names gives #26 (tied with 3) and #103 (tied with 2), and it names no ties and no denominator. Not the dataset-position defect — the column is genuinely score-ordered. Left open, not silently repaired: the report is a finished job's artifact, the correction of record is written, and the verifier holds the red. |
-| D184 | implemented | `ops/daily/gauntlet.mjs` (`callWorker`, `WORKER_MAX_TOKENS_CEILING`, `defaultRunner`'s `maxTokens`); `test/daily-gauntlet-gate.test.mjs` (two new cases); run `2026-09-23T09-57-20-158Z-186582` `workers/worker-failure-1790158254112-218278.json` and `…-1790158265110-225592.json` | A producer completion cut off at 16,384 is not a bad answer, it is no answer, and it ended the round that paid for it. The default cap is unchanged; only a call that ran into it is repeated once at the runner's maximum. Implemented by claude-opus; needs a non-claude-opus sign-off and an unattended run. |
+| D184 | implemented | `ops/daily/gauntlet.mjs` (`callWorker`, `WORKER_MAX_TOKENS_CEILING`, `defaultRunner`'s `maxTokens`); `test/daily-gauntlet-gate.test.mjs` (two new cases); run `2026-09-23T09-57-20-158Z-186582` `workers/worker-failure-1790158254112-218278.json` and `…-1790158265110-225592.json` | A producer completion cut off at 16,384 is not a bad answer, it is no answer, and it ended the round that paid for it. The default cap is unchanged; only a call that ran into it is repeated once at the runner's maximum, the critic is held out (already at the ceiling), and the strike stands so the retry goes to the next route. **Both observed cuts spent 16,384 of 16,384 on reasoning at `effort: low`**, so this buys round survival, not writing room. Implemented by claude-opus; needs a non-claude-opus sign-off and an unattended run. |
 | D185 | open | `/opt/benchmarkheaven/state/ux-evidence/iter182-pass32/{canonical-verifier.log,hub-width-sweep.txt}`; agent board thread #5 | `/jev-models` needs 385 px of layout width, so it overflows anything between the 375 and 390 px breakpoints — a 390 px desktop window with a classic scrollbar lays out at 380 and overflows by 5 px. **No phone width overflows** (320 → −10, 360 → +1, 375 → −2, 390 → −5, 414 → −10 with scrollbars hidden); the first posting of this said "mobile overflow" and was wrong. Separately, long project URLs in the † notes do not break at 320 px. Owned by the CR-132 writer; reported, not fixed. |
