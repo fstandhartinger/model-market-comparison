@@ -18,6 +18,19 @@ const one = (v: number | null) => (v === null ? '—' : v.toFixed(1));
 const usdText = (x: number) => `$${x.toFixed(x < 0.01 ? 4 : 3)}`;
 const openLabel = (open: JevV12Row['open']) => open === 'yes' ? 'open (code and weights)' : open === 'weights' ? 'open weights' : 'closed / proprietary';
 const costCaveat = (row: JevV12Row) => row.costKind === 'estimate' ? ' (estimated)' : row.costKind === 'announced' ? ' (announced price, not yet charged)' : '';
+// F-168 (Fable pass 32): a system type is a data key (`jev-service`, `small-tool-model`); the reader gets the board's own words for it.
+// Same map as components/JevRadars.tsx (a client module, so not importable here — see usdText above).
+const TYPE_LABEL: Record<string, string> = { jev: 'Jev', 'jev-rebuild': 'Jev rebuild', 'llm-baseline': 'instruction model', 'small-tool-model': 'small tool-calling model', 'jev-service': 'service built on Jev', classifier: 'zero-shot classifier', 'decision-api': 'closed decision API', reranker: 'reranker' };
+const typeLabel = (cls: string) => TYPE_LABEL[cls] ?? cls.replace(/-/g, ' ');
+// F-168: the not-ranked status is one sentence — the listing kind, "not ranked", and the artifact's reason once. The artifact's
+// `notRankedBecause` already ends in "— listed, not ranked" for an honorable mention; that clause is the sentence's own and is not repeated.
+const notRankedReason = (row: JevV12Row) => (row.notRankedBecause ?? '').replace(/\s*[—–-]\s*listed,\s*not ranked\.?\s*$/i, '').replace(/\.$/, '');
+function statusSentence(row: JevV12Row, view: JevV12View): string {
+  if (row.ranked && row.rank != null) return `Rank #${row.rank} of ${view.ranked.length} ranked systems.`;
+  const reason = notRankedReason(row);
+  if (row.listing === 'honorable_mention') return `Honorable mention, not ranked — ${reason || "it runs another entrant's model"}.`;
+  return `Partial run, not ranked — ${reason || 'it missed a tier'}.`;
+}
 
 async function findRow(key: string): Promise<{ row: JevV12Row; view: JevV12View; all: JevV12Row[] } | null> {
   const view = jevbenchV12View(await readJevbenchV12());
@@ -31,8 +44,9 @@ async function findRow(key: string): Promise<{ row: JevV12Row; view: JevV12View;
 function describeRow(row: JevV12Row, view: JevV12View, all: JevV12Row[]): string {
   const rankText = row.ranked && row.rank != null
     ? `ranks #${row.rank} of ${view.ranked.length} ranked systems with a JevBench ${view.revision} score of ${one(row.main)}`
-    : `is not ranked on JevBench ${view.revision} (${row.notRankedBecause ?? 'listed, not ranked'}); its score is ${one(row.main)}`;
-  const jevRow = row.key === 'jev-1.13.0' ? null : all.find((r) => r.key === 'jev-1.13.0') ?? null;
+    : `is listed on JevBench ${view.revision} with a score of ${one(row.main)} but not ranked (${row.listing === 'honorable_mention' ? 'honorable mention' : 'partial run'}${notRankedReason(row) ? `: ${notRankedReason(row)}` : ''})`;
+  // F-168: the board compares ranked systems only; an unranked listing gets no "ahead of / behind Jev" clause.
+  const jevRow = !row.ranked || row.key === 'jev-1.13.0' ? null : all.find((r) => r.key === 'jev-1.13.0') ?? null;
   const vsJev = jevRow ? (() => {
     const diff = row.main - jevRow.main;
     return ` That is ${one(Math.abs(diff))} points ${diff >= 0 ? 'ahead of' : 'behind'} Jev 1.13.0's ${one(jevRow.main)}.`;
@@ -60,7 +74,7 @@ export default async function JevSystemPage({ params }: { params: Promise<{ syst
   const found = await findRow(decodeURIComponent(system));
   if (!found) notFound();
   const { row, view, all } = found;
-  const jevRow = row.key === 'jev-1.13.0' ? null : all.find((r) => r.key === 'jev-1.13.0') ?? null;
+  const jevRow = !row.ranked || row.key === 'jev-1.13.0' ? null : all.find((r) => r.key === 'jev-1.13.0') ?? null;
   const description = describeRow(row, view, all);
 
   const structuredData = {
@@ -91,7 +105,7 @@ export default async function JevSystemPage({ params }: { params: Promise<{ syst
       <div className="bh-eyebrow">JevBench {view.revision} · one system</div>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">{row.display}</h1>
       <p className="bh-muted mt-2 max-w-3xl">
-        {row.author} · {row.licence} · {openLabel(row.open)} · <span data-bh-jev-system-cls>{row.cls}</span>
+        {row.author} · {row.licence} · {openLabel(row.open)} · <span data-bh-jev-system-cls={row.cls}>{typeLabel(row.cls)}</span>
       </p>
     </header>
 
@@ -99,8 +113,8 @@ export default async function JevSystemPage({ params }: { params: Promise<{ syst
       <h2 id="jev-system-score" className="text-lg font-semibold">JevBench {view.revision} score</h2>
       <p className="mt-2 text-3xl font-bold tabular-nums">{one(row.main)}</p>
       {row.ranked && row.rank != null
-        ? <p className="bh-muted mt-1">Rank #{row.rank} of {view.ranked.length} ranked systems.</p>
-        : <p className="bh-muted mt-1" data-bh-jev-system-not-ranked>Not ranked{row.notRankedBecause ? ` — ${row.notRankedBecause}` : ''}. Listed as a {row.listing.replace('_', ' ')}.</p>}
+        ? <p className="bh-muted mt-1">{statusSentence(row, view)}</p>
+        : <p className="bh-muted mt-1" data-bh-jev-system-not-ranked>{statusSentence(row, view)}</p>}
       {jevRow && <p className="bh-muted mt-2 text-sm" data-bh-jev-system-vs-jev>
         {one(Math.abs(row.main - jevRow.main))} points {row.main >= jevRow.main ? 'ahead of' : 'behind'} Jev 1.13.0&apos;s {one(jevRow.main)}.
       </p>}
@@ -110,7 +124,10 @@ export default async function JevSystemPage({ params }: { params: Promise<{ syst
       <h2 id="jev-system-axes" className="text-lg font-semibold">Axes</h2>
       <dl className="mt-2 grid grid-cols-2 gap-3 sm:grid-cols-4">
         <div className="bh-panel p-3"><dt className="bh-muted text-xs">Intelligence</dt><dd className="text-xl font-semibold tabular-nums">{one(row.axes.intelligence)}</dd></div>
-        <div className="bh-panel p-3"><dt className="bh-muted text-xs">Calibration</dt><dd className="text-xl font-semibold tabular-nums">{one(row.axes.calibration)}</dd></div>
+        {/* F-168: a label-only system has no calibration; the board's row says so in words ("none (label only)"), and so does this card. */}
+        <div className="bh-panel p-3"><dt className="bh-muted text-xs">Calibration</dt>{row.axes.calibration === null
+          ? <dd className="text-xl font-semibold tabular-nums" title={row.calibrationNote ?? undefined} data-bh-jev-system-no-cal>none <span className="bh-muted text-xs font-normal">(label only)</span></dd>
+          : <dd className="text-xl font-semibold tabular-nums">{one(row.axes.calibration)}</dd>}</div>
         <div className="bh-panel p-3"><dt className="bh-muted text-xs">Speed</dt><dd className="text-xl font-semibold tabular-nums">{one(row.axes.speed)}</dd></div>
         <div className="bh-panel p-3"><dt className="bh-muted text-xs">Cost</dt><dd className="text-xl font-semibold tabular-nums">{one(row.axes.cost)}</dd></div>
       </dl>

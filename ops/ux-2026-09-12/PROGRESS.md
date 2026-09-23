@@ -8105,3 +8105,60 @@ things follow, and both belong in the record rather than in a rounded-up "verifi
 re-run on an idle box before anyone calls the row closed; and the intermittent `_rsc` prefetch failures are worth a look of their own, since
 this is the second time this iteration that a browser check produced a symptom explained by a payload that never arrived (part 12's pass-31
 `page.evaluate` null).
+
+## Iteration 181 — 2026-09-23 08:55 → ~10:20 UTC (claude-fable, design pass 32): the Compare page, the model pages, and the per-system JevBench pages another job shipped
+
+- **Scope (Florian: Fable sparingly — what changed since pass 31).** The Compare page after F-163/F-164/F-165(b), the launch-day model pages
+  after the CR-128 ingests, and a new surface shipped by another job with no CR row: the per-system JevBench pages and the hub's link block
+  (CR-129, `2aecd9b9`, Claude Sonnet 5, pushed 07:26 from its own checkout — iteration 180, part 9). Live revision `55543977` (= this checkout's
+  HEAD at start), dataset 06:53 UTC, canonical host, 1440/390 × light/dark: 81 shots + `metrics.json` in
+  `/opt/benchmarkheaven/state/ux-evidence/fable-20260923-pass32/canonical/` (`bin/shoot-fable-pass32.mjs`; 0 page errors in all four contexts,
+  no page overflow). Simple, Advanced, the wizard, Benchmaxxing and the Fable 5.1 model page re-shot as quick views: unchanged apart from the
+  data. One unrelated root Chromium job was running on the box (`chutes-discord-extractor`), so no timing metrics this pass. Only writer in this
+  checkout (`git status` clean at start; the self-heal repair agent's three files from part 13 had landed as `55543977`).
+- **Verdict.** **Compare and the model pages are at the bar:** the status line reads "3 models selected. 112 evaluation rows in the full
+  comparison; 26 of 135 values are not independent measurements." with the per-model clauses beneath, 3 lines each at 390 (F-164); the snapshot
+  cards hold 5 muted "No measured result in this topic" lines and no empty track (F-163); six same-name pairs in the full comparison all differ
+  in their sub-line ("published 2026-09-10" vs "published 2026-09-22 · Vendor-reported by Anthropic", F-165(b)); Opus 5.5 opens on
+  "100.0 ◔ Thin data · 1/7" + "16 of 46 values are Anthropic's own claims (†)", Sol on "91.7 ◔ Thin data · 1/7" + "2 of 16" (F-161/F-146).
+  **The per-system JevBench pages are not at the bar** (full text in `DESIGN-DIRECTIVES.md`, "Verdict … pass 32"): no chart and no bar on any
+  of the four sampled pages (`svg 0`, `bars 0`, content ends at ~700 px of a 1000 px desktop viewport); the raw class key printed in the
+  sub-line ("jev-service", "small-tool-model"); a status said three times ("Not ranked — runs on Jev (TypeSafe) — listed, not ranked. Listed as a
+  honorable mention."); "9.2 points ahead of Jev 1.13.0's 74.4" on the honorable mention the hub declines to rank, "74.3 points behind" on a
+  partial run; Calibration "—" with no word for a label-only system; and the hub's way in is a 1,488 px column of 52 underlined links at
+  y = 17,892 on a phone with "djev" and "OpenJev" each listed twice, while the board's own rows link to project sites, not to the pages.
+  Also, after CR-128, two data strings reach the Compare reader ("4.0-upstream-timeouts" as a sub-line; the `configuration` fallback "protocol
+  requires individual inspection" as a cohort sub-line) and the Opus 5.5 sheet cuts "Terminal-Bench v4.0 (AA, upstrea…" with an ellipsis at 1440.
+- **Fixed by Fable in this pass — F-168** (`app/jev-models/[system]/page.tsx` only; no number, rank or version touched — the other job's
+  JevBench hold is respected): the type sub-line prints the hub radar's `TYPE_LABEL` ("service built on Jev", the raw key kept as
+  `data-bh-jev-system-cls`); the status is one generated sentence ("Rank #n of N ranked systems." / "Honorable mention, not ranked — runs on
+  Jev (TypeSafe)." / "Partial run, not ranked — it missed a tier.") with the artifact's own "— listed, not ranked" tail stripped; the
+  "points ahead of / behind Jev 1.13.0" sentence (page and metadata description) renders for ranked systems only; a `null` calibration reads
+  "none (label only)" with `calibrationNote` as its title. Pinned in `test/fable-pass32.test.mjs` (4/4); live verifier
+  `ops/ux-2026-09-12/bin/verify-fable-pass32-design.mjs` (84 checks: four pages × four contexts).
+- **Directed (open):** **F-167** `[judgment]` the per-system page draws its number — a score strip among the 48 ranked systems with the
+  reference marked, 22 px bands on the axis cards, the hub's CR-94 radar reused with the pair fixed (`JevPairRadar`), two columns at `lg+`;
+  **F-169** `[judgment]` the board's name cell links to `/jev-models/<key>` and the "Browse every JevBench system" block is deleted (the CR-129
+  test's hub pins move to the component; four verifiers that read row names to be re-run); **F-170** `[mechanical]` `versionSuffix` returns
+  `null` when the name already carries every token of the version, the `configuration` fallback never becomes a sub-line, sheet names wrap.
+  F-165's data half stays open (CR-128.1). Decisions recorded in `DESIGN-DIRECTIVES.md` ("Decisions in pass 32"); four rules added to the
+  design-system notes. Done-log: F-161/F-162/F-166 rows now read `verified` (iteration 180), F-163/F-164 rows added as verified (review gate
+  20260923T031003Z), F-168 added as implemented by Fable.
+- **Gates (tree at this commit):** `node scripts/build-dataset.mjs` 863 / 669 / 94 / 2,976 with **no data diff** (two timestamps only,
+  restored); `npm test` **1,181 tests / 1,180 pass / 0 fail / 1 skipped** (`/tmp/fable32-npm-test.log`); `npx tsc --noEmit -p .` clean;
+  `npm run build` see the commit line below. Local `next dev` (port 3123): `verify-fable-pass32-design.mjs` **84/84**
+  (`…/pass32/local/`, screenshots read by eye: classifier.dev "Honorable mention, not ranked — runs on Jev (TypeSafe)." with no Jev clause,
+  Needle 3 "none (label only)").
+- **Push timing:** the 08:39 catch-up run's `state/run.lock` file was still present, but `flock -n` on it succeeded at 09:15 UTC (no holder),
+  so the pre-push hook let the push through; nothing was bypassed. `npm run build` rc 0 (`/tmp/fable32-build.log`). Live verification on both
+  hosts follows the deploy (see the part below); being the implementer, this pass cannot set the F-168 row `verified`.
+- **For the next non-Fable engine:** after the deploy, run `bin/verify-fable-pass32-design.mjs` on both hosts and flip the F-168 rows
+  (here and in the Done log) to `verified`; then take **F-169** (small, one component + one page + one test) and **F-167** (medium; TSX —
+  claude-opus, not Kimi) from `DESIGN-DIRECTIVES.md`, and **F-170** as a delegable mechanical unit with its test spec.
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| F-168 | implemented | `test/fable-pass32.test.mjs`; `ops/ux-2026-09-12/bin/verify-fable-pass32-design.mjs`; `/opt/benchmarkheaven/state/ux-evidence/fable-20260923-pass32/{canonical,local}/` | Per-system JevBench page: type label, one status sentence, Jev comparison for ranked systems only, "none (label only)". Fable-implemented; needs a non-Fable live run on both hosts. |
+| F-167 | open | `DESIGN-DIRECTIVES.md` F-167 | Per-system page draws its number: score strip, axis bands, fixed-pair topic radar, two columns at `lg+`. `[judgment]`, claude-opus. |
+| F-169 | open | `DESIGN-DIRECTIVES.md` F-169 | Board name cell links to the system page; the "Browse every JevBench system" block goes; CR-129 test pins move to the component. `[judgment]`, claude-opus. |
+| F-170 | open | `DESIGN-DIRECTIVES.md` F-170 | No registry version id or `configuration` fallback as a sub-line; sheet names wrap. `[mechanical]`. |
