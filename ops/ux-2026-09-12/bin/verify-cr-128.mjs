@@ -220,6 +220,34 @@ for (const host of hosts) {
   }
   rankReadings.push({ host, scored: scored.length, reading });
 }
+// CR-128.5 also asks for Pareto position and cost per task per family. Both are re-derived here from
+// each host's own payload, using the site's own frontier definition (lib/pareto.mjs + the value map's
+// grace) so the report states the same frontier a reader sees, not a second opinion about it.
+const { paretoFrontier } = await import(`${REPO}/lib/pareto.mjs`);
+const { frontierGrace } = await import(`${REPO}/lib/value-map.mjs`);
+const COST_ID = 'aa-intelligence-index-cost-per-task::4.3.2';
+for (const reading of rankReadings) {
+  const list = await getJson(`${reading.host}/api/models?score=composite`);
+  const priced = (list.models ?? []).filter((m) => Number.isFinite(m.score) && Number.isFinite(m.cost_blended_10to1))
+    .map((m) => ({ id: m.id, x: m.cost_blended_10to1, y: m.score }));
+  const grace = frontierGrace(priced.map((p) => p.y));
+  const frontier = paretoFrontier(priced, { grace }).map((p) => p.id);
+  reading.frontier_size = frontier.length;
+  for (const id of Object.keys(REPORTED)) {
+    if (!reading.reading[id]) continue;
+    const detail = await getJson(`${reading.host}/api/models/${encodeURIComponent(id)}`);
+    const costRows = (detail.benchmark_observations ?? [])
+      .filter((o) => o.benchmark_id === COST_ID && o.basis === 'measured' && o.unit === 'USD/task');
+    reading.reading[id].on_frontier = frontier.includes(id);
+    reading.reading[id].frontier_position = frontier.indexOf(id) >= 0 ? frontier.indexOf(id) + 1 : null;
+    reading.reading[id].aa_cost_per_task_usd = costRows.length === 1 ? costRows[0].value : null;
+    reading.reading[id].aa_cost_observation_count = costRows.length;
+  }
+}
+check('report/one-measured-cost-per-task-per-family',
+  rankReadings.every((r) => Object.values(r.reading).every((v) => !v || v.aa_cost_observation_count === 1)),
+  rankReadings.map((r) => Object.entries(r.reading).map(([id, v]) => `${id}:${v?.aa_cost_observation_count}`).join(' ')).join(' | '));
+
 const [first, ...rest] = rankReadings;
 check('rank/hosts-agree', rest.every((r) => JSON.stringify(r.reading) === JSON.stringify(first.reading)),
   `${rankReadings.length} hosts read the same composite ranks`);
