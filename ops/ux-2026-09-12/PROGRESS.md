@@ -7926,3 +7926,35 @@ a self-canonical, `WebPage,BreadcrumbList` JSON-LD **only** — no `Product`/`Ag
 no page errors; `/jev-models/multimodal-preview` still carries `noindex, nofollow` and no canonical, so CR-120.1's exclusion survived; and the
 sitemap holds **54** `/jev-models` URLs (the hub, `/v1` and 52 systems, matching the artifact's 52 rows) with the preview absent. Their three
 claims hold.
+
+### Iteration 180, part 10 — correcting D178's claim, and what the 06:58 run actually hit
+
+The 06:58 run finished its benchmark phase while this iteration watched, and its own `workers/unavailable-models.jsonl` **narrows the claim made
+for D178 above**. Stated plainly, because the earlier wording was too strong:
+
+D178's entry says Kimi's *first* drop removed it "each time", on three runs. That is right for 00:41 (3 drops) and for **05:17, where it dropped
+once** — the case the fix straightforwardly repairs. It is **not** right for 06:58: there Kimi took **two** drops (07:08:53 and 07:09:01), so it
+would have been excluded under the new rule as well. The fix is still the right rule — one transient connection drop should not cost the only
+free critic — but it would not have saved this run, and the ledger should not suggest it would.
+
+**What this run hit is bigger than the policy**, and it is the reason for its 39 `BENCHMARK RETAINED` boards and the
+"No supported viable worker model found" messages **from round 1** rather than round 2:
+
+| Route | Role | Failures in this run |
+|---|---|---|
+| `z-ai/glm-5.3-flash` | producer | 2 × `fetch failed` |
+| `z-ai/glm-5.3-flash` | critic | 2 × `fetch failed`, 2 × "Critic round does not match the packet round", 1 × `terminated` |
+| `chutes/moonshotai/Kimi-K3-TEE` | critic | 2 × `fetch failed` |
+| `deepseek/deepseek-v4.1-flash` | producer | 2 × `fetch failed` |
+| `deepseek/deepseek-v4-flash-0731` | producer | 2 × `fetch failed` |
+
+**Five distinct routes, every one of them dropping twice, inside one window from 07:05.** That is a transport episode — the OpenRouter egress or
+the routes behind it — not a selection bug and not an empty account (credits were measured at $15.10 in the same hour, and no `402` appears).
+Once every route has spent its allowance the pool is empty, so each *later* batch fails at its own round 1; the round number says when the pool
+emptied, not when the trouble started. Iteration 179 read round 2 as the signature of exhaustion, which was right for that run's evidence; round 1
+here is the same exhaustion arriving earlier, not a different fault.
+
+**What this means for the two changes.** D178 still stands on the 05:17 evidence and on the rule itself. D179 (the critic's 32,768-token bound) is
+untouched by any of this. But neither addresses a window where every route drops twice, and **that** is what cost today's rows — worth a retry
+policy with a backoff *between* rounds rather than a larger per-route allowance, which is a design question for its own iteration and is not
+started here.
