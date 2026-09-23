@@ -43,8 +43,9 @@ const board = async (dir) => {
 
 test('the six withdrawn KernelBench rows are the ones the board retracted', async () => {
   const observations = await readJson('data/raw/benchmarks/public-observations.json');
-  const withdrawn = (observations.withdrawn_observations ?? []).filter((o) => PROBLEM[o.benchmark_id]);
-  assert.equal(withdrawn.length, 6);
+  const withdrawn = (observations.withdrawn_observations ?? [])
+    .filter((o) => PROBLEM[o.benchmark_id] && /D187/.test(o.withdrawn_reason ?? ''));
+  assert.equal(withdrawn.length, 6, 'the six D187 rows; a later retraction writes its own record');
   const before = await board('2026-09-21T07-46-30-273Z');
   const flipped = await board('2026-09-22T07-47-17-816Z');
   const after = await board('2026-09-23T10-16-55-034Z');
@@ -65,11 +66,23 @@ test('the six withdrawn KernelBench rows are the ones the board retracted', asyn
     assert.equal(was.run_id, now.run_id);
   }
 
-  // Nothing else was swept up: every board row that still has a value is still published.
+  // Nothing else was swept up: every row we publish has a value in the capture *it* cites. Reading each row's
+  // own evidence rather than this pinned capture keeps the check true after the next refresh, which rebuilds
+  // these boards from a newer one and may add rows that today's capture does not contain.
   const published = observations.observations.filter((o) => PROBLEM[o.benchmark_id]);
+  assert.ok(published.length > 30, `${published.length} rows across the four boards`);
+  const byFile = new Map();
   for (const row of published) {
-    const now = after(row.subject.source_id, PROBLEM[row.benchmark_id]);
-    assert.ok(now && now.peak_fraction !== null, `${row.benchmark_id} ${row.subject.source_id} still has a board value`);
+    if (!byFile.has(row.source.file)) {
+      const bytes = gunzipSync(await readFile(new URL(`../${row.source.file}`, import.meta.url)));
+      assert.equal(createHash('sha256').update(bytes).digest('hex'), row.source.sha256, `row evidence digest: ${row.source.file}`);
+      byFile.set(row.source.file, JSON.parse(bytes.toString('utf8')));
+    }
+    const parsed = byFile.get(row.source.file);
+    const result = (parsed.models.find((m) => m.label === row.subject.source_id)?.results ?? {})[PROBLEM[row.benchmark_id]];
+    assert.ok(result && result.peak_fraction !== null, `${row.benchmark_id} ${row.subject.source_id} has a value in its own capture`);
+    assert.equal(result.correct, true, `${row.subject.source_id} is a correct cell`);
+    assert.equal(Math.round(result.peak_fraction * 10000) / 100, Math.round(row.value * 100) / 100);
   }
 });
 

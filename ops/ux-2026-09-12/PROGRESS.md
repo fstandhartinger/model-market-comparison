@@ -8677,11 +8677,20 @@ clear, no acceptance marker is appended.
 **Two source follow-ups this iteration deliberately did not take**, both recorded here so the next writer has the
 measurement rather than the symptom:
 
-1. **`kernelbench-cuda-deepseek-nsa` will still fail its coverage guard.** Its published rows drop from 13 to 8
-   while the board now carries 10 with values, and `ops/daily/public-candidate.py` fails closed with
-   "Coverage shrank / no scores". That guard exists for good reason and unlocking it is a decision about how much
-   shrinkage a re-adjudication may cause, not a repair — it needs its own reviewed change, and the arm is honest
-   while it fails.
+1. **The `kernelbench-cuda-deepseek-nsa` floor — taken after simulating it, because the simulation showed the
+   decision was small.** "Coverage shrank / no scores" is not a comparison with yesterday: it is the plan's
+   `minimum_rows`, set to each board's row count when the arm was reviewed. The board re-adjudicated six cells, so
+   this problem now has **10** scored cells and the floor of 13 could never be met again. Simulated first, against
+   the run's own capture: with the floor at 10 the collector returns 10 rows, `reconcilePublicIdentities` succeeds,
+   **all 8 rows we still publish keep their public IDs**, and `grok/grok-4.7 [xhigh]` (10.02) and
+   `claude/claude-opus-5-5 [xhigh]` (109.57) join as new rows the frozen arm has been missing since the 22nd. The
+   floor is now the board's true size, so a further loss still fails closed; the reason is recorded in the plan
+   entry and `data/SCRAPING.md`. The same simulation confirmed the other two arms: `mcp-atlas` reconciles with the
+   restated label and keeps `public:166ad482b48375ffcde7daff`, and `kernelbench-cuda-glm52-fused-moe` collects 16
+   rows against its floor of 15. **The three arms that were frozen will collect again at 05:17** — and because a
+   refresh rewrites each row's `source` to the newest capture, the D186 and D187 tests were rewritten to read the
+   capture each row *itself* cites (hash-checked, then parsed) instead of pinning today's, which is the trap
+   "pins written while an arm was frozen fail the first refresh".
 2. **Seven `anthropic-…` identities fail every day with "Response exceeds 12MB bound" and five `openai-…` ones with
    HTTP 403**, none of which has ever collected (`Last OK: —`). These were ingested manually with retained captures
    (CR-126.4 records the 403), so the daily attempt is noise that hides a real failure; whether they belong in the

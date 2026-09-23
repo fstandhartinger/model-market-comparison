@@ -3775,7 +3775,7 @@
         "format": "JSON",
         "locator": "GET benchmarks/cuda/results/leaderboard.json → one row per stated model identity whose 02_deepseek_nsa cell passes the site validity rule; value = peak_fraction × 100 (percent of roofline).",
         "version_guard": "schema_version must stay 1, hardware.name must contain “RTX PRO 6000”, and the problem must stay in the stated four-problem deck. A scored cell must be correct, audited (clean/interesting) and appear in the published per_problem ranked list with the same value. Another hardware board (e.g. H100/B200) is a different identity.",
-        "notes": "02_deepseek_nsa — DeepSeek Native Sparse Attention block (block top-n + sparse attention)."
+        "notes": "02_deepseek_nsa — DeepSeek Native Sparse Attention block (block top-n + sparse attention). Floor lowered 13 → 10 on 2026-09-23 (D187): the board itself re-adjudicated six 02_deepseek_nsa runs on 2026-09-22 — same run ids, still annotated clean, but correct=true with a peak_fraction became correct=false with peak_fraction=null — so it now publishes 10 scored cells for this problem, not 13, and the old floor was the row count at review time. 10 is today's true size (capture 60b9c889b38bb61b136c24f12dc2721d94ae61ade2b7c1a916ad4ec4098b159b), so a further loss still fails closed. Simulated before the change: with the floor at 10 the collector returns 10 rows and every one of the 8 rows we still publish keeps its public ID, while grok/grok-4.7 [xhigh] and claude/claude-opus-5-5 [xhigh] join as new rows. The five retracted rows stay in public-observations.json under withdrawn_observations."
       },
       "cadence": "daily, at most one capture per source; stop on access restrictions",
       "version_guard": "schema_version must stay 1, hardware.name must contain “RTX PRO 6000”, and the problem must stay in the stated four-problem deck. A scored cell must be correct, audited (clean/interesting) and appear in the published per_problem ranked list with the same value. Another hardware board (e.g. H100/B200) is a different identity.",
@@ -3787,7 +3787,7 @@
       },
       "protocol": "KernelBench-CUDA 02_deepseek_nsa (RTX PRO 6000 Blackwell, environment v2_containerized): DeepSeek Native Sparse Attention block (block top-n + sparse attention); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.",
       "basis": "measured",
-      "minimum_rows": 13,
+      "minimum_rows": 10,
       "source_urls": [
         "https://kernelbench.com/cuda"
       ]

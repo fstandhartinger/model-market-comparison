@@ -71,9 +71,16 @@ test('the restatement record names a published row and carries both captures', a
   assert.equal(row.subject.name, record.to);
   assert.equal(row.value, 63.1);
   assert.equal(row.basis, 'measured');
-  assert.equal(row.source.sha256, record.first_seen.sha256, 'the evidence shows the label we publish');
-  assert.equal(row.source.locator, `scale_swepro; source row 25; ${record.to}; field score`);
-  assert.equal(record.previous_locator, `scale_swepro; source row 25; ${record.from}; field score`);
+  // Refresh-proof: the daily rebuilds this row from the newest capture, so do not pin which capture it cites —
+  // require that whatever it cites really carries this label and value at the row its locator names.
+  const cited = gunzipSync(await readFile(new URL(`../${row.source.file}`, import.meta.url)));
+  assert.equal(createHash('sha256').update(cited).digest('hex'), row.source.sha256, 'the row hashes its own evidence');
+  const citedRows = boardRows(cited.toString('utf8'));
+  const index = Number(/source row (\d+)/.exec(row.source.locator)?.[1]);
+  assert.equal(citedRows[index].model, record.to, 'the cited capture carries the label we publish');
+  assert.equal(citedRows[index].score, row.value);
+  assert.match(row.source.locator, new RegExp(`^scale_swepro; source row \\d+; ${record.to.replace(/[()]/g, '\\$&')}; field score$`));
+  assert.match(record.previous_locator, new RegExp(`^scale_swepro; source row \\d+; ${record.from.replace(/[()]/g, '\\$&')}; field score$`));
 });
 
 test('the two captures differ in exactly one field of one row, and it is the label', async () => {
