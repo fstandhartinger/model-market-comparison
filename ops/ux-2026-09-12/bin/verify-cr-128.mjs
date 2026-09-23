@@ -31,9 +31,19 @@ fs.mkdirSync(outDir, { recursive: true });
 const checks = [];
 const check = (id, ok, detail) => { checks.push({ id, ok: !!ok, detail }); };
 
-const candidate = JSON.parse(fs.readFileSync(CANDIDATE, 'utf8'));
-check('candidate/304-rows', candidate.length === 304, `${candidate.length} rows in the candidate packet`);
-check('candidate/unique-ids', new Set(candidate.map((r) => r.id)).size === candidate.length, 'every candidate id is distinct');
+const candidateAll = JSON.parse(fs.readFileSync(CANDIDATE, 'utf8'));
+// D180 (2026-09-23): a candidate row that was later withdrawn must be *absent* from the hosts, not
+// present. The withdrawal is a recorded decision in the repository, with the row's evidence and its
+// reason kept beside it, so this verifier reads it from there rather than from a list of ids here.
+const withdrawn = new Map((JSON.parse(fs.readFileSync('data/raw/benchmarks/manual-board-observations.json', 'utf8'))
+  .withdrawn_observations ?? []).map((row) => [row.id, row]));
+const candidate = candidateAll.filter((row) => !withdrawn.has(row.id));
+check('withdrawn/every-withdrawn-row-states-its-reason', [...withdrawn.values()].every((row) => typeof row.withdrawn_reason === 'string' && row.withdrawn_reason.length > 40),
+  `${withdrawn.size} withdrawn candidate row(s): ${[...withdrawn.keys()].join(', ') || 'none'}`);
+// The packet is what the ingest job froze and does not change; `candidate` is what is still meant
+// to be published, so the two counts are asserted separately.
+check('candidate/304-rows', candidateAll.length === 304, `${candidateAll.length} rows in the candidate packet, ${candidate.length} still published`);
+check('candidate/unique-ids', new Set(candidateAll.map((r) => r.id)).size === candidateAll.length, 'every candidate id is distinct');
 
 // ---------------------------------------------------------------- published rows in the repo
 const published = new Map();
@@ -188,9 +198,12 @@ for (const host of hosts) {
     for (const k of SOURCE) if (!same(want.source?.[k], got.source?.[k])) { differences.push(`${want.id}.source.${k}`); rowOk = false; }
     if (rowOk) matched += 1;
   }
-  hostResults.push({ host, revision: meta?.revision, generated_at: meta?.generated_at, expected: candidate.length, matched, differences });
+  const stillLive = [...withdrawn.keys()].filter((id) => live.has(id));
+  hostResults.push({ host, revision: meta?.revision, generated_at: meta?.generated_at, expected: candidate.length, matched, differences, withdrawn_still_live: stillLive });
   check(`live/${host}/all-rows-match`, matched === candidate.length && differences.length === 0,
-    `${matched}/${candidate.length} rows identical at revision ${meta?.revision}, ${differences.length} field differences`);
+    `${matched}/${candidate.length} published rows identical at revision ${meta?.revision}, ${differences.length} field differences`);
+  check(`live/${host}/withdrawn-rows-are-gone`, stillLive.length === 0,
+    `${withdrawn.size} withdrawn row(s), ${stillLive.length} still served${stillLive.length ? `: ${stillLive.join(', ')}` : ''}`);
 }
 check('live/hosts-agree-on-revision',
   new Set(hostResults.map((r) => r.revision)).size === 1,

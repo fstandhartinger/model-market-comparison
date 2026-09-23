@@ -28,7 +28,12 @@ const IDS = {
 const scores = JSON.parse(await fs.readFile(new URL('../../../data/raw/benchmarks/scores.json', import.meta.url), 'utf8'));
 const obs = scores.observations.filter((o) => IDS[o.benchmark_id]);
 const joined = obs.filter((o) => o.subject?.model_id);
-check('raw store: 728 observations, 189 joined', obs.length === 728 && joined.length === 189, { obs: obs.length, joined: joined.length });
+// D180 (2026-09-23): back to the counts this verifier shipped with. The CR-128 ingest had added three
+// rows from epoch.ai/data/eci_benchmarks.csv on top (731 / 189), and they were withdrawn because that
+// file's `performance` column is Epoch's chance-normalised ECI statistic, not the "Best score (across
+// scorers)" these identities declare. A count is not the product's promise — the byte-exact cell checks
+// below are — but a store that shrinks unexpectedly is worth stopping on.
+check('raw store: 728 observations, 186 joined', obs.length === 728 && joined.length === 186, { obs: obs.length, joined: joined.length });
 
 const meta = await (await fetch(`${BASE}/api/meta`)).json().catch(() => ({}));
 check('deployed revision matches the expected commit', !REV || String(meta.revision || '').startsWith(REV), { revision: meta.revision, expected: REV });
@@ -53,7 +58,9 @@ for (const o of joined) {
   if (v === undefined || Math.abs(Number(v) - o.value) > 1e-9) mismatches.push({ board: o.benchmark_id, model: o.subject.model_id, live: v, expected: o.value });
   else matched++;
 }
-check('matrix: all 189 joined values byte-exact against the retained raw store', matched === 189 && mismatches.length === 0,
+// Re-derived from the store, not pinned: the promise is that every joined cell the store holds is
+// byte-exact live, and that none is missing. A literal only records how many rows existed that day.
+check(`matrix: all ${joined.length} joined values byte-exact against the retained raw store`, matched === joined.length && mismatches.length === 0,
   { matched, mismatches: mismatches.slice(0, 5) });
 const fableChess = cell['claude-fable-5.1::max']?.[idx.get('chess-puzzles::snapshot-2026-09-18')];
 check('matrix: Fable 5.1 (max) Chess Puzzles 0.47 (acceptance example)', Math.abs(Number(fableChess) - 0.47) < 1e-9, fableChess);
@@ -63,6 +70,11 @@ const { buildBenchmarkView } = await import('../../../lib/benchmark-view.mjs');
 const { scoreBenchmaxxing } = await import('../../../lib/benchmax.mjs');
 const { benchmaxxingLevelFor } = await import('../../../lib/benchmaxxing-levels.mjs');
 const localView = buildBenchmarkView(JSON.parse(await fs.readFile(new URL('../../../data/dataset.json', import.meta.url), 'utf8')));
+// Benchmaxxing is not stored in dataset.json; it is fitted from the built view, so the expectation
+// the model-page check below compares against is computed here from the same code the page runs.
+const geminiFit = scoreBenchmaxxing(localView, 'gemini-3.6-flash::high');
+const expectedGemini = { tier: benchmaxxingLevelFor(geminiFit?.score), printed: (Math.round((geminiFit?.score ?? 0) * 10) / 10).toFixed(1), score: geminiFit?.score };
+check('expected Benchmaxxing fit re-derived from this checkout is still the medium tier', expectedGemini.tier === 'medium', expectedGemini);
 for (const [id, level] of [['muse-spark-1.1::xhigh', 'strong'], ['qwen3.7-max::default', 'medium'], ['gemini-3.6-flash::high', 'medium'], ['hy3::default', 'light']]) {
   const local = scoreBenchmaxxing(localView, id);
   const live = await (await fetch(`${BASE}/api/benchmaxxing?report=${encodeURIComponent(id)}`)).json().catch(() => ({}));
@@ -142,8 +154,12 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
       const chip = document.querySelector('[data-bh-model-benchmaxxing]');
       return { text: chip?.innerText?.replace(/\s+/g, ' ') ?? null };
     });
-    check(`${tag} model page: Gemini 3.6 Flash (high) shows its medium Benchmaxxing tag from the sharpened corpus`,
-      !!gem.text && /medium/i.test(gem.text) && /6\.1/.test(gem.text), gem.text);
+    // The tier and the number are re-derived from the dataset this checkout built, never pinned:
+    // the corpus moves with every ingest, and a frozen 6.1 only records one day's fit (2026-09-23:
+    // the fit reads 5.9629, which the page prints as 6.0, while the pin still said 6.1).
+    check(`${tag} model page: Gemini 3.6 Flash (high) shows its ${expectedGemini.tier} Benchmaxxing tag at ${expectedGemini.printed}`,
+      !!gem.text && new RegExp(expectedGemini.tier, 'i').test(gem.text)
+        && new RegExp(expectedGemini.printed.replace('.', '\\.')).test(gem.text), { live: gem.text, expected: expectedGemini });
     await page.screenshot({ path: `${OUT}/model-gemini-${tag}.png`, fullPage: false });
   }
   if (errors.length) check(`${tag} page errors`, false, errors.slice(0, 3));

@@ -8476,3 +8476,37 @@ off, together with CR-132.1–.4.
 unattended run), F-165(a)'s rekey half, D183, the scheduled-run half of D174–D179/D181, and the non-claude sign-offs owed
 on every claude-opus row including CR-132.1–.4, D180 and D185. The queued evergreen-preview CR remains
 `codex:session-818a9299ae`'s, waiting on the v1.4.1 outcome (board #163); this iteration did not take it.
+
+### Iteration 184, part 4 — the three verifiers D180 touched, and two more pins that had rotted
+
+Post-deploy at `1e37acc9`, both hosts:
+
+| Verifier | Result | Evidence |
+|---|---|---|
+| `verify-cr-54-2.mjs` | **52/52 per host** (was 48/51) | `/opt/benchmarkheaven/state/ux-evidence/iter184-d180/cr54-2-{benchmarkheaven,model-market-comparison}/verification.json` |
+| `verify-cr-128.mjs` | **31/33** — the two reds are D183's finished reports, held on purpose | `/opt/benchmarkheaven/state/ux-evidence/iter184-d180/cr128/verify-cr-128.json` |
+| `verify-d185-width.mjs` | **14/14** across both hosts, 320→1440 px | `/opt/benchmarkheaven/state/ux-evidence/iter184-d185/verification.json` |
+
+`verify-cr-54-2`'s raw-store counts are back to the numbers it shipped with — **728 observations, 186 joined** — because the
+three rows the CR-128 ingest had added on top (731 / 189) are the ones D180 withdrew. That is a useful confirmation in its
+own right: the store returned to its pre-CR-128 shape rather than to some third number.
+
+Two of its checks were pins that had rotted, and both are now re-derived rather than re-pinned:
+
+- "all **189** joined values byte-exact" read `matched: 186, mismatches: []` — **zero mismatches**, failing only on the
+  literal. It now asserts `matched === joined.length`, which is the actual promise: every cell the store holds is exact
+  live and none is missing.
+- The Gemini 3.6 Flash Benchmaxxing check pinned `6.1`. The page prints **+6.0**, and it was already 6.0 before D180:
+  recomputing `scoreBenchmaxxing` against the previous commit's dataset gives 5.9624 and against this one 5.9629 — the
+  withdrawal moved the fit by 0.0005, invisible at one decimal, and the 6.1 was older drift. The check now computes the
+  tier and the printed value from the same code the page runs, so a corpus that moves cannot make it red.
+
+`verify-cr-128` needed a different repair, not a re-pin: it read the ingest job's frozen packet as "what must be live", so
+a withdrawn row looked like a missing row. It now separates the two — the packet is still asserted at 304 rows, the 299
+still meant to be published must match live byte for byte, and **each withdrawn row must be absent from both hosts**, with
+its reason read from the repository rather than from a list of ids in the verifier. Both hosts: 299/299 identical, 5
+withdrawn, 0 still served.
+
+One process note worth keeping: the first re-run of `verify-cr-54-2` reported 48/51 from a `verification.json` the run had
+never written — the script had died on a duplicate import and left the previous file in place. A verifier's output
+directory is cleared before a re-run for that reason; an unchanged receipt is not evidence that nothing changed.
