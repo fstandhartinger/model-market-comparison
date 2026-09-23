@@ -9135,3 +9135,59 @@ with `gauntlet.mjs` restored byte-for-byte the suite is 15/15. No product code c
 | ID | Status | Why |
 |---|---|---|
 | D184 | implemented (sign-off done, unattended run still owed) | Kimi K3 non-claude sign-off with its own mutation checks; the scheduled-run half of the evidence is unchanged and still open. |
+
+## Iteration 188 — 2026-09-23 22:50 → ~23:25 UTC (claude-fable, design pass 33): the JevBench hub at v1.4.1, its pinned pages, the per-system pages, and an early look at CR-136
+
+- **Scope (Florian: Fable sparingly — what changed since pass 32).** The hub after CR-132/CR-134/CR-135 (v1.4.1 board, four compare radars,
+  restored bar chart and sections, † notes, the frozen `/v1.4` and `/v1.4.1` pages, capability charts and the lazy 3D view) and the per-system
+  pages after F-167/F-169 (iteration 181). Live revision `fb07266f` (= this checkout's HEAD at start), dataset 18:39 UTC, canonical host,
+  1440/390 × light/dark: 82 shots + `metrics.json` in `/opt/benchmarkheaven/state/ux-evidence/fable-20260923-pass33/canonical/`
+  (`bin/shoot-fable-pass33.mjs`; page errors: only the two 404s below and one transient `ERR_NETWORK_CHANGED`; no page overflow in any
+  context). Simple, Advanced, the wizard, Benchmaxxing and the Fable 5.1 model page re-shot as quick views: unchanged since pass 32 apart from
+  the data. **Another writer shared this checkout throughout:** the CR-136 SEO job (codex, `jevbench-seo-hn-push-20260923`, writer lease
+  holder) had its alternatives/chooser/Jev-vs pages, `JevV141SystemDetail`, sitemap and `[system]/page.tsx` edits uncommitted in the tree
+  (16 paths) while waiting on `tick.lock`; this pass touched none of them, staged by path, and told the job so on the agent board (thread #7,
+  entry #304). Its pages were judged early from its draft files and its own local screenshots (F-178), not live.
+- **Verdict** (full text in `DESIGN-DIRECTIVES.md`, "Verdict … pass 33"). **At the bar:** the v1.4.1 bar chart, the pinned-name table with
+  in-place † notes, the four-radar compare with the pair in the URL, light/dark parity, no overflow, no "1 <plural>", 10 px floor held, the
+  frozen pages' hash + share link + frozen top five. **Not at the bar — seven things:** (1) the leaf pages are a release behind the board
+  (`/jev-models/jev-1.13.0` says "v1.3.0 · 74.4 · Rank #1 of 48" under a board that says 63.3 · #1 of 77; reflex 4B "70.3 · #5 of 48 · 4.1
+  behind 74.4" vs 54.0) and the board's #2 and #3, JevK5 v0.2.0 and Hopper, have no page (404 in all four contexts); (2) the board's rows lead
+  nowhere — table names plain (0 of 82 rows link), chart names link to GitHub, all 52 `/jev-models/<key>` links now inside the closed
+  historical disclosure at y = 18,971: F-169 undone on the current board; (3) the head says "534 public + 308 sealed" four times before the
+  first number and the first bar is below 844 px at 390 (h2 at 757); (4) the default pair's "Hard tier by family" radar draws one series and
+  nine "· —" labels; (5) "What changed in v1.4" sits between the compare panel and the table; (6) "Interactive 3D view ready." and "three.js
+  r128 is included under its MIT license." as reader copy; (7) the hub HTML is 6.8 MB, 6.1 MB of it the closed historical board.
+  **CR-136 draft:** numbers-only alternatives table, an 8-link guides row under every head, a 9 × 2 numbers table for a pair the hub draws as
+  four radars, field names in copy ("sealed_accuracy", "Highest Cost axis"), two back-link wordings, and a second leaf design for exactly the two
+  systems with no page.
+- **Fixed by Fable in this pass — F-176(a)** (`components/JevCapability3D.tsx`, one string; no other writer holds the file): the ready state
+  clears the live region (loading and failure sentences stay). Pinned in `test/fable-pass33.test.mjs` (1/1).
+- **Directed (open):** **F-171** `[judgment]` the leaf reads the v1.4.1 artifact (score, rank of 77, axes, cost, speed, tier radar, sealed
+  families), every ranked row gets a page, the v1.3.0 topic radar stays under a heading naming the run — lands after CR-136 and replaces its
+  `JevV141SystemDetail`; **F-172** `[mechanical]` table and chart names link to `/jev-models/<key>`; **F-173** `[mechanical]` one head sentence,
+  the size once, the first bar inside 844 px at 390 (hub and both pinned pages); **F-174** `[mechanical]` a missing series is one sentence on
+  a pair radar; **F-175** `[mechanical]` chart → table → compare → "What changed"; **F-176(b)** `[mechanical]` the licence line to Credit;
+  **F-178** `[judgment]` the CR-136 pages: bars on the alternatives table, the guides row cut to siblings, the pair pages draw the hub's four
+  radars, no field names, one back-link wording, no second leaf design; **F-179** `[judgment]` the historical board loads on open (target
+  < 1.5 MB HTML). F-165's data half stays open (CR-128.1). Seven rules added to the design-system notes; decisions recorded ("Decisions in
+  pass 33"). Done log: F-168 → verified (iteration 181), F-167/F-169/F-170 rows added as verified (gate 20260923T150004Z), F-176(a) added.
+- **For the next non-Fable engine:** `ONLY=F-176 node ops/ux-2026-09-12/bin/verify-fable-pass33-design.mjs <host> <out>` on both hosts after the
+  deploy, then flip the F-176(a) rows here and in the Done log; the other groups of the same verifier are the acceptance gates for
+  F-171–F-175 and will read FAIL until those land. Order of work after CR-136 is live: F-171 (claude-opus; TSX, not Kimi), then F-172,
+  F-173, F-175, F-174, F-176(b) (each small), F-178 with or by the CR-136 author, F-179 last.
+- **Gates (tree at this commit, with CR-136's uncommitted files present):** `npm test` **1,237 pass / 0 fail / 1 skipped**
+  (`…/pass33/local/npm-test.log`); `npx tsc --noEmit -p .` clean (`…/pass33/local/tsc.log`); `node --test test/fable-pass33.test.mjs` 1/1;
+  no data change, so `build-dataset` was not re-run (the 21:50 gate ran it on this data with no diff). Pushed by path; live check of
+  F-176(a) follows the deploy (see below if recorded).
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| F-176 | implemented ((a) by Fable; (b) open) | `components/JevCapability3D.tsx`; `test/fable-pass33.test.mjs`; `ops/ux-2026-09-12/bin/verify-fable-pass33-design.mjs` (`ONLY=F-176`); `/opt/benchmarkheaven/state/ux-evidence/fable-20260923-pass33/` | The 3D view's "ready" announcement is gone; the licence sentence beside the chart is (b), open. Needs a non-Fable live run on both hosts before `verified`. |
+| F-171 | open | `DESIGN-DIRECTIVES.md` § Directives (pass 33); `…/pass33/canonical/{desktop,mobile}_{light,dark}-sys-*.png`, `metrics.json` | Leaf pages read v1.3.0 under a v1.4.1 board; jevk5-v02 and hopper 404. After CR-136. |
+| F-172 | open | `…/pass33/canonical/metrics.json` (`tables[1].links 0`), `desktop_light-hub.png` | Board names do not link to the pages; chart names link to repos. After F-171. |
+| F-173 | open | `…/pass33/canonical/mobile_light-hub.png`, `metrics.json` (`firstScreen`, h2 at y = 757) | Size said four times; first bar below 844 px at 390; hub and both pinned pages. |
+| F-174 | open | `…/pass33/canonical/desktop_light-hub-radars-vp.png` | Nine "· —" labels on a one-series radar. |
+| F-175 | open | `…/pass33/canonical/metrics.json` (heads y: compare 1,639 · note 3,169 · table 3,502) | "What changed in v1.4" before the table. |
+| F-178 | open | CR-136 draft files in the tree; `/home/flori/jobs/jevbench-seo-hn-push-20260923/LOCAL-ALTERNATIVES-{DESKTOP,MOBILE}.png` | Judged from the draft, not live; to be re-judged once CR-136 is live. |
+| F-179 | open | `curl -s https://benchmarkheaven.com/jev-models \| wc -c` = 6,846,480; 741,801 bytes before `data-bh-jev13-history` | Historical board ships closed. |

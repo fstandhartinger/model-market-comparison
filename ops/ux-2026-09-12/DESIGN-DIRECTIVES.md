@@ -1,17 +1,17 @@
 # DESIGN DIRECTIVES — Benchmark Heaven (design authority: Claude Fable 5.1)
 
-**Pass 32: 2026-09-23 ~09:00 UTC**, the "what changed since pass 31" pass (Florian: Fable sparingly). Since pass 31 the changed surface is
-the **Compare page** after F-163/F-164/F-165(b) (the unmeasured-model line, the claim counts, the cohort sub-lines), the **launch-day model
-pages** after the CR-128 ingests, and one **new surface shipped by another job**: the per-system JevBench pages and the hub's link block
-(CR-129, `2aecd9b9`, Claude Sonnet 5, no CR row of its own). Judged against the live site (revision `55543977`, dataset 06:53 UTC) on the
-canonical host at 1440/390 × light/dark: 81 shots + `metrics.json` in `/opt/benchmarkheaven/state/ux-evidence/fable-20260923-pass32/canonical/`
-(0 page errors in all four contexts, no horizontal page overflow; per-system page: h1, sub-line text, status sentence, axis cards, `svg` and bar
-counts, content bottom, links, JSON-LD types; hub: link-block position, height, columns, link count, rows linking to a page; Compare: status
-and claims line counts, snapshot cards and muted lines, per-row sub-lines and same-name pairs, † count; model pages: thin tag, count line;
-the smallest font and a "1 <plural>" scan per page). Script: `bin/shoot-fable-pass32.mjs`; source pins: `test/fable-pass32.test.mjs`; live
-verifier for non-Fable engines: `bin/verify-fable-pass32-design.mjs` (84 checks). Simple, Advanced, the wizard, Benchmaxxing and the Fable 5.1
-model page were re-shot as quick views and are unchanged since pass 31 apart from the data. Earlier passes: `…/fable-20260922-pass31/` …
-`…/fable-20260913/`.
+**Pass 33: 2026-09-23 ~22:50 UTC**, the "what changed since pass 32" pass (Florian: Fable sparingly). Since pass 32 the changed surface is
+the **JevBench hub** after CR-132 (compare view with four radars, restored bar chart and sections, † row notes), CR-134 (the frozen
+`/jev-models/v1.4` share page), CR-135 (the v1.4.1 board, `/jev-models/v1.4.1`, the capability charts and the lazy 3D view), and the
+**per-system pages** after F-167/F-169 (iteration 181). CR-136 (the SEO pages: alternatives, chooser, four Jev-vs pages, a v1.4.1 detail
+fallback) was in another writer's working tree in this checkout, uncommitted, while this pass ran; it is judged from its draft files and its own
+local screenshots, not live. Judged against the live site (revision `fb07266f`, dataset 18:39 UTC) on the canonical host at 1440/390 ×
+light/dark: 82 shots + `metrics.json` in `/opt/benchmarkheaven/state/ux-evidence/fable-20260923-pass33/canonical/` (hub: visible heading
+outline with y positions, table rows/columns/links, svg and radar counts, details, first-screen text at 390, word count, min font, overflow,
+"1 <plural>"; per-system pages: score-panel text, strip/bands/radar presence, links, content bottom; pinned pages: the same; the quick views
+Simple, Advanced, wizard, Benchmaxxing and the Fable 5.1 model page re-shot and unchanged since pass 32 apart from the data). Script:
+`bin/shoot-fable-pass33.mjs`; source pin: `test/fable-pass33.test.mjs`; live verifier for non-Fable engines: `bin/verify-fable-pass33-design.mjs`
+(groups per directive, `ONLY=F-176` for the part Fable shipped). Earlier passes: `…/fable-20260923-pass32/` … `…/fable-20260913/`.
 
 **The bar (Florian):** minimalistic and simple, very expressive, not overloaded, key messages
 first, graphical with many charts.
@@ -30,62 +30,88 @@ the reviewing engine directly.
 
 ---
 
-## Verdict on the live site — pass 32 (2026-09-23), the Compare page, the model pages and the new per-system JevBench pages
+## Verdict on the live site — pass 33 (2026-09-23), the JevBench hub at v1.4.1, its pinned pages, and the per-system pages
 
-**Compare and the model pages are at the bar.** The mixed link `/compare?model=claude-opus-5.5::max&model=gpt-6-sol::max&model=claude-fable-5::max`
-reads "3 models selected. 112 evaluation rows in the full comparison; 26 of 135 values are not independent measurements." with the per-model
-clauses underneath ("Claude Opus 5.5: 16 of 46 values are Anthropic's own claims (†) · GPT-6 Sol: 5 of 19 are OpenAI's · Claude Fable 5: 5 of 70
-are Anthropic's") — three lines each at 390 (F-164's bound met; `metrics.json`: `status.lines 3`, `claims.lines 3`). The snapshot cards hold 36
-lines of which 5 are the one muted "No measured result in this topic" line with no track (F-163; `none 5`, no empty progressbar). Six benchmark
-names appear twice in the full comparison and every pair differs in its sub-line — "published 2026-09-10" against "published 2026-09-22 ·
-Vendor-reported by Anthropic" — so the reader can tell whose run each is (F-165(b); `dupNames []`, `daggers 26`). Claude Opus 5.5 opens on
-"100.0 ◔ Thin data · 1/7" and "16 of 46 values are Anthropic's own claims (†)"; GPT-6 Sol on "91.7 ◔ Thin data · 1/7" and "2 of 16" (F-161,
-F-146). 0 page errors, no overflow, no "1 <plural>", light and dark match, both hosts on the same revision.
+**The hub's chart, table and compare radars are at the bar.** The v1.4.1 ranking opens on the bar chart (77 ranked rows, the reference in blue,
+`~$0.022 est.` cost column, "What changed in v1.4 ↓" in the caption), the table pins the name column on a phone and puts every row note behind
+a † that opens in place (F-152), and the compare panel draws four radars for any pair with the pair in the URL. Light and dark match; no
+horizontal page overflow at 390 in any context; no "1 <plural>"; the smallest text is the 10 px eyebrow pill. The frozen `/jev-models/v1.4`
+and `/v1.4.1` pages carry the hash, the "Share this version" link and the frozen top five before the same chart. Simple, Advanced, the wizard,
+Benchmaxxing and the model page are unchanged since pass 32.
 
-**The per-system JevBench pages (CR-129) are not at the bar — six things; four fixed in this pass, two directed.**
+**Seven things are not at the bar; one fixed in this pass, six directed.**
 
-1. **No chart, no bar.** All four sampled pages (`/jev-models/jev-1.13.0`, `semif-qwen3.5-4b`, `classifier-dev-fast`, `needle-3`) render `svg 0`,
-   `bars 0`; the content ends at 698–750 px of a 1000 px desktop viewport with the right half of the page empty (`max-w-3xl`), and on a phone the
-   whole "graphic" is four numbers in boxes (`desktop_light-jev-jev-full.png`, `mobile_light-jev-needle-full.png`). The hub draws the score as a
-   bar in every row (F-159) and has a two-system radar (CR-94); the leaf page a search lands on shows none of it. → **F-167** (open, `[judgment]`).
-2. **The raw class key in the sub-line.** "TypeSafe AI · proprietary API · closed / proprietary · **jev**", "… · **jev-service**", "… ·
-   **small-tool-model**" — a data key printed as a word (F-54); the hub has a label for each. → **F-168**, fixed by Fable.
-3. **The status said three times.** "Not ranked — runs on Jev (TypeSafe) — listed, not ranked. Listed as a honorable mention." (with the
-   article slip), and for a partial run "Not ranked. Listed as a partial." — the listing key again. → **F-168**, fixed by Fable.
-4. **A comparison the board withholds.** "9.2 points ahead of Jev 1.13.0's 74.4" as the honorable mention's second sentence, for a service that
-   runs on Jev — the very thing the hub's F-141 card spends two sentences declining to rank; "74.3 points behind Jev 1.13.0's 74.4" for a partial
-   run scored 0.1. → **F-168**, fixed by Fable: ranked systems only.
-5. **Calibration "—" with no word.** A label-only system's Calibration card is a dash; the hub's row says "none (label only)" with the artifact's
-   note in its title. → **F-168**, fixed by Fable.
-6. **The way in is a link farm.** "Browse every JevBench system" is a 1,488 px column of 52 underlined links at y = 17,892 on a phone (the 12th
-   `h2` of the hub), 48 of them in one column at 1440; the names go through `short()`, so "djev" and "OpenJev" each appear twice with nothing to
-   tell the two apart (`desktop_light-hub-links-vp.png`); and the board's own 52 rows link to the project sites, none to the system's page
-   (`tableLinks 0`). → **F-169** (open, `[judgment]`).
+1. **The leaf pages are a release behind the board.** `/jev-models/jev-1.13.0` reads "JevBench v1.3.0 score **74.4** · Rank #1 of **48** ranked
+   systems"; the board it links back to says **63.3**, rank 1 of **77** (v1.4.1). `/jev-models/reflex-4b` says "70.3 · Rank #5 of 48 · 4.1 points
+   behind Jev 1.13.0's 74.4" against the board's 54.0, #5 of 77. And the board's #2 and #3 — JevK5 v0.2.0 and Hopper — have **no page at all**
+   (`/jev-models/jevk5-v02`, `/jev-models/hopper` → 404 in all four contexts; `metrics.json` `errors`). A leaf that contradicts its board is
+   worse than no leaf. → **F-171** (open, `[judgment]`).
+2. **The board's rows lead nowhere.** In the v1.4.1 table every name is plain text (`tables[1].links 0` of 82 rows); in the bar chart the
+   names are underlined links — to the project's GitHub, not to the system's page. Every `/jev-models/<key>` link on the hub (52 of them) now
+   sits inside the closed "Historical v1.3.0 board" disclosure at y = 18,971. F-169's rule ("a leaf is reached from its row") is undone on the
+   current board. → **F-172** (open, `[mechanical]`, after F-171).
+3. **The head says the size four times and the first bar is below the fold on a phone.** Before the first number at 390 the reader gets:
+   "Version v1.4.1 measures 82 systems on **534 public and 308 sealed decisions**…" (paragraph 2), "**534 public + 308 sealed** aggregate
+   decisions" (meta line), "77 ranked systems and 5 unranked rows, measured on **534 public decisions plus 308 sealed**…" (a sentence between the
+   head and the panel), "JEVBENCH V1.4.1 · **534 PUBLIC + 308 SEALED** DECISIONS PER SYSTEM" (the panel eyebrow). The "JevBench Score" h2 sits
+   at y = 757 at 390 and the first bar below 844 (`firstScreen`, `mobile_light-hub.png`). The same block repeats on both pinned pages.
+   → **F-173** (open, `[mechanical]`).
+4. **A radar with one series and nine dashes.** On the default pair (Jev 1.13.0 vs JevK5 v0.2.0) "Hard tier by family (v1.2 topics)" draws
+   Jev alone and labels every spoke "100% · —", "79% · —" … with a caption explaining the dash (`desktop_light-hub-radars-vp.png`). A missing
+   series is one sentence, not nine dashes (F-158). → **F-174** (open, `[mechanical]`).
+5. **The explanation sits between the chart and the table.** "What changed in v1.4" (five bullets with formulas, y = 3,169 at 1440) comes
+   after the compare panel (1,639) and before the table "Axes, accuracy, latency and cost" (3,502). An explanatory note follows what it explains
+   (pass 30); the compare tool is exploration and follows the data. → **F-175** (open, `[mechanical]`).
+6. **Implementation notes as copy.** Under the 3D view: "Interactive 3D view ready." (a status that stays after it is true) and "three.js r128
+   is included under its MIT license." (a licence line in the reader's caption). → **F-176**; (a) fixed by Fable, (b) directed.
+7. **6.8 MB of HTML for one page.** The hub's HTML is 6,846 KB, of which 6,105 KB is the closed "Historical v1.3.0 board" disclosure (its
+   234 × 53 task grid, weighting explorer, radars, held-out tables: 14,360 `<td>`); the current board and everything the reader sees open is
+   742 KB. A phone downloads and parses the history to read the board. → **F-179** (open, `[judgment]`).
 
-**Also, after the CR-128 ingests, two data strings reach the reader** (F-54): the Compare sub-line "4.0-upstream-timeouts" under "Terminal-Bench
-v4.0 (AA, upstream timeouts)" — a registry version id whose words the name already carries — and the configuration fallback "protocol requires
-individual inspection" (`lib/benchmark-view.mjs:54`) printed as a cohort sub-line once; on the Claude Opus 5.5 sheet the name "Terminal-Bench v4.0
-(AA, upstrea…" is cut with an ellipsis at 1440 (names never truncate). → **F-170** (open, `[mechanical]`).
+**The CR-136 draft (another writer's tree, not live) — judged early so it lands at the bar (F-178).** From
+`app/jev-models/{alternatives,how-to-choose,jev-vs-*}/page.tsx`, `components/{JevBenchSeoBlocks,JevComparisonPage,JevV141SystemDetail}.tsx`
+and the job's `LOCAL-ALTERNATIVES-{DESKTOP,MOBILE}.png`: (a) the alternatives page is a table of numbers with no bar — every ranking draws its
+headline number (F-159); (b) an eight-link "JevBench guides" row under every head, including a link to the page itself, is the link farm
+F-169 removed; (c) a Jev-vs page is a 9 × 2 table of numbers while the hub already draws the pair as four radars; (d) the copy prints field
+names — "Published sealed_accuracy aggregate", "Highest Cost axis" — data strings as copy (F-54); (e) the back link reads "← JevBench by
+Benchmark Heaven" here and "← Back to the full JevBench leaderboard" on the system pages — one wording; (f) the v1.4.1 fallback detail
+(`JevV141SystemDetail`) is a second leaf design — rank, score, four numbers in boxes, no strip, no bands, no radar — for exactly the two
+systems a reader is most likely to open; F-171 makes it unnecessary.
 
-Not defects: the Math card's "Claude Opus 5.5 · 0 / 100 · 1 of 6 benchmarks measured" is a percentile from one measured board and its count line
-says so; the bounded Compare table scrolls inside its wrapper at 390 (the pass-23 pattern). The hero claim is Florian's own copy (R3.1, unchanged).
+Not defects: the frozen pages' "Frozen top five" list before the chart is the share content and stays; the 3D view itself is Florian's
+approved chart (CR-135 brief); the compare panel's `<select>` pair picker is the pass-25 pattern; the hero claim is Florian's own copy.
 
-## Decisions in pass 32
+## Decisions in pass 33
 
-1. **A leaf page speaks the board's words (F-168).** A type, listing or basis key never reaches the reader raw; the leaf uses the same label map
-   as the board, states a not-ranked status in one sentence with the artifact's reason once, and words a missing axis the way the board's row does.
-2. **A page never prints a comparison its board withholds (F-168, extends F-161).** An unranked listing gets no "ahead of / behind" clause; the
-   board compares ranked systems only, so does the page that a search lands on.
-3. **A leaf page draws its number (F-167, extends F-159).** A page for one ranked entry shows where that number sits among its peers and against
-   the reference in a chart, above any table of numbers.
-4. **A leaf is reached from its row, not from a link farm (F-169).** The board's name cell is the way in; a list of every leaf under the board is
-   not a section.
-5. **Fable shipped F-168 itself** (one page file, no numbers) and pinned it in `test/fable-pass32.test.mjs`; a non-Fable engine runs
-   `bin/verify-fable-pass32-design.mjs` on both hosts before the Done-log row reads `verified`. F-167 and F-169 are TSX work for claude-opus (Kimi
-   stalls on TSX); F-170 is mechanical (a lib helper and its test). The other job's hold on JevBench rows, ranks and versions is respected: nothing
-   in this pass changes a number, and F-167/F-169 render published fields only.
-6. **X4 (UI meets the design bar) still met for the default views.** The CR-129 pages are a new leaf surface and are not at the bar until F-167
-   and F-169 land.
+1. **A leaf shows the board's release (F-171, extends F-167/F-168).** A system page reads the same artifact as the current board — score,
+   rank, denominator, axes, cost, tier accuracies — and names that release once in its eyebrow. An older run's data may appear below, under a
+   heading that names the run, never as the page's number. Every ranked row of the current board has a page.
+2. **A ranking's names lead to their pages, everywhere the ranking is drawn (F-172, re-states F-169 for the v1.4 board).** Table row and bar
+   row alike; the project link stays on the author line.
+3. **The size of a benchmark is stated once before its first number (F-173, extends F-142/F-166).** One head sentence, one meta line, the
+   panel eyebrow; a count that a heading already carries is not repeated in a paragraph.
+4. **A missing series is one sentence (F-174, extends F-158 to radars).** A radar for a pair draws the series it has and states the absent one
+   once under its title; labels carry only the values that exist.
+5. **Chart, table, explore, explain (F-175).** A board page reads in that order: the ranking drawn, the ranking as a table, the tools that
+   explore it, the notes that explain it.
+6. **Status lines end with the state they announce (F-176).** "Loading…" and failures are copy; "ready" is not. Library credits go to Credit.
+7. **A disclosure that is closed by default does not ship its content (F-179).** Content behind a closed `<details>` heavier than the page it
+   sits in loads when opened.
+8. **Fable shipped F-176(a)** (one string in `components/JevCapability3D.tsx`, a file no other writer holds) and pinned it in
+   `test/fable-pass33.test.mjs`; everything else is directed, because the files involved (`app/jev-models/page.tsx`, `[system]/page.tsx`,
+   `JevModelsV14.tsx`) are in CR-136's uncommitted working tree in this checkout, and a design pass does not race a release job.
+9. **X4 still met for the default views.** The JevBench hub is at the bar in its charts and table; its head, its leaf pages and its weight are
+   not until F-171–F-175 and F-179 land.
+
+## Verdict on the live site — pass 32 (2026-09-23), condensed
+
+The Compare page after F-163/F-164/F-165(b), the launch-day model pages after CR-128, and the per-system JevBench pages (CR-129, another job):
+Compare and the model pages at the bar (3-line status and claims lines at 390, five muted "No measured result" lines and no empty track, six
+same-name pairs each with a distinguishing sub-line). Six things on the CR-129 leaf pages: no chart (F-167), raw class keys and a status said
+three times (F-168, fixed by Fable), a comparison the board withholds (F-168), a dash for a label-only calibration (F-168), a 52-link "Browse
+every JevBench system" farm (F-169); plus two data strings on Compare (F-170). All four are **verified** since (iteration 181, `d388663e`;
+review gate 20260923T150004Z). Rules recorded: a leaf page speaks the board's words; a page never prints a comparison its board withholds; a
+leaf page draws its number; a leaf is reached from its row. Full text: `git show fb07266f:ops/ux-2026-09-12/DESIGN-DIRECTIVES.md`.
 
 ## Verdict on the live site — pass 31 (2026-09-22), condensed
 
@@ -193,80 +219,130 @@ and the counts line under it keeps the page honest (P4).
 
 ---
 
-## Directives (pass 32)
+## Directives (pass 33)
 
-### F-167 — The per-system JevBench page draws its number `[judgment]` — implemented (iteration 181), live 287/287 per host at `eff2b4a9`
+### F-171 — The per-system page shows the board's release; every ranked row has a page `[judgment]`
 
-*Where:* `app/jev-models/[system]/page.tsx`; `components/JevRadars.tsx` (export a fixed-pair radar); a new client component (e.g.
-`components/JevSystemCharts.tsx`) for the strip and the bands. Data: the fields the page already reads plus `readJevbenchV12Topics` as the hub
-does. No file under `lib/jevbench-v12*.mjs` and no artifact changes (the other job's hold).
-*What:* the reference is Jev 1.13.0 on every page except Jev's own, where it is the rank-2 system; the caption names it once.
-(a) **Score strip**, inside the score panel under the number: one horizontal track on the JevBench Score scale 0–100 with round ticks 0 · 25 ·
-50 · 75 · 100, a faint tick for each of the 48 ranked systems, this system's point filled in its type colour (`--jev-t-*`, as the hub) and the
-reference as a marked tick with a `title` ("Jev 1.13.0 · 74.4"); an unranked system is the hub's `is-partial` grey, hollow, on the same track.
-One caption line: "Where it sits among the 48 ranked systems." / "Shown, not ranked." Full width of the panel, ≥ 300 px at 390.
-(b) **Axis bands**: each of the four axis cards keeps its number and gains a 22 px band (F-79) on 0–100 with the reference's value as a tick
-(title "Jev 1.13.0: 85.7"); the label-only Calibration card keeps "none (label only)" and draws no band (F-84).
-(c) **Topic radar**: the hub's CR-94 radar reused with the pair fixed — export `JevPairRadar({ a, b, topics })` from `JevRadars.tsx` (the
-same `Radar`, no selects, same thin-spoke rule for `attempted < minAttempted`, F-136 ring labels), rendered as "Accuracy by topic" with the
-hub's one caption sentence; outer ring ≥ 40 % of its card width at 1440 (F-91), fits 358 px at 390 with no panning.
-(d) **Layout**: at `lg+` the page is two columns — score panel and axes left, topic radar right — so the content reaches the page width; at
-390 the number and the strip are inside the first 844 px (F-83). The external project link and the "full leaderboard" line stay where they are.
-*Accept:* the four sampled pages at 1440/390 × light/dark: `svg ≥ 2` per page (strip may be HTML: then ≥ 1 svg and 1 `[role=progressbar]`-free
-strip element), 4 axis cards with 3 or 4 bands, every number on the page equal to the artifact's (re-derive with `jevbenchV12View`, never pin),
-the reference named once in a caption, no panning at 390, 0 page errors, no overflow; `test/jevbench-system-pages.test.mjs` and
-`verify-fable-pass32-design.mjs` still pass; `git diff --stat` touches no `lib/jevbench-v12*` file and no artifact.
+*Where:* `app/jev-models/[system]/page.tsx` (its `findRow`, `generateStaticParams`, `generateMetadata`); `components/JevSystemCharts.tsx`
+(`JevScoreStrip`, `JevAxisBand` — reuse); `components/JevRadars.tsx` (`JevPairRadar` — reuse) or the hub's `JevCompareV14` radar for
+"Accuracy per tier, incl. sealed"; data from `lib/jevbench-v141.mjs` (`readJevbenchV141`, `jevbenchV141View`) — the artifact the board reads;
+`test/jevbench-system-pages.test.mjs`. No artifact and no `lib/jevbench-v12*` change. Lands **after CR-136** (its tree touches the same page);
+if CR-136 ships `JevV141SystemDetail`, this directive replaces it — one leaf design, not two.
+*What:* (a) `findRow` resolves the key against the **v1.4.1** view first (ranked, honorable, partial); the v1.3.0 view is a secondary lookup for
+the topic radar only. `generateStaticParams` lists every v1.4.1 row (82) plus any v1.3.0-only key that still resolves. (b) The score panel:
+eyebrow "JevBench v1.4.1 · one system"; the number `jevbench_score`; the one status sentence (F-168) with the v1.4.1 rank and denominator ("Rank
+#2 of 77 ranked systems."); the strip among the **77** ranked with the reference (Jev 1.13.0; on Jev's page the rank-2 system) marked; the
+"points behind Jev 1.13.0's 63.3" clause for ranked systems only. (c) Four axis cards from `axes` with bands and the reference tick as today;
+a `null` calibration reads "none (label only)". (d) The cost line from `cost` with its kind ("$0.022 per 1,000 decisions (estimated)"); the
+speed line "p50 0.65 s" when `speed.p50_s_adjusted` exists, with `adjustment` in its title. (e) The right column at `lg+`: **"Accuracy per
+tier, incl. sealed"** — the hub's five-spoke pair radar for this system against the reference (from `tiers` + `sealed_accuracy`), caption as
+the hub's; then **"Sealed set by family"** from `sealed_aggregate.by_family` when present. The v1.3.0 topic radar stays below under the heading
+"Accuracy by topic — v1.3.0 run, not part of the score" for systems the v1.3.0 run measured, and is absent otherwise (no empty radar). (f) The
+API flag and the row's † note text appear once, under the sub-line, in the board's words (`api_exposure_note`, the note's first sentence as a
+`title`). (g) `generateMetadata` description uses the v1.4.1 numbers; the preview stays evergreen (CR-134: no rank or score in OG).
+*Accept:* `/jev-models/jevk5-v02`, `/jev-models/hopper`, `/jev-models/jev-1.13.0`, `/jev-models/reflex-4b` at 1440/390 × light/dark: 200;
+score panel text contains "v1.4.1" and not "v1.3.0"; number, rank and denominator equal the v1.4.1 artifact (re-derive with
+`jevbenchV141View`, never pin); strip + ≥ 3 bands + ≥ 1 radar (`verify-fable-pass33-design.mjs` group F-171); the title/description carry no
+rank; `test/jevbench-system-pages.test.mjs` passes as amended; 0 page errors; no overflow. `generateStaticParams().length ≥ 82`.
 
-### F-169 — A system is reached from its row; the link farm goes `[judgment]` — implemented (iteration 181), live 287/287 per host at `eff2b4a9`
+### F-172 — A ranking's names link to their pages, in the table and in the chart `[mechanical]` — after F-171
 
-*Where:* `components/JevModelsV12.tsx` (row `R`, the name span at the `ProjectLink`; the honorable card's `h3`), `app/jev-models/page.tsx`
-(the `data-bh-jev-system-links` section), `test/jevbench-system-pages.test.mjs` (its two hub pins).
-*What:* (a) in every board row and in the honorable card the system's name links to `/jev-models/${r.key}` (internal, no `target`, `title` =
-`r.display`); the external project link leaves the row — it is the first thing after the axes on the system page (`data-bh-jev-system-link`)
-and stays in the notes disclosure. (b) The "Browse every JevBench system" section is deleted, sitemap untouched (52 entries stay). (c) The
-CR-129 test's hub pins move to the component: the row template `/jev-models/${r.key}` in `JevModelsV12.tsx` and "no literal dynamic-segment text".
-(d) `verify-cr-90.mjs`, `verify-cr-94.mjs`, `verify-cr-97.mjs` and `verify-fable-pass28-design.mjs` read row names; re-run them and amend only a
-pin that asserted the external href on the name.
-*Accept:* `/jev-models` at 1440/390 × light/dark: no `h2` "Browse every JevBench system"; 52 row name links to `/jev-models/<key>` (48 ranked, 1
-honorable, 3 partial) plus the honorable card's; the phone page is shorter by the block's 1,488 px; `/jev-models/multimodal-preview` still
-`noindex`; the four verifiers above pass; `test/jevbench-system-pages.test.mjs` passes as amended.
+*Where:* `components/JevModelsV14.tsx` (`SystemName`, the chart `Bar`'s name span), `test/jevbench-system-pages.test.mjs` (hub pins).
+*What:* (a) in `SystemName` the name span becomes `<Link href={`/jev-models/${encodeURIComponent(row.key)}`} title={row.display}>` around the
+`Tail` (the † stays outside the link but inside the same no-wrap box, as the comment in the file requires); the author line keeps the project
+link. (b) In the bar chart the name links to the same page (the repo link moves to the bar's `title` or goes — the table has it). (c) A test
+pins: every ranked and unranked v1.4 row renders a `th a[href^="/jev-models/"]`; no `target="_blank"` on an internal link.
+*Accept:* hub at 1440/390 × light/dark: `[data-bh-jev14-row] th a[href^="/jev-models/"]` count = row count (82); `[data-bh-jev14-bar] a[href^="/jev-models/"]`
+count = bar count; every such href is 200 (F-171); `verify-fable-pass33-design.mjs` group F-172; `verify-cr-90/94/97` and
+`verify-fable-pass28-design` unchanged or amended for the link only.
 
-### F-170 — No registry id or fallback string as a sub-line; sheet names wrap `[mechanical]` — implemented (iteration 181), live 287/287 per host at `eff2b4a9`
+### F-173 — The size of the benchmark is said once; the first bar is inside the first screen on a phone `[mechanical]`
 
-*Where:* `lib/version-label.ts` (`versionSuffix`), `lib/benchmark-view.mjs` (`cohortSubLabel`, the `configuration` fallback at line 54), the
-model page's benchmark sheet (`components/BenchmarkSheet.tsx` and the row it renders: the rule that cuts the name with an ellipsis at 1440).
-*What:* (a) `versionSuffix(name, version)` returns `null` when every token of the version (split on `-`, `_`, `.`-groups; `v` stripped; case-
-insensitive) already appears in the name as a word — so "Terminal-Bench v4.0 (AA, upstream timeouts)" carries no "4.0-upstream-timeouts" sub-line;
-a version with a token the name lacks prints as today. Test: the pair above → `null`; `("SWE-bench Verified", "1.1")` → `v1.1`; snapshot/pin
-unchanged. (b) The `configuration` catch-fallback ("protocol requires individual inspection") is an internal marker: `cohortSubLabel` returns
-`null` for it and the evidence row's (i)/detail carries the note; the sub-line histogram on the mixed Compare link has no such entry. (c) The
-sheet's name cell wraps to two lines (`title` keeps the full name) instead of an ellipsis at any width — names never truncate (F-14/F-56).
-*Accept:* mixed Compare link at 1440/390: no sub-line matching `/^\d+(\.\d+)*-[a-z]/` and none equal to the fallback string; `/models/claude-opus-5.5::max`
-at 1440: no name span with `text-overflow: ellipsis` clipping (`scrollWidth ≤ clientWidth` for every name); the unit tests for (a) pass;
-`verify-f165-b.mjs` and `verify-cr-127.mjs` still pass.
+*Where:* `app/jev-models/page.tsx` (the head: paragraphs 1–2, the meta line, the "77 ranked systems and 5 unranked rows…" sentence),
+`app/jev-models/v1.4/page.tsx` and `v1.4.1/page.tsx` (the same sentence), `components/JevModelsV14.tsx` (the panel eyebrow and the "Official"
+line).
+*What:* (a) The head keeps: eyebrow · h1 · **one** sentence ("JevBench is Benchmark Heaven's own benchmark for Jev-class decision models: state and
+a bounded rubric in, a typed answer out.") · the meta line ("Scored 23 Sept 2026 · protocol … · 534 public + 308 sealed decisions · one request at
+a time from a server in Germany · harness · results JSON · sha256 · v1.0 results") · "Share this version". Paragraph 2's second sentence ("Built and
+run by us, not collected from someone else's leaderboard; the results describe the tested configurations, not every application.") moves into
+the "Method and tiers" disclosure; its first sentence is deleted (the meta line and the panel say it). (b) The sentence "77 ranked systems and 5
+unranked rows, measured on 534 public decisions plus 308 sealed decisions. The sealed text and answers remain private; only system-level
+aggregates appear here." is deleted on the hub and both pinned pages; "5 unranked rows" is already the table's status tags; the sealed
+sentence is already the API note under the table. (c) The panel eyebrow reads "JevBench v1.4.1" only (the meta line carries the counts). (d) Below
+`sm` the "Official …" line is one sentence: "Official · four axes 0–100, equal-weight harmonic mean · What changed ↓" (the full sentence stays
+at `sm+`).
+*Accept:* hub at 390: the first `[data-bh-jev14-bar]`'s top < 844 px; "534 public" occurs once in `main` above the chart; at 1440 the head is
+≤ 5 blocks (eyebrow, h1, sentence, meta, share); both pinned pages likewise; `verify-fable-pass33-design.mjs` group F-173; the CR-131/CR-135
+verifiers still pass (amend a pin that asserted the deleted sentence, with the reason).
 
-### F-165 — Same-name rows say whose run they are `[judgment]` — data part open (→ CR-128.1)
+### F-174 — A missing series on a pair radar is one sentence, not a dash per spoke `[mechanical]`
 
-The label half is live and verified (`135a3098`, `4a9dd523`; sub-lines "Vendor-reported by Anthropic" / "… by OpenAI", `verify-f165-a.mjs`
-34/34 canonical). Open: the identity half — where a vendor's launch number was produced on the board's own protocol, the row joins the board's
-identity with basis `self_reported` so one Compare row holds both values; 25 candidate boards (iteration 180, part 4). Accept as in pass 31.
+*Where:* `components/JevCompareV14.tsx` (the radar renderer and its label builder), its test.
+*What:* when one system of the pair has no value on a radar (all its spokes `null`), the radar draws the other series alone, every label shows
+that one value ("Adversarial 100%"), and one muted sentence under the title reads "⟨B⟩ was not run on the v1.2 hard tier." (or "… has no sealed
+family breakdown."); when neither has values the radar is replaced by that sentence. The generic '"—" = not measured for that system, not
+plotted.' caption goes; a single missing spoke (not the whole series) keeps the "—" for that spoke only.
+*Accept:* default pair at 1440/390 × light/dark: no radar label ends in "—"; the sentence names the system; a pair with both series unchanged;
+`verify-fable-pass33-design.mjs` group F-174.
 
-## Directives (pass 32; completed by Fable — awaiting non-Fable live verification)
+### F-175 — Chart, table, explore, explain `[mechanical]`
 
-### F-168 — The per-system page speaks the board's words; ranked systems only are compared with Jev `[mechanical]`
+*Where:* `app/jev-models/page.tsx` / `components/JevModelsV14.tsx` (block order).
+*What:* the v1.4.1 section reads: bar chart → "Axes, accuracy, latency and cost" table → "Compare two systems" → "What changed in v1.4" → "What the
+run says". The caption link "What changed in v1.4 ↓" keeps its anchor. Nothing else moves.
+*Accept:* hub and both pinned pages: y("What changed in v1.4") > y(table) > y(chart) and y(compare) between table and note, at 1440 and 390;
+`verify-fable-pass33-design.mjs` group F-175.
 
-*Where:* `app/jev-models/[system]/page.tsx`.
-*What:* the sub-line's type span prints `typeLabel(row.cls)` from the hub radar's `TYPE_LABEL` map (the raw key stays as
-`data-bh-jev-system-cls`); the status is `statusSentence()`: "Rank #n of N ranked systems." / "Honorable mention, not ranked — ⟨reason⟩." /
-"Partial run, not ranked — ⟨reason⟩." with the artifact's `notRankedBecause` stripped of its own "— listed, not ranked" tail (fallbacks: "it
-runs another entrant's model" / "it missed a tier", the artifact's rule); the "points ahead of / behind Jev 1.13.0" sentence and the metadata
-description's clause render for ranked systems only; a `null` calibration reads "none (label only)" (`data-bh-jev-system-no-cal`, `title` =
-`calibrationNote`).
-*Accept:* `verify-fable-pass32-design.mjs` on both hosts (84 checks: labelled type, one status sentence, comparison only when ranked, the
-calibration wording, no overflow, no page errors, 1440/390 × light/dark); `test/fable-pass32.test.mjs` 4/4; `test/jevbench-system-pages.test.mjs` 8/8.
+### F-176 — No implementation note as copy under the 3D view `[mechanical]` — (a) shipped by Fable, (b) open
+
+*Where:* (a) `components/JevCapability3D.tsx` — done: the ready state sets the live region to '' (loading and failure sentences stay);
+(b) `components/JevCapabilityChart.tsx` line 218 and `app/jev-models/page.tsx` (the Credit disclosure).
+*What (b):* the caption keeps "79 systems plotted; systems missing cost or Speed are omitted."; "three.js r128 is included under its MIT license."
+moves into the Credit disclosure as one line ("3D view: three.js (MIT).").
+*Accept:* `verify-fable-pass33-design.mjs` group F-176 on both hosts (status silent or a "could not" sentence after scroll; no licence sentence
+beside the chart); `test/fable-pass33.test.mjs`.
+
+### F-178 — The CR-136 pages land at the bar `[judgment]` — when CR-136 is live, or by its author before
+
+*Where:* `app/jev-models/{alternatives,how-to-choose,jev-vs-*}/page.tsx`, `components/JevBenchSeoBlocks.tsx`, `components/JevComparisonPage.tsx`.
+*What:* (a) the alternatives table draws the JevBench Score as a bar per row (reuse the hub chart's `Bar` for the four rows, reference row
+included as row 1 in muted blue) — every ranking draws its headline number (F-159); (b) `JevIntentLinks` renders only under the alternatives
+and chooser heads, lists the sibling guide (not itself) and the board, and never the four pair pages — those are linked from their rows in the
+alternatives table (already) and from each other's "compare more" line; (c) a Jev-vs page renders the hub's four-radar pair (`JevCompareV14`
+with `rows` = the pair, pickers hidden) above its FAQ, and the 9-row table becomes the "All values as a table" disclosure the hub already has;
+(d) copy uses the board's words: "sealed-set accuracy" for `sealed_accuracy`, "Cheapest per decision (Cost axis)" for "Highest Cost axis",
+"Fastest (Speed axis)"; no field name reaches the reader (F-54); (e) the back link is "← Back to the full JevBench leaderboard" everywhere;
+(f) `JevV141SystemDetail` is removed once F-171 is live (or never shipped if F-171 lands first).
+*Accept:* the six pages at 1440/390 × light/dark: bars on the alternatives table (`[role=progressbar]` or the hub's bar element ≥ 4); at most
+3 links in the guides row and none to the current page; a Jev-vs page has ≥ 4 `svg` above its FAQ; no `_` inside a visible word; one back-link
+wording; 0 page errors; no overflow; CR-136's own verifier still passes.
+
+### F-179 — The historical board loads when opened `[judgment]`
+
+*Where:* `app/jev-models/page.tsx` (the `jev13-history` details), a client wrapper (e.g. `components/JevHistoryLazy.tsx`) that dynamic-imports
+the v1.3.0 board, radars, task grid and held-out tables and fetches their data on `toggle`; the CR-90/94/97 verifiers open the details before
+they read it (add one `click` on the summary).
+*What:* the server HTML of `/jev-models` contains the summary and one sentence; the content mounts on first open. `/jev-models/v1` (the v1.0
+page) is untouched.
+*Accept:* `curl -s https://benchmarkheaven.com/jev-models | wc -c` < 1.5 MB (today 6.8 MB); after opening the details the same tables, radars
+and grid render (the four verifiers pass with the click); Lighthouse-free check: `performance.getEntriesByType('navigation')[0].transferSize`
+at 390 under 400 KB compressed; 0 page errors.
+
+### F-165 — Same-name rows say whose run they are `[judgment]` — data part open (→ CR-128.1, F-165(a) decided in iteration 187)
+
+The label half is live and verified (`135a3098`, `4a9dd523`). Open: the identity half — rows joining the board's identity with basis
+`self_reported`; the rekey decision per vendor launch row is recorded (iteration 187). Accept as in pass 31.
 
 ## Design system notes (apply while touching any file above)
 
+- **A leaf shows the board's release (pass 33, F-171):** a system page reads the artifact the current board reads and names it once; an older
+  run's data appears only under a heading that names the run.
+- **A ranking's names lead to their pages wherever the ranking is drawn (pass 33, F-172, re-states F-169):** table rows and chart rows alike.
+- **The size of a benchmark is said once before its first number (pass 33, F-173):** one head sentence, one meta line, the panel eyebrow.
+- **A missing series is one sentence (pass 33, F-174, extends F-158 to radars):** labels carry only the values that exist.
+- **Chart, table, explore, explain (pass 33, F-175):** a board page reads in that order.
+- **A status line ends with the state it announces (pass 33, F-176):** "loading" and failures are copy, "ready" is not; library credits go to Credit.
+- **A closed disclosure does not ship its content when it outweighs the page (pass 33, F-179).**
 - **A toggle follows what it reveals (pass 29, F-155):** a "+N / less" control renders after the items it shows, never between or before
   them; an opened group reads items → control.
 - **A thin board says how big it is (pass 29, F-156):** a ranking that opens on a few matched rows states "N of M published results are matched"
@@ -493,7 +569,11 @@ calibration wording, no overflow, no page errors, 1440/390 × light/dark); `test
 
 | Directive | Commit | Evidence | Verified by |
 |---|---|---|---|
-| F-168 the per-system JevBench page speaks the board's words (type label, one status sentence, comparison only when ranked, "none (label only)") | pass 32 (Fable, surgical: `app/jev-models/[system]/page.tsx`) + `test/fable-pass32.test.mjs` | `/opt/benchmarkheaven/state/ux-evidence/fable-20260923-pass32/` (`canonical/` before, `local/` 84/84 on the dev server, `live-*/` after the deploy; `verify-fable-pass32-design.mjs`) | **implemented by Fable** — awaiting a non-Fable engine: run `bin/verify-fable-pass32-design.mjs` on both hosts |
+| F-168 the per-system JevBench page speaks the board's words (type label, one status sentence, comparison only when ranked, "none (label only)") | pass 32 (Fable, surgical: `app/jev-models/[system]/page.tsx`) + `test/fable-pass32.test.mjs` | `/opt/benchmarkheaven/state/ux-evidence/fable-20260923-pass32/` (`canonical/` before, `local/` 84/84 on the dev server, `live-*/` after the deploy; `verify-fable-pass32-design.mjs`) | **verified** — iteration 181 (claude-opus, non-Fable) ran `bin/verify-fable-pass32-design.mjs` on both hosts (84/84 each; `/opt/benchmarkheaven/state/ux-evidence/iter181-pass32/`) |
+| F-167 the per-system page draws its number (score strip among the ranked, 22 px axis bands with the reference tick, the pair radar, two columns at `lg+`) | `d388663e` (claude-opus, iteration 181) | `/opt/benchmarkheaven/state/ux-evidence/review-20260923T150004Z/post-deploy/f167-f170-{main,mintapis}/` (`verify-fable-pass32-f167-f170.mjs`) | **verified** — review gate 20260923T150004Z (codex-luna, non-implementer), 287/287 per host at `eff2b4a9`; pass 33 notes the page still reads the v1.3.0 artifact → F-171 |
+| F-169 every board row's name and the honorable card link to `/jev-models/<key>`; the 52-link block is gone | `d388663e` (claude-opus, iteration 181) | same | **verified** — same gate; pass 33: undone on the v1.4.1 board (names plain, chart names → repos) → F-172 |
+| F-170 no registry id or fallback string as a sub-line; sheet names wrap | `d388663e` (claude-opus, iteration 181) | same | **verified** — same gate |
+| F-176(a) the 3D view announces nothing once it is up (live region kept for loading and failure states) | pass 33 (Fable, surgical: `components/JevCapability3D.tsx`) + `test/fable-pass33.test.mjs` | `/opt/benchmarkheaven/state/ux-evidence/fable-20260923-pass33/` (`canonical/` before; `verify-fable-pass33-design.mjs` `ONLY=F-176` after the deploy) | **implemented by Fable** — awaiting a non-Fable engine: `ONLY=F-176 node bin/verify-fable-pass33-design.mjs <host> <out>` on both hosts; (b) the licence line stays open |
 | F-163 a model with no measured result leaves the snapshot cards; one status per card line | `ee6c2748` (claude-opus, iteration 177) + `lib/compare-claims.mjs`, `test/fable-pass31-compare.test.mjs` | `/opt/benchmarkheaven/state/ux-evidence/review-20260923T031003Z/f163-f164-{canonical,legacy}/verification.json` | **verified** — codex-luna (review gate 20260923T031003Z, non-implementer): `verify-f163-f164.mjs` 87/87 per host; re-judged in pass 32: 5 muted lines, no empty track |
 | F-164 the Compare status line says how many values are the developers' own | same | same | **verified** — same gate; pass 32: status 3 lines and claims 3 lines at 390, generated from the rendered rows |
 | F-161 A thin Composite wears its tag beside the number; no input, no number | `8937dcbb` (Fable, pass 31) | `/opt/benchmarkheaven/state/ux-evidence/fable-20260922-pass31/{canonical,local,live-canonical,live-legacy}/` | **verified** — claude-opus (iteration 180, non-Fable, non-implementer): `verify-fable-pass31-design.mjs` 44/44 per host at `d8a821ab`, 1440/390 × light/dark; see the F-161/F-162/F-166 rows in `PROGRESS.md` |

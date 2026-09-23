@@ -232,7 +232,7 @@ export function JevCapability3D({ points, costBounds }: { points: Point[]; costB
           renderer?.domElement.removeEventListener('pointerdown', showTip);
         };
         render();
-        setStatus('Interactive 3D view ready.');
+        setStatus(''); // F-176 (Fable pass 33): a ready view needs no announcement; the live region stays for the loading and failure states.
       } catch {
         setStatus('This browser could not create the interactive 3D view. Use the Capability and scatter charts above.');
       }
