@@ -47,6 +47,19 @@ function RankingTable({ systems, track, all = false }: { systems: any[]; track: 
   </div>;
 }
 
+function ScoreBars({ systems, track }: { systems: any[]; track: Track }) {
+  const rows = [...systems].sort((x, y) => y.tracks[track].composite.score - x.tracks[track].composite.score);
+  return <ol className="mt-4 grid gap-2" data-bh-mm-bars={track}>{rows.map((s, i) => {
+    const v = s.tracks[track].composite.score;
+    const color = i === 0 ? 'bg-amber-400' : s.api_flag ? 'bg-pink-400' : 'bg-teal-400';
+    return <li key={s.key} className="grid grid-cols-[minmax(0,11rem)_1fr_3.2rem] items-center gap-3 sm:grid-cols-[minmax(0,17rem)_1fr_3.5rem]">
+      <span className="truncate text-sm font-semibold" title={s.name}>{i + 1}. {s.name}{s.api_flag && <span className="ml-1 whitespace-nowrap text-[0.68rem] font-bold text-accent">API</span>}</span>
+      <span className="h-5 rounded-md bg-black/10 dark:bg-white/10"><span className={`block h-full rounded-md ${color}`} style={{ width: `${Math.max(0.5, v)}%` }} /></span>
+      <span className="text-right font-bold tabular-nums">{score(v)}</span>
+    </li>;
+  })}</ol>;
+}
+
 export default async function MultimodalPreviewPage() {
   const a: any = await readMultimodalPreview();
   const s = a.split;
@@ -81,6 +94,11 @@ export default async function MultimodalPreviewPage() {
       </li>)}</ol>
     </section>
 
+    <section className="mt-10" aria-labelledby="bars-heading">
+      <h2 id="bars-heading" className="text-2xl font-semibold">Composite score</h2>
+      <p className="bh-muted mt-1 text-sm">Whole candidate, 444 decisions. Pink bars are hosted APIs; the four axes and the v1.4 gates are in the table below.</p>
+      <ScoreBars systems={a.ranking} track="all" />
+    </section>
     <section className="mt-9 max-w-6xl" aria-labelledby="overall-heading">
       <h2 id="overall-heading" className="text-2xl font-semibold">Whole-candidate ranking</h2>
       <p className="bh-muted mt-2 max-w-5xl text-sm">Ranked by the candidate composite: equal-weight Intelligence, Calibration, Speed and Cost axes, then the v1.4 Jev-class gates. Hosted systems are marked API because their providers received sealed images and questions.</p>
