@@ -7168,13 +7168,13 @@ CR-130 is complete on `main` at `b0b77191`. Re-read the CR brief and PROGRESS le
 
 | ID | Status | Evidence | Note |
 |---|---|---|---|
-| CR-131.1 | open | `/home/flori/jobs/jevbench-v14-release2-20260923/INTEGRITY.md`; JevBench tag `v1.4.0` | Serve only the pinned v1.4 aggregate artifact; include all approved rows, no private djev rows or new entrants, no sealed item-level data. |
-| CR-131.2 | open | `/home/flori/jobs/jevbench-v14-release2-20260923/CR-131-DRAFT.md` | Make the default board v1.4; exactly 76 systems / 71 ranked, with exposure flags and existing disclosures. |
-| CR-131.3 | open | `/home/flori/jobs/jevbench-v14-release2-20260923/PAGE-V14-SECTION.md` | State the approved formulas, gates and transparency notes. |
-| CR-131.4 | open | `/home/flori/jobs/jev-models-evergreen-preview-20260923/PROMPT.md` | Keep changing-page and model-detail social previews evergreen; pinned-version preview is a queued follow-up. |
-| CR-131.5 | open | `test/` | Test the v1.4 page/API and run the full suite, typecheck and production build. |
-| CR-131.6 | open | `https://benchmarkheaven.com/jev-models`; `https://model-market-comparison.app.mintapis.com/jev-models`; Hugging Face Space | Publish after code gates, verify both hosts and the live-API Space. |
-| CR-131.7 | open | `/home/flori/jobs/jevbench-v14-release2-20260923/INTEGRITY.md` | Repeat the local-only sealed-data scan after publication and record release evidence. |
+| CR-131.1 | verified | `data/raw/benchmarks/jevbench/v1.4/jevbench-v1.4-results.json`; JevBench tag `v1.4.0`; API SHA `006ebff534221d913abe3195f87efeea420698ce0ab207beeb89dc3fb50fb517` | Both production API hosts serve the exact pinned 76-row aggregate, 71 ranked systems, and approved top five. No sealed item-level fields are present. |
+| CR-131.2 | verified | `app/jev-models/page.tsx`; `components/JevModelsV14.tsx`; live checks on both Benchmark Heaven hosts | The default `/jev-models` board is v1.4.0 with 76 systems / 71 ranked. Both hosts return the approved top five and identical API hash. |
+| CR-131.3 | verified | `components/JevModelsV14.tsx`; `test/jevbench-v14.test.mjs`; live `/jev-models` on both hosts | The live page has a clear “What changed in v1.4” section covering the approved blends, gap penalty, harmonic score, gates, API exposure flag, and existing disclosures. |
+| CR-131.4 | verified | `app/jev-models/opengraph-image.tsx`; `test/jevbench-v14.test.mjs`; deployment `osu8uo6wnf6l9ms2kjm6z3ho` | Changing-page social artwork is evergreen and carries no pinned version, rank, or score. Regression test passed. |
+| CR-131.5 | verified | `/home/flori/jobs/jevbench-v14-release2-20260923/{npm-test-node22.log,production-build.log}` | Full suite: 1,195 passed, 0 failed, 1 skipped; typecheck and production build passed. CR-131 focused tests passed. |
+| CR-131.6 | open | Both Benchmark Heaven hosts verified; public Hugging Face Space still at `7f217c49e2da31178e82c0a2de4d17b933511e68` | Canonical and legacy pages/APIs are live and match. The Space still needs a repository-scoped write token; available HF token is inference-only. Complete live Space publication and display verification after access is available. |
+| CR-131.7 | open | `/home/flori/jobs/jevbench-v14-release2-20260923/INTEGRITY.md` | Local-only scan passed for source, both live site/API hosts, and the v1.4 Space candidate; repeat against the live Space after it is updated. |
 
 ## Iteration 179 — 2026-09-23 04:10 → ~05:05 UTC (claude-opus, work): CR-128 audited from the primary artifacts, and the rank that was not a rank
 
