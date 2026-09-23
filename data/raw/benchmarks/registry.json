@@ -6487,7 +6487,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "The website release selector is newer than the README (which still calls 2025-04-25 current). Register the verified website release. Do not combine dated releases; preserve source-published overall overrides with attribution."
+        "notes": "Register the verified website release; do not combine dated releases. The release files publish per-task columns (table_2026_06_25.csv) and a seven-category map (categories_2026_06_25.json), never an overall column, so the overall is the mean of the seven category means. The site’s own front-end bundle hardcodes two per-model overall values instead of that mean — grok-3-thinking 72 and grok-3 58 — and those source-published overrides are retained with attribution."
       },
       "maintainer": "LiveBench team",
       "source_type": "official_leaderboard",
@@ -12777,6 +12777,14 @@
           "fetched_at": "2026-09-10T21:49:10Z",
           "excerpt": "\\\"metrics_schema\\\":{\\\"type\\\":\\\"object\\\",\\\"required\\\":[\\\"accuracy\\\",\\\"accuracy_ci95_half_width\\\",\\\"display_accuracy\\\",\\\"total_tokens\\\",\\\"display_total_tokens\\\",\\\"total_cost_usd\\\",\\\"display_cost\\\",\\\"n_trials\\\"],\\\"properties\\\":{\\\"accuracy\\\":{\\\"type\\\":\\\"number\\\",\\\"maximum\\\":100,\\\"minimum\\\":0}",
           "recipe": "next-rsc"
+        },
+        {
+          "url": "https://www.tbench.ai/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-23T10-16-55-034Z/ea2d53799340eab6e196.gz",
+          "sha256": "0a69f362cb5093c54029f7a3e0204eb84b7db37a136fe910f49513169d38db66",
+          "fetched_at": "2026-09-23T10:21:59.022232+00:00",
+          "excerpt": "Hosted by Stanford / Harbor / Laude Institute",
+          "recipe": "next-rsc"
         }
       ]
     },
@@ -13963,7 +13971,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Published and maintained by Morgan Linton on vulcanbench.com; the leaderboard renders assets/data/swe-v4-board.csv (18 columns, n=23 per row, one row per model × effort). Each column aggregates every run of that model at that effort level in its own agent harness (Codex on a ChatGPT subscription, or Claude Code); Fable 5.1’s runs include 11 disclosed Opus 4.8 fallback cells that the operator keeps in the population (source footnote). Code quality is judged for a human reader by Muse Spark 1.3 and Grok 4.6 under one frozen protocol family (code-quality-maintenance-v3.4–v3.6). The retired v3 suite is a different task set and scale, never comparable. The suite was renamed VulcanBench Frontier v4 (formerly VulcanBench-SWE v4, September 2026) with task set and report URLs unchanged. Community benchmark (single operator), never a Composite input; the judged 33% component makes the combined score a judged score for category composites."
+        "notes": "Published and maintained by Morgan Linton on vulcanbench.com; the leaderboard renders assets/data/swe-v4-board.csv (18 columns, n=23 per row, one row per model × effort). Each column aggregates every run of that model at that effort level in its own agent harness (Codex on a ChatGPT subscription, or Claude Code); Fable 5.1’s runs include 11 disclosed Opus 4.8 fallback cells that the operator keeps in the population (source footnote). Code quality is judged for a human reader by Muse Spark 1.3 and Grok 4.6 under one frozen protocol family (code-quality-maintenance-v3.4–v3.7; the board states that \"v3.4 to v3.7 apply the same rubric, controls, gates and judges to each population\"). The retired v3 suite is a different task set and scale, never comparable. The suite was renamed VulcanBench Frontier v4 (formerly VulcanBench-SWE v4, September 2026) with task set and report URLs unchanged. Community benchmark (single operator), never a Composite input; the judged 33% component makes the combined score a judged score for category composites."
       },
       "maintainer": "Morgan Linton (VulcanBench)",
       "source_type": "official_leaderboard",
