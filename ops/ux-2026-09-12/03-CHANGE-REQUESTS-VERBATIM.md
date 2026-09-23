@@ -1580,3 +1580,7 @@ launch; first run: OpenAI's GPT-6 Sol and Luna), verbatim goal:
 >    [...] or add an alias.
 > 4. Deploy through the normal path and verify live on BOTH hosts that serve benchmarkheaven.com.
 
+## CR-20260923a — Jev-models link preview visual fix → CR-130
+
+Florian, 23 Sep 2026, verbatim:
+> Fix the link preview for the jev-models page.
