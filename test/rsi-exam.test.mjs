@@ -109,6 +109,8 @@ test('One cohort label map for every surface: the view library owns it, the comp
   const { cohortLabel } = await import('../lib/benchmark-view.mjs');
   const matrix = await import('../lib/benchmark-matrix.mjs');
   assert.equal(matrix.cohortLabel, cohortLabel, 'the matrix re-exports the same function, never its own copy');
+  const { cohortSubLabel } = await import('../lib/benchmark-view.mjs');
+  assert.equal(matrix.cohortSubLabel, cohortSubLabel, 'and the same for the sub-line rule built on it');
   assert.equal(cohortLabel('musecode'), 'Muse Code');
   for (const [file, hints] of Object.entries({
     'components/BenchmarkSheetLazy.tsx': ['cohortLabel(a.cohort)'],
@@ -116,10 +118,13 @@ test('One cohort label map for every surface: the view library owns it, the comp
     'components/BenchmaxxExplorer.tsx': ['cohortLabel(p.target.cohort)', 'cohortLabel(data.axis.cohort)', 'cohortLabel(a.cohort)'],
     'components/BenchmarkRadar.tsx': ['cohortLabel(a.cohort)'],
     'components/BenchmarkRanking.tsx': ['cohortLabel(axis.cohort)', 'cohortLabel(e.cohort)', 'cohortLabel(r.harness)'],
-    'components/BenchmarkCompare.tsx': ['cohortLabel(a.cohort)'],
+    // F-165(b): Compare prints the cohort only when it is not the default "Published board", so its
+    // display site is `cohortSubLabel` — which is `cohortLabel` with that one rule in front of it,
+    // from the same module. What this guard is protecting is unchanged: no surface renders a raw slug.
+    'components/BenchmarkCompare.tsx': ['cohortSubLabel(a.cohort)'],
   })) {
     const source = readFileSync(file, 'utf8');
-    assert.match(source, /cohortLabel.*benchmark-view\.mjs/, `${file} imports the shared map`);
+    assert.match(source, /cohort(Sub)?Label.*benchmark-view\.mjs/, `${file} imports the shared map`);
     for (const hint of hints) assert.ok(source.includes(hint), `${file} renders ${hint}`);
   }
 });

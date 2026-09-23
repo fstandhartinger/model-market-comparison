@@ -59,6 +59,7 @@ export function isJudged(key: string, caveats: unknown): boolean;
 export function freshnessOf(key: string, caveats: unknown): Freshness | null;
 export function versionLine(row: Pick<MatrixRow, "version" | "asOf" | "freshness">, showPin?: boolean): string;
 export function cohortLabel(cohort: string | null | undefined): string | null | undefined;
+export function cohortSubLabel(cohort: string | null | undefined): string | null;
 export const COMPOSITE_MIN_ROWS: number;
 export function scoreRowSubtitle(score: string, shortLabel: string): string;
 export function compatibleRow(row: Pick<MatrixRow, "unit" | "higherBetter" | "range">): boolean;

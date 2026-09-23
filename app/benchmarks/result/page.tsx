@@ -7,7 +7,7 @@ import { getDataset } from '../../../lib/data';
 import { getBenchmarkView } from '../../../lib/benchmark-data';
 import { getBenchmarkMatrixPage } from '../../../lib/benchmark-matrix-data';
 import { latestScores } from '../../../lib/benchmark-view.mjs';
-import { formatValue, cellHref, cellAxisId, resultHref, rowWinners, versionLine, cohortLabel, variantLabel, familyScopeDonorOf } from '../../../lib/benchmark-matrix.mjs';
+import { formatValue, cellHref, cellAxisId, resultHref, rowWinners, versionLine, cohortLabel, cohortSubLabel, variantLabel, familyScopeDonorOf } from '../../../lib/benchmark-matrix.mjs';
 import caveats from '../../../data/benchmark-caveats.json';
 import { SourceScore } from '../../../components/BenchmarkEvidence';
 import { humanVersion, isPin } from '../../../lib/version-label';
@@ -158,7 +158,7 @@ export default async function BenchmarkResultPage({ searchParams }: { searchPara
     {backLink}
     <header className="bh-page-head mt-3">
       {/* F-124: a pinned revision is not something to headline — the card below names it once. */}
-      <p className="bh-eyebrow">{ax.category}{isPin(ax.version) ? '' : ` · ${humanVersion(ax.version).label}`}{ax.cohort !== 'Published board' ? ` · ${cohortLabel(ax.cohort)}` : ''}</p>
+      <p className="bh-eyebrow">{ax.category}{isPin(ax.version) ? '' : ` · ${humanVersion(ax.version).label}`}{cohortSubLabel(ax.cohort) ? ` · ${cohortSubLabel(ax.cohort)}` : ''}</p>
       <h1 className="text-3xl font-bold tracking-tight">{ax.name}</h1>
       {ax.description && <p className="bh-muted mt-2 max-w-2xl">{ax.description}</p>}
     </header>

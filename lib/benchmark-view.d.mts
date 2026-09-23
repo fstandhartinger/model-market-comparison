@@ -20,6 +20,7 @@ export interface ProfileFlag { axisId: string; scoreId: string; direction: strin
 export const ANOMALY_POLICY: { minPeers: number; minFamilies: number; minProfile: number; peerZ: number; profileGap: number };
 export const HARNESS_LABELS: Record<string, string>;
 export function cohortLabel(cohort: string | null | undefined): string | null | undefined;
+export function cohortSubLabel(cohort: string | null | undefined): string | null;
 export function effectiveBasis(o: { source_basis?: string; basis: string }): string;
 export function cohortOf(o: import('./benchmark-scores.mjs').BenchmarkObservation): string;
 export function latestScores(rows: ViewScore[], basis?: string): ViewScore[];
