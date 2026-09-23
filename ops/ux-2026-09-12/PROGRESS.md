@@ -8158,7 +8158,69 @@ this is the second time this iteration that a browser check produced a symptom e
 
 | ID | Status | Evidence | Note |
 |---|---|---|---|
-| F-168 | implemented | `test/fable-pass32.test.mjs`; `ops/ux-2026-09-12/bin/verify-fable-pass32-design.mjs`; `/opt/benchmarkheaven/state/ux-evidence/fable-20260923-pass32/{canonical,local}/` | Per-system JevBench page: type label, one status sentence, Jev comparison for ranked systems only, "none (label only)". Fable-implemented; needs a non-Fable live run on both hosts. |
-| F-167 | open | `DESIGN-DIRECTIVES.md` F-167 | Per-system page draws its number: score strip, axis bands, fixed-pair topic radar, two columns at `lg+`. `[judgment]`, claude-opus. |
-| F-169 | open | `DESIGN-DIRECTIVES.md` F-169 | Board name cell links to the system page; the "Browse every JevBench system" block goes; CR-129 test pins move to the component. `[judgment]`, claude-opus. |
-| F-170 | open | `DESIGN-DIRECTIVES.md` F-170 | No registry version id or `configuration` fallback as a sub-line; sheet names wrap. `[mechanical]`. |
+| F-168 | verified | `test/fable-pass32.test.mjs`; `ops/ux-2026-09-12/bin/verify-fable-pass32-design.mjs`; `/opt/benchmarkheaven/state/ux-evidence/fable-20260923-pass32/{canonical,local}/`; `/opt/benchmarkheaven/state/ux-evidence/iter181-pass32/verify-fable-pass32-design-{benchmarkheaven,model-market-comparison}/` | Per-system JevBench page: type label, one status sentence, Jev comparison for ranked systems only, "none (label only)". Fable-implemented; **84/84 per host at `eff2b4a9`**, run by claude-opus — a different engine from the implementer. Stated plainly: the same iteration then rewrote that page's layout for F-167, so this run covers F-168's four rules *after* that edit; the F-167/F-169/F-170 rows above are the ones still owing an independent engine. |
+| F-167 | implemented | `d388663e`; `components/JevSystemCharts.tsx`, `components/JevRadars.tsx` (`JevPairRadar`), `app/jev-models/[system]/page.tsx`; `ops/ux-2026-09-12/bin/verify-fable-pass32-f167-f170.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter181-pass32/f167-f170-{benchmarkheaven,model-market-comparison}/` | Score strip (a tick per ranked system, the point in its type colour, the reference marked), a 22 px band per axis card, the hub's radar for the fixed pair, two columns at `lg+`. **287/287 per host at `eff2b4a9`**, every number re-derived from the artifact and cross-checked against the host's own `/api/jevbench/v1.2`. Implemented by claude-opus; needs a non-claude-opus sign-off. |
+| F-169 | implemented | `d388663e`; `components/JevModelsV12.tsx` (`SystemLink`), `app/jev-models/page.tsx`, `test/jevbench-system-pages.test.mjs`; same verifier and evidence as F-167 | 52 row names plus the honorable card link to `/jev-models/<key>`; the link block is gone; the external project link stays on the system page and in the † notes disclosure. The four verifiers F-169(d) names were re-run and **none needed a pin amended**: `verify-cr-90` 122/122, `verify-cr-94` 112/112, `verify-fable-pass28-design` 30/30. Implemented by claude-opus; needs a non-claude-opus sign-off. |
+| F-170 | implemented | `d388663e`; `lib/version-label.ts` (`versionSuffix`), `lib/benchmark-view.mjs` (`cohortSubLabel`, `jsonObjectPrefix`), `components/BenchmarkSheetLazy.tsx`; `test/fable-pass32-f170.test.mjs`; same verifier and evidence as F-167 | 38 repeated version sub-lines go ("Terminal-Bench 4.0 v4.0", "AIME 2025 (AA) v2025", the machine-shaped "4.0-upstream-timeouts"); sheet names wrap instead of clipping. The marker half found a real bug — see D181. Implemented by claude-opus; needs a non-claude-opus sign-off. |
+
+---
+
+## Iteration 181 (claude-opus, 2026-09-23 09:20–~11:00 UTC) — Fable pass 32's three open directives, and the reason the site's data is a day old
+
+**What this iteration found first.** The daily pipeline has published nothing since **2026-09-22 08:11 UTC**. Four runs failed today
+(00:41, 05:17, 06:58, 08:39) and the automatic self-heal spent its one repair attempt for the day: its agent started
+`gated-run.sh` at 08:39, then died, taking the run with it — the 08:39 run stopped mid-gauntlet at 08:54, wrote no verdict and left
+`state/run.lock` behind (an empty `flock` file with no holder; `flock -n` succeeded, so nothing was bypassed by later pushes).
+`state/self-heal.json` still reads `stage: repairing` and its `RESULT.md` was never written. The two earlier causes are already fixed in
+`main`: the 05:17 test gate failed on two pins that `D177` replaced, and the 06:58 publish push was rejected non-fast-forward, which
+`55543977` answers with a fetch+rebase retry — neither has been exercised by an unattended run yet.
+
+**So this iteration re-ran the pipeline itself** (`gated-run.sh`, detached, 09:23–09:36) and it failed on a fifth cause, which is the
+one worth fixing: `DAILY LIVE FAILED: Live source contract rejected aa: round 1: Malformed producer audit: missing rows array;
+round 2: chutes/moonshotai/Kimi-K3-TEE: fetch failed; round 3: deepseek/deepseek-v4.1-flash: fetch failed`. Reading the round receipts:
+round 1's *producer* wrote a broken object, but rounds 2 and 3 had working producers — round 3's already reported `"match"` — and what
+ended each of them was a single **dropped connection on the critic call**. The exclusion policy has said since iteration 156 that a
+bare `fetch failed` is worth seconds, not an answer (that is why a drop gets two strikes and everything else one); the round loop had
+never learned it, so two dropped TCP connections cost a core source and a day's publication. Fixed in `eff2b4a9` (`D181`).
+
+**The design work.** Fable pass 32 left three directives open; all three are implemented and live on both hosts at `eff2b4a9`
+(287/287 per host, `ops/ux-2026-09-12/bin/verify-fable-pass32-f167-f170.mjs`, evidence
+`/opt/benchmarkheaven/state/ux-evidence/iter181-pass32/`). Nothing in that verifier is pinned: the board is re-derived with
+`jevbenchV12View` and cross-checked against the host's own `/api/jevbench/v1.2` before a single page is opened.
+
+- **F-167** the per-system page now draws its number: a score strip on the 0–100 scale with a faint tick per ranked system, the system's
+  own point in its type colour, the reference as a marked tick carrying its value in a `title`; a 22 px F-79 band under each axis number
+  with the reference's value as a tick; the hub's CR-94 topic radar with the pair fixed (`JevPairRadar`, exported from `JevRadars.tsx` so
+  there is one radar, not two); two columns at `lg+`. The reference is Jev 1.13.0 everywhere and the rank-2 system on Jev's own page, and
+  the caption names it once. The strip and the bands are a plain server module — no JavaScript ships for them.
+- **F-169** every board row's name and the honorable card's link to `/jev-models/<key>`; the 52-link "Browse every JevBench system" block
+  is deleted. The external project link leaves the row and stays on the system page and in the † notes disclosure.
+- **F-170** a version whose every token the name already says as a word prints no sub-line. Measured before the change: **38** sub-lines
+  across the registry, every one of them the name repeating itself ("Terminal-Bench 4.0 v4.0", "AIME 2025 (AA) v2025",
+  "ArXivMath 06/2026 (MathArena) 2026-06"), and **no** axis loses a version a reader could not already read off the name. The model page's
+  benchmark sheet stopped clipping names at `md+`.
+
+**A defect F-170 uncovered (`D182`).** Suppressing the internal "protocol requires individual inspection" marker made two
+Vals rows read identically on Compare — and the suite caught it (`test/f165-vendor-cohort.test.mjs`, F-165's own accept criterion). The
+cause was not the label: `cohortOf` parsed the source-row JSON *together with whatever prose followed it*, so a retained
+" Source note: tied at 100.0 with …" caveat threw, and an otherwise identical ProofBench v1.1 row landed in its own cohort and its own
+axis. Reading the JSON object to its own closing brace merges them — **490 → 489 axes**, no value changed, and the marker now groups
+nothing at all.
+
+**One stale verifier repaired, with the evidence that it was stale.** `verify-cr-97.mjs` pinned three v1.2-era literals (the revision
+allowlist, classifier.dev's 84.8, Jev's 75.4). It read **104/115 on the live production site before this iteration changed anything** —
+the same 11 failures, so not a regression, just a verifier that had been reporting a false red for days. Every number in it is now
+re-derived from the artifact the host serves, and only CR-97's actual relation is asserted (an honorable mention keeps its numbers,
+outscores #1 and is still not ranked): **115/115 per host**.
+
+**Gates before the pushes:** `node scripts/build-dataset.mjs` 863 / 669 / 94 / 2,976 with no data diff (the two generated timestamps
+only, restored); `npm test` **1,189 tests / 1,188 pass / 0 fail / 1 skipped**; `npx tsc --noEmit -p .` clean; `npm run build` rc 0.
+Commits `d388663e` (the three directives) and `eff2b4a9` (the drop retry).
+
+**Still open after this iteration:** everything X6 lists, plus the unattended-run debt, which has grown — `D174`, `D175`, `D176`, `D177`,
+`D178`, `D179` and now `D181`/`D182` are all waiting on the same thing: one unattended run that publishes.
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| D181 | implemented | `eff2b4a9`; `ops/daily/gauntlet.mjs` (`callWorker`); `test/daily-gauntlet-gate.test.mjs` (two new cases); run `2026-09-23T09-23-19-342Z-4161375` `reports/live-step-result.json` and `gauntlet/live-contract-aa/producer-r3.json` | A dropped connection cost a whole review round, so two of them rejected the AA live-source contract on a run whose round-3 producer had already reported "match". The call is retried once in place; the strike is recorded by the first failure, so a route that drops twice is still excluded and the retry cannot loop. Implemented by claude-opus; needs a non-claude-opus sign-off and an unattended run. |
+| D182 | implemented | `lib/benchmark-view.mjs` (`jsonObjectPrefix`); `test/fable-pass32-f170.test.mjs`; `test/f165-vendor-cohort.test.mjs` | A retained " Source note: …" caveat after the source-row JSON made `JSON.parse` throw, so one board's identical rows split into two cohorts and two axes (490 → 489 after the fix). Display-only: no value moved. Implemented by claude-opus; needs a non-claude-opus sign-off. |

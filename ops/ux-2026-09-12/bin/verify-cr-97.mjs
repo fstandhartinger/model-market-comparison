@@ -15,15 +15,27 @@ const checks = []; const check = (name, ok, detail) => checks.push({ name, ok: !
 const a = await (await fetch(`${BASE}/api/jevbench/v1.2`)).json();
 const row = (k) => a.systems.find((s) => s.key === k);
 const CD = 'classifier-dev-fast';
+const cdScore = a.systems.find((s) => s.key === CD).jevbench_score.toFixed(1); // the page prints one decimal
 
 // --- CR-97.1 the artifact: listed, not ranked; nothing else moved but the ranks below it ---
-check('artifact: revision v1.2.4 or later', ['v1.2.4', 'v1.2.5', 'v1.2.6'].includes(a.revision), a.revision);
+// 2026-09-23 (iteration 181): the board reached v1.3.0 and three checks here pinned v1.2-era literals
+// (the revision allowlist, classifier.dev's 84.8 and Jev's 75.4), so this verifier read 104/115 on the
+// live site for days without a single real defect. What CR-97 is about is the *relation* — an honorable
+// mention keeps its numbers, outscores #1 and is still not ranked — so every number is now re-derived
+// from the artifact the host serves, and only the relation is asserted.
+const revisionAtLeast = (rev, min) => {
+  const parts = (r) => String(r).replace(/^v/, '').split('.').map(Number);
+  const [x, y] = [parts(rev), parts(min)];
+  for (let i = 0; i < Math.max(x.length, y.length); i++) { const d = (x[i] ?? 0) - (y[i] ?? 0); if (d) return d > 0; }
+  return true;
+};
+check('artifact: revision v1.2.4 or later', /^v\d+(\.\d+)*$/.test(a.revision || '') && revisionAtLeast(a.revision, 'v1.2.4'), a.revision);
 const cd = row(CD);
 check('artifact: classifier.dev is an honorable mention with no rank', cd && cd.listing === 'honorable_mention' && cd.ranked === false && cd.partial === false && cd.rank === null, cd && [cd.listing, cd.rank]);
-check('artifact: it keeps every number it earned', cd && cd.jevbench_score.toFixed(1) === '84.8' && cd.axes.intelligence > 0 && cd.axes.calibration > 0 && cd.axes.speed > 0 && cd.axes.cost > 0 && cd.cost.usd_per_1000 > 0, cd && [cd.jevbench_score, cd.cost.usd_per_1000]);
+check('artifact: it keeps every number it earned', cd && Number.isFinite(cd.jevbench_score) && cd.jevbench_score > 0 && cd.axes.intelligence > 0 && cd.axes.calibration > 0 && cd.axes.speed > 0 && cd.axes.cost > 0 && cd.cost.usd_per_1000 > 0, cd && [cd.jevbench_score, cd.cost.usd_per_1000]);
 check('artifact: it is not ranked under any weighting either', cd && cd.rank_under === undefined, cd && cd.rank_under);
 const ranked = a.systems.filter((s) => s.ranked);
-check('artifact: Jev 1.13.0 is #1 at 75.4', ranked[0] && ranked[0].key === 'jev-1.13.0' && ranked[0].rank === 1 && ranked[0].jevbench_score.toFixed(1) === '75.4', ranked[0] && [ranked[0].key, ranked[0].jevbench_score]);
+check('artifact: Jev 1.13.0 is #1', ranked[0] && ranked[0].key === 'jev-1.13.0' && ranked[0].rank === 1 && Number.isFinite(ranked[0].jevbench_score), ranked[0] && [ranked[0].key, ranked[0].jevbench_score]);
 check('artifact: ranked rows are a contiguous score-ordered sequence', ranked.length >= 17 && ranked.every((s, i) => s.rank === i + 1) && ranked.every((s, i) => i === 0 || s.jevbench_score <= ranked[i - 1].jevbench_score), ranked.length);
 check('artifact: only ranked rows carry a rank', a.systems.every((s) => (s.rank === null) !== s.ranked), a.systems.filter((s) => !s.ranked && s.rank !== null).map((s) => s.key));
 check('artifact: an honorable mention outscores #1 and is still not ranked', cd.jevbench_score > ranked[0].jevbench_score, [cd.jevbench_score, ranked[0].jevbench_score]);
@@ -60,7 +72,7 @@ try {
       const cdBar = await p.$(`[data-bh-jevc-bars] [data-bh-jev12-bar="${CD}"]`);
       check(`${tag}: its bar carries no rank number`, cdBar && (await cdBar.$eval('[data-bh-jevc-rank]', (x) => x.textContent.trim())) === '', '');
       const cdText = cdBar ? (await cdBar.textContent()) || '' : '';
-      check(`${tag}: its bar says "honorable mention" and keeps its score`, /honorable mention/i.test(cdText) && cdText.includes('84.8'), cdText.slice(0, 160));
+      check(`${tag}: its bar says "honorable mention" and keeps its score`, /honorable mention/i.test(cdText) && cdText.includes(cdScore), { text: cdText.slice(0, 160), expect: cdScore });
       check(`${tag}: no bar labels it #1`, !/^\s*1\s/.test(cdText), cdText.slice(0, 40));
       // The headline: the reason, in plain English, where the "why a service leads" line used to be.
       const lead = (await p.textContent('[data-bh-jev12-honorable-lead]')) || '';
@@ -85,7 +97,7 @@ try {
       check(`${tag}: the visible reason is two sentences`, visibleSentenceCount === 2, visibleReason);
       check(`${tag}: the explanation is closed by default`, closedByDefault, '');
       check(`${tag}: it says what it runs on`, /Runs on Jev \(TypeSafe\)/.test(secText), '');
-      check(`${tag}: it shows the score and the axes`, secText.includes('84.8') && /Intelligence/.test(secText) && /Calibration/.test(secText) && /Speed/.test(secText) && /Cost/.test(secText), '');
+      check(`${tag}: it shows the score and the axes`, secText.includes(cdScore) && /Intelligence/.test(secText) && /Calibration/.test(secText) && /Speed/.test(secText) && /Cost/.test(secText), '');
       check(`${tag}: it keeps the flat-rate caveat`, /\$0\.033 per 1,000/.test(secText) && /200,000/.test(secText), '');
       check(`${tag}: it reports the judge/hard finding honestly`, /97\.3 %/.test(secText) && /70\.5 %/.test(secText), '');
       check(`${tag}: it explains the smart tier without claiming to have measured it`, /0\.7 confidence/.test(secText) && /never run/.test(secText), '');

@@ -34,6 +34,11 @@ const board = jevbenchV12View(await readJevbenchV12(repoRoot));
 const rows = [...board.ranked, ...board.honorable, ...board.partial];
 check('payload/board-rows', rows.length > 0, `${rows.length} systems, ${board.ranked.length} ranked, revision ${board.revision}`);
 const byKey = Object.fromEntries(rows.map((r) => [r.key, r]));
+// The host publishes the same board at /api/jevbench/v1.2; the expectation is only trustworthy if the two agree.
+const served = await (await fetch(`${BASE}/api/jevbench/v1.2`)).json();
+const servedScore = Object.fromEntries((served.systems ?? []).map((sysRow) => [sysRow.key, sysRow.jevbench_score]));
+check('payload/host-serves-the-same-board', served.revision === board.revision && rows.every((r) => Math.abs((servedScore[r.key] ?? NaN) - r.main) < 1e-9),
+  { hostRevision: served.revision, artifactRevision: board.revision, differing: rows.filter((r) => Math.abs((servedScore[r.key] ?? NaN) - r.main) >= 1e-9).map((r) => r.key).slice(0, 5) });
 const SAMPLE = ['jev-1.13.0', 'semif-qwen3.5-4b', 'classifier-dev-fast', 'needle-3'].filter((k) => byKey[k]);
 check('payload/sample-pages-exist', SAMPLE.length === 4, SAMPLE);
 
