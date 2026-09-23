@@ -8945,12 +8945,14 @@ post-deploy rankings and ledger update are complete.
 
 | ID | Status | Evidence | Note |
 |---|---|---|---|
-| CR-136.1 | open | `/home/flori/jobs/jevbench-seo-hn-push-20260923/CR-SCOPE.md` | Alternatives intent page |
-| CR-136.2 | open | `/home/flori/jobs/jevbench-seo-hn-push-20260923/CR-SCOPE.md` | Use-case chooser with labeled artifact metrics and evidence bases |
-| CR-136.3 | open | `/home/flori/jobs/jevbench-seo-hn-push-20260923/CR-SCOPE.md` | Jev versus each other member of the current published top five |
-| CR-136.4 | open | `/home/flori/jobs/jevbench-seo-hn-push-20260923/CR-SCOPE.md` | SEO metadata, JSON-LD, sitemap, internal links and missing v1.4-backed detail routes |
-| CR-136.5 | implemented | `/home/flori/jobs/jevbench-seo-hn-push-20260923/HF-PUBLISH-RECEIPT.json` | Hugging Face app reads v1.4.1; card and reciprocal board/GitHub links verified |
+| CR-136.1 | implemented | `app/jev-models/alternatives/page.tsx`; `test/jevbench-seo.test.mjs`; F-178 score-bar guidance in `DESIGN-DIRECTIVES.md` | Live-artifact alternatives page with Jev reference row, expandable values table and explicit open-source evidence |
+| CR-136.2 | implemented | `app/jev-models/how-to-choose/page.tsx`; `lib/jevbench-seo.mjs`; `test/jevbench-seo.test.mjs` | Chooser uses sealed-set accuracy, Speed and Cost axes, and explicit license/repository evidence |
+| CR-136.3 | implemented | `app/jev-models/jev-vs-*`; `components/JevComparisonPage.tsx`; `components/JevCompareV14.tsx`; `test/jevbench-seo.test.mjs` | Four fixed Jev pairs from the current published top five, with the board's four radars and expandable values |
+| CR-136.4 | implemented | `app/sitemap.ts`; `lib/jevbench-seo-metadata.ts`; `components/JevBenchSeoBlocks.tsx`; `app/jev-models/[system]/page.tsx`; `components/JevV141SystemDetail.tsx` | Canonicals, branded OG/title, Dataset + FAQ JSON-LD, sitemap and links are in the draft; live gates remain pending |
+| CR-136.5 | verified | `/home/flori/jobs/jevbench-seo-hn-push-20260923/HF-PUBLISH-RECEIPT.json`; existing official post `https://x.com/benchmarkheaven/status/2102444967884906846`; GitHub README | Hugging Face card and reciprocal board/GitHub links are live; GitHub README and existing JevBench post link to the board, so no duplicate was published |
 | CR-136.6 | open | `/home/flori/jobs/jevbench-seo-hn-push-20260923/CR-SCOPE.md` | Validation, dual-host deployment, Serper ledgers, loop release and final delivery |
+
+CR-136 implementation is in the shared checkout based on `54f5f1d2`; F-178's alternatives bars, sibling-only guide navigation, fixed-pair four-radar pages, reader-facing metric labels and consistent return link are included. Focused checks pass 15/15, the Node 22 suite passes 1,244 with 1 skipped, typecheck is clean, and `node scripts/build-dataset.mjs` preserves 865 models / 670 families / 96 providers / 3,032 offers (its two generated timestamps were restored). Production build and deployment, three-host page checks, post-deploy Serper results, SEO-loop ledger update and reservation release remain open. Disk availability was 45 GiB at the last check; defer a push that would trigger a production build until the server regains the 55 GiB headroom needed by the queued job.
 
 
 ## Iteration 187 (claude-opus) — F-165(a): the rekey half is decided, and D188 is signed off

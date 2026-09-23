@@ -74,13 +74,13 @@ function Row({ row, note }: { row: JevV14System; note: string | null }) {
   </tr>;
 }
 
-function Bar({ row }: { row: JevV14System }) {
+export function JevScoreBar({ row, reference = false }: { row: JevV14System; reference?: boolean }) {
   const s = row.jevbench_score;
   const usd = row.cost?.usd_per_1000;
   const kind = row.cost?.kind;
   const label = `${row.display}: ${one(s)}${row.rank ? `, rank ${row.rank}` : `, ${NOT_RANKED[row.listing] ?? row.listing}, not ranked`}. Intelligence ${one(row.axes?.intelligence)}, calibration ${row.axes?.calibration == null ? 'none' : one(row.axes.calibration)}, speed ${one(row.axes?.speed)}, cost ${one(row.axes?.cost)}.`;
   return <li style={typeVar(row.class)} className="grid grid-cols-[1.4rem_minmax(0,1fr)_3.3rem] items-center gap-x-2 text-sm sm:grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_19rem]"
-    data-bh-jev14-bar={row.key} data-bh-jev14-bar-score={s == null ? '' : s.toFixed(3)} aria-label={label}>
+    data-bh-jev14-bar={row.key} data-bh-jev14-bar-score={s == null ? '' : s.toFixed(3)} data-bh-jev14-reference={reference ? '1' : undefined} aria-label={label}>
     <span className="bh-muted tabular col-start-1 row-start-1 text-right text-xs">{row.rank ?? ''}</span>
     <span className="col-start-2 row-start-1 min-w-0 sm:truncate sm:text-right" title={row.display}>
       {row.repo ? <a href={row.repo} target="_blank" rel="noopener noreferrer" className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent hover:decoration-current">{shortName(row.display)}</a> : shortName(row.display)}
@@ -88,7 +88,7 @@ function Bar({ row }: { row: JevV14System }) {
       {row.api_flag && <span className="bh-thin-tag ml-1.5 align-middle" title={row.api_exposure_note ?? apiExplanation}>API</span>}
     </span>
     <span className="bh-jevc-grid col-start-2 row-start-2 mt-1 flex h-4 sm:col-start-3 sm:row-start-1 sm:mt-0 sm:h-6" aria-hidden="true">
-      {s != null && <span className={`bh-jevc-bar ${row.ranked ? '' : 'is-partial'}`} style={{ width: `${Math.max(0, Math.min(100, s)).toFixed(4)}%` }} />}
+      {s != null && <span className={`bh-jevc-bar ${row.ranked ? '' : 'is-partial'} ${reference ? 'is-reference' : ''}`} style={{ width: `${Math.max(0, Math.min(100, s)).toFixed(4)}%` }} />}
     </span>
     <b className="tabular col-start-3 row-span-2 row-start-1 self-center text-right text-base sm:col-start-4 sm:row-span-1 sm:text-lg">{one(s)}</b>
     <span className="bh-muted col-start-2 row-start-3 mt-0.5 min-w-0 font-mono text-[10.5px] sm:col-start-5 sm:row-start-1 sm:mt-0 sm:grid sm:grid-cols-[1fr_1fr_1fr_1fr_2.1fr] sm:whitespace-nowrap sm:text-right sm:text-[12px]">
@@ -113,10 +113,10 @@ function ScoreChart({ revision, ranked, unranked, publicDecisions, sealedDecisio
     <h2 id="jev14-chart-title" className="mt-1 text-xl font-bold leading-snug sm:text-2xl">JevBench Score: {ranked.length} ranked systems</h2>
     <p className="bh-muted mt-1 text-sm"><span className="bh-jevc-official mr-2">Official</span>Intelligence, Calibration, Speed and Cost, each 0–100 — equal-weight harmonic mean, with the generalization and Jev-class gates. <a href="#jev14-changes" className="text-accent underline">What changed in v1.4 ↓</a></p>
     {header}
-    <ol className="mt-2 space-y-2.5 sm:mt-1" data-bh-jev14-bars>{all.slice(0, CHART_TOP).map((row) => <Bar key={row.key} row={row} />)}</ol>
+    <ol className="mt-2 space-y-2.5 sm:mt-1" data-bh-jev14-bars>{all.slice(0, CHART_TOP).map((row) => <JevScoreBar key={row.key} row={row} />)}</ol>
     {rest.length > 0 && <details className="mt-2.5" data-bh-jev14-bars-more>
       <summary className="cursor-pointer text-sm font-semibold text-accent">Show all {all.length} systems ({ranked.length - Math.min(CHART_TOP, ranked.length)} more ranked, {unranked.length} not ranked)</summary>
-      <ol className="mt-2.5 space-y-2.5">{rest.map((row) => <Bar key={row.key} row={row} />)}</ol>
+      <ol className="mt-2.5 space-y-2.5">{rest.map((row) => <JevScoreBar key={row.key} row={row} />)}</ol>
     </details>}
     <div className="mt-2 hidden grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_19rem] gap-x-2 text-[11px] sm:grid" aria-hidden="true">
       <span /><span /><span className="bh-muted flex justify-between tabular"><span>0</span><span>20</span><span>40</span><span>60</span><span>80</span><span>100</span></span>

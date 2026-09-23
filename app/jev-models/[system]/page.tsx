@@ -5,6 +5,10 @@ import { readJevbenchV12, jevbenchV12View, type JevV12Row, type JevV12View } fro
 import { readJevbenchV12Topics, jevbenchV12TopicsView, type JevTopicsView } from '../../../lib/jevbench-v12-topics.mjs';
 import { JevPairRadar } from '../../../components/JevRadars';
 import { JevAxisBand, JevScoreStrip, typeColour } from '../../../components/JevSystemCharts';
+import { JevBenchRelatedLinks } from '../../../components/JevBenchRelatedLinks';
+import { JevV141SystemDetail } from '../../../components/JevV141SystemDetail';
+import { readJevbenchV141, jevbenchV141View } from '../../../lib/jevbench-v141.mjs';
+import type { SeoRow } from '../../../components/JevBenchSeoBlocks';
 import { previewMetadata } from '../../../lib/seo';
 
 // CR-129 (2026-09-23): Google Trends shows readers searching individual JevBench system names
@@ -49,6 +53,14 @@ async function findRow(key: string): Promise<{ row: JevV12Row; view: JevV12View;
   return { row, view, all, topics: jevbenchV12TopicsView(await readJevbenchV12Topics(v12.artifact)) };
 }
 
+async function findV141Row(key: string): Promise<{ row: SeoRow; view: { revision: string; generated: string } } | null> {
+  const result = await readJevbenchV141();
+  const view = jevbenchV141View(result);
+  const row = view.ranked.find((candidate) => candidate.key === key);
+  // readJevbenchV141 validates the ranked rows' numeric fields before this narrow is applied.
+  return row ? { row: row as SeoRow, view } : null;
+}
+
 /** F-167: what this system's number is read against — Jev 1.13.0 everywhere, and on Jev's own page the
  *  rank-2 system, because a reference identical to the point would say nothing. An unranked listing is
  *  still drawn against Jev: it is not compared in words (F-168), but the reader still needs the scale. */
@@ -72,23 +84,36 @@ function describeRow(row: JevV12Row, view: JevV12View, all: JevV12Row[]): string
 
 export async function generateStaticParams() {
   const view = jevbenchV12View(await readJevbenchV12());
-  return [...view.ranked, ...view.honorable, ...view.partial].map((r) => ({ system: r.key }));
+  const existing = [...view.ranked, ...view.honorable, ...view.partial].map((r) => ({ system: r.key }));
+  const existingKeys = new Set(existing.map(({ system }) => system));
+  const publishedTopFive = jevbenchV141View(await readJevbenchV141()).ranked.slice(0, 5).map((r) => r.key);
+  const newTopFive = publishedTopFive.filter((system) => !existingKeys.has(system)).map((system) => ({ system }));
+  return [...existing, ...newTopFive];
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ system: string }> }): Promise<Metadata> {
   const { system } = await params;
-  const found = await findRow(decodeURIComponent(system));
-  if (!found) return { title: 'System not found' };
-  const { row } = found;
+  const key = decodeURIComponent(system);
+  const found = await findRow(key);
+  const current = found ? null : await findV141Row(key);
+  const row = found?.row ?? current?.row;
+  if (!row) return { title: 'System not found' };
   const title = `${short(row.display)} — JevBench by Benchmark Heaven`;
   const description = `Explore the ${short(row.display)} configuration evaluated across intelligence, calibration, speed, and cost.`;
-  return previewMetadata({ path: `/jev-models/${row.key}`, documentTitle: title, title, description });
+  return previewMetadata({ path: `/jev-models/${encodeURIComponent(row.key)}`, documentTitle: title, title, description });
 }
 
 export default async function JevSystemPage({ params }: { params: Promise<{ system: string }> }) {
   const { system } = await params;
-  const found = await findRow(decodeURIComponent(system));
-  if (!found) notFound();
+  const key = decodeURIComponent(system);
+  const found = await findRow(key);
+  if (!found) {
+    const current = await findV141Row(key);
+    if (current && ['jevk5-v02', 'hopper'].includes(key)) {
+      return <JevV141SystemDetail row={current.row} revision={current.view.revision} generated={current.view.generated} />;
+    }
+    notFound();
+  }
   const { row, view, all, topics } = found;
   const jevRow = !row.ranked || row.key === 'jev-1.13.0' ? null : all.find((r) => r.key === 'jev-1.13.0') ?? null;
   const reference = referenceRow(row, view, all);
@@ -125,6 +150,7 @@ export default async function JevSystemPage({ params }: { params: Promise<{ syst
         {row.author} · {row.licence} · {openLabel(row.open)} · <span data-bh-jev-system-cls={row.cls}>{typeLabel(row.cls)}</span>
       </p>
     </header>
+    <JevBenchRelatedLinks systemKey={row.key} />
 
     {/* F-167 (Fable pass 32): two columns at lg+ — the number, its place on the board's scale and the four
         axes on the left, accuracy by topic on the right — so the page reaches the page width instead of

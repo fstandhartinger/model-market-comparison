@@ -12,6 +12,7 @@ import { jevbenchV12HeldoutView } from '../../lib/jevbench-v12-heldout.mjs';
 import { readJevbenchV141, jevbenchV141View } from '../../lib/jevbench-v141.mjs';
 import { JevModelsV14Board } from '../../components/JevModelsV14';
 import { JevCapabilityChart } from '../../components/JevCapabilityChart';
+import { JevBoardIntentLinks } from '../../components/JevBenchSeoBlocks';
 
 const OG_ART_REVISION = 'og4'; // The live board URL changes; its share card stays evergreen.
 
@@ -167,6 +168,7 @@ export default async function JevModelsPage() {
       <div className="bh-eyebrow flex flex-nowrap items-center"><span><span className="sm:hidden">JevBench {v14.revision}</span><span className="hidden sm:inline">JevBench {v14.revision} · our own benchmark</span></span><CustomEvaluationOffer /></div>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">JevBench by Benchmark Heaven</h1>
       <p className="mt-3 max-w-3xl text-lg" data-bh-jev-own>JevBench is <b>Benchmark Heaven&apos;s own benchmark</b> for Jev-class decision models: state and a bounded rubric in, a typed answer out.</p>
+      <JevBoardIntentLinks />
       <p className="bh-muted mt-2 max-w-3xl">Version {v14.revision} measures {v14.systems.length} systems on {v14.publicDecisions} public and {v14.sealedDecisions} sealed decisions, with only system-level sealed aggregates published. Built and run by us, not collected from someone else&apos;s leaderboard; the results describe the tested configurations, not every application.</p>
       <p className="bh-muted mt-3 max-w-3xl text-xs leading-relaxed" data-bh-jev-meta>
         Scored {day(v14.generated)} · protocol <code>{v14.artifact.protocol}</code> · {v14.publicDecisions} public + {v14.sealedDecisions} sealed aggregate decisions · one request at a time from a server in Germany ·{' '}

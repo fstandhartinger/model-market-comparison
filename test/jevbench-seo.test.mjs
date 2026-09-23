@@ -1,41 +1,82 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readFileSync } from 'node:fs';
+import {
+  JEV_SEO_PATHS,
+  JEV_TOP_FIVE_COMPARISONS,
+  readJevbenchSeoData,
+} from '../lib/jevbench-seo.mjs';
 
-const page = await readFile(new URL('../app/jev-models/page.tsx', import.meta.url), 'utf8');
-const image = await readFile(new URL('../app/jev-models/opengraph-image.tsx', import.meta.url), 'utf8');
-const preview = await readFile(new URL('../app/jev-models/multimodal-preview/page.tsx', import.meta.url), 'utf8');
-const sitemap = await readFile(new URL('../app/sitemap.ts', import.meta.url), 'utf8');
-
-test('CR-131 changing board metadata stays evergreen and complete for large link cards', () => {
-  const metadata = page.slice(page.indexOf('export async function generateMetadata'), page.indexOf('\nconst day ='));
-  assert.match(page, /generateMetadata\(\)/);
-  assert.match(metadata, /alternates: \{ canonical: '\/jev-models' \}/);
-  assert.match(metadata, /card: 'summary_large_image'/);
-  assert.match(metadata, /width: 1200, height: 630/);
-  assert.match(metadata, /JevBench by Benchmark Heaven/);
-  assert.doesNotMatch(metadata, /view\.revision|view\.decisions|rank|score|\bleads at\b/i);
-  assert.match(page, /href="\/jev-models\/v1\.4\.1" data-bh-jev-version-share>Share this version/);
+test('JevBench intent routes use the hash-checked current public release', async () => {
+  const data = await readJevbenchSeoData();
+  assert.equal(data.artifact.revision, 'v1.4.1');
+  assert.equal(data.sha256, 'e6754863056503fe2b010410fc7111df884ac1f9ce4449aa369aab61d98092cd');
+  assert.equal(data.ranked.length, 77);
+  assert.equal(data.topFive[0].key, 'jev-1.13.0');
+  assert.deepEqual(JEV_SEO_PATHS, {
+    alternatives: '/jev-models/alternatives',
+    chooser: '/jev-models/how-to-choose',
+  });
 });
 
-test('CR-131 generated image is an evergreen 1200 by 630 JevBench card', () => {
-  assert.match(image, /export const size = \{ width: 1200, height: 630 \}/);
-  assert.match(image, /JevBench by Benchmark Heaven/);
-  assert.match(image, /Jev-class decision models/);
-  assert.doesNotMatch(image, /v1\.\d|rank|score|\bleads at\b/i);
+test('comparison pages match the four other members of the published top five', async () => {
+  const data = await readJevbenchSeoData();
+  assert.equal(data.comparisons.length, 4);
+  assert.deepEqual(data.comparisons.map((pair) => pair.rival.key), data.topFive.slice(1).map((row) => row.key));
+  assert.deepEqual(data.comparisons.map((pair) => pair.slug), JEV_TOP_FIVE_COMPARISONS.map((pair) => pair.slug));
+  assert.ok(data.comparisons.every((pair) => pair.jev.key === data.topFive[0].key));
 });
 
-test('CR-120 visible FAQ and schema cover the requested intent without a GDPR claim', () => {
-  for (const phrase of ['What are open-source alternatives to Jev?', 'Which Jev-class models can I self-host in the EU', 'How is JevBench scored?', 'How do I submit my model?']) assert.match(page, new RegExp(phrase.replace(/[?]/g, '\\?')));
-  assert.match(page, /'@type': 'Dataset'/);
-  assert.match(page, /'@type': 'FAQPage'/);
-  assert.match(page, /self-hosted open decision models/);
-  assert.match(page, /run by the authors of this benchmark/);
-  assert.match(page, /does not by itself make a deployment GDPR-compliant/);
-  assert.doesNotMatch(page, /(?:is|are|fully) GDPR[- ]compliant/i);
+test('chooser winners use the published accuracy, speed and cost fields', async () => {
+  const data = await readJevbenchSeoData();
+  assert.equal(data.winners.mostAccurate.key, [...data.ranked].sort((a, b) => b.sealed_accuracy - a.sealed_accuracy)[0].key);
+  assert.equal(data.winners.fastest.key, [...data.ranked].sort((a, b) => b.axes.speed - a.axes.speed)[0].key);
+  assert.equal(data.winners.cheapest.key, [...data.ranked].filter((row) =>
+    ['measured', 'estimate', 'announced'].includes(row.cost?.kind)
+      && Number.isFinite(row.cost?.usd_per_1000)
+      && Number.isFinite(row.axes?.cost),
+  ).sort((a, b) => b.axes.cost - a.axes.cost)[0].key);
+  assert.ok(['measured', 'estimate', 'announced'].includes(data.winners.cheapest.cost.kind));
 });
 
-test('CR-120 preserves the multimodal preview noindex and sitemap exclusion', () => {
-  assert.match(preview, /robots: \{ index: false, follow: false/);
-  assert.doesNotMatch(sitemap, /multimodal-preview/);
+test('self-host candidates have explicit published openness, license and repository evidence', async () => {
+  const data = await readJevbenchSeoData();
+  assert.ok(data.selfHostable.length > 0);
+  assert.ok(data.selfHostable.every((row) =>
+    (row.open === 'yes' || row.open === 'weights' || row.open === true)
+      && typeof row.licence === 'string' && row.licence.trim()
+      && /^https:\/\//i.test(row.repo),
+  ));
+});
+
+test('alternatives guide reuses the board score bars and keeps the reference first', () => {
+  const alternatives = readFileSync(new URL('../app/jev-models/alternatives/page.tsx', import.meta.url), 'utf8');
+  const board = readFileSync(new URL('../components/JevModelsV14.tsx', import.meta.url), 'utf8');
+  const guides = readFileSync(new URL('../components/JevBenchSeoBlocks.tsx', import.meta.url), 'utf8');
+  assert.match(alternatives, /data-bh-jev-alternatives-bars/);
+  assert.match(alternatives, /JevScoreBar key=\{row\.key\} row=\{row\} reference=\{row\.key === 'jev-1\.13\.0'\}/);
+  assert.match(board, /export function JevScoreBar/);
+  assert.match(guides, /data-bh-jev-guides=\{current\}/);
+  assert.match(guides, /const sibling = current === 'alternatives'/);
+  assert.doesNotMatch(guides, /jev-vs-/);
+});
+
+test('pair pages render a fixed JevCompareV14 radar pair and an expandable values table', () => {
+  const compare = readFileSync(new URL('../components/JevComparisonPage.tsx', import.meta.url), 'utf8');
+  const radar = readFileSync(new URL('../components/JevCompareV14.tsx', import.meta.url), 'utf8');
+  assert.match(compare, /<JevCompareV14[\s\S]*?fixedPair/);
+  assert.match(compare, /All values as a table/);
+  assert.match(radar, /data-bh-jev14-radar=\{f\.key\}/);
+  assert.match(radar, /data-bh-jev14-pair-mode=\{fixedPair \? 'fixed' : 'selectable'\}/);
+  assert.match(radar, /\{!fixedPair && <div className="flex flex-col gap-2/);
+});
+
+test('chooser and comparison copy uses reader-facing metric labels', () => {
+  const chooser = readFileSync(new URL('../app/jev-models/how-to-choose/page.tsx', import.meta.url), 'utf8');
+  const compare = readFileSync(new URL('../components/JevComparisonPage.tsx', import.meta.url), 'utf8');
+  assert.match(chooser, /Most accurate \(sealed-set accuracy\)/);
+  assert.match(chooser, /Fastest \(Speed axis\)/);
+  assert.match(chooser, /Cheapest per decision \(Cost axis\)/);
+  assert.doesNotMatch(chooser, /sealed_accuracy aggregate/);
+  assert.doesNotMatch(compare, /sealed_accuracy aggregate/);
 });

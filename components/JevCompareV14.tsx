@@ -49,7 +49,9 @@ function parsePair(search: string, keys: Set<string>): [string, string] | null {
   return a && b && a !== b && keys.has(a) && keys.has(b) ? [a, b] : null;
 }
 
-export function JevCompareV14({ rows, sealedDecisions, hardDecisions }: { rows: JevCompareRow[]; sealedDecisions: number; hardDecisions: number }) {
+export function JevCompareV14({ rows, sealedDecisions, hardDecisions, fixedPair = false, heading }: {
+  rows: JevCompareRow[]; sealedDecisions: number; hardDecisions: number; fixedPair?: boolean; heading?: string;
+}) {
   const ranked = rows.filter((r) => r.rank !== null);
   const unranked = rows.filter((r) => r.rank === null);
   const first = ranked.find((r) => r.key === "jev-1.13.0") ?? ranked[0];
@@ -59,16 +61,18 @@ export function JevCompareV14({ rows, sealedDecisions, hardDecisions }: { rows: 
   const [ready, setReady] = useState(false);
   const [copied, setCopied] = useState(false);
   useEffect(() => {
-    const pair = parsePair(window.location.search, new Set(rows.map((r) => r.key)));
-    if (pair) { setA(pair[0]); setB(pair[1]); }
+    if (!fixedPair) {
+      const pair = parsePair(window.location.search, new Set(rows.map((r) => r.key)));
+      if (pair) { setA(pair[0]); setB(pair[1]); }
+    }
     setReady(true);
-  }, [rows]);
+  }, [rows, fixedPair]);
   useEffect(() => {
-    if (!ready) return;
+    if (fixedPair || !ready) return;
     const u = new URL(window.location.href);
     if (a === first.key && b === second.key) u.searchParams.delete("compare"); else u.searchParams.set("compare", `${a},${b}`);
     if (u.href !== window.location.href) window.history.replaceState(window.history.state, "", u.href);
-  }, [a, b, ready, first.key, second.key]);
+  }, [a, b, ready, first.key, second.key, fixedPair]);
 
   const A = rows.find((r) => r.key === a) ?? first, B = rows.find((r) => r.key === b) ?? second;
   const pair = [A, B], s = series(A, B);
@@ -99,20 +103,22 @@ export function JevCompareV14({ rows, sealedDecisions, hardDecisions }: { rows: 
     { key: "hard", title: "Hard tier by family (v1.2 topics)", note: `Share correct within each family of the ${hardDecisions} v1.2 hard-tier decisions (public and held-out).`, spokes: hardSpokes, size: { w: 460, h: 370, r: 100 } },
     { key: "sealed", title: "Sealed set by family", note: "Share correct within each sealed family — system-level aggregates; the items stay private.", spokes: sealedSpokes, size: { w: 460, h: 370, r: 100 } },
   ];
-  return <section id="compare" className="mt-10 scroll-mt-6" aria-labelledby="jev14-compare" data-bh-jev14-compare data-bh-jev14-compare-a={A.key} data-bh-jev14-compare-b={B.key}>
-    <h2 id="jev14-compare" className="text-2xl font-semibold">Compare two systems</h2>
-    <p className="bh-muted mt-1 max-w-3xl text-sm">Pick any two. Four radars: the score axes, accuracy per tier including the sealed set, and accuracy by family on the v1.2 hard tier and on the sealed set. Further out is better on every spoke; the link keeps the pair.</p>
+  return <section id="compare" className="mt-8 scroll-mt-6" aria-labelledby="jev14-compare" data-bh-jev14-compare data-bh-jev14-pair-mode={fixedPair ? 'fixed' : 'selectable'} data-bh-jev14-compare-a={A.key} data-bh-jev14-compare-b={B.key}>
+    <h2 id="jev14-compare" className="text-2xl font-semibold">{heading ?? 'Compare two systems'}</h2>
+    <p className="bh-muted mt-1 max-w-3xl text-sm">{fixedPair
+      ? 'Four radars compare this fixed pair across the score axes, accuracy per tier, and accuracy by family on the hard tier and sealed set. Further out is better on every spoke.'
+      : 'Pick any two. Four radars: the score axes, accuracy per tier including the sealed set, and accuracy by family on the v1.2 hard tier and on the sealed set. Further out is better on every spoke; the link keeps the pair.'}</p>
     <div className="bh-panel mt-3 p-3 sm:p-4">
-      <div className="flex flex-col gap-2 sm:flex-row sm:items-end">
+      {!fixedPair && <div className="flex flex-col gap-2 sm:flex-row sm:items-end">
         {pick("jev14-compare-a", "System A", A.key, setA, B.key)}
         <button type="button" className="bh-button shrink-0 self-end text-sm font-semibold sm:self-auto" onClick={() => { setA(B.key); setB(A.key); }} aria-label="Swap system A and system B" data-bh-jev14-compare-swap>⇄ Swap</button>
         {pick("jev14-compare-b", "System B", B.key, setB, A.key)}
-      </div>
+      </div>}
       <div className="mt-3 flex flex-wrap items-start justify-between gap-2">
         <ul className="space-y-1 text-[13px]" aria-label="Legend" data-bh-jev14-compare-legend>
           {pair.map((r, k) => <li key={k}><Swatch s={s[k]} /><b>{k === 0 ? "A" : "B"}: {r.name}</b> <span className="bh-muted">— {JEV_TYPE_LABEL[r.cls] ?? r.cls} · </span><span className="whitespace-nowrap" data-bh-jev14-compare-score={r.score === null ? "" : r.score.toFixed(3)}>Score {one(r.score)} ({status(r)})</span></li>)}
         </ul>
-        <button type="button" className="bh-button text-xs font-semibold" onClick={copy} data-bh-jev14-compare-copy>{copied ? "Link copied" : "Copy link to this pair"}</button>
+        {!fixedPair && <button type="button" className="bh-button text-xs font-semibold" onClick={copy} data-bh-jev14-compare-copy>{copied ? "Link copied" : "Copy link to this pair"}</button>}
       </div>
       <div className="mt-3 grid gap-x-6 gap-y-5 lg:grid-cols-2">
         {figures.map((f) => <figure key={f.key} className="min-w-0" data-bh-jev14-radar={f.key}>
@@ -121,7 +127,7 @@ export function JevCompareV14({ rows, sealedDecisions, hardDecisions }: { rows: 
           <figcaption className="bh-muted text-[12px]">{f.note}{f.spokes.some((sp) => sp.thin.some(Boolean)) ? " “—” = not measured for that system, not plotted." : ""}</figcaption>
         </figure>)}
       </div>
-      <details className="mt-3 text-[13px]" data-bh-jev14-compare-values><summary className="cursor-pointer text-accent">All values as a table</summary>
+      {!fixedPair && <details className="mt-3 text-[13px]" data-bh-jev14-compare-values><summary className="cursor-pointer text-accent">All values as a table</summary>
         <div className="bh-table-wrap mt-2"><table className="bh-table" data-bh-jev14-compare-table>
           <thead><tr><th scope="col">Spoke</th><th scope="col">A: {s[0].name}</th><th scope="col">B: {s[1].name}</th></tr></thead>
           <tbody>{figures.flatMap((f) => [
@@ -129,7 +135,7 @@ export function JevCompareV14({ rows, sealedDecisions, hardDecisions }: { rows: 
             ...f.spokes.map((sp) => <tr key={`${f.key}-${sp.key}`}><th scope="row" className="text-left font-normal">{sp.lines.join(" ")}</th><td className="tabular">{sp.texts[0]}</td><td className="tabular">{sp.texts[1]}</td></tr>),
           ])}</tbody>
         </table></div>
-      </details>
+      </details>}
     </div>
   </section>;
 }
