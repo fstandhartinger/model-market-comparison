@@ -8638,6 +8638,19 @@ bridged back, and the two locator scopes are asserted against each other so neit
 `test/coding-sources.test.mjs` accepted only `public-withdrawals.json` as a reason for a joined map entry to have no
 observation; it now accepts a reasoned `withdrawn_observations` entry too, which is what D180 and D187 write.
 
+### Part 4 — the live receipt for both source changes
+
+`ops/ux-2026-09-12/bin/verify-d186-d187.mjs`, **30/30 on both hosts** at revision `0782d11e`:
+`/opt/benchmarkheaven/state/ux-evidence/iter185-d186-d187/verification.json`. Nothing in it is a typed
+expectation — the restatement record supplies the old and new label, the withdrawal records supply the six rows,
+today's retained capture is re-hashed and re-parsed to confirm the board itself publishes no value for them, and
+the hosts are then required to agree: the MCP Atlas row is served as "Nemotron 3 Ultra (thinking)" at 63.1 with
+the old label absent and the board still 34 rows, none of the six retracted rows is served by either host, and
+**every remaining row of all four KernelBench boards is still served with its exact value** — the check that
+would catch a withdrawal that swept up its neighbours. Two dataset checks close the loop: no retracted or
+restated label appears as a history estimate, and the sibling boards' own estimates are still there (19 of them
+vanished while the withheld locator was matched across boards, so their survival is part of the receipt).
+
 ### Gates and evidence
 
 `node scripts/build-dataset.mjs` clean (865 models, 670 families, 96 providers, 3,032 offers); `npm test`
