@@ -1066,3 +1066,47 @@ Source: CR-20260923f in `03-CHANGE-REQUESTS-VERBATIM.md`; final aggregate and re
 - **CR-135.6 Integrity and delivery.** Scan the final source, public page and both API responses for all 308 sealed IDs and 308 distinctive phrases; record zero matches without printing matched values. Preserve the one-message-per-author drafts in `AUTHOR-MESSAGES.md` and do not send authors. Send Florian the result table, top-five impact and publication status in plain English; retain the Telegram receipt.
 
 The approved Capability/cost charts, two scatterplots, and lazy 3D view were included in CR-135 below the existing page content. The ImageJev example cards and updated noindex WIP preview remain outside CR-135 in the page-image job; the context-length table/chart remains queued for its own follow-on CR. Coordinate the next page slot through the agent board.
+
+
+## CR-136 — JevBench alternatives, chooser and top-five comparisons
+
+Source: CR-20260923g in `03-CHANGE-REQUESTS-VERBATIM.md`; full user request is preserved in
+`/home/flori/jobs/jevbench-seo-hn-push-20260923/PROMPT.md`. The latest published public
+artifact at seeding is JevBench v1.4.1, SHA-256
+`e6754863056503fe2b010410fc7111df884ac1f9ce4449aa369aab61d98092cd` (82 systems, 77
+ranked). Recheck the latest public artifact before implementation. Build all claims and
+FAQ answers from the hash-checked published artifact; do not invent numbers or availability.
+
+- **CR-136.1 Alternatives.** Add indexable `/jev-models/alternatives` covering “Jev alternatives”,
+  “best Jev alternative” and “open source Jev alternative”, using fair comparisons derived
+  from live released rows.
+- **CR-136.2 Chooser.** Add `/jev-models/how-to-choose` by use case: most accurate from
+  `sealed_accuracy`; fastest from the Speed axis, described as a benchmark score rather
+  than universal wall-clock latency; cheapest from the Cost axis with each row's measured,
+  estimated or announced basis disclosed; self-hostable from explicit public license/weights
+  evidence only, leaving unknown evidence unknown. Never call the composite raw accuracy.
+- **CR-136.3 Pair comparisons.** Add `/jev-models/jev-vs-jevk5`,
+  `/jev-models/jev-vs-hopper`, `/jev-models/jev-vs-winnow-12b-q8` and
+  `/jev-models/jev-vs-reflex-4b`, one Jev comparison per other member of the published top
+  five. Read rank and metrics from the latest hash-checked artifact; do not infer a result
+  from rounded display values.
+- **CR-136.4 Metadata and navigation.** Use “JevBench by Benchmark Heaven” in titles and
+  Open Graph metadata; add accurate descriptions, canonical URLs, evergreen live-page
+  previews, Dataset and page-specific FAQ JSON-LD, sitemap entries and internal links from
+  the board and relevant model pages. Provide v1.4.1-backed detail handling for top-five
+  keys missing from the older v1.2 detail reader, including JevK5 and Hopper.
+- **CR-136.5 Hugging Face and repository links.** The Space app already reads the v1.4.1
+  API and its aggregate-only snapshot; its running revision, card metadata and reciprocal
+  board/GitHub links are recorded in
+  `/home/flori/jobs/jevbench-seo-hn-push-20260923/HF-PUBLISH-RECEIPT.json`. Keep the JevBench
+  GitHub README, HF Space and any necessary owned post linking to the board. Check for an
+  existing official v1.4 announcement before publishing through Harold's normal account
+  checks; no duplicate. No HN posts/comments, spam, fake accounts or reviews.
+- **CR-136.6 Verify and sustain.** Run focused validation, full tests, typecheck, dataset
+  build and production build as required by the main brief. Verify content, canonical/meta/OG,
+  JSON-LD, sitemap, artifact-backed values and mobile layout on both production hosts (plus
+  the configured www alias). Run Serper after deployment for the 14 intent/brand/comparison
+  queries in US and Germany; append board and Space positions to the SEO loop CSVs and add
+  a dated explanation to its ledger. Keep `SEO-CR-RESERVED` until site deployment, results
+  and ledgers are recorded, then remove it. Send Florian one requested plain-English done
+  message; the plan message was already sent.

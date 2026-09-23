@@ -1675,3 +1675,15 @@ Florian, 23 Sep 2026, via `/home/flori/jobs/jevbench-v141-additions-20260923/PRO
 > preview metadata evergreen. Verify both production hosts and the API/artifact hashes,
 > repeat the sealed ID/text scan, retain the draft author messages without sending them, and
 > send Florian the result table, top-five impact and publication status in plain English.
+
+
+## CR-20260923g — JevBench alternatives, chooser and comparisons → CR-136
+
+Florian, 23 Sep 2026, request preserved verbatim in
+`/home/flori/jobs/jevbench-seo-hn-push-20260923/PROMPT.md`: make JevBench by Benchmark
+Heaven and its Hugging Face Space the destination for choosing a Jev-class model or
+alternative while the HN story is on the front page. Publish data-grounded alternatives,
+use-case chooser and top-five pair pages; provide clear publisher metadata, structured
+data, canonicals, sitemap and internal links; verify owned links, search visibility and
+the scheduled SEO loop. No unsolicited engagement with the unrelated jevbench.dev
+project, no posting in the HN thread, spam comments, fake accounts or reviews.

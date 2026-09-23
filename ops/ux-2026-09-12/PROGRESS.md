@@ -8934,3 +8934,20 @@ implemented pending a non-claude sign-off. CR-135.1–.6 remain implemented:
 the release was Codex work, so this Codex gate does not supply the required
 independent non-implementer sign-off. X6 remains uncleared for the open rows
 listed in the review, and no `ALL-ACCEPTED` line is appended.
+
+
+## CR-136 — seeded 2026-09-23 (Codex)
+
+Source: CR-20260923g. Latest published data at seeding is the hash-checked JevBench v1.4.1
+aggregate, SHA-256 `e6754863056503fe2b010410fc7111df884ac1f9ce4449aa369aab61d98092cd`
+(82 systems, 77 ranked). The SEO loop reservation remains active until the live deployment,
+post-deploy rankings and ledger update are complete.
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| CR-136.1 | open | `/home/flori/jobs/jevbench-seo-hn-push-20260923/CR-SCOPE.md` | Alternatives intent page |
+| CR-136.2 | open | `/home/flori/jobs/jevbench-seo-hn-push-20260923/CR-SCOPE.md` | Use-case chooser with labeled artifact metrics and evidence bases |
+| CR-136.3 | open | `/home/flori/jobs/jevbench-seo-hn-push-20260923/CR-SCOPE.md` | Jev versus each other member of the current published top five |
+| CR-136.4 | open | `/home/flori/jobs/jevbench-seo-hn-push-20260923/CR-SCOPE.md` | SEO metadata, JSON-LD, sitemap, internal links and missing v1.4-backed detail routes |
+| CR-136.5 | implemented | `/home/flori/jobs/jevbench-seo-hn-push-20260923/HF-PUBLISH-RECEIPT.json` | Hugging Face app reads v1.4.1; card and reciprocal board/GitHub links verified |
+| CR-136.6 | open | `/home/flori/jobs/jevbench-seo-hn-push-20260923/CR-SCOPE.md` | Validation, dual-host deployment, Serper ledgers, loop release and final delivery |
