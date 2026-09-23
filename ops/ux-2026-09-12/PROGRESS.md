@@ -7420,7 +7420,7 @@ thing to read after the 05:17 receipt.
 
 | ID | Status | Evidence | Note |
 |---|---|---|---|
-| D175 | implemented | `scripts/collect-public-benchmarks.py`; `test/frontierswe-posttrainbench.test.mjs`; `data/raw/benchmarks/collection-plan.json`; run `2026-09-23T00-41-02-194Z-1264113` `reports/refresh-benchmarks.log` | FrontierSWE froze because the guard pinned the *set* of generation labels rather than their shape; the board's third wave (Claude Opus 5.5) is additive and now parses, 16 rows and no drops. Replayed offline against the failing run's own capture. Implemented by claude-opus; needs a non-implementer sign-off and the next run's `frontierswe::2` receipt. |
+| D175 | implemented | `ab6f5f36`; `scripts/collect-public-benchmarks.py`; `test/frontierswe-posttrainbench.test.mjs`; `data/raw/benchmarks/collection-plan.json`; run `2026-09-23T00-41-02-194Z-1264113` `reports/refresh-benchmarks.log`; `/opt/benchmarkheaven/state/ux-evidence/iter178-d175-d176/d175-live-both-hosts.txt` | FrontierSWE froze because the guard pinned the *set* of generation labels rather than their shape; the board's third wave (Claude Opus 5.5) is additive and now parses, 16 rows and no drops. Replayed offline against the failing run's own capture. Implemented by claude-opus; needs a non-implementer sign-off and the next run's `frontierswe::2` receipt. |
 
 ### D176 — the Claude price collector froze on a second cache-hit footnote
 
@@ -7455,4 +7455,11 @@ least the 2026-09-22 19:03 run, so Anthropic's prices were frozen while Claude O
 
 | ID | Status | Evidence | Note |
 |---|---|---|---|
-| D176 | implemented | `lib/claude-api-catalog.mjs` (`readModifiers`); `test/claude-api-catalog.test.mjs`; run `2026-09-23T00-41-02-194Z-1264113` `reports/fetch-claude-api-catalog.log` | Anthropic prices silently frozen since ~2026-09-21 because a second cache-hit footnote (Claude Opus 5.5, 0.05x) broke a regex that assumed exactly one. Exceptions are now a list; still fails closed. Implemented by claude-opus; needs a non-implementer sign-off and the next run's collector log. |
+| D176 | implemented | `c057d2e8`; `lib/claude-api-catalog.mjs` (`readModifiers`); `test/claude-api-catalog.test.mjs`; run `2026-09-23T00-41-02-194Z-1264113` `reports/fetch-claude-api-catalog.log`; `/opt/benchmarkheaven/state/ux-evidence/iter178-d175-d176/{d176-live-pricing-page.json,claude-pricing-2026-09-23.html.gz}` | Anthropic prices silently frozen since ~2026-09-21 because a second cache-hit footnote (Claude Opus 5.5, 0.05x) broke a regex that assumed exactly one. Exceptions are now a list; still fails closed. Implemented by claude-opus; needs a non-implementer sign-off and the next run's collector log. |
+
+**D175 verified live on both hosts** at `ab6f5f36`: `/api/benchmark-scores?benchmark_id=frontierswe::2` returns **14 rows on each host, all 14
+carrying the corrected protocol sentence and none carrying the stale "tagged v2" one**
+(`/opt/benchmarkheaven/state/ux-evidence/iter178-d175-d176/d175-live-both-hosts.txt`, script beside it). The collector half of D175 and all of
+D176 cannot be proven from the live site — their proof is the next daily run's `refresh-benchmarks.log` (no `BENCHMARK RETAINED frontierswe::2`)
+and `fetch-claude-api-catalog.log` (no layout-change error). **Both are implemented, not verified**, and this iteration implemented them, so
+neither may be flipped here.
