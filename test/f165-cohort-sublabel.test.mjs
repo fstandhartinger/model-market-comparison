@@ -6,6 +6,7 @@
 // itself and the fact that all three surfaces now share one implementation.
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { cohortSubLabel, cohortLabel, cohortOf } from '../lib/benchmark-view.mjs';
 import { cohortSubLabel as matrixCohortSubLabel } from '../lib/benchmark-matrix.mjs';
 
@@ -41,4 +42,10 @@ test('a row with no harness and no stated configuration still lands on the defau
   };
   assert.equal(cohortOf(observation), 'Published board');
   assert.equal(cohortSubLabel(cohortOf(observation)), null);
+});
+
+test('the ranking page uses the same rule for its visible benchmark sub-line', () => {
+  const source = readFileSync(new URL('../components/BenchmarkRanking.tsx', import.meta.url), 'utf8');
+  assert.match(source, /cohortSubLabel.*benchmark-view\.mjs/);
+  assert.match(source, /cohortSubLabel\(axis\.cohort\)/);
 });
