@@ -264,3 +264,68 @@ test('a second drop is a real failure, not an endless retry', async () => {
     assert.ok(result.errors.some((e) => /fetch failed/.test(e)), result.errors);
   } finally { await rm(dir, { recursive: true, force: true }); }
 });
+
+// D188: the refusal reason a single-row artifact produced was "revise without a bounded
+// row-level revision" even when the critic had named that very row and written a repair.
+// Every protocol review is a single-row artifact, so twelve boards froze for up to a week
+// behind a sentence that pointed at the harness instead of at the registry field to fix.
+// Refusal is unchanged; only the reason is now true and carries the critic's instruction.
+async function refusalReason({ dir, artifactId, findings, verdict = 'revise', rows: artifactRows = rows }) {
+  const runner = async (args) => {
+    await mockRunner(args);
+    const path = args[args.indexOf('--out') + 1];
+    const meta = JSON.parse(await readFile(path + '.meta.json', 'utf8'));
+    let body;
+    if (args.includes('--critic')) {
+      const review = JSON.parse(await readFile(path, 'utf8'));
+      Object.assign(review, { verdict, errors_found: findings.length, findings });
+      review.coverage_checked = [...artifactRows.map((row) => row.id), 'c1'];
+      body = JSON.stringify(review) + '\n';
+    } else body = JSON.stringify({ rows: artifactRows.map((row) => ({ id: row.id, status: 'match', note: 'Fixture value matches primary input' })) }) + '\n';
+    await writeFile(path, body);
+    meta.output_sha256 = sha256(body);
+    await writeFile(path + '.meta.json', JSON.stringify(meta));
+  };
+  const result = await reviewArtifact({ runDir: dir, artifactId, rows: artifactRows,
+    sources: artifactRows.map((row) => ({ ...sources[0], content: `${row.id} = ${row.value}`, sha256: sha256(`${row.id} = ${row.value}`) })),
+    criteria: ['Verify source value'], maxRounds: 1, runner });
+  assert.equal(result.accepted, false, 'refusal must be unchanged');
+  return result.errors.join(' ;; ');
+}
+
+test('D188: a refused single-row artifact says every row is disputed and quotes the critic repair', async () => {
+  const dir = await mkdtemp(join(tmpdir(), 'bh-gauntlet-reason-'));
+  try {
+    const named = await refusalReason({ dir, artifactId: 'reason-named', findings: [
+      { id: 'F1', severity: 'major', location: 'row fixture:1 scoring.notes', evidence: 'the notes claim a protocol family the board no longer publishes', repair: 'Update the notes to the protocol family the board CSV actually carries' },
+    ] });
+    assert.match(named, /all 1 row disputed, nothing left to publish/);
+    assert.match(named, /\[major\] row fixture:1 scoring\.notes → Update the notes to the protocol family the board CSV actually carries/);
+    assert.doesNotMatch(named, /without a bounded row-level revision/);
+
+    // A minor-only revise names no droppable row; that is a different situation and says so.
+    const minor = await refusalReason({ dir, artifactId: 'reason-minor', findings: [
+      { id: 'F1', severity: 'minor', location: 'row fixture:1 maintainer', evidence: 'no excerpt carries the attribution', repair: 'Supply the attribution excerpt or drop the field' },
+    ] });
+    assert.match(minor, /only minor findings, no row-level revision to apply/);
+    assert.match(minor, /\[minor\] row fixture:1 maintainer → Supply the attribution excerpt or drop the field/);
+
+    // A finding that names no row at all is the genuinely unbounded case; wording kept.
+    const wide = await refusalReason({ dir, artifactId: 'reason-wide', findings: [
+      { id: 'F1', severity: 'blocker', location: 'overall', evidence: 'the artifact as a whole disagrees with the source', repair: 'Re-extract the artifact' },
+    ] });
+    assert.match(wide, /no bounded row-level revision \(artifact-wide finding\)/);
+    assert.match(wide, /\[blocker\] overall → Re-extract the artifact/);
+
+    // Multi-row artifacts still drop the named rows rather than refusing, so the new
+    // wording can only appear when every row is gone: two rows, both named.
+    const both = await refusalReason({ dir, artifactId: 'reason-both',
+      rows: [{ id: 'fixture:1', value: 42 }, { id: 'fixture:2', value: 7 }],
+      findings: [
+        { id: 'F1', severity: 'blocker', location: 'row fixture:1', evidence: 'wrong', repair: 'Fix row one' },
+        { id: 'F2', severity: 'major', location: 'row fixture:2', evidence: 'wrong', repair: 'Fix row two' },
+      ] });
+    assert.match(both, /all 2 rows disputed, nothing left to publish/);
+    assert.match(both, /\[blocker\] row fixture:1 → Fix row one \| \[major\] row fixture:2 → Fix row two/);
+  } finally { await rm(dir, { recursive: true, force: true }); }
+});

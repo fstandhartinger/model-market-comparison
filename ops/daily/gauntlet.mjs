@@ -418,6 +418,21 @@ function droppableRows(review, rowIds) {
   return { drops, artifactWide };
 }
 
+// The refusal reason is the only thing a reader of the daily summary or of
+// `reports/source-health.md` ever sees, so it has to carry the critic's own repair
+// instruction. Bounded: the two most severe findings, each trimmed, so a run log and a
+// health table stay readable.
+const SEVERITY_ORDER = { blocker: 0, major: 1, minor: 2 };
+function findingSummary(review, limit = 2) {
+  const findings = [...(review.findings ?? [])]
+    .sort((a, b) => (SEVERITY_ORDER[a.severity] ?? 3) - (SEVERITY_ORDER[b.severity] ?? 3));
+  if (!findings.length) return 'no findings named';
+  const clip = (value, max) => { const text = String(value ?? '').replace(/\s+/g, ' ').trim(); return text.length > max ? `${text.slice(0, max - 1)}…` : text; };
+  const shown = findings.slice(0, limit)
+    .map((finding) => `[${finding.severity}] ${clip(finding.location, 90)} → ${clip(finding.repair || finding.evidence, 160)}`);
+  return shown.join(' | ') + (findings.length > limit ? ` (+${findings.length - limit} more)` : '');
+}
+
 /**
  * Review one frozen artifact through the gauntlet. Returns the acceptance verdict,
  * all critic reviews, per-row approval fingerprints (compatible with the score
@@ -575,7 +590,19 @@ export async function reviewArtifact({
           await recordInvalidModel(critic.meta, 'critic', 'Pass without a bounded row-level revision', runner);
           if (round === maxRounds) terminalError = new Error('review cannot be revised safely');
         } else {
-          errors.push(`round ${round}: ${review.verdict} without a bounded row-level revision${artifactWide ? ' (artifact-wide finding)' : ''}${missingRows.length ? `; uncovered rows ${missingRows.join(',')}` : ''}${missingCriteria.length ? `; uncovered criteria ${missingCriteria.join(',')}` : ''}`);
+          // Two different situations used to share one sentence, and it was wrong in both.
+          // `drops.size === rowIds.size` means the revision *was* bound to rows — to all of
+          // them, so there is nothing left to publish; every single-row artifact (each
+          // protocol review is one) lands here whenever a critic names its only row. The
+          // remaining case is the real unbounded one: minor-only, artifact-wide or no
+          // findings. Either way the critic's own repair instruction goes into the reason,
+          // because that reason is what the daily summary and source-health.md print.
+          const disputedAll = drops.size >= rowIds.size && rowIds.size > 0;
+          const minorOnly = !drops.size && review.findings.length > 0 && review.findings.every((finding) => finding.severity === 'minor');
+          const shape = disputedAll ? `all ${rowIds.size} row${rowIds.size === 1 ? '' : 's'} disputed, nothing left to publish`
+            : minorOnly ? 'only minor findings, no row-level revision to apply'
+            : `no bounded row-level revision${artifactWide ? ' (artifact-wide finding)' : ''}`;
+          errors.push(`round ${round}: ${review.verdict} — ${shape}: ${findingSummary(review)}${missingRows.length ? `; uncovered rows ${missingRows.join(',')}` : ''}${missingCriteria.length ? `; uncovered criteria ${missingCriteria.join(',')}` : ''}`);
           if (round === maxRounds || (!missingRows.length && !missingCriteria.length)) terminalError = new Error('review cannot be revised safely');
         }
       }
