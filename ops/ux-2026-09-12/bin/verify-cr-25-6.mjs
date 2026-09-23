@@ -26,27 +26,54 @@ for (const key of CATEGORIES) {
 // 2026-09-16 (CR-38.2): anchors are weighted, not averaged flat — a saturated anchor counts at half.
 // Which anchors are saturated is read from the LIVE page (the category header's own (i) names them), so
 // this stays an independent recompute: the arithmetic below must agree with what the product tells a user.
-const benchmarksHtml = await (await fetch(`${BASE}/benchmarks`)).text();
-const halfWeighted = [...benchmarksHtml.matchAll(/saturated benchmarks weigh half \(([^)]*\([^)]*\)[^)]*|[^)]*)\)/g)]
-  .flatMap((m) => m[1].split(/,\s*(?=[A-Z\u03c4])/).map((n) => n.trim())).filter(Boolean);
+// 2026-09-23 (iteration 180): this read `${BASE}/benchmarks` as raw HTML and regexed the prose
+// "saturated benchmarks weigh half (…)". Two things had moved underneath it: the heavy props now travel
+// as /api/page-data, so that word is not in the server HTML at all, and the page states the rule on
+// /about while marking the individual boards with a Saturated tag instead of listing them in a
+// parenthetical. The list came back empty, every anchor was therefore weighted 1, and the recompute
+// reported the *site* as wrong on cat_science. The site was right: with GPQA Diamond at half,
+// (29.714 + 93.737/2)/1.5 = 51.05, which is what it publishes (51.1).
+// It now reads the live matrix API's own `saturation.saturated`, which is the product's machine-readable
+// answer to exactly this question — still the live site, and no longer a sentence that can be reworded.
+const browser = await chromium.launch();
+const matrixModels = [...new Set(CATEGORIES.flatMap((k) => (scored[k] ?? []).slice(0, 2).map((m) => m.id)))].slice(0, 5);
+const matrix = (await (await fetch(`${BASE}/api/benchmark-matrix?models=${encodeURIComponent(matrixModels.join(','))}`)).json()).matrix;
+const halfWeighted = (matrix?.rows ?? []).filter((r) => r?.saturation?.saturated).map((r) => r.name);
 const SATURATED_WEIGHT = 0.5;
-const anchorNames = {
-  cat_coding: [/^Terminal-Bench v4/, /^SciCode/, /^DeepSWE/],
-  cat_science: [/^CritPt/, /^GPQA Diamond/],
-  cat_long_context: [/^AA-LCR/, /^GDP\.pdf/, /^MLCR/],
-};
+// 2026-09-23 (iteration 180): the anchors were local regexes, and /^GPQA Diamond/ matches two live
+// boards — "GPQA Diamond (AA)" and "GPQA Diamond (Epoch AI run)". The tie was broken by the later
+// version string, so for gpt-6-astra::max the recompute used Epoch's 94.36 while the site uses AA's
+// 96.06, and the check reported the *site* as wrong by 0.6. It is not: (31.714 + 96.0606/2)/1.5 =
+// 53.16, which is what it publishes (53.2). The anchor set is read from the methodology page, which
+// publishes it by exact name for exactly this reason, and matched exactly — a benchmark whose name
+// the page states but the data does not carry is now a finding rather than a silent substitution.
+const anchorsPublished = await (async () => {
+  const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
+  const page = await context.newPage();
+  await goto(page, `${BASE}/about`); await settle(page);
+  const items = await page.locator('[data-category-anchors] li').allInnerTexts();
+  await context.close();
+  return items.map((t) => t.replace(/\s+/g, ' ').trim());
+})();
+const CATEGORY_LABEL = { cat_coding: /^Coding:/, cat_agentic: /^Agentic/, cat_science: /^Science:/, cat_long_context: /^Long context:/ };
+const anchorNames = Object.fromEntries(Object.entries(CATEGORY_LABEL).map(([key, label]) => {
+  const line = anchorsPublished.find((t) => label.test(t)) ?? '';
+  return [key, line.slice(line.indexOf(':') + 1).split(/,\s*(?=[^)]*(?:\(|$))/).map((n) => n.trim()).filter(Boolean)];
+}));
+check('CR-25.6 the methodology page publishes an anchor set for every category',
+  Object.values(anchorNames).every((names) => names.length > 0), anchorNames);
 /** Half weight when the live page itself lists this axis as a saturated benchmark of its category. */
 const axisWeight = (axis) => (axis && halfWeighted.some((n) => n === axis.name) ? SATURATED_WEIGHT : 1);
 check('CR-38.2 the live page names its half-weighted (saturated) benchmarks', halfWeighted.length > 0, halfWeighted);
 
 for (const [key, patterns] of Object.entries(anchorNames)) {
-  const sample = scored[key].slice(0, 3);
+  const sample = (scored[key] ?? []).slice(0, 3);
   const wrong = [];
   for (const m of sample) {
     const view = await (await fetch(`${BASE}/api/benchmark-view?model=${encodeURIComponent(m.id)}`)).json();
     const weights = [];
-    const values = patterns.map((re) => {
-      const axis = view.axes.filter((a) => re.test(a.name) && a.scores.some((r) => r.modelId === m.id))
+    const values = patterns.map((name) => {
+      const axis = view.axes.filter((a) => a.name === name && a.scores.some((r) => r.modelId === m.id))
         .sort((a, b) => String(b.version).localeCompare(String(a.version)))[0];
       weights.push(axisWeight(axis));
       if (!axis) return null;
@@ -66,7 +93,6 @@ const codingIds = new Set(scored.cat_coding.map((m) => m.id));
 const all = (await (await fetch(`${BASE}/api/models?score=cat_coding`)).json()).models;
 check('data models missing an anchor have no Coding score (no partial average)', all.some((m) => !codingIds.has(m.id) && m.score == null), { total: all.length, scored: codingIds.size });
 
-const browser = await chromium.launch();
 for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop', { width: 1440, height: 1000 }], ['mobile', { width: 390, height: 844 }]]) {
   const tag = `${kind}_${theme}`, mobile = kind === 'mobile';
   const context = await browser.newContext({ viewport, isMobile: mobile, hasTouch: mobile, colorScheme: theme });
