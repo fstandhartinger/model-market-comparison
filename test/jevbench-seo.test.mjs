@@ -7,22 +7,21 @@ const image = await readFile(new URL('../app/jev-models/opengraph-image.tsx', im
 const preview = await readFile(new URL('../app/jev-models/multimodal-preview/page.tsx', import.meta.url), 'utf8');
 const sitemap = await readFile(new URL('../app/sitemap.ts', import.meta.url), 'utf8');
 
-test('CR-120 metadata is artifact-driven and complete for large link cards', () => {
+test('CR-131 changing board metadata stays evergreen and complete for large link cards', () => {
+  const metadata = page.slice(page.indexOf('export async function generateMetadata'), page.indexOf('\nconst day ='));
   assert.match(page, /generateMetadata\(\)/);
-  assert.match(page, /alternates: \{ canonical: '\/jev-models' \}/);
-  assert.match(page, /card: 'summary_large_image'/);
-  assert.match(page, /width: 1200, height: 630/);
-  assert.match(page, /view\.revision/);
-  assert.match(page, /view\.decisions/);
+  assert.match(metadata, /alternates: \{ canonical: '\/jev-models' \}/);
+  assert.match(metadata, /card: 'summary_large_image'/);
+  assert.match(metadata, /width: 1200, height: 630/);
+  assert.match(metadata, /JevBench by Benchmark Heaven/);
+  assert.doesNotMatch(metadata, /view\.revision|view\.decisions|rank|score|\bleads at\b/i);
 });
 
-test('CR-120 generated image is a current top-five 1200 by 630 board', () => {
+test('CR-131 generated image is an evergreen 1200 by 630 JevBench card', () => {
   assert.match(image, /export const size = \{ width: 1200, height: 630 \}/);
-  assert.match(image, /readJevbenchV12/);
-  assert.match(image, /view\.ranked\.slice\(0, 5\)/);
-  assert.match(image, /view\.revision/);
-  assert.match(image, /view\.generated/);
-  assert.match(image, /view\.decisions/);
+  assert.match(image, /JevBench by Benchmark Heaven/);
+  assert.match(image, /Jev-class decision models/);
+  assert.doesNotMatch(image, /v1\.\d|rank|score|\bleads at\b/i);
 });
 
 test('CR-120 visible FAQ and schema cover the requested intent without a GDPR claim', () => {

@@ -9,33 +9,30 @@ import { readJevbenchV12Topics, jevbenchV12TopicsView } from '../../lib/jevbench
 import { readJevbenchV12Tasks, jevbenchV12TasksView } from '../../lib/jevbench-v12-tasks.mjs';
 import { CustomEvaluationOffer } from '../../components/CustomEvaluationOffer';
 import { jevbenchV12HeldoutView } from '../../lib/jevbench-v12-heldout.mjs';
+import { readJevbenchV14, jevbenchV14View } from '../../lib/jevbench-v14.mjs';
+import { JevModelsV14Board } from '../../components/JevModelsV14';
 
-const OG_ART_REVISION = 'og3'; // Bump when the card artwork changes, even when the results revision stays fixed.
+const OG_ART_REVISION = 'og4'; // The live board URL changes; its share card stays evergreen.
 
-// CR-92 (Florian 2026-09-19 ~13:20 UTC): JevBench v1.2 final — the JevBench Score (Intelligence, Calibration, Speed, Cost,
-// 25 % each, geometric mean) is the default; the earlier weightings stay as presets. CR-88's WIP banner and noindex are gone and the
-// page is back in the menu and sitemap (Florian approved the result). Every number is read from the committed v1.2 artifact
-// (lib/jevbench-v12.mjs recomputes each one); v1.0 stays published at /jev-models/v1.
+// CR-131: v1.4.0 is the default board. The previous public-only v1.3.0 view stays below in a
+// labeled historical disclosure; the pinned v1.0 page remains at /jev-models/v1.
 export async function generateMetadata(): Promise<Metadata> {
-  const view = jevbenchV12View(await readJevbenchV12());
-  const systems = view.ranked.length + view.honorable.length + view.partial.length;
-  const lead = view.ranked[0];
-  const description = `${systems} Jev-class systems tested on ${view.decisions} decisions. ${short(lead.display)} leads JevBench ${view.revision} with ${one(lead.main)}; compare open-source, self-hostable and hosted options.`;
-  const socialDescription = `JevBench ${view.revision}: ${systems} systems, ${view.decisions} decisions. ${short(lead.display)} leads at ${one(lead.main)}.`;
-  const imageAlt = `JevBench ${view.revision} top five: ${view.ranked.slice(0, 5).map((row) => `#${row.rank} ${short(row.display)} ${one(row.main)}`).join('; ')}. ${systems} systems, ${view.decisions} decisions. Benchmark Heaven.`;
-  const image = `https://benchmarkheaven.com/jev-models/opengraph-image?v=${encodeURIComponent(view.revision)}-${OG_ART_REVISION}`;
+  const title = 'JevBench by Benchmark Heaven — Jev-class model benchmark';
+  const description = 'Compare Jev-class decision models across intelligence, calibration, speed, and cost with JevBench.';
+  const imageAlt = 'JevBench by Benchmark Heaven: a benchmark for Jev-class decision models across intelligence, calibration, speed, and cost.';
+  const image = `https://benchmarkheaven.com/jev-models/opengraph-image?v=${OG_ART_REVISION}`;
   return {
-    title: `Jev alternatives & benchmark — JevBench ${view.revision}`,
+    title,
     description,
     alternates: { canonical: '/jev-models' },
     openGraph: {
       type: 'website', siteName: 'Benchmark Heaven', locale: 'en_US', url: '/jev-models',
-      title: `JevBench ${view.revision}: Jev alternatives ranked`, description: socialDescription,
+      title, description,
       images: [{ url: image, type: 'image/png', secureUrl: image, width: 1200, height: 630, alt: imageAlt }],
     },
     twitter: {
       card: 'summary_large_image', site: '@benchmarkheaven', creator: '@benchmarkheaven',
-      title: `JevBench ${view.revision}: Jev alternatives ranked`, description: socialDescription,
+      title, description,
       images: [{ url: image, alt: imageAlt }],
     },
   };
@@ -78,6 +75,8 @@ const currentNotMeasured = [
 ];
 
 export default async function JevModelsPage() {
+  const v14Result = await readJevbenchV14();
+  const v14 = jevbenchV14View(v14Result);
   const v12 = await readJevbenchV12();
   const view = jevbenchV12View(v12);
   const costExample = jevCostExample(view);
@@ -114,7 +113,7 @@ export default async function JevModelsPage() {
     },
     {
       question: 'How is JevBench scored?',
-      answer: `JevBench ${view.revision} combines chance-corrected Intelligence, Calibration, Speed and Cost with equal 25% weights using a geometric mean. The current board uses ${view.decisions} decisions, including ${view.tierCounts.hard} hard decisions, and applies a growing penalty below 50 Intelligence.`,
+      answer: 'JevBench v1.4.0 blends 20% sealed aggregate accuracy into Intelligence, blends Calibration toward its sealed-inclusive result at the approved weight, applies a k=1 public-to-sealed gap penalty above 25 percentage points, and combines the four axes with an equal-weight harmonic mean. Intelligence, Speed and Cost retain their approved low-axis gates.',
     },
     {
       question: 'How do I submit my model?',
@@ -126,21 +125,21 @@ export default async function JevModelsPage() {
     '@graph': [
       {
         '@type': 'WebPage', '@id': 'https://benchmarkheaven.com/jev-models#page',
-        url: 'https://benchmarkheaven.com/jev-models', name: `Jev alternatives and benchmark — JevBench ${view.revision}`,
-        description: `Independent comparison of ${all.length} Jev-class systems across ${view.decisions} decisions.`,
-        dateModified: view.generated, isPartOf: { '@id': 'https://benchmarkheaven.com/#website' },
+        url: 'https://benchmarkheaven.com/jev-models', name: 'JevBench by Benchmark Heaven — Jev-class model benchmark',
+        description: `Independent comparison of ${v14.systems.length} Jev-class systems across ${v14.totalDecisions} public and sealed decisions.`,
+        dateModified: v14.generated, isPartOf: { '@id': 'https://benchmarkheaven.com/#website' },
         mainEntity: { '@id': 'https://benchmarkheaven.com/jev-models#dataset' },
       },
       {
         '@type': 'Dataset', '@id': 'https://benchmarkheaven.com/jev-models#dataset',
-        name: `JevBench ${view.revision} results`,
-        description: `Measured JevBench results for ${all.length} Jev-class systems on ${view.decisions} typed decisions.`,
-        url: 'https://benchmarkheaven.com/jev-models', dateModified: view.generated,
+        name: `JevBench ${v14.revision} results`,
+        description: `Measured JevBench results for ${v14.systems.length} Jev-class systems on ${v14.totalDecisions} typed decisions.`,
+        url: 'https://benchmarkheaven.com/jev-models', dateModified: v14.generated,
         creator: { '@type': 'Organization', name: 'Benchmark Heaven', url: 'https://benchmarkheaven.com' },
         license: 'https://github.com/fstandhartinger/jevbench/blob/main/LICENSE',
         isAccessibleForFree: true,
         variableMeasured: ['JevBench Score', 'Intelligence', 'Calibration', 'Speed', 'Cost'],
-        distribution: [{ '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: 'https://benchmarkheaven.com/api/jevbench/v1.2' }],
+        distribution: [{ '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: 'https://benchmarkheaven.com/api/jevbench/v1.4' }],
       },
       {
         '@type': 'FAQPage', '@id': 'https://benchmarkheaven.com/jev-models#faq',
@@ -152,17 +151,24 @@ export default async function JevModelsPage() {
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, '\\u003c') }} />
     <header className="bh-page-head">
       {/* F-160 (Fable pass 30): the eyebrow is a div — CustomEvaluationOffer mounts a <div> toast inside it after 6 s, which is invalid inside a <p>. */}
-      <div className="bh-eyebrow flex flex-nowrap items-center"><span><span className="sm:hidden">JevBench v1.3.0</span><span className="hidden sm:inline">JevBench v1.3.0 · our own benchmark</span></span><CustomEvaluationOffer /></div>
-      <h1 className="mt-1 text-3xl font-bold tracking-tight">Jev-class models</h1>
+      <div className="bh-eyebrow flex flex-nowrap items-center"><span>JevBench v1.4.0 · our own benchmark</span><CustomEvaluationOffer /></div>
+      <h1 className="mt-1 text-3xl font-bold tracking-tight">JevBench by Benchmark Heaven</h1>
       <p className="mt-3 max-w-3xl text-lg" data-bh-jev-own>JevBench is <b>Benchmark Heaven&apos;s own benchmark</b> for Jev-class decision models: state and a bounded rubric in, a typed answer out.</p>
-      <p className="bh-muted mt-2 max-w-3xl">Version 1.3.0 measures {all.length} systems on the unchanged {view.decisions} decisions, including {view.tierCounts.hard} hard ones, and ranks them by the <b className="text-gray-200">JevBench Score</b>. Built and run by us, not collected from someone else&apos;s leaderboard; the results describe the tested configurations, not every application.</p>
+      <p className="bh-muted mt-2 max-w-3xl">Version 1.4.0 measures {v14.systems.length} systems on {v14.publicDecisions} public and {v14.sealedDecisions} sealed decisions, with only system-level sealed aggregates published. Built and run by us, not collected from someone else&apos;s leaderboard; the results describe the tested configurations, not every application.</p>
       <p className="bh-muted mt-3 max-w-3xl text-xs leading-relaxed" data-bh-jev-meta>
-        Scored {day(view.generated)} · protocol <code>{view.protocol}</code> · {view.tierCounts.easy} easy + {view.tierCounts.standard} standard + {view.tierCounts.judge} judge + {view.tierCounts.hard} hard decisions · one request at a time from a server in Germany ·{' '}
+        Scored {day(v14.generated)} · protocol <code>{v14.artifact.protocol}</code> · {v14.publicDecisions} public + {v14.sealedDecisions} sealed aggregate decisions · one request at a time from a server in Germany ·{' '}
         <a className="text-accent underline" href={JEVBENCH_REPO}>harness, public tasks &amp; scoring rules (MIT)</a> ·{' '}
-        <a className="text-accent underline" href="/api/jevbench/v1.2" data-bh-jev-sha={view.sha256}>results JSON</a> <span className="whitespace-nowrap">sha256 <code title={view.sha256}>{view.sha256.slice(0, 12)}…</code></span> ·{' '}
+        <a className="text-accent underline" href="/api/jevbench/v1.4" data-bh-jev-sha={v14.sha256}>results JSON</a> <span className="whitespace-nowrap">sha256 <code title={v14.sha256}>{v14.sha256.slice(0, 12)}…</code></span> ·{' '}
         <a className="text-accent underline" href="/jev-models/v1" data-bh-jev-v1-link>v1.0 results</a>
       </p>
     </header>
+
+    <JevModelsV14Board artifact={v14.artifact} sha256={v14.sha256} />
+
+    <details id="jev13-history" className="bh-panel mt-10 max-w-5xl scroll-mt-6 p-5" data-bh-jev13-history>
+      <summary className="cursor-pointer text-sm font-semibold">Historical v1.3.0 board details and public-run diagnostics</summary>
+      <div className="mt-5">
+        <p className="bh-muted mb-5 max-w-4xl text-sm">The following public-only tables and diagnostics preserve the earlier JevBench v1.3.0 view. The ranking above is the current v1.4.0 result.</p>
 
     <JevModelsV12Board view={view} tasks={tasks}>
     {/* F-157 (Fable pass 30): the CR-118.4 note follows the board it explains — the ranking is the key message, the note is its footnote. */}
@@ -314,6 +320,8 @@ export default async function JevModelsPage() {
           {credits.map((r) => <li key={r.key}><b className="text-gray-200">{r.display}</b> — {r.author}, {r.licence}{r.link && <> — <a className="text-accent underline" href={r.link} target="_blank" rel="noopener noreferrer">{r.link.replace(/^https:\/\//, '')}</a></>}</li>)}
         </ul>
         <p>Authors: if we tested the wrong configuration, tell us and we will rerun it. New entrants become a new version rather than silently changing this one.</p>
+      </div>
+    </details>
       </div>
     </details>
   </>;

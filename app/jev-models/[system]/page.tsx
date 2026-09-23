@@ -79,10 +79,10 @@ export async function generateMetadata({ params }: { params: Promise<{ system: s
   const { system } = await params;
   const found = await findRow(decodeURIComponent(system));
   if (!found) return { title: 'System not found' };
-  const { row, view, all } = found;
-  const description = describeRow(row, view, all);
-  const documentTitle = `${short(row.display)} — JevBench ${view.revision} score`;
-  return previewMetadata({ path: `/jev-models/${row.key}`, documentTitle, title: documentTitle, description });
+  const { row } = found;
+  const title = `${short(row.display)} — JevBench by Benchmark Heaven`;
+  const description = `Explore the ${short(row.display)} configuration evaluated across intelligence, calibration, speed, and cost.`;
+  return previewMetadata({ path: `/jev-models/${row.key}`, documentTitle: title, title, description });
 }
 
 export default async function JevSystemPage({ params }: { params: Promise<{ system: string }> }) {

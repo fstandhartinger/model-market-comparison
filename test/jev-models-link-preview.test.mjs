@@ -5,53 +5,44 @@ import { readJevbenchV12, jevbenchV12View } from '../lib/jevbench-v12.mjs';
 
 const page = await readFile(new URL('../app/jev-models/page.tsx', import.meta.url), 'utf8');
 const image = await readFile(new URL('../app/jev-models/opengraph-image.tsx', import.meta.url), 'utf8');
-const view = jevbenchV12View(await readJevbenchV12());
+const detail = await readFile(new URL('../app/jev-models/[system]/page.tsx', import.meta.url), 'utf8');
+const historic = jevbenchV12View(await readJevbenchV12());
 
-const short = (name) => name.split(' (')[0].split(', formerly')[0];
-const one = (value) => value === null ? '—' : value.toFixed(1);
-
-test('CR-130.1: link preview values come from the pinned public v1.3.0 artifact', () => {
-  assert.equal(view.revision, 'v1.3.0');
-  assert.equal(view.decisions, 534);
-  assert.equal(view.ranked.length + view.honorable.length + view.partial.length, 52);
-  assert.deepEqual(view.ranked.slice(0, 5).map((row) => [short(row.display), one(row.main)]), [
-    ['Jev 1.13.0', '74.4'],
-    ['SemIf', '73.1'],
-    ['djev', '73.0'],
-    ['Winnow-12B Q8', '71.2'],
-    ['reflex 4B', '70.3'],
-  ]);
-  assert.match(image, /readJevbenchV12/);
-  assert.doesNotMatch(image, /heldout|private/i);
+test('CR-131: the changing JevBench board has evergreen Open Graph and X metadata', () => {
+  const metadata = page.slice(page.indexOf('export async function generateMetadata'), page.indexOf('\nconst day ='));
+  assert.match(metadata, /JevBench by Benchmark Heaven/);
+  assert.match(metadata, /Jev-class model benchmark/);
+  assert.match(metadata, /intelligence, calibration, speed, and cost/);
+  assert.match(metadata, /alternates: \{ canonical: '\/jev-models' \}/);
+  assert.match(metadata, /card: 'summary_large_image'/);
+  assert.match(metadata, /width: 1200, height: 630/);
+  assert.doesNotMatch(metadata, /rank|score|\bleads at\b|systems tested|decisions/i);
+  assert.match(page, /const OG_ART_REVISION = 'og4'/);
+  assert.match(metadata, /twitter:[\s\S]*title, description/);
 });
 
-test('CR-130.2: social description stays compact while the SEO description remains full', () => {
-  const lead = view.ranked[0];
-  const systems = view.ranked.length + view.honorable.length + view.partial.length;
-  const social = `JevBench ${view.revision}: ${systems} systems, ${view.decisions} decisions. ${short(lead.display)} leads at ${one(lead.main)}.`;
-  assert.equal(social, 'JevBench v1.3.0: 52 systems, 534 decisions. Jev 1.13.0 leads at 74.4.');
-  assert.ok(social.length <= 80);
-  assert.match(page, /const description = `\$\{systems\} Jev-class systems tested on/);
-  assert.match(page, /description,\s*alternates:/, 'search description stays on page Metadata');
-  assert.match(page, /openGraph:[\s\S]*description: socialDescription/);
-  assert.match(page, /twitter:[\s\S]*description: socialDescription/);
-});
-
-test('CR-130.3: both card metadata formats point to the versioned absolute HTTPS PNG', () => {
-  assert.match(page, /const OG_ART_REVISION = 'og3'; \/\/ Bump when the card artwork changes/);
-  assert.match(page, /https:\/\/benchmarkheaven\.com\/jev-models\/opengraph-image\?v=\$\{encodeURIComponent\(view\.revision\)\}-\$\{OG_ART_REVISION\}/);
-  assert.match(page, /type: 'image\/png', secureUrl: image, width: 1200, height: 630, alt: imageAlt/);
-  assert.match(page, /twitter:[\s\S]*images: \[\{ url: image, alt: imageAlt \}\]/);
-  assert.match(page, /view\.ranked\.slice\(0, 5\).*row\.rank/);
-});
-
-test('CR-130.4: card is 1200×630, names the domain and gives rows readable type sizes', () => {
+test('CR-131: the Open Graph card is branded and evergreen', () => {
   assert.match(image, /export const size = \{ width: 1200, height: 630 \}/);
+  assert.match(image, /JevBench by Benchmark Heaven/);
+  assert.match(image, /Jev-class decision models/);
+  for (const axis of ['Intelligence', 'Calibration', 'Speed', 'Cost']) assert.match(image, new RegExp(axis));
   assert.match(image, /benchmarkheaven\.com/);
-  assert.match(image, />JevBench Score<\/div>/);
-  assert.match(image, /JevBench \{view\.revision\} · \{date\} · \{systems\} systems · \{view\.decisions\} decisions/);
-  assert.match(image, /fontSize: 36, fontWeight: 600/);
-  assert.match(image, /fontSize: 38, fontWeight: 700/);
-  assert.match(image, /fontSize: 44, fontWeight: 800/);
-  assert.match(image, /view\.ranked\.slice\(0, 5\)/);
+  assert.doesNotMatch(image, /v1\.|rank|score|\bleads at\b|view\.|row\.rank|row\.main/i);
+});
+
+test('CR-131: dynamic model previews omit changing ranks and scores', () => {
+  const metadata = detail.slice(detail.indexOf('export async function generateMetadata'), detail.indexOf('\nexport default async function'));
+  assert.match(metadata, /JevBench by Benchmark Heaven/);
+  assert.match(metadata, /evaluated across intelligence, calibration, speed, and cost/);
+  assert.doesNotMatch(metadata, /row\.rank|row\.main|view\.revision|#\$\{|score of|ranks /i);
+});
+
+test('CR-131: the historical v1.3 artifact remains available inside the labeled history', () => {
+  assert.equal(historic.revision, 'v1.3.0');
+  assert.equal(historic.decisions, 534);
+  assert.deepEqual(historic.ranked.slice(0, 5).map((row) => row.key), [
+    'jev-1.13.0', 'semif-qwen3.5-4b', 'djev', 'winnow-12b', 'reflex-4b',
+  ]);
+  assert.match(page, /<details id="jev13-history"/);
+  assert.match(page, /Historical v1\.3\.0 board details/);
 });
