@@ -6145,6 +6145,232 @@
       },
       "protocol": "Cost per AA Intelligence Index task; source configuration GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Luna\",\"config\":\"GPT-6 Luna (xhigh) [gpt-6-luna-xhigh]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":0.041708771594451556}}\",\"source_unit\":\"USD/task\",\"displayed_value\":0.0417}",
       "comparison_key": null
+    },
+    {
+      "id": "cr128:4b8c9db738085ecd4236738d",
+      "benchmark_id": "lmarena-text::snapshot-2026-09-22",
+      "subject": {
+        "source_id": "gpt-6-astra-max-text",
+        "name": "gpt-6-astra-max",
+        "model_id": "gpt-6-astra::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 1479.7712562096513,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://lmarena.ai/leaderboard/text",
+        "retrieved_at": "2026-09-22T21:03:57.053116+00:00",
+        "published_at": null,
+        "sha256": "9fc48cf37d8d3ba4563fbe1d0bd8b90ef9fba4626c03e9ec83d5b2ec9ec59d05",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/9fc48cf37d8d3ba4563f.gz",
+        "locator": "LMArena Text (overall); gpt-6-astra-max; exact source excerpt: {\"rank\":24,\"rankUpper\":5,\"rankLower\":51,\"modelKey\":\"gpt-6-astra-max-text\",\"modelDisplayName\":\"gpt-6-astra-max\",\"rating\":1479.7712562096513,...,\"votes\":2693}"
+      },
+      "protocol": "LMArena Text (overall); source configuration gpt-6-astra-max; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"gpt-6-astra-max\",\"source_quote\":\"{\\\"rank\\\":24,\\\"rankUpper\\\":5,\\\"rankLower\\\":51,\\\"modelKey\\\":\\\"gpt-6-astra-max-text\\\",\\\"modelDisplayName\\\":\\\"gpt-6-astra-max\\\",\\\"rating\\\":1479.7712562096513,...,\\\"votes\\\":2693}\",\"source_unit\":\"Elo (CI 1468.12-1491.42, 2693 votes)\",\"displayed_value\":1479.77}",
+      "comparison_key": null,
+      "confidence_interval": {
+        "level": 0.95,
+        "lower": 1468.12,
+        "upper": 1491.42
+      }
+    },
+    {
+      "id": "cr128:ba1a020e7b79505537f7542a",
+      "benchmark_id": "lmarena-vision::snapshot-2026-09-22",
+      "subject": {
+        "source_id": "gpt-6-astra-max-vision",
+        "name": "gpt-6-astra-max",
+        "model_id": "gpt-6-astra::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 1284.0034100860937,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://lmarena.ai/leaderboard/vision",
+        "retrieved_at": "2026-09-22T21:04:01.219774+00:00",
+        "published_at": null,
+        "sha256": "2c91c655896aed72d511802b59b4602779cfd69646e0e3739f35dc59243d97ea",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/2c91c655896aed72d511.gz",
+        "locator": "LMArena Vision; gpt-6-astra-max; exact source excerpt: {\"rank\":16,\"rankUpper\":2,\"rankLower\":38,\"modelKey\":\"gpt-6-astra-max-vision\",\"modelDisplayName\":\"gpt-6-astra-max\",\"rating\":1284.0034100860937,...,\"votes\":1367}"
+      },
+      "protocol": "LMArena Vision; source configuration gpt-6-astra-max; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"gpt-6-astra-max\",\"source_quote\":\"{\\\"rank\\\":16,\\\"rankUpper\\\":2,\\\"rankLower\\\":38,\\\"modelKey\\\":\\\"gpt-6-astra-max-vision\\\",\\\"modelDisplayName\\\":\\\"gpt-6-astra-max\\\",\\\"rating\\\":1284.0034100860937,...,\\\"votes\\\":1367}\",\"source_unit\":\"Elo (CI 1266.98-1301.03, 1367 votes)\",\"displayed_value\":1284}",
+      "comparison_key": null,
+      "confidence_interval": {
+        "level": 0.95,
+        "lower": 1266.98,
+        "upper": 1301.03
+      }
+    },
+    {
+      "id": "cr128:40a940934f82b4fa4ab75cda",
+      "benchmark_id": "scale-drug-discovery-bench::snapshot-2026-09-22",
+      "subject": {
+        "source_id": "GPT 6 Astra (mini-SWE-agent) max",
+        "name": "GPT 6 Astra (mini-SWE-agent) max",
+        "model_id": "gpt-6-astra::max",
+        "variant": "max",
+        "harness": "mini-SWE-agent"
+      },
+      "value": 68.7,
+      "unit": "score",
+      "basis": "measured",
+      "source": {
+        "url": "https://scale.com/leaderboard",
+        "retrieved_at": "2026-09-22T21:04:04.684350+00:00",
+        "published_at": null,
+        "sha256": "20e4d1914da7a59e28d6c9234f48eb7bf009149207cd98187088ad23e1b2eab2",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/20e4d1914da7a59e28d6.gz",
+        "locator": "Scale SEAL: DrugDiscoveryBench; GPT 6 Astra (mini-SWE-agent) max; exact source excerpt: {\"model\":\"GPT 6 Astra (mini-SWE-agent) max\",\"rank\":1,\"score\":68.7,\"confidenceInterval_upper\":2.5}"
+      },
+      "protocol": "Scale SEAL: DrugDiscoveryBench; source configuration GPT 6 Astra (mini-SWE-agent) max; page date updatedAt 2026-09-14T19:50:30Z; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT 6 Astra (mini-SWE-agent) max\",\"source_quote\":\"{\\\"model\\\":\\\"GPT 6 Astra (mini-SWE-agent) max\\\",\\\"rank\\\":1,\\\"score\\\":68.7,\\\"confidenceInterval_upper\\\":2.5}\",\"source_unit\":\"score ±2.5\",\"displayed_value\":68.7}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:d195c10b9141fd8cdf292a3b",
+      "benchmark_id": "scale-drug-discovery-bench::snapshot-2026-09-22",
+      "subject": {
+        "source_id": "GPT 6 Astra (Codex) max",
+        "name": "GPT 6 Astra (Codex) max",
+        "model_id": "gpt-6-astra::max",
+        "variant": "max",
+        "harness": "Codex"
+      },
+      "value": 65.4,
+      "unit": "score",
+      "basis": "measured",
+      "source": {
+        "url": "https://scale.com/leaderboard",
+        "retrieved_at": "2026-09-22T21:04:04.684350+00:00",
+        "published_at": null,
+        "sha256": "20e4d1914da7a59e28d6c9234f48eb7bf009149207cd98187088ad23e1b2eab2",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/20e4d1914da7a59e28d6.gz",
+        "locator": "Scale SEAL: DrugDiscoveryBench; GPT 6 Astra (Codex) max; exact source excerpt: {\"model\":\"GPT 6 Astra (Codex) max\",\"rank\":2,\"score\":65.4,\"confidenceInterval_upper\":1.9}"
+      },
+      "protocol": "Scale SEAL: DrugDiscoveryBench; source configuration GPT 6 Astra (Codex) max; page date updatedAt 2026-09-14T19:50:30Z; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT 6 Astra (Codex) max\",\"source_quote\":\"{\\\"model\\\":\\\"GPT 6 Astra (Codex) max\\\",\\\"rank\\\":2,\\\"score\\\":65.4,\\\"confidenceInterval_upper\\\":1.9}\",\"source_unit\":\"score ±1.9\",\"displayed_value\":65.4}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:8f7d2c465b9849fc82d3a8c8",
+      "benchmark_id": "scale-swe-bench-pro-v2-hard::snapshot-2026-09-22",
+      "subject": {
+        "source_id": "GPT-6 Astra (Codex) high",
+        "name": "GPT-6 Astra (Codex) high",
+        "model_id": "gpt-6-astra::high",
+        "variant": "high",
+        "harness": "Codex"
+      },
+      "value": 90.2,
+      "unit": "score",
+      "basis": "measured",
+      "source": {
+        "url": "https://scale.com/leaderboard",
+        "retrieved_at": "2026-09-22T21:04:04.684350+00:00",
+        "published_at": null,
+        "sha256": "20e4d1914da7a59e28d6c9234f48eb7bf009149207cd98187088ad23e1b2eab2",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/20e4d1914da7a59e28d6.gz",
+        "locator": "Scale SEAL: SWE-Bench Pro V2 HARD; GPT-6 Astra (Codex) high; exact source excerpt: {\"model\":\"GPT-6 Astra (Codex) high\",\"rank\":3,\"score\":90.2,\"confidenceInterval_upper\":0}"
+      },
+      "protocol": "Scale SEAL: SWE-Bench Pro V2 HARD; source configuration GPT-6 Astra (Codex) high; page date updatedAt 2026-09-22T17:09:42Z; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT-6 Astra (Codex) high\",\"source_quote\":\"{\\\"model\\\":\\\"GPT-6 Astra (Codex) high\\\",\\\"rank\\\":3,\\\"score\\\":90.2,\\\"confidenceInterval_upper\\\":0}\",\"source_unit\":\"score ±0\",\"displayed_value\":90.2}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:b203b273e236a017418ea458",
+      "benchmark_id": "scale-seal-hle::snapshot-2026-09-22",
+      "subject": {
+        "source_id": "GPT 6 Astra",
+        "name": "GPT 6 Astra",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 54.8,
+      "unit": "score",
+      "basis": "measured",
+      "source": {
+        "url": "https://scale.com/leaderboard",
+        "retrieved_at": "2026-09-22T21:04:04.684350+00:00",
+        "published_at": null,
+        "sha256": "20e4d1914da7a59e28d6c9234f48eb7bf009149207cd98187088ad23e1b2eab2",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/20e4d1914da7a59e28d6.gz",
+        "locator": "Scale SEAL: Humanity's Last Exam; GPT 6 Astra; exact source excerpt: {\"model\":\"GPT 6 Astra\",\"rank\":1,\"score\":54.8,\"confidenceInterval_upper\":1.94}"
+      },
+      "protocol": "Scale SEAL: Humanity's Last Exam; source configuration GPT 6 Astra; page date updatedAt 2026-09-17T17:13:45Z; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT 6 Astra\",\"source_quote\":\"{\\\"model\\\":\\\"GPT 6 Astra\\\",\\\"rank\\\":1,\\\"score\\\":54.8,\\\"confidenceInterval_upper\\\":1.94}\",\"source_unit\":\"score ±1.94\",\"displayed_value\":54.8}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:eff61ddc3c1ebad26c894acf",
+      "benchmark_id": "scale-seal-hle-text-only::snapshot-2026-09-22",
+      "subject": {
+        "source_id": "GPT 6 Astra",
+        "name": "GPT 6 Astra",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 54.17,
+      "unit": "score",
+      "basis": "measured",
+      "source": {
+        "url": "https://scale.com/leaderboard",
+        "retrieved_at": "2026-09-22T21:04:04.684350+00:00",
+        "published_at": null,
+        "sha256": "20e4d1914da7a59e28d6c9234f48eb7bf009149207cd98187088ad23e1b2eab2",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/20e4d1914da7a59e28d6.gz",
+        "locator": "Scale SEAL: Humanity's Last Exam (Text Only); GPT 6 Astra; exact source excerpt: {\"model\":\"GPT 6 Astra\",\"rank\":1,\"score\":54.17,\"confidenceInterval_upper\":2.09}"
+      },
+      "protocol": "Scale SEAL: Humanity's Last Exam (Text Only); source configuration GPT 6 Astra; page date updatedAt 2026-09-17T17:13:56Z; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT 6 Astra\",\"source_quote\":\"{\\\"model\\\":\\\"GPT 6 Astra\\\",\\\"rank\\\":1,\\\"score\\\":54.17,\\\"confidenceInterval_upper\\\":2.09}\",\"source_unit\":\"score ±2.09\",\"displayed_value\":54.17}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:7680986be978a53fa355cead",
+      "benchmark_id": "scale-seal-rli::snapshot-2026-09-22",
+      "subject": {
+        "source_id": "GPT 6 Astra",
+        "name": "GPT 6 Astra",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 20.83,
+      "unit": "score",
+      "basis": "measured",
+      "source": {
+        "url": "https://scale.com/leaderboard",
+        "retrieved_at": "2026-09-22T21:04:04.684350+00:00",
+        "published_at": null,
+        "sha256": "20e4d1914da7a59e28d6c9234f48eb7bf009149207cd98187088ad23e1b2eab2",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/20e4d1914da7a59e28d6.gz",
+        "locator": "Scale SEAL: Remote Labor Index (RLI); GPT 6 Astra; exact source excerpt: {\"model\":\"GPT 6 Astra\",\"rank\":1,\"score\":20.83,\"confidenceInterval_upper\":0}"
+      },
+      "protocol": "Scale SEAL: Remote Labor Index (RLI); source configuration GPT 6 Astra; page date updatedAt 2026-07-14 (category); entry createdAt 2026-09-17; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT 6 Astra\",\"source_quote\":\"{\\\"model\\\":\\\"GPT 6 Astra\\\",\\\"rank\\\":1,\\\"score\\\":20.83,\\\"confidenceInterval_upper\\\":0}\",\"source_unit\":\"score ±0\",\"displayed_value\":20.83}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:f5f7b6641c82d198473a99fa",
+      "benchmark_id": "balrog::snapshot-2026-09-22",
+      "subject": {
+        "source_id": "GPT-6-Astra-Max",
+        "name": "GPT-6-Astra-Max",
+        "model_id": "gpt-6-astra::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 68.3,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://balrogai.com/",
+        "retrieved_at": "2026-09-22T21:03:43.287037+00:00",
+        "published_at": null,
+        "sha256": "9d14a3ad953686cc3ce03ef5b73e8bdcbc5dc4f464299449556d1107cd99deec",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/9d14a3ad953686cc3ce0.gz",
+        "locator": "BALROG (average progress); GPT-6-Astra-Max; exact source excerpt: \"🥇 🕹️ GPT-6-Astra-Max | 68.3 ± 2.0\""
+      },
+      "protocol": "BALROG (average progress); source configuration GPT-6-Astra-Max; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT-6-Astra-Max\",\"source_quote\":\"\\\"🥇 🕹️ GPT-6-Astra-Max | 68.3 ± 2.0\\\"\",\"source_unit\":\"% ± 2.0\",\"displayed_value\":68.3}",
+      "comparison_key": null
     }
   ],
   "collections": [
@@ -6158,6 +6384,54 @@
       "benchmark_id": "aa-intelligence-index-cost-per-task::4.3.2",
       "status": "collected",
       "source_url": "https://artificialanalysis.ai/models/gpt-6-luna",
+      "reason": "Hash-bound primary source reviewed for CR-128; exact rows retained with the observation."
+    },
+    {
+      "benchmark_id": "lmarena-text::snapshot-2026-09-22",
+      "status": "collected",
+      "source_url": "https://lmarena.ai/leaderboard/text",
+      "reason": "Hash-bound primary source reviewed for CR-128; exact rows retained with the observation."
+    },
+    {
+      "benchmark_id": "lmarena-vision::snapshot-2026-09-22",
+      "status": "collected",
+      "source_url": "https://lmarena.ai/leaderboard/vision",
+      "reason": "Hash-bound primary source reviewed for CR-128; exact rows retained with the observation."
+    },
+    {
+      "benchmark_id": "scale-drug-discovery-bench::snapshot-2026-09-22",
+      "status": "collected",
+      "source_url": "https://scale.com/leaderboard",
+      "reason": "Hash-bound primary source reviewed for CR-128; exact rows retained with the observation."
+    },
+    {
+      "benchmark_id": "scale-swe-bench-pro-v2-hard::snapshot-2026-09-22",
+      "status": "collected",
+      "source_url": "https://scale.com/leaderboard",
+      "reason": "Hash-bound primary source reviewed for CR-128; exact rows retained with the observation."
+    },
+    {
+      "benchmark_id": "scale-seal-hle::snapshot-2026-09-22",
+      "status": "collected",
+      "source_url": "https://scale.com/leaderboard",
+      "reason": "Hash-bound primary source reviewed for CR-128; exact rows retained with the observation."
+    },
+    {
+      "benchmark_id": "scale-seal-hle-text-only::snapshot-2026-09-22",
+      "status": "collected",
+      "source_url": "https://scale.com/leaderboard",
+      "reason": "Hash-bound primary source reviewed for CR-128; exact rows retained with the observation."
+    },
+    {
+      "benchmark_id": "scale-seal-rli::snapshot-2026-09-22",
+      "status": "collected",
+      "source_url": "https://scale.com/leaderboard",
+      "reason": "Hash-bound primary source reviewed for CR-128; exact rows retained with the observation."
+    },
+    {
+      "benchmark_id": "balrog::snapshot-2026-09-22",
+      "status": "collected",
+      "source_url": "https://balrogai.com/",
       "reason": "Hash-bound primary source reviewed for CR-128; exact rows retained with the observation."
     }
   ]

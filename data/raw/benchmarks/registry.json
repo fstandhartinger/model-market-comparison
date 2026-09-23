@@ -18043,6 +18043,470 @@
           "excerpt": "\"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":5.982012019521066}}"
         }
       ]
+    },
+    {
+      "id": "lmarena-text::snapshot-2026-09-22",
+      "name": "LMArena Text (overall)",
+      "version": "snapshot-2026-09-22",
+      "version_status": "snapshot",
+      "family": "lmarena-text",
+      "category": "Other",
+      "one_sentence_description": "LMArena Text (overall) results published by LMArena.",
+      "scoring": {
+        "metric": "LMArena reported Elo rating",
+        "unit": "Elo",
+        "range": [
+          null,
+          null
+        ],
+        "higher_better": true,
+        "notes": "Keep the source's exact board, version, effort and harness separate. The captured source row is retained with each observation; no cross-benchmark normalization is applied."
+      },
+      "maintainer": "LMArena",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://lmarena.ai/leaderboard/text",
+      "publication_urls": [
+        {
+          "url": "https://lmarena.ai/leaderboard/text",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and source capture entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "Review the retained primary-source capture and extract the exact named row/configuration; do not infer missing effort or combine nearby benchmark variants.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Exact row for GPT-6 Astra; gpt-6-astra-max; quoted field {\"rank\":24,\"rankUpper\":5,\"rankLower\":51,\"modelKey\":\"gpt-6-astra-max-text\",\"modelDisplayName\":\"gpt-6-astra-max\",\"rating\":1479.7712562096513,...,\"votes\":2693}",
+        "version_guard": "Require source date/version retrieved 2026-09-22; keep this exact benchmark and operator separate from other similarly named boards.",
+        "notes": "One-time manual snapshot for CR-128; refresh only after verifying the source's version and protocol. Source maintainer: LMArena."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source.",
+        "check_recommendation": "Recheck on a model release or when the board updates; do not imply a source schedule."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://lmarena.ai/leaderboard/text",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/9fc48cf37d8d3ba4563f.gz",
+          "sha256": "b43d20969397871b90297c37b76d791236f876180d8e5433ade28ea36b03cc3e",
+          "fetched_at": "2026-09-22T21:03:57.053116+00:00",
+          "source_sha256": "9fc48cf37d8d3ba4563fbe1d0bd8b90ef9fba4626c03e9ec83d5b2ec9ec59d05",
+          "excerpt": "{\"rank\":24,\"rankUpper\":5,\"rankLower\":51,\"modelKey\":\"gpt-6-astra-max-text\",\"modelDisplayName\":\"gpt-6-astra-max\",\"rating\":1479.7712562096513,...,\"votes\":2693}"
+        }
+      ]
+    },
+    {
+      "id": "lmarena-vision::snapshot-2026-09-22",
+      "name": "LMArena Vision",
+      "version": "snapshot-2026-09-22",
+      "version_status": "snapshot",
+      "family": "lmarena-vision",
+      "category": "Other",
+      "one_sentence_description": "LMArena Vision results published by LMArena.",
+      "scoring": {
+        "metric": "LMArena reported Elo rating",
+        "unit": "Elo",
+        "range": [
+          null,
+          null
+        ],
+        "higher_better": true,
+        "notes": "Keep the source's exact board, version, effort and harness separate. The captured source row is retained with each observation; no cross-benchmark normalization is applied."
+      },
+      "maintainer": "LMArena",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://lmarena.ai/leaderboard/vision",
+      "publication_urls": [
+        {
+          "url": "https://lmarena.ai/leaderboard/vision",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and source capture entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "Review the retained primary-source capture and extract the exact named row/configuration; do not infer missing effort or combine nearby benchmark variants.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Exact row for GPT-6 Astra; gpt-6-astra-max; quoted field {\"rank\":16,\"rankUpper\":2,\"rankLower\":38,\"modelKey\":\"gpt-6-astra-max-vision\",\"modelDisplayName\":\"gpt-6-astra-max\",\"rating\":1284.0034100860937,...,\"votes\":1367}",
+        "version_guard": "Require source date/version retrieved 2026-09-22; keep this exact benchmark and operator separate from other similarly named boards.",
+        "notes": "One-time manual snapshot for CR-128; refresh only after verifying the source's version and protocol. Source maintainer: LMArena."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source.",
+        "check_recommendation": "Recheck on a model release or when the board updates; do not imply a source schedule."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://lmarena.ai/leaderboard/vision",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/2c91c655896aed72d511.gz",
+          "sha256": "08ca53d2efceb56945960cc6facf3506549801f2228197545fe46cff153ac591",
+          "fetched_at": "2026-09-22T21:04:01.219774+00:00",
+          "source_sha256": "2c91c655896aed72d511802b59b4602779cfd69646e0e3739f35dc59243d97ea",
+          "excerpt": "{\"rank\":16,\"rankUpper\":2,\"rankLower\":38,\"modelKey\":\"gpt-6-astra-max-vision\",\"modelDisplayName\":\"gpt-6-astra-max\",\"rating\":1284.0034100860937,...,\"votes\":1367}"
+        }
+      ]
+    },
+    {
+      "id": "scale-drug-discovery-bench::snapshot-2026-09-22",
+      "name": "Scale SEAL: DrugDiscoveryBench",
+      "version": "snapshot-2026-09-22",
+      "version_status": "snapshot",
+      "family": "scale-drug-discovery-bench",
+      "category": "Science",
+      "one_sentence_description": "Scale SEAL: DrugDiscoveryBench results published by Scale AI.",
+      "scoring": {
+        "metric": "Scale SEAL benchmark score",
+        "unit": "score",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Keep the source's exact board, version, effort and harness separate. The captured source row is retained with each observation; no cross-benchmark normalization is applied."
+      },
+      "maintainer": "Scale AI",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://scale.com/leaderboard",
+      "publication_urls": [
+        {
+          "url": "https://scale.com/leaderboard",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and source capture entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "Review the retained primary-source capture and extract the exact named row/configuration; do not infer missing effort or combine nearby benchmark variants.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Exact row for GPT-6 Astra; GPT 6 Astra (mini-SWE-agent) max; quoted field {\"model\":\"GPT 6 Astra (mini-SWE-agent) max\",\"rank\":1,\"score\":68.7,\"confidenceInterval_upper\":2.5}",
+        "version_guard": "Require source date/version updatedAt 2026-09-14T19:50:30Z; keep this exact benchmark and operator separate from other similarly named boards.",
+        "notes": "One-time manual snapshot for CR-128; refresh only after verifying the source's version and protocol. Source maintainer: Scale AI."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source.",
+        "check_recommendation": "Recheck on a model release or when the board updates; do not imply a source schedule."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://scale.com/leaderboard",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/20e4d1914da7a59e28d6.gz",
+          "sha256": "f63735c05dfc1352ad4fa49d803dd49774e070415a1db7f94397d199c5059d53",
+          "fetched_at": "2026-09-22T21:04:04.684350+00:00",
+          "source_sha256": "20e4d1914da7a59e28d6c9234f48eb7bf009149207cd98187088ad23e1b2eab2",
+          "excerpt": "{\"model\":\"GPT 6 Astra (mini-SWE-agent) max\",\"rank\":1,\"score\":68.7,\"confidenceInterval_upper\":2.5}"
+        }
+      ]
+    },
+    {
+      "id": "scale-swe-bench-pro-v2-hard::snapshot-2026-09-22",
+      "name": "Scale SEAL: SWE-Bench Pro V2 HARD",
+      "version": "snapshot-2026-09-22",
+      "version_status": "snapshot",
+      "family": "scale-swe-bench-pro-v2-hard",
+      "category": "Agentic",
+      "one_sentence_description": "Scale SEAL: SWE-Bench Pro V2 HARD results published by Scale AI.",
+      "scoring": {
+        "metric": "Scale SEAL benchmark score",
+        "unit": "score",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Keep the source's exact board, version, effort and harness separate. The captured source row is retained with each observation; no cross-benchmark normalization is applied."
+      },
+      "maintainer": "Scale AI",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://scale.com/leaderboard",
+      "publication_urls": [
+        {
+          "url": "https://scale.com/leaderboard",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and source capture entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "Review the retained primary-source capture and extract the exact named row/configuration; do not infer missing effort or combine nearby benchmark variants.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Exact row for GPT-6 Astra; GPT-6 Astra (Codex) high; quoted field {\"model\":\"GPT-6 Astra (Codex) high\",\"rank\":3,\"score\":90.2,\"confidenceInterval_upper\":0}",
+        "version_guard": "Require source date/version updatedAt 2026-09-22T17:09:42Z; keep this exact benchmark and operator separate from other similarly named boards.",
+        "notes": "One-time manual snapshot for CR-128; refresh only after verifying the source's version and protocol. Source maintainer: Scale AI."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source.",
+        "check_recommendation": "Recheck on a model release or when the board updates; do not imply a source schedule."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://scale.com/leaderboard",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/20e4d1914da7a59e28d6.gz",
+          "sha256": "f63735c05dfc1352ad4fa49d803dd49774e070415a1db7f94397d199c5059d53",
+          "fetched_at": "2026-09-22T21:04:04.684350+00:00",
+          "source_sha256": "20e4d1914da7a59e28d6c9234f48eb7bf009149207cd98187088ad23e1b2eab2",
+          "excerpt": "{\"model\":\"GPT-6 Astra (Codex) high\",\"rank\":3,\"score\":90.2,\"confidenceInterval_upper\":0}"
+        }
+      ]
+    },
+    {
+      "id": "scale-seal-hle::snapshot-2026-09-22",
+      "name": "Scale SEAL: Humanity's Last Exam",
+      "version": "snapshot-2026-09-22",
+      "version_status": "snapshot",
+      "family": "scale-seal-hle",
+      "category": "Other",
+      "one_sentence_description": "Scale SEAL: Humanity's Last Exam results published by Scale AI.",
+      "scoring": {
+        "metric": "Scale SEAL benchmark score",
+        "unit": "score",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Keep the source's exact board, version, effort and harness separate. The captured source row is retained with each observation; no cross-benchmark normalization is applied."
+      },
+      "maintainer": "Scale AI",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://scale.com/leaderboard",
+      "publication_urls": [
+        {
+          "url": "https://scale.com/leaderboard",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and source capture entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "Review the retained primary-source capture and extract the exact named row/configuration; do not infer missing effort or combine nearby benchmark variants.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Exact row for GPT-6 Astra; GPT 6 Astra; quoted field {\"model\":\"GPT 6 Astra\",\"rank\":1,\"score\":54.8,\"confidenceInterval_upper\":1.94}",
+        "version_guard": "Require source date/version updatedAt 2026-09-17T17:13:45Z; keep this exact benchmark and operator separate from other similarly named boards.",
+        "notes": "One-time manual snapshot for CR-128; refresh only after verifying the source's version and protocol. Source maintainer: Scale AI."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source.",
+        "check_recommendation": "Recheck on a model release or when the board updates; do not imply a source schedule."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://scale.com/leaderboard",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/20e4d1914da7a59e28d6.gz",
+          "sha256": "f63735c05dfc1352ad4fa49d803dd49774e070415a1db7f94397d199c5059d53",
+          "fetched_at": "2026-09-22T21:04:04.684350+00:00",
+          "source_sha256": "20e4d1914da7a59e28d6c9234f48eb7bf009149207cd98187088ad23e1b2eab2",
+          "excerpt": "{\"model\":\"GPT 6 Astra\",\"rank\":1,\"score\":54.8,\"confidenceInterval_upper\":1.94}"
+        }
+      ]
+    },
+    {
+      "id": "scale-seal-hle-text-only::snapshot-2026-09-22",
+      "name": "Scale SEAL: Humanity's Last Exam (Text Only)",
+      "version": "snapshot-2026-09-22",
+      "version_status": "snapshot",
+      "family": "scale-seal-hle-text-only",
+      "category": "Other",
+      "one_sentence_description": "Scale SEAL: Humanity's Last Exam (Text Only) results published by Scale AI.",
+      "scoring": {
+        "metric": "Scale SEAL benchmark score",
+        "unit": "score",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Keep the source's exact board, version, effort and harness separate. The captured source row is retained with each observation; no cross-benchmark normalization is applied."
+      },
+      "maintainer": "Scale AI",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://scale.com/leaderboard",
+      "publication_urls": [
+        {
+          "url": "https://scale.com/leaderboard",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and source capture entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "Review the retained primary-source capture and extract the exact named row/configuration; do not infer missing effort or combine nearby benchmark variants.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Exact row for GPT-6 Astra; GPT 6 Astra; quoted field {\"model\":\"GPT 6 Astra\",\"rank\":1,\"score\":54.17,\"confidenceInterval_upper\":2.09}",
+        "version_guard": "Require source date/version updatedAt 2026-09-17T17:13:56Z; keep this exact benchmark and operator separate from other similarly named boards.",
+        "notes": "One-time manual snapshot for CR-128; refresh only after verifying the source's version and protocol. Source maintainer: Scale AI."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source.",
+        "check_recommendation": "Recheck on a model release or when the board updates; do not imply a source schedule."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://scale.com/leaderboard",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/20e4d1914da7a59e28d6.gz",
+          "sha256": "f63735c05dfc1352ad4fa49d803dd49774e070415a1db7f94397d199c5059d53",
+          "fetched_at": "2026-09-22T21:04:04.684350+00:00",
+          "source_sha256": "20e4d1914da7a59e28d6c9234f48eb7bf009149207cd98187088ad23e1b2eab2",
+          "excerpt": "{\"model\":\"GPT 6 Astra\",\"rank\":1,\"score\":54.17,\"confidenceInterval_upper\":2.09}"
+        }
+      ]
+    },
+    {
+      "id": "scale-seal-rli::snapshot-2026-09-22",
+      "name": "Scale SEAL: Remote Labor Index (RLI)",
+      "version": "snapshot-2026-09-22",
+      "version_status": "snapshot",
+      "family": "scale-seal-rli",
+      "category": "Agentic",
+      "one_sentence_description": "Scale SEAL: Remote Labor Index (RLI) results published by Scale AI.",
+      "scoring": {
+        "metric": "Scale SEAL benchmark score",
+        "unit": "score",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Keep the source's exact board, version, effort and harness separate. The captured source row is retained with each observation; no cross-benchmark normalization is applied."
+      },
+      "maintainer": "Scale AI",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://scale.com/leaderboard",
+      "publication_urls": [
+        {
+          "url": "https://scale.com/leaderboard",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and source capture entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "Review the retained primary-source capture and extract the exact named row/configuration; do not infer missing effort or combine nearby benchmark variants.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Exact row for GPT-6 Astra; GPT 6 Astra; quoted field {\"model\":\"GPT 6 Astra\",\"rank\":1,\"score\":20.83,\"confidenceInterval_upper\":0}",
+        "version_guard": "Require source date/version updatedAt 2026-07-14 (category); entry createdAt 2026-09-17; keep this exact benchmark and operator separate from other similarly named boards.",
+        "notes": "One-time manual snapshot for CR-128; refresh only after verifying the source's version and protocol. Source maintainer: Scale AI."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source.",
+        "check_recommendation": "Recheck on a model release or when the board updates; do not imply a source schedule."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://scale.com/leaderboard",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/20e4d1914da7a59e28d6.gz",
+          "sha256": "f63735c05dfc1352ad4fa49d803dd49774e070415a1db7f94397d199c5059d53",
+          "fetched_at": "2026-09-22T21:04:04.684350+00:00",
+          "source_sha256": "20e4d1914da7a59e28d6c9234f48eb7bf009149207cd98187088ad23e1b2eab2",
+          "excerpt": "{\"model\":\"GPT 6 Astra\",\"rank\":1,\"score\":20.83,\"confidenceInterval_upper\":0}"
+        }
+      ]
+    },
+    {
+      "id": "balrog::snapshot-2026-09-22",
+      "name": "BALROG (average progress)",
+      "version": "snapshot-2026-09-22",
+      "version_status": "snapshot",
+      "family": "balrog",
+      "category": "Other",
+      "one_sentence_description": "BALROG (average progress) results published by BALROG.",
+      "scoring": {
+        "metric": "Source-reported score for BALROG (average progress)",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Keep the source's exact board, version, effort and harness separate. The captured source row is retained with each observation; no cross-benchmark normalization is applied."
+      },
+      "maintainer": "BALROG",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://balrogai.com/",
+      "publication_urls": [
+        {
+          "url": "https://balrogai.com/",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and source capture entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "Review the retained primary-source capture and extract the exact named row/configuration; do not infer missing effort or combine nearby benchmark variants.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Exact row for GPT-6 Astra; GPT-6-Astra-Max; quoted field \"🥇 🕹️ GPT-6-Astra-Max | 68.3 ± 2.0\"",
+        "version_guard": "Require source date/version retrieved 2026-09-22; keep this exact benchmark and operator separate from other similarly named boards.",
+        "notes": "One-time manual snapshot for CR-128; refresh only after verifying the source's version and protocol. Source maintainer: BALROG."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source.",
+        "check_recommendation": "Recheck on a model release or when the board updates; do not imply a source schedule."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-22",
+      "last_verified": "2026-09-22",
+      "evidence": [
+        {
+          "url": "https://balrogai.com/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/9d14a3ad953686cc3ce0.gz",
+          "sha256": "f86b62df47b10180c9d0cba01ee263edfd13255b428b56b1df1438b53d18e4d3",
+          "fetched_at": "2026-09-22T21:03:43.287037+00:00",
+          "source_sha256": "9d14a3ad953686cc3ce03ef5b73e8bdcbc5dc4f464299449556d1107cd99deec",
+          "excerpt": "\"🥇 🕹️ GPT-6-Astra-Max | 68.3 ± 2.0\""
+        }
+      ]
     }
   ],
   "aa_field_map": [

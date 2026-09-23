@@ -6098,6 +6098,102 @@
         "locator": "Exact row for Claude Opus 5.5; Claude Opus 5.5 (max with fallback) [claude-opus-5-5]; quoted field \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":5.982012019521066}}",
         "version_guard": "Require source date/version retrieved 2026-09-22; keep this exact benchmark and operator separate from other similarly named boards."
       }
+    },
+    {
+      "benchmark_id": "lmarena-text::snapshot-2026-09-22",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Hash-bound primary-source snapshot reviewed for CR-128 on 2026-09-22; exact scores are retained in manual-board-observations.json.",
+      "recipe": {
+        "command": "Review the retained primary-source capture, confirm the named row and benchmark version, then update the manual observation file and evidence hash.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Exact row for GPT-6 Astra; gpt-6-astra-max; quoted field {\"rank\":24,\"rankUpper\":5,\"rankLower\":51,\"modelKey\":\"gpt-6-astra-max-text\",\"modelDisplayName\":\"gpt-6-astra-max\",\"rating\":1479.7712562096513,...,\"votes\":2693}",
+        "version_guard": "Require source date/version retrieved 2026-09-22; keep this exact benchmark and operator separate from other similarly named boards."
+      }
+    },
+    {
+      "benchmark_id": "lmarena-vision::snapshot-2026-09-22",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Hash-bound primary-source snapshot reviewed for CR-128 on 2026-09-22; exact scores are retained in manual-board-observations.json.",
+      "recipe": {
+        "command": "Review the retained primary-source capture, confirm the named row and benchmark version, then update the manual observation file and evidence hash.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Exact row for GPT-6 Astra; gpt-6-astra-max; quoted field {\"rank\":16,\"rankUpper\":2,\"rankLower\":38,\"modelKey\":\"gpt-6-astra-max-vision\",\"modelDisplayName\":\"gpt-6-astra-max\",\"rating\":1284.0034100860937,...,\"votes\":1367}",
+        "version_guard": "Require source date/version retrieved 2026-09-22; keep this exact benchmark and operator separate from other similarly named boards."
+      }
+    },
+    {
+      "benchmark_id": "scale-drug-discovery-bench::snapshot-2026-09-22",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Hash-bound primary-source snapshot reviewed for CR-128 on 2026-09-22; exact scores are retained in manual-board-observations.json.",
+      "recipe": {
+        "command": "Review the retained primary-source capture, confirm the named row and benchmark version, then update the manual observation file and evidence hash.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Exact row for GPT-6 Astra; GPT 6 Astra (mini-SWE-agent) max; quoted field {\"model\":\"GPT 6 Astra (mini-SWE-agent) max\",\"rank\":1,\"score\":68.7,\"confidenceInterval_upper\":2.5}",
+        "version_guard": "Require source date/version updatedAt 2026-09-14T19:50:30Z; keep this exact benchmark and operator separate from other similarly named boards."
+      }
+    },
+    {
+      "benchmark_id": "scale-swe-bench-pro-v2-hard::snapshot-2026-09-22",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Hash-bound primary-source snapshot reviewed for CR-128 on 2026-09-22; exact scores are retained in manual-board-observations.json.",
+      "recipe": {
+        "command": "Review the retained primary-source capture, confirm the named row and benchmark version, then update the manual observation file and evidence hash.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Exact row for GPT-6 Astra; GPT-6 Astra (Codex) high; quoted field {\"model\":\"GPT-6 Astra (Codex) high\",\"rank\":3,\"score\":90.2,\"confidenceInterval_upper\":0}",
+        "version_guard": "Require source date/version updatedAt 2026-09-22T17:09:42Z; keep this exact benchmark and operator separate from other similarly named boards."
+      }
+    },
+    {
+      "benchmark_id": "scale-seal-hle::snapshot-2026-09-22",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Hash-bound primary-source snapshot reviewed for CR-128 on 2026-09-22; exact scores are retained in manual-board-observations.json.",
+      "recipe": {
+        "command": "Review the retained primary-source capture, confirm the named row and benchmark version, then update the manual observation file and evidence hash.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Exact row for GPT-6 Astra; GPT 6 Astra; quoted field {\"model\":\"GPT 6 Astra\",\"rank\":1,\"score\":54.8,\"confidenceInterval_upper\":1.94}",
+        "version_guard": "Require source date/version updatedAt 2026-09-17T17:13:45Z; keep this exact benchmark and operator separate from other similarly named boards."
+      }
+    },
+    {
+      "benchmark_id": "scale-seal-hle-text-only::snapshot-2026-09-22",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Hash-bound primary-source snapshot reviewed for CR-128 on 2026-09-22; exact scores are retained in manual-board-observations.json.",
+      "recipe": {
+        "command": "Review the retained primary-source capture, confirm the named row and benchmark version, then update the manual observation file and evidence hash.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Exact row for GPT-6 Astra; GPT 6 Astra; quoted field {\"model\":\"GPT 6 Astra\",\"rank\":1,\"score\":54.17,\"confidenceInterval_upper\":2.09}",
+        "version_guard": "Require source date/version updatedAt 2026-09-17T17:13:56Z; keep this exact benchmark and operator separate from other similarly named boards."
+      }
+    },
+    {
+      "benchmark_id": "scale-seal-rli::snapshot-2026-09-22",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Hash-bound primary-source snapshot reviewed for CR-128 on 2026-09-22; exact scores are retained in manual-board-observations.json.",
+      "recipe": {
+        "command": "Review the retained primary-source capture, confirm the named row and benchmark version, then update the manual observation file and evidence hash.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Exact row for GPT-6 Astra; GPT 6 Astra; quoted field {\"model\":\"GPT 6 Astra\",\"rank\":1,\"score\":20.83,\"confidenceInterval_upper\":0}",
+        "version_guard": "Require source date/version updatedAt 2026-07-14 (category); entry createdAt 2026-09-17; keep this exact benchmark and operator separate from other similarly named boards."
+      }
+    },
+    {
+      "benchmark_id": "balrog::snapshot-2026-09-22",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Hash-bound primary-source snapshot reviewed for CR-128 on 2026-09-22; exact scores are retained in manual-board-observations.json.",
+      "recipe": {
+        "command": "Review the retained primary-source capture, confirm the named row and benchmark version, then update the manual observation file and evidence hash.",
+        "format": "Captured leaderboard HTML/JSON",
+        "locator": "Exact row for GPT-6 Astra; GPT-6-Astra-Max; quoted field \"🥇 🕹️ GPT-6-Astra-Max | 68.3 ± 2.0\"",
+        "version_guard": "Require source date/version retrieved 2026-09-22; keep this exact benchmark and operator separate from other similarly named boards."
+      }
     }
   ]
 }
