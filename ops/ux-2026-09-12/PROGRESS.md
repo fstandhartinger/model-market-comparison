@@ -7970,3 +7970,44 @@ here is the same exhaustion arriving earlier, not a different fault.
 untouched by any of this. But neither addresses a window where every route drops twice, and **that** is what cost today's rows — worth a retry
 policy with a backoff *between* rounds rather than a larger per-route allowance, which is a design question for its own iteration and is not
 started here.
+
+### Iteration 180, part 11 — the 06:58 run passed every gate and lost the publication to a concurrent push
+
+This is the fourth unattended run in a row that published nothing, and the fourth for a **different reason**. It must not be read as "the pipeline
+is broken again": the run did everything right.
+
+From its own step log (`/opt/benchmarkheaven-daily/cron.log`, run `2026-09-23T06-58-17-624Z-3332392`):
+
+```
+OK stage-status · OK stage-data · OK git-name · OK git-email · OK commit-data · OK candidate-commit · OK remote-url
+DAILY FAILED: push-data FAILED: [bh-gate] verdict PASS: reusing the explicit run for this commit
+ ! [rejected]          HEAD -> main (fetch first)
+hint: Updates were rejected because the remote contains work that you do not have locally.
+```
+
+**Isolated `npm test` 1,159 tests / 1,158 pass / 0 fail / 1 skip** — this morning's D177 fix did its job and the gate that killed 00:41 and 05:17
+is clear. The dataset was built, the data committed, the publish gate returned **PASS**, and then the push was refused as **non-fast-forward**,
+because `2aecd9b9` had landed on `main` at 07:26 while the run was in its benchmark phase. Today's refresh exists, complete and gate-passed, in
+that run's staging clone; it is unpublished for no reason of its own.
+
+**This iteration's pushes are not the cause** and the timing shows it: `41eb1ced`/`d8a821ab` went out at 06:55–06:57, *before* the run started at
+06:58 and cloned `d8a821ab`; the next one was at 08:24, *after* the run ended at 08:23:46. The workstream's pre-push hook exists precisely to
+hold this window, and it held.
+
+**The gap this exposes is in the pipeline, not in either writer:** `push-data` pushes once and gives up. A `pull --rebase` and one retry on a
+rejected push would have published today's data, since the run's commit touches only `data/` and the colliding commit touched only app code and
+`CHANGELOG.md`. **Not implemented here, deliberately** — the self-heal repair agent launched at 08:23:46 with a two-hour mandate on exactly this
+failure, and two writers editing the publish step at once is the thing the one-writer rule forbids. The diagnosis is written here so that agent,
+or the next iteration, does not spend its time rediscovering it. If it is still unfixed at the next tick, it is the highest-value change available:
+four days of collected data have now been discarded by four unrelated one-line causes.
+
+The run's other receipts, for the rows that were waiting on them:
+- **D174** — `benchmarks-step-result.json` is `ok: true` and the two-line digest step ran; the run did not fail on an unreviewed vendor score. Its
+  stated proof was "the run must publish", which it did not, for the reason above. **Still `implemented`, not verified.**
+- **D175** — the log *does* contain `BENCHMARK RETAINED frontierswe::2`, but **not for the reason D175 is about**: the line reads `protocol not
+  approved: round 1: worker: No supported viable worker model found`, i.e. the gauntlet had no worker left to approve the protocol (part 10). The
+  collector half — whether the arm ingests 16 rows without the stale protocol sentence — is neither proven nor refuted by this run.
+- **D176** — `fetch-claude-api-catalog.log` reads `14 callable models (added 0, removed 0, price changes 0, lifecycle changes 0; excluded 4)` with
+  **no "multiplier text not found"**. That is D176's stated proof condition, met unattended, on a page carrying the two cache-hit exceptions that
+  broke the old parser. It was implemented by claude-opus and this is claude-opus, so it stays `implemented` — but the receipt it was waiting for
+  now exists, and a non-claude-opus engine can close it from that one line.
