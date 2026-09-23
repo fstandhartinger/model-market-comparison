@@ -7871,5 +7871,13 @@ other rows must not join it) or a different series (in which case it needs its o
 captures are retained and both are hashed, so the comparison can be made offline — `2026-09-18-epoch-hub/epoch-gpqa_diamond.csv.gz` against
 `2026-09-22-cr128-third-party/1bb9d35fbcf31f43e888.gz` — and Epoch documents both files. Check the other three boards at the same time: the same
 ingest, the same day, the same model, the same shape.
+
+**The decisive column is already in the two captures** (`iter180-regression/d180/two-epoch-files.txt`). `eci_benchmarks.csv` is the ECI dataset's
+per-benchmark input table — `model_id,benchmark_id,performance,benchmark,benchmark_release_date,model,model_version,Model,date,source` — where the
+**`source` column names where each number came from** (`lechmazur/writing Github repository`, `Stanford CRFM Leaderboard`, …) and, per the CR-128
+locator, an empty `source` means Epoch ran it. The hub export is Epoch's own run log: `Model version,mean_score,Best score (across
+scorers),…,stderr,Started at,id`. For this row the ECI CSV's `source` is empty, so both files claim an Epoch run of GPQA Diamond — and the hub
+export gives Astra `mean_score` **and** "Best score" as 0.9577 while the ECI CSV gives `performance` 0.9436. A third number, not a rounding of
+either, which is what makes "same measurement, one identity" the claim that has to be proven rather than assumed.
 Until then `verify-cr-54-2`'s two failures are **correct and should stay red** — the first, "728 observations" against 731, is an ordinary pinned
 count that grew and can be re-pinned once the rows above are settled, not before.
