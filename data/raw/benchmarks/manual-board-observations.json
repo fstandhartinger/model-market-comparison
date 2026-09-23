@@ -2401,19 +2401,1891 @@
       },
       "protocol": "Cost per AA Intelligence Index task; source configuration GPT-6 Astra (xhigh) [gpt-6-astra-xhigh]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Astra\",\"config\":\"GPT-6 Astra (xhigh) [gpt-6-astra-xhigh]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":2.308795912269076}}\",\"source_unit\":\"USD/task\",\"displayed_value\":2.3088}",
       "comparison_key": null
+    },
+    {
+      "id": "cr128:6b4b5c7a197e591d0b62d088",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "c50ea08c-88c0-4eb7-85b8-27f2bbf6d527",
+        "name": "GPT-6 Sol (max) [gpt-6-sol]",
+        "model_id": "gpt-6-sol::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 1486.93,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "GDPval-AA v2.1; GPT-6 Sol (max) [gpt-6-sol]; exact source excerpt: \"gdpval\":1486.93 (page payload, model slug gpt-6-sol)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Sol (max) [gpt-6-sol]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (max) [gpt-6-sol]\",\"source_quote\":\"\\\"gdpval\\\":1486.93 (page payload, model slug gpt-6-sol)\",\"source_unit\":\"Elo\",\"displayed_value\":1486.93}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:84e33d54c88be7bdfe7183ee",
+      "benchmark_id": "aa-terminal-bench::4.0-upstream-timeouts",
+      "subject": {
+        "source_id": "c50ea08c-88c0-4eb7-85b8-27f2bbf6d527",
+        "name": "GPT-6 Sol (max) [gpt-6-sol]",
+        "model_id": "gpt-6-sol::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.439393939393939,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "Terminal-Bench 4.0 (AA run); GPT-6 Sol (max) [gpt-6-sol]; exact source excerpt: \"terminalBench40\":0.439393939393939 (page payload, model slug gpt-6-sol)"
+      },
+      "protocol": "Terminal-Bench 4.0 (AA run); source configuration GPT-6 Sol (max) [gpt-6-sol]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (max) [gpt-6-sol]\",\"source_quote\":\"\\\"terminalBench40\\\":0.439393939393939 (page payload, model slug gpt-6-sol)\",\"source_unit\":\"%\",\"displayed_value\":43.94}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:f5098e1f425e36840911a4b4",
+      "benchmark_id": "aa-scicode::1.0.1",
+      "subject": {
+        "source_id": "c50ea08c-88c0-4eb7-85b8-27f2bbf6d527",
+        "name": "GPT-6 Sol (max) [gpt-6-sol]",
+        "model_id": "gpt-6-sol::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.576388888888889,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "SciCode (AA); GPT-6 Sol (max) [gpt-6-sol]; exact source excerpt: \"scicode\":0.576388888888889 (page payload, model slug gpt-6-sol)"
+      },
+      "protocol": "SciCode (AA); source configuration GPT-6 Sol (max) [gpt-6-sol]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (max) [gpt-6-sol]\",\"source_quote\":\"\\\"scicode\\\":0.576388888888889 (page payload, model slug gpt-6-sol)\",\"source_unit\":\"%\",\"displayed_value\":57.64}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:4e7d29049076f2d5efcb9da4",
+      "benchmark_id": "aa-hle::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "c50ea08c-88c0-4eb7-85b8-27f2bbf6d527",
+        "name": "GPT-6 Sol (max) [gpt-6-sol]",
+        "model_id": "gpt-6-sol::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.479147358665431,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "Humanity's Last Exam (AA); GPT-6 Sol (max) [gpt-6-sol]; exact source excerpt: \"hle\":0.479147358665431 (page payload, model slug gpt-6-sol)"
+      },
+      "protocol": "Humanity's Last Exam (AA); source configuration GPT-6 Sol (max) [gpt-6-sol]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (max) [gpt-6-sol]\",\"source_quote\":\"\\\"hle\\\":0.479147358665431 (page payload, model slug gpt-6-sol)\",\"source_unit\":\"%\",\"displayed_value\":47.91}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:b57331b72530f5b29c178669",
+      "benchmark_id": "aa-critpt::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "c50ea08c-88c0-4eb7-85b8-27f2bbf6d527",
+        "name": "GPT-6 Sol (max) [gpt-6-sol]",
+        "model_id": "gpt-6-sol::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.308571428571429,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "CritPt (AA); GPT-6 Sol (max) [gpt-6-sol]; exact source excerpt: \"critpt\":0.308571428571429 (page payload, model slug gpt-6-sol)"
+      },
+      "protocol": "CritPt (AA); source configuration GPT-6 Sol (max) [gpt-6-sol]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (max) [gpt-6-sol]\",\"source_quote\":\"\\\"critpt\\\":0.308571428571429 (page payload, model slug gpt-6-sol)\",\"source_unit\":\"%\",\"displayed_value\":30.86}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:5d290be013494aee342592fe",
+      "benchmark_id": "aa-lcr::1.1",
+      "subject": {
+        "source_id": "c50ea08c-88c0-4eb7-85b8-27f2bbf6d527",
+        "name": "GPT-6 Sol (max) [gpt-6-sol]",
+        "model_id": "gpt-6-sol::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.836666666666667,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "AA-LCR v1.1; GPT-6 Sol (max) [gpt-6-sol]; exact source excerpt: \"lcr\":0.836666666666667 (page payload, model slug gpt-6-sol)"
+      },
+      "protocol": "AA-LCR v1.1; source configuration GPT-6 Sol (max) [gpt-6-sol]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (max) [gpt-6-sol]\",\"source_quote\":\"\\\"lcr\\\":0.836666666666667 (page payload, model slug gpt-6-sol)\",\"source_unit\":\"%\",\"displayed_value\":83.67}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:7ffa3330c816f61e107e6904",
+      "benchmark_id": "aa-omniscience::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "c50ea08c-88c0-4eb7-85b8-27f2bbf6d527",
+        "name": "GPT-6 Sol (max) [gpt-6-sol]",
+        "model_id": "gpt-6-sol::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 27.116666666666667,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "AA-Omniscience; GPT-6 Sol (max) [gpt-6-sol]; exact source excerpt: \"omniscience\":27.116666666666667 (page payload, model slug gpt-6-sol)"
+      },
+      "protocol": "AA-Omniscience; source configuration GPT-6 Sol (max) [gpt-6-sol]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (max) [gpt-6-sol]\",\"source_quote\":\"\\\"omniscience\\\":27.116666666666667 (page payload, model slug gpt-6-sol)\",\"source_unit\":\"index (-100..100)\",\"displayed_value\":27.12}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:2007f758f6e8cffaf0f2b892",
+      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
+      "subject": {
+        "source_id": "c50ea08c-88c0-4eb7-85b8-27f2bbf6d527",
+        "name": "GPT-6 Sol (max) [gpt-6-sol]",
+        "model_id": "gpt-6-sol::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.248,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "GDP.pdf (all-pass); GPT-6 Sol (max) [gpt-6-sol]; exact source excerpt: \"gdpPdfAllPass\":0.248 (page payload, model slug gpt-6-sol)"
+      },
+      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Sol (max) [gpt-6-sol]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (max) [gpt-6-sol]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.248 (page payload, model slug gpt-6-sol)\",\"source_unit\":\"%\",\"displayed_value\":24.8}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:40c6a07d04d0c2c505be610f",
+      "benchmark_id": "aa-automationbench::1.0.6",
+      "subject": {
+        "source_id": "c50ea08c-88c0-4eb7-85b8-27f2bbf6d527",
+        "name": "GPT-6 Sol (max) [gpt-6-sol]",
+        "model_id": "gpt-6-sol::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.6163369295959864,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "AutomationBench-AA (partial score); GPT-6 Sol (max) [gpt-6-sol]; exact source excerpt: \"automationBenchPartialScore\":0.6163369295959864 (page payload, model slug gpt-6-sol)"
+      },
+      "protocol": "AutomationBench-AA (partial score); source configuration GPT-6 Sol (max) [gpt-6-sol]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (max) [gpt-6-sol]\",\"source_quote\":\"\\\"automationBenchPartialScore\\\":0.6163369295959864 (page payload, model slug gpt-6-sol)\",\"source_unit\":\"%\",\"displayed_value\":61.63}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:0faca875121c29285da9bb25",
+      "benchmark_id": "aa-mmmu-pro::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "c50ea08c-88c0-4eb7-85b8-27f2bbf6d527",
+        "name": "GPT-6 Sol (max) [gpt-6-sol]",
+        "model_id": "gpt-6-sol::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.832947976878613,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "MMMU-Pro (AA); GPT-6 Sol (max) [gpt-6-sol]; exact source excerpt: \"mmmuPro\":0.832947976878613 (page payload, model slug gpt-6-sol)"
+      },
+      "protocol": "MMMU-Pro (AA); source configuration GPT-6 Sol (max) [gpt-6-sol]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (max) [gpt-6-sol]\",\"source_quote\":\"\\\"mmmuPro\\\":0.832947976878613 (page payload, model slug gpt-6-sol)\",\"source_unit\":\"%\",\"displayed_value\":83.29}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:03ec8d51f72918ab1edcbdbe",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "c50ea08c-88c0-4eb7-85b8-27f2bbf6d527",
+        "name": "GPT-6 Sol (max) [gpt-6-sol]",
+        "model_id": "gpt-6-sol::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 1482.78,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "AA-Briefcase v1.1; GPT-6 Sol (max) [gpt-6-sol]; exact source excerpt: {\"slug\":\"aa-briefcase\",\"score\":1482.78}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Sol (max) [gpt-6-sol]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (max) [gpt-6-sol]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1482.78}\",\"source_unit\":\"Elo\",\"displayed_value\":1482.78}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:d15208e9962b85bbd6c8ad38",
+      "benchmark_id": "aa-intelligence-index-cost::4.3.2",
+      "subject": {
+        "source_id": "c50ea08c-88c0-4eb7-85b8-27f2bbf6d527",
+        "name": "GPT-6 Sol (max) [gpt-6-sol]",
+        "model_id": "gpt-6-sol::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 1550.082053769398,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "Cost to run AA Intelligence Index (total); GPT-6 Sol (max) [gpt-6-sol]; exact source excerpt: \"intelligenceIndexCost\":{\"total\":1550.082053769398}"
+      },
+      "protocol": "Cost to run AA Intelligence Index (total); source configuration GPT-6 Sol (max) [gpt-6-sol]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (max) [gpt-6-sol]\",\"source_quote\":\"\\\"intelligenceIndexCost\\\":{\\\"total\\\":1550.082053769398}\",\"source_unit\":\"USD\",\"displayed_value\":1550.08}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:af72f468644e967b031c94c1",
+      "benchmark_id": "aa-intelligence-index-cost-per-task::4.3.2",
+      "subject": {
+        "source_id": "c50ea08c-88c0-4eb7-85b8-27f2bbf6d527",
+        "name": "GPT-6 Sol (max) [gpt-6-sol]",
+        "model_id": "gpt-6-sol::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 1.0564240894076389,
+      "unit": "USD/task",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "Cost per AA Intelligence Index task; GPT-6 Sol (max) [gpt-6-sol]; exact source excerpt: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":1.0564240894076389}}"
+      },
+      "protocol": "Cost per AA Intelligence Index task; source configuration GPT-6 Sol (max) [gpt-6-sol]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (max) [gpt-6-sol]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":1.0564240894076389}}\",\"source_unit\":\"USD/task\",\"displayed_value\":1.0564}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:cc00958081c813f4afbdee2c",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "52eebe3e-6ede-4e46-92db-c5dea49fc410",
+        "name": "GPT-6 Sol (high) [gpt-6-sol-high]",
+        "model_id": "gpt-6-sol::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 1376.05,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "GDPval-AA v2.1; GPT-6 Sol (high) [gpt-6-sol-high]; exact source excerpt: \"gdpval\":1376.05 (page payload, model slug gpt-6-sol-high)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Sol (high) [gpt-6-sol-high]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (high) [gpt-6-sol-high]\",\"source_quote\":\"\\\"gdpval\\\":1376.05 (page payload, model slug gpt-6-sol-high)\",\"source_unit\":\"Elo\",\"displayed_value\":1376.05}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:3c38055c9ddcf1b0217fa970",
+      "benchmark_id": "aa-terminal-bench::4.0-upstream-timeouts",
+      "subject": {
+        "source_id": "52eebe3e-6ede-4e46-92db-c5dea49fc410",
+        "name": "GPT-6 Sol (high) [gpt-6-sol-high]",
+        "model_id": "gpt-6-sol::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 0.262626262626263,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "Terminal-Bench 4.0 (AA run); GPT-6 Sol (high) [gpt-6-sol-high]; exact source excerpt: \"terminalBench40\":0.262626262626263 (page payload, model slug gpt-6-sol-high)"
+      },
+      "protocol": "Terminal-Bench 4.0 (AA run); source configuration GPT-6 Sol (high) [gpt-6-sol-high]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (high) [gpt-6-sol-high]\",\"source_quote\":\"\\\"terminalBench40\\\":0.262626262626263 (page payload, model slug gpt-6-sol-high)\",\"source_unit\":\"%\",\"displayed_value\":26.26}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:b6d9d4a5d180147de36b4eb7",
+      "benchmark_id": "aa-scicode::1.0.1",
+      "subject": {
+        "source_id": "52eebe3e-6ede-4e46-92db-c5dea49fc410",
+        "name": "GPT-6 Sol (high) [gpt-6-sol-high]",
+        "model_id": "gpt-6-sol::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 0.548611111111111,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "SciCode (AA); GPT-6 Sol (high) [gpt-6-sol-high]; exact source excerpt: \"scicode\":0.548611111111111 (page payload, model slug gpt-6-sol-high)"
+      },
+      "protocol": "SciCode (AA); source configuration GPT-6 Sol (high) [gpt-6-sol-high]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (high) [gpt-6-sol-high]\",\"source_quote\":\"\\\"scicode\\\":0.548611111111111 (page payload, model slug gpt-6-sol-high)\",\"source_unit\":\"%\",\"displayed_value\":54.86}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:049f0d1a7de3d4a25136ecc0",
+      "benchmark_id": "aa-hle::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "52eebe3e-6ede-4e46-92db-c5dea49fc410",
+        "name": "GPT-6 Sol (high) [gpt-6-sol-high]",
+        "model_id": "gpt-6-sol::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 0.44114921223355,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "Humanity's Last Exam (AA); GPT-6 Sol (high) [gpt-6-sol-high]; exact source excerpt: \"hle\":0.44114921223355 (page payload, model slug gpt-6-sol-high)"
+      },
+      "protocol": "Humanity's Last Exam (AA); source configuration GPT-6 Sol (high) [gpt-6-sol-high]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (high) [gpt-6-sol-high]\",\"source_quote\":\"\\\"hle\\\":0.44114921223355 (page payload, model slug gpt-6-sol-high)\",\"source_unit\":\"%\",\"displayed_value\":44.11}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:ce6b5cc4f479d96002439889",
+      "benchmark_id": "aa-critpt::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "52eebe3e-6ede-4e46-92db-c5dea49fc410",
+        "name": "GPT-6 Sol (high) [gpt-6-sol-high]",
+        "model_id": "gpt-6-sol::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 0.254285714285714,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "CritPt (AA); GPT-6 Sol (high) [gpt-6-sol-high]; exact source excerpt: \"critpt\":0.254285714285714 (page payload, model slug gpt-6-sol-high)"
+      },
+      "protocol": "CritPt (AA); source configuration GPT-6 Sol (high) [gpt-6-sol-high]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (high) [gpt-6-sol-high]\",\"source_quote\":\"\\\"critpt\\\":0.254285714285714 (page payload, model slug gpt-6-sol-high)\",\"source_unit\":\"%\",\"displayed_value\":25.43}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:3b599701632a997f0bd538ca",
+      "benchmark_id": "aa-lcr::1.1",
+      "subject": {
+        "source_id": "52eebe3e-6ede-4e46-92db-c5dea49fc410",
+        "name": "GPT-6 Sol (high) [gpt-6-sol-high]",
+        "model_id": "gpt-6-sol::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 0.836666666666667,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "AA-LCR v1.1; GPT-6 Sol (high) [gpt-6-sol-high]; exact source excerpt: \"lcr\":0.836666666666667 (page payload, model slug gpt-6-sol-high)"
+      },
+      "protocol": "AA-LCR v1.1; source configuration GPT-6 Sol (high) [gpt-6-sol-high]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (high) [gpt-6-sol-high]\",\"source_quote\":\"\\\"lcr\\\":0.836666666666667 (page payload, model slug gpt-6-sol-high)\",\"source_unit\":\"%\",\"displayed_value\":83.67}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:10debb679586d187feabf92e",
+      "benchmark_id": "aa-omniscience::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "52eebe3e-6ede-4e46-92db-c5dea49fc410",
+        "name": "GPT-6 Sol (high) [gpt-6-sol-high]",
+        "model_id": "gpt-6-sol::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 26.816666666666666,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "AA-Omniscience; GPT-6 Sol (high) [gpt-6-sol-high]; exact source excerpt: \"omniscience\":26.816666666666666 (page payload, model slug gpt-6-sol-high)"
+      },
+      "protocol": "AA-Omniscience; source configuration GPT-6 Sol (high) [gpt-6-sol-high]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (high) [gpt-6-sol-high]\",\"source_quote\":\"\\\"omniscience\\\":26.816666666666666 (page payload, model slug gpt-6-sol-high)\",\"source_unit\":\"index (-100..100)\",\"displayed_value\":26.82}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:219e87f80b4301eb981f807f",
+      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
+      "subject": {
+        "source_id": "52eebe3e-6ede-4e46-92db-c5dea49fc410",
+        "name": "GPT-6 Sol (high) [gpt-6-sol-high]",
+        "model_id": "gpt-6-sol::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 0.28,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "GDP.pdf (all-pass); GPT-6 Sol (high) [gpt-6-sol-high]; exact source excerpt: \"gdpPdfAllPass\":0.28 (page payload, model slug gpt-6-sol-high)"
+      },
+      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Sol (high) [gpt-6-sol-high]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (high) [gpt-6-sol-high]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.28 (page payload, model slug gpt-6-sol-high)\",\"source_unit\":\"%\",\"displayed_value\":28}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:33d5779afb8f80070719a716",
+      "benchmark_id": "aa-automationbench::1.0.6",
+      "subject": {
+        "source_id": "52eebe3e-6ede-4e46-92db-c5dea49fc410",
+        "name": "GPT-6 Sol (high) [gpt-6-sol-high]",
+        "model_id": "gpt-6-sol::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 0.6012584091127188,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "AutomationBench-AA (partial score); GPT-6 Sol (high) [gpt-6-sol-high]; exact source excerpt: \"automationBenchPartialScore\":0.6012584091127188 (page payload, model slug gpt-6-sol-high)"
+      },
+      "protocol": "AutomationBench-AA (partial score); source configuration GPT-6 Sol (high) [gpt-6-sol-high]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (high) [gpt-6-sol-high]\",\"source_quote\":\"\\\"automationBenchPartialScore\\\":0.6012584091127188 (page payload, model slug gpt-6-sol-high)\",\"source_unit\":\"%\",\"displayed_value\":60.13}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:0849ff40e37aa896a07fe882",
+      "benchmark_id": "aa-mmmu-pro::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "52eebe3e-6ede-4e46-92db-c5dea49fc410",
+        "name": "GPT-6 Sol (high) [gpt-6-sol-high]",
+        "model_id": "gpt-6-sol::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 0.812138728323699,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "MMMU-Pro (AA); GPT-6 Sol (high) [gpt-6-sol-high]; exact source excerpt: \"mmmuPro\":0.812138728323699 (page payload, model slug gpt-6-sol-high)"
+      },
+      "protocol": "MMMU-Pro (AA); source configuration GPT-6 Sol (high) [gpt-6-sol-high]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (high) [gpt-6-sol-high]\",\"source_quote\":\"\\\"mmmuPro\\\":0.812138728323699 (page payload, model slug gpt-6-sol-high)\",\"source_unit\":\"%\",\"displayed_value\":81.21}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:93e33ec27feb55eafabe6daf",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "52eebe3e-6ede-4e46-92db-c5dea49fc410",
+        "name": "GPT-6 Sol (high) [gpt-6-sol-high]",
+        "model_id": "gpt-6-sol::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 1289.24,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "AA-Briefcase v1.1; GPT-6 Sol (high) [gpt-6-sol-high]; exact source excerpt: {\"slug\":\"aa-briefcase\",\"score\":1289.24}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Sol (high) [gpt-6-sol-high]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (high) [gpt-6-sol-high]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1289.24}\",\"source_unit\":\"Elo\",\"displayed_value\":1289.24}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:0e03bb2880e62ee6b03b78c4",
+      "benchmark_id": "aa-intelligence-index-cost::4.3.2",
+      "subject": {
+        "source_id": "52eebe3e-6ede-4e46-92db-c5dea49fc410",
+        "name": "GPT-6 Sol (high) [gpt-6-sol-high]",
+        "model_id": "gpt-6-sol::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 609.5031986433529,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "Cost to run AA Intelligence Index (total); GPT-6 Sol (high) [gpt-6-sol-high]; exact source excerpt: \"intelligenceIndexCost\":{\"total\":609.5031986433529}"
+      },
+      "protocol": "Cost to run AA Intelligence Index (total); source configuration GPT-6 Sol (high) [gpt-6-sol-high]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (high) [gpt-6-sol-high]\",\"source_quote\":\"\\\"intelligenceIndexCost\\\":{\\\"total\\\":609.5031986433529}\",\"source_unit\":\"USD\",\"displayed_value\":609.5}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:1633bd245a04104b0af58cd6",
+      "benchmark_id": "aa-intelligence-index-cost-per-task::4.3.2",
+      "subject": {
+        "source_id": "52eebe3e-6ede-4e46-92db-c5dea49fc410",
+        "name": "GPT-6 Sol (high) [gpt-6-sol-high]",
+        "model_id": "gpt-6-sol::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 0.3746326907148203,
+      "unit": "USD/task",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "Cost per AA Intelligence Index task; GPT-6 Sol (high) [gpt-6-sol-high]; exact source excerpt: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":0.3746326907148203}}"
+      },
+      "protocol": "Cost per AA Intelligence Index task; source configuration GPT-6 Sol (high) [gpt-6-sol-high]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (high) [gpt-6-sol-high]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":0.3746326907148203}}\",\"source_unit\":\"USD/task\",\"displayed_value\":0.3746}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:826f9a7ee7c3ad2a68a022d2",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "01459872-433a-4ab2-8e99-7083162172eb",
+        "name": "GPT-6 Sol (low) [gpt-6-sol-low]",
+        "model_id": "gpt-6-sol::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 1175.59,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "GDPval-AA v2.1; GPT-6 Sol (low) [gpt-6-sol-low]; exact source excerpt: \"gdpval\":1175.59 (page payload, model slug gpt-6-sol-low)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Sol (low) [gpt-6-sol-low]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (low) [gpt-6-sol-low]\",\"source_quote\":\"\\\"gdpval\\\":1175.59 (page payload, model slug gpt-6-sol-low)\",\"source_unit\":\"Elo\",\"displayed_value\":1175.59}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:080757b43a34deffbe6f2657",
+      "benchmark_id": "aa-terminal-bench::4.0-upstream-timeouts",
+      "subject": {
+        "source_id": "01459872-433a-4ab2-8e99-7083162172eb",
+        "name": "GPT-6 Sol (low) [gpt-6-sol-low]",
+        "model_id": "gpt-6-sol::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 0.0909090909090909,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "Terminal-Bench 4.0 (AA run); GPT-6 Sol (low) [gpt-6-sol-low]; exact source excerpt: \"terminalBench40\":0.0909090909090909 (page payload, model slug gpt-6-sol-low)"
+      },
+      "protocol": "Terminal-Bench 4.0 (AA run); source configuration GPT-6 Sol (low) [gpt-6-sol-low]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (low) [gpt-6-sol-low]\",\"source_quote\":\"\\\"terminalBench40\\\":0.0909090909090909 (page payload, model slug gpt-6-sol-low)\",\"source_unit\":\"%\",\"displayed_value\":9.09}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:18ac84658cf52732354d3817",
+      "benchmark_id": "aa-scicode::1.0.1",
+      "subject": {
+        "source_id": "01459872-433a-4ab2-8e99-7083162172eb",
+        "name": "GPT-6 Sol (low) [gpt-6-sol-low]",
+        "model_id": "gpt-6-sol::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 0.502314814814815,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "SciCode (AA); GPT-6 Sol (low) [gpt-6-sol-low]; exact source excerpt: \"scicode\":0.502314814814815 (page payload, model slug gpt-6-sol-low)"
+      },
+      "protocol": "SciCode (AA); source configuration GPT-6 Sol (low) [gpt-6-sol-low]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (low) [gpt-6-sol-low]\",\"source_quote\":\"\\\"scicode\\\":0.502314814814815 (page payload, model slug gpt-6-sol-low)\",\"source_unit\":\"%\",\"displayed_value\":50.23}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:93f81b94dbabcd33665f5917",
+      "benchmark_id": "aa-hle::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "01459872-433a-4ab2-8e99-7083162172eb",
+        "name": "GPT-6 Sol (low) [gpt-6-sol-low]",
+        "model_id": "gpt-6-sol::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 0.349397590361446,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "Humanity's Last Exam (AA); GPT-6 Sol (low) [gpt-6-sol-low]; exact source excerpt: \"hle\":0.349397590361446 (page payload, model slug gpt-6-sol-low)"
+      },
+      "protocol": "Humanity's Last Exam (AA); source configuration GPT-6 Sol (low) [gpt-6-sol-low]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (low) [gpt-6-sol-low]\",\"source_quote\":\"\\\"hle\\\":0.349397590361446 (page payload, model slug gpt-6-sol-low)\",\"source_unit\":\"%\",\"displayed_value\":34.94}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:6811c0b8bdfb043621743197",
+      "benchmark_id": "aa-critpt::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "01459872-433a-4ab2-8e99-7083162172eb",
+        "name": "GPT-6 Sol (low) [gpt-6-sol-low]",
+        "model_id": "gpt-6-sol::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 0.162857142857143,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "CritPt (AA); GPT-6 Sol (low) [gpt-6-sol-low]; exact source excerpt: \"critpt\":0.162857142857143 (page payload, model slug gpt-6-sol-low)"
+      },
+      "protocol": "CritPt (AA); source configuration GPT-6 Sol (low) [gpt-6-sol-low]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (low) [gpt-6-sol-low]\",\"source_quote\":\"\\\"critpt\\\":0.162857142857143 (page payload, model slug gpt-6-sol-low)\",\"source_unit\":\"%\",\"displayed_value\":16.29}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:ff69251bef26a9eb93922854",
+      "benchmark_id": "aa-lcr::1.1",
+      "subject": {
+        "source_id": "01459872-433a-4ab2-8e99-7083162172eb",
+        "name": "GPT-6 Sol (low) [gpt-6-sol-low]",
+        "model_id": "gpt-6-sol::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 0.793333333333333,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "AA-LCR v1.1; GPT-6 Sol (low) [gpt-6-sol-low]; exact source excerpt: \"lcr\":0.793333333333333 (page payload, model slug gpt-6-sol-low)"
+      },
+      "protocol": "AA-LCR v1.1; source configuration GPT-6 Sol (low) [gpt-6-sol-low]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (low) [gpt-6-sol-low]\",\"source_quote\":\"\\\"lcr\\\":0.793333333333333 (page payload, model slug gpt-6-sol-low)\",\"source_unit\":\"%\",\"displayed_value\":79.33}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:bb5709079ca034ccef2adf7e",
+      "benchmark_id": "aa-omniscience::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "01459872-433a-4ab2-8e99-7083162172eb",
+        "name": "GPT-6 Sol (low) [gpt-6-sol-low]",
+        "model_id": "gpt-6-sol::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 26.516666666666666,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "AA-Omniscience; GPT-6 Sol (low) [gpt-6-sol-low]; exact source excerpt: \"omniscience\":26.516666666666666 (page payload, model slug gpt-6-sol-low)"
+      },
+      "protocol": "AA-Omniscience; source configuration GPT-6 Sol (low) [gpt-6-sol-low]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (low) [gpt-6-sol-low]\",\"source_quote\":\"\\\"omniscience\\\":26.516666666666666 (page payload, model slug gpt-6-sol-low)\",\"source_unit\":\"index (-100..100)\",\"displayed_value\":26.52}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:29ab9680220a71257e09f2af",
+      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
+      "subject": {
+        "source_id": "01459872-433a-4ab2-8e99-7083162172eb",
+        "name": "GPT-6 Sol (low) [gpt-6-sol-low]",
+        "model_id": "gpt-6-sol::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 0.218,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "GDP.pdf (all-pass); GPT-6 Sol (low) [gpt-6-sol-low]; exact source excerpt: \"gdpPdfAllPass\":0.218 (page payload, model slug gpt-6-sol-low)"
+      },
+      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Sol (low) [gpt-6-sol-low]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (low) [gpt-6-sol-low]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.218 (page payload, model slug gpt-6-sol-low)\",\"source_unit\":\"%\",\"displayed_value\":21.8}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:98b304673bdab77fd37823f4",
+      "benchmark_id": "aa-automationbench::1.0.6",
+      "subject": {
+        "source_id": "01459872-433a-4ab2-8e99-7083162172eb",
+        "name": "GPT-6 Sol (low) [gpt-6-sol-low]",
+        "model_id": "gpt-6-sol::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 0.5388999278467668,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "AutomationBench-AA (partial score); GPT-6 Sol (low) [gpt-6-sol-low]; exact source excerpt: \"automationBenchPartialScore\":0.5388999278467668 (page payload, model slug gpt-6-sol-low)"
+      },
+      "protocol": "AutomationBench-AA (partial score); source configuration GPT-6 Sol (low) [gpt-6-sol-low]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (low) [gpt-6-sol-low]\",\"source_quote\":\"\\\"automationBenchPartialScore\\\":0.5388999278467668 (page payload, model slug gpt-6-sol-low)\",\"source_unit\":\"%\",\"displayed_value\":53.89}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:0f292d9ddecffa45cd133899",
+      "benchmark_id": "aa-mmmu-pro::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "01459872-433a-4ab2-8e99-7083162172eb",
+        "name": "GPT-6 Sol (low) [gpt-6-sol-low]",
+        "model_id": "gpt-6-sol::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 0.788439306358382,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "MMMU-Pro (AA); GPT-6 Sol (low) [gpt-6-sol-low]; exact source excerpt: \"mmmuPro\":0.788439306358382 (page payload, model slug gpt-6-sol-low)"
+      },
+      "protocol": "MMMU-Pro (AA); source configuration GPT-6 Sol (low) [gpt-6-sol-low]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (low) [gpt-6-sol-low]\",\"source_quote\":\"\\\"mmmuPro\\\":0.788439306358382 (page payload, model slug gpt-6-sol-low)\",\"source_unit\":\"%\",\"displayed_value\":78.84}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:800b3589c2abbec2d62eabdd",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "01459872-433a-4ab2-8e99-7083162172eb",
+        "name": "GPT-6 Sol (low) [gpt-6-sol-low]",
+        "model_id": "gpt-6-sol::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 905.16,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "AA-Briefcase v1.1; GPT-6 Sol (low) [gpt-6-sol-low]; exact source excerpt: {\"slug\":\"aa-briefcase\",\"score\":905.16}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Sol (low) [gpt-6-sol-low]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (low) [gpt-6-sol-low]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":905.16}\",\"source_unit\":\"Elo\",\"displayed_value\":905.16}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:9fe551daa8980ebb007dd9a6",
+      "benchmark_id": "aa-intelligence-index-cost::4.3.2",
+      "subject": {
+        "source_id": "01459872-433a-4ab2-8e99-7083162172eb",
+        "name": "GPT-6 Sol (low) [gpt-6-sol-low]",
+        "model_id": "gpt-6-sol::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 268.12896373273975,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "Cost to run AA Intelligence Index (total); GPT-6 Sol (low) [gpt-6-sol-low]; exact source excerpt: \"intelligenceIndexCost\":{\"total\":268.12896373273975}"
+      },
+      "protocol": "Cost to run AA Intelligence Index (total); source configuration GPT-6 Sol (low) [gpt-6-sol-low]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (low) [gpt-6-sol-low]\",\"source_quote\":\"\\\"intelligenceIndexCost\\\":{\\\"total\\\":268.12896373273975}\",\"source_unit\":\"USD\",\"displayed_value\":268.13}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:0294aec89bf378d64d26a0a8",
+      "benchmark_id": "aa-intelligence-index-cost-per-task::4.3.2",
+      "subject": {
+        "source_id": "01459872-433a-4ab2-8e99-7083162172eb",
+        "name": "GPT-6 Sol (low) [gpt-6-sol-low]",
+        "model_id": "gpt-6-sol::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 0.13224085088798104,
+      "unit": "USD/task",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "Cost per AA Intelligence Index task; GPT-6 Sol (low) [gpt-6-sol-low]; exact source excerpt: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":0.13224085088798104}}"
+      },
+      "protocol": "Cost per AA Intelligence Index task; source configuration GPT-6 Sol (low) [gpt-6-sol-low]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (low) [gpt-6-sol-low]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":0.13224085088798104}}\",\"source_unit\":\"USD/task\",\"displayed_value\":0.1322}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:82589697d2ed5e40d2819f27",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "780a4a85-17ff-4175-a8dd-ebca4823e61b",
+        "name": "GPT-6 Sol (medium) [gpt-6-sol-medium]",
+        "model_id": "gpt-6-sol::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 1320.11,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "GDPval-AA v2.1; GPT-6 Sol (medium) [gpt-6-sol-medium]; exact source excerpt: \"gdpval\":1320.11 (page payload, model slug gpt-6-sol-medium)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Sol (medium) [gpt-6-sol-medium]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (medium) [gpt-6-sol-medium]\",\"source_quote\":\"\\\"gdpval\\\":1320.11 (page payload, model slug gpt-6-sol-medium)\",\"source_unit\":\"Elo\",\"displayed_value\":1320.11}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:9b212425a180010391dd6e5c",
+      "benchmark_id": "aa-terminal-bench::4.0-upstream-timeouts",
+      "subject": {
+        "source_id": "780a4a85-17ff-4175-a8dd-ebca4823e61b",
+        "name": "GPT-6 Sol (medium) [gpt-6-sol-medium]",
+        "model_id": "gpt-6-sol::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 0.186868686868687,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "Terminal-Bench 4.0 (AA run); GPT-6 Sol (medium) [gpt-6-sol-medium]; exact source excerpt: \"terminalBench40\":0.186868686868687 (page payload, model slug gpt-6-sol-medium)"
+      },
+      "protocol": "Terminal-Bench 4.0 (AA run); source configuration GPT-6 Sol (medium) [gpt-6-sol-medium]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (medium) [gpt-6-sol-medium]\",\"source_quote\":\"\\\"terminalBench40\\\":0.186868686868687 (page payload, model slug gpt-6-sol-medium)\",\"source_unit\":\"%\",\"displayed_value\":18.69}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:110a5857d201469b7562c35a",
+      "benchmark_id": "aa-scicode::1.0.1",
+      "subject": {
+        "source_id": "780a4a85-17ff-4175-a8dd-ebca4823e61b",
+        "name": "GPT-6 Sol (medium) [gpt-6-sol-medium]",
+        "model_id": "gpt-6-sol::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 0.538194444444444,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "SciCode (AA); GPT-6 Sol (medium) [gpt-6-sol-medium]; exact source excerpt: \"scicode\":0.538194444444444 (page payload, model slug gpt-6-sol-medium)"
+      },
+      "protocol": "SciCode (AA); source configuration GPT-6 Sol (medium) [gpt-6-sol-medium]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (medium) [gpt-6-sol-medium]\",\"source_quote\":\"\\\"scicode\\\":0.538194444444444 (page payload, model slug gpt-6-sol-medium)\",\"source_unit\":\"%\",\"displayed_value\":53.82}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:b89b0d3d135789de24a5c403",
+      "benchmark_id": "aa-hle::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "780a4a85-17ff-4175-a8dd-ebca4823e61b",
+        "name": "GPT-6 Sol (medium) [gpt-6-sol-medium]",
+        "model_id": "gpt-6-sol::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 0.409638554216867,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "Humanity's Last Exam (AA); GPT-6 Sol (medium) [gpt-6-sol-medium]; exact source excerpt: \"hle\":0.409638554216867 (page payload, model slug gpt-6-sol-medium)"
+      },
+      "protocol": "Humanity's Last Exam (AA); source configuration GPT-6 Sol (medium) [gpt-6-sol-medium]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (medium) [gpt-6-sol-medium]\",\"source_quote\":\"\\\"hle\\\":0.409638554216867 (page payload, model slug gpt-6-sol-medium)\",\"source_unit\":\"%\",\"displayed_value\":40.96}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:0c7012eb2c8a7e37db1e6d72",
+      "benchmark_id": "aa-critpt::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "780a4a85-17ff-4175-a8dd-ebca4823e61b",
+        "name": "GPT-6 Sol (medium) [gpt-6-sol-medium]",
+        "model_id": "gpt-6-sol::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 0.245714285714286,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "CritPt (AA); GPT-6 Sol (medium) [gpt-6-sol-medium]; exact source excerpt: \"critpt\":0.245714285714286 (page payload, model slug gpt-6-sol-medium)"
+      },
+      "protocol": "CritPt (AA); source configuration GPT-6 Sol (medium) [gpt-6-sol-medium]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (medium) [gpt-6-sol-medium]\",\"source_quote\":\"\\\"critpt\\\":0.245714285714286 (page payload, model slug gpt-6-sol-medium)\",\"source_unit\":\"%\",\"displayed_value\":24.57}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:95a535ff79aa224d16b8ab08",
+      "benchmark_id": "aa-lcr::1.1",
+      "subject": {
+        "source_id": "780a4a85-17ff-4175-a8dd-ebca4823e61b",
+        "name": "GPT-6 Sol (medium) [gpt-6-sol-medium]",
+        "model_id": "gpt-6-sol::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 0.823333333333333,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "AA-LCR v1.1; GPT-6 Sol (medium) [gpt-6-sol-medium]; exact source excerpt: \"lcr\":0.823333333333333 (page payload, model slug gpt-6-sol-medium)"
+      },
+      "protocol": "AA-LCR v1.1; source configuration GPT-6 Sol (medium) [gpt-6-sol-medium]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (medium) [gpt-6-sol-medium]\",\"source_quote\":\"\\\"lcr\\\":0.823333333333333 (page payload, model slug gpt-6-sol-medium)\",\"source_unit\":\"%\",\"displayed_value\":82.33}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:bec2c0d58df25b4e47415677",
+      "benchmark_id": "aa-omniscience::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "780a4a85-17ff-4175-a8dd-ebca4823e61b",
+        "name": "GPT-6 Sol (medium) [gpt-6-sol-medium]",
+        "model_id": "gpt-6-sol::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 27.016666666666666,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "AA-Omniscience; GPT-6 Sol (medium) [gpt-6-sol-medium]; exact source excerpt: \"omniscience\":27.016666666666666 (page payload, model slug gpt-6-sol-medium)"
+      },
+      "protocol": "AA-Omniscience; source configuration GPT-6 Sol (medium) [gpt-6-sol-medium]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (medium) [gpt-6-sol-medium]\",\"source_quote\":\"\\\"omniscience\\\":27.016666666666666 (page payload, model slug gpt-6-sol-medium)\",\"source_unit\":\"index (-100..100)\",\"displayed_value\":27.02}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:4acfcda0ae02bc100dd0a12f",
+      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
+      "subject": {
+        "source_id": "780a4a85-17ff-4175-a8dd-ebca4823e61b",
+        "name": "GPT-6 Sol (medium) [gpt-6-sol-medium]",
+        "model_id": "gpt-6-sol::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 0.254,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "GDP.pdf (all-pass); GPT-6 Sol (medium) [gpt-6-sol-medium]; exact source excerpt: \"gdpPdfAllPass\":0.254 (page payload, model slug gpt-6-sol-medium)"
+      },
+      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Sol (medium) [gpt-6-sol-medium]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (medium) [gpt-6-sol-medium]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.254 (page payload, model slug gpt-6-sol-medium)\",\"source_unit\":\"%\",\"displayed_value\":25.4}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:538f368611f78968df5e89c0",
+      "benchmark_id": "aa-automationbench::1.0.6",
+      "subject": {
+        "source_id": "780a4a85-17ff-4175-a8dd-ebca4823e61b",
+        "name": "GPT-6 Sol (medium) [gpt-6-sol-medium]",
+        "model_id": "gpt-6-sol::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 0.5797223510768895,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "AutomationBench-AA (partial score); GPT-6 Sol (medium) [gpt-6-sol-medium]; exact source excerpt: \"automationBenchPartialScore\":0.5797223510768895 (page payload, model slug gpt-6-sol-medium)"
+      },
+      "protocol": "AutomationBench-AA (partial score); source configuration GPT-6 Sol (medium) [gpt-6-sol-medium]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (medium) [gpt-6-sol-medium]\",\"source_quote\":\"\\\"automationBenchPartialScore\\\":0.5797223510768895 (page payload, model slug gpt-6-sol-medium)\",\"source_unit\":\"%\",\"displayed_value\":57.97}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:f5119ddefa3a375cb9fa8b46",
+      "benchmark_id": "aa-mmmu-pro::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "780a4a85-17ff-4175-a8dd-ebca4823e61b",
+        "name": "GPT-6 Sol (medium) [gpt-6-sol-medium]",
+        "model_id": "gpt-6-sol::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 0.80635838150289,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "MMMU-Pro (AA); GPT-6 Sol (medium) [gpt-6-sol-medium]; exact source excerpt: \"mmmuPro\":0.80635838150289 (page payload, model slug gpt-6-sol-medium)"
+      },
+      "protocol": "MMMU-Pro (AA); source configuration GPT-6 Sol (medium) [gpt-6-sol-medium]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (medium) [gpt-6-sol-medium]\",\"source_quote\":\"\\\"mmmuPro\\\":0.80635838150289 (page payload, model slug gpt-6-sol-medium)\",\"source_unit\":\"%\",\"displayed_value\":80.64}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:5b9f40a86e610042deb6141b",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "780a4a85-17ff-4175-a8dd-ebca4823e61b",
+        "name": "GPT-6 Sol (medium) [gpt-6-sol-medium]",
+        "model_id": "gpt-6-sol::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 1142.18,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "AA-Briefcase v1.1; GPT-6 Sol (medium) [gpt-6-sol-medium]; exact source excerpt: {\"slug\":\"aa-briefcase\",\"score\":1142.18}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Sol (medium) [gpt-6-sol-medium]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (medium) [gpt-6-sol-medium]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1142.18}\",\"source_unit\":\"Elo\",\"displayed_value\":1142.18}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:4298cb53b9d8bcf8b7d71995",
+      "benchmark_id": "aa-intelligence-index-cost::4.3.2",
+      "subject": {
+        "source_id": "780a4a85-17ff-4175-a8dd-ebca4823e61b",
+        "name": "GPT-6 Sol (medium) [gpt-6-sol-medium]",
+        "model_id": "gpt-6-sol::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 416.6753328983983,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "Cost to run AA Intelligence Index (total); GPT-6 Sol (medium) [gpt-6-sol-medium]; exact source excerpt: \"intelligenceIndexCost\":{\"total\":416.6753328983983}"
+      },
+      "protocol": "Cost to run AA Intelligence Index (total); source configuration GPT-6 Sol (medium) [gpt-6-sol-medium]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (medium) [gpt-6-sol-medium]\",\"source_quote\":\"\\\"intelligenceIndexCost\\\":{\\\"total\\\":416.6753328983983}\",\"source_unit\":\"USD\",\"displayed_value\":416.68}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:a126e4889491d2214983d6ee",
+      "benchmark_id": "aa-intelligence-index-cost-per-task::4.3.2",
+      "subject": {
+        "source_id": "780a4a85-17ff-4175-a8dd-ebca4823e61b",
+        "name": "GPT-6 Sol (medium) [gpt-6-sol-medium]",
+        "model_id": "gpt-6-sol::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 0.24820209578663968,
+      "unit": "USD/task",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "Cost per AA Intelligence Index task; GPT-6 Sol (medium) [gpt-6-sol-medium]; exact source excerpt: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":0.24820209578663968}}"
+      },
+      "protocol": "Cost per AA Intelligence Index task; source configuration GPT-6 Sol (medium) [gpt-6-sol-medium]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (medium) [gpt-6-sol-medium]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":0.24820209578663968}}\",\"source_unit\":\"USD/task\",\"displayed_value\":0.2482}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:6d206407bb4914185e2f21ff",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "d3e20e76-9e1a-45b6-b809-ad6aa37430cf",
+        "name": "GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]",
+        "model_id": "gpt-6-sol::non-reasoning",
+        "variant": "non-reasoning",
+        "harness": null
+      },
+      "value": 1225.39,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "GDPval-AA v2.1; GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; exact source excerpt: \"gdpval\":1225.39 (page payload, model slug gpt-6-sol-non-reasoning)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]\",\"source_quote\":\"\\\"gdpval\\\":1225.39 (page payload, model slug gpt-6-sol-non-reasoning)\",\"source_unit\":\"Elo\",\"displayed_value\":1225.39}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:a37d6efe77c28e43e7d1430c",
+      "benchmark_id": "aa-terminal-bench::4.0-upstream-timeouts",
+      "subject": {
+        "source_id": "d3e20e76-9e1a-45b6-b809-ad6aa37430cf",
+        "name": "GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]",
+        "model_id": "gpt-6-sol::non-reasoning",
+        "variant": "non-reasoning",
+        "harness": null
+      },
+      "value": 0.131313131313131,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "Terminal-Bench 4.0 (AA run); GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; exact source excerpt: \"terminalBench40\":0.131313131313131 (page payload, model slug gpt-6-sol-non-reasoning)"
+      },
+      "protocol": "Terminal-Bench 4.0 (AA run); source configuration GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]\",\"source_quote\":\"\\\"terminalBench40\\\":0.131313131313131 (page payload, model slug gpt-6-sol-non-reasoning)\",\"source_unit\":\"%\",\"displayed_value\":13.13}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:9ce0850af22ffbeb56a64008",
+      "benchmark_id": "aa-scicode::1.0.1",
+      "subject": {
+        "source_id": "d3e20e76-9e1a-45b6-b809-ad6aa37430cf",
+        "name": "GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]",
+        "model_id": "gpt-6-sol::non-reasoning",
+        "variant": "non-reasoning",
+        "harness": null
+      },
+      "value": 0.47337962962963,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "SciCode (AA); GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; exact source excerpt: \"scicode\":0.47337962962963 (page payload, model slug gpt-6-sol-non-reasoning)"
+      },
+      "protocol": "SciCode (AA); source configuration GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]\",\"source_quote\":\"\\\"scicode\\\":0.47337962962963 (page payload, model slug gpt-6-sol-non-reasoning)\",\"source_unit\":\"%\",\"displayed_value\":47.34}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:663e9f47888abe55c44b9821",
+      "benchmark_id": "aa-hle::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "d3e20e76-9e1a-45b6-b809-ad6aa37430cf",
+        "name": "GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]",
+        "model_id": "gpt-6-sol::non-reasoning",
+        "variant": "non-reasoning",
+        "harness": null
+      },
+      "value": 0.183966635773865,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "Humanity's Last Exam (AA); GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; exact source excerpt: \"hle\":0.183966635773865 (page payload, model slug gpt-6-sol-non-reasoning)"
+      },
+      "protocol": "Humanity's Last Exam (AA); source configuration GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]\",\"source_quote\":\"\\\"hle\\\":0.183966635773865 (page payload, model slug gpt-6-sol-non-reasoning)\",\"source_unit\":\"%\",\"displayed_value\":18.4}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:bba0e6f7a855308a80c3753c",
+      "benchmark_id": "aa-critpt::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "d3e20e76-9e1a-45b6-b809-ad6aa37430cf",
+        "name": "GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]",
+        "model_id": "gpt-6-sol::non-reasoning",
+        "variant": "non-reasoning",
+        "harness": null
+      },
+      "value": 0.04,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "CritPt (AA); GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; exact source excerpt: \"critpt\":0.04 (page payload, model slug gpt-6-sol-non-reasoning)"
+      },
+      "protocol": "CritPt (AA); source configuration GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]\",\"source_quote\":\"\\\"critpt\\\":0.04 (page payload, model slug gpt-6-sol-non-reasoning)\",\"source_unit\":\"%\",\"displayed_value\":4}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:ce15fc1d95b83883626cffa4",
+      "benchmark_id": "aa-lcr::1.1",
+      "subject": {
+        "source_id": "d3e20e76-9e1a-45b6-b809-ad6aa37430cf",
+        "name": "GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]",
+        "model_id": "gpt-6-sol::non-reasoning",
+        "variant": "non-reasoning",
+        "harness": null
+      },
+      "value": 0.64,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "AA-LCR v1.1; GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; exact source excerpt: \"lcr\":0.64 (page payload, model slug gpt-6-sol-non-reasoning)"
+      },
+      "protocol": "AA-LCR v1.1; source configuration GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]\",\"source_quote\":\"\\\"lcr\\\":0.64 (page payload, model slug gpt-6-sol-non-reasoning)\",\"source_unit\":\"%\",\"displayed_value\":64}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:5caa697cdc85fe57f1c34305",
+      "benchmark_id": "aa-omniscience::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "d3e20e76-9e1a-45b6-b809-ad6aa37430cf",
+        "name": "GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]",
+        "model_id": "gpt-6-sol::non-reasoning",
+        "variant": "non-reasoning",
+        "harness": null
+      },
+      "value": -0.85,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "AA-Omniscience; GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; exact source excerpt: \"omniscience\":-0.85 (page payload, model slug gpt-6-sol-non-reasoning)"
+      },
+      "protocol": "AA-Omniscience; source configuration GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]\",\"source_quote\":\"\\\"omniscience\\\":-0.85 (page payload, model slug gpt-6-sol-non-reasoning)\",\"source_unit\":\"index (-100..100)\",\"displayed_value\":-0.85}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:8254216b68241969889b27ad",
+      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
+      "subject": {
+        "source_id": "d3e20e76-9e1a-45b6-b809-ad6aa37430cf",
+        "name": "GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]",
+        "model_id": "gpt-6-sol::non-reasoning",
+        "variant": "non-reasoning",
+        "harness": null
+      },
+      "value": 0.156,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "GDP.pdf (all-pass); GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; exact source excerpt: \"gdpPdfAllPass\":0.156 (page payload, model slug gpt-6-sol-non-reasoning)"
+      },
+      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.156 (page payload, model slug gpt-6-sol-non-reasoning)\",\"source_unit\":\"%\",\"displayed_value\":15.6}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:cfcac4b4c826bac5c793f645",
+      "benchmark_id": "aa-automationbench::1.0.6",
+      "subject": {
+        "source_id": "d3e20e76-9e1a-45b6-b809-ad6aa37430cf",
+        "name": "GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]",
+        "model_id": "gpt-6-sol::non-reasoning",
+        "variant": "non-reasoning",
+        "harness": null
+      },
+      "value": 0.34180173483579396,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "AutomationBench-AA (partial score); GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; exact source excerpt: \"automationBenchPartialScore\":0.34180173483579396 (page payload, model slug gpt-6-sol-non-reasoning)"
+      },
+      "protocol": "AutomationBench-AA (partial score); source configuration GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]\",\"source_quote\":\"\\\"automationBenchPartialScore\\\":0.34180173483579396 (page payload, model slug gpt-6-sol-non-reasoning)\",\"source_unit\":\"%\",\"displayed_value\":34.18}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:387dcc965835b87d7b04f9a2",
+      "benchmark_id": "aa-mmmu-pro::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "d3e20e76-9e1a-45b6-b809-ad6aa37430cf",
+        "name": "GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]",
+        "model_id": "gpt-6-sol::non-reasoning",
+        "variant": "non-reasoning",
+        "harness": null
+      },
+      "value": 0.68150289017341,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "MMMU-Pro (AA); GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; exact source excerpt: \"mmmuPro\":0.68150289017341 (page payload, model slug gpt-6-sol-non-reasoning)"
+      },
+      "protocol": "MMMU-Pro (AA); source configuration GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]\",\"source_quote\":\"\\\"mmmuPro\\\":0.68150289017341 (page payload, model slug gpt-6-sol-non-reasoning)\",\"source_unit\":\"%\",\"displayed_value\":68.15}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:7070a0936841ec903678b3d8",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "d3e20e76-9e1a-45b6-b809-ad6aa37430cf",
+        "name": "GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]",
+        "model_id": "gpt-6-sol::non-reasoning",
+        "variant": "non-reasoning",
+        "harness": null
+      },
+      "value": 1085.35,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "AA-Briefcase v1.1; GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; exact source excerpt: {\"slug\":\"aa-briefcase\",\"score\":1085.35}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1085.35}\",\"source_unit\":\"Elo\",\"displayed_value\":1085.35}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:da3a9d5c08a29facdbc59d3f",
+      "benchmark_id": "aa-intelligence-index-cost::4.3.2",
+      "subject": {
+        "source_id": "d3e20e76-9e1a-45b6-b809-ad6aa37430cf",
+        "name": "GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]",
+        "model_id": "gpt-6-sol::non-reasoning",
+        "variant": "non-reasoning",
+        "harness": null
+      },
+      "value": 447.6046791562862,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "Cost to run AA Intelligence Index (total); GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; exact source excerpt: \"intelligenceIndexCost\":{\"total\":447.6046791562862}"
+      },
+      "protocol": "Cost to run AA Intelligence Index (total); source configuration GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]\",\"source_quote\":\"\\\"intelligenceIndexCost\\\":{\\\"total\\\":447.6046791562862}\",\"source_unit\":\"USD\",\"displayed_value\":447.6}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:3e4df5b640518bc05f8b3590",
+      "benchmark_id": "aa-intelligence-index-cost-per-task::4.3.2",
+      "subject": {
+        "source_id": "d3e20e76-9e1a-45b6-b809-ad6aa37430cf",
+        "name": "GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]",
+        "model_id": "gpt-6-sol::non-reasoning",
+        "variant": "non-reasoning",
+        "harness": null
+      },
+      "value": 0.33144507449754673,
+      "unit": "USD/task",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "Cost per AA Intelligence Index task; GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; exact source excerpt: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":0.33144507449754673}}"
+      },
+      "protocol": "Cost per AA Intelligence Index task; source configuration GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (Non-reasoning) [gpt-6-sol-non-reasoning]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":0.33144507449754673}}\",\"source_unit\":\"USD/task\",\"displayed_value\":0.3314}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:6198025ae4a34d026ae64eee",
+      "benchmark_id": "aa-gdpval::2.1",
+      "subject": {
+        "source_id": "da2642fe-9f73-4788-b5af-24edcd55b37e",
+        "name": "GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]",
+        "model_id": "gpt-6-sol::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 1436.68,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "GDPval-AA v2.1; GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; exact source excerpt: \"gdpval\":1436.68 (page payload, model slug gpt-6-sol-xhigh)"
+      },
+      "protocol": "GDPval-AA v2.1; source configuration GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]\",\"source_quote\":\"\\\"gdpval\\\":1436.68 (page payload, model slug gpt-6-sol-xhigh)\",\"source_unit\":\"Elo\",\"displayed_value\":1436.68}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:b58dc1e3e0b346230e734d41",
+      "benchmark_id": "aa-terminal-bench::4.0-upstream-timeouts",
+      "subject": {
+        "source_id": "da2642fe-9f73-4788-b5af-24edcd55b37e",
+        "name": "GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]",
+        "model_id": "gpt-6-sol::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 0.303030303030303,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "Terminal-Bench 4.0 (AA run); GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; exact source excerpt: \"terminalBench40\":0.303030303030303 (page payload, model slug gpt-6-sol-xhigh)"
+      },
+      "protocol": "Terminal-Bench 4.0 (AA run); source configuration GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]\",\"source_quote\":\"\\\"terminalBench40\\\":0.303030303030303 (page payload, model slug gpt-6-sol-xhigh)\",\"source_unit\":\"%\",\"displayed_value\":30.3}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:452f80a8ae45e4140e4fa812",
+      "benchmark_id": "aa-scicode::1.0.1",
+      "subject": {
+        "source_id": "da2642fe-9f73-4788-b5af-24edcd55b37e",
+        "name": "GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]",
+        "model_id": "gpt-6-sol::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 0.550925925925926,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "SciCode (AA); GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; exact source excerpt: \"scicode\":0.550925925925926 (page payload, model slug gpt-6-sol-xhigh)"
+      },
+      "protocol": "SciCode (AA); source configuration GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]\",\"source_quote\":\"\\\"scicode\\\":0.550925925925926 (page payload, model slug gpt-6-sol-xhigh)\",\"source_unit\":\"%\",\"displayed_value\":55.09}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:dcec4fe31e731bb610cef44c",
+      "benchmark_id": "aa-hle::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "da2642fe-9f73-4788-b5af-24edcd55b37e",
+        "name": "GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]",
+        "model_id": "gpt-6-sol::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 0.462928637627433,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "Humanity's Last Exam (AA); GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; exact source excerpt: \"hle\":0.462928637627433 (page payload, model slug gpt-6-sol-xhigh)"
+      },
+      "protocol": "Humanity's Last Exam (AA); source configuration GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]\",\"source_quote\":\"\\\"hle\\\":0.462928637627433 (page payload, model slug gpt-6-sol-xhigh)\",\"source_unit\":\"%\",\"displayed_value\":46.29}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:b1611b95b43f3a58f000f511",
+      "benchmark_id": "aa-critpt::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "da2642fe-9f73-4788-b5af-24edcd55b37e",
+        "name": "GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]",
+        "model_id": "gpt-6-sol::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 0.28,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "CritPt (AA); GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; exact source excerpt: \"critpt\":0.28 (page payload, model slug gpt-6-sol-xhigh)"
+      },
+      "protocol": "CritPt (AA); source configuration GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]\",\"source_quote\":\"\\\"critpt\\\":0.28 (page payload, model slug gpt-6-sol-xhigh)\",\"source_unit\":\"%\",\"displayed_value\":28}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:189a7de2fbb5f1f352e49f1e",
+      "benchmark_id": "aa-lcr::1.1",
+      "subject": {
+        "source_id": "da2642fe-9f73-4788-b5af-24edcd55b37e",
+        "name": "GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]",
+        "model_id": "gpt-6-sol::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 0.813333333333333,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "AA-LCR v1.1; GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; exact source excerpt: \"lcr\":0.813333333333333 (page payload, model slug gpt-6-sol-xhigh)"
+      },
+      "protocol": "AA-LCR v1.1; source configuration GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]\",\"source_quote\":\"\\\"lcr\\\":0.813333333333333 (page payload, model slug gpt-6-sol-xhigh)\",\"source_unit\":\"%\",\"displayed_value\":81.33}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:de610c8417d4388ff679ac61",
+      "benchmark_id": "aa-omniscience::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "da2642fe-9f73-4788-b5af-24edcd55b37e",
+        "name": "GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]",
+        "model_id": "gpt-6-sol::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 26.666666666666668,
+      "unit": "points",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "AA-Omniscience; GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; exact source excerpt: \"omniscience\":26.666666666666668 (page payload, model slug gpt-6-sol-xhigh)"
+      },
+      "protocol": "AA-Omniscience; source configuration GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]\",\"source_quote\":\"\\\"omniscience\\\":26.666666666666668 (page payload, model slug gpt-6-sol-xhigh)\",\"source_unit\":\"index (-100..100)\",\"displayed_value\":26.67}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:4af89b645c8f5a2f9402a483",
+      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-21",
+      "subject": {
+        "source_id": "da2642fe-9f73-4788-b5af-24edcd55b37e",
+        "name": "GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]",
+        "model_id": "gpt-6-sol::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 0.238,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "GDP.pdf (all-pass); GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; exact source excerpt: \"gdpPdfAllPass\":0.238 (page payload, model slug gpt-6-sol-xhigh)"
+      },
+      "protocol": "GDP.pdf (all-pass); source configuration GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]\",\"source_quote\":\"\\\"gdpPdfAllPass\\\":0.238 (page payload, model slug gpt-6-sol-xhigh)\",\"source_unit\":\"%\",\"displayed_value\":23.8}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:77c006b41b30f8a752b69ea7",
+      "benchmark_id": "aa-automationbench::1.0.6",
+      "subject": {
+        "source_id": "da2642fe-9f73-4788-b5af-24edcd55b37e",
+        "name": "GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]",
+        "model_id": "gpt-6-sol::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 0.6169423511586409,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "AutomationBench-AA (partial score); GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; exact source excerpt: \"automationBenchPartialScore\":0.6169423511586409 (page payload, model slug gpt-6-sol-xhigh)"
+      },
+      "protocol": "AutomationBench-AA (partial score); source configuration GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]\",\"source_quote\":\"\\\"automationBenchPartialScore\\\":0.6169423511586409 (page payload, model slug gpt-6-sol-xhigh)\",\"source_unit\":\"%\",\"displayed_value\":61.69}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:2789de666c04ec62895e24d3",
+      "benchmark_id": "aa-mmmu-pro::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "da2642fe-9f73-4788-b5af-24edcd55b37e",
+        "name": "GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]",
+        "model_id": "gpt-6-sol::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 0.824277456647399,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "MMMU-Pro (AA); GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; exact source excerpt: \"mmmuPro\":0.824277456647399 (page payload, model slug gpt-6-sol-xhigh)"
+      },
+      "protocol": "MMMU-Pro (AA); source configuration GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; page date retrieved 2026-09-22 (model release 2026-09-22); source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]\",\"source_quote\":\"\\\"mmmuPro\\\":0.824277456647399 (page payload, model slug gpt-6-sol-xhigh)\",\"source_unit\":\"%\",\"displayed_value\":82.43}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:93a4fa9b24325ca7eda1b10f",
+      "benchmark_id": "aa-briefcase::1.1",
+      "subject": {
+        "source_id": "da2642fe-9f73-4788-b5af-24edcd55b37e",
+        "name": "GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]",
+        "model_id": "gpt-6-sol::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 1363.66,
+      "unit": "Elo",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "AA-Briefcase v1.1; GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; exact source excerpt: {\"slug\":\"aa-briefcase\",\"score\":1363.66}"
+      },
+      "protocol": "AA-Briefcase v1.1; source configuration GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]\",\"source_quote\":\"{\\\"slug\\\":\\\"aa-briefcase\\\",\\\"score\\\":1363.66}\",\"source_unit\":\"Elo\",\"displayed_value\":1363.66}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:f721997661b33f759563cbdd",
+      "benchmark_id": "aa-intelligence-index-cost::4.3.2",
+      "subject": {
+        "source_id": "da2642fe-9f73-4788-b5af-24edcd55b37e",
+        "name": "GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]",
+        "model_id": "gpt-6-sol::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 865.4806440191774,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "Cost to run AA Intelligence Index (total); GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; exact source excerpt: \"intelligenceIndexCost\":{\"total\":865.4806440191774}"
+      },
+      "protocol": "Cost to run AA Intelligence Index (total); source configuration GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]\",\"source_quote\":\"\\\"intelligenceIndexCost\\\":{\\\"total\\\":865.4806440191774}\",\"source_unit\":\"USD\",\"displayed_value\":865.48}",
+      "comparison_key": null
+    },
+    {
+      "id": "cr128:a2e0e7065f76c9fcfa7ede16",
+      "benchmark_id": "aa-intelligence-index-cost-per-task::4.3.2",
+      "subject": {
+        "source_id": "da2642fe-9f73-4788-b5af-24edcd55b37e",
+        "name": "GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]",
+        "model_id": "gpt-6-sol::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 0.5318962692390143,
+      "unit": "USD/task",
+      "basis": "measured",
+      "source": {
+        "url": "https://artificialanalysis.ai/models/gpt-6-sol",
+        "retrieved_at": "2026-09-22T22:47:42.063569+00:00",
+        "published_at": null,
+        "sha256": "fb0216b316b19c56873d3e6e9e1636b625628a80542aea2e678a5fe9689ff28d",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/fb0216b316b19c56873d.gz",
+        "locator": "Cost per AA Intelligence Index task; GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; exact source excerpt: \"intelligenceIndexCostPerTask\":{\"cost\":{\"total\":0.5318962692390143}}"
+      },
+      "protocol": "Cost per AA Intelligence Index task; source configuration GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]; page date retrieved 2026-09-22; source row: {\"model\":\"GPT-6 Sol\",\"config\":\"GPT-6 Sol (xhigh) [gpt-6-sol-xhigh]\",\"source_quote\":\"\\\"intelligenceIndexCostPerTask\\\":{\\\"cost\\\":{\\\"total\\\":0.5318962692390143}}\",\"source_unit\":\"USD/task\",\"displayed_value\":0.5319}",
+      "comparison_key": null
     }
   ],
   "collections": [
     {
       "benchmark_id": "aa-intelligence-index-cost::4.3.2",
       "status": "collected",
-      "source_url": "https://artificialanalysis.ai/models/gpt-6-astra",
+      "source_url": "https://artificialanalysis.ai/models/gpt-6-sol",
       "reason": "Hash-bound primary source reviewed for CR-128; exact rows retained with the observation."
     },
     {
       "benchmark_id": "aa-intelligence-index-cost-per-task::4.3.2",
       "status": "collected",
-      "source_url": "https://artificialanalysis.ai/models/gpt-6-astra",
+      "source_url": "https://artificialanalysis.ai/models/gpt-6-sol",
       "reason": "Hash-bound primary source reviewed for CR-128; exact rows retained with the observation."
     }
   ]
