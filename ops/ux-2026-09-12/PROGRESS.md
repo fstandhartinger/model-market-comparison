@@ -8917,3 +8917,20 @@ CR-135 publishes the already-scored JevBench v1.4.1 aggregate after CR-134. GitH
 | CR-135.4 | implemented | `/home/flori/jobs/jevbench-v141-additions-20260923/AGGREGATE-VERIFICATION-RECEIPT.json`; `/home/flori/jobs/jevbench-v141-additions-20260923/SITE-PUBLISH-RECEIPT.json` | No new row entered the top five; its order is unchanged; publish proceeded without a preview hold. |
 | CR-135.5 | implemented | `/home/flori/jobs/jevbench-v141-additions-20260923/INTEGRITY.md`; `/home/flori/jobs/jevbench-v141-additions-20260923/SITE-PUBLISH-RECEIPT.json`; `/home/flori/jobs/jevbench-v141-additions-20260923/SITE-SEALED-LEAK-SCAN-LIVE.json` | Build and full suite passed; 15 route checks across three hosts passed; both API hashes, row counts, top five, and live sealed scan passed. Independent chart QA is recorded in agent-board thread #7 entry #255. |
 | CR-135.6 | implemented | `/home/flori/jobs/jevbench-v141-additions-20260923/AUTHOR-MESSAGES.md`; `/home/flori/jobs/jevbench-v141-additions-20260923/RESULT.md`; `/home/flori/jobs/jevbench-v141-additions-20260923/TELEGRAM-RECEIPT.json` | Five author messages remain unsent drafts; Florian's requested result update was sent in English and receipted. |
+
+## Review gate 20260923T215003Z — codex-luna
+
+The gate reviewed `eb968b3b..5f39f316` and rechecked the changed CR-132–CR-135
+and D180/D186/D187/D188 surfaces. Build-dataset, the full test suite, typecheck,
+production build and the 51-test focused changed-surface set passed. The current
+live page was independently checked on both required hosts at desktop/mobile
+light/dark contexts; evidence is under
+`/opt/benchmarkheaven/state/ux-evidence/review-20260923T215003Z/`.
+
+CR-132.1–.4, D180, D185, D186 and D187 retain their existing independent
+verified status. CR-134.1–.5 retain verified status. CR-133 remains a private
+preview with its independent scoring critique unfinished. D188 remains
+implemented pending a non-claude sign-off. CR-135.1–.6 remain implemented:
+the release was Codex work, so this Codex gate does not supply the required
+independent non-implementer sign-off. X6 remains uncleared for the open rows
+listed in the review, and no `ALL-ACCEPTED` line is appended.
