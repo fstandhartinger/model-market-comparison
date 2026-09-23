@@ -7137,17 +7137,17 @@ engine, as for CR-127.1–.3.
 - **Status decisions.** As this gate did not implement these changes, CR-122.1–.4, CR-123.1–.5, CR-126.1–.5, CR-127.1–.4 and D173.1 are now `verified`. D172.1–.3 remain `verified` under the earlier Kimi K3 non-implementer sign-off. Evidence and the complete review are in `/opt/benchmarkheaven/state/ux-evidence/review-20260922T221002Z/` and `REVIEW-20260922T221002Z.md`.
 - **Acceptance decision.** X6 is not clear: CR-34.5, CR-37.1/CR-37.3, CR-38.1, CR-62.4, CR-73.5, CR-85.1 and CR-85.2 remain open/in-progress for Florian, source or scheduled-run reasons. `ALL-ACCEPTED` is not appended.
 
-## CR-128 — seeded 2026-09-22 (Codex, before score changes)
+## CR-128 — seeded 2026-09-22; completed 2026-09-23 (Codex)
 
-Seeded from CR-128 in `04-CR-BRIEF.md` after checking `main`: CR-127 was the highest existing CR, so this request is CR-128. Scope is the four families in `/home/flori/jobs/bh-frontier-update-20260922/third-party-scores.json`. No score or application data has been changed in this seed commit.
+CR-127 was the highest request on `main` when this was seeded. Scope is the four model families in `/home/flori/jobs/bh-frontier-update-20260922/third-party-scores.json`. The 399-row audit added 304 independent observations in seven bounded batches; 72 exact live duplicates and 23 already-consumed profile values were excluded (including five vendor claims already represented as self-reported). Values were rechecked against captured primary pages; no missing Composite protocol was inferred. Final revision: `8ba1e941`.
 
 | ID | Status | Evidence | Note |
 |---|---|---|---|
-| CR-128.1 | in progress | `/home/flori/jobs/bh-frontier-update-20260922/THIRD-PARTY-SCORES.md`; `third-party-scores.json`; `RESULT.md`; `staging/cr128-candidate-audit.json` | Audited all 399 rows against captured primary pages; 72 exact live duplicates and 23 already-consumed profile values excluded. Missing Composite protocols remain unfilled unless exact source evidence exists. |
-| CR-128.2 | in progress | `data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/`; `source-captures/manifest.json`; `staging/cr128-batch-*-rows.json` | Hash-bound source locators retained; measured board rows remain measured, five already-live vendor claims stay self-reported, and AA fallback plus Vals 30/198 caveats are retained. |
-| CR-128.3 | in progress | `registry.json`; `collection-plan.json`; `manual-board-observations.json`; `scripts/ingest-benchmark-scores.mjs` | Seven bounded manual-snapshot batches are staged; batches 1–6 are live, with Epoch/Cognition batch 7 now prepared. The full daily refresh is not used. |
-| CR-128.4 | in progress | `/home/flori/jobs/bh-thirdparty-ingest-20260922/verification/cr128-batch-01-aa-opus-rows-verification.json`; `cr128-batch-02-aa-astra-rows-verification.json`; `cr128-batch-03-aa-sol-rows-verification.json`; `cr128-batch-04-aa-luna-rows-verification.json`; `cr128-batch-05-external-scale-lmarena-balrog-rows-verification.json`; `cr128-batch-06-external-vals-rows-verification.json` | Opus 70/70 at `eb64ebfe`, Astra 30/30 at `a3b030fb`, Sol 78/78 at `e7406b9d`, Luna 78/78 at `ce5682f9`, Scale/LMArena/BALROG 9/9 at `f6ae0ebf`, and Vals 31/31 at `e67f5962` verified on each host; Epoch/Cognition batch 7 awaits its both-host check. |
-| CR-128.5 | in progress | `/home/flori/jobs/bh-thirdparty-ingest-20260922/RESULT.md` | Different-family frozen-data review, tests, typecheck, production build, final both-host verification and per-family report remain pending. |
+| CR-128.1 | verified | `/home/flori/jobs/bh-frontier-update-20260922/THIRD-PARTY-SCORES.md`; `third-party-scores.json`; `staging/cr128-candidate-audit.json`; `/home/flori/jobs/bh-thirdparty-ingest-20260922/verification/cr128-repair-validation.json` | All 399 rows classified; 304 independent rows added, 72 exact duplicates and 23 profile values excluded. The six missing named Composite protocols for Opus 5.5, Sol and Luna remain missing because no exact matching source row exists. |
+| CR-128.2 | verified | `data/raw/benchmarks/daily-evidence/2026-09-22-cr128-third-party/`; `source-captures/manifest.json`; `/home/flori/jobs/bh-thirdparty-ingest-20260922/verification/cr128-all-candidate-rows-verification.json` | Source URL/date/hash and basis retained; already-live vendor claims remain self-reported. The Vals 30-of-198 fallback, seven published ± markers, four source-note caveats and all 81 normalized source locators are preserved. |
+| CR-128.3 | verified | `registry.json`; `collection-plan.json`; `manual-board-observations.json`; `scores.json`; revision `8ba1e941` | Seven bounded manual-snapshot batches published. The ingest did not invoke the full daily pipeline; a separately scheduled run ended without publication at 02:14 UTC (31 steps succeeded, 4 failed). |
+| CR-128.4 | verified | `/home/flori/jobs/bh-thirdparty-ingest-20260922/verification/cr128-batch-01-aa-opus-rows-verification.json` through `cr128-batch-07-external-epoch-cognition-rows-verification.json`; `cr128-all-candidate-rows-verification.json` | Final revision `8ba1e941` returned all 304/304 observations with no differences on both `benchmarkheaven.com` and `model-market-comparison.app.mintapis.com`. |
+| CR-128.5 | verified | `/home/flori/jobs/bh-thirdparty-ingest-20260922/verification/npm-test-final-repair.log`; `production-build-repair.log`; `cr128-repair-validation.json`; `final-live-metrics.json`; `/home/flori/jobs/bh-thirdparty-ingest-20260922/RESULT.md` | 1,136 tests passed, 0 failed, 1 skipped; typecheck and production build passed. Live Composite: Opus 5.5 100 (#1, 1/7, Pareto 14/15, $5.98/task); Astra 97.20 (#6, 7/7, off Pareto, $3.26/task); Sol 91.69 (#18, 1/7, off Pareto, $1.06/task); Luna 69.06 (#61, 1/7, off Pareto, $0.0681/task). Independent Mimo review surfaced four corrections, which were applied; the focused follow-up reached its time cap without returning a final verdict, so no independent PASS is claimed. |
 
 ## Iteration 175 — 2026-09-22 22:40 → ~23:15 UTC (claude-opus, work): CR-120 gets the verifier it never had, and its non-implementer sign-off
 
@@ -7268,3 +7268,82 @@ Seeded from CR-128 in `04-CR-BRIEF.md` after checking `main`: CR-127 was the hig
 | F-164 | open | `DESIGN-DIRECTIVES.md` F-164 | Compare status line carries the per-model vendor-claim count (generated, never pinned). `[judgment]`, claude-opus. |
 | F-165 | open | `DESIGN-DIRECTIVES.md` F-165; CR-128.1 | Same-name rows say whose run they are: launch rows join the board's identity where the protocol matches, otherwise the cohort names the runner; Compare drops the default "Published board" sub-line. Data part → CR-128.1. |
 | F-166 | implemented | same as F-161 | "Not measured yet" panel: two sentences the head does not say; id/org in the chip title. Fable-implemented; needs a non-Fable live run. |
+
+## Iteration 177 — 2026-09-23 02:20 → ~04:00 UTC (claude-opus, work): the Compare page says which values are not measurements, and why the daily stopped publishing
+
+- **Why these items.** Every CR row is blocked on Florian (`CR-34.5`, `CR-62.4`), on a source (`CR-37.1`/`CR-37.3`, `CR-85.2`) or on an
+  unattended run (`CR-38.1`, `CR-73.5`, `CR-85.1`). What was unblocked: the three rows Fable pass 31 implemented itself and could not sign off
+  (`F-161`, `F-162`, `F-166`), and the two directives it left for this engine by name (`F-163`, `F-164` — "medium Compare edits … claude-opus;
+  Kimi stalls on TSX"). **A second writer is active in this checkout** (the CR-128 third-party ingest, codex/gpt-6-luna, running since 20:51 and
+  still running at 04:00); its own CR-128.1–.5 rows above were written by that job into the working tree and are carried by this commit, not
+  authored here. This iteration staged by path and touched no data file and no ingest script.
+
+- **`F-161`, `F-162`, `F-166` → verified.** `bin/verify-fable-pass31-design.mjs` run by claude-opus (not the implementer, not Fable) on both
+  hosts at revision `8ba1e941`: **44/44 per host** (`/opt/benchmarkheaven/state/ux-evidence/iter177/{canonical-rerun,legacy}/`), and again after
+  this iteration's own deploy at `ee6c2748`: **44/44 per host** (`…/iter177/{canonical,legacy}-pass31-post/`). The first canonical run scored
+  43/44 on a transient burst of 502s from the host during the `desktop_dark` context (kept at `…/iter177/canonical/`); the immediate re-run and
+  both post-deploy runs are clean, and the legacy host passed 44/44 throughout, so the miss was the edge, not the page.
+
+- **`F-164` — the status line no longer counts a vendor claim as an evaluation.** The live region qualifies its own count
+  ("3 models selected. 53 evaluation rows in the full comparison; **23 of 67 values are not independent measurements**"), and the per-model
+  clauses follow underneath in the benchmark sheet's wording: "Claude Opus 5.5: 16 of 46 values are Anthropic's own claims (†) · GPT-6 Sol: 5 of
+  19 are OpenAI's · Union Alpha: 2 of 2 values are announced, chart-read figures (‡)." A repeated basis is elided, as Fable wrote it.
+  **Decision, against the letter of the directive:** Fable put the clauses *inside* the `role="status"` element. Measured at 390 px that made the
+  line **five lines** (108 px at a 20 px line height), and a live region is re-announced on every selection change. The clauses therefore sit in a
+  muted paragraph directly under it (`data-bh-compare-claims`), and the status line measures **three lines** — the bar the directive itself set.
+  Nothing is hidden and nothing is duplicated.
+- **`F-163` — a model with nothing measured leaves the snapshot cards.** It is named once under the intro with what its values actually are, and
+  a card row with no result in that topic is one muted line with no bar (F-84, F-146). A model with **no row at all** is never described by
+  another model's claims: the notice groups the models by their own basis, and a model whose only measurements cannot be placed against a peer
+  range is said to be exactly that, not a claim. With nothing measured anywhere the section is the one line and no cards (verified live on
+  `/compare?model=union-alpha::default`: notice present, 0 cards, no empty-state box).
+- **Both strings are generated, never pinned.** `lib/compare-claims.mjs` (pure, typed by `lib/compare-claims.d.mts`) computes them from the rows
+  the table renders, so the sentence cannot disagree with the table, and a single-variant model's clause equals its model page's sheet line
+  (pinned by a test that re-derives both). Number agreement follows the subject ("1 of 9 values **is** the developer's own claim"); the sheet
+  governs its verb by the total instead, so the two differ on that one edge — the sheet is verified copy and was left alone. The row count now
+  reads through `counted()` (D173's rule; it could print "1 evaluation rows" before).
+- **Fable's two pinned accept numbers are obsolete, and that is not a miss.** Pass 31 asked for "16/17 and 5/6" and for the phone snapshot
+  section to shrink "from ~1,670 px to under 900 px". Since then the CR-128 ingest gave Claude Opus 5.5 **30** and GPT-6 Sol **14** independently
+  measured rows, so both models legitimately keep their cards; the re-derived counts are **16 of 46** and **5 of 19**, and the section grows
+  (1,760 px at 390 px) because it now has real cards to show. The only model with nothing measured anywhere today is Union Alpha. The verifier
+  re-derives all of this at run time and pins none of it.
+
+- **Gates (tree at `ee6c2748`):** `npm test` 1,149 tests / **1,148 pass / 0 fail / 1 skip**; `npx tsc --noEmit -p .` clean; `npm run build` rc 0;
+  `node scripts/build-dataset.mjs` 863 models / 669 families / 94 providers / 2,976 offers with **no data diff** (the two generated timestamps
+  only, restored).
+- **Verifier and evidence.** `ops/ux-2026-09-12/bin/verify-f163-f164.mjs` (87 checks per host) derives every expected number from the host's own
+  `/api/benchmark-view` with its own implementation of the row-choice and placeability rules, and reads the DOM at 1440/390 × light/dark plus two
+  negative cases (a measured-only pair chosen from the host's family list — today `kimi-k3::max` and `glm-5.3-flash::default` — must carry neither
+  sentence; a selection with nothing measured must show the line and no cards). **Mutation-tested**: shifting the self-reported count by one fails
+  21 checks, suppressing the measured tally fails 17. Local production build on :3111 **87/87**; live after deploy **87/87 on each host** at
+  `ee6c2748` (`/opt/benchmarkheaven/state/ux-evidence/iter177/{canonical-f163,legacy-f163}/`, screenshots read by eye at 390 px light).
+  Being the implementer, this iteration cannot set `F-163`/`F-164` to `verified`.
+
+- **Found while reading the 00:41 daily run: the unattended publication is broken, and will break again.** `STATUS: problem`, 31 steps ok, 4
+  failed, no publication (`/opt/benchmarkheaven-daily/runs/2026-09-23T00-41-02-194Z-1264113/`). The failing step is
+  `scripts/ingest-benchmark-scores.mjs` → `Unreviewed vendor score: public:a6733a51ed77c54d4c74c4b0` (CursorBench 4.0, "Fable 5.1 Max", a
+  self-reported row). Diagnosed against the run's own capture, no model calls: the row was re-captured today (new evidence file, new
+  `retrieved_at`, and the board's rank cell moved from 1 to 5 inside `protocol`), so yesterday's approval no longer binds it and the run's own
+  gauntlet minted a fresh one — **bound to the wrong form of the row**. `ops/daily/gauntlet.mjs:526` records
+  `observation_sha256: observationDigest(row)` on the row as the draft ingest hands it over, i.e. **joined** (`subject.model_id`,
+  `join_note`, `identity_review` present, digest `f5a3cb1f…`), while `lib/benchmark-score-evidence.mjs:61` looks the approval up under
+  `observationDigest(unjoined(o))` for exactly those rows — "the value approval still binds the unjoined row" — i.e. `44c4e6cd…`. Neither stored
+  approval carries that digest, so the ingest refuses the row. **Every self-reported row with a reviewed identity join fails the day its source is
+  re-captured**, which is why the repo's own copy still validates (its approvals predate the join rule) and the daily does not. The fix is to
+  present and fingerprint the unjoined form in the gauntlet; note that the artifact comparison at `benchmark-score-evidence.mjs:90`
+  (`observationDigest(reviewed) !== observationDigest(approvedForm)`) reads the row out of the critic artifact, so the artifact must carry the
+  same unjoined form — changing only the fingerprint moves the failure one line down. Filed as **D174**.
+
+- **Next.** `D174` first — it blocks `CR-38.1`, `CR-73.5` and `CR-85.1`, all of which wait on an unattended run that publishes. Then a non-Fable,
+  non-implementing engine runs `bin/verify-f163-f164.mjs` on both hosts and flips `F-163`/`F-164`. `F-165`'s data half stays with CR-128.1.
+  X6's open list is unchanged apart from CR-120: `CR-34.5`, `CR-62.4` (Florian), `CR-37.1`/`CR-37.3`, `CR-38.1`, `CR-73.5`, `CR-85.1`, `CR-85.2`,
+  plus `D174`.
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| F-161 | verified | `ops/ux-2026-09-12/bin/verify-fable-pass31-design.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter177/{canonical-rerun,legacy,canonical-pass31-post,legacy-pass31-post}/verification.json` | 44/44 per host at `8ba1e941` and again at `ee6c2748`, run by claude-opus (neither Fable nor the implementer). |
+| F-162 | verified | same | same run. |
+| F-166 | verified | same | same run. |
+| F-163 | implemented | `ee6c2748`; `lib/compare-claims.mjs`; `test/fable-pass31-compare.test.mjs`; `ops/ux-2026-09-12/bin/verify-f163-f164.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter177/{local,canonical-f163,legacy-f163}/verification.json` | 87/87 per host live. Implemented by claude-opus; needs a non-implementer live run. Fable's pinned 16/17 · 5/6 · "<900 px" are obsolete after the CR-128 ingest — re-derive, never pin. |
+| F-164 | implemented | same | 87/87 per host live. The clauses sit under the live region, not inside it (five lines → three at 390 px); decision recorded above. |
+| D174 | open | `/opt/benchmarkheaven-daily/runs/2026-09-23T00-41-02-194Z-1264113/reports/benchmarks-step-result.json`; `ops/daily/gauntlet.mjs:526`; `lib/benchmark-score-evidence.mjs:61,90` | The daily gauntlet fingerprints a self-reported row in its **joined** form; the evidence guard looks it up **unjoined**. Every reviewed-join vendor row fails the ingest the day its source is re-captured — the daily has published nothing since. Fix both the artifact and the fingerprint. |
