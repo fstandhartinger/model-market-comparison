@@ -7849,17 +7849,27 @@ which `cohortOf` does not read, so they land on **one axis** and `latestScores` 
 currently publishes Epoch's 22 Sep CSV value **under an identity that says it is the 18 Sep snapshot**, while the retained raw store still holds
 the 18 Sep value — which is exactly what `verify-cr-54-2` reports as a byte-exactness mismatch.
 
-**Why this is a finding and not churn.** A dated snapshot identity is supposed to mean one thing; CR-128.3's own rule is that every row carries a
-versioned registry identity, and this workstream's standing rule is that a clean ingestion is strictly additive. Two different measurements of one
-configuration under one snapshot date is neither. Epoch does refit and re-publish — that is ordinary — but then the new values belong to a **new
-snapshot identity** (`snapshot-2026-09-22`), or the superseded rows need a supersession record, the way a withdrawn public row does.
+**The two rows' own source records say what happened, and it is not a refit.** They come from **different Epoch files and different fields**:
+
+- `public:f3047a4b…` — `https://epoch.ai/data/benchmark_data.zip`, member `epoch-gpqa_diamond.csv.gz`, field **"Best score (across scorers)"**,
+  0.9577, with `mean_score`, `stderr`, the run's start time and Epoch's run id kept in the protocol.
+- `cr128:b98ef738…` — `https://epoch.ai/data/eci_benchmarks.csv` ("Updated Sep. 22, 2026"), field **`performance`**, 0.9436.
+
+So this is a **join question before it is a date question**: the CR-128 ingest attached a value from the ECI-benchmarks CSV to a board identity
+that was defined from the benchmark hub's per-benchmark export and a different statistic. The public row's own protocol already states the
+principle — "separate identity from the AA and OpenRouter runs" — and two files that publish two different numbers for one configuration are two
+series by that same rule. A dated snapshot identity is supposed to mean one thing, CR-128.3 requires every row to carry a versioned registry
+identity, and this workstream's standing rule is that a clean ingestion is strictly additive; one board holding both statistics is none of those.
 
 **The other five pairs are not this.** All five are `aa-coding-agent-index::1.4`, where one model legitimately has several measured rows because
 the board runs several harnesses; they are separated by `subject.harness`, and the "best of" rule the legend publishes is exactly about them.
 They were checked before being set aside, so the four above are not four of nine but four of four.
 
-**What the next pass has to decide** (not decidable from the numbers alone): whether the 22 Sep Epoch values are a re-publication of the same
-snapshot — in which case the 18 Sep rows are superseded and must be recorded as such — or a new snapshot, in which case they need their own dated
-identity and the 18 Sep rows stay as history. Read Epoch's own page date beside both captures before choosing; both captures are retained.
+**What the next pass has to decide** — and it is a registry decision, not an arithmetic one: whether `eci_benchmarks.csv`'s `performance` column
+is the same measurement as the hub export's "Best score (across scorers)" (in which case one file is the canonical source for this board and the
+other rows must not join it) or a different series (in which case it needs its own versioned identity, and the four rows move there). Both
+captures are retained and both are hashed, so the comparison can be made offline — `2026-09-18-epoch-hub/epoch-gpqa_diamond.csv.gz` against
+`2026-09-22-cr128-third-party/1bb9d35fbcf31f43e888.gz` — and Epoch documents both files. Check the other three boards at the same time: the same
+ingest, the same day, the same model, the same shape.
 Until then `verify-cr-54-2`'s two failures are **correct and should stay red** — the first, "728 observations" against 731, is an ordinary pinned
 count that grew and can be re-pinned once the rows above are settled, not before.
