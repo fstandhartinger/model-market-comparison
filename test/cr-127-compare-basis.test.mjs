@@ -32,10 +32,18 @@ test('CR-126 and CR-123 launch rows are the case that was rendering unmarked', (
     const own = picked.axes.flatMap((a) => a.scores.filter((r) => r.modelId === modelId));
     const self = own.filter((r) => r.basis === 'self_reported');
     assert.ok(self.length >= min, `${modelId}: expected >= ${min} self-reported rows in the compare view, got ${self.length}`);
-    // The complaint named the row subtitle: these axes really are labelled with the generic cohort,
-    // which is why the basis has to be carried by the cell itself.
-    const generic = picked.axes.filter((a) => a.scores.some((r) => r.modelId === modelId && r.basis === 'self_reported') && a.cohort === 'Published board');
-    assert.ok(generic.length > 0, `${modelId}: expected the generic "Published board" cohort on a vendor-claim row`);
+    // The complaint named the row subtitle: the sub-line does not tell a reader that the number is
+    // the developer's own, which is why the basis has to be carried by the cell itself. That intent
+    // is what this pins. It used to be pinned as `cohort === 'Published board'`, i.e. by the string
+    // F-165(a) then changed (2026-09-23) — a launch row's cohort now names the runner. The cell must
+    // still carry the basis either way, so the assertion is that the sub-line alone never states it:
+    // no cohort on a vendor-claim axis says "claim", "self-reported" or "developer".
+    const claimAxes = picked.axes.filter((a) => a.scores.some((r) => r.modelId === modelId && r.basis === 'self_reported'));
+    assert.ok(claimAxes.length > 0, `${modelId}: expected at least one vendor-claim axis in the compare view`);
+    for (const a of claimAxes) {
+      assert.doesNotMatch(String(a.cohort), /claim|self[- ]report|developer/i,
+        `${modelId}: the sub-line "${a.cohort}" states the basis, so the cell's own marker is no longer the thing under test`);
+    }
   }
 });
 

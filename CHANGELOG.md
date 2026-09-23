@@ -4,6 +4,27 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-23 — A vendor's launch number says whose it is (F-165(a))
+
+**Presentation only: no benchmark value, unit, path or registry identity changed.** A lab's own run of a public
+benchmark has always entered as a separate `basis: self_reported` identity (see the CR-126 entry below), but in
+the UI both it and the board's own measured run fell through to the same default evaluation group, "Published
+board". A model page could therefore print two rows reading "Terminal-Bench 4.0" that differed only by the †
+marker on the cell — and in four groups of axes (nine axes, among them three "DeepSWE v1.1" rows from StepFun,
+Xiaomi and OpenAI) the rendered name and sub-line were identical.
+
+Where an observation's protocol names the vendor that produced the number ("Vendor-reported by X for …" — the
+sentence our launch-post ingest writes, matching 97 of the 839 self-reported observations), its evaluation group
+now ends with `Vendor-reported by X`, after any harness or configuration the source stated. Board submissions,
+the other 742 self-reported rows, keep the default.
+
+**For consumers:** `GET /api/benchmark-view?axis=<id>` takes a presentation id built from benchmark id, cohort
+and unit, so the 96 launch axes have new ids — e.g.
+`anthropic-terminal-bench-4-0::4.0@@Published%20board@@percent` is now
+`anthropic-terminal-bench-4-0::4.0@@Vendor-reported%20by%20Anthropic@@percent`. This is the documented
+instability of presentation ids (API.md: "use registry IDs and observation IDs from the canonical APIs for
+integrations"); no registry id, observation id or value moved, and the axis count is unchanged at 490.
+
 ## 2026-09-23 — A page per JevBench system (CR-129)
 
 Every system in the JevBench v1.3.0 artifact (52 rows — ranked, honorable mention and

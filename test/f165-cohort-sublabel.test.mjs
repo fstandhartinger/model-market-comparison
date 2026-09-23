@@ -31,17 +31,30 @@ test('the matrix re-exports the same rule, so the surfaces cannot drift apart', 
   }
 });
 
-test('a row with no harness and no stated configuration still lands on the default cohort', () => {
-  // The guard that makes the rule worth having: this is what the vendor launch rows produce today,
-  // which is why F-165(a) — naming the runner — is still open.
+test('a row with no harness, no configuration and no named runner still lands on the default cohort', () => {
+  // The guard that makes the rule worth having: the default must stay the default for everything
+  // that has nothing more specific to say.
+  const observation = {
+    id: 'board-submission:example',
+    benchmark_id: 'terminal-bench-4-0::4.0',
+    protocol: 'Submitted to the public leaderboard; standard configuration.',
+    subject: { harness: null },
+  };
+  assert.equal(cohortOf(observation), 'Published board');
+  assert.equal(cohortSubLabel(cohortOf(observation)), null);
+});
+
+test('F-165(a): a vendor launch row names its runner instead of sharing the default', () => {
+  // Written here as the counterpart of the guard above: this row used to be indistinguishable from
+  // the board's own measured run. Full coverage of the rule is in test/f165-vendor-cohort.test.mjs.
   const observation = {
     id: 'self-reported:example-launch-row',
     benchmark_id: 'anthropic-terminal-bench-4-0::4.0',
     protocol: 'Vendor-reported by Anthropic for Claude Opus 5.5 in the Claude Opus 5.5 launch post.',
     subject: { harness: null },
   };
-  assert.equal(cohortOf(observation), 'Published board');
-  assert.equal(cohortSubLabel(cohortOf(observation)), null);
+  assert.equal(cohortOf(observation), 'Vendor-reported by Anthropic');
+  assert.equal(cohortSubLabel(cohortOf(observation)), 'Vendor-reported by Anthropic');
 });
 
 test('the ranking page uses the same rule for its visible benchmark sub-line', () => {

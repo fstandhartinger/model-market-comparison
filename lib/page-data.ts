@@ -20,7 +20,10 @@ import { BENCHMAXX_LEVELS, type BenchmaxxingLevel } from "./benchmaxxing-levels.
  * `/api/page-data/<key>?v=<dataset version>`; the pages keep their server-rendered head and hero.
  * The payloads are exactly the props the pages used to pass, built by the same functions.
  */
-export const PAGE_DATA_SHAPE = "cr68.5";
+// F-165(a) (2026-09-23): the vendor-launch cohort now names the runner, so 96 axis ids changed value
+// without the dataset changing. Cached payloads carry axis ids; bumped so no browser pairs the old ones
+// with the new code.
+export const PAGE_DATA_SHAPE = "f165a";
 export const PAGE_DATA_KEYS = ["home", "catalog", "benchmarks", "ranking", "compare", "benchmaxxing", "filters"] as const;
 export type PageDataKey = (typeof PAGE_DATA_KEYS)[number];
 export const isPageDataKey = (key: string): key is PageDataKey => (PAGE_DATA_KEYS as readonly string[]).includes(key);
