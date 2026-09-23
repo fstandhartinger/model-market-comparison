@@ -121,7 +121,15 @@ function validateRows(rows) {
 // 600 s a timeout does, so a paid OpenRouter worker gets the same one retry per run for it (global, both roles share
 // the strike). Evidence: in the 12:41 dry run a network episode dropped three paid calls in 45 min; the last producer
 // (GLM, 14:05) was excluded after one drop and every later score batch failed "No supported viable worker model
-// found" — 0/21 changed score rows accepted. Timeouts, empty completions and free router routes stay single-strike.
+// found" — 0/21 changed score rows accepted. Timeouts and empty completions stay single-strike.
+// 2026-09-23 (iteration 180): the free route gets that same one retry, and only for the bare drop. It was excluded
+// from it because a *failing* free route can burn a run's time (1c394a3) — but that was written about timeouts and
+// slow max-effort calls, and a dropped connection costs seconds whoever owns the route. The cost of the old rule was
+// measured on three consecutive unattended runs on 2026-09-23: `chutes/moonshotai/Kimi-K3-TEE` as critic took 3 drops
+// at 00:41, 1 at 05:17 and 2 at 06:58, and each time the *first* one removed it for the rest of the run. It is the
+// free critic CR-73.4 designates, and for several producers the only different-family critic on the whitelist, so its
+// removal is what empties the pool — the 00:41 run then failed nine score batches (55 rows) with "No supported viable
+// worker model found" from round 2 onwards. Every other reason, for every route, is still a single strike.
 const MALFORMED_OUTPUT = /malformed/i;
 const CONNECTION_DROP = /^fetch failed$/i;
 export const WORKER_ROLES = ['producer', 'critic'];
@@ -135,7 +143,7 @@ export function excludedWorkerModels(records, { role = null } = {}) {
     const contentOnly = MALFORMED_OUTPUT.test(record.reason ?? '')
       && WORKER_ROLES.includes(record.role) && role !== null && record.role !== role;
     if (contentOnly) continue;
-    if (CONNECTION_DROP.test(record.reason ?? '') && !record.model.startsWith('chutes/')) {
+    if (CONNECTION_DROP.test(record.reason ?? '')) {
       dropped.set(record.model, (dropped.get(record.model) ?? 0) + 1);
       if (dropped.get(record.model) >= 2) excluded.add(record.model);
       continue;

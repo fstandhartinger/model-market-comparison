@@ -26,8 +26,11 @@ test('CR-73.4: a content failure is scoped to the role that produced it; transpo
   assert.deepEqual(excludedWorkerModels(records, { role: 'critic' }), [PAID]);
   // In its own role the free route is still excluded on the first malformed answer (CR-67.3's single strike).
   assert.deepEqual(excludedWorkerModels(records, { role: 'producer' }).sort(), [KIMI, PAID].sort());
-  // A transport failure is evidence about the route, not about the task: global, as CR-67.3 requires.
-  assert.deepEqual(excludedWorkerModels([{ model: KIMI, role: 'producer', reason: 'fetch failed' }], { role: 'critic' }), [KIMI]);
+  // A transport failure is evidence about the route, not about the task: global, as CR-67.3 requires. A bare
+  // connection drop is the one exception and it is allowed exactly once per run (see the iteration 156/180 test
+  // below), so the globality is pinned here with two drops rather than one.
+  assert.deepEqual(excludedWorkerModels([{ model: KIMI, role: 'producer', reason: 'fetch failed' },
+    { model: KIMI, role: 'producer', reason: 'fetch failed' }], { role: 'critic' }), [KIMI]);
   assert.deepEqual(excludedWorkerModels([{ model: KIMI, role: 'critic', reason: 'Router completion HTTP 500' }], { role: 'producer' }), [KIMI]);
   // A record without a role cannot be attributed, so it excludes everywhere — an older or truncated log never
   // widens what a route is offered.
@@ -53,11 +56,18 @@ test('iteration 156: a paid worker survives one bare connection drop per run; th
   assert.deepEqual(excludedWorkerModels([drop(GLM, 'critic'), drop(GLM, 'critic')], { role: 'critic' }), [GLM]);
   // Drops and malformed answers are separate one-retry allowances; neither lends the other a strike.
   assert.deepEqual(excludedWorkerModels([drop(PAID, 'critic'), { model: PAID, role: 'critic', reason: 'Malformed critic output: not JSON' }], { role: 'critic' }), []);
-  // Only the bare drop qualifies: timeouts, HTTP errors, empty completions and free router routes stay single-strike.
+  // Only the bare drop qualifies: timeouts, HTTP errors and empty completions stay single-strike for every route.
   for (const reason of ['The operation was aborted due to timeout', 'Router completion HTTP 500', 'Empty completion', 'fetch failed: ECONNRESET after 600 s']) {
     assert.deepEqual(excludedWorkerModels([{ model: GLM, role: 'producer', reason }], { role: 'producer' }), [GLM], reason);
+    assert.deepEqual(excludedWorkerModels([{ model: KIMI, role: 'critic', reason }], { role: 'critic' }), [KIMI], `free route: ${reason}`);
   }
-  assert.deepEqual(excludedWorkerModels([drop(KIMI, 'critic')], { role: 'critic' }), [KIMI]);
+  // 2026-09-23 (iteration 180): the free route survives one bare drop too. It is the designated free critic, and
+  // losing it to a seconds-long connection drop is what emptied the critic pool on three runs in a row.
+  assert.deepEqual(excludedWorkerModels([drop(KIMI, 'critic')], { role: 'critic' }), []);
+  assert.deepEqual(excludedWorkerModels([drop(KIMI, 'critic')], { role: 'producer' }), []);
+  assert.deepEqual(excludedWorkerModels([drop(KIMI, 'critic'), drop(KIMI, 'producer')], { role: 'critic' }), [KIMI]);
+  // The drop allowance does not lend a strike to a malformed answer: the free route is still out on the first one.
+  assert.deepEqual(excludedWorkerModels([drop(KIMI, 'critic'), { model: KIMI, role: 'critic', reason: 'Malformed critic output: not JSON' }], { role: 'critic' }), [KIMI]);
 });
 
 test('CR-73.4: the free-route role is explicit, validated and legible on the receipt', () => {
