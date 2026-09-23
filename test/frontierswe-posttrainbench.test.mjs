@@ -46,7 +46,14 @@ def mutate(html,old,new):
 # the flight payload is a JSON-escaped string: fields appear as \"harness\":\"proximus\" in the raw HTML
 fails(mutate(text,'\\"harness\\":\\"proximus\\"','\\"harness\\":\\"proximus-2\\"',),'harness changed')
 fails(mutate(text,'\\"overall\\":56.29078999999999','\\"overall\\":96.29078999999999'),'score mutated')
-fails(mutate(text,'\\"generation\\":2','\\"generation\\":3'),'unlisted generation')
+# The generation label is the board's own, retained per row and never scored. A generation the board
+# has not used before is an additive label (3 arrived with Claude Opus 5.5 on 2026-09-23), so it must
+# parse and carry through; what must fail closed is a row that does not state one.
+grown=m.parse(mutate(text,'\\"generation\\":2','\\"generation\\":4'),e['parser'],load)
+assert {r['context']['generation'] for r in grown}=={1,4},{r['context']['generation'] for r in grown}
+for bad in ('null','\\"2\\"','0','-1','2.5','true'):
+  fails(mutate(text,'\\"generation\\":2','\\"generation\\":'+bad),'generation not stated as a positive whole number: '+bad)
+fails(text.replace('\\"generation\\":','\\"gen\\":'),'generation field dropped')
 # missing supporting source must fail
 try: m.parse(text,e['parser'],None)
 except Exception as exc: assert 'method_source' in str(exc) or isinstance(exc,(ValueError,TypeError,AttributeError,KeyError)),exc

@@ -641,7 +641,12 @@ def parse(source,spec,load_source):
         for index,r in enumerate(mean):
             if not required <= set(r.keys()):raise ValueError(f'FrontierSWE v2 row {index}: fields changed ({sorted(required-set(r.keys()))})')
             if r['harness']!='proximus':raise ValueError(f"FrontierSWE v2 row {index}: harness {r['harness']!r} is not proximus")
-            if r['generation'] not in (1,2):raise ValueError(f"FrontierSWE v2 row {index}: generation {r['generation']!r} not stated")
+            # The board's own numeric generation label. It is retained per row and never scored, so a new
+            # wave of models (generation 3 arrived with Claude Opus 5.5 on 2026-09-23) is an additive label,
+            # not a re-basing: guard that the label is stated as a positive whole number, not that it is one
+            # of the values seen on an earlier capture. The documented version_guard never pinned the set.
+            if isinstance(r['generation'],bool) or not isinstance(r['generation'],int) or r['generation']<1:
+                raise ValueError(f"FrontierSWE v2 row {index}: generation {r['generation']!r} not stated")
             if r['model'] not in best or r['model'] not in worst:raise ValueError(f"FrontierSWE v2 row {index}: {r['model']!r} missing from best/worst views")
             for field in ('overall','implementation','performance','research'):
                 value=r[field]

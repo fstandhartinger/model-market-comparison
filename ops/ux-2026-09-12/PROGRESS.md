@@ -7377,3 +7377,47 @@ wrong is worth reading before it is re-run**: the next ingest of a thin board wo
   returns, diff the run's `work/data/raw/benchmarks/score-approvals.json` fingerprint for the failing id against
   `observationDigest(unjoined(row))` of the same row in the run's `public-observations.json` — the same two-line check that found this.
   Four steps failed in that run; the ingest is the one that stopped publication, and the other three were not diagnosed here.
+
+### D175 — FrontierSWE froze on a generation label the board had simply not used before
+
+Picked up as **work left in the tree by the killed 03:40 iteration** (`history.log`: `20260923T034002Z work claude-opus rc=143`), then re-derived
+from scratch rather than taken on trust.
+
+- **The failure, read out of the 00:41 run's own log** (`reports/refresh-benchmarks.log`):
+  `ValueError: FrontierSWE v2 row 1: generation 3 not stated` → `BENCHMARK RETAINED frontierswe::2`. The guard listed the generation values it
+  had seen (`not in (1,2)`) instead of the shape it actually needs, so the board publishing a third wave froze the arm.
+- **Replayed offline against that run's own capture, no model calls and no network.** Capture
+  `work/data/raw/benchmarks/daily-evidence/2026-09-23T00-55-33-404Z/ee3ae32c083701db6fd2.gz`; its decompressed body hashes to
+  `ee3ae32c083701db6fd2…`, exactly the `sha256` the run's `plan-107.json` records (the plan hashes the body, the registry the `.gz`). Loading
+  `HEAD:scripts/collect-public-benchmarks.py` against it reproduces the production `ValueError` verbatim; the working-tree parser returns
+  **16 rows with generations {1, 2, 3}**.
+- **Who generation 3 is, checked and not assumed.** The sole generation-3 row is **Claude Opus 5.5**; the board grew from the repo's 14 rows to
+  16 by adding **Claude Opus 5.5** and **Grok 4.7**, and dropped none. So `minimum_rows: 14` still holds and the guard's "silent row drop is a
+  different identity" clause is untouched — this is an additive wave, which is also why it matters: Opus 5.5's composite rested on 1 of 7 inputs.
+- **What the guard now asserts.** The label must be *stated as a positive whole number*; a value the board has not used before passes, while
+  missing, `null`, a string, `0`, negative, fractional or boolean fails closed. `generation` is the board's own label — it is carried in
+  `context` and **never scored** (the value is `mean_at_5`) — so the set of values was never the pin, and the documented `version_guard` never
+  claimed it was. Both `version_guard` copies in `collection-plan.json` now say so explicitly.
+- **The protocol text was wrong, not just thin.** It read "newer generation models are tagged v2", which the board's own payload contradicts
+  (it publishes a numeric `generation`, and does not explain the scale). Corrected on the 14 published observations. **Safe to rewrite:**
+  `lib/benchmark-score-evidence.mjs:56` skips the approval lookup for any row whose basis is not `self_reported`, and all 14 FrontierSWE rows are
+  `measured` — so this is *not* a D174-class digest break. The build guard confirms it: 18,602 observations / 189 source files /
+  1,430 verified self-reported, unchanged from `REVIEW-20260923T031003Z`.
+- **Tests** (`test/frontierswe-posttrainbench.test.mjs`): a mutated capture with a generation the board has never used must *parse* and carry the
+  label through (`{1,4}`), while `null`, `"2"`, `0`, `-1`, `2.5`, `true` and a dropped field each still fail closed.
+- **Gates:** `node scripts/build-dataset.mjs` 863 models / 669 families / 94 providers / 2,976 offers; `npm test` **1,153 tests / 1,152 pass /
+  0 fail / 1 skip**; `npx tsc --noEmit -p .` clean; `npm run build` rc 0. Data diff is the protocol sentence only — the two generated timestamps
+  were restored.
+- **A trap worth recording:** a first `npm test` showed three red files (`CR-38.3`, `benchmark-cell-href`, `benchmark-count-rule`). They were not
+  real — `build-dataset` was still rewriting `data/dataset.json` underneath the readers. Piping `npm test` into `tail` had also hidden the true
+  exit code, which is what made the red look green. Run the suite to a file and read `ℹ fail`, and never run a build beside it.
+
+**The other three failed steps of the 00:41 run, which the previous entry left undiagnosed:** `fetch-lumina-ledger` is the deliberate
+bulk-download pause (previous snapshot preserved, by design); `fetch-azure-foundry-catalog` is a transient `HTTP 429` on Azure Retail; and
+`fetch-claude-api-catalog` reports "batch, data-residency or cache-hit multiplier text not found (page layout changed?)". All three fail soft and
+keep the prior snapshot, so none blocked publication — but the third is a **live-source breakage that will silently go stale**, and is the next
+thing to read after the 05:17 receipt.
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| D175 | implemented | `scripts/collect-public-benchmarks.py`; `test/frontierswe-posttrainbench.test.mjs`; `data/raw/benchmarks/collection-plan.json`; run `2026-09-23T00-41-02-194Z-1264113` `reports/refresh-benchmarks.log` | FrontierSWE froze because the guard pinned the *set* of generation labels rather than their shape; the board's third wave (Claude Opus 5.5) is additive and now parses, 16 rows and no drops. Replayed offline against the failing run's own capture. Implemented by claude-opus; needs a non-implementer sign-off and the next run's `frontierswe::2` receipt. |
