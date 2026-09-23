@@ -1660,3 +1660,18 @@ Florian, 23 Sep 2026, verbatim request from `/home/flori/jobs/jev-models-evergre
 > 3. Same rule for model detail pages (/jev-models/<system>): no rank numbers in previews (rank changes); scores only on version-pinned URLs.
 > 4. Test: fetch as Twitterbot/WhatsApp/facebookexternalhit user agents on both hosts; verify metas. Note in OUTPUT.md that already-cached previews on X/WhatsApp can't be purged by us (X card validator is gone; FB/WhatsApp re-scrape only via the Meta Sharing Debugger, which needs a login — list the steps for Florian, don't log in).
 > 5. One plain-English Telegram when live.
+
+## CR-20260923f — JevBench v1.4.1 public board and API
+
+Florian, 23 Sep 2026, via `/home/flori/jobs/jevbench-v141-additions-20260923/PROMPT.md`:
+
+> Add the five systems measured on 23 Sep but omitted from the frozen v1.4.0 set, plus the
+> completed original Qwen3.5-0.8B run. The 82-row v1.4.1 result is scored with the released
+> v1.4 scorer and is published at
+> https://github.com/fstandhartinger/jevbench/releases/tag/v1.4.1. The six new rows rank
+> outside the approved top five, so publish the v1.4.1 data through the `/jev-models` CR
+> process (CR max+1, single writer). Preserve the existing v1.4.0 artifact and pinned page,
+> add an exact v1.4.1 API and pinned page, and make v1.4.1 the current board. Keep the live
+> preview metadata evergreen. Verify both production hosts and the API/artifact hashes,
+> repeat the sealed ID/text scan, retain the draft author messages without sending them, and
+> send Florian the result table, top-five impact and publication status in plain English.

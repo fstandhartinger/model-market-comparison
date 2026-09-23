@@ -8904,3 +8904,16 @@ Florian requested an evergreen preview for the changing `/jev-models` URL, a sha
 | CR-134.3 | verified | `app/jev-models/[system]/page.tsx`; focused tests; production receipt above; reviewer receipt above | Both hosts serve the dynamic model-detail URL with stable name-only preview metadata and no rank or score claims. |
 | CR-134.4 | verified | `/home/flori/jobs/jev-models-evergreen-preview-20260923/{production-preview-verification.json,build.log,test-full-tsx.log,focused-final.log,prerender-final.log,tsc-final.log,local-live-mobile-390.png,local-pinned-mobile-390.png,local-pinned-mobile-360.png,local-og-card.png,CR-134-review-round1-glm-final.json}` | Build, full/focused tests, typecheck, static prerender and mobile checks pass. Production passed 18/18 bot-route checks and 2/2 image checks; both hosts served identical 1200×630 PNG bytes. |
 | CR-134.5 | verified | `/home/flori/jobs/jev-models-evergreen-preview-20260923/OUTPUT.md`; `/home/flori/jobs/jev-models-evergreen-preview-20260923/notification-receipt.json` (Telegram message 14589) | Recorded cached-preview limits and Meta Sharing Debugger steps without logging in. Sent the single requested plain-English live notice after both hosts passed. |
+
+## CR-135 — seeded 2026-09-23 (Codex)
+
+CR-135 publishes the already-scored JevBench v1.4.1 aggregate after CR-134. The GitHub v1.4.1 release is public; this CR updates the Benchmark Heaven API and board, preserves the exact v1.4.0 artifact and `/jev-models/v1.4` pin, and adds a v1.4.1 pin. The corrected final artifact SHA-256 is `e6754863056503fe2b010410fc7111df884ac1f9ce4449aa369aab61d98092cd` (526,575 bytes; 82 systems, 77 ranked). Its top five matches v1.4.0, so no preview hold applies. The original Qwen3.5-0.8B offline run is included unchanged and will not be repeated. The Capability/cost and scatter/3D charts are a separate follow-on CR, coordinated after the v1.4.1 data page.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| CR-135.1 | open | `/home/flori/jobs/jevbench-v141-additions-20260923/FINAL-ARTIFACT-RECEIPT.json`; public GitHub release | Publish the exact 82-row aggregate, preserve the 76 v1.4.0 rows, expose no item-level data. |
+| CR-135.2 | open | `/home/flori/jobs/jevbench-v141-additions-20260923/INTEGRITY.md` | Add a separate v1.4.1 API/hash route; retain v1.4.0 API bytes. |
+| CR-135.3 | open | `/home/flori/jobs/jevbench-v141-additions-20260923/RESULT.md` | Default board to v1.4.1; add the exact pin/share URL; keep evergreen live metadata and v1.4.0 pin. |
+| CR-135.4 | open | `/home/flori/jobs/jevbench-v141-additions-20260923/AGGREGATE-VERIFICATION-RECEIPT.json`; `/home/flori/jobs/jevbench-v141-additions-20260923/INTEGRITY.md` | No new row enters the top five and its order is unchanged, so publish without a preview hold. |
+| CR-135.5 | open | `/home/flori/jobs/jevbench-v141-additions-20260923/INTEGRITY.md`; `/home/flori/jobs/jevbench-v141-additions-20260923/SEALED-LEAK-SCAN-RECEIPT.json` | Test/build and verify both production hosts, both API versions, row counts, top five and final sealed scan. |
+| CR-135.6 | open | `/home/flori/jobs/jevbench-v141-additions-20260923/AUTHOR-MESSAGES.md`; `/home/flori/jobs/jevbench-v141-additions-20260923/RESULT.md` | Keep author messages as drafts; send Florian the requested plain-English result update and save receipt. |
