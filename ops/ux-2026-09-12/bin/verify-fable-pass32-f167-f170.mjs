@@ -66,6 +66,8 @@ try {
           return {
             svgs: main.querySelectorAll('svg').length,
             strip: box(strip),
+            stripRole: strip?.getAttribute('role') ?? null,
+            stripProgressbars: strip ? strip.querySelectorAll('[role=progressbar]').length : -1,
             stripCaption: strip?.querySelector('[data-bh-jev-system-strip-caption]')?.innerText.replace(/\s+/g, ' ').trim() ?? null,
             peerTicks: main.querySelectorAll('[data-bh-jev-system-peer-tick]').length,
             referenceTicks: [...main.querySelectorAll('[data-bh-jev-system-reference-tick]')].map((el) => ({ key: el.dataset.bhJevSystemReferenceTick, title: el.title, left: el.style.left })),
@@ -84,7 +86,9 @@ try {
           };
         });
         const labelOnly = row.axes.calibration === null;
-        check(`${label}/${key}/svg-and-strip`, m.svgs >= 1 && !!m.strip, { svgs: m.svgs, strip: !!m.strip });
+        // F-167 allows an HTML strip instead of a second svg, as long as it is not faked as a progress bar.
+        check(`${label}/${key}/svg-and-strip`, m.svgs >= 1 && !!m.strip && m.stripProgressbars === 0 && m.stripRole !== 'progressbar',
+          { svgs: m.svgs, strip: !!m.strip, role: m.stripRole, progressbars: m.stripProgressbars });
         check(`${label}/${key}/peer-tick-per-ranked-system`, m.peerTicks === board.ranked.length, { ticks: m.peerTicks, ranked: board.ranked.length });
         // The browser rounds an inline `left` to six significant digits, so the position is compared as a number.
         const leftPct = Number.parseFloat(m.pointLeft ?? 'NaN');
@@ -103,6 +107,8 @@ try {
         const refName = refRow.display.split(' (')[0].split(', formerly')[0];
         check(`${label}/${key}/reference-named-once-in-the-caption`, caption.includes(refName) && (m.bodyText.match(new RegExp(refName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')) ?? []).length <= (key === 'jev-1.13.0' ? 4 : 3), { caption, refName });
         check(`${label}/${key}/band-reference-titles`, m.bandRefTitles.length === (labelOnly ? 3 : 4) && m.bandRefTitles.every((t) => t.startsWith(`${refName}:`)), m.bandRefTitles);
+        const usd = row.usd < 0.01 ? row.usd.toFixed(4) : row.usd.toFixed(3);
+        check(`${label}/${key}/cost-is-the-artifacts`, (m.usd ?? '').includes(usd), { shown: m.usd, artifact: usd });
         check(`${label}/${key}/no-horizontal-overflow`, m.overflow <= 1, `${m.overflow}px`);
         check(`${label}/${key}/nothing-wider-than-the-viewport`, m.widestChild <= width + 1, { widest: Math.round(m.widestChild), width });
         if (width === 1440) {
@@ -113,6 +119,8 @@ try {
         }
         check(`${label}/${key}/no-page-errors`, pageErrors.length === 0, pageErrors.slice(0, 3));
         pageErrors.length = 0;
+        // The shot belongs to the page it verified, so it is taken here and not after the last navigation.
+        await page.screenshot({ path: `${OUT}/${label}-${key}.png`, fullPage: width === 390 }).catch(() => {});
       }
 
       // ---------------- F-169 ----------------
@@ -158,7 +166,6 @@ try {
         check(`${label}/sheet/names-never-clip`, sheet.length > 0 && sheet.every((c) => !c.clipped && !c.ellipsis), { rows: sheet.length, offenders: sheet.filter((c) => c.clipped || c.ellipsis).slice(0, 3) });
         check(`${label}/sheet/names-carry-a-title`, sheet.every((c) => c.title && c.title.length > 0), sheet.filter((c) => !c.title).slice(0, 3));
       }
-      await page.screenshot({ path: `${OUT}/${label}-system-page.png`, fullPage: false }).catch(() => {});
       await context.close();
     }
   }

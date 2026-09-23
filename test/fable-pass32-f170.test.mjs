@@ -50,11 +50,17 @@ test('F-170(b): the unparsed-protocol marker is never a sub-line, and the real p
 test('F-170(b): a retained source note no longer splits one board into two axes', () => {
   // The two Vals rows this found: same board, same protocol shape, one of them carrying a " Source note: …"
   // caveat the ingest kept. Before the parse fix that note put it in its own cohort and its own axis.
+  // Stated as an invariant, not a row count: a board may legitimately grow a second axis for a second
+  // harness or configuration, but never one that differs from another only by the internal marker.
   assert.equal(view.axes.filter((axis) => String(axis.cohort).includes(INSPECTION_MARKER)).length, 0,
     'no axis is grouped by the marker any more');
-  const proof = view.axes.filter((axis) => axis.benchmarkId === 'vals-proofbench-v1-1::1.1');
-  assert.equal(proof.length, 1, `ProofBench v1.1 is one axis, not ${proof.length}`);
-  assert.equal(proof[0].scores.length, 2, 'both published rows sit on it');
+  const seen = new Map();
+  for (const axis of view.axes) {
+    const key = `${axis.benchmarkId}\u0000${axis.unit}\u0000${String(axis.cohort).split(' \u00b7 ').filter((part) => part !== INSPECTION_MARKER).join(' \u00b7 ')}`;
+    seen.set(key, [...(seen.get(key) ?? []), axis.id]);
+  }
+  assert.deepEqual([...seen.values()].filter((ids) => ids.length > 1), [],
+    'the marker is never the only thing separating two axes of one board');
 });
 
 test('F-170(c): the sheet\'s benchmark name cell wraps at every width and keeps the full name in a title', async () => {
