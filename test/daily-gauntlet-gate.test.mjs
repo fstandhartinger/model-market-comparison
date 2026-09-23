@@ -221,6 +221,20 @@ test('a producer cut off at the cap is asked again with the runner\'s maximum, o
   } finally { await rm(dir, { recursive: true, force: true }); }
 });
 
+test('a critic cut off at the ceiling is not repeated: the retry would buy the same room twice', async () => {
+  const dir = await mkdtemp(join(tmpdir(), 'bh-gauntlet-length3-'));
+  try {
+    let critics = 0;
+    const runner = async (args) => {
+      if (args.includes('--critic')) { critics++; throw new Error('z-ai/glm-5.3-flash: Incomplete completion (length)'); }
+      return mockRunner(args);
+    };
+    const result = await reviewArtifact({ runDir: dir, artifactId: 'length3', rows, sources, criteria: ['Verify values'], runner, maxRounds: 2 });
+    assert.equal(result.accepted, false);
+    assert.equal(critics, 2, 'two rounds, one critic call each');
+  } finally { await rm(dir, { recursive: true, force: true }); }
+});
+
 test('a second cut at the ceiling is a real failure, not an endless retry', async () => {
   const dir = await mkdtemp(join(tmpdir(), 'bh-gauntlet-length2-'));
   try {

@@ -8269,11 +8269,18 @@ checked by re-introducing the pre-fix parse (`jsonObjectPrefix` made a no-op): t
 stronger than what it replaces. Committed as `d4e5de36` with the verifier's own hardening — the score strip may not be faked as a
 progress bar, and the cost the page prints must be the artifact's.
 
-**A live defect on the new v1.4 board, reported rather than fixed.** That verifier reads **301/303** on
-`https://benchmarkheaven.com` at `ea5471c4`. The two failures are real: `/jev-models` overflows horizontally by **5 px at 390 px**,
-light and dark; desktop and every per-system page are clean. The page is CR-131's new board and is already owned by the CR-132
-branch, so under the one-writer rule it was posted to the agent board (thread #5, entry #135) with the log and the verifier to gate
-the fix with, and left alone here. Evidence: `/opt/benchmarkheaven/state/ux-evidence/iter182-pass32/canonical-verifier.log`.
+**A live finding on the new v1.4 board — and what it is not.** That verifier reads **301/303** on
+`https://benchmarkheaven.com` at `ea5471c4`; the two failures are `mobile-{light,dark}/hub/no-horizontal-overflow`, both `5px`.
+The first thing posted about it — "`/jev-models` overflows horizontally at 390 px" — was **over-claimed, and is corrected here and
+on the board.** The verifier launches with `ignoreDefaultArgs: ['--hide-scrollbars']`, so a classic scrollbar takes 10 px of layout
+width and the page is laid out at **380**, not 390. Measured across widths with scrollbars hidden, which is what a phone does
+(`document.documentElement.scrollWidth - clientWidth`): 320 → −10, 360 → +1, 375 → −2, 390 → −5, 414 → −10. **No phone width
+overflows.** What is real is a band: at a layout width of ~376–384 px the page still needs **385 px**, so it overflows a desktop
+browser narrowed to a 390 px window with a classic scrollbar — something between the 375 and 390 breakpoints does not reflow. A
+second, separate thing the probe found: long project URLs in the † notes (`github.com/deepanwadhwa/OpenDecision`,
+`huggingface.co/convaiinnovations/laya`) do not break and stick out of their container at 320 px. Both belong to CR-132's page, so
+under the one-writer rule they were posted to the agent board (thread #5, entries #135 and the correction) and left alone here.
+Evidence: `/opt/benchmarkheaven/state/ux-evidence/iter182-pass32/canonical-verifier.log` and `hub-width-sweep.txt`.
 
 **CR-128.5: the verifier was carrying the defect's own wrong numbers.** `ops/ux-2026-09-12/bin/verify-cr-128.mjs` pinned
 `REPORTED = {opus: 1, astra: 6, sol: 18, luna: 61}` — a copy of the very quartet it exists to catch. Such a check goes green the day
@@ -8336,4 +8343,4 @@ every claude-opus item below.
 |---|---|---|---|
 | D183 | open | `/home/flori/jobs/bh-frontier-update-20260922/RESULT.md`; `ops/ux-2026-09-12/bin/verify-cr-128.mjs` (`rank/frontier/report-matches-its-own-dataset`); `/opt/benchmarkheaven/state/ux-evidence/iter182-cr128-5/cr128-5-rank-correction.txt` | The frontier report's Composite ranking reads #25 and #101 for `gpt-6-sol::max` and `gpt-6-luna::max`; the dataset it names gives #26 (tied with 3) and #103 (tied with 2), and it names no ties and no denominator. Not the dataset-position defect — the column is genuinely score-ordered. Left open, not silently repaired: the report is a finished job's artifact, the correction of record is written, and the verifier holds the red. |
 | D184 | implemented | `ops/daily/gauntlet.mjs` (`callWorker`, `WORKER_MAX_TOKENS_CEILING`, `defaultRunner`'s `maxTokens`); `test/daily-gauntlet-gate.test.mjs` (two new cases); run `2026-09-23T09-57-20-158Z-186582` `workers/worker-failure-1790158254112-218278.json` and `…-1790158265110-225592.json` | A producer completion cut off at 16,384 is not a bad answer, it is no answer, and it ended the round that paid for it. The default cap is unchanged; only a call that ran into it is repeated once at the runner's maximum. Implemented by claude-opus; needs a non-claude-opus sign-off and an unattended run. |
-| D185 | open | `/opt/benchmarkheaven/state/ux-evidence/iter182-pass32/canonical-verifier.log`; agent board thread #5 entry #135 | `/jev-models` overflows horizontally by 5 px at 390 px, light and dark, at `ea5471c4`. Owned by the CR-132 writer; reported, not fixed. |
+| D185 | open | `/opt/benchmarkheaven/state/ux-evidence/iter182-pass32/{canonical-verifier.log,hub-width-sweep.txt}`; agent board thread #5 | `/jev-models` needs 385 px of layout width, so it overflows anything between the 375 and 390 px breakpoints — a 390 px desktop window with a classic scrollbar lays out at 380 and overflows by 5 px. **No phone width overflows** (320 → −10, 360 → +1, 375 → −2, 390 → −5, 414 → −10 with scrollbars hidden); the first posting of this said "mobile overflow" and was wrong. Separately, long project URLs in the † notes do not break at 320 px. Owned by the CR-132 writer; reported, not fixed. |

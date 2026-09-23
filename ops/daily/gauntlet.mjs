@@ -244,8 +244,10 @@ async function callWorker(runner, args, options) {
   catch (error) {
     const message = error?.message ?? '';
     if (CONNECTION_DROP_CALL.test(message)) return runner(args, options);
-    // `options.maxTokens` set means this *is* the retry: a second cut is a real failure.
-    if (LENGTH_CUT_CALL.test(message) && !options?.maxTokens) {
+    // `options.maxTokens` set means this *is* the retry: a second cut is a real failure. A critic is
+    // already at the ceiling (D179), so repeating its call would buy the same room twice and pay twice.
+    const role = args.includes('--critic') ? 'critic' : 'producer';
+    if (LENGTH_CUT_CALL.test(message) && !options?.maxTokens && workerMaxTokens(role) < WORKER_MAX_TOKENS_CEILING) {
       return runner(args, { ...options, maxTokens: WORKER_MAX_TOKENS_CEILING });
     }
     throw error;
