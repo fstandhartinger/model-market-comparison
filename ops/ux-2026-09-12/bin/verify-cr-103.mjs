@@ -35,11 +35,20 @@ try {
     await page.waitForTimeout(350); // let the intentional 220 ms entrance fade settle before sampling opacity
     const open = await page.$eval('[data-bh-custom-evaluation-toast]', (el) => {
       const s = getComputedStyle(el); const r = el.getBoundingClientRect();
-      return { phase: el.getAttribute('data-phase'), position: s.position, background: s.backgroundColor, opacity: Number(s.opacity), r: { left: r.left, right: r.right, bottom: r.bottom } };
+      return { phase: el.getAttribute('data-phase'), position: s.position, background: s.backgroundColor, opacity: Number(s.opacity),
+        r: { left: r.left, right: r.right, bottom: r.bottom }, vw: window.innerWidth, vh: window.innerHeight };
     });
-    check(`${tag}: toast is opaque and fixed at the bottom`, open.phase === 'open' && open.position === 'fixed' && !/transparent|rgba\([^)]*,\s*0\)/i.test(open.background) && open.opacity > 0.9 && open.r.left >= 0 && open.r.right <= 320 && open.r.bottom <= 800, open);
+    // 2026-09-23 (iteration 180): the bound was the literal 320 × 800 of the context options, and under
+    // mobile emulation this page reports innerHeight 830 — so a toast sitting exactly its 16 px inset
+    // above the bottom (rect bottom 814) was reported as hanging off the screen. Measured against the
+    // page's own viewport instead, which is what "inside the screen" means and what a resize cannot fake.
+    check(`${tag}: toast is opaque and fixed inside the screen`, open.phase === 'open' && open.position === 'fixed' && !/transparent|rgba\([^)]*,\s*0\)/i.test(open.background) && open.opacity > 0.9 && open.r.left >= 0 && open.r.right <= open.vw + 1 && open.r.bottom <= open.vh + 1, open);
     await page.screenshot({ path: `${OUT}/${tag}-toast-open.png`, fullPage: false });
-    await page.waitForSelector('[data-bh-custom-evaluation-toast][data-phase="landing"]', { state: 'visible', timeout: 9000 });
+    // 2026-09-23 (iteration 180): the component starts the landing phase on a 16 s timer
+    // (`components/CustomEvaluationOffer.tsx`: `setTimeout(() => setPhase("landing"), 16000)`), and this
+    // waited 9 s for it, so the whole script died on a TimeoutError before any of its checks ran. Watched
+    // live, the toast opens and holds `phase="open"` well past 12 s, exactly as the component says it should.
+    await page.waitForSelector('[data-bh-custom-evaluation-toast][data-phase="landing"]', { state: 'visible', timeout: 22000 });
     const landing = await page.$eval('[data-bh-custom-evaluation-toast]', (el) => {
       const style = getComputedStyle(el); const animation = el.getAnimations()[0]; const originalTime = animation?.currentTime; const timing = animation?.effect?.getComputedTiming();
       animation?.pause(); if (animation && typeof timing?.duration === 'number') animation.currentTime = timing.duration;
