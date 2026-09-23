@@ -8025,3 +8025,25 @@ The run's other receipts, for the rows that were waiting on them:
   **no "multiplier text not found"**. That is D176's stated proof condition, met unattended, on a page carrying the two cache-hit exceptions that
   broke the old parser. It was implemented by claude-opus and this is claude-opus, so it stays `implemented` — but the receipt it was waiting for
   now exists, and a non-claude-opus engine can close it from that one line.
+
+### Iteration 180, part 12 — F-165(a) verified live, and the last two reds belong to the JevBench owner
+
+**F-165(a) live on both hosts at `d04bdc69`: `bin/verify-f165-a.mjs` 34/34 each**, at 1440 and 390 px in light and dark
+(`/opt/benchmarkheaven/state/ux-evidence/iter180-f165a/after-{canonical,legacy}/`). Against the **pre-fix** receipt from the same script on the
+same site (`before/`, `before-legacy/`: 18/28 on each host) that is the whole of the change: no two rendered rows on one sheet read the same, the
+launch rows name their runner, and the default sub-line is still absent. The axis-id move is proven rather than asserted — for three sampled
+launch boards the **new** id resolves `200` on `/api/benchmark-view` *and* `/api/benchmaxxing`, and the id it replaced returns `404` on both,
+so a stale deep link fails cleanly instead of resolving to a different group.
+
+**No regression on the surfaces it touches**, all at the deployed revision: `verify-f165-b` **18/18**, `verify-cr-127` **25/25**,
+`verify-cr-127-4` **33/33**, `verify-f163-f164` **87/87**, and `verify-fable-pass31-design` **44/44** on re-run. That pass-31 run is recorded
+honestly: the first attempt scored **39/40**, one `page.evaluate` hitting a null element and ending the `desktop_light` context early (hence 40
+checks, not 44); the re-run at the next deployed revision was 44/44 with no failures. A transient in the harness, not a regression — but it is the
+second flaky `page.evaluate` this workstream has recorded in that script's `desktop_light` context, so if it recurs it needs a settle, not a rerun.
+
+**The sweep's last two reds are JevBench, and they are not this workstream's to touch.** Both pin a superseded artifact revision:
+`verify-cr-107` throws immediately (`if (api.revision !== 'v1.2.7') throw`) and `verify-cr-115` is **18/32**, pinning v1.2.16's numbers
+(`zerank-2` 68.9/#12, `jev-1.13.0` 75.4, `smalljev` 62.4) while `/api/jevbench` now serves **v1.3.0** with different values and ranks
+(`zerank-2` 65.97/#13, `jev-1.13.0` 74.40, `smalljev` 27.44/#40). Re-pinning them means stating *why* each number moved between artifact
+revisions, and JevBench rows, versions and tags are under a publishing hold owned by another job — so this is handed to that owner rather than
+re-pinned here. Recorded with the exact values so the re-pin is a reading, not a re-derivation.
