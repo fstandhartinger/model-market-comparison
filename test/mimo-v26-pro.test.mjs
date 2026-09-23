@@ -16,10 +16,17 @@ test('CR-117: MiMo-V2.6-Pro identity, licence and exact standard route are sourc
   assert.equal(model.aa_metadata.license_name, 'MIT');
   assert.equal(model.aa_metadata.huggingface_url, 'https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL');
   assert.equal(model.aa_metadata.openrouter_api_id, 'xiaomi/mimo-v2.6-pro');
-  assert.deepEqual(model.offers.map((offer) => offer.or_model_id), ['xiaomi/mimo-v2.6-pro']);
-  assert.deepEqual(model.offers.map((offer) => [offer.input_per_1m, offer.output_per_1m, offer.cache_read_per_1m]), [[0.435, 0.87, 0.0036]]);
-  assert.equal(model.offers[0].context_length, 1048576);
-  assert.equal(model.offers[0].max_completion_tokens, 131072);
+  // Every route must be the exact standard OpenRouter identity, never a borrowed one. The number of
+  // routes is a live fact and grows: on 2026-09-23 DeepInfra joined Xiaomi's own endpoint, both under
+  // xiaomi/mimo-v2.6-pro (openrouter.ai/api/v1/models/xiaomi/mimo-v2.6-pro/endpoints).
+  assert.ok(model.offers.length >= 1);
+  assert.deepEqual([...new Set(model.offers.map((offer) => offer.or_model_id))], ['xiaomi/mimo-v2.6-pro']);
+  assert.deepEqual([...new Set(model.offers.map((offer) => offer.or_canonical_slug))], ['xiaomi/mimo-v2.6-pro-20260921']);
+  const firstParty = model.offers.find((offer) => offer.or_provider_slug === 'xiaomi');
+  assert.ok(firstParty);
+  assert.deepEqual([firstParty.input_per_1m, firstParty.output_per_1m, firstParty.cache_read_per_1m], [0.435, 0.87, 0.0036]);
+  assert.equal(firstParty.context_length, 1048576);
+  assert.equal(firstParty.max_completion_tokens, 131072);
 });
 
 test('CR-117: AA values and efficiency attach by exact UUID, never by a borrowed model identity', () => {

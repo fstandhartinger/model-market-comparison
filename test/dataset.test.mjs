@@ -367,11 +367,19 @@ test("confirmed non-US provider metadata reaches the provider directory", () => 
 
 test("Claude first-party snapshot contains every currently callable model", () => {
   assert.ok(claude.collected_at >= "2026-09-08");
-  assert.equal(claude.models.length, 13);
+  // 2026-09-23: Claude Opus 5.5 joined the pricing table (13 -> 14 callable models).
+  assert.equal(claude.models.length, 14);
   assert.ok(claude.models.some((model) => model.model_name === "Claude Mythos 5"));
   // 2026-09-08: official lifecycle confirms retirement on August 5.
   assert.equal(claude.models.some((model) => model.model_name === "Claude Opus 4.1"), false);
   assert.ok(claude.models.some((model) => model.model_name === "Claude Fable 5.1" && model.cache_read_per_1m_usd === 0.25));
+  // 2026-09-23 pricing page: Opus 5.5 at $4/$20 with the 0.05x cache-hit exception ($0.20 / MTok).
+  const opus55 = claude.models.find((model) => model.model_name === "Claude Opus 5.5");
+  assert.deepEqual(
+    [opus55?.model_id, opus55?.input_per_1m_usd, opus55?.output_per_1m_usd, opus55?.cache_read_per_1m_usd],
+    ["claude-opus-5-5", 4, 20, 0.2],
+  );
+  assert.equal(claude.pricing_modifiers?.prompt_cache_read_multiplier_exceptions?.["claude-opus-5-5"], 0.05);
 });
 
 test("Coding Agent snapshot is fresh and internally consistent", () => {
