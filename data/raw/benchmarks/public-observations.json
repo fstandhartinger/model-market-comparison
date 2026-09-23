@@ -229099,37 +229099,6 @@
       }
     },
     {
-      "id": "public:5289a09aa820aec8aeabf0b2",
-      "benchmark_id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
-      "subject": {
-        "source_id": "or-opus/anthropic/claude-opus-5 [max]",
-        "name": "or-opus/anthropic/claude-opus-5 [max]",
-        "model_id": null,
-        "variant": null,
-        "harness": null
-      },
-      "value": 10.72,
-      "unit": "percent of roofline",
-      "basis": "derived",
-      "source": {
-        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
-        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
-        "published_at": null,
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
-        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
-        "locator": "kernelbench_cuda_board; source row 9; or-opus/anthropic/claude-opus-5 [max]; field peak_fraction"
-      },
-      "protocol": "KernelBench-CUDA 01_glm52_fused_moe (RTX PRO 6000 Blackwell, environment v2_containerized): GLM-5.2 MoE (256+shared experts, top-8) fused forward, CUDA/PTX/CUTLASS only (Triton/vLLM banned); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"or-opus/anthropic/claude-opus-5 [max]\",\"harness\":\"or-opus\",\"stated_effort\":\"max\",\"stated_model\":\"anthropic/claude-opus-5\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260725_023403_or-opus_anthropic_claude-opus-5_01_glm52_fused_moe\",\"elapsed_seconds\":8302,\"problem\":\"01_glm52_fused_moe\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.1072,\"percent_of_roofline\":10.72}",
-      "comparison_key": null,
-      "source_basis": "measured",
-      "derivation": {
-        "formula": "Source value × 100 to registry units",
-        "inputs": [
-          0.1072
-        ]
-      }
-    },
-    {
       "id": "public:5977c2015dc607ab80f117cc",
       "benchmark_id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
       "subject": {
@@ -229316,37 +229285,6 @@
       }
     },
     {
-      "id": "public:b4d9054698928aaf0ad96f8e",
-      "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
-      "subject": {
-        "source_id": "codex/openai/gpt-6-astra-pro [xhigh]",
-        "name": "codex/openai/gpt-6-astra-pro [xhigh]",
-        "model_id": null,
-        "variant": null,
-        "harness": null
-      },
-      "value": 39.46,
-      "unit": "percent of roofline",
-      "basis": "derived",
-      "source": {
-        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
-        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
-        "published_at": null,
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
-        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
-        "locator": "kernelbench_cuda_board; source row 1; codex/openai/gpt-6-astra-pro [xhigh]; field peak_fraction"
-      },
-      "protocol": "KernelBench-CUDA 02_deepseek_nsa (RTX PRO 6000 Blackwell, environment v2_containerized): DeepSeek Native Sparse Attention block (block top-n + sparse attention); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"codex/openai/gpt-6-astra-pro [xhigh]\",\"harness\":\"codex\",\"stated_effort\":\"xhigh\",\"stated_model\":\"openai/gpt-6-astra-pro\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260906_222051_codex_openai_gpt-6-astra-pro_02_deepseek_nsa\",\"elapsed_seconds\":8549,\"problem\":\"02_deepseek_nsa\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.3946,\"percent_of_roofline\":39.46}",
-      "comparison_key": null,
-      "source_basis": "measured",
-      "derivation": {
-        "formula": "Source value × 100 to registry units",
-        "inputs": [
-          0.3946
-        ]
-      }
-    },
-    {
       "id": "public:b674f58f45cc16751579c9f7",
       "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
       "subject": {
@@ -229374,37 +229312,6 @@
         "formula": "Source value × 100 to registry units",
         "inputs": [
           0.5019
-        ]
-      }
-    },
-    {
-      "id": "public:3739cb9beba32d4a6817a984",
-      "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
-      "subject": {
-        "source_id": "grok/grok-4.5",
-        "name": "grok/grok-4.5",
-        "model_id": null,
-        "variant": null,
-        "harness": null
-      },
-      "value": 1.77,
-      "unit": "percent of roofline",
-      "basis": "derived",
-      "source": {
-        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
-        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
-        "published_at": null,
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
-        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
-        "locator": "kernelbench_cuda_board; source row 3; grok/grok-4.5; field peak_fraction"
-      },
-      "protocol": "KernelBench-CUDA 02_deepseek_nsa (RTX PRO 6000 Blackwell, environment v2_containerized): DeepSeek Native Sparse Attention block (block top-n + sparse attention); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"grok/grok-4.5\",\"harness\":\"grok\",\"stated_effort\":\"not stated\",\"stated_model\":\"grok-4.5\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260715_212751_grok_grok-4.5_02_deepseek_nsa\",\"elapsed_seconds\":4222,\"problem\":\"02_deepseek_nsa\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0177,\"percent_of_roofline\":1.77}",
-      "comparison_key": null,
-      "source_basis": "measured",
-      "derivation": {
-        "formula": "Source value × 100 to registry units",
-        "inputs": [
-          0.0177
         ]
       }
     },
@@ -229502,68 +229409,6 @@
       }
     },
     {
-      "id": "public:aba5f85faa10e47ee1ff293f",
-      "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
-      "subject": {
-        "source_id": "or-fable/anthropic/claude-fable-5-1 [max]",
-        "name": "or-fable/anthropic/claude-fable-5-1 [max]",
-        "model_id": null,
-        "variant": null,
-        "harness": null
-      },
-      "value": 106.27,
-      "unit": "percent of roofline",
-      "basis": "derived",
-      "source": {
-        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
-        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
-        "published_at": null,
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
-        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
-        "locator": "kernelbench_cuda_board; source row 7; or-fable/anthropic/claude-fable-5-1 [max]; field peak_fraction"
-      },
-      "protocol": "KernelBench-CUDA 02_deepseek_nsa (RTX PRO 6000 Blackwell, environment v2_containerized): DeepSeek Native Sparse Attention block (block top-n + sparse attention); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"or-fable/anthropic/claude-fable-5-1 [max]\",\"harness\":\"or-fable\",\"stated_effort\":\"max\",\"stated_model\":\"anthropic/claude-fable-5-1\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260904_041452_or-fable_anthropic_claude-fable-5-1_02_deepseek_nsa\",\"elapsed_seconds\":11230,\"problem\":\"02_deepseek_nsa\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":1.0627,\"percent_of_roofline\":106.27}",
-      "comparison_key": null,
-      "source_basis": "measured",
-      "derivation": {
-        "formula": "Source value × 100 to registry units",
-        "inputs": [
-          1.0627
-        ]
-      }
-    },
-    {
-      "id": "public:e32a6e42a9e1beef6a940cec",
-      "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
-      "subject": {
-        "source_id": "or-opus/anthropic/claude-opus-5 [max]",
-        "name": "or-opus/anthropic/claude-opus-5 [max]",
-        "model_id": null,
-        "variant": null,
-        "harness": null
-      },
-      "value": 103.67,
-      "unit": "percent of roofline",
-      "basis": "derived",
-      "source": {
-        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
-        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
-        "published_at": null,
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
-        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
-        "locator": "kernelbench_cuda_board; source row 9; or-opus/anthropic/claude-opus-5 [max]; field peak_fraction"
-      },
-      "protocol": "KernelBench-CUDA 02_deepseek_nsa (RTX PRO 6000 Blackwell, environment v2_containerized): DeepSeek Native Sparse Attention block (block top-n + sparse attention); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"or-opus/anthropic/claude-opus-5 [max]\",\"harness\":\"or-opus\",\"stated_effort\":\"max\",\"stated_model\":\"anthropic/claude-opus-5\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260725_023423_or-opus_anthropic_claude-opus-5_02_deepseek_nsa\",\"elapsed_seconds\":49430,\"problem\":\"02_deepseek_nsa\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":1.0367,\"percent_of_roofline\":103.67}",
-      "comparison_key": null,
-      "source_basis": "measured",
-      "derivation": {
-        "formula": "Source value × 100 to registry units",
-        "inputs": [
-          1.0367
-        ]
-      }
-    },
-    {
       "id": "public:1eeeb8b7ae6fa99a845de792",
       "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
       "subject": {
@@ -229622,37 +229467,6 @@
         "formula": "Source value × 100 to registry units",
         "inputs": [
           0.0945
-        ]
-      }
-    },
-    {
-      "id": "public:f77333580f42675f2967cb48",
-      "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
-      "subject": {
-        "source_id": "grok/grok-4.6 [xhigh]",
-        "name": "grok/grok-4.6 [xhigh]",
-        "model_id": null,
-        "variant": null,
-        "harness": null
-      },
-      "value": 7.960000000000001,
-      "unit": "percent of roofline",
-      "basis": "derived",
-      "source": {
-        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
-        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
-        "published_at": null,
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
-        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
-        "locator": "kernelbench_cuda_board; source row 12; grok/grok-4.6 [xhigh]; field peak_fraction"
-      },
-      "protocol": "KernelBench-CUDA 02_deepseek_nsa (RTX PRO 6000 Blackwell, environment v2_containerized): DeepSeek Native Sparse Attention block (block top-n + sparse attention); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"grok/grok-4.6 [xhigh]\",\"harness\":\"grok\",\"stated_effort\":\"xhigh\",\"stated_model\":\"grok-4.6\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260814_000307_grok_grok-4.6_02_deepseek_nsa\",\"elapsed_seconds\":3012,\"problem\":\"02_deepseek_nsa\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0796,\"percent_of_roofline\":7.960000000000001}",
-      "comparison_key": null,
-      "source_basis": "measured",
-      "derivation": {
-        "formula": "Source value × 100 to registry units",
-        "inputs": [
-          0.0796
         ]
       }
     },
@@ -291948,6 +291762,200 @@
         "sha256": "55e7d57be35dae9b8f127d96b090a9e0b29b145bdf24c298377177ee1ce26e6e",
         "retrieved_at": "2026-09-22T07:50:26Z"
       }
+    }
+  ],
+  "withdrawn_observations": [
+    {
+      "id": "public:5289a09aa820aec8aeabf0b2",
+      "benchmark_id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+      "subject": {
+        "source_id": "or-opus/anthropic/claude-opus-5 [max]",
+        "name": "or-opus/anthropic/claude-opus-5 [max]",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 10.72,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 9; or-opus/anthropic/claude-opus-5 [max]; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 01_glm52_fused_moe (RTX PRO 6000 Blackwell, environment v2_containerized): GLM-5.2 MoE (256+shared experts, top-8) fused forward, CUDA/PTX/CUTLASS only (Triton/vLLM banned); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"or-opus/anthropic/claude-opus-5 [max]\",\"harness\":\"or-opus\",\"stated_effort\":\"max\",\"stated_model\":\"anthropic/claude-opus-5\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260725_023403_or-opus_anthropic_claude-opus-5_01_glm52_fused_moe\",\"elapsed_seconds\":8302,\"problem\":\"01_glm52_fused_moe\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.1072,\"percent_of_roofline\":10.72}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.1072
+        ]
+      },
+      "withdrawn_reason": "D187 (2026-09-23): kernelbench.com re-adjudicated this run. Run 20260725_023403_or-opus_anthropic_claude-opus-5_01_glm52_fused_moe is still listed and still annotated \"clean\", but the board's own result flipped from correct=true with peak_fraction=0.1072 in the 2026-09-21T07:48:52Z capture (sha256 8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724) to correct=false with peak_fraction=null in the 2026-09-22T07:49:28Z capture (sha256 2528bb46dd9c2ef1d294e66d6466ec332809abd0428f915a489ecaf1cf283a98), and the 2026-09-23T10:19:08Z capture (sha256 60b9c889b38bb61b136c24f12dc2721d94ae61ade2b7c1a916ad4ec4098b159b) repeats it. The registry protocol for this board scores only correct audited cells, so the source now publishes no value for this cell and this row asserted a number the maintainer had retracted. Withdrawn rather than re-dated: a bridged \"no longer published\" estimate would keep asserting the retracted value. The row stays here with its evidence, and the ingest republishes it as a withheld rejection carrying its locator."
+    },
+    {
+      "id": "public:b4d9054698928aaf0ad96f8e",
+      "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+      "subject": {
+        "source_id": "codex/openai/gpt-6-astra-pro [xhigh]",
+        "name": "codex/openai/gpt-6-astra-pro [xhigh]",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 39.46,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 1; codex/openai/gpt-6-astra-pro [xhigh]; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 02_deepseek_nsa (RTX PRO 6000 Blackwell, environment v2_containerized): DeepSeek Native Sparse Attention block (block top-n + sparse attention); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"codex/openai/gpt-6-astra-pro [xhigh]\",\"harness\":\"codex\",\"stated_effort\":\"xhigh\",\"stated_model\":\"openai/gpt-6-astra-pro\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260906_222051_codex_openai_gpt-6-astra-pro_02_deepseek_nsa\",\"elapsed_seconds\":8549,\"problem\":\"02_deepseek_nsa\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.3946,\"percent_of_roofline\":39.46}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.3946
+        ]
+      },
+      "withdrawn_reason": "D187 (2026-09-23): kernelbench.com re-adjudicated this run. Run 20260906_222051_codex_openai_gpt-6-astra-pro_02_deepseek_nsa is still listed and still annotated \"clean\", but the board's own result flipped from correct=true with peak_fraction=0.3946 in the 2026-09-21T07:48:52Z capture (sha256 8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724) to correct=false with peak_fraction=null in the 2026-09-22T07:49:28Z capture (sha256 2528bb46dd9c2ef1d294e66d6466ec332809abd0428f915a489ecaf1cf283a98), and the 2026-09-23T10:19:08Z capture (sha256 60b9c889b38bb61b136c24f12dc2721d94ae61ade2b7c1a916ad4ec4098b159b) repeats it. The registry protocol for this board scores only correct audited cells, so the source now publishes no value for this cell and this row asserted a number the maintainer had retracted. Withdrawn rather than re-dated: a bridged \"no longer published\" estimate would keep asserting the retracted value. The row stays here with its evidence, and the ingest republishes it as a withheld rejection carrying its locator."
+    },
+    {
+      "id": "public:3739cb9beba32d4a6817a984",
+      "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+      "subject": {
+        "source_id": "grok/grok-4.5",
+        "name": "grok/grok-4.5",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 1.77,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 3; grok/grok-4.5; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 02_deepseek_nsa (RTX PRO 6000 Blackwell, environment v2_containerized): DeepSeek Native Sparse Attention block (block top-n + sparse attention); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"grok/grok-4.5\",\"harness\":\"grok\",\"stated_effort\":\"not stated\",\"stated_model\":\"grok-4.5\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260715_212751_grok_grok-4.5_02_deepseek_nsa\",\"elapsed_seconds\":4222,\"problem\":\"02_deepseek_nsa\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0177,\"percent_of_roofline\":1.77}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.0177
+        ]
+      },
+      "withdrawn_reason": "D187 (2026-09-23): kernelbench.com re-adjudicated this run. Run 20260715_212751_grok_grok-4.5_02_deepseek_nsa is still listed and still annotated \"clean\", but the board's own result flipped from correct=true with peak_fraction=0.0177 in the 2026-09-21T07:48:52Z capture (sha256 8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724) to correct=false with peak_fraction=null in the 2026-09-22T07:49:28Z capture (sha256 2528bb46dd9c2ef1d294e66d6466ec332809abd0428f915a489ecaf1cf283a98), and the 2026-09-23T10:19:08Z capture (sha256 60b9c889b38bb61b136c24f12dc2721d94ae61ade2b7c1a916ad4ec4098b159b) repeats it. The registry protocol for this board scores only correct audited cells, so the source now publishes no value for this cell and this row asserted a number the maintainer had retracted. Withdrawn rather than re-dated: a bridged \"no longer published\" estimate would keep asserting the retracted value. The row stays here with its evidence, and the ingest republishes it as a withheld rejection carrying its locator."
+    },
+    {
+      "id": "public:aba5f85faa10e47ee1ff293f",
+      "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+      "subject": {
+        "source_id": "or-fable/anthropic/claude-fable-5-1 [max]",
+        "name": "or-fable/anthropic/claude-fable-5-1 [max]",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 106.27,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 7; or-fable/anthropic/claude-fable-5-1 [max]; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 02_deepseek_nsa (RTX PRO 6000 Blackwell, environment v2_containerized): DeepSeek Native Sparse Attention block (block top-n + sparse attention); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"or-fable/anthropic/claude-fable-5-1 [max]\",\"harness\":\"or-fable\",\"stated_effort\":\"max\",\"stated_model\":\"anthropic/claude-fable-5-1\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260904_041452_or-fable_anthropic_claude-fable-5-1_02_deepseek_nsa\",\"elapsed_seconds\":11230,\"problem\":\"02_deepseek_nsa\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":1.0627,\"percent_of_roofline\":106.27}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          1.0627
+        ]
+      },
+      "withdrawn_reason": "D187 (2026-09-23): kernelbench.com re-adjudicated this run. Run 20260904_041452_or-fable_anthropic_claude-fable-5-1_02_deepseek_nsa is still listed and still annotated \"clean\", but the board's own result flipped from correct=true with peak_fraction=1.0627 in the 2026-09-21T07:48:52Z capture (sha256 8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724) to correct=false with peak_fraction=null in the 2026-09-22T07:49:28Z capture (sha256 2528bb46dd9c2ef1d294e66d6466ec332809abd0428f915a489ecaf1cf283a98), and the 2026-09-23T10:19:08Z capture (sha256 60b9c889b38bb61b136c24f12dc2721d94ae61ade2b7c1a916ad4ec4098b159b) repeats it. The registry protocol for this board scores only correct audited cells, so the source now publishes no value for this cell and this row asserted a number the maintainer had retracted. Withdrawn rather than re-dated: a bridged \"no longer published\" estimate would keep asserting the retracted value. The row stays here with its evidence, and the ingest republishes it as a withheld rejection carrying its locator."
+    },
+    {
+      "id": "public:e32a6e42a9e1beef6a940cec",
+      "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+      "subject": {
+        "source_id": "or-opus/anthropic/claude-opus-5 [max]",
+        "name": "or-opus/anthropic/claude-opus-5 [max]",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 103.67,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 9; or-opus/anthropic/claude-opus-5 [max]; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 02_deepseek_nsa (RTX PRO 6000 Blackwell, environment v2_containerized): DeepSeek Native Sparse Attention block (block top-n + sparse attention); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"or-opus/anthropic/claude-opus-5 [max]\",\"harness\":\"or-opus\",\"stated_effort\":\"max\",\"stated_model\":\"anthropic/claude-opus-5\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260725_023423_or-opus_anthropic_claude-opus-5_02_deepseek_nsa\",\"elapsed_seconds\":49430,\"problem\":\"02_deepseek_nsa\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":1.0367,\"percent_of_roofline\":103.67}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          1.0367
+        ]
+      },
+      "withdrawn_reason": "D187 (2026-09-23): kernelbench.com re-adjudicated this run. Run 20260725_023423_or-opus_anthropic_claude-opus-5_02_deepseek_nsa is still listed and still annotated \"clean\", but the board's own result flipped from correct=true with peak_fraction=1.0367 in the 2026-09-21T07:48:52Z capture (sha256 8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724) to correct=false with peak_fraction=null in the 2026-09-22T07:49:28Z capture (sha256 2528bb46dd9c2ef1d294e66d6466ec332809abd0428f915a489ecaf1cf283a98), and the 2026-09-23T10:19:08Z capture (sha256 60b9c889b38bb61b136c24f12dc2721d94ae61ade2b7c1a916ad4ec4098b159b) repeats it. The registry protocol for this board scores only correct audited cells, so the source now publishes no value for this cell and this row asserted a number the maintainer had retracted. Withdrawn rather than re-dated: a bridged \"no longer published\" estimate would keep asserting the retracted value. The row stays here with its evidence, and the ingest republishes it as a withheld rejection carrying its locator."
+    },
+    {
+      "id": "public:f77333580f42675f2967cb48",
+      "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+      "subject": {
+        "source_id": "grok/grok-4.6 [xhigh]",
+        "name": "grok/grok-4.6 [xhigh]",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 7.960000000000001,
+      "unit": "percent of roofline",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+        "retrieved_at": "2026-09-18T20:46:23.832372+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-cr82-2/8f09f0e63ca3685e9713.gz",
+        "sha256": "8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724",
+        "locator": "kernelbench_cuda_board; source row 12; grok/grok-4.6 [xhigh]; field peak_fraction"
+      },
+      "protocol": "KernelBench-CUDA 02_deepseek_nsa (RTX PRO 6000 Blackwell, environment v2_containerized): DeepSeek Native Sparse Attention block (block top-n + sparse attention); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"grok/grok-4.6 [xhigh]\",\"harness\":\"grok\",\"stated_effort\":\"xhigh\",\"stated_model\":\"grok-4.6\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260814_000307_grok_grok-4.6_02_deepseek_nsa\",\"elapsed_seconds\":3012,\"problem\":\"02_deepseek_nsa\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0796,\"percent_of_roofline\":7.960000000000001}",
+      "comparison_key": null,
+      "source_basis": "measured",
+      "derivation": {
+        "formula": "Source value × 100 to registry units",
+        "inputs": [
+          0.0796
+        ]
+      },
+      "withdrawn_reason": "D187 (2026-09-23): kernelbench.com re-adjudicated this run. Run 20260814_000307_grok_grok-4.6_02_deepseek_nsa is still listed and still annotated \"clean\", but the board's own result flipped from correct=true with peak_fraction=0.0796 in the 2026-09-21T07:48:52Z capture (sha256 8f09f0e63ca3685e97134c637bd0a02939ccf4ed1f89cc53bb6a88cde7616724) to correct=false with peak_fraction=null in the 2026-09-22T07:49:28Z capture (sha256 2528bb46dd9c2ef1d294e66d6466ec332809abd0428f915a489ecaf1cf283a98), and the 2026-09-23T10:19:08Z capture (sha256 60b9c889b38bb61b136c24f12dc2721d94ae61ade2b7c1a916ad4ec4098b159b) repeats it. The registry protocol for this board scores only correct audited cells, so the source now publishes no value for this cell and this row asserted a number the maintainer had retracted. Withdrawn rather than re-dated: a bridged \"no longer published\" estimate would keep asserting the retracted value. The row stays here with its evidence, and the ingest republishes it as a withheld rejection carrying its locator."
     }
   ]
 }

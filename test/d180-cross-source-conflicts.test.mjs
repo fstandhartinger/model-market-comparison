@@ -72,7 +72,9 @@ test('a withheld locator suppresses the estimate a retained state would otherwis
   const obs = [ob('a::default', 0.51), ob('b::default', 0.41), ob('c::default', 0.31), ob('d::default', 0.21)];
   assert.equal(datedEstimates(obs, registry, states).filter((e) => e.model_id === 'gpt-6-astra::max').length, 1,
     'without the withheld locator the retained row becomes an estimate');
-  assert.equal(datedEstimates(obs, registry, states, [locator]).filter((e) => e.model_id === 'gpt-6-astra::max').length, 0);
+  assert.equal(datedEstimates(obs, registry, states, [{ benchmark_id: B, locator }]).filter((e) => e.model_id === 'gpt-6-astra::max').length, 0);
+  // D187: the locator is withheld on its own board only — the same string on another board is another row.
+  assert.equal(datedEstimates(obs, registry, states, [{ benchmark_id: 'other::1', locator }]).filter((e) => e.model_id === 'gpt-6-astra::max').length, 1);
 });
 
 test('the four Epoch identities still say which statistic they carry', async () => {

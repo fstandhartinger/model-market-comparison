@@ -7175,10 +7175,10 @@ CR-130 is complete on `main` at `b0b77191`. Re-read the CR brief and PROGRESS le
 | CR-131.5 | verified | `/opt/benchmarkheaven/state/ux-evidence/review-20260923T150004Z/`; current `npm test`, `tsc`, `npm run build` receipts in Iteration 183 | Current gates are green: build-dataset completed, 1,199 tests with 1,198 pass / 0 fail / 1 skipped, typecheck clean, and production build clean; CR-131 focused tests pass. |
 | CR-131.6 | verified | `ops/ux-2026-09-12/bin/verify-cr-131-space.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter184-cr131-space/verification.json` (43/43); `/opt/benchmarkheaven/state/ux-evidence/iter184-cr131-live/{benchmarkheaven,model-market-comparison}/verification.json` (49/49 per host) | The Space was published by `codex:session-bf53a2dad3` and is at `09a8f819f85243bf9c4d052fd829e09aeb96d5c2`. Independently rechecked by claude-opus, a different engine: `index.html` fetches `https://benchmarkheaven.com/api/jevbench/v1.4` and falls back to the committed snapshot only in the `catch`, the rendered app reports `Live from benchmarkheaven.com` with revision v1.4.0, 71 rows and the approved top five at 1440 and 390 px in light and dark, and with the live fetch aborted the fallback renders the same 71 rows and the same top five while labelling itself a dated snapshot. Every expected value is re-derived from the pinned artifact; the API bytes still hash to the artifact's sha. |
 | CR-131.7 | verified | `ops/ux-2026-09-12/bin/verify-cr-131-space.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter184-cr131-space/verification.json` | Repeated against the **live** Space by a different engine: all 308 sealed IDs and 308 96-character phrases (both the string and the structured `state` shape, plus each item's `question`) scanned over the Space's `index.html`, `snapshot.json`, `style.css`, `README.md` and rendered output, the live `/api/jevbench/v1.4` bytes and the live `/jev-models` HTML. Zero ID matches, zero phrase matches, zero exact item-level field names. The receipt carries a positive control — the same matcher finds a planted ID and phrase in an in-memory string — so a zero is a scan, not a broken scanner. No matched or sealed string is printed, written or retained. |
-| CR-132.1 | implemented | `components/JevCompareV14.tsx`; c6e7cb9e; `/home/flori/jobs/jev-models-v14-page-fixes-20260923/shots/live/*-compare.png` | Four-radar two-system compare on the v1.4 board; default Jev 1.13.0 vs #2; `?compare=a,b`. |
-| CR-132.2 | implemented | `lib/jevbench-v14.mjs` (`jevV14RowNote`); `components/JevModelsV14.tsx`; `test/jev-models-v14-page-fixes.test.mjs`; `/home/flori/jobs/jev-models-v14-page-fixes-20260923/shots/live/*-note-open.png` | † only for row-specific notes, expandable in place, glued to the last word of the name. |
-| CR-132.3 | implemented | `components/JevModelsV14.tsx`; `app/jev-models/page.tsx`; c6e7cb9e; `/home/flori/jobs/jev-models-v14-page-fixes-20260923/shots/live/*-chart.png` | v1.3 bar chart restored with v1.4 scores; evergreen sections back outside the history, on v1.4 data. |
-| CR-132.4 | implemented | `/home/flori/jobs/jev-models-v14-page-fixes-20260923/shots/live/` (52 screenshots, both hosts); `/home/flori/jobs/jev-models-v14-page-fixes-20260923/live-pass32-*.log` (303/303 per host); `/home/flori/jobs/jev-models-v14-page-fixes-20260923/live-cr131-*.log` (48/49: only `live/revision`, pinned to the pre-CR-132 commit) | 390/360/1440, light+dark, both hosts; no overflow; sticky name column; legible radars; evergreen OG. |
+| CR-132.1 | verified | `components/JevCompareV14.tsx`; c6e7cb9e; `/home/flori/jobs/jev-models-v14-page-fixes-20260923/shots/live/*-compare.png` | Four-radar two-system compare on the v1.4 board; default Jev 1.13.0 vs #2; `?compare=a,b`. **Sign-off (iteration 185, Kimi K3 `chutes/moonshotai/Kimi-K3-TEE`, non-claude, non-implementer, run from `/tmp/iter185-signoff`): ACCEPTED** — it ran `ops/ux-2026-09-12/bin/verify-cr-132.mjs` itself, **248/248 per host** at 1440/390/360 × light/dark, and re-checked the claim outside the verifier with curl (66 † markers over 76 rows, 4 radars, identical v1.4 API bytes on both hosts and locally). Evidence `/opt/benchmarkheaven/state/ux-evidence/iter185-signoff-kimi/`. |
+| CR-132.2 | verified | `lib/jevbench-v14.mjs` (`jevV14RowNote`); `components/JevModelsV14.tsx`; `test/jev-models-v14-page-fixes.test.mjs`; `/home/flori/jobs/jev-models-v14-page-fixes-20260923/shots/live/*-note-open.png` | † only for row-specific notes, expandable in place, glued to the last word of the name. **Sign-off (iteration 185, Kimi K3 `chutes/moonshotai/Kimi-K3-TEE`, non-claude, non-implementer, run from `/tmp/iter185-signoff`): ACCEPTED** — it ran `ops/ux-2026-09-12/bin/verify-cr-132.mjs` itself, **248/248 per host** at 1440/390/360 × light/dark, and re-checked the claim outside the verifier with curl (66 † markers over 76 rows, 4 radars, identical v1.4 API bytes on both hosts and locally). Evidence `/opt/benchmarkheaven/state/ux-evidence/iter185-signoff-kimi/`. |
+| CR-132.3 | verified | `components/JevModelsV14.tsx`; `app/jev-models/page.tsx`; c6e7cb9e; `/home/flori/jobs/jev-models-v14-page-fixes-20260923/shots/live/*-chart.png` | v1.3 bar chart restored with v1.4 scores; evergreen sections back outside the history, on v1.4 data. **Sign-off (iteration 185, Kimi K3 `chutes/moonshotai/Kimi-K3-TEE`, non-claude, non-implementer, run from `/tmp/iter185-signoff`): ACCEPTED** — it ran `ops/ux-2026-09-12/bin/verify-cr-132.mjs` itself, **248/248 per host** at 1440/390/360 × light/dark, and re-checked the claim outside the verifier with curl (66 † markers over 76 rows, 4 radars, identical v1.4 API bytes on both hosts and locally). Evidence `/opt/benchmarkheaven/state/ux-evidence/iter185-signoff-kimi/`. |
+| CR-132.4 | verified | `/home/flori/jobs/jev-models-v14-page-fixes-20260923/shots/live/` (52 screenshots, both hosts); `/home/flori/jobs/jev-models-v14-page-fixes-20260923/live-pass32-*.log` (303/303 per host); `/home/flori/jobs/jev-models-v14-page-fixes-20260923/live-cr131-*.log` (48/49: only `live/revision`, pinned to the pre-CR-132 commit) | 390/360/1440, light+dark, both hosts; no overflow; sticky name column; legible radars; evergreen OG. **Sign-off (iteration 185, Kimi K3 `chutes/moonshotai/Kimi-K3-TEE`, non-claude, non-implementer, run from `/tmp/iter185-signoff`): ACCEPTED** — it ran `ops/ux-2026-09-12/bin/verify-cr-132.mjs` itself, **248/248 per host** at 1440/390/360 × light/dark, and re-checked the claim outside the verifier with curl (66 † markers over 76 rows, 4 radars, identical v1.4 API bytes on both hosts and locally). Evidence `/opt/benchmarkheaven/state/ux-evidence/iter185-signoff-kimi/`. |
 
 ## Review gate 20260923T150004Z (codex-luna, non-implementer)
 
@@ -8367,7 +8367,9 @@ every claude-opus item below.
 |---|---|---|---|
 | D183 | open | `/home/flori/jobs/bh-frontier-update-20260922/RESULT.md`; `ops/ux-2026-09-12/bin/verify-cr-128.mjs` (`rank/frontier/report-matches-its-own-dataset`); `/opt/benchmarkheaven/state/ux-evidence/iter182-cr128-5/cr128-5-rank-correction.txt` | The frontier report's Composite ranking reads #25 and #101 for `gpt-6-sol::max` and `gpt-6-luna::max`; the dataset it names gives #26 (tied with 3) and #103 (tied with 2), and it names no ties and no denominator. Not the dataset-position defect — the column is genuinely score-ordered. Left open, not silently repaired: the report is a finished job's artifact, the correction of record is written, and the verifier holds the red. |
 | D184 | implemented | `ops/daily/gauntlet.mjs` (`callWorker`, `WORKER_MAX_TOKENS_CEILING`, `defaultRunner`'s `maxTokens`); `test/daily-gauntlet-gate.test.mjs` (two new cases); run `2026-09-23T09-57-20-158Z-186582` `workers/worker-failure-1790158254112-218278.json` and `…-1790158265110-225592.json` | A producer completion cut off at 16,384 is not a bad answer, it is no answer, and it ended the round that paid for it. The default cap is unchanged; only a call that ran into it is repeated once at the runner's maximum, the critic is held out (already at the ceiling), and the strike stands so the retry goes to the next route. **Both observed cuts spent 16,384 of 16,384 on reasoning at `effort: low`**, so this buys round survival, not writing room. Implemented by claude-opus; needs a non-claude-opus sign-off and an unattended run. |
-| D185 | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter182-pass32/{canonical-verifier.log,hub-width-sweep.txt}`; agent board thread #5 | `/jev-models` needs 385 px of layout width, so it overflows anything between the 375 and 390 px breakpoints — a 390 px desktop window with a classic scrollbar lays out at 380 and overflows by 5 px. **No phone width overflows** (320 → −10, 360 → +1, 375 → −2, 390 → −5, 414 → −10 with scrollbars hidden); the first posting of this said "mobile overflow" and was wrong. Separately, long project URLs in the † notes do not break at 320 px. Owned by the CR-132 writer; reported, not fixed. |
+| D185 | verified | `/opt/benchmarkheaven/state/ux-evidence/iter185-signoff-kimi/d185/verification.json` (14/14 per host, 320→1440 px, run by Kimi K3 as part of the iteration 185 sign-off); `/opt/benchmarkheaven/state/ux-evidence/iter184-d185/verification.json`; `/opt/benchmarkheaven/state/ux-evidence/iter182-pass32/{canonical-verifier.log,hub-width-sweep.txt}`; agent board thread #5 | `/jev-models` needs 385 px of layout width, so it overflows anything between the 375 and 390 px breakpoints — a 390 px desktop window with a classic scrollbar lays out at 380 and overflows by 5 px. **No phone width overflows** (320 → −10, 360 → +1, 375 → −2, 390 → −5, 414 → −10 with scrollbars hidden); the first posting of this said "mobile overflow" and was wrong. Separately, long project URLs in the † notes do not break at 320 px. Owned by the CR-132 writer; reported, not fixed. |
+| D186 | implemented | `data/raw/benchmarks/public-observations.json` (`source_label_restatements`); `scripts/ingest-benchmark-scores.mjs`; `data/raw/benchmarks/collection-plan.json`; `data/SCRAPING.md`; `test/d186-source-label-restatement.test.mjs` | MCP Atlas renamed row 25 "Nemotron 3 Ultra (xHigh)" → "(thinking)" on 2026-09-22 without re-running it (one field of one of 34 rows differs between the two captures; score 63.1, rank 18, CI upper 3 and createdAt unchanged). The row keeps its public ID and value under the new label; the old label is republished as a withheld rejection so the retained states cannot bridge the same measurement back — without that the estimate count grew by 18. Implemented by claude-opus; needs a non-claude sign-off. |
+| D187 | implemented | `data/raw/benchmarks/public-observations.json` (`withdrawn_observations`); `lib/benchmark-history.mjs` (`datedEstimates` locator scope); `lib/benchmark-scores.mjs`; `test/d187-kernelbench-retracted.test.mjs`; `test/coding-sources.test.mjs` | kernelbench.com re-adjudicated six runs on 2026-09-22 — same run ids, still `clean`, but `correct: true` + a `peak_fraction` became `correct: false` + `peak_fraction: null`, so the board publishes no value for those cells while we served all six as measured (106.27 and 103.67 among them). Withdrawn with their evidence and withheld from the bridge. The withheld-locator scope had to be fixed with it: the KernelBench locator is row-numbered per board, so one withholding removed 19 legitimate estimates on the other three boards, while OpenRouter's `own_data row …` locator must still reach its cost twin. Implemented by claude-opus; needs a non-claude sign-off. The `deepseek-nsa` arm still fails its coverage guard by design — see iteration 185. |
 
 **CR-132 (/jev-models v1.4 page fixes, 23 Sep 2026, Claude Opus 5.5, job `jev-models-v14-page-fixes-20260923`).** Live on both hosts at `c6e7cb9e`.
 Cause of "† note on every row": the v1.4 artifact gives all 76 systems a footnote, most of it shared provenance ("already on the live v1.3.0 board", "re-run on a throwaway RunPod pod …"), so `footnote &&` was always true. `jevV14RowNote` drops the shared segments: 66 rows keep a real note. The marker now sits next to the last word of the name inside a no-wrap span and opens in place. CR-131 had not deleted the v1.3 sections; it moved all of them into the collapsed history. The bar chart, the four-radar compare and the evergreen sections are back on the v1.4 data, and the v1.3-only material stays in the history. The same change fixes the 5 px overflow at 390 px with classic scrollbars reported by iteration 182 (the long eyebrow; the short phone label is back) and makes long URLs and module names wrap at 320 px.
@@ -8526,3 +8528,148 @@ Implementation and live verification are complete; detailed receipts follow.
 - **Both hosts:** canonical and legacy preview routes return 200, identical rendered HTML hash `ff14b99ed9095a07337b9a7fb8144b77bc015e80b60ad48594016f1150529755`, and `/api/meta` reports the deployed revision. Both set robots and Googlebot to `noindex, nofollow`; zero route self/navigation links; zero sitemap entries.
 - **Sealed-data check:** scanned 179 sealed records and 493 nontrivial sealed strings/identifiers against each live page; zero matches. Evidence in `/home/flori/jobs/image-jev-bench-continue-20260923/site-live-verification.json`.
 - **Release status:** CR-133's preview is live for Florian's review only. The candidate is not an approved release; no public announcement was made. Independent scoring critique remains incomplete after three `Incomplete completion (length)` results, so the scorer verdict is still open.
+
+---
+
+## Iteration 185 — 2026-09-23, claude-opus
+
+Three things: the sign-offs CR-132 and D185 were owed, closed by a non-claude engine against a new live receipt;
+and two source changes nobody had read, found in the daily run's own `source-health.md` and fixed — one board
+restated a row's label, another retracted six values.
+
+The `/jev-models` page and its metadata stayed with `codex:session-818a9299ae`, which had taken the shared writer
+for CR-133 (board #170). This iteration added only `ops/ux-2026-09-12/bin/verify-cr-132.mjs`, data files, two tests
+and this ledger; it touched no file under `app/`, `components/` or `lib/jevbench-*`. Declared on board #172 before
+starting, and pushed after `git pull --rebase` on codex's `77d3aae4`.
+
+### Part 1 — CR-132.1–.4 and D185: an independent receipt, then a non-claude sign-off
+
+CR-132 shipped with a focused test suite and screenshots, but no live receipt that re-derives what the page must
+show. `ops/ux-2026-09-12/bin/verify-cr-132.mjs` is that receipt: **248/248 on both hosts** at 1440×900, 390×844 and
+360×800 in light and dark. Every expectation comes from the pinned v1.4 artifact through the same
+`lib/jevbench-v14.mjs` the page uses — the default compare pair, the legend scores, the sealed tier and both
+family radars, the top-20 bar scores, and the set of rows that may carry a † (`jevV14RowNote`, not a count typed
+into the verifier). The live `/api/jevbench/v1.4` bytes are hashed against the pinned artifact first, so a host
+serving a different board cannot pass by agreeing with a literal.
+
+Four of its checks measure things a class name cannot prove, and each exists because the naive version passes
+vacuously:
+
+- **The † never stands alone on a line.** Not "the span has `white-space: nowrap`": the marker's own rect must
+  overlap the last line box of the word before it, measured with a `Range` over that text node. The no-wrap span
+  itself is no use — the closed note is a laid-out block inside it, so the span reports four client rects.
+- **A closed note is not on the page.** `getBoundingClientRect()` gives the closed `<details>` body a 195×108 box,
+  because Chromium hides it through `content-visibility` on `::details-content` rather than `display: none`.
+  `checkVisibility()` is the honest question, and the check then clicks the marker and requires the row's own name
+  cell to grow — "opens in place" means in the row, not in a popup somewhere else.
+- **The name column really is sticky.** Read as computed style on the live page *and* exercised: scroll the wrap
+  240 px sideways and the cell must stop at the container's left edge (it starts at 37/49 px, behind the rank
+  column, so "unchanged" would have been the wrong assertion). At 1440 px the table fits and there is nothing to
+  scroll; the check records which of the two cases it saw instead of passing silently.
+- **Nothing crosses the viewport edge** — measured with the document clip removed, like `verify-d185-width.mjs`,
+  because a clipped document reports no overflow whatever it contains.
+
+**Sign-off (Kimi K3 `chutes/moonshotai/Kimi-K3-TEE`, non-claude, non-implementer, run from `/tmp/iter185-signoff`):
+ACCEPTED.** It ran both verifiers itself — `verify-cr-132.mjs` **248/248** and `verify-d185-width.mjs` **14/14**
+across 320→1440 px on both hosts — and then checked the claim from outside them with `curl`: 66 † markers over 76
+rows and 4 radars on each host, the v1.4 API bytes byte-identical on both hosts and equal to the pinned artifact
+(`006ebff5…`), and 76 systems / 71 ranked with the approved top five. Evidence and its verdict:
+`/opt/benchmarkheaven/state/ux-evidence/iter185-signoff-kimi/` (`VERDICT-A.md`, `TASK-A.txt`, `cr132/`, `d185/`,
+`kimi-transcript-A.log`).
+
+### Part 2 — D186: MCP Atlas restated a row label, and a rename alone would have invented 18 estimates
+
+`reports/source-health.md` in the 09:57 daily run listed `mcp-atlas::snapshot-2026-09-21` as failing since
+2026-09-22 with **"Prior public identities disappeared"** — two days unread. Replayed offline against the run's own
+captures: Scale renamed row 25 from **"Nemotron 3 Ultra (xHigh)"** to **"Nemotron 3 Ultra (thinking)"**. Between the
+21 and 22 September captures **exactly one field of exactly one of the 34 rows differs**, and score 63.1, rank 18,
+`confidenceInterval_upper` 3 and `createdAt` 2026-09-17T15:00:58.000Z are unchanged; the 23 September capture
+repeats the new label. The board's own row count never moved.
+
+So it is neither a withdrawal nor a second identity, and both of those would have been wrong: a withdrawal record
+says the maintainer dropped the row, and re-adding the new label as its own row would publish one measurement
+twice. The row keeps its public ID `public:166ad482b48375ffcde7daff` and its value, follows the source label, and
+cites the first capture that proves that label. The previous label is recorded in `public-observations.json` under
+a new `source_label_restatements` array with both captures, their digests and the reason.
+
+**The second half is the fix, not bookkeeping.** Renaming alone made `historical.estimates` grow 1,702 → 1,720:
+18 bridged "no longer published" values at exactly the withdrawn 63.1, one per retained state — the same trap D180
+documented. The ingest now republishes a restatement as a **withheld rejection carrying the old locator**, and with
+that in place the estimate count is unchanged and the dataset diff is the one row plus that rejection. Both ingest
+guards (the record must name a published row under its new label; it must carry a reason, a locator and both
+digests) were checked by hand against a corrupted record.
+
+`test/d186-source-label-restatement.test.mjs` re-derives the claim rather than trusting the prose: it re-parses both
+captures with the plan's own parser, verifies their digests, and asserts the single differing field, the unchanged
+score/rank/`createdAt`, the withheld locator, and that no estimate for the old label exists.
+
+### Part 3 — D187: kernelbench.com retracted six values we were still publishing
+
+The same health report showed three KernelBench-CUDA arms failing since 2026-09-22. The recorded diagnoses were
+each one step short, and the real cause is the same for all of them: **kernelbench.com re-adjudicated six runs.**
+The run ids are unchanged and still annotated `clean`, but the board's own result flipped from `correct: true` with
+a `peak_fraction` to **`correct: false` with `peak_fraction: null`** in the 22 September capture, and today's repeats
+it. The registry protocol for these boards scores only correct audited cells, so the source now publishes no value
+for those cells — while the site was still serving all six as measured percent-of-roofline numbers, including
+**106.27 for Claude Fable 5.1 (max)** and **103.67 for Claude Opus 5 (max)** on `kernelbench-cuda-deepseek-nsa`.
+Not a stale number: a number the maintainer had retracted.
+
+Two things worth recording, because the first guess was wrong on both:
+
+- **The published allowlist was not the cause.** `published_runs.json` is a curation list ("to retire one, remove
+  it"), and it was the obvious suspect. It never dropped these runs: it only *gained* four on 22 September and four
+  more on 23 September, and all six run ids are still in it today. The retraction is in the adjudication, not the
+  allowlist.
+- **A withheld locator was reaching three boards it had no business on.** The six rows are withdrawn with their
+  evidence and republished as withheld rejections (D180's mechanism), but the KernelBench locator is row-numbered
+  *per board* — `"kernelbench_cuda_board; source row 9; or-opus/anthropic/claude-opus-5 [max]; field peak_fraction"`
+  is row 9 of each of the four problems. Withholding it unqualified silently removed **19 legitimate "no longer
+  published" estimates** on the other three boards. Qualifying every locator by benchmark then broke the opposite
+  case: OpenRouter's parser gives an accuracy row and its cost twin the *same* locator, so withholding an
+  implausible GPQA accuracy must still withhold the cost derived from that row — 12 Nova Micro cost estimates came
+  back. `datedEstimates` now draws the distinction the file already drew for `rowLocator`: a locator that names one
+  source row (`own_data row model_permaslug=…`) reaches every board; any other locator holds only on its own board.
+  With that rule the dataset diff is exactly the six rows' estimates and nothing else.
+
+`test/d187-kernelbench-retracted.test.mjs` pins all of it: the six rows are exactly the ones the board retracted
+(scored before, unscored after, same run id, digests re-derived from the bytes and required to appear in each
+withdrawal reason), every row that still has a board value is still published, none of the six is published or
+bridged back, and the two locator scopes are asserted against each other so neither can be dropped.
+`test/coding-sources.test.mjs` accepted only `public-withdrawals.json` as a reason for a joined map entry to have no
+observation; it now accepts a reasoned `withdrawn_observations` entry too, which is what D180 and D187 write.
+
+### Gates and evidence
+
+`node scripts/build-dataset.mjs` clean (865 models, 670 families, 96 providers, 3,032 offers); `npm test`
+**1,212 pass / 0 fail / 1 skipped** (1,213 tests); `npx tsc --noEmit -p .` clean; the prebuild score/evidence guard
+clean (18,607 observations, 191 source files). Dataset diffs were read leaf by leaf before each commit, and the
+estimate multiset before/after, because a count alone hides an equal-sized swap.
+
+### Status changes
+
+| ID | From | To | Why |
+|---|---|---|---|
+| CR-132.1–.4 | implemented | verified | 248/248 per host on a receipt that re-derives from the pinned artifact, re-run and accepted by Kimi K3 (non-claude, non-implementer) with its own outside checks. **Sign-off (iteration 185, Kimi K3 `chutes/moonshotai/Kimi-K3-TEE`, non-claude, non-implementer, run from `/tmp/iter185-signoff`): ACCEPTED** — it ran `ops/ux-2026-09-12/bin/verify-cr-132.mjs` itself, **248/248 per host** at 1440/390/360 × light/dark, and re-checked the claim outside the verifier with curl (66 † markers over 76 rows, 4 radars, identical v1.4 API bytes on both hosts and locally). Evidence `/opt/benchmarkheaven/state/ux-evidence/iter185-signoff-kimi/`. |
+| D185 | implemented | verified | Same sign-off: `verify-d185-width.mjs` 14/14 across 320→1440 px on both hosts, run by the signer. |
+| D186 | — | implemented | MCP Atlas label restatement recorded, ingest guard added, estimate regression closed; needs a non-claude sign-off. |
+| D187 | — | implemented | Six retracted KernelBench values withdrawn; withheld-locator scope corrected; needs a non-claude sign-off. |
+
+### Still open after this iteration
+
+`CR-34.5`, `CR-62.4` (Florian's decisions), `CR-37.1`/`CR-37.3`, `CR-85.2` (sources), `CR-38.1`, `CR-73.5`,
+`CR-85.1` (an unattended run), F-165(a)'s rekey half, D183, the scheduled-run half of D174–D179/D181, the
+non-claude sign-offs still owed on D180, D186 and D187, and CR-133 (codex's, in flight). Because X6's list is not
+clear, no acceptance marker is appended.
+
+**Two source follow-ups this iteration deliberately did not take**, both recorded here so the next writer has the
+measurement rather than the symptom:
+
+1. **`kernelbench-cuda-deepseek-nsa` will still fail its coverage guard.** Its published rows drop from 13 to 8
+   while the board now carries 10 with values, and `ops/daily/public-candidate.py` fails closed with
+   "Coverage shrank / no scores". That guard exists for good reason and unlocking it is a decision about how much
+   shrinkage a re-adjudication may cause, not a repair — it needs its own reviewed change, and the arm is honest
+   while it fails.
+2. **Seven `anthropic-…` identities fail every day with "Response exceeds 12MB bound" and five `openai-…` ones with
+   HTTP 403**, none of which has ever collected (`Last OK: —`). These were ingested manually with retained captures
+   (CR-126.4 records the 403), so the daily attempt is noise that hides a real failure; whether they belong in the
+   daily plan at all is a plan decision, not a fix.

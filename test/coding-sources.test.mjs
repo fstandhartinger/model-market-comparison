@@ -158,9 +158,16 @@ test('identity map: exact existing configurations; measured joins visible; self-
       assert.equal(o.identity_review.critic_model, entry.review.critic_model);
     } else assert.equal(o.subject.model_id, null, 'without a receipt the row stays unjoined');
   }
-  // A row its maintainer took off the board (reviewed in public-withdrawals.json) keeps its join rule, so it
-  // joins again if it is re-published; until then it has no observation.
-  const withdrawn = new Set(json('data/raw/benchmarks/public-withdrawals.json').withdrawals.map((w) => `${w.benchmark_id}#${w.source_id}`));
+  // A row its maintainer took off the board keeps its join rule, so it joins again if it is re-published; until
+  // then it has no observation. Two reviewed records can say so, and both must be accepted here: a withdrawal in
+  // public-withdrawals.json (the board dropped the row; the value stays visible as a dated history estimate), and
+  // a `withdrawn_observations` entry with its reason (D180/D187 — the source no longer stands behind the value, so
+  // the row keeps its evidence in the file and the ingest withholds it from the history bridge too).
+  const withdrawn = new Set([
+    ...json('data/raw/benchmarks/public-withdrawals.json').withdrawals.map((w) => `${w.benchmark_id}#${w.source_id}`),
+    ...(json('data/raw/benchmarks/public-observations.json').withdrawn_observations ?? [])
+      .filter((w) => w.withdrawn_reason).map((w) => `${w.benchmark_id}#${w.subject.source_id}`),
+  ]);
   for (const entry of map.entries.filter((e) => e.basis !== 'self_reported')) {
     assert.ok([...IDS, ...EPOCH_RUN, ...SLUG_BOARDS].some((id) => entry.benchmark_id === id || entry.benchmark_id.startsWith(`${id}::`)),
       `the map covers only the reviewed boards: ${entry.benchmark_id}`);
