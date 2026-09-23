@@ -1025,3 +1025,12 @@ Source: CR-20260923b in `03-CHANGE-REQUESTS-VERBATIM.md` and the release job's `
 - **CR-131.5 Regression and build gates.** Add tests for the v1.4 revision, pinned artifact hash, exact approved top five, API exposure flag, retained disclosures, “What changed” section, and evergreen metadata. Run the full test suite, typecheck and production build.
 - **CR-131.6 Publish and verify.** Use the normal main-branch change-request flow. Verify page and API on `benchmarkheaven.com` and `model-market-comparison.app.mintapis.com`, with the exact approved top five before publication (from the pinned artifact) and after publication. Publish the Hugging Face Space only after the v1.4 API is live; it must read the live API and show revision v1.4.0 and the same top five.
 - **CR-131.7 Integrity and evidence.** Repeat the local-only sealed-ID/text scan against the final repo, API, page and Space source/output. Record zero matches without printing sealed strings. Record commit, API hash, test/build logs and both-host/Space checks in the release job.
+
+## CR-132 — /jev-models v1.4 page fixes
+
+Source: CR-20260923c in `03-CHANGE-REQUESTS-VERBATIM.md`. Ordered by Florian before the evergreen-preview CR and the SEO push.
+
+- **CR-132.1 Compare view.** Restore the two-system compare on the v1.4 board with four radars: the four axes, accuracy per tier including sealed, v1.2 hard-tier accuracy by family, sealed accuracy by family (published aggregates only). Default Jev 1.13.0 vs #2; selectable pair; pair kept in the URL.
+- **CR-132.2 Row notes.** A † marker only where a row has a row-specific note (not the shared provenance every row carries); note reachable by tap/click and tooltip; marker never wraps alone.
+- **CR-132.3 v1.3 sections.** Restore the v1.3 hero bar chart with v1.4 scores, and move findings, alternatives/FAQ, costs, availability, method/tiers, limits and credit out of the collapsed history, reading v1.4 data. v1.3-only material (weightings, per-task grid, topic radars, held-out diagnostic) stays in the labelled history.
+- **CR-132.4 Mobile/desktop QA.** 390×844, 360×800 and 1440 px, light and dark, both hosts: no page overflow, table usable (sticky name column), radars legible, no orphaned markers; screenshots saved. OG/X metadata stays evergreen.

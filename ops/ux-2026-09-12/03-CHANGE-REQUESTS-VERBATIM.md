@@ -1597,3 +1597,19 @@ Florian, 23 Sep 2026, verbatim excerpt from `/home/flori/jobs/jevbench-v14-relea
 > Do not add any new third-party entrant in this release. If the Sandy execution or sealed-data integrity check fails, stop before publishing and message Florian.
 
 Approved formula details and the exact top five are recorded in the same job prompt. Florian's separately queued 23 Sep evergreen-preview request is recorded in `/home/flori/jobs/jev-models-evergreen-preview-20260923/PROMPT.md`; CR-131 must not publish changing ranks or scores in the live board's Open Graph/X preview.
+
+
+## CR-20260923c — /jev-models v1.4 page fixes (Florian, 23 Sep 2026, via job prompt)
+
+Verbatim from `/home/flori/jobs/jev-models-v14-page-fixes-20260923/PROMPT.md`:
+
+> # /jev-models v1.4 page: restore what v1.3 had + fixes (Florian, 23 Sep, top priority for the site)
+>
+> The v1.4 board went live via CR-131 (job /home/flori/jobs/jevbench-v14-release2-20260923). Florian's feedback:
+> 1. **Compare view is missing.** Bring back comparing two models, now with FOUR radar charts per comparison, like the private lab artifact (scratch reference: /home/flori/jobs/jevbench-v14-refresh-20260922/review/ and the lab data): (a) the four axes Intelligence/Calibration/Speed/Cost, (b) accuracy per tier incl. sealed, (c) v1.2 hard-topic accuracy, (d) sealed-topic accuracy (aggregates only — never item text/golds). Default pair e.g. Jev 1.13.0 vs #2; selectable pair; shareable URL state.
+> 2. **"† note" on every table row:** find out why it appears on every row (probably a generic footnote marker rendered for all rows). Show a marker only where a row has a real row-specific note; the note text must be reachable (tooltip/expand). Never let the marker wrap (white-space: nowrap on marker+label, no orphaned "†" on its own line).
+> 3. **Sections from the v1.3 page are gone.** Diff the v1.3 page (git history of app/jev-models before CR-131, and the live v1.3 route if still present) against v1.4 and restore every section that existed in v1.3 (e.g. the bar chart, methodology/tiers, topics, cost/speed explanations, how-to-submit, FAQ — whatever was there), updated to v1.4 data. **Most important: the bar chart from v1.3** — restore it with v1.4 scores.
+> 4. **Test mobile portrait** (390×844 and 360×800), plus desktop, light and dark, both hosts: no horizontal page overflow, table usable (sticky name column or horizontal scroll inside the table only), radars legible, no wrapped markers. Save screenshots.
+>
+> Process: Benchmark Heaven CR process (CR id = max+1, single writer). If jevbench-v14-release2 still holds the writer lease, coordinate via the agent board (`agent-board`), and take the lease as soon as it's free — this CR goes before the SEO push (tell jevbench-seo-hn-push on the board) and before jev-models-evergreen-preview's version-pinned route. Keep link previews evergreen (no ranks/scores in OG). Tests + typecheck + build; verify both hosts live.
+> Telegram to Florian when live (plain English, German is fine too since he wrote German): what changed, with 2–3 screenshots (`notify now --requested --photo`), including one mobile portrait.

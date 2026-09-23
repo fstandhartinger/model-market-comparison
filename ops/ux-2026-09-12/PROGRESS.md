@@ -7175,6 +7175,10 @@ CR-130 is complete on `main` at `b0b77191`. Re-read the CR brief and PROGRESS le
 | CR-131.5 | verified | `/opt/benchmarkheaven/state/ux-evidence/review-20260923T150004Z/`; current `npm test`, `tsc`, `npm run build` receipts in Iteration 183 | Current gates are green: build-dataset completed, 1,199 tests with 1,198 pass / 0 fail / 1 skipped, typecheck clean, and production build clean; CR-131 focused tests pass. |
 | CR-131.6 | open | Both Benchmark Heaven hosts verified; public Hugging Face Space still at `7f217c49e2da31178e82c0a2de4d17b933511e68` | Canonical and legacy pages/APIs are live and match. The Space still needs a repository-scoped write token; available HF token is inference-only. Complete live Space publication and display verification after access is available. |
 | CR-131.7 | open | `/home/flori/jobs/jevbench-v14-release2-20260923/INTEGRITY.md` | Local-only scan passed for source, both live site/API hosts, and the v1.4 Space candidate; repeat against the live Space after it is updated. |
+| CR-132.1 | open | `components/JevCompareV14.tsx` | Four-radar two-system compare on the v1.4 board; default Jev 1.13.0 vs #2; `?compare=a,b`. |
+| CR-132.2 | open | `lib/jevbench-v14.mjs` (`jevV14RowNote`); `components/JevModelsV14.tsx` | † only for row-specific notes, expandable in place, glued to the last word of the name. |
+| CR-132.3 | open | `components/JevModelsV14.tsx`; `app/jev-models/page.tsx` | v1.3 bar chart restored with v1.4 scores; evergreen sections back outside the history, on v1.4 data. |
+| CR-132.4 | open | `/home/flori/jobs/jev-models-v14-page-fixes-20260923/shots/` | 390/360/1440, light+dark, both hosts; no overflow; sticky name column; legible radars; evergreen OG. |
 
 ## Review gate 20260923T150004Z (codex-luna, non-implementer)
 
