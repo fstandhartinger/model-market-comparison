@@ -7173,8 +7173,8 @@ CR-130 is complete on `main` at `b0b77191`. Re-read the CR brief and PROGRESS le
 | CR-131.3 | verified | `components/JevModelsV14.tsx`; `test/jevbench-v14.test.mjs`; post-deploy CR-131 receipt above | Both hosts render “What changed in v1.4”, the approved blends, gap penalty, harmonic score, gates, API exposure flag, aggregate-only disclosure and no page errors. |
 | CR-131.4 | verified | `app/jev-models/opengraph-image.tsx`; `test/jevbench-v14.test.mjs`; post-deploy CR-131 receipt above | Evergreen `og4` metadata/artwork has no pinned ranks/counts; both hosts return a 200 PNG at exactly 1200×630 and the declared metadata agrees. |
 | CR-131.5 | verified | `/opt/benchmarkheaven/state/ux-evidence/review-20260923T150004Z/`; current `npm test`, `tsc`, `npm run build` receipts in Iteration 183 | Current gates are green: build-dataset completed, 1,199 tests with 1,198 pass / 0 fail / 1 skipped, typecheck clean, and production build clean; CR-131 focused tests pass. |
-| CR-131.6 | open | Both Benchmark Heaven hosts verified; public Hugging Face Space still at `7f217c49e2da31178e82c0a2de4d17b933511e68` | Canonical and legacy pages/APIs are live and match. The Space still needs a repository-scoped write token; available HF token is inference-only. Complete live Space publication and display verification after access is available. |
-| CR-131.7 | open | `/home/flori/jobs/jevbench-v14-release2-20260923/INTEGRITY.md` | Local-only scan passed for source, both live site/API hosts, and the v1.4 Space candidate; repeat against the live Space after it is updated. |
+| CR-131.6 | verified | `ops/ux-2026-09-12/bin/verify-cr-131-space.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter184-cr131-space/verification.json` (43/43); `/opt/benchmarkheaven/state/ux-evidence/iter184-cr131-live/{benchmarkheaven,model-market-comparison}/verification.json` (49/49 per host) | The Space was published by `codex:session-bf53a2dad3` and is at `09a8f819f85243bf9c4d052fd829e09aeb96d5c2`. Independently rechecked by claude-opus, a different engine: `index.html` fetches `https://benchmarkheaven.com/api/jevbench/v1.4` and falls back to the committed snapshot only in the `catch`, the rendered app reports `Live from benchmarkheaven.com` with revision v1.4.0, 71 rows and the approved top five at 1440 and 390 px in light and dark, and with the live fetch aborted the fallback renders the same 71 rows and the same top five while labelling itself a dated snapshot. Every expected value is re-derived from the pinned artifact; the API bytes still hash to the artifact's sha. |
+| CR-131.7 | verified | `ops/ux-2026-09-12/bin/verify-cr-131-space.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter184-cr131-space/verification.json` | Repeated against the **live** Space by a different engine: all 308 sealed IDs and 308 96-character phrases (both the string and the structured `state` shape, plus each item's `question`) scanned over the Space's `index.html`, `snapshot.json`, `style.css`, `README.md` and rendered output, the live `/api/jevbench/v1.4` bytes and the live `/jev-models` HTML. Zero ID matches, zero phrase matches, zero exact item-level field names. The receipt carries a positive control — the same matcher finds a planted ID and phrase in an in-memory string — so a zero is a scan, not a broken scanner. No matched or sealed string is printed, written or retained. |
 | CR-132.1 | implemented | `components/JevCompareV14.tsx`; c6e7cb9e; `/home/flori/jobs/jev-models-v14-page-fixes-20260923/shots/live/*-compare.png` | Four-radar two-system compare on the v1.4 board; default Jev 1.13.0 vs #2; `?compare=a,b`. |
 | CR-132.2 | implemented | `lib/jevbench-v14.mjs` (`jevV14RowNote`); `components/JevModelsV14.tsx`; `test/jev-models-v14-page-fixes.test.mjs`; `/home/flori/jobs/jev-models-v14-page-fixes-20260923/shots/live/*-note-open.png` | † only for row-specific notes, expandable in place, glued to the last word of the name. |
 | CR-132.3 | implemented | `components/JevModelsV14.tsx`; `app/jev-models/page.tsx`; c6e7cb9e; `/home/flori/jobs/jev-models-v14-page-fixes-20260923/shots/live/*-chart.png` | v1.3 bar chart restored with v1.4 scores; evergreen sections back outside the history, on v1.4 data. |
@@ -8367,9 +8367,112 @@ every claude-opus item below.
 |---|---|---|---|
 | D183 | open | `/home/flori/jobs/bh-frontier-update-20260922/RESULT.md`; `ops/ux-2026-09-12/bin/verify-cr-128.mjs` (`rank/frontier/report-matches-its-own-dataset`); `/opt/benchmarkheaven/state/ux-evidence/iter182-cr128-5/cr128-5-rank-correction.txt` | The frontier report's Composite ranking reads #25 and #101 for `gpt-6-sol::max` and `gpt-6-luna::max`; the dataset it names gives #26 (tied with 3) and #103 (tied with 2), and it names no ties and no denominator. Not the dataset-position defect — the column is genuinely score-ordered. Left open, not silently repaired: the report is a finished job's artifact, the correction of record is written, and the verifier holds the red. |
 | D184 | implemented | `ops/daily/gauntlet.mjs` (`callWorker`, `WORKER_MAX_TOKENS_CEILING`, `defaultRunner`'s `maxTokens`); `test/daily-gauntlet-gate.test.mjs` (two new cases); run `2026-09-23T09-57-20-158Z-186582` `workers/worker-failure-1790158254112-218278.json` and `…-1790158265110-225592.json` | A producer completion cut off at 16,384 is not a bad answer, it is no answer, and it ended the round that paid for it. The default cap is unchanged; only a call that ran into it is repeated once at the runner's maximum, the critic is held out (already at the ceiling), and the strike stands so the retry goes to the next route. **Both observed cuts spent 16,384 of 16,384 on reasoning at `effort: low`**, so this buys round survival, not writing room. Implemented by claude-opus; needs a non-claude-opus sign-off and an unattended run. |
-| D185 | open | `/opt/benchmarkheaven/state/ux-evidence/iter182-pass32/{canonical-verifier.log,hub-width-sweep.txt}`; agent board thread #5 | `/jev-models` needs 385 px of layout width, so it overflows anything between the 375 and 390 px breakpoints — a 390 px desktop window with a classic scrollbar lays out at 380 and overflows by 5 px. **No phone width overflows** (320 → −10, 360 → +1, 375 → −2, 390 → −5, 414 → −10 with scrollbars hidden); the first posting of this said "mobile overflow" and was wrong. Separately, long project URLs in the † notes do not break at 320 px. Owned by the CR-132 writer; reported, not fixed. |
+| D185 | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter182-pass32/{canonical-verifier.log,hub-width-sweep.txt}`; agent board thread #5 | `/jev-models` needs 385 px of layout width, so it overflows anything between the 375 and 390 px breakpoints — a 390 px desktop window with a classic scrollbar lays out at 380 and overflows by 5 px. **No phone width overflows** (320 → −10, 360 → +1, 375 → −2, 390 → −5, 414 → −10 with scrollbars hidden); the first posting of this said "mobile overflow" and was wrong. Separately, long project URLs in the † notes do not break at 320 px. Owned by the CR-132 writer; reported, not fixed. |
 
 **CR-132 (/jev-models v1.4 page fixes, 23 Sep 2026, Claude Opus 5.5, job `jev-models-v14-page-fixes-20260923`).** Live on both hosts at `c6e7cb9e`.
 Cause of "† note on every row": the v1.4 artifact gives all 76 systems a footnote, most of it shared provenance ("already on the live v1.3.0 board", "re-run on a throwaway RunPod pod …"), so `footnote &&` was always true. `jevV14RowNote` drops the shared segments: 66 rows keep a real note. The marker now sits next to the last word of the name inside a no-wrap span and opens in place. CR-131 had not deleted the v1.3 sections; it moved all of them into the collapsed history. The bar chart, the four-radar compare and the evergreen sections are back on the v1.4 data, and the v1.3-only material stays in the history. The same change fixes the 5 px overflow at 390 px with classic scrollbars reported by iteration 182 (the long eyebrow; the short phone label is back) and makes long URLs and module names wrap at 320 px.
 Gates: `npm test` (node22, strip-types) 1,202 / 1,201 pass / 0 fail / 1 skipped; `tsc` clean; `npm run build` rc 0. Live: `verify-fable-pass32-f167-f170.mjs` 303/303 on both hosts; `verify-cr-131-live.mjs` 48/49 on both hosts (only `live/revision`, which is pinned to the pre-CR-132 commit). OG/X metadata stays evergreen. A different engine must still set `verified`.
 
+
+---
+
+## Iteration 184 — 2026-09-23, claude-opus
+
+Three things this iteration: the two open JevBench Space rows closed by a different engine than the one that published
+the Space, D180 decided and fixed, and D185 measured rather than assumed.
+
+### Part 1 — CR-131.6/.7: the live Hugging Face Space, rechecked by a different engine
+
+`codex:session-bf53a2dad3` published the Space and asked on agent board #5 (#160) that the next site writer close the two
+rows. That is a legitimate request — the publisher may not verify its own work — and this iteration is claude-opus, so the
+recheck is independent.
+
+`ops/ux-2026-09-12/bin/verify-cr-131-space.mjs` is the receipt: **43/43**, evidence under
+`/opt/benchmarkheaven/state/ux-evidence/iter184-cr131-space/`. Every expected value is re-derived from the pinned
+`data/raw/benchmarks/jevbench/v1.4/jevbench-v1.4-results.json` — no board number is typed into the verifier.
+
+What it actually establishes, beyond "the page looks right":
+
+- **It reads the live API.** CR-131.6's wording matters here: the Space is a *static* Space, so "reads the live API" is a
+  claim about `index.html`, not about the SDK. `fetch(LIVE_URL)` targets `https://benchmarkheaven.com/api/jevbench/v1.4`
+  and `snapshot.json` is reached only from that promise's `catch`. The rendered page confirms it at runtime: the live
+  branch writes "Live from benchmarkheaven.com — revision v1.4.0", the fallback writes a warning, and all four rendered
+  contexts (1440 and 390 px × light and dark) carry the live note.
+- **The fallback cannot show a different board.** With the live request aborted in the browser, the committed snapshot
+  renders the same 71 rows and the same approved top five, and says of itself that it is a dated snapshot. A fallback that
+  quietly served stale ranks would be the same defect CR-131.4 exists to prevent.
+- **CR-131.7's scan has a positive control.** All 308 sealed IDs and 308 96-character phrases were scanned over the
+  Space's four files, its rendered output, the live API bytes and the live `/jev-models` HTML: zero matches. The first
+  draft of the scanner silently covered only 260 of 308 items — 48 carry a structured `state` object rather than a string —
+  which is exactly how a scan reports a clean zero it never performed. Both shapes are now flattened the same way, each
+  item's `question` is scanned too, and the receipt plants an ID and a phrase in an in-memory string to prove the matcher
+  fires. No sealed or matched string is printed, written or retained.
+
+`verify-cr-131-live.mjs` was also re-run and is now **49/49 on both hosts**. Its one red was its own: `EXPECTED_REVISION`
+was a hard-coded commit from before CR-132. It now re-derives from `git rev-parse HEAD`, because the check means "the host
+serves the revision that contains this code", and a literal can only rot.
+
+### Part 2 — D180 decided: two Epoch files, two statistics, one identity
+
+D180 asked which it was: the same measurement published twice, or two series. **It is two series, and the proof is in the
+two retained captures** (`/opt/benchmarkheaven/state/ux-evidence/iter184-d180/two-epoch-statistics.txt`).
+
+Of the 180 configurations GPQA Diamond has in both `eci_benchmarks.csv` and the 18 Sep hub export, **none agree**, and
+**130 equal `(best − 0.25) / (1 − 0.25)` exactly**. The implied baseline is 0.25 for GPQA Diamond — its four choices —
+0.0496 for Chess Puzzles and 0.0922 for Mystery Game Puzzles. `performance` is Epoch's chance-normalised ECI input
+statistic with a per-benchmark baseline. A refit moves values; a rounding is small; a later capture disagrees on some
+rows. A transform that holds exactly on 130 of 180 rows is none of those.
+
+So the five `cr128:` rows sourced from that file are **withdrawn**, not re-dated: they were published on identities whose
+`scoring.metric` says "Best score across scorers", and re-admitting the ECI statistic needs its own versioned identity
+rather than one that promises the other column. Three of the five were the visible defect — `epoch-gpqa-diamond`,
+`chess-puzzles` and `mystery-game-puzzles` each carried two different measured values for `gpt-6-astra::max`, and
+`latestScores` showed the wrong one. `otis-mock-aime::2024-2025` loses its only row and is now an empty board, which is
+the honest state: we hold no valid measurement for it.
+
+Nothing was deleted. The rows stay in `manual-board-observations.json` under `withdrawn_observations` with their evidence
+and a reason, and the ingest republishes each as a withheld rejection carrying its locator. **That last part is the whole
+fix, not bookkeeping.** Withdrawing the rows alone made `historical.estimates` grow 1,702 → 1,705: three bridged
+"estimated" values for `frontiermath-tier-4` at exactly the withdrawn 0.976, because the retained 23 Sep states record
+that we published it and the bridge reads a disappearance as "the source stopped reporting". With the withheld locators in
+place the estimate count is unchanged and the dataset diff is the five observations and nothing else.
+
+`withholdConflictingSourceRows` could not have caught this: it groups by source URL on purpose, so a duplicate arriving
+from a *second* file is invisible to it. `test/d180-cross-source-conflicts.test.mjs` closes that gap with a dataset
+invariant — no identity may publish two differing measured values for one model configuration, whatever source each came
+from — plus the withdrawal's own shape and a unit test that a withheld locator suppresses the estimate. The invariant is
+**red on the previous dataset** (the three pairs above) and green on this one.
+
+`test/epoch-cr54-2.test.mjs` had pinned those three joins as expected output. It now asserts the empty list with the reason
+written next to it. That is the one edit of this kind here, and it is the page that was wrong, not the test's shape.
+
+### Part 3 — D185 measured, both halves
+
+`ops/ux-2026-09-12/bin/verify-d185-width.mjs`, **14/14** across both hosts at 320/360/375/390/414/768/1440 px with classic
+scrollbars and every `<details>` note opened: `/opt/benchmarkheaven/state/ux-evidence/iter184-d185/verification.json`.
+
+The measurement matters more than the number. `6b4a5d76` added `overflow-x: clip` to the document, and a clipped document
+reports `scrollWidth === clientWidth` whatever it contains — so a receipt that measured the document alone would pass
+vacuously and prove nothing. This one removes the clip in the page, re-measures, and reports any element crossing the
+viewport's right edge outside an intentional scroll container. Nothing does, at any width, including the long project URLs
+in the † notes at 320 px that the review gate left open. So the clip is not hiding a defect, and both halves of D185 are
+fixed on the live site.
+
+CR-132 and this D185 receipt are both claude work, so D185 stays `implemented`: a non-claude engine still has to sign it
+off, together with CR-132.1–.4.
+
+### Status changes
+
+| ID | From | To | Why |
+|---|---|---|---|
+| CR-131.6 | open | verified | 43/43 independent live Space receipt by a different engine than the publisher. |
+| CR-131.7 | open | verified | The sealed scan repeated against the live Space, with a positive control, zero matches. |
+| D180 | open | implemented | Decided against the two captures and fixed; needs a non-claude-opus sign-off. |
+| D185 | open | implemented | 14/14 unclipped width receipt on both hosts; needs a non-claude sign-off with CR-132. |
+
+### Still open after this iteration
+
+`CR-34.5`, `CR-62.4` (Florian's decisions), `CR-37.1`/`CR-37.3`, `CR-85.2` (sources), `CR-38.1`, `CR-73.5`, `CR-85.1` (an
+unattended run), F-165(a)'s rekey half, D183, the scheduled-run half of D174–D179/D181, and the non-claude sign-offs owed
+on every claude-opus row including CR-132.1–.4, D180 and D185. The queued evergreen-preview CR remains
+`codex:session-818a9299ae`'s, waiting on the v1.4.1 outcome (board #163); this iteration did not take it.

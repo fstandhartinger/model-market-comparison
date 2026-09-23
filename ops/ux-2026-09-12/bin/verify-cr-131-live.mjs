@@ -5,12 +5,16 @@
 import { createHash } from 'node:crypto';
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
+import { execFileSync } from 'node:child_process';
 
 const require = createRequire('/home/flori/n8n-local/');
 const { chromium } = require('playwright');
 const BASE = (process.argv[2] || 'https://benchmarkheaven.com').replace(/\/$/, '');
 const OUT = process.argv[3] || `/opt/benchmarkheaven/state/ux-evidence/cr131-live-${new URL(BASE).hostname}`;
-const EXPECTED_REVISION = process.argv[4] || '6b4a5d7635443830e64b442fd857b792ead60eb4';
+// Re-derived from the checkout, never pinned to a past commit: the check asks whether the
+// host serves the revision that contains the code this receipt is about.
+const EXPECTED_REVISION = process.argv[4]
+  || execFileSync('git', ['rev-parse', 'HEAD'], { cwd: new URL('../../../', import.meta.url).pathname }).toString().trim();
 const ROOT = new URL('../../../', import.meta.url).pathname.replace(/\/$/, '');
 const ARTIFACT = `${ROOT}/data/raw/benchmarks/jevbench/v1.4/jevbench-v1.4-results.json`;
 await mkdir(OUT, { recursive: true });
