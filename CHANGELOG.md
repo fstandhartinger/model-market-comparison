@@ -4,6 +4,20 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-23 — A page per JevBench system (CR-129)
+
+Every system in the JevBench v1.3.0 artifact (52 rows — ranked, honorable mention and
+partial) now has its own indexable, statically generated page at
+`/jev-models/<system-key>` (e.g. `/jev-models/semif-qwen3.5-4b`, `/jev-models/laya`),
+built entirely from fields already published on `/jev-models`: score, rank or
+not-ranked reason, the four axes, cost with its estimate/announced caveat, and a
+one-line comparison to Jev 1.13.0's score. `WebPage` + `BreadcrumbList` JSON-LD only
+(no `Product`/`AggregateRating`/`Review` — a benchmark result is not a user review).
+The `/jev-models` hub now links every system into its own page, grouped ranked /
+honorable mention / partial, and `/sitemap.ts` gets one entry per system.
+`/jev-models/multimodal-preview` stays excluded, as before. No JevBench row, rank or
+version changed — this only renders data already live in the committed artifact.
+
 ## 2026-09-22 — GPT-6 Sol and GPT-6 Luna: OpenAI's own launch numbers (CR-126)
 
 **Six new self-reported observations; no field, path or unit changed, and no existing value touched.** OpenAI

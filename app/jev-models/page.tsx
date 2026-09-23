@@ -183,6 +183,33 @@ export default async function JevModelsPage() {
     {/* CR-94: two-system radars — the four score axes and accuracy by subject topic (completes CR-90.3). */}
     <JevRadars ranked={view.ranked} honorable={view.honorable} partial={view.partial} topics={topics} />
 
+    {/* CR-129 (2026-09-23): a dedicated page per system (Google Trends shows readers searching system names
+        directly, e.g. "semif", "laya model") — this links the hub into each of those new leaf pages. */}
+    <section className="mt-10 max-w-5xl" aria-labelledby="jev-systems-heading" data-bh-jev-system-links>
+      <h2 id="jev-systems-heading" className="text-2xl font-semibold">Browse every JevBench system</h2>
+      <p className="bh-muted mt-2 max-w-4xl">Each system below has its own page with its score, axes, cost and how it compares to Jev.</p>
+      <div className="mt-4 grid gap-4 md:grid-cols-3">
+        <div>
+          <h3 className="text-sm font-semibold text-gray-400">Ranked ({view.ranked.length})</h3>
+          <ul className="mt-2 space-y-1 text-sm">
+            {view.ranked.map((r) => <li key={r.key}><a className="text-accent underline" href={`/jev-models/${r.key}`}>{short(r.display)}</a></li>)}
+          </ul>
+        </div>
+        {view.honorable.length > 0 && <div>
+          <h3 className="text-sm font-semibold text-gray-400">Honorable mentions ({view.honorable.length})</h3>
+          <ul className="mt-2 space-y-1 text-sm">
+            {view.honorable.map((r) => <li key={r.key}><a className="text-accent underline" href={`/jev-models/${r.key}`}>{short(r.display)}</a></li>)}
+          </ul>
+        </div>}
+        {view.partial.length > 0 && <div>
+          <h3 className="text-sm font-semibold text-gray-400">Partial runs ({view.partial.length})</h3>
+          <ul className="mt-2 space-y-1 text-sm">
+            {view.partial.map((r) => <li key={r.key}><a className="text-accent underline" href={`/jev-models/${r.key}`}>{short(r.display)}</a></li>)}
+          </ul>
+        </div>}
+      </div>
+    </section>
+
     <section className="mt-10 max-w-5xl" aria-labelledby="jev-alternatives-heading" data-bh-jev-seo-guide>
       <h2 id="jev-alternatives-heading" className="text-2xl font-semibold">Jev alternatives, open source and self-hosting</h2>
       <p className="bh-muted mt-2 max-w-4xl">The table above compares the tested systems, not marketing claims. These are the practical answers readers most often need before choosing a Jev-class decision model.</p>
