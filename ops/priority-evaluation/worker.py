@@ -34,7 +34,7 @@ class StripeUnknownOutcome(Exception):
 
 def sql(sql_text: str) -> str | None:
     result = subprocess.run(
-        ["sudo", "-n", "-u", "postgres", "psql", "-X", "-qAt", "-v", "ON_ERROR_STOP=1", "-d", "benchmarkheaven_accounts", "-c", sql_text],
+        ["psql", "-X", "-qAt", "-v", "ON_ERROR_STOP=1", "-d", "benchmarkheaven_accounts", "-c", sql_text],
         text=True, capture_output=True, timeout=20,
     )
     if result.returncode:
