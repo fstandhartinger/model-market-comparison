@@ -50,7 +50,7 @@ export function Radar({ spokes, series, size, id, title, desc }: { spokes: Spoke
       const y = sin < -0.2 ? y0 - (n - 1) * 14 - 2 : sin > 0.2 ? y0 + 12 : y0 - ((n - 1) * 14) / 2 + 5;
       return <text key={s.key} x={x} y={y} textAnchor={anchor} fontSize={13.5} fill="var(--text)" data-bh-jev12-radar-spoke={s.key}>
         {s.lines.map((l, j) => <tspan key={j} x={x} dy={j === 0 ? 0 : 14} fontWeight={600}>{l}</tspan>)}
-        <tspan x={x} dy={14} fontSize={13}>{series.map((se, k) => <tspan key={k} fill={s.thin[k] ? "var(--muted)" : se.stroke} fontWeight={700} data-bh-jev12-radar-value={`${k === 0 ? "a" : "b"}:${s.key}`}>{k > 0 ? <tspan fill="var(--muted)" fontWeight={400}> · </tspan> : null}{s.texts[k]}</tspan>)}</tspan>
+        <tspan x={x} dy={14} fontSize={13}>{series.map((se, k) => s.values[k] === null ? null : <tspan key={k} fill={s.thin[k] ? "var(--muted)" : se.stroke} fontWeight={700} data-bh-jev12-radar-value={`${k === 0 ? "a" : "b"}:${s.key}`}>{k > 0 ? <tspan fill="var(--muted)" fontWeight={400}> · </tspan> : null}{s.texts[k]}</tspan>)}</tspan>
       </text>;
     })}
   </svg>;

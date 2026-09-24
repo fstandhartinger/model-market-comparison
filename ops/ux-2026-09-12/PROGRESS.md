@@ -9379,6 +9379,19 @@ with `gauntlet.mjs` restored byte-for-byte the suite is 15/15. No product code c
 |---|---|---|---|
 | F-171 | implemented | `35291e3e`; `/opt/benchmarkheaven/state/ux-evidence/iter198-f171/{final-canonical,final-legacy-mintapis}/verification-F-171.json` | Final responsive score/radar layout is live. Codex Luna implementer matrix: 40/40 per configured host. Different-engine sign-off remains required before `verified`. |
 
+## Iteration 200 — 2026-09-24 (codex-luna, work): F-172–F-175 in progress
+
+F-171 is live and its JevBench page files are now free under the one-writer rule. This
+iteration takes the next four pass-33 mechanical directives together because they share the
+board, compare radar and hub head/order. CR-139 remains with its existing remediation lane.
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| F-172 | in-progress | — | Add internal links from every v1.4.1 table and chart ranking name to its system page. |
+| F-173 | in-progress | — | Keep the decision count in the head meta once, remove repeated board copy, and bring the first phone bar into the first screen. |
+| F-174 | in-progress | — | Render missing radar series as one sentence and omit missing values from labels; retain a dash only for a single missing spoke. |
+| F-175 | in-progress | — | Reorder the board to chart → table → compare → What changed; the page findings already follow the board. |
+
 ## Iteration 198 — 2026-09-24 09:00 → 09:25 UTC (codex-luna, work): F-171 current per-system pages
 
 - Implemented F-171 after CR-136 released the v1.4.1 board. Current system routes resolve all 82 v1.4.1 rows first, then retain v1.3-only rows as a secondary fallback; the old JevK5/Hopper-only fallback is gone.

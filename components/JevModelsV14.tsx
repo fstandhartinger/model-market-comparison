@@ -1,4 +1,5 @@
-import type { CSSProperties, ReactNode } from 'react';
+import type { CSSProperties } from 'react';
+import Link from 'next/link';
 import { jevV14RowNote, type JevV14Artifact, type JevV14System } from '../lib/jevbench-v14.mjs';
 import { JevCompareV14, type JevCompareRow } from './JevCompareV14';
 import { JEV_TYPE_LABEL, JEV_TYPE_VAR } from './jevTypes';
@@ -15,12 +16,6 @@ const typeVar = (cls: string) => ({ '--jev-t': `var(${JEV_TYPE_VAR[cls] ?? JEV_T
 const NOT_RANKED: Record<string, string> = { honorable_mention: 'honorable mention', partial: 'partial run' };
 const CHART_TOP = 20;
 
-/** The last word of a label and its marker never part: the marker cannot wrap onto a line of its own. */
-function Tail({ text, children }: { text: string; children: ReactNode }) {
-  const cut = text.lastIndexOf(' ');
-  return <>{cut > 0 ? text.slice(0, cut + 1) : ''}<span className="whitespace-nowrap">{cut > 0 ? text.slice(cut + 1) : text}{children}</span></>;
-}
-
 /** A row-specific note: a small † glued to the name that opens the note in place (tap or click), with the note as tooltip too. */
 function NoteMarker({ row, note }: { row: JevV14System; note: string }) {
   return <details className="bh-jev14-note" data-bh-jev14-note={row.key}>
@@ -33,9 +28,17 @@ function SystemName({ row, note }: { row: JevV14System; note: string | null }) {
   const name = shortName(row.display);
   const rawVariant = row.display.startsWith(name) ? row.display.slice(name.length).replace(/^[ ,]*\(?|\)$/g, '') : '';
   const variant = rawVariant && !row.author.includes(rawVariant) ? rawVariant : '';
-  // The name is plain text so the † can share a no-wrap box with its last word; the project link sits on the author line.
+  const href = `/jev-models/${encodeURIComponent(row.key)}`;
+  const cut = name.lastIndexOf(' ');
+  // The † stays outside the link but shares a no-wrap box with the final word.
   return <div>
-    <span className="font-semibold" title={row.display}><Tail text={name}>{note && <NoteMarker row={row} note={note} />}</Tail></span>
+    <span className="font-semibold" title={row.display}>
+      {cut > 0 && <Link href={href} title={row.display}>{name.slice(0, cut + 1)}</Link>}
+      <span className="whitespace-nowrap">
+        <Link href={href} title={row.display}>{cut > 0 ? name.slice(cut + 1) : name}</Link>
+        {note && <NoteMarker row={row} note={note} />}
+      </span>
+    </span>
     {row.api_flag && <span className="bh-thin-tag ml-2 align-middle" data-bh-jev14-api-flag={row.key} title={row.api_exposure_note ?? apiExplanation} aria-label={apiExplanation}>API</span>}
     <span className="bh-muted block text-[11px] leading-tight">by {row.repo
       ? <a href={row.repo} target="_blank" rel="noopener noreferrer" className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent">{row.author}</a>
@@ -83,7 +86,7 @@ export function JevScoreBar({ row, reference = false }: { row: JevV14System; ref
     data-bh-jev14-bar={row.key} data-bh-jev14-bar-score={s == null ? '' : s.toFixed(3)} data-bh-jev14-reference={reference ? '1' : undefined} aria-label={label}>
     <span className="bh-muted tabular col-start-1 row-start-1 text-right text-xs">{row.rank ?? ''}</span>
     <span className="col-start-2 row-start-1 min-w-0 sm:truncate sm:text-right" title={row.display}>
-      {row.repo ? <a href={row.repo} target="_blank" rel="noopener noreferrer" className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent hover:decoration-current">{shortName(row.display)}</a> : shortName(row.display)}
+      <Link href={`/jev-models/${encodeURIComponent(row.key)}`} title={row.display} className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent hover:decoration-current">{shortName(row.display)}</Link>
       {!row.ranked && <span className="bh-muted whitespace-nowrap" title={row.not_ranked_because ?? undefined}> ({NOT_RANKED[row.listing] ?? row.listing})</span>}
       {row.api_flag && <span className="bh-thin-tag ml-1.5 align-middle" title={row.api_exposure_note ?? apiExplanation}>API</span>}
     </span>
@@ -109,9 +112,9 @@ function ScoreChart({ revision, ranked, unranked, publicDecisions, sealedDecisio
   </div>;
   const rest = all.slice(CHART_TOP);
   return <figure className="bh-panel mt-6 p-4 sm:p-5" data-bh-jev14-chart aria-labelledby="jev14-chart-title">
-    <p className="bh-eyebrow">JevBench {revision} · {publicDecisions} public + {sealedDecisions} sealed decisions per system</p>
+    <p className="bh-eyebrow">JevBench {revision}</p>
     <h2 id="jev14-chart-title" className="mt-1 text-xl font-bold leading-snug sm:text-2xl">JevBench Score: {ranked.length} ranked systems</h2>
-    <p className="bh-muted mt-1 text-sm"><span className="bh-jevc-official mr-2">Official</span>Intelligence, Calibration, Speed and Cost, each 0–100 — equal-weight harmonic mean, with the generalization and Jev-class gates. <a href="#jev14-changes" className="text-accent underline">What changed in v1.4 ↓</a></p>
+    <p className="bh-muted mt-1 text-sm"><span className="bh-jevc-official mr-2">Official</span>· four axes 0–100, equal-weight harmonic mean · <a href="#jev14-changes" className="text-accent underline">What changed in v1.4 ↓</a></p>
     {header}
     <ol className="mt-2 space-y-2.5 sm:mt-1" data-bh-jev14-bars>{all.slice(0, CHART_TOP).map((row) => <JevScoreBar key={row.key} row={row} />)}</ol>
     {rest.length > 0 && <details className="mt-2.5" data-bh-jev14-bars-more>
@@ -144,7 +147,7 @@ function compareRow(row: JevV14System): JevCompareRow {
   };
 }
 
-export function JevModelsV14Board({ artifact, sha256, children }: { artifact: JevV14Artifact; sha256: string; children?: ReactNode }) {
+export function JevModelsV14Board({ artifact, sha256 }: { artifact: JevV14Artifact; sha256: string }) {
   const ranked = artifact.systems.filter((row) => row.listing === 'ranked').sort((a, b) => (a.rank ?? 999) - (b.rank ?? 999));
   const unranked = artifact.systems.filter((row) => row.listing !== 'ranked').sort((a, b) => (b.jevbench_score ?? -1) - (a.jevbench_score ?? -1));
   const rows = [...ranked, ...unranked];
@@ -154,24 +157,7 @@ export function JevModelsV14Board({ artifact, sha256, children }: { artifact: Je
   const sealedDecisions = artifact.tiers.sealed;
   return <section className="mt-8" aria-labelledby="jev14-board" data-bh-jevbench-v14>
     <h2 id="jev14-board" className="sr-only">JevBench {artifact.revision} ranking</h2>
-    <p className="bh-muted mt-1 max-w-5xl text-sm">{ranked.length} ranked systems and {unranked.length} unranked rows, measured on {publicDecisions} public decisions plus {sealedDecisions} sealed decisions. The sealed text and answers remain private; only system-level aggregates appear here.</p>
-
     <ScoreChart revision={artifact.revision} ranked={ranked} unranked={unranked} publicDecisions={publicDecisions} sealedDecisions={sealedDecisions} />
-
-    <JevCompareV14 rows={rows.map(compareRow)} sealedDecisions={sealedDecisions} hardDecisions={artifact.tiers.hard} />
-
-    <section id="jev14-changes" className="bh-panel mt-10 max-w-5xl scroll-mt-6 p-5" aria-labelledby="jev14-changes-head" data-bh-jev14-changes>
-      <h3 id="jev14-changes-head" className="text-lg font-semibold">What changed in v1.4</h3>
-      <ul className="bh-muted mt-3 list-disc space-y-2 pl-5 text-sm">
-        <li>Fresh sealed decisions keep the benchmark moving as public items saturate. Sealed items contribute 20% of Intelligence: <code>I = 0.8 × I_v1.3 + 0.2 × I_sealed</code>, where <code>I_sealed = 100 × max(0, (acc_sealed − 0.293) / (1 − 0.293))</code>. Public and sealed scores are published only as aggregates.</li>
-        <li>Calibration blends toward the sealed-inclusive result at the approved weight: <code>C = C_v1.3 + (C_v1.4 − C_v1.3) × min(1, 0.2 / 0.35)</code>.</li>
-        <li>The <code>k = 1</code> generalization penalty reduces Intelligence when public accuracy exceeds sealed accuracy by more than 25 percentage points: <code>I × (1 − max(0, gap − 25) / 100)</code>. It rewards systems that generalize beyond the public half.</li>
-        <li>The four axes use an equal-weight harmonic mean (<code>p = −1</code>). Intelligence below 50 keeps its quadratic penalty; Speed and Cost each have a separate Jev-class gate below 50. Speed and Cost axis calculations are unchanged from v1.3.0.</li>
-        <li>The visible <b className="text-gray-200">API</b> flag discloses when an operator endpoint received held-out item text, without answers. Existing system notes preserve disclosures such as Hopper's public-half development and JevK5's public-set selection.</li>
-      </ul>
-    </section>
-
-    {children}
 
     <h2 id="jev14-table" className="mt-10 text-xl font-semibold">Axes, accuracy, latency and cost</h2>
     <p className="bh-muted mt-1 max-w-4xl text-sm">Every system with its four axes, public and sealed accuracy and the gap between them. On a phone the name column stays put while the table scrolls sideways. <span className="whitespace-nowrap">† = a note on that system</span> — tap it to read.</p>
@@ -187,12 +173,25 @@ export function JevModelsV14Board({ artifact, sha256, children }: { artifact: Je
         <tbody>{rows.map((row) => <Row key={row.key} row={row} note={noteOf.get(row.key) ?? null} />)}</tbody>
       </table>
     </div>
-    <p className="bh-muted mt-2 text-xs" data-bh-jev14-api-note>API = the operator's endpoint received sealed item text during evaluation; the answers and item-level results are not published. Cost is per 1,000 decisions. Hover endpoint, cost and API labels for their recorded details.</p>
+    <p className="bh-muted mt-2 text-xs" data-bh-jev14-api-note>API = the operator's endpoint received sealed item text during evaluation; the answers and item-level results are not published. The sealed text and answers remain private; only system-level aggregates appear here. Cost is per 1,000 decisions. Hover endpoint, cost and API labels for their recorded details.</p>
     <details className="mt-3 text-xs" data-bh-jev14-notes>
       <summary className="cursor-pointer text-accent">All {notes.length} system notes and disclosures</summary>
       <ul className="bh-muted mt-2 space-y-1">{notes.map((row) => <li key={row.key} id={`jev14-note-${row.key}`}>† <b className="text-gray-200">{row.display}</b>: {noteOf.get(row.key)}</li>)}</ul>
       <p className="bh-muted mt-2">Rows without a † have no note beyond the shared provenance: every row was measured or re-run with its recorded recipe, and deviations are in its run manifest.</p>
     </details>
     <p className="bh-muted mt-2 text-xs">Artifact: <a className="text-accent underline" href={`/api/jevbench/${artifact.revision.slice(1)}`}>{artifact.revision} results JSON</a> · SHA-256 <code title={sha256}>{sha256.slice(0, 12)}…</code> · <a className="text-accent underline" href={`https://github.com/fstandhartinger/jevbench/releases/tag/${artifact.revision}`}>JevBench {artifact.revision} release and method</a></p>
+
+    <JevCompareV14 rows={rows.map(compareRow)} sealedDecisions={sealedDecisions} hardDecisions={artifact.tiers.hard} />
+
+    <section id="jev14-changes" className="bh-panel mt-10 max-w-5xl scroll-mt-6 p-5" aria-labelledby="jev14-changes-head" data-bh-jev14-changes>
+      <h3 id="jev14-changes-head" className="text-lg font-semibold">What changed in v1.4</h3>
+      <ul className="bh-muted mt-3 list-disc space-y-2 pl-5 text-sm">
+        <li>Fresh sealed decisions keep the benchmark moving as public items saturate. Sealed items contribute 20% of Intelligence: <code>I = 0.8 × I_v1.3 + 0.2 × I_sealed</code>, where <code>I_sealed = 100 × max(0, (acc_sealed − 0.293) / (1 − 0.293))</code>. Public and sealed scores are published only as aggregates.</li>
+        <li>Calibration blends toward the sealed-inclusive result at the approved weight: <code>C = C_v1.3 + (C_v1.4 − C_v1.3) × min(1, 0.2 / 0.35)</code>.</li>
+        <li>The <code>k = 1</code> generalization penalty reduces Intelligence when public accuracy exceeds sealed accuracy by more than 25 percentage points: <code>I × (1 − max(0, gap − 25) / 100)</code>. It rewards systems that generalize beyond the public half.</li>
+        <li>The four axes use an equal-weight harmonic mean (<code>p = −1</code>). Intelligence below 50 keeps its quadratic penalty; Speed and Cost each have a separate Jev-class gate below 50. Speed and Cost axis calculations are unchanged from v1.3.0.</li>
+        <li>The visible <b className="text-gray-200">API</b> flag discloses when an operator endpoint received held-out item text, without answers. Existing system notes preserve disclosures such as Hopper's public-half development and JevK5's public-set selection.</li>
+      </ul>
+    </section>
   </section>;
 }

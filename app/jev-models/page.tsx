@@ -171,7 +171,6 @@ export default async function JevModelsPage() {
       <h1 className="mt-1 text-3xl font-bold tracking-tight">JevBench by Benchmark Heaven</h1>
       <p className="mt-3 max-w-3xl text-lg" data-bh-jev-own>JevBench is <b>Benchmark Heaven&apos;s own benchmark</b> for Jev-class decision models: state and a bounded rubric in, a typed answer out.</p>
       <JevBoardIntentLinks />
-      <p className="bh-muted mt-2 max-w-3xl">Version {v14.revision} measures {v14.systems.length} systems on {v14.publicDecisions} public and {v14.sealedDecisions} sealed decisions, with only system-level sealed aggregates published. Built and run by us, not collected from someone else&apos;s leaderboard; the results describe the tested configurations, not every application.</p>
       <p className="bh-muted mt-3 max-w-3xl text-xs leading-relaxed" data-bh-jev-meta>
         Scored {day(v14.generated)} · protocol <code>{v14.artifact.protocol}</code> · {v14.publicDecisions} public + {v14.sealedDecisions} sealed aggregate decisions · one request at a time from a server in Germany ·{' '}
         <a className="text-accent underline" href={JEVBENCH_REPO}>harness, public tasks &amp; scoring rules (MIT)</a> ·{' '}
@@ -271,6 +270,7 @@ export default async function JevModelsPage() {
     <details id="method" className="bh-panel mt-8 max-w-4xl scroll-mt-6 p-5">
       <summary className="cursor-pointer text-sm font-semibold">Method and tiers</summary>
       <div className="bh-muted mt-4 space-y-3 text-sm">
+        <p>Built and run by us, not collected from someone else&apos;s leaderboard; the results describe the tested configurations, not every application.</p>
         <p data-bh-jev14-method-score><b className="text-gray-200">JevBench Score.</b> {v14Scoring.jevbench_score}</p>
         <p><b className="text-gray-200">Intelligence.</b> {v14Scoring.intelligence}</p>
         <p data-bh-jev-revision><b className="text-gray-200">Revision {v14.revision}.</b> {String(v14.artifact.revision_note ?? '')}</p>

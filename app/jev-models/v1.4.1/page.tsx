@@ -48,6 +48,7 @@ export default async function JevModelsV141Page() {
       <h1 className="mt-1 text-3xl font-bold tracking-tight">JevBench {view.revision} — frozen results</h1>
       <p className="bh-muted mt-3 max-w-3xl">This page always uses the public, hash-checked {view.revision} artifact. The live board may change when a later release is published.</p>
       <p className="bh-muted mt-2 max-w-3xl text-xs">Artifact SHA-256 <code className="break-all" title={view.sha256}>{view.sha256}</code>.</p>
+      <p className="bh-muted mt-2 max-w-3xl text-xs" data-bh-jev-meta>{view.publicDecisions} public + {view.sealedDecisions} sealed decisions · only system-level sealed aggregates are published.</p>
       <p className="mt-3 max-w-3xl text-sm" data-bh-jev-version-share-row>
         <a className="text-accent underline" href="/jev-models/v1.4.1" data-bh-jev-version-share>Share this version</a>
         {' · '}

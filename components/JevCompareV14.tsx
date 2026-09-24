@@ -85,6 +85,12 @@ export function JevCompareV14({ rows, sealedDecisions, hardDecisions, fixedPair 
   const tierSpokes = accuracySpokes(pair, TIERS, (r, k) => r.tiers[k as keyof JevCompareRow["tiers"]]);
   const hardSpokes = accuracySpokes(pair, HARD_FAMILIES, (r, k) => r.hard?.[k]?.accuracy ?? null);
   const sealedSpokes = accuracySpokes(pair, SEALED_FAMILIES, (r, k) => r.sealed?.[k] ?? null);
+  const missingFor = (spokes: Spoke[]) => pair.filter((_, k) => spokes.every((sp) => sp.values[k] === null)).map((r) => r.name);
+  const missingSentence = (key: string, names: string[]) => {
+    if (key === "sealed") return `${names.join(" and ")} has no sealed family breakdown.`;
+    if (key === "hard") return `${names.join(" and ")} was not run on the v1.2 hard tier.`;
+    return `${names.join(" and ")} has no published accuracy-tier results.`;
+  };
   const status = (r: JevCompareRow) => r.rank !== null ? `#${r.rank}` : r.listing === "honorable_mention" ? "honorable mention, not ranked" : "partial run, not ranked";
   const option = (r: JevCompareRow) => <option key={r.key} value={r.key}>{r.rank !== null ? `${r.rank}. ` : ""}{r.name}{r.rank === null ? ` (${r.listing === "honorable_mention" ? "honorable mention" : "partial"})` : ""}</option>;
   const pick = (id: string, label: string, value: string, set: (k: string) => void, other: string) => <label className="block min-w-0 flex-1 text-[13px]" htmlFor={id}>
@@ -98,11 +104,11 @@ export function JevCompareV14({ rows, sealedDecisions, hardDecisions, fixedPair 
     const u = new URL(window.location.href); u.searchParams.set("compare", `${A.key},${B.key}`); u.hash = "compare";
     try { await navigator.clipboard.writeText(u.href); setCopied(true); window.setTimeout(() => setCopied(false), 2000); } catch { window.location.hash = "compare"; }
   };
-  const figures: { key: string; title: string; note: string; spokes: Spoke[]; size: { w: number; h: number; r: number } }[] = [
-    { key: "axes", title: "The four score axes", note: "0–100, the values in the table. A label-only system has no calibration (counted as 0).", spokes: axisSpokes, size: { w: 420, h: 320, r: 96 } },
-    { key: "tiers", title: "Accuracy per tier, incl. sealed", note: `Share correct per tier; Sealed = the ${sealedDecisions} private decisions, aggregate only.`, spokes: tierSpokes, size: { w: 440, h: 340, r: 100 } },
-    { key: "hard", title: "Hard tier by family (v1.2 topics)", note: `Share correct within each family of the ${hardDecisions} v1.2 hard-tier decisions (public and held-out).`, spokes: hardSpokes, size: { w: 460, h: 370, r: 100 } },
-    { key: "sealed", title: "Sealed set by family", note: "Share correct within each sealed family — system-level aggregates; the items stay private.", spokes: sealedSpokes, size: { w: 460, h: 370, r: 100 } },
+  const figures: { key: string; title: string; note: string; spokes: Spoke[]; missing: string[]; size: { w: number; h: number; r: number } }[] = [
+    { key: "axes", title: "The four score axes", note: "0–100, the values in the table. A label-only system has no calibration (counted as 0).", spokes: axisSpokes, missing: [], size: { w: 420, h: 320, r: 96 } },
+    { key: "tiers", title: "Accuracy per tier, incl. sealed", note: `Share correct per tier; Sealed = the ${sealedDecisions} private decisions, aggregate only.`, spokes: tierSpokes, missing: missingFor(tierSpokes), size: { w: 440, h: 340, r: 100 } },
+    { key: "hard", title: "Hard tier by family (v1.2 topics)", note: `Share correct within each family of the ${hardDecisions} v1.2 hard-tier decisions (public and held-out).`, spokes: hardSpokes, missing: missingFor(hardSpokes), size: { w: 460, h: 370, r: 100 } },
+    { key: "sealed", title: "Sealed set by family", note: "Share correct within each sealed family — system-level aggregates; the items stay private.", spokes: sealedSpokes, missing: missingFor(sealedSpokes), size: { w: 460, h: 370, r: 100 } },
   ];
   return <section id="compare" className="mt-8 scroll-mt-6" aria-labelledby="jev14-compare" data-bh-jev14-compare data-bh-jev14-pair-mode={fixedPair ? 'fixed' : 'selectable'} data-bh-jev14-compare-a={A.key} data-bh-jev14-compare-b={B.key}>
     <h2 id="jev14-compare" className="text-2xl font-semibold">{heading ?? 'Compare two systems'}</h2>
@@ -124,8 +130,11 @@ export function JevCompareV14({ rows, sealedDecisions, hardDecisions, fixedPair 
       <div className="mt-3 grid gap-x-6 gap-y-5 lg:grid-cols-2">
         {figures.map((f) => <figure key={f.key} className="min-w-0" data-bh-jev14-radar={f.key}>
           <h3 className="text-base font-semibold">{f.title}</h3>
-          <Radar spokes={f.spokes} series={s} size={f.size} id={`jev14-radar-${f.key}`} title={`Radar: ${f.title.toLowerCase()}, two systems`} desc={desc(f.title, f.spokes)} />
-          <figcaption className="bh-muted text-[12px]">{f.note}{f.spokes.some((sp) => sp.thin.some(Boolean)) ? " “—” = not measured for that system, not plotted." : ""}</figcaption>
+          {f.missing.length > 0 && <p className="bh-muted mt-1 text-[12px]" data-bh-jev14-radar-missing={f.key}>{missingSentence(f.key, f.missing)}</p>}
+          {f.missing.length < 2
+            ? <Radar spokes={f.spokes} series={s} size={f.size} id={`jev14-radar-${f.key}`} title={`Radar: ${f.title.toLowerCase()}, two systems`} desc={desc(f.title, f.spokes)} />
+            : <p className="bh-muted mt-3 text-[12px]">Neither selected system has a published series for this view.</p>}
+          <figcaption className="bh-muted text-[12px]">{f.note}</figcaption>
         </figure>)}
       </div>
       {!fixedPair && <details className="mt-3 text-[13px]" data-bh-jev14-compare-values><summary className="cursor-pointer text-accent">All values as a table</summary>
