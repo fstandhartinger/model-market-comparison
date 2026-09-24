@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { readMultimodalPreview } from '../../../lib/jevbench-multimodal-preview.mjs';
+import { ImageJevExamples } from '../../../components/ImageJevExamples';
 
 export const metadata: Metadata = {
   title: 'PREVIEW — Image JevBench v0.1',
@@ -99,6 +100,7 @@ export default async function MultimodalPreviewPage() {
       <p className="bh-muted mt-1 text-sm">Whole candidate, 444 decisions. Pink bars are hosted APIs; the four axes and the v1.4 gates are in the table below.</p>
       <ScoreBars systems={a.ranking} track="all" />
     </section>
+    <ImageJevExamples />
     <section className="mt-9 max-w-6xl" aria-labelledby="overall-heading">
       <h2 id="overall-heading" className="text-2xl font-semibold">Whole-candidate ranking</h2>
       <p className="bh-muted mt-2 max-w-5xl text-sm">Ranked by the candidate composite: equal-weight Intelligence, Calibration, Speed and Cost axes, then the v1.4 Jev-class gates. Hosted systems are marked API because their providers received sealed images and questions.</p>

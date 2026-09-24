@@ -4,7 +4,7 @@
   "status": "preview",
   "built_utc": "2026-09-23",
   "sealed_item_details_included": false,
-  "n_systems": 9,
+  "n_systems": 10,
   "split": {
     "items_total": 444,
     "items_public": 265,
@@ -40,14 +40,15 @@
     "intelligence": "Chance-corrected accuracy, 80% public / 20% sealed, with the v1.4 penalty when the public-to-sealed accuracy gap exceeds 25 points. Invalid or missing answers count as incorrect.",
     "calibration": "10-bin top-label ECE scaled by valid probability coverage; label-only outputs receive zero calibration.",
     "speed": "p50 and p95 whole-call latency; local latency uses the v1.4 2× plus 0.15-second adjustment.",
-    "cost": "Hosted cost uses returned OpenRouter usage receipts; missing receipts are not zero-filled, and the cost axis is scaled by receipt coverage. Local cost uses measured GPU seconds at USD 1.19/GPU-hour. Retry calls are tracked separately.",
+    "cost": "Hosted cost uses returned OpenRouter usage receipts; missing receipts are not zero-filled, and the cost axis is scaled by receipt coverage. Local cost uses measured GPU seconds at the measured per-system GPU-hour rate (USD 1.19 for the original nine systems; USD 1.29 for Jev-Omni). Retry calls are tracked separately.",
     "composite": "Equal-weight harmonic mean of Intelligence, Calibration, Speed, and Cost, followed by the v1.4 intelligence, speed, and cost gates below 50.",
     "difficulty": "Real-source difficulty labels are not comparable. The core split is balanced by source and within-source normalized task-length tertiles as a disclosed proxy."
   },
   "exposure": {
     "hosted": "All four hosted systems received sealed images and questions through the requested no-retention route with provider fallback disabled; they carry the API flag.",
     "label_checkers": "GPT-6 Luna and Gemini 3.8 Flash saw 100 public promo-photo candidates and 68 new sealed-photo candidates in stateless single-turn label checks, including candidates later dropped. No gold labels were shown; human gold-blind review decided inclusion.",
-    "djev_spark": "djev-spark saw the 100 public promo photos in the earlier inference-only video run, with no training. Its score on the 61 new sealed photo variants is the independent measure."
+    "djev_spark": "djev-spark saw the 100 public promo photos in the earlier inference-only video run, with no training. Its score on the 61 new sealed photo variants is the independent measure.",
+    "jev_omni": "This checkpoint was measured on a separate frozen JevBench v1.4 text set before this run. It received no ImageJevBench task input before this evaluation."
   },
   "ranking": [
     {
@@ -410,6 +411,188 @@
     },
     {
       "rank": 3,
+      "key": "jev_omni",
+      "name": "Jev-Omni",
+      "api_flag": false,
+      "prior_exposure": "This checkpoint was measured on a separate frozen JevBench v1.4 text set before this run. It received no ImageJevBench task input before this evaluation.",
+      "score": 59.25228124214037,
+      "tracks": {
+        "all": {
+          "public": {
+            "n": 265,
+            "correct": 168,
+            "accuracy": 0.6339622641509434,
+            "chance": 0.29962264150943396,
+            "chance_corrected_intelligence": 47.73706896551724,
+            "ece": 0.09492282983979176,
+            "probability_coverage": 1.0,
+            "valid_answer_count": 265,
+            "latency_count": 265
+          },
+          "sealed": {
+            "n": 179,
+            "correct": 113,
+            "accuracy": 0.6312849162011173,
+            "chance": 0.3036312849162011,
+            "chance_corrected_intelligence": 47.051744885679895,
+            "ece": 0.07890469167342007,
+            "probability_coverage": 1.0,
+            "valid_answer_count": 179,
+            "latency_count": 179
+          },
+          "axes": {
+            "intelligence": 47.600004149549775,
+            "calibration": 81.65615955869652,
+            "speed": 89.94839872362184,
+            "cost": 59.48707347669823
+          },
+          "overfit_penalty_points": 0.0,
+          "speed": {
+            "score": 89.94839872362184,
+            "raw_p50_s": 0.07424040790647268,
+            "raw_p95_s": 0.09451717603951693,
+            "adjusted_p50_s": 0.2984808158129454,
+            "adjusted_p95_s": 0.3390343520790339,
+            "latency_coverage": 1.0
+          },
+          "cost": {
+            "score": 59.48707347669823,
+            "total_usd": 0.009949788615989687,
+            "usd_per_1000": 0.022409433819796595,
+            "raw_score": 59.48707347669823,
+            "coverage": 1.0,
+            "source": "measured GPU seconds × $1.29/GPU-hour"
+          },
+          "composite": {
+            "harmonic_before_gates": 65.37792055585902,
+            "gates": {
+              "intelligence": 0.9063041580148623,
+              "speed": 1.0,
+              "cost": 1.0
+            },
+            "score": 59.25228124214037
+          }
+        },
+        "core": {
+          "public": {
+            "n": 176,
+            "correct": 86,
+            "accuracy": 0.48863636363636365,
+            "chance": 0.20681818181818182,
+            "chance_corrected_intelligence": 35.53008595988539,
+            "ece": 0.11848807854941742,
+            "probability_coverage": 1.0,
+            "valid_answer_count": 176,
+            "latency_count": 176
+          },
+          "sealed": {
+            "n": 118,
+            "correct": 55,
+            "accuracy": 0.4661016949152542,
+            "chance": 0.21059322033898306,
+            "chance_corrected_intelligence": 32.367149758454104,
+            "ece": 0.10453338470870506,
+            "probability_coverage": 1.0,
+            "valid_answer_count": 118,
+            "latency_count": 118
+          },
+          "axes": {
+            "intelligence": 34.897498719599135,
+            "calibration": 76.86057204374501,
+            "speed": 89.85484440153232,
+            "cost": 59.01969421302452
+          },
+          "overfit_penalty_points": 0.0,
+          "speed": {
+            "score": 89.85484440153232,
+            "raw_p50_s": 0.07570168096572161,
+            "raw_p95_s": 0.0965289669111371,
+            "adjusted_p50_s": 0.30140336193144324,
+            "adjusted_p95_s": 0.34305793382227423,
+            "latency_coverage": 1.0
+          },
+          "cost": {
+            "score": 59.01969421302452,
+            "total_usd": 0.0068290064563115436,
+            "usd_per_1000": 0.023227913116705932,
+            "raw_score": 59.01969421302452,
+            "coverage": 1.0,
+            "source": "measured GPU seconds × $1.29/GPU-hour"
+          },
+          "composite": {
+            "harmonic_before_gates": 57.35714501404615,
+            "gates": {
+              "intelligence": 0.4871341667537693,
+              "speed": 1.0,
+              "cost": 1.0
+            },
+            "score": 27.940625043792483
+          }
+        },
+        "everyday_photo": {
+          "public": {
+            "n": 89,
+            "correct": 82,
+            "accuracy": 0.9213483146067416,
+            "chance": 0.48314606741573035,
+            "chance_corrected_intelligence": 84.78260869565219,
+            "ece": 0.07144742454052032,
+            "probability_coverage": 1.0,
+            "valid_answer_count": 89,
+            "latency_count": 89
+          },
+          "sealed": {
+            "n": 61,
+            "correct": 58,
+            "accuracy": 0.9508196721311475,
+            "chance": 0.48360655737704916,
+            "chance_corrected_intelligence": 90.47619047619047,
+            "ece": 0.06400529896114039,
+            "probability_coverage": 1.0,
+            "valid_answer_count": 61,
+            "latency_count": 61
+          },
+          "axes": {
+            "intelligence": 85.92132505175985,
+            "calibration": 86.00820011507113,
+            "speed": 90.13390969363553,
+            "cost": 60.454834133225056
+          },
+          "overfit_penalty_points": 0.0,
+          "speed": {
+            "score": 90.13390969363553,
+            "raw_p50_s": 0.07092946395277977,
+            "raw_p95_s": 0.09111392963677645,
+            "adjusted_p50_s": 0.29185892790555956,
+            "adjusted_p95_s": 0.3322278592735529,
+            "latency_coverage": 1.0
+          },
+          "cost": {
+            "score": 60.454834133225056,
+            "total_usd": 0.0031207821596781413,
+            "usd_per_1000": 0.020805214397854273,
+            "raw_score": 60.454834133225056,
+            "coverage": 1.0,
+            "source": "measured GPU seconds × $1.29/GPU-hour"
+          },
+          "composite": {
+            "harmonic_before_gates": 78.58356181323907,
+            "gates": {
+              "intelligence": 1.0,
+              "speed": 1.0,
+              "cost": 1.0
+            },
+            "score": 78.58356181323907
+          }
+        }
+      },
+      "model_revision": "akhilaaa3/Jev-Omni@c050d51354147985d13286cf4acf90f562f2c631",
+      "base_revision": "google/gemma-4-12B-it@707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7",
+      "gpu_usd_per_hour": 1.29,
+      "runtime_note": "One RTX PRO 6000 Blackwell; reviewed image-only adapter; offline inference."
+    },
+    {
+      "rank": 4,
       "key": "djev_spark_nvfp4",
       "name": "djev-spark NVFP4",
       "api_flag": false,
@@ -588,7 +771,7 @@
       "kind": "gpu"
     },
     {
-      "rank": 4,
+      "rank": 5,
       "key": "djev_dev_bf16",
       "name": "djev-dev BF16",
       "api_flag": false,
@@ -767,7 +950,7 @@
       "kind": "gpu"
     },
     {
-      "rank": 5,
+      "rank": 6,
       "key": "gpt6_luna",
       "name": "GPT-6 Luna",
       "api_flag": true,
@@ -946,7 +1129,7 @@
       "kind": "api"
     },
     {
-      "rank": 6,
+      "rank": 7,
       "key": "gpt56_luna",
       "name": "GPT-5.6 Luna",
       "api_flag": true,
@@ -1125,7 +1308,7 @@
       "kind": "api"
     },
     {
-      "rank": 7,
+      "rank": 8,
       "key": "gemini31_flash_lite",
       "name": "Gemini 3.1 Flash Lite",
       "api_flag": true,
@@ -1304,7 +1487,7 @@
       "kind": "api"
     },
     {
-      "rank": 8,
+      "rank": 9,
       "key": "gemini38_flash",
       "name": "Gemini 3.8 Flash",
       "api_flag": true,
@@ -1483,7 +1666,7 @@
       "kind": "api"
     },
     {
-      "rank": 9,
+      "rank": 10,
       "key": "openjev_4b_nli",
       "name": "OpenJev 4B NLI v2 (official image-premise path)",
       "api_flag": false,

@@ -6,6 +6,7 @@ import { readMultimodalPreview } from '../lib/jevbench-multimodal-preview.mjs';
 const expectedRanking = [
   'Mapika decider-2b-vision BF16',
   'Reflex 4B (released stable configuration)',
+  'Jev-Omni',
   'djev-spark NVFP4',
   'djev-dev BF16',
   'GPT-6 Luna',
@@ -22,7 +23,15 @@ function forbiddenItemFields(value) {
   return Object.entries(value).flatMap(([key, child]) => forbidden.has(key) ? [key] : forbiddenItemFields(child));
 }
 
-test('Image JevBench v0.1 preview contains the frozen aggregate candidate and top-five cut', async () => {
+function longArrays(value, path = 'root') {
+  if (Array.isArray(value)) {
+    return [ ...(value.length >= 50 ? [path] : []), ...value.flatMap((item, index) => longArrays(item, `${path}[${index}]`)) ];
+  }
+  if (!value || typeof value !== 'object') return [];
+  return Object.entries(value).flatMap(([key, child]) => longArrays(child, `${path}.${key}`));
+}
+
+test('Image JevBench v0.1 preview retains aggregate candidate, exact roster and Jev-Omni metrics', async () => {
   const a = await readMultimodalPreview();
   assert.equal(a.benchmark, 'Image JevBench v0.1 candidate');
   assert.equal(a.sealed_item_details_included, false);
@@ -35,12 +44,28 @@ test('Image JevBench v0.1 preview contains the frozen aggregate candidate and to
   assert.deepEqual(a.ranking.map((s) => s.name), expectedRanking);
   assert.deepEqual(a.ranking.slice(0, 5).map((s) => s.name), expectedRanking.slice(0, 5));
   assert.equal(a.ranking.filter((s) => s.api_flag).length, 4);
+  assert.ok(a.ranking.every((s, i) => s.rank === i + 1));
   assert.ok(a.ranking.every((s) => s.tracks.all.public.n === 265 && s.tracks.all.sealed.n === 179));
   assert.ok(a.ranking.every((s) => s.tracks.core.public.n === 176 && s.tracks.core.sealed.n === 118));
   assert.ok(a.ranking.every((s) => s.tracks.everyday_photo.public.n === 89 && s.tracks.everyday_photo.sealed.n === 61));
+
+  const jevOmni = a.ranking.find((s) => s.key === 'jev_omni');
+  assert.ok(jevOmni);
+  assert.equal(jevOmni.api_flag, false);
+  assert.equal(jevOmni.score, 59.25228124214037);
+  assert.deepEqual([jevOmni.tracks.all.public.n, jevOmni.tracks.all.public.correct], [265, 168]);
+  assert.deepEqual([jevOmni.tracks.all.sealed.n, jevOmni.tracks.all.sealed.correct], [179, 113]);
+  for (const [axis, expected] of Object.entries({ intelligence: 47.60, calibration: 81.66, speed: 89.95, cost: 59.49 })) {
+    assert.ok(Math.abs(jevOmni.tracks.all.axes[axis] - expected) < 0.005, axis);
+  }
+  assert.equal(jevOmni.tracks.all.public.probability_coverage, 1);
+  assert.equal(jevOmni.tracks.all.sealed.probability_coverage, 1);
+  assert.equal(jevOmni.tracks.all.cost.source, 'measured GPU seconds × $1.29/GPU-hour');
+
   const spark = a.ranking.find((s) => s.key === 'djev_spark_nvfp4');
   assert.deepEqual([spark.tracks.everyday_photo.sealed.correct, spark.tracks.everyday_photo.sealed.n], [53, 61]);
-  assert.equal(forbiddenItemFields(a).length, 0);
+  assert.deepEqual(forbiddenItemFields(a), []);
+  assert.deepEqual(longArrays(a), []);
 });
 
 test('preview stays noindex, unlinked, and uses only aggregate candidate content', async () => {
@@ -54,8 +79,12 @@ test('preview stays noindex, unlinked, and uses only aggregate candidate content
   assert.match(page, /not part of the JevBench Score/);
   assert.match(page, /Current top five by candidate composite/);
   assert.match(page, /data-bh-djev-spark-sealed-photo/);
-  assert.doesNotMatch(page, /Public example items|a\.examples/);
+  assert.match(page, /<ImageJevExamples\s*\/>/);
+  assert.doesNotMatch(page, /a\.examples/);
   assert.doesNotMatch(nav, /multimodal-preview/);
   assert.doesNotMatch(sitemap, /multimodal-preview/);
-  assert.equal(forbiddenItemFields(JSON.parse(data)).length, 0);
+  const artifact = JSON.parse(data);
+  assert.equal(artifact.sealed_item_details_included, false);
+  assert.deepEqual(forbiddenItemFields(artifact), []);
+  assert.deepEqual(longArrays(artifact), []);
 });
