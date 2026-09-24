@@ -157,7 +157,9 @@ export function JevScoreChart({ revision, rows, rankedCount, newLabel, fairness,
 
   const top = shown.slice(0, CHART_TOP);
   const rest = shown.slice(CHART_TOP);
-  const bar = (row: JevBoardViewRow) => <JevScoreBar key={row.key} row={row} metric={metric} heat={heat} isNew={row.isNew} />;
+  // Two configurations can share a short name (GPT-6 Luna and its low-effort setting); those rows keep the full name.
+  const collide = useMemo(() => { const seen = new Map<string, number>(); for (const r of rows) seen.set(shortName(r.display), (seen.get(shortName(r.display)) ?? 0) + 1); return seen; }, [rows]);
+  const bar = (row: JevBoardViewRow) => <JevScoreBar key={row.key} row={row} metric={metric} heat={heat} isNew={row.isNew} name={(collide.get(shortName(row.display)) ?? 0) > 1 ? row.display : undefined} />;
   const status = `${shown.length} of ${rows.length} systems, sorted by ${SORT_LABEL[sort.key]}, ${dirWords(sort)}.`;
 
   return <figure className="bh-panel mt-6 p-4 sm:p-5" data-bh-jev14-chart data-bh-jev14-view={view} aria-labelledby="jev14-chart-title">
@@ -180,23 +182,24 @@ export function JevScoreChart({ revision, rows, rankedCount, newLabel, fairness,
         Among the top five, <b className="text-[color:var(--text)]">{fairness.topName}</b> is still the strongest reasoner (Intelligence {one(fairness.topInt)} vs {one(fairness.leadInt)}){fairness.leadsOn.length > 0 ? <>; <b className="text-[color:var(--text)]">{fairness.leadName}</b> leads on {joinWords(fairness.leadsOn)}</> : null}. JevBench weighs Intelligence, Calibration, Speed and Cost equally —{' '}
         <button type="button" className="bh-inline-btn text-accent underline" onClick={() => choose('intelligence')} data-bh-jev-fairness-sort>view by Intelligence</button> for raw reasoning.
       </p> : null}
-      {!approvedNote && !fairness && <p className="bh-muted mt-2 text-[13px] leading-snug" data-bh-jev-viewby-hint>The official order weighs Intelligence, Calibration, Speed and Cost equally. Each button re-sorts the same systems by one axis, and the column headings sort too.</p>}
+      {!approvedNote && !fairness && <p className="bh-muted mt-2 text-[13px] leading-snug" data-bh-jev-viewby-hint>The official order weighs Intelligence, Calibration, Speed and Cost equally. Each button re-sorts the same systems by one axis<span className="hidden sm:inline">, and the column headings sort too</span>.</p>}
       {view !== 'overall' && <p className="mt-2 text-[13px]" data-bh-jev-view-note><span className="bh-jevc-notdefault">Not the official order</span> <span className="bh-muted">Bars and the bold number show {METRIC_LABEL[metric]} (0–100). # is still the official JevBench rank.</span></p>}
     </div>
 
     <FilterBar rows={rows} filters={filters} setFilters={setFilters} shown={shown.length} newLabel={newLabel} idPrefix="chart" />
+    <p className="bh-muted mt-2 text-[11.5px] leading-snug"><HeatLegend /></p>
 
     <div className="mt-3 hidden grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_21rem] items-end gap-x-2 text-[11px] sm:grid" role="group" aria-label="Sort the chart" data-bh-jev14-chart-sort>
       <SortButton k="rank" label="#" sort={sort} toggle={toggle} className="justify-end" />
       <SortButton k="name" label="System" sort={sort} toggle={toggle} className="justify-end" />
       <span />
-      <SortButton k={metric === 'score' ? 'score' : metric} label={SHORT_METRIC[metric]} sort={sort} toggle={toggle} className="justify-end" />
+      {metric === 'score' ? <SortButton k="score" label="Score" sort={sort} toggle={toggle} className="justify-end" /> : <span className="bh-muted self-center text-right font-semibold" data-bh-jev14-view-column>{SHORT_METRIC[metric]}</span>}
       <span className="grid grid-cols-[1fr_1fr_1fr_1fr_2.1fr] gap-x-1 text-right font-mono">
         <SortButton k="intelligence" label="Intel." sort={sort} toggle={toggle} className="justify-end" />
         <SortButton k="calibration" label="Calib." sort={sort} toggle={toggle} className="justify-end" />
         <SortButton k="speed" label="Speed" sort={sort} toggle={toggle} className="justify-end" />
         <SortButton k="cost" label="Cost" sort={sort} toggle={toggle} className="justify-end" />
-        <SortButton k="usd" label="$/1k dec." sort={sort} toggle={toggle} className="justify-end" />
+        <SortButton k="usd" label="$/1k" sort={sort} toggle={toggle} className="justify-end" title="Sort by US dollars per 1,000 decisions" />
       </span>
     </div>
     <p className="sr-only" aria-live="polite" data-bh-jev-sort-status>{status}</p>
@@ -215,9 +218,8 @@ export function JevScoreChart({ revision, rows, rankedCount, newLabel, fairness,
     <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px]" aria-label="Legend" data-bh-jev14-legend>
       {types.map((t) => <li key={t} style={typeVar(t)}><span className="bh-jevc-swatch mr-1.5" />{JEV_TYPE_LABEL[t]}</li>)}
       {unranked > 0 && <li><span className="bh-jevc-swatch is-partial mr-1.5" />Shown, not ranked</li>}
-      <li><HeatLegend /></li>
     </ul>
-    <figcaption className="bh-muted mt-3 text-[11.5px] leading-snug">I, C, S, K = Intelligence, Calibration, Speed, Cost; ~ est. = <a href="#jev-costs" className="text-accent underline">estimated cost</a>; ann. = announced price; API = the operator&apos;s endpoint saw sealed item text, without answers{newLabel ? <>; new = first listed in {newLabel}</> : null}. Click a column heading to sort. Names link to each project.</figcaption>
+    <figcaption className="bh-muted mt-3 text-[11.5px] leading-snug">I, C, S, K = Intelligence, Calibration, Speed, Cost; ~ est. = <a href="#jev-costs" className="text-accent underline">estimated cost</a>; ann. = announced price; API = the operator&apos;s endpoint saw sealed item text, without answers{newLabel ? <>; new = first listed in {newLabel}</> : null}; $/1k = US dollars per 1,000 decisions. <span className="hidden sm:inline">Click a column heading to sort. </span>Names link to each project.</figcaption>
   </figure>;
 }
 
@@ -309,7 +311,7 @@ export function JevAxesTable({ rows, publicDecisions, sealedDecisions, newLabel 
   const captionId = useId();
   return <>
     <FilterBar rows={rows} filters={filters} setFilters={setFilters} shown={shown.length} newLabel={newLabel} idPrefix="table" />
-    <p className="bh-muted mt-2 text-xs"><HeatLegend /> Badges: <span className="bh-thin-tag bh-flag-tag">API</span> sealed text went to the operator&apos;s endpoint · <span className="bh-thin-tag bh-est-tag">est.</span> estimated price · <span className="bh-thin-tag bh-partial-tag">not ranked</span> partial run or honorable mention{newLabel ? <> · <span className="bh-new-tag">new</span> first listed in {newLabel}</> : null}.</p>
+    <p className="bh-muted mt-2 text-xs"><HeatLegend latency /> Badges: <span className="bh-thin-tag bh-flag-tag">API</span> sealed text went to the operator&apos;s endpoint · <span className="bh-thin-tag bh-est-tag">est.</span> estimated price · <span className="bh-thin-tag bh-partial-tag">not ranked</span> partial run or honorable mention{newLabel ? <> · <span className="bh-new-tag">new</span> first listed in {newLabel}</> : null}.</p>
     <div className="bh-table-wrap mt-3">
       <table className="bh-table bh-jev-table" data-bh-jev14-table aria-describedby={captionId}>
         <thead><tr>
