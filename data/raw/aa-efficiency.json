@@ -3,7 +3,7 @@
   "basis": "measured",
   "interpretation": "benchmark_proxy",
   "caveat": "AA Intelligence Index benchmark token accounting. Ratios are BENCHMARK PROXIES, never typical user I/O usage; usage ratios must come from OpenRouter/Chutes sources.",
-  "collected_at": "2026-09-23T09:57:55.637Z",
+  "collected_at": "2026-09-24T17:53:18.696Z",
   "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
   "data_fields": {
     "tokens_per_task": "intelligenceIndexOutputTokensPerTask {reasoning, answer, output} (measured)",
@@ -13,18 +13,18 @@
   "attempts": [
     {
       "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
-      "fetched_at": "2026-09-23T09:57:55.427Z",
+      "fetched_at": "2026-09-24T17:53:18.468Z",
       "http_status": 200,
-      "bytes": 3997137,
-      "sha256": "2c25becf8833e77b7166d348f75612ef25e0ce58f6424d5a4614ab829ec5a9ac"
+      "bytes": 3968707,
+      "sha256": "da46f3f47de06da80e0f532105b9e35de0a276c850156b9e306dd5c9eda32487"
     }
   ],
   "coverage": {
-    "published_rows": 166,
-    "scored_denominator": 664,
+    "published_rows": 167,
+    "scored_denominator": 662,
     "denominator_source": "Leaderboard rows carrying a finite intelligenceIndex inside the same model-page Flight payload"
   },
-  "count": 166,
+  "count": 167,
   "rows": [
     {
       "source_id": "8014c311-fa23-4a4b-8485-8a864db8a113",
@@ -2664,6 +2664,28 @@
         "basis": "derived",
         "input_output_ratio": 14.283352970203794,
         "reasoning_output_share": 0.587052240852633
+      }
+    },
+    {
+      "source_id": "765c9f31-95ec-4f14-900a-80614c3b0777",
+      "slug": "mercury-2-5",
+      "name": "Mercury 2.5",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 8437.833446126484,
+        "answer": 660.1215780224895,
+        "output": 9097.955024148974
+      },
+      "canonical_token_counts": {
+        "input": 1098901142,
+        "output": 35253099,
+        "answer": 2594069,
+        "reasoning": 32659030
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 31.171760020303463,
+        "reasoning_output_share": 0.9274428620200573
       }
     },
     {

@@ -12,6 +12,7 @@ import { aaSpeed } from "../lib/aa-speed.mjs";
 import { collapseDuplicateEndpoints, perMillion } from "../lib/openrouter-endpoints.mjs";
 import { normalizeOpenRouterPriceOverrides } from "../lib/openrouter-pricing.mjs";
 import { deterministicFamilyRepresentative } from "../lib/family-representative.mjs";
+import { openRouterGpt6Alias } from "../lib/openrouter-gpt6.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const RAW = join(__dirname, "..", "data", "raw");
@@ -768,7 +769,8 @@ async function build() {
     // OpenRouter alias (notably Gemma 3n preview vs final).
     const hfMappedFamily = aaHfFamily.get(stableHuggingFaceId(m.hugging_face_id));
     const mappedFamily = hfMappedFamily || aaOrFamily.get(stableOrId) || aaOrFamily.get(stableCanonicalSlug);
-    const familyKey = mappedFamily || own.familyKey;
+    const gpt6Alias = openRouterGpt6Alias(m.id);
+    const familyKey = gpt6Alias?.familyKey || mappedFamily || own.familyKey;
     const org = mappedFamily ? [...models.values()].find((row) => row.family_key === familyKey)?.org || own.org : own.org;
     const pricedEndpoints = (m.endpoints || []).filter((e) => num(e.pricing?.prompt) != null || num(e.pricing?.completion) != null);
     if (!pricedEndpoints.length) continue;
@@ -782,7 +784,9 @@ async function build() {
     orIdsByFamily.get(familyKey).add(stableOrId);
     openRouterRoutes.push({
       familyKey, id: m.id, canonicalSlug: m.canonical_slug || null,
-      name: m.name || familyDisplay(familyKey), org,
+      name: gpt6Alias?.displayName || m.name || familyDisplay(familyKey), org,
+      variant: gpt6Alias?.variant || null,
+      reasoningMode: gpt6Alias?.reasoningMode || null,
       openWeights: hasPublishedWeights,
       huggingFaceId: m.hugging_face_id || null,
       contextLength: num(m.context_length),
@@ -1118,18 +1122,25 @@ async function build() {
     // would only duplicate the family with empty benchmarks.
     const unlinked = rows.length > 0
       && rows.every((row) => sourceAliasesForRow(row).size === 0 && !huggingFaceForRow(row));
-    if (exact || generic || unlinked || rows.length === 0) continue;
-    let suffix = "openrouter";
+    // GPT-6 Pro mode is a separate configuration with its own exact OpenRouter
+    // route. Keep that row even when a generic family row exists; otherwise the
+    // mode-specific SKU would be merged into the standard-effort offers.
+    if (exact || (!route.reasoningMode && (generic || unlinked || rows.length === 0))) continue;
+    let suffix = route.variant || "openrouter";
     let serial = 2;
-    while (models.has(`${route.familyKey}::${suffix}`)) suffix = `openrouter-${serial++}`;
+    while (models.has(`${route.familyKey}::${suffix}`)) {
+      suffix = route.variant ? `${route.variant}-${serial++}` : `openrouter-${serial++}`;
+    }
+    const familyReleaseDate = route.reasoningMode ? rows.find((row) => row.release_date)?.release_date ?? null : null;
     const row = emptyModel({
       familyKey: route.familyKey, fam, id: `${route.familyKey}::${suffix}`,
-      displayName: route.name, variant: suffix, openWeights: route.openWeights,
+      displayName: route.name, variant: suffix, openWeights: route.openWeights, releaseDate: familyReleaseDate,
     });
     row.openrouter_metadata = {
       id: route.id, canonical_slug: route.canonicalSlug,
       hugging_face_id: route.huggingFaceId,
       context_window_tokens: route.contextLength,
+      ...(route.reasoningMode ? { reasoning_mode: route.reasoningMode } : {}),
     };
     models.set(row.id, row);
   }
@@ -1194,7 +1205,7 @@ async function build() {
         ? exactOrOffers
         : exactHfOffers.length
           ? exactHfOffers
-          : (exactOrAliases.size || exactHf) ? [] : fam.offers.filter((offer) => offer.or_model_id);
+          : (exactOrAliases.size || exactHf) ? [] : fam.offers.filter((offer) => offer.or_model_id && !openRouterGpt6Alias(offer.or_model_id));
       row.offers = [...directOffers, ...selectedRouterOffers];
       row.copilot = fam.copilot;
     }
@@ -1515,7 +1526,13 @@ async function build() {
       rows: c.rows.map((r) => ({ id: r.id, name: r.name, version: r.version })) })) };
     console.log(`Category scores: ${resolved.map((c) => `${c.label} (${c.rows.length} anchors)`).join(", ")} for ${scores.size} model rows`);
   }
-  await writeFile(OUT, JSON.stringify(dataset, null, 2));
+  // Historical comparisons carry full bridge evidence. Compact serialization
+  // keeps refreshed datasets below GitHub's per-file size limit.
+  const serialized = JSON.stringify(dataset);
+  if (Buffer.byteLength(serialized) > 100 * 1024 * 1024) {
+    throw new Error(`dataset.json exceeds the 100 MiB GitHub file limit (${Buffer.byteLength(serialized)} bytes)`);
+  }
+  await writeFile(OUT, serialized);
   console.log("✓ dataset.json", dataset.counts);
 }
 
