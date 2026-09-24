@@ -27,6 +27,21 @@ test('CR-135 v1.4.1 is the exact aggregate-only release with the approved unchan
   assert.doesNotMatch(JSON.stringify(artifact), /"(?:item_id|item_text|question_text|gold|expected|prediction|predicted|per_item|item_results)"\s*:/i);
 });
 
+test('CR-142 adds only the missing v1.2 hard-family aggregates', () => {
+  const added = ['jevk5-v02', 'opensourcejev-qwen35-4b-q4km', 'qwen35-9b-jev-data-mix-v2', 'gpt-6-luna-low', 'gpt-6-luna', 'von-395m', 'mghafiri-qwen3.5-0.8b-decision-model'];
+  for (const key of added) {
+    const row = artifact.systems.find((system) => system.key === key);
+    assert.ok(row?.rank != null, `${key} remains ranked`);
+    assert.deepEqual(Object.keys(row.hard ?? {}), ['by_family']);
+    const families = row.hard.by_family;
+    assert.equal(Object.keys(families).length, 10);
+    const values = Object.values(families);
+    assert.equal(values.reduce((sum, family) => sum + family.n, 0), 220);
+    assert.ok(values.every((family) => family.correct >= 0 && family.correct <= family.n && Math.abs(family.accuracy - family.correct / family.n) < 0.000051));
+    assert.ok(Math.abs(values.reduce((sum, family) => sum + family.correct, 0) / 220 - row.tiers.hard) < 0.00001);
+  }
+});
+
 test('CR-135 adds a versioned API and pin while retaining the v1.4.0 source pin', async () => {
   const [route, page, livePage, frozenV14, sitemap] = await Promise.all([
     read('../app/api/jevbench/v1.4.1/route.ts'),

@@ -10,7 +10,7 @@ import {
 test('JevBench intent routes use the hash-checked current public release', async () => {
   const data = await readJevbenchSeoData();
   assert.equal(data.artifact.revision, 'v1.4.1');
-  assert.equal(data.sha256, 'e6754863056503fe2b010410fc7111df884ac1f9ce4449aa369aab61d98092cd');
+  assert.equal(data.sha256, '808909c4ecc891fcee7eec0931cefa1b424cb60371412cd6480c0ecff9e48570');
   assert.equal(data.ranked.length, 77);
   assert.equal(data.topFive[0].key, 'jev-1.13.0');
   assert.deepEqual(JEV_SEO_PATHS, {
