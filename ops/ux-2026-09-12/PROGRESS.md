@@ -9511,6 +9511,12 @@ board, compare radar and hub head/order. CR-139 remains with its existing remedi
 - **Merge:** PR #1, merge commit `643711f90c2c9ed445f9fe6c1e25ed5e4ff2c001`, via the queue's steps under `merge-queue.lock`. Gates on the rebased tree: tsc clean, build clean, `npm test` 1,288 pass / 0 fail / 1 skipped. The build ran before the tests, because `test/production/prerender.mjs` needs `.next`. The ledger entries first used the pre-fix allocator id CR-20260925; this entry renames it to the allocated CR-141.
 - **Live:** benchmarkheaven.com, www and the legacy host all served `643711f9` via the webhook deploy. Preview routes return 200 with noindex and are not in the sitemap. `/image-jev-bench` stays 404; the route is prepared on an unpushed branch pending Florian's go. The sealed-content scan of the live HTML on both hosts found 0 hits, and so did the scan of the repo at `main` (7,512 files).
 
+## CR-143 — independent CR-139.2 sign-off (2026-09-24)
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| CR-143.1 | verified | `/opt/benchmarkheaven/state/ux-evidence/iter205-cr139-2-codex/verification.json` | Operational verification follow-up for CR-139.2. Codex Luna independently checked the deployed Claude Fable 5.1 Vertex AI cost modal on both production hosts at 1440×1000 and 390×844 in light and dark themes: 48/48 checks passed, including conditional/cache pricing disclosure, provider/route identity, source date, exact cache-read SHA-256 locator, and no document overflow. This row records the sign-off only; no new data or product claim was introduced. |
+
 ## Iteration 205 — 2026-09-24 14:35 → 14:39 UTC (codex-luna, work): CR-139.2 independent sign-off
 
 - Re-read the authority files, latest review gate, ledger and design directives. The deploy
