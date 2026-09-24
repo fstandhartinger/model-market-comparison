@@ -120,6 +120,16 @@ def json_fields(row: dict) -> str:
     return json.dumps(row, ensure_ascii=True, separators=(",", ":"))
 
 
+def notification_claim_eligibility_sql() -> str:
+    return """status='paid' AND (
+      (notification_status='pending' AND (
+        last_notification_attempt_at IS NULL OR
+        last_notification_attempt_at < now()-interval '1 minute'
+      )) OR
+      (notification_status='sending' AND last_notification_attempt_at < now()-interval '10 minutes')
+    )"""
+
+
 def claim_notification() -> dict | None:
     return sql_json(f"""
       UPDATE {TABLE} AS r
@@ -127,13 +137,7 @@ def claim_notification() -> dict | None:
           last_notification_attempt_at=now(), updated_at=now()
       WHERE r.id=(
         SELECT id FROM {TABLE}
-        WHERE status='paid' AND (
-          (notification_status='pending' AND (
-            last_notification_attempt_at IS NULL OR
-            last_notification_attempt_at < now()-interval '1 minute'
-          )) OR
-          (notification_status='sending' AND last_notification_attempt_at < now()-interval '10 minutes')
-        )
+        WHERE {notification_claim_eligibility_sql()}
         ORDER BY created_at FOR UPDATE SKIP LOCKED LIMIT 1
       )
       RETURNING json_build_object(
@@ -186,16 +190,33 @@ def process_notification() -> bool:
     return True
 
 
+def automatic_terminal_refund_retry_eligibility_sql() -> str:
+    return f"""(
+      (refund_status IS DISTINCT FROM 'failed' AND refund_status IS DISTINCT FROM 'canceled')
+      OR (refund_id IS NULL AND refund_attempts < {AUTO_REFUND_FAILURE_ATTEMPT_LIMIT})
+    )"""
+
+
+def refund_claim_needs_new_attempt_sql() -> str:
+    return "refund_id IS NULL AND (refund_idempotency_key IS NULL OR refund_status IN ('failed','canceled'))"
+
+
+def refund_attempt_increment_sql() -> str:
+    return f"CASE WHEN {refund_claim_needs_new_attempt_sql()} THEN 1 ELSE 0 END"
+
+
+def refund_idempotency_key_update_sql(new_key: str) -> str:
+    return f"CASE WHEN {refund_claim_needs_new_attempt_sql()} THEN {text_literal(new_key)} ELSE refund_idempotency_key END"
+
+
 def claim_refund(request_id: str | None = None) -> dict | None:
     new_key = "jev-priority-refund-" + uuid.uuid4().hex
     if request_id is None:
         # Unknown outcomes keep the same idempotency key and may be checked again.
         # Only terminal automatic failures that need a new key are capped.
         eligibility = f"""((status='review_passed' AND result_delivered_at IS NULL AND review_passed_at <= now()-interval '48 hours')
-          OR (status='refund_due' AND updated_at <= now()-interval '5 minutes' AND (
-            (refund_status IS DISTINCT FROM 'failed' AND refund_status IS DISTINCT FROM 'canceled')
-            OR (refund_id IS NULL AND refund_attempts < {AUTO_REFUND_FAILURE_ATTEMPT_LIMIT})
-          ))
+          OR (status='refund_due' AND updated_at <= now()-interval '5 minutes'
+            AND {automatic_terminal_refund_retry_eligibility_sql()})
           OR (status='refund_pending' AND updated_at <= now()-interval '5 minutes'))"""
     else:
         if not UUID_RE.fullmatch(request_id):
@@ -204,8 +225,8 @@ def claim_refund(request_id: str | None = None) -> dict | None:
     return sql_json(f"""
       UPDATE {TABLE} AS r
       SET status='refund_pending',
-          refund_attempts=refund_attempts + CASE WHEN refund_id IS NULL AND (refund_idempotency_key IS NULL OR refund_status IN ('failed','canceled')) THEN 1 ELSE 0 END,
-          refund_idempotency_key=CASE WHEN refund_id IS NULL AND (refund_idempotency_key IS NULL OR refund_status IN ('failed','canceled')) THEN {text_literal(new_key)} ELSE refund_idempotency_key END,
+          refund_attempts=refund_attempts + {refund_attempt_increment_sql()},
+          refund_idempotency_key={refund_idempotency_key_update_sql(new_key)},
           refund_status=CASE WHEN refund_id IS NOT NULL THEN refund_status ELSE 'processing' END,
           updated_at=now()
       WHERE r.id=(SELECT id FROM {TABLE} WHERE {eligibility} ORDER BY created_at FOR UPDATE SKIP LOCKED LIMIT 1)
