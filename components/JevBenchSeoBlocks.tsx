@@ -9,6 +9,34 @@ type Artifact = {
   protocol: string;
   score_one_liner: string;
 };
+export type StructuredListItem = { name: string; url?: string | null };
+
+function itemListNode(canonical: string, name: string, items: StructuredListItem[]) {
+  return {
+    '@type': 'ItemList',
+    '@id': `${canonical}#item-list`,
+    name,
+    itemListOrder: 'https://schema.org/ItemListOrderUnordered',
+    numberOfItems: items.length,
+    itemListElement: items.map(({ name: itemName, url }, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: { '@type': 'Thing', name: itemName, ...(url ? { url } : {}) },
+    })),
+  };
+}
+
+function faqNode(canonical: string, faq: Faq[]) {
+  return {
+    '@type': 'FAQPage',
+    '@id': `${canonical}#faq`,
+    mainEntity: faq.map(({ question, answer }) => ({
+      '@type': 'Question',
+      name: question,
+      acceptedAnswer: { '@type': 'Answer', text: answer },
+    })),
+  };
+}
 
 export type SeoRow = {
   key: string;
@@ -54,40 +82,52 @@ export function opennessLabel(row: SeoRow): string {
   return 'Unknown in the published row';
 }
 
-export function DatasetFaqJsonLd({ path, artifact, faq }: { path: string; artifact: Artifact; faq: Faq[] }) {
+export function DatasetFaqJsonLd({
+  path, artifact, faq, items, itemListName, variables,
+}: {
+  path: string;
+  artifact: Artifact;
+  faq: Faq[];
+  items?: StructuredListItem[];
+  itemListName?: string;
+  variables?: string[];
+}) {
+  const canonical = new URL(path, SITE_URL).toString();
+  const graph = [
+    {
+      '@type': 'Dataset',
+      '@id': `${canonical}#dataset`,
+      name: `JevBench ${artifact.revision} public aggregate — Benchmark Heaven`,
+      description: 'Published aggregate benchmark results for Jev-class decision models, with separate intelligence, calibration, speed and cost measures.',
+      url: canonical,
+      creator: { '@type': 'Organization', name: 'Benchmark Heaven', url: SITE_URL },
+      isAccessibleForFree: true,
+      dateModified: artifact.generated_utc,
+      version: artifact.revision,
+      measurementTechnique: artifact.score_one_liner,
+      variableMeasured: variables ?? ['JevBench Score', 'Intelligence', 'Calibration', 'Speed', 'Cost', 'sealed accuracy'],
+      distribution: {
+        '@type': 'DataDownload',
+        encodingFormat: 'application/json',
+        contentUrl: `${SITE_URL}/api/jevbench/v1.4.1`,
+      },
+      citation: 'https://github.com/fstandhartinger/jevbench/blob/v1.4.1/docs/METHOD-v1.4.md',
+    },
+    ...(items?.length ? [itemListNode(canonical, itemListName ?? `Systems in JevBench ${artifact.revision}`, items)] : []),
+    faqNode(canonical, faq),
+  ];
+  const json = {
+    '@context': 'https://schema.org',
+    '@graph': graph,
+  };
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(json).replace(/</g, '\\u003c') }} />;
+}
+
+export function JevItemListFaqJsonLd({ path, name, items, faq }: { path: string; name: string; items: StructuredListItem[]; faq: Faq[] }) {
   const canonical = new URL(path, SITE_URL).toString();
   const json = {
     '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'Dataset',
-        '@id': `${canonical}#dataset`,
-        name: `JevBench ${artifact.revision} public aggregate — Benchmark Heaven`,
-        description: 'Published aggregate benchmark results for Jev-class decision models, with separate intelligence, calibration, speed and cost measures.',
-        url: canonical,
-        creator: { '@type': 'Organization', name: 'Benchmark Heaven', url: SITE_URL },
-        isAccessibleForFree: true,
-        dateModified: artifact.generated_utc,
-        version: artifact.revision,
-        measurementTechnique: artifact.score_one_liner,
-        variableMeasured: ['JevBench Score', 'Intelligence', 'Calibration', 'Speed', 'Cost', 'sealed accuracy'],
-        distribution: {
-          '@type': 'DataDownload',
-          encodingFormat: 'application/json',
-          contentUrl: `${SITE_URL}/api/jevbench/v1.4.1`,
-        },
-        citation: 'https://github.com/fstandhartinger/jevbench/blob/v1.4.1/docs/METHOD-v1.4.md',
-      },
-      {
-        '@type': 'FAQPage',
-        '@id': `${canonical}#faq`,
-        mainEntity: faq.map(({ question, answer }) => ({
-          '@type': 'Question',
-          name: question,
-          acceptedAnswer: { '@type': 'Answer', text: answer },
-        })),
-      },
-    ],
+    '@graph': [itemListNode(canonical, name, items), faqNode(canonical, faq)],
   };
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(json).replace(/</g, '\\u003c') }} />;
 }

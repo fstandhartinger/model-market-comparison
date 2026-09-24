@@ -6,11 +6,13 @@ const PAIR_LINKS: Record<string, Array<{ href: string; label: string }>> = {
     { href: '/jev-models/jev-vs-hopper', label: 'Jev vs Hopper' },
     { href: '/jev-models/jev-vs-winnow-12b-q8', label: 'Jev vs Winnow-12B Q8' },
     { href: '/jev-models/jev-vs-reflex-4b', label: 'Jev vs reflex 4B' },
+    { href: '/jev-models/jev-vs-laya', label: 'Jev vs Laya' },
   ],
   'jevk5-v02': [{ href: '/jev-models/jev-vs-jevk5', label: 'Jev vs JevK5' }],
   hopper: [{ href: '/jev-models/jev-vs-hopper', label: 'Jev vs Hopper' }],
   'winnow-12b': [{ href: '/jev-models/jev-vs-winnow-12b-q8', label: 'Jev vs Winnow-12B Q8' }],
   'reflex-4b': [{ href: '/jev-models/jev-vs-reflex-4b', label: 'Jev vs reflex 4B' }],
+  laya: [{ href: '/jev-models/jev-vs-laya', label: 'Jev vs Laya' }],
 };
 
 export function JevBenchRelatedLinks({ systemKey }: { systemKey: string }) {

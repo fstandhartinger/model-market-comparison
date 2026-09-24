@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { readJevbenchV12, jevbenchV12View } from '../../lib/jevbench-v12.mjs';
 import { readJevbenchV11, jevbenchV11View } from '../../lib/jevbench-v11.mjs';
 import { JEVBENCH_REPO } from '../../lib/jevbench.mjs';
@@ -171,6 +172,7 @@ export default async function JevModelsPage() {
       <h1 className="mt-1 text-3xl font-bold tracking-tight">JevBench by Benchmark Heaven</h1>
       <p className="mt-3 max-w-3xl text-lg" data-bh-jev-own>JevBench is <b>Benchmark Heaven&apos;s own benchmark</b> for Jev-class decision models: state and a bounded rubric in, a typed answer out.</p>
       <JevBoardIntentLinks />
+      <p className="mt-2 text-sm"><Link className="text-accent underline" href="/jev-models/jev-vs-laya">Compare Jev and Laya on the same published v1.4.1 release.</Link></p>
       <p className="bh-muted mt-3 max-w-3xl text-xs leading-relaxed" data-bh-jev-meta>
         Scored {day(v14.generated)} · protocol <code>{v14.artifact.protocol}</code> · {v14.publicDecisions} public + {v14.sealedDecisions} sealed aggregate decisions · one request at a time from a server in Germany ·{' '}
         <a className="text-accent underline" href={JEVBENCH_REPO}>harness, public tasks &amp; scoring rules (MIT)</a> ·{' '}
