@@ -2359,5 +2359,49 @@
     }
    }
   }
- ]
+ ],
+ "preview_tracks": {
+  "status": "announced v0.1 preview tracks; no system measured yet; no scores",
+  "decided": "2026-09-24 (Florian)",
+  "computer_use": {
+   "items_total": 400,
+   "public": 147,
+   "sealed": 253,
+   "public_decision_types": [
+    "target location",
+    "element type",
+    "next action class"
+   ],
+   "sealed_decision_types": [
+    "task completion",
+    "action success",
+    "dialog safety",
+    "blocker status"
+   ],
+   "sealed_origin": "original synthetic local fixtures",
+   "reassigned_to_sealed": 93
+  },
+  "browser_use": {
+   "items_total": 400,
+   "public": 240,
+   "sealed": 160,
+   "public_decision_types": [
+    "target location",
+    "element type",
+    "next action class"
+   ],
+   "sealed_decision_types": [
+    "task completion",
+    "action success",
+    "dialog safety",
+    "blocker status"
+   ],
+   "sealed_origin": "original synthetic local fixtures",
+   "mind2web_public_only": 133,
+   "reassigned_to_sealed": 0
+  },
+  "cross_track_rule": "A public-origin Computer Use or Browser Use row that shares a source row or screenshot with a sealed core item is sealed too.",
+  "kev_flag": "Mind2Web-derived Browser Use rows are public-only and reported separately for Kev, whose training data overlaps Mind2Web.",
+  "scoring": "Same method as the core once measured; the matched-family gap needs decision types present in both parts."
+ }
 }
