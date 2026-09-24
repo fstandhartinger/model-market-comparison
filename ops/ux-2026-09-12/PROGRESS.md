@@ -9457,3 +9457,20 @@ board, compare radar and hub head/order. CR-139 remains with its existing remedi
 | F-173 | verified | `1238cc8c`; same evidence dirs, `verification-F-173.json` | Independent Kimi K3 gate: 10/10 per host; first mobile bar is above the fold, the decision count is stated once, and there is no horizontal overflow. |
 | F-174 | verified | `1238cc8c`; same evidence dirs, `verification-F-174.json` | Independent Kimi K3 gate: 4/4 per host; missing radar series are stated once instead of rendering trailing dash labels. |
 | F-175 | verified | `1238cc8c`; same evidence dirs, `verification-F-175.json` | Independent Kimi K3 gate: 4/4 per host; the board order is chart → table → compare → explanation. |
+
+## Iteration 203 — 2026-09-24 (codex-luna, work): CR-139 gate bounded without a verdict
+
+- The deployed CR-139 remediation was checked read-only. Focused CR-139 tests passed
+  **53/53**, and both production hosts agreed on revision `5ed2897e`, generated data
+  `2026-09-24T08:11:43.066Z`, and counts **871 models / 676 families / 96 providers /
+  3,036 offers**. The AA source remains held and no AA number was changed.
+- Two independent free-review attempts were made through `bin/delegate.sh`: Kimi K3 via
+  Chutes (bounded at about 25 minutes) and nex-agi/nex-n2.5-pro:free via OpenRouter
+  (bounded at about 10 minutes). Neither returned a report or verdict; both were stopped
+  cleanly and neither modified the repository or production.
+- Per the engine rule, no CR-139 row is promoted to `verified` from these deterministic
+  checks. Evidence and the exact blocker are recorded at
+  `/opt/benchmarkheaven/state/ux-evidence/iter203-cr139-gate/VERIFICATION-STATUS.md`.
+  A non-Codex live gate must still verify CR-139.1/.2/.4/.5; CR-139.3 remains blocked on
+  written AA permission, CR-139.6 on Florian's historical preview decision, and CR-139.7
+  on the complete independent review plus deployment acceptance.
