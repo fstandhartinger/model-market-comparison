@@ -1688,17 +1688,17 @@ data, canonicals, sitemap and internal links; verify owned links, search visibil
 the scheduled SEO loop. No unsolicited engagement with the unrelated jevbench.dev
 project, no posting in the HN thread, spam comments, fake accounts or reviews.
 
-## CR-20260925 — ImageJevBench v0.1 final split, sealed-weighted score and overfit penalty (2026-09-24)
+## CR-141 — ImageJevBench v0.1 final split, sealed-weighted score and overfit penalty (2026-09-24)
 
-- **CR-20260925.1 Exposure-driven split.** Florian (board #455): fewer public, more sealed items. Anything already exposed
+- **CR-141.1 Exposure-driven split.** Florian (board #455): fewer public, more sealed items. Anything already exposed
   stays public: Mind2Web-derived items (Kev overlap), the promo photos shown in videos, the example cards, and the source rows
   published in this repository by the 21 Sep multimodal preview. Every never-exposed item is sealed. Record the frozen
   split hashes before any per-system result.
-- **CR-20260925.2 Score.** Chance-corrected intelligence and calibration weighted 35 % public / 65 % sealed. Matched-family
+- **CR-141.2 Score.** Chance-corrected intelligence and calibration weighted 35 % public / 65 % sealed. Matched-family
   public-minus-sealed accuracy gap penalty above 15 points: Intelligence × max(0, 1 − (gap − 15)/100), same for all systems.
   Speed, cost, composite and gates unchanged. Recompute every measured system from stored item-level outputs.
-- **CR-20260925.3 Page.** Update the noindex preview (and the WIP route that reuses it) with split, method, the 11-system ranking,
+- **CR-141.3 Page.** Update the noindex preview (and the WIP route that reuses it) with split, method, the 11-system ranking,
   matched gap and penalty columns, and the Computer Use / Browser Use preview tracks (board #475; not measured yet).
   Aggregate-only; no sealed content. Prepare but do not publish `/image-jev-bench`.
-- **CR-20260925.4 Verify.** Focused tests, full suite, typecheck, build; both-host live check; sealed-content scan of the
+- **CR-141.4 Verify.** Focused tests, full suite, typecheck, build; both-host live check; sealed-content scan of the
   live HTML. Florian decides publication.
