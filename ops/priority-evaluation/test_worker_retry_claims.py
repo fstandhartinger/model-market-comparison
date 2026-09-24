@@ -269,6 +269,23 @@ class RetryClaimTests(unittest.TestCase):
             self.assertNotIn("refund_idempotency_key=NULL", statement)
             self.assertIn(f"refund_status='{expected_state}'", statement)
 
+    def test_invalid_stored_refund_reference_is_retained_and_flagged(self):
+        row = {
+            "id": "8f15b2f0-3d6e-4a70-b8a3-80dbdc57107a",
+            "stripe_mode": "test",
+            "payment_intent_id": "pi_123",
+            "refund_id": "invalid-refund-reference",
+            "refund_idempotency_key": "jev-priority-refund-existing",
+        }
+        with patch.object(worker, "stripe_request") as stripe_request, \
+             patch.object(worker, "sql") as sql:
+            self.assertEqual(worker.operate_refund(row), "failed")
+        stripe_request.assert_not_called()
+        statement = sql.call_args.args[0]
+        self.assertIn("refund_status='failed'", statement)
+        self.assertIn("refund_id=CASE WHEN FALSE THEN NULL ELSE COALESCE(NULL,refund_id) END", statement)
+        self.assertNotIn("refund_idempotency_key=NULL", statement)
+
     def test_refund_claim_database_error_fails_the_cycle_for_timer_retry(self):
         with patch.object(worker, "claim_refund", side_effect=worker.WorkerError("database operation failed")):
             with self.assertRaises(worker.WorkerError):

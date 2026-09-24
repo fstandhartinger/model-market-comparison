@@ -1,5 +1,6 @@
 DO $$
 BEGIN
+  -- Serialize initializers before applying the short timeout to table DDL.
   PERFORM pg_advisory_xact_lock(hashtext('bh_accounts_priority_eval_schema'));
   PERFORM set_config('lock_timeout', '2s', true);
   IF NOT EXISTS (
