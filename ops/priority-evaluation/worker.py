@@ -205,33 +205,33 @@ def automatic_terminal_refund_retry_eligibility_sql() -> str:
     )"""
 
 
-def refund_attention_marker_eligibility_sql(attempts: int, state: str) -> str:
-    return f"""r.refund_attempts >= {attempts} AND (
-      r.refund_attention_notified_attempts < {attempts}
-      OR (r.refund_attempts={attempts}
+def refund_attention_marker_eligibility_sql(attempt_seq: int, state: str) -> str:
+    return f"""r.refund_attempt_seq >= {attempt_seq} AND (
+      r.refund_attention_notified_attempts < {attempt_seq}
+      OR (r.refund_attempt_seq={attempt_seq}
         AND r.refund_attention_notified_state IS DISTINCT FROM {text_literal(state)})
     )"""
 
 
-def refund_attention_marker_state_update_sql(attempts: int, state: str) -> str:
-    return f"CASE WHEN r.refund_attempts={attempts} THEN {text_literal(state)} ELSE r.refund_attention_notified_state END"
+def refund_attention_marker_state_update_sql(attempt_seq: int, state: str) -> str:
+    return f"CASE WHEN r.refund_attempt_seq={attempt_seq} THEN {text_literal(state)} ELSE r.refund_attention_notified_state END"
 
 
 def mark_refund_attention_notified(row: dict, state: str) -> bool:
     request_id = str(row.get("id", ""))
-    attempts = row.get("refund_attempts")
+    attempt_seq = row.get("refund_attempt_seq")
     if not UUID_RE.fullmatch(request_id):
         raise WorkerError("database returned an invalid request ID")
-    if not isinstance(attempts, int) or isinstance(attempts, bool) or attempts < 1:
-        raise WorkerError("database returned an invalid automatic refund attempt count")
+    if not isinstance(attempt_seq, int) or isinstance(attempt_seq, bool) or attempt_seq < 1:
+        raise WorkerError("database returned an invalid refund attempt sequence")
     if state not in ("failed", "unknown", "error"):
         raise WorkerError("invalid refund attention state")
     result = sql_json(f"""
       UPDATE {TABLE} AS r
-      SET refund_attention_notified_attempts=GREATEST(r.refund_attention_notified_attempts,{attempts}),
-          refund_attention_notified_state={refund_attention_marker_state_update_sql(attempts, state)},
+      SET refund_attention_notified_attempts=GREATEST(r.refund_attention_notified_attempts,{attempt_seq}),
+          refund_attention_notified_state={refund_attention_marker_state_update_sql(attempt_seq, state)},
           updated_at=now()
-      WHERE r.id='{request_id}'::uuid AND ({refund_attention_marker_eligibility_sql(attempts, state)})
+      WHERE r.id='{request_id}'::uuid AND ({refund_attention_marker_eligibility_sql(attempt_seq, state)})
       RETURNING json_build_object('id',r.id::text)::text
     """)
     return result is not None
@@ -239,13 +239,13 @@ def mark_refund_attention_notified(row: dict, state: str) -> bool:
 
 def refund_attention_should_notify(
     state: str,
-    refund_attempts: int,
+    refund_attempt_seq: int,
     notified_attempts: int,
     notified_state: str | None,
 ) -> bool:
     if state not in ("failed", "unknown", "error"):
         return False
-    return refund_attempts > notified_attempts or state != notified_state
+    return refund_attempt_seq > notified_attempts or state != notified_state
 
 
 def refund_claim_needs_new_attempt_sql() -> str:
@@ -256,6 +256,10 @@ def refund_attempt_increment_sql(automatic: bool = True) -> str:
     if not automatic:
         # This counter is the automatic retry cap; a manual claim is never blocked by it.
         return "0"
+    return f"CASE WHEN {refund_claim_needs_new_attempt_sql()} THEN 1 ELSE 0 END"
+
+
+def refund_attempt_seq_increment_sql() -> str:
     return f"CASE WHEN {refund_claim_needs_new_attempt_sql()} THEN 1 ELSE 0 END"
 
 
@@ -286,6 +290,7 @@ def claim_refund(request_id: str | None = None) -> dict | None:
       UPDATE {TABLE} AS r
       SET status='refund_pending',
           refund_attempts=refund_attempts + {refund_attempt_increment_sql(automatic=request_id is None)},
+          refund_attempt_seq=refund_attempt_seq + {refund_attempt_seq_increment_sql()},
           refund_idempotency_key={refund_idempotency_key_update_sql(new_key)},
           refund_status=CASE WHEN refund_id IS NOT NULL THEN refund_status ELSE 'processing' END,
           updated_at=now()
@@ -293,6 +298,7 @@ def claim_refund(request_id: str | None = None) -> dict | None:
       RETURNING json_build_object('id',r.id::text,'stripe_mode',r.stripe_mode,
         'payment_intent_id',r.payment_intent_id,'refund_id',r.refund_id,
         'refund_idempotency_key',r.refund_idempotency_key,'refund_attempts',r.refund_attempts,
+        'refund_attempt_seq',r.refund_attempt_seq,
         'refund_attention_notified_attempts',r.refund_attention_notified_attempts,
         'refund_attention_notified_state',r.refund_attention_notified_state)::text
     """)
@@ -337,10 +343,20 @@ def operate_refund(row: dict) -> str:
         set_refund_state(row, "refund_due", "unknown", refund_id if isinstance(refund_id, str) else None)
         return "unknown"
     except StripeFailure as exc:
+        if refund_id:
+            # The refund object already exists. A failed GET cannot establish that the
+            # refund failed, so retain its ID and key and never create a replacement.
+            set_refund_state(row, "refund_due", "unknown")
+            return "unknown"
         retryable = exc.status >= 500 or exc.status in (408, 409, 429)
         set_refund_state(row, "refund_due", "unknown" if retryable else "failed", refund_id if isinstance(refund_id, str) else None, clear_key=not retryable)
         return "unknown" if retryable else "failed"
     except WorkerError:
+        if refund_id:
+            # Credential/configuration failures while retrieving a known refund are
+            # also uncertain; preserve the reference for the next GET attempt.
+            set_refund_state(row, "refund_due", "unknown")
+            return "unknown"
         set_refund_state(row, "refund_due", "failed", refund_id if isinstance(refund_id, str) else None, clear_key=True)
         raise
 
@@ -373,17 +389,21 @@ def process_due_refunds(limit: int = 50) -> int:
         print(f"Refund request {row.get('id', '')}: {state}")
         if refund_attention_should_notify(
             state,
-            row.get("refund_attempts", 0),
+            row.get("refund_attempt_seq", 0),
             row.get("refund_attention_notified_attempts", 0),
             row.get("refund_attention_notified_state"),
         ):
-            sent = notify_florian(
-                f"Priority evaluation refund needs attention\nRequest ID: {row.get('id', '')}\n"
-                f"The refund worker could not confirm a full {str(row.get('stripe_mode', '')).upper()} refund. "
-                "Check the Stripe payment record before retrying."
-            )
-            if sent:
-                mark_refund_attention_notified(row, state)
+            try:
+                sent = notify_florian(
+                    f"Priority evaluation refund needs attention\nRequest ID: {row.get('id', '')}\n"
+                    f"The refund worker could not confirm a full {str(row.get('stripe_mode', '')).upper()} refund. "
+                    "Check the Stripe payment record before retrying."
+                )
+                if sent:
+                    mark_refund_attention_notified(row, state)
+            except Exception as exc:
+                # A notice/marker error must not starve the rest of the refund batch.
+                print("Refund attention notice failed: " + type(exc).__name__, file=sys.stderr)
         count += 1
     return count
 
