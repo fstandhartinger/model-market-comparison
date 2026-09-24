@@ -1722,3 +1722,26 @@ Florian, 24 Sep 2026, request preserved from `/home/flori/jobs/jev-page-fixes-20
 > a proposal for a long-context Jev-class track at 16k/64k/256k/1M, including item design,
 > cost and qualifying systems; proposal only, no build. Verify all production hosts,
 > retain screenshots, notify Florian, and write the job output.
+
+
+## CR-20260924a — New benchmarks from Florian's X bookmark folder "evals" (introducing-mentalhealthbench) → CR-143
+Filed automatically by the bookmark intake (`/opt/benchmarkheaven/bin/bookmarks_intake.py`), 24 Sep 2026 15:12 UTC. Standing rule, Florian 18 Sep 2026, verbatim:
+
+> new rule for benchmark heaven: it should look into https://x.com/i/history/bookmarks/2098158441952907558 once a day and check if there are new evals/benchmarks it doesn't have in its list yet, and then add them
+
+Source folder: https://x.com/i/history/bookmarks/2098158441952907558
+
+### introducing-mentalhealthbench — https://x.com/OpenAI/status/2102837574092161102
+Bookmarked post by OpenAI (@OpenAI), posted Wed Sep 23 19:08:41 +0000 2026. Post text, verbatim:
+
+> We’re demonstrating how frontier models have continued to improve in realistic mental health conversations with MentalHealthBench.
+>
+> This new open benchmark was built with input from more than 80 mental health clinicians.
+>
+> We’re releasing it openly so other researchers can examine the methods, run their own evaluations, and build on the work.
+>
+> https://t.co/VTm5ZgxJbl
+
+Links in the post: `https://openai.com/index/introducing-mentalhealthbench/`
+Media in the post: `https://pbs.twimg.com/media/HS7G-iaa8AAw6YK.jpg` (results are often only in the image — read it).
+Registry check: not in the registry and not in any change request.
