@@ -28,6 +28,13 @@ try {
     const p = await c.newPage(); const errs = []; p.on('pageerror', (e) => errs.push(String(e))); p.on('console', (msg) => { if (msg.type() === 'error') errs.push(msg.text()); });
     try {
       await p.goto(`${BASE}/jev-models`, { waitUntil: 'networkidle', timeout: 60000 });
+      // F-179 (PR #7, 2026-09-24): the v1.2/v1.3 historical board now mounts only when the
+      // `jev13-history` disclosure is first opened, so every read below needs that click first.
+      const f179History = p.locator('[data-bh-jev13-history]');
+      if (await f179History.count()) {
+        if (!(await f179History.evaluate((element) => element.hasAttribute('open')))) await f179History.locator('summary').click();
+        await p.waitForSelector('[data-bh-jev12-task-table]', { state: 'attached', timeout: 30000 });
+      }
       const sec = p.locator('[data-bh-jev12-compare]');
       await sec.scrollIntoViewIfNeeded();
       const vals = async (radar, side, keys) => Promise.all(keys.map(async (k) => ((await p.textContent(`[data-bh-jev12-radar="${radar}"] [data-bh-jev12-radar-value="${side}:${k}"]`)) || '').replace(/^ · /, '').trim()));
@@ -69,7 +76,10 @@ try {
       check(`${tag}: same-type pair → B is dashed`, dash === '6 4', dash);
       await p.locator('[data-bh-jev12-compare] .bh-panel').screenshot({ path: `${OUT}/${tag}-radars-same-type.png` });
       // svg is labelled, value tables exist
-      check(`${tag}: radars are labelled images with value tables`, (await p.$$('[data-bh-jev12-radar-svg][role="img"][aria-labelledby]')).length === 2 && (await p.$$('[data-bh-jev12-radar-table]')).length === 2, '');
+      // Scoped to CR-94's own compare panel (2026-09-24): the unscoped selector also counted the four
+      // `jev14-radar-*` SVGs the later V14 suite added elsewhere on the page, so it read 6 and failed on a
+      // defect that is not there. Both v1.2 radars are labelled and both have value tables.
+      check(`${tag}: radars are labelled images with value tables`, (await p.$$('[data-bh-jev12-compare] [data-bh-jev12-radar-svg][role="img"][aria-labelledby]')).length === 2 && (await p.$$('[data-bh-jev12-compare] [data-bh-jev12-radar-table]')).length === 2, '');
       // no horizontal overflow on the page at 390
       const over = await p.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
       check(`${tag}: no horizontal page overflow`, over <= 1, over);

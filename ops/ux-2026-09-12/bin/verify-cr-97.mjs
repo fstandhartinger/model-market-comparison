@@ -65,6 +65,13 @@ try {
     const p = await c.newPage(); const errs = []; p.on('pageerror', (e) => errs.push(String(e)));
     try {
       await p.goto(`${BASE}/jev-models`, { waitUntil: 'networkidle', timeout: 60000 });
+      // F-179 (PR #7, 2026-09-24): the v1.2/v1.3 historical board now mounts only when the
+      // `jev13-history` disclosure is first opened, so every read below needs that click first.
+      const f179History = p.locator('[data-bh-jev13-history]');
+      if (await f179History.count()) {
+        if (!(await f179History.evaluate((element) => element.hasAttribute('open')))) await f179History.locator('summary').click();
+        await p.waitForSelector('[data-bh-jev12-task-table]', { state: 'attached', timeout: 30000 });
+      }
       // The chart: Jev is bar 1, classifier.dev is below every ranked bar and shows no rank number.
       const bars = await p.$$eval('[data-bh-jevc-bars] [data-bh-jev12-bar]', (e) => e.map((x) => x.getAttribute('data-bh-jev12-bar')));
       check(`${tag}: Jev 1.13.0 is the first bar`, bars[0] === 'jev-1.13.0', bars.slice(0, 4));

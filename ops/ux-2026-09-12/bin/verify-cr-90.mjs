@@ -21,6 +21,13 @@ try {
     page.on('console', (message) => { if (message.type() === 'error') errors.push(message.text()); });
     try {
       await page.goto(`${BASE}/jev-models`, { waitUntil: 'networkidle', timeout: 60000 });
+      // F-179 (PR #7, 2026-09-24): the v1.2/v1.3 historical board now mounts only when the
+      // `jev13-history` disclosure is first opened, so every read below needs that click first.
+      const f179History = page.locator('[data-bh-jev13-history]');
+      if (await f179History.count()) {
+        if (!(await f179History.evaluate((element) => element.hasAttribute('open')))) await f179History.locator('summary').click();
+        await page.waitForSelector('[data-bh-jev12-task-table]', { state: 'attached', timeout: 30000 });
+      }
       const difficulty = page.locator('[data-bh-jev12-difficulty]');
       const grid = page.locator('[data-bh-jev12-task-grid]');
       check(`${tag}: difficulty controls render`, await difficulty.count() === 1 && await difficulty.locator('[data-bh-jev12-scope-option]').count() === 4);
@@ -84,6 +91,13 @@ try {
       check(`${tag}: Easy scope gives the easy tier the whole weight`, easyWeights.tiers[0].includes('72 dec. · 100 %') && easyWeights.tiers.slice(1).every((t) => /outside this scope/.test(t)), easyWeights.tiers);
       check(`${tag}: Easy method list states one scored tier`, easyWeights.intelScope === 'easy' && /for the Easy only scope/.test(easyWeights.intel) && /easy 100 %/.test(easyWeights.intel) && /Hard, Standard and Judge are outside this scope/.test(easyWeights.intel), easyWeights.intel);
       await page.reload({ waitUntil: 'networkidle', timeout: 60000 });
+      // F-179: a reload closes the disclosure again, so the scoped board has to be re-opened before it
+      // can be read. Whether a `?scope=` deep link should open it by itself is recorded separately.
+      const reopened = page.locator('[data-bh-jev13-history]');
+      if (await reopened.count() && !(await reopened.evaluate((element) => element.hasAttribute('open')))) {
+        await reopened.locator('summary').click();
+        await page.waitForSelector('[data-bh-jev12-difficulty]', { state: 'attached', timeout: 30000 });
+      }
       check(`${tag}: reload restores the scoped URL view`, await page.locator('[data-bh-jev12-difficulty]').getAttribute('data-bh-jev12-scope') === 'easy' && await page.locator('[data-bh-jev12-main-chart]').getAttribute('data-bh-jevc-chart') === 'custom' && new URL(page.url()).searchParams.get('scope') === 'easy');
       await difficulty.locator('[data-bh-jev12-scope-reset]').click();
       const defaultState = await page.evaluate(() => ({

@@ -9558,3 +9558,125 @@ board, compare radar and hub head/order. CR-139 remains with its existing remedi
 | F-171–F-175 | verified | `pass33-{canonical,legacy}/` | Re-confirmed after the CR-142 edits to the same components: 78/82 per host, the only failures being F-176(b). No regression. |
 | F-176 | open ((b)) | `pass33-{canonical,legacy}/` | `three.js r128 is included under its MIT license.` is still beside the chart on both hosts — unchanged from the previous gate. |
 | F-179 | open | `curl -s https://benchmarkheaven.com/jev-models \| wc -c` = **7,384,601** | **Moving the wrong way:** up from the recorded 6,846,480 bytes (+538 KB, +7.9%) once CR-142 added the capacity chart, the top-five lists and the 7 hard-tier breakdowns. PR #7 (`perf: lazy-load JevBench history and heavy views`) is open and unmerged; it should land before the page grows again. |
+
+## Iteration 206 — 2026-09-24 16:50 → 17:5x UTC (claude-opus, work): the daily pipeline's silent day, and F-179 live
+
+### The finding this iteration started from: 2026-09-24 has no pipeline publication, and nobody was told
+
+Read from receipts, not from a report:
+
+- **05:17:01Z daily failed at `fetch-aa`** — `Artificial Analysis models: partial response or
+  removal requiring review (3 prior identities absent: 6ace0ead…, f3a0e101…, 8decf027…)`. Those are
+  Sapiens AI's three "Agnes" rows. The guard in `lib/live-source.mjs` did its job.
+- **05:37:29Z self-heal retry: identical failure.** `pipeline-streak.json` → `failures_in_row: 2`.
+- **05:38:10Z the bounded repair agent was launched, and it was not idle.** It reviewed the captured
+  primary response and committed `712eac76` — a digest-bound, expiring `aa_models` entry in
+  `data/raw/source-change-approvals.json` approving exactly that three-model withdrawal. Its own
+  re-run (05:45:13Z) got past `fetch-aa` on that approval (671 models) and ran on through
+  `OK review-live` (06:00) into the benchmark refresh.
+- **07:37:29Z systemd killed the whole chain**: `bh-selfheal-20260924-051729.service: Failed with
+  result 'timeout'` — `RuntimeMaxSec=8400` in `/opt/benchmarkheaven-daily/coordination/self-heal.sh`.
+  That took the in-flight gated run with it, left the repair job's `OUTPUT.md` empty with no
+  `RESULT.md`, froze `state/self-heal.json` at `stage: "repairing"` — and **skipped the last-resort
+  "Needs you" Telegram entirely**. Florian was never told the day had gone unpublished.
+- **07:17:02Z the catch-up skipped** — the orphaned 05:45 run still held `run.lock` at that moment.
+
+The budget was arithmetically impossible: a documented chain of 1200 s wait + one full gated run
+(23 Sep took 09:57→11:56Z) + a 7200 s repair agent + the alert, inside 8400 s.
+
+**Nothing bad reached the site.** The run never published, so no dataset was written from the
+approved shrink; benchmarkheaven.com serves `generated_at 2026-09-24T08:11:43.066Z` from the CR-139
+job's audited refresh. One correction to this loop's own first reading: `data/raw/artificialanalysis.json`
+still holds 673 models with all three Agnes rows, but that file has not been refreshed since
+`5bfb97de` (2026-09-23 11:52Z) — it is yesterday's snapshot, not evidence about today.
+
+**The withdrawal was re-verified against the primary source** with one read-only
+`GET https://artificialanalysis.ai/api/v2/data/llms/models` at 17:00Z (200, 578,028 bytes, 672
+unique identities): all three Agnes rows still absent ~11.5 h later, exactly those three and nothing
+else absent relative to the committed snapshot, and the response has since *gained* two identities
+(`Mercury 2.5`, `DeepSeek V4.1 Flash (Non-Reasoning)`). A truncated response does not behave that
+way — the repair agent's judgement was right. Capture retained (uncompressed sha256
+`8d24102ca7f534893ad16918eee5017998cfd6a0c007aee924ab587890e92afd`).
+
+**`lib/live-source.mjs` was deliberately left alone.** Its current-identity-set binding is a tested
+design decision (`test/live-source.test.mjs:23`) and is not the defect. The consequence is stated
+openly instead: that binding makes an approval single-use — it is consumed by the run that publishes
+the new snapshot. Today's run never published and AA's catalog has moved twice since, so
+**tomorrow's 05:17 run will fail at `fetch-aa` again** unless one deliberate `gated-run.sh` consumes
+the withdrawal first. With the budget fix the self-heal chain can now carry that itself, at the cost
+of a repair-agent cycle and a ~08:00 publication.
+
+### What was fixed: `/opt/benchmarkheaven-daily/coordination/self-heal.sh`
+
+Not a repo file (that tree is not under git); backup `self-heal.sh.bak-20260924-budget`, full diff in
+the evidence directory.
+
+- `RuntimeMaxSec` is now **derived** from named budgets (`WAIT_S` 1200, `RETRY_BUDGET_S` 7200,
+  `REPAIR_S` 7200, `ALERT_RESERVE_S` 600 → 16,500 s) instead of a literal, so the unit can never be
+  smaller than the chain it holds. `RETRY_BUDGET_S` is 7200 because a full gated run has taken ~2 h.
+- The repair agent is bounded by the **remaining** chain budget minus the alert reserve, not by a
+  fixed 7200 s. A long retry now shortens the agent; it can no longer silence the alert.
+- Below `MIN_REPAIR_S` (900 s) the agent is not started at all and that is written to `RESULT.md`.
+- A `TERM`/`INT` trap sends the last-resort alert and records `stage: "terminated_alerted"` even if
+  the unit is torn down anyway (time limit, reboot, `systemctl stop`); `TimeoutStopSec=120` gives it
+  room before SIGKILL.
+- `launch_repair_agent` is called with `|| true` — a second, latent way to lose the alert: under
+  `set -e`, the agent failing to start (lock held, no budget) ended the chain before it reported.
+- `coordination/test-self-heal.sh`: **17 passed, 0 failed** (was 10). New scenarios 6 (the limit
+  covers the chain and is derived, not a literal), 7 (a terminated chain still alerts and records
+  `terminated_alerted`), 8 (a budget-starved agent is skipped but Florian is still told).
+- The orphaned job's missing report was written after the fact
+  (`state/self-heal-repair-job/RESULT.md`), and `state/self-heal.json` now records
+  `stage: "terminated_unreported"` with the reason rather than a frozen `"repairing"` or a fake
+  success.
+
+### F-179 — merged by PR #7 and verified live here by a non-implementer engine
+
+- Independently re-derived: `/jev-models` is **1,366,324 bytes** on all three hosts, down from the
+  recorded **7,384,601** (−81.5 %), comfortably under the directive's 1.5 MB bar; 173,373 bytes
+  gzipped, against a 400 KB compressed bar.
+- `ops/ux-2026-09-12/bin/verify-f179.mjs` **22/22 per host, 66/66** at 1440×1000 and 390×844 in light
+  and dark on canonical, www and legacy, at revision `b95905f2`.
+- **PR #7 shipped only half of the directive.** F-179 says "the CR-90/94/97 verifiers open the
+  details before they read it (add one `click` on the summary)"; none of the three had it, and
+  `verify-cr-90.mjs` timed out on `[data-bh-jev12-difficulty]` on both hosts. The click was added to
+  all three. With it: `verify-cr-90` **122/122**, `verify-cr-94` **112/112**, `verify-cr-97`
+  **115/115** on canonical and legacy.
+- **A second, older verifier defect surfaced on the way** (not caused by F-179): `verify-cr-94.mjs`
+  counted every `[data-bh-jev12-radar-svg]` on the page and therefore also the four `jev14-radar-*`
+  SVGs the later V14 suite added, reading 6 where it wanted 2 — red on a defect that is not there.
+  Scoped to CR-94's own compare panel; both v1.2 radars are labelled and both have value tables.
+- **One real product consequence, fixed rather than tolerated.** After a reload the disclosure closes,
+  so `/jev-models?scope=easy` landed on a page showing none of what the link asked for — and CR-90's
+  "reload restores the scoped URL view" is a **verified** row. `components/JevHistoryLazy.tsx` now
+  opens on mount for `?scope=`, `?w=` and `#jev13-history` only. The server HTML F-179 shrank is
+  unchanged for everyone who did not ask; `test/f179-history-lazy.test.mjs` pins both halves.
+
+### Gates and evidence
+
+`npx tsc --noEmit -p .` rc 0 · `npm run build` rc 0 · `node --test test/` **1,283 tests / 1,282 pass
+/ 0 fail / 1 skip** (rc 0) · `node scripts/build-dataset.mjs` rc 0, **871/676/96/3,036**, the only
+diff `generated_at` and `source_status/composite/collected_at`, `data/dataset.json` restored.
+
+Evidence: `/opt/benchmarkheaven/state/ux-evidence/iter206-selfheal/` (self-heal diff, test log,
+systemd kill log, the AA capture, the reconstructed `RESULT.md`, the state files) and
+`/opt/benchmarkheaven/state/ux-evidence/iter206-f179/` (four verifiers × hosts, screenshots, logs).
+
+### Not done, and why
+
+- **The catch-up `gated-run.sh` was not started.** It holds `run.lock` — and therefore blocks every
+  push to `main` — for up to two hours, and the merge queue was actively gating PRs #7–#11 with the
+  disk watchdog at ~90 %. Handed off on agent board thread #8, entries #747, #758 and #777.
+- **F-176(b) was not attempted.** Its Credit half is `app/jev-models/page.tsx`, which PR #7 rewrote
+  and PR #9 also touches. Same one-writer reason as iteration 189; still waiting for a quiet moment
+  on that file.
+
+| ID | Status | Evidence added this iteration | Note |
+|---|---|---|---|
+| F-179 | verified | `b95905f2` (PR #7); `/opt/benchmarkheaven/state/ux-evidence/iter206-f179/f179-{canonical,www,legacy}/verification.json` | Independent (non-implementer) live gate: **22/22 per host, 66/66** at 1440/390 × light/dark on all three hosts. `/jev-models` re-derived at **1,366,324 bytes**, down from 7,384,601 (−81.5 %), under the 1.5 MB bar; 173,373 gzipped against a 400 KB bar. The closed disclosure ships summary and one sentence only; opening it fetches `/api/jevbench/v1.3/history` (200) and renders the board, radars, task grid and held-out table with 0 page errors. |
+| CR-90.x | verified (held) | `iter206-f179/cr-90-{canonical,legacy}/verification.json` | **122/122 per host** after the directive's missing click was added to `verify-cr-90.mjs`. The deep-link half was genuinely degraded by F-179 and is fixed here, not waived: `JevHistoryLazy` opens on mount for `?scope=`, `?w=` and `#jev13-history`. |
+| CR-94.x | verified | `iter206-f179/cr-94-{canonical,legacy}/verification.json` | **112/112 per host.** The 4 failures were the verifier's, not the page's: an unscoped `[data-bh-jev12-radar-svg]` selector also counted the four later `jev14-radar-*` SVGs. Scoped to the CR-94 compare panel. |
+| CR-97.x | verified | `iter206-f179/cr-97-{canonical,legacy}/verification.json` | **115/115 per host** with the click added. |
+| D190 | fixed | `/opt/benchmarkheaven/state/ux-evidence/iter206-selfheal/` | Self-heal's `RuntimeMaxSec=8400` could not hold its own documented chain, so the 2026-09-24 chain was killed mid-repair and its last-resort alert never fired. Limit now derived from named budgets; repair agent bounded by remaining budget minus a reserved alert slice; `TERM` trap reports even on teardown; `launch_repair_agent || true` closes a second silent-exit path. `test-self-heal.sh` 17/17. |
+| D191 | open | `state/pipeline-streak.json` (`last_ok_day: "2026-09-23"`, `failures_in_row: 2`) | **2026-09-24 has no pipeline publication.** The AA withdrawal approval `712eac76` is single-use by design and was never consumed, and AA's catalog has moved twice since, so tomorrow's 05:17 run will fail at `fetch-aa` again unless one deliberate `gated-run.sh` consumes it first. Not started here: it blocks all pushes to `main` for up to two hours while the merge queue was gating PRs #7–#11. |
+| F-176 | open ((b)) | — | Not attempted: the Credit half is `app/jev-models/page.tsx`, rewritten by PR #7 and also touched by PR #9. |
