@@ -7,6 +7,7 @@ const page = await readFile(new URL('../app/jev-models/[system]/page.tsx', impor
 const hub = await readFile(new URL('../app/jev-models/page.tsx', import.meta.url), 'utf8');
 const sitemap = await readFile(new URL('../app/sitemap.ts', import.meta.url), 'utf8');
 const board = await readFile(new URL('../components/JevModelsV12.tsx', import.meta.url), 'utf8');
+const v141Detail = await readFile(new URL('../components/JevV141SystemDetail.tsx', import.meta.url), 'utf8');
 
 test('CR-129 the current artifact really has semif-qwen3.5-4b and laya (the two Trends queries this targets)', async () => {
   const view = jevbenchV12View(await readJevbenchV12());
@@ -68,4 +69,13 @@ test('CR-129 the hub HTML actually contains links for semif-qwen3.5-4b and laya 
   assert.ok(all.some((r) => r.key === 'semif-qwen3.5-4b'));
   assert.ok(all.some((r) => r.key === 'laya'));
   assert.doesNotMatch(board, /jev-models\/\[system\]/); // sanity: no literal dynamic-segment text leaked into the board
+});
+
+test('F-171 current per-system pages resolve the v1.4.1 board first and draw its score evidence', () => {
+  assert.match(page, /const current = await findV141Row\(key\);\n  if \(current\) return <JevV141SystemDetail/);
+  assert.match(page, /jevbenchV141View\(await readJevbenchV141\(\)\)\.systems\.map\(\(r\) => \(\{ system: r\.key \}\)\)/);
+  assert.match(v141Detail, /data-bh-jev-system-score/);
+  assert.match(v141Detail, /data-bh-jev-system-strip/);
+  assert.match(v141Detail, /data-bh-jev-system-radar/);
+  assert.match(v141Detail, /JevCompareV14/);
 });

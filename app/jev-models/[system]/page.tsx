@@ -7,8 +7,8 @@ import { JevPairRadar } from '../../../components/JevRadars';
 import { JevAxisBand, JevScoreStrip, typeColour } from '../../../components/JevSystemCharts';
 import { JevBenchRelatedLinks } from '../../../components/JevBenchRelatedLinks';
 import { JevV141SystemDetail } from '../../../components/JevV141SystemDetail';
+import type { JevV14System } from '../../../lib/jevbench-v14.mjs';
 import { readJevbenchV141, jevbenchV141View } from '../../../lib/jevbench-v141.mjs';
-import type { SeoRow } from '../../../components/JevBenchSeoBlocks';
 import { previewMetadata } from '../../../lib/seo';
 
 // CR-129 (2026-09-23): Google Trends shows readers searching individual JevBench system names
@@ -53,12 +53,12 @@ async function findRow(key: string): Promise<{ row: JevV12Row; view: JevV12View;
   return { row, view, all, topics: jevbenchV12TopicsView(await readJevbenchV12Topics(v12.artifact)) };
 }
 
-async function findV141Row(key: string): Promise<{ row: SeoRow; view: { revision: string; generated: string } } | null> {
+async function findV141Row(key: string): Promise<{ row: JevV14System; view: { revision: string; generated: string; ranked: JevV14System[] } } | null> {
   const result = await readJevbenchV141();
   const view = jevbenchV141View(result);
-  const row = view.ranked.find((candidate) => candidate.key === key);
+  const row = view.systems.find((candidate) => candidate.key === key);
   // readJevbenchV141 validates the ranked rows' numeric fields before this narrow is applied.
-  return row ? { row: row as SeoRow, view } : null;
+  return row ? { row, view } : null;
 }
 
 /** F-167: what this system's number is read against — Jev 1.13.0 everywhere, and on Jev's own page the
@@ -86,16 +86,16 @@ export async function generateStaticParams() {
   const view = jevbenchV12View(await readJevbenchV12());
   const existing = [...view.ranked, ...view.honorable, ...view.partial].map((r) => ({ system: r.key }));
   const existingKeys = new Set(existing.map(({ system }) => system));
-  const publishedTopFive = jevbenchV141View(await readJevbenchV141()).ranked.slice(0, 5).map((r) => r.key);
-  const newTopFive = publishedTopFive.filter((system) => !existingKeys.has(system)).map((system) => ({ system }));
-  return [...existing, ...newTopFive];
+  const current = jevbenchV141View(await readJevbenchV141()).systems.map((r) => ({ system: r.key }));
+  const currentKeys = new Set(current.map(({ system }) => system));
+  return [...current, ...existing.filter(({ system }) => !currentKeys.has(system))].filter(({ system }, index, rows) => rows.findIndex((r) => r.system === system) === index);
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ system: string }> }): Promise<Metadata> {
   const { system } = await params;
   const key = decodeURIComponent(system);
-  const found = await findRow(key);
-  const current = found ? null : await findV141Row(key);
+  const current = await findV141Row(key);
+  const found = current ? null : await findRow(key);
   const row = found?.row ?? current?.row;
   if (!row) return { title: 'System not found' };
   const title = `${short(row.display)} — JevBench by Benchmark Heaven`;
@@ -106,12 +106,10 @@ export async function generateMetadata({ params }: { params: Promise<{ system: s
 export default async function JevSystemPage({ params }: { params: Promise<{ system: string }> }) {
   const { system } = await params;
   const key = decodeURIComponent(system);
+  const current = await findV141Row(key);
+  if (current) return <JevV141SystemDetail row={current.row} ranked={current.view.ranked} revision={current.view.revision} generated={current.view.generated} />;
   const found = await findRow(key);
   if (!found) {
-    const current = await findV141Row(key);
-    if (current && ['jevk5-v02', 'hopper'].includes(key)) {
-      return <JevV141SystemDetail row={current.row} revision={current.view.revision} generated={current.view.generated} />;
-    }
     notFound();
   }
   const { row, view, all, topics } = found;
