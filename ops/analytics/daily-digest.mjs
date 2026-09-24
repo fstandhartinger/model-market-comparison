@@ -81,7 +81,7 @@ for (const row of Array.isArray(referrerRows) ? referrerRows : []) {
   grouped.set(label, (grouped.get(label) || 0) + Number(row.y || 0));
 }
 const topReferrers = [...grouped.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5);
-const views = stats?.pageviews?.value;
+const views = stats?.pageviews;
 if (!Number.isSafeInteger(views) || views < 0 || !Number.isFinite(startAt) || !Number.isFinite(endAt)) {
   throw new Error("Umami returned an invalid daily report");
 }
