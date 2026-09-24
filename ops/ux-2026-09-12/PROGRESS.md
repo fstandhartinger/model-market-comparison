@@ -9268,7 +9268,7 @@ with `gauntlet.mjs` restored byte-for-byte the suite is 15/15. No product code c
 | ID | Status | Evidence | Note |
 |---|---|---|---|
 | F-176 | implemented ((a) by Fable; (b) open) | `components/JevCapability3D.tsx`; `test/fable-pass33.test.mjs`; `ops/ux-2026-09-12/bin/verify-fable-pass33-design.mjs` (`ONLY=F-176`); `/opt/benchmarkheaven/state/ux-evidence/fable-20260923-pass33/` | The 3D view's "ready" announcement is gone; the licence sentence beside the chart is (b), open. Needs a non-Fable live run on both hosts before `verified`. |
-| F-171 | open | `DESIGN-DIRECTIVES.md` § Directives (pass 33); `…/pass33/canonical/{desktop,mobile}_{light,dark}-sys-*.png`, `metrics.json` | Leaf pages read v1.3.0 under a v1.4.1 board; jevk5-v02 and hopper 404. After CR-136. |
+| F-171 | implemented | `25160bf8`; `/opt/benchmarkheaven/state/ux-evidence/iter198-f171/{canonical-rerun,legacy}/verification-F-171.json` | Current per-system pages resolve the v1.4.1 artifact first for all 82 rows, retain v1.3-only fallbacks, and draw the v1.4.1 score, rank, 77-row strip, axis bands and comparison radar. Implementer Codex live matrix: 40/40 per host at 1440/390 light/dark. A different-engine gate is still required before `verified`. |
 | F-172 | open | `…/pass33/canonical/metrics.json` (`tables[1].links 0`), `desktop_light-hub.png` | Board names do not link to the pages; chart names link to repos. After F-171. |
 | F-173 | open | `…/pass33/canonical/mobile_light-hub.png`, `metrics.json` (`firstScreen`, h2 at y = 757) | Size said four times; first bar below 844 px at 390; hub and both pinned pages. |
 | F-174 | open | `…/pass33/canonical/desktop_light-hub-radars-vp.png` | Nine "· —" labels on a one-series radar. |
@@ -9366,6 +9366,13 @@ with `gauntlet.mjs` restored byte-for-byte the suite is 15/15. No product code c
 - Fixed one misleading coverage sentence and added `test/jev-context-length.test.mjs` (3/3). Full gates: `node scripts/build-dataset.mjs` passed; `npm test` 1,252 passed / 0 failed / 1 skipped; `npx tsc --noEmit -p .` clean; `npm run build` passed. Commit `850e87a7` is live on both hosts.
 - Live browser receipt: 24 contexts across both hosts, both routes, 1440/390/360, light/dark; every context has 82 rows, 52 chart points, 82 source-linked rows, working sort, long-policy content and no horizontal overflow. Screenshots and logs are in `/opt/benchmarkheaven/state/ux-evidence/cr138-context-length/`. A separate Kimi QA returned `PASS` in `independent-review-concise.json`.
 - The first full Kimi reviewer was terminated after a bounded silent run; its fallback left a partial planning note only. The concise independent Kimi review was the accepted non-implementer gate. The worktree is clean; `ALL-ACCEPTED` remains absent because other ledger items are still open.
+
+## Iteration 198 — 2026-09-24 09:00 → 09:25 UTC (codex-luna, work): F-171 current per-system pages
+
+- Implemented F-171 after CR-136 released the v1.4.1 board. Current system routes resolve all 82 v1.4.1 rows first, then retain v1.3-only rows as a secondary fallback; the old JevK5/Hopper-only fallback is gone.
+- The current detail now reads the board's v1.4.1 score/rank, renders the 77-system score strip, four axis bands, cost/evidence lines, and the v1.4 comparison radar with aggregate-only tier/sealed values. A defensive radar fallback prevents unranked or missing-axis rows from breaking static generation.
+- Gates: dataset rebuild 871/676/96/3,036; focused system-page tests 9/9; full suite 1,271 pass / 0 fail / 1 skipped; typecheck clean; production build 131/131 pages.
+- Commit `25160bf8` pushed and live on both hosts. The provided pass-33 F-171 verifier returned 40/40 at 1440/390 light/dark on each host; receipt paths are recorded in the F-171 row above. This is implementer evidence only; a different engine must set `verified`.
 
 ## Iteration 197 — 2026-09-24 08:10 → 08:45 UTC (codex-luna, work): CR-139 non-AA remediation deployed
 
