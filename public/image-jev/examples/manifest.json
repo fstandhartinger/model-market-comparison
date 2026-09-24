@@ -1,6 +1,10 @@
 {
   "status": "public_examples_only",
   "count": 8,
+  "hash_fields": {
+    "source_file_sha256": "SHA-256 of the file named by source_file. For benchmark rows, this is the processed public evaluation image and may equal evaluation_image_sha256 in public/core/items.jsonl; source_image_sha256 there refers to the upstream source image.",
+    "asset_sha256": "SHA-256 of the published WebP asset named by asset."
+  },
   "examples": [
     {
       "asset": "/image-jev/examples/parcel-damaged.webp",
@@ -11,7 +15,7 @@
       "license": "Synthetic image created for ImageJevBench",
       "dataset_revision": null,
       "source_file": "everyday-public/assets/parcel-01.jpg",
-      "source_sha256": "2f5f1290701fe2923faa0a7b68768a0125fb585a96568e85dbbbd63ac7aca2dd",
+      "source_file_sha256": "2f5f1290701fe2923faa0a7b68768a0125fb585a96568e85dbbbd63ac7aca2dd",
       "source_size_px": [
         1536,
         1024
@@ -32,7 +36,7 @@
       "license": "Synthetic image created for ImageJevBench",
       "dataset_revision": null,
       "source_file": "everyday-public/assets/receipt-00.jpg",
-      "source_sha256": "4dad670d43c40e44b6f076f83f9c0d7e6305d88dcdedb413389cbdbc0416c33f",
+      "source_file_sha256": "4dad670d43c40e44b6f076f83f9c0d7e6305d88dcdedb413389cbdbc0416c33f",
       "source_size_px": [
         1536,
         1024
@@ -53,7 +57,7 @@
       "license": "MIT",
       "dataset_revision": "210e78d3844251110bff86c95835ebd37a6930fa",
       "source_file": "core/assets/final-ssp-excel_macos_0.webp",
-      "source_sha256": "5d06151bf4100fc874f5ce7c640df1174540e694d9972e309f41149d97ce033c",
+      "source_file_sha256": "5d06151bf4100fc874f5ce7c640df1174540e694d9972e309f41149d97ce033c",
       "source_size_px": [
         1200,
         776
@@ -74,7 +78,7 @@
       "license": "Apache-2.0",
       "dataset_revision": "0be08781e2e188582f6131625ae1598d443b4d5d",
       "source_file": "core/assets/final-ss-19.webp",
-      "source_sha256": "5b936aecb5f6b815f73cb87b635e477b4a30a48d299aae7ec9d85169be6bacba",
+      "source_file_sha256": "5b936aecb5f6b815f73cb87b635e477b4a30a48d299aae7ec9d85169be6bacba",
       "source_size_px": [
         960,
         540
@@ -95,7 +99,7 @@
       "license": "Apache-2.0",
       "dataset_revision": "0be08781e2e188582f6131625ae1598d443b4d5d",
       "source_file": "core/assets/final-ss-15.webp",
-      "source_sha256": "4c5ce1f933a8dd8b7280de87726f3f392b93ee6995c7e80c042f561114bd7489",
+      "source_file_sha256": "4c5ce1f933a8dd8b7280de87726f3f392b93ee6995c7e80c042f561114bd7489",
       "source_size_px": [
         960,
         540
@@ -116,7 +120,7 @@
       "license": "Apache-2.0",
       "dataset_revision": "0be08781e2e188582f6131625ae1598d443b4d5d",
       "source_file": "core/assets/final-ss-341.webp",
-      "source_sha256": "718fad71f20a667dc08d9e12a1d0568030363d911a035a9a34dc6e8881a12f3e",
+      "source_file_sha256": "718fad71f20a667dc08d9e12a1d0568030363d911a035a9a34dc6e8881a12f3e",
       "source_size_px": [
         1200,
         834
@@ -137,7 +141,7 @@
       "license": "MIT",
       "dataset_revision": "fd21e533e1e50d0662a2bf7b223e60511bd5f8b7",
       "source_file": "core/assets/final-geometry-8.webp",
-      "source_sha256": "eb22fa7e6f6c7a79c6bb6f6219a63b94ff0b4d01157155de5e132cf75a077c78",
+      "source_file_sha256": "eb22fa7e6f6c7a79c6bb6f6219a63b94ff0b4d01157155de5e132cf75a077c78",
       "source_size_px": [
         352,
         179
@@ -158,7 +162,7 @@
       "license": "MIT annotations; CDLA-Permissive-1.0 table data",
       "dataset_revision": "3d6a736bc67e06bc15fbf3618d88204a57c5b25e",
       "source_file": "core/assets/final-finqa-0.webp",
-      "source_sha256": "b934df943ee447decfe07a2de118466a2bee28664d68a45df7e1dca11d33365c",
+      "source_file_sha256": "b934df943ee447decfe07a2de118466a2bee28664d68a45df7e1dca11d33365c",
       "source_size_px": [
         640,
         228

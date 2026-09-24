@@ -37,11 +37,15 @@ test('published example images match the public-only manifest and are downscaled
   const manifest = JSON.parse(readFileSync(path.join(root, 'public/image-jev/examples/manifest.json'), 'utf8'));
   assert.equal(manifest.status, 'public_examples_only');
   assert.equal(manifest.count, 8);
+  assert.match(manifest.hash_fields?.source_file_sha256 ?? '', /file named by source_file.*evaluation image/i);
+  assert.match(manifest.hash_fields?.asset_sha256 ?? '', /published WebP asset/i);
 
   for (const item of PUBLIC_IMAGE_JEV_EXAMPLES) {
     const record = manifest.examples.find((example) => example.source_item_id === item.sourceItemId);
     assert.ok(record, item.key);
     assert.equal(record.split, 'public', item.key);
+    assert.match(record.source_file_sha256 ?? '', /^[a-f0-9]{64}$/i, item.key);
+    assert.equal('source_sha256' in record, false, item.key);
     assert.equal(record.asset, item.image, item.key);
     assert.equal(record.license, item.license, item.key);
     assert.ok(Math.max(...record.published_size_px) <= 1200, item.key);
