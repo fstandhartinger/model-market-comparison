@@ -37,7 +37,11 @@ export const GAUNTLET_LIMITS = {
   batchBytesCap: 131_072,
 };
 
-const sanitize = (id) => {
+// Exported because it decides a directory name: two artifact ids that sanitize to the same
+// string share `${runDir}/gauntlet/<id>/`. Sequentially that is only reuse; since D191 the
+// protocol reviews run concurrently, so a collision would be two rounds writing one directory.
+// test/protocol-artifact-dirs.test.mjs proves the registry has no such pair.
+export const sanitize = (id) => {
   const clean = String(id ?? '').replace(/[^A-Za-z0-9._-]+/g, '-').replace(/^-+|-+$/g, '');
   if (!clean) throw new Error('artifactId must contain at least one safe character');
   return clean.slice(0, 120);

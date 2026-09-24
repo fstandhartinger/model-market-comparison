@@ -10050,3 +10050,90 @@ took 34 min on 2026-09-17T10:02 and 53 min on 2026-09-17T20:51.
 **Raising the budget is not the fix.** `run.sh` wraps `daily.mjs` in `timeout … 3h`, and the run
 already spent 150 min wall; a step allowed to run longer just moves the kill one level up.
 
+### D191, part 3 — the fix for the timeout: the protocol reviews join their neighbours
+
+`ops/daily/refresh-benchmarks.mjs`. The public-spec loop is split in two. Pass 1 keeps everything
+local and sequential and in spec order — `current()`, `public-candidate.py`, identity reconciliation,
+the changed-row comparison, and the `checked_unchanged` and early-failure outcomes. Specs that do
+have changed rows are queued. Their protocol reviews then run through the same
+`mapWithConcurrency(…, { limit: concurrency })` the vendor sources and score batches on either side
+already use, one review per registry entry. Pass 2 applies every result in spec order.
+
+What deliberately did **not** change, and how it is held:
+
+- **Report order.** The loop's checks go into a per-spec slot (`specChecks`) and are concatenated in
+  spec order, so `daily-checks.json` reads exactly as it did. `protocol()` gained a `reviewSink`
+  argument so the parallel phase collects each round's manifest per unit and splices them into
+  `reviews` in input order — not completion order.
+- **`public-observations.json` row order.** The only shared mutation after a protocol review is
+  `publicRows = publicRows.filter(benchmark_id ≠ …).concat(…)`. Each spec touches only its own
+  benchmark's rows, so the two passes are disjoint per benchmark; the specs that append still append
+  in the same relative order, and the ones that only remove are position-independent. The array comes
+  out identical.
+- **Failure isolation.** A rejected review retains that one benchmark through the same `fail()` path
+  and reason string; `mapWithConcurrency` already guarantees a rejection never cancels a sibling.
+- **The escape hatch.** `BH_DAILY_CONCURRENCY=1` makes `mapWithConcurrency` exactly sequential
+  (pinned by `test/cr-73-concurrency.test.mjs`), so the previous behaviour is one environment
+  variable away if the 05:17 run shows anything unexpected.
+
+**The new hazard, and the test for it.** `reviewArtifact` writes a round into
+`${runDir}/gauntlet/<sanitize(artifactId)>/`, and the protocol arm's id is
+`protocol-<registry entry id>`. Two entry ids that sanitize to one directory used to be a harmless
+reuse of a folder; concurrently they are two rounds writing the same files, and one round's evidence
+disappears without either noticing. `sanitize` is now exported and
+`test/protocol-artifact-dirs.test.mjs` proves all **292** registry entries map to 292 distinct
+directories, and that the two shapes that *would* collide (`::` vs `-`, and ids differing only past
+the 120-character truncation) are really caught by the rule.
+
+**Honest limit on the verification.** `refreshBenchmarks()` has no end-to-end harness — it needs the
+whole `data/raw/benchmarks` tree, a live capture crawl and ~50 gauntlet rounds — and CR-73.3 verified
+its own two parallelisations the same way: the helper's guarantees are tested, the call sites are
+argued. I did not build that harness in this iteration and I did not replay the step, because a
+replay means a second full crawl of every benchmark source three hours after the last one. The
+change is therefore verified by construction plus the full suite, and **the real proof is the 05:17
+run**: expect `refresh-benchmarks` well under `8_400_000 ms` (123 sequential minutes over four lanes,
+with a 10-minute longest single review as the floor), the same `BENCHMARK RETAINED` lines it had
+before, and the score gauntlet actually reaching the end.
+
+### D191, part 4 — the AA approval now carries the opt-in, and tomorrow's run can consume it
+
+`data/raw/source-change-approvals.json`, `aa_models`. **No hash was edited.** A third independent
+capture at **2026-09-24T22:39Z** (HTTP 200, 578,860 bytes, body sha256 `d9058e38…`, retained at
+`iter210-d191/aa-live-20260924T2239Z.json.gz`) was derived from scratch:
+
+- 673 unique identities; the committed snapshot has 673.
+- Absent against the committed snapshot: **exactly the same three** Sapiens AI rows the 05:45 and
+  17:45 reviews named, and nothing else. `previous_identity_sha256` still matches the committed
+  snapshot; the 17:45 `current_identity_sha256` still matches that capture.
+- Added: Mercury 2.5, DeepSeek V4.1 Flash (Non-Reasoning) and — **new since the 17:45 review** —
+  GLM-5.3 (low). So the approval written five hours ago was already stale again, on growth alone,
+  with the reviewed withdrawal completely unmoved. That is the failure D191 describes, observed a
+  third time rather than argued.
+
+`allow_additions: true` and an `additions_basis` carrying that derivation are therefore set on this
+one approval. Replayed against the real committed snapshot, the real capture and the real approval
+file (`iter210-d191/aa-approval-replay.log`):
+
+| Case | Outcome |
+|---|---|
+| 22:39 capture at 2026-09-25T05:17Z — tomorrow's scheduled run | **accept** |
+| the same capture after the 2026-09-26T17:45Z expiry | refuse |
+| the same capture with one extra, unnamed prior model withdrawn | refuse (4 absent) |
+| the capture plus 11 more additions (14 > the bound of 13) | refuse |
+| the capture plus 10 more additions (13 = the bound) | accept |
+
+### Gates
+
+`node --test test/` **1,293 tests / 1,292 pass / 0 fail / 1 skip**, rc 0 · `npx tsc --noEmit -p .`
+rc 0 · `node scripts/build-dataset.mjs` rc 0, deterministic **871 / 676 / 96 / 3,036**, the only diff
+`generated_at`, `data/dataset.json` restored. Logs in `iter210-d191/`.
+
+### Still open after this iteration
+
+| ID | Status | Note |
+|---|---|---|
+| D191 | in-progress | Both known causes are addressed, neither is proven in production. The 05:17 run is the test: `fetch-aa` should consume the amended approval, and `refresh-benchmarks` should finish inside its budget. `state/pipeline-streak.json` stood at `failures_in_row: 2` before the 19:20 run, which makes tomorrow's the fourth in a row if it fails. |
+| D192 | open | `refresh-benchmarks` produced **23** `BENCHMARK RETAINED` lines on 2026-09-24 and the timeout hid them. Several look chronic rather than incidental: four `ugi*` and two `frontiercode*` rows fail with *"methodology passage changed or unavailable in a large primary page"*, two `eqbench*` rows with *"Prior public identities disappeared"*, `swe-bench-pro-public` with a hard `ValueError: Scale leaderboard source identity changed` out of `collect-public-benchmarks.py:217`, and both `arc-agi::2` and `vals-index-legal-research::2` burned extra rounds on *"Critic round does not match the packet round"*. Each is a separate repair; none is a timeout. |
+| F-179 | open (number) | Iteration 209 measured the served document at **1,366,503** bytes / **173,452** over the wire, and first load including its 15 static chunks at **2,060,487** / **384,543** — not the 7,384,601 in the ledger, which is neither the document nor the first load. Whoever picks it up should say which number the item is about before moving it. Not changed: `app/jev-models/page.tsx` is in PR #7's and the v1.4.2 release cut's path. |
+| F-183, F-187, F-188 | open | Unchanged from iteration 208; still waiting on the v1.4.2 release cut and `/image-jev-bench`. |
+

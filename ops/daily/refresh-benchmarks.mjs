@@ -177,7 +177,9 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
     if (error.code === 'ENOENT') return { withdrawals: [] }; throw error;
   })).withdrawals;
   const checks = [], reviews = [], changedIds = new Set(), evidenceById = new Map();
-  const fail = (id, error) => { const reason = error.message ?? String(error); checks.push({ id, status: 'retained_after_failure', reason }); console.error(`BENCHMARK RETAINED ${id}: ${reason}`); };
+  // `sink` is `checks` for every arm that runs in source order; the public-spec loop below
+  // hands in its own per-spec slot so a parallel phase still reports in spec order.
+  const fail = (id, error, sink = checks) => { const reason = error.message ?? String(error); sink.push({ id, status: 'retained_after_failure', reason }); console.error(`BENCHMARK RETAINED ${id}: ${reason}`); };
   const urls = new Map();
   const add = (source) => {
     // Vite SPA pages pin a hashed module bundle; only the stable page is queued,
@@ -234,7 +236,10 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
   // `extra.activity` (only set by the AA-field arm below) attaches this run's own
   // added/changed-value summary; the cache key includes its field so two fields on one
   // entry each get their own review, and a plain call never reads a field-tagged one.
-  async function protocol(entry, extra = null) {
+  // `reviewSink` lets a caller that runs several protocol reviews concurrently collect
+  // their manifests per unit and splice them into `reviews` in input order, so the report
+  // does not depend on which review finished first.
+  async function protocol(entry, extra = null, reviewSink = reviews) {
     const cacheKey = extra?.activity ? `${entry.id}#${extra.activity.field}` : entry.id;
     if (protocolCache.has(cacheKey)) return protocolCache.get(cacheKey);
     const references = (entry.evidence ?? []).filter((s) => !s.source_sha256 && !/literal field/.test(s.excerpt ?? ''));
@@ -248,7 +253,7 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
     if (extra?.activity) sources.push(aaActivitySource(extra.receipt, extra.activity));
     const reviewed = await review({ runDir: evidenceDir, artifactId: `protocol-${entry.id}`, rows: [protocolReviewRow(entry)],
       sources, criteria: PROTOCOL_REVIEW_CRITERIA });
-    reviews.push({ scope: entry.id, type: 'protocol', ...reviewed.manifest });
+    reviewSink.push({ scope: entry.id, type: 'protocol', ...reviewed.manifest });
     if (!reviewed.accepted || reviewed.fingerprints.length !== 1) throw new Error(`${entry.id}: protocol not approved: ${reviewed.errors.join('; ')}`);
     protocolCache.set(cacheKey, sources);
     entry.last_verified = day;
@@ -334,11 +339,25 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
   } catch (error) { fail('openrouter-benchmarks', error); }
   // Public recipes run one benchmark at a time. Failed or shrinking candidates
   // retain that benchmark's prior rows and dates; they cannot erase good data.
+  //
+  // D191 (24 Sep 2026): CR-73.3 gave bounded concurrency to the live contracts, the vendor
+  // sources and the score batches, but the protocol reviews *between* them stayed strictly
+  // sequential — and they are the same kind of unit: one gauntlet round each, its own
+  // artifact directory, no shared writes. On 2026-09-24 about fifty of them ran one after
+  // another from 19:40 to 21:43 UTC and the step was killed at its 8,400,000 ms budget with
+  // the score gauntlet eight minutes in, so the day published nothing. The loop is therefore
+  // split in two: everything local and cheap stays sequential and in spec order (pass 1),
+  // the protocol reviews run with the same bounded concurrency as their neighbours, and
+  // every result is applied in spec order afterwards (pass 2). Nothing about what is
+  // reviewed, retained or published changes — `specChecks`, `reviewSlots` and the ordered
+  // pass 2 exist precisely so the outputs stay byte-identical to the sequential loop.
   let publicRows = [...oldPublic.observations];
+  const specChecks = plan.entries.map(() => []);
+  const pending = [];
   for (const [index, spec] of plan.entries.entries()) {
     const priorRows = oldPublic.observations.filter((r) => r.benchmark_id === spec.benchmark_id);
-    if (!spec.parser) { checks.push({ id: spec.benchmark_id, status: spec.status, reason: spec.reason }); continue; }
-    if (manual.has(spec.benchmark_id)) { checks.push({ id: spec.benchmark_id, status: 'retained_manual_snapshot', rows: priorRows.length, reason: spec.reason }); continue; }
+    if (!spec.parser) { specChecks[index].push({ id: spec.benchmark_id, status: spec.status, reason: spec.reason }); continue; }
+    if (manual.has(spec.benchmark_id)) { specChecks[index].push({ id: spec.benchmark_id, status: 'retained_manual_snapshot', rows: priorRows.length, reason: spec.reason }); continue; }
     try {
       const proposed = structuredClone(spec); proposed.source = current(spec.source);
       for (const key of ['method_source', 'categories_source', 'frontend_source', 'detail_source', 'config_source']) if (spec.parser[key]) proposed.parser[key] = current(spec.parser[key]);
@@ -359,22 +378,38 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
       const changed = candidate.observations.filter((r) => !equal(semantic(r), semantic(old.get(r.id) ?? {})));
       if (!changed.length) {
         if (gone.size) publicRows = publicRows.filter((r) => !gone.has(r.id));
-        checks.push({ id: spec.benchmark_id, status: 'checked_unchanged', rows: candidate.observations.length, source: proposed.source, ...(gone.size ? { withdrawn_by_source: withdrawnBySource } : {}) });
+        specChecks[index].push({ id: spec.benchmark_id, status: 'checked_unchanged', rows: candidate.observations.length, source: proposed.source, ...(gone.size ? { withdrawn_by_source: withdrawnBySource } : {}) });
         continue;
       }
       const entry = registry.entries.find((e) => e.id === spec.benchmark_id);
-      const protocolSources = await protocol(entry);
-      // Joining happens in the offline ingestion draft before fingerprints are
-      // issued, so approval binds exactly the final published observation.
-      for (const row of changed) {
-        const rowSource = proposed.parser.runs?.find((run) => run.url === row.source.url) ?? proposed.source;
-        changedIds.add(row.id); evidenceById.set(row.id, [{ ...rowSource, locator: row.source.locator,
-          content: JSON.stringify({ native_source_row: evidence[row.id], protocol: proposed.protocol, registry: { id: entry.id, version: entry.version, scoring: entry.scoring } }) }, ...protocolSources]);
-      }
-      publicRows = publicRows.filter((r) => r.benchmark_id !== spec.benchmark_id).concat(candidate.observations.map((r) => changedIds.has(r.id) ? r : old.get(r.id)));
-      checks.push({ id: spec.benchmark_id, status: 'candidate', rows: candidate.observations.length, changed_rows: changed.length, ...(gone.size ? { withdrawn_by_source: withdrawnBySource } : {}) });
-    } catch (error) { fail(spec.benchmark_id, error); }
+      // The sequential loop reached this as a TypeError inside `protocol()`; naming it keeps
+      // the same retained-failure outcome with a reason a reader can act on.
+      if (!entry) throw new Error(`${spec.benchmark_id}: changed rows but no registry entry to review the protocol against`);
+      pending.push({ index, spec, entry, proposed, candidate, evidence, changed, old, gone, withdrawnBySource });
+    } catch (error) { fail(spec.benchmark_id, error, specChecks[index]); }
   }
+  // One review per registry entry, at most `concurrency` in flight, results indexed by input
+  // position. A rejection is isolated: it retains that benchmark and nothing else.
+  const protocolUnits = [...new Map(pending.map((item) => [item.entry.id, item.entry])).values()];
+  const reviewSlots = protocolUnits.map(() => []);
+  const protocolSettled = await mapWithConcurrency(protocolUnits, (entry, index) => protocol(entry, null, reviewSlots[index]), { limit: concurrency });
+  for (const slot of reviewSlots) reviews.push(...slot);
+  const protocolByEntry = new Map(protocolUnits.map((entry, index) => [entry.id, protocolSettled[index]]));
+  for (const { index, spec, entry, proposed, candidate, evidence, changed, old, gone, withdrawnBySource } of pending) {
+    const settled = protocolByEntry.get(entry.id);
+    if (settled.status === 'rejected') { fail(spec.benchmark_id, settled.reason, specChecks[index]); continue; }
+    const protocolSources = settled.value;
+    // Joining happens in the offline ingestion draft before fingerprints are
+    // issued, so approval binds exactly the final published observation.
+    for (const row of changed) {
+      const rowSource = proposed.parser.runs?.find((run) => run.url === row.source.url) ?? proposed.source;
+      changedIds.add(row.id); evidenceById.set(row.id, [{ ...rowSource, locator: row.source.locator,
+        content: JSON.stringify({ native_source_row: evidence[row.id], protocol: proposed.protocol, registry: { id: entry.id, version: entry.version, scoring: entry.scoring } }) }, ...protocolSources]);
+    }
+    publicRows = publicRows.filter((r) => r.benchmark_id !== spec.benchmark_id).concat(candidate.observations.map((r) => changedIds.has(r.id) ? r : old.get(r.id)));
+    specChecks[index].push({ id: spec.benchmark_id, status: 'candidate', rows: candidate.observations.length, changed_rows: changed.length, ...(gone.size ? { withdrawn_by_source: withdrawnBySource } : {}) });
+  }
+  for (const slot of specChecks) checks.push(...slot);
   // Vendor collection uses a cheap completion to read current primary text.
   // The slots/checkpoint identities are locked; a new identity needs discovery
   // review. The different-family gauntlet below verifies every changed value.
