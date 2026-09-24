@@ -8940,19 +8940,19 @@ listed in the review, and no `ALL-ACCEPTED` line is appended.
 
 Source: CR-20260923g. Latest published data at seeding is the hash-checked JevBench v1.4.1
 aggregate, SHA-256 `e6754863056503fe2b010410fc7111df884ac1f9ce4449aa369aab61d98092cd`
-(82 systems, 77 ranked). The SEO loop reservation remains active until the live deployment,
-post-deploy rankings and ledger update are complete.
+(82 systems, 77 ranked). The SEO loop reservation was released on 2026-09-24 after the live deployment,
+post-deploy rankings, loop ledger, job result and project status were updated.
 
 | ID | Status | Evidence | Note |
 |---|---|---|---|
-| CR-136.1 | implemented | `app/jev-models/alternatives/page.tsx`; `test/jevbench-seo.test.mjs`; F-178 score-bar guidance in `DESIGN-DIRECTIVES.md` | Live-artifact alternatives page with Jev reference row, expandable values table and explicit open-source evidence |
-| CR-136.2 | implemented | `app/jev-models/how-to-choose/page.tsx`; `lib/jevbench-seo.mjs`; `test/jevbench-seo.test.mjs` | Chooser uses sealed-set accuracy, Speed and Cost axes, and explicit license/repository evidence |
-| CR-136.3 | implemented | `app/jev-models/jev-vs-*`; `components/JevComparisonPage.tsx`; `components/JevCompareV14.tsx`; `test/jevbench-seo.test.mjs` | Four fixed Jev pairs from the current published top five, with the board's four radars and expandable values |
-| CR-136.4 | implemented | `app/sitemap.ts`; `lib/jevbench-seo-metadata.ts`; `components/JevBenchSeoBlocks.tsx`; `app/jev-models/[system]/page.tsx`; `components/JevV141SystemDetail.tsx` | Canonicals, branded OG/title, Dataset + FAQ JSON-LD, sitemap and links are in the draft; live gates remain pending |
+| CR-136.1 | verified | `app/jev-models/alternatives/page.tsx`; `test/jevbench-seo.test.mjs`; F-178 score-bar guidance in `DESIGN-DIRECTIVES.md` | Live-artifact alternatives page with Jev reference row, expandable values table and explicit open-source evidence |
+| CR-136.2 | verified | `app/jev-models/how-to-choose/page.tsx`; `lib/jevbench-seo.mjs`; `test/jevbench-seo.test.mjs` | Chooser uses sealed-set accuracy, Speed and Cost axes, and explicit license/repository evidence |
+| CR-136.3 | verified | `app/jev-models/jev-vs-*`; `components/JevComparisonPage.tsx`; `components/JevCompareV14.tsx`; `test/jevbench-seo.test.mjs` | Four fixed Jev pairs from the current published top five, with the board's four radars and expandable values |
+| CR-136.4 | verified | `app/sitemap.ts`; `lib/jevbench-seo-metadata.ts`; `components/JevBenchSeoBlocks.tsx`; `app/jev-models/[system]/page.tsx`; `components/JevV141SystemDetail.tsx`; `LIVE-SEO-VERIFICATION.json` | Canonicals, branded OG/title, Dataset + FAQ JSON-LD, sitemap, board-row anchors and links passed live checks on all three hosts |
 | CR-136.5 | verified | `/home/flori/jobs/jevbench-seo-hn-push-20260923/HF-PUBLISH-RECEIPT.json`; existing official post `https://x.com/benchmarkheaven/status/2102444967884906846`; GitHub README | Hugging Face card and reciprocal board/GitHub links are live; GitHub README and existing JevBench post link to the board, so no duplicate was published |
-| CR-136.6 | open | `/home/flori/jobs/jevbench-seo-hn-push-20260923/CR-SCOPE.md` | Validation, dual-host deployment, Serper ledgers, loop release and final delivery |
+| CR-136.6 | verified | `/home/flori/jobs/jevbench-seo-hn-push-20260923/{LIVE-SEO-VERIFICATION.json,LIVE-SCREENSHOT-VERIFICATION.json,LIVE-BROWSER-ERRORS.json,SERPER-FINAL-POSTDEPLOY-20260923.log}` | Final app deployment, three-host checks, 24 visual captures, zero browser errors, rank ledgers and delivery are complete |
 
-CR-136 implementation is in the shared checkout based on `54f5f1d2`; F-178's alternatives bars, sibling-only guide navigation, fixed-pair four-radar pages, reader-facing metric labels and consistent return link are included. Focused checks pass 15/15, the Node 22 suite passes 1,244 with 1 skipped, typecheck is clean, and `node scripts/build-dataset.mjs` preserves 865 models / 670 families / 96 providers / 3,032 offers (its two generated timestamps were restored). Production build and deployment, three-host page checks, post-deploy Serper results, SEO-loop ledger update and reservation release remain open. Disk availability was 45 GiB at the last check; defer a push that would trigger a production build until the server regains the 55 GiB headroom needed by the queued job.
+CR-136 is live after the first page deployment (`7a62f201`) and a link-fix deployment (`995e5146`). The six intent pages, five current top-five detail routes, metadata/schema, sitemap, board-row anchors and v1.4.1 artifact passed on all three hosts. Final visual review: 24 captures at 1440×900 and 390×844 in light and dark, with no overflow or browser errors. Focused SEO checks pass 8/8 after the link fix; TypeScript is clean; the full Node 22 suite passed 1,244 with 1 skipped before the small follow-up; both production builds completed. The 14-query US/Germany Serper run and SEO-loop ledger are recorded. The SEO reservation was released after the job result, loop ledger and project status records were saved. Disk last showed 65 GiB free (85%).
 
 
 ## Iteration 187 (claude-opus) — F-165(a): the rekey half is decided, and D188 is signed off
@@ -9191,7 +9191,7 @@ with `gauntlet.mjs` restored byte-for-byte the suite is 15/15. No product code c
 | F-173 | open | `…/pass33/canonical/mobile_light-hub.png`, `metrics.json` (`firstScreen`, h2 at y = 757) | Size said four times; first bar below 844 px at 390; hub and both pinned pages. |
 | F-174 | open | `…/pass33/canonical/desktop_light-hub-radars-vp.png` | Nine "· —" labels on a one-series radar. |
 | F-175 | open | `…/pass33/canonical/metrics.json` (heads y: compare 1,639 · note 3,169 · table 3,502) | "What changed in v1.4" before the table. |
-| F-178 | open | CR-136 draft files in the tree; `/home/flori/jobs/jevbench-seo-hn-push-20260923/LOCAL-ALTERNATIVES-{DESKTOP,MOBILE}.png` | Judged from the draft, not live; to be re-judged once CR-136 is live. |
+| F-178 | verified | `/home/flori/jobs/jevbench-seo-hn-push-20260923/LIVE-SCREENSHOT-VERIFICATION.json`; `LIVE-BROWSER-ERRORS.json`; `LIVE-SEO-VERIFICATION.json` | Re-judged on the live six routes by the CR-136 author: 24 desktop/mobile light/dark captures, zero overflow or browser errors; F-171 detail unification remains queued. |
 | F-179 | open | `curl -s https://benchmarkheaven.com/jev-models \| wc -c` = 6,846,480; 741,801 bytes before `data-bh-jev13-history` | Historical board ships closed. |
 
 ## Iteration 189 — 2026-09-23 23:10 → ~00:10 UTC (claude-opus, work): F-176(a) verified, and the pass-33 acceptance gate could not see what it judged (D189)
@@ -9258,3 +9258,13 @@ with `gauntlet.mjs` restored byte-for-byte the suite is 15/15. No product code c
 | F-176(a) | implemented → **verified** | `/opt/benchmarkheaven/state/ux-evidence/iter189-f176/{canonical,mintapis}/verification-F-176.json` | 8/8 (a) checks per host at `6714f8d4`, 1440/390 × light/dark, non-Fable engine. |
 | F-176(b) | open | same receipts (red 4/4 per host, quoting the live sentence); `components/JevCapabilityChart.tsx:218`; `app/jev-models/page.tsx` `<details id="credit">` | Blocked by the one-writer rule, not by difficulty: the two halves must land together and the Credit half is held. |
 | D189 | fixed (verified by its own run) | `ops/ux-2026-09-12/bin/verify-fable-pass33-design.mjs`; `test/f176-gate-scope.test.mjs`; `/opt/benchmarkheaven/state/ux-evidence/iter189-f176/` | The F-176(b) gate passed on empty text while the sentence was live, and the gate crashed on SVG text before three of four contexts. Both repaired; the repair is proved by the check now reading FAIL on both hosts for a defect that is really there. |
+
+## Iteration 190 — 2026-09-23 23:55 UTC (Codex): CR-136 deployed; F-178 checked live
+
+- CR-136's alternatives, use-case guide and four Jev-vs pages now use the hash-checked v1.4.1 aggregate (82 systems / 77 ranked). Final app source commit `995e514607e3e38ef11bcf4b3e1e6140d5e442fe`; the deployment finished successfully.
+- A first post-deploy browser check surfaced one 404 from dynamic winner links to legacy detail routes not present for every current row. The follow-up commit changed chooser and self-hosting links to stable v1.4.1 board-row anchors; the final three-host verifier passes those anchors.
+- Live verification: all six new pages and all five top-five detail routes passed on canonical, `www`, and mintapis hosts; API SHA-256 `e6754863056503fe2b010410fc7111df884ac1f9ce4449aa369aab61d98092cd`; all three health routes returned HTTP 200. Final browser review captured all six new pages at 1440/390 × light/dark: 24 screenshots, no overflow, and zero browser or HTTP errors. Evidence: `/home/flori/jobs/jevbench-seo-hn-push-20260923/LIVE-SEO-VERIFICATION.json`, `LIVE-SCREENSHOT-VERIFICATION.json`, `LIVE-BROWSER-ERRORS.json`.
+- Gates: focused SEO tests 8/8 and typecheck clean after the link fix; full Node 22 suite 1,244 passed / 0 failed / 1 skipped before the link-only follow-up; both site production builds completed. The dataset build preserved the tracked dataset after its generated timestamps were restored.
+- Final Serper run at 23:55 UTC appended 28 rows per CSV: US positions #1 “jevbench”, #2 “jev benchmark”, #10 “jev-class model leaderboard”, #4 “jev vs Winnow-12B Q8” (the existing system-detail URL), and #3 “jevbench by benchmark heaven”; the other 23 board query/locale pairs and all 28 exact-space checks were outside the top 100. All 14 queries are already scheduled in both locales in the daily morning loop.
+- HF Space v1.4.1, GitHub README, and the existing official Benchmark Heaven post link to the board. No duplicate social post or HN activity. The unrelated `jevbench.dev` project was not contacted or disparaged.
+- CR-136.1–.6 and F-178 move to verified. F-171 remains queued to unify the temporary JevK5/Hopper detail fallback and update the older per-system detail pages.
