@@ -8984,11 +8984,11 @@ Source: `/home/flori/jobs/bh-numbers-audit-swarm-20260923/final/PROMPT.md`, Phas
 
 | ID | Status | Evidence | Note |
 |---|---|---|---|
-| CR-139.1 | in-progress | `data/dataset.json`; retained source captures; `/home/flori/jobs/bh-numbers-audit-swarm-20260923/final/full-test.log` | **Flipped back to in-progress by review gate 20260924T074002Z (opencode-kimi):** iteration 196 (codex-luna) marked this `verified` itself, the engine rule requires a different engine, and the work is still uncommitted and undeployed (`verified` requires live checks). Local claim stands: refreshed non-AA offers, availability, currency conversions, counts and subscriptions; dataset 871 models / 676 families / 96 providers / 3,036 offers. Azure returned 429 and was not retried. Six new models have no AA numeric scores. Awaits commit + deploy + non-codex live verification. |
-| CR-139.2 | in-progress | `lib/openrouter-pricing.mjs`; offer projections and cost UI; `test/openrouter-pricing.test.mjs`; full-suite log | **Flipped back to in-progress by review gate 20260924T074002Z (opencode-kimi):** implementer-set `verified` on uncommitted, undeployed work. Claim: OpenRouter conditions and AWS/Azure/Vertex cache-read prices and provenance reach the client and displayed costs; focused and full regression suites pass locally. Awaits commit + deploy + non-codex live verification. |
+| CR-139.1 | verified | `3ceb4cd8`; review gate 20260924T123004Z (opencode-kimi); both hosts at revision `9a229751` | **Verified by non-Codex gate 20260924T123004Z:** both hosts serve `generated_at=2026-09-24T08:11:43.066Z` with 871 models / 676 families / 96 providers / 3,036 offers, matching committed `data/dataset.json`. Retained live captures in `data/raw/benchmarks/daily-evidence/2026-09-24-cr139/` hash-verify against `live-manifest.jsonl` (gunzipped SHA-256). AA payload untouched (zero new AA numbers). |
+| CR-139.2 | in-progress | `3ceb4cd8`; gate fix `9a229751` (components/PriceValue.tsx); live modal screenshots in `/opt/benchmarkheaven/state/ux-evidence/review-20260924T123004Z/` | **Kept in-progress by gate 20260924T123004Z:** the core conditional/cache pricing behaviour (condition line, used tier rates, UTC checked timestamp) is confirmed live on both hosts. However the gate found and fixed a provenance defect: `PriceValue.SourceLine` dropped `source.note`, so cache-read SHA-256/locator and route identity never rendered (fix commit `9a229751`). The fix is gate-written code and owes a non-kimi sign-off per the engine rule, so the row cannot be `verified` yet. Post-fix live check (canon, light, `claude-fable-5.1::max` Vertex row) shows `Cache-read price: … · 2026-09-24 · Anthropic's Claude models · Global · Claude Fable 5.1 · cached input $0.25/1M · SHA-256 54f907c2…`. |
 | CR-139.3 | open | `data/raw/aa-coding-agents.method.md`; `/home/flori/jobs/bh-numbers-audit-swarm-20260923/final/AA-HOLD-VERIFICATION.json` | **Status normalized to `open` by review gate 20260924T074002Z (`on hold` is not a ledger status):** written permission for a full-precision AA median correction was not found; the hold itself is correct and stays. Zero AA numeric payload changes across 865 exact UUID+variant matches; zero new AA numbers. Row closes only when the hold is released (written AA permission) or Florian rules otherwise. |
-| CR-139.4 | in-progress | `lib/client-model.ts`; `test/cr139-composite-eligibility.test.mjs`; full-suite log | **Flipped back to in-progress by review gate 20260924T074002Z (opencode-kimi):** implementer-set `verified` on uncommitted, undeployed work. Claim: exact-configuration evidence across Composite consumers; siblings and family scores cannot substitute for the selected model configuration. Awaits commit + deploy + non-codex live verification. |
-| CR-139.5 | in-progress | UI/source diffs; subscriptions and benchmark registry; full-suite log | **Flipped back to in-progress by review gate 20260924T074002Z (opencode-kimi):** implementer-set `verified` on uncommitted, undeployed work. Claim: updated scale, caveat, provenance and subscription displays; HealthBench's staged candidate unit matches the approved `points` unit. Awaits commit + deploy + non-codex live verification. |
+| CR-139.4 | verified | `3ceb4cd8`; review gate 20260924T123004Z (opencode-kimi) | **Verified by non-Codex gate 20260924T123004Z:** all 190 models with `composite_coverage=0` return `score=null` on both hosts (not the old `50` fallback); `/models/gemini-3-deep-think::default` shows the no-composite message; evidence-backed configs (`gpt-6-astra::max`) still display Composite. `test/cr139-composite-eligibility.test.mjs` green in the gate's clean-tree run. |
+| CR-139.5 | verified | `3ceb4cd8`; review gate 20260924T123004Z (opencode-kimi); `/opt/benchmarkheaven/state/ux-evidence/review-20260924T123004Z/*.png` | **Verified by non-Codex gate 20260924T123004Z:** HealthBench Professional and the Real-SWE lower-bound wording are present on `/benchmarks`; cost modal says "benchmark-sized workload"; home Subscriptions panel shows `Plans · list prices (catalog snapshot 2026-09-13; …)` with per-plan `Source checked …` dates on both hosts (heading is CSS-uppercased). |
 | CR-139.6 | in-progress | `/home/flori/jobs/bh-numbers-audit-swarm-20260923/final/historical-preview/`; `data/raw/benchmarks/daily-evidence/2026-09-24-cr139/jevbench-topics-reconciliation.json`; `/home/flori/jobs/bh-numbers-audit-swarm-20260923/final/gauntlet/REPORT.md` | **Status kept in-progress by review gate 20260924T074002Z (`pending approval; independent review blocked` is not a ledger status):** v1.1 corrects 11 pooled-accuracy fields with exact API/source hashes; v1.2 uses the official 47-system topic artifact, five unsupported rows blank, ranks unchanged. Preview is local; Florian's preview approval is required before any publication rank correction ships (CR-139.6 wording). Three critic completions ended at the output limit; no clean verdict. No production release. |
 | CR-139.7 | open | `/home/flori/jobs/bh-numbers-audit-swarm-20260923/final/RESULT.md`; full test, typecheck, build and data-validation logs; browser and failure receipts | Local tests, validators, typecheck, build and preview checks pass. Still open: complete independent review, both-host verification after approval, and Florian's preview decision. Production remains unchanged. |
 
@@ -9412,10 +9412,10 @@ board, compare radar and hub head/order. CR-139 remains with its existing remedi
 
 | ID | Status | Evidence added this iteration | Note |
 |---|---|---|---|
-| CR-139.1 | in-progress | `3ceb4cd8`; `/opt/benchmarkheaven/state/ux-evidence/iter197-cr139/{build-dataset.log,npm-test.log,tsc.log,npm-build.log,live-http-receipt.json}` | Deployed and live-confirmed by Codex; awaits a different-engine sign-off. |
-| CR-139.2 | in-progress | `3ceb4cd8`; `live-http-receipt.json`; `lib/openrouter-pricing.mjs`; `test/openrouter-pricing.test.mjs` | Conditional/cache pricing is deployed; awaits a different-engine sign-off. |
-| CR-139.4 | in-progress | `3ceb4cd8`; `live-http-receipt.json`; `test/cr139-composite-eligibility.test.mjs` | Exact-configuration rule is deployed; awaits a different-engine sign-off. |
-| CR-139.5 | in-progress | `3ceb4cd8`; `live-http-receipt.json`; live-browser screenshots | Display and provenance corrections are deployed; awaits a different-engine sign-off. |
+| CR-139.1 | verified | `3ceb4cd8`; review gate 20260924T123004Z; live counts on both hosts match committed dataset; retained captures hash-verify against `data/raw/benchmarks/daily-evidence/2026-09-24-cr139/live-manifest.jsonl` | Live data refresh confirmed by non-Codex review gate (opencode-kimi). |
+| CR-139.2 | in-progress | review gate 20260924T123004Z; commit `9a229751` | Core conditional/cache pricing confirmed live on both hosts (conditional line, used tier rates, UTC timestamp). Gate fixed a provenance defect: `PriceValue.SourceLine` was dropping `source.note`, so cache-read SHA-256/locator never rendered (commit `9a229751`, 1 file). The fix itself is gate-written code and owes a non-kimi sign-off, so the row stays in-progress. |
+| CR-139.4 | verified | `3ceb4cd8`; review gate 20260924T123004Z | 190/190 `composite_coverage=0` rows return `score=null` on both hosts; no-composite message visible; composite still shows for evidence-backed configs. |
+| CR-139.5 | verified | `3ceb4cd8`; review gate 20260924T123004Z; screenshots in `/opt/benchmarkheaven/state/ux-evidence/review-20260924T123004Z/` | HealthBench Professional, Real-SWE lower-bound, benchmark-sized wording, and subscription plan notes (`catalog snapshot`, per-plan `Source checked`) confirmed live on both hosts via `/benchmarks` and the home Subscriptions `<details>`. |
 | CR-139.6 | in-progress | `/home/flori/jobs/bh-numbers-audit-swarm-20260923/final/historical-preview/` | Local preview retained; no production historical-ranking correction was approved or claimed. |
 | CR-139.7 | open | `live-http-receipt.json`; failed delegate attempts recorded above | Independent review and owner preview decision are still required before release acceptance. |
 
@@ -9474,3 +9474,33 @@ board, compare radar and hub head/order. CR-139 remains with its existing remedi
   A non-Codex live gate must still verify CR-139.1/.2/.4/.5; CR-139.3 remains blocked on
   written AA permission, CR-139.6 on Florian's historical preview decision, and CR-139.7
   on the complete independent review plus deployment acceptance.
+
+## Iteration 204 — 2026-09-24 12:30 → 14:10 UTC (opencode-kimi, independent live gate): CR-139 review gate 20260924T123004Z
+
+- Scope: `44803cb6..22e23824` (11 commits, all codex-luna / Sandy MMC Bot) plus the gate's
+  own fix `9a229751`. Worktree was clean at the scope tip; remote had since advanced via
+  the ImageJevBench preview PR (#1, out of gate scope) — the gate fix was rebased on top.
+- Local gates on the clean tree: `node --test test/` 1272 tests / 1271 pass / 0 fail / 1
+  skip (rc 0); `npx tsc --noEmit -p .` rc 0; `node scripts/build-dataset.mjs` rc 0,
+  deterministic 871/676/96/3036 (only the build timestamp changed; tracked dataset restored).
+- Live (both hosts, `benchmarkheaven.com` + `model-market-comparison.app.mintapis.com`,
+  revisions `5ed2897e` then `9a229751`):
+  - CR-139.1 verified — counts/`generated_at` match committed dataset; retained
+    `2026-09-24-cr139` captures hash-verify against the manifest; AA payload unchanged.
+  - CR-139.4 verified — 190/190 `composite_coverage=0` models score `null` (no old `50`
+    fallback), no-composite message shown, evidence-backed configs still show Composite.
+  - CR-139.5 verified — HealthBench Professional + Real-SWE lower-bound on `/benchmarks`,
+    "benchmark-sized workload" in the cost modal, subscriptions heading
+    `Plans · list prices (catalog snapshot 2026-09-13; …)` + per-plan `Source checked` dates.
+  - F-171–F-175 re-confirmed via `bin/verify-fable-pass33-design.mjs`: 78/82 per host;
+    the only failures are the known-open F-176(b) licence sentence (both hosts, unchanged).
+  - CR-139.2 core behaviour verified (condition line, used tier rates, UTC timestamp),
+    but the gate found a small provenance defect: `components/PriceValue.tsx` `SourceLine`
+    dropped `source.note`, so cache-read SHA-256/locator and route identity never rendered.
+    Gate fix `9a229751` (1 file, +2/-1) pushed, deployed to `9a229751`, and re-verified
+    live: the Vertex cost modal now renders `… · cached input $0.25/1M · SHA-256 54f907c2…`.
+- CR-139.2 therefore stays **in-progress**: the gate-written fix owes a non-kimi sign-off.
+  CR-139.3 stays open (AA hold), CR-139.6 in-progress (Florian preview decision),
+  CR-139.7 open (umbrella release acceptance). **No `ALL-ACCEPTED` line appended.**
+- Report: `ops/ux-2026-09-12/REVIEW-20260924T123004Z.md`.
+  Evidence: `/opt/benchmarkheaven/state/ux-evidence/review-20260924T123004Z/`.
