@@ -9979,3 +9979,74 @@ hub's header component exported from the file that release rewrites. **F-187** w
 | F-183 | open | — | Left for whoever holds `components/JevV141SystemDetail.tsx` after the v1.4.2 release cut. |
 | F-188 | open | — | Needs the hub header component exported from `components/JevModelsV14.tsx`; that file is in the release cut's path. |
 | F-187 | open | — | Before `/image-jev-bench` publishes, as directed. |
+
+## Iteration 210 — 2026-09-24 ~22:30 → UTC (claude-opus): why the pipeline has missed two days, and the first half of the fix
+
+Receipts: `/opt/benchmarkheaven/state/ux-evidence/iter210-d191/`.
+
+### D191, part 1 — the withdrawal approval kept going stale because it binds one exact response
+
+This change was **written by iteration 209 and left uncommitted** in the shared checkout
+(`lib/live-source.mjs`, `test/live-source.test.mjs`, mtime 19:15/19:16 UTC), together with its
+reasoning in `/opt/benchmarkheaven/state/ux-evidence/iter209-d191/ledger-draft.md`. The 22:00 review
+gate ran the full suite over it (`review-20260924T220003Z/`) and also left without committing. I read
+the diff, re-derived the argument, re-ran the gates myself and am committing it — the text below is
+209's, condensed, with my own verification appended. It overturns iteration 206's explicit
+"`lib/live-source.mjs` was deliberately left alone"; that call was defensible when the binding looked
+like the whole security property, and the point 209 makes is that it is only half of it.
+
+`assertApprovedIdentityCoverage` bound **both** complete identity sets: the prior one *and* the
+current one. Binding the prior set is what makes the exception un-inheritable — the whole security
+property, and it stays. Binding the *current* set to one exact response is a different thing: any
+upstream **addition** between the operator's review and the run invalidates an approval whose
+reviewed **withdrawal** has not moved at all.
+
+That happened twice on 2026-09-24. The 05:45 approval (`712eac76`) was written against a capture
+taken minutes earlier; by 17:45 AA had added `Mercury 2.5` and `DeepSeek V4.1 Flash (Non-Reasoning)`,
+so it could no longer be consumed and had to be re-reviewed into `fa06c33b` — the same three Agnes
+removals, the same prior set, a new `current_identity_sha256`. Nothing about the judgement changed;
+only the response had grown. The cost was a missed publication day and two operator review cycles.
+
+**The fix.** A reviewer who has seen the source keep growing may write `allow_additions: true` with a
+non-empty `additions_basis`. Then the current-set digest is not required to match, and *only* that is
+relaxed: the prior identity set is still bound, the removals are still pinned exactly (a second,
+unnamed loss still fails closed), expiry is unchanged, and additions are bounded by
+`max(10, 2% of the prior set)` — the same shape as `OPENROUTER_WITHDRAWAL_BOUNDS.models`, so a wholly
+different and larger catalog cannot ride in on an approval for a three-model withdrawal. It is never
+a default: no committed approval sets either field, so behaviour on `main` is unchanged until a
+reviewer opts in, per approval, in writing.
+
+**My verification (non-author):** the relaxed branch is reachable only when `bindsCurrent` is false,
+and the final re-assertion still proves every surviving prior identity is present, so the mechanism
+cannot mask a loss. `node --test test/live-source.test.mjs` **15/15 pass, rc 0**; `npx tsc --noEmit
+-p .` rc 0 (`iter210-d191/live-source-test.log`, `tsc.log`, `gates.txt`). The 22:00 gate's full-suite
+run over the same tree is at `review-20260924T220003Z/npm-test.log`.
+
+### D191, part 2 — the real reason 2026-09-24 published nothing is a timeout, not a benchmark
+
+The 19:20 `gated-run.sh` **passed `fetch-aa`** (the `fa06c33b` approval was still exact) and got all
+the way to `refresh-benchmarks`, which then ran for `8_400_123 ms` against the `8_400_000 ms` budget
+in `ops/daily/daily.mjs:318`. The 23 `BENCHMARK RETAINED` lines in the run's
+`reports/refresh-benchmarks.log` are **not** the failure — retained failures are explicitly
+non-fatal (`refresh-benchmarks.mjs:180`) and the fatal `error` field in `run-report.json` is just the
+truncated tail of that stderr. The step was killed.
+
+Where the 140 minutes went, from the 124 worker receipts in the run's `workers/`:
+
+| Window | Shape | Cost |
+|---|---|---|
+| 19:24–19:31 | `review-live`, concurrency 4 | 7 min |
+| **19:40–21:43** | **strictly sequential** producer → critic → producer → critic | **123 min** |
+| 21:43–21:51 | score/vendor batches, concurrency 4 — killed 8 min in | 8 min |
+
+The sequential window is the `for (const spec of plan.entries.entries())` loop in
+`ops/daily/refresh-benchmarks.mjs:338`: each spec that has changed rows calls `protocol(entry)`,
+which is a full producer+critic gauntlet round. About fifty of them ran one after another, at
+20 s–10 min each (several hit a 10:00 and a 5:00 call ceiling exactly). CR-73.3 already parallelised
+the vendor units and the score batches around this loop; the protocol reviews between them were left
+sequential, and the benchmark set has since grown past what that affords. For comparison, the step
+took 34 min on 2026-09-17T10:02 and 53 min on 2026-09-17T20:51.
+
+**Raising the budget is not the fix.** `run.sh` wraps `daily.mjs` in `timeout … 3h`, and the run
+already spent 150 min wall; a step allowed to run longer just moves the kill one level up.
+

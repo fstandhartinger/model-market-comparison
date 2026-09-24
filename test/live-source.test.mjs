@@ -36,6 +36,41 @@ test('catalog approval names every withdrawal: an approved retirement cannot mas
   assert.throws(() => assertApprovedIdentityCoverage(current, [{ id: 'keep' }], id, 'fixture', { approval, now }), /~deepseek\/deepseek-flash-latest/);
 });
 
+// D191: the reviewed withdrawal stands still while the source keeps growing. An
+// approval may tolerate later *additions* if the reviewer says so and says why —
+// and nothing else, so no other loss and no unbounded substitution rides along.
+test('an approval tolerates later additions only when the reviewer opted in, and never another loss', () => {
+  const id = (r) => r.id, now = Date.parse('2026-09-24T19:00:00Z');
+  const previous = [...Array(100)].map((_, i) => ({ id: `m${i}` })).concat([{ id: 'retired' }]);
+  const reviewed = previous.filter((r) => r.id !== 'retired');
+  const base = {
+    expires_at: '2026-09-26T17:45:00Z', reviewed_at: '2026-09-24T17:45:00Z',
+    previous_identity_sha256: identityDigest(previous, id),
+    current_identity_sha256: identityDigest(reviewed, id),
+    removed: ['retired'],
+  };
+  const grown = [...reviewed, { id: 'mercury-2.5' }, { id: 'deepseek-v4.1-flash' }];
+  const opted = { ...base, allow_additions: true, additions_basis: 'AA adds models daily; a truncated response does not grow.' };
+
+  // The exact reviewed response is accepted by either form.
+  assert.doesNotThrow(() => assertApprovedIdentityCoverage(previous, reviewed, id, 'fixture', { approval: base, now }));
+  assert.doesNotThrow(() => assertApprovedIdentityCoverage(previous, reviewed, id, 'fixture', { approval: opted, now }));
+  // Two later additions: today's failure mode. Refused without the opt-in, accepted with it.
+  assert.throws(() => assertApprovedIdentityCoverage(previous, grown, id, 'fixture', { approval: base, now }), /partial response or removal/);
+  assert.doesNotThrow(() => assertApprovedIdentityCoverage(previous, grown, id, 'fixture', { approval: opted, now }));
+  // The opt-in is explicit and reasoned: the flag alone, or an empty basis, is not an approval.
+  for (const bad of [{ ...opted, additions_basis: '   ' }, { ...base, additions_basis: opted.additions_basis }, { ...opted, allow_additions: 'yes' }]) {
+    assert.throws(() => assertApprovedIdentityCoverage(previous, grown, id, 'fixture', { approval: bad, now }), /partial response or removal/);
+  }
+  // Everything else is unchanged: a second, unnamed loss still fails, and so does expiry.
+  assert.throws(() => assertApprovedIdentityCoverage(previous, grown.filter((r) => r.id !== 'm7'), id, 'fixture', { approval: opted, now }), /partial response or removal/);
+  assert.throws(() => assertApprovedIdentityCoverage(previous, grown, id, 'fixture', { approval: opted, now: Date.parse('2026-09-27T00:00:00Z') }), /partial response or removal/);
+  // Additions are bounded like OpenRouter's withdrawal planner: max(10, 2% of the prior set).
+  const bulk = (n) => [...reviewed, ...[...Array(n)].map((_, i) => ({ id: `added${i}` }))];
+  assert.doesNotThrow(() => assertApprovedIdentityCoverage(previous, bulk(10), id, 'fixture', { approval: opted, now }));
+  assert.throws(() => assertApprovedIdentityCoverage(previous, bulk(11), id, 'fixture', { approval: opted, now }), /partial response or removal/);
+});
+
 test('committed collection-wide approvals are exact, bounded and evidenced', async () => {
   const approvals = JSON.parse(await readFile(new URL('../data/raw/source-change-approvals.json', import.meta.url), 'utf8'));
   for (const a of [approvals.aa_models, approvals.openrouter_catalog].filter(Boolean)) {
