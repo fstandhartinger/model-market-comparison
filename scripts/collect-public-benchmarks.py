@@ -194,10 +194,11 @@ def parse(source,spec,load_source):
             value=sum(max(0,min(1,(v-lo)/(hi-lo)))*w for v,(lo,hi),w in zip(inputs,bounds,weights))*100
             rows.append({'name':row['model'],'value':value,'derivation':{'formula':'Source composite: 0.6 words + 0.25 contrast + 0.15 trigrams, each min-max normalized with 10% extended bounds and clipped 0..1; ×100. Bounds='+json.dumps(bounds),'inputs':inputs}})
     elif kind=='scale_swepro':
-        arrays=[]
+        arrays=[];boardkeys=[]
         def scan(v):
             if isinstance(v,dict):
-                if isinstance(v.get('entries'),list) and v['entries'] and 'model' in v['entries'][0] and 'score' in v['entries'][0]:arrays.append(v['entries'])
+                if isinstance(v.get('entries'),list) and v['entries'] and 'model' in v['entries'][0] and 'score' in v['entries'][0]:
+                    arrays.append(v['entries']);boardkeys.append(v.get('key'))
                 for c in v.values():scan(c)
             elif isinstance(v,list):
                 for c in v:scan(c)
@@ -214,8 +215,22 @@ def parse(source,spec,load_source):
         # (SWE Atlas boards share navigation text, so their guard is the page title).
         required=spec.get('require_text','swe_bench_pro_public')
         required=[required] if isinstance(required,str) else required
-        if len(arrays)!=1 or any(t not in source for t in required):raise ValueError('Scale leaderboard source identity changed')
-        rows=arrays[0]
+        if any(t not in source for t in required):raise ValueError('Scale leaderboard source identity changed')
+        # 2026-09-24: labs.scale.com began serving the private dataset's board from the same page as
+        # the public one, so "the page carries exactly one entries array" stopped being a way to name
+        # a board — the guard fired every day and swe-bench-pro-public was retained. A plan that says
+        # which dataset it means selects by the page's own `key`, and still fails closed if that key
+        # is absent or matches more than one board. A plan that does not keeps the old rule, so a
+        # board that silently grows a second array is still refused rather than guessed at, and the
+        # older unkeyed captures (2026-09-10) stay readable for provenance replays.
+        wanted=spec.get('dataset_key')
+        if wanted is not None and any(k is not None for k in boardkeys):
+            matched=[a for a,k in zip(arrays,boardkeys) if k==wanted]
+            if len(matched)!=1:raise ValueError('Scale leaderboard dataset %r missing or ambiguous (%d of %d boards)'%(wanted,len(matched),len(arrays)))
+            rows=matched[0]
+        else:
+            if len(arrays)!=1:raise ValueError('Scale leaderboard source identity changed')
+            rows=arrays[0]
     elif kind=='terminalbench':
         chunks=[]
         for raw in re.findall(r'<script[^>]*>self\.__next_f\.push\((\[.*?\])\)</script>',source,re.S):

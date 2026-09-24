@@ -1176,6 +1176,11 @@
         "kind": "scale_swepro",
         "name_field": "model",
         "value_field": "score",
+        "dataset_key": "public",
+        "require_text": [
+          "swe_bench_pro_public",
+          "SWE-Bench Pro (Public Dataset)"
+        ],
         "context_fields": [
           "version",
           "contaminationMessage"

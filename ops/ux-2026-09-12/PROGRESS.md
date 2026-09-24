@@ -10137,3 +10137,41 @@ rc 0 · `node scripts/build-dataset.mjs` rc 0, deterministic **871 / 676 / 96 / 
 | F-179 | open (number) | Iteration 209 measured the served document at **1,366,503** bytes / **173,452** over the wire, and first load including its 15 static chunks at **2,060,487** / **384,543** — not the 7,384,601 in the ledger, which is neither the document nor the first load. Whoever picks it up should say which number the item is about before moving it. Not changed: `app/jev-models/page.tsx` is in PR #7's and the v1.4.2 release cut's path. |
 | F-183, F-187, F-188 | open | Unchanged from iteration 208; still waiting on the v1.4.2 release cut and `/image-jev-bench`. |
 
+### D192, first repair — Scale now serves two boards from one page
+
+Of the 23 benchmarks the 2026-09-24 run retained, `swe-bench-pro-public::snapshot-2026-09-10` was the
+only hard crash rather than a review dispute: `ValueError: Scale leaderboard source identity changed`
+out of `scripts/collect-public-benchmarks.py:217`. Replayed against **the run's own capture** —
+`2bc8bf56e467d4753a5661538d263eeeed677cc992ff2d65b8e9fca7ab66c7bf`, retained with its receipt at
+`data/raw/benchmarks/daily-evidence/2026-09-24-d192/` — the cause is exact:
+
+| board | `key` | `label` | rows | top row |
+|---|---|---|---|---|
+| 0 | `public` | SWE-Bench Pro (Public Dataset) | 25 | Muse Spark 1.1* 61.5 |
+| 1 | `private` | SWE-Bench Pro (Private Dataset) | 14 | Muse Spark 1.1* 51.5 |
+
+labs.scale.com began serving the **private** dataset's board from the same page. The parser named a
+board by "this page carries exactly one entries array", so it refused — correctly: two boards and no
+stated preference is exactly the ambiguity that guard exists for. It is not a number problem. The
+25 public rows are **identical to the 25 already published**, which the test asserts against
+`public-observations.json` rather than my reading of the page.
+
+The repair says which dataset the plan means, in the page's own vocabulary: `parser.dataset_key`
+selects the board whose `key` matches, and refuses if that key is absent or matches more than one
+board. A plan without `dataset_key` keeps the old rule exactly, so a board that silently grows a
+second array is still refused rather than guessed at, and the unkeyed 2026-09-10 capture stays
+readable for provenance replays. `swe-bench-pro-public` gets `dataset_key: "public"` and a
+`require_text` that also pins the visible label, so a relabel fails closed too.
+
+`test/d192-scale-swepro-datasets.test.mjs` asserts the 25 rows and their values against the retained
+capture and the published rows, that no private-board value (51.5) reaches them, and that five
+separate losses still fail closed: the public board renamed, no board answering to `public`, each
+pinned identity text removed, and the two-board page offered to a plan that does not name a dataset.
+
+The other 22 retentions are untouched and still open under D192. Their shapes, for whoever takes
+them: four `ugi*` and two `frontiercode*` fail on *"methodology passage changed or unavailable in a
+large primary page"*; two `eqbench*` on *"Prior public identities disappeared"*; `arc-agi::1/2/3`,
+both `vals-index*` pairs, `matharena-brokenarxiv`, `vulcanbench-frontier`, `kernelbench-…`,
+`frontierswe::2`, `surge-gdp-pdf` and `aa-automationbench` on protocol-review disputes — several of
+which are reviewer wording objections (`scoring.notes`) rather than source changes.
+
