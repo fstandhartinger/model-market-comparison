@@ -5,6 +5,7 @@ import { readJevbenchV12, jevbenchV12View } from '../lib/jevbench-v12.mjs';
 import { readJevbenchV14, jevbenchV14View } from '../lib/jevbench-v14.mjs';
 
 const page = await readFile(new URL('../app/jev-models/page.tsx', import.meta.url), 'utf8');
+const history = await readFile(new URL('../components/JevHistoryLazy.tsx', import.meta.url), 'utf8');
 const image = await readFile(new URL('../app/jev-models/opengraph-image.tsx', import.meta.url), 'utf8');
 const detail = await readFile(new URL('../app/jev-models/[system]/page.tsx', import.meta.url), 'utf8');
 const frozenPage = await readFile(new URL('../app/jev-models/v1.4/page.tsx', import.meta.url), 'utf8');
@@ -63,6 +64,7 @@ test('CR-131: the historical v1.3 artifact remains available inside the labeled 
   assert.deepEqual(historic.ranked.slice(0, 5).map((row) => row.key), [
     'jev-1.13.0', 'semif-qwen3.5-4b', 'djev', 'winnow-12b', 'reflex-4b',
   ]);
-  assert.match(page, /<details id="jev13-history"/);
-  assert.match(page, /Historical v1\.3\.0 board/);
+  assert.match(page, /<JevHistoryLazy \/>/);
+  assert.match(history, /<details id="jev13-history"/);
+  assert.match(history, /Historical v1\.3\.0 board/);
 });

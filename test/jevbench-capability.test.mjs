@@ -68,7 +68,7 @@ test('Capability views define the measure, use twenty expandable bars, and follo
   assert.match(readFileSync(path.join(root, 'components/JevCapability3D.tsx'), 'utf8'), /data-bh-jev14-3d-top-five/);
   assert.match(source, /xKind="cost"/);
   assert.match(source, /xKind="speed"/);
-  assert.ok(page.indexOf('id="credit"') < page.indexOf('<JevCapabilityChart') && page.indexOf('<JevCapabilityChart') < page.indexOf('id="jev13-history"'), 'capability views follow the current board sections and precede only historical content');
+  assert.ok(page.indexOf('id="credit"') < page.indexOf('<JevCapabilityLazy') && page.indexOf('<JevCapabilityLazy') < page.indexOf('<JevHistoryLazy'), 'capability views follow the current board sections and precede only historical content');
   assert.match(pinned, /JevModelsV14Board artifact=\{view\.artifact\}[\s\S]*<JevCapabilityChart systems=\{view\.systems\}/);
   assert.doesNotMatch(previous, /JevCapabilityChart/);
 });

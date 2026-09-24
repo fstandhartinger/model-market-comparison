@@ -328,6 +328,8 @@ function LongPolicySummary({ rows, itemCount }: { rows: LongPolicy[]; itemCount:
   </div>;
 }
 
+export type { ContextData };
+
 export function JevContextLength({ data }: { data: ContextData }) {
   const worst = [...data.longPolicySystems].sort((a, b) => a.deltaPercentagePoints - b.deltaPercentagePoints)[0];
   const leastAffected = [...data.longPolicySystems].sort((a, b) => b.deltaPercentagePoints - a.deltaPercentagePoints)[0];

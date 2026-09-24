@@ -8,17 +8,17 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 
 const read = (p) => readFile(new URL(p, import.meta.url), 'utf8');
-const [jev, mm] = await Promise.all([read('../app/jev-models/page.tsx'), read('../app/jev-models/multimodal-preview/page.tsx')]);
+const [jev, history, mm] = await Promise.all([read('../app/jev-models/page.tsx'), read('../components/JevHistoryContent.tsx'), read('../app/jev-models/multimodal-preview/page.tsx')]);
 
 test('F-157: the CR-118.4 note is rendered inside the board, after the ranking chart, with its wording intact', () => {
-  const board = jev.indexOf('<JevModelsV12Board view={view} tasks={tasks}>');
-  const note = jev.indexOf('data-bh-jev-score-change');
-  const findings = jev.indexOf('aria-labelledby="jev12-headline"');
+  const board = history.indexOf('<JevModelsV12Board view={view} tasks={tasks}>');
+  const note = history.indexOf('data-bh-jev-score-change');
+  const findings = history.indexOf('aria-labelledby="jev12-headline"');
   assert.ok(board > 0 && note > 0 && findings > 0, 'board, note and findings section exist');
   assert.ok(board < note && note < findings, 'the note is the first child of the board, before "What the run says"');
-  assert.match(jev, /What changed in the score<\/h2>/);
-  assert.match(jev, /barely better than guessing could rank high; intelligence is now measured above chance, and systems below half-way get a growing penalty\. The tasks, Calibration, Speed, Cost and ranking eligibility are unchanged\./);
-  assert.equal(jev.match(/data-bh-jev-score-change/g).length, 1, 'exactly one note');
+  assert.match(history, /What changed in the score<\/h2>/);
+  assert.match(history, /barely better than guessing could rank high; intelligence is now measured above chance, and systems below half-way get a growing penalty\. The tasks, Calibration, Speed, Cost and ranking eligibility are unchanged\./);
+  assert.equal(history.match(/data-bh-jev-score-change/g).length, 1, 'exactly one note');
 });
 
 test('F-158: the candidate preview banner is clear, multi-axis results are labelled, and noindex remains', () => {

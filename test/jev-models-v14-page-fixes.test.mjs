@@ -7,7 +7,7 @@ import { readJevbenchV14, jevV14RowNote } from '../lib/jevbench-v14.mjs';
 // the evergreen v1.3 sections back out of the historical disclosure.
 const { artifact } = await readJevbenchV14();
 const read = (path) => readFile(new URL(path, import.meta.url), 'utf8');
-const [board, compare, page, css] = await Promise.all([read('../components/JevModelsV14.tsx'), read('../components/JevCompareV14.tsx'), read('../app/jev-models/page.tsx'), read('../app/globals.css')]);
+const [board, compare, page, historySource, css] = await Promise.all([read('../components/JevModelsV14.tsx'), read('../components/JevCompareV14.tsx'), read('../app/jev-models/page.tsx'), read('../components/JevHistoryContent.tsx'), read('../app/globals.css')]);
 
 test('a † marker appears only for row-specific notes, never for shared provenance', () => {
   assert.equal(jevV14RowNote('already on the live v1.3.0 board | re-run on a throwaway RunPod pod with the original recipe; deviations in its manifest'), null);
@@ -35,12 +35,15 @@ test('the v1.3 bar chart is back with v1.4 scores and the compare view has four 
 });
 
 test('evergreen sections sit outside the historical v1.3 disclosure and read v1.4', () => {
-  const history = page.indexOf('<details id="jev13-history"');
+  const history = page.indexOf('<JevHistoryLazy />');
   for (const marker of ['data-bh-jev14-findings', 'jev-alternatives-heading', 'data-bh-jev-costs', 'jev-not-measured', '<details id="method"', '<details id="limits"', '<details id="credit"']) {
     const at = page.indexOf(marker);
     assert.ok(at > 0 && at < history, `${marker} must precede the history disclosure`);
   }
-  assert.ok(page.indexOf('<JevModelsV12Board') > history && page.indexOf('<JevRadars') > history && page.indexOf('id="held-out-diagnostic"') > history);
+  assert.match(page, /<JevHistoryLazy \/>/);
+  assert.match(historySource, /<JevModelsV12Board/);
+  assert.match(historySource, /<JevRadars/);
+  assert.match(historySource, /id="held-out-diagnostic"/);
   assert.match(page, /v14Credits\.map/);
   assert.match(page, /v14Estimated\.map/);
 });
