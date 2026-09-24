@@ -65,23 +65,36 @@ class RetryClaimTests(unittest.TestCase):
             "refund_status IS DISTINCT FROM 'canceled'",
             "(refund_status <> 'canceled' OR refund_status IS NULL)",
         )
-        columns = ("refund_status", "refund_id", "refund_attempts", "refund_idempotency_key")
-        cases = (
-            ("failed", None, 0, None, True),
-            ("failed", None, 2, None, True),
-            ("failed", None, 3, None, False),
-            ("failed", "re_123", 1, "key", False),
-            ("canceled", None, 2, None, True),
-            ("canceled", "re_123", 0, "key", False),
-            ("unknown", None, 3, "existing-key", True),
-            ("unknown", None, 3, None, False),
-            ("unknown", "re_123", 3, None, True),
-            (None, None, 3, None, True),
+        expression = expression.replace(
+            "refund_status IS DISTINCT FROM 'manual_review'",
+            "(refund_status <> 'manual_review' OR refund_status IS NULL)",
         )
-        for refund_status, refund_id, attempts, refund_key, expected in cases:
+        expression = expression.replace(
+            "refund_attention_notified_state IS DISTINCT FROM 'manual_review'",
+            "refund_attention_notified_state IS NOT 'manual_review'",
+        )
+        columns = (
+            "refund_status", "refund_id", "refund_attempts", "refund_idempotency_key",
+            "refund_attention_notified_attempts", "refund_attempt_seq", "refund_attention_notified_state",
+        )
+        cases = (
+            ("failed", None, 0, None, 0, 0, None, True),
+            ("failed", None, 2, None, 0, 2, None, True),
+            ("failed", None, 3, None, 0, 3, None, False),
+            ("failed", "re_123", 1, "key", 0, 1, None, False),
+            ("canceled", None, 2, None, 0, 2, None, True),
+            ("canceled", "re_123", 0, "key", 0, 0, None, False),
+            ("unknown", None, 3, "existing-key", 0, 3, None, True),
+            ("unknown", None, 3, None, 0, 3, None, False),
+            ("unknown", "re_123", 3, None, 0, 3, None, True),
+            (None, None, 3, None, 0, 3, None, True),
+            ("manual_review", None, 0, "old-key", 0, 1, None, True),
+            ("manual_review", None, 0, "old-key", 1, 1, "manual_review", False),
+        )
+        for refund_status, refund_id, attempts, refund_key, notified_attempts, attempt_seq, notified_state, expected in cases:
             with self.subTest(refund_status=refund_status, refund_id=refund_id, attempts=attempts, refund_key=refund_key):
                 self.assertEqual(
-                    self.evaluate(columns, expression, (refund_status, refund_id, attempts, refund_key)),
+                    self.evaluate(columns, expression, (refund_status, refund_id, attempts, refund_key, notified_attempts, attempt_seq, notified_state)),
                     expected,
                 )
         reference_columns = ("refund_id", "refund_idempotency_key", "refund_status")
@@ -113,8 +126,7 @@ class RetryClaimTests(unittest.TestCase):
         )
         key_update = worker.refund_idempotency_key_update_sql("jev-priority-refund-next")
         attempts_update = f"refund_attempts + {worker.refund_attempt_increment_sql()}"
-        with patch.object(worker.uuid, "uuid4") as uuid4:
-            uuid4.return_value.hex = "next"
+        with patch.object(worker, "new_refund_idempotency_key", return_value="jev-priority-refund-next"):
             query = self.query_for(worker.claim_refund)
         self.assertIn(f"refund_attempts={attempts_update}", query)
         self.assertIn(f"refund_idempotency_key={key_update}", query)
@@ -166,6 +178,43 @@ class RetryClaimTests(unittest.TestCase):
         with self.assertRaises(worker.WorkerError):
             worker.claim_refund("not-a-uuid")
 
+    def test_manual_review_requires_explicit_confirmation_to_issue_a_new_key(self):
+        request_id = "8f15b2f0-3d6e-4a70-b8a3-80dbdc57107a"
+        normal = worker.refund_claim_eligibility_sql(request_id)
+        confirmed = worker.refund_claim_eligibility_sql(request_id, confirm_unknown_retry=True)
+        self.assertNotIn("status IN ('paid','review_passed','refund_due','refund_pending','manual_review')", normal)
+        self.assertIn("refund_status IS DISTINCT FROM 'manual_review'", normal)
+        self.assertIn("manual_review", confirmed)
+        key_update = worker.refund_idempotency_key_update_sql("new-key", confirm_unknown_retry=True)
+        self.assertIn("refund_status='manual_review'", key_update)
+        self.assertTrue(worker.refund_attention_should_notify("manual_review", 1, 0, None))
+
+    def test_idempotency_key_safe_retry_window_and_legacy_key(self):
+        issued_at = 1760000000
+        with patch.object(worker.uuid, "uuid4") as uuid4:
+            uuid4.return_value.hex = "a" * 32
+            key = worker.new_refund_idempotency_key(now=issued_at)
+        self.assertEqual(key, f"jev-priority-refund-v2-{issued_at}-{'a' * 32}")
+        self.assertTrue(worker.refund_key_within_safe_retry_window(key, issued_at + 19 * 60 * 60))
+        self.assertFalse(worker.refund_key_within_safe_retry_window(key, issued_at + 20 * 60 * 60))
+        self.assertFalse(worker.refund_key_within_safe_retry_window("jev-priority-refund-legacy", issued_at + 60))
+        self.assertFalse(worker.refund_key_within_safe_retry_window(key, issued_at - 1))
+
+    def test_expired_unknown_refund_is_parked_without_another_stripe_post(self):
+        row = {
+            "id": "8f15b2f0-3d6e-4a70-b8a3-80dbdc57107a",
+            "stripe_mode": "test",
+            "payment_intent_id": "pi_123",
+            "refund_idempotency_key": "jev-priority-refund-v2-1760000000-" + "a" * 32,
+        }
+        output_time = 1760000000 + worker.REFUND_IDEMPOTENCY_SAFE_RETRY_SECONDS
+        with patch.object(worker.time, "time", return_value=output_time), \
+             patch.object(worker, "stripe_request") as stripe_request, \
+             patch.object(worker, "sql") as sql:
+            self.assertEqual(worker.operate_refund(row), "manual_review")
+        stripe_request.assert_not_called()
+        self.assertIn("refund_status='manual_review'", sql.call_args.args[0])
+
     def test_manual_refund_cli_rejects_invalid_id_before_database_access(self):
         with patch.object(worker.sys, "argv", ["worker", "refund", "not-a-uuid"]), \
              patch.object(worker, "claim_refund") as claim, \
@@ -178,11 +227,44 @@ class RetryClaimTests(unittest.TestCase):
     def test_cycle_bounds_notice_phase_and_refund_batch(self):
         with patch.object(worker.sys, "argv", ["worker", "cycle"]), \
              patch.object(worker.time, "monotonic", side_effect=[0, 0, 119, 120]), \
+             patch.object(worker, "process_pending_refund_attention", return_value=0) as pending_attention, \
              patch.object(worker, "process_notification", return_value=True) as notification, \
              patch.object(worker, "process_due_refunds") as refunds:
             self.assertEqual(worker.main(), 0)
+        pending_attention.assert_called_once_with(deadline=120)
         self.assertEqual(notification.call_count, 2)
         refunds.assert_called_once_with(limit=1)
+
+    def test_refunds_are_claimed_by_least_recent_update(self):
+        query = self.query_for(worker.claim_refund)
+        self.assertIn("ORDER BY updated_at,created_at", query)
+
+    def test_pending_refund_attention_covers_terminal_rows_and_retries_delivery(self):
+        query = worker.pending_refund_attention_sql()
+        self.assertIn("r.refund_status IN ('failed','unknown','manual_review')", query)
+        self.assertIn("r.refund_attention_notified_attempts < r.refund_attempt_seq", query)
+        self.assertIn("LIMIT 50", query)
+        row = {
+            "id": "8f15b2f0-3d6e-4a70-b8a3-80dbdc57107a",
+            "stripe_mode": "test",
+            "status": "refund_due",
+            "refund_status": "failed",
+            "refund_attempt_seq": 3,
+            "refund_attention_notified_attempts": 0,
+            "refund_attention_notified_state": None,
+        }
+        with patch.object(worker, "sql_json_rows", return_value=[row]), \
+             patch.object(worker, "notify_florian", return_value=False) as notify, \
+             patch.object(worker, "mark_refund_attention_notified") as mark:
+            self.assertEqual(worker.process_pending_refund_attention(float("inf")), 1)
+        notify.assert_called_once()
+        mark.assert_not_called()
+        with patch.object(worker, "sql_json_rows", return_value=[row]), \
+             patch.object(worker, "notify_florian", return_value=True) as notify, \
+             patch.object(worker, "mark_refund_attention_notified", return_value=True) as mark:
+            self.assertEqual(worker.process_pending_refund_attention(float("inf")), 1)
+        notify.assert_called_once()
+        mark.assert_called_once_with(row, "failed")
 
     def test_clear_key_boolean_controls_refund_id_reset(self):
         cleared = worker.refund_id_update_sql("re_new", True)
@@ -299,6 +381,19 @@ class RetryClaimTests(unittest.TestCase):
         self.assertIn("unknown", output.getvalue())
         notify.assert_not_called()
 
+    def test_worker_error_without_refund_reference_is_saved_as_failed(self):
+        row = {
+            "id": "8f15b2f0-3d6e-4a70-b8a3-80dbdc57107a",
+            "stripe_mode": "test",
+            "payment_intent_id": "pi_123",
+            "refund_idempotency_key": "jev-priority-refund-v2-1760000000-" + "a" * 32,
+        }
+        with patch.object(worker.time, "time", return_value=1760000001), \
+             patch.object(worker, "stripe_request", side_effect=worker.WorkerError("credentials unavailable")), \
+             patch.object(worker, "sql") as sql:
+            self.assertEqual(worker.operate_refund(row), "failed")
+        self.assertIn("refund_status='failed'", sql.call_args.args[0])
+
     def test_refund_claim_database_error_fails_the_cycle_for_timer_retry(self):
         with patch.object(worker, "claim_refund", side_effect=worker.WorkerError("database operation failed")):
             with self.assertRaises(worker.WorkerError):
@@ -315,6 +410,28 @@ class RetryClaimTests(unittest.TestCase):
             self.assertEqual(worker.process_due_refunds(limit=2), 2)
         self.assertEqual(claim.call_count, 2)
         self.assertEqual(marker.call_count, 2)
+
+    def test_manual_refund_cli_reports_the_actual_request_status(self):
+        request_id = "8f15b2f0-3d6e-4a70-b8a3-80dbdc57107a"
+        error = io.StringIO()
+        with patch.object(worker.sys, "argv", ["worker", "refund", request_id]), \
+             patch.object(worker, "claim_refund", return_value=None), \
+             patch.object(worker, "sql_json", return_value={"status": "completed", "refund_status": None}), \
+             redirect_stderr(error):
+            self.assertEqual(worker.main(), 1)
+        self.assertIn("completed", error.getvalue())
+
+    def test_manual_review_cli_explains_the_confirmation_step(self):
+        request_id = "8f15b2f0-3d6e-4a70-b8a3-80dbdc57107a"
+        error = io.StringIO()
+        with patch.object(worker.sys, "argv", ["worker", "refund", request_id]), \
+             patch.object(worker, "claim_refund", return_value=None) as claim, \
+             patch.object(worker, "sql_json", return_value={"status": "refund_due", "refund_status": "manual_review"}), \
+             redirect_stderr(error):
+            self.assertEqual(worker.main(), 1)
+        claim.assert_called_once_with(request_id, confirm_unknown_retry=False)
+        self.assertIn("Check the Stripe payment record", error.getvalue())
+        self.assertIn("--confirmed-no-refund", error.getvalue())
 
 
 if __name__ == "__main__":
