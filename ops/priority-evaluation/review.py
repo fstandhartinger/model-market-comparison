@@ -12,7 +12,7 @@ UUID_RE = re.compile(r"^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{
 
 def query(statement: str) -> str | None:
     result = subprocess.run(
-        ["sudo", "-n", "-u", "postgres", "psql", "-X", "-qAt", "-v", "ON_ERROR_STOP=1", "-d", "benchmarkheaven_accounts", "-c", statement],
+        ["psql", "-X", "-qAt", "-v", "ON_ERROR_STOP=1", "-d", "benchmarkheaven_accounts", "-c", statement],
         text=True, capture_output=True, timeout=20,
     )
     if result.returncode:
