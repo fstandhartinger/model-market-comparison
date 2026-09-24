@@ -25,6 +25,10 @@ class WorkerError(Exception):
     pass
 
 
+class InvalidRefundReference(WorkerError):
+    pass
+
+
 class StripeFailure(Exception):
     def __init__(self, status: int, data: dict | None):
         self.status = status
@@ -345,7 +349,7 @@ def operate_refund(row: dict) -> str:
     try:
         if refund_id:
             if not isinstance(refund_id, str) or not STRIPE_ID_RE.fullmatch(refund_id):
-                raise WorkerError("database returned an invalid refund reference")
+                raise InvalidRefundReference("database returned an invalid refund reference")
             data = stripe_request(mode, "GET", "refunds/" + urllib.parse.quote(refund_id, safe=""))
         else:
             idem = row.get("refund_idempotency_key")
@@ -367,12 +371,19 @@ def operate_refund(row: dict) -> str:
         retryable = exc.status >= 500 or exc.status in (408, 409, 429)
         set_refund_state(row, "refund_due", "unknown" if retryable else "failed", refund_id if isinstance(refund_id, str) else None, clear_key=not retryable)
         return "unknown" if retryable else "failed"
-    except WorkerError:
+    except InvalidRefundReference:
         if refund_id:
-            # Local validation/configuration failures need an operator check; retain
-            # the existing ID and key so a later manual GET cannot create a duplicate.
+            # An invalid stored ID cannot be retried against Stripe, but keep it for
+            # inspection and never replace it with a second refund attempt.
             set_refund_state(row, "refund_due", "failed")
             return "failed"
+        raise
+    except WorkerError:
+        if refund_id:
+            # Credential/configuration failures can recover after local correction;
+            # keep the reference and retry the GET without creating another refund.
+            set_refund_state(row, "refund_due", "unknown")
+            return "unknown"
         set_refund_state(row, "refund_due", "failed", refund_id if isinstance(refund_id, str) else None, clear_key=True)
         raise
 
@@ -450,6 +461,9 @@ def main() -> int:
                     return 0
                 print("No refundable request found for that ID.", file=sys.stderr)
                 return 1
+            # This command is operator-attended: report the outcome synchronously
+            # and return nonzero when the refund is not confirmed. Scheduled cycles
+            # own background attention notices.
             state = operate_refund(row)
             print(f"Refund request {request_id}: {state}")
             return 0 if state in ("refunded", "pending") else 1
