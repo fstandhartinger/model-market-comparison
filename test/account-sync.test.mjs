@@ -81,8 +81,10 @@ test('CR-5.2 the committed migration and the runtime schema are identical', () =
   assert.match(sql, /refund_attempt_seq integer NOT NULL DEFAULT 0/);
   assert.match(sql, /table_schema = current_schema\(\)/);
   assert.match(sql, /set_config\('lock_timeout', '2s', true\)/);
-  assert.match(sql, /pg_advisory_xact_lock\(hashtext\('bh_accounts_priority_eval_schema'\)\)/);
-  assert.ok(sql.indexOf('pg_advisory_xact_lock') < sql.indexOf("set_config('lock_timeout'"));
+  assert.match(sql, /pg_try_advisory_xact_lock\(hashtext\('bh_accounts_priority_eval_schema'\)\)/);
+  assert.match(sql, /FOR lock_attempt IN 1\.\.300 LOOP/);
+  assert.match(sql, /pg_sleep\(0\.1\)/);
+  assert.ok(sql.indexOf('pg_try_advisory_xact_lock') < sql.indexOf("set_config('lock_timeout'"));
   assert.match(sql, /refund_attempt_seq = GREATEST\(/);
   // CR-5.5: nothing beyond id, email, name and avatar is stored about a person.
   const userCols = sql.match(/CREATE TABLE IF NOT EXISTS bh_users \(([\s\S]*?)\);/)[1].split('\n').map((l) => l.trim().split(' ')[0]).filter(Boolean);
