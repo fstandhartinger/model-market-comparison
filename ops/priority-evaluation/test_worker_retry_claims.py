@@ -186,6 +186,8 @@ class RetryClaimTests(unittest.TestCase):
         notify = worker.refund_attention_should_notify
 
         self.assertTrue(notify("unknown", 1, 0, None))
+        # A persistent unknown result on the same idempotency key is one attention
+        # event; it must not send the same notice every five-minute poll.
         self.assertFalse(notify("unknown", 1, 1, "unknown"))
         self.assertTrue(notify("unknown", 1, 0, None))
         self.assertTrue(notify("failed", 1, 1, "unknown"))
@@ -242,15 +244,26 @@ class RetryClaimTests(unittest.TestCase):
             "refund_id": "re_123",
             "refund_idempotency_key": "jev-priority-refund-existing",
         }
-        for error in (worker.StripeFailure(403, {}), worker.WorkerError("credentials unavailable")):
+        cases = (
+            (worker.StripeFailure(404, {}), "failed"),
+            (worker.StripeFailure(500, {}), "unknown"),
+            (worker.WorkerError("credentials unavailable"), "failed"),
+        )
+        for error, expected_state in cases:
             with self.subTest(error=type(error).__name__), \
                  patch.object(worker, "stripe_request", side_effect=error) as stripe_request, \
                  patch.object(worker, "sql") as sql:
-                self.assertEqual(worker.operate_refund(row), "unknown")
+                self.assertEqual(worker.operate_refund(row), expected_state)
             stripe_request.assert_called_once_with("test", "GET", "refunds/re_123")
             statement = sql.call_args.args[0]
             self.assertIn("refund_id=CASE WHEN FALSE THEN NULL ELSE COALESCE(NULL,refund_id) END", statement)
             self.assertNotIn("refund_idempotency_key=NULL", statement)
+            self.assertIn(f"refund_status='{expected_state}'", statement)
+
+    def test_refund_claim_database_error_fails_the_cycle_for_timer_retry(self):
+        with patch.object(worker, "claim_refund", side_effect=worker.WorkerError("database operation failed")):
+            with self.assertRaises(worker.WorkerError):
+                worker.process_due_refunds()
 
     def test_refund_marker_error_does_not_abort_the_batch(self):
         row1 = {"id": "8f15b2f0-3d6e-4a70-b8a3-80dbdc57107a", "stripe_mode": "test", "refund_attempt_seq": 1}

@@ -245,6 +245,8 @@ def refund_attention_should_notify(
 ) -> bool:
     if state not in ("failed", "unknown", "error"):
         return False
+    # Alert once per distinct refund attempt and state. Unknown retries reuse the
+    # same key, so they do not send a new alert on every five-minute poll.
     return refund_attempt_seq > notified_attempts or state != notified_state
 
 
@@ -272,12 +274,21 @@ def refund_claim_eligibility_sql(request_id: str | None = None) -> str:
         # Unknown outcomes keep the same idempotency key and may be checked again.
         # Only terminal automatic failures that need a new key are capped. An uncertain
         # prior attempt without its original key is blocked to avoid creating a duplicate.
-        return f"""((status='review_passed' AND result_delivered_at IS NULL AND review_passed_at <= now()-interval '48 hours')
-            AND ({refund_claim_has_safe_retry_reference_sql()}))
-          OR (status='refund_due' AND updated_at <= now()-interval '5 minutes'
-            AND {automatic_terminal_refund_retry_eligibility_sql()})
-          OR (status='refund_pending' AND updated_at <= now()-interval '5 minutes'
-            AND ({refund_claim_has_safe_retry_reference_sql()})))"""
+        return f"""(
+          (
+            status='review_passed' AND result_delivered_at IS NULL
+            AND review_passed_at <= now()-interval '48 hours'
+            AND ({refund_claim_has_safe_retry_reference_sql()})
+          )
+          OR (
+            status='refund_due' AND updated_at <= now()-interval '5 minutes'
+            AND {automatic_terminal_refund_retry_eligibility_sql()}
+          )
+          OR (
+            status='refund_pending' AND updated_at <= now()-interval '5 minutes'
+            AND ({refund_claim_has_safe_retry_reference_sql()})
+          )
+        )"""
     if not UUID_RE.fullmatch(request_id):
         raise WorkerError("request ID must be a UUID")
     return f"id='{request_id}'::uuid AND status IN ('paid','review_passed','refund_due','refund_pending') AND ({refund_claim_has_safe_retry_reference_sql()})"
@@ -344,19 +355,22 @@ def operate_refund(row: dict) -> str:
         return "unknown"
     except StripeFailure as exc:
         if refund_id:
-            # The refund object already exists. A failed GET cannot establish that the
-            # refund failed, so retain its ID and key and never create a replacement.
-            set_refund_state(row, "refund_due", "unknown")
-            return "unknown"
+            # Never discard a known refund reference after a GET error. Retry
+            # transient responses, but surface definite client errors and stop the
+            # timer from polling a refund ID Stripe says it cannot retrieve.
+            retryable = exc.status >= 500 or exc.status in (408, 409, 429)
+            state = "unknown" if retryable else "failed"
+            set_refund_state(row, "refund_due", state)
+            return state
         retryable = exc.status >= 500 or exc.status in (408, 409, 429)
         set_refund_state(row, "refund_due", "unknown" if retryable else "failed", refund_id if isinstance(refund_id, str) else None, clear_key=not retryable)
         return "unknown" if retryable else "failed"
     except WorkerError:
         if refund_id:
-            # Credential/configuration failures while retrieving a known refund are
-            # also uncertain; preserve the reference for the next GET attempt.
-            set_refund_state(row, "refund_due", "unknown")
-            return "unknown"
+            # Local validation/configuration failures need an operator check; retain
+            # the existing ID and key so a later manual GET cannot create a duplicate.
+            set_refund_state(row, "refund_due", "failed")
+            return "failed"
         set_refund_state(row, "refund_due", "failed", refund_id if isinstance(refund_id, str) else None, clear_key=True)
         raise
 
@@ -378,6 +392,8 @@ def operate_refund(row: dict) -> str:
 def process_due_refunds(limit: int = 50) -> int:
     count = 0
     for _ in range(limit):
+        # A claim failure is fatal for this cycle: no row was returned, and the
+        # nonzero service exit lets the five-minute systemd timer retry later.
         row = claim_refund()
         if not row:
             break
