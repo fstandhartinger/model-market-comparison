@@ -221,11 +221,7 @@ def refund_claim_has_safe_retry_reference_sql() -> str:
 
 def automatic_terminal_refund_retry_eligibility_sql() -> str:
     return f"""(
-      (
-        refund_status IS DISTINCT FROM 'manual_review'
-        OR refund_attention_notified_attempts < refund_attempt_seq
-        OR refund_attention_notified_state IS DISTINCT FROM 'manual_review'
-      )
+      refund_status IS DISTINCT FROM 'manual_review'
       AND
       (
         (refund_status IS DISTINCT FROM 'failed' AND refund_status IS DISTINCT FROM 'canceled')
