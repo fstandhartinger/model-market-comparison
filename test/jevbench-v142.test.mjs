@@ -29,7 +29,7 @@ test('CR-152 serves v1.4.2 as the live board with a pinned page, API and fairnes
     read('../app/api/jevbench/v1.4.2/route.ts'),
     read('../app/jev-models/v1.4.2/page.tsx'),
     read('../app/jev-models/page.tsx'),
-    read('../components/JevModelsV14.tsx'),
+    Promise.all(['JevModelsV14', 'JevBoardShared', 'JevBoardInteractive'].map((f) => read(`../components/${f}.tsx`))).then((files) => files.join('\n')), // CR-151 split the board
     read('../app/sitemap.ts'),
   ]);
   assert.match(route, /readJevbenchV142\(\)/);

@@ -568,3 +568,43 @@ details[open] > .bh-collapsible-grid { display: grid; }
 [data-theme="light"] { --jev-t-sysone: 150 26 214; --jev-t-unnamed: 150 26 214; }
 /* Long project URLs in the credit and note lists break instead of sticking out at 320 px (UX iteration 182 probe). */
 [data-bh-jev-credits] a, [data-bh-jev14-notes] a, [data-bh-jev12-legend] a, [data-bh-jev-cost-rows], [data-bh-jev-availability] { overflow-wrap: anywhere; }
+
+/* CR-151 (Florian 25 Sep 2026): heat-shaded axis cells, sortable/filterable JevBench board, View by switch. The green's
+   opacity follows the value's place between the column's weakest (faint) and strongest (solid) system. */
+:root, [data-theme="dark"] { --heat: 46 204 113; --heat-min: .04; --heat-span: .46; }
+[data-theme="light"] { --heat: 22 163 74; --heat-min: .04; --heat-span: .52; }
+.bh-heat { background-color: rgb(var(--heat) / calc(var(--heat-min) + var(--h, 0) * var(--heat-span))); }
+.bh-heat-cell { border-radius: 3px; }
+@media (min-width: 640px) { [data-bh-jev14-bar-axes] .bh-heat-cell { padding: 1px 4px; } }
+@media (max-width: 639px) { [data-bh-jev14-bar-axes] .bh-heat { padding: 0 2px; } }
+.bh-heat-key { display: inline-block; width: 40px; height: 10px; border-radius: 2px; vertical-align: middle; border: 1px solid rgb(var(--line) / .6);
+  background: linear-gradient(90deg, rgb(var(--heat) / var(--heat-min)), rgb(var(--heat) / calc(var(--heat-min) + var(--heat-span)))); }
+.bh-sort-btn { display: inline-flex; align-items: center; gap: 3px; width: 100%; padding: 2px 0; border-radius: 4px; font: inherit; color: inherit; background: none; cursor: pointer; white-space: nowrap; }
+.bh-sort-btn:hover { color: rgb(var(--accent)); }
+.bh-sort-btn.is-active { color: var(--text); font-weight: 700; }
+[data-bh-jev14-chart-sort] .bh-sort-btn { color: var(--muted); }
+[data-bh-jev14-chart-sort] .bh-sort-btn.is-active, [data-bh-jev14-chart-sort] .bh-sort-btn:hover { color: rgb(var(--accent)); }
+.bh-sort-arrow { font-size: 10px; opacity: .45; }
+.bh-sort-arrow.is-active { opacity: 1; color: rgb(var(--accent)); }
+.bh-jev-table thead th { white-space: normal; }
+.bh-jev-table thead .bh-sort-btn { white-space: normal; text-align: left; justify-content: flex-start; font-weight: 600; }
+.bh-jev-table td.bh-heat { background-clip: padding-box; }
+.bh-viewby-btn { display: inline-flex; align-items: center; min-height: 34px; padding: 3px 11px; border: 1px solid rgb(var(--line)); border-radius: 999px; font-size: 13px; color: var(--text); background: none; cursor: pointer; text-decoration: none; }
+.bh-viewby-btn:hover { background: rgb(var(--accent) / .08); }
+.bh-viewby-btn[aria-pressed="true"] { border-color: rgb(var(--accent)); background: rgb(var(--accent) / .14); box-shadow: inset 0 0 0 1px rgb(var(--accent)); font-weight: 700; }
+.bh-jev-filters { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; }
+.bh-jev-filters .bh-input { padding: 5px 9px; font-size: 13px; }
+.bh-jev-filter-search { flex: 1 1 14rem; max-width: 20rem; }
+.bh-jev-filter-search .bh-input { width: 100%; }
+.bh-jev-filter-check { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; cursor: pointer; }
+@media (max-width: 639px) {
+  .bh-jev-filters > label:not(.bh-jev-filter-search):not(.bh-jev-filter-check) { flex: 1 1 calc(50% - 10px); }
+  .bh-jev-filters > label select { width: 100%; }
+  .bh-jev-filter-search { max-width: none; flex-basis: 100%; }
+}
+.bh-new-tag { display: inline-flex; align-items: center; border-radius: 999px; padding: 0 6px; font-size: 10px; font-weight: 700; line-height: 14px; color: rgb(var(--accent2)); border: 1px solid rgb(var(--accent2) / .6); background: rgb(var(--accent2) / .1); }
+.bh-thin-tag.bh-flag-tag { border-style: solid; border-color: rgb(var(--warn) / .7); color: rgb(var(--warn)); background: rgb(var(--warn) / .08); }
+.bh-thin-tag.bh-est-tag { border-color: rgb(var(--accent) / .6); color: rgb(var(--accent)); }
+.bh-inline-btn { display: inline; min-height: 0; padding: 0; border: 0; background: none; font: inherit; cursor: pointer; }
+[data-bh-jev14-chart-sort] .bh-sort-btn { min-height: 0; }
+@media (max-width: 639px) { .bh-viewby-btn { min-height: 44px; } }

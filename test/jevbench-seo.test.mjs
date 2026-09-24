@@ -53,7 +53,7 @@ test('self-host candidates have explicit published openness, license and reposit
 
 test('alternatives guide reuses the board score bars and keeps the reference first', () => {
   const alternatives = readFileSync(new URL('../app/jev-models/alternatives/page.tsx', import.meta.url), 'utf8');
-  const board = readFileSync(new URL('../components/JevModelsV14.tsx', import.meta.url), 'utf8');
+  const board = ['JevModelsV14', 'JevBoardShared', 'JevBoardInteractive'].map((f) => readFileSync(new URL(`../components/${f}.tsx`, import.meta.url), 'utf8')).join('\n'); // CR-151 split the board
   const guides = readFileSync(new URL('../components/JevBenchSeoBlocks.tsx', import.meta.url), 'utf8');
   assert.match(alternatives, /data-bh-jev-alternatives-bars/);
   // F-188/F-189: the bar row and its header moved to components/JevScoreBar.tsx so the client rank-by control
@@ -94,7 +94,7 @@ test('dynamic chooser and open-row links target stable anchors in the live v1.4.
   const chooser = readFileSync(new URL('../app/jev-models/how-to-choose/page.tsx', import.meta.url), 'utf8');
   const alternatives = readFileSync(new URL('../app/jev-models/alternatives/page.tsx', import.meta.url), 'utf8');
   const links = readFileSync(new URL('../components/JevBenchSeoBlocks.tsx', import.meta.url), 'utf8');
-  const board = readFileSync(new URL('../components/JevModelsV14.tsx', import.meta.url), 'utf8');
+  const board = ['JevModelsV14', 'JevBoardShared', 'JevBoardInteractive'].map((f) => readFileSync(new URL(`../components/${f}.tsx`, import.meta.url), 'utf8')).join('\n'); // CR-151 split the board
   assert.match(links, /href=\{`\/jev-models#jev14-row-\$\{encodeURIComponent\(row\.key\)\}`\}/);
   assert.match(board, /id=\{`jev14-row-\$\{row\.key\}`\}/);
   assert.match(chooser, /<JevRowLink row=\{accurate\}/);
