@@ -293,6 +293,7 @@ export default async function JevModelsPage() {
           {v14Credits.map((r) => <li key={r.key}><b className="text-gray-200">{r.display}</b> — {r.author}, {r.licence}{r.repo && <> — <a className="text-accent underline" href={r.repo} target="_blank" rel="noopener noreferrer">{r.repo.replace(/^https:\/\//, '')}</a></>}</li>)}
         </ul>
         <p>Authors: if we tested the wrong configuration, tell us and we will rerun it. New entrants become a new version rather than silently changing this one.</p>
+        <p data-bh-jev-credit-3d>3D view: three.js r128 (MIT).</p>
       </div>
     </details>
 

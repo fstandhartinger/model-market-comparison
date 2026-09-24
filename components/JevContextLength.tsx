@@ -188,7 +188,7 @@ function CapacityChart({ rows }: { rows: Capacity[] }) {
     <p className="bh-muted mt-1 text-sm">Each row shows the system&apos;s exact published maximum input context. API/serving caps, hard limits and trained lengths use different bar colors; training configuration limits appear as separate markers and values where published.</p>
     <div className="mt-4">
       <div className="relative h-6" aria-hidden="true">
-        {CONTEXT_TICKS.filter((tick) => tick <= maximum).map((tick, index, ticks) => <span key={tick} className={`absolute top-0 whitespace-nowrap font-mono text-[9px] text-[var(--muted)] ${index === 0 ? '' : index === ticks.length - 1 ? '-translate-x-full' : '-translate-x-1/2'} ${tick === 524288 ? 'hidden sm:block' : ''}`} style={{ left: `${contextPosition(tick, maximum)}%` }}>{contextTickLabel(tick)}</span>)}
+        {CONTEXT_TICKS.filter((tick) => tick <= maximum).map((tick, index, ticks) => <span key={tick} className={`absolute top-0 whitespace-nowrap font-mono text-[10px] text-[var(--muted)] ${index === 0 ? '' : index === ticks.length - 1 ? '-translate-x-full' : '-translate-x-1/2'} ${tick === 524288 ? 'hidden sm:block' : ''}`} style={{ left: `${contextPosition(tick, maximum)}%` }}>{contextTickLabel(tick)}</span>)}
       </div>
       <ol className="m-0 list-none p-0" aria-label="Published context limits by system">
       {rows.map((row) => {

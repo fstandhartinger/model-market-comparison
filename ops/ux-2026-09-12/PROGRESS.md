@@ -9735,3 +9735,64 @@ is not consumed by the next run will have gone stale again and that run will fai
 guard behaving as designed, not a defect — but it means a refreshed approval is a good bet for a
 clean 05:17, not a guarantee. If AA has moved again by then, the (now correctly budgeted) self-heal
 chain re-reviews and reruns, and alerts Florian if it cannot.
+
+
+## Iteration 207 — 2026-09-24 ~18:05 → ~19:10 UTC (claude-fable, design pass 34): the hub after CR-142, the leaf pages at v1.4.1, the CR-136 pages, the multimodal preview, the priority-evaluation page and the cost modal
+
+- **Scope (Florian: Fable sparingly — what changed since pass 33).** The JevBench hub after F-171–F-175/F-179 (iterations 198–206) and CR-142
+  (cost log axis, dark-mode SVG fills, the seven input-length buckets, the context-limit chart and table); the per-system pages at v1.4.1;
+  the CR-136 pages now live; the CR-141 preview; the CR-140 request page; the CR-139.2 cost modal. Live revision `29809bf9` (= this checkout's
+  HEAD at start, `20ee66be`, minus two ops commits), dataset 08:11 UTC, canonical host, 1440/390 × light/dark: 138 shots + `metrics-<ctx>.json`
+  in `/opt/benchmarkheaven/state/ux-evidence/fable-20260924-pass34/canonical/` (`bin/shoot-fable-pass34.mjs`; 0 page errors in all four
+  contexts; no page overflow anywhere at 390 except the by-design scrolling tables). Simple, Advanced, the wizard, Benchmaxxing and the
+  Fable 5.1 model page re-shot as quick views: unchanged since pass 33 apart from the data. **The tree was clean and no other writer held
+  a file this pass touched**: the two unmerged job branches that edit `app/jev-models/page.tsx` (`jobs/jevbench-paid-eval-20260924`,
+  `jobs/seo-jev-oss-laya-20260924`) each add one line elsewhere in the file. Server state at start: disk 91.2 % (watchdog `critical`), so no
+  gated run, no second perf script, evidence kept to 30 MB.
+- **Verdict** (full text in `DESIGN-DIRECTIVES.md`, "Verdict … pass 34"). **Pass 33's seven findings are closed live** — size once, first bar
+  y = 662 at 390, 130 row links, no dash labels, chart → table → compare → "What changed", 3D status silent, 1,366,324 bytes served — and the
+  leaf pages, the CR-136 pages (F-178 as directed) and CR-142's charts are at the bar where they draw. **Not at the bar — nine things:**
+  (1) "Context limits by system" repeats the chart's 82 rows as a table with 82 closed "Basis, training and serving notes" disclosures and 82
+  date lines (7,200 px at 1440, ~14,000 at 390, unpinned name column); (2) 9 px tick labels on the cost and context axes; (3) `long_policy`,
+  `max_seq_len`, `usage.input_tokens` as copy; (4) the leaf opens with "This detail uses the public, hash-checked v1.4.1 aggregate … the page
+  preview remains name-only." and its right column's H2 is one of its radars' titles; (5) capability rows of two heights (the inputs column
+  wraps); (6) the input-length chart draws three buckets no system has items in, and a 100 % point made of 3/3 items; (7) the cost modal's
+  64-char SHA-256 forces a horizontal scrollbar across the sheet at 390; (8) the multimodal preview's ranking is a 14-column table with no bar
+  (noindex, Florian's review copy — judged for publication day); (9) the alternatives bars have no "Intel. Calib. Speed Cost $/1k dec." header
+  and the chooser prints "94.0/ 100 benchmark score".
+- **Fixed by Fable in this pass** (four files, none held by another writer; `test/fable-pass34.test.mjs` 3/3; `npx tsc --noEmit` rc 0;
+  `node --test test/` **1,286 tests / 1,285 pass / 0 fail / 1 skip**; `node scripts/build-dataset.mjs` rc 0, 871/676/96/3,036, only
+  `generated_at`/`collected_at` moved and `data/dataset.json` was restored): **F-176(b)** the licence sentence left the 3D caption and Credit
+  gained "3D view: three.js r128 (MIT)." (`components/JevCapabilityChart.tsx`, `app/jev-models/page.tsx`); **F-181** two `text-[9px]` →
+  `text-[10px]` (`JevCapabilityChart.tsx`, `JevContextLength.tsx`); **F-186** the cost modal's source note is `break-all`
+  (`components/PriceValue.tsx`) — the full hash stays, CR-139.2's verifier is untouched.
+- **Directed (open):** **F-180** `[mechanical]` the context table behind "All 82 limits as a table", one notes disclosure with † marks, dates
+  in the link title, pinned name cell at 390, the chart at 25 + "Show all 82"; **F-182** `[mechanical]` words for the three field names;
+  **F-183** `[mechanical]` the leaf's sub-line in the board's words, provenance moved to "Availability and evidence", the right column titled
+  "Against Jev 1.13.0"; **F-184** `[mechanical]` one row height in "Capability with cost alongside"; **F-185** `[judgment]` the input-length
+  axis shows only buckets with items plus one generated sentence naming the empty ones, points from n < 20 hollow with their n, the section
+  head cut to one sentence + one meta line; **F-187** `[judgment]` the image benchmark's page draws its ranking before `/image-jev-bench`
+  publishes; **F-188** `[mechanical]` the alternatives header line from the hub's component, "94.0 / 100". F-165's data half stays open
+  (CR-128.1). Five rules added to the design-system notes; decisions recorded ("Decisions in pass 34"). Done log: F-171–F-175 and F-178 rows
+  added as verified (iteration 202, gate 20260923T235002Z); F-176(b), F-181, F-186 added as implemented.
+- **Recorded for Florian (X7):** F-185 keeps CR-142.4's seven buckets in the data, the tooltips and the chart's own sentence, and draws only
+  the four that hold items today; if he wants all seven on the axis regardless, that is one line to revert in the directive.
+- **For the next non-Fable engine:** after the deploy, `ONLY=F-176`, `ONLY=F-181` and `ONLY=F-186` with
+  `node ops/ux-2026-09-12/bin/verify-fable-pass34-design.mjs <host> <out>` on both hosts, then flip the three rows here and in the Done log;
+  the other groups (F-180, F-182–F-185, F-188) are the acceptance gates for the directed work and read FAIL until it lands. Order of work:
+  F-180 and F-185 together (same file, claude-opus; TSX, not Kimi), then F-182 (same file, can ride along), F-183, F-184, F-188 (each small),
+  F-187 with the image benchmark's publication.
+
+| ID | status | evidence | notes |
+|---|---|---|---|
+| F-176(b) | implemented | `/opt/benchmarkheaven/state/ux-evidence/fable-20260924-pass34/canonical/` (`*-hub-3d-vp.png`, `metrics-*.json` → `licence`); `test/fable-pass34.test.mjs` | Fable, pass 34. Needs a non-Fable engine: `ONLY=F-176 node ops/ux-2026-09-12/bin/verify-fable-pass34-design.mjs <host> <out>` on both hosts. |
+| F-181 | implemented | same (`metrics-*.json` → `minFont` = `9 · SPAN $0.0010` before) | Fable, pass 34. `ONLY=F-181`. |
+| F-186 | implemented | same (`mobile_light-cost-modal.png`) | Fable, pass 34. `ONLY=F-186`. |
+| F-178 | verified | review gate 20260923T235002Z; re-seen in pass 34 (`desktop_light-alt.png`, `desktop_light-vs-radars-vp.png`, `metrics-*.json` → `guides`/`bars`/`underscore`) | Done-log row added. |
+| F-180 | open | `desktop_light-hub-ctxsys-vp.png`, `mobile_light-hub-ctxsys-vp.png`; `metrics-desktop_light.json` → 82 "Basis, training and serving notes" details, y 21,689–28,736 | The chart's table is a disclosure; 82 notes are one. |
+| F-182 | open | `metrics-*.json` → `underscore` (`long_policy`, `max_seq_len`, `usage.input_tokens`) | Words, not keys. |
+| F-183 | open | `desktop_light-sys-jevk5-v02.png`, `mobile_light-sys-jevk5-v02.png` | Provenance never opens a page; a heading is not a child's title. |
+| F-184 | open | `desktop_light-hub-cap-vp.png` | One row height. |
+| F-185 | open | `desktop_light-hub-context-vp.png`; the point tooltips (`16–64k tokens: 100.0% (3/3)`) | Axis = the data's range; thin points hollow; one explainer. |
+| F-187 | open | `desktop_light-mm-ranking-vp.png`, `mobile_light-mm-ranking-vp.png` | Before `/image-jev-bench` publishes. |
+| F-188 | open | `desktop_light-alt.png`; `/jev-models/how-to-choose` first-screen text `94.0/ 100 benchmark score` | Header line from the hub's component; the slash. |

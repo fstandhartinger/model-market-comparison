@@ -216,7 +216,7 @@ export function JevCapabilityChart({ systems, revision }: { systems: JevV14Syste
       <div className="mt-1 grid grid-cols-[1.4rem_minmax(0,1fr)_3.3rem] gap-x-2 sm:grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_11rem]" data-bh-jev14-cost-axis>
         <span /><span />
         <div className="relative col-start-2 row-start-1 h-5 sm:col-start-3" aria-hidden="true">
-          {costTicks(costBounds).map((tick, index, ticks) => <span key={tick} className={`absolute top-0 whitespace-nowrap font-mono text-[9px] text-[var(--muted)] ${index === 0 ? '' : index === ticks.length - 1 ? '-translate-x-full' : '-translate-x-1/2'}`} style={{ left: `${costAxisPosition(tick, costBounds)}%` }}>{usd(tick)}</span>)}
+          {costTicks(costBounds).map((tick, index, ticks) => <span key={tick} className={`absolute top-0 whitespace-nowrap font-mono text-[10px] text-[var(--muted)] ${index === 0 ? '' : index === ticks.length - 1 ? '-translate-x-full' : '-translate-x-1/2'}`} style={{ left: `${costAxisPosition(tick, costBounds)}%` }}>{usd(tick)}</span>)}
         </div>
         <span />
         <span className="bh-muted col-start-2 row-start-2 mt-1 text-[10px] sm:col-start-3">Cost per 1,000 decisions · logarithmic · lower is better; free is at the left edge.</span>
@@ -243,7 +243,7 @@ export function JevCapabilityChart({ systems, revision }: { systems: JevV14Syste
       <h3 id="jev14-capability-3d-title" className="text-xl font-semibold">All three at once</h3>
       <p className="bh-muted mt-1 text-sm">The 3D view plots Capability vertically, lower cost to the right, and higher Speed toward you. Sphere size follows the JevBench score. Drag to rotate; pinch or scroll to zoom. The view loads when it scrolls into view.</p>
       <JevCapability3D points={plotted3d} costBounds={costBounds} />
-      <p className="bh-muted mt-2 text-xs">{plotted3d.length} systems plotted; systems missing cost or Speed are omitted. three.js r128 is included under its MIT license.</p>
+      <p className="bh-muted mt-2 text-xs">{plotted3d.length} systems plotted; systems missing cost or Speed are omitted.</p>
     </section>
   </section>;
 }
