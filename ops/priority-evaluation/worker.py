@@ -14,6 +14,7 @@ from pathlib import Path
 
 HOME = Path.home()
 TABLE = "bh_priority_evaluation_requests"
+AUTO_REFUND_FAILURE_ATTEMPT_LIMIT = 3
 UUID_RE = re.compile(r"^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$", re.I)
 STRIPE_ID_RE = re.compile(r"^re_[A-Za-z0-9]+$")
 
@@ -127,7 +128,10 @@ def claim_notification() -> dict | None:
       WHERE r.id=(
         SELECT id FROM {TABLE}
         WHERE status='paid' AND (
-          notification_status='pending' OR
+          (notification_status='pending' AND (
+            last_notification_attempt_at IS NULL OR
+            last_notification_attempt_at < now()-interval '1 minute'
+          )) OR
           (notification_status='sending' AND last_notification_attempt_at < now()-interval '10 minutes')
         )
         ORDER BY created_at FOR UPDATE SKIP LOCKED LIMIT 1
@@ -185,7 +189,14 @@ def process_notification() -> bool:
 def claim_refund(request_id: str | None = None) -> dict | None:
     new_key = "jev-priority-refund-" + uuid.uuid4().hex
     if request_id is None:
-        eligibility = "((status='review_passed' AND result_delivered_at IS NULL AND review_passed_at <= now()-interval '48 hours') OR (status='refund_due' AND updated_at <= now()-interval '5 minutes') OR (status='refund_pending' AND updated_at <= now()-interval '5 minutes'))"
+        # Unknown outcomes keep the same idempotency key and may be checked again.
+        # Only terminal automatic failures that need a new key are capped.
+        eligibility = f"""((status='review_passed' AND result_delivered_at IS NULL AND review_passed_at <= now()-interval '48 hours')
+          OR (status='refund_due' AND updated_at <= now()-interval '5 minutes' AND (
+            (refund_status IS DISTINCT FROM 'failed' AND refund_status IS DISTINCT FROM 'canceled')
+            OR (refund_id IS NULL AND refund_attempts < {AUTO_REFUND_FAILURE_ATTEMPT_LIMIT})
+          ))
+          OR (status='refund_pending' AND updated_at <= now()-interval '5 minutes'))"""
     else:
         if not UUID_RE.fullmatch(request_id):
             raise WorkerError("request ID must be a UUID")
