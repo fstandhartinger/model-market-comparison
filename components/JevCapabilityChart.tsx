@@ -90,7 +90,7 @@ function CapabilityBar({ row, capability, position, costBounds }: {
 
   return <li
     style={typeVar(row.class)}
-    className="grid grid-cols-[1.4rem_minmax(0,1fr)_3.3rem] items-center gap-x-2 text-sm sm:grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_11rem]"
+    className="grid grid-cols-[1.4rem_minmax(0,1fr)_3.3rem] items-center gap-x-2 text-sm sm:grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_15rem]"
     data-bh-jev14-capability-row={row.key}
     data-bh-jev14-capability-value={capability.toFixed(3)}
     data-bh-jev14-cost={cost == null ? '' : String(cost)}
@@ -109,7 +109,7 @@ function CapabilityBar({ row, capability, position, costBounds }: {
       <span className="bh-jevc-grid flex h-[7px] rounded-sm" title={`Cost ${cost == null ? 'not reported' : usd(cost) + ' per 1,000 decisions' + (row.cost?.kind === 'estimate' ? ', estimated' : '')}; logarithmic scale, lower is better`}><span className="block h-full rounded-sm" style={{ width: costWidth.toFixed(4) + '%', backgroundColor: 'var(--muted)' }} /></span>
     </span>
     <b className="tabular col-start-3 row-span-2 row-start-1 self-center text-right text-base sm:col-start-4 sm:row-span-1 sm:text-lg">{one(capability)}</b>
-    <span className="bh-muted col-start-2 row-start-3 mt-0.5 min-w-0 font-mono text-[10.5px] sm:col-start-5 sm:row-start-1 sm:mt-0 sm:whitespace-normal sm:text-right sm:text-[12px]">
+    <span className="bh-muted col-start-2 row-start-3 mt-0.5 min-w-0 font-mono text-[10.5px] sm:col-start-5 sm:row-start-1 sm:mt-0 sm:whitespace-nowrap sm:text-right sm:text-[12px]">
       <span className="sm:hidden">Cost </span>{cost == null ? '—' : usd(cost)}{row.cost?.kind === 'estimate' && cost != null ? ' est.' : ''}
       <span className="hidden sm:inline"> · I {one(intelligence)} · C {one(calibration)}</span>
     </span>
@@ -198,11 +198,11 @@ export function JevCapabilityChart({ systems, revision }: { systems: JevV14Syste
       <p className="bh-eyebrow">Top {Math.min(CHART_TOP, all.length)} by Capability</p>
       <h3 id="jev14-capability-bars-title" className="mt-1 text-xl font-bold leading-snug">Capability with cost alongside</h3>
       <p className="bh-muted mt-1 text-sm">Each system has a wide Capability bar and a narrower cost bar. The cost scale is logarithmic: longer bars mean higher cost, so shorter is cheaper.</p>
-      <div className="mt-4 hidden grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_11rem] gap-x-2 text-[11px] sm:grid" aria-hidden="true">
+      <div className="mt-4 hidden grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_15rem] gap-x-2 text-[11px] sm:grid" aria-hidden="true">
         <span /><span />
         <span className="bh-muted flex justify-between font-mono"><span>0</span><span>20</span><span>40</span><span>60</span><span>80</span><span>100</span></span>
         <span />
-        <span className="bh-muted text-right font-mono">I · C inputs</span>
+        <span className="bh-muted text-right font-mono">$/1k · I · C</span>
       </div>
       <ol className="mt-2 space-y-2.5 sm:mt-1" data-bh-jev14-capability-bars>
         {all.slice(0, CHART_TOP).map((item, index) => <CapabilityBar key={item.row.key} {...item} position={index} costBounds={costBounds} />)}
@@ -213,7 +213,7 @@ export function JevCapabilityChart({ systems, revision }: { systems: JevV14Syste
           {rest.map((item, index) => <CapabilityBar key={item.row.key} {...item} position={index + CHART_TOP} costBounds={costBounds} />)}
         </ol>
       </details>}
-      <div className="mt-1 grid grid-cols-[1.4rem_minmax(0,1fr)_3.3rem] gap-x-2 sm:grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_11rem]" data-bh-jev14-cost-axis>
+      <div className="mt-1 grid grid-cols-[1.4rem_minmax(0,1fr)_3.3rem] gap-x-2 sm:grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_15rem]" data-bh-jev14-cost-axis>
         <span /><span />
         <div className="relative col-start-2 row-start-1 h-5 sm:col-start-3" aria-hidden="true">
           {costTicks(costBounds).map((tick, index, ticks) => <span key={tick} className={`absolute top-0 whitespace-nowrap font-mono text-[10px] text-[var(--muted)] ${index === 0 ? '' : index === ticks.length - 1 ? '-translate-x-full' : '-translate-x-1/2'}`} style={{ left: `${costAxisPosition(tick, costBounds)}%` }}>{usd(tick)}</span>)}
@@ -221,7 +221,7 @@ export function JevCapabilityChart({ systems, revision }: { systems: JevV14Syste
         <span />
         <span className="bh-muted col-start-2 row-start-2 mt-1 text-[10px] sm:col-start-3">Cost per 1,000 decisions · logarithmic · lower is better; free is at the left edge.</span>
       </div>
-      <div className="mt-3 grid grid-cols-[1.4rem_minmax(0,1fr)_3.3rem] gap-x-2 text-[10px] sm:grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_11rem]" aria-hidden="true">
+      <div className="mt-3 grid grid-cols-[1.4rem_minmax(0,1fr)_3.3rem] gap-x-2 text-[10px] sm:grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_15rem]" aria-hidden="true">
         <span /><span />
         <span className="bh-muted flex justify-between tabular"><span>Capability 0–100</span><span>100</span></span>
         <span />

@@ -57,8 +57,44 @@ test('context page uses theme-aware labels and charts exact limits with distinct
   assert.match(source, /data-bh-jev-context-capacity-row=\{row\.key\}/);
   assert.match(source, /<ol[^>]*aria-label="Published context limits by system"/);
   assert.match(source, /<div className="relative h-6" aria-hidden="true">/);
-  assert.match(source, /Training max_seq_len/);
+  // F-182 (Fable pass 34): the training markers stay distinct, but the page spells them in words.
+  assert.match(source, /Trained sequence length/);
   assert.match(source, /Training state limit/);
+  // the only place a dataset key may appear is the helper that sets a quoted one in code type.
+  const copy = source.replace(/const FIELD_NAMES = [^\n]*\n/, '');
+  assert.equal(/max_seq_len|long_policy|usage\.input_tokens/.test(copy), false, 'no dataset keys in the page copy');
+  assert.match(source, /function withFieldNames/);
+});
+
+test('F-180: the context table and its notes are disclosures, and the chart lists 25 bars first', () => {
+  const source = readFileSync(new URL('../components/JevContextLength.tsx', import.meta.url), 'utf8');
+  assert.match(source, /<summary[^>]*>All \{rows\.length\} limits as a table<\/summary>/);
+  assert.match(source, /data-bh-jev-context-notes/);
+  assert.match(source, /Notes for \{rows\.length\} systems/);
+  assert.equal(source.includes('Basis, training and serving notes'), false, 'no per-row disclosure survives');
+  assert.equal(source.includes('Sort by selecting a column heading'), false, 'the instruction sentence is gone');
+  assert.match(source, /const CAPACITY_TOP = 25;/);
+  assert.match(source, /data-bh-jev-context-capacity-more/);
+  assert.match(source, /bh-ctx-sticky/);
+});
+
+test('F-180: the pinned name cell is scoped to the context table in the stylesheet', () => {
+  const css = readFileSync(new URL('../app/globals.css', import.meta.url), 'utf8');
+  assert.match(css, /\[data-bh-jev-context-table\] \.bh-ctx-sticky \{[^}]*position: sticky;[^}]*left: 0;/);
+});
+
+test('F-185: the drawn axis is the range the data occupies and thin points are marked', () => {
+  const source = readFileSync(new URL('../components/JevContextLength.tsx', import.meta.url), 'utf8');
+  assert.match(source, /const THIN_BUCKET = 20;/);
+  assert.match(source, /data-bh-thin/);
+  assert.match(source, /data-bh-jev-context-empty-buckets/);
+  // the seven buckets stay in the data even when the axis draws fewer
+  const active = new Set();
+  for (const system of contextData.lengthSystems) for (const bucket of system.buckets) if (bucket.accuracy != null) active.add(bucket.label);
+  assert.ok(active.size < contextData.bucketLabels.length, 'today at least one bucket is empty for every system');
+  assert.deepEqual([...active], contextData.bucketLabels.filter((label) => active.has(label)));
+  const thin = contextData.lengthSystems.flatMap((system) => system.buckets.filter((bucket) => bucket.accuracy != null && bucket.n < 20));
+  assert.ok(thin.length > 0, 'the hollow-point rule has at least one row to describe today');
 });
 
 test('public context artifact contains no sealed item-level material', () => {

@@ -465,6 +465,8 @@ details[open] > .bh-collapsible-grid { display: grid; }
 .bh-jev11-partial > * { opacity: .62; }
 /* F-128 (Fable pass 24): the pinned name cell stays opaque so scrolled cells cannot show through it; it is dimmed by colour instead. */
 .bh-jev11-partial > .bh-jev-sticky { opacity: 1; color: var(--muted); }
+/* F-180 (Fable pass 34): the context table scrolls sideways at 390 with its name cell pinned. */
+[data-bh-jev-context-table] .bh-ctx-sticky { position: sticky; left: 0; z-index: 1; background: var(--surface); box-shadow: inset -1px 0 0 rgb(var(--line)); }
 /* CR-87 (2026-09-19): JevBench Main Composite Score chart — colour by system type (as the launch chart), live weights. */
 :root, [data-theme="dark"] { --jev-t-jev: 74 149 234; --jev-t-rebuild: 240 122 74; --jev-t-llm: 47 192 141; --jev-t-tool: 146 128 232; --jev-t-service: 135 190 245; --jev-t-classifier: 222 92 168; --jev-t-api: 226 178 60; }
 [data-theme="light"] { --jev-t-jev: 42 122 213; --jev-t-rebuild: 224 97 45; --jev-t-llm: 22 163 116; --jev-t-tool: 75 58 166; --jev-t-service: 84 150 214; --jev-t-classifier: 176 42 124; --jev-t-api: 150 104 0; }

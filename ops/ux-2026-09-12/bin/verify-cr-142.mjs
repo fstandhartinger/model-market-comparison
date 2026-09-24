@@ -132,10 +132,17 @@ for (const vp of viewports) {
         const fig = document.querySelector('[data-bh-jev-context-chart]');
         const labels = fig ? [...fig.querySelectorAll('svg > g > text')].map((t) => t.textContent.trim()).filter((t) => !/%$/.test(t)) : [];
         const cap = document.querySelector('[data-bh-jev-context-capacity-chart]');
-        const rows = cap ? [...cap.querySelectorAll('[data-bh-jev-context-capacity-row]')] : [];
+        const rows = cap ? [...cap.querySelectorAll('[data-bh-jev-context-capacity-row]')] : [];  // incl. the closed "show all" disclosure
         const ticks = cap ? [...cap.querySelectorAll('span[style*="left"]')].filter((s) => s.getBoundingClientRect().width > 0).map((s) => s.textContent.trim()) : [];
+        const emptySentence = (fig?.querySelector('[data-bh-jev-context-empty-buckets]')?.textContent || '').replace(/\s+/g, ' ').trim();
+        const counts = document.querySelector('[data-bh-jev-context-bucket-counts]');
+        const countHeads = counts ? [...counts.querySelectorAll('thead th')].map((t) => t.textContent.trim()) : [];
+        const pointLabels = [...document.querySelectorAll('[data-bh-jev-context-point]')].map((n) => (n.getAttribute('data-bh-jev-context-point') || '').split(':').slice(1).join(':'));
         return {
           bucketLabels: labels,
+          emptySentence,
+          countHeads,
+          pointLabels: [...new Set(pointLabels)],
           capacityRows: rows.length,
           unknownRows: rows.filter((r) => /Unknown/.test(r.textContent)).length,
           trainingRows: rows.filter((r) => /Training configuration/.test(r.textContent)).length,
@@ -145,12 +152,18 @@ for (const vp of viewports) {
           heading: cap ? (cap.querySelector('h3')?.textContent || '').trim() : '',
         };
       });
-      check('CR-142.4', `${tag} the seven required input-length buckets are the axis labels`, JSON.stringify(ctxChart.bucketLabels.filter((l) => EXPECTED_BUCKETS.includes(l))) === JSON.stringify(EXPECTED_BUCKETS), ctxChart.bucketLabels);
+      // F-185 (Fable pass 34): the drawn axis lists only the buckets that hold a plotted item; the
+      // seven required buckets are pinned in the counts table, the point ids and the empty-bucket sentence.
+      const drawnBuckets = ctxChart.bucketLabels.filter((l) => EXPECTED_BUCKETS.includes(l));
+      const accountedFor = [...new Set([...drawnBuckets, ...ctxChart.countHeads.filter((l) => EXPECTED_BUCKETS.includes(l)), ...EXPECTED_BUCKETS.filter((l) => ctxChart.emptySentence.includes(l))])];
+      check('CR-142.4', `${tag} all seven input-length buckets are accounted for`, EXPECTED_BUCKETS.every((l) => accountedFor.includes(l)), { drawn: drawnBuckets, counts: ctxChart.countHeads, sentence: ctxChart.emptySentence });
+      check('CR-142.4', `${tag} every drawn bucket holds a plotted point`, drawnBuckets.length > 0 && drawnBuckets.every((l) => ctxChart.pointLabels.includes(l)), { drawn: drawnBuckets, points: ctxChart.pointLabels });
+      check('CR-142.4', `${tag} the empty buckets are named in one sentence`, drawnBuckets.length === EXPECTED_BUCKETS.length || (/empty/.test(ctxChart.emptySentence) && EXPECTED_BUCKETS.filter((l) => !drawnBuckets.includes(l)).every((l) => ctxChart.emptySentence.includes(l))), ctxChart.emptySentence);
       check('CR-142.4', `${tag} no legacy bucket label survives`, !ctxChart.bucketLabels.some((l) => /^(<500|500–999|1k–1,999|≥2k)$/.test(l)), ctxChart.bucketLabels);
       check('CR-142.4', `${tag} the logarithmic published-context chart is present`, /logarithmic/i.test(ctxChart.heading) && ctxChart.capacityRows > 0, { heading: ctxChart.heading, rows: ctxChart.capacityRows });
       check('CR-142.4', `${tag} every context row is represented`, ctxChart.capacityRows === 82, ctxChart.capacityRows);
       check('CR-142.4', `${tag} unknown limits are labelled`, ctxChart.unknownRows >= 0 && /Unknown|unknown/.test(ctxChart.caption + ctxChart.heading) || ctxChart.unknownRows > 0, { unknown: ctxChart.unknownRows });
-      check('CR-142.4', `${tag} training markers are separated in the legend`, /max_seq_len/.test(ctxChart.legend) && /state limit/i.test(ctxChart.legend) && /Trained length/.test(ctxChart.legend), ctxChart.legend.slice(0, 200));
+      check('CR-142.4', `${tag} training markers are separated in the legend`, /Trained sequence length/.test(ctxChart.legend) && /state limit/i.test(ctxChart.legend) && /Trained length/.test(ctxChart.legend), ctxChart.legend.slice(0, 200));
       check('CR-142.4', `${tag} training configuration values are printed`, ctxChart.trainingRows > 0, ctxChart.trainingRows);
       check('CR-142.4', `${tag} log ticks are rendered`, ctxChart.ticks.length >= 4, ctxChart.ticks);
 

@@ -87,3 +87,14 @@ test('Three.js is pinned locally, integrity checked, and loaded after the sectio
   assert.doesNotMatch(source, /https?:\/\//);
   assert.match(license, /Copyright © 2010-2021 three\.js authors/);
 });
+
+test('F-184 (Fable pass 34): the capability rows share one height and the header names the value columns', () => {
+  const source = readFileSync(path.join(root, 'components/JevCapabilityChart.tsx'), 'utf8');
+  // the trailing value column never wraps at sm+, on a track wide enough for the longest string
+  // the data produces ("$0.0033 est. · I 51.6 · C 72.4", measured live at 1440: 15 rem fits it).
+  assert.match(source, /sm:whitespace-nowrap sm:text-right/);
+  assert.equal(source.includes('_3.2rem_11rem]'), false, 'the old 11 rem track is gone');
+  assert.equal((source.match(/_3\.2rem_15rem\]/g) ?? []).length, 4, 'row, header, cost axis and footer share one grid');
+  assert.match(source, /\$\/1k · I · C/);
+  assert.equal(source.includes('I · C inputs'), false);
+});

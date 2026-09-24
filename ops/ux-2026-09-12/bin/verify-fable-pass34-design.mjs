@@ -39,8 +39,11 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
       const costAxis = document.querySelector('[data-bh-jev14-cost-axis]');
       const ctxAxis = document.querySelector('ol[aria-label="Published context limits by system"]')?.previousElementSibling;
       const notes = [...document.querySelectorAll('summary')].filter((s) => /Basis, training and serving notes/.test(t(s))).length;
-      const ctxTableH3 = [...document.querySelectorAll('h2, h3, summary')].find((e) => /Context limits by system/.test(t(e)));
-      const ctxTable = ctxTableH3 ? ctxTableH3.closest('details') : null;
+      const ctxPanel = [...document.querySelectorAll('h2, h3, summary')].find((e) => /Context limits by system/.test(t(e)));
+      // The panel keeps its title line; the table itself is the disclosure ("All N limits as a table").
+      const ctxTableEl = [...document.querySelectorAll('table')].find((el) => el.querySelectorAll('tbody tr').length > 20 && /Maximum input context/.test(String(el.textContent || '')));
+      const ctxTable = ctxTableEl ? ctxTableEl.closest('details') : null;
+      const ctxTableSummary = ctxTable ? t(ctxTable.querySelector(':scope > summary')) : null;
       const bodyText = [...document.querySelectorAll('main *')].filter((e) => !e.closest('code, pre, script, style') && [...e.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim())).map((e) => [...e.childNodes].filter((n) => n.nodeType === 3).map((n) => n.textContent).join(' ')).join(' ');
       const fieldNames = ['long_policy', 'max_seq_len', 'usage.input_tokens'].filter((w) => bodyText.includes(w));
       const capRows = [...document.querySelectorAll('[data-bh-jev14-capability-row]')].map((r) => Math.round(r.getBoundingClientRect().height));
@@ -52,7 +55,7 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
       const usedBuckets = new Set(titles.map((x) => (x.match(/· ([^:]+) tokens:/) || [])[1]).filter(Boolean));
       const thin = titles.filter((x) => { const m = x.match(/\((\d+)\/(\d+)\)/); return m && Number(m[2]) < 20; }).length;
       const thinMarked = accSvg ? accSvg.querySelectorAll('[data-bh-thin]').length : 0;
-      return { suiteText: suite ? t(suite) : null, creditText: credit ? String(credit.textContent || '').replace(/\s+/g, ' ').trim() : null, smallCost: costAxis ? small(costAxis) : null, smallCtx: ctxAxis ? small(ctxAxis) : null, notes, ctxTableClosed: ctxTable ? !ctxTable.open : false, ctxTableFound: !!ctxTableH3, fieldNames, capRows, buckets, usedBuckets: [...usedBuckets], thin, thinMarked };
+      return { suiteText: suite ? t(suite) : null, creditText: credit ? String(credit.textContent || '').replace(/\s+/g, ' ').trim() : null, smallCost: costAxis ? small(costAxis) : null, smallCtx: ctxAxis ? small(ctxAxis) : null, notes, ctxTableClosed: ctxTable ? !ctxTable.open : false, ctxTableFound: !!ctxPanel && !!ctxTableEl, ctxTableSummary, fieldNames, capRows, buckets, usedBuckets: [...usedBuckets], thin, thinMarked };
     });
     if (want('F-176')) {
       check('F-176', `${tag} (b) capability suite present`, !!hub.suiteText, {});
@@ -64,7 +67,7 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
       check('F-181', `${tag} context axis has no text under 10 px`, hub.smallCtx && hub.smallCtx.length === 0, { small: hub.smallCtx });
     }
     if (want('F-180')) {
-      check('F-180', `${tag} context table is behind a closed disclosure`, hub.ctxTableFound && hub.ctxTableClosed, { found: hub.ctxTableFound, closed: hub.ctxTableClosed });
+      check('F-180', `${tag} context table is behind a closed disclosure`, hub.ctxTableFound && hub.ctxTableClosed && /limits as a table/.test(hub.ctxTableSummary || ''), { found: hub.ctxTableFound, closed: hub.ctxTableClosed, summary: hub.ctxTableSummary });
       check('F-180', `${tag} at most one row-notes disclosure`, hub.notes <= 1, { notes: hub.notes });
     }
     if (want('F-182')) check('F-182', `${tag} no field name as copy`, hub.fieldNames.length === 0, { fieldNames: hub.fieldNames });
