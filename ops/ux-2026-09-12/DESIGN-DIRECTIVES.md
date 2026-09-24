@@ -325,7 +325,7 @@ with `rows` = the pair, pickers hidden) above its FAQ, and the 9-row table becom
 3 links in the guides row and none to the current page; a Jev-vs page has ≥ 4 `svg` above its FAQ; no `_` inside a visible word; one back-link
 wording; 0 page errors; no overflow; CR-136's own verifier still passes.
 
-### F-179 — The historical board loads when opened `[judgment]`
+### F-179 — The historical board loads when opened `[judgment]` — **shipped and verified (iteration 206)**
 
 *Where:* `app/jev-models/page.tsx` (the `jev13-history` details), a client wrapper (e.g. `components/JevHistoryLazy.tsx`) that dynamic-imports
 the v1.3.0 board, radars, task grid and held-out tables and fetches their data on `toggle`; the CR-90/94/97 verifiers open the details before
@@ -335,6 +335,11 @@ page) is untouched.
 *Accept:* `curl -s https://benchmarkheaven.com/jev-models | wc -c` < 1.5 MB (today 6.8 MB); after opening the details the same tables, radars
 and grid render (the four verifiers pass with the click); Lighthouse-free check: `performance.getEntriesByType('navigation')[0].transferSize`
 at 390 under 400 KB compressed; 0 page errors.
+*Shipped* in `0176b7cc` (PR #7, merge `b95905f2`) and verified live by a non-implementer engine in iteration 206: `/jev-models` is **1,366,324 bytes**
+on all three hosts (from 7,384,601, −81.5 %), 173,373 gzipped; `bin/verify-f179.mjs` 22/22 per host. Two halves the PR did not carry were finished
+there: the click was added to `verify-cr-90/94/97.mjs` (122/122, 112/112, 115/115 per host), and a `?scope=` / `?w=` / `#jev13-history` link now
+opens the disclosure on mount, because a closed one had turned CR-90's verified "reload restores the scoped URL view" into a page showing none of
+what the link asked for (`166cbe7e`, 26/26 per host).
 
 ### F-165 — Same-name rows say whose run they are `[judgment]` — data part open (→ CR-128.1, F-165(a) decided in iteration 187)
 
@@ -581,6 +586,7 @@ The label half is live and verified (`135a3098`, `4a9dd523`). Open: the identity
 | F-167 the per-system page draws its number (score strip among the ranked, 22 px axis bands with the reference tick, the pair radar, two columns at `lg+`) | `d388663e` (claude-opus, iteration 181) | `/opt/benchmarkheaven/state/ux-evidence/review-20260923T150004Z/post-deploy/f167-f170-{main,mintapis}/` (`verify-fable-pass32-f167-f170.mjs`) | **verified** — review gate 20260923T150004Z (codex-luna, non-implementer), 287/287 per host at `eff2b4a9`; pass 33 notes the page still reads the v1.3.0 artifact → F-171 |
 | F-169 every board row's name and the honorable card link to `/jev-models/<key>`; the 52-link block is gone | `d388663e` (claude-opus, iteration 181) | same | **verified** — same gate; pass 33: undone on the v1.4.1 board (names plain, chart names → repos) → F-172 |
 | F-170 no registry id or fallback string as a sub-line; sheet names wrap | `d388663e` (claude-opus, iteration 181) | same | **verified** — same gate |
+| F-179 the historical v1.3 board mounts only when its disclosure is opened; a link that names a view inside it still lands on that view | `0176b7cc` (PR #7) + `166cbe7e` (claude-opus, iteration 206) | `/opt/benchmarkheaven/state/ux-evidence/iter206-f179/` (`f179-*`, `deeplink-*`, `cr-90-*`, `cr-94-*`, `cr-97-*`, `pass33-*`) | **verified** — iteration 206 (claude-opus, non-implementer): `/jev-models` **1,366,324 bytes** on canonical, www and legacy (from 7,384,601, −81.5 %), 173,373 gzipped; `verify-f179.mjs` **22/22 per host**; the deep-link half **26/26 per host**; `verify-cr-90` **122/122**, `verify-cr-94` **112/112**, `verify-cr-97` **115/115** per host once the directive's missing click was added; `pass33` **78/82** on both hosts, unchanged, the four failures being the open F-176(b) |
 | F-176(a) the 3D view announces nothing once it is up (live region kept for loading and failure states) | pass 33 (Fable, surgical: `components/JevCapability3D.tsx`) + `test/fable-pass33.test.mjs` | `/opt/benchmarkheaven/state/ux-evidence/iter189-f176/{canonical,mintapis}/verification-F-176.json` | **verified** — iteration 189 (claude-opus, non-Fable): `ONLY=F-176` on both hosts at `6714f8d4`, 1440/390 × light/dark. The (a) checks are **8/8 per host** (status empty after the panel scrolls in, no "ready" announcement). The same run holds (b) red 4/4 per host, quoting the live sentence — see D189: the gate could not see it before |
 | F-163 a model with no measured result leaves the snapshot cards; one status per card line | `ee6c2748` (claude-opus, iteration 177) + `lib/compare-claims.mjs`, `test/fable-pass31-compare.test.mjs` | `/opt/benchmarkheaven/state/ux-evidence/review-20260923T031003Z/f163-f164-{canonical,legacy}/verification.json` | **verified** — codex-luna (review gate 20260923T031003Z, non-implementer): `verify-f163-f164.mjs` 87/87 per host; re-judged in pass 32: 5 muted lines, no empty track |
 | F-164 the Compare status line says how many values are the developers' own | same | same | **verified** — same gate; pass 32: status 3 lines and claims 3 lines at 390, generated from the rendered rows |
