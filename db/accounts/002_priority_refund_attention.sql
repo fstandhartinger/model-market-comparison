@@ -1,7 +1,7 @@
 DO $$
 BEGIN
-  PERFORM set_config('lock_timeout', '2s', true);
   PERFORM pg_advisory_xact_lock(hashtext('bh_accounts_priority_eval_schema'));
+  PERFORM set_config('lock_timeout', '2s', true);
   IF NOT EXISTS (
     SELECT 1 FROM information_schema.columns
     WHERE table_schema = current_schema()

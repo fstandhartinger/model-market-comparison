@@ -175,6 +175,15 @@ class RetryClaimTests(unittest.TestCase):
         claim.assert_not_called()
         sql_json.assert_not_called()
 
+    def test_cycle_bounds_notice_phase_and_refund_batch(self):
+        with patch.object(worker.sys, "argv", ["worker", "cycle"]), \
+             patch.object(worker.time, "monotonic", side_effect=[0, 0, 119, 120]), \
+             patch.object(worker, "process_notification", return_value=True) as notification, \
+             patch.object(worker, "process_due_refunds") as refunds:
+            self.assertEqual(worker.main(), 0)
+        self.assertEqual(notification.call_count, 2)
+        refunds.assert_called_once_with(limit=1)
+
     def test_clear_key_boolean_controls_refund_id_reset(self):
         cleared = worker.refund_id_update_sql("re_new", True)
         retained = worker.refund_id_update_sql(None, False)
