@@ -5036,21 +5036,21 @@
           "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/124169fc88fe23ad8be8.gz",
           "sha256": "a5ea92016466836a5a1a7b2e63a920c9f5635523c6125637a6e1920c5a837eab",
           "fetched_at": "2026-09-13T20:31:37.884619+00:00",
-          "excerpt": "data.json v1_1 Main: every model × effort run carries cost, the mean USD spend per rollout."
+          "excerpt": "\"cost\" (literal field in the captured leaderboard data.json, v1_1 Main subset; gzip source retained)"
         },
         {
           "url": "https://cognition.com/frontiercode",
           "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/f2f055237ae1ea2192dc.gz",
           "sha256": "9dd5aaa60f252934d5b4aa14e1aa9d3e448d09c9d971ab03848035e2e36f24b2",
           "fetched_at": "2026-09-13T20:31:40.605644+00:00",
-          "excerpt": "FrontierCode 1.1 — \"Current revision. Runs flagged for unfair internet use are zeroed.\" Methodology: mergeability of maintainer-crafted tasks graded with unit tests, rubrics and verifiers."
+          "excerpt": "Refines the methodology to distinguish legitimate internet use from unfair use: runs flagged for consulting solution-bearing sources are zeroed. Also audits blocker criteria and deprecates the Diamond subset."
         },
         {
           "url": "https://cognition.com/robots.txt",
           "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/cognition.com-robots.txt",
           "sha256": "43b41314c0a79121c3a73cec88c56035754f8de4a5cc717a8c9ace3351c744e4",
           "fetched_at": "2026-09-13T20:31:40.605644+00:00",
-          "excerpt": "Allow: / ; Disallow: /downloads/ — the leaderboard page and its data file are permitted."
+          "excerpt": "Allow: / Disallow: /downloads/"
         }
       ]
     },
@@ -5113,21 +5113,21 @@
           "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/124169fc88fe23ad8be8.gz",
           "sha256": "a5ea92016466836a5a1a7b2e63a920c9f5635523c6125637a6e1920c5a837eab",
           "fetched_at": "2026-09-13T20:31:37.884619+00:00",
-          "excerpt": "data.json v1_1: 36 models, 98 model × effort runs on the 100-task Main subset, each with new_score, correct, flagged_rate, cost and tokens."
+          "excerpt": "\"new_score\" (literal field in the captured leaderboard data.json, v1_1 Main subset; gzip source retained)"
         },
         {
           "url": "https://cognition.com/frontiercode",
           "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/f2f055237ae1ea2192dc.gz",
           "sha256": "9dd5aaa60f252934d5b4aa14e1aa9d3e448d09c9d971ab03848035e2e36f24b2",
           "fetched_at": "2026-09-13T20:31:40.605644+00:00",
-          "excerpt": "FrontierCode 1.1 — \"Current revision. Runs flagged for unfair internet use are zeroed.\" Methodology: mergeability of maintainer-crafted tasks graded with unit tests, rubrics and verifiers."
+          "excerpt": "FrontierCode is the first benchmark to measure mergeability: would the maintainer actually merge this PR? Our criteria assess end-to-end code quality (correctness, test quality, scope discipline, style, and adherence to codebase standards) using an ensemble of grading techniques including unit tests, rubrics, and new types of verifiers."
         },
         {
           "url": "https://cognition.com/robots.txt",
           "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/cognition.com-robots.txt",
           "sha256": "43b41314c0a79121c3a73cec88c56035754f8de4a5cc717a8c9ace3351c744e4",
           "fetched_at": "2026-09-13T20:31:40.605644+00:00",
-          "excerpt": "Allow: / ; Disallow: /downloads/ — the leaderboard page and its data file are permitted."
+          "excerpt": "Allow: / Disallow: /downloads/"
         }
       ]
     },
@@ -13067,21 +13067,21 @@
           "file": "ops/rebuild-2026-09/evidence/phase-04/sources/supp-e399fbd15e57.txt",
           "sha256": "dc6f43c6140c93d0479085681ed94f054c829db8f03f48808b362eee0d3678bd",
           "fetched_at": "2026-09-10T22:01:49Z",
-          "excerpt": "See About Benchmarks in app.py and the exact named column in the published CSV."
+          "excerpt": "html.Strong(\"NatInt 💡\"), \": Natural Intelligence\"], style={'marginTop': '20px', 'fontSize': '1.2em'}), html.P(\"Measures a model's general knowledge and reasoning capabilities across a range of standard and specialized domains.\")"
         },
         {
           "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard",
           "file": "ops/rebuild-2026-09/evidence/phase-04/sources/a-aac3f162463d.txt",
           "sha256": "48aeeb8e5b30d1557590f3a298e5b7d541cdc12dec533d121425efb89c52c0c4",
           "fetched_at": "2026-09-10T21:45:53.851000+00:00",
-          "excerpt": "Results published in this source; use the exact locator and preserve the source field identity."
+          "excerpt": "UGI Leaderboard - a Hugging Face Space by DontPlanToEnd"
         },
         {
           "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
           "file": "ops/rebuild-2026-09/evidence/phase-04/sources/supp-6c45283c6461.txt",
           "sha256": "4154635c4557af4b4eebbeaab6970bdf8296aef44e46f6193fdb4976cd8fe7f2",
           "fetched_at": "2026-09-10T22:04:13Z",
-          "excerpt": "Exact score column NatInt 💡"
+          "excerpt": "\"NatInt 💡\" (literal field in the captured leaderboard CSV; gzip source retained)"
         }
       ]
     },
@@ -13143,21 +13143,21 @@
           "file": "ops/rebuild-2026-09/evidence/phase-04/sources/supp-e399fbd15e57.txt",
           "sha256": "dc6f43c6140c93d0479085681ed94f054c829db8f03f48808b362eee0d3678bd",
           "fetched_at": "2026-09-10T22:01:49Z",
-          "excerpt": "See About Benchmarks in app.py and the exact named column in the published CSV."
+          "excerpt": "html.Strong(\"W/10 👍 (Willingness/10):\"), \" How far a model can be pushed before it refuses to answer or deviates from instructions.\""
         },
         {
           "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard",
           "file": "ops/rebuild-2026-09/evidence/phase-04/sources/a-aac3f162463d.txt",
           "sha256": "48aeeb8e5b30d1557590f3a298e5b7d541cdc12dec533d121425efb89c52c0c4",
           "fetched_at": "2026-09-10T21:45:53.851000+00:00",
-          "excerpt": "Results published in this source; use the exact locator and preserve the source field identity."
+          "excerpt": "UGI Leaderboard - a Hugging Face Space by DontPlanToEnd"
         },
         {
           "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
           "file": "ops/rebuild-2026-09/evidence/phase-04/sources/supp-6c45283c6461.txt",
           "sha256": "4154635c4557af4b4eebbeaab6970bdf8296aef44e46f6193fdb4976cd8fe7f2",
           "fetched_at": "2026-09-10T22:04:13Z",
-          "excerpt": "Exact score column W/10 👍"
+          "excerpt": "\"W/10 👍\" (literal field in the captured leaderboard CSV; gzip source retained)"
         }
       ]
     },
@@ -13219,21 +13219,21 @@
           "file": "ops/rebuild-2026-09/evidence/phase-04/sources/supp-e399fbd15e57.txt",
           "sha256": "dc6f43c6140c93d0479085681ed94f054c829db8f03f48808b362eee0d3678bd",
           "fetched_at": "2026-09-10T22:01:49Z",
-          "excerpt": "See About Benchmarks in app.py and the exact named column in the published CSV."
+          "excerpt": "html.P([html.Strong(\"Writing ✍️\")], style={'marginTop': '20px', 'fontSize': '1.2em'}), html.P(\"A score of a model's writing ability, factoring in intelligence, writing style, amount of repetition, and adherence to requested output length."
         },
         {
           "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard",
           "file": "ops/rebuild-2026-09/evidence/phase-04/sources/a-aac3f162463d.txt",
           "sha256": "48aeeb8e5b30d1557590f3a298e5b7d541cdc12dec533d121425efb89c52c0c4",
           "fetched_at": "2026-09-10T21:45:53.851000+00:00",
-          "excerpt": "Results published in this source; use the exact locator and preserve the source field identity."
+          "excerpt": "UGI Leaderboard - a Hugging Face Space by DontPlanToEnd"
         },
         {
           "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
           "file": "ops/rebuild-2026-09/evidence/phase-04/sources/supp-6c45283c6461.txt",
           "sha256": "4154635c4557af4b4eebbeaab6970bdf8296aef44e46f6193fdb4976cd8fe7f2",
           "fetched_at": "2026-09-10T22:04:13Z",
-          "excerpt": "Exact score column Writing ✍️"
+          "excerpt": "\"Writing ✍️\" (literal field in the captured leaderboard CSV; gzip source retained)"
         }
       ]
     },
@@ -13295,21 +13295,21 @@
           "file": "ops/rebuild-2026-09/evidence/phase-04/sources/supp-e399fbd15e57.txt",
           "sha256": "dc6f43c6140c93d0479085681ed94f054c829db8f03f48808b362eee0d3678bd",
           "fetched_at": "2026-09-10T22:01:49Z",
-          "excerpt": "See About Benchmarks in app.py and the exact named column in the published CSV."
+          "excerpt": "html.Strong(\"UGI 🏆\"), \": Uncensored General Intelligence\"], style={'marginTop': '20px', 'fontSize': '1.2em'}), html.P(\"Measures a model's knowledge of sensitive topics and its ability to follow instructions when faced with controversial prompts.\")"
         },
         {
           "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard",
           "file": "ops/rebuild-2026-09/evidence/phase-04/sources/a-aac3f162463d.txt",
           "sha256": "48aeeb8e5b30d1557590f3a298e5b7d541cdc12dec533d121425efb89c52c0c4",
           "fetched_at": "2026-09-10T21:45:53.851000+00:00",
-          "excerpt": "Results published in this source; use the exact locator and preserve the source field identity."
+          "excerpt": "UGI Leaderboard - a Hugging Face Space by DontPlanToEnd"
         },
         {
           "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
           "file": "ops/rebuild-2026-09/evidence/phase-04/sources/supp-6c45283c6461.txt",
           "sha256": "4154635c4557af4b4eebbeaab6970bdf8296aef44e46f6193fdb4976cd8fe7f2",
           "fetched_at": "2026-09-10T22:04:13Z",
-          "excerpt": "Exact score column UGI 🏆"
+          "excerpt": "\"UGI 🏆\" (literal field in the captured leaderboard CSV; gzip source retained)"
         }
       ]
     },

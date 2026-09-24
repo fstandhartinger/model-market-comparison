@@ -1,0 +1,62 @@
+[
+  {
+    "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+    "retrieved_at": "2026-09-24T19:33:04.049088+00:00",
+    "method": "GET",
+    "status": 200,
+    "file": "data/raw/benchmarks/daily-evidence/2026-09-24-d193/edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc.gz",
+    "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+    "bytes": 78154,
+    "note": "D193: the FrontierCode leaderboard payload the same run fetched. 78,155 bytes of extracted text, over the review bound, and pure data — no methodology prose. Retained so the test can show v1_1 carries subsets.main = 100 while no passage exists to pin."
+  },
+  {
+    "url": "https://cognition.com/frontiercode",
+    "retrieved_at": "2026-09-24T19:33:01.268471+00:00",
+    "method": "GET",
+    "status": 200,
+    "file": "data/raw/benchmarks/daily-evidence/2026-09-24-d193/524108d82bac8cf1f536b4044afcbebb1f3605dd540aa51c55bd2485795004fb.gz",
+    "sha256": "524108d82bac8cf1f536b4044afcbebb1f3605dd540aa51c55bd2485795004fb",
+    "bytes": 146903,
+    "note": "D193: the FrontierCode leaderboard page from the same run. Extracted text is 5,402 bytes and carries the published methodology and the 1.1 revision statement, which both frontiercode* entries now pin verbatim."
+  },
+  {
+    "url": "https://cognition.com/robots.txt",
+    "retrieved_at": "2026-09-24T19:33:06.590426+00:00",
+    "method": "GET",
+    "status": 200,
+    "file": "data/raw/benchmarks/daily-evidence/2026-09-24-d193/43b41314c0a79121c3a73cec88c56035754f8de4a5cc717a8c9ace3351c744e4.gz",
+    "sha256": "43b41314c0a79121c3a73cec88c56035754f8de4a5cc717a8c9ace3351c744e4",
+    "bytes": 89,
+    "note": "D193: cognition.com/robots.txt from the same run, the access check the FrontierCode entries record. Extracted text is 89 bytes; its excerpt now quotes the two directives themselves."
+  },
+  {
+    "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard",
+    "retrieved_at": "2026-09-24T19:37:06.147050+00:00",
+    "method": "GET",
+    "status": 200,
+    "file": "data/raw/benchmarks/daily-evidence/2026-09-24-d193/72db31331ac981ae0edb453f6284e7d0ee23de6dfeb894430681a7dff952c404.gz",
+    "sha256": "72db31331ac981ae0edb453f6284e7d0ee23de6dfeb894430681a7dff952c404",
+    "bytes": 34566,
+    "note": "D193: the Space landing page from the same run, for completeness. Extracted text is 570 bytes of Hugging Face navigation chrome; it is under the review bound and is passed in full."
+  },
+  {
+    "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/app.py",
+    "retrieved_at": "2026-09-24T19:37:06.313131+00:00",
+    "method": "GET",
+    "status": 200,
+    "file": "data/raw/benchmarks/daily-evidence/2026-09-24-d193/dc6f43c6140c93d0479085681ed94f054c829db8f03f48808b362eee0d3678bd.gz",
+    "sha256": "dc6f43c6140c93d0479085681ed94f054c829db8f03f48808b362eee0d3678bd",
+    "bytes": 77254,
+    "note": "D193: the UGI Space's own app.py as the 2026-09-24T19:20Z daily run captured it. Its 'About the Benchmarks' section is the board's published methodology; extracted text is 58,689 bytes, 1,311 short of the 60,000-byte review bound, which is why each ugi* entry now pins a verbatim passage from it."
+  },
+  {
+    "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+    "retrieved_at": "2026-09-24T19:37:09.058797+00:00",
+    "method": "GET",
+    "status": 200,
+    "file": "data/raw/benchmarks/daily-evidence/2026-09-24-d193/b7242fac6164ef520510b5c98f70238279162f3607b305c0f766ccd9e8d99894.gz",
+    "sha256": "b7242fac6164ef520510b5c98f70238279162f3607b305c0f766ccd9e8d99894",
+    "bytes": 665173,
+    "note": "D193: the published results CSV from the same run. 665,173 bytes of extracted text — far over the review bound — and it carries no methodology prose at all, only the header row and the values. Retained so the test can show the four ugi* score columns are named in its header while no methodology passage exists to pin."
+  }
+]
