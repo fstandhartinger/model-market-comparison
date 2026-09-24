@@ -1,0 +1,24 @@
+{
+  "artifact_id": "gpt6-luna-arc-v1-v2",
+  "artifact_sha256": "2713fc16b0ab131be12f1c0c9e8c1d89fb19df480646de0f74798e02dffdab73",
+  "round": 2,
+  "verdict": "pass",
+  "coverage_checked": [
+    "ARC Prize evidence: title 'GPT-6 Luna', ARC Prize Verified badge (alt='ARC Prize Verified'), date 'Sep 22, 2026' — present",
+    "ARC-AGI-1 values: Max 86.7, XHigh 73.0, High 70.3, Medium 61.0, Low 37.7, None 8.8 — all match table column 1",
+    "ARC-AGI-2 values: Max 59.3, XHigh 41.9, High 31.4, Medium 18.1, Low 4.6, None 0.0 — all match table column 2",
+    "Units percent, basis measured, published_at 2026-09-22, capture URL/sha256/retrieved_at consistent across all 12 rows",
+    "Coverage exactly ARC-AGI-1 × 6 variants and ARC-AGI-2 × 6 variants, each once; no ARC-AGI-3 rows or extra claims in frozen rows (source page v3 columns correctly not ingested)",
+    "Model IDs against OpenAI catalog excerpt: gpt-6-luna with none/low/medium/high/xhigh/max — all 12 proposed_model_id mappings supported; source None → effort none → canonical non-reasoning",
+    "Protocol wording describes only badge presence, best Semi-Private scores, and per-variant table; no unsupported 'Verified scores' label remains",
+    "identity_map_candidates: 12 entries, consistent with rows and catalog"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Capture/excerpt integrity was verified by comparing values and labels against the embedded excerpt text only; I cannot recompute the file hashes (sha256 for artifact, capture, and excerpt) without execution tools, so hash self-consistency is asserted, not independently confirmed.",
+    "Protocol says scores are 'Semi-Private' — supported by page prose ('best Semi-Private scores'); per-variant table basis (semi-private vs public set) is not explicitly labeled per cell, but this is a faithful restatement of page prose and non-material."
+  ],
+  "missing_evidence": []
+}

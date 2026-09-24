@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "reviewed_at": "2026-09-16",
+  "reviewed_at": "2026-09-24",
   "policy": "Exact joins for public boards whose labels are not catalog names. A label must state the exact model and a setting that exists as a catalog configuration; without a stated setting only a family whose catalog holds exactly one configuration, the default, joins; a configuration named more than once on one board joins neither row. Boards that label models by slug join only when the slug, after one documented normalisation (lower-case, `_`→`-`, a trailing `-<digit>-<digit>` read as a version), is exactly a catalog family key. Self-reported rows keep the critic approval of their unjoined observation; their join takes effect only with its own independent review receipt (`review`). Rules: lib/coding-identity.mjs (product-name boards) and lib/board-identity.mjs (slug boards).",
   "entries": [
     {
@@ -13792,6 +13792,222 @@
       "model_id": "o3-pro::default",
       "rule": "label names o3-pro without a setting; the catalog has exactly one configuration, the default (o3-pro::default)",
       "reviewed_at": "2026-09-21"
+    },
+    {
+      "benchmark_id": "arc-agi::1",
+      "source_id": "GPT-6 Luna|High",
+      "model_id": "gpt-6-luna::high",
+      "rule": "ARC Prize GPT-6 Luna results page gives the exact source variant High; OpenAI API catalog lists model ID gpt-6-luna with reasoning effort high; canonical catalog configuration is gpt-6-luna::high.",
+      "reviewed_at": "2026-09-24",
+      "basis": "measured",
+      "review": {
+        "packet_file": "ops/rebuild-2026-09/evidence/phase-09/gpt6-luna-arc/critic-packet-r3.json",
+        "packet_sha256": "341691fde8e2ab5f145ea61647641224595558988eddb63a2029b805a80b8e9e",
+        "verdict_file": "ops/rebuild-2026-09/evidence/phase-09/gpt6-luna-arc/critic-review-r3.json",
+        "verdict_sha256": "064fd0d0a3ae50c36dcf5e44c6afe9f4886c8712e9d2effd9357609a21b5f0e7",
+        "critic_model": "z-ai/glm-5.3-flash",
+        "producer_models": [
+          "deepseek/deepseek-v4-flash-0731"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "arc-agi::1",
+      "source_id": "GPT-6 Luna|Low",
+      "model_id": "gpt-6-luna::low",
+      "rule": "ARC Prize GPT-6 Luna results page gives the exact source variant Low; OpenAI API catalog lists model ID gpt-6-luna with reasoning effort low; canonical catalog configuration is gpt-6-luna::low.",
+      "reviewed_at": "2026-09-24",
+      "basis": "measured",
+      "review": {
+        "packet_file": "ops/rebuild-2026-09/evidence/phase-09/gpt6-luna-arc/critic-packet-r3.json",
+        "packet_sha256": "341691fde8e2ab5f145ea61647641224595558988eddb63a2029b805a80b8e9e",
+        "verdict_file": "ops/rebuild-2026-09/evidence/phase-09/gpt6-luna-arc/critic-review-r3.json",
+        "verdict_sha256": "064fd0d0a3ae50c36dcf5e44c6afe9f4886c8712e9d2effd9357609a21b5f0e7",
+        "critic_model": "z-ai/glm-5.3-flash",
+        "producer_models": [
+          "deepseek/deepseek-v4-flash-0731"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "arc-agi::1",
+      "source_id": "GPT-6 Luna|Max",
+      "model_id": "gpt-6-luna::max",
+      "rule": "ARC Prize GPT-6 Luna results page gives the exact source variant Max; OpenAI API catalog lists model ID gpt-6-luna with reasoning effort max; canonical catalog configuration is gpt-6-luna::max.",
+      "reviewed_at": "2026-09-24",
+      "basis": "measured",
+      "review": {
+        "packet_file": "ops/rebuild-2026-09/evidence/phase-09/gpt6-luna-arc/critic-packet-r3.json",
+        "packet_sha256": "341691fde8e2ab5f145ea61647641224595558988eddb63a2029b805a80b8e9e",
+        "verdict_file": "ops/rebuild-2026-09/evidence/phase-09/gpt6-luna-arc/critic-review-r3.json",
+        "verdict_sha256": "064fd0d0a3ae50c36dcf5e44c6afe9f4886c8712e9d2effd9357609a21b5f0e7",
+        "critic_model": "z-ai/glm-5.3-flash",
+        "producer_models": [
+          "deepseek/deepseek-v4-flash-0731"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "arc-agi::1",
+      "source_id": "GPT-6 Luna|Medium",
+      "model_id": "gpt-6-luna::medium",
+      "rule": "ARC Prize GPT-6 Luna results page gives the exact source variant Medium; OpenAI API catalog lists model ID gpt-6-luna with reasoning effort medium; canonical catalog configuration is gpt-6-luna::medium.",
+      "reviewed_at": "2026-09-24",
+      "basis": "measured",
+      "review": {
+        "packet_file": "ops/rebuild-2026-09/evidence/phase-09/gpt6-luna-arc/critic-packet-r3.json",
+        "packet_sha256": "341691fde8e2ab5f145ea61647641224595558988eddb63a2029b805a80b8e9e",
+        "verdict_file": "ops/rebuild-2026-09/evidence/phase-09/gpt6-luna-arc/critic-review-r3.json",
+        "verdict_sha256": "064fd0d0a3ae50c36dcf5e44c6afe9f4886c8712e9d2effd9357609a21b5f0e7",
+        "critic_model": "z-ai/glm-5.3-flash",
+        "producer_models": [
+          "deepseek/deepseek-v4-flash-0731"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "arc-agi::1",
+      "source_id": "GPT-6 Luna|None",
+      "model_id": "gpt-6-luna::non-reasoning",
+      "rule": "ARC Prize GPT-6 Luna results page gives the exact source variant None; OpenAI API catalog lists model ID gpt-6-luna with reasoning effort none; canonical catalog configuration is gpt-6-luna::non-reasoning.",
+      "reviewed_at": "2026-09-24",
+      "basis": "measured",
+      "review": {
+        "packet_file": "ops/rebuild-2026-09/evidence/phase-09/gpt6-luna-arc/critic-packet-r3.json",
+        "packet_sha256": "341691fde8e2ab5f145ea61647641224595558988eddb63a2029b805a80b8e9e",
+        "verdict_file": "ops/rebuild-2026-09/evidence/phase-09/gpt6-luna-arc/critic-review-r3.json",
+        "verdict_sha256": "064fd0d0a3ae50c36dcf5e44c6afe9f4886c8712e9d2effd9357609a21b5f0e7",
+        "critic_model": "z-ai/glm-5.3-flash",
+        "producer_models": [
+          "deepseek/deepseek-v4-flash-0731"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "arc-agi::1",
+      "source_id": "GPT-6 Luna|XHigh",
+      "model_id": "gpt-6-luna::xhigh",
+      "rule": "ARC Prize GPT-6 Luna results page gives the exact source variant XHigh; OpenAI API catalog lists model ID gpt-6-luna with reasoning effort xhigh; canonical catalog configuration is gpt-6-luna::xhigh.",
+      "reviewed_at": "2026-09-24",
+      "basis": "measured",
+      "review": {
+        "packet_file": "ops/rebuild-2026-09/evidence/phase-09/gpt6-luna-arc/critic-packet-r3.json",
+        "packet_sha256": "341691fde8e2ab5f145ea61647641224595558988eddb63a2029b805a80b8e9e",
+        "verdict_file": "ops/rebuild-2026-09/evidence/phase-09/gpt6-luna-arc/critic-review-r3.json",
+        "verdict_sha256": "064fd0d0a3ae50c36dcf5e44c6afe9f4886c8712e9d2effd9357609a21b5f0e7",
+        "critic_model": "z-ai/glm-5.3-flash",
+        "producer_models": [
+          "deepseek/deepseek-v4-flash-0731"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "arc-agi::2",
+      "source_id": "GPT-6 Luna|High",
+      "model_id": "gpt-6-luna::high",
+      "rule": "ARC Prize GPT-6 Luna results page gives the exact source variant High; OpenAI API catalog lists model ID gpt-6-luna with reasoning effort high; canonical catalog configuration is gpt-6-luna::high.",
+      "reviewed_at": "2026-09-24",
+      "basis": "measured",
+      "review": {
+        "packet_file": "ops/rebuild-2026-09/evidence/phase-09/gpt6-luna-arc/critic-packet-r3.json",
+        "packet_sha256": "341691fde8e2ab5f145ea61647641224595558988eddb63a2029b805a80b8e9e",
+        "verdict_file": "ops/rebuild-2026-09/evidence/phase-09/gpt6-luna-arc/critic-review-r3.json",
+        "verdict_sha256": "064fd0d0a3ae50c36dcf5e44c6afe9f4886c8712e9d2effd9357609a21b5f0e7",
+        "critic_model": "z-ai/glm-5.3-flash",
+        "producer_models": [
+          "deepseek/deepseek-v4-flash-0731"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "arc-agi::2",
+      "source_id": "GPT-6 Luna|Low",
+      "model_id": "gpt-6-luna::low",
+      "rule": "ARC Prize GPT-6 Luna results page gives the exact source variant Low; OpenAI API catalog lists model ID gpt-6-luna with reasoning effort low; canonical catalog configuration is gpt-6-luna::low.",
+      "reviewed_at": "2026-09-24",
+      "basis": "measured",
+      "review": {
+        "packet_file": "ops/rebuild-2026-09/evidence/phase-09/gpt6-luna-arc/critic-packet-r3.json",
+        "packet_sha256": "341691fde8e2ab5f145ea61647641224595558988eddb63a2029b805a80b8e9e",
+        "verdict_file": "ops/rebuild-2026-09/evidence/phase-09/gpt6-luna-arc/critic-review-r3.json",
+        "verdict_sha256": "064fd0d0a3ae50c36dcf5e44c6afe9f4886c8712e9d2effd9357609a21b5f0e7",
+        "critic_model": "z-ai/glm-5.3-flash",
+        "producer_models": [
+          "deepseek/deepseek-v4-flash-0731"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "arc-agi::2",
+      "source_id": "GPT-6 Luna|Max",
+      "model_id": "gpt-6-luna::max",
+      "rule": "ARC Prize GPT-6 Luna results page gives the exact source variant Max; OpenAI API catalog lists model ID gpt-6-luna with reasoning effort max; canonical catalog configuration is gpt-6-luna::max.",
+      "reviewed_at": "2026-09-24",
+      "basis": "measured",
+      "review": {
+        "packet_file": "ops/rebuild-2026-09/evidence/phase-09/gpt6-luna-arc/critic-packet-r3.json",
+        "packet_sha256": "341691fde8e2ab5f145ea61647641224595558988eddb63a2029b805a80b8e9e",
+        "verdict_file": "ops/rebuild-2026-09/evidence/phase-09/gpt6-luna-arc/critic-review-r3.json",
+        "verdict_sha256": "064fd0d0a3ae50c36dcf5e44c6afe9f4886c8712e9d2effd9357609a21b5f0e7",
+        "critic_model": "z-ai/glm-5.3-flash",
+        "producer_models": [
+          "deepseek/deepseek-v4-flash-0731"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "arc-agi::2",
+      "source_id": "GPT-6 Luna|Medium",
+      "model_id": "gpt-6-luna::medium",
+      "rule": "ARC Prize GPT-6 Luna results page gives the exact source variant Medium; OpenAI API catalog lists model ID gpt-6-luna with reasoning effort medium; canonical catalog configuration is gpt-6-luna::medium.",
+      "reviewed_at": "2026-09-24",
+      "basis": "measured",
+      "review": {
+        "packet_file": "ops/rebuild-2026-09/evidence/phase-09/gpt6-luna-arc/critic-packet-r3.json",
+        "packet_sha256": "341691fde8e2ab5f145ea61647641224595558988eddb63a2029b805a80b8e9e",
+        "verdict_file": "ops/rebuild-2026-09/evidence/phase-09/gpt6-luna-arc/critic-review-r3.json",
+        "verdict_sha256": "064fd0d0a3ae50c36dcf5e44c6afe9f4886c8712e9d2effd9357609a21b5f0e7",
+        "critic_model": "z-ai/glm-5.3-flash",
+        "producer_models": [
+          "deepseek/deepseek-v4-flash-0731"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "arc-agi::2",
+      "source_id": "GPT-6 Luna|None",
+      "model_id": "gpt-6-luna::non-reasoning",
+      "rule": "ARC Prize GPT-6 Luna results page gives the exact source variant None; OpenAI API catalog lists model ID gpt-6-luna with reasoning effort none; canonical catalog configuration is gpt-6-luna::non-reasoning.",
+      "reviewed_at": "2026-09-24",
+      "basis": "measured",
+      "review": {
+        "packet_file": "ops/rebuild-2026-09/evidence/phase-09/gpt6-luna-arc/critic-packet-r3.json",
+        "packet_sha256": "341691fde8e2ab5f145ea61647641224595558988eddb63a2029b805a80b8e9e",
+        "verdict_file": "ops/rebuild-2026-09/evidence/phase-09/gpt6-luna-arc/critic-review-r3.json",
+        "verdict_sha256": "064fd0d0a3ae50c36dcf5e44c6afe9f4886c8712e9d2effd9357609a21b5f0e7",
+        "critic_model": "z-ai/glm-5.3-flash",
+        "producer_models": [
+          "deepseek/deepseek-v4-flash-0731"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "arc-agi::2",
+      "source_id": "GPT-6 Luna|XHigh",
+      "model_id": "gpt-6-luna::xhigh",
+      "rule": "ARC Prize GPT-6 Luna results page gives the exact source variant XHigh; OpenAI API catalog lists model ID gpt-6-luna with reasoning effort xhigh; canonical catalog configuration is gpt-6-luna::xhigh.",
+      "reviewed_at": "2026-09-24",
+      "basis": "measured",
+      "review": {
+        "packet_file": "ops/rebuild-2026-09/evidence/phase-09/gpt6-luna-arc/critic-packet-r3.json",
+        "packet_sha256": "341691fde8e2ab5f145ea61647641224595558988eddb63a2029b805a80b8e9e",
+        "verdict_file": "ops/rebuild-2026-09/evidence/phase-09/gpt6-luna-arc/critic-review-r3.json",
+        "verdict_sha256": "064fd0d0a3ae50c36dcf5e44c6afe9f4886c8712e9d2effd9357609a21b5f0e7",
+        "critic_model": "z-ai/glm-5.3-flash",
+        "producer_models": [
+          "deepseek/deepseek-v4-flash-0731"
+        ]
+      }
     }
   ]
 }

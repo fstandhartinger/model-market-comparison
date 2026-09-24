@@ -1,0 +1,22 @@
+{
+  "artifact_id": "gpt6-luna-arc-v1-v2",
+  "artifact_sha256": "c15cd892ecd8a1c03b8df9cd6e8e4be4b2b24e63c781e193de713554a2797a67",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "ARC-AGI-1 x {max 86.7, xhigh 73.0, high 70.3, medium 61.0, low 37.7, none 8.8}: all 6 values match the ARC Prize table excerpt exactly; each appears exactly once",
+    "ARC-AGI-2 x {max 59.3, xhigh 41.9, high 31.4, medium 18.1, low 4.6, none 0.0}: all 6 values match the ARC Prize table excerpt exactly; each appears exactly once",
+    "No ARC-AGI-3 rows in frozen_artifact.rows or identity_map_candidates; ARC-AGI-3 columns in the source excerpt are correctly excluded",
+    "Publication date: page shows 'Sep 22, 2026' and rows carry published_at 2026-09-22; retrieved_at 2026-09-24T20:22:51+00:00 matches source record",
+    "Official/verified status: page shows 'ARC Prize Verified' badge, OpenAI attribution, title 'GPT-6 Luna'",
+    "Identity mappings: API catalog excerpt lists gpt-6-luna with efforts none, low, medium, high, xhigh, max; none maps to gpt-6-luna::non-reasoning per rule; all 12 identity_map_candidates consistent and duplicate-free",
+    "Units percent, basis measured, source variant labels (Max/XHigh/High/Medium/Low/None) match the excerpt's Variant column"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Protocol text asserts the page 'labels the table Verified scores'; the excerpt shows an 'ARC Prize Verified' badge but no visible text explicitly labeling the table itself as Verified scores. Cosmetic provenance-wording risk only; underlying values and dates are fully supported. Non-material, no row change required."
+  ],
+  "missing_evidence": []
+}
