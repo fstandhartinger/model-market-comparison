@@ -19071,17 +19071,31 @@
     },
     {
       "id": "self-reported:claude-opus-55-healthbench-professional",
-      "observation_sha256": "a9f952f7c0ff6f67463e9d49531956f62df3151ac93ad16e4bbcb540f782ae9c",
+      "observation_sha256": "848766b43997d74fb7e7125cde6781f7d25750091e17ceca7f25520fee63228c",
       "critic_model": "z-ai/glm-5.3-flash",
       "producer_models": [
-        "anthropic/claude-opus-5"
+        "openai/gpt-6-luna"
       ],
-      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/review-r4.json",
-      "review_sha256": "b2736216794080454d54800eb06b9cced6c50a9ea7bd10fc24ab22016b9dad97",
-      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/artifact-r4.json",
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-24-cr139/gauntlet/healthbench-point-unit-review-r3.json",
+      "review_sha256": "ae1ff7b3ee9494d1bab2f40ab2188b510a039f9950a89718a460786aa174c0d0",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-24-cr139/gauntlet/healthbench-point-unit-artifact-r2.json",
       "review_row": "self-reported:claude-opus-55-healthbench-professional",
       "verdict": "accepted",
-      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/packet-r4.json; self-reported:claude-opus-55-healthbench-professional"
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-24-cr139/gauntlet/healthbench-point-unit-review-packet-r3.md; data/raw/benchmarks/daily-evidence/2026-09-24-cr139/gauntlet/healthbench-hash-adjudication.md; clean pass; exact observation hash verified",
+      "supersedes": {
+        "id": "self-reported:claude-opus-55-healthbench-professional",
+        "observation_sha256": "a9f952f7c0ff6f67463e9d49531956f62df3151ac93ad16e4bbcb540f782ae9c",
+        "critic_model": "z-ai/glm-5.3-flash",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ],
+        "review_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/review-r4.json",
+        "review_sha256": "b2736216794080454d54800eb06b9cced6c50a9ea7bd10fc24ab22016b9dad97",
+        "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/artifact-r4.json",
+        "review_row": "self-reported:claude-opus-55-healthbench-professional",
+        "verdict": "accepted",
+        "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/gauntlet/packet-r4.json; self-reported:claude-opus-55-healthbench-professional"
+      }
     },
     {
       "id": "self-reported:claude-opus-55-hle-no-tools",

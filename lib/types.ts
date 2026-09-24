@@ -113,6 +113,17 @@ export interface Offer {
   output_per_1m: number | null;
   cache_read_per_1m?: number | null;
   cache_write_per_1m?: number | null;
+  cache_read_source?: { url: string; date?: string; sha256?: string; locator?: string };
+  price_overrides?: {
+    min_prompt_tokens?: number;
+    utc_start?: number;
+    utc_end?: number;
+    utc_days?: string[];
+    input_per_1m?: number;
+    output_per_1m?: number;
+    cache_read_per_1m?: number;
+    cache_write_per_1m?: number;
+  }[];
   internal_reasoning_per_1m?: number | null;
   input_per_1m_eur?: number | null;
   output_per_1m_eur?: number | null;

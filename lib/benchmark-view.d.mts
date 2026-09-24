@@ -1,7 +1,7 @@
 import type { Dataset } from './types';
 import type { BenchmarkDivergence, BenchmarkMissing } from './benchmark-scores.mjs';
 export interface ViewModel { id: string; name: string; org: string; family: string; familyName?: string | null; variant?: string | null; released?: string | null; variantCount?: number; open: boolean; deprecated: boolean; historical?: boolean; outputTps?: number | null; ttftS?: number | null; contextTokens?: number | null }
-export interface ViewScore { id: string; modelId: string | null; subjectId: string; name: string; value: number; basis: string; derived: boolean; source: number; date: string; variant: string | null; harness?: string | null; confidenceInterval?: { level: number; lower: number; upper: number } | null; costPerRollout?: number | null; publishedStddev?: number | null; sampleSize?: number | null; lowSample: boolean; battles?: number | null; variantId?: string; variantLabel?: string; bestOf?: number; percentile?: number }
+export interface ViewScore { id: string; modelId: string | null; subjectId: string; name: string; value: number; basis: string; derived: boolean; source: number; date: string; variant: string | null; harness?: string | null; confidenceInterval?: { level: number; lower: number; upper: number } | null; costPerRollout?: number | null; costLowerBound?: boolean; costNote?: string | null; costIncompleteUsageRuns?: number | null; costUnmeasuredRequests?: number | null; costRuns?: number | null; publishedStddev?: number | null; sampleSize?: number | null; lowSample: boolean; battles?: number | null; variantId?: string; variantLabel?: string; bestOf?: number; percentile?: number }
 export interface ViewPublicationScope { published_tasks: number; runs_per_task: number; configurations: number; rollouts: number; note: string }
 export interface ViewEstimateSpread { min: number; q1: number; q3: number; max: number; iqr: number; iqr_relative: number }
 export interface ViewEstimateUncertainty { lower: number; upper: number; min: number; max: number; iqr: number; iqr_relative: number }
@@ -22,6 +22,10 @@ export const HARNESS_LABELS: Record<string, string>;
 export function cohortLabel(cohort: string | null | undefined): string | null | undefined;
 export function cohortSubLabel(cohort: string | null | undefined): string | null;
 export function effectiveBasis(o: { source_basis?: string; basis: string }): string;
+export function isRankableScore(row: Pick<ViewScore, 'basis'>): boolean;
+export function sortRankingScores(rows: ViewScore[], higherBetter: boolean | null): ViewScore[];
+export function rankingPosition(rows: ViewScore[], row: ViewScore, higherBetter: boolean | null): number | null;
+export function rankingTopValue(rows: ViewScore[], higherBetter: boolean | null): number | null;
 export function cohortOf(o: import('./benchmark-scores.mjs').BenchmarkObservation): string;
 export function latestScores(rows: ViewScore[], basis?: string): ViewScore[];
 export function distribution(axis: ViewAxis, models: ViewModel[]): ViewStats;

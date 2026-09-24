@@ -4,8 +4,10 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { versionSuffix } from '../lib/version-label.ts';
+import { importTsModule } from './helpers/transpile-ts.mjs';
 import { buildBenchmarkView, cohortSubLabel, INSPECTION_MARKER } from '../lib/benchmark-view.mjs';
+
+const { versionSuffix } = await importTsModule(new URL('../lib/version-label.ts', import.meta.url));
 
 const dataset = JSON.parse(await readFile(new URL('../data/dataset.json', import.meta.url), 'utf8'));
 const view = buildBenchmarkView(dataset);

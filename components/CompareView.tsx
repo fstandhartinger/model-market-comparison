@@ -37,13 +37,14 @@ export function CompareView({ data }: { data: ClientData }) {
       const hasOffer = scopedCatalogOffers(data.offersByModel[m.id], offerScope).length > 0;
       return offerScope.restricted ? hasOffer : hasOffer || hasScoreEvidence(m, s.score);
     });
+    if (s.score === "composite") r = r.filter((m) => hasScoreEvidence(m, "composite"));
     if (s.collapse) r = collapseModels(r, preferredId);
     if (s.openOnly) r = r.filter((m) => m.open_weights);
     if (s.labAllowed) r = r.filter((m) => s.labAllowed!(m.org));
     if (s.featured) r = r.filter((m) => m.featured);
     if (s.familySet) r = r.filter((m) => s.familySet!.has(m.family_key));
-    // Composite without evidence is the neutral fallback 50 and must not meet a
-    // positive minimum; other scores keep the existing null/value policy.
+    // Composite without exact evidence is not an eligible model-specific score.
+    // Other scores keep the existing null/value policy.
     if (s.advancedMinScore > 0) r = r.filter((m) => hasScoreEvidence(m, s.score) && m.scores[s.score] != null && (m.scores[s.score] as number) >= s.advancedMinScore);
     return r.sort((a, b) => (b.scores[s.score] ?? -Infinity) - (a.scores[s.score] ?? -Infinity));
   }, [data, candidates, offerScope, s.score, s.collapse, s.featured, s.familySet, s.openOnly, s.labAllowed, s.advancedMinScore, preferredId]);

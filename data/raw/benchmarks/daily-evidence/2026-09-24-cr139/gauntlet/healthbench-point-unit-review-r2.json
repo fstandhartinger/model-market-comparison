@@ -1,0 +1,23 @@
+{
+  "artifact_id": "self-reported:claude-opus-55-healthbench-professional",
+  "artifact_sha256": "03ad08174b0a6af86e88043d24c766783b654bfd727254a86841c83378ba9272",
+  "round": 2,
+  "verdict": "pass",
+  "coverage_checked": [
+    "Criterion 1: model/configuration — row subject Claude Opus 5.5, variant 'max effort (adaptive thinking)'; Table 8.1.A locator lists row 'HealthBench Professional' under the first column 'Claude Opus 5.5' of the stated four-column table; caption supports adaptive thinking at max effort as default setup. Supported.",
+    "Criterion 2: value — printed row 'HealthBench Professional 65.6 59.8 62.1 63.4' confirms 65.6 for Opus 5.5; basis self_reported; source published_at and retrieved_at both 2026-09-22; benchmark_id snapshot-2026-09-22 matches. Preserved.",
+    "Criterion 3: unit — HealthBench Professional paper Section 4.2: example scores clipped to [0,1], 'not percent accuracy', multiplied by 100 for readability; supports unit 'points' on a 0–100 scale. Note: System Card Section 8.15.2 writes '65.6%', which the paper's methodology shows is the scaled point score, not percent accuracy; row correctly uses points.",
+    "Criterion 4: protocol clauses — each clause traced: Table 8.1.A row value 65.6 (primary source A); Section 8.15.2 raw 77.1% and length-adjusted 65.6%; Figure 8.15.2.A grader Claude Opus 4.8, safety classifiers, refusal fallback to Claude Opus 5, five trials, no tools/custom system prompts; caption adaptive thinking at max effort, default sampling, five trials; self-report disclaimer present. All supported.",
+    "Round 1 finding HBP-R1-1: supplied local check outputs reconcile the three digests: gz container sha256 a0c0bbc…, decompressed body sha256 95a7b26… matching row.source.sha256, PDF document sha256 7311c9c6…; manifest classifies source as pdf_text_layer and the loader decompresses before hashing. Correction to content digest is supported.",
+    "Round 1 finding HBP-R1-2: protocol text now maps clause-by-clause to supplied System Card excerpts; value and unit findings addressed. Supported."
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": ["HBP-R1-1", "HBP-R1-2"],
+  "uncertainties": [
+    "The System Card Section 8.15.2 uses the '%' glyph for 65.6 while the HealthBench Professional paper states the score is not percent accuracy; this apparent label inconsistency is resolved in favor of 'points' by the methodology, but the System Card itself was not excerpted on this exact point.",
+    "Hash verification (HBP-R1-1) rests on the supplied sha256sum/gzip outputs and manifest description; as a read-only reviewer I could not independently recompute them.",
+    "I cannot verify the live URL contents; all checks rely on the supplied excerpts and retained-file metadata."
+  ],
+  "missing_evidence": []
+}

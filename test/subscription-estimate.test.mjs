@@ -11,10 +11,11 @@ test('CR-16.3: effective cost per task = (monthly fee + extra usage) ÷ complete
   }
 });
 
-test('CR-16.3: only flat-rate single-vendor plans with a collected price are estimable (no Copilot credits, no uncollected prices)', async () => {
+test('CR-16.3: only flat-rate single-vendor plans with a collected price are estimable (no Copilot credits or multi-vendor plans)', async () => {
   const catalog = JSON.parse(await readFile(new URL('../data/raw/subscriptions.json', import.meta.url), 'utf8'));
   const ids = estimablePlans(subscriptionView(catalog, { isCompany: false }).plans).map((p) => p.id);
   assert.ok(ids.includes('anthropic-claude-max') && ids.includes('google-ai-pro'));
   assert.ok(!ids.some((id) => id.startsWith('github-') || id.startsWith('cursor-')), 'credit-metered and multi-vendor tools are not per-task estimable');
-  assert.ok(!ids.includes('openai-chatgpt-plus-pro'), 'an uncollected price is never estimated');
+  assert.ok(ids.includes('openai-chatgpt-plus') && ids.includes('openai-chatgpt-pro-100'));
+  assert.ok(ids.includes('xai-supergrok'), 'the collected flat-rate SuperGrok plan qualifies for a user-assumption estimate');
 });

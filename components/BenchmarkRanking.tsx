@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
-import { latestScores, cohortLabel, cohortSubLabel, type BenchmarkView, type ViewAxis } from '../lib/benchmark-view.mjs';
+import { latestScores, cohortLabel, cohortSubLabel, sortRankingScores, rankingPosition, rankingTopValue, type BenchmarkView, type ViewAxis } from '../lib/benchmark-view.mjs';
 import { SourceScore } from './BenchmarkEvidence';
 import { humanVersion, versionHeading } from '../lib/version-label';
 import { counted } from '../lib/format';
@@ -15,7 +15,7 @@ const NO_SCORES: ViewAxis['scores'] = [];
 function ResultCell({ view, axis, row, topValue, compareHref }: { view: BenchmarkView; axis: ViewAxis; row: ViewAxis['scores'][number]; topValue: number | null; compareHref?: string }) {
   // A higher-is-better board whose best shown value is 0 or below has nothing to scale against: no bar, never a full one
   // (Blueprint-Bench 2 prints scores at or below its random baseline as 0).
-  const barWidth = axis.unit === 'Elo' || topValue == null ? null : axis.higherBetter === false ? (row.value > 0 ? Math.min(100, (topValue / row.value) * 100) : 100) : topValue > 0 ? Math.min(100, (row.value / topValue) * 100) : null;
+  const barWidth = row.basis === 'preliminary' || axis.unit === 'Elo' || topValue == null ? null : axis.higherBetter === false ? (row.value > 0 ? Math.min(100, (topValue / row.value) * 100) : 100) : topValue > 0 ? Math.min(100, (row.value / topValue) * 100) : null;
   return <>
     <p className="font-semibold tabular">{row.value.toLocaleString('en-US', { maximumSignificantDigits: 4 })} <span className="bh-muted text-xs font-normal">{axis.unit}</span>{row.date ? <span className="bh-muted ml-2 hidden text-xs font-normal sm:inline">{row.date.slice(0, 10)}</span> : null}</p>{barWidth != null ? <span aria-hidden="true" className="mt-1 block h-1 rounded bg-accent" style={{ width: `${Math.max(4, barWidth)}%` }} /> : null}
     <details className="mt-0.5 text-xs"><summary className="!min-h-0 !py-0.5 text-accent">Source &amp; evidence</summary><div className="mt-2 min-w-0"><SourceScore view={view} axis={axis} row={row} />{compareHref && <Link className="mt-2 inline-block text-accent underline" href={compareHref}>Compare →</Link>}</div></details>
@@ -58,12 +58,17 @@ export function BenchmarkRanking({ initialView, axisList }: { initialView: Bench
   const hasSelfReported = (rowsList: ViewAxis['scores']) => rowsList.some((r) => String(r.basis).includes('self'));
   const allRows = latestScores(loadedScores, basis);
   const models = new Map(view.models.map((m) => [m.id, m]));
-  const rows = allRows.filter((r) => (unmatched || r.modelId) && (!openOnly || (r.modelId && models.get(r.modelId)?.open)) && `${r.modelId ? models.get(r.modelId)?.name : r.name} ${r.modelId ? models.get(r.modelId)?.org : ''}`.toLowerCase().includes(q.toLowerCase())).sort((a, b) => (axis.higherBetter === false ? a.value - b.value : b.value - a.value) || a.name.localeCompare(b.name));
+  const rows = sortRankingScores(
+    allRows.filter((r) => (unmatched || r.modelId)
+      && (!openOnly || (r.modelId && models.get(r.modelId)?.open))
+      && `${r.modelId ? models.get(r.modelId)?.name : r.name} ${r.modelId ? models.get(r.modelId)?.org : ''}`.toLowerCase().includes(q.toLowerCase())),
+    axis.higherBetter,
+  );
   const matched = new Set(allRows.map((r) => r.modelId).filter(Boolean)).size;
   const unmatchedCount = allRows.filter((r) => !r.modelId).length;
   // F-156 (pass 29): a board that opens on a few matched rows says how many results it publishes; the checkbox says how many it hides.
   const matchedRows = allRows.length - unmatchedCount;
-  const topValue = rows.length ? (axis.higherBetter === false ? Math.min(...rows.map((r) => r.value)) : Math.max(...rows.map((r) => r.value))) : null;
+  const topValue = rankingTopValue(rows, axis.higherBetter);
   const direction = axis.higherBetter == null ? 'direction unknown; numeric order only' : axis.higherBetter ? 'higher is better' : 'lower is better';
   const historicalAxis = view.axes[0]?.id === axisId ? view.axes[0] : null;
   const estFilter = (e: NonNullable<ViewAxis['estimates']>[number]) => {
@@ -93,8 +98,8 @@ export function BenchmarkRanking({ initialView, axisList }: { initialView: Bench
       {error && <button className="bh-button mt-3" onClick={() => setRetry((n) => n + 1)}>Retry loading</button>}
       {!busy && !error && (basisWidened || unmatchedWidened) && rows.length > 0 && <p role="status" className="bh-muted mt-3 text-sm">{basisWidened && unmatchedWidened ? (hasSelfReported(rows) ? 'Showing self-reported results, listed under the names the source publishes — none is matched to a catalog model yet.' : 'Listed under the names the source publishes — none of these independently measured results is matched to a catalog model yet.') : basisWidened ? 'Showing self-reported results too — no independent measurement exists for this board yet.' : `Listed under the names the source publishes — none of these ${counted(rows.length, 'result')} is matched to a catalog model yet.`}</p>}
       {busy ? <div className="bh-empty min-h-80" aria-busy="true">Loading ranked results…</div> : rows.length ? <div className="bh-table-wrap overflow-x-auto" tabIndex={0} role="region" aria-label="Benchmark ranking table"><table className="bh-table w-full text-sm [&>tbody>tr>td]:!py-2 [&>tbody>tr>th]:!py-2 [&>thead>tr>th]:!py-2"><caption className="sr-only">{axis.name}, {humanVersion(axis.version).label}, {cohortLabel(axis.cohort)}. Rank is within the filtered results; ties share a rank.</caption><thead><tr><th scope="col">Rank</th><th scope="col">Model / configuration</th><th scope="col">Result</th></tr></thead><tbody>{rows.slice(0, limit).map((r, i) => {
-        const m = r.modelId ? models.get(r.modelId) : null, rank = rows.findIndex((v) => v.value === r.value) + 1;
-        return <tr key={r.id}><td className="align-top tabular bh-muted">{axis.higherBetter == null ? '—' : rank}</td><th scope="row" className={`max-w-md text-left align-top ${i === 0 ? 'font-semibold' : 'font-medium'}`}>{m ? <Link href={`/models/${encodeURIComponent(m.id)}#benchmark-sheet`} className="hover:underline">{m.name}</Link> : r.name}<p className="bh-muted mt-1 text-xs font-normal">{m ? `${m.org}${m.open ? ' · open weights' : ''}` : matched === 0 ? 'As named by the source' : 'As named by the source · not matched to a catalog model'}{r.harness ? ` · harness ${cohortLabel(r.harness)}` : ''}{r.variant ? ` · ${r.variant}` : ''}</p></th><td className="align-top"><ResultCell view={view} axis={axis} row={r} topValue={topValue} compareHref={m ? `/compare?model=${encodeURIComponent(m.id)}` : undefined} /></td></tr>;
+        const m = r.modelId ? models.get(r.modelId) : null, rank = rankingPosition(rows, r, axis.higherBetter);
+        return <tr key={r.id}><td className="align-top tabular bh-muted">{rank ?? '—'}</td><th scope="row" className={`max-w-md text-left align-top ${i === 0 ? 'font-semibold' : 'font-medium'}`}>{m ? <Link href={`/models/${encodeURIComponent(m.id)}#benchmark-sheet`} className="hover:underline">{m.name}</Link> : r.name}<p className="bh-muted mt-1 text-xs font-normal">{m ? `${m.org}${m.open ? ' · open weights' : ''}` : matched === 0 ? 'As named by the source' : 'As named by the source · not matched to a catalog model'}{r.harness ? ` · harness ${cohortLabel(r.harness)}` : ''}{r.variant ? ` · ${r.variant}` : ''}{r.basis === 'preliminary' ? ' · preliminary · not ranked' : ''}</p></th><td className="align-top"><ResultCell view={view} axis={axis} row={r} topValue={topValue} compareHref={m ? `/compare?model=${encodeURIComponent(m.id)}` : undefined} /></td></tr>;
       })}</tbody></table></div> : <div className="bh-empty min-h-56"><h3 className="font-semibold">No results in this view</h3><p className="mt-2">{axis.collection?.status !== 'collected' ? axis.collection?.reason : q || openOnly ? 'No result matches your search or the open-weights filter.' : 'Nothing is published for this view yet. Missing evidence is never a zero.'}</p><p className="mt-2 text-xs">Collection status: {axis.collection?.status || 'unknown'}</p></div>}
       {rows.length > limit && <button className="bh-button mt-4" onClick={() => setLimit((n) => n + PAGE)}>Show more ({rows.length - limit} remaining)</button>}
       {!busy && (estimatedRows.length > 0 || incomparable.length > 0 || recompute.length > 0) && <section className="mt-8 border-t border-line pt-5" aria-label="Historic configurations">

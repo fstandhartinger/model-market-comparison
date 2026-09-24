@@ -1,0 +1,24 @@
+{
+  "id": "self-reported:claude-opus-55-healthbench-professional",
+  "benchmark_id": "anthropic-healthbench-professional::snapshot-2026-09-22",
+  "subject": {
+    "source_id": "https://www.anthropic.com/claude-opus-5-5-system-card#Claude-Opus-5.5",
+    "name": "Claude Opus 5.5",
+    "model_id": "claude-opus-5.5::max",
+    "variant": "max effort (adaptive thinking)",
+    "harness": null
+  },
+  "value": 65.6,
+  "unit": "points",
+  "basis": "self_reported",
+  "source": {
+    "url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+    "retrieved_at": "2026-09-22T16:55:31.262433+00:00",
+    "published_at": "2026-09-22",
+    "sha256": "95a7b26f5d4497072d973935ccb674978149f16db396d425b4b544581fcbc728",
+    "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/95a7b26f5d4497072d97.gz",
+    "locator": "System card Table 8.1.A (page 174), row \"HealthBench Professional\", under \"Claude Opus 5.5\" (first column of: Claude Opus 5.5 | Claude Opus 5 | Claude Fable 5.1 | GPT-6 Astra); printed row: HealthBench Professional 65.6 59.8 62.1 63.4"
+  },
+  "protocol": "Vendor-reported by Anthropic for Claude Opus 5.5 in the Claude Opus 5.5 System Card (PDF, text layer), printed as \"HealthBench Professional\". Standard configuration per Anthropic unless noted otherwise (system card Table 8.1.A caption): adaptive thinking at max effort, default sampling, averaged over five trials; production safeguards enabled (when they intervened, cyber tasks fell back to Claude Opus 4.8 and biology/frontier-LLM tasks to Claude Opus 5). System card Table 8.1.A. Section 8.15.2 shows this is the length-adjusted score (raw score 77.1%). No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+  "comparison_key": null
+}

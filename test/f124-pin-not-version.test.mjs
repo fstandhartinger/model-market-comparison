@@ -6,7 +6,9 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { isPin } from '../lib/version-pin.mjs';
 import { versionLine } from '../lib/benchmark-matrix.mjs';
-import { humanVersion } from '../lib/version-label.ts';
+import { importTsModule } from './helpers/transpile-ts.mjs';
+
+const { humanVersion, versionHeading } = await importTsModule(new URL('../lib/version-label.ts', import.meta.url));
 
 test('a hash is a pin; a numeric, semantic, dated or snapshot version is not', () => {
   assert.equal(isPin('74221fb'), true, 'the AA Terminal-Bench Hard identity');
@@ -61,7 +63,6 @@ test('the result page drops the org line when it only repeats the model name', (
 
 // 2026-09-22 (iteration 169): only a release `v` before a digit is dropped in "Version …" — MCPMark's `verified` read "Version erified".
 test('the version heading keeps a word that starts with v', async () => {
-  const { versionHeading } = await import('../lib/version-label.ts');
   assert.equal(versionHeading('verified'), 'Version verified');
   assert.equal(versionHeading('v2'), 'Version 2');
   assert.equal(versionHeading('4.0'), 'Version 4.0');

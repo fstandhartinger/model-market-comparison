@@ -1,10 +1,8 @@
 # Claude API / Claude Code Enterprise — collection method
 
-> **Current audit: 2026-09-08.** See [September refresh audit](../research/refresh-2026-09-08.md)
-> and the adjacent JSON's `method`/`collected_at` for current values and exclusions.
-> Earlier dated collection notes below are historical, not current prices.
+> **Current audit: 2026-09-24.** The adjacent JSON records the current model prices, exclusions, modifier checks, Enterprise terms, and response hashes. The dated collection notes below are historical unless marked as the current snapshot.
 
-Collected: 2026-07-22 (previous snapshot: 2026-07-12; re-verified against all primary sources, no price or lifecycle changes)
+Current snapshot refreshed: 2026-09-24 (previous complete check: 2026-09-08).
 
 Output: `data/raw/claude-code.json`
 
@@ -15,26 +13,19 @@ This snapshot covers two related Anthropic offers:
 1. first-party Claude API list prices in USD per 1M tokens; and
 2. the current Claude Code Enterprise seat plus its usage-billing terms.
 
-`models[]` includes every non-retired first-party API model with a published
-price on the collection date. That means active generally available models,
-Claude Mythos 5 in limited availability, and Claude Opus 4.1, which is deprecated
-but remains callable until its scheduled August 5, 2026 retirement. Models that
-Anthropic marks retired are excluded even when the pricing page still displays
-their historical/cloud-platform rates.
+`models[]` includes first-party API models that have a published price and are
+not retired on the collection date, including restricted-availability models.
+Retired rows are excluded even when a pricing page still shows historical or
+cloud-platform rates. The current snapshot contains 14 callable rows and excludes
+four retired models, listed above.
 
 ## Snapshot result
 
-The file contains **11 callable models**:
-
-- 10 active models: Claude Fable 5, Claude Mythos 5, Opus 4.8, Opus 4.7,
-  Opus 4.6, Opus 4.5, Sonnet 5, Sonnet 4.6, Sonnet 4.5, and Haiku 4.5.
-- 1 deprecated but not yet retired model: Claude Opus 4.1.
-
-Newly captured relative to the prior incomplete snapshot are Claude Mythos 5,
-Claude Opus 4.5, Claude Opus 4.1, Claude Sonnet 4.5, and Claude Haiku 4.5.
-Mythos Preview is not included because it retired in favor of Mythos 5; the
-deprecations page (checked 2026-07-22) states its retirement date as
-July 21, 2026.
+The current snapshot contains **14 callable models**: Fable 5.1, Opus 5.5,
+Sonnet 5, Mythos 5.1, Fable 5, Mythos 5, Opus 5, Opus 4.8, Opus 4.7, Opus 4.6,
+Opus 4.5, Sonnet 4.6, Sonnet 4.5, and Haiku 4.5. Four retired models are
+excluded: Opus 4.1, Opus 4, Sonnet 4, and Haiku 3.5. The current lifecycle
+source and exact exclusion labels are in the adjacent JSON and its response hashes.
 
 For older dated model IDs, the pinned ID is stored in `model_id` and the
 convenience alias separately in `model_alias`. Starting with the 4.6 generation,
@@ -53,8 +44,9 @@ promotion is active:
 - `batch_input_per_1m_usd` and `batch_output_per_1m_usd`
 
 Anthropic's general modifiers are 1.25× input for a five-minute cache write, 2×
-for a one-hour cache write, 0.1× for a cache read, and 50% off input/output for
-the Batch API. Output tokens, including thinking tokens, use the single output
+for a one-hour cache write, 0.1× by default for a cache read, and 50% off
+input/output for the Batch API. The current pricing page also lists model-specific
+cache-read exceptions; the catalog parser checks and records them. Output tokens, including thinking tokens, use the single output
 rate for the selected model.
 
 Claude Opus 4.6, Claude Sonnet 4.6, and later models incur a 1.1× multiplier
@@ -64,28 +56,18 @@ other modifiers.
 
 ## Active promotion and fast-mode lifecycle
 
-Claude Sonnet 5 has introductory pricing through **August 31, 2026**:
-
-| Category | Promotional | Standard from 2026-09-01 |
-|---|---:|---:|
-| Input | $2 / MTok | $3 / MTok |
-| 5m cache write | $2.50 / MTok | $3.75 / MTok |
-| 1h cache write | $4 / MTok | $6 / MTok |
-| Cache read | $0.20 / MTok | $0.30 / MTok |
-| Output | $10 / MTok | $15 / MTok |
-| Batch input | $1 / MTok | $1.50 / MTok |
-| Batch output | $5 / MTok | $7.50 / MTok |
-
-The active promotional values are stored in the top-level fields so the app
-shows the price actually charged on the collection date. The future standard
-values and transition date are retained in `standard_pricing` to make the
-scheduled update deterministic.
+As checked on **2026-09-24**, Anthropic still lists Claude Sonnet 5 at $2 input
+and $10 output per MTok. The pricing documentation explicitly says the planned
+September 1 increase to $3/$15 will not happen. Do not promote the stale
+standard-price schedule or infer a future price; the current values remain in
+the adjacent JSON. The retained official pricing response hash is recorded in
+`response_sha256.pricing` there.
 
 Fast mode is not a separate model row in this direct-API file:
 
 - Opus 4.8 fast mode is a research preview at $10 input / $50 output per MTok.
-- Opus 4.7 fast mode is deprecated at $30 / $150 and scheduled for removal on
-  July 24, 2026.
+- Opus 4.7 fast mode is unavailable. The current pricing page says `speed: "fast"`
+  requests return an error; its former fast-mode rate is historical only.
 - Opus 4.6 fast mode was removed June 29, 2026. A request with `speed: "fast"`
   now runs at standard speed and standard price.
 
@@ -167,12 +149,13 @@ plain HTML but fetch fine with curl and a browser User-Agent (verified
 7. Validate the JSON and confirm every numerical price maps directly to an
    official table entry or documented multiplier.
 
-## Executable collector (2026-09-14)
+## Executable collector (refreshed 2026-09-24)
 
 `scripts/fetch-claude-api-catalog.mjs` (parser `lib/claude-api-catalog.mjs`, tests `test/claude-api-catalog.test.mjs`)
-runs as the non-fatal daily step `fetch-claude-api-catalog`. Three GETs with an identifying User-Agent:
+runs as the non-fatal daily step `fetch-claude-api-catalog`. Four GETs with an identifying User-Agent:
 `platform.claude.com/docs/en/about-claude/pricing` and `…/model-deprecations` (robots.txt disallows only
-`/api/`), and `claude.com/pricing` (robots.txt allows all). All three are server-rendered.
+`/api/`), `claude.com/pricing` (robots.txt allows all), and the Enterprise Help Center article.
+The 2026-09-24 refresh captured all four response bodies before parsing.
 
 - `models[]`: the pricing page's model table (base input, 5m/1h cache writes, cache hits, output) and its
   batch table, matched by model name. Rows labelled "retired" there, or `Retired` in the deprecations
@@ -180,12 +163,11 @@ runs as the non-fatal daily step `fetch-claude-api-catalog`. Three GETs with an 
   from the lifecycle table by API model id; curated ids, aliases, availability and notes are kept. A name
   that is new to the snapshot gets `mapping: derived` and a name-derived `model_id` marked as such.
 - `pricing_modifiers`: 5m/1h cache-write multipliers are derived from the table and must be uniform; the
-  cache-hit default and exception ("0.025x … standard 0.1x"), the batch discount and the US-only
+  cache-hit default and all model-specific exceptions, the batch discount, and the US-only
   `inference_geo` multiplier are read from the page prose. Missing prose fails the run.
-- `claude_code_enterprise`: only the seat price is re-read, from the Enterprise line "Seat price + usage at
-  API rates | $20 | /seat" on claude.com/pricing → `seat_and_usage_checked_at`. Minimum seats, sales-assisted
-  options and the legacy-seat note are not on that page; they keep `other_terms_checked_at` (2026-09-08)
-  and are not re-dated.
+- `claude_code_enterprise`: the seat price is re-read from the pricing page; minimum seats, sales-assisted
+  options, usage billing/limits, and the legacy-seat note are re-read from the Enterprise Help Center.
+  Both check dates were updated to 2026-09-24 after successful validation.
 - Fails closed: missing price or batch table, unreadable price, a callable row without a batch price,
   inconsistent write multipliers, or fewer than 50 % of previous rows still listed.
 - First run 2026-09-14: all 13 callable rows and every modifier reproduced the 2026-09-08 snapshot exactly;

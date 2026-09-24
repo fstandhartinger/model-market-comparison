@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
+import { importTsModule } from "./helpers/transpile-ts.mjs";
 import {
   compositeEvidenceCount,
   computeCompositeScoreDetails,
@@ -518,7 +519,7 @@ test("CR-65.3: adding a thin dominated row never changes any other row's final s
 });
 
 test("CR-65.3: the projection never raises a score on the live catalog", async () => {
-  const { clientData } = await import("../lib/client-model.ts");
+  const { clientData } = await importTsModule(new URL("../lib/client-model.ts", import.meta.url));
   const ds = JSON.parse(await readFile(new URL("../data/dataset.json", import.meta.url), "utf8"));
   const data = clientData(ds, {});
   for (const m of data.models) assert.ok(m.scores.composite <= m.composite_base + 1e-9, `${m.id} raised ${m.composite_base} → ${m.scores.composite}`);

@@ -2,7 +2,7 @@
   "source": "Azure AI Foundry",
   "region": "offer-specific (global, EU Data Zone, regional, or US Fireworks)",
   "collected_at": "2026-09-23",
-  "method": "Azure Retail Prices API (prices.azure.com/api/retail/prices), paginated across six EU resource/billing regions and cross-checked against the model-retirement schedule (https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/model-retirement-schedule, updated 2026-08-19) plus current model/region catalogs. Queries cover OpenAI/Models/AI Foundry plus the separate productName 'Azure Kimi'. Deployment scope is modeled per offer: Global meters use region=global and are not technically EU-resident; only documented Europe Data Zone or regional offers use an EU region. A company-specific policy overlay marks only the native Azure Direct DeepSeek V4 Pro and Kimi K2.7 Code Global routes as eu_policy_equivalent=true so they qualify for this application's EU filter without changing eu_hosted=false or claiming technical residency. Retired models are excluded even when stale Retail meters remain. GPT-5.6 Luna/Sol/Terra standard token meters were published (effective 2026-07-01), so those rows now carry the default short-context Standard prices; long-context prices are documented in notes. Fireworks offers use documented US hosting and eu_hosted=false. Standard uncached pay-as-you-go token meters only; batch, cached and provisioned-throughput meters are excluded. All prices are native USD from the API (currencyCode=USD); no currency conversion is applied. 2026-08-26 refresh sources: Retail Prices API (Foundry Models + Azure Kimi, swedencentral), https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure (2026-08-20), https://learn.microsoft.com/en-us/azure/foundry/how-to/fireworks/enable-fireworks-models (2026-08-07), https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-from-partners (2026-07-24). Retail 'Azure Kimi' placeholder meters 'Model 6'/'Model 7' (eff. 2026-08-01, inconsistent in/out values) are ignored until a named product appears. grok-4.6 is in the catalog (Preview) but has no Retail meter yet, so no row. MAI-Cyber-1-Flash has Retail 'MAI Models' meters (0.60/3.50, eff. 2026-08-01) but Microsoft states it is available only to verified defenders through MDASH (Foundry private preview, not a standalone API; https://microsoft.ai/models/mai-cyber-1-flash/) and it is absent from the Azure-sold catalog, so no row. 2026-09-08: fetched all 1,619 matching swedencentral Retail rows across OpenAI/Models/AI Foundry/Azure Kimi (two pages), checked current lifecycle and region catalogs. GPT-6 Astra is now listed, but no named meter: added unpriced Global and EU Data Zone rows. Six older Fireworks models are GA but PTU-only per the current Fireworks catalog: their lingering token meters are excluded. Added Kimi K3 at $3.30/$16.50 using named Retail meters and explicit pay-per-token availability. Existing GPT-5.6 Sol Azure rates remain $5/$30 Global ($5.50/$33 DZ), despite different first-party/Copilot rates; no cross-provider price substitution.",
+  "method": "Azure Retail Prices API (prices.azure.com/api/retail/prices), paginated across six EU resource/billing regions and cross-checked against the model-retirement schedule (https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/model-retirement-schedule, updated 2026-08-19) plus current model/region catalogs. Queries cover OpenAI/Models/AI Foundry plus the separate productName 'Azure Kimi'. Deployment scope is modeled per offer: Global meters use region=global and are not technically EU-resident; only documented Europe Data Zone or regional offers use an EU region. A company-specific policy overlay marks only the native Azure Direct DeepSeek V4 Pro and Kimi K2.7 Code Global routes as eu_policy_equivalent=true so they qualify for this application's EU filter without changing eu_hosted=false or claiming technical residency. Retired models are excluded even when stale Retail meters remain. GPT-5.6 Luna/Sol/Terra standard token meters were published (effective 2026-07-01), so those rows now carry the default short-context Standard prices; long-context prices are documented in notes. Fireworks offers use documented US hosting and eu_hosted=false. Standard pay-as-you-go input/output token meters plus explicitly mapped Kimi K2.7 Code cache-read meters; other cached, batch and provisioned-throughput meters are excluded. All prices are native USD from the API (currencyCode=USD); no currency conversion is applied. 2026-08-26 refresh sources: Retail Prices API (Foundry Models + Azure Kimi, swedencentral), https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure (2026-08-20), https://learn.microsoft.com/en-us/azure/foundry/how-to/fireworks/enable-fireworks-models (2026-08-07), https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-from-partners (2026-07-24). Retail 'Azure Kimi' placeholder meters 'Model 6'/'Model 7' (eff. 2026-08-01, inconsistent in/out values) are ignored until a named product appears. grok-4.6 is in the catalog (Preview) but has no Retail meter yet, so no row. MAI-Cyber-1-Flash has Retail 'MAI Models' meters (0.60/3.50, eff. 2026-08-01) but Microsoft states it is available only to verified defenders through MDASH (Foundry private preview, not a standalone API; https://microsoft.ai/models/mai-cyber-1-flash/) and it is absent from the Azure-sold catalog, so no row. 2026-09-08: fetched all 1,619 matching swedencentral Retail rows across OpenAI/Models/AI Foundry/Azure Kimi (two pages), checked current lifecycle and region catalogs. GPT-6 Astra is now listed, but no named meter: added unpriced Global and EU Data Zone rows. Six older Fireworks models are GA but PTU-only per the current Fireworks catalog: their lingering token meters are excluded. Added Kimi K3 at $3.30/$16.50 using named Retail meters and explicit pay-per-token availability. Existing GPT-5.6 Sol Azure rates remain $5/$30 Global ($5.50/$33 DZ), despite different first-party/Copilot rates; no cross-provider price substitution.",
   "models": [
     {
       "model_name": "GPT-5",
@@ -1143,7 +1143,16 @@
       "retail_meters": {
         "product": "Azure Kimi",
         "input": "K2.7 Code Inp glbl Tokens",
-        "output": "K2.7 Code Outp glbl Tokens"
+        "output": "K2.7 Code Outp glbl Tokens",
+        "cache_read": "K2.7 Code cached glbl Tokens"
+      },
+      "cache_read_per_1m_usd": 0.19,
+      "cache_read_checked_at": "2026-09-24",
+      "cache_read_source": {
+        "url": "https://prices.azure.com/api/retail/prices?currencyCode=USD&$filter=armRegionName%20eq%20'swedencentral'%20and%20(contains(productName%2C'OpenAI')%20or%20contains(productName%2C'Models')%20or%20productName%20eq%20'Azure%20Kimi')",
+        "date": "2026-09-24",
+        "sha256": "b1e7582028862bbdf19802d4f461f8defff69a460716b2371855a649bdc369d5",
+        "locator": "Azure Kimi · K2.7 Code cached glbl Tokens · $0.00019 per 1K USD · x1000 = $0.19 per 1M"
       }
     },
     {
@@ -1171,7 +1180,16 @@
       "retail_meters": {
         "product": "Azure Fireworks Models",
         "input": "FW Kimi K2.7 Code Inp DZ Tokens",
-        "output": "FW Kimi K2.7 Code Opt DZ Tokens"
+        "output": "FW Kimi K2.7 Code Opt DZ Tokens",
+        "cache_read": "FW Kimi K2.7 Code Cd Inp DZ Tokens"
+      },
+      "cache_read_per_1m_usd": 0.21,
+      "cache_read_checked_at": "2026-09-24",
+      "cache_read_source": {
+        "url": "https://prices.azure.com/api/retail/prices?currencyCode=USD&$filter=armRegionName%20eq%20'westeurope'%20and%20(contains(productName%2C'OpenAI')%20or%20contains(productName%2C'Models')%20or%20productName%20eq%20'Azure%20Kimi')",
+        "date": "2026-09-24",
+        "sha256": "79f5f71896448f06706c3cb78aa3ed6e954bda61d491b9e271879611291946b7",
+        "locator": "Azure Fireworks Models · FW Kimi K2.7 Code Cd Inp DZ Tokens · $0.00021 per 1K USD · x1000 = $0.21 per 1M"
       }
     },
     {
@@ -1376,7 +1394,7 @@
   ],
   "lifecycle_checked_at": "2026-09-08",
   "meters_checked_at": "2026-09-23",
-  "retail_collection": "scripts/fetch-azure-foundry-catalog.mjs (2026-09-23): 12 pages, 8746 Retail items across swedencentral, westeurope, francecentral, germanywestcentral, polandcentral, spaincentral; each row's named Standard input/output meters re-read (1K meters x 1000), first billing region by that order. Rows are never added by the script; lifecycle and Europe Data Zone availability keep lifecycle_checked_at.",
+  "retail_collection": "scripts/fetch-azure-foundry-catalog.mjs (2026-09-23): 12 pages, 8746 Retail items across swedencentral, westeurope, francecentral, germanywestcentral, polandcentral, spaincentral; each row's named Standard input/output meters re-read (1K meters x 1000), first billing region by that order. Rows are never added by the script; lifecycle and Europe Data Zone availability keep lifecycle_checked_at. 2026-09-24 cache-read verification: Azure Direct Global Kimi K2.7 Code $0.19/1M and Azure Fireworks Kimi K2.7 Code $0.21/1M from named 1K Retail meters multiplied by 1000; exact page hashes and meter locators are in each row cache_read_source.",
   "response_sha256": "b9fec31e6197920bb770a0943db678dcf5f264eb07b224d5bf8146a42290ce18",
   "diff": {
     "removed": [],

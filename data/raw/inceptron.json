@@ -1,9 +1,9 @@
 {
   "source": "Inceptron",
   "region": "eu (Finland; HQ Sweden)",
-  "collected_at": "2026-09-23",
+  "collected_at": "2026-09-24",
   "listing_url": "https://www.inceptron.io/models",
-  "method": "scripts/fetch-inceptron-catalog.mjs (2026-09-23): one GET of Inceptron's unauthenticated OpenAI-compatible catalog https://api.inceptron.io/v1/models, the live billing meter; pricing.prompt / pricing.completion / input_cache_reads are USD per token, stored per 1M tokens with four decimals. Models with text output, the chat feature and both token prices are included; curated rows kept by api_model_id, the id in their notes, or name; new ids mapping=derived; ids no longer listed are dropped. The marketing page www.inceptron.io/models is a client-rendered list that has shown different list prices; the API is canonical. HQ Sweden (SE), datacenter Finland (FI) per OpenRouter provider metadata. See inceptron.method.md.",
+  "method": "scripts/fetch-inceptron-catalog.mjs (2026-09-24): one GET of Inceptron's unauthenticated OpenAI-compatible catalog https://api.inceptron.io/v1/models, the live billing meter; pricing.prompt / pricing.completion / input_cache_reads are USD per token, stored per 1M tokens with four decimals. Models with text output, the chat feature and both token prices are included; curated rows kept by api_model_id, the id in their notes, or name; new ids mapping=derived; ids no longer listed are dropped. The marketing page www.inceptron.io/models is a client-rendered list that has shown different list prices; the API is canonical. HQ Sweden (SE), datacenter Finland (FI) per OpenRouter provider metadata. See inceptron.method.md.",
   "models": [
     {
       "model_name": "GLM 5.2",
@@ -20,9 +20,9 @@
     {
       "model_name": "GLM 5.3",
       "provider_org": "Z.ai",
-      "input_per_1m_usd": 0.9856,
-      "output_per_1m_usd": 3.9785,
-      "cache_read_per_1m_usd": 0.2767,
+      "input_per_1m_usd": 0.8902,
+      "output_per_1m_usd": 3.7298,
+      "cache_read_per_1m_usd": 0.257,
       "region": "eu",
       "notes": "Added 2026-09-08: api.inceptron.io zai-org/GLM-5.3, fp4 quant, 1,048,576 context, text-only, reasoning (effort low/high/max), tools/json_mode/structured_outputs. Native API 1.25/4.40 (cache 0.26); web page lists 1.40/4.40 (cache 0.26)",
       "api_model_id": "zai-org/GLM-5.3",
@@ -56,11 +56,11 @@
     {
       "model_name": "DeepSeek V4 Flash 0731",
       "provider_org": "DeepSeek",
-      "input_per_1m_usd": 0.12,
-      "output_per_1m_usd": 0.5,
+      "input_per_1m_usd": 0.0908,
+      "output_per_1m_usd": 0.6128,
       "region": "eu",
       "notes": "Added 2026-08-26: api.inceptron.io deepseek-ai/DeepSeek-V4-Flash-0731, cache 0.03, 1M ctx; web page agrees 0.13/0.28. | 2026-09-08: unchanged 0.13/0.28 (cache 0.03)",
-      "cache_read_per_1m_usd": 0.05,
+      "cache_read_per_1m_usd": 0.06,
       "api_model_id": "deepseek-ai/DeepSeek-V4-Flash-0731",
       "context_length": 1048576,
       "quantization": "fp4"
@@ -79,18 +79,14 @@
       "notes": "Listed by api.inceptron.io/v1/models as zai-org/GLM-5.3-Flash; fp8 quant; 1,048,576 context; text"
     }
   ],
-  "response_sha256": "59d0cf5a95624770cbb7bd12a3c95074b396d3bc52e43c820e00784a0a18e582",
+  "response_sha256": "8a0ebc3d801c57ef4ad0398ef2e733a31d86b70f5e2a3db6ed27d071d58da4fb",
   "skipped": [],
   "diff": {
     "added": [],
     "removed": [],
     "price_changed": [
-      "GLM 5.2: 0.9563/3.06 (cache 0.1838) -> 1.0125/3.24 (cache 0.1943)",
-      "GLM 5.3: 0.8509/2.8798 (cache 0.1505) -> 0.9856/3.9785 (cache 0.2767)",
-      "Kimi K2.6: 0.5181/2.97 (cache 0.0999) -> 0.4972/2.97 (cache 0.1284)",
-      "Kimi K2.7 Code: 0.7062/3.21 (cache 0.18) -> 0.7062/3.3 (cache 0.18)",
-      "DeepSeek V4 Flash 0731: 0.06/0.3 (cache 0.04) -> 0.12/0.5 (cache 0.05)",
-      "GLM 5.3 Flash: 0.1/0.4 (cache 0.03) -> 0.15/0.5 (cache 0.07)"
+      "GLM 5.3: 0.9856/3.9785 (cache 0.2767) -> 0.8902/3.7298 (cache 0.257)",
+      "DeepSeek V4 Flash 0731: 0.12/0.5 (cache 0.05) -> 0.0908/0.6128 (cache 0.06)"
     ]
   }
 }

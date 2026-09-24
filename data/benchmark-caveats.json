@@ -11,6 +11,11 @@
   },
   "judged_definition": "The published number ranks or rates outputs by preference or quality. A judge model that only checks whether an answer is correct (an equality checker, a majority vote on accuracy, an LLM normaliser in front of exact matching) is NOT judged — the ground truth still decides.",
   "judged": {
+    "anthropic-healthbench-professional": {
+      "quote": "not percent accuracy",
+      "field": "scoring.notes",
+      "why": "Professional responses are graded against physician-authored rubric criteria by a model grader, so this is a judged quality score on a readable 0–100 scale, not percent correct."
+    },
     "aa-apex-agents": {
       "quote": "Rubric-based local file grading",
       "field": "scoring.metric",
@@ -30,6 +35,16 @@
       "quote": "strict pass/fail from an LLM judge",
       "field": "scoring.metric",
       "why": "One judge model grades legal work product against a rubric."
+    },
+    "lmarena-text": {
+      "quote": "Bradley-Terry rating system",
+      "field": "scoring.notes",
+      "why": "The rating summarizes anonymous community pairwise preferences rather than task accuracy."
+    },
+    "lmarena-vision": {
+      "quote": "Bradley-Terry rating system",
+      "field": "scoring.notes",
+      "why": "The rating summarizes anonymous community pairwise preferences rather than task accuracy."
     },
     "buzzbench": {
       "quote": "LLM judge score against human-authored gold responses",

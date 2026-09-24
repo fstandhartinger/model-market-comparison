@@ -92,9 +92,12 @@ The **full dataset** in one response — the canonical machine-readable feed: ev
 ### `GET /api/models`
 List of models with a single chosen score, the cheapest 10:1-blended cost, and the top-5 cheapest providers per model.
 Every row also includes `composite_base` (the pre-projection mean-imputed value) and
-`composite_coverage` from 0 to 7 so clients can distinguish the neutral Composite fallback
-50 at 0/7 from a measured score. `composite_attached` counts the Composite inputs attached from
-another configuration of the family; the site marks a row "Thin data" when coverage + attached < 3.
+`composite_coverage` from 0 to 7. `score`, `composite_unpenalised`, and `composite_base` are `null`
+for Composite when no input is measured on that exact configuration; the internal neutral fallback
+50 is never exposed as a score. `composite_attached` counts inputs attached from another family
+configuration. Attached inputs are shown as supporting evidence but do not qualify a model for
+Composite scoring on their own. When an exact input exists, attached inputs supplement the score;
+the site marks it "Thin data" when exact coverage + attached inputs is below 3.
 `release_date` is the model's release date (ISO day) or `null`.
 
 Query params:

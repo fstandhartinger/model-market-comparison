@@ -3,14 +3,41 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { JEVBENCH_V11_ARTIFACT, JEVBENCH_V11_SHA256, readJevbenchV11, validateJevbenchV11, jevbenchV11View, mainScore } from '../lib/jevbench-v11.mjs';
+import { createHash } from 'node:crypto';
+import ts from 'typescript';
+import { JEVBENCH_V11_ARTIFACT, JEVBENCH_V11_SHA256, readJevbenchV11, validateJevbenchV11, validateJevbenchV11PooledAccuracy, jevbenchV11View, mainScore } from '../lib/jevbench-v11.mjs';
 
 const clone = async () => JSON.parse(await readFile(JEVBENCH_V11_ARTIFACT, 'utf8'));
 
-test('the committed v1.1 artifact is the tagged public one and validates', async () => {
-  const { sha256, artifact } = await readJevbenchV11();
-  assert.equal(sha256, JEVBENCH_V11_SHA256);
+test('the pinned source stays intact; corrected pooled accuracy is validated and hashed in the exact API response', async () => {
+  const { sha256, sourceSha256, artifact, bytes } = await readJevbenchV11();
+  const sourceBytes = await readFile(JEVBENCH_V11_ARTIFACT);
+  assert.equal(sourceSha256, JEVBENCH_V11_SHA256);
+  assert.equal(createHash('sha256').update(sourceBytes).digest('hex'), JEVBENCH_V11_SHA256);
+  assert.equal(bytes.toString('utf8'), `${JSON.stringify(artifact, null, 2)}\n`);
+  assert.equal(createHash('sha256').update(bytes).digest('hex'), sha256);
+  validateJevbenchV11PooledAccuracy(artifact);
+  assert.ok(artifact.systems.every((s) => s.capability.pooled_accuracy >= 0 && s.capability.pooled_accuracy <= 1));
   for (const s of artifact.systems.filter((x) => x.ranked)) assert.ok(Math.abs(mainScore(s, artifact.weights) - s.main_score) < 1e-9, s.key);
+
+  const routeSource = await readFile(new URL('../app/api/jevbench/v1.1/route.ts', import.meta.url), 'utf8');
+  const route = ts.transpileModule(routeSource, { compilerOptions: { module: ts.ModuleKind.ES2022, target: ts.ScriptTarget.ES2022 } }).outputText
+    .replace('from "../../../../lib/jevbench-v11.mjs"', `from "${new URL('../lib/jevbench-v11.mjs', import.meta.url).href}"`);
+  const { GET } = await import(`data:text/javascript;base64,${Buffer.from(route).toString('base64')}`);
+  const response = await GET();
+  assert.equal(Buffer.from(await response.arrayBuffer()).toString('utf8'), bytes.toString('utf8'));
+  assert.equal(response.headers.get('x-content-sha256'), sha256);
+  assert.equal(response.headers.get('x-source-sha256'), sourceSha256);
+});
+
+test('pooled accuracy reconstructs correct and attempted decision counts from source tier values', async () => {
+  const source = await clone();
+  const corrected = await readJevbenchV11();
+  assert.throws(() => validateJevbenchV11PooledAccuracy(source), /pooled_accuracy does not recompute/);
+  const byKey = new Map(corrected.artifact.systems.map((s) => [s.key, s.capability.pooled_accuracy]));
+  assert.equal(byKey.get('system-one-open'), 290 / 314);
+  assert.equal(byKey.get('qwen3.8-27b'), 287 / 295);
+  assert.equal(byKey.get('open-alternative-jev'), 2 / 6);
 });
 
 test('a Main Score that does not recompute, a zero unknown cost or an unlabelled estimate fails', async () => {
@@ -32,7 +59,7 @@ test('a label-only system needs a null calibration with a note; ranks must follo
   assert.throws(() => validateJevbenchV11(a), /item-level/);
 });
 
-test('view: ranked by Main Score, partial runs apart, the defective pooled accuracy never reaches the page', async () => {
+test('view: ranked by Main Score, partial runs apart, and pooled accuracy stays out of the equal-tier headline view', async () => {
   const v = jevbenchV11View(await readJevbenchV11());
   v.ranked.forEach((r, i) => assert.equal(r.rankUnder[v.sensitivityOrder[0]], i + 1, r.key));
   assert.ok(v.partial.length >= 1 && v.partial.every((r) => !r.ranked));

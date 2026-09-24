@@ -1,5 +1,7 @@
 export const JEVBENCH_V11_ARTIFACT: string;
 export const JEVBENCH_V11_SHA256: string;
+export function recomputePooledAccuracy(system: any, tierCounts: Record<string, number>): number | null;
+export function validateJevbenchV11PooledAccuracy(artifact: any): any;
 export const VENDOR_LINKS: Record<string, string>;
 export const TIERS: ('easy' | 'standard' | 'judge')[];
 export type JevTier = 'easy' | 'standard' | 'judge';
@@ -19,5 +21,5 @@ export type JevV11View = {
 };
 export function mainScore(system: any, weights: { capability: number; speed: number; cost: number }): number | null;
 export function validateJevbenchV11(artifact: any): any;
-export function readJevbenchV11(root?: string): Promise<{ artifact: any; bytes: Buffer; sha256: string }>;
+export function readJevbenchV11(root?: string): Promise<{ artifact: any; bytes: Buffer; sha256: string; sourceSha256: string }>;
 export function jevbenchV11View(data: { artifact: any; sha256: string }): JevV11View;

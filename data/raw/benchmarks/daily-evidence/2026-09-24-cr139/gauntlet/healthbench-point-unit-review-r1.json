@@ -1,0 +1,38 @@
+{
+  "artifact_id": "self-reported:claude-opus-55-healthbench-professional",
+  "artifact_sha256": "5122f19a886c511545c70e79af1591dc9d8743ee66133f20a4a0c016636193bf",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["model/configuration", "benchmark identity", "value", "unit/scale", "date/snapshot", "self-reported basis", "source locator", "source integrity hash"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "field": "source.sha256",
+      "severity": "high",
+      "evidence": "Candidate lists source.sha256 = 95a7b26f5d4497072d973935ccb674978149f16db396d425b4b544581fcbc728, but Source A records the retained capture SHA-256 as a0c0bbcafad4eb6f8b106fb161908f08113d30df301037c1b75b5025c0bbc8ca. The two hashes do not match and no supplied evidence explains the difference (e.g., page-level vs. full-capture hashing).",
+      "repair": "Resolve the hash discrepancy against the retained capture metadata; either correct source.sha256 to the capture hash or document which artifact the existing hash refers to, using only verified provenance records."
+    },
+    {
+      "field": "protocol",
+      "severity": "medium",
+      "evidence": "The protocol field asserts: (a) Table 8.1.A caption specifies adaptive thinking at max effort, default sampling, five-trial averaging, and safeguard fallbacks; (b) Section 8.15.2 shows a length-adjusted score with raw score 77.1%. None of this content appears in the supplied evidence. Source A supplies only the table locator and the printed row \"HealthBench Professional 65.6 59.8 62.1 63.4\". The 77.1% figure and the caption/fallback details are unverified.",
+      "repair": "Remove or clearly flag the unverified protocol claims (77.1% raw score, Section 8.15.2, caption-derived configuration and fallback details) unless the underlying source text is supplied; alternatively restrict the protocol field to what the supplied evidence supports (vendor-reported, Table 8.1.A row, printed value)."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Whether the Table 8.1.A caption and Section 8.15.2 contents exist and support the protocol claims cannot be determined from the supplied excerpts.",
+    "The relationship between source.sha256 and the evidence's capture SHA-256 (e.g., per-page vs. whole-document hashing) is not documented in the supplied evidence."
+  ],
+  "missing_evidence": [
+    "Text of the System Card Table 8.1.A caption (needed to support configuration claims in the protocol field).",
+    "Text of System Card Section 8.15.2 (needed to support the length-adjusted-score and 77.1% raw-score claims).",
+    "Provenance note explaining the 95a7b26f... vs. a0c0bbca... hash difference for the System Card capture."
+  ],
+  "confirmed_ok": [
+    "Value 65.6 matches the exact captured row \"HealthBench Professional 65.6 59.8 62.1 63.4\" under the Claude Opus 5.5 column (Source A).",
+    "Locator matches Source A: Table 8.1.A, page 174, first column of Claude Opus 5.5 | Claude Opus 5 | Claude Fable 5.1 | GPT-6 Astra.",
+    "Unit \"points\" and basis self_reported are consistent with Source B Section 4.2: scores are not percent accuracy, lie in [0,1], and are multiplied by 100 for readability.",
+    "Benchmark identity, published/retrieved dates (2026-09-22), and snapshot-2026-09-22 are consistent with Source A."
+  ]
+}

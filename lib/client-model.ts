@@ -25,6 +25,8 @@ export interface ClientOffer {
   output_per_1m: number | null;
   cache_read_per_1m?: number | null;
   cache_write_per_1m?: number | null;
+  cache_read_source?: { url: string; date?: string; sha256?: string; locator?: string };
+  price_overrides?: OfferPriceOverride[];
   or_model_id?: string;
   or_canonical_slug?: string | null;
   or_hugging_face_id?: string | null;
@@ -42,6 +44,17 @@ export interface ClientOffer {
   /** R4.10: true/false = OpenRouter publishes a policy for the serving provider and it
    *  does / does not satisfy "Does not train" + "Zero retention". Undefined = unknown. */
   data_private?: boolean;
+}
+
+export interface OfferPriceOverride {
+  min_prompt_tokens?: number;
+  utc_start?: number;
+  utc_end?: number;
+  utc_days?: string[];
+  input_per_1m?: number;
+  output_per_1m?: number;
+  cache_read_per_1m?: number;
+  cache_write_per_1m?: number;
 }
 
 export type CompositeSlot =
@@ -152,10 +165,15 @@ export interface ClientData {
   comparison?: BenchmarkComparison;
 }
 
-/** Whether a displayed score is backed by at least one source result. Composite
- * may be the neutral 50 fallback even when this returns false. */
-export function hasScoreEvidence(model: ClientModel, score: ScoreKey): boolean {
+/** Whether a displayed score has qualifying source evidence. Composite requires a result
+ * measured on this exact configuration; family-attached values can supplement but do not qualify it. */
+export function hasScoreEvidence(model: Pick<ClientModel, "composite_coverage" | "scores">, score: ScoreKey): boolean {
   return score === "composite" ? model.composite_coverage > 0 : model.scores[score] != null;
+}
+
+/** A score value for a consumer that follows the shared evidence-eligibility rule. */
+export function scoreWithEvidence(model: Pick<ClientModel, "composite_coverage" | "scores">, score: ScoreKey): number | null {
+  return hasScoreEvidence(model, score) ? model.scores[score] ?? null : null;
 }
 
 /** F-41: a Composite looks thin when fewer than three of its seven slots hold any value,
@@ -197,6 +215,8 @@ export function clientData(ds: Dataset, benchmaxxing: Record<string, ClientBench
     source: o.source, provider: o.provider, platform: o.platform,
     input_per_1m: o.input_per_1m, output_per_1m: o.output_per_1m,
     cache_read_per_1m: o.cache_read_per_1m, cache_write_per_1m: o.cache_write_per_1m,
+    cache_read_source: o.cache_read_source,
+    price_overrides: o.price_overrides,
     or_model_id: o.or_model_id,
     or_canonical_slug: o.or_canonical_slug,
     or_hugging_face_id: o.or_hugging_face_id,
@@ -216,6 +236,7 @@ export function clientData(ds: Dataset, benchmaxxing: Record<string, ClientBench
       const signature = [offer.key, offer.region, offer.tee ? 1 : 0, offer.eu_hosted ? 1 : 0,
         offer.eu_policy_equivalent ? 1 : 0,
         offer.input_per_1m, offer.output_per_1m, offer.cache_read_per_1m, offer.cache_write_per_1m,
+        JSON.stringify(offer.price_overrides || []), JSON.stringify(offer.cache_read_source || null),
         offer.or_model_id || "", offer.or_canonical_slug || "", offer.or_hugging_face_id || "", offer.endpoint_tag || "",
         offer.pricing_tier || "", offer.route_type || ""].join("::");
       if (seen.has(signature)) continue;

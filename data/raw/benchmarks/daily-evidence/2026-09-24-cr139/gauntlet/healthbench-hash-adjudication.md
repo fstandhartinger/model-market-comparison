@@ -1,0 +1,9 @@
+# Owner adjudication: HealthBench source hash layers
+
+The round 3 critic approved the exact observation row at SHA-256 `03ad08174b0a6af86e88043d24c766783b654bfd727254a86841c83378ba9272`. The row's `source.sha256` is `95a7b26f5d4497072d973935ccb674978149f16db396d425b4b544581fcbc728`, the digest of the decompressed PDF text layer recorded in the retained `manifest.json`.
+
+There are two other hashes for different bytes: `a0c0bbcafad4eb6f8b106fb161908f08113d30df301037c1b75b5025c0bbc8ca` is the exact stored gzip container; `7311c9c6bbb16d012f1c12c7418b05949fcf7ae3e30d2c40f22050074b2a7378` is the upstream PDF document. `verifyScoreEvidence` decompresses `.gz` before comparing an observation source hash. `validate-benchmark-registry.mjs` hashes the evidence file as stored, without decompression. Therefore the observation source keeps `95a7…`, while the registry evidence record correctly uses `a0c0…`.
+
+Round 2's packet incorrectly described the registry evidence SHA as corrected to the decompressed hash. The registry record has been restored to the compressed-file hash required by its validator. This did not change the reviewed observation, its source content hash, or the round 3 artifact. Owner checks recomputed both local hashes and the accepted observation binding; `verifyScoreEvidence` reports 18,607 observations, 191 source files and 1,443 reviewed self-reported rows.
+
+The additional HealthBench paper capture follows the same storage distinction. Its source capture manifest records the uncompressed PDF-body digest `6fb95bee7caa319432c3349c22355c72aa979edbf011af582790658bb64e56e7`; the stored `.gz` evidence file hashes to `a09ed2e94f66ec5d817480b2c9bbe630c321e61b6c8e2b73bb23787b37a70066`. The benchmark registry stores the hash of the exact evidence file bytes (`a09ed…`), while any score observation source that points through `.gz` uses the decompressed-body digest.

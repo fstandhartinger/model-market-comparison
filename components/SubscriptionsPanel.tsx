@@ -70,7 +70,7 @@ export function SubscriptionsPanel({ rows, perTask }: { rows: SubscriptionRow[];
           {" "}<Link href="/about#subscriptions" className="text-accent underline">How we read the terms →</Link></p>
       </div>
       <Estimate plans={view.plans} perTask={perTask} />
-      <h3 className="mt-4 text-xs font-semibold uppercase tracking-wide text-gray-400">Plans · list prices {view.retrieved_at}{isCompany ? " · open to companies" : ""}</h3>
+      <h3 className="mt-4 text-xs font-semibold uppercase tracking-wide text-gray-400">Plans · list prices (catalog snapshot {view.retrieved_at}; newer source checks shown per plan){isCompany ? " · open to companies" : ""}</h3>
       <ul className="mt-1 divide-y divide-line/60">
         {displayPlans.map((p) => {
           const e = ELIGIBILITY[p.company_use];
@@ -82,7 +82,7 @@ export function SubscriptionsPanel({ rows, perTask }: { rows: SubscriptionRow[];
               {p.breakEvenTasks != null && p.reference
                 ? <>Cheaper than the API above <b className="text-gray-300">{p.breakEvenTasks.toLocaleString("en-US")}</b> tasks/mo of {p.reference.name}, if its limits allow · </>
                 : p.flat_rate && p.org && perTask ? <>No {p.org} model in your view to compare · </> : null}
-              {p.included}{p.billing_note ? ` · ${p.billing_note}` : ""}
+              {p.included}{p.billing_note ? ` · ${p.billing_note}` : ""}{p.source_checked_at && <span className="block text-[11px] text-gray-600">Source checked {p.source_checked_at}</span>}
             </span>
           </li>;
         })}

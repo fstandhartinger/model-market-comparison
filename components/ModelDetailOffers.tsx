@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef } from "react";
 import type { ClientOffer, ProviderInfo, ClientModel, ClientData } from "../lib/client-model";
 import { offerPrice, priceContext, priceLabel, scopeFromSettings, rankedOffers, scopedCatalogRoutes } from "../lib/cost";
 import { FREE_ROUTE_NOTE, freeRouteLabel, freeRouteTitle, isCurrentFreeRoute, isFreeRoute, isStealthPreview } from "../lib/free-route.mjs";
+import { describeOpenRouterPriceOverrideWithRates } from "../lib/openrouter-pricing.mjs";
 import { usdPerM, counted } from "../lib/format";
 import { PriceValue, PriceAssumptions } from "./PriceValue";
 import { useSettings } from "./SettingsContext";
@@ -115,7 +116,7 @@ export function ModelDetailOffers({
             <tbody>
               {platformOffers.map((offer) => (
                 <tr key={[offer.key, offer.region, offer.pricing_tier, offer.route_type, offer.endpoint_tag].join("::")} data-free-route={isFreeRoute(offer) ? "1" : undefined}>
-                  <td className="px-2 py-1">{offer.provider}{isFreeRoute(offer) && (() => {
+                  <td className="px-2 py-1">{offer.provider}{offer.price_overrides?.length ? <span title={offer.price_overrides.map(describeOpenRouterPriceOverrideWithRates).join("; ")} className="ml-1 rounded border border-line px-1 text-[10px] font-normal text-sky-300">conditional</span> : null}{isFreeRoute(offer) && (() => {
                     // CR-50.2: a current, healthy free route names its provider and its limits; any other $0 route keeps the generic note.
                     const note = isCurrentFreeRoute(offer, freeWhen) ? freeRouteTitle([offer], pricingData.sourceDates?.openrouter) : FREE_ROUTE_NOTE;
                     return <span title={note} data-bh-free-route-current={isCurrentFreeRoute(offer, freeWhen) ? "1" : undefined} className="ml-1 rounded border border-line px-1 text-[10px] text-gray-400">{freeRouteLabel(offer)}<span className="sr-only"> — {note}</span></span>;

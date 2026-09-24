@@ -1,0 +1,24 @@
+{
+  "artifact_id": "cr139-jevbench-topic-reconciliation-20260924",
+  "source_url": "https://raw.githubusercontent.com/fstandhartinger/jevbench/v1.3.0/results/v1.2/jevbench-v1.2-topics.json",
+  "retrieved_at": "2026-09-24",
+  "source_revision": "v1.2.15",
+  "official_system_rows": 47,
+  "official_source_sha256": "858aca87ed42eb441251b85c49374e8c9417336c0eecff52f4e98f596141e754",
+  "previous_local_revision": "v1.2.16",
+  "previous_local_system_rows": 52,
+  "previous_local_gzip_sha256": "a8c50082a23bfcec941e539cc540678a3972bdda4b5b5914200cfbd6d57db2c9",
+  "previous_local_uncompressed_sha256": "770acedaafdd8063dbf53a67765ee8d035410073a838a7c86c9605b3e34385d8",
+  "official_rows_compared": 47,
+  "exact_row_matches": 47,
+  "added_rows": [],
+  "local_only_rows_removed_from_canonical": [
+    "bge-reranker-v2-m3",
+    "gte-reranker-modernbert-base",
+    "mxbai-rerank-base-v2",
+    "qwen3-reranker-4b",
+    "zerank-2"
+  ],
+  "comparison": "Each common systems[key] JSON value is exactly equal, including all topic counts and accuracy fields.",
+  "sealed_item_level_data_used": false
+}

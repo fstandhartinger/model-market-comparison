@@ -2,18 +2,27 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { readJevbenchV12, jevbenchV12View } from '../lib/jevbench-v12.mjs';
-import { JEVBENCH_V12_TOPICS_ARTIFACT, JEVBENCH_V12_TOPICS_SHA256, readJevbenchV12Topics, validateJevbenchV12Topics, jevbenchV12TopicsView } from '../lib/jevbench-v12-topics.mjs';
+import { JEVBENCH_V12_TOPICS_ARTIFACT, JEVBENCH_V12_TOPICS_SHA256, TOPIC_DATA_UNPUBLISHED_SYSTEMS, readJevbenchV12Topics, validateJevbenchV12Topics, jevbenchV12TopicsView } from '../lib/jevbench-v12-topics.mjs';
 
 const clone = async () => JSON.parse(await readFile(JEVBENCH_V12_TOPICS_ARTIFACT, 'utf8'));
 
-test('the committed topic artifact is the pinned one, validates and covers every v1.2 system', async () => {
+test('the official topic source validates; unsupported later systems have no topic cells', async () => {
   const v12 = await readJevbenchV12();
   const t = await readJevbenchV12Topics(v12.artifact);
+  const bytes = await readFile(JEVBENCH_V12_TOPICS_ARTIFACT);
   assert.equal(t.sha256, JEVBENCH_V12_TOPICS_SHA256);
+  assert.equal(createHash('sha256').update(bytes).digest('hex'), JEVBENCH_V12_TOPICS_SHA256);
   const view = jevbenchV12TopicsView(t);
   const v = jevbenchV12View(v12);
-  assert.deepEqual(Object.keys(view.systems).sort(), [...v.ranked, ...v.honorable, ...v.partial].map((r) => r.key).sort());
+  assert.equal(view.sourceRevision, 'v1.2.15');
+  assert.deepEqual(view.unpublishedSystems, TOPIC_DATA_UNPUBLISHED_SYSTEMS);
+  assert.deepEqual(Object.keys(view.systems).sort(), [...v.ranked, ...v.honorable, ...v.partial].map((r) => r.key).filter((k) => !TOPIC_DATA_UNPUBLISHED_SYSTEMS.includes(k)).sort());
+  for (const key of TOPIC_DATA_UNPUBLISHED_SYSTEMS) {
+    assert.ok(v12.artifact.systems.some((s) => s.key === key), `${key} remains in the v1.2 ranking artifact`);
+    assert.equal(view.systems[key], undefined, `${key} has no unsupported topic aggregate`);
+  }
   assert.equal(view.topics.reduce((s, x) => s + x.n, 0), v.decisions);
   assert.ok(view.topics.length >= 6 && view.topics.length <= 9 && view.topics.every((x) => x.n >= view.minAttempted && x.short));
   // spot values (jevbench repo RESULTS-v1.2.md, "Accuracy by subject topic")
@@ -28,7 +37,7 @@ test('a topic accuracy that does not recompute, a missing system, item-level con
   let a = await clone(); a.systems['jev-1.13.0'].topics.math.accuracy += 0.01;
   assert.throws(() => validateJevbenchV12Topics(a, v12), /does not recompute/);
   a = await clone(); delete a.systems.djev;
-  assert.throws(() => validateJevbenchV12Topics(a, v12), /exactly the v1.2 systems/);
+  assert.throws(() => validateJevbenchV12Topics(a, v12), /officially published topic aggregates/);
   a = await clone(); a.systems['jev-1.13.0'].predictions = [];
   assert.throws(() => validateJevbenchV12Topics(a, v12), /item-level/);
   a = await clone(); a.topics[0].items = ['x'];

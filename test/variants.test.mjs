@@ -1,13 +1,10 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
-import ts from "typescript";
+import { compileTsModule, importTsModule } from "./helpers/transpile-ts.mjs";
 
-const source = await readFile(new URL("../lib/variants.ts", import.meta.url), "utf8");
-const compiled = ts.transpileModule(source, {
-  compilerOptions: { module: ts.ModuleKind.ES2022, target: ts.ScriptTarget.ES2022 },
-}).outputText;
-const variants = await import(`data:text/javascript;base64,${Buffer.from(compiled).toString("base64")}`);
+const clientModelModule = await compileTsModule(new URL("../lib/client-model.ts", import.meta.url));
+const variants = await importTsModule(new URL("../lib/variants.ts", import.meta.url), { "./client-model": clientModelModule });
 
 const model = (family_key, variant, agent, { composite = 50, coverage = agent == null ? 0 : 1 } = {}) => ({
   id: `${family_key}::${variant}`,

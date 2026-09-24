@@ -26,7 +26,7 @@ export function SourceScore({ view, axis, row }: { view: BenchmarkView; axis: Vi
       {row.confidenceInterval ? <span className="bh-muted">{Math.round(row.confidenceInterval.level * 100)}% CI {fmt(row.confidenceInterval.lower, 1)}–{fmt(row.confidenceInterval.upper, 1)} {axis.unit}</span> : null}
       {row.publishedStddev != null ? <span className="bh-muted">± {fmt(row.publishedStddev, 3)} sd</span> : null}
       {row.sampleSize != null ? <span className="bh-muted">· {row.sampleSize} tasks</span> : null}
-      {row.costPerRollout != null ? <span className="bh-muted">· {fmt(row.costPerRollout, 2)} USD {costLabel(axis)}</span> : null}
+      {row.costPerRollout != null ? <span className="bh-muted">· {row.costLowerBound ? '≥ ' : ''}{fmt(row.costPerRollout, 2)} USD {costLabel(axis)}{row.costLowerBound ? ' · lower bound' : ''}</span> : null}
       {divergence && <span className="bh-badge bh-alert">Vendor − measured: {fmt(divergence.delta)} {divergence.unit}</span>}
       {row.lowSample ? <span className="bh-alert">low sample</span> : null}
       {row.battles != null ? <span className="bh-muted">{row.battles} battles</span> : null}
@@ -41,7 +41,7 @@ export function SourceScore({ view, axis, row }: { view: BenchmarkView; axis: Vi
           {row.confidenceInterval ? <div>{Math.round(row.confidenceInterval.level * 100)}% confidence interval: {row.confidenceInterval.lower} to {row.confidenceInterval.upper} {axis.unit}</div> : null}
           {row.publishedStddev != null ? <div>Published standard deviation: {row.publishedStddev} {axis.unit}</div> : null}
           {row.sampleSize != null ? <div>Tasks evaluated: {row.sampleSize}</div> : null}
-          {row.costPerRollout != null ? <div>Published mean cost: {row.costPerRollout} USD {costLabel(axis)}{isOpenRouterRun(axis) ? ` — measured by OpenRouter on ${axis.name}` : ''}</div> : null}
+          {row.costPerRollout != null ? <div>Published mean cost: {row.costLowerBound ? 'at least ' : ''}{row.costPerRollout} USD {costLabel(axis)}{row.costLowerBound ? ` — lower bound${row.costRuns ? `; ${row.costRuns} planned runs` : ''}${row.costIncompleteUsageRuns ? `; incomplete usage in ${row.costIncompleteUsageRuns} runs` : ''}${row.costUnmeasuredRequests ? `; ${row.costUnmeasuredRequests} requests unmeasured` : ''}${row.costNote ? ` (${row.costNote})` : ''}` : ''}{isOpenRouterRun(axis) ? ` — measured by OpenRouter on ${axis.name}` : ''}</div> : null}
           {row.harness ? <div>Evaluation harness: {cohortLabel(row.harness)}</div> : null}
           <div>Observed: {row.date} · publication date: {src?.published || 'not recorded'}</div>
           <div>Observation id: <code>{row.id}</code></div>

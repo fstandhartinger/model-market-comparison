@@ -10,7 +10,8 @@ const compiled = ts.transpileModule(source, {
   compilerOptions: { module: ts.ModuleKind.ES2022, target: ts.ScriptTarget.ES2022 },
 }).outputText.replace('from "./effective-cost.mjs"', `from "${new URL("../lib/effective-cost.mjs", import.meta.url).href}"`)
   .replace('from "./regions.mjs"', `from "${new URL("../lib/regions.mjs", import.meta.url).href}"`)
-  .replace('from "./free-route.mjs"', `from "${new URL("../lib/free-route.mjs", import.meta.url).href}"`);
+  .replace('from "./free-route.mjs"', `from "${new URL("../lib/free-route.mjs", import.meta.url).href}"`)
+  .replace('from "./openrouter-pricing.mjs"', `from "${new URL("../lib/openrouter-pricing.mjs", import.meta.url).href}"`);
 const cost = await import(`data:text/javascript;base64,${Buffer.from(compiled).toString("base64")}`);
 
 // Exercise the real Dataset -> client projection -> shared offer scope as one
@@ -124,6 +125,53 @@ const telemetryData = {models:[model],providers:[],offersByModel:{[model.id]:[ro
 // CR-65.8: the per-model tests below price each model's own OpenRouter usage mix; the default is the common workload.
 const adjusted={priceMode:'adjusted',inputWeight:10,ioBasis:'usage'};
 const common={priceMode:'adjusted',inputWeight:10};
+
+test('CR-139.2: adjusted cost uses the matching OpenRouter prompt tier and cache rates', () => {
+  const scheduled = { ...route, price_overrides: [
+    { min_prompt_tokens: 18000, input_per_1m: 4, output_per_1m: 16, cache_read_per_1m: 0.4, cache_write_per_1m: 5 },
+  ] };
+  const checkedAt = new Date('2026-09-24T12:00:00Z');
+  const result = cost.offerPrice(scheduled, cost.priceContext(model, telemetryData, adjusted), checkedAt);
+  assert.equal(result.effective.inputs.input_per_1m, 4);
+  assert.equal(result.effective.inputs.output_per_1m, 16);
+  assert.equal(result.effective.inputs.cache_read_per_1m, 0.4);
+  assert.equal(result.effective.inputs.cache_write_per_1m, 5);
+  assert.equal(result.priceCondition, 'prompt length ≥ 18,000 tokens');
+  assert.equal(result.conditionCheckedAt, checkedAt.toISOString());
+  assert.ok(Math.abs(result.value - 0.047) < 1e-12, `expected $0.047/task, received ${result.value}`);
+});
+
+test('CR-139.2: exact OpenRouter cache observations require the route model, tag, and provider', () => {
+  const checkedAt = new Date('2026-09-24T12:00:00Z');
+  const matching = cost.offerPrice({ ...route, price_overrides: [{ min_prompt_tokens: 18000, input_per_1m: 4 }] }, cost.priceContext(model, telemetryData, adjusted), checkedAt);
+  const wrongProvider = cost.offerPrice({ ...route, provider: 'Other', price_overrides: [{ min_prompt_tokens: 18000, input_per_1m: 4 }] }, cost.priceContext(model, telemetryData, adjusted), checkedAt);
+  const wrongTag = cost.offerPrice({ ...route, endpoint_tag: 'test/slow', price_overrides: [{ min_prompt_tokens: 18000, input_per_1m: 4 }] }, cost.priceContext(model, telemetryData, adjusted), checkedAt);
+  assert.equal(matching.cache.kind, 'observed');
+  assert.notEqual(wrongProvider.cache.kind, 'observed');
+  assert.notEqual(wrongTag.cache.kind, 'observed');
+});
+
+test('CR-139.4: attached-only Composite inputs do not qualify a model-specific score', () => {
+  const attachedOnly = { scores: { composite: 18.2 }, composite_coverage: 0, composite_attached: 2 };
+  const exact = { scores: { composite: 18.2 }, composite_coverage: 1, composite_attached: 0 };
+  assert.equal(client.hasScoreEvidence(attachedOnly, 'composite'), false);
+  assert.equal(client.scoreWithEvidence(attachedOnly, 'composite'), null);
+  assert.equal(client.hasScoreEvidence(exact, 'composite'), true);
+  assert.equal(client.scoreWithEvidence(exact, 'composite'), 18.2);
+});
+
+test('CR-139.2: client projection retains OpenRouter schedules and cloud cache provenance', () => {
+  const projected = client.clientData(dataset);
+  const conditional = Object.values(projected.offersByModel).flat().find((offer) => offer.platform === 'OpenRouter' && offer.price_overrides?.length);
+  assert.ok(conditional, 'at least one source-published OpenRouter conditional route survives projection');
+  assert.ok(conditional.price_overrides.some((tier) => tier.min_prompt_tokens != null || tier.utc_start != null));
+  const projectedOffers = Object.values(projected.offersByModel).flat();
+  for (const platform of ['AWS Bedrock', 'Azure AI Foundry', 'Google Vertex AI']) {
+    const cachedCloud = projectedOffers.find((offer) => offer.platform === platform
+      && offer.cache_read_per_1m != null && offer.cache_read_source?.url);
+    assert.ok(cachedCloud, `${platform} cache-read price and source survive projection`);
+  }
+});
 
 test('client projection includes exact effort tokens and shared endpoint observations',()=>{
   const projected=client.clientData(dataset);

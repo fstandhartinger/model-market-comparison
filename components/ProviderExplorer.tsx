@@ -1,6 +1,6 @@
 "use client";
 import { Fragment, useMemo, useState } from "react";
-import type { ClientData, ClientOffer, ProviderInfo } from "../lib/client-model";
+import { hasScoreEvidence, type ClientData, type ClientOffer, type ProviderInfo } from "../lib/client-model";
 import { counted } from "../lib/format";
 import { SCORE_LABELS } from "../lib/types";
 import { scoreLabel, scoreVersion } from "../lib/score-label";
@@ -39,10 +39,9 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
       if (s.labAllowed && !s.labAllowed(model.org)) return false;
       if (s.featured && !model.featured) return false;
       if (s.familySet && !s.familySet.has(model.family_key)) return false;
+      if (s.score === "composite" && !hasScoreEvidence(model, s.score)) return false;
       const score = scoreOf(model, s.score);
-      // A composite without benchmark evidence is the neutral fallback 50, not
-      // a measured score — it must not satisfy a positive min-score filter.
-      return !(s.advancedMinScore > 0 && (score == null || score < s.advancedMinScore || (s.score === "composite" && model.composite_coverage <= 0)));
+      return !(s.advancedMinScore > 0 && (score == null || score < s.advancedMinScore));
     });
   }, [candidates, preferredId, s.collapse, s.openOnly, s.labAllowed, s.featured, s.familySet, s.advancedMinScore, s.score]);
 

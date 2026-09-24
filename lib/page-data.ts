@@ -1,5 +1,5 @@
 import { getDataset } from "./data";
-import { clientData, type ClientBenchmaxxing, type FamilyOption, type ProviderInfo } from "./client-model";
+import { clientData, hasScoreEvidence, type ClientBenchmaxxing, type FamilyOption, type ProviderInfo } from "./client-model";
 import { getBenchmarkView } from "./benchmark-data";
 import { benchmaxxingFamilySignals, scoreBenchmaxxing } from "./benchmax.mjs";
 import { buildBenchmarkComparison } from "./benchmark-comparison.mjs";
@@ -80,7 +80,7 @@ async function build(key: PageDataKey): Promise<unknown> {
   }
   // benchmaxxing
   const clientModels = clientData(ds).models;
-  const compositeById = new Map(clientModels.map((m) => [m.id, m.scores.composite]));
+  const compositeById = new Map(clientModels.map((m) => [m.id, hasScoreEvidence(m, "composite") ? m.scores.composite : null]));
   // CR-74.2: a row's composite is its family's Main Composite exactly as the collapsed Overview shows it (the
   // preferred variant for the composite); null when that variant has no composite input, so Top 50 skips it.
   const preferred = preferredVariantIds(clientModels, "composite");
@@ -90,7 +90,7 @@ async function build(key: PageDataKey): Promise<unknown> {
   const familyComposite = (id: string) => {
     const m = clientById.get(id);
     const shown = m ? clientById.get(preferred.get(m.family_key) ?? m.id) : undefined;
-    return shown && shown.composite_coverage > 0 ? shown.scores.composite ?? null : null;
+    return shown && hasScoreEvidence(shown, "composite") ? shown.scores.composite ?? null : null;
   };
   // CR-21.1: one row per model family (its most-covered scored variant); the tag is the family's verdict.
   const { reports, levels, familyLevels, familyUncertain, uncertain, average } = benchmaxxingFamilySignals(view);

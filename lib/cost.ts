@@ -1,8 +1,9 @@
 import type { ClientOffer, ClientModel, ClientData } from "./client-model";
 import type { ScoreKey } from "./types";
-import { effectiveCost, fixedCost, cacheHitBaseline, FIXED_BLENDS, DEFAULT_BLEND, type EffectiveCostResult, type CacheHitBaseline } from "./effective-cost.mjs";
+import { effectiveCost, fixedCost, cacheHitBaseline, FIXED_BLENDS, DEFAULT_BLEND, FALLBACK_OUTPUT_TOKENS, FALLBACK_IO_RATIO, type EffectiveCostResult, type CacheHitBaseline } from "./effective-cost.mjs";
 import { REGION_BUCKETS, allRegions, countryBucket, hostingBucket, regionStateFromLegacy } from "./regions.mjs";
 import { isFreeRoute } from "./free-route.mjs";
+import { applyOpenRouterPriceOverride, describeOpenRouterPriceOverride, describeOpenRouterPriceOverrideWithRates, selectOpenRouterPriceOverride } from "./openrouter-pricing.mjs";
 export { FIXED_BLENDS, DEFAULT_BLEND };
 
 export type PriceMode = "adjusted" | "raw";
@@ -31,6 +32,11 @@ export interface PriceResult {
   model?: string;
   provider?: string;
   cache?: PriceCache;
+  /** The source condition used for this adjusted estimate; raw blends use the published base rate. */
+  priceCondition?: string | null;
+  /** Source conditions retained on the offer, including tiers not used by this scenario. */
+  conditionalRates?: string[];
+  conditionCheckedAt?: string;
   /** True when the AA task-token measurement was missing and the 1,000-token example task was used. */
   assumedTask?: boolean;
 }
@@ -74,7 +80,7 @@ const SOURCE_KEYS: Record<string, string> = {
  * identity is mandatory for cache statistics: a route never borrows another endpoint's measured rate. CR-65.9: the one
  * documented exception is the typical baseline (median of OpenRouter endpoints), applied to any route — OpenRouter or
  * direct — that publishes a cache-read price, so one model costs the same caching share wherever it is sold. */
-export function offerPrice(offer: ClientOffer, context: Pricing = 10): PriceResult {
+export function offerPrice(offer: ClientOffer, context: Pricing = 10, evaluatedAt: Date = new Date()): PriceResult {
   const settings = typeof context === "number" ? { priceMode: "raw" as const, inputWeight: context } : context;
   const priceUrl = offer.platform === "OpenRouter" && offer.or_model_id ? `https://openrouter.ai/api/v1/models/${offer.or_model_id}/endpoints`
     : offer.platform === "Google Vertex AI" ? "https://cloud.google.com/vertex-ai/generative-ai/pricing"
@@ -83,11 +89,16 @@ export function offerPrice(offer: ClientOffer, context: Pricing = 10): PriceResu
   const sources: PriceSource[] = [{ label: "List prices", source: offer.source, url: priceUrl,
     date: typeof context === "number" ? undefined : context.data.sourceDates?.[SOURCE_KEYS[offer.platform]], basis: offer.estimated ? "assumed" : "self_reported",
     note: `${offer.platform} / ${offer.provider}; ${offer.region}${offer.endpoint_tag ? `; endpoint ${offer.endpoint_tag}` : ""}${offer.pricing_tier ? `; ${offer.pricing_tier}` : ""}${offer.notes ? `. ${offer.notes}` : ""}` }];
+  if (offer.cache_read_source?.url) sources.push({ label: "Cache-read price", source: offer.cache_read_source.url,
+    url: offer.cache_read_source.url, date: offer.cache_read_source.date, basis: "measured",
+    note: [offer.cache_read_source.locator, offer.cache_read_source.sha256 ? `SHA-256 ${offer.cache_read_source.sha256}` : null].filter(Boolean).join(" · ") });
+  const conditionalRates = offer.price_overrides?.map(describeOpenRouterPriceOverrideWithRates) ?? [];
+  const retained = { conditionalRates: conditionalRates.length ? conditionalRates : undefined };
   const base = { label: priceLabel(settings), sources, model: typeof context === "number" ? undefined : context.model.display_name, provider: `${offer.provider} / ${offer.platform}` };
   if (settings.priceMode === "raw" || typeof context === "number") {
     const result = fixedCost(offer.input_per_1m, offer.output_per_1m, settings.inputWeight);
     if (offer.estimated) result.assumptions.push("Catalog price is marked estimated by its source.");
-    return { ...base, value: result.value, unit: "$/1M tokens", assumptions: result.assumptions, effective: null };
+    return { ...base, ...retained, value: result.value, unit: "$/1M tokens", assumptions: result.assumptions, effective: null };
   }
   const { model, data } = context;
   const extra: string[] = [];
@@ -122,6 +133,24 @@ export function offerPrice(offer: ClientOffer, context: Pricing = 10): PriceResu
   if (tokens && !tokens.stale) sources.push({ label: "Output tokens/task", source: tokens.source, url: tokens.url, date: tokens.collected_at, basis: tokens.basis,
     note: `AA Intelligence Index task; exact configuration ${telemetry?.aa.source_slug} (${telemetry?.aa.source_variant || model.variant || "source default"}). Includes answer and reasoning tokens.` });
   if (tokens?.stale) extra.push("Stale AA task-token observation ignored.");
+  const conditionCheckedAt = offer.platform === "OpenRouter" && conditionalRates.length ? evaluatedAt : undefined;
+  const scenarioOutputTokens = tokens && !tokens.stale && valid(tokens.value.output) && tokens.value.output > 0
+    ? tokens.value.output : FALLBACK_OUTPUT_TOKENS;
+  const scenarioRatio = valid(ratio?.value) ? ratio.value : FALLBACK_IO_RATIO;
+  const promptTokens = scenarioOutputTokens * scenarioRatio;
+  const selectedCondition = offer.platform === "OpenRouter"
+    ? selectOpenRouterPriceOverride(offer.price_overrides, { promptTokens, date: conditionCheckedAt ?? evaluatedAt })
+    : { status: "none", override: null };
+  const pricedOffer = offer.platform === "OpenRouter" ? applyOpenRouterPriceOverride(offer, selectedCondition.override) : offer;
+  const priceCondition = selectedCondition.override ? describeOpenRouterPriceOverride(selectedCondition.override)
+    : conditionalRates.length ? "Published base rate" : null;
+  if (selectedCondition.override) {
+    extra.push(`OpenRouter rate condition applied: ${priceCondition}; estimated prompt length ${Math.round(promptTokens).toLocaleString("en-US")} tokens; schedule checked at ${conditionCheckedAt!.toISOString()} (UTC).`);
+  } else if (selectedCondition.status === "no_match") {
+    extra.push(`OpenRouter base rate applies: no published prompt-length or UTC condition matches an estimated ${Math.round(promptTokens).toLocaleString("en-US")}-token prompt at ${conditionCheckedAt!.toISOString()} (UTC).`);
+  } else if (selectedCondition.status === "ambiguous") {
+    extra.push("OpenRouter conditional rates overlap for this prompt and UTC time; the estimate uses the published base rate until the source conditions can be disambiguated.");
+  }
   const endpoint = offer.platform === "OpenRouter" && offer.or_model_id && offer.endpoint_tag
     ? data.efficiency?.openrouter_endpoints[offer.or_model_id]?.[offer.endpoint_tag] : undefined;
   const exactEndpoint = endpoint?.or_model_id === offer.or_model_id && endpoint?.endpoint_tag === offer.endpoint_tag
@@ -131,7 +160,7 @@ export function offerPrice(offer: ClientOffer, context: Pricing = 10): PriceResu
   // 2026-09-15: a route without its own usable observation gets the documented typical rate (median of
   // OpenRouter endpoints that bill cache reads), not 0 %. CR-65.9: only on routes that publish a cache-read price
   // (where caching is billed); a route without one gets no rate at all, so the modal never claims a cache share.
-  const baselineApplies = !observedHit && valid(offer.cache_read_per_1m);
+  const baselineApplies = !observedHit && valid(pricedOffer.cache_read_per_1m);
   const baseline = baselineApplies ? baselineFor(data) : null;
   if (observedHit) {
     sources.push({ label: "Cache-hit rate", source: hit!.source, url: hit!.url, date: hit!.collected_at, basis: hit!.basis, note: hit!.definition });
@@ -148,9 +177,9 @@ export function offerPrice(offer: ClientOffer, context: Pricing = 10): PriceResu
   if (endpoint && !exactEndpoint) extra.push("Conflicting/ambiguous endpoint identity ignored; no endpoint cache statistics borrowed.");
   const appliedHit = observedHit ? hit!.value : baseline?.value ?? null;
   const costInputs = {
-    input_per_1m: offer.input_per_1m, output_per_1m: offer.output_per_1m,
-    cache_read_per_1m: offer.cache_read_per_1m,
-    cache_write_per_1m: offer.cache_write_per_1m,
+    input_per_1m: pricedOffer.input_per_1m, output_per_1m: pricedOffer.output_per_1m,
+    cache_read_per_1m: pricedOffer.cache_read_per_1m,
+    cache_write_per_1m: pricedOffer.cache_write_per_1m,
     output_tokens_per_task: tokens && !tokens.stale ? tokens.value.output : null,
     input_output_ratio: ratio?.value,
     cache_hit_rate: appliedHit,
@@ -159,7 +188,7 @@ export function offerPrice(offer: ClientOffer, context: Pricing = 10): PriceResu
   // CR-65.9: a route that publishes a cache-write price above its input price (explicit caching, e.g. Anthropic's
   // 1.25×) bills the input it has to cache at that price. When cache reads are credited, every uncached input token
   // is assumed to be written once (an upper bound); the engine adds only the surcharge over the input price.
-  const hitRate = result.inputs.cache_hit_rate ?? 0, writePrice = offer.cache_write_per_1m, inputPrice = result.inputs.input_per_1m;
+  const hitRate = result.inputs.cache_hit_rate ?? 0, writePrice = pricedOffer.cache_write_per_1m, inputPrice = result.inputs.input_per_1m;
   if (hitRate > 0 && valid(writePrice) && typeof inputPrice === "number" && writePrice > inputPrice) {
     const writes = result.inputs.input_tokens_per_task * (1 - hitRate);
     result = effectiveCost({ ...costInputs, cache_write_tokens: writes, cache_write_per_1m: writePrice - inputPrice });
@@ -176,7 +205,7 @@ export function offerPrice(offer: ClientOffer, context: Pricing = 10): PriceResu
   if (offer.estimated) extra.push("Catalog price is marked estimated by its source.");
   result.assumptions.push(...extra);
   result.estimated = true;
-  return { ...base, value: result.effective_cost_per_task, unit: "$/task", assumptions: result.assumptions, effective: result, cache,
+  return { ...base, ...retained, priceCondition, conditionCheckedAt: conditionCheckedAt?.toISOString(), value: result.effective_cost_per_task, unit: "$/task", assumptions: result.assumptions, effective: result, cache,
     assumedTask: !(tokens && !tokens.stale && Number.isFinite(tokens.value.output) && tokens.value.output > 0) };
 }
 

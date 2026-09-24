@@ -1,7 +1,7 @@
 {
   "source": "GitHub Copilot (current usage-based billing plus annual-plan legacy request billing)",
-  "collected_at": "2026-09-23",
-  "method": "scripts/fetch-github-copilot-catalog.mjs (2026-09-23): current_models[] = the intersection of the supported-models catalog table (https://docs.github.com/en/copilot/reference/ai-models/supported-models) and the per-token pricing tables (https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing), matched by exact name after footnote markers are removed; Default and Long context tiers are folded into one row (long_context carries the threshold and higher price); promotion end dates come from the pricing footnotes. models[] = the legacy annual-plan multiplier table (https://docs.github.com/en/copilot/reference/copilot-billing/request-based-billing-legacy/model-multipliers-for-annual-plans) with effective USD per request = multiplier × per_premium_request_usd; the page's \"subject to change\" list sets the note. Plan allowances (plans[]) are documented on separate billing pages and keep plans_checked_at. See github-copilot.method.md.",
+  "collected_at": "2026-09-24",
+  "method": "scripts/fetch-github-copilot-catalog.mjs (2026-09-24): current_models[] = the intersection of the supported-models catalog table (https://docs.github.com/en/copilot/reference/ai-models/supported-models) and the per-token pricing tables (https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing), matched by exact name after footnote markers are removed; Default and Long context tiers are folded into one row (long_context carries the threshold and higher price); promotion end dates come from the pricing footnotes. models[] = the legacy annual-plan multiplier table (https://docs.github.com/en/copilot/reference/copilot-billing/request-based-billing-legacy/model-multipliers-for-annual-plans) with effective USD per request = multiplier × per_premium_request_usd; the page's \"subject to change\" list sets the note. Plan allowances (plans[]) are documented on separate billing pages and keep plans_checked_at. See github-copilot.method.md.",
   "pricing_model": "ai_credits_per_token_with_legacy_per_premium_request",
   "ai_credit_usd": 0.01,
   "per_premium_request_usd": 0.04,
@@ -583,7 +583,7 @@
       "notes": "Legacy annual request billing only. Under current usage-based billing, code review consumes model tokens in AI credits plus GitHub Actions minutes; no fixed 13x charge applies."
     }
   ],
-  "plans_checked_at": "2026-09-08",
+  "plans_checked_at": "2026-09-24",
   "retirement_history": [
     {
       "name": "Claude Opus 4.7",
@@ -778,20 +778,40 @@
     "Claude Sonnet 4.6 (2026-09-01)"
   ],
   "response_sha256": {
-    "supported": "843a9c50fb35a889843e0c66295f21ab470a5b0166c03411d09a2d68620542b7",
-    "pricing": "9db0bf0be613227b3a94c0815c918b08db60f259866fa2435bca797220b1015f",
-    "multipliers": "7f138c4e708818103db0d19c53d4072ef4e1da8a9f34d8e6ee5d3e911c09565f"
+    "supported": "0e09da0c230c4b0438713769a86de7a95aa831b0c6b175aa0840358c499d5cb6",
+    "pricing": "df3559dcc9ac52d23c3ce9d568ccd3047ea8bdb3a03e88dba723ef28d989e174",
+    "multipliers": "6d193c03014cfd561af7a92493a5a7104816f98073be5489ffb7b84fc2f0451c"
   },
   "diff": {
-    "current_added": [
-      "GPT-6 Luna",
-      "GPT-6 Sol",
-      "Claude Opus 5.5"
-    ],
+    "current_added": [],
     "current_removed": [],
     "current_price_changed": [],
     "legacy_added": [],
     "legacy_removed": [],
     "legacy_multiplier_changed": []
-  }
+  },
+  "plans_source_url": "https://github.com/features/copilot/plans",
+  "plans_response_sha256": "4195710796fa763b9249120bd1de065b7897eb7665dd4512fdb9a238bac66455",
+  "plans_source_evidence": [
+    {
+      "url": "https://github.com/features/copilot/plans",
+      "checked_at": "2026-09-24",
+      "sha256": "4195710796fa763b9249120bd1de065b7897eb7665dd4512fdb9a238bac66455"
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/concepts/billing/usage-based-billing-for-individuals",
+      "checked_at": "2026-09-24",
+      "sha256": "d4c909f7226a0b6fa41c9b13f2238357ad1fe14347d2ae6edb2d49f9de807832"
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/concepts/billing/usage-based-billing-for-organizations-and-enterprises",
+      "checked_at": "2026-09-24",
+      "sha256": "ed0f294ae53023a59e11119aa2c38b8ed8faf72e986dd4156f3a36853c83bc82"
+    },
+    {
+      "url": "https://docs.github.com/en/copilot/tutorials/roll-out-at-scale/assign-licenses/choose-enterprise-plan",
+      "checked_at": "2026-09-24",
+      "sha256": "67e02fb8999825769dbb3ad3d1bd88e21fad147ddac88c3edb1f367cbe18e55c"
+    }
+  ]
 }

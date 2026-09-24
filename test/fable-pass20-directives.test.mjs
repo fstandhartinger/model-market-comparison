@@ -2,6 +2,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { importTsModule } from './helpers/transpile-ts.mjs';
 
 const src = (path) => readFile(new URL(`../${path}`, import.meta.url), 'utf8');
 
@@ -58,7 +59,7 @@ test('F-111: every (i) shares one frame-coalesced media-query subscription', asy
 });
 
 test('CR-65.11: every label of the pinned Coding Agent value names v1.4', async () => {
-  const { SCORE_SHORT_LABELS, SCORE_PICKER_LABELS, SCORE_LABELS } = await import('../lib/types.ts');
+  const { SCORE_SHORT_LABELS, SCORE_PICKER_LABELS, SCORE_LABELS } = await importTsModule(new URL('../lib/types.ts', import.meta.url));
   for (const label of [SCORE_SHORT_LABELS.aa_coding_agent, SCORE_PICKER_LABELS.aa_coding_agent, SCORE_LABELS.aa_coding_agent]) assert.match(label, /v1\.4/, label);
   // score-label.ts imports ./types without an extension, so its version line is checked in the source.
   assert.match(await src('lib/score-label.ts'), /return `v1\.4 snapshot \$\{dates\?\.aa_coding_agents \|\| 'date unavailable'\} \(AA now publishes v1\.5\)`/);

@@ -4,13 +4,15 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import ts from "typescript";
+import { compileTsModule, importTsModule } from "./helpers/transpile-ts.mjs";
 import { benchmaxxingAdjustedComposite, BENCHMAXX_COMPOSITE_WEIGHT, BENCHMAXX_COMPOSITE_WEIGHT_CAP } from "../lib/composite.mjs";
 import { buildBenchmarkView } from "../lib/benchmark-view.mjs";
 import { benchmaxxingFamilySignals } from "../lib/benchmax.mjs";
 
-const { clientData, isThinComposite } = await import("../lib/client-model.ts");
-const { preferredVariantIds, selectableModels } = await import("../lib/variants.ts");
-const { withCompositeSetting, benchmaxxingCompositeOf } = await import("../lib/composite-setting.ts");
+const clientModelModule = await compileTsModule(new URL("../lib/client-model.ts", import.meta.url));
+const { clientData, isThinComposite } = await import(clientModelModule);
+const { preferredVariantIds, selectableModels } = await importTsModule(new URL("../lib/variants.ts", import.meta.url), { "./client-model": clientModelModule });
+const { withCompositeSetting, benchmaxxingCompositeOf } = await importTsModule(new URL("../lib/composite-setting.ts", import.meta.url));
 const read = (path) => readFile(new URL(path, import.meta.url), "utf8");
 
 test("CR-74.4: positive signals are penalised by w per point; negative, zero, null and off are identity", () => {
@@ -55,7 +57,8 @@ test("CR-74.4: includeBenchmaxxing defaults on, persists, and old payloads load 
   const asModule = (code) => `data:text/javascript;base64,${Buffer.from(code).toString("base64")}`;
   const lib = (f) => new URL(`../lib/${f}`, import.meta.url).href;
   const costCode = transpile(await read("../lib/cost.ts")).replace('from "./effective-cost.mjs"', `from "${lib("effective-cost.mjs")}"`)
-    .replace('from "./regions.mjs"', `from "${lib("regions.mjs")}"`).replace('from "./free-route.mjs"', `from "${lib("free-route.mjs")}"`);
+    .replace('from "./regions.mjs"', `from "${lib("regions.mjs")}"`).replace('from "./free-route.mjs"', `from "${lib("free-route.mjs")}"`)
+    .replace('from "./openrouter-pricing.mjs"', `from "${lib("openrouter-pricing.mjs")}"`);
   const settingsCode = transpile(await read("../lib/settings-state.ts")).replace('from "./cost"', `from "${asModule(costCode)}"`)
     .replace('from "./regions.mjs"', `from "${lib("regions.mjs")}"`).replace('from "./free-route.mjs"', `from "${lib("free-route.mjs")}"`);
   const { SETTINGS_DEFAULTS, sanitizeSettings, anyFiltersActive } = await import(asModule(settingsCode));

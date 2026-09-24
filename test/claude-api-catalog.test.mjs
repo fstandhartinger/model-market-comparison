@@ -1,8 +1,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readPriceTables, readLifecycle, readModifiers, readEnterpriseSeat, parseClaudeApiCatalog } from "../lib/claude-api-catalog.mjs";
+import { readPriceTables, readLifecycle, readModifiers, readEnterpriseSeat, readEnterpriseTerms, parseClaudeApiCatalog } from "../lib/claude-api-catalog.mjs";
 
 const table = (header, rows) => `<table><thead><tr>${header.map((h) => `<th>${h}</th>`).join("")}</tr></thead><tbody>${rows.map((r) => `<tr>${r.map((c) => `<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
+const groupedTable = (groupHeader, header, rows) => `<table><thead><tr>${groupHeader.map((h) => `<th>${h}</th>`).join("")}</tr><tr>${header.map((h) => `<th>${h}</th>`).join("")}</tr></thead><tbody>${rows.map((r) => `<tr>${r.map((c) => `<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
 const $ = (v, foot = "") => `$${v} / MTok${foot ? ` <sup>${foot}</sup>` : ""}`;
 const HEAD = ["Model", "Base input tokens", "5m cache writes", "1h cache writes", "Cache hits and refreshes", "Output tokens"];
 const row = (name, input, read, foot = "") => [name, $(input), $(input * 1.25), $(input * 2), $(read, foot), $(input * 5)];
@@ -44,7 +45,59 @@ test("reads lifecycle, stated multipliers and the Enterprise seat line", () => {
   assert.deepEqual(readModifiers(pricing(fullRows, fullBatch), rows), { write5m: 1.25, write1h: 2, readDefault: 0.1, readExceptions: [0.025], batchPct: 50, usOnly: 1.1 });
   assert.throws(() => readModifiers(`<html>${table(HEAD, fullRows)}</html>`, rows), /multiplier text not found/);
   assert.deepEqual(readEnterpriseSeat(enterprise), { seat_monthly_usd: 20, usage_at_api_rates: true });
+  assert.deepEqual(readEnterpriseSeat(`<section><h3>Enterprise</h3><p>Seat price + usage at API rates</p><p>US$20/seat/month, billed annually. Usage cost scales with model and task.</p></section>`), {
+    seat_monthly_usd: 20, usage_at_api_rates: true, seat_billing_period: "annual",
+  });
   assert.equal(readEnterpriseSeat("<div>Team</div>"), null);
+});
+
+test("reads current Enterprise support terms and preserves dates on a layout change", () => {
+  const terms = `<html>${table(["", "Self-serve", "Sales-assisted"], [
+    ["Minimum number of seats", "20", "50"],
+  ])}<p>Usage isn't included in the seat fee. Every token is billed at standard API rates.</p>
+  <p>Usage-based Enterprise plans have no plan or seat-level usage limits.</p>
+  <p>Seat-based Enterprise plans haven't changed. Some organizations retain Standard and Premium seats until migration.</p></html>`;
+  assert.deepEqual(readEnterpriseTerms(terms), {
+    self_serve_minimum_seats: 20,
+    sales_assisted_minimum_seats: 50,
+    usage_billing: "Usage is billed separately at standard API rates based on actual team consumption.",
+    usage_limits: "Usage-based Enterprise plans have no plan or seat-level usage limits; administrators can set spend limits.",
+    sales_assisted_options: "Invoicing, multi-currency billing, and HIPAA-readiness/BAA are available through sales.",
+    legacy_note: "Some organizations remain on older seat-based Enterprise plans with Standard and Premium seats and per-seat limits until they migrate to usage-based billing.",
+  });
+  assert.equal(readEnterpriseTerms("<html>Enterprise</html>"), null);
+});
+
+test("reads Anthropic's grouped pricing tables and current status badges", () => {
+  const modelCell = (name, slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-"), badge = "") =>
+    `<a href="/docs/en/models/${slug}/overview">${name}</a>${badge ? `<button aria-label="${name} (${badge})">i</button>` : ""}`;
+  const retiredCell = `<div aria-label="Claude Opus 4.1 (Retired)">Claude Opus 4.1</div>`;
+  const main = groupedTable(["Model", "Base tokens", "Prompt caching"], ["Name", "Input", "Output", "5m writes", "1h writes", "Hits and refreshes"], [
+    [modelCell("Claude Fable 5.1", "fable-5-1"), $(10), $(50), $(12.5), $(20), $(0.25)],
+    [modelCell("Claude Opus 5.5", "opus-5-5"), $(4), $(20), $(5), $(8), $(0.2)],
+    [modelCell("Claude Sonnet 5", "sonnet-5"), $(2), $(10), $(2.5), $(4), $(0.2)],
+    [modelCell("Claude Mythos 5.1", "mythos-5-1", "Invite only"), $(10), $(50), $(12.5), $(20), $(0.25)],
+    [retiredCell, $(15), $(75), $(18.75), $(30), $(1.5)],
+  ]);
+  const batch = groupedTable(["Model", "Batch tokens"], ["Name", "Input", "Output"], [
+    [modelCell("Claude Fable 5.1", "fable-5-1"), $(5), $(25)],
+    [modelCell("Claude Opus 5.5", "opus-5-5"), $(2), $(10)],
+    [modelCell("Claude Sonnet 5", "sonnet-5"), $(1), $(5)],
+    [modelCell("Claude Mythos 5.1", "mythos-5-1", "Invite only"), $(5), $(25)],
+    [retiredCell, $(7.5), $(37.5)],
+  ]);
+  const currentText = `<p>All other models use the standard 0.1x multiplier.</p>
+    <p>On Claude Fable 5.1, a cache hit costs 2.5% of the standard input price.</p>
+    <p>On Claude Opus 5.5, a cache hit costs 5% of the standard input price.</p>
+    <p>For Claude 4.6 and later models, using inference_geo: "us" applies a 1.1x pricing multiplier.</p>`;
+  const html = `<html>${main}${batch}${currentText}</html>`;
+  const rows = readPriceTables(html);
+  assert.equal(rows.length, 5);
+  assert.deepEqual(rows[0], { name: "Claude Fable 5.1", label: "", retired: false, limited: false, input: 10, write5m: 12.5, write1h: 20, read: 0.25, output: 50, batch: { input: 5, output: 25 } });
+  assert.equal(rows[3].limited, true);
+  assert.equal(rows[4].name, "Claude Opus 4.1");
+  assert.equal(rows[4].retired, true);
+  assert.deepEqual(readModifiers(html, rows), { write5m: 1.25, write1h: 2, readDefault: 0.1, readExceptions: [0.025, 0.05], batchPct: 50, usOnly: 1.1 });
 });
 
 test("keeps curated rows, excludes retired ones, derives new models and dates the Enterprise check honestly", () => {

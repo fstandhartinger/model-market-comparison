@@ -10,6 +10,7 @@ import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { aaSpeed } from "../lib/aa-speed.mjs";
 import { collapseDuplicateEndpoints, perMillion } from "../lib/openrouter-endpoints.mjs";
+import { normalizeOpenRouterPriceOverrides } from "../lib/openrouter-pricing.mjs";
 import { deterministicFamilyRepresentative } from "../lib/family-representative.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -799,15 +800,20 @@ async function build() {
       if (/(?:^|\/)(?:flex|priority|batch)(?:\/|$)/i.test(tag)) continue;
       const euRoute = /(?:^|\/)(?:eu(?:rope)?|eu-[a-z0-9-]+|europe(?:-[a-z0-9-]+)?|swedencentral)(?:\/|$)/i.test(tag);
       const override = offerOverrides.get(`${m.id}::${tag}`);
+      const priceOverrides = normalizeOpenRouterPriceOverrides(e.pricing?.overrides);
+      // An explicit source schedule supersedes a manually-curated base-price override: applying a
+      // peak rate to every hour would erase the upstream route's off-peak price window.
+      const manualOverride = override && priceOverrides.length === 0 ? override : null;
       fam.offers.push({
         source: "OpenRouter",
         provider: e.provider_name || "Unknown",
         platform: "OpenRouter",
-        input_per_1m: override ? override.input_per_1m : (perMillion(e.pricing?.prompt)),
-        output_per_1m: override ? override.output_per_1m : (perMillion(e.pricing?.completion)),
-        ...(override ? { notes: `Price override: ${override.reason}` } : {}),
+        input_per_1m: manualOverride ? manualOverride.input_per_1m : (perMillion(e.pricing?.prompt)),
+        output_per_1m: manualOverride ? manualOverride.output_per_1m : (perMillion(e.pricing?.completion)),
+        ...(manualOverride ? { notes: `Price override: ${manualOverride.reason}` } : {}),
         cache_read_per_1m: perMillion(e.pricing?.input_cache_read),
         cache_write_per_1m: perMillion(e.pricing?.input_cache_write),
+        ...(priceOverrides.length ? { price_overrides: priceOverrides } : {}),
         internal_reasoning_per_1m: perMillion(e.pricing?.internal_reasoning),
         region: euRoute ? "eu" : "global",
         unit: "per_1m_token",
@@ -841,7 +847,10 @@ async function build() {
     fam.offers.push({
       source: "AWS Bedrock", provider: "AWS Bedrock", platform: "AWS Bedrock",
       input_per_1m: num(m.input_per_1m_usd), output_per_1m: num(m.output_per_1m_usd),
+      cache_read_per_1m: num(m.cache_read_per_1m_usd ?? m.cache_read),
       region: m.region || "eu-central-1", unit: "per_1m_token", notes: m.notes || "",
+      ...(m.cache_read_source ? { cache_read_source: m.cache_read_source } : {}),
+      ...(Array.isArray(m.price_overrides) && m.price_overrides.length ? { price_overrides: m.price_overrides } : {}),
       pricing_tier: pricingTier(m.model_name), route_type: routeType(m.model_name),
       eu_hosted: typeof m.eu_hosted === "boolean" ? m.eu_hosted : undefined,
     });
@@ -857,7 +866,10 @@ async function build() {
     fam.offers.push({
       source: "Azure AI Foundry", provider: "Azure AI Foundry", platform: "Azure AI Foundry",
       input_per_1m: num(m.input_per_1m_usd), output_per_1m: num(m.output_per_1m_usd),
+      cache_read_per_1m: num(m.cache_read_per_1m_usd),
       region: m.region || "swedencentral", unit: "per_1m_token", notes: m.notes || "",
+      ...(m.cache_read_source ? { cache_read_source: m.cache_read_source } : {}),
+      ...(Array.isArray(m.price_overrides) && m.price_overrides.length ? { price_overrides: m.price_overrides } : {}),
       pricing_tier: pricingTier(m.model_name), route_type: m.route_type || routeType(m.model_name),
       eu_hosted: typeof m.eu_hosted === "boolean" ? m.eu_hosted : undefined,
       eu_policy_equivalent: m.eu_policy_equivalent === true || undefined,
@@ -873,7 +885,10 @@ async function build() {
     fam.offers.push({
       source: "Google Vertex AI", provider: "Google Vertex AI", platform: "Google Vertex AI",
       input_per_1m: num(m.input_per_1m_usd), output_per_1m: num(m.output_per_1m_usd),
+      cache_read_per_1m: num(m.cache_read_per_1m_usd),
       region: m.region || "europe-west4", unit: "per_1m_token", notes: m.notes || "",
+      ...(m.cache_read_source ? { cache_read_source: m.cache_read_source } : {}),
+      ...(Array.isArray(m.price_overrides) && m.price_overrides.length ? { price_overrides: m.price_overrides } : {}),
       pricing_tier: pricingTier(m.model_name), route_type: routeType(m.model_name),
       eu_hosted: typeof m.eu_hosted === "boolean" ? m.eu_hosted : undefined,
     });

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useSettings } from "./SettingsContext";
 import { SCORE_SHORT_LABELS } from "../lib/types";
-import type { ClientModel } from "../lib/client-model";
+import { hasScoreEvidence, type ClientModel } from "../lib/client-model";
 import { rowBars, rowWinners, formatValue, cellHref, chartRows, categoryComposite, versionLine, countBoards, variantLabel, caveatTip, type BenchmarkMatrix as Matrix, type MatrixRow } from "../lib/benchmark-matrix.mjs";
 import { versionSuffix } from "../lib/version-label";
 import { counted } from "../lib/format";
@@ -168,9 +168,8 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
   // F-102: one counting rule — a benchmark is a board (one family at one version); a harness cohort and a
   // cost twin are rows of that board. The status line, the row chooser and the hero all count boards.
   const shownBoards = useMemo(() => countBoards(visible.map((v) => v.row)), [visible]);
-  // 2026-09-15: the selected score, with the same evidence rule as the candidate filter (a Composite
-  // with no observed slot is the neutral fallback, not a score).
-  const valuesFor = (key: typeof score) => ids.map((id) => { const m = modelsById.get(id); const v = m?.scores[key]; return v != null && (key !== "composite" || (m!.composite_coverage ?? 0) > 0) ? v : null; });
+  // CR-139.4: chart values use the same exact-evidence rule as score filters and shortlist rows.
+  const valuesFor = (key: typeof score) => ids.map((id) => { const m = modelsById.get(id); const v = m?.scores[key]; return v != null && hasScoreEvidence(m!, key) ? v : null; });
   const matches = useMemo(() => {
     const t = q.trim().toLowerCase();
     if (!t) return [];

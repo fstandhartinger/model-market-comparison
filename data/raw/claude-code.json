@@ -1,7 +1,7 @@
 {
   "source": "Anthropic Claude API and Claude Code Enterprise",
-  "collected_at": "2026-09-23",
-  "method": "scripts/fetch-claude-api-catalog.mjs (2026-09-23): models[] from the server-rendered model and batch price tables on https://platform.claude.com/docs/en/about-claude/pricing; rows labelled retired there, or Retired in the lifecycle table on https://platform.claude.com/docs/en/about-claude/model-deprecations, are excluded; lifecycle_status and tentative retirement dates come from that table by API model id. pricing_modifiers: cache-write multipliers derived from the table (must be uniform), cache-hit default/exception, batch discount and US-only inference multiplier read from the page text. claude_code_enterprise: the seat price is re-read from the Enterprise line on https://claude.com/pricing (\"Seat price + usage at API rates\"); minimum-seat, sales-assisted and legacy-seat terms are not on that page and keep other_terms_checked_at. See claude-code.method.md.",
+  "collected_at": "2026-09-24",
+  "method": "scripts/fetch-claude-api-catalog.mjs (2026-09-24): models[] from the server-rendered model and batch price tables on https://platform.claude.com/docs/en/about-claude/pricing; rows labelled retired there, or Retired in the lifecycle table on https://platform.claude.com/docs/en/about-claude/model-deprecations, are excluded; lifecycle_status and tentative retirement dates come from that table by API model id. Pricing modifiers are derived from the current tables and text. Claude Code Enterprise seat pricing comes from https://claude.com/pricing; seat minimums, usage billing, limits, and legacy-plan terms come from https://support.claude.com/en/articles/9797531-what-is-the-enterprise-plan. See claude-code.method.md.",
   "models": [
     {
       "model_name": "Claude Fable 5.1",
@@ -18,6 +18,53 @@
       "batch_output_per_1m_usd": 25,
       "notes": "Official pricing: cache hits are 0.025x base input ($0.25/MTok); 5m/1h writes $12.50/$20. Mythos remains limited availability.",
       "tentative_retirement": "Not sooner than September 1, 2027"
+    },
+    {
+      "model_name": "Claude Opus 5.5",
+      "model_id": "claude-opus-5-5",
+      "provider_org": "Anthropic",
+      "lifecycle_status": "active",
+      "input_per_1m_usd": 4,
+      "output_per_1m_usd": 20,
+      "cache_write_per_1m_usd": 5,
+      "cache_write_1h_per_1m_usd": 8,
+      "cache_read_per_1m_usd": 0.2,
+      "batch_input_per_1m_usd": 2,
+      "batch_output_per_1m_usd": 10,
+      "mapping": "derived",
+      "model_id_source": "derived from the pricing-table name; not listed in the deprecations table",
+      "tentative_retirement": "Not sooner than September 22, 2027"
+    },
+    {
+      "model_name": "Claude Sonnet 5",
+      "model_id": "claude-sonnet-5",
+      "provider_org": "Anthropic",
+      "lifecycle_status": "active",
+      "input_per_1m_usd": 2,
+      "output_per_1m_usd": 10,
+      "cache_write_per_1m_usd": 2.5,
+      "cache_write_1h_per_1m_usd": 4,
+      "cache_read_per_1m_usd": 0.2,
+      "batch_input_per_1m_usd": 1,
+      "batch_output_per_1m_usd": 5,
+      "notes": "The launch $2/$10 price is now permanent; the previously announced September 1 increase was cancelled (official pricing page checked 2026-09-08).",
+      "tentative_retirement": "Not sooner than June 30, 2027"
+    },
+    {
+      "model_name": "Claude Haiku 4.5",
+      "model_id": "claude-haiku-4-5-20251001",
+      "model_alias": "claude-haiku-4-5",
+      "provider_org": "Anthropic",
+      "lifecycle_status": "active",
+      "input_per_1m_usd": 1,
+      "output_per_1m_usd": 5,
+      "cache_write_per_1m_usd": 1.25,
+      "cache_write_1h_per_1m_usd": 2,
+      "cache_read_per_1m_usd": 0.1,
+      "batch_input_per_1m_usd": 0.5,
+      "batch_output_per_1m_usd": 2.5,
+      "notes": "Active first-party Claude API model. Anthropic's published tentative retirement is not sooner than October 15, 2026.",
+      "tentative_retirement": "Not sooner than October 15, 2026"
     },
     {
       "model_name": "Claude Mythos 5.1",
@@ -68,22 +115,6 @@
       "tentative_retirement": "Not sooner than June 9, 2027"
     },
     {
-      "model_name": "Claude Opus 5.5",
-      "model_id": "claude-opus-5-5",
-      "provider_org": "Anthropic",
-      "lifecycle_status": "active",
-      "input_per_1m_usd": 4,
-      "output_per_1m_usd": 20,
-      "cache_write_per_1m_usd": 5,
-      "cache_write_1h_per_1m_usd": 8,
-      "cache_read_per_1m_usd": 0.2,
-      "batch_input_per_1m_usd": 2,
-      "batch_output_per_1m_usd": 10,
-      "mapping": "derived",
-      "model_id_source": "derived from the pricing-table name; not listed in the deprecations table",
-      "tentative_retirement": "Not sooner than September 22, 2027"
-    },
-    {
       "model_name": "Claude Opus 5",
       "model_id": "claude-opus-5",
       "provider_org": "Anthropic",
@@ -131,7 +162,7 @@
       "cache_read_per_1m_usd": 0.5,
       "batch_input_per_1m_usd": 2.5,
       "batch_output_per_1m_usd": 12.5,
-      "notes": "1M context at standard pricing. The model remains active; only its fast mode is scheduled for removal on July 24, 2026.",
+      "notes": "1M context at standard pricing. Fast mode is unavailable; the current pricing page says requests with speed=\"fast\" return an error. Checked 2026-09-24.",
       "tentative_retirement": "Not sooner than April 16, 2027"
     },
     {
@@ -166,21 +197,6 @@
       "tentative_retirement": "Not sooner than November 24, 2026"
     },
     {
-      "model_name": "Claude Sonnet 5",
-      "model_id": "claude-sonnet-5",
-      "provider_org": "Anthropic",
-      "lifecycle_status": "active",
-      "input_per_1m_usd": 2,
-      "output_per_1m_usd": 10,
-      "cache_write_per_1m_usd": 2.5,
-      "cache_write_1h_per_1m_usd": 4,
-      "cache_read_per_1m_usd": 0.2,
-      "batch_input_per_1m_usd": 1,
-      "batch_output_per_1m_usd": 5,
-      "notes": "The launch $2/$10 price is now permanent; the previously announced September 1 increase was cancelled (official pricing page checked 2026-09-08).",
-      "tentative_retirement": "Not sooner than June 30, 2027"
-    },
-    {
       "model_name": "Claude Sonnet 4.6",
       "model_id": "claude-sonnet-4-6",
       "provider_org": "Anthropic",
@@ -210,22 +226,6 @@
       "batch_output_per_1m_usd": 7.5,
       "notes": "Active first-party Claude API model. Anthropic's published tentative retirement is not sooner than September 29, 2026.",
       "tentative_retirement": "Not sooner than September 29, 2026"
-    },
-    {
-      "model_name": "Claude Haiku 4.5",
-      "model_id": "claude-haiku-4-5-20251001",
-      "model_alias": "claude-haiku-4-5",
-      "provider_org": "Anthropic",
-      "lifecycle_status": "active",
-      "input_per_1m_usd": 1,
-      "output_per_1m_usd": 5,
-      "cache_write_per_1m_usd": 1.25,
-      "cache_write_1h_per_1m_usd": 2,
-      "cache_read_per_1m_usd": 0.1,
-      "batch_input_per_1m_usd": 0.5,
-      "batch_output_per_1m_usd": 2.5,
-      "notes": "Active first-party Claude API model. Anthropic's published tentative retirement is not sooner than October 15, 2026.",
-      "tentative_retirement": "Not sooner than October 15, 2026"
     }
   ],
   "claude_code_enterprise": {
@@ -234,14 +234,14 @@
     "claude_code_included": true,
     "cowork_included": true,
     "included_usage": false,
-    "usage_billing": "All Claude, Claude Code, and Cowork usage is billed from the first token at standard Claude API rates on top of the seat fee.",
-    "usage_limits": "No plan-level or seat-level usage cap; administrators can set organization and user spend limits.",
+    "usage_billing": "Usage is billed separately at standard API rates based on actual team consumption.",
+    "usage_limits": "Usage-based Enterprise plans have no plan or seat-level usage limits; administrators can set spend limits.",
     "self_serve_minimum_seats": 20,
     "sales_assisted_minimum_seats": 50,
-    "sales_assisted_options": "Invoicing, HIPAA-readiness/BAA, dedicated customer success, and multi-currency support are available through sales.",
-    "legacy_note": "Chat/Chat + Claude Code and Standard/Premium seat types are legacy and unavailable for new contracts; they transition to the single Enterprise seat at renewal.",
-    "seat_and_usage_checked_at": "2026-09-16",
-    "other_terms_checked_at": "2026-09-08"
+    "sales_assisted_options": "Invoicing, multi-currency billing, and HIPAA-readiness/BAA are available through sales.",
+    "legacy_note": "Some organizations remain on older seat-based Enterprise plans with Standard and Premium seats and per-seat limits until they migrate to usage-based billing.",
+    "seat_and_usage_checked_at": "2026-09-24",
+    "other_terms_checked_at": "2026-09-24"
   },
   "pricing_modifiers": {
     "prompt_cache_5m_write_multiplier": 1.25,
@@ -252,21 +252,22 @@
     "us_only_inference_applies_to": "Claude Opus 4.6, Claude Sonnet 4.6, and later models; global routing is standard price.",
     "prompt_cache_read_multiplier_exceptions": {
       "claude-fable-5-1": 0.025,
-      "claude-mythos-5-1": 0.025,
-      "claude-opus-5-5": 0.05
+      "claude-opus-5-5": 0.05,
+      "claude-mythos-5-1": 0.025
     }
   },
   "plan_notes": "The direct API list prices in models[] are the token rates used by current Claude Code Enterprise usage billing. Enterprise adds a $20/user/month access seat billed annually; the seat includes Claude Code but no token allowance. Enterprise volume discounts and custom terms may be negotiated through sales. Claude Sonnet 5 $2/$10 is now the permanent standard price; the previously scheduled increase was cancelled. Output tokens, including thinking tokens, use the single output rate.",
   "excluded": [
-    "Claude Opus 4.1 (retired, except on Bedrock and Google Cloud)",
-    "Claude Opus 4 (retired, except on Google Cloud)",
-    "Claude Sonnet 4 (retired, except on Bedrock and Google Cloud)",
-    "Claude Haiku 3.5 (retired, except on Bedrock and Google Cloud)"
+    "Claude Opus 4.1 (Retired)",
+    "Claude Opus 4 (Retired)",
+    "Claude Sonnet 4 (Retired)",
+    "Claude Haiku 3.5 (Retired)"
   ],
   "response_sha256": {
-    "pricing": "06bf7f6f2a895a4e52fce9e96b2f673e1309652c7852faf41dff74ff8d568a9a",
-    "deprecations": "a7eb97c510d79fe099b3f73b2afc46b135a209978278093c94f56f9a06b065c8",
-    "enterprise": "5bade8a0dab834b1124a5d3e122488c1bc4f379191842004e0ae984d0248648d"
+    "pricing": "1af0730a54b14af3d3e1dc433c1b29f899c515d40ac6fb87dcb874ae26a3501e",
+    "deprecations": "0301717fc14d871773f6c307ae296d8c6bfa8ecead036d544d2934cff59850d1",
+    "enterprise": "f95deeebfe12969c48bb61f6afbaca70a499108758e660d22733ffabf1ee5742",
+    "enterprise_terms": "bfec447d40fbabad9c4112fd1099d0d94ef7d4dbe78a8334c990f8c60c31ee5e"
   },
   "diff": {
     "added": [],

@@ -1,6 +1,6 @@
 {
   "source": "Manual supplements",
-  "collected_at": "2026-08-26",
+  "collected_at": "2026-09-22",
   "method": "Hand-curated entries for models that are required but not yet present in the live APIs (or whose pricing/benchmarks are not yet published). Update as upstream data becomes available.",
   "notes": "GLM 5.2 is live on OpenRouter (z-ai/glm-5.2, real Z.AI pricing) and ships MIT open weights (HuggingFace zai-org/GLM-5.2). Its current benchmark evidence is sourced from Artificial Analysis (Coding and Intelligence), the AA Coding Agent Index, and both DesignArena boards; no manual score is used. GPT-5.6 Sol/Terra/Luna hand-curated offers were removed 2026-07-10 and are sourced live from OpenRouter plus AA.",
   "models": [
@@ -85,5 +85,13 @@
       "retirement_reason": "This is an OpenRouter route, not the first-party API. The current endpoint publishes $2/$10 and $0.20 cache read; substituting first-party input/output prices mixed tariffs. Use the exact published endpoint rates together.",
       "verified_source": "https://openrouter.ai/api/v1/models/openai/gpt-5.6-sol/endpoints"
     }
-  ]
+  ],
+  "source_receipts": {
+    "claude_opus_5_5_offer": {
+      "source_url": "https://www.anthropic.com/claude-opus-5-5",
+      "published_at": "2026-09-22",
+      "checked_at": "2026-09-22",
+      "source_capture_sha256": "0d0dc41069177dd4291623ce4112e3dcd002bf3a6ffe9428a70f13b0d8cc73a9"
+    }
+  }
 }

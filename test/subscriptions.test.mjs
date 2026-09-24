@@ -46,13 +46,31 @@ test("break-even uses the vendor's best-scoring priced model in view", () => {
 });
 
 test("no break-even without a reference, a price or a flat rate", () => {
-  const rows = [{ id: "x", name: "X", org: "OpenAI", score: 90, cost: 0.1 }];
+  const rows = [{ id: "x", name: "X", org: "Other vendor", score: 90, cost: 0.1 }];
   const view = subscriptionView(catalog, { rows });
   const byId = new Map(view.plans.map((p) => [p.id, p]));
   assert.equal(byId.get("anthropic-claude-pro").breakEvenTasks, null, "no Anthropic model in view");
-  assert.equal(byId.get("openai-chatgpt-plus-pro").breakEvenTasks, null, "price not collected");
+  assert.equal(byId.get("openai-chatgpt-plus").breakEvenTasks, null, "no OpenAI model in view");
   assert.equal(byId.get("github-copilot-pro").breakEvenTasks, null, "multi-vendor credit plan");
   const enterprise = subscriptionView(catalog, { isCompany: true, rows: [{ id: "c", name: "C", org: "Anthropic", score: 1, cost: 1 }] })
     .plans.find((p) => p.id === "anthropic-claude-enterprise");
   assert.equal(enterprise.breakEvenTasks, null, "seat plus API usage is not a flat rate");
+});
+
+
+test("refreshed OpenAI, xAI, and GitHub plan values carry source dates and receipts", () => {
+  const byId = new Map(catalog.plans.map((p) => [p.id, p]));
+  assert.equal(byId.get("openai-chatgpt-plus").usd_per_month, 20);
+  assert.equal(byId.get("openai-chatgpt-pro-100").usd_per_month, 100);
+  const pro200 = byId.get("openai-chatgpt-pro-200");
+  assert.equal(pro200.usd_per_month, 200);
+  assert.match(pro200.included, /new sign-ups\/upgrades paused since 2026-09-10/);
+  assert.equal(pro200.source_checked_at, "2026-09-24");
+  assert.match(pro200.source_receipts[0].evidence_receipt_sha256, /^[a-f0-9]{64}$/);
+  const grok = byId.get("xai-supergrok");
+  assert.equal(grok.usd_per_month, 30);
+  assert.match(grok.included, /no numeric quota/);
+  assert.equal(grok.source_url, "https://x.ai/pricing");
+  assert.equal(grok.source_checked_at, "2026-09-24");
+  assert.equal(byId.get("github-copilot-business").source_receipts.length, 3);
 });

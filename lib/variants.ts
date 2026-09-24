@@ -1,4 +1,4 @@
-import type { ClientModel } from "./client-model";
+import { hasScoreEvidence, type ClientModel } from "./client-model";
 import type { ScoreKey } from "./types";
 
 /** "Hide deprecated" operates on FAMILIES, not variants. AA flags individual
@@ -49,7 +49,7 @@ export function preferredVariantIds(models: ClientModel[], score?: ScoreKey): Ma
     // attachment must not make a family disappear merely because its generic
     // display representative is an unmeasured sibling effort.
     const measured = score ? rows.filter((row) => score === "composite"
-      ? row.composite_coverage > 0
+      ? hasScoreEvidence(row, score)
       : row.scores[score] != null) : [];
     const candidates = measured.length ? measured : rows;
     // With a score in play, the family is represented by its strongest measured

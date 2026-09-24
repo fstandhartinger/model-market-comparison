@@ -7,7 +7,7 @@ import { benchmaxxingLevelInfo } from "../../../lib/benchmaxxing-levels.mjs";
 import { notFound } from "next/navigation";
 import { getDataset } from "../../../lib/data";
 import { num, pct, orgColor, usdPerM, counted } from "../../../lib/format";
-import { clientData, isThinComposite, thinCompositeNote } from "../../../lib/client-model";
+import { clientData, hasScoreEvidence, isThinComposite, thinCompositeNote } from "../../../lib/client-model";
 import { compositeBenchmaxxingSignals } from "../../../lib/composite-signals";
 import { CompositeScoreValue } from "../../../components/CompositeScoreValue";
 import { cacheHitBaseline } from "../../../lib/effective-cost.mjs";
@@ -85,8 +85,9 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
   const pctOf = (key: ScoreKey) => catalogPercentile(
     data.models.map((m) => m.scores[key]).filter((v): v is number => v != null), clientModel.scores[key]);
   const daPcts = [pctOf("designarena_frontend"), pctOf("designarena_fullstack")].filter((v): v is number => v != null);
-  // F-161: exact + attached Composite inputs; 0 means no number, < 3 means the thin tag (same rule as the Overview, lib/client-model.ts).
+  // CR-139.4: Composite score eligibility uses an exact result; attached inputs support a qualified score but do not qualify by themselves.
   const compositeInputs = clientModel.composite_coverage + clientModel.composite_attached;
+  const compositeEligible = hasScoreEvidence(clientModel, "composite");
   const radarAxes = [
     { label: "AA Coding", value: pctOf("aa_coding_index"), native: num(clientModel.scores.aa_coding_index), note: clientModel.composite_attachments.aa_coding_index?.note ?? null },
     { label: "Coding Agent v1.4", value: pctOf("aa_coding_agent"), native: num(clientModel.scores.aa_coding_agent), note: clientModel.composite_attachments.aa_coding_agent?.note ?? null },
@@ -126,20 +127,18 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
         {/* F-08b: the Composite as the headline, its inputs as a six-axis percentile radar,
             and the native numbers as a caption strip. */}
         <section className="card order-first min-w-0 p-4 lg:order-none" aria-label="Composite and its inputs">
-          {/* F-161 (Fable pass 31): the number wears the Overview's "◔ Thin data · n/7" tag when fewer than three of its seven inputs
-              hold a value, and with no input at all no number is printed — the Overview row shows a dash for the same model, so the
-              page must not show a 50.0 built from nothing. */}
+          {/* CR-139.4: only exact evidence qualifies the model-specific Composite score. Attached family values remain visible as supporting inputs. */}
           <div className="flex items-baseline justify-between gap-3">
             <h2 className="font-semibold">Composite</h2>
             <span className="text-xs text-gray-500">{clientModel.composite_coverage + clientModel.composite_attached} of 7 inputs{clientModel.composite_attached ? ` · ${clientModel.composite_attached} from the model family` : ""}<span className="block text-right">6 radar axes: DesignArena&apos;s two boards share one</span></span>
           </div>
           {/* CR-74.4: the number follows the "Include Benchmaxxing signal in the score" option. */}
-          {compositeInputs === 0
-            ? <p className="mt-2 text-sm text-gray-500" data-bh-no-composite>No Composite yet: none of its 7 inputs is measured, so no score is shown — its Overview row shows a dash for the same reason.</p>
+          {!compositeEligible
+            ? <p className="mt-2 text-sm text-gray-500" data-bh-no-composite>No Composite score for this exact configuration: none of its inputs has a directly measured result. Family-attached evidence does not qualify this row for model-specific scoring.</p>
             : <CompositeScoreValue raw={clientModel.composite_raw ?? clientModel.scores.composite} signal={clientModel.composite_signal ?? null}
                 tag={isThinComposite(clientModel) ? <span className="bh-thin-tag" data-bh-composite-thin data-composite-inputs={compositeInputs} title={thinCompositeNote(clientModel)}><span aria-hidden="true">◔</span>&nbsp;Thin data · {compositeInputs}/7<span className="sr-only">{thinCompositeNote(clientModel)}</span></span> : undefined} />}
           {/* CR-65.3: a dominance adjustment above one point is disclosed where the number is. */}
-          {compositeInputs > 0 && clientModel.composite_raw != null && clientModel.composite_base != null && Math.abs(clientModel.composite_raw - clientModel.composite_base) > 1
+          {compositeEligible && clientModel.composite_raw != null && clientModel.composite_base != null && Math.abs(clientModel.composite_raw - clientModel.composite_base) > 1
             && <p className="text-xs text-gray-500" data-bh-composite-adjusted title="A better-measured model with results at least as good on every input this model has keeps the higher score">dominance-adjusted from {num(clientModel.composite_base)}: a better-measured model that is at least as good on each of these inputs ranks above it</p>}
           {bmx?.score != null && bmx.level && <p className="mt-2 text-sm" data-bh-model-benchmaxxing>
             <span className="bh-muted">Benchmaxxing signal</span> <SignalValue score={bmx.score} level={bmx.level} uncertain={bmx.uncertain} /> <span className="bh-muted">· {benchmaxxingLevelInfo(bmx.level)?.label}</span>{" "}

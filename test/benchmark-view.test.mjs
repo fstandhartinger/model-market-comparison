@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { buildBenchmarkView, cohortOf, distribution, latestScores, normalize, profileAnomalies, selectBenchmarkView } from '../lib/benchmark-view.mjs';
+import { buildBenchmarkView, cohortOf, distribution, isRankableScore, latestScores, normalize, profileAnomalies, rankingPosition, rankingTopValue, selectBenchmarkView, sortRankingScores } from '../lib/benchmark-view.mjs';
 
 const row = (id, value, extra = {}) => ({ id, modelId: id, subjectId: id, value, date: '2026-09-10', basis: 'measured', lowSample: false, ...extra });
 test('radar preserves zero, reverses lower-better, and withholds missing or uninformative ranges', () => {
@@ -19,6 +19,16 @@ test('observation selection prefers measured and latest, never highest or vendor
   assert.equal(latestScores(rows)[0].value, 40);
   assert.equal(latestScores(rows, 'all')[0].value, 40);
   assert.equal(latestScores(rows, 'self_reported')[0].value, 100);
+});
+test('preliminary scores stay visible but never enter rank, position, or ranking scale', () => {
+  const measured = row('measured', 40), preliminary = row('preliminary', 99, { basis: 'preliminary' });
+  const rows = [preliminary, measured];
+  assert.equal(isRankableScore(preliminary), false);
+  assert.deepEqual(sortRankingScores(rows, true).map((r) => r.id), ['measured', 'preliminary']);
+  assert.equal(rankingPosition(rows, measured, true), 1);
+  assert.equal(rankingPosition(rows, preliminary, true), null);
+  assert.equal(rankingTopValue(rows, true), 40);
+  assert.equal(rankingPosition(rows, measured, null), null);
 });
 test('peer distribution excludes unmatched identities, claims, low battle counts, and duplicate source identities', () => {
   const models = ['a','b','clone','c','d'].map((id) => ({ id, family: id }));
@@ -120,6 +130,22 @@ test('actual source adapter keeps all version identities, values and dated legac
   // CR-128 adds 27 independently sourced benchmark axes; selected model score rows remain bounded.
   assert.ok(JSON.stringify(selected).length < 800_000, 'initial benchmark payload bounded to selected models');
   assert.equal(JSON.stringify(ds), before);
+});
+
+test('Real-SWE lower-bound provenance is attached to both quality and cost rows', async () => {
+  const ds = JSON.parse(await readFile('data/dataset.json', 'utf8'));
+  const view = buildBenchmarkView(ds);
+  const rowById = (benchmarkId, suffix) => view.axes.filter((a) => a.benchmarkId === benchmarkId)
+    .flatMap((a) => a.scores).find((r) => r.id.endsWith(`:${suffix}`));
+  for (const suffix of ['grok', 'kimi']) {
+    const quality = rowById('realswe::snapshot-2026-09-12', suffix);
+    const cost = rowById('realswe-cost::snapshot-2026-09-12', suffix);
+    assert.equal(quality?.costLowerBound, true, `${suffix} quality row exposes the lower-bound cost`);
+    assert.equal(cost?.costLowerBound, true, `${suffix} cost row is marked as a lower bound`);
+    assert.match(cost?.costNote ?? '', /actual cost may be higher/);
+  }
+  assert.equal(rowById('realswe::snapshot-2026-09-12', 'grok')?.costIncompleteUsageRuns, 3);
+  assert.equal(rowById('realswe::snapshot-2026-09-12', 'kimi')?.costUnmeasuredRequests, 4);
 });
 
 // CR-36.2: one Compare entry per model; each benchmark takes the best of its reasoning variants and names it.

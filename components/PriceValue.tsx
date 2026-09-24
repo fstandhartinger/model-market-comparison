@@ -59,11 +59,12 @@ export function PriceValue({ price, compact = false, showEstimate = true, contex
         <button autoFocus type="button" className="rounded border border-line px-3 py-1 focus-visible:outline focus-visible:outline-accent" onClick={() => dialog.current?.close()}>Close</button>
       </div>
       {e ? <>
-        <p className="leading-relaxed">This is an estimate of what one typical task costs with this model. It combines:</p>
+        <p className="leading-relaxed">This is a modeled cost for a benchmark-sized workload; it is not a typical end-user task price. It combines:</p>
         <ul className="mt-2 list-disc space-y-1.5 pl-5 leading-relaxed" data-testid="cost-explanation">
           <li>{assumedTask
-            ? <>Tokens per task: Artificial Analysis has no task measurement for this model, so an example task of {tokens(e.inputs.output_tokens_per_task ?? 0)} output tokens is used.</>
-            : <>Tokens per task from Artificial Analysis, to model how token-efficient the model is: {tokens(e.inputs.output_tokens_per_task ?? 0)} output tokens and about {tokens(e.inputs.input_tokens_per_task)} input tokens. <AaCredit /></>}</li>
+            ? <>Artificial Analysis publishes no Intelligence Index task-token measurement for this model, so this scenario uses {tokens(e.inputs.output_tokens_per_task ?? 0)} output tokens.</>
+            : <>Output tokens on an Artificial Analysis Intelligence Index task for this exact configuration: {tokens(e.inputs.output_tokens_per_task ?? 0)}, modeled with about {tokens(e.inputs.input_tokens_per_task)} input tokens. This benchmark task length is not a typical user task. <AaCredit /></>}</li>
+          {price.priceCondition && <li>Price condition: {price.priceCondition}{price.conditionCheckedAt ? ` · checked ${price.conditionCheckedAt} (UTC)` : ""}. The prices below are the rates used in this estimate.</li>}
           <li>{cache?.kind === "observed"
             ? <>Cache-efficiency data from OpenRouter: {percent(cache.rate)} of input tokens are read from cache on this route.</>
             : cache?.kind === "baseline"
@@ -81,7 +82,8 @@ export function PriceValue({ price, compact = false, showEstimate = true, contex
           <dt className="text-gray-400">Input : output ratio</dt><dd>{e.inputs.input_output_ratio == null ? "—" : `${e.inputs.input_output_ratio.toFixed(1)} : 1`}</dd>
           {e.terms && <><dt className="text-gray-400">Cost split</dt><dd>input {priceNumber(e.terms.uncached_input)} + cached {priceNumber(e.terms.cached_input)}{e.terms.cache_write > 0 && <> + cache-write surcharge {priceNumber(e.terms.cache_write)}</>} + output {priceNumber(e.terms.output)}</dd></>}
         </dl>
-      </> : <p className="leading-relaxed">This is the provider&apos;s published list price per million tokens, blended at the input : output mix chosen in your settings. It does not use task or cache data.</p>}
+      </> : <div className="space-y-2 leading-relaxed"><p>This is the provider&apos;s published list price per million tokens, blended at the input : output mix chosen in your settings. It does not use task or cache data.</p>
+        {price.conditionalRates?.length ? <p>Conditional rates published for this exact route: {price.conditionalRates.join("; ")}. The raw blend uses the base rate because it has no modeled prompt length or request time.</p> : null}</div>}
       <h3 className="mt-4 font-semibold">Sources</h3>
       <ul className="mt-1 space-y-1 text-xs" data-testid="cost-sources">{price.sources.map((source, i) => <SourceLine key={i} source={source} />)}</ul>
     </dialog>, document.body)}

@@ -17457,13 +17457,13 @@
       "one_sentence_description": "HealthBench Professional result reported by Anthropic for Claude Opus 5.5 in its 2026-09-22 Claude Opus 5.5 System Card (PDF, text layer); Anthropic's own run, not an independent measurement.",
       "scoring": {
         "metric": "Source-published score",
-        "unit": "percent",
+        "unit": "points",
         "range": [
           0,
           100
         ],
         "higher_better": true,
-        "notes": "Anthropic's own result. The printed label is retained under a dated snapshot because no version was printed; it stays outside measured cohorts and Composite."
+        "notes": "Scale: 0–100 points for readability; not percent accuracy. The professional tasks are graded against physician-authored rubrics by a model grader. Anthropic's own result. The printed label is retained under a dated snapshot because no version was printed; it stays outside measured cohorts and Composite."
       },
       "maintainer": "OpenAI",
       "source_type": "vendor_report",
@@ -17506,6 +17506,13 @@
           "sha256": "a0c0bbcafad4eb6f8b106fb161908f08113d30df301037c1b75b5025c0bbc8ca",
           "fetched_at": "2026-09-22T16:55:31.262433+00:00",
           "excerpt": "HealthBench Professional: HealthBench Professional 65.6 59.8 62.1 63.4 (columns: Claude Opus 5.5 | Claude Opus 5 | Claude Fable 5.1 | GPT-6 Astra)"
+        },
+        {
+          "url": "https://cdn.openai.com/dd128428-0184-4e25-b155-3a7686c7d744/HealthBench-Professional.pdf",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-24-cr139/6fb95bee7caa319432c3349c22355c72aa979edbf011af582790658bb64e56e7.gz",
+          "sha256": "a09ed2e94f66ec5d817480b2c9bbe630c321e61b6c8e2b73bb23787b37a70066",
+          "fetched_at": "2026-09-24T04:52:17.050Z",
+          "excerpt": "The score is not percent accuracy, but example-level scores commonly lie in [0, 1], and we report scores multiplied by 100 for readability."
         }
       ]
     },
@@ -17952,7 +17959,7 @@
           null
         ],
         "higher_better": false,
-        "notes": "Keep the source's exact board, version, effort and harness separate. The captured source row is retained with each observation; no cross-benchmark normalization is applied."
+        "notes": "The captured source row is retained with each observation; no cross-benchmark normalization is applied."
       },
       "maintainer": "Artificial Analysis",
       "source_type": "official_leaderboard",
@@ -18010,7 +18017,7 @@
           null
         ],
         "higher_better": false,
-        "notes": "Keep the source's exact board, version, effort and harness separate. The captured source row is retained with each observation; no cross-benchmark normalization is applied."
+        "notes": "The captured source row is retained with each observation; no cross-benchmark normalization is applied."
       },
       "maintainer": "Artificial Analysis",
       "source_type": "official_leaderboard",
@@ -18068,7 +18075,7 @@
           null
         ],
         "higher_better": true,
-        "notes": "Keep the source's exact board, version, effort and harness separate. The captured source row is retained with each observation; no cross-benchmark normalization is applied."
+        "notes": "The Bradley-Terry rating system aggregates pairwise community votes; preference Elo is not task accuracy. Keep the source's exact board, version, effort and harness separate. The captured source row is retained with each observation; no cross-benchmark normalization is applied."
       },
       "maintainer": "LMArena",
       "source_type": "official_leaderboard",
@@ -18107,6 +18114,13 @@
           "fetched_at": "2026-09-22T21:03:57.053116+00:00",
           "source_sha256": "9fc48cf37d8d3ba4563fbe1d0bd8b90ef9fba4626c03e9ec83d5b2ec9ec59d05",
           "excerpt": "{\"rank\":24,\"rankUpper\":5,\"rankLower\":51,\"modelKey\":\"gpt-6-astra-max-text\",\"modelDisplayName\":\"gpt-6-astra-max\",\"rating\":1479.7712562096513,...,\"votes\":2693}"
+        },
+        {
+          "url": "https://arena.ai/faq",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-24-cr139/600effcb3ea6b16dde100a1bb38da5d0a854560edb0603b927634c604ee757b0.gz",
+          "sha256": "f206e6723feea3798c63e86a75c539f79207f0af4a0b26e34ed5af8134a45949",
+          "fetched_at": "2026-09-24T04:52:17.636Z",
+          "excerpt": "Your votes directly shape the model rankings through the Bradley-Terry rating system, a statistical model originally developed for paired comparison experiments."
         }
       ]
     },
@@ -18126,7 +18140,7 @@
           null
         ],
         "higher_better": true,
-        "notes": "Keep the source's exact board, version, effort and harness separate. The captured source row is retained with each observation; no cross-benchmark normalization is applied."
+        "notes": "The Bradley-Terry rating system aggregates pairwise community votes; preference Elo is not task accuracy. Keep the source's exact board, version, effort and harness separate. The captured source row is retained with each observation; no cross-benchmark normalization is applied."
       },
       "maintainer": "LMArena",
       "source_type": "official_leaderboard",
@@ -18165,6 +18179,13 @@
           "fetched_at": "2026-09-22T21:04:01.219774+00:00",
           "source_sha256": "2c91c655896aed72d511802b59b4602779cfd69646e0e3739f35dc59243d97ea",
           "excerpt": "{\"rank\":16,\"rankUpper\":2,\"rankLower\":38,\"modelKey\":\"gpt-6-astra-max-vision\",\"modelDisplayName\":\"gpt-6-astra-max\",\"rating\":1284.0034100860937,...,\"votes\":1367}"
+        },
+        {
+          "url": "https://arena.ai/faq",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-24-cr139/600effcb3ea6b16dde100a1bb38da5d0a854560edb0603b927634c604ee757b0.gz",
+          "sha256": "f206e6723feea3798c63e86a75c539f79207f0af4a0b26e34ed5af8134a45949",
+          "fetched_at": "2026-09-24T04:52:17.636Z",
+          "excerpt": "Your votes directly shape the model rankings through the Bradley-Terry rating system, a statistical model originally developed for paired comparison experiments."
         }
       ]
     },

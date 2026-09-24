@@ -2,9 +2,11 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { readFileSync } from 'node:fs';
+import { importTsModule } from './helpers/transpile-ts.mjs';
 import { BENCHMAXX_LEVELS, BENCHMAXX_TAG_MIN_COMPARISONS, benchmaxxingFamilySignals, benchmaxxingLevelFor, benchmaxxingSignals } from '../lib/benchmax.mjs';
 import { buildBenchmarkView } from '../lib/benchmark-view.mjs';
-import { BENCHMAXXING_PRESETS, DEFAULT_BENCHMAXXING_PRESET, presetLimit, presetRows, presetShowing } from '../lib/benchmaxxing-presets.ts';
+
+const { BENCHMAXXING_PRESETS, DEFAULT_BENCHMAXXING_PRESET, presetLimit, presetRows, presetShowing } = await importTsModule(new URL('../lib/benchmaxxing-presets.ts', import.meta.url));
 
 // CR-74.1 (Florian 2026-09-17, supersedes CR-42.2 rank bands and CR-71.3): three tag levels on the signed score —
 // light ≥ +3.0, medium ≥ +6.0, very strong ≥ +12.0 (inclusive, on the one-decimal published score).

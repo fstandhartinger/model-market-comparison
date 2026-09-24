@@ -45,13 +45,13 @@ try {
     ...previous,
     collected_at,
     meters_checked_at: collected_at,
-    retail_collection: `scripts/fetch-azure-foundry-catalog.mjs (${collected_at}): ${pages} pages, ${items.length} Retail items across ${REGIONS.join(", ")}; each row's named Standard input/output meters re-read (1K meters x 1000), first billing region by that order. Rows are never added by the script; lifecycle and Europe Data Zone availability keep lifecycle_checked_at.`,
+    retail_collection: `scripts/fetch-azure-foundry-catalog.mjs (${collected_at}): ${pages} pages, ${items.length} Retail items across ${REGIONS.join(", ")}; each row's named Standard input/output and explicitly mapped cache-read meters re-read (1K meters x 1000), first billing region by that order. Rows are never added by the script; lifecycle and Europe Data Zone availability keep lifecycle_checked_at.`,
     response_sha256: hash.digest("hex"),
     diff,
     models,
   });
-  console.log(`Azure Foundry: ${models.length} rows (removed ${diff.removed.length}, price changes ${diff.price_changed.length}, suspicious ${diff.suspicious.length}, unmetered ${diff.unmetered.length}, uncovered meters effective in the last 90 days: ${diff.new_meters.length})`);
-  for (const line of [...diff.price_changed, ...diff.removed, ...diff.suspicious, ...diff.new_meters]) console.log(`  ${line}`);
+  console.log(`Azure Foundry: ${models.length} rows (removed ${diff.removed.length}, price changes ${diff.price_changed.length}, suspicious ${diff.suspicious.length}, unmetered ${diff.unmetered.length}, cache-read meters missing ${diff.cache_read_missing.length}, uncovered meters effective in the last 90 days: ${diff.new_meters.length})`);
+  for (const line of [...diff.price_changed, ...diff.removed, ...diff.suspicious, ...diff.cache_read_missing, ...diff.new_meters]) console.log(`  ${line}`);
 } catch (error) {
   console.error(`Azure Foundry catalog refresh failed; previous snapshot preserved: ${error.message}`);
   process.exitCode = 1;

@@ -9,7 +9,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { buildBenchmarkView, cohortOf, cohortSubLabel, vendorRunner } from '../lib/benchmark-view.mjs';
-import { humanVersion, versionSuffix } from '../lib/version-label.ts';
+import { importTsModule } from './helpers/transpile-ts.mjs';
+
+const { humanVersion, versionSuffix } = await importTsModule(new URL('../lib/version-label.ts', import.meta.url));
 
 const ds = JSON.parse(readFileSync(new URL('../data/dataset.json', import.meta.url), 'utf8'));
 const view = buildBenchmarkView(ds);

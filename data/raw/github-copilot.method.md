@@ -1,10 +1,8 @@
 # GitHub Copilot pricing — collection method and caveats
 
-> **Current audit: 2026-09-08.** See [September refresh audit](../research/refresh-2026-09-08.md)
-> and the adjacent JSON's `method`/`collected_at` for current values and exclusions.
-> Earlier dated collection notes below are historical, not current prices.
+> **Current audit: 2026-09-24.** The adjacent JSON stores the current model/plan data, source dates, and response hashes. Earlier dated collection notes below are historical unless marked as the current snapshot.
 
-Collected: 2026-07-22 (previous: 2026-07-12)
+Current catalog snapshot refreshed: 2026-09-24 (previous full audit: 2026-09-08).
 
 Output: `data/raw/github-copilot.json`
 
@@ -54,24 +52,14 @@ the collection date:
 - the supported-model catalog determines which models are currently offered;
 - the models-and-pricing table supplies USD prices per 1M tokens.
 
-Result: **27 current models** across OpenAI, Anthropic, Google, Microsoft,
-GitHub, and Moonshot AI. The only new entry relative to the 2026-07-12 snapshot
-is **Gemini 3.6 Flash** (GA, categorized Versatile in the pricing table, $1.50
-input / $0.15 cached input / $7.50 output per 1M tokens — note the output price
-is lower than Gemini 3.5 Flash's $9.00). Gemini 3.6 Flash appears in the
-supported-model catalog and pricing table but not yet in the legacy multiplier
-table, so it has no `models[]` row. All other prices, plans, credits, the
-June-August 2026 commercial promotion, and the Claude Sonnet 5 introductory
-pricing (through 2026-08-31) were re-verified unchanged on 2026-07-22. Claude
-Sonnet 4 remains in one pricing table and in parts of the plans page, but it is
-absent from the current supported-model reference, so it is not treated as a
-current supported model here.
+Current result: **32 supported and priced models** and **18 legacy multiplier rows**. The adjacent JSON records current per-model values, availability gaps, retirement history, and source hashes. On 2026-09-24, Claude Sonnet 4 remained present in a pricing table but was absent from the supported-model catalog, so it stays out of `current_models[]` and is listed under `priced_not_supported`.
+
+Current subscription terms were rechecked separately on 2026-09-24. Individual Pro, Pro+, and Max remain $10/$39/$100 per month with 1,500/7,000/20,000 monthly AI credits. Business and Enterprise remain $19/$39 per user per month with 1,900/3,900 monthly credits. Existing-customer promotional credits ended on 2026-09-01; the raw `plans[]` retains the dated promotion for historical clarity. The checked pages and hashes are stored in `plans_source_evidence`.
 
 For models with a long-context tier, the normal price is stored in the main
 fields and the threshold and higher price are stored in `long_context`.
-Anthropic models also have a cache-write field. Claude Sonnet 5's stored values
-are the active introductory prices through August 31, 2026; its standard values
-from September 1 are recorded separately on the same row.
+Anthropic models also have a cache-write field. Promotion end dates are retained
+with the affected rows and are not treated as current prices after expiry.
 
 ## Legacy premium-request billing
 
@@ -89,9 +77,9 @@ legacy annual plans do not receive new models and features.
   change and identifies MAI-Code-1-Flash's 0.33× multiplier as promotional;
   no promotion end date is published.
 
-The official table contains 25 model rows. Several are no longer in the current
-usage-based catalog (for example GPT-4o and GPT-5.1 variants); they remain in
-`models[]` because GitHub's legacy reference still lists them.
+The current captured legacy table contains 18 model rows. Rows remain in
+`models[]` when GitHub still lists them for eligible legacy annual subscribers,
+even if they are absent from the current usage-based catalog.
 
 ## Official primary sources
 
@@ -123,7 +111,7 @@ No secondary source supplies a value in this snapshot.
    for new models that are absent from that page.
 5. Recompute every legacy `effective_usd_per_request` from the published
    multiplier and `$0.04` base price.
-6. Validate JSON and assert 27 current rows and 25 legacy rows for this snapshot.
+6. Validate JSON and reconcile current and legacy counts to the captured source tables. The 2026-09-24 snapshot has 32 current and 18 legacy rows.
 
 ## Collection notes 2026-07-22
 
@@ -154,8 +142,7 @@ allows all): supported-models, models-and-pricing, model-multipliers-for-annual-
 - `models[]` (legacy): the multiplier table; `effective_usd_per_request` = multiplier ×
   `per_premium_request_usd`; notes follow the page's "subject to change" list; the auto-selection discount
   is read from the page.
-- `plans[]` are documented on the usage-based billing pages, which this collector does not fetch; they keep
-  `plans_checked_at` (2026-09-08) and are not re-dated.
+- `plans[]` are maintained separately from the model-table collector. On 2026-09-24, the official individual, organization, and enterprise billing pages were rechecked; `plans_checked_at` and the source capture hashes were updated in the adjacent JSON. The automated model collector preserves these fields.
 - Fails closed: missing tables, the "1 AI credit = $0.01 USD" statement missing, unreadable price or
   multiplier, unknown tier, duplicate rows, or fewer than 50 % of previous rows in either array.
 - First run 2026-09-14: 28 current and 18 legacy rows reproduced the 2026-09-08 snapshot field for field;

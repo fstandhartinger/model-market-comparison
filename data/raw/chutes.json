@@ -1,6 +1,6 @@
 {
   "source": "Chutes — llm.chutes.ai/v1/models (first-party, public catalog)",
-  "collected_at": "2026-09-23",
+  "collected_at": "2026-09-24",
   "method": "scripts/fetch-chutes-catalog.mjs: one GET of the public catalog; prices are price.{input,output,input_cache_read}.usd per 1M tokens; curated model_name/provider_org carried over by exact tee_model_id; new ids marked mapping=derived. See chutes.method.md.",
   "models": [
     {
@@ -24,6 +24,16 @@
       "tee_model_id": "Qwen/Qwen3.5-397B-A17B-TEE"
     },
     {
+      "model_name": "Qwen3.6-27B",
+      "provider_org": "Alibaba",
+      "input_per_1m_usd": 0.3,
+      "output_per_1m_usd": 2,
+      "cache_read_per_1m_usd": 0.03,
+      "context_length": 262144,
+      "confidential_compute": true,
+      "tee_model_id": "Qwen/Qwen3.6-27B-TEE"
+    },
+    {
       "model_name": "Qwen3.8 27B",
       "provider_org": "Alibaba",
       "input_per_1m_usd": 0.24,
@@ -33,16 +43,6 @@
       "context_length": 262144,
       "tee_model_id": "Qwen/Qwen3.8-27B-TEE",
       "notes": "Added 2026-08-26 from llm.chutes.ai | 2026-09-08: price cut 0.35/2.75->0.32/2.50, cache-read 0.032 (live llm.chutes.ai)"
-    },
-    {
-      "model_name": "Qwen3.6-27B",
-      "provider_org": "Alibaba",
-      "input_per_1m_usd": 0.3,
-      "output_per_1m_usd": 2,
-      "cache_read_per_1m_usd": 0.03,
-      "context_length": 262144,
-      "confidential_compute": true,
-      "tee_model_id": "Qwen/Qwen3.6-27B-TEE"
     },
     {
       "model_name": "DeepSeek-V3.2",
@@ -150,7 +150,7 @@
       "notes": "Added 2026-08-26 from llm.chutes.ai (root nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16)"
     }
   ],
-  "response_sha256": "7bb8e3649203121466d1bdd1315c73f1486ebc54d2ed3d2f93de761ca122a060",
+  "response_sha256": "db5e7de5670664098e9d803e1de6b510510dba0f7c18ce720874b0e3567115a1",
   "diff": {
     "added": [],
     "removed": [],

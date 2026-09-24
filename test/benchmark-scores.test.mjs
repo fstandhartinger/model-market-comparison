@@ -86,6 +86,16 @@ test('source and critic receipts must match; any edited self-report loses approv
     const receipt = { actual_model: 'critic/model', producers: ['producer/model'], output_sha256: sha256(review) };
     await writeFile(join(root, 'review.json.meta.json'), JSON.stringify(receipt));
     assert.equal((await verifyScoreEvidence(snapshot([claim]), registry, { root, approvals })).self_reported_verified, 1);
+    const singleArtifact = JSON.stringify(claim);
+    const singleReview = JSON.stringify({ verdict: 'pass', artifact_sha256: sha256(singleArtifact), coverage_checked: [claim.id], errors_found: 0, findings: [], fixed: [], missing_evidence: [] });
+    await writeFile(join(root, 'single-artifact.json'), singleArtifact);
+    await writeFile(join(root, 'single-review.json'), singleReview);
+    const singleReceipt = { actual_model: 'critic/model', producers: ['producer/model'], output_sha256: sha256(singleReview) };
+    await writeFile(join(root, 'single-review.json.meta.json'), JSON.stringify(singleReceipt));
+    const singleApproval = { ...approval, review_file: 'single-review.json', review_sha256: sha256(singleReview),
+      artifact_file: 'single-artifact.json', review_row: claim.id };
+    assert.equal((await verifyScoreEvidence(snapshot([claim]), registry, { root, approvals: { rows: [singleApproval] } })).self_reported_verified, 1,
+      'a critic can bind one standalone JSON observation as well as an array or observations manifest');
     const aliased = { ...approval, critic_model: 'z-ai/critic', producer_models: ['chutes/zai-org/producer'] };
     await assert.rejects(verifyScoreEvidence(snapshot([claim]), registry, { root, approvals: { rows: [aliased] } }), /Unreviewed vendor score/);
     await writeFile(join(root, 'review.json.meta.json'), JSON.stringify({ ...receipt, actual_model: 'wrong/critic' }));

@@ -7,6 +7,10 @@ export interface SubscriptionVendor {
   quote_note?: string;
   terms_url: string;
   pricing_url: string;
+  pricing_checked_at?: string;
+  pricing_source_sha256?: string;
+  pricing_evidence_receipt_sha256?: string;
+  pro_pricing_url?: string;
 }
 
 export interface SubscriptionPlan {
@@ -20,6 +24,10 @@ export interface SubscriptionPlan {
   billing_note: string | null;
   flat_rate: boolean;
   included: string;
+  source_checked_at?: string;
+  source_url?: string;
+  source_sha256?: string;
+  source_receipts?: Array<{ url: string; locator?: string; source_sha256?: string; evidence_receipt_sha256?: string }>;
 }
 
 export interface SubscriptionCatalog {

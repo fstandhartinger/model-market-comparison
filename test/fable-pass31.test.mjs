@@ -12,16 +12,16 @@ const [page, value, offers, compare] = await Promise.all([
   read('../app/models/[id]/page.tsx'), read('../components/CompositeScoreValue.tsx'), read('../components/ModelDetailOffers.tsx'), read('../components/BenchmarkCompare.tsx'),
 ]);
 
-test('F-161: the model page counts exact + attached inputs with the Overview\'s own helpers', () => {
-  assert.match(page, /import \{ clientData, isThinComposite, thinCompositeNote \} from "\.\.\/\.\.\/\.\.\/lib\/client-model";/);
-  assert.match(page, /const compositeInputs = clientModel\.composite_coverage \+ clientModel\.composite_attached;/);
+test('CR-139.4: the model page uses exact evidence to qualify the score', () => {
+  assert.match(page, /import \{ clientData, hasScoreEvidence, isThinComposite, thinCompositeNote \} from "\.\.\/\.\.\/\.\.\/lib\/client-model";/);
+  assert.match(page, /const compositeEligible = hasScoreEvidence\(clientModel, "composite"\);/);
 });
 
-test('F-161: with no input there is no number, no radar and no caption — one sentence instead', () => {
-  assert.match(page, /\{compositeInputs === 0\s*\? <p className="mt-2 text-sm text-gray-500" data-bh-no-composite>No Composite yet: none of its 7 inputs is measured, so no score is shown — its Overview row shows a dash for the same reason\.<\/p>/);
+test('CR-139.4: attached-only evidence does not qualify a model-specific Composite score', () => {
+  assert.match(page, /\{!compositeEligible\s*\? <p className="mt-2 text-sm text-gray-500" data-bh-no-composite>No Composite score for this exact configuration: none of its inputs has a directly measured result\. Family-attached evidence does not qualify this row for model-specific scoring\.<\/p>/);
   assert.match(page, /\{compositeInputs > 0 && <>\s*<MiniRadar/, 'the radar is inside the > 0 branch');
   assert.match(page, /a gap means not measured\.<\/p>\s*<\/>\}/, 'the caption strip and radar note close the > 0 branch');
-  assert.match(page, /\{compositeInputs > 0 && clientModel\.composite_raw != null && clientModel\.composite_base != null/, 'the dominance line needs a number to qualify');
+  assert.match(page, /\{compositeEligible && clientModel\.composite_raw != null && clientModel\.composite_base != null/, 'the dominance line needs a number to qualify');
 });
 
 test('F-161: a thin Composite carries the Overview\'s tag beside the number, outside the value element', () => {
