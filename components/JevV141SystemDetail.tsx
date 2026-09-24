@@ -66,26 +66,30 @@ export function JevV141SystemDetail({ row, revision, generated, ranked }: { row:
       <JevBenchRelatedLinks systemKey={row.key} />
     </header>
 
-    <section className="bh-panel mt-6 p-5" aria-labelledby="jev-v141-system-summary" data-bh-jev-system-score>
-      <h2 id="jev-v141-system-summary" className="text-xl font-semibold">JevBench {revision} score</h2>
-      <p className="mt-2 text-3xl font-bold tabular-nums">{one(row.jevbench_score)}</p>
-      <p className="bh-muted mt-1">{row.ranked && row.rank != null ? `Rank #${row.rank} of ${ranked.length} ranked systems.` : `${row.listing === 'honorable_mention' ? 'Honorable mention' : 'Partial run'}, not ranked — ${row.not_ranked_because ?? 'the published run is incomplete'}.`}</p>
-      {row.ranked && row.rank != null && row.key !== 'jev-1.13.0' && ranked[0] && <p className="bh-muted mt-2 text-sm">{one(Math.abs(row.jevbench_score! - ranked[0].jevbench_score!))} points {row.jevbench_score! >= ranked[0].jevbench_score! ? 'ahead of' : 'behind'} Jev 1.13.0&apos;s {one(ranked[0].jevbench_score)}.</p>}
-      <ScoreStrip row={row} ranked={ranked} />
-    </section>
+    <div className="mt-6 grid items-start gap-6 lg:grid-cols-2">
+      <div className="min-w-0 space-y-8">
+        <section className="bh-panel p-5" aria-labelledby="jev-v141-system-summary" data-bh-jev-system-score>
+          <h2 id="jev-v141-system-summary" className="text-xl font-semibold">JevBench {revision} score</h2>
+          <p className="mt-2 text-3xl font-bold tabular-nums">{one(row.jevbench_score)}</p>
+          <p className="bh-muted mt-1">{row.ranked && row.rank != null ? `Rank #${row.rank} of ${ranked.length} ranked systems.` : `${row.listing === 'honorable_mention' ? 'Honorable mention' : 'Partial run'}, not ranked — ${row.not_ranked_because ?? 'the published run is incomplete'}.`}</p>
+          {row.ranked && row.rank != null && row.key !== 'jev-1.13.0' && ranked[0] && <p className="bh-muted mt-2 text-sm">{one(Math.abs(row.jevbench_score! - ranked[0].jevbench_score!))} points {row.jevbench_score! >= ranked[0].jevbench_score! ? 'ahead of' : 'behind'} Jev 1.13.0&apos;s {one(ranked[0].jevbench_score)}.</p>}
+          <ScoreStrip row={row} ranked={ranked} />
+        </section>
 
-    <section className="mt-8" aria-labelledby="jev-v141-system-axes">
-      <h2 id="jev-v141-system-axes" className="text-xl font-semibold">Published axes</h2>
-      <dl className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
-        {axisKeys.map((axis) => <div className="bh-panel p-4" key={axis}>
-          <dt className="bh-muted text-sm capitalize">{axis}</dt><dd className="mt-1 text-2xl font-semibold tabular-nums">{one(axes[axis])}{axes[axis] != null && <JevAxisBand axis={axis} value={axes[axis]!} colour={typeColour(row.class)} reference={ranked.find((r) => r.key === 'jev-1.13.0')?.axes?.[axis] ?? null} referenceName="Jev 1.13.0" />}</dd>
-        </div>)}
-      </dl>
-    </section>
+        <section aria-labelledby="jev-v141-system-axes">
+          <h2 id="jev-v141-system-axes" className="text-xl font-semibold">Published axes</h2>
+          <dl className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
+            {axisKeys.map((axis) => <div className="bh-panel p-4" key={axis}>
+              <dt className="bh-muted text-sm capitalize">{axis}</dt><dd className="mt-1 text-2xl font-semibold tabular-nums">{one(axes[axis])}{axes[axis] != null && <JevAxisBand axis={axis} value={axes[axis]!} colour={typeColour(row.class)} reference={ranked.find((r) => r.key === 'jev-1.13.0')?.axes?.[axis] ?? null} referenceName="Jev 1.13.0" />}</dd>
+            </div>)}
+          </dl>
+        </section>
+      </div>
 
-    <section className="bh-panel mt-8 p-4 sm:p-5" aria-labelledby="jev-v141-system-accuracy" data-bh-jev-system-radar>
-      <JevCompareV14 rows={[row, ...(ranked[0]?.key === row.key ? ranked.slice(1, 2) : [ranked[0]])].map(compareRow)} sealedDecisions={308} hardDecisions={47} fixedPair heading="Accuracy per tier, incl. sealed" />
-    </section>
+      <section className="bh-panel min-w-0 p-4 sm:p-5" aria-labelledby="jev-v141-system-accuracy" data-bh-jev-system-radar>
+        <JevCompareV14 rows={[row, ...(ranked[0]?.key === row.key ? ranked.slice(1, 2) : [ranked[0]])].map(compareRow)} sealedDecisions={308} hardDecisions={47} fixedPair heading="Accuracy per tier, incl. sealed" />
+      </section>
+    </div>
 
     <section className="bh-panel mt-8 p-5" aria-labelledby="jev-v141-system-evidence">
       <h2 id="jev-v141-system-evidence" className="text-xl font-semibold">Availability and evidence</h2>
