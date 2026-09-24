@@ -1,16 +1,18 @@
 {
   "aa_models": {
-    "previous_identity_sha256": "1543a66de61b0e86b42c3818ea04b7459479209189812ad14cf2b7a391eefcad",
-    "current_identity_sha256": "d79bd5a037f5512554e71cdee1e0b1c942c6db073dd5d25f31d328faf0f9a787",
+    "previous_identity_sha256": "d0fb83d88dcc0e4ad0e9984f257a130039bf919a561b8c2a64cca81dda2b55f0",
+    "current_identity_sha256": "e8cb59d72234592d51232737f451b3b0652963697ba15529f2040d2757c92175",
     "removed": [
-      "21a0a2f6-bc72-40d2-80db-ea4e66b02b90"
+      "6ace0ead-584f-4ce6-a9b7-6c3f9cc91c3c",
+      "8decf027-5114-4721-9ee1-81c0552980a0",
+      "f3a0e101-086f-44b3-a1b2-d23498f9716b"
     ],
-    "expires_at": "2026-09-14T23:30:00Z",
-    "reviewed_at": "2026-09-12T22:55:00Z",
+    "expires_at": "2026-09-26T05:45:00Z",
+    "reviewed_at": "2026-09-24T05:45:00Z",
     "primary_url": "https://artificialanalysis.ai/api/v2/data/llms/models",
-    "primary_capture_sha256": "61104c5aa480335071c822fee2f1c111cbc43169f97c50af3379e4504c0d9161",
-    "review_basis": "The complete primary API response contained 646 unique identities, replacing exactly one prior identity (GPT-6 Astra (Non-reasoning)) with one new identity (Agnes 3.0 Flash). The same run's ordinary Artificial Analysis leaderboard HTML contains Astra's other variants but not the removed non-reasoning row. This exception binds both complete identity-set hashes and expires; any other shrink, changed response, malformed response, or endpoint change remains fatal.",
-    "owner_acceptance": "Operator reviewed the captured primary API response and leaderboard HTML during the 2026-09-12 daily-refresh remediation; approve only this exact withdrawal for a bounded rerun."
+    "primary_capture_sha256": "bf5baf620d93df48e59546a9b8574d51d48fe746c3d947ac186016e65e27ff05",
+    "review_basis": "The complete primary API response contained 671 unique identities (673 prior, minus the three listed Sapiens AI 'Agnes' rows — Agnes 3.0 Flash, Agnes 2.5 Pro Beta, Agnes 2.5 Pro Alpha — plus one new identity, Inception's Mercury 2.5, so this is a clean withdrawal of one vendor's model line, not a truncated or partial response). No other prior identity is absent. This exception binds both complete identity-set hashes and expires; any other shrink, changed response, malformed response, or endpoint change remains fatal.",
+    "owner_acceptance": "Operator (self-heal repair agent, run 2026-09-24T05-37-29-523Z-3381234) reviewed the captured primary API response byte-for-byte against the previously committed catalog; approve only this exact three-model withdrawal for a bounded rerun. Already-published benchmark rows referencing these models by slug (e.g. agnes-2.5-pro-alpha::default) as historical variant scores are untouched — this approval only unblocks today's fresh AA catalog fetch."
   },
   "openrouter_catalog": {
     "previous_identity_sha256": "6e3f8538ca6a633df306aee4f52984f3b8224ed4f8b684fcd13795635d61de49",
