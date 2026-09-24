@@ -1702,3 +1702,23 @@ project, no posting in the HN thread, spam comments, fake accounts or reviews.
   Aggregate-only; no sealed content. Prepare but do not publish `/image-jev-bench`.
 - **CR-141.4 Verify.** Focused tests, full suite, typecheck, build; both-host live check; sealed-content scan of the
   live HTML. Florian decides publication.
+
+## CR-20260924jev-page-fixes — Jev-models capability and context charts → CR-142
+
+Florian, 24 Sep 2026, request preserved from `/home/flori/jobs/jev-page-fixes-20260924/PROMPT.md`:
+
+> Fix the “Hard tier by family (v1.2 topics)” compare view by measuring ranked systems
+> missing v1.2 hard-tier family runs (public and held-out hard items, same protocol) and
+> publishing only per-family aggregates; stop for a preview if scores or ranks change.
+> Until data is ready, show a clear placeholder series note. Distinguish GPT-6 Luna’s
+> medium and low reasoning rows in “Capability with cost alongside”; render the cost
+> series on a visible secondary log scale with lower cost better. Fix dark-mode text in
+> Capability vs cost, Capability vs speed, the 3D view, and public accuracy by actual
+> input length; use theme colors for axes, ticks and legends, add system/value tooltips
+> and permanent top-five labels, and verify light/dark on desktop and 390 px mobile.
+> Replace the coarse `>=2k` input bucket with `<2k`, `2–8k`, `8–16k`, `16–64k`,
+> `64–256k`, `256k–1M`, `>=1M`. Add a log-scale chart of each exact published context
+> limit, distinguish training and serving where known, and retain source evidence. Write
+> a proposal for a long-context Jev-class track at 16k/64k/256k/1M, including item design,
+> cost and qualifying systems; proposal only, no build. Verify all production hosts,
+> retain screenshots, notify Florian, and write the job output.

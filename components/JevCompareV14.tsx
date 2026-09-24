@@ -88,7 +88,7 @@ export function JevCompareV14({ rows, sealedDecisions, hardDecisions, fixedPair 
   const missingFor = (spokes: Spoke[]) => pair.filter((_, k) => spokes.every((sp) => sp.values[k] === null)).map((r) => r.name);
   const missingSentence = (key: string, names: string[]) => {
     if (key === "sealed") return `${names.join(" and ")} has no sealed family breakdown.`;
-    if (key === "hard") return `${names.join(" and ")} was not run on the v1.2 hard tier.`;
+    if (key === "hard") return `${names.join(" and ")} ${names.length === 1 ? "has" : "have"} no published v1.2 hard-tier family breakdown.`;
     return `${names.join(" and ")} has no published accuracy-tier results.`;
   };
   const status = (r: JevCompareRow) => r.rank !== null ? `#${r.rank}` : r.listing === "honorable_mention" ? "honorable mention, not ranked" : "partial run, not ranked";

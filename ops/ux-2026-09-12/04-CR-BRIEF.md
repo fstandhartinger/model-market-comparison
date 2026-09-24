@@ -1147,3 +1147,18 @@ Owner: `claude:imagejevbench-final` (job `/home/flori/jobs/imagejevbench-final-2
 | CR-141.2 | 35/65 weighting and 15-point matched-family overfit penalty in the artifact and page; 11 systems incl. Bonsai-2-27B v2. |
 | CR-141.3 | Computer Use / Browser Use preview-track section (counts, decision types, cross-track sealing rule, Kev flag, "not measured yet"). |
 | CR-141.4 | Validator, tests, build, both-host live verification and sealed-content scan; `/image-jev-bench` prepared on an unpushed branch only. |
+
+## CR-142 — Jev-models capability and context charts (2026-09-24)
+
+Source: Florian's request preserved verbatim as `CR-20260924jev-page-fixes` in
+`03-CHANGE-REQUESTS-VERBATIM.md`; detailed working notes and receipts are in
+`/home/flori/jobs/jev-page-fixes-20260924/`.
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-142.1 | Measure the seven ranked systems missing v1.2 hard-tier family breakdowns, using the official protocol and public plus held-out hard items. Publish only aggregate family counts and accuracy. | Each family row reconciles to the 220 hard-tier decisions; all other artifact fields, scores and ranks are unchanged. No per-item content is added. If any score or rank would change, stop and prepare a preview for Florian. |
+| CR-142.2 | Distinguish the GPT-6 Luna medium and low-reasoning rows in “Capability with cost alongside”. Make the cost series visible on its secondary logarithmic scale and state that lower cost is better. | Both presets have distinct visible labels; cost bars, scale ticks, values and legend are present. |
+| CR-142.3 | Fix light/dark chart labels, ticks and legends in Capability vs cost, Capability vs speed, the 3D view, and public accuracy by actual input length. Add system/value hover or focus tooltips and permanent labels for the top five systems. | Theme tokens provide readable SVG text in both themes; all four views identify systems and values; desktop and 390 px mobile screenshots verify light and dark. |
+| CR-142.4 | Replace the coarse input-length buckets with `<2k`, `2–8k`, `8–16k`, `16–64k`, `64–256k`, `256k–1M`, `≥1M`; add a logarithmic exact published context-limit chart with training and serving limits shown separately where known. | Public aggregate buckets reconcile for each included system. All 82 exact source-backed context rows are represented; unknowns and training markers are clear, and the existing source links and notes remain. |
+| CR-142.5 | Write `PROPOSAL-LONG-CONTEXT.md` for a possible Jev-class track at 16k/64k/256k/1M, including item design, running cost, and qualifying systems. | Proposal only; no benchmark track or items are built. |
+| CR-142.6 | Verify the deployed page on `benchmarkheaven.com`, `www.benchmarkheaven.com`, and `model-market-comparison.app.mintapis.com`; retain screenshots and results, then notify Florian as requested. | Hosts serve the merged revision and matching aggregates; light/dark desktop and 390 px screenshots are retained; deployment and notification receipts are recorded. |

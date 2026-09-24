@@ -126,37 +126,97 @@ function AccuracyChart({ systems, labels }: { systems: LengthSystem[]; labels: s
 
   return <figure className="bh-panel mt-4 min-w-0 p-3 sm:p-5" data-bh-jev-context-chart aria-labelledby="jev-context-chart-heading">
     <h3 id="jev-context-chart-heading" className="text-lg font-semibold">Public accuracy by actual input length</h3>
-    <p className="bh-muted mt-1 text-sm">Each line is one of the 13 top-15 systems with reconciled public outcomes and input-token counts. A point&apos;s tooltip shows correct answers and the bucket size.</p>
+    <p className="bh-muted mt-1 text-sm">Each line is one of the {systems.length} top-15 systems with reconciled public outcomes and input-token counts. A point&apos;s tooltip shows the system, accuracy, correct answers and bucket size.</p>
     <svg className="mt-3 block h-auto w-full" viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby="jev-context-svg-title jev-context-svg-desc">
-      <title id="jev-context-svg-title">JevBench public accuracy across four input-length buckets</title>
-      <desc id="jev-context-svg-desc">Thirteen systems are plotted from fewer than 500 input tokens through 2,000 or more tokens. Bucket denominators differ by system and are available in the details table below.</desc>
+      <title id="jev-context-svg-title">JevBench public accuracy across seven input-length buckets</title>
+      <desc id="jev-context-svg-desc">{systems.length} systems are plotted across {labels.join(', ')} input-token buckets. Bucket denominators differ by system and are available in the details table below.</desc>
       {[0, 0.25, 0.5, 0.75, 1].map((tick) => <g key={tick}>
         <line x1={left} x2={plotRight} y1={y(tick)} y2={y(tick)} stroke="rgb(var(--line) / .7)" />
-        <text x={left - 8} y={y(tick) + 4} textAnchor="end" className="bh-muted" fontSize="11">{Math.round(tick * 100)}%</text>
+        <text x={left - 8} y={y(tick) + 4} textAnchor="end" fill="var(--muted)" fontSize="11">{Math.round(tick * 100)}%</text>
       </g>)}
       {labels.map((label, index) => <g key={label}>
         <line x1={x(index)} x2={x(index)} y1={top} y2={plotBottom} stroke="rgb(var(--line) / .42)" />
-        <text x={x(index)} y={plotBottom + 18} textAnchor="middle" className="bh-muted" fontSize="10.5">{label}</text>
+        <text x={x(index)} y={plotBottom + 18} textAnchor="middle" fill="var(--muted)" fontSize="10.5">{label}</text>
       </g>)}
-      <text x={(left + plotRight) / 2} y={height - 9} textAnchor="middle" className="bh-muted" fontSize="10">Actual input tokens per decision</text>
+      <text x={(left + plotRight) / 2} y={height - 9} textAnchor="middle" fill="var(--text)" fontSize="10">Actual input tokens per decision</text>
       {systems.map((system, systemIndex) => <g key={system.key}>
         {system.buckets.slice(1).map((bucket, bucketIndex) => {
           const previous = system.buckets[bucketIndex];
           if (previous.accuracy == null || bucket.accuracy == null) return null;
           return <line key={`${system.key}-${bucketIndex}`} x1={x(bucketIndex)} y1={y(previous.accuracy)} x2={x(bucketIndex + 1)} y2={y(bucket.accuracy)} stroke={palette[systemIndex % palette.length]} strokeWidth="2" strokeLinecap="round" data-bh-jev-context-line={system.key} />;
         })}
-        {system.buckets.map((bucket, bucketIndex) => bucket.accuracy == null ? null : <circle key={`${system.key}-${bucketIndex}`} cx={x(bucketIndex)} cy={y(bucket.accuracy)} r="4" fill={palette[systemIndex % palette.length]} stroke="rgb(var(--surface))" strokeWidth="1.5" tabIndex={0} data-bh-jev-context-point={`${system.key}:${bucket.label}`}>
-          <title>{`${system.system} · ${bucket.label} tokens: ${percent(bucket.accuracy)} (${bucket.correct}/${bucket.n})`}</title>
+        {system.buckets.map((bucket, bucketIndex) => bucket.accuracy == null ? null : <circle key={`${system.key}-${bucketIndex}`} cx={x(bucketIndex)} cy={y(bucket.accuracy)} r="4" fill={palette[systemIndex % palette.length]} stroke="var(--surface)" strokeWidth="1.5" tabIndex={0} data-bh-jev-context-point={`${system.key}:${bucket.label}`}>
+          <title>{`#${system.rank} ${system.system} · ${bucket.label} tokens: ${percent(bucket.accuracy)} (${bucket.correct}/${bucket.n})`}</title>
         </circle>)}
       </g>)}
     </svg>
-    <ul className="mt-3 grid gap-x-4 gap-y-1.5 text-xs sm:grid-cols-2 lg:grid-cols-3" aria-label="Chart systems">
-      {systems.map((system, index) => <li key={system.key} className="flex min-w-0 items-baseline gap-2">
+    <ul className="mt-3 grid gap-x-4 gap-y-1.5 text-xs sm:grid-cols-2 lg:grid-cols-3" aria-label="Chart systems, with the top five shown first" data-bh-jev-context-top-five>
+      {systems.map((system, index) => <li key={system.key} className="flex min-w-0 items-baseline gap-2" data-bh-jev-context-system={system.key}>
         <span className="inline-block h-0.5 w-4 shrink-0" style={{ backgroundColor: palette[index % palette.length] }} aria-hidden="true" />
-        <span className="bh-muted min-w-0 break-words" title={`#${system.rank} ${system.system}`}>#{system.rank} {system.system}</span>
+        <span className="min-w-0 break-words" title={`#${system.rank} ${system.system}`}>{index < 5 && <b>Top five · </b>}#{system.rank} {system.system}</span>
       </li>)}
     </ul>
     <figcaption className="bh-muted mt-3 text-xs">Bucket counts vary because only stored usage telemetry is available. The chart describes these benchmark items; it does not show that context length alone caused a score change.</figcaption>
+  </figure>;
+}
+
+const CONTEXT_MIN = 512;
+const CONTEXT_TICKS = [512, 2048, 8192, 32768, 131072, 524288, 1050000];
+
+function contextPosition(value: number, maximum: number) {
+  if (maximum <= CONTEXT_MIN) return 0;
+  return Math.max(0, Math.min(100, (Math.log(value) - Math.log(CONTEXT_MIN)) / (Math.log(maximum) - Math.log(CONTEXT_MIN)) * 100));
+}
+
+function contextTickLabel(value: number) {
+  if (value >= 1_000_000) return '1.05M';
+  if (value >= 1024) return `${Math.round(value / 1024)}k`;
+  return String(value);
+}
+
+function CapacityChart({ rows }: { rows: Capacity[] }) {
+  const known = rows.flatMap((row) => row.maxContextTokens == null ? [] : [row.maxContextTokens]);
+  const maximum = Math.max(CONTEXT_MIN, ...known);
+  const barColor = (type: string) => type === 'API cap' ? 'rgb(var(--accent))' : type === 'Trained length' ? 'rgb(var(--accent2))' : 'rgb(var(--warn))';
+  const trainingNotes = (row: Capacity) => [
+    row.trainingMaxSeqLen == null ? null : `max_seq_len ${tokens(row.trainingMaxSeqLen)}`,
+    row.trainingStateMaxTokens == null ? null : `state limit ${tokens(row.trainingStateMaxTokens)}`,
+  ].filter(Boolean);
+
+  return <figure className="bh-panel mt-4 min-w-0 p-3 sm:p-5" data-bh-jev-context-capacity-chart aria-labelledby="jev-context-capacity-chart-title">
+    <h3 id="jev-context-capacity-chart-title" className="text-lg font-semibold">Published context limits · logarithmic scale</h3>
+    <p className="bh-muted mt-1 text-sm">Each row shows the system&apos;s exact published maximum input context. API/serving caps, hard limits and trained lengths use different bar colors; training configuration limits appear as separate markers and values where published.</p>
+    <div className="mt-4">
+      <div className="relative h-6" aria-hidden="true">
+        {CONTEXT_TICKS.filter((tick) => tick <= maximum).map((tick, index, ticks) => <span key={tick} className={`absolute top-0 whitespace-nowrap font-mono text-[9px] text-[var(--muted)] ${index === 0 ? '' : index === ticks.length - 1 ? '-translate-x-full' : '-translate-x-1/2'} ${tick === 524288 ? 'hidden sm:block' : ''}`} style={{ left: `${contextPosition(tick, maximum)}%` }}>{contextTickLabel(tick)}</span>)}
+      </div>
+      <ol className="m-0 list-none p-0" aria-label="Published context limits by system">
+      {rows.map((row) => {
+        const seq = row.trainingMaxSeqLen;
+        const state = row.trainingStateMaxTokens;
+        const note = trainingNotes(row);
+        const rowLabel = `${row.rank == null ? 'Unranked' : `JevBench rank ${row.rank}`} ${row.system}; ${row.maxContextTokens == null ? 'published maximum unknown' : `${tokens(row.maxContextTokens)}, ${row.type}`}${note.length ? `; training ${note.join(', ')}` : ''}`;
+        return <li key={row.key} className="grid grid-cols-[minmax(0,1fr)_auto] gap-x-2 border-t border-[rgb(var(--line))] py-2 first:border-0" data-bh-jev-context-capacity-row={row.key} aria-label={rowLabel}>
+          <span className="min-w-0 truncate text-xs font-medium" title={rowLabel}>{row.rank == null ? 'Unranked' : `#${row.rank}`} {row.system}</span>
+          <span className="tabular text-right text-[11px]" title={row.type}>{row.maxContextTokens == null ? 'Unknown' : `${row.maxContextTokens.toLocaleString('en-US')} · ${row.type}`}</span>
+          <div className="relative col-span-2 mt-1 h-3 rounded-sm bg-[rgb(var(--line)/.38)]" role="img" aria-label={rowLabel}>
+            {row.maxContextTokens != null && <span className="absolute inset-y-0 left-0 min-w-[2px] rounded-sm" style={{ width: `${Math.max(0.8, contextPosition(row.maxContextTokens, maximum))}%`, backgroundColor: barColor(row.type) }} title={`${row.system}: ${tokens(row.maxContextTokens)} (${row.type})`} />}
+            {seq != null && <span className="absolute inset-y-[-2px] z-10 border-l-2 border-solid border-[var(--text)]" style={{ left: `${contextPosition(seq, maximum)}%` }} title={`Training max_seq_len: ${tokens(seq)}`} aria-hidden="true" />}
+            {state != null && <span className="absolute inset-y-[-2px] z-10 border-l-2 border-dashed border-[var(--text)]" style={{ left: `${contextPosition(state, maximum)}%` }} title={`Training state limit: ${tokens(state)}`} aria-hidden="true" />}
+          </div>
+          {note.length > 0 && <span className="bh-muted col-span-2 mt-0.5 text-[10px]">Training configuration: {note.join(' · ')}.</span>}
+        </li>;
+      })}
+      </ol>
+    </div>
+    <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-[11px]" aria-label="Context chart legend">
+      <li><span className="mr-1.5 inline-block h-2 w-3 rounded-sm" style={{ backgroundColor: 'rgb(var(--accent))' }} />API / serving cap</li>
+      <li><span className="mr-1.5 inline-block h-2 w-3 rounded-sm" style={{ backgroundColor: 'rgb(var(--warn))' }} />Hard limit</li>
+      <li><span className="mr-1.5 inline-block h-2 w-3 rounded-sm" style={{ backgroundColor: 'rgb(var(--accent2))' }} />Trained length</li>
+      <li><span className="mr-1.5 inline-block h-3 border-l-2 border-solid border-[var(--text)] align-middle" />Training max_seq_len</li>
+      <li><span className="mr-1.5 inline-block h-3 border-l-2 border-dashed border-[var(--text)] align-middle" />Training state limit</li>
+    </ul>
+    <figcaption className="bh-muted mt-2 text-xs">The scale runs from 512 tokens to {tokens(maximum)}. Source links, dates, evidence notes and exact training details remain in the table below.</figcaption>
   </figure>;
 }
 
@@ -271,23 +331,27 @@ function LongPolicySummary({ rows, itemCount }: { rows: LongPolicy[]; itemCount:
 export function JevContextLength({ data }: { data: ContextData }) {
   const worst = [...data.longPolicySystems].sort((a, b) => a.deltaPercentagePoints - b.deltaPercentagePoints)[0];
   const leastAffected = [...data.longPolicySystems].sort((a, b) => b.deltaPercentagePoints - a.deltaPercentagePoints)[0];
-  const maxKnown = Math.max(...data.capacitySystems.flatMap((row) => row.maxContextTokens == null ? [] : [row.maxContextTokens]));
-  const minKnown = Math.min(...data.capacitySystems.flatMap((row) => row.maxContextTokens == null ? [] : [row.maxContextTokens]));
-  const axisLabels = ['<500', '500–999', '1k–1,999', '≥2k'];
+  const knownCapacity = data.capacitySystems.flatMap((row) => row.maxContextTokens == null ? [] : [row.maxContextTokens]);
+  const maxKnown = Math.max(...knownCapacity);
+  const minKnown = Math.min(...knownCapacity);
+  const unknownCapacityCount = data.capacitySystems.filter((row) => row.maxContextTokens == null).length;
+  const lengthCoverageMin = Math.min(...data.lengthSystems.map((row) => row.lengthCoverage));
+  const lengthCoverageMax = Math.max(...data.lengthSystems.map((row) => row.lengthCoverage));
 
   return <section id="jev-context-length" className="mt-12 scroll-mt-6" data-bh-jev-context-section aria-labelledby="jev-context-title">
     <p className="bh-eyebrow">JevBench {data.sourceDataset.replace('JevBench ', '')} · input capacity and long inputs</p>
     <h2 id="jev-context-title" className="mt-1 text-2xl font-bold leading-snug sm:text-3xl">Context length</h2>
     <p className="bh-muted mt-2 max-w-5xl text-sm">Context length is the amount of input a model or service can accept in one request. It matters when an app sends a long conversation state, policy set, or document: a smaller window can force truncation or chunking. A larger window is a capacity ceiling, not a promise that the system will use every token well.</p>
-    <p className="bh-muted mt-2 max-w-5xl text-sm">Across 82 v1.4.1 rows (77 ranked systems and five unranked additions), supported published values range from {tokens(minKnown)} to {tokens(maxKnown)}; eight have no published maximum we could verify. For Jev-class rebuilds, the table records the base window and separately notes any published training truncation or missing runtime cap.</p>
+    <p className="bh-muted mt-2 max-w-5xl text-sm">Across {data.capacitySystems.length} v1.4.1 rows ({data.capacitySystems.filter((row) => row.rank != null).length} ranked systems and {data.capacitySystems.filter((row) => row.rank == null).length} unranked additions), supported published values range from {tokens(minKnown)} to {tokens(maxKnown)}; {unknownCapacityCount} have no published maximum we could verify. For Jev-class rebuilds, the chart and table separate a model&apos;s trained length from any published serving cap and show training truncation limits where available.</p>
 
-    <AccuracyChart systems={data.lengthSystems} labels={axisLabels} />
+    <AccuracyChart systems={data.lengthSystems} labels={data.bucketLabels} />
     <BucketCounts systems={data.lengthSystems} />
-    <p className="bh-muted mt-3 text-xs" data-bh-jev-context-coverage>Coverage: {data.lengthSystems.length} of the top {data.topRankedSystemsConsidered} systems are shown. JevK5 v0.2.0 is excluded because its retained per-item run is 199/231 while the published v1.4.1 public score is 197/231. SystemOne-open has matching outcomes but no per-item input-token telemetry. All {data.lengthSystems.length} included systems exactly reproduce their published public accuracy; stored lengths cover 183–231 decisions per system.</p>
+    <p className="bh-muted mt-3 text-xs" data-bh-jev-context-coverage>Coverage: {data.lengthSystems.length} of the top {data.topRankedSystemsConsidered} systems are shown. Exclusions: {data.excludedLengthSystems.map((row) => `${row.system} (${row.reason})`).join('; ')}. All {data.lengthSystems.length} included systems exactly reproduce their published public accuracy; stored lengths cover {lengthCoverageMin}–{lengthCoverageMax} decisions per system.</p>
 
     <LongPolicySummary rows={data.longPolicySystems} itemCount={data.longPolicyItems} />
     <p className="bh-muted mt-3 max-w-5xl text-xs">For example, {worst.system} scored {percent(worst.longPolicyAccuracy)} on long_policy versus {percent(worst.overallAccuracy)} overall (change {pp(worst.deltaPercentagePoints)}), while {leastAffected.system} scored {percent(leastAffected.longPolicyAccuracy)} versus {percent(leastAffected.overallAccuracy)} (change {pp(leastAffected.deltaPercentagePoints)}). These are descriptive public-set comparisons. Prompt wrappers and tokenizers differ by system, and the 19-item family is small, so the results do not isolate context length as the cause. Only public item results were used; sealed-set item rows were not used.</p>
 
+    <CapacityChart rows={data.capacitySystems} />
     <CapacityTable rows={data.capacitySystems} checkedAt={data.checkedAt} />
     <p className="bh-muted mt-3 max-w-5xl text-xs">The input-length chart uses each system&apos;s existing <code>usage.input_tokens</code> telemetry and public item outcomes; no new model runs were made. Source dates are listed beside each primary-source link, and every source was checked {day(data.checkedAt)}. Training limits and inference or API caps are shown separately where published.</p>
   </section>;

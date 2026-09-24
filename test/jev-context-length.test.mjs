@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import contextData from '../data/jevbench-context-length.json' with { type: 'json' };
+import { readFileSync } from 'node:fs';
 
 const SEALED_MARKERS = [
   'jevbench-sealed',
@@ -44,6 +45,20 @@ test('length analysis only includes reconciled public telemetry and records excl
   }
   assert.equal(contextData.longPolicyItems, 19);
   assert.equal(contextData.longPolicySystems.length, 14);
+  assert.deepEqual(contextData.bucketLabels, ['<2k', '2–8k', '8–16k', '16–64k', '64–256k', '256k–1M', '≥1M']);
+  for (const row of contextData.lengthSystems) assert.deepEqual(row.buckets.map((bucket) => bucket.label), contextData.bucketLabels);
+});
+
+test('context page uses theme-aware labels and charts exact limits with distinct training markers', () => {
+  const source = readFileSync(new URL('../components/JevContextLength.tsx', import.meta.url), 'utf8');
+  assert.match(source, /fill="var\(--muted\)"/);
+  assert.match(source, /data-bh-jev-context-top-five/);
+  assert.match(source, /data-bh-jev-context-capacity-chart/);
+  assert.match(source, /data-bh-jev-context-capacity-row=\{row\.key\}/);
+  assert.match(source, /<ol[^>]*aria-label="Published context limits by system"/);
+  assert.match(source, /<div className="relative h-6" aria-hidden="true">/);
+  assert.match(source, /Training max_seq_len/);
+  assert.match(source, /Training state limit/);
 });
 
 test('public context artifact contains no sealed item-level material', () => {

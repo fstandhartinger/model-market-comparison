@@ -6,13 +6,19 @@ import { JevCapability3D } from './JevCapability3D';
 
 const CHART_TOP = 20;
 const one = (value: number) => value.toFixed(1);
-const shortName = (value: string) => value.split(' (')[0].split(', formerly')[0];
+const shortName = (value: string) => {
+  const clean = value.split(', formerly')[0];
+  if (clean === 'GPT-6 Luna (low reasoning effort)') return 'GPT-6 Luna (low)';
+  if (clean === 'GPT-6 Luna (default medium reasoning effort)') return 'GPT-6 Luna (medium)';
+  return clean.split(' (')[0];
+};
 const typeVar = (cls: string) => ({ '--jev-t': 'var(' + (JEV_TYPE_VAR[cls] ?? JEV_TYPE_VAR['llm-baseline']) + ')' }) as CSSProperties;
 const usd = (value: number) => value === 0 ? 'Free' : value >= 1 ? '$' + value.toFixed(2) : '$' + value.toPrecision(2);
 
 type PlotPoint = {
   key: string;
   name: string;
+  rank: number | null;
   cls: string;
   colorVariable: string;
   capability: number;
@@ -26,6 +32,7 @@ function toPlotPoint(row: JevV14System, capability: number): PlotPoint {
   return {
     key: row.key,
     name: shortName(row.display),
+    rank: row.rank,
     cls: row.class,
     colorVariable: JEV_TYPE_VAR[row.class] ?? JEV_TYPE_VAR['llm-baseline'],
     capability,
@@ -54,6 +61,10 @@ function logCostPosition(cost: number, bounds: [number, number]): number {
   return Math.max(0, Math.min(1, (Math.log10(cost) - min) / (max - min)));
 }
 
+function costAxisPosition(cost: number, bounds: [number, number]): number {
+  return 4 + 96 * logCostPosition(cost, bounds);
+}
+
 function costTicks(bounds: [number, number]): number[] {
   const values: number[] = [];
   for (let exponent = Math.floor(bounds[0]); exponent <= Math.ceil(bounds[1]); exponent += 1) {
@@ -73,7 +84,7 @@ function CapabilityBar({ row, capability, position, costBounds }: {
   const intelligence = row.axes?.intelligence ?? 0;
   const calibration = row.axes?.calibration ?? 0;
   const cost = row.cost?.usd_per_1000 ?? null;
-  const costWidth = cost == null ? 0 : cost === 0 ? 1.5 : logCostPosition(cost, costBounds) * 100;
+  const costWidth = cost == null ? 0 : cost === 0 ? 2 : costAxisPosition(cost, costBounds);
   const width = Math.max(0, Math.min(100, capability));
   const label = `${row.display}: Capability ${one(capability)}, the mean of Intelligence ${one(intelligence)} and Calibration ${one(calibration)}; cost ${cost == null ? 'not reported' : usd(cost) + ' per 1,000 decisions' + (row.cost?.kind === 'estimate' ? ', estimated' : '')}.`;
 
@@ -84,6 +95,7 @@ function CapabilityBar({ row, capability, position, costBounds }: {
     data-bh-jev14-capability-value={capability.toFixed(3)}
     data-bh-jev14-cost={cost == null ? '' : String(cost)}
     aria-label={label}
+    title={label}
   >
     <span className="bh-muted tabular col-start-1 row-start-1 text-right text-xs">{position + 1}</span>
     <span className="col-start-2 row-start-1 min-w-0 truncate sm:text-right" title={row.display}>
@@ -94,7 +106,7 @@ function CapabilityBar({ row, capability, position, costBounds }: {
     </span>
     <span className="col-start-2 row-start-2 mt-1 flex flex-col justify-center gap-1 sm:col-start-3 sm:row-start-1 sm:mt-0" aria-hidden="true">
       <span className="bh-jevc-grid flex h-[10px] rounded-sm"><span className={'bh-jevc-bar' + (row.ranked ? '' : ' is-partial')} style={{ width: width.toFixed(4) + '%' }} /></span>
-      <span className="bh-jevc-grid flex h-[5px] rounded-sm"><span className="block h-full rounded-sm bg-[rgb(var(--muted))]" style={{ width: costWidth.toFixed(4) + '%' }} /></span>
+      <span className="bh-jevc-grid flex h-[7px] rounded-sm" title={`Cost ${cost == null ? 'not reported' : usd(cost) + ' per 1,000 decisions' + (row.cost?.kind === 'estimate' ? ', estimated' : '')}; logarithmic scale, lower is better`}><span className="block h-full rounded-sm" style={{ width: costWidth.toFixed(4) + '%', backgroundColor: 'var(--muted)' }} /></span>
     </span>
     <b className="tabular col-start-3 row-span-2 row-start-1 self-center text-right text-base sm:col-start-4 sm:row-span-1 sm:text-lg">{one(capability)}</b>
     <span className="bh-muted col-start-2 row-start-3 mt-0.5 min-w-0 font-mono text-[10.5px] sm:col-start-5 sm:row-start-1 sm:mt-0 sm:whitespace-normal sm:text-right sm:text-[12px]">
@@ -118,6 +130,7 @@ function Scatter({ id, title, description, points, xKind, costBounds }: {
   const W = 520, H = 370, L = 55, R = 14, T = 18, B = 58;
   const xMax = W - R, yMax = H - B;
   const xTicks = xKind === 'cost' ? costTicks(costBounds) : [0, 20, 40, 60, 80, 100];
+  const leaders = plotted.slice(0, 5);
   const xMinValue = xKind === 'cost' ? costBounds[0] : 0;
   const xMaxValue = xKind === 'cost' ? costBounds[1] : 100;
   const xAt = (value: number) => {
@@ -135,23 +148,30 @@ function Scatter({ id, title, description, points, xKind, costBounds }: {
       <desc id={id + '-svg-desc'}>{description} Each point has a tooltip with the system and its values.</desc>
       {[0, 20, 40, 60, 80, 100].map((tick) => <g key={'y' + tick}>
         <line x1={L} x2={xMax} y1={yAt(tick)} y2={yAt(tick)} stroke="rgb(var(--line) / .7)" />
-        <text x={L - 7} y={yAt(tick) + 4} textAnchor="end" className="bh-muted" fontSize="11">{tick}</text>
+        <text x={L - 7} y={yAt(tick) + 4} textAnchor="end" fill="var(--muted)" fontSize="11">{tick}</text>
       </g>)}
       {xTicks.map((tick) => <g key={'x' + tick}>
         <line x1={xAt(tick)} x2={xAt(tick)} y1={T} y2={yMax} stroke="rgb(var(--line) / .55)" />
-        <text x={xAt(tick)} y={yMax + 17} textAnchor="middle" className="bh-muted" fontSize="10">{xKind === 'cost' ? usd(tick) : tick}</text>
+        <text x={xAt(tick)} y={yMax + 17} textAnchor="middle" fill="var(--muted)" fontSize="10">{xKind === 'cost' ? usd(tick) : tick}</text>
       </g>)}
-      <text x={(L + xMax) / 2} y={H - 7} textAnchor="middle" className="bh-muted" fontSize="10">{xLabel}</text>
-      <text x="13" y={(T + yMax) / 2} textAnchor="middle" className="bh-muted" fontSize="11" transform={`rotate(-90 13 ${(T + yMax) / 2})`}>Capability · higher ↑</text>
+      <text x={(L + xMax) / 2} y={H - 7} textAnchor="middle" fill="var(--text)" fontSize="10">{xLabel}</text>
+      <text x="13" y={(T + yMax) / 2} textAnchor="middle" fill="var(--text)" fontSize="11" transform={`rotate(-90 13 ${(T + yMax) / 2})`}>Capability · higher ↑</text>
       {plotted.map((point) => {
         const x = xKind === 'cost' ? xAt(point.cost ?? 0) : xAt(point.speed ?? 0);
         const y = yAt(point.capability);
-        const titleText = `${point.name} · Capability ${one(point.capability)} · Cost ${point.cost == null ? 'not reported' : usd(point.cost) + (point.costKind === 'estimate' ? ' estimated' : '')} per 1,000 decisions · Speed ${point.speed == null ? 'not reported' : one(point.speed)}.`;
-        return <circle key={point.key} cx={x} cy={y} r="4.5" fill={`rgb(var(${point.colorVariable}))`} stroke="rgb(var(--surface))" strokeWidth="1.25" data-bh-jev14-point={point.key} tabIndex={0}>
+        const titleText = `${point.name}${point.rank == null ? '' : ` · JevBench rank ${point.rank}`} · Capability ${one(point.capability)} · Cost ${point.cost == null ? 'not reported' : usd(point.cost) + (point.costKind === 'estimate' ? ' estimated' : '')} per 1,000 decisions · Speed ${point.speed == null ? 'not reported' : one(point.speed)}.`;
+        const leader = leaders.some((candidate) => candidate.key === point.key);
+        return <circle key={point.key} cx={x} cy={y} r={leader ? 5.5 : 4.25} fill={`rgb(var(${point.colorVariable}))`} stroke="var(--surface)" strokeWidth={leader ? 1.75 : 1.25} data-bh-jev14-point={point.key} tabIndex={0}>
           <title>{titleText}</title>
         </circle>;
       })}
     </svg>
+    <ol className="mt-3 grid gap-x-4 gap-y-2 text-xs sm:grid-cols-2" aria-label={`Top five systems by Capability in ${title}`} data-bh-jev14-scatter-top-five={xKind}>
+      {leaders.map((point, index) => <li key={point.key} className="flex min-w-0 items-start gap-2" data-bh-jev14-leader={point.key}>
+        <span className="mt-1 inline-block h-2.5 w-2.5 shrink-0 rounded-full" style={{ backgroundColor: `rgb(var(${point.colorVariable}))` }} aria-hidden="true" />
+        <span className="min-w-0"><b>Capability #{index + 1} · {point.name}</b><br /><span className="bh-muted">Capability {one(point.capability)} · Cost {point.cost == null ? 'not reported' : usd(point.cost) + (point.costKind === 'estimate' ? ' estimated' : '')} / 1,000 · Speed {point.speed == null ? '—' : one(point.speed)}{point.rank == null ? '' : ` · JevBench #${point.rank}`}</span></span>
+      </li>)}
+    </ol>
     <figcaption className="bh-muted mt-2 text-xs">{plotted.length} systems plotted{plotted.length !== points.length ? `; ${points.length - plotted.length} omitted because ${xKind === 'cost' ? 'cost is not reported' : 'Speed is not reported'}` : ''}. Hover or focus a point to read its values.</figcaption>
   </figure>;
 }
@@ -193,6 +213,14 @@ export function JevCapabilityChart({ systems, revision }: { systems: JevV14Syste
           {rest.map((item, index) => <CapabilityBar key={item.row.key} {...item} position={index + CHART_TOP} costBounds={costBounds} />)}
         </ol>
       </details>}
+      <div className="mt-1 grid grid-cols-[1.4rem_minmax(0,1fr)_3.3rem] gap-x-2 sm:grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_11rem]" data-bh-jev14-cost-axis>
+        <span /><span />
+        <div className="relative col-start-2 row-start-1 h-5 sm:col-start-3" aria-hidden="true">
+          {costTicks(costBounds).map((tick, index, ticks) => <span key={tick} className={`absolute top-0 whitespace-nowrap font-mono text-[9px] text-[var(--muted)] ${index === 0 ? '' : index === ticks.length - 1 ? '-translate-x-full' : '-translate-x-1/2'}`} style={{ left: `${costAxisPosition(tick, costBounds)}%` }}>{usd(tick)}</span>)}
+        </div>
+        <span />
+        <span className="bh-muted col-start-2 row-start-2 mt-1 text-[10px] sm:col-start-3">Cost per 1,000 decisions · logarithmic · lower is better; free is at the left edge.</span>
+      </div>
       <div className="mt-3 grid grid-cols-[1.4rem_minmax(0,1fr)_3.3rem] gap-x-2 text-[10px] sm:grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_11rem]" aria-hidden="true">
         <span /><span />
         <span className="bh-muted flex justify-between tabular"><span>Capability 0–100</span><span>100</span></span>

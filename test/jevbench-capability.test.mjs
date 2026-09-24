@@ -59,6 +59,13 @@ test('Capability views define the measure, use twenty expandable bars, and follo
   assert.match(source, /data-bh-jev14-capability-more/);
   assert.match(source, /USD per 1,000 decisions[^\n]*logarithmic/);
   assert.match(source, /data-bh-jev14-scatter=\{xKind\}/);
+  assert.match(source, /GPT-6 Luna \(low\)/);
+  assert.match(source, /GPT-6 Luna \(medium\)/);
+  assert.match(source, /data-bh-jev14-cost-axis/);
+  assert.match(source, /logarithmic · lower is better/);
+  assert.match(source, /fill="var\(--muted\)"/);
+  assert.match(source, /data-bh-jev14-scatter-top-five=\{xKind\}/);
+  assert.match(readFileSync(path.join(root, 'components/JevCapability3D.tsx'), 'utf8'), /data-bh-jev14-3d-top-five/);
   assert.match(source, /xKind="cost"/);
   assert.match(source, /xKind="speed"/);
   assert.ok(page.indexOf('id="credit"') < page.indexOf('<JevCapabilityChart') && page.indexOf('<JevCapabilityChart') < page.indexOf('id="jev13-history"'), 'capability views follow the current board sections and precede only historical content');
