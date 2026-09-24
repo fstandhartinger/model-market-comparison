@@ -9432,3 +9432,28 @@ board, compare radar and hub head/order. CR-139 remains with its existing remedi
   handoff was posted to agent-board thread 7 as entry 444.
 - Resume only after both active writers formally release the shared slot and their final trees
   and result reports are inspected. Do not append `ALL-ACCEPTED`.
+
+## Iteration 202 — 2026-09-24 11:16 → 11:25 UTC (opencode-kimi, independent live gate): F-171–F-175 verified
+
+- The previously active JevBench writers had released the repository slot; the checkout was
+  clean at `3eca31d8` before this read-only gate. A separate Kimi K3 worker ran the existing
+  pass-33 verifier as five bounded checks per host and captured supplementary real-browser
+  screenshots. It did not edit the repository or commit anything.
+- Both `https://benchmarkheaven.com` and
+  `https://model-market-comparison.app.mintapis.com` reported the same deployed revision
+  `3eca31d88e0fa2c8ab86a6ca2462dba6fa0524be`, matching `HEAD`. The matrix covered 1440×1000
+  and 390×844, light and dark themes, and returned **132/132 checks passed, 0 failed**:
+  F-171 40/40 per host, F-172 8/8, F-173 10/10, F-174 4/4, F-175 4/4. No defects were
+  found. Evidence and SHA-256 receipts are under
+  `/opt/benchmarkheaven/state/ux-evidence/iter202-f171-f175-kimi/`, including the worker's
+  final report and 16 screenshots per host.
+- The five current pass-33 rows below are now independently verified. The older historical
+  rows above remain as implementation history; this entry is the latest status for each ID.
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| F-171 | verified | `1238cc8c`; `/opt/benchmarkheaven/state/ux-evidence/iter202-f171-f175-kimi/{benchmarkheaven.com,model-market-comparison.app.mintapis.com}/verification-F-171.json` | Independent Kimi K3 gate: 40/40 per host; current v1.4.1 leaf pages have release-aligned score panels, strips, axis bands and radars with no page errors. |
+| F-172 | verified | `1238cc8c`; same evidence dirs, `verification-F-172.json` | Independent Kimi K3 gate: 8/8 per host; all board-row and bar-chart names link to internal system pages. |
+| F-173 | verified | `1238cc8c`; same evidence dirs, `verification-F-173.json` | Independent Kimi K3 gate: 10/10 per host; first mobile bar is above the fold, the decision count is stated once, and there is no horizontal overflow. |
+| F-174 | verified | `1238cc8c`; same evidence dirs, `verification-F-174.json` | Independent Kimi K3 gate: 4/4 per host; missing radar series are stated once instead of rendering trailing dash labels. |
+| F-175 | verified | `1238cc8c`; same evidence dirs, `verification-F-175.json` | Independent Kimi K3 gate: 4/4 per host; the board order is chart → table → compare → explanation. |
