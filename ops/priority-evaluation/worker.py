@@ -205,6 +205,18 @@ def automatic_terminal_refund_retry_eligibility_sql() -> str:
     )"""
 
 
+def refund_attention_marker_eligibility_sql(attempts: int, state: str) -> str:
+    return f"""r.refund_attempts >= {attempts} AND (
+      r.refund_attention_notified_attempts < {attempts}
+      OR (r.refund_attempts={attempts}
+        AND r.refund_attention_notified_state IS DISTINCT FROM {text_literal(state)})
+    )"""
+
+
+def refund_attention_marker_state_update_sql(attempts: int, state: str) -> str:
+    return f"CASE WHEN r.refund_attempts={attempts} THEN {text_literal(state)} ELSE r.refund_attention_notified_state END"
+
+
 def mark_refund_attention_notified(row: dict, state: str) -> bool:
     request_id = str(row.get("id", ""))
     attempts = row.get("refund_attempts")
@@ -217,10 +229,9 @@ def mark_refund_attention_notified(row: dict, state: str) -> bool:
     result = sql_json(f"""
       UPDATE {TABLE} AS r
       SET refund_attention_notified_attempts=GREATEST(r.refund_attention_notified_attempts,{attempts}),
-          refund_attention_notified_state={text_literal(state)}, updated_at=now()
-      WHERE r.id='{request_id}'::uuid AND r.refund_attempts={attempts}
-        AND (r.refund_attention_notified_attempts < {attempts}
-          OR r.refund_attention_notified_state IS DISTINCT FROM {text_literal(state)})
+          refund_attention_notified_state={refund_attention_marker_state_update_sql(attempts, state)},
+          updated_at=now()
+      WHERE r.id='{request_id}'::uuid AND ({refund_attention_marker_eligibility_sql(attempts, state)})
       RETURNING json_build_object('id',r.id::text)::text
     """)
     return result is not None
