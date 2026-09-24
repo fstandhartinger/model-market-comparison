@@ -6,6 +6,7 @@ import os
 import re
 import subprocess
 import sys
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -15,6 +16,7 @@ from pathlib import Path
 HOME = Path.home()
 TABLE = "bh_priority_evaluation_requests"
 AUTO_REFUND_FAILURE_ATTEMPT_LIMIT = 3
+NOTIFICATION_PHASE_BUDGET_SECONDS = 120
 UUID_RE = re.compile(r"^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$", re.I)
 STRIPE_ID_RE = re.compile(r"^re_[A-Za-z0-9]+$")
 
@@ -431,9 +433,10 @@ def main() -> int:
     command = sys.argv[1]
     try:
         if command == "cycle":
-            while process_notification():
+            notification_deadline = time.monotonic() + NOTIFICATION_PHASE_BUDGET_SECONDS
+            while time.monotonic() < notification_deadline and process_notification():
                 pass
-            process_due_refunds()
+            process_due_refunds(limit=1)
             return 0
         if command == "refund" and len(sys.argv) == 3:
             request_id = sys.argv[2]
