@@ -10175,3 +10175,39 @@ both `vals-index*` pairs, `matharena-brokenarxiv`, `vulcanbench-frontier`, `kern
 `frontierswe::2`, `surge-gdp-pdf` and `aa-automationbench` on protocol-review disputes — several of
 which are reviewer wording objections (`scoring.notes`) rather than source changes.
 
+### D193 (new) — six benchmarks can only pass a protocol review on days when nothing changes
+
+Diagnosed while sorting D192's 23 retentions; **not repaired here**, because the repair is a review
+act on four primary sources and this iteration had a dry run in flight. It is filed separately from
+D192 because it is not a source change at all.
+
+`protocolSourceContent` (`ops/daily/refresh-benchmarks.mjs:94`) supplies a long primary source to the
+reviewer only through `reference.excerpt`, and requires that excerpt to appear **verbatim** in
+today's capture. `protocolSourceLocator` says the same in its own words: *"Published protocol text;
+exact excerpt when the full page exceeds the bound"*.
+
+The `excerpt` fields on these references are not passages of their sources. They are editorial
+locator notes:
+
+| entry | oversized reference | bytes | its `excerpt` |
+|---|---|---|---|
+| `ugi::…`, `ugi-natint::…` (and the two siblings) | `…/raw/main/ugi-leaderboard-data.csv` | 663,853 | *"Exact score column UGI 🏆"* |
+| `frontiercode::1.1` | `cognition.com/data/frontiercode-leaderboard/data.json` | 78,155 | *"data.json v1_1: 36 models, 98 model × effort runs on the 100-task Main subset, each with new_score, correct, flagged_rate, c…"* |
+| `frontiercode-cost::1.1` | the same `data.json` | 78,155 | *"data.json v1_1 Main: every model × effort run carries cost, the mean USD spend per rollout."* |
+
+Matched against the 19:20 run's own captures by longest common prefix, **2 to 4 characters** of each
+excerpt are present — they were never source text. (The other references on these entries are under
+the 60,000-byte bound, so they are passed in full and are fine.)
+
+That is why the symptom looks intermittent. `protocol()` only runs for a benchmark whose rows
+changed. On 2026-09-23 all four `ugi*` entries were `checked_unchanged` and the guard never fired;
+on 2026-09-24 the UGI board moved, the review ran, and all four failed. `frontiercode*` has been
+failing on both days because its board keeps moving. **So these six entries fail whenever their
+numbers change — which is the only time their numbers matter.** The message
+*"methodology passage changed"* is misleading: nothing upstream changed.
+
+The repair is to read each source and pin a real verbatim methodology passage — for the UGI CSV that
+means the header line or the `About Benchmarks` text the note points at, for FrontierCode the
+revision statement in `data.json`. Deliberately not done by guessing a string that makes the guard
+pass; that is the one thing this guard exists to prevent.
+
