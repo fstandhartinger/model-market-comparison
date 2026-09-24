@@ -8978,6 +8978,26 @@ Source: Florian's request in `/home/flori/jobs/jevbench-context-length-20260923/
 | CR-138.4 | verified | `850e87a7`; `components/JevContextLength.tsx`; `data/jevbench-context-length.json`; `test/jev-context-length.test.mjs`; `/opt/benchmarkheaven/state/ux-evidence/cr138-context-length/production-build-final.log` | Context length section is live after the capability chart on both `/jev-models` and `/jev-models/v1.4.1`, with accessible sorting, 82-row sourced table, public input-length chart, long-policy summary, and plain-language relevance. Independent Kimi QA returned PASS. |
 | CR-138.5 | verified | `/opt/benchmarkheaven/state/ux-evidence/cr138-context-length/live-browser-final.log`; 24 screenshots in the same directory; `independent-review-concise.json`; `npm-test-final.log`; `tsc-final.log`; `production-build-final.log` | Revision `850e87a7` verified live on both hosts: current and pinned routes × 1440/390/360 × light/dark, 82 rows, 52 chart points, 82 source-linked rows, working sort, no horizontal overflow, and no sealed item-level content. Independent Kimi QA returned PASS. |
 
+## CR-139 — Benchmark Heaven number-audit remediation (seeded 2026-09-24)
+
+Source: `/home/flori/jobs/bh-numbers-audit-swarm-20260923/final/PROMPT.md`, Phase 4. The audit confirmed 1,077 findings; implementation is limited to source-verifiable non-AA corrections. AA-derived rows remain on hold pending written permission; the 57 unclear findings remain unchanged; sealed JevBench item-level data is out of scope.
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| CR-139.1 | open | `/home/flori/jobs/bh-numbers-audit-swarm-20260923/final/CONFIRMED.jsonl`; `REMEDIATION-PLAN.md`; retained primary-source captures | Refresh confirmed non-AA provider offers, availability, currency conversions, counts, subscriptions and plan values from current sources; rebuild dataset. Preserve exact provenance and keep AA-derived rows unchanged. |
+| CR-139.2 | open | `/home/flori/jobs/bh-numbers-audit-swarm-20260923/final/CONFIRMED.jsonl`; offer collectors, types, projections and cost UI | Preserve OpenRouter prompt-length/time conditions and AWS/Azure/Vertex cache-read prices through the offer model and cost display; add regression coverage for conditions, route identity, units and adjusted-cost arithmetic. |
+| CR-139.3 | open | `/home/flori/jobs/bh-numbers-audit-swarm-20260923/final/CONFIRMED.jsonl`; retained Coding Agent v1.4 source snapshot | Compute the median from full-precision source values, recompute the affected output and correct stale method dates; add a regression test for transform order. |
+| CR-139.4 | open | `/home/flori/jobs/bh-numbers-audit-swarm-20260923/final/CONFIRMED.jsonl`; `lib/client-model.ts` and score consumers | Apply one exact-evidence rule to Composite detail, API, filter, chart and shortlist paths; reconcile confirmed counts and source-to-identity mappings. |
+| CR-139.5 | open | `/home/flori/jobs/bh-numbers-audit-swarm-20260923/final/CONFIRMED.jsonl`; affected display and subscription sources | Correct labels, scale descriptions, preliminary-result and lower-bound disclosures, collection notes and subscription metadata at the point of use. |
+| CR-139.6 | open | `/home/flori/jobs/bh-numbers-audit-swarm-20260923/final/CONFIRMED.jsonl`; official JevBench v1.1/v1.2 source artifacts | Correct or remove unsupported historical fields, verify exact API bytes, and send Florian a before/after ranking preview. Do not publish those corrections until he approves. No sealed item-level data. |
+| CR-139.7 | open | Dataset, test/typecheck/build logs; both-host receipts; independent review | Keep open until all required gates pass, both hosts agree, a different engine independently verifies the rows, and the ranking-preview approval gate is satisfied. |
+
+## Iteration 195 — 2026-09-24 03:19 UTC (Codex GPT-6 Luna, work): CR-139 seeded
+
+- Verified CR-138.1–.5 from commit `8fe43d1c`, its retained test/build/live-browser receipts, and the independent PASS review. The CR-138 owner process ended, the iteration `running` marker was absent, and the worktree was clean at `8fe43d1c` before taking the next queued writer slot.
+- Claimed the workstream `running` marker for this session so the scheduled tick cannot launch a competing writer. This marker will be removed when this CR work ends.
+- Added CR-139.1–.7 as open rows before implementation. No code or dataset fix is included in this seed commit. Source policy, AA permission hold, unclear-row hold, historical-ranking preview, and no-sealed-data rules are explicit.
+
 ## Iteration 192 — 2026-09-24 00:40 UTC (codex-luna, work): CR-137 deferred under the one-writer rule
 
 The required authority chain and the latest review were read before inspection. CR-137 is the
