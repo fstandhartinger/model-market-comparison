@@ -150,6 +150,11 @@ export default async function JevModelsPage() {
     ],
   };
   return <>
+    {/* Temporary release notice (Florian, 25 Sep 2026) — remove when v1.4.2 is live. */}
+    <div role="status" data-bh-release-notice style={{ margin: "12px 0 20px", padding: "18px 20px", borderRadius: 10, border: "2px solid #f2a33a", background: "rgba(242,163,58,0.14)", fontSize: 20, fontWeight: 700, lineHeight: 1.35 }}>
+      🚀 New leaderboard (JevBench v1.4.2) is being uploaded and will be live in a few minutes.
+      <div style={{ fontSize: 14, fontWeight: 400, marginTop: 6, opacity: 0.85 }}>The rankings below are still v1.4.1. Please check back shortly.</div>
+    </div>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, '\\u003c') }} />
     <header className="bh-page-head">
       {/* F-160 (Fable pass 30): the eyebrow is a div — CustomEvaluationOffer mounts a <div> toast inside it after 6 s, which is invalid inside a <p>. */}
