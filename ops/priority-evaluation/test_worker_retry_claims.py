@@ -177,8 +177,33 @@ class RetryClaimTests(unittest.TestCase):
             self.assertTrue(worker.mark_refund_attention_notified(row, "unknown"))
         query = sql_json.call_args.args[0]
         self.assertIn("refund_attention_notified_attempts=GREATEST(r.refund_attention_notified_attempts,2)", query)
-        self.assertIn("refund_attention_notified_state='unknown'", query)
+        self.assertIn(
+            "refund_attention_notified_state=CASE WHEN r.refund_attempts=2 THEN 'unknown' ELSE r.refund_attention_notified_state END",
+            query,
+        )
         self.assertIn("r.refund_attempts=2", query)
+
+    def test_stale_notice_marker_records_only_its_attempt_after_concurrent_retry(self):
+        eligibility = worker.refund_attention_marker_eligibility_sql(1, "unknown")
+        eligibility = eligibility.replace("r.", "").replace(" IS DISTINCT FROM ", " IS NOT ")
+        columns = (
+            "refund_attempts",
+            "refund_attention_notified_attempts",
+            "refund_attention_notified_state",
+        )
+
+        # A successful notice for attempt 1 can be recorded after attempt 2 starts,
+        # but it must not mark attempt 2's state as already notified.
+        self.assertTrue(self.evaluate(columns, eligibility, (2, 0, None)))
+        state_update = worker.refund_attention_marker_state_update_sql(1, "unknown").replace("r.", "")
+        self.assertEqual(
+            self.evaluate_value(("refund_attempts", "refund_attention_notified_state"), state_update, (2, "failed")),
+            "failed",
+        )
+        self.assertTrue(worker.refund_attention_should_notify("unknown", 2, 1, "failed"))
+
+        # Replaying the marker for attempt 1 does nothing once it was recorded.
+        self.assertFalse(self.evaluate(columns, eligibility, (2, 1, "unknown")))
 
 
 if __name__ == "__main__":
