@@ -1,18 +1,19 @@
 {
   "aa_models": {
     "previous_identity_sha256": "d0fb83d88dcc0e4ad0e9984f257a130039bf919a561b8c2a64cca81dda2b55f0",
-    "current_identity_sha256": "e8cb59d72234592d51232737f451b3b0652963697ba15529f2040d2757c92175",
+    "current_identity_sha256": "a0de2e4b92c904009b8485b9e7d43accd1d5e20450292050961096f0843d21ac",
     "removed": [
       "6ace0ead-584f-4ce6-a9b7-6c3f9cc91c3c",
       "8decf027-5114-4721-9ee1-81c0552980a0",
       "f3a0e101-086f-44b3-a1b2-d23498f9716b"
     ],
-    "expires_at": "2026-09-26T05:45:00Z",
-    "reviewed_at": "2026-09-24T05:45:00Z",
+    "expires_at": "2026-09-26T17:45:00Z",
+    "reviewed_at": "2026-09-24T17:45:00Z",
     "primary_url": "https://artificialanalysis.ai/api/v2/data/llms/models",
-    "primary_capture_sha256": "bf5baf620d93df48e59546a9b8574d51d48fe746c3d947ac186016e65e27ff05",
-    "review_basis": "The complete primary API response contained 671 unique identities (673 prior, minus the three listed Sapiens AI 'Agnes' rows — Agnes 3.0 Flash, Agnes 2.5 Pro Beta, Agnes 2.5 Pro Alpha — plus one new identity, Inception's Mercury 2.5, so this is a clean withdrawal of one vendor's model line, not a truncated or partial response). No other prior identity is absent. This exception binds both complete identity-set hashes and expires; any other shrink, changed response, malformed response, or endpoint change remains fatal.",
-    "owner_acceptance": "Operator (self-heal repair agent, run 2026-09-24T05-37-29-523Z-3381234) reviewed the captured primary API response byte-for-byte against the previously committed catalog; approve only this exact three-model withdrawal for a bounded rerun. Already-published benchmark rows referencing these models by slug (e.g. agnes-2.5-pro-alpha::default) as historical variant scores are untouched — this approval only unblocks today's fresh AA catalog fetch."
+    "primary_capture_sha256": "dbf48b7e25d94684e8657db6ac89fad6ef1b876f635c3601d6740d639b687a55",
+    "review_basis": "Re-review of the same three-model withdrawal against a fresh primary capture, because the 2026-09-24 05:45 approval was never consumed: the run it unblocked was killed by systemd before it published (see ops/ux-2026-09-12/PROGRESS.md, iteration 206), and the approval binds one exact response. This capture (2026-09-24T17:45Z, HTTP 200, 578,020 bytes, body sha256 dbf48b7e...) holds 672 unique identities. Exactly the same three Sapiens AI rows are absent relative to the committed 673-model snapshot — Agnes 3.0 Flash, Agnes 2.5 Pro Beta, Agnes 2.5 Pro Alpha — and nothing else is. Two identities have been ADDED since the 05:45 review: Mercury 2.5 (Inception) and DeepSeek V4.1 Flash (Non-Reasoning). A truncated or partial response does not grow; that, plus the withdrawal still standing 12 hours later, is why this is read as a real upstream removal rather than a short response. The exception binds both complete identity-set hashes and expires; any other shrink, changed response, malformed response or endpoint change remains fatal.",
+    "owner_acceptance": "Operator (Benchmark Heaven UX loop, engine claude-opus, iteration 206, 2026-09-24T17:45Z) re-derived the identity sets from the retained capture rather than trusting the earlier review. Corroborated independently: job bh-gpt6-refresh-20260924 reported the identical body sha256 dbf48b7e25d94684e8657db6ac89fad6ef1b876f635c3601d6740d639b687a55 from its own fetch at 17:22Z (agent board thread #8, entry #782), and reported all 17 of its AA catalog configurations unchanged in evaluation and price fields. Approves only this exact three-model withdrawal, for a bounded rerun. Already-published benchmark rows that reference these models by slug as historical variant scores are untouched; this only unblocks the fresh AA catalog fetch. Note for whoever runs next: this approval is single-use by design — AA's catalog gains identities through the day, so if it is still unconsumed by the next scheduled run the digest will have moved again and the run will fail closed, which is the intended behaviour, not a defect.",
+    "primary_capture_file": "/opt/benchmarkheaven/state/ux-evidence/iter206-selfheal/aa-live-20260924T1745Z.json.gz"
   },
   "openrouter_catalog": {
     "previous_identity_sha256": "6e3f8538ca6a633df306aee4f52984f3b8224ed4f8b684fcd13795635d61de49",

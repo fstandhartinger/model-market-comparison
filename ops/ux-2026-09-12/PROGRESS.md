@@ -9699,3 +9699,37 @@ All three hosts serve `166cbe7e024ee67326287dbd2ec2d37ced85e00c`, `generated_at
 - **`verify-fable-pass33-design.mjs` 78/82 on canonical and legacy** — byte-identical to the previous
   gate's baseline, the only 4 failures being the known-open F-176(b) licence sentence
   (`pass33-{canonical,legacy}/`).
+
+### Iteration 206 — the AA withdrawal approval was re-reviewed and refreshed (`data/raw/source-change-approvals.json`)
+
+The 05:45 approval was never consumed, and it binds one exact response, so it no longer matches
+anything AA serves. A second job hit the same wall from the other side: `bh-gpt6-refresh-20260924`
+reported at 17:22Z that its own catalog refresh "correctly stopped before writing because the current
+digest exceeds the expiring approval" (agent board thread #8, entry #782).
+
+Re-reviewed against a fresh primary capture rather than against the earlier review
+(`GET https://artificialanalysis.ai/api/v2/data/llms/models`, 2026-09-24T17:45Z, 200, 578,020 bytes,
+body sha256 `dbf48b7e25d94684e8657db6ac89fad6ef1b876f635c3601d6740d639b687a55`, retained at
+`/opt/benchmarkheaven/state/ux-evidence/iter206-selfheal/aa-live-20260924T1745Z.json.gz`):
+
+- 672 unique identities. Exactly the same three Sapiens AI rows are absent relative to the committed
+  673-model snapshot, and **nothing else is**.
+- Two identities have been **added** since the 05:45 review: `Mercury 2.5` and
+  `DeepSeek V4.1 Flash (Non-Reasoning)`. A truncated response does not grow.
+- **That body hash is byte-identical to the one `bh-gpt6-refresh-20260924` computed independently at
+  17:22Z**, and that job also reported all 17 of its AA catalog configurations unchanged in
+  evaluation and price fields.
+
+Only `current_identity_sha256`, `primary_capture_sha256`, `reviewed_at`, `expires_at` (48 h) and the
+two prose fields moved; `previous_identity_sha256` and the three `removed` ids are untouched.
+Checked behaviourally, not just by re-serialising: the refreshed approval **accepts** the live
+response, still **refuses** a response with one extra identity missing (`4 prior identities absent`),
+and is **dead after `expires_at`**. `node --test test/` 1,283 / 1,282 pass / 0 fail / 1 skip;
+`npx tsc --noEmit -p .` rc 0.
+
+`lib/live-source.mjs` is still untouched. Recorded for whoever picks this up: the current-identity-set
+binding makes every approval single-use, and AA gains identities through the day, so an approval that
+is not consumed by the next run will have gone stale again and that run will fail closed. That is the
+guard behaving as designed, not a defect — but it means a refreshed approval is a good bet for a
+clean 05:17, not a guarantee. If AA has moved again by then, the (now correctly budgeted) self-heal
+chain re-reviews and reruns, and alerts Florian if it cannot.
