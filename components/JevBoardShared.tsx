@@ -34,7 +34,7 @@ export const NOT_RANKED: Record<string, string> = { honorable_mention: 'honorabl
 // ---- Heat shading: each column shaded by where a value sits between the column's weakest and strongest system ----
 
 export type HeatColumn = 'score' | 'intelligence' | 'calibration' | 'speed' | 'cost' | 'usd' | 'public' | 'sealed' | 'latency';
-type HeatSpec = { get: (row: JevBoardRow) => number | null | undefined; lowerIsBetter?: boolean; log?: boolean };
+type HeatSpec = { get: (row: JevBoardRow) => number | null | undefined; lowerIsBetter?: boolean };
 
 export const HEAT_COLUMNS: Record<HeatColumn, HeatSpec> = {
   score: { get: (r) => r.jevbench_score },
@@ -42,34 +42,35 @@ export const HEAT_COLUMNS: Record<HeatColumn, HeatSpec> = {
   calibration: { get: (r) => r.axes?.calibration },
   speed: { get: (r) => r.axes?.speed },
   cost: { get: (r) => r.axes?.cost },
-  // Prices and latencies span orders of magnitude; a linear scale would paint everything but the priciest row alike.
-  usd: { get: (r) => r.cost?.usd_per_1000, lowerIsBetter: true, log: true },
+  usd: { get: (r) => r.cost?.usd_per_1000, lowerIsBetter: true },
   public: { get: (r) => r.public_accuracy },
   sealed: { get: (r) => r.sealed_accuracy },
-  latency: { get: (r) => r.speed?.p50_s_raw, lowerIsBetter: true, log: true },
+  latency: { get: (r) => r.speed?.p50_s_raw, lowerIsBetter: true },
 };
 
-export type HeatScales = Partial<Record<HeatColumn, { min: number; max: number }>>;
+export type HeatScales = Partial<Record<HeatColumn, number[]>>;
 
-const heatValue = (column: HeatColumn, value: number) => HEAT_COLUMNS[column].log ? Math.log10(Math.max(value, 1e-6)) : value;
-
-/** Column ranges over every listed system, so shading does not shift when the reader filters. */
+/** Each column's values over every listed system, sorted ascending, so shading does not shift when the reader filters.
+ *  A cell's shade is its place in that order, not its distance from the extremes: a handful of far-out rows (the
+ *  instruction-model baselines reach Intelligence 97) would otherwise flatten the differences near the top. */
 export function heatScales(rows: JevBoardRow[]): HeatScales {
   const scales: HeatScales = {};
   for (const column of Object.keys(HEAT_COLUMNS) as HeatColumn[]) {
-    const values = rows.map((row) => HEAT_COLUMNS[column].get(row)).filter((v): v is number => typeof v === 'number' && Number.isFinite(v) && (!HEAT_COLUMNS[column].log || v > 0)).map((v) => heatValue(column, v));
-    if (values.length > 1) scales[column] = { min: Math.min(...values), max: Math.max(...values) };
+    const values = rows.map((row) => HEAT_COLUMNS[column].get(row)).filter((v): v is number => typeof v === 'number' && Number.isFinite(v)).sort((a, b) => a - b);
+    if (values.length > 1) scales[column] = values;
   }
   return scales;
 }
 
-/** 0 = weakest in the column, 1 = strongest (cheapest/fastest for price and latency); null when there is no value. */
+/** 0 = weakest in the column, 1 = strongest (cheapest/fastest for price and latency); tied values share a shade;
+ *  null when there is no value. */
 export function heatLevel(scales: HeatScales, column: HeatColumn, row: JevBoardRow): number | null {
   const raw = HEAT_COLUMNS[column].get(row);
-  const scale = scales[column];
-  if (typeof raw !== 'number' || !Number.isFinite(raw) || !scale) return null;
-  if (HEAT_COLUMNS[column].log && raw <= 0) return HEAT_COLUMNS[column].lowerIsBetter ? 1 : 0;
-  const t = scale.max === scale.min ? 1 : (heatValue(column, raw) - scale.min) / (scale.max - scale.min);
+  const sorted = scales[column];
+  if (typeof raw !== 'number' || !Number.isFinite(raw) || !sorted) return null;
+  let below = 0, equal = 0;
+  for (const v of sorted) { if (v < raw) below += 1; else if (v === raw) equal += 1; }
+  const t = (below + Math.max(0, equal - 1) / 2) / (sorted.length - 1);
   const clamped = Math.max(0, Math.min(1, t));
   return HEAT_COLUMNS[column].lowerIsBetter ? 1 - clamped : clamped;
 }
@@ -77,10 +78,10 @@ export function heatLevel(scales: HeatScales, column: HeatColumn, row: JevBoardR
 export const heatStyle = (level: number | null) => (level == null ? undefined : ({ '--h': level.toFixed(3) }) as CSSProperties);
 
 /** The tiny key that explains the green cells. */
-export function HeatLegend({ className = '' }: { className?: string }) {
+export function HeatLegend({ className = '', latency = false }: { className?: string; latency?: boolean }) {
   return <span className={`inline-flex flex-wrap items-center gap-x-1.5 gap-y-0.5 ${className}`} data-bh-jev-heat-legend>
     <span className="bh-heat-key" aria-hidden="true" />
-    <span>Greener = stronger within its column (weakest → strongest system); for $/1k and latency, cheaper or faster is greener.</span>
+    <span>Greener = stronger within its column: the shade follows each system&apos;s place in that column, from weakest (faint) to strongest (solid). For $/1k{latency ? ' and latency' : ''}, cheaper{latency ? ' or faster' : ''} is greener.</span>
   </span>;
 }
 
@@ -90,11 +91,13 @@ export type BarMetric = 'score' | 'intelligence' | 'calibration' | 'speed' | 'co
 export const METRIC_LABEL: Record<BarMetric, string> = { score: 'JevBench Score', intelligence: 'Intelligence', calibration: 'Calibration', speed: 'Speed', cost: 'Cost' };
 export const metricValue = (row: JevBoardRow, metric: BarMetric) => metric === 'score' ? row.jevbench_score : row.axes?.[metric] ?? null;
 
+const AXIS_LETTER = { intelligence: 'I', calibration: 'C', speed: 'S', cost: 'K' } as const;
+
 function AxisValue({ level, children, title }: { level: number | null; children: ReactNode; title?: string }) {
-  return <span className={level == null ? 'bh-heat-cell' : 'bh-heat-cell bh-heat'} style={heatStyle(level)} title={title}>{children}</span>;
+  return <span className={level == null ? 'bh-heat-cell sm:block' : 'bh-heat-cell bh-heat sm:block'} style={heatStyle(level)} title={title}>{children}</span>;
 }
 
-export function JevScoreBar({ row, reference = false, metric = 'score', heat, isNew = false }: { row: JevBoardRow; reference?: boolean; metric?: BarMetric; heat?: HeatScales; isNew?: boolean }) {
+export function JevScoreBar({ row, reference = false, metric = 'score', heat, isNew = false, name }: { row: JevBoardRow; reference?: boolean; metric?: BarMetric; heat?: HeatScales; isNew?: boolean; name?: string }) {
   const s = row.jevbench_score;
   const value = metricValue(row, metric);
   const usd = row.cost?.usd_per_1000;
@@ -105,7 +108,7 @@ export function JevScoreBar({ row, reference = false, metric = 'score', heat, is
     data-bh-jev14-bar={row.key} data-bh-jev14-bar-score={s == null ? '' : s.toFixed(3)} data-bh-jev14-bar-metric={metric === 'score' ? undefined : metric} data-bh-jev14-reference={reference ? '1' : undefined} aria-label={label}>
     <span className="bh-muted tabular col-start-1 row-start-1 text-right text-xs">{row.rank ?? ''}</span>
     <span className="col-start-2 row-start-1 min-w-0 sm:truncate sm:text-right" title={row.display}>
-      <Link href={`/jev-models/${encodeURIComponent(row.key)}`} title={row.display} className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent hover:decoration-current">{shortName(row.display)}</Link>
+      <Link href={`/jev-models/${encodeURIComponent(row.key)}`} title={row.display} className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent hover:decoration-current">{name ?? shortName(row.display)}</Link>
       {row.priority_run === true && <span className="bh-thin-tag ml-1.5 align-middle" data-bh-jev14-priority-run={row.key}>priority run</span>}
       {!row.ranked && <span className="bh-muted whitespace-nowrap" title={row.not_ranked_because ?? undefined}> ({NOT_RANKED[row.listing] ?? row.listing})</span>}
       {row.api_flag && <span className="bh-thin-tag bh-flag-tag ml-1.5 align-middle" title={row.api_exposure_note ?? apiExplanation}>API</span>}
@@ -115,10 +118,9 @@ export function JevScoreBar({ row, reference = false, metric = 'score', heat, is
       {value != null && <span className={`bh-jevc-bar ${row.ranked ? '' : 'is-partial'} ${reference ? 'is-reference' : ''}`} style={{ width: `${Math.max(0, Math.min(100, value)).toFixed(4)}%` }} />}
     </span>
     <b className="tabular col-start-3 row-span-2 row-start-1 self-center text-right text-base sm:col-start-4 sm:row-span-1 sm:text-lg" data-bh-jev14-bar-value>{one(value)}</b>
-    <span className="bh-muted col-start-2 row-start-3 mt-0.5 min-w-0 font-mono text-[10.5px] sm:col-start-5 sm:row-start-1 sm:mt-0 sm:grid sm:grid-cols-[1fr_1fr_1fr_1fr_2.1fr] sm:gap-x-1 sm:whitespace-nowrap sm:text-right sm:text-[12px]" data-bh-jev14-bar-axes>
-      <span className="sm:hidden">I </span><AxisValue level={level('intelligence')}>{f0(row.axes?.intelligence)}</AxisValue><span className="sm:hidden"> · C </span><AxisValue level={level('calibration')}>{f0(row.axes?.calibration)}</AxisValue>
-      <span className="sm:hidden"> · S </span><AxisValue level={level('speed')}>{f0(row.axes?.speed)}</AxisValue><span className="sm:hidden"> · K </span><AxisValue level={level('cost')}>{f0(row.axes?.cost)}</AxisValue>
-      <span className="sm:hidden"> · </span><AxisValue level={level('usd')} title={row.cost?.basis}>{`${kind === 'estimate' ? '~' : ''}${dollars(usd)}`}{kind === 'estimate' ? ' est.' : kind === 'announced' ? ' ann.' : ''}</AxisValue>
+    <span className="bh-muted col-start-2 row-start-3 mt-0.5 flex min-w-0 flex-wrap gap-x-2 font-mono text-[10.5px] sm:col-start-5 sm:row-start-1 sm:mt-0 sm:grid sm:grid-cols-[1fr_1fr_1fr_1fr_2.1fr] sm:gap-x-1 sm:whitespace-nowrap sm:text-right sm:text-[12px]" data-bh-jev14-bar-axes>
+      {(['intelligence', 'calibration', 'speed', 'cost'] as const).map((axis) => <span key={axis} className="whitespace-nowrap sm:block"><span className="sm:hidden">{AXIS_LETTER[axis]} </span><AxisValue level={level(axis)}>{f0(row.axes?.[axis])}</AxisValue></span>)}
+      <span className="whitespace-nowrap sm:block"><AxisValue level={level('usd')} title={row.cost?.basis}>{`${kind === 'estimate' ? '~' : ''}${dollars(usd)}`}{kind === 'estimate' ? ' est.' : kind === 'announced' ? ' ann.' : ''}</AxisValue></span>
     </span>
   </li>;
 }

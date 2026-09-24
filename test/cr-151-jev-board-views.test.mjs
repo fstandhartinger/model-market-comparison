@@ -8,8 +8,9 @@ const read = (path) => readFile(new URL(path, import.meta.url), 'utf8');
 const [board, shared, client, page, css] = await Promise.all([read('../components/JevModelsV14.tsx'), read('../components/JevBoardShared.tsx'), read('../components/JevBoardInteractive.tsx'), read('../app/jev-models/page.tsx'), read('../app/globals.css')]);
 
 test('axis cells are shaded by their standing in the column; price and latency count lower as better', () => {
-  assert.match(shared, /usd: \{ get: \(r\) => r\.cost\?\.usd_per_1000, lowerIsBetter: true, log: true \}/);
-  assert.match(shared, /latency: \{ get: \(r\) => r\.speed\?\.p50_s_raw, lowerIsBetter: true, log: true \}/);
+  assert.match(shared, /usd: \{ get: \(r\) => r\.cost\?\.usd_per_1000, lowerIsBetter: true \}/);
+  assert.match(shared, /latency: \{ get: \(r\) => r\.speed\?\.p50_s_raw, lowerIsBetter: true \}/);
+  assert.match(shared, /const t = \(below \+ Math\.max\(0, equal - 1\) \/ 2\) \/ \(sorted\.length - 1\)/, 'shade follows the place in the column');
   for (const axis of ['intelligence', 'calibration', 'speed', 'cost']) assert.match(shared, new RegExp(`${axis}: \\{ get: \\(r\\) => r\\.axes\\?\\.${axis} \\}`));
   assert.match(shared, /return HEAT_COLUMNS\[column\]\.lowerIsBetter \? 1 - clamped : clamped/);
   assert.match(shared, /data-bh-jev-heat-legend/);
