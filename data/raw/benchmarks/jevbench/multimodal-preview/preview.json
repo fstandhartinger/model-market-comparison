@@ -1,11 +1,11 @@
 {
  "benchmark": "Image JevBench v0.1 candidate",
- "revision": "v0.1-final-split-complete-roster-preview",
+ "revision": "v0.1-preview-split-deviation-pending-disposition",
  "status": "preview",
  "built_utc": "2026-09-24",
  "sealed_item_details_included": false,
  "n_systems": 12,
- "method_sha256": "e4df31054f29e74b7c0de03c0e988488caa834a09dd257a5d72ba3cb6b3eaaf9",
+ "method_sha256": "ff61029b8589399de4cec8859643d66678377c50cdeac29d7c3905990d463b9d",
  "split_sha256": "5dd744aa7207eff6c3e1ccac62d27c43e319b76083b97bfcd9538c25a4e0c8dd",
  "split": {
   "items_total": 444,
@@ -68,7 +68,15 @@
   "synthetic_total": 150,
   "synthetic_share_percent": 33.78378378378378,
   "public_tokens_sha256": "c3747596dabab64329b4d8e1565598c53de5f991043b557d8d9b3d12d43d42b4",
-  "sealed_tokens_sha256": "51f09513ac36a6443cd76f6437c2462a0511b261a0176698620c1aa69fdd5f39"
+  "sealed_tokens_sha256": "51f09513ac36a6443cd76f6437c2462a0511b261a0176698620c1aa69fdd5f39",
+  "disposition": {
+   "status": "deviation_pending_waiver_or_new_source_round",
+   "approved_target": "approximately one third public and two thirds sealed",
+   "current_split": "228 public / 216 sealed (51.4% / 48.6%); this does not meet the approved target",
+   "source_pool": "All 444 frozen items are assigned; all 228 public items were already exposed; no unused unseen items remain.",
+   "path_to_target": "Keeping 228 exposed items public would require about 456 sealed items total, or roughly 240 newly sourced and reviewed unseen items (about 684 total).",
+   "release_gate": "Florian must explicitly waive the deviation or authorize a separate source, split review and remeasurement round before release freeze or publication."
+  }
  },
  "method": {
   "split": "An item is public if it was exposed anywhere (Mind2Web-derived, shown in videos or on this page, or present in the public site repository since the 21 Sep preview); every never-exposed item is sealed.",
@@ -77,7 +85,8 @@
   "calibration": "10-bin top-label ECE scaled by valid probability coverage, 35% public / 65% sealed; label-only outputs receive zero calibration.",
   "speed": "p50 and p95 whole-call latency; local latency uses the v1.4 2× plus 0.15-second adjustment.",
   "cost": "Hosted cost uses returned usage receipts: OpenRouter receipt costs for four endpoints and the saved Autoloops per-request Gemma 4 31B token usage priced at published rates. Missing receipts are not zero-filled; the cost axis is scaled by receipt coverage. Local cost uses measured GPU seconds at the recorded per-system GPU-hour rate.",
-  "composite": "Equal-weight harmonic mean of Intelligence, Calibration, Speed, and Cost, followed by the v1.4 intelligence, speed, and cost gates below 50."
+  "composite": "Equal-weight harmonic mean of Intelligence, Calibration, Speed, and Cost, followed by the v1.4 intelligence, speed, and cost gates below 50.",
+  "split_disposition": "The frozen 228/216 split deviates from the approved approximately one-third/two-thirds target. This preview retains it without claiming compliance; release freeze and publication require Florian's explicit waiver or a separately authorized source, split review and remeasurement round."
  },
  "exposure": {
   "hosted": "Four OpenRouter systems (GPT-6 Luna low, GPT-5.6 Luna, Gemini 3.1 Flash Lite and Gemini 3.8 Flash) received sealed images and questions through the requested no-retention route with provider fallback disabled. Gemma 4 31B used the Autoloops endpoint and its completed saved result; no provider no-retention claim is made for that endpoint. All five hosted rows carry the API flag.",
@@ -2612,10 +2621,10 @@
   "cross_track_rule": "A public-origin Computer Use or Browser Use row that shares a source row or screenshot with a sealed core item is sealed too.",
   "kev_flag": "Mind2Web-derived Browser Use rows are public-only and reported separately for Kev, whose training data overlaps Mind2Web.",
   "scoring": "Same method as the core once measured; the matched-family gap needs decision types present in both parts.",
-  "scoring_status": "Matched-family split readiness and system measurements are still pending for these two tracks."
+  "scoring_status": "Neither track has a reviewed system or reusable output. Computer Use has no reviewed candidate in the current queue. Browser Use has one candidate requested, not yet evaluated: kev-0.6b-browser-use. Its public, ungated HF adapter is pinned at 08414b0001f6eba32bc69372abfeac5b74718ac0 (model card license: Apache-2.0), with base jaredpalmer/kev-0.6b at dece6dba8d43f0f7ded45e9f5b9df12474d90843. The model takes textual DOM state and uses a pointer head; its serving path and safe head loader are not independently reviewed. Its Mind2Web-derived examples remain public-only. Both tracks still lack a ready matched-family split and measurements, so they remain separate, requested, and unscored outside the core ranking."
  },
  "candidate_coverage": {
-  "checked_utc": "2026-09-24T15:55:00Z",
+  "checked_utc": "2026-09-24T18:02:05+00:00",
   "included_note": "Gemma 4 31B reuses completed saved results; GPT-6 Luna is the saved low-reasoning-effort setting.",
   "candidates": [
    {
@@ -2623,42 +2632,42 @@
     "source_revision": "HF 16818868b0cc7813808aae4e87b417657046ab79",
     "access": "Public, ungated; pinned revision resolves",
     "status": "requested, not yet evaluated",
-    "reason": "Static inference path passed review, but no candidate-specific reviewed launch/evaluator controller or saved ImageJevBench predictions were found."
+    "reason": "Pinned source and multimodal image path passed source review; the integrated runner’s exact-hash independent review is pending. No weights have been staged and no ImageJevBench inference has run."
    },
    {
     "candidate": "Visual Jev 4B Answer-SFT",
     "source_revision": "HF 7a3f1bb0d8f7bfbbd8514d968ab7de3518849c8d",
     "access": "Public, ungated; pinned revision resolves",
     "status": "requested, not yet evaluated",
-    "reason": "Static inference path passed review, but no candidate-specific reviewed controller or saved predictions were found; training uses two and four options while the benchmark includes up to five."
+    "reason": "Pinned source and image path passed source review; exact-hash runner review is pending. Training used two and four options while the benchmark includes up to five. No weights have been staged and no inference has run."
    },
    {
     "candidate": "NeoHorse-Jev-4B",
     "source_revision": "HF 56c36ae625a3ccca47d9a34fb7ca6203b39b309e",
     "access": "Public, ungated; pinned revision resolves",
     "status": "requested, not yet evaluated",
-    "reason": "Static inference path passed review, but no candidate-specific reviewed launch/evaluator controller or saved predictions were found."
+    "reason": "Pinned self-contained multimodal source passed source review; the integrated runner’s exact-hash independent review is pending. No weights have been staged and no inference has run."
    },
    {
     "candidate": "Jevify Qwen3-VL-2B Tier 2",
     "source_revision": "HF 46e8e72c27b50fe08f671bdf6b0e013acee5aae6",
     "access": "Public, ungated; pinned revision resolves",
     "status": "requested, not yet evaluated",
-    "reason": "Static inference path passed review, but no candidate-specific reviewed launch/evaluator controller or saved predictions were found."
+    "reason": "Pinned Tier 2 vision adapter and image path passed source review; exact-hash runner review is pending. The loader rejects an optional pickle head. No weights have been staged and no inference has run."
    },
    {
     "candidate": "Standard One 3B",
     "source_revision": "HF c0d23877ec5577f3edcba9e788e658840fa95774",
     "access": "Public, ungated; pinned revision resolves",
     "status": "requested, not yet evaluated",
-    "reason": "Static inference path passed review, but no candidate-specific reviewed controller or saved predictions were found."
+    "reason": "Pinned image-capable checkpoint and server path passed source review; exact-hash runner review is pending. No weights have been staged and no inference has run."
    },
    {
     "candidate": "Standard One 8B",
     "source_revision": "HF 5d1285dd77075043b03a8d6c4ef42e3c1c695105",
     "access": "Public, ungated; pinned revision resolves",
     "status": "requested, not yet evaluated",
-    "reason": "Static inference path passed review, but no candidate-specific reviewed controller or saved predictions were found; larger serving footprint needs a fresh pod/resource gate."
+    "reason": "Pinned image-capable checkpoint and server path passed source review; exact-hash runner review and a fresh pod/disk resource gate are pending. The checkpoint is about 17.9 GB and will be staged only on an owned remote pod. No weights have been staged and no inference has run."
    },
    {
     "candidate": "Sage1 / Levanto Sage",
@@ -2787,11 +2796,18 @@
     "reason": "Published loaders use unrestricted pickle .pt files; an approved safe loader is unavailable."
    },
    {
+    "candidate": "Bonsai-Llama-Jev submission (measured as Bonsai-2-27B v2)",
+    "source_revision": "kyr0/Bonsai-Llama-Jev@7a4cf234c50d54a234c1e05d32a624e160f89bee; prism-ml/Ternary-Bonsai-2-27B-gguf@6ed5e12bf84b7a63069882c91dd9e9218647d17",
+    "access": "Public pinned submission and model artifacts; completed item-level outputs reused from the Bonsai measurement job",
+    "status": "included in ranking (rank 7/12)",
+    "reason": "This submission maps to the existing Bonsai-2-27B v2 PQ2_0 + Q8_0 MMProj row (score 18.9529). The reviewed System One path accepts inline image data; offline_eval.image_body reads each local image and sends it as a data:image data URI in the request state. The final clean run returned 444/444 image predictions. The frozen 228-public / 216-sealed roster was rescored from these saved item outputs; no rerun was done. See receipts/BONSAI-ALIAS-AND-IMAGE-PATH.md."
+   },
+   {
     "candidate": "AutoJev-27B",
-    "source_revision": "HF 6f5b557e037f5edb25c7dc92dbc6553e5a19c015; reviewed GitHub ee63c1515980491a742f0bd0685c8dc5ca1f00c3",
+    "source_revision": "GitHub denis-pplx/autojev ee63c1515980491a742f0bd0685c8dc5ca1f00c3; HF denis-pplx/autojev-27b 6f5b557e037f5edb25c7dc92dbc6553e5a19c015; base Qwen/Qwen3.8-27B 1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0",
     "access": "Public, ungated; Apache-2.0 weights / MIT code",
-    "status": "excluded from image ranking",
-    "reason": "The reviewed DecisionModel path forms a text prompt from state, question and options and receives no image. Vision weights are not used by this path."
+    "status": "requested, not yet evaluated",
+    "reason": "Pinned upstream inference source supports images: DecisionInput.images is typed; model.open_image loads image objects, data URIs or paths; DecisionModel.prepare passes images to the processor; server EvaluationRequest.images flows into model.prepare. However, this continuation has no ImageJevBench offline, local-only, safetensors adapter/controller for AutoJev. The exact-hash-reviewed runner is frozen to six other candidates pending independent PASS. A separate adapter and exact-hash review are required. The public, ungated Apache-2.0 checkpoint is about 52.2 GB and may only be staged on a remote owned pod after fresh disk, watchdog, GPU and spend checks; the current USD 6 approval covers the six-candidate proposal and has not been extended to AutoJev. No weights or task inputs were staged and no predictions were made."
    },
    {
     "candidate": "CLM-8B",

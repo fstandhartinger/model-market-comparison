@@ -108,6 +108,11 @@ export async function MultimodalPreviewContent({ publicRoute = false }: { public
       <p className="bh-muted mt-2 max-w-4xl">The frozen candidate has {s.items_total} items: {s.items_public} public and {s.items_sealed} sealed. This page shows aggregate sealed results only. It contains no sealed task, image, answer key, or per-item prediction.</p>
     </header>
 
+    {!publicRoute && <section className="mt-6 max-w-6xl rounded-xl border-2 border-red-600 bg-red-50 p-5 text-red-950 shadow-sm dark:bg-red-950 dark:text-red-100" role="alert" data-bh-mm-split-deviation>
+      <h2 className="text-lg font-bold">Split target deviation — release disposition required</h2>
+      <p className="mt-2 text-sm">The approved target is approximately one third public and two thirds sealed. This frozen pool is 228 public / 216 sealed ({s.public_percent.toFixed(1)}% / {s.sealed_percent.toFixed(1)}%), so it does not meet that target. All 228 public items were already exposed, and every item in the frozen pool is assigned. Keeping those exposed items public would require about 240 newly sourced and reviewed unseen items to approach the target. Florian must explicitly waive this deviation or authorize a separate source, split review and remeasurement round before release freeze or publication. Scores on this preview use the current frozen split.</p>
+    </section>}
+
     <section className="mt-7 grid max-w-6xl gap-4 sm:grid-cols-2 lg:grid-cols-4" aria-label="Candidate size">
       <article className="bh-panel p-4"><p className="bh-eyebrow">Licensed real-source core</p><p className="mt-1 text-2xl font-bold">{s.licensed_core_total} items</p><p className="bh-muted mt-1 text-sm">{s.licensed_core_public} public · {s.licensed_core_sealed} sealed · six below the earlier target</p></article>
       <article className="bh-panel p-4"><p className="bh-eyebrow">Everyday photo decisions</p><p className="mt-1 text-2xl font-bold">{s.everyday_photo_total} items</p><p className="bh-muted mt-1 text-sm">{s.everyday_photo_public} public · {s.everyday_photo_sealed} new sealed · 100% synthetic</p></article>
