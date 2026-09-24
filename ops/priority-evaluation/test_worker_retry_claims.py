@@ -130,6 +130,27 @@ class RetryClaimTests(unittest.TestCase):
             self.assertEqual(actual_attempts, expected_attempts)
             self.assertEqual(actual_key, expected_key)
 
+    def test_attempt_sequence_advances_only_when_a_new_idempotency_key_is_issued(self):
+        columns = ("refund_id", "refund_idempotency_key", "refund_status", "refund_attempt_seq")
+        seq_update = f"refund_attempt_seq + {worker.refund_attempt_seq_increment_sql()}"
+        query = self.query_for(worker.claim_refund)
+        self.assertIn(f"refund_attempt_seq={seq_update}", query)
+        self.assertIn("'refund_attempt_seq',r.refund_attempt_seq", query)
+        cases = (
+            (None, "jev-priority-refund-existing", "unknown", 4, 4),
+            (None, None, "failed", 4, 5),
+            (None, None, None, 0, 1),
+            ("re_123", "jev-priority-refund-existing", "pending", 2, 2),
+        )
+        for refund_id, key, status, seq, expected in cases:
+            with self.subTest(refund_id=refund_id, key=key, status=status, seq=seq), sqlite3.connect(":memory:") as db:
+                actual = db.execute(
+                    f"WITH request({','.join(columns)}) AS (SELECT {','.join('?' for _ in columns)}) "
+                    f"SELECT {seq_update} FROM request",
+                    (refund_id, key, status, seq),
+                ).fetchone()[0]
+            self.assertEqual(actual, expected)
+
     def test_manual_refund_claim_is_not_limited_by_automatic_cap(self):
         request_id = "8f15b2f0-3d6e-4a70-b8a3-80dbdc57107a"
         query = self.query_for(worker.claim_refund, request_id)
@@ -140,6 +161,7 @@ class RetryClaimTests(unittest.TestCase):
         self.assertIn("status IN ('paid','review_passed','refund_due','refund_pending')", eligibility)
         self.assertNotIn("refund_attempts <", eligibility)
         self.assertIn("refund_attempts=refund_attempts + 0", normalized)
+        self.assertIn(f"refund_attempt_seq=refund_attempt_seq + {worker.refund_attempt_seq_increment_sql()}", normalized)
         self.assertIn(eligibility, query)
         with self.assertRaises(worker.WorkerError):
             worker.claim_refund("not-a-uuid")
@@ -172,38 +194,75 @@ class RetryClaimTests(unittest.TestCase):
 
     def test_refund_notice_marker_updates_only_the_current_attempt(self):
         request_id = "8f15b2f0-3d6e-4a70-b8a3-80dbdc57107a"
-        row = {"id": request_id, "refund_attempts": 2}
+        # Manual attempts do not count toward refund_attempts, but get a unique sequence.
+        row = {"id": request_id, "refund_attempts": 0, "refund_attempt_seq": 2}
         with patch.object(worker, "sql_json", return_value={"id": request_id}) as sql_json:
             self.assertTrue(worker.mark_refund_attention_notified(row, "unknown"))
         query = sql_json.call_args.args[0]
         self.assertIn("refund_attention_notified_attempts=GREATEST(r.refund_attention_notified_attempts,2)", query)
         self.assertIn(
-            "refund_attention_notified_state=CASE WHEN r.refund_attempts=2 THEN 'unknown' ELSE r.refund_attention_notified_state END",
+            "refund_attention_notified_state=CASE WHEN r.refund_attempt_seq=2 THEN 'unknown' ELSE r.refund_attention_notified_state END",
             query,
         )
-        self.assertIn("r.refund_attempts=2", query)
+        self.assertIn("r.refund_attempt_seq=2", query)
+
+    def test_manual_attempt_failure_after_automatic_cap_is_not_suppressed(self):
+        # Manual attempts advance the sequence while leaving the automatic cap at 3.
+        self.assertTrue(worker.refund_attention_should_notify("failed", 4, 3, "failed"))
+        self.assertFalse(worker.refund_attention_should_notify("failed", 4, 4, "failed"))
+        self.assertTrue(worker.refund_attention_should_notify("unknown", 5, 4, "unknown"))
 
     def test_stale_notice_marker_records_only_its_attempt_after_concurrent_retry(self):
         eligibility = worker.refund_attention_marker_eligibility_sql(1, "unknown")
         eligibility = eligibility.replace("r.", "").replace(" IS DISTINCT FROM ", " IS NOT ")
         columns = (
-            "refund_attempts",
+            "refund_attempt_seq",
             "refund_attention_notified_attempts",
             "refund_attention_notified_state",
         )
 
-        # A successful notice for attempt 1 can be recorded after attempt 2 starts,
-        # but it must not mark attempt 2's state as already notified.
+        # A successful notice for sequence 1 can be recorded after sequence 2 starts,
+        # but it must not mark sequence 2's state as already notified.
         self.assertTrue(self.evaluate(columns, eligibility, (2, 0, None)))
         state_update = worker.refund_attention_marker_state_update_sql(1, "unknown").replace("r.", "")
         self.assertEqual(
-            self.evaluate_value(("refund_attempts", "refund_attention_notified_state"), state_update, (2, "failed")),
+            self.evaluate_value(("refund_attempt_seq", "refund_attention_notified_state"), state_update, (2, "failed")),
             "failed",
         )
         self.assertTrue(worker.refund_attention_should_notify("unknown", 2, 1, "failed"))
 
         # Replaying the marker for attempt 1 does nothing once it was recorded.
         self.assertFalse(self.evaluate(columns, eligibility, (2, 1, "unknown")))
+
+    def test_known_refund_lookup_errors_preserve_refund_id_and_key(self):
+        row = {
+            "id": "8f15b2f0-3d6e-4a70-b8a3-80dbdc57107a",
+            "stripe_mode": "test",
+            "payment_intent_id": "pi_123",
+            "refund_id": "re_123",
+            "refund_idempotency_key": "jev-priority-refund-existing",
+        }
+        for error in (worker.StripeFailure(403, {}), worker.WorkerError("credentials unavailable")):
+            with self.subTest(error=type(error).__name__), \
+                 patch.object(worker, "stripe_request", side_effect=error) as stripe_request, \
+                 patch.object(worker, "sql") as sql:
+                self.assertEqual(worker.operate_refund(row), "unknown")
+            stripe_request.assert_called_once_with("test", "GET", "refunds/re_123")
+            statement = sql.call_args.args[0]
+            self.assertIn("refund_id=CASE WHEN FALSE THEN NULL ELSE COALESCE(NULL,refund_id) END", statement)
+            self.assertNotIn("refund_idempotency_key=NULL", statement)
+
+    def test_refund_marker_error_does_not_abort_the_batch(self):
+        row1 = {"id": "8f15b2f0-3d6e-4a70-b8a3-80dbdc57107a", "stripe_mode": "test", "refund_attempt_seq": 1}
+        row2 = {"id": "8f15b2f0-3d6e-4a70-b8a3-80dbdc57107b", "stripe_mode": "test", "refund_attempt_seq": 1}
+        with patch.object(worker, "claim_refund", side_effect=[row1, row2, None]) as claim, \
+             patch.object(worker, "operate_refund", return_value="unknown"), \
+             patch.object(worker, "notify_florian", return_value=True), \
+             patch.object(worker, "mark_refund_attention_notified", side_effect=[worker.WorkerError("marker write"), True]) as marker, \
+             redirect_stderr(io.StringIO()):
+            self.assertEqual(worker.process_due_refunds(limit=2), 2)
+        self.assertEqual(claim.call_count, 2)
+        self.assertEqual(marker.call_count, 2)
 
 
 if __name__ == "__main__":
