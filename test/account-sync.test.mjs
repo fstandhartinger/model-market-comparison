@@ -70,9 +70,14 @@ test('CR-5.1 CSRF guard: Origin must match the host the request was sent to', ()
 });
 
 test('CR-5.2 the committed migration and the runtime schema are identical', () => {
-  const sql = fs.readFileSync(new URL('../db/accounts/001_init.sql', import.meta.url), 'utf8');
+  const sql = fs.readdirSync(new URL('../db/accounts/', import.meta.url))
+    .filter((file) => file.endsWith('.sql')).sort()
+    .map((file) => fs.readFileSync(new URL(`../db/accounts/${file}`, import.meta.url), 'utf8'))
+    .join('');
   assert.equal(ACCOUNTS_SCHEMA_SQL, sql);
   assert.match(sql, /ON DELETE CASCADE/);
+  assert.match(sql, /refund_attention_notified_attempts integer NOT NULL DEFAULT 0/);
+  assert.match(sql, /refund_attention_notified_state text/);
   // CR-5.5: nothing beyond id, email, name and avatar is stored about a person.
   const userCols = sql.match(/CREATE TABLE IF NOT EXISTS bh_users \(([\s\S]*?)\);/)[1].split('\n').map((l) => l.trim().split(' ')[0]).filter(Boolean);
   assert.deepEqual(userCols, ['id', 'google_sub', 'email', 'name', 'image', 'created_at', 'last_sign_in_at']);
