@@ -153,7 +153,11 @@ export default async function JevModelsPage() {
     {/* Temporary release notice (Florian, 25 Sep 2026) — remove when v1.4.2 is live. */}
     <div role="status" data-bh-release-notice style={{ margin: "12px 0 20px", padding: "18px 20px", borderRadius: 10, border: "2px solid #f2a33a", background: "rgba(242,163,58,0.14)", fontSize: 20, fontWeight: 700, lineHeight: 1.35 }}>
       🚀 New leaderboard (JevBench v1.4.2) is being uploaded and will be live in a few minutes.
-      <div style={{ fontSize: 14, fontWeight: 400, marginTop: 6, opacity: 0.85 }}>The rankings below are still v1.4.1. Please check back shortly.</div>
+      <div style={{ fontSize: 14, fontWeight: 400, marginTop: 6, opacity: 0.85 }}>Preview of the new results below. The full v1.4.2 page is coming online in a few minutes; the detailed rankings further down are still v1.4.1.</div>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 12, marginTop: 14 }}>
+        <img src="/jevbench/v142-preview/top5.png" alt="JevBench v1.4.2 top 5: decider-4b v2 64.13, Jev 1.13.0 63.29, JevK5 v0.2.0 62.04, Cygnet 61.76, Hopper 59.43" style={{ width: "100%", height: "auto", borderRadius: 8 }} />
+        <img src="/jevbench/v142-preview/decider-vs-jev.png" alt="decider-4b v2 vs Jev 1.13.0: Jev leads Intelligence 53.1 vs 49.4 and Calibration 76.3 vs 75.0; decider leads Speed 92.9 vs 83.3 and Cost 60.9 vs 52.0" style={{ width: "100%", height: "auto", borderRadius: 8 }} />
+      </div>
     </div>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, '\\u003c') }} />
     <header className="bh-page-head">
