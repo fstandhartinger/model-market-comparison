@@ -4,7 +4,7 @@ import importlib.util
 import io
 import sqlite3
 import unittest
-from contextlib import redirect_stderr
+from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 from unittest.mock import patch
 
@@ -256,7 +256,7 @@ class RetryClaimTests(unittest.TestCase):
         cases = (
             (worker.StripeFailure(404, {}), "failed"),
             (worker.StripeFailure(500, {}), "unknown"),
-            (worker.WorkerError("credentials unavailable"), "failed"),
+            (worker.WorkerError("credentials unavailable"), "unknown"),
         )
         for error, expected_state in cases:
             with self.subTest(error=type(error).__name__), \
@@ -285,6 +285,19 @@ class RetryClaimTests(unittest.TestCase):
         self.assertIn("refund_status='failed'", statement)
         self.assertIn("refund_id=CASE WHEN FALSE THEN NULL ELSE COALESCE(NULL,refund_id) END", statement)
         self.assertNotIn("refund_idempotency_key=NULL", statement)
+
+    def test_manual_refund_reports_unconfirmed_result_without_background_notice(self):
+        request_id = "8f15b2f0-3d6e-4a70-b8a3-80dbdc57107a"
+        row = {"id": request_id, "stripe_mode": "test"}
+        output = io.StringIO()
+        with patch.object(worker.sys, "argv", ["worker", "refund", request_id]), \
+             patch.object(worker, "claim_refund", return_value=row), \
+             patch.object(worker, "operate_refund", return_value="unknown"), \
+             patch.object(worker, "notify_florian") as notify, \
+             redirect_stdout(output):
+            self.assertEqual(worker.main(), 1)
+        self.assertIn("unknown", output.getvalue())
+        notify.assert_not_called()
 
     def test_refund_claim_database_error_fails_the_cycle_for_timer_retry(self):
         with patch.object(worker, "claim_refund", side_effect=worker.WorkerError("database operation failed")):
