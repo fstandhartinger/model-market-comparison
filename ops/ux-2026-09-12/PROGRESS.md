@@ -8961,10 +8961,23 @@ Source: Florian's ImageJevBench follow-up in `/home/flori/jobs/jevbench-v141-pag
 
 | ID | Status | Evidence | Note |
 |---|---|---|---|
-| CR-137.1 | open | `components/ImageJevExamples.tsx`; `lib/image-jev-public-examples.mjs`; `test/image-jev-public-examples.test.mjs`; `public/image-jev/examples/manifest.json` | Show eight diverse public-only examples with downscaled images, question, options, correct answer and source/license attribution; never use sealed items. |
-| CR-137.2 | open | `/home/flori/jobs/jevbench-v141-page-imagejev-20260923/JEV-OMNI-IMAGE-CODE-REVIEW.md`; `jev-omni-image/jev_omni-run-receipt.json`; `jev-omni-image/AGGREGATES-PUBLIC-10-SYSTEMS.json` | Jev-Omni accepts image input and was run offline on all 444 items with the same harness/scorer. Add its aggregate row; do not publish per-item sealed predictions or represent an ineligible model as zero. |
-| CR-137.3 | open | `app/jev-models/multimodal-preview/page.tsx`; `test/jevbench-multimodal-preview.test.mjs`; `test/image-jev-public-examples.test.mjs` | Keep the unlisted ImageJev route `noindex, nofollow` until release; show only public aggregate/example material and retain noindex in the generated page. |
-| CR-137.4 | open | `/home/flori/jobs/jevbench-v141-page-imagejev-20260923/visual-qa.mjs`; live QA receipts and screenshots | Verify both production hosts and the WIP URL at desktop and 360/390 px portrait in light and dark; require no overflow, eight public examples, Jev-Omni row, and no sealed content. |
+| CR-137.1 | verified | `821bdeb5` (deployed both hosts, `/api/meta`); `/opt/benchmarkheaven/state/ux-evidence/review-20260924T012001Z/cr137-verification.json` | Implementer: Codex job `jevbench-v141-page-imagejev-20260923`. **Gate 20260924T012001Z (opencode-kimi, non-implementer):** 8 cards live on `/jev-models/multimodal-preview` (canonical 1440 light/dark, 390 light/dark, 360 light/dark; legacy 360 light in a real browser), all eight card ids match the manifest, all eight committed webp assets re-hash to their manifest `asset_sha256`, manifest is `public_examples_only` with every row `split: "public"`, licensed sources credited with name/URL/revision/licence. |
+| CR-137.2 | verified | `821bdeb5`; `/opt/benchmarkheaven/state/ux-evidence/review-20260924T012001Z/cr137-verification.json` | Implementer: Codex job (see CR-137.1). **Gate 20260924T012001Z:** the published Jev-Omni row equals `jev-omni-image/AGGREGATES-JEV-OMNI-PUBLIC.json` value for value (59.25228124214037; 168/265 public, 113/179 sealed correct, coverage 1.0) and the composite was re-derived independently: harmonic mean of the four axes 65.3779 × (47.6/50)² = 0.906304 → 59.2523. Loader forbids item-level fields and requires the row with `api_flag: false`; the $1.29/GPU-hour cost basis is documented in METHOD-ADDENDUM.md. |
+| CR-137.3 | verified | `821bdeb5`; `/opt/benchmarkheaven/state/ux-evidence/review-20260924T012001Z/cr137-verification.json` | Implementer: Codex job (see CR-137.1). **Gate 20260924T012001Z:** `noindex, nofollow` live on `/jev-models/multimodal-preview` and the WIP alias `/wip-oiifi41ouv1f/image-jev`, preview lead and "not part of the JevBench Score" wording intact, served artifact aggregate-only (loader + `test/jevbench-multimodal-preview.test.mjs` 6/6). |
+| CR-137.4 | verified | `821bdeb5`; `/opt/benchmarkheaven/state/ux-evidence/review-20260924T012001Z/cr137-verification.json` + 5 screenshots | Implementer: Codex job (see CR-137.1); its own full-matrix receipt was still in progress at gate time. **Gate 20260924T012001Z ran the matrix itself:** canonical preview at 1440/390/360 × light/dark (six contexts), WIP alias at 1440 dark / 390 light / 360 dark, legacy preview at 360 light — zero horizontal overflow, 8/8 example images load under normal scrolling, Jev-Omni visible, noindex everywhere; both hosts at fetch level; deploy pinned via `/api/meta` revision `821bdeb5…`. Release-time note: ScreenSpot/FinQA/Geometry3K screenshot rights still need the pre-publication review the CU/BU data job recorded before the route is un-noindexed. |
+
+## Iteration 192 — 2026-09-24 00:40 UTC (codex-luna, work): CR-137 deferred under the one-writer rule
+
+The required authority chain and the latest review were read before inspection. CR-137 is the
+highest-value open item, but an independent Codex job at
+`/home/flori/jobs/jev-cu-bu-bench-data-20260923` is actively writing the same checkout and owns
+all current CR-137 paths (the ImageJevBench preview, public examples, generated image assets and
+their tests). This iteration did not touch, stage, test, commit or push any of those files. It
+recorded the live process/path evidence at
+`/opt/benchmarkheaven/state/ux-evidence/iter192-coordination/coordination.json` and appended the
+handoff to `/home/flori/.hermes/fuer-claude.md`. The next UX writer must wait for that job to
+finish, inspect its result and working tree, then resume CR-137 with the full build/test/typecheck
+and independent live desktop/mobile light/dark verification gates. `ALL-ACCEPTED` remains absent.
 
 
 ## Iteration 187 (claude-opus) — F-165(a): the rekey half is decided, and D188 is signed off
