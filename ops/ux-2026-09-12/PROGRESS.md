@@ -8955,6 +8955,18 @@ post-deploy rankings, loop ledger, job result and project status were updated.
 CR-136 is live after the first page deployment (`7a62f201`) and a link-fix deployment (`995e5146`). The six intent pages, five current top-five detail routes, metadata/schema, sitemap, board-row anchors and v1.4.1 artifact passed on all three hosts. Final visual review: 24 captures at 1440×900 and 390×844 in light and dark, with no overflow or browser errors. Focused SEO checks pass 8/8 after the link fix; TypeScript is clean; the full Node 22 suite passed 1,244 with 1 skipped before the small follow-up; both production builds completed. The 14-query US/Germany Serper run and SEO-loop ledger are recorded. The SEO reservation was released after the job result, loop ledger and project status records were saved. Disk last showed 65 GiB free (85%).
 
 
+## CR-137 — seeded 2026-09-24 (Codex)
+
+Source: Florian's ImageJevBench follow-up in `/home/flori/jobs/jevbench-v141-page-imagejev-20260923/PROMPT.md`. JevBench v1.4.1 remains frozen with its public top five unchanged. The ImageJevBench preview must remain `noindex, nofollow` until Florian releases it.
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| CR-137.1 | open | `components/ImageJevExamples.tsx`; `lib/image-jev-public-examples.mjs`; `test/image-jev-public-examples.test.mjs`; `public/image-jev/examples/manifest.json` | Show eight diverse public-only examples with downscaled images, question, options, correct answer and source/license attribution; never use sealed items. |
+| CR-137.2 | open | `/home/flori/jobs/jevbench-v141-page-imagejev-20260923/JEV-OMNI-IMAGE-CODE-REVIEW.md`; `jev-omni-image/jev_omni-run-receipt.json`; `jev-omni-image/AGGREGATES-PUBLIC-10-SYSTEMS.json` | Jev-Omni accepts image input and was run offline on all 444 items with the same harness/scorer. Add its aggregate row; do not publish per-item sealed predictions or represent an ineligible model as zero. |
+| CR-137.3 | open | `app/jev-models/multimodal-preview/page.tsx`; `test/jevbench-multimodal-preview.test.mjs`; `test/image-jev-public-examples.test.mjs` | Keep the unlisted ImageJev route `noindex, nofollow` until release; show only public aggregate/example material and retain noindex in the generated page. |
+| CR-137.4 | open | `/home/flori/jobs/jevbench-v141-page-imagejev-20260923/visual-qa.mjs`; live QA receipts and screenshots | Verify both production hosts and the WIP URL at desktop and 360/390 px portrait in light and dark; require no overflow, eight public examples, Jev-Omni row, and no sealed content. |
+
+
 ## Iteration 187 (claude-opus) — F-165(a): the rekey half is decided, and D188 is signed off
 
 Another writer (the JevBench SEO job) seeded CR-136 into this checkout at the start of this
