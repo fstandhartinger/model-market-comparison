@@ -1,6 +1,10 @@
+"""SQLite checks evaluate SQL truth-table fragments; PostgreSQL query assembly is structural only."""
+
 import importlib.util
+import io
 import sqlite3
 import unittest
+from contextlib import redirect_stderr
 from pathlib import Path
 from unittest.mock import patch
 
@@ -17,19 +21,18 @@ class RetryClaimTests(unittest.TestCase):
             claim(*args)
         return sql_json.call_args.args[0]
 
-    def eligibility_from(self, query):
-        marker = f"WHERE r.id=(SELECT id FROM {worker.TABLE} WHERE "
-        return query.split(marker, 1)[1].split(" ORDER BY created_at", 1)[0]
-
     def evaluate(self, columns, expression, values):
+        return bool(self.evaluate_value(columns, expression, values))
+
+    def evaluate_value(self, columns, expression, values):
         names = ",".join(columns)
         placeholders = ",".join("?" for _ in columns)
         sql = (
             f"WITH request({names}) AS (SELECT {placeholders}) "
-            f"SELECT CASE WHEN {expression} THEN 1 ELSE 0 END FROM request"
+            f"SELECT {expression} FROM request"
         )
         with sqlite3.connect(":memory:") as db:
-            return bool(db.execute(sql, values).fetchone()[0])
+            return db.execute(sql, values).fetchone()[0]
 
     def test_failed_notification_has_a_retry_backoff(self):
         expression = worker.notification_claim_eligibility_sql()
@@ -48,8 +51,11 @@ class RetryClaimTests(unittest.TestCase):
 
     def test_automatic_terminal_refunds_have_a_finite_retry_limit(self):
         expression = worker.automatic_terminal_refund_retry_eligibility_sql()
+        eligibility = worker.refund_claim_eligibility_sql()
+        safe_reference = worker.refund_claim_has_safe_retry_reference_sql()
         query = self.query_for(worker.claim_refund)
-        self.assertIn(expression.strip(), self.eligibility_from(query))
+        self.assertIn(" ".join(expression.split()), " ".join(eligibility.split()))
+        self.assertIn(eligibility, query)
         # SQLite lacks PostgreSQL's null-safe inequality operator; preserve its truth table.
         expression = expression.replace(
             "refund_status IS DISTINCT FROM 'failed'",
@@ -59,23 +65,44 @@ class RetryClaimTests(unittest.TestCase):
             "refund_status IS DISTINCT FROM 'canceled'",
             "(refund_status <> 'canceled' OR refund_status IS NULL)",
         )
-        columns = ("refund_status", "refund_id", "refund_attempts")
+        columns = ("refund_status", "refund_id", "refund_attempts", "refund_idempotency_key")
         cases = (
-            ("failed", None, 0, True),
-            ("failed", None, 2, True),
-            ("failed", None, 3, False),
-            ("failed", "re_123", 1, False),
-            ("canceled", None, 2, True),
-            ("canceled", "re_123", 0, False),
-            ("unknown", None, 3, True),
-            (None, None, 3, True),
+            ("failed", None, 0, None, True),
+            ("failed", None, 2, None, True),
+            ("failed", None, 3, None, False),
+            ("failed", "re_123", 1, "key", False),
+            ("canceled", None, 2, None, True),
+            ("canceled", "re_123", 0, "key", False),
+            ("unknown", None, 3, "existing-key", True),
+            ("unknown", None, 3, None, False),
+            ("unknown", "re_123", 3, None, True),
+            (None, None, 3, None, True),
         )
-        for refund_status, refund_id, attempts, expected in cases:
-            with self.subTest(refund_status=refund_status, refund_id=refund_id, attempts=attempts):
+        for refund_status, refund_id, attempts, refund_key, expected in cases:
+            with self.subTest(refund_status=refund_status, refund_id=refund_id, attempts=attempts, refund_key=refund_key):
                 self.assertEqual(
-                    self.evaluate(columns, expression, (refund_status, refund_id, attempts)),
+                    self.evaluate(columns, expression, (refund_status, refund_id, attempts, refund_key)),
                     expected,
                 )
+        reference_columns = ("refund_id", "refund_idempotency_key", "refund_status")
+        reference_cases = (
+            (None, None, None, True),
+            (None, None, "failed", True),
+            (None, None, "canceled", True),
+            (None, "existing-key", "unknown", True),
+            ("re_123", None, "unknown", True),
+            (None, None, "unknown", False),
+            (None, None, "processing", False),
+            (None, "existing-key", "processing", True),
+        )
+        for refund_id, key, status, expected in reference_cases:
+            with self.subTest(refund_id=refund_id, key=key, status=status):
+                self.assertEqual(
+                    self.evaluate(reference_columns, safe_reference, (refund_id, key, status)),
+                    expected,
+                )
+        normalized = " ".join(eligibility.split())
+        self.assertEqual(normalized.count("AND (" + " ".join(safe_reference.split()) + ")"), 3)
 
     def test_unknown_refund_reuses_its_idempotency_key(self):
         columns = ("refund_id", "refund_idempotency_key", "refund_status", "refund_attempts")
@@ -106,11 +133,52 @@ class RetryClaimTests(unittest.TestCase):
     def test_manual_refund_claim_is_not_limited_by_automatic_cap(self):
         request_id = "8f15b2f0-3d6e-4a70-b8a3-80dbdc57107a"
         query = self.query_for(worker.claim_refund, request_id)
-        eligibility = self.eligibility_from(query)
+        eligibility = worker.refund_claim_eligibility_sql(request_id)
+        normalized = " ".join(query.split())
 
         self.assertIn(f"id='{request_id}'::uuid", eligibility)
         self.assertIn("status IN ('paid','review_passed','refund_due','refund_pending')", eligibility)
         self.assertNotIn("refund_attempts <", eligibility)
+        self.assertIn("refund_attempts=refund_attempts + 0", normalized)
+        self.assertIn(eligibility, query)
+        with self.assertRaises(worker.WorkerError):
+            worker.claim_refund("not-a-uuid")
+
+    def test_manual_refund_cli_rejects_invalid_id_before_database_access(self):
+        with patch.object(worker.sys, "argv", ["worker", "refund", "not-a-uuid"]), \
+             patch.object(worker, "claim_refund") as claim, \
+             patch.object(worker, "sql_json") as sql_json, \
+             redirect_stderr(io.StringIO()):
+            self.assertEqual(worker.main(), 1)
+        claim.assert_not_called()
+        sql_json.assert_not_called()
+
+    def test_clear_key_boolean_controls_refund_id_reset(self):
+        cleared = worker.refund_id_update_sql("re_new", True)
+        retained = worker.refund_id_update_sql(None, False)
+
+        self.assertIsNone(self.evaluate_value(("refund_id",), cleared, ("re_old",)))
+        self.assertEqual(self.evaluate_value(("refund_id",), retained, ("re_old",)), "re_old")
+
+    def test_unknown_refund_notice_repeats_only_until_successful_marker(self):
+        notify = worker.refund_attention_should_notify
+
+        self.assertTrue(notify("unknown", 1, 0, None))
+        self.assertFalse(notify("unknown", 1, 1, "unknown"))
+        self.assertTrue(notify("unknown", 1, 0, None))
+        self.assertTrue(notify("failed", 1, 1, "unknown"))
+        self.assertTrue(notify("unknown", 2, 1, "unknown"))
+        self.assertFalse(notify("pending", 2, 1, "unknown"))
+
+    def test_refund_notice_marker_updates_only_the_current_attempt(self):
+        request_id = "8f15b2f0-3d6e-4a70-b8a3-80dbdc57107a"
+        row = {"id": request_id, "refund_attempts": 2}
+        with patch.object(worker, "sql_json", return_value={"id": request_id}) as sql_json:
+            self.assertTrue(worker.mark_refund_attention_notified(row, "unknown"))
+        query = sql_json.call_args.args[0]
+        self.assertIn("refund_attention_notified_attempts=GREATEST(r.refund_attention_notified_attempts,2)", query)
+        self.assertIn("refund_attention_notified_state='unknown'", query)
+        self.assertIn("r.refund_attempts=2", query)
 
 
 if __name__ == "__main__":
