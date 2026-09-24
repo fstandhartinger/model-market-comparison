@@ -34,6 +34,8 @@ Explore [benchmark rankings](https://benchmarkheaven.com/benchmarks), compare up
 
 ### JevBench public and held-out tasks
 
+**[JevBench](https://benchmarkheaven.com/jev-models)** is our own typed-decision benchmark for Jev-class models (Jev, JevK5, Hopper, Winnow, reflex, and open alternatives like SemIf and Laya) — live rankings, per-model pages, an [alternatives guide](https://benchmarkheaven.com/jev-models/alternatives), and a [how-to-choose guide](https://benchmarkheaven.com/jev-models/how-to-choose) are all on the site; this repo hosts the scoring code and data.
+
 Training on JevBench's public split is allowed and should be declared with each submission. Rankings continue to use all benchmark items. We report held-out results separately so that specialisation on public tasks is visible. Held-out means not publicly released, not guaranteed unseen: hosted systems receive these tasks during evaluation. We periodically issue fresh tasks to reduce the value of prior exposure.
 
 
