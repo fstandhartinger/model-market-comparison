@@ -3,7 +3,8 @@ import path from 'node:path';
 
 const root = process.cwd();
 const src = path.join(root, 'data/raw/benchmarks/jevbench/multimodal-preview/source');
-const out = path.join(root, 'data/raw/benchmarks/jevbench/multimodal-preview/preview.json');
+// This legacy builder predates the frozen aggregate artifact; never overwrite the served preview.
+const out = path.join(root, 'data/raw/benchmarks/jevbench/multimodal-preview/preview.legacy-candidate.json');
 const readJson = async (name) => JSON.parse(await readFile(path.join(src, name), 'utf8'));
 const readText = async (name) => readFile(path.join(src, name), 'utf8');
 
