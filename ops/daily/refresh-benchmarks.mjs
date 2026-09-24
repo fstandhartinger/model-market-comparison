@@ -199,6 +199,11 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
     add(spec.source); for (const key of ['method_source', 'categories_source', 'frontend_source', 'detail_source', 'config_source']) add(spec.parser?.[key]);
     // One-file-per-run sources (BU Bench): every run file is a primary source of its own row.
     for (const run of spec.parser?.runs ?? []) add(run);
+    for (const extra of spec.additional_sources ?? []) {
+      add(extra.source);
+      for (const key of ['method_source', 'categories_source', 'frontend_source', 'detail_source', 'config_source']) add(extra.parser?.[key]);
+      for (const run of extra.parser?.runs ?? []) add(run);
+    }
   }
   for (const row of vendor.observations) add(row.source);
   // AA's model page was already fetched by efficiency; never fetch it again.
@@ -343,6 +348,12 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
       const proposed = structuredClone(spec); proposed.source = current(spec.source);
       for (const key of ['method_source', 'categories_source', 'frontend_source', 'detail_source', 'config_source']) if (spec.parser[key]) proposed.parser[key] = current(spec.parser[key]);
       if (spec.parser.runs) proposed.parser.runs = spec.parser.runs.map(current);
+      proposed.additional_sources = (spec.additional_sources ?? []).map((extra) => {
+        const currentExtra = structuredClone(extra); currentExtra.source = current(extra.source);
+        for (const key of ['method_source', 'categories_source', 'frontend_source', 'detail_source', 'config_source']) if (extra.parser?.[key]) currentExtra.parser[key] = current(extra.parser[key]);
+        if (extra.parser?.runs) currentExtra.parser.runs = extra.parser.runs.map(current);
+        return currentExtra;
+      });
       const onePlan = join(temporary, `plan-${index}.json`), output = join(temporary, `public-${index}.json`);
       await put(onePlan, { schema_version: 1, entries: [proposed] });
       await exec('python3', ['ops/daily/public-candidate.py', onePlan, output], { timeout: 60_000, maxBuffer: 2_000_000 });
@@ -367,9 +378,10 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
       // Joining happens in the offline ingestion draft before fingerprints are
       // issued, so approval binds exactly the final published observation.
       for (const row of changed) {
-        const rowSource = proposed.parser.runs?.find((run) => run.url === row.source.url) ?? proposed.source;
+        const rowConfig = proposed.additional_sources?.find((extra) => extra.source.url === row.source.url) ?? proposed;
+        const rowSource = rowConfig.parser?.runs?.find((run) => run.url === row.source.url) ?? rowConfig.source;
         changedIds.add(row.id); evidenceById.set(row.id, [{ ...rowSource, locator: row.source.locator,
-          content: JSON.stringify({ native_source_row: evidence[row.id], protocol: proposed.protocol, registry: { id: entry.id, version: entry.version, scoring: entry.scoring } }) }, ...protocolSources]);
+          content: JSON.stringify({ native_source_row: evidence[row.id], protocol: rowConfig.protocol ?? proposed.protocol, registry: { id: entry.id, version: entry.version, scoring: entry.scoring } }) }, ...protocolSources]);
       }
       publicRows = publicRows.filter((r) => r.benchmark_id !== spec.benchmark_id).concat(candidate.observations.map((r) => changedIds.has(r.id) ? r : old.get(r.id)));
       checks.push({ id: spec.benchmark_id, status: 'candidate', rows: candidate.observations.length, changed_rows: changed.length, ...(gone.size ? { withdrawn_by_source: withdrawnBySource } : {}) });

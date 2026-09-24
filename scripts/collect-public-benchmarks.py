@@ -3,6 +3,7 @@
 import argparse,csv,gzip,hashlib,html,io,json,math,re,sys,os,tempfile
 from pathlib import Path
 from html.parser import HTMLParser
+from datetime import datetime
 
 class Tables(HTMLParser):
     def __init__(self):
@@ -116,6 +117,32 @@ def parse(source,spec,load_source):
         if spec.get('unique_names'):
             names=[row['name'] for row in rows]
             if len(set(names))!=len(names):raise ValueError('Duplicate model rows in HTML table')
+    elif kind=='arc_verified_results_page':
+        model=spec['model_name']
+        titles=[text(m) for m in re.findall(r'<h1\b[^>]*>(.*?)</h1>',source,re.S)]
+        if titles!=[model]:raise ValueError('ARC Prize results page title changed or is ambiguous')
+        if not re.search(r'<img\b[^>]*\balt=["\']ARC Prize Verified["\']',source):raise ValueError('ARC Prize Verified badge missing')
+        meta=re.search(r'<h1\b[^>]*>.*?</h1>\s*<div\b[^>]*>(.*?)</div>',source,re.S)
+        published=re.search(r'OpenAI\s*[·]\s*([A-Z][a-z]{2}\s+\d{1,2},\s+\d{4})\s*[·]',text(meta[1]) if meta else '')
+        if not published:raise ValueError('ARC Prize model publication date missing or changed')
+        published_at=datetime.strptime(published[1],'%b %d, %Y').date().isoformat()
+        parser=Tables();parser.feed(source)
+        tables=[table for table in parser.tables if table and [text(' '.join(cell)) for cell in table[0]]==spec['expected_header']]
+        if len(tables)!=1:raise ValueError('ARC Prize verified-scores table missing or ambiguous')
+        table=tables[0];labels=[text(' '.join(row[0])) for row in table[1:] if row]
+        if labels!=spec['expected_variants']:raise ValueError('ARC Prize reasoning-variant coverage changed: '+json.dumps(labels))
+        column=spec['expected_header'].index(spec['benchmark_column'])
+        for index,row in enumerate(table[1:],1):
+            cells=[text(' '.join(cell)) for cell in row]
+            if len(cells)!=len(spec['expected_header']):raise ValueError('ARC Prize verified-scores row width changed')
+            label=cells[0];effort=spec['effort_map'].get(label)
+            if not effort:raise ValueError('ARC Prize reasoning effort is unmapped: '+label)
+            value=numeric(cells[column])
+            if value is None or not 0<=value<=100:raise ValueError('ARC Prize verified score is missing or outside 0–100')
+            rows.append({'name':f"{model} ({spec['display_effort_map'][label]})",'source_id':f'{model}|{label}',
+                'value':value,'published_at':published_at,'source_row':index,
+                'context':{'page_model':model,'source_variant':label,'reasoning_effort':effort,
+                    'benchmark_column':spec['benchmark_column'],'cells':cells,'page_publication_date':published_at}})
     elif kind=='astro_props':
         # Astro serialises island props as [type, value] pairs; only plain values (0) and arrays (1) are decoded.
         islands=[m.group(0) for m in re.finditer(r'<astro-island\b[^>]*>',source) if spec['component'] in m.group(0)]
@@ -1209,40 +1236,48 @@ def collect(plan,registry,root=Path('.'),evidence=None):
         bid=spec['benchmark_id'];entry=entries[bid];source=spec.get('source')
         if not spec.get('parser'):
             collections.append({'benchmark_id':bid,'status':spec['status'],'reason':spec['reason'],'source_url':entry['primary_url']});continue
-        rule=spec['parser'];parsed=parse(load(source),rule,load);count=0
-        for index,row in enumerate(parsed):
-            if rule.get('filter_field') and row.get(rule['filter_field'])!=rule['filter_value']:continue
-            if rule.get('skip_field') and row.get(rule['skip_field']) in rule['skip_values']:continue
-            if rule.get('display_only') and row.get('display') is not True:continue
-            raw_name=at(row,rule['name_field']);name=' '.join(str(raw_name).split()) if rule.get('plain_text_names') else text(raw_name)
-            if not name:raise ValueError('Missing model name: '+bid+' row '+str(index))
-            try:value=numeric(at(row,rule['value_field']))
-            except (ValueError,KeyError) as e:raise ValueError(f'{bid} row {index}: {e}') from e
-            if value is None:
-                rejected.append({'benchmark_id':bid,'source_id':name,'reason':row.get('reject_reason') or 'No numeric result in source cell; not substituted with zero.'});continue
-            scale=rule.get('scale',1);raw_value=value;value*=scale
-            lo,hi=entry['scoring']['range']
-            if not math.isfinite(value) or lo is not None and value<lo or hi is not None and value>hi:raise ValueError('Score outside registry range: '+bid)
-            sid=str(row.get(rule.get('id_field'),name));harness=str(row[rule['harness_field']]) if rule.get('harness_field') and row.get(rule['harness_field']) else rule.get('harness')
-            protocol=spec['protocol'];src=row.get('run_source') or source
-            if 'context' in row:protocol+='; source row: '+json.dumps(row['context'],ensure_ascii=False,separators=(',',':'))
-            for field in rule.get('context_fields',[]):
-                if field in row:protocol+=f'; {field}='+str(row[field])
-            basis=spec.get('basis','measured');o={'id':'public:'+hashlib.sha256(f'{bid}\0{sid}\0{index}'.encode()).hexdigest()[:24],
-                'benchmark_id':bid,'subject':{'source_id':sid,'name':name,'model_id':None,'variant':None,'harness':harness},
-                'value':value,'unit':entry['scoring']['unit'],'basis':basis,
-                'source':{'url':src['url'],'retrieved_at':src.get('retrieved_at',src.get('fetched_at')),'published_at':None,'file':src['file'],'sha256':src['sha256'],
-                    'locator':f'{rule["kind"]}; source row {row.get("source_row",index)}; {sid}; field {rule["value_field"]}'},
-                'protocol':protocol,'comparison_key':None}
-            if scale!=1 or 'derivation' in row:
-                o.update(basis='derived',source_basis=basis,derivation=row.get('derivation',{'formula':f'Source value × {scale} to registry units','inputs':[raw_value]}))
-            supporting=[(k,rule[k]) for k in ['method_source','categories_source','frontend_source','detail_source','config_source'] if k in rule]
-            if supporting:
-                o['supporting_sources']=[{'url':s['url'],**{x:s[x] for x in ('zip_member','container_sha256') if s.get(x)},'file':s['file'],'sha256':s['sha256'],'retrieved_at':s.get('retrieved_at',s.get('fetched_at')),'published_at':None,'locator':k} for k,s in supporting]
-            if evidence is not None:evidence[o['id']]={'source_row':row,'parser':rule,'source_index':index}
-            observations.append(o);count+=1
+        source_specs=[{'source':source,'parser':spec['parser'],'basis':spec.get('basis','measured'),
+            'protocol':spec['protocol'],'minimum_rows':spec.get('minimum_rows',1)}]
+        source_specs.extend(spec.get('additional_sources',[]))
+        count=0;source_urls=[]
+        for source_spec in source_specs:
+            source=source_spec['source'];rule=source_spec['parser'];parsed=parse(load(source),rule,load);source_count=0
+            for index,row in enumerate(parsed):
+                if rule.get('filter_field') and row.get(rule['filter_field'])!=rule['filter_value']:continue
+                if rule.get('skip_field') and row.get(rule['skip_field']) in rule['skip_values']:continue
+                if rule.get('display_only') and row.get('display') is not True:continue
+                raw_name=at(row,rule['name_field']);name=' '.join(str(raw_name).split()) if rule.get('plain_text_names') else text(raw_name)
+                if not name:raise ValueError('Missing model name: '+bid+' row '+str(index))
+                try:value=numeric(at(row,rule['value_field']))
+                except (ValueError,KeyError) as e:raise ValueError(f'{bid} row {index}: {e}') from e
+                if value is None:
+                    rejected.append({'benchmark_id':bid,'source_id':name,'reason':row.get('reject_reason') or 'No numeric result in source cell; not substituted with zero.'});continue
+                scale=rule.get('scale',1);raw_value=value;value*=scale
+                lo,hi=entry['scoring']['range']
+                if not math.isfinite(value) or lo is not None and value<lo or hi is not None and value>hi:raise ValueError('Score outside registry range: '+bid)
+                sid=str(row.get(rule.get('id_field'),name));harness=str(row[rule['harness_field']]) if rule.get('harness_field') and row.get(rule['harness_field']) else rule.get('harness')
+                protocol=source_spec.get('protocol',spec['protocol']);src=row.get('run_source') or source
+                if 'context' in row:protocol+='; source row: '+json.dumps(row['context'],ensure_ascii=False,separators=(',',':'))
+                for field in rule.get('context_fields',[]):
+                    if field in row:protocol+=f'; {field}='+str(row[field])
+                basis=source_spec.get('basis',spec.get('basis','measured'));o={'id':'public:'+hashlib.sha256(f'{bid}\0{sid}\0{index}'.encode()).hexdigest()[:24],
+                    'benchmark_id':bid,'subject':{'source_id':sid,'name':name,'model_id':None,'variant':None,'harness':harness},
+                    'value':value,'unit':entry['scoring']['unit'],'basis':basis,
+                    'source':{'url':src['url'],'retrieved_at':src.get('retrieved_at',src.get('fetched_at')),'published_at':row.get('published_at',source_spec.get('published_at')),'file':src['file'],'sha256':src['sha256'],
+                        'locator':f'{rule["kind"]}; source row {row.get("source_row",index)}; {sid}; field {rule["value_field"]}'},
+                    'protocol':protocol,'comparison_key':None}
+                if scale!=1 or 'derivation' in row:
+                    o.update(basis='derived',source_basis=basis,derivation=row.get('derivation',{'formula':f'Source value × {scale} to registry units','inputs':[raw_value]}))
+                supporting=[(k,rule[k]) for k in ['method_source','categories_source','frontend_source','detail_source','config_source'] if k in rule]
+                if supporting:
+                    o['supporting_sources']=[{'url':s['url'],**{x:s[x] for x in ('zip_member','container_sha256') if s.get(x)},'file':s['file'],'sha256':s['sha256'],'retrieved_at':s.get('retrieved_at',s.get('fetched_at')),'published_at':None,'locator':k} for k,s in supporting]
+                if evidence is not None:evidence[o['id']]={'source_row':row,'parser':rule,'source_index':index}
+                observations.append(o);count+=1;source_count+=1
+            if source_count<source_spec.get('minimum_rows',1):raise ValueError('Coverage shrank / no scores: '+bid+' from '+source['url'])
+            source_urls.append(source['url'])
         if count<spec.get('minimum_rows',1):raise ValueError('Coverage shrank / no scores: '+bid)
-        collections.append({'benchmark_id':bid,'status':'collected','source_url':source['url'],'reason':f'{count} source results parsed; configurations remain separate; unmatched model identities are retained.'})
+        collections.append({'benchmark_id':bid,'status':'collected','source_url':source_urls[0],'source_urls':source_urls,
+            'reason':f'{count} source results parsed from {len(source_urls)} source(s); configurations remain separate; unmatched model identities are retained.'})
     return {'schema_version':1,'observations':observations,'collections':collections,'rejected':rejected}
 
 def main():

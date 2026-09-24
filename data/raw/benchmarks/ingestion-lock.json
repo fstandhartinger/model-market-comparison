@@ -12,8 +12,8 @@
       "sha256": "e3b39c00dfff19717d8da6a875ff44e999b5255300da26f174c5bdcea843368b"
     },
     "1.5": {
-      "file": "data/raw/benchmarks/daily-evidence/2026-09-23T10-16-55-034Z/aa-coding-agents-v1.5.json",
-      "sha256": "faa33ad4471487f104faa7e19cc8f339808331c8de9680bc2de1b3a5f0d9512b"
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-24T17-23-53-347Z/aa-coding-agents-v1.5.json",
+      "sha256": "990350b128135928020c1b6a37007b52441ce9e0ceda1d6bdf728898aa2b1d31"
     }
   },
   "realswe": {
@@ -40,10 +40,10 @@
   "openrouter_aa_relay": {
     "source_url": "https://openrouter.ai/benchmarks",
     "api_url": "https://openrouter.ai/api/v1/benchmarks",
-    "snapshot_date": "2026-09-18",
-    "retrieved_at": "2026-09-18T11:09:37.540Z",
-    "source_file": "data/raw/benchmarks/daily-evidence/2026-09-18-openrouter-aa-relay/d05928a5c8a059f5db394d7170a69be01e08b4b9a46d4bf84a8ebce3d0b3ec06.gz",
-    "source_sha256": "d05928a5c8a059f5db394d7170a69be01e08b4b9a46d4bf84a8ebce3d0b3ec06",
+    "snapshot_date": "2026-09-24",
+    "retrieved_at": "2026-09-24T18:25:52.082Z",
+    "source_file": "data/raw/benchmarks/daily-evidence/2026-09-24-openrouter-aa-relay/ad542fe840bc6154d98abb5f23fb3f81f67d0cb931c3fbe4555e33b33f8e1c1a.gz",
+    "source_sha256": "ad542fe840bc6154d98abb5f23fb3f81f67d0cb931c3fbe4555e33b33f8e1c1a",
     "note": "Hash of the decompressed unfiltered /api/v1/benchmarks response; ingestion refuses the AA agentic rows when the capture no longer matches. Use: CR-34.4 (AA Agentic Index, relayed from Artificial Analysis; AA attribution, relay named). Rotate by re-running scripts/lock-openrouter-aa-relay.mjs and reviewing the diff."
   }
 }

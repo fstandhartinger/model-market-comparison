@@ -88,7 +88,60 @@
       "basis": "self_reported",
       "minimum_rows": 1,
       "source_urls": [
-        "https://arcprize.org/media/data/leaderboard/v1.json"
+        "https://arcprize.org/media/data/leaderboard/v1.json",
+        "https://arcprize.org/results/openai-gpt-6-luna"
+      ],
+      "additional_sources": [
+        {
+          "source": {
+            "url": "https://arcprize.org/results/openai-gpt-6-luna",
+            "file": "ops/rebuild-2026-09/evidence/phase-09/gpt6-luna-arc/captures/184926c7cd259eddc3f7.gz",
+            "sha256": "184926c7cd259eddc3f756ea32e5d8f2ef078543bf96cbe35d4460e0849f842e",
+            "retrieved_at": "2026-09-24T20:22:51.069121+00:00"
+          },
+          "parser": {
+            "kind": "arc_verified_results_page",
+            "model_name": "GPT-6 Luna",
+            "expected_header": [
+              "Variant",
+              "ARC-AGI-1",
+              "ARC-AGI-2",
+              "ARC-AGI-3 (Standard harness)",
+              "ARC-AGI-3 (Provider Adapter harness)"
+            ],
+            "expected_variants": [
+              "Max",
+              "XHigh",
+              "High",
+              "Medium",
+              "Low",
+              "None"
+            ],
+            "effort_map": {
+              "Max": "max",
+              "XHigh": "xhigh",
+              "High": "high",
+              "Medium": "medium",
+              "Low": "low",
+              "None": "none"
+            },
+            "display_effort_map": {
+              "Max": "max",
+              "XHigh": "xhigh",
+              "High": "high",
+              "Medium": "medium",
+              "Low": "low",
+              "None": "Non-reasoning"
+            },
+            "benchmark_column": "ARC-AGI-1",
+            "name_field": "name",
+            "id_field": "source_id",
+            "value_field": "value"
+          },
+          "basis": "measured",
+          "protocol": "Official ARC Prize GPT-6 Luna results page, published 2026-09-22, carrying an ARC Prize Verified badge. Its summary identifies 86.7% on ARC-AGI-1/v1 and 59.3% on ARC-AGI-2/v2 as the model's best Semi-Private scores; the table lists per-variant ARC-AGI-1 and ARC-AGI-2 percentages. Basis is the evaluator-published benchmark result; source reasoning labels are retained.",
+          "minimum_rows": 6
+        }
       ]
     },
     {
@@ -139,7 +192,60 @@
       "basis": "self_reported",
       "minimum_rows": 1,
       "source_urls": [
-        "https://arcprize.org/media/data/leaderboard/v2.json"
+        "https://arcprize.org/media/data/leaderboard/v2.json",
+        "https://arcprize.org/results/openai-gpt-6-luna"
+      ],
+      "additional_sources": [
+        {
+          "source": {
+            "url": "https://arcprize.org/results/openai-gpt-6-luna",
+            "file": "ops/rebuild-2026-09/evidence/phase-09/gpt6-luna-arc/captures/184926c7cd259eddc3f7.gz",
+            "sha256": "184926c7cd259eddc3f756ea32e5d8f2ef078543bf96cbe35d4460e0849f842e",
+            "retrieved_at": "2026-09-24T20:22:51.069121+00:00"
+          },
+          "parser": {
+            "kind": "arc_verified_results_page",
+            "model_name": "GPT-6 Luna",
+            "expected_header": [
+              "Variant",
+              "ARC-AGI-1",
+              "ARC-AGI-2",
+              "ARC-AGI-3 (Standard harness)",
+              "ARC-AGI-3 (Provider Adapter harness)"
+            ],
+            "expected_variants": [
+              "Max",
+              "XHigh",
+              "High",
+              "Medium",
+              "Low",
+              "None"
+            ],
+            "effort_map": {
+              "Max": "max",
+              "XHigh": "xhigh",
+              "High": "high",
+              "Medium": "medium",
+              "Low": "low",
+              "None": "none"
+            },
+            "display_effort_map": {
+              "Max": "max",
+              "XHigh": "xhigh",
+              "High": "high",
+              "Medium": "medium",
+              "Low": "low",
+              "None": "Non-reasoning"
+            },
+            "benchmark_column": "ARC-AGI-2",
+            "name_field": "name",
+            "id_field": "source_id",
+            "value_field": "value"
+          },
+          "basis": "measured",
+          "protocol": "Official ARC Prize GPT-6 Luna results page, published 2026-09-22, carrying an ARC Prize Verified badge. Its summary identifies 86.7% on ARC-AGI-1/v1 and 59.3% on ARC-AGI-2/v2 as the model's best Semi-Private scores; the table lists per-variant ARC-AGI-1 and ARC-AGI-2 percentages. Basis is the evaluator-published benchmark result; source reasoning labels are retained.",
+          "minimum_rows": 6
+        }
       ]
     },
     {

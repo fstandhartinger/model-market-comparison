@@ -212,6 +212,7 @@ export interface ModelRow {
     canonical_slug?: string | null;
     hugging_face_id?: string | null;
     context_window_tokens?: number | null;
+    reasoning_mode?: "standard" | "pro" | null;
   };
   coding_agent_results?: { harness: string; score: number; source_model_name?: string }[];
   featured: boolean;
