@@ -13,6 +13,8 @@ import { readJevbenchV141, jevbenchV141View } from '../../lib/jevbench-v141.mjs'
 import { JevModelsV14Board } from '../../components/JevModelsV14';
 import { JevCapabilityChart } from '../../components/JevCapabilityChart';
 import { JevBoardIntentLinks } from '../../components/JevBenchSeoBlocks';
+import { JevContextLength } from '../../components/JevContextLength';
+import jevContextLengthData from '../../data/jevbench-context-length.json';
 
 const OG_ART_REVISION = 'og4'; // The live board URL changes; its share card stays evergreen.
 
@@ -309,6 +311,7 @@ export default async function JevModelsPage() {
     </details>
 
     <JevCapabilityChart systems={v14.systems} revision={v14.revision} />
+    <JevContextLength data={jevContextLengthData} />
 
     <details id="jev13-history" className="bh-panel mt-10 max-w-5xl scroll-mt-6 p-5" data-bh-jev13-history>
       <summary className="cursor-pointer text-sm font-semibold">Historical v1.3.0 board: weightings, per-task grid, topic radars and held-out diagnostics</summary>

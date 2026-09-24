@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { readJevbenchV141, jevbenchV141View } from '../../../lib/jevbench-v141.mjs';
 import { JevModelsV14Board } from '../../../components/JevModelsV14';
 import { JevCapabilityChart } from '../../../components/JevCapabilityChart';
+import { JevContextLength } from '../../../components/JevContextLength';
+import jevContextLengthData from '../../../data/jevbench-context-length.json';
 
 const short = (display: string) => display.split(' (')[0].split(', formerly')[0];
 const one = (score: number | null) => score === null ? '—' : score.toFixed(1);
@@ -61,5 +63,6 @@ export default async function JevModelsV141Page() {
     </section>
     <JevModelsV14Board artifact={view.artifact} sha256={view.sha256} />
     <JevCapabilityChart systems={view.systems} revision={view.revision} />
+    <JevContextLength data={jevContextLengthData} />
   </>;
 }
