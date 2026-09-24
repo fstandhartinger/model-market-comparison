@@ -323,9 +323,12 @@ test('real view: a historical model appears only as an estimate, never among mea
   assert.ok(estimated.length > 0);
 
   for (const e of estimated) {
-    const axis = view.axes.find((a) => a.benchmarkId === e.benchmark_id && (e.cohort == null || a.cohort === e.cohort || a.cohort.startsWith(`${e.cohort} · `)));
-    assert.ok(axis, `an axis exists for ${e.benchmark_id}`);
-    assert.ok((axis.estimates ?? []).some((x) => x.id === e.id), 'the estimate is attached to the axis');
+    // Snapshot history can be attached to the current date-keyed axis through a stable registry alias.
+    // Resolve the axis by the estimate identity; the current axis ID need not equal its historical ID.
+    const axes = view.axes.filter((a) => (e.cohort == null || a.cohort === e.cohort || a.cohort.startsWith(`${e.cohort} · `))
+      && (a.estimates ?? []).some((x) => x.id === e.id));
+    assert.equal(axes.length, 1, `the estimate for ${e.benchmark_id} is attached to exactly one axis`);
+    const [axis] = axes;
     assert.ok(!axis.scores.some((s) => s.modelId === e.model_id), `${e.model_id} must not be listed as a measured score on ${e.benchmark_id}`);
     const selected = selectBenchmarkView(view, [], axis.id);
     assert.equal(selected.axes.length, 1);
