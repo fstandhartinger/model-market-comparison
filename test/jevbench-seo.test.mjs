@@ -9,22 +9,24 @@ import {
 
 test('JevBench intent routes use the hash-checked current public release', async () => {
   const data = await readJevbenchSeoData();
-  assert.equal(data.artifact.revision, 'v1.4.1');
-  assert.equal(data.sha256, '808909c4ecc891fcee7eec0931cefa1b424cb60371412cd6480c0ecff9e48570');
-  assert.equal(data.ranked.length, 77);
-  assert.equal(data.topFive[0].key, 'jev-1.13.0');
+  assert.equal(data.artifact.revision, 'v1.4.2');
+  assert.equal(data.sha256, 'ac14e206dde51ae28e40dc1ea2ff1fecc4a449b941d098e9ecb5618bd533e5be');
+  assert.equal(data.ranked.length, 89);
+  // CR-152: decider-4b v2 leads v1.4.2; Jev 1.13.0 is #2 and stays the comparison reference.
+  assert.equal(data.topFive[1].key, 'jev-1.13.0');
   assert.deepEqual(JEV_SEO_PATHS, {
     alternatives: '/jev-models/alternatives',
     chooser: '/jev-models/how-to-choose',
   });
 });
 
-test('comparison pages match the four other members of the published top five', async () => {
+test('comparison pages keep their four ranked rivals against Jev 1.13.0', async () => {
   const data = await readJevbenchSeoData();
   assert.equal(data.comparisons.length, 4);
-  assert.deepEqual(data.comparisons.map((pair) => pair.rival.key), data.topFive.slice(1).map((row) => row.key));
+  assert.deepEqual(data.comparisons.map((pair) => pair.rival.key), JEV_TOP_FIVE_COMPARISONS.map((pair) => pair.key));
+  assert.ok(data.comparisons.every((pair) => data.ranked.some((row) => row.key === pair.rival.key)));
   assert.deepEqual(data.comparisons.map((pair) => pair.slug), JEV_TOP_FIVE_COMPARISONS.map((pair) => pair.slug));
-  assert.ok(data.comparisons.every((pair) => pair.jev.key === data.topFive[0].key));
+  assert.ok(data.comparisons.every((pair) => pair.jev.key === 'jev-1.13.0'));
 });
 
 test('chooser winners use the published accuracy, speed and cost fields', async () => {

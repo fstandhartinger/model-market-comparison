@@ -105,7 +105,30 @@ export function JevScoreBar({ row, reference = false }: { row: JevV14System; ref
 }
 
 /** The v1.3 page's hero bar chart, restored with the v1.4 scores: every system, top 20 open, the rest one tap away. */
-function ScoreChart({ revision, ranked, unranked, publicDecisions, sealedDecisions }: { revision: string; ranked: JevV14System[]; unranked: JevV14System[]; publicDecisions: number; sealedDecisions: number }) {
+/** CR-152 (Florian, 25 Sep 2026): the fairness sentence next to the top five and a visible Intelligence ordering.
+ *  Plain <details>, no client JavaScript; the planned "View by" switch replaces it later. */
+function TopFiveNote({ note, ranked }: { note: string; ranked: JevV14System[] }) {
+  const byIntelligence = [...ranked].sort((a, b) => (b.axes?.intelligence ?? -1) - (a.axes?.intelligence ?? -1) || (a.rank ?? 999) - (b.rank ?? 999));
+  return <div className="mt-3 rounded-md border border-white/10 p-3 text-sm" data-bh-jev14-top-five-note>
+    <p>{note}</p>
+    <details className="mt-2" data-bh-jev14-sort-intelligence>
+      <summary className="cursor-pointer font-semibold text-accent">Sort by Intelligence ↓</summary>
+      <div className="bh-table-wrap mt-2">
+        <table className="bh-table text-[13px]">
+          <thead><tr><th scope="col">By Intelligence</th><th scope="col">System</th><th scope="col">Intelligence</th><th scope="col">Calibration</th><th scope="col">JevBench Score</th><th scope="col">Overall rank</th></tr></thead>
+          <tbody>{byIntelligence.map((row, index) => <tr key={row.key}>
+            <td className="tabular">{index + 1}</td>
+            <td><Link className="text-accent underline" href={`/jev-models/${row.key}`}>{shortName(row.display)}</Link>{row.api_flag && <span className="bh-thin-tag ml-1.5 align-middle" title={row.api_exposure_note ?? apiExplanation}>API</span>}</td>
+            <td className="tabular">{one(row.axes?.intelligence)}</td><td className="tabular">{one(row.axes?.calibration)}</td>
+            <td className="tabular">{one(row.jevbench_score)}</td><td className="tabular">#{row.rank}</td>
+          </tr>)}</tbody>
+        </table>
+      </div>
+    </details>
+  </div>;
+}
+
+function ScoreChart({ revision, ranked, unranked, publicDecisions, sealedDecisions, topFiveNote }: { revision: string; ranked: JevV14System[]; unranked: JevV14System[]; publicDecisions: number; sealedDecisions: number; topFiveNote?: string | null }) {
   const all = [...ranked, ...unranked];
   const types = Object.keys(JEV_TYPE_LABEL).filter((t) => all.some((r) => r.class === t));
   const header = <div className="mt-4 hidden grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_19rem] gap-x-2 text-[11px] sm:grid" aria-hidden="true">
@@ -117,6 +140,7 @@ function ScoreChart({ revision, ranked, unranked, publicDecisions, sealedDecisio
     <p className="bh-eyebrow">JevBench {revision}</p>
     <h2 id="jev14-chart-title" className="mt-1 text-xl font-bold leading-snug sm:text-2xl">JevBench Score: {ranked.length} ranked systems</h2>
     <p className="bh-muted mt-1 text-sm"><span className="bh-jevc-official mr-2">Official</span>· four axes 0–100, equal-weight harmonic mean · <a href="#jev14-changes" className="text-accent underline">What changed in v1.4 ↓</a></p>
+    {topFiveNote && <TopFiveNote note={topFiveNote} ranked={ranked} />}
     {header}
     <ol className="mt-2 space-y-2.5 sm:mt-1" data-bh-jev14-bars>{all.slice(0, CHART_TOP).map((row) => <JevScoreBar key={row.key} row={row} />)}</ol>
     {rest.length > 0 && <details className="mt-2.5" data-bh-jev14-bars-more>
@@ -159,7 +183,7 @@ export function JevModelsV14Board({ artifact, sha256 }: { artifact: JevV14Artifa
   const sealedDecisions = artifact.tiers.sealed;
   return <section className="mt-8" aria-labelledby="jev14-board" data-bh-jevbench-v14>
     <h2 id="jev14-board" className="sr-only">JevBench {artifact.revision} ranking</h2>
-    <ScoreChart revision={artifact.revision} ranked={ranked} unranked={unranked} publicDecisions={publicDecisions} sealedDecisions={sealedDecisions} />
+    <ScoreChart revision={artifact.revision} ranked={ranked} unranked={unranked} publicDecisions={publicDecisions} sealedDecisions={sealedDecisions} topFiveNote={typeof artifact.top_five_note === 'string' ? artifact.top_five_note : null} />
 
     <h2 id="jev14-table" className="mt-10 text-xl font-semibold">Axes, accuracy, latency and cost</h2>
     <p className="bh-muted mt-1 max-w-4xl text-sm">Every system with its four axes, public and sealed accuracy and the gap between them. On a phone the name column stays put while the table scrolls sideways. <span className="whitespace-nowrap">† = a note on that system</span> — tap it to read.</p>

@@ -5,7 +5,7 @@ import { JEVBENCH_REPO } from '../../lib/jevbench.mjs';
 import { CostUnitNote } from '../../components/JevModelsV12';
 import { JevCostsDisclosure } from '../../components/JevCostsDisclosure';
 import { CustomEvaluationOffer } from '../../components/CustomEvaluationOffer';
-import { readJevbenchV141, jevbenchV141View } from '../../lib/jevbench-v141.mjs';
+import { readJevbenchV142, jevbenchV142View } from '../../lib/jevbench-v142.mjs';
 import { JevModelsV14Board } from '../../components/JevModelsV14';
 import { JevCapabilityLazy } from '../../components/JevCapabilityLazy';
 import { JevBoardIntentLinks } from '../../components/JevBenchSeoBlocks';
@@ -14,7 +14,7 @@ import { JevHistoryLazy } from '../../components/JevHistoryLazy';
 
 const OG_ART_REVISION = 'og4'; // The live board URL changes; its share card stays evergreen.
 
-// CR-135: v1.4.1 is the default board. The previous public-only v1.3.0 view stays below in a
+// CR-152: v1.4.2 is the default board (CR-135 introduced the v1.4.x default). The previous public-only v1.3.0 view stays below in a
 // labeled historical disclosure; frozen releases remain at their version-pinned URLs.
 export async function generateMetadata(): Promise<Metadata> {
   const title = 'JevBench by Benchmark Heaven — Jev-class model benchmark';
@@ -77,8 +77,8 @@ const currentNotMeasured = [
 ];
 
 export default async function JevModelsPage() {
-  const v14Result = await readJevbenchV141();
-  const v14 = jevbenchV141View(v14Result);
+  const v14Result = await readJevbenchV142();
+  const v14 = jevbenchV142View(v14Result);
   const v12 = await readJevbenchV12();
   const costUnit = v12.artifact.cost_unit;
   const costCorrection = (v12.artifact.cost_correction ?? null) as CostCorrection | null;
@@ -173,7 +173,7 @@ export default async function JevModelsPage() {
         <a className="text-accent underline" href="/jev-models/v1" data-bh-jev-v1-link>v1.0 results</a>
       </p>
       <p className="mt-3 max-w-3xl text-sm" data-bh-jev-version-share-row>
-        <a className="text-accent underline" href="/jev-models/v1.4.1" data-bh-jev-version-share>Share this version</a>
+        <a className="text-accent underline" href="/jev-models/v1.4.2" data-bh-jev-version-share>Share this version</a>
       </p>
     </header>
 

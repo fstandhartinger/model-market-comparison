@@ -71,9 +71,9 @@ test('CR-129 the hub HTML actually contains links for semif-qwen3.5-4b and laya 
   assert.doesNotMatch(board, /jev-models\/\[system\]/); // sanity: no literal dynamic-segment text leaked into the board
 });
 
-test('F-171 current per-system pages resolve the v1.4.1 board first and draw its score evidence', () => {
+test('F-171 current per-system pages resolve the current v1.4.x board first and draw its score evidence', () => {
   assert.match(page, /const current = await findV141Row\(key\);\n  if \(current\) return <JevV141SystemDetail/);
-  assert.match(page, /jevbenchV141View\(await readJevbenchV141\(\)\)\.systems\.map\(\(r\) => \(\{ system: r\.key \}\)\)/);
+  assert.match(page, /jevbenchV142View\(await readJevbenchV142\(\)\)\.systems\.map\(\(r\) => \(\{ system: r\.key \}\)\)/);
   assert.match(v141Detail, /data-bh-jev-system-score/);
   assert.match(v141Detail, /data-bh-jev-system-strip/);
   assert.match(v141Detail, /data-bh-jev-system-radar/);
