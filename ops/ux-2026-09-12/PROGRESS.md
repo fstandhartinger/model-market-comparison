@@ -9796,3 +9796,26 @@ chain re-reviews and reruns, and alerts Florian if it cannot.
 | F-185 | open | `desktop_light-hub-context-vp.png`; the point tooltips (`16–64k tokens: 100.0% (3/3)`) | Axis = the data's range; thin points hollow; one explainer. |
 | F-187 | open | `desktop_light-mm-ranking-vp.png`, `mobile_light-mm-ranking-vp.png` | Before `/image-jev-bench` publishes. |
 | F-188 | open | `desktop_light-alt.png`; `/jev-models/how-to-choose` first-screen text `94.0/ 100 benchmark score` | Header line from the hub's component; the slash. |
+
+### Iteration 207 — post-deploy verification of Fable's own change (`453f7e27`)
+
+Both public hosts served `453f7e27647cdf683797b29e66d1d383b187b4d5` at 18:06 UTC (`generated_at` unchanged, 08:11). Run 75 s after the flip
+(switchover lag), 1440×1000 and 390×844 in light and dark, canonical and legacy:
+
+- **F-176(b)** `ONLY=F-176 verify-fable-pass34-design.mjs`: **16/16 per host** — no "three.js … is included" inside
+  `[data-bh-jev14-capability-suite]`, "3D view: three.js r128 (MIT)." inside `#credit`. The pass-33 gate `ONLY=F-176
+  verify-fable-pass33-design.mjs`: **16/16** on canonical (was 12/16 since pass 33; the pass-33 verifier now reads 82/82 in full).
+- **F-181** `ONLY=F-181`: **12/12 per host** — no rendered text under 10 px inside the cost axis or the context axis row.
+- **F-186** `ONLY=F-186`: **16/16 per host** — the open `<dialog>` has no horizontal scroll container at 390 in either theme and still
+  prints `SHA-256 <64 hex>`.
+- 0 page errors in every state. Receipts: `/opt/benchmarkheaven/state/ux-evidence/fable-20260924-pass34/verify-{canonical,legacy}/verification-F-1{76,81,86}.json` + screenshots.
+- **Two verifier defects fixed before these numbers, both in the checker, not the page** (recorded so the next engine does not re-derive them):
+  (1) the Credit check read `innerText` of a closed `<details>`, which is only the summary — it reads `textContent` now; (2) the modal
+  check took the first `[role=dialog]`, an unrelated div that precedes the cost sheet in the DOM — it takes `dialog[open]` now. The first
+  full run (all groups, before the fixes) is deleted; its open-group baseline stands and is worth quoting: **F-180** 82 notes disclosures
+  and the table not in a disclosure; **F-182** `long_policy`, `max_seq_len` in visible copy; **F-183** the provenance paragraph and the
+  duplicated H2 present; **F-184** capability rows 28 px (rows 1–4) vs 40 px (rows 5–20) at 1440; **F-185** three empty buckets on the axis
+  and one thin point (3/3) unmarked; **F-188** no header line above the alternatives bars, "/ 100 benchmark score" on the chooser — all
+  FAIL as they should on both hosts.
+- These are Fable's own runs on Fable's own change, so the three rows stay **implemented**; a non-Fable engine repeats the three `ONLY=`
+  runs and flips them.

@@ -52,7 +52,7 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
       const usedBuckets = new Set(titles.map((x) => (x.match(/· ([^:]+) tokens:/) || [])[1]).filter(Boolean));
       const thin = titles.filter((x) => { const m = x.match(/\((\d+)\/(\d+)\)/); return m && Number(m[2]) < 20; }).length;
       const thinMarked = accSvg ? accSvg.querySelectorAll('[data-bh-thin]').length : 0;
-      return { suiteText: suite ? t(suite) : null, creditText: credit ? t(credit) : null, smallCost: costAxis ? small(costAxis) : null, smallCtx: ctxAxis ? small(ctxAxis) : null, notes, ctxTableClosed: ctxTable ? !ctxTable.open : false, ctxTableFound: !!ctxTableH3, fieldNames, capRows, buckets, usedBuckets: [...usedBuckets], thin, thinMarked };
+      return { suiteText: suite ? t(suite) : null, creditText: credit ? String(credit.textContent || '').replace(/\s+/g, ' ').trim() : null, smallCost: costAxis ? small(costAxis) : null, smallCtx: ctxAxis ? small(ctxAxis) : null, notes, ctxTableClosed: ctxTable ? !ctxTable.open : false, ctxTableFound: !!ctxTableH3, fieldNames, capRows, buckets, usedBuckets: [...usedBuckets], thin, thinMarked };
     });
     if (want('F-176')) {
       check('F-176', `${tag} (b) capability suite present`, !!hub.suiteText, {});
@@ -86,7 +86,7 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
     await go('/models/claude-fable-5.1::max');
     const opened = await p.evaluate(() => { const b = [...document.querySelectorAll('button[aria-haspopup="dialog"]')].find((x) => /Google Vertex AI \/ Google Vertex AI/.test(x.getAttribute('aria-label') || '')); if (!b) return false; b.click(); return true; });
     await p.waitForTimeout(1200);
-    const modal = await p.evaluate(() => { const d = document.querySelector('[role=dialog]'); if (!d) return null; const over = [...d.querySelectorAll('*')].concat([d]).filter((e) => e.scrollWidth > e.clientWidth + 2 && /auto|scroll/.test(getComputedStyle(e).overflowX)).map((e) => ({ tag: e.tagName, sw: e.scrollWidth, cw: e.clientWidth })); return { over, sha: /SHA-256 [0-9a-f]{64}/.test(d.textContent || ''), w: d.getBoundingClientRect().width }; });
+    const modal = await p.evaluate(() => { const d = document.querySelector('dialog[open]') || [...document.querySelectorAll('[role=dialog]')].find((x) => x.querySelector('[data-testid="cost-sources"]')); if (!d) return null; const over = [...d.querySelectorAll('*')].concat([d]).filter((e) => e.scrollWidth > e.clientWidth + 2 && /auto|scroll/.test(getComputedStyle(e).overflowX)).map((e) => ({ tag: e.tagName, sw: e.scrollWidth, cw: e.clientWidth })); return { over, sha: /SHA-256 [0-9a-f]{64}/.test(d.textContent || ''), w: d.getBoundingClientRect().width }; });
     check('F-186', `${tag} cost modal opened`, opened && modal, {});
     check('F-186', `${tag} modal has no horizontal scroll container`, modal && modal.over.length === 0, { over: modal?.over });
     check('F-186', `${tag} full SHA-256 still shown`, modal && modal.sha, {});
