@@ -223,6 +223,7 @@ export default async function JevModelsPage() {
         <article className="bh-panel p-5">
           <h3 className="text-lg font-semibold">How do I submit my model?</h3>
           <p className="bh-muted mt-2 text-sm">Open an issue in the <a className="text-accent underline" href={`${JEVBENCH_REPO}/issues`} target="_blank" rel="noopener noreferrer">JevBench repository</a> with a reproducible endpoint or runnable code, the exact model and licence, and whether public JevBench items were used during development. New entrants use the same frozen harness and appear in a new version. For private data, see the <a className="text-accent underline" href="/jev-models/custom-evaluation">custom evaluation options</a>.</p>
+          <p className="bh-muted mt-2 text-xs" data-bh-priority-evaluation-link>Model author? <a className="text-accent underline" href="/jev-models/request-evaluation">Request a priority evaluation</a>.</p>
         </article>
       </div>
     </section>
