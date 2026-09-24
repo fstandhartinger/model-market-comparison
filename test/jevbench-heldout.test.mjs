@@ -18,10 +18,14 @@ test('hard held-out diagnostic recomputes from frozen answers and totals', () =>
 });
 
 test('page keeps the diagnostic out of the main table and uses neutral wording', async () => {
-  const page = await readFile(new URL('../app/jev-models/page.tsx', import.meta.url), 'utf8');
-  assert.match(page, /id="held-out-diagnostic"/);
-  assert.match(page, /Training on JevBench(?:&apos;|’|')s public split is allowed/);
-  assert.doesNotMatch(page, /contaminated/i);
+  const [page, history] = await Promise.all([
+    readFile(new URL('../app/jev-models/page.tsx', import.meta.url), 'utf8'),
+    readFile(new URL('../components/JevHistoryContent.tsx', import.meta.url), 'utf8'),
+  ]);
+  assert.match(page, /<JevHistoryLazy \/>/);
+  assert.match(history, /id="held-out-diagnostic"/);
+  assert.match(history, /Training on JevBench(?:&apos;|’|')s public split is allowed/);
+  assert.doesNotMatch(history, /contaminated/i);
 });
 
 test('CR-116: the published diagnostic (current pinned artifact) carries both Open-Jev (Zefan Cai) rows', async () => {

@@ -1,20 +1,16 @@
 import type { Metadata } from 'next';
-import { readJevbenchV12, jevbenchV12View } from '../../lib/jevbench-v12.mjs';
+import { readJevbenchV12 } from '../../lib/jevbench-v12.mjs';
 import { readJevbenchV11, jevbenchV11View } from '../../lib/jevbench-v11.mjs';
 import { JEVBENCH_REPO } from '../../lib/jevbench.mjs';
-import { JevModelsV12Board, CostValue, CostUnitNote } from '../../components/JevModelsV12';
+import { CostUnitNote } from '../../components/JevModelsV12';
 import { JevCostsDisclosure } from '../../components/JevCostsDisclosure';
-import { JevRadars } from '../../components/JevRadars';
-import { readJevbenchV12Topics, jevbenchV12TopicsView } from '../../lib/jevbench-v12-topics.mjs';
-import { readJevbenchV12Tasks, jevbenchV12TasksView } from '../../lib/jevbench-v12-tasks.mjs';
 import { CustomEvaluationOffer } from '../../components/CustomEvaluationOffer';
-import { jevbenchV12HeldoutView } from '../../lib/jevbench-v12-heldout.mjs';
 import { readJevbenchV141, jevbenchV141View } from '../../lib/jevbench-v141.mjs';
 import { JevModelsV14Board } from '../../components/JevModelsV14';
-import { JevCapabilityChart } from '../../components/JevCapabilityChart';
+import { JevCapabilityLazy } from '../../components/JevCapabilityLazy';
 import { JevBoardIntentLinks } from '../../components/JevBenchSeoBlocks';
-import { JevContextLength } from '../../components/JevContextLength';
-import jevContextLengthData from '../../data/jevbench-context-length.json';
+import { JevContextLazy } from '../../components/JevContextLazy';
+import { JevHistoryLazy } from '../../components/JevHistoryLazy';
 
 const OG_ART_REVISION = 'og4'; // The live board URL changes; its share card stays evergreen.
 
@@ -49,8 +45,10 @@ const pct = (v: number | null) => (v === null ? '—' : `${(100 * v).toFixed(1)}
 const points = (v: number | null, signed = false) => v === null ? '—' : `${signed && v >= 0 ? '+' : ''}${(100 * v).toFixed(1)}`;
 // Gaps are the difference of the scores as displayed (one decimal), so a reader can check them by eye.
 const gap = (a: number, b: number) => (Math.round(a * 10) - Math.round(b * 10)) / 10;
-const jevCostExample = (view: ReturnType<typeof jevbenchV12View>) => {
-  const example = view.costUnit.worked_example;
+type CostCorrection = { revision: string; rule: string; what_was_wrong: string[] };
+type CostCorrectionEntry = { old: number; new: number; pct: number; unchanged?: boolean };
+const jevCostExample = (costUnit: { worked_example: string }) => {
+  const example = costUnit.worked_example;
   const tokens = example.match(/reads\s+(\d+(?:\.\d+)?)\s+input tokens/)?.[1];
   const tariff = example.match(/tariff of \$(\d+(?:\.\d+)?) per MILLION input tokens/)?.[1];
   const cost = example.match(/=\s*\$(\d+(?:\.\d+)?)/)?.[1];
@@ -82,29 +80,17 @@ export default async function JevModelsPage() {
   const v14Result = await readJevbenchV141();
   const v14 = jevbenchV141View(v14Result);
   const v12 = await readJevbenchV12();
-  const view = jevbenchV12View(v12);
-  const costExample = jevCostExample(view);
-  const topics = jevbenchV12TopicsView(await readJevbenchV12Topics(v12.artifact));
-  const taskData = await readJevbenchV12Tasks(v12);
-  const tasks = jevbenchV12TasksView(taskData);
-  const heldout = jevbenchV12HeldoutView(taskData.artifact);
-  const v11 = jevbenchV11View(await readJevbenchV11());
-  const [lead] = view.ranked;
-  const rankOf = (key: string) => view.ranked.findIndex((r) => r.key === key) + 1;
-  const bestOpen = view.ranked.find((r) => r.cls === 'jev-rebuild');
-  const jev = view.ranked.find((r) => r.cls === 'jev');
-  const prices = v11.referencePrices ?? {};
-  const all = [...view.ranked, ...view.honorable, ...view.partial];
-  const estimated = all.filter((r) => r.costKind === 'estimate');
-  // CR-96: the rows whose price the v1.2.3 correction moved, in the published order.
-  const corrected = all.flatMap((r) => {
-    const c = view.costCorrectionTable?.[r.key];
+  const costUnit = v12.artifact.cost_unit;
+  const costCorrection = (v12.artifact.cost_correction ?? null) as CostCorrection | null;
+  const costCorrectionTable = (v12.artifact.cost_correction_table ?? {}) as Record<string, CostCorrectionEntry>;
+  const costCorrectionRows: Array<{ r: { key: string; display: string }; c: CostCorrectionEntry }> = v12.artifact.systems.flatMap((r: { key: string; display: string }) => {
+    const c = costCorrectionTable[r.key];
     return c && !c.unchanged ? [{ r, c }] : [];
   });
-  const topInt = [...view.ranked].sort((a, b) => (b.axes.intelligence ?? 0) - (a.axes.intelligence ?? 0))[0];
-  const [topHonorable] = view.honorable;
+  const costExample = jevCostExample(costUnit);
+  const v11 = jevbenchV11View(await readJevbenchV11());
+  const prices = v11.referencePrices ?? {};
   const notMeasured = currentNotMeasured;
-  const credits = all.filter((r) => !r.key.endsWith('-tools')).sort((a, b) => a.display.localeCompare(b.display));
   // Page fix (Florian 23 Sep 2026): the evergreen sections below read the v1.4 board, not the v1.3 one.
   const v14Rank = (key: string) => v14.ranked.find((r) => r.key === key)?.rank ?? null;
   const openAlternatives = v14.ranked.filter((r) => r.class === 'jev-rebuild' && r.open === 'yes').slice(0, 4);
@@ -235,7 +221,7 @@ export default async function JevModelsPage() {
         One decision is a whole question — state, rubric and options — about {costExample.tokens} input tokens for Jev 1.13.0, so at its ${costExample.tariff} per million input tokens 1,000 decisions cost ${costExample.cost}.
       </p>
       <JevCostsDisclosure>
-        <p className="bh-muted mt-2">{view.costUnit.worked_example}</p>
+        <p className="bh-muted mt-2">{costUnit.worked_example}</p>
         <p className="bh-muted mt-2">Systems with a public tariff (per token or per request) are priced at that tariff times the tokens we measured. Systems without one — open weights, author demos, models we ran locally — are priced as if a <b className="text-gray-200">large inference provider</b> hosted them: the OpenRouter list price of the same weights; if OpenRouter does not list them, the nearest larger sibling; if no model of that size class is on OpenRouter, the DeepInfra list price of the same weights or of the nearest larger model of the same class. We do not use per-minute GPU rental or our own CPU time — providers buy capacity in bulk or own the hardware, and price accordingly. Price × tokens per decision = $ per 1,000 decisions, marked &ldquo;est.&rdquo;.</p>
         <ul className="mt-3 space-y-1.5" data-bh-jev-cost-rows>
           {v14Estimated.map((r) => <li key={r.key}><b>{short(r.display)}</b> — <span className="whitespace-nowrap">~{usd(r.cost.usd_per_1000)} <span className="bh-thin-tag">est.</span></span> per 1,000 decisions: <span className="bh-muted">{r.cost.basis.replace(/^ESTIMATE: (hosted-provider price, )?/, '')}</span></li>)}
@@ -246,15 +232,15 @@ export default async function JevModelsPage() {
           </ul>
           <p className="bh-muted mt-2">Sources: {String(prices.token_source ?? '')}.</p></details>}
       </JevCostsDisclosure>
-      {view.costCorrection && corrected.length > 0 && <details className="bh-panel mt-3 p-4" data-bh-jev12-cost-correction>
-        <summary className="cursor-pointer text-sm font-semibold">Correction, {view.costCorrection.revision} (20 September 2026): every price recomputed, each decision counted once</summary>
-        <p className="bh-muted mt-2">{view.costCorrection.rule}</p>
+      {costCorrection && costCorrectionRows.length > 0 && <details className="bh-panel mt-3 p-4" data-bh-jev12-cost-correction>
+        <summary className="cursor-pointer text-sm font-semibold">Correction, {costCorrection.revision} (20 September 2026): every price recomputed, each decision counted once</summary>
+        <p className="bh-muted mt-2">{costCorrection.rule}</p>
         <ul className="bh-muted mt-2 list-disc space-y-1 pl-5">
-          {view.costCorrection.what_was_wrong.map((w, i) => <li key={i}>{w}</li>)}
+          {costCorrection.what_was_wrong.map((w, i) => <li key={i}>{w}</li>)}
         </ul>
         <p className="bh-muted mt-2">No tariff, measurement, item, answer or rank changed. The prices before and after:</p>
         <ul className="bh-muted mt-2 space-y-1" data-bh-jev12-cost-correction-rows>
-          {corrected.map(({ r, c }) => <li key={r.key}><b className="text-gray-200">{short(r.display)}</b> — ${c.old.toFixed(4)} → ${c.new.toFixed(4)} ({c.pct > 0 ? '+' : ''}{c.pct.toFixed(2)} %)</li>)}
+          {costCorrectionRows.map(({ r, c }) => <li key={r.key}><b className="text-gray-200">{short(r.display)}</b> — ${c.old.toFixed(4)} → ${c.new.toFixed(4)} ({c.pct > 0 ? '+' : ''}{c.pct.toFixed(2)} %)</li>)}
         </ul>
       </details>}
     </section>
@@ -275,10 +261,10 @@ export default async function JevModelsPage() {
         <p><b className="text-gray-200">Intelligence.</b> {v14Scoring.intelligence}</p>
         <p data-bh-jev-revision><b className="text-gray-200">Revision {v14.revision}.</b> {String(v14.artifact.revision_note ?? '')}</p>
         <ul className="list-disc space-y-1.5 pl-5">{(['easy', 'standard', 'judge'] as const).map((t) => <li key={t}><b className="text-gray-200">{t}</b>: {v11.tierNotes[t]}</li>)}
-          <li><b className="text-gray-200">hard</b>: {v14Scoring.hard_tier ?? view.scoring.hard_tier}</li>
+          <li><b className="text-gray-200">hard</b>: {v14Scoring.hard_tier ?? v12.artifact.scoring.hard_tier}</li>
           <li data-bh-jev14-method-sealed><b className="text-gray-200">sealed</b>: {v14.sealedDecisions} fresh private decisions across ten families, run once per system. Only system-level aggregates — overall and per-family accuracy, calibration — are published; the item text, answers and per-item results stay private and rotate between versions.</li></ul>
         <p>Every system sees the same state, instructions, rubric and exact label set; only the transport differs. Requests go out one at a time with no retries, so latency includes the network. Estimated costs are hosted-provider prices for the same weights or size class and are marked &ldquo;est.&rdquo; — hover one for its basis, or see <a className="text-accent underline" href="#jev-costs">how costs are estimated</a>. Every system has a price; none gets a free 100.</p>
-        {view.honorableMentions && <p data-bh-jev12-method-honorable><b className="text-gray-200">A service running another entrant&apos;s model is listed, but not ranked against the models.</b> {view.honorableMentions.rule.replace(/^A service that runs another entrant's model is listed with all of its scores and axes, but is not ranked against the models\. /, '')} Which rows this applies to, and why: <a className="text-accent underline" href="#jev12-honorable">{view.honorableMentions.heading}</a>.</p>}
+        {v12.artifact.honorable_mentions && <p data-bh-jev12-method-honorable><b className="text-gray-200">A service running another entrant&apos;s model is listed, but not ranked against the models.</b> {v12.artifact.honorable_mentions.rule.replace(/^A service that runs another entrant's model is listed with all of its scores and axes, but is not ranked against the models\. /, '')} Which rows this applies to, and why: <a className="text-accent underline" href="#jev12-honorable">{v12.artifact.honorable_mentions.heading}</a>.</p>}
         <p>v1.4 scores are not comparable with v1.3 or earlier (sealed blend, gap penalty and harmonic mean). The v1.3.0 board stays below as history; the v1.0 page keeps its own numbers, calibration plots and per-family tables.</p>
       </div>
     </details>
@@ -310,56 +296,9 @@ export default async function JevModelsPage() {
       </div>
     </details>
 
-    <JevCapabilityChart systems={v14.systems} revision={v14.revision} />
-    <JevContextLength data={jevContextLengthData} />
+    <JevCapabilityLazy revision={v14.revision} />
+    <JevContextLazy />
 
-    <details id="jev13-history" className="bh-panel mt-10 max-w-5xl scroll-mt-6 p-5" data-bh-jev13-history>
-      <summary className="cursor-pointer text-sm font-semibold">Historical v1.3.0 board: weightings, per-task grid, topic radars and held-out diagnostics</summary>
-      <div className="mt-5">
-        <p className="bh-muted mb-5 max-w-4xl text-sm">The following public-only tables and diagnostics preserve the earlier JevBench v1.3.0 view. The ranking above is the current {v14.revision} result.</p>
-    <JevModelsV12Board view={view} tasks={tasks}>
-    {/* F-157 (Fable pass 30): the CR-118.4 note follows the board it explains — the ranking is the key message, the note is its footnote. */}
-    <aside className="bh-panel mt-6 max-w-4xl p-4 text-sm" data-bh-jev-score-change>
-      <h2 className="font-semibold">What changed in the score</h2>
-      <p className="bh-muted mt-1">A system that is cheap and fast but barely better than guessing could rank high; intelligence is now measured above chance, and systems below half-way get a growing penalty. The tasks, Calibration, Speed, Cost and ranking eligibility are unchanged.</p>
-    </aside>
-    {lead && <section className="mt-8 max-w-4xl" aria-labelledby="jev12-headline">
-      <h2 id="jev12-headline" className="text-xl font-semibold">What the run says (JevBench Score)</h2>
-      <ul className="mt-2 list-disc space-y-1.5 pl-5 text-[15px]" data-bh-jev12-findings>
-        <li><b>{lead.display}</b> leads with {one(lead.main)}: Intelligence {one(lead.axes.intelligence)}, Calibration {one(lead.axes.calibration)}, Speed {one(lead.axes.speed)}, Cost {one(lead.axes.cost)} (<CostValue r={lead} /> per 1,000 decisions).</li>
-        {jev && jev.key !== lead.key && <li><b>{jev.display}</b> is #{rankOf(jev.key)} at {one(jev.main)}, {one(gap(lead.main, jev.main))} points behind.</li>}
-        {/* CR-97 (Florian 2026-09-20): a service running another entrant's model is listed, not ranked. CR-95.3's
-            "why a service leads" bullet is replaced by the reason it no longer does. */}
-        {topHonorable && <li data-bh-jev12-honorable-lead><b>{short(topHonorable.display)}</b> scores {one(topHonorable.main)} — higher than anything in the ranking — but is <b>not ranked</b>: it runs {view.honorableMentions?.systems[topHonorable.key]?.runs_on ?? 'another entrant&rsquo;s model'}, so ranking it would put the same model in the list twice, once at the model&apos;s own price and once at the service&apos;s. It keeps every number it earned under <a href="#jev12-honorable" className="text-accent underline">{view.honorableMentions?.heading ?? 'Honorable mentions'}</a>.</li>}
-        {bestOpen && bestOpen.key !== lead.key && <li>Open rebuilds of Jev appeared within days. The best of them, <b>{bestOpen.display}</b>, is #{rankOf(bestOpen.key)} at {one(bestOpen.main)} — <span data-bh-jev12-gap>{one(gap(lead.main, bestOpen.main))} points behind</span>: more speed and a lower (estimated) price, less intelligence and calibration.</li>}
-        {topInt && topInt.key !== lead.key && <li><b>{topInt.display}</b> has the highest Intelligence ({one(topInt.axes.intelligence)}) but places #{rankOf(topInt.key)}: its cost score is {one(topInt.axes.cost)} (<CostValue r={topInt} /> per 1,000 decisions), and the geometric mean does not let accuracy buy that back.</li>}
-        {view.partial.length > 0 && <li>{view.partial.map((r) => short(r.display)).join(', ')} did not answer every tier — each for the reason in its † note; they are shown below the ranking as partial runs, without a rank.</li>}
-      </ul>
-    </section>}
-    </JevModelsV12Board>
-    {/* CR-94: two-system radars — the four score axes and accuracy by subject topic (completes CR-90.3). */}
-    <JevRadars ranked={view.ranked} honorable={view.honorable} partial={view.partial} topics={topics} />
-    <details id="held-out-diagnostic" className="bh-panel mt-8 max-w-5xl scroll-mt-6 p-5" data-bh-jev-heldout>
-      <summary className="cursor-pointer text-sm font-semibold">Held-out hard-tier detail</summary>
-      <div className="bh-muted mt-4 space-y-3 text-sm">
-        <p>With about 110 items on each side, ordinary noise is roughly ±9 percentage points. Read a system&apos;s public-minus-held-out gap against the field mean ({points(heldout.fieldMeanGap, true)} points across {heldout.fieldN} complete systems): only an outlier against that field is meaningful. &ldquo;Not public&rdquo; does not mean &ldquo;not seen&rdquo;, because held-out items were sent to hosted APIs.</p>
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[760px] text-left text-xs" data-bh-jev-heldout-table>
-            <thead><tr><th className="p-2">System</th><th className="p-2 text-right">Hard public</th><th className="p-2 text-right">Hard held-out</th><th className="p-2 text-right">Public − held-out gap (95% interval)</th><th className="p-2 text-right">Field mean gap</th></tr></thead>
-            <tbody>{heldout.rows.map((r) => <tr key={r.key} className="border-t border-line">
-              <th scope="row" className="p-2 font-medium text-[rgb(var(--text))]">{r.display}{r.partial ? <span className="bh-muted"> (partial)</span> : null}</th>
-              <td className="p-2 text-right tabular-nums">{pct(r.publicAccuracy)} <span className="bh-muted">({r.publicCorrect}/{r.publicN})</span></td>
-              <td className="p-2 text-right tabular-nums">{pct(r.heldoutAccuracy)} <span className="bh-muted">({r.heldoutCorrect}/{r.heldoutN})</span></td>
-              <td className="p-2 text-right tabular-nums">{points(r.gap, true)} points <span className="bh-muted">[{points(r.ciLow, true)}, {points(r.ciHigh, true)}]</span></td>
-              <td className="p-2 text-right tabular-nums">{points(heldout.fieldMeanGap, true)} points</td>
-            </tr>)}</tbody>
-          </table>
-        </div>
-        <p>Accuracy is correct / attempted; invalid responses count as incorrect. The interval is the unpooled two-sample normal 95% interval for a difference in proportions. Partial systems are shown but excluded from the field mean.</p>
-        <p data-bh-jev-training-policy><b className="text-gray-200">Public-split policy.</b> Training on JevBench&apos;s public split is allowed and should be declared with each submission. Rankings continue to use all benchmark items. We report held-out results separately so that specialisation on public tasks is visible. Held-out means not publicly released, not guaranteed unseen: hosted systems receive these tasks during evaluation. We periodically issue fresh tasks to reduce the value of prior exposure.</p>
-      </div>
-    </details>
-      </div>
-    </details>
+    <JevHistoryLazy />
   </>;
 }
