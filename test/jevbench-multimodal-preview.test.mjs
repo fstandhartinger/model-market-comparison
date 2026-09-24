@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { readMultimodalPreview } from '../lib/jevbench-multimodal-preview.mjs';
+import { formatMatchedGapPp, readMultimodalPreview, validatePreviewTracks } from '../lib/jevbench-multimodal-preview.mjs';
 
 const expectedRanking = [
   'Mapika decider-2b-vision BF16',
@@ -73,8 +73,35 @@ test('Image JevBench v0.1 preview retains aggregate split, exact roster and Jev-
 
   const spark = a.ranking.find((s) => s.key === 'djev_spark_nvfp4');
   assert.deepEqual([spark.tracks.everyday_photo.sealed.correct, spark.tracks.everyday_photo.sealed.n], [53, 61]);
+  assert.deepEqual([a.preview_tracks.computer_use.items_total, a.preview_tracks.computer_use.public, a.preview_tracks.computer_use.sealed], [400, 147, 253]);
+  assert.deepEqual([a.preview_tracks.browser_use.items_total, a.preview_tracks.browser_use.public, a.preview_tracks.browser_use.sealed], [400, 240, 160]);
+  assert.deepEqual(a.preview_tracks.computer_use.public_decision_types, ['target location', 'element type', 'next action class']);
+  assert.deepEqual(a.preview_tracks.computer_use.sealed_decision_types, ['task completion', 'action success', 'dialog safety', 'blocker status']);
+  assert.equal(a.preview_tracks.computer_use.sealed_origin, 'original synthetic local fixtures');
+  assert.equal(a.preview_tracks.browser_use.mind2web_public_only, 133);
+  assert.match(a.preview_tracks.cross_track_rule, /shares a source row or screenshot with a sealed core item is sealed too/);
+  assert.match(a.preview_tracks.kev_flag, /Mind2Web/);
   assert.deepEqual(forbiddenItemFields(a), []);
   assert.deepEqual(longArrays(a), []);
+});
+
+test('preview tracks validator rejects missing or changed counts', async () => {
+  const a = await readMultimodalPreview();
+  assert.equal(validatePreviewTracks(a.preview_tracks), a.preview_tracks);
+  const missing = structuredClone(a.preview_tracks);
+  delete missing.computer_use;
+  assert.throws(() => validatePreviewTracks(missing), /Invalid computer_use preview track counts/);
+  const changed = structuredClone(a.preview_tracks);
+  changed.browser_use.sealed = 159;
+  assert.throws(() => validatePreviewTracks(changed), /Invalid browser_use preview track counts/);
+});
+
+test('matched gap formatting removes negative zero', () => {
+  assert.equal(formatMatchedGapPp(-0.04), '0.0 pp');
+  assert.equal(formatMatchedGapPp(-0), '0.0 pp');
+  assert.equal(formatMatchedGapPp(0.04), '0.0 pp');
+  assert.equal(formatMatchedGapPp(0.15), '+0.1 pp');
+  assert.equal(formatMatchedGapPp(-0.15), '-0.1 pp');
 });
 
 test('preview stays noindex, unlinked, and uses only aggregate candidate content', async () => {
@@ -89,6 +116,12 @@ test('preview stays noindex, unlinked, and uses only aggregate candidate content
   assert.match(page, /not part of the JevBench Score/);
   assert.match(page, /Current top five by candidate composite/);
   assert.match(page, /Split/);
+  assert.match(page, /Computer Use and Browser Use tracks \(preview\)/);
+  assert.ok(page.indexOf('id="split-heading"') < page.indexOf('id="preview-tracks-heading"'));
+  assert.match(page, /Not measured yet — no scores\. Scored with the same method once systems have run\./);
+  assert.match(page, /a\.preview_tracks\.cross_track_rule/);
+  assert.match(page, /a\.preview_tracks\.kev_flag/);
+  assert.match(page, /formatMatchedGapPp\(t\.matched_gap_pp\)/);
   assert.match(page, /Gap \(matched\)/);
   assert.match(page, /t\.penalty_multiplier\.toFixed\(3\)/);
   assert.doesNotMatch(page, /80% public|25 points/);

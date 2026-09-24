@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { readMultimodalPreview } from '../../../lib/jevbench-multimodal-preview.mjs';
+import { formatMatchedGapPp, readMultimodalPreview } from '../../../lib/jevbench-multimodal-preview.mjs';
 import { ImageJevExamples } from '../../../components/ImageJevExamples';
 
 export const metadata: Metadata = {
@@ -12,8 +12,6 @@ const pct = (v: number) => `${(v * 100).toFixed(1)}%`;
 const score = (v: number) => Number(v).toFixed(2);
 const unitCost = (v: number | null) => v == null ? 'Not measured' : `USD ${v.toFixed(4)}`;
 const time = (v: number) => `${v.toFixed(3)} s`;
-const signedPp = (v: number) => `${v > 0 ? '+' : ''}${v.toFixed(1)} pp`;
-
 type Track = 'all' | 'core' | 'everyday_photo';
 type FamilyCount = { public: number; sealed: number };
 
@@ -40,7 +38,7 @@ function RankingTable({ systems, track, all = false }: { systems: any[]; track: 
           <td className="p-3 text-right tabular-nums">{score(t.axes.calibration)}</td>
           <td className="p-3 text-right tabular-nums">{score(t.axes.speed)}</td>
           <td className="p-3 text-right tabular-nums">{score(t.axes.cost)}</td>
-          {all && <><td className="p-3 text-right tabular-nums whitespace-nowrap">{signedPp(t.matched_gap_pp)}</td><td className="p-3 text-right tabular-nums">×{t.penalty_multiplier.toFixed(3)}</td></>}
+          {all && <><td className="p-3 text-right tabular-nums whitespace-nowrap">{formatMatchedGapPp(t.matched_gap_pp)}</td><td className="p-3 text-right tabular-nums">×{t.penalty_multiplier.toFixed(3)}</td></>}
           <td className="p-3 text-right tabular-nums"><span className="whitespace-nowrap">{t.public.correct}/{t.public.n} · {pct(t.public.accuracy)}</span></td>
           <td className="p-3 text-right tabular-nums"><span className="whitespace-nowrap">{t.sealed.correct}/{t.sealed.n} · {pct(t.sealed.accuracy)}</span></td>
           <td className="p-3 text-right tabular-nums">{unitCost(t.cost.usd_per_1000)}</td>
@@ -109,6 +107,34 @@ export async function MultimodalPreviewContent({ publicRoute = false }: { public
           </table>
         </div>
       </div>
+    </section>
+
+    <section className="mt-10 max-w-6xl" aria-labelledby="preview-tracks-heading">
+      <h2 id="preview-tracks-heading" className="text-2xl font-semibold">Computer Use and Browser Use tracks (preview)</h2>
+      <p className="bh-muted mt-2 max-w-5xl text-sm">Two planned tracks extend the image benchmark to computer and browser interactions.</p>
+      <div className="mt-4 grid gap-4 md:grid-cols-2">
+        {(['computer_use', 'browser_use'] as const).map((key) => {
+          const track = a.preview_tracks[key];
+          const title = key === 'computer_use' ? 'Computer Use' : 'Browser Use';
+          return <article key={key} className="bh-panel p-5" data-bh-mm-preview-track={key}>
+            <p className="bh-eyebrow">{title}</p>
+            <p className="mt-1 text-2xl font-bold">{track.items_total} items</p>
+            <p className="bh-muted mt-1 text-sm"><span className="font-semibold text-[rgb(var(--text))]">{track.public} public</span> · <span className="font-semibold text-[rgb(var(--text))]">{track.sealed} sealed</span></p>
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              {(['public', 'sealed'] as const).map((part) => <div key={part} className="rounded-lg border border-line p-3">
+                <p className="bh-eyebrow">{part === 'public' ? 'Public' : 'Sealed'} decision types</p>
+                <ul className="mt-2 list-disc space-y-1 pl-5 text-sm">{track[`${part}_decision_types`].map((type: string) => <li key={type}>{type}</li>)}</ul>
+              </div>)}
+            </div>
+            <p className="bh-muted mt-4 border-t border-line pt-3 text-sm"><b className="text-[rgb(var(--text))]">Sealed origin:</b> {track.sealed_origin}</p>
+          </article>;
+        })}
+      </div>
+      <div className="mt-4 space-y-3 rounded-xl border border-line bg-[rgb(var(--surface))] p-4 text-sm">
+        <p><b>Cross-track sealing rule.</b> {a.preview_tracks.cross_track_rule}</p>
+        <p><b>Kev / Mind2Web flag.</b> {a.preview_tracks.browser_use.mind2web_public_only} {a.preview_tracks.kev_flag}</p>
+      </div>
+      <p className="mt-4 rounded-lg border border-amber-600 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-950 dark:bg-amber-950/40 dark:text-amber-100" role="note" data-bh-mm-unmeasured>Not measured yet — no scores. Scored with the same method once systems have run.</p>
     </section>
 
     <section className="mt-8 max-w-6xl rounded-xl border border-emerald-800 bg-emerald-950/30 p-5" aria-labelledby="top-five-heading">
