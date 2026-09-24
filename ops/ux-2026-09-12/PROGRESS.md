@@ -9979,3 +9979,32 @@ hub's header component exported from the file that release rewrites. **F-187** w
 | F-183 | open | — | Left for whoever holds `components/JevV141SystemDetail.tsx` after the v1.4.2 release cut. |
 | F-188 | open | — | Needs the hub header component exported from `components/JevModelsV14.tsx`; that file is in the release cut's path. |
 | F-187 | open | — | Before `/image-jev-bench` publishes, as directed. |
+
+## Review gate 20260924T220003Z — codex-luna
+
+- Scope: f6271e6e..72f14a29, reviewed in a clean worktree. The shared main
+  checkout's uncommitted D191 changes in lib/live-source.mjs and
+  test/live-source.test.mjs were preserved; their focused tests pass 15/15, but
+  D191 remains open because no live promotion was attempted.
+- Live parity: benchmarkheaven.com, www.benchmarkheaven.com, and
+  model-market-comparison.app.mintapis.com all serve revision 72f14a29,
+  generated data 2026-09-24T08:11:43.066Z, and counts 871/676/96/3,036.
+- Gates: build-dataset passed with only generated timestamps changing and then
+  restored; focused UX tests 20/20; full npm test 1,290 total / 1,289 pass /
+  0 fail / 1 skip; TypeScript passed.
+- Independent live promotions: F-179, F-180, F-182, F-184 and F-185 are now
+  verified by this non-implementer gate. F-176(b), F-181 and F-186 were
+  independently re-confirmed and remain verified. Evidence:
+  /opt/benchmarkheaven/state/ux-evidence/review-20260924T220003Z/.
+- Recheck details: F-179's initial page is 1,366,503 bytes with lazy history
+  loading; opening the disclosure fetches the v1.3 API and renders its board,
+  radars and held-out table; query/hash deep links open it. F-180 has one closed
+  table disclosure with 82 rows and one notes disclosure; F-182 has no raw field
+  keys in visible copy outside permitted code; F-184 has 79 equal-height capability
+  rows; F-185 draws occupied buckets and marks the single thin-data point; F-176(b),
+  F-181 and F-186 retain their prior live acceptance.
+- Not accepted: CR-140.3/.5, CR-139.3/.6/.7, CR-143.1/.2, CR-34.5, CR-37.3,
+  CR-38.1, CR-62.4, CR-73.5, CR-85.1/.2, D183, D191, F-165(a), F-183, F-187,
+  F-188 and X6 remain open or in-progress. Therefore ALL-ACCEPTED is not
+  appended.
+- Full report: REVIEW-20260924T220003Z.md.
