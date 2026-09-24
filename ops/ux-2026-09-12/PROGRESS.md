@@ -9680,3 +9680,22 @@ systemd kill log, the AA capture, the reconstructed `RESULT.md`, the state files
 | D190 | fixed | `/opt/benchmarkheaven/state/ux-evidence/iter206-selfheal/` | Self-heal's `RuntimeMaxSec=8400` could not hold its own documented chain, so the 2026-09-24 chain was killed mid-repair and its last-resort alert never fired. Limit now derived from named budgets; repair agent bounded by remaining budget minus a reserved alert slice; `TERM` trap reports even on teardown; `launch_repair_agent || true` closes a second silent-exit path. `test-self-heal.sh` 17/17. |
 | D191 | open | `state/pipeline-streak.json` (`last_ok_day: "2026-09-23"`, `failures_in_row: 2`) | **2026-09-24 has no pipeline publication.** The AA withdrawal approval `712eac76` is single-use by design and was never consumed, and AA's catalog has moved twice since, so tomorrow's 05:17 run will fail at `fetch-aa` again unless one deliberate `gated-run.sh` consumes it first. Not started here: it blocks all pushes to `main` for up to two hours while the merge queue was gating PRs #7–#11. |
 | F-176 | open ((b)) | — | Not attempted: the Credit half is `app/jev-models/page.tsx`, rewritten by PR #7 and also touched by PR #9. |
+
+### Iteration 206 — post-deploy verification of its own change (`166cbe7e`)
+
+All three hosts serve `166cbe7e024ee67326287dbd2ec2d37ced85e00c`, `generated_at
+2026-09-24T08:11:43.066Z`.
+
+- **The deep-link fix, verified live: 26/26 per host, 78/78 across canonical, www and legacy**, at
+  1440×1000 and 390×844 in light and dark (`deeplink-{canonical,www,legacy}/verification.json`,
+  12 screenshots per host). `/jev-models?scope=easy` lands with the disclosure open, the difficulty
+  control on `easy`, the chart marked `custom` and the URL parameter intact;
+  `/jev-models#jev13-history` opens the section; **plain `/jev-models` still renders the disclosure
+  closed with nothing mounted**, and the served HTML is still **1,366,324 bytes** with no `open`
+  attribute on `[data-bh-jev13-history]`. 0 page errors in every state.
+- **No regression from this iteration's change.** Re-run on the new revision:
+  `verify-f179.mjs` **22/22 per host**, `verify-cr-90.mjs` **122/122 per host**
+  (`post-f179-*`, `post-cr-90-*`).
+- **`verify-fable-pass33-design.mjs` 78/82 on canonical and legacy** — byte-identical to the previous
+  gate's baseline, the only 4 failures being the known-open F-176(b) licence sentence
+  (`pass33-{canonical,legacy}/`).
