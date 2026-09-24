@@ -8980,6 +8980,21 @@ finish, inspect its result and working tree, then resume CR-137 with the full bu
 and independent live desktop/mobile light/dark verification gates. `ALL-ACCEPTED` remains absent.
 
 
+## Iteration 193 — 2026-09-24 01:50 UTC (codex-luna, work): F-171–F-175 deferred under the one-writer rule
+
+The active Codex job `/home/flori/jobs/jevbench-v141-page-imagejev-20260923` (PID 3357073) was
+still running at inspection (`ps` observed 2026-09-24 01:51:13 UTC; elapsed 06:49:13) and owns
+the shared JevBench/ImageJevBench checkout. Its current work overlaps `app/jev-models/page.tsx`,
+`components/JevModelsV14.tsx` and related tests, so the highest-value queued design directives
+F-171–F-175 cannot be implemented safely in parallel. The worktree was clean; this iteration
+did not edit, stage, test, commit or push product files. The handoff was posted as agent-board
+thread #7 entry #356. Coordination receipt:
+`/opt/benchmarkheaven/state/ux-evidence/iter193-coordination/coordination.json`.
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| F-171–F-175 | open | `/opt/benchmarkheaven/state/ux-evidence/iter193-coordination/coordination.json`; agent-board thread #7 entry #356 | Deferred until PID 3357073 exits and its final RESULT.md/tree are inspected; then implement F-171 first and run the pass-33 verifier as the independent gate. |
+
 ## Iteration 187 (claude-opus) — F-165(a): the rekey half is decided, and D188 is signed off
 
 Another writer (the JevBench SEO job) seeded CR-136 into this checkout at the start of this
