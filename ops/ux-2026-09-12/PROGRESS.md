@@ -9367,6 +9367,18 @@ with `gauntlet.mjs` restored byte-for-byte the suite is 15/15. No product code c
 - Live browser receipt: 24 contexts across both hosts, both routes, 1440/390/360, light/dark; every context has 82 rows, 52 chart points, 82 source-linked rows, working sort, long-policy content and no horizontal overflow. Screenshots and logs are in `/opt/benchmarkheaven/state/ux-evidence/cr138-context-length/`. A separate Kimi QA returned `PASS` in `independent-review-concise.json`.
 - The first full Kimi reviewer was terminated after a bounded silent run; its fallback left a partial planning note only. The concise independent Kimi review was the accepted non-implementer gate. The worktree is clean; `ALL-ACCEPTED` remains absent because other ledger items are still open.
 
+## Iteration 199 — 2026-09-24 09:00 → 09:32 UTC (codex-luna, work): F-171 final responsive layout and live receipts
+
+- **Implementation.** Followed the F-171 directive after CR-136: current `/jev-models/[system]` pages resolve the v1.4.1 artifact first for all 82 rows, retain v1.3-only fallbacks, and show the current score/rank denominator, 77-row strip, axis bands, cost/speed/evidence, and the v1.4.1 tier/sealed comparison radar. The final UI adjustment puts score/axes in the left column and the radar in the right column at `lg+`, while preserving the one-column phone layout. Defensive fallbacks cover unranked/null-axis rows and missing comparison partners.
+- **Gates.** `node scripts/build-dataset.mjs` passed with 871 models / 676 families / 96 providers / 3,036 offers; generated timestamps were restored and the tracked dataset has no diff. `npx tsc --noEmit -p .` clean; focused JevBench suite 9/9; `npm test` 1,271 passed / 0 failed / 1 skipped; `npm run build` 131/131 static pages; `git diff --check` clean.
+- **Commit/deploy.** Product change `35291e3e` (`UX: align Jev detail score and radar columns`) pushed to `origin/main`; Coolify deployment `hrh2j2fbkmmck15jcbql9ea8` finished successfully. Both configured hosts report revision `35291e3ec729b4d85b7122b4e3775a3ad6fa793a` and generated data `2026-09-24T08:11:43.066Z`.
+- **Live implementer receipt.** `verify-fable-pass33-design.mjs` with `ONLY=F-171` passed **40/40 on each configured host** (`benchmarkheaven.com` and `model-market-comparison.app.mintapis.com`), covering the three target systems, 1440/390 viewports, light/dark themes, 200 responses, release text, strip, four axis bands, radar, and no page errors. Receipts: `/opt/benchmarkheaven/state/ux-evidence/iter198-f171/final-canonical/verification-F-171.json` and `.../final-legacy-mintapis/verification-F-171.json`. A probe against the obsolete `benchmark-heaven.onrender.com` hostname returned 404 and is not a configured host; it is not used as evidence.
+- **Engine rule.** This is still implementer evidence from Codex Luna. F-171 remains `implemented`, not `verified`, until a different engine/vendor independently reruns the live gate and supplies a verdict.
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| F-171 | implemented | `35291e3e`; `/opt/benchmarkheaven/state/ux-evidence/iter198-f171/{final-canonical,final-legacy-mintapis}/verification-F-171.json` | Final responsive score/radar layout is live. Codex Luna implementer matrix: 40/40 per configured host. Different-engine sign-off remains required before `verified`. |
+
 ## Iteration 198 — 2026-09-24 09:00 → 09:25 UTC (codex-luna, work): F-171 current per-system pages
 
 - Implemented F-171 after CR-136 released the v1.4.1 board. Current system routes resolve all 82 v1.4.1 rows first, then retain v1.3-only rows as a secondary fallback; the old JevK5/Hopper-only fallback is gone.
