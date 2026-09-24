@@ -1,0 +1,8 @@
+[Unit]
+Description=Delete Benchmark Heaven Umami analytics data older than 13 months
+After=network.target
+
+[Service]
+Type=oneshot
+Environment=PGPASSFILE=/home/flori/.config/bh-analytics/.pgpass
+ExecStart=/usr/bin/psql --no-psqlrc --set=ON_ERROR_STOP=1 --host=127.0.0.1 --port=6432 --username=umami_bh --dbname=umami_bh_analytics --file=/opt/model-market-comparison/ops/analytics/retention.sql

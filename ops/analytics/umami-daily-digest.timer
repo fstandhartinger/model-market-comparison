@@ -1,0 +1,10 @@
+[Unit]
+Description=Daily Benchmark Heaven analytics digest line
+
+[Timer]
+OnCalendar=*-*-* 18:10:00 Europe/Berlin
+Persistent=true
+Unit=umami-daily-digest.service
+
+[Install]
+WantedBy=timers.target

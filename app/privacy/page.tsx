@@ -3,8 +3,6 @@ import Link from "next/link";
 
 export const metadata: Metadata = { title: "Privacy policy" };
 
-// CR-5.5: written for what the site actually does — no advertising, optional Google sign-in.
-// CR-67.7: aggregate server-side visitor statistics (lib/visit-stats.mjs; decision record CR-67.5-CONSENT-DECISION.md).
 export default function PrivacyPage() {
   return <article className="max-w-3xl text-sm leading-relaxed text-gray-300">
     <h1 className="text-2xl font-bold text-inherit">Privacy policy</h1>
@@ -17,41 +15,42 @@ export default function PrivacyPage() {
 
     <h2 className="mt-6 mb-2 font-semibold">Using the site without an account</h2>
     <p>You can use every comparison without signing in. Your filters, settings and saved presets are then kept in your
-      browser&apos;s local storage and are not sent to us. To deliver pages, our server necessarily processes technical request
-      data such as your IP address, the requested page and your browser type; this is used to run and secure the service
-      (Art. 6(1)(f) GDPR) and, without your IP address, for the aggregate <a className="text-accent" href="#visitor-statistics">visitor
-      statistics</a> below. We use no tracking or advertising of any kind.</p>
+      browser&apos;s local storage and are not sent to us. To deliver pages and run and secure the service, our server
+      processes technical request data such as your IP address, requested page and browser type. Analytics is described
+      below. We do not use advertising or cross-site tracking.</p>
 
-    <h2 id="visitor-statistics" className="mt-6 mb-2 font-semibold">Visitor statistics</h2>
-    <p>To see which pages are read and how people find the site, our server counts the page loads it delivers. For each
-      day it stores only totals per page and referring website: the number of page loads (opening or reloading a page;
-      moving between pages inside the site is not counted), the number of visits (page loads that did not come from
-      another page of this site), the requested page (without query parameters) and the host name of the website that
-      linked to it (for example <code>news.ycombinator.com</code>, without path or query).</p>
+    <h2 id="visitor-statistics" className="mt-6 mb-2 font-semibold">Website analytics</h2>
+    <p>We run Umami ourselves on our Sandy PaaS. The tracker and its event requests use the <code>/analytics</code> path
+      on this website and are forwarded to our Umami installation. We use the reports to understand which Benchmark
+      Heaven pages people read and how they find them, and to improve the service. Our basis is our legitimate interest
+      in operating and improving the website (Art. 6(1)(f) GDPR).</p>
     <ul className="mt-2 list-disc space-y-1 pl-5">
-      <li><strong>What is used:</strong> only HTTP headers your browser sends with the page request itself — the Referer
-        header (reduced to the host name), the User-Agent header (read in full, only to leave out automated clients, and
-        not stored), the Accept, Sec-Fetch-Dest and Sec-Purpose/Purpose headers (to tell a page load from a prefetch or a
-        file request) and the Global Privacy Control / Do Not Track signals. These are processed in memory; only the daily
-        totals are kept.</li>
-      <li><strong>No device access and no identifiers:</strong> the statistics set no cookie, use no local storage, add no
-        script, pixel or extra request, and do not use your IP address. No ID, hash or fingerprint is created, so we
-        cannot count unique visitors or tell whether two page loads came from the same person, and statistics are never
-        linked to accounts. In our assessment no consent is required under § 25 TDDDG for this, so there is no cookie
-        banner.</li>
-      <li><strong>Purpose and legal basis:</strong> understanding which content is useful and planning capacity; our
-        legitimate interest under Art. 6(1)(f) GDPR.</li>
-      <li><strong>Where and who:</strong> the totals are kept in our own database on servers of Hetzner Online GmbH in the
-        European Union, which acts as our hosting processor. No analytics provider is involved and nothing is passed to
-        anyone else. Our internal report only shows pages and referring websites with at least 3 page loads; those with
-        fewer than 3 are combined.</li>
-      <li><strong>Retention:</strong> daily totals are deleted after 13 months (checked at least hourly). Totals not yet
-        written are held in server memory, normally for about a minute and never for more than two days.</li>
-      <li><strong>Objection:</strong> if your browser sends a Global Privacy Control or Do Not Track signal, your page loads
-        are not counted at all. As the stored totals cannot be traced back to you, we cannot find or remove past counts of
-        a single person; you can still object by email to <a className="text-accent" href="mailto:info@productivity-boost.com">info@productivity-boost.com</a>,
-        and we will answer and explain how to switch on one of these signals.</li>
+      <li><strong>What we collect:</strong> page views, page paths, referring website host names, browser, operating
+        system, device category and country. On the model comparison pages, we keep only the public model IDs needed to
+        distinguish a compared pair; all other query strings and URL fragments are removed. Referrer paths and query
+        strings are also removed.</li>
+      <li><strong>Daily visitor count:</strong> Umami derives a rotating, pseudonymous daily identifier using the website,
+        the request IP address and browser User-Agent with a salt that changes daily. This lets the report estimate unique
+        visitors per day; it does not link visits across days or websites. Umami uses the request IP to determine country
+        and derive the daily identifier, but does not store the raw IP address in its analytics database.</li>
+      <li><strong>Browser controls:</strong> the tracker sets no cookies or persistent browser identifier, honors Do Not Track
+        and Global Privacy Control, and uses Umami&apos;s default automated-traffic filtering. Its signed session token stays
+        in memory for the current page session. We do not show an analytics consent banner.</li>
+      <li><strong>Where and for how long:</strong> Umami runs on our Sandy PaaS and stores analytics in a dedicated
+        PostgreSQL database on our server. The analytics records are automatically deleted after 13 months. No
+        third-party analytics provider receives them.</li>
+      <li><strong>Objection:</strong> you can stop future Umami collection by enabling your browser&apos;s Do Not Track
+        setting. Our separate server-side totals also skip Do Not Track and Global Privacy Control requests. You can
+        contact <a className="text-accent" href="mailto:info@productivity-boost.com">info@productivity-boost.com</a>
+        with questions or an objection.</li>
     </ul>
+
+    <h2 className="mt-6 mb-2 font-semibold">Separate server-side page totals</h2>
+    <p>Separately from Umami, our page server keeps daily aggregate totals per page path and external referring host.
+      This counter reads the request headers needed to recognise a page load, remove automated clients and reduce a
+      referrer to its host name. It does not use an IP address or create a visitor identifier, and it does not count
+      in-app page navigation. Only totals are stored; they are deleted after 13 months. Its internal report combines
+      low-count rows rather than showing individual low-volume pages or referrers.</p>
 
     <h2 className="mt-6 mb-2 font-semibold">Accounts (Sign in with Google)</h2>
     <p>If you choose to sign in, Google shares your Google account ID, email address, name and profile picture link with us.

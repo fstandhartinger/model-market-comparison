@@ -8,6 +8,7 @@ import { pageDataVersion } from "../lib/page-data";
 import { AaCredit } from "../components/AaCredit";
 import { EpochCredit } from "../components/EpochCredit";
 import { WebMcpTools } from "../components/WebMcpTools";
+import { Analytics } from "../components/Analytics";
 
 const BRAND_CLAIM = "The most detailed cost–capability analysis in AI.";
 const BRAND_LINE = "Every model. Every Benchmark. Actual Costs.";
@@ -36,6 +37,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang="en" suppressHydrationWarning>
       <head><script dangerouslySetInnerHTML={{ __html: `(function(){try{var t=localStorage.getItem('bh-theme');document.documentElement.dataset.theme=t==='light'||t==='dark'?t:window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'}catch(e){document.documentElement.dataset.theme='dark'}})()` }} /></head>
       <body>
+        <Analytics />
         <a href="#main-content" className="skip-link">Skip to main content</a>
         <SettingsProvider>
           <AccountProvider>

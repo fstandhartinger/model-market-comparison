@@ -1,0 +1,10 @@
+[Unit]
+Description=Queue yesterday's Benchmark Heaven analytics in the evening digest
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+EnvironmentFile=/home/flori/.config/bh-analytics/daily-digest.env
+WorkingDirectory=/opt/model-market-comparison
+ExecStart=/usr/bin/node /opt/model-market-comparison/ops/analytics/daily-digest.mjs
