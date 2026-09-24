@@ -21,6 +21,7 @@ export interface JevV14System {
   public_minus_sealed_gap_pp: number | null;
   api_flag: boolean;
   api_exposure_note: string | null;
+  priority_run?: boolean;
   not_ranked_because: string | null;
   [key: string]: unknown;
 }
