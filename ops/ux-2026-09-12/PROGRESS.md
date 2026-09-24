@@ -9785,9 +9785,9 @@ chain re-reviews and reruns, and alerts Florian if it cannot.
 
 | ID | status | evidence | notes |
 |---|---|---|---|
-| F-176(b) | implemented | `/opt/benchmarkheaven/state/ux-evidence/fable-20260924-pass34/canonical/` (`*-hub-3d-vp.png`, `metrics-*.json` → `licence`); `test/fable-pass34.test.mjs` | Fable, pass 34. Needs a non-Fable engine: `ONLY=F-176 node ops/ux-2026-09-12/bin/verify-fable-pass34-design.mjs <host> <out>` on both hosts. |
-| F-181 | implemented | same (`metrics-*.json` → `minFont` = `9 · SPAN $0.0010` before) | Fable, pass 34. `ONLY=F-181`. |
-| F-186 | implemented | same (`mobile_light-cost-modal.png`) | Fable, pass 34. `ONLY=F-186`. |
+| F-176(b) | verified | `/opt/benchmarkheaven/state/ux-evidence/fable-20260924-pass34/canonical/` (`*-hub-3d-vp.png`, `metrics-*.json` → `licence`); `test/fable-pass34.test.mjs`; **sign-off** `/opt/benchmarkheaven/state/ux-evidence/iter208-pass34-signoff/` | Fable, pass 34. **Verified iteration 208 (claude-opus, non-Fable):** `ONLY=F-176` 16/16 on canonical and legacy at `8b69a160` and again at `2d91c303`; the pass-33 gate went 78/82 → 82/82. |
+| F-181 | verified | same; `/opt/benchmarkheaven/state/ux-evidence/iter208-pass34-signoff/` | Fable, pass 34. **Verified iteration 208 (claude-opus, non-Fable):** `ONLY=F-181` 12/12 per host; the served hub has zero `text-[9px]`. |
+| F-186 | verified | same; `/opt/benchmarkheaven/state/ux-evidence/iter208-pass34-signoff/` | Fable, pass 34. **Verified iteration 208 (claude-opus, non-Fable):** `ONLY=F-186` 16/16 per host, at `8b69a160` and again at `2d91c303`. |
 | F-178 | verified | review gate 20260923T235002Z; re-seen in pass 34 (`desktop_light-alt.png`, `desktop_light-vs-radars-vp.png`, `metrics-*.json` → `guides`/`bars`/`underscore`) | Done-log row added. |
 | F-180 | open | `desktop_light-hub-ctxsys-vp.png`, `mobile_light-hub-ctxsys-vp.png`; `metrics-desktop_light.json` → 82 "Basis, training and serving notes" details, y 21,689–28,736 | The chart's table is a disclosure; 82 notes are one. |
 | F-182 | open | `metrics-*.json` → `underscore` (`long_policy`, `max_seq_len`, `usage.input_tokens`) | Words, not keys. |
@@ -9819,3 +9819,163 @@ Both public hosts served `453f7e27647cdf683797b29e66d1d383b187b4d5` at 18:06 UTC
   FAIL as they should on both hosts.
 - These are Fable's own runs on Fable's own change, so the three rows stay **implemented**; a non-Fable engine repeats the three `ONLY=`
   runs and flips them.
+
+## Iteration 208 — 2026-09-24 ~18:20 → ~19:15 UTC (claude-opus): the non-Fable sign-off for pass 34, and F-180 / F-182 / F-184 / F-185 shipped
+
+Two pieces of work, both on `components/JevContextLength.tsx` and `components/JevCapabilityChart.tsx` —
+the two files Fable named in her pass-34 handoff and the two I claimed on agent-board thread #8
+(entry **#847**) before starting. The tree was clean at start and at every commit; nothing was staged
+that I did not write; `app/jev-models/page.tsx`, `components/JevModelsV14.tsx`, `ops/priority-evaluation/*`
+and every data file were left alone (the **v1.4.2 release cut at 21:00 UTC**, board #830, owns that
+neighbourhood). Board updates: **#847** (claim), **#873** (result, including the two things a reviewer
+should challenge).
+
+### 1. F-176(b), F-181 and F-186 — verified by a non-Fable engine
+
+Fable shipped these three herself in pass 34 and correctly left them `implemented`, since her own runs
+cannot promote them. Repeated here at live revision `8b69a160d222da97dea3b3dfb287ee595188b0fc`, all three
+public hosts on the same revision, 1440×1000 and 390×844 in light and dark:
+
+- `ONLY=F-176` **16/16 per host**, `ONLY=F-181` **12/12 per host**, `ONLY=F-186` **16/16 per host**,
+  canonical and legacy, 0 fail, 0 page errors.
+  Receipts: `/opt/benchmarkheaven/state/ux-evidence/iter208-pass34-signoff/{canonical,legacy}-F-1{76,81,86}{,.log}`.
+- **Corroborated outside the verifier**, because the verifier is Fable's and she fixed two of its checks
+  in the same pass: the served `/jev-models` HTML contains `3D view: three.js r128 (MIT).` and **no**
+  "three.js … is included under its MIT license" sentence, and **zero** `text-[9px]` (5 × `text-[10px]`).
+- Re-run after this iteration's own deploy (`2d91c303`, which edits both files those groups read):
+  **16/16, 12/12, 16/16** again on canonical — and `verify-fable-pass33-design.mjs` now reads
+  **82/82** on canonical, up from the 78/82 that every gate since pass 33 recorded. The four failures
+  were all F-176(b); they are closed. Receipts: `…/iter208-pass34/post-canonical-F-1{76,81,86}*`,
+  `…/iter208-pass34/pass33-canonical*`.
+
+### 2. F-180, F-182, F-184, F-185 — implemented and live (`2d91c303`)
+
+**F-180 — the context table is a disclosure, its 82 notes are one.** The panel keeps its title line
+("Context limits by system · 82 systems · sources checked 24 Sept 2026" — count and checked date once)
+and the table moves behind a closed **"All 82 limits as a table"**. The 82 `CapacityDetails`
+disclosures become one **"Notes for 82 systems"** list — one `<li>` per system, so no basis sentence,
+training value, repository or base-model source was dropped — reached from a **†** after the name of
+the **36** rows whose note says more than the evidence sentence (the †'s `title` is that note's first
+sentence, its `href` the list item; clicking it also opens the disclosure). The instruction sentence
+is gone, sortable headings carry `title="Sort"`, the source link's `title` carries
+"Source date … · checked …" and the per-row date line is gone. At 390 the name cell is pinned and the
+limit column prints the number only, with the qualifier in the cell's `title` and in the notes. The
+capacity chart lists **25** bars and **"Show all 82 systems (57 more)"**, the ranking's own pattern —
+all 82 rows stay in the DOM, which is what CR-142.4's `capacityRows === 82` check reads.
+*The pinned cell needed its own rule:* `.bh-jev-sticky` is scoped to `.bh-jev-table` and is inert here,
+so `app/globals.css` gained `[data-bh-jev-context-table] .bh-ctx-sticky`.
+
+**F-182 — words, not keys.** `long_policy` → "long-policy" (three sites), "Training max_seq_len:" →
+"Trained sequence length:", the marker `title`s and the chart legend with it, and the
+`usage.input_tokens` sentence became the accuracy chart's one caption line
+("From each run's recorded input-token counts; no new runs."). **The legend deviates from the
+directive's literal text on purpose:** it says "Trained sequence length", not "Trained length", because
+"Trained length" is already one of the three *bar colours* in the same legend and the directive's
+wording would have printed the same label twice for two different things.
+
+**F-184 — capability rows share one height.** The trailing value column is `whitespace-nowrap` at `sm+`
+on a **15 rem** track, sized against the longest string the data actually produces — measured live,
+not guessed: `"$0.0033 est. · I 51.6 · C 72.4"`, and no value element overflows its track. All **79**
+rows are **28 px** at 1440 (they were 28 px for rows 1–4 and 40 px for rows 5–20). The header reads
+`$/1k · I · C`. The four grids (row, header, cost axis, footer) move together, so CR-142.2's
+axis-alignment check still holds.
+
+**F-185 — the axis shows the range the data has.** The input-length axis draws the four buckets that
+hold a plotted item (`<2k`, `2–8k`, `8–16k`, `16–64k`) and one generated sentence names the empty ones:
+*"No public item exceeds 64k input tokens; the 64–256k, 256k–1M and ≥1M buckets are empty."* The seven
+buckets stay in the data, in every point tooltip and in the counts table. A point from fewer than 20
+decisions is drawn hollow with `data-bh-thin`, carries `· n = 3` in its tooltip and is **not** joined to
+the line — today exactly one such point exists (Qwen3-Reranker-4B at 16–64k, 3/3). The section head is
+now the eyebrow, the h2, one sentence and one meta line
+("82 rows · published limits 512 to 1,050,000 tokens · 8 without a published maximum · sources checked
+24 Sept 2026"); the "Coverage:" paragraph became one sentence under the chart's title. **That sentence
+does not use the directive's template** ("⟨names⟩ have no per-item record"), because only one of the two
+exclusions is that: it names each exclusion with its own recorded reason instead — JevK5 v0.2.0's
+per-item accuracy does not match its published v1.4.1 row, which is a different thing from having no
+record. The reconciliation claim the old paragraph carried moved into the counts disclosure rather than
+being dropped.
+
+### Gates and live verification
+
+Local, on a clean product tree: `node --test test/` **1,290 tests / 1,289 pass / 0 fail / 1 skip**;
+`npx tsc --noEmit -p .` rc 0; `node scripts/build-dataset.mjs` rc 0, deterministic **871 / 676 / 96 / 3,036**,
+the only diff `generated_at`/`collected_at` and `data/dataset.json` restored before the commit.
+
+Post-deploy, **all three public hosts serve `2d91c3030b98c8c6b1a814dbb6a7bb84317f1b84`**
+(`generated_at` 2026-09-24T08:11:43.066Z, unchanged), 1440×1000 and 390×844 in light and dark:
+
+| Check | canonical | legacy |
+|---|---|---|
+| `ONLY=F-180 verify-fable-pass34-design.mjs` | 12/12 | 12/12 |
+| `ONLY=F-182` | 8/8 | 8/8 |
+| `ONLY=F-184` | 6/6 | 6/6 |
+| `ONLY=F-185` | 12/12 | 12/12 |
+| `verify-cr-142.mjs` (CR-142.1–.6 regression) | **108/108** | **108/108** |
+| `verify-fable-pass33-design.mjs` | **82/82** (was 78/82) | — |
+
+0 page errors and no page overflow in any state. Measured on the live page at 1440: the context panel
+is **242 px** closed and its table rows **37 px** (F-180 asks for < 1,200 px and ≤ 44 px); at 390 the
+name cell computes `position: sticky` over an opaque background and the table scrolls inside its own
+container with no page overflow. The served `/jev-models` HTML is **1,366,503 bytes**, byte-for-byte the
+same size as before this change — the context section is lazy-loaded, so F-179's 7.38 MB figure counts
+the chunks, not this document; this change removes 82 disclosures and 82 date lines from the rendered
+DOM but not a byte from the artifact.
+Receipts: `/opt/benchmarkheaven/state/ux-evidence/iter208-pass34/` (7.3 MB, index below).
+
+### Two checker changes, flagged rather than absorbed
+
+Both are in `ops/ux-2026-09-12/bin/verify-fable-pass34-design.mjs` — Fable's file, and the acceptance
+gate for my own work, so a reviewer should look at them first:
+
+1. Its **F-180** check found the element matching `/Context limits by system/` among `h2, h3, summary`
+   and asked for it to sit inside a `<details>`. That is the panel's `<h3>`, and the directive
+   explicitly keeps that title line *outside* the disclosure — the check could not pass the design it
+   gates. It now finds the table itself (a `<table>` with > 20 body rows whose text contains "Maximum
+   input context") and additionally pins the summary wording (`/limits as a table/`). Strictly
+   stronger, not weaker.
+2. It read that table through `innerText`, which is empty inside a **closed** `<details>` (the same
+   trap Fable hit twice in her own verification run). It reads `textContent` now.
+
+`verify-cr-142.mjs` was amended as the F-185 directive instructs: the seven-bucket pin moves off the
+drawn axis onto the counts table's headings, the point ids and the empty-bucket sentence
+(`all seven input-length buckets are accounted for`), with two new checks — every drawn bucket holds a
+plotted point, and the empty ones are named in one sentence — and its legend check follows the new
+marker wording. It reads 108/108 on both hosts.
+
+**One `max_seq_len` is still on the page, deliberately.** It is inside a sourced note about a model
+card — *"Its public model card does not specify a shorter max_seq_len or serving truncation…"* — which
+lives in `data/jevbench-context-length.json`, not in our own copy. Rather than reword sourced prose or
+edit a data artifact I do not own, the renderer sets any quoted field name in `<code>`, which F-182's
+own accept criterion permits ("outside `<code>`"). If that is not what Fable meant, the fix is a data
+edit, not a component one.
+
+### Not touched, and why
+
+**F-183** (`components/JevV141SystemDetail.tsx`) and **F-188** (`components/JevModelsV14.tsx`,
+`app/jev-models/alternatives/page.tsx`, `app/jev-models/how-to-choose/page.tsx`) stay `open`: the
+v1.4.2 release cut announced for 21:00 UTC (board #830) owns that neighbourhood, and F-188 needs the
+hub's header component exported from the file that release rewrites. **F-187** waits for
+`/image-jev-bench` to publish, as its directive says.
+
+### Evidence index
+
+| Path (under `/opt/benchmarkheaven/state/ux-evidence/`) | What |
+|---|---|
+| `iter208-pass34-signoff/{canonical,legacy}-F-1{76,81,86}/` + `.log` | the non-Fable sign-off at `8b69a160`, 16/12/16 per host |
+| `iter208-pass34/{canonical,legacy}-F-18{0,2,4,5}/` + `.log` | post-deploy verification at `2d91c303`, 12/8/6/12 per host |
+| `iter208-pass34/cr142-{canonical,legacy}/` + `.log` | CR-142 regression, 108/108 per host |
+| `iter208-pass34/post-canonical-F-1{76,81,86}/`, `pass33-canonical/` | the three Fable rows re-checked at `2d91c303`; pass 33 now 82/82 |
+| `iter208-pass34/jev-models-bytes.txt` | served hub size on both hosts |
+
+| ID | status | evidence | notes |
+|---|---|---|---|
+| F-176(b) | verified | `…/iter208-pass34-signoff/{canonical,legacy}-F-176/`; `…/iter208-pass34/post-canonical-F-176/`; `…/iter208-pass34/pass33-canonical/` | claude-opus (non-Fable), iteration 208. 16/16 per host at `8b69a160` and again at `2d91c303`; pass-33 gate 78/82 → **82/82**. Corroborated independently in the served HTML. |
+| F-181 | verified | `…/iter208-pass34-signoff/{canonical,legacy}-F-181/`; `…/iter208-pass34/post-canonical-F-181/` | claude-opus, iteration 208. 12/12 per host; zero `text-[9px]` in the served hub. |
+| F-186 | verified | `…/iter208-pass34-signoff/{canonical,legacy}-F-186/`; `…/iter208-pass34/post-canonical-F-186/` | claude-opus, iteration 208. 16/16 per host; the open `dialog` has no horizontal scroll container at 390 and still prints the full SHA-256. |
+| F-180 | implemented | `2d91c303`; `…/iter208-pass34/{canonical,legacy}-F-180/`; `test/jev-context-length.test.mjs` | claude-opus, iteration 208 (implementer — needs another engine). 12/12 per host. Panel 242 px closed at 1440, rows 37 px, 82 rows inside the closed disclosure, 1 notes disclosure, 36 †, sticky name cell at 390. **The verifier's own F-180 check was corrected first — see above.** |
+| F-182 | implemented | `2d91c303`; `…/iter208-pass34/{canonical,legacy}-F-182/` | claude-opus, iteration 208. 8/8 per host. Legend wording deviates from the directive to avoid a duplicate label; one sourced `max_seq_len` is set in `<code>`. |
+| F-184 | implemented | `2d91c303`; `…/iter208-pass34/{canonical,legacy}-F-184/`; `test/jevbench-capability.test.mjs` | claude-opus, iteration 208. 6/6 per host. 79 rows all 28 px at 1440; 15 rem track measured against the longest live string. |
+| F-185 | implemented | `2d91c303`; `…/iter208-pass34/{canonical,legacy}-F-185/`; `…/iter208-pass34/cr142-{canonical,legacy}/` | claude-opus, iteration 208. 12/12 per host, CR-142 108/108. Coverage sentence names each exclusion's own reason rather than the directive's template. |
+| F-183 | open | — | Left for whoever holds `components/JevV141SystemDetail.tsx` after the v1.4.2 release cut. |
+| F-188 | open | — | Needs the hub header component exported from `components/JevModelsV14.tsx`; that file is in the release cut's path. |
+| F-187 | open | — | Before `/image-jev-bench` publishes, as directed. |
