@@ -1,1848 +1,2407 @@
 {
-  "benchmark": "Image JevBench v0.1 candidate",
-  "revision": "v0.1-private-preview",
-  "status": "preview",
-  "built_utc": "2026-09-23",
-  "sealed_item_details_included": false,
-  "n_systems": 10,
-  "split": {
-    "items_total": 444,
-    "items_public": 265,
-    "items_sealed": 179,
-    "public_percent": 59.68,
-    "sealed_percent": 40.32,
-    "licensed_core_total": 294,
-    "licensed_core_public": 176,
-    "licensed_core_sealed": 118,
-    "licensed_core_target_shortfall": 6,
-    "public_source_counts": {
-      "Android-in-the-Wild (AITW_Single mirror)": 17,
-      "FinQA": 12,
-      "Geometry3K": 12,
-      "Multimodal-Mind2Web": 47,
-      "ScreenSpot": 56,
-      "ScreenSpot-Pro": 32
-    },
-    "everyday_photo_total": 150,
-    "everyday_photo_public": 89,
-    "everyday_photo_sealed": 61,
-    "everyday_photo_synthetic": true,
-    "everyday_photo_situations": 17,
-    "public_promo_candidates": 100,
-    "public_promo_accepted": 89,
-    "new_sealed_candidates": 68,
-    "new_sealed_accepted": 61,
-    "synthetic_total": 150,
-    "synthetic_share_percent": 33.78378378378378,
-    "everyday_photo_track_synthetic_share_percent": 100.0
+ "benchmark": "Image JevBench v0.1 candidate",
+ "revision": "v0.1-final-split-preview",
+ "status": "preview",
+ "built_utc": "2026-09-24",
+ "sealed_item_details_included": false,
+ "n_systems": 11,
+ "method_sha256": "e4df31054f29e74b7c0de03c0e988488caa834a09dd257a5d72ba3cb6b3eaaf9",
+ "split_sha256": "5dd744aa7207eff6c3e1ccac62d27c43e319b76083b97bfcd9538c25a4e0c8dd",
+ "split": {
+  "items_total": 444,
+  "items_public": 228,
+  "items_sealed": 216,
+  "public_percent": 51.35,
+  "sealed_percent": 48.65,
+  "previous_split": {
+   "public": 265,
+   "sealed": 179
   },
-  "method": {
-    "intelligence": "Chance-corrected accuracy, 80% public / 20% sealed, with the v1.4 penalty when the public-to-sealed accuracy gap exceeds 25 points. Invalid or missing answers count as incorrect.",
-    "calibration": "10-bin top-label ECE scaled by valid probability coverage; label-only outputs receive zero calibration.",
-    "speed": "p50 and p95 whole-call latency; local latency uses the v1.4 2× plus 0.15-second adjustment.",
-    "cost": "Hosted cost uses returned OpenRouter usage receipts; missing receipts are not zero-filled, and the cost axis is scaled by receipt coverage. Local cost uses measured GPU seconds at the measured per-system GPU-hour rate (USD 1.19 for the original nine systems; USD 1.29 for Jev-Omni). Retry calls are tracked separately.",
-    "composite": "Equal-weight harmonic mean of Intelligence, Calibration, Speed, and Cost, followed by the v1.4 intelligence, speed, and cost gates below 50.",
-    "difficulty": "Real-source difficulty labels are not comparable. The core split is balanced by source and within-source normalized task-length tertiles as a disclosed proxy."
+  "licensed_core_total": 294,
+  "licensed_core_public": 139,
+  "licensed_core_sealed": 155,
+  "licensed_core_target_shortfall": 6,
+  "family_counts": {
+   "Android-in-the-Wild (AITW_Single mirror)": {
+    "public": 0,
+    "sealed": 28
+   },
+   "Everyday photo": {
+    "public": 89,
+    "sealed": 61
+   },
+   "FinQA": {
+    "public": 20,
+    "sealed": 0
+   },
+   "Geometry3K": {
+    "public": 19,
+    "sealed": 0
+   },
+   "Multimodal-Mind2Web": {
+    "public": 79,
+    "sealed": 0
+   },
+   "ScreenSpot": {
+    "public": 20,
+    "sealed": 74
+   },
+   "ScreenSpot-Pro": {
+    "public": 1,
+    "sealed": 53
+   }
   },
-  "exposure": {
-    "hosted": "All four hosted systems received sealed images and questions through the requested no-retention route with provider fallback disabled; they carry the API flag.",
-    "label_checkers": "GPT-6 Luna and Gemini 3.8 Flash saw 100 public promo-photo candidates and 68 new sealed-photo candidates in stateless single-turn label checks, including candidates later dropped. No gold labels were shown; human gold-blind review decided inclusion.",
-    "djev_spark": "djev-spark saw the 100 public promo photos in the earlier inference-only video run, with no training. Its score on the 61 new sealed photo variants is the independent measure.",
-    "jev_omni": "This checkpoint was measured on a separate frozen JevBench v1.4 text set before this run. It received no ImageJevBench task input before this evaluation."
+  "public_reason_counts": {
+   "mind2web_public_only": 79,
+   "shown_in_promo_videos": 89,
+   "in_public_repo_2026-09-21_preview": 61,
+   "shown_on_wip_page_and_status_video": 8,
+   "image_in_public_repo": 1
   },
-  "ranking": [
-    {
-      "rank": 1,
-      "key": "decider_2b_vision",
-      "name": "Mapika decider-2b-vision BF16",
-      "api_flag": false,
-      "prior_exposure": "No evaluation run on this item set before this job.",
-      "score": 68.7981437785817,
-      "tracks": {
-        "all": {
-          "public": {
-            "n": 265,
-            "correct": 184,
-            "accuracy": 0.6943396226415094,
-            "chance": 0.29962264150943396,
-            "chance_corrected_intelligence": 56.35775862068965,
-            "ece": 0.09245193785030154,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 265,
-            "latency_count": 265
-          },
-          "sealed": {
-            "n": 179,
-            "correct": 130,
-            "accuracy": 0.7262569832402235,
-            "chance": 0.3036312849162011,
-            "chance_corrected_intelligence": 60.68993180906538,
-            "ece": 0.06620573444236753,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 179,
-            "latency_count": 179
-          },
-          "axes": {
-            "intelligence": 57.2241932583648,
-            "calibration": 82.55946056625706,
-            "speed": 88.55558964891941,
-            "cost": 57.93355711957896
-          },
-          "overfit_penalty_points": 0.0,
-          "speed": {
-            "score": 88.55558964891941,
-            "raw_p50_s": 0.09228803194127977,
-            "raw_p95_s": 0.13340885704383254,
-            "adjusted_p50_s": 0.33457606388255956,
-            "adjusted_p95_s": 0.4168177140876651,
-            "latency_coverage": 1.0
-          },
-          "cost": {
-            "score": 57.93355711957896,
-            "total_usd": 0.011209796608622867,
-            "usd_per_1000": 0.02524728965906051,
-            "raw_score": 57.93355711957896,
-            "coverage": 1.0,
-            "source": "measured GPU seconds × $1.19/GPU-hour"
-          },
-          "composite": {
-            "harmonic_before_gates": 68.7981437785817,
-            "gates": {
-              "intelligence": 1.0,
-              "speed": 1.0,
-              "cost": 1.0
-            },
-            "score": 68.7981437785817
-          }
-        },
-        "core": {
-          "public": {
-            "n": 176,
-            "correct": 108,
-            "accuracy": 0.6136363636363636,
-            "chance": 0.20681818181818182,
-            "chance_corrected_intelligence": 51.289398280802295,
-            "ece": 0.09911500005636947,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 176,
-            "latency_count": 176
-          },
-          "sealed": {
-            "n": 118,
-            "correct": 77,
-            "accuracy": 0.652542372881356,
-            "chance": 0.21059322033898306,
-            "chance_corrected_intelligence": 55.984970477724104,
-            "ece": 0.10000470656670153,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 118,
-            "latency_count": 118
-          },
-          "axes": {
-            "intelligence": 52.228512720186664,
-            "calibration": 80.14141172831283,
-            "speed": 89.67494685612841,
-            "cost": 60.36699297795318
-          },
-          "overfit_penalty_points": 0.0,
-          "speed": {
-            "score": 89.67494685612841,
-            "raw_p50_s": 0.07886400900315493,
-            "raw_p95_s": 0.10010892385616899,
-            "adjusted_p50_s": 0.3077280180063099,
-            "adjusted_p95_s": 0.350217847712338,
-            "latency_coverage": 1.0
-          },
-          "cost": {
-            "score": 60.36699297795318,
-            "total_usd": 0.006158111732816696,
-            "usd_per_1000": 0.02094595827488672,
-            "raw_score": 60.36699297795318,
-            "coverage": 1.0,
-            "source": "measured GPU seconds × $1.19/GPU-hour"
-          },
-          "composite": {
-            "harmonic_before_gates": 67.40667540160673,
-            "gates": {
-              "intelligence": 1.0,
-              "speed": 1.0,
-              "cost": 1.0
-            },
-            "score": 67.40667540160673
-          }
-        },
-        "everyday_photo": {
-          "public": {
-            "n": 89,
-            "correct": 76,
-            "accuracy": 0.8539325842696629,
-            "chance": 0.48314606741573035,
-            "chance_corrected_intelligence": 71.73913043478261,
-            "ece": 0.09504013570223432,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 89,
-            "latency_count": 89
-          },
-          "sealed": {
-            "n": 61,
-            "correct": 53,
-            "accuracy": 0.8688524590163934,
-            "chance": 0.48360655737704916,
-            "chance_corrected_intelligence": 74.60317460317461,
-            "ece": 0.08820538574334152,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 61,
-            "latency_count": 61
-          },
-          "axes": {
-            "intelligence": 72.31193926846102,
-            "calibration": 81.26536285790884,
-            "speed": 87.68411364929105,
-            "cost": 54.17965022875221
-          },
-          "overfit_penalty_points": 0.0,
-          "speed": {
-            "score": 87.68411364929105,
-            "raw_p50_s": 0.12761053699068725,
-            "raw_p95_s": 0.1353132410440594,
-            "adjusted_p50_s": 0.4052210739813745,
-            "adjusted_p95_s": 0.4206264820881188,
-            "latency_coverage": 1.0
-          },
-          "cost": {
-            "score": 54.17965022875221,
-            "total_usd": 0.005051684875806172,
-            "usd_per_1000": 0.03367789917204115,
-            "raw_score": 54.17965022875221,
-            "coverage": 1.0,
-            "source": "measured GPU seconds × $1.19/GPU-hour"
-          },
-          "composite": {
-            "harmonic_before_gates": 71.4336363689848,
-            "gates": {
-              "intelligence": 1.0,
-              "speed": 1.0,
-              "cost": 1.0
-            },
-            "score": 71.4336363689848
-          }
-        }
+  "moved_sealed_to_public_exposed": 26,
+  "moved_public_to_sealed_unexposed": 93,
+  "everyday_photo_total": 150,
+  "everyday_photo_public": 89,
+  "everyday_photo_sealed": 61,
+  "everyday_photo_synthetic": true,
+  "everyday_photo_situations": 17,
+  "synthetic_total": 150,
+  "synthetic_share_percent": 33.78378378378378,
+  "public_tokens_sha256": "c3747596dabab64329b4d8e1565598c53de5f991043b557d8d9b3d12d43d42b4",
+  "sealed_tokens_sha256": "51f09513ac36a6443cd76f6437c2462a0511b261a0176698620c1aa69fdd5f39"
+ },
+ "method": {
+  "split": "An item is public if it was exposed anywhere (Mind2Web-derived, shown in videos or on this page, or present in the public site repository since the 21 Sep preview); every never-exposed item is sealed.",
+  "intelligence": "Chance-corrected accuracy per part, weighted 35% public / 65% sealed.",
+  "overfit_penalty": "Matched-family public-minus-sealed accuracy gap (ScreenSpot and Everyday photo, inverse-variance weighted). Above 15 points, Intelligence is multiplied by 1 - (gap - 15)/100. Same rule for every system.",
+  "calibration": "10-bin top-label ECE scaled by valid probability coverage, 35% public / 65% sealed; label-only outputs receive zero calibration.",
+  "speed": "p50 and p95 whole-call latency; local latency uses the v1.4 2× plus 0.15-second adjustment.",
+  "cost": "Hosted cost uses returned OpenRouter usage receipts; missing receipts are not zero-filled, and the cost axis is scaled by receipt coverage. Local cost uses measured GPU seconds at the measured per-system GPU-hour rate (USD 1.19 for the original nine systems; USD 1.29 for Jev-Omni). Retry calls are tracked separately.",
+  "composite": "Equal-weight harmonic mean of Intelligence, Calibration, Speed, and Cost, followed by the v1.4 intelligence, speed, and cost gates below 50."
+ },
+ "exposure": {
+  "hosted": "All four hosted systems received sealed images and questions through the requested no-retention route with provider fallback disabled; they carry the API flag.",
+  "label_checkers": "GPT-6 Luna and Gemini 3.8 Flash saw 100 public promo-photo candidates and 68 new sealed-photo candidates in stateless single-turn label checks, including candidates later dropped. No gold labels were shown; human gold-blind review decided inclusion.",
+  "djev_spark": "djev-spark saw the 100 public promo photos in the earlier inference-only video run, with no training. Its score on the 61 new sealed photo variants is the independent measure.",
+  "jev_omni": "This checkpoint was measured on a separate frozen JevBench v1.4 text set before this run. It received no ImageJevBench task input before this evaluation.",
+  "bonsai": "Bonsai-2-27B v2 (PQ2_0 weights, Q8_0 MMProj) was measured offline on 24 Sep; the clean PNG-normalized rerun is scored."
+ },
+ "weights": {
+  "public": 0.35,
+  "sealed": 0.65
+ },
+ "gap_allowance_pp": 15.0,
+ "gap_slope_k": 1.0,
+ "ranking": [
+  {
+   "rank": 1,
+   "key": "decider_2b_vision",
+   "name": "Mapika decider-2b-vision BF16",
+   "api_flag": false,
+   "prior_exposure": "No evaluation run on this item set before this job.",
+   "score": 70.01889938021766,
+   "tracks": {
+    "all": {
+     "public": {
+      "n": 228,
+      "correct": 151,
+      "accuracy": 0.6622807017543859,
+      "chance": 0.32127192982456143,
+      "chance_corrected_intelligence": 50.242326332794825,
+      "ece": 0.1080686080795735,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 228
+     },
+     "sealed": {
+      "n": 216,
+      "correct": 163,
+      "accuracy": 0.7546296296296297,
+      "chance": 0.2800925925925926,
+      "chance_corrected_intelligence": 65.91639871382637,
+      "ece": 0.07139999420638177,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 216
+     },
+     "axes": {
+      "intelligence": 60.43047338046533,
+      "calibration": 83.15319818760022,
+      "speed": 88.55558964891941,
+      "cost": 57.93355711957896
+     },
+     "intelligence_before_penalty": 60.43047338046533,
+     "raw_overall_gap_pp": -9.234892787524373,
+     "matched_gap_pp": -0.7119779988693553,
+     "matched_gap_families": {
+      "Everyday photo": {
+       "gap_pp": -1.491987474673051,
+       "weight": 36.193333333333335
       },
-      "kind": "gpu"
+      "ScreenSpot": {
+       "gap_pp": 1.0810810810810811,
+       "weight": 15.74468085106383
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 88.55558964891941,
+      "raw_p50_s": 0.09228803194127977,
+      "raw_p95_s": 0.13340885704383254,
+      "adjusted_p50_s": 0.33457606388255956,
+      "adjusted_p95_s": 0.4168177140876651,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 57.93355711957896,
+      "raw_score": 57.93355711957896,
+      "usd_per_1000": 0.02524728965906051,
+      "total_usd": 0.011209796608622867,
+      "coverage": 1.0,
+      "source": "measured GPU seconds x $1.19/GPU-hour"
+     },
+     "composite": {
+      "harmonic_before_gates": 70.01889938021766,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 1.0
+      },
+      "score": 70.01889938021766
+     }
     },
-    {
-      "rank": 2,
-      "key": "reflex_4b",
-      "name": "Reflex 4B (released stable configuration)",
-      "api_flag": false,
-      "prior_exposure": "No evaluation run on this item set before this job.",
-      "score": 68.16318309861019,
-      "tracks": {
-        "all": {
-          "public": {
-            "n": 265,
-            "correct": 212,
-            "accuracy": 0.8,
-            "chance": 0.29962264150943396,
-            "chance_corrected_intelligence": 71.44396551724138,
-            "ece": 0.11155862110058246,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 265,
-            "latency_count": 265
-          },
-          "sealed": {
-            "n": 179,
-            "correct": 139,
-            "accuracy": 0.776536312849162,
-            "chance": 0.3036312849162011,
-            "chance_corrected_intelligence": 67.91014841556358,
-            "ece": 0.11690999510283165,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 179,
-            "latency_count": 179
-          },
-          "axes": {
-            "intelligence": 70.73720209690583,
-            "calibration": 77.47422081979354,
-            "speed": 86.62443917313291,
-            "cost": 49.96568083345824
-          },
-          "overfit_penalty_points": 0.0,
-          "speed": {
-            "score": 86.62443917313291,
-            "raw_p50_s": 0.15307909448165447,
-            "raw_p95_s": 0.16345729399472475,
-            "adjusted_p50_s": 0.45615818896330895,
-            "adjusted_p95_s": 0.4769145879894495,
-            "latency_coverage": 1.0
-          },
-          "cost": {
-            "score": 49.96568083345824,
-            "total_usd": 0.020663011100196835,
-            "usd_per_1000": 0.04653831328873161,
-            "raw_score": 49.96568083345824,
-            "coverage": 1.0,
-            "source": "measured GPU seconds × $1.19/GPU-hour"
-          },
-          "composite": {
-            "harmonic_before_gates": 68.25685167170599,
-            "gates": {
-              "intelligence": 1.0,
-              "speed": 1.0,
-              "cost": 0.9986277044604063
-            },
-            "score": 68.16318309861019
-          }
-        },
-        "core": {
-          "public": {
-            "n": 176,
-            "correct": 131,
-            "accuracy": 0.7443181818181818,
-            "chance": 0.20681818181818182,
-            "chance_corrected_intelligence": 67.76504297994269,
-            "ece": 0.11885771413476276,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 176,
-            "latency_count": 176
-          },
-          "sealed": {
-            "n": 118,
-            "correct": 86,
-            "accuracy": 0.7288135593220338,
-            "chance": 0.21059322033898306,
-            "chance_corrected_intelligence": 65.64680622651636,
-            "ece": 0.15265280183680824,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 118,
-            "latency_count": 118
-          },
-          "axes": {
-            "intelligence": 67.34139562925742,
-            "calibration": 74.87665366496563,
-            "speed": 87.02263582643465,
-            "cost": 50.82102457516124
-          },
-          "overfit_penalty_points": 0.0,
-          "speed": {
-            "score": 87.02263582643465,
-            "raw_p50_s": 0.135005445452407,
-            "raw_p95_s": 0.161290287040174,
-            "adjusted_p50_s": 0.420010890904814,
-            "adjusted_p95_s": 0.47258057408034804,
-            "latency_coverage": 1.0
-          },
-          "cost": {
-            "score": 50.82102457516124,
-            "total_usd": 0.01281287269785139,
-            "usd_per_1000": 0.043581199652555754,
-            "raw_score": 50.82102457516124,
-            "coverage": 1.0,
-            "source": "measured GPU seconds × $1.19/GPU-hour"
-          },
-          "composite": {
-            "harmonic_before_gates": 67.37050481484492,
-            "gates": {
-              "intelligence": 1.0,
-              "speed": 1.0,
-              "cost": 1.0
-            },
-            "score": 67.37050481484492
-          }
-        },
-        "everyday_photo": {
-          "public": {
-            "n": 89,
-            "correct": 81,
-            "accuracy": 0.9101123595505618,
-            "chance": 0.48314606741573035,
-            "chance_corrected_intelligence": 82.60869565217392,
-            "ece": 0.10618323705286409,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 89,
-            "latency_count": 89
-          },
-          "sealed": {
-            "n": 61,
-            "correct": 53,
-            "accuracy": 0.8688524590163934,
-            "chance": 0.48360655737704916,
-            "chance_corrected_intelligence": 74.60317460317461,
-            "ece": 0.07085615081139021,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 61,
-            "latency_count": 61
-          },
-          "axes": {
-            "intelligence": 81.00759144237406,
-            "calibration": 80.17643603908614,
-            "speed": 86.3949716642636,
-            "cost": 48.4364183616248
-          },
-          "overfit_penalty_points": 0.0,
-          "speed": {
-            "score": 86.3949716642636,
-            "raw_p50_s": 0.15673863445408642,
-            "raw_p95_s": 0.17242546705529094,
-            "adjusted_p50_s": 0.46347726890817287,
-            "adjusted_p95_s": 0.4948509341105819,
-            "latency_coverage": 1.0
-          },
-          "cost": {
-            "score": 48.4364183616248,
-            "total_usd": 0.007850138402345445,
-            "usd_per_1000": 0.052334256015636293,
-            "raw_score": 48.4364183616248,
-            "coverage": 1.0,
-            "source": "measured GPU seconds × $1.19/GPU-hour"
-          },
-          "composite": {
-            "harmonic_before_gates": 70.12944275602315,
-            "gates": {
-              "intelligence": 1.0,
-              "speed": 1.0,
-              "cost": 0.9384346494809377
-            },
-            "score": 65.81189903104207
-          }
-        }
+    "core": {
+     "public": {
+      "n": 139,
+      "correct": 75,
+      "accuracy": 0.539568345323741,
+      "chance": 0.21762589928057555,
+      "chance_corrected_intelligence": 41.149425287356316,
+      "ece": 0.1241921044920938,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 139
+     },
+     "sealed": {
+      "n": 155,
+      "correct": 110,
+      "accuracy": 0.7096774193548387,
+      "chance": 0.2,
+      "chance_corrected_intelligence": 63.70967741935485,
+      "ece": 0.08026810953726363,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 155
+     },
+     "axes": {
+      "intelligence": 55.813589173155364,
+      "calibration": 80.87169844570916,
+      "speed": 89.67494685612841,
+      "cost": 60.366992977953174
+     },
+     "intelligence_before_penalty": 55.813589173155364,
+     "raw_overall_gap_pp": -17.010907403109776,
+     "matched_gap_pp": 1.0810810810810811,
+     "matched_gap_families": {
+      "ScreenSpot": {
+       "gap_pp": 1.0810810810810811,
+       "weight": 15.74468085106383
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 89.67494685612841,
+      "raw_p50_s": 0.07886400900315493,
+      "raw_p95_s": 0.10010892385616899,
+      "adjusted_p50_s": 0.3077280180063099,
+      "adjusted_p95_s": 0.350217847712338,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 60.366992977953174,
+      "raw_score": 60.36699297795318,
+      "usd_per_1000": 0.02094595827488672,
+      "total_usd": 0.006158111732816696,
+      "coverage": 1.0,
+      "source": "measured GPU seconds x $1.19/GPU-hour"
+     },
+     "composite": {
+      "harmonic_before_gates": 68.9669687052892,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 1.0
       },
-      "kind": "gpu"
+      "score": 68.9669687052892
+     }
     },
-    {
-      "rank": 3,
-      "key": "jev_omni",
-      "name": "Jev-Omni",
-      "api_flag": false,
-      "prior_exposure": "This checkpoint was measured on a separate frozen JevBench v1.4 text set before this run. It received no ImageJevBench task input before this evaluation.",
-      "score": 59.25228124214037,
-      "tracks": {
-        "all": {
-          "public": {
-            "n": 265,
-            "correct": 168,
-            "accuracy": 0.6339622641509434,
-            "chance": 0.29962264150943396,
-            "chance_corrected_intelligence": 47.73706896551724,
-            "ece": 0.09492282983979176,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 265,
-            "latency_count": 265
-          },
-          "sealed": {
-            "n": 179,
-            "correct": 113,
-            "accuracy": 0.6312849162011173,
-            "chance": 0.3036312849162011,
-            "chance_corrected_intelligence": 47.051744885679895,
-            "ece": 0.07890469167342007,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 179,
-            "latency_count": 179
-          },
-          "axes": {
-            "intelligence": 47.600004149549775,
-            "calibration": 81.65615955869652,
-            "speed": 89.94839872362184,
-            "cost": 59.48707347669823
-          },
-          "overfit_penalty_points": 0.0,
-          "speed": {
-            "score": 89.94839872362184,
-            "raw_p50_s": 0.07424040790647268,
-            "raw_p95_s": 0.09451717603951693,
-            "adjusted_p50_s": 0.2984808158129454,
-            "adjusted_p95_s": 0.3390343520790339,
-            "latency_coverage": 1.0
-          },
-          "cost": {
-            "score": 59.48707347669823,
-            "total_usd": 0.009949788615989687,
-            "usd_per_1000": 0.022409433819796595,
-            "raw_score": 59.48707347669823,
-            "coverage": 1.0,
-            "source": "measured GPU seconds × $1.29/GPU-hour"
-          },
-          "composite": {
-            "harmonic_before_gates": 65.37792055585902,
-            "gates": {
-              "intelligence": 0.9063041580148623,
-              "speed": 1.0,
-              "cost": 1.0
-            },
-            "score": 59.25228124214037
-          }
-        },
-        "core": {
-          "public": {
-            "n": 176,
-            "correct": 86,
-            "accuracy": 0.48863636363636365,
-            "chance": 0.20681818181818182,
-            "chance_corrected_intelligence": 35.53008595988539,
-            "ece": 0.11848807854941742,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 176,
-            "latency_count": 176
-          },
-          "sealed": {
-            "n": 118,
-            "correct": 55,
-            "accuracy": 0.4661016949152542,
-            "chance": 0.21059322033898306,
-            "chance_corrected_intelligence": 32.367149758454104,
-            "ece": 0.10453338470870506,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 118,
-            "latency_count": 118
-          },
-          "axes": {
-            "intelligence": 34.897498719599135,
-            "calibration": 76.86057204374501,
-            "speed": 89.85484440153232,
-            "cost": 59.01969421302452
-          },
-          "overfit_penalty_points": 0.0,
-          "speed": {
-            "score": 89.85484440153232,
-            "raw_p50_s": 0.07570168096572161,
-            "raw_p95_s": 0.0965289669111371,
-            "adjusted_p50_s": 0.30140336193144324,
-            "adjusted_p95_s": 0.34305793382227423,
-            "latency_coverage": 1.0
-          },
-          "cost": {
-            "score": 59.01969421302452,
-            "total_usd": 0.0068290064563115436,
-            "usd_per_1000": 0.023227913116705932,
-            "raw_score": 59.01969421302452,
-            "coverage": 1.0,
-            "source": "measured GPU seconds × $1.29/GPU-hour"
-          },
-          "composite": {
-            "harmonic_before_gates": 57.35714501404615,
-            "gates": {
-              "intelligence": 0.4871341667537693,
-              "speed": 1.0,
-              "cost": 1.0
-            },
-            "score": 27.940625043792483
-          }
-        },
-        "everyday_photo": {
-          "public": {
-            "n": 89,
-            "correct": 82,
-            "accuracy": 0.9213483146067416,
-            "chance": 0.48314606741573035,
-            "chance_corrected_intelligence": 84.78260869565219,
-            "ece": 0.07144742454052032,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 89,
-            "latency_count": 89
-          },
-          "sealed": {
-            "n": 61,
-            "correct": 58,
-            "accuracy": 0.9508196721311475,
-            "chance": 0.48360655737704916,
-            "chance_corrected_intelligence": 90.47619047619047,
-            "ece": 0.06400529896114039,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 61,
-            "latency_count": 61
-          },
-          "axes": {
-            "intelligence": 85.92132505175985,
-            "calibration": 86.00820011507113,
-            "speed": 90.13390969363553,
-            "cost": 60.454834133225056
-          },
-          "overfit_penalty_points": 0.0,
-          "speed": {
-            "score": 90.13390969363553,
-            "raw_p50_s": 0.07092946395277977,
-            "raw_p95_s": 0.09111392963677645,
-            "adjusted_p50_s": 0.29185892790555956,
-            "adjusted_p95_s": 0.3322278592735529,
-            "latency_coverage": 1.0
-          },
-          "cost": {
-            "score": 60.454834133225056,
-            "total_usd": 0.0031207821596781413,
-            "usd_per_1000": 0.020805214397854273,
-            "raw_score": 60.454834133225056,
-            "coverage": 1.0,
-            "source": "measured GPU seconds × $1.29/GPU-hour"
-          },
-          "composite": {
-            "harmonic_before_gates": 78.58356181323907,
-            "gates": {
-              "intelligence": 1.0,
-              "speed": 1.0,
-              "cost": 1.0
-            },
-            "score": 78.58356181323907
-          }
-        }
+    "everyday_photo": {
+     "public": {
+      "n": 89,
+      "correct": 76,
+      "accuracy": 0.8539325842696629,
+      "chance": 0.48314606741573035,
+      "chance_corrected_intelligence": 71.73913043478261,
+      "ece": 0.09504013570223432,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 89
+     },
+     "sealed": {
+      "n": 61,
+      "correct": 53,
+      "accuracy": 0.8688524590163934,
+      "chance": 0.48360655737704916,
+      "chance_corrected_intelligence": 74.60317460317461,
+      "ece": 0.08820538574334152,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 61
+     },
+     "axes": {
+      "intelligence": 73.6007591442374,
+      "calibration": 81.8804903542092,
+      "speed": 87.68411364929105,
+      "cost": 54.17965022875221
+     },
+     "intelligence_before_penalty": 73.6007591442374,
+     "raw_overall_gap_pp": -1.491987474673051,
+     "matched_gap_pp": -1.491987474673051,
+     "matched_gap_families": {
+      "Everyday photo": {
+       "gap_pp": -1.491987474673051,
+       "weight": 36.193333333333335
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 87.68411364929105,
+      "raw_p50_s": 0.12761053699068725,
+      "raw_p95_s": 0.1353132410440594,
+      "adjusted_p50_s": 0.4052210739813745,
+      "adjusted_p95_s": 0.4206264820881188,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 54.17965022875221,
+      "raw_score": 54.17965022875221,
+      "usd_per_1000": 0.03367789917204115,
+      "total_usd": 0.005051684875806172,
+      "coverage": 1.0,
+      "source": "measured GPU seconds x $1.19/GPU-hour"
+     },
+     "composite": {
+      "harmonic_before_gates": 71.86305204296275,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 1.0
       },
-      "model_revision": "akhilaaa3/Jev-Omni@c050d51354147985d13286cf4acf90f562f2c631",
-      "base_revision": "google/gemma-4-12B-it@707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7",
-      "gpu_usd_per_hour": 1.29,
-      "runtime_note": "One RTX PRO 6000 Blackwell; reviewed image-only adapter; offline inference."
-    },
-    {
-      "rank": 4,
-      "key": "djev_spark_nvfp4",
-      "name": "djev-spark NVFP4",
-      "api_flag": false,
-      "prior_exposure": "Saw the 100 public promo photos in the earlier video run through inference only; no training. Its score on the new sealed photo variants is the clean split measurement.",
-      "score": 42.68907149577741,
-      "tracks": {
-        "all": {
-          "public": {
-            "n": 265,
-            "correct": 162,
-            "accuracy": 0.6113207547169811,
-            "chance": 0.29962264150943396,
-            "chance_corrected_intelligence": 44.50431034482758,
-            "ece": 0.10155382667896722,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 265,
-            "latency_count": 265
-          },
-          "sealed": {
-            "n": 179,
-            "correct": 111,
-            "accuracy": 0.6201117318435754,
-            "chance": 0.3036312849162011,
-            "chance_corrected_intelligence": 45.44725230645807,
-            "ece": 0.08308098174329522,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 179,
-            "latency_count": 179
-          },
-          "axes": {
-            "intelligence": 44.692898737153676,
-            "calibration": 80.42814846163344,
-            "speed": 85.90690899433434,
-            "cost": 47.4804182949381
-          },
-          "overfit_penalty_points": 0.0,
-          "speed": {
-            "score": 85.90690899433434,
-            "raw_p50_s": 0.1682967705419287,
-            "raw_p95_s": 0.18870160006918013,
-            "adjusted_p50_s": 0.48659354108385744,
-            "adjusted_p95_s": 0.5274032001383603,
-            "latency_coverage": 1.0
-          },
-          "cost": {
-            "score": 47.4804182949381,
-            "total_usd": 0.025005508675,
-            "usd_per_1000": 0.056318713231981975,
-            "raw_score": 47.4804182949381,
-            "coverage": 1.0,
-            "source": "measured GPU seconds × $1.19/GPU-hour"
-          },
-          "composite": {
-            "harmonic_before_gates": 59.25030720895192,
-            "gates": {
-              "intelligence": 0.798982079011789,
-              "speed": 1.0,
-              "cost": 0.901756048584917
-            },
-            "score": 42.68907149577741
-          }
-        },
-        "core": {
-          "public": {
-            "n": 176,
-            "correct": 83,
-            "accuracy": 0.4715909090909091,
-            "chance": 0.20681818181818182,
-            "chance_corrected_intelligence": 33.381088825214896,
-            "ece": 0.13630927216905478,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 176,
-            "latency_count": 176
-          },
-          "sealed": {
-            "n": 118,
-            "correct": 58,
-            "accuracy": 0.4915254237288136,
-            "chance": 0.21059322033898306,
-            "chance_corrected_intelligence": 35.587761674718195,
-            "ece": 0.11267372120381225,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 118,
-            "latency_count": 118
-          },
-          "axes": {
-            "intelligence": 33.82242339511556,
-            "calibration": 73.68356760479875,
-            "speed": 85.95706123470069,
-            "cost": 47.224858529952776
-          },
-          "overfit_penalty_points": 0.0,
-          "speed": {
-            "score": 85.95706123470069,
-            "raw_p50_s": 0.1652924990048632,
-            "raw_p95_s": 0.18893298599869013,
-            "adjusted_p50_s": 0.4805849980097264,
-            "adjusted_p95_s": 0.5278659719973803,
-            "latency_coverage": 1.0
-          },
-          "cost": {
-            "score": 47.224858529952776,
-            "total_usd": 0.016885686144444443,
-            "usd_per_1000": 0.057434306613756606,
-            "raw_score": 47.224858529952776,
-            "coverage": 1.0,
-            "source": "measured GPU seconds × $1.19/GPU-hour"
-          },
-          "composite": {
-            "harmonic_before_gates": 52.66849183023609,
-            "gates": {
-              "intelligence": 0.4575825297273841,
-              "speed": 1.0,
-              "cost": 0.8920749052696213
-            },
-            "score": 21.499167332526405
-          }
-        },
-        "everyday_photo": {
-          "public": {
-            "n": 89,
-            "correct": 79,
-            "accuracy": 0.8876404494382022,
-            "chance": 0.48314606741573035,
-            "chance_corrected_intelligence": 78.26086956521739,
-            "ece": 0.03408787199413475,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 89,
-            "latency_count": 89
-          },
-          "sealed": {
-            "n": 61,
-            "correct": 53,
-            "accuracy": 0.8688524590163934,
-            "chance": 0.48360655737704916,
-            "chance_corrected_intelligence": 74.60317460317461,
-            "ece": 0.08394993368696115,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 61,
-            "latency_count": 61
-          },
-          "axes": {
-            "intelligence": 77.52933057280883,
-            "calibration": 91.18794313346,
-            "speed": 85.87126118174852,
-            "cost": 47.99634165370624
-          },
-          "overfit_penalty_points": 0.0,
-          "speed": {
-            "score": 85.87126118174852,
-            "raw_p50_s": 0.1704564766259864,
-            "raw_p95_s": 0.18853566306643188,
-            "adjusted_p50_s": 0.4909129532519728,
-            "adjusted_p95_s": 0.5270713261328638,
-            "latency_coverage": 1.0
-          },
-          "cost": {
-            "score": 47.99634165370624,
-            "total_usd": 0.008119822530555555,
-            "usd_per_1000": 0.0541321502037037,
-            "raw_score": 47.99634165370624,
-            "coverage": 1.0,
-            "source": "measured GPU seconds × $1.19/GPU-hour"
-          },
-          "composite": {
-            "harmonic_before_gates": 70.99125607433432,
-            "gates": {
-              "intelligence": 1.0,
-              "speed": 1.0,
-              "cost": 0.9214595248557186
-            },
-            "score": 65.41556909116674
-          }
-        }
-      },
-      "kind": "gpu"
-    },
-    {
-      "rank": 5,
-      "key": "djev_dev_bf16",
-      "name": "djev-dev BF16",
-      "api_flag": false,
-      "prior_exposure": "No evaluation run on this item set before this job.",
-      "score": 38.83529866525653,
-      "tracks": {
-        "all": {
-          "public": {
-            "n": 265,
-            "correct": 159,
-            "accuracy": 0.6,
-            "chance": 0.29962264150943396,
-            "chance_corrected_intelligence": 42.887931034482754,
-            "ece": 0.14598415385561692,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 265,
-            "latency_count": 265
-          },
-          "sealed": {
-            "n": 179,
-            "correct": 118,
-            "accuracy": 0.659217877094972,
-            "chance": 0.3036312849162011,
-            "chance_corrected_intelligence": 51.06297633373445,
-            "ece": 0.08587590533307149,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 179,
-            "latency_count": 179
-          },
-          "axes": {
-            "intelligence": 44.522940094333094,
-            "calibration": 73.20749916977843,
-            "speed": 85.35268068385818,
-            "cost": 46.129309364701776
-          },
-          "overfit_penalty_points": 0.0,
-          "speed": {
-            "score": 85.35268068385818,
-            "raw_p50_s": 0.18831039301585406,
-            "raw_p95_s": 0.2018241269979626,
-            "adjusted_p50_s": 0.5266207860317081,
-            "adjusted_p95_s": 0.5536482539959252,
-            "latency_coverage": 1.0
-          },
-          "cost": {
-            "score": 46.129309364701776,
-            "total_usd": 0.027737841230555553,
-            "usd_per_1000": 0.06247261538413413,
-            "raw_score": 46.129309364701776,
-            "coverage": 1.0,
-            "source": "measured GPU seconds × $1.19/GPU-hour"
-          },
-          "composite": {
-            "harmonic_before_gates": 57.542018306923026,
-            "gates": {
-              "intelligence": 0.7929168778574295,
-              "speed": 1.0,
-              "cost": 0.8511652729857452
-            },
-            "score": 38.83529866525653
-          }
-        },
-        "core": {
-          "public": {
-            "n": 176,
-            "correct": 77,
-            "accuracy": 0.4375,
-            "chance": 0.20681818181818182,
-            "chance_corrected_intelligence": 29.083094555873924,
-            "ece": 0.2202700830812243,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 176,
-            "latency_count": 176
-          },
-          "sealed": {
-            "n": 118,
-            "correct": 65,
-            "accuracy": 0.5508474576271186,
-            "chance": 0.21059322033898306,
-            "chance_corrected_intelligence": 43.10252281266773,
-            "ece": 0.10815132606812035,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 118,
-            "latency_count": 118
-          },
-          "axes": {
-            "intelligence": 31.88698020723269,
-            "calibration": 60.430733664279295,
-            "speed": 85.37931177737522,
-            "cost": 45.89606316909154
-          },
-          "overfit_penalty_points": 0.0,
-          "speed": {
-            "score": 85.37931177737522,
-            "raw_p50_s": 0.18501371948514134,
-            "raw_p95_s": 0.2036201790906489,
-            "adjusted_p50_s": 0.5200274389702827,
-            "adjusted_p95_s": 0.5572403581812978,
-            "latency_coverage": 1.0
-          },
-          "cost": {
-            "score": 45.89606316909154,
-            "total_usd": 0.01869872056111111,
-            "usd_per_1000": 0.06360109034391534,
-            "raw_score": 45.89606316909154,
-            "coverage": 1.0,
-            "source": "measured GPU seconds × $1.19/GPU-hour"
-          },
-          "composite": {
-            "harmonic_before_gates": 49.13435479820544,
-            "gates": {
-              "intelligence": 0.40671180269457974,
-              "speed": 1.0,
-              "cost": 0.8425794457684963
-            },
-            "score": 16.83770490323831
-          }
-        },
-        "everyday_photo": {
-          "public": {
-            "n": 89,
-            "correct": 82,
-            "accuracy": 0.9213483146067416,
-            "chance": 0.48314606741573035,
-            "chance_corrected_intelligence": 84.78260869565219,
-            "ece": 0.05470643170228029,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 89,
-            "latency_count": 89
-          },
-          "sealed": {
-            "n": 61,
-            "correct": 53,
-            "accuracy": 0.8688524590163934,
-            "chance": 0.48360655737704916,
-            "chance_corrected_intelligence": 74.60317460317461,
-            "ece": 0.06120859209824996,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 61,
-            "latency_count": 61
-          },
-          "axes": {
-            "intelligence": 82.74672187715667,
-            "calibration": 88.79862724370517,
-            "speed": 85.37957724787815,
-            "cost": 46.59895224783852
-          },
-          "overfit_penalty_points": 0.0,
-          "speed": {
-            "score": 85.37957724787815,
-            "raw_p50_s": 0.19073488446883857,
-            "raw_p95_s": 0.19760493491776288,
-            "adjusted_p50_s": 0.5314697689376772,
-            "adjusted_p95_s": 0.5452098698355258,
-            "latency_coverage": 1.0
-          },
-          "cost": {
-            "score": 46.59895224783852,
-            "total_usd": 0.009039120669444444,
-            "usd_per_1000": 0.060260804462962954,
-            "raw_score": 46.59895224783852,
-            "coverage": 1.0,
-            "source": "measured GPU seconds × $1.19/GPU-hour"
-          },
-          "composite": {
-            "harmonic_before_gates": 70.77313759075086,
-            "gates": {
-              "intelligence": 1.0,
-              "speed": 1.0,
-              "cost": 0.8685849402385339
-            },
-            "score": 61.47248148475588
-          }
-        }
-      },
-      "kind": "gpu"
-    },
-    {
-      "rank": 6,
-      "key": "gpt6_luna",
-      "name": "GPT-6 Luna",
-      "api_flag": true,
-      "prior_exposure": "Before evaluation, the API received stateless, single-turn label-check calls for the 100 public promo-photo candidates and 68 new sealed-photo candidates, including images later dropped. Calls showed the image, question, and options but not the gold key; provider data-collection denial, zero-data-retention, and no-fallback were requested. Human gold-blind adjudication decided inclusion; checker outputs did not determine keep/drop decisions. This job used no fine-tuning and carried no context between calls.",
-      "score": 16.6473555323967,
-      "tracks": {
-        "all": {
-          "public": {
-            "n": 265,
-            "correct": 243,
-            "accuracy": 0.9169811320754717,
-            "chance": 0.29962264150943396,
-            "chance_corrected_intelligence": 88.14655172413794,
-            "ece": 0.036908045977011535,
-            "probability_coverage": 0.9849056603773585,
-            "valid_answer_count": 261,
-            "latency_count": 265
-          },
-          "sealed": {
-            "n": 179,
-            "correct": 149,
-            "accuracy": 0.8324022346368715,
-            "chance": 0.3036312849162011,
-            "chance_corrected_intelligence": 75.93261131167266,
-            "ece": 0.03068553459119498,
-            "probability_coverage": 0.888268156424581,
-            "valid_answer_count": 159,
-            "latency_count": 179
-          },
-          "axes": {
-            "intelligence": 85.70376364164488,
-            "calibration": 89.65138568567514,
-            "speed": 61.77419054171388,
-            "cost": 27.905814687003325
-          },
-          "overfit_penalty_points": 0.0,
-          "speed": {
-            "score": 61.77419054171388,
-            "raw_p50_s": 3.4255253970623016,
-            "raw_p95_s": 19.402324065566063,
-            "adjusted_p50_s": 3.4255253970623016,
-            "adjusted_p95_s": 19.402324065566063,
-            "latency_coverage": 1.0
-          },
-          "cost": {
-            "score": 27.905814687003325,
-            "total_usd": 0.09771096555,
-            "usd_per_1000": 0.22990815423529412,
-            "raw_score": 29.153368755363473,
-            "coverage": 0.9572072072072072,
-            "source": "OpenRouter usage.cost receipts"
-          },
-          "composite": {
-            "harmonic_before_gates": 53.44361805806628,
-            "gates": {
-              "intelligence": 1.0,
-              "speed": 1.0,
-              "cost": 0.31149379733814825
-            },
-            "score": 16.6473555323967
-          }
-        },
-        "core": {
-          "public": {
-            "n": 176,
-            "correct": 154,
-            "accuracy": 0.875,
-            "chance": 0.20681818181818182,
-            "chance_corrected_intelligence": 84.24068767908311,
-            "ece": 0.06258139534883722,
-            "probability_coverage": 0.9772727272727273,
-            "valid_answer_count": 172,
-            "latency_count": 176
-          },
-          "sealed": {
-            "n": 118,
-            "correct": 91,
-            "accuracy": 0.7711864406779662,
-            "chance": 0.21059322033898306,
-            "chance_corrected_intelligence": 71.01449275362319,
-            "ece": 0.04725999999999997,
-            "probability_coverage": 0.847457627118644,
-            "valid_answer_count": 100,
-            "latency_count": 118
-          },
-          "axes": {
-            "intelligence": 81.59544869399113,
-            "calibration": 83.74348228043144,
-            "speed": 61.70624003160064,
-            "cost": 28.66564726624446
-          },
-          "overfit_penalty_points": 0.0,
-          "speed": {
-            "score": 61.70624003160064,
-            "raw_p50_s": 3.438646111637354,
-            "raw_p95_s": 19.633083522319794,
-            "adjusted_p50_s": 3.438646111637354,
-            "adjusted_p95_s": 19.633083522319794,
-            "latency_coverage": 1.0
-          },
-          "cost": {
-            "score": 28.66564726624446,
-            "total_usd": 0.0577629558,
-            "usd_per_1000": 0.2085305263537906,
-            "raw_score": 30.4249108168804,
-            "coverage": 0.9421768707482994,
-            "source": "OpenRouter usage.cost receipts"
-          },
-          "composite": {
-            "harmonic_before_gates": 53.12960520449749,
-            "gates": {
-              "intelligence": 1.0,
-              "speed": 1.0,
-              "cost": 0.3286877332770994
-            },
-            "score": 17.463049504573462
-          }
-        },
-        "everyday_photo": {
-          "public": {
-            "n": 89,
-            "correct": 89,
-            "accuracy": 1.0,
-            "chance": 0.48314606741573035,
-            "chance_corrected_intelligence": 100.0,
-            "ece": 0.012707865168539278,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 89,
-            "latency_count": 89
-          },
-          "sealed": {
-            "n": 61,
-            "correct": 58,
-            "accuracy": 0.9508196721311475,
-            "chance": 0.48360655737704916,
-            "chance_corrected_intelligence": 90.47619047619047,
-            "ece": 0.0025932203389830155,
-            "probability_coverage": 0.9672131147540983,
-            "valid_answer_count": 59,
-            "latency_count": 61
-          },
-          "axes": {
-            "intelligence": 98.0952380952381,
-            "calibration": 97.21067599926323,
-            "speed": 61.804770874668506,
-            "cost": 26.70215708519729
-          },
-          "overfit_penalty_points": 0.0,
-          "speed": {
-            "score": 61.804770874668506,
-            "raw_p50_s": 3.4014896862208843,
-            "raw_p95_s": 19.402324065566063,
-            "adjusted_p50_s": 3.4014896862208843,
-            "adjusted_p95_s": 19.402324065566063,
-            "latency_coverage": 1.0
-          },
-          "cost": {
-            "score": 26.70215708519729,
-            "total_usd": 0.03994800975,
-            "usd_per_1000": 0.26991898479729726,
-            "raw_score": 27.06299704580806,
-            "coverage": 0.9866666666666667,
-            "source": "OpenRouter usage.cost receipts"
-          },
-          "composite": {
-            "harmonic_before_gates": 53.972912806394724,
-            "gates": {
-              "intelligence": 1.0,
-              "speed": 1.0,
-              "cost": 0.28520207720102064
-            },
-            "score": 15.393186844973345
-          }
-        }
-      },
-      "kind": "api"
-    },
-    {
-      "rank": 7,
-      "key": "gpt56_luna",
-      "name": "GPT-5.6 Luna",
-      "api_flag": true,
-      "prior_exposure": "No previous photo-label-check call in this job.",
-      "score": 12.575379102439722,
-      "tracks": {
-        "all": {
-          "public": {
-            "n": 265,
-            "correct": 246,
-            "accuracy": 0.9283018867924528,
-            "chance": 0.29962264150943396,
-            "chance_corrected_intelligence": 89.76293103448276,
-            "ece": 0.01540458015267181,
-            "probability_coverage": 0.9886792452830189,
-            "valid_answer_count": 262,
-            "latency_count": 265
-          },
-          "sealed": {
-            "n": 179,
-            "correct": 163,
-            "accuracy": 0.9106145251396648,
-            "chance": 0.3036312849162011,
-            "chance_corrected_intelligence": 87.16405936622542,
-            "ece": 0.06778857142857148,
-            "probability_coverage": 0.9776536312849162,
-            "valid_answer_count": 175,
-            "latency_count": 179
-          },
-          "axes": {
-            "intelligence": 89.24315670083129,
-            "calibration": 93.5596323389902,
-            "speed": 60.80646121878747,
-            "cost": 24.85147276921242
-          },
-          "overfit_penalty_points": 0.0,
-          "speed": {
-            "score": 60.80646121878747,
-            "raw_p50_s": 3.880011420696974,
-            "raw_p95_s": 21.405278079211712,
-            "adjusted_p50_s": 3.880011420696974,
-            "adjusted_p95_s": 21.405278079211712,
-            "latency_coverage": 1.0
-          },
-          "cost": {
-            "score": 24.85147276921242,
-            "total_usd": 0.139236867,
-            "usd_per_1000": 0.3157298571428571,
-            "raw_score": 25.02053040709822,
-            "coverage": 0.9932432432432432,
-            "source": "OpenRouter usage.cost receipts"
-          },
-          "composite": {
-            "harmonic_before_gates": 50.904576921828415,
-            "gates": {
-              "intelligence": 1.0,
-              "speed": 1.0,
-              "cost": 0.2470382795195626
-            },
-            "score": 12.575379102439722
-          }
-        },
-        "core": {
-          "public": {
-            "n": 176,
-            "correct": 157,
-            "accuracy": 0.8920454545454546,
-            "chance": 0.20681818181818182,
-            "chance_corrected_intelligence": 86.38968481375359,
-            "ece": 0.030329479768786,
-            "probability_coverage": 0.9829545454545454,
-            "valid_answer_count": 173,
-            "latency_count": 176
-          },
-          "sealed": {
-            "n": 118,
-            "correct": 103,
-            "accuracy": 0.8728813559322034,
-            "chance": 0.21059322033898306,
-            "chance_corrected_intelligence": 83.89694041867955,
-            "ece": 0.09559130434782603,
-            "probability_coverage": 0.9745762711864406,
-            "valid_answer_count": 115,
-            "latency_count": 118
-          },
-          "axes": {
-            "intelligence": 85.89113593473878,
-            "calibration": 89.63144838212637,
-            "speed": 60.121672579635685,
-            "cost": 24.558232070485957
-          },
-          "overfit_penalty_points": 0.0,
-          "speed": {
-            "score": 60.121672579635685,
-            "raw_p50_s": 4.1033581122756,
-            "raw_p95_s": 23.696997418999672,
-            "adjusted_p50_s": 4.1033581122756,
-            "adjusted_p95_s": 23.696997418999672,
-            "latency_coverage": 1.0
-          },
-          "cost": {
-            "score": 24.558232070485957,
-            "total_usd": 0.094297797,
-            "usd_per_1000": 0.32293766095890414,
-            "raw_score": 24.72643913946189,
-            "coverage": 0.9931972789115646,
-            "source": "OpenRouter usage.cost receipts"
-          },
-          "composite": {
-            "harmonic_before_gates": 49.90522746814472,
-            "gates": {
-              "intelligence": 1.0,
-              "speed": 1.0,
-              "cost": 0.241242704971138
-            },
-            "score": 12.03927206661517
-          }
-        },
-        "everyday_photo": {
-          "public": {
-            "n": 89,
-            "correct": 89,
-            "accuracy": 1.0,
-            "chance": 0.48314606741573035,
-            "chance_corrected_intelligence": 100.0,
-            "ece": 0.013606741573033654,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 89,
-            "latency_count": 89
-          },
-          "sealed": {
-            "n": 61,
-            "correct": 60,
-            "accuracy": 0.9836065573770492,
-            "chance": 0.48360655737704916,
-            "chance_corrected_intelligence": 96.82539682539682,
-            "ece": 0.014499999999999957,
-            "probability_coverage": 0.9836065573770492,
-            "valid_answer_count": 60,
-            "latency_count": 61
-          },
-          "axes": {
-            "intelligence": 99.36507936507937,
-            "calibration": 96.92456069257692,
-            "speed": 61.40976820805645,
-            "cost": 25.446086530508055
-          },
-          "overfit_penalty_points": 0.0,
-          "speed": {
-            "score": 61.40976820805645,
-            "raw_p50_s": 3.5096979439258575,
-            "raw_p95_s": 20.59460363537073,
-            "adjusted_p50_s": 3.5096979439258575,
-            "adjusted_p95_s": 20.59460363537073,
-            "latency_coverage": 1.0
-          },
-          "cost": {
-            "score": 25.446086530508055,
-            "total_usd": 0.04493907,
-            "usd_per_1000": 0.3016044966442953,
-            "raw_score": 25.616865634739654,
-            "coverage": 0.9933333333333333,
-            "source": "OpenRouter usage.cost receipts"
-          },
-          "composite": {
-            "harmonic_before_gates": 52.656501901497094,
-            "gates": {
-              "intelligence": 1.0,
-              "speed": 1.0,
-              "cost": 0.2590013278872414
-            },
-            "score": 13.638103914384798
-          }
-        }
-      },
-      "kind": "api"
-    },
-    {
-      "rank": 8,
-      "key": "gemini31_flash_lite",
-      "name": "Gemini 3.1 Flash Lite",
-      "api_flag": true,
-      "prior_exposure": "No previous photo-label-check call in this job.",
-      "score": 9.230658590776605,
-      "tracks": {
-        "all": {
-          "public": {
-            "n": 265,
-            "correct": 232,
-            "accuracy": 0.8754716981132076,
-            "chance": 0.29962264150943396,
-            "chance_corrected_intelligence": 82.2198275862069,
-            "ece": 0.0450830188679245,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 265,
-            "latency_count": 265
-          },
-          "sealed": {
-            "n": 179,
-            "correct": 160,
-            "accuracy": 0.8938547486033519,
-            "chance": 0.3036312849162011,
-            "chance_corrected_intelligence": 84.7573204973927,
-            "ece": 0.03441340782122909,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 179,
-            "latency_count": 179
-          },
-          "axes": {
-            "intelligence": 82.72732616844407,
-            "calibration": 91.41018066828292,
-            "speed": 61.856468349573426,
-            "cost": 22.07776714007956
-          },
-          "overfit_penalty_points": 0.0,
-          "speed": {
-            "score": 61.856468349573426,
-            "raw_p50_s": 2.390967261046171,
-            "raw_p95_s": 27.275928013026714,
-            "adjusted_p50_s": 2.390967261046171,
-            "adjusted_p95_s": 27.275928013026714,
-            "latency_coverage": 1.0
-          },
-          "cost": {
-            "score": 22.07776714007956,
-            "total_usd": 0.175707675,
-            "usd_per_1000": 0.39573800675675674,
-            "raw_score": 22.07776714007956,
-            "coverage": 1.0,
-            "source": "OpenRouter usage.cost receipts"
-          },
-          "composite": {
-            "harmonic_before_gates": 47.34372226489181,
-            "gates": {
-              "intelligence": 1.0,
-              "speed": 1.0,
-              "cost": 0.19497112075663067
-            },
-            "score": 9.230658590776605
-          }
-        },
-        "core": {
-          "public": {
-            "n": 176,
-            "correct": 143,
-            "accuracy": 0.8125,
-            "chance": 0.20681818181818182,
-            "chance_corrected_intelligence": 76.36103151862464,
-            "ece": 0.08465909090909086,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 176,
-            "latency_count": 176
-          },
-          "sealed": {
-            "n": 118,
-            "correct": 99,
-            "accuracy": 0.8389830508474576,
-            "chance": 0.21059322033898306,
-            "chance_corrected_intelligence": 79.60279119699409,
-            "ece": 0.05906779661016952,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 118,
-            "latency_count": 118
-          },
-          "axes": {
-            "intelligence": 77.00938345429853,
-            "calibration": 84.09183359013869,
-            "speed": 62.57221425552512,
-            "cost": 21.4912566807712
-          },
-          "overfit_penalty_points": 0.0,
-          "speed": {
-            "score": 62.57221425552512,
-            "raw_p50_s": 2.282226175069809,
-            "raw_p95_s": 24.23370921611786,
-            "adjusted_p50_s": 2.282226175069809,
-            "adjusted_p95_s": 24.23370921611786,
-            "latency_coverage": 1.0
-          },
-          "cost": {
-            "score": 21.4912566807712,
-            "total_usd": 0.121704165,
-            "usd_per_1000": 0.41395974489795917,
-            "raw_score": 21.4912566807712,
-            "coverage": 1.0,
-            "source": "OpenRouter usage.cost receipts"
-          },
-          "composite": {
-            "harmonic_before_gates": 45.77220639643641,
-            "gates": {
-              "intelligence": 1.0,
-              "speed": 1.0,
-              "cost": 0.1847496454875171
-            },
-            "score": 8.45639890492309
-          }
-        },
-        "everyday_photo": {
-          "public": {
-            "n": 89,
-            "correct": 89,
-            "accuracy": 1.0,
-            "chance": 0.48314606741573035,
-            "chance_corrected_intelligence": 100.0,
-            "ece": 0.037674157303370856,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 89,
-            "latency_count": 89
-          },
-          "sealed": {
-            "n": 61,
-            "correct": 61,
-            "accuracy": 1.0,
-            "chance": 0.48360655737704916,
-            "chance_corrected_intelligence": 100.0,
-            "ece": 0.03655737704918038,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 61,
-            "latency_count": 61
-          },
-          "axes": {
-            "intelligence": 100.0,
-            "calibration": 92.50983974949345,
-            "speed": 61.24716088211909,
-            "cost": 23.310078130263904
-          },
-          "overfit_penalty_points": 0.0,
-          "speed": {
-            "score": 61.24716088211909,
-            "raw_p50_s": 2.485154092311859,
-            "raw_p95_s": 30.194690987467766,
-            "adjusted_p50_s": 2.485154092311859,
-            "adjusted_p95_s": 30.194690987467766,
-            "latency_coverage": 1.0
-          },
-          "cost": {
-            "score": 23.310078130263904,
-            "total_usd": 0.05400351,
-            "usd_per_1000": 0.3600234,
-            "raw_score": 23.310078130263904,
-            "coverage": 1.0,
-            "source": "OpenRouter usage.cost receipts"
-          },
-          "composite": {
-            "harmonic_before_gates": 49.97698093711095,
-            "gates": {
-              "intelligence": 1.0,
-              "speed": 1.0,
-              "cost": 0.217343896975603
-            },
-            "score": 10.862191795947117
-          }
-        }
-      },
-      "kind": "api"
-    },
-    {
-      "rank": 9,
-      "key": "gemini38_flash",
-      "name": "Gemini 3.8 Flash",
-      "api_flag": true,
-      "prior_exposure": "Before evaluation, the API received stateless, single-turn label-check calls for the 100 public promo-photo candidates and 68 new sealed-photo candidates, including images later dropped. Calls showed the image, question, and options but not the gold key; provider data-collection denial, zero-data-retention, and no-fallback were requested. Human gold-blind adjudication decided inclusion; checker outputs did not determine keep/drop decisions. This job used no fine-tuning and carried no context between calls.",
-      "score": 0.0019220517719927069,
-      "tracks": {
-        "all": {
-          "public": {
-            "n": 265,
-            "correct": 239,
-            "accuracy": 0.9018867924528302,
-            "chance": 0.29962264150943396,
-            "chance_corrected_intelligence": 85.99137931034483,
-            "ece": 0.12915352697095436,
-            "probability_coverage": 0.909433962264151,
-            "valid_answer_count": 241,
-            "latency_count": 265
-          },
-          "sealed": {
-            "n": 179,
-            "correct": 163,
-            "accuracy": 0.9106145251396648,
-            "chance": 0.3036312849162011,
-            "chance_corrected_intelligence": 87.16405936622542,
-            "ece": 0.13521556886227545,
-            "probability_coverage": 0.9329608938547486,
-            "valid_answer_count": 167,
-            "latency_count": 179
-          },
-          "axes": {
-            "intelligence": 86.22591532152094,
-            "calibration": 67.57484473490038,
-            "speed": 56.76147955551755,
-            "cost": 1.079614731073832
-          },
-          "overfit_penalty_points": 0.0,
-          "speed": {
-            "score": 56.76147955551755,
-            "raw_p50_s": 5.22262055799365,
-            "raw_p95_s": 40.361153580248356,
-            "adjusted_p50_s": 5.22262055799365,
-            "adjusted_p95_s": 40.361153580248356,
-            "latency_coverage": 1.0
-          },
-          "cost": {
-            "score": 1.079614731073832,
-            "total_usd": 0.880499565,
-            "usd_per_1000": 1.9831071283783785,
-            "raw_score": 1.079614731073832,
-            "coverage": 1.0,
-            "source": "OpenRouter usage.cost receipts"
-          },
-          "composite": {
-            "harmonic_before_gates": 4.122564761345803,
-            "gates": {
-              "intelligence": 1.0,
-              "speed": 1.0,
-              "cost": 0.000466227187020649
-            },
-            "score": 0.0019220517719927069
-          }
-        },
-        "core": {
-          "public": {
-            "n": 176,
-            "correct": 150,
-            "accuracy": 0.8522727272727273,
-            "chance": 0.20681818181818182,
-            "chance_corrected_intelligence": 81.37535816618912,
-            "ece": 0.10545394736842104,
-            "probability_coverage": 0.8636363636363636,
-            "valid_answer_count": 152,
-            "latency_count": 176
-          },
-          "sealed": {
-            "n": 118,
-            "correct": 103,
-            "accuracy": 0.8728813559322034,
-            "chance": 0.21059322033898306,
-            "chance_corrected_intelligence": 83.89694041867955,
-            "ece": 0.12479245283018867,
-            "probability_coverage": 0.8983050847457628,
-            "valid_answer_count": 106,
-            "latency_count": 118
-          },
-          "axes": {
-            "intelligence": 81.87967461668721,
-            "calibration": 68.00112480739601,
-            "speed": 56.679085344098894,
-            "cost": 0.0
-          },
-          "overfit_penalty_points": 0.0,
-          "speed": {
-            "score": 56.679085344098894,
-            "raw_p50_s": 5.322649825364351,
-            "raw_p95_s": 40.361153580248356,
-            "adjusted_p50_s": 5.322649825364351,
-            "adjusted_p95_s": 40.361153580248356,
-            "latency_coverage": 1.0
-          },
-          "cost": {
-            "score": 0.0,
-            "total_usd": 0.641860065,
-            "usd_per_1000": 2.1831975000000003,
-            "raw_score": 0.0,
-            "coverage": 1.0,
-            "source": "OpenRouter usage.cost receipts"
-          },
-          "composite": {
-            "harmonic_before_gates": 0.0,
-            "gates": {
-              "intelligence": 1.0,
-              "speed": 1.0,
-              "cost": 0.0
-            },
-            "score": 0.0
-          }
-        },
-        "everyday_photo": {
-          "public": {
-            "n": 89,
-            "correct": 89,
-            "accuracy": 1.0,
-            "chance": 0.48314606741573035,
-            "chance_corrected_intelligence": 100.0,
-            "ece": 0.16962921348314614,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 89,
-            "latency_count": 89
-          },
-          "sealed": {
-            "n": 61,
-            "correct": 60,
-            "accuracy": 0.9836065573770492,
-            "chance": 0.48360655737704916,
-            "chance_corrected_intelligence": 96.82539682539682,
-            "ece": 0.15332786885245894,
-            "probability_coverage": 1.0,
-            "valid_answer_count": 61,
-            "latency_count": 61
-          },
-          "axes": {
-            "intelligence": 99.36507936507937,
-            "calibration": 66.72621108859826,
-            "speed": 56.30085090408677,
-            "cost": 3.950467859173159
-          },
-          "overfit_penalty_points": 0.0,
-          "speed": {
-            "score": 56.30085090408677,
-            "raw_p50_s": 5.004384379833937,
-            "raw_p95_s": 46.834323316812515,
-            "adjusted_p50_s": 5.004384379833937,
-            "adjusted_p95_s": 46.834323316812515,
-            "latency_coverage": 1.0
-          },
-          "cost": {
-            "score": 3.950467859173159,
-            "total_usd": 0.2386395,
-            "usd_per_1000": 1.59093,
-            "raw_score": 3.950467859173159,
-            "coverage": 1.0,
-            "source": "OpenRouter usage.cost receipts"
-          },
-          "composite": {
-            "harmonic_before_gates": 13.515942389231448,
-            "gates": {
-              "intelligence": 1.0,
-              "speed": 1.0,
-              "cost": 0.0062424785225440645
-            },
-            "score": 0.08437298007672023
-          }
-        }
-      },
-      "kind": "api"
-    },
-    {
-      "rank": 10,
-      "key": "openjev_4b_nli",
-      "name": "OpenJev 4B NLI v2 (official image-premise path)",
-      "api_flag": false,
-      "prior_exposure": "No evaluation run on this item set before this job. The repository includes `code/eval_image_nli.py`; the benchmark wrapper follows its image-premise NLI scoring path. It does not import or execute `train.py`, whose training entry point and dataset-loading code are excluded.",
-      "score": 0.0,
-      "tracks": {
-        "all": {
-          "public": {
-            "n": 265,
-            "correct": 210,
-            "accuracy": 0.7924528301886793,
-            "chance": 0.29962264150943396,
-            "chance_corrected_intelligence": 70.36637931034484,
-            "ece": null,
-            "probability_coverage": 0.0,
-            "valid_answer_count": 265,
-            "latency_count": 265
-          },
-          "sealed": {
-            "n": 179,
-            "correct": 138,
-            "accuracy": 0.770949720670391,
-            "chance": 0.3036312849162011,
-            "chance_corrected_intelligence": 67.10790212595266,
-            "ece": null,
-            "probability_coverage": 0.0,
-            "valid_answer_count": 179,
-            "latency_count": 179
-          },
-          "axes": {
-            "intelligence": 69.71468387346641,
-            "calibration": 0.0,
-            "speed": 80.35494099548347,
-            "cost": 40.135498772376565
-          },
-          "overfit_penalty_points": 0.0,
-          "speed": {
-            "score": 80.35494099548347,
-            "raw_p50_s": 0.31785281794145703,
-            "raw_p95_s": 0.5114298069383949,
-            "adjusted_p50_s": 0.7857056358829141,
-            "adjusted_p95_s": 1.1728596138767897,
-            "latency_coverage": 1.0
-          },
-          "cost": {
-            "score": 40.135498772376565,
-            "total_usd": 0.04394063657958772,
-            "usd_per_1000": 0.09896539770177415,
-            "raw_score": 40.135498772376565,
-            "coverage": 1.0,
-            "source": "measured GPU seconds × $1.19/GPU-hour"
-          },
-          "composite": {
-            "harmonic_before_gates": 0.0,
-            "gates": {
-              "intelligence": 1.0,
-              "speed": 1.0,
-              "cost": 0.6443433046829763
-            },
-            "score": 0.0
-          }
-        },
-        "core": {
-          "public": {
-            "n": 176,
-            "correct": 127,
-            "accuracy": 0.7215909090909091,
-            "chance": 0.20681818181818182,
-            "chance_corrected_intelligence": 64.89971346704871,
-            "ece": null,
-            "probability_coverage": 0.0,
-            "valid_answer_count": 176,
-            "latency_count": 176
-          },
-          "sealed": {
-            "n": 118,
-            "correct": 84,
-            "accuracy": 0.711864406779661,
-            "chance": 0.21059322033898306,
-            "chance_corrected_intelligence": 63.49973161567364,
-            "ece": null,
-            "probability_coverage": 0.0,
-            "valid_answer_count": 118,
-            "latency_count": 118
-          },
-          "axes": {
-            "intelligence": 64.6197170967737,
-            "calibration": 0.0,
-            "speed": 79.63889371448398,
-            "cost": 40.09545752574213
-          },
-          "overfit_penalty_points": 0.0,
-          "speed": {
-            "score": 79.63889371448398,
-            "raw_p50_s": 0.389116475940682,
-            "raw_p95_s": 0.5103608211502433,
-            "adjusted_p50_s": 0.928232951881364,
-            "adjusted_p95_s": 1.1707216423004865,
-            "latency_coverage": 1.0
-          },
-          "cost": {
-            "score": 40.09545752574213,
-            "total_usd": 0.029185384072144827,
-            "usd_per_1000": 0.09927001385083274,
-            "raw_score": 40.09545752574213,
-            "coverage": 1.0,
-            "source": "measured GPU seconds × $1.19/GPU-hour"
-          },
-          "composite": {
-            "harmonic_before_gates": 0.0,
-            "gates": {
-              "intelligence": 1.0,
-              "speed": 1.0,
-              "cost": 0.6430582856794365
-            },
-            "score": 0.0
-          }
-        },
-        "everyday_photo": {
-          "public": {
-            "n": 89,
-            "correct": 83,
-            "accuracy": 0.9325842696629213,
-            "chance": 0.48314606741573035,
-            "chance_corrected_intelligence": 86.95652173913044,
-            "ece": null,
-            "probability_coverage": 0.0,
-            "valid_answer_count": 89,
-            "latency_count": 89
-          },
-          "sealed": {
-            "n": 61,
-            "correct": 54,
-            "accuracy": 0.8852459016393442,
-            "chance": 0.48360655737704916,
-            "chance_corrected_intelligence": 77.77777777777777,
-            "ece": null,
-            "probability_coverage": 0.0,
-            "valid_answer_count": 61,
-            "latency_count": 61
-          },
-          "axes": {
-            "intelligence": 85.12077294685992,
-            "calibration": 0.0,
-            "speed": 79.5514339384258,
-            "cost": 40.214338391526866
-          },
-          "overfit_penalty_points": 0.0,
-          "speed": {
-            "score": 79.5514339384258,
-            "raw_p50_s": 0.3168250290909782,
-            "raw_p95_s": 0.6324641548562795,
-            "adjusted_p50_s": 0.7836500581819564,
-            "adjusted_p95_s": 1.414928309712559,
-            "latency_coverage": 1.0
-          },
-          "cost": {
-            "score": 40.214338391526866,
-            "total_usd": 0.014755252507442898,
-            "usd_per_1000": 0.09836835004961933,
-            "raw_score": 40.214338391526866,
-            "coverage": 1.0,
-            "source": "measured GPU seconds × $1.19/GPU-hour"
-          },
-          "composite": {
-            "harmonic_before_gates": 0.0,
-            "gates": {
-              "intelligence": 1.0,
-              "speed": 1.0,
-              "cost": 0.6468772049072926
-            },
-            "score": 0.0
-          }
-        }
-      },
-      "kind": "gpu"
+      "score": 71.86305204296275
+     }
     }
-  ]
+   }
+  },
+  {
+   "rank": 2,
+   "key": "reflex_4b",
+   "name": "Reflex 4B (released stable configuration)",
+   "api_flag": false,
+   "prior_exposure": "No evaluation run on this item set before this job.",
+   "score": 68.0985993861034,
+   "tracks": {
+    "all": {
+     "public": {
+      "n": 228,
+      "correct": 184,
+      "accuracy": 0.8070175438596491,
+      "chance": 0.32127192982456143,
+      "chance_corrected_intelligence": 71.5670436187399,
+      "ece": 0.1334701563347419,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 228
+     },
+     "sealed": {
+      "n": 216,
+      "correct": 167,
+      "accuracy": 0.7731481481481481,
+      "chance": 0.2800925925925926,
+      "chance_corrected_intelligence": 68.48874598070738,
+      "ece": 0.09286448180898176,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 216
+     },
+     "axes": {
+      "intelligence": 69.56615015401877,
+      "calibration": 78.58470642140044,
+      "speed": 86.62443917313291,
+      "cost": 49.96568083345824
+     },
+     "intelligence_before_penalty": 69.56615015401877,
+     "raw_overall_gap_pp": 3.386939571150094,
+     "matched_gap_pp": 2.383637888044396,
+     "matched_gap_families": {
+      "Everyday photo": {
+       "gap_pp": 4.125990053416839,
+       "weight": 36.193333333333335
+      },
+      "ScreenSpot": {
+       "gap_pp": -1.6216216216216273,
+       "weight": 15.74468085106383
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 86.62443917313291,
+      "raw_p50_s": 0.15307909448165447,
+      "raw_p95_s": 0.16345729399472475,
+      "adjusted_p50_s": 0.45615818896330895,
+      "adjusted_p95_s": 0.4769145879894495,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 49.96568083345824,
+      "raw_score": 49.96568083345824,
+      "usd_per_1000": 0.04653831328873161,
+      "total_usd": 0.020663011100196835,
+      "coverage": 1.0,
+      "source": "measured GPU seconds x $1.19/GPU-hour"
+     },
+     "composite": {
+      "harmonic_before_gates": 68.19217920946772,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 0.9986277044604063
+      },
+      "score": 68.0985993861034
+     }
+    },
+    "core": {
+     "public": {
+      "n": 139,
+      "correct": 103,
+      "accuracy": 0.7410071942446043,
+      "chance": 0.21762589928057555,
+      "chance_corrected_intelligence": 66.89655172413792,
+      "ece": 0.15674186144161914,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 139
+     },
+     "sealed": {
+      "n": 155,
+      "correct": 114,
+      "accuracy": 0.7354838709677419,
+      "chance": 0.2,
+      "chance_corrected_intelligence": 66.93548387096773,
+      "ece": 0.11061206170371977,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 155
+     },
+     "axes": {
+      "intelligence": 66.9218576195773,
+      "calibration": 74.6485016776031,
+      "speed": 87.02263582643465,
+      "cost": 50.82102457516124
+     },
+     "intelligence_before_penalty": 66.9218576195773,
+     "raw_overall_gap_pp": 0.5523323276862335,
+     "matched_gap_pp": -1.6216216216216273,
+     "matched_gap_families": {
+      "ScreenSpot": {
+       "gap_pp": -1.6216216216216273,
+       "weight": 15.74468085106383
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 87.02263582643465,
+      "raw_p50_s": 0.135005445452407,
+      "raw_p95_s": 0.161290287040174,
+      "adjusted_p50_s": 0.420010890904814,
+      "adjusted_p95_s": 0.47258057408034804,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 50.82102457516124,
+      "raw_score": 50.82102457516124,
+      "usd_per_1000": 0.043581199652555754,
+      "total_usd": 0.01281287269785139,
+      "coverage": 1.0,
+      "source": "measured GPU seconds x $1.19/GPU-hour"
+     },
+     "composite": {
+      "harmonic_before_gates": 67.21889689695496,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 1.0
+      },
+      "score": 67.21889689695496
+     }
+    },
+    "everyday_photo": {
+     "public": {
+      "n": 89,
+      "correct": 81,
+      "accuracy": 0.9101123595505618,
+      "chance": 0.48314606741573035,
+      "chance_corrected_intelligence": 82.60869565217392,
+      "ece": 0.10618323705286409,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 89
+     },
+     "sealed": {
+      "n": 61,
+      "correct": 53,
+      "accuracy": 0.8688524590163934,
+      "chance": 0.48360655737704916,
+      "chance_corrected_intelligence": 74.60317460317461,
+      "ece": 0.07085615081139021,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 61
+     },
+     "axes": {
+      "intelligence": 77.40510697032437,
+      "calibration": 83.3558738008188,
+      "speed": 86.3949716642636,
+      "cost": 48.4364183616248
+     },
+     "intelligence_before_penalty": 77.40510697032437,
+     "raw_overall_gap_pp": 4.125990053416839,
+     "matched_gap_pp": 4.125990053416839,
+     "matched_gap_families": {
+      "Everyday photo": {
+       "gap_pp": 4.125990053416839,
+       "weight": 36.193333333333335
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 86.3949716642636,
+      "raw_p50_s": 0.15673863445408642,
+      "raw_p95_s": 0.17242546705529094,
+      "adjusted_p50_s": 0.46347726890817287,
+      "adjusted_p95_s": 0.4948509341105819,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 48.4364183616248,
+      "raw_score": 48.4364183616248,
+      "usd_per_1000": 0.052334256015636293,
+      "total_usd": 0.007850138402345445,
+      "coverage": 1.0,
+      "source": "measured GPU seconds x $1.19/GPU-hour"
+     },
+     "composite": {
+      "harmonic_before_gates": 70.00819356960486,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 0.9384346494809377
+      },
+      "score": 65.69811459328577
+     }
+    }
+   }
+  },
+  {
+   "rank": 3,
+   "key": "jev_omni",
+   "name": "Jev-Omni",
+   "api_flag": false,
+   "prior_exposure": "This checkpoint was measured on a separate frozen JevBench v1.4 text set before this run. It received no ImageJevBench task input before this evaluation.",
+   "score": 55.627382518052855,
+   "tracks": {
+    "all": {
+     "public": {
+      "n": 228,
+      "correct": 153,
+      "accuracy": 0.6710526315789473,
+      "chance": 0.32127192982456143,
+      "chance_corrected_intelligence": 51.534733441033914,
+      "ece": 0.05616163099268808,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 228
+     },
+     "sealed": {
+      "n": 216,
+      "correct": 128,
+      "accuracy": 0.5925925925925926,
+      "chance": 0.2800925925925926,
+      "chance_corrected_intelligence": 43.40836012861735,
+      "ece": 0.09711254261036997,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 216
+     },
+     "axes": {
+      "intelligence": 46.25259078796315,
+      "calibration": 83.44405529116375,
+      "speed": 89.94839872362184,
+      "cost": 59.48707347669823
+     },
+     "intelligence_before_penalty": 46.25259078796315,
+     "raw_overall_gap_pp": 7.8460038986354785,
+     "matched_gap_pp": 1.6741178109202812,
+     "matched_gap_families": {
+      "Everyday photo": {
+       "gap_pp": -2.9471357524405883,
+       "weight": 36.193333333333335
+      },
+      "ScreenSpot": {
+       "gap_pp": 12.297297297297305,
+       "weight": 15.74468085106383
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 89.94839872362184,
+      "raw_p50_s": 0.07424040790647268,
+      "raw_p95_s": 0.09451717603951693,
+      "adjusted_p50_s": 0.2984808158129454,
+      "adjusted_p95_s": 0.3390343520790339,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 59.48707347669823,
+      "raw_score": 59.48707347669823,
+      "usd_per_1000": 0.022409433819796595,
+      "total_usd": 0.009949788615989687,
+      "coverage": 1.0,
+      "source": "measured GPU seconds x $1.29/GPU-hour"
+     },
+     "composite": {
+      "harmonic_before_gates": 65.00645829584295,
+      "gates": {
+       "intelligence": 0.8557208618395095,
+       "speed": 1.0,
+       "cost": 1.0
+      },
+      "score": 55.627382518052855
+     }
+    },
+    "core": {
+     "public": {
+      "n": 139,
+      "correct": 71,
+      "accuracy": 0.5107913669064749,
+      "chance": 0.21762589928057555,
+      "chance_corrected_intelligence": 37.4712643678161,
+      "ece": 0.0766369725624651,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 139
+     },
+     "sealed": {
+      "n": 155,
+      "correct": 70,
+      "accuracy": 0.45161290322580644,
+      "chance": 0.2,
+      "chance_corrected_intelligence": 31.451612903225804,
+      "ece": 0.1373494367460633,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 155
+     },
+     "axes": {
+      "intelligence": 33.55849091583241,
+      "calibration": 76.77998514363921,
+      "speed": 89.85484440153232,
+      "cost": 59.019694213024515
+     },
+     "intelligence_before_penalty": 33.55849091583241,
+     "raw_overall_gap_pp": 5.917846368066843,
+     "matched_gap_pp": 12.297297297297305,
+     "matched_gap_families": {
+      "ScreenSpot": {
+       "gap_pp": 12.297297297297305,
+       "weight": 15.74468085106383
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 89.85484440153232,
+      "raw_p50_s": 0.07570168096572161,
+      "raw_p95_s": 0.0965289669111371,
+      "adjusted_p50_s": 0.30140336193144324,
+      "adjusted_p95_s": 0.34305793382227423,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 59.019694213024515,
+      "raw_score": 59.01969421302452,
+      "usd_per_1000": 0.023227913116705932,
+      "total_usd": 0.0068290064563115436,
+      "coverage": 1.0,
+      "source": "measured GPU seconds x $1.29/GPU-hour"
+     },
+     "composite": {
+      "harmonic_before_gates": 56.42106832766596,
+      "gates": {
+       "intelligence": 0.45046892501920244,
+       "speed": 1.0,
+       "cost": 1.0
+      },
+      "score": 25.415937997998654
+     }
+    },
+    "everyday_photo": {
+     "public": {
+      "n": 89,
+      "correct": 82,
+      "accuracy": 0.9213483146067416,
+      "chance": 0.48314606741573035,
+      "chance_corrected_intelligence": 84.78260869565219,
+      "ece": 0.07144742454052032,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 89
+     },
+     "sealed": {
+      "n": 61,
+      "correct": 58,
+      "accuracy": 0.9508196721311475,
+      "chance": 0.48360655737704916,
+      "chance_corrected_intelligence": 90.47619047619047,
+      "ece": 0.06400529896114039,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 61
+     },
+     "axes": {
+      "intelligence": 88.48343685300206,
+      "calibration": 86.67799141721532,
+      "speed": 90.13390969363553,
+      "cost": 60.45483413322506
+     },
+     "intelligence_before_penalty": 88.48343685300206,
+     "raw_overall_gap_pp": -2.9471357524405883,
+     "matched_gap_pp": -2.9471357524405883,
+     "matched_gap_families": {
+      "Everyday photo": {
+       "gap_pp": -2.9471357524405883,
+       "weight": 36.193333333333335
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 90.13390969363553,
+      "raw_p50_s": 0.07092946395277977,
+      "raw_p95_s": 0.09111392963677645,
+      "adjusted_p50_s": 0.29185892790555956,
+      "adjusted_p95_s": 0.3322278592735529,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 60.45483413322506,
+      "raw_score": 60.454834133225056,
+      "usd_per_1000": 0.020805214397854273,
+      "total_usd": 0.0031207821596781413,
+      "coverage": 1.0,
+      "source": "measured GPU seconds x $1.29/GPU-hour"
+     },
+     "composite": {
+      "harmonic_before_gates": 79.24812207554079,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 1.0
+      },
+      "score": 79.24812207554079
+     }
+    }
+   }
+  },
+  {
+   "rank": 4,
+   "key": "djev_spark_nvfp4",
+   "name": "djev-spark NVFP4",
+   "api_flag": false,
+   "prior_exposure": "Saw the 100 public promo photos in the earlier video run through inference only; no training. Its score on the new sealed photo variants is the clean split measurement.",
+   "score": 41.55750809880439,
+   "tracks": {
+    "all": {
+     "public": {
+      "n": 228,
+      "correct": 146,
+      "accuracy": 0.6403508771929824,
+      "chance": 0.32127192982456143,
+      "chance_corrected_intelligence": 47.01130856219709,
+      "ece": 0.0608199273629017,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 228
+     },
+     "sealed": {
+      "n": 216,
+      "correct": 127,
+      "accuracy": 0.5879629629629629,
+      "chance": 0.2800925925925926,
+      "chance_corrected_intelligence": 42.7652733118971,
+      "ece": 0.13007406635000932,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 216
+     },
+     "axes": {
+      "intelligence": 44.2513856495021,
+      "calibration": 78.83297645909568,
+      "speed": 85.90690899433434,
+      "cost": 47.4804182949381
+     },
+     "intelligence_before_penalty": 44.2513856495021,
+     "raw_overall_gap_pp": 5.238791423001954,
+     "matched_gap_pp": 4.094897627559309,
+     "matched_gap_families": {
+      "Everyday photo": {
+       "gap_pp": 1.8787990421808787,
+       "weight": 36.193333333333335
+      },
+      "ScreenSpot": {
+       "gap_pp": 9.189189189189184,
+       "weight": 15.74468085106383
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 85.90690899433434,
+      "raw_p50_s": 0.1682967705419287,
+      "raw_p95_s": 0.18870160006918013,
+      "adjusted_p50_s": 0.48659354108385744,
+      "adjusted_p95_s": 0.5274032001383603,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 47.4804182949381,
+      "raw_score": 47.4804182949381,
+      "usd_per_1000": 0.056318713231981975,
+      "total_usd": 0.025005508675,
+      "coverage": 1.0,
+      "source": "measured GPU seconds x $1.19/GPU-hour"
+     },
+     "composite": {
+      "harmonic_before_gates": 58.83648158456181,
+      "gates": {
+       "intelligence": 0.783274052760384,
+       "speed": 1.0,
+       "cost": 0.901756048584917
+      },
+      "score": 41.55750809880439
+     }
+    },
+    "core": {
+     "public": {
+      "n": 139,
+      "correct": 67,
+      "accuracy": 0.48201438848920863,
+      "chance": 0.21762589928057555,
+      "chance_corrected_intelligence": 33.793103448275865,
+      "ece": 0.09678632751767623,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 139
+     },
+     "sealed": {
+      "n": 155,
+      "correct": 74,
+      "accuracy": 0.4774193548387097,
+      "chance": 0.2,
+      "chance_corrected_intelligence": 34.677419354838705,
+      "ece": 0.16478646720298168,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 155
+     },
+     "axes": {
+      "intelligence": 34.36790878754171,
+      "calibration": 71.80271633737505,
+      "speed": 85.95706123470069,
+      "cost": 47.224858529952776
+     },
+     "intelligence_before_penalty": 34.36790878754171,
+     "raw_overall_gap_pp": 0.45950336504989586,
+     "matched_gap_pp": 9.189189189189184,
+     "matched_gap_families": {
+      "ScreenSpot": {
+       "gap_pp": 9.189189189189184,
+       "weight": 15.74468085106383
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 85.95706123470069,
+      "raw_p50_s": 0.1652924990048632,
+      "raw_p95_s": 0.18893298599869013,
+      "adjusted_p50_s": 0.4805849980097264,
+      "adjusted_p95_s": 0.5278659719973803,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 47.224858529952776,
+      "raw_score": 47.224858529952776,
+      "usd_per_1000": 0.057434306613756606,
+      "total_usd": 0.016885686144444443,
+      "coverage": 1.0,
+      "source": "measured GPU seconds x $1.19/GPU-hour"
+     },
+     "composite": {
+      "harmonic_before_gates": 52.747508829309886,
+      "gates": {
+       "intelligence": 0.4724612617715146,
+       "speed": 1.0,
+       "cost": 0.8920749052696213
+      },
+      "score": 22.23153660830832
+     }
+    },
+    "everyday_photo": {
+     "public": {
+      "n": 89,
+      "correct": 79,
+      "accuracy": 0.8876404494382022,
+      "chance": 0.48314606741573035,
+      "chance_corrected_intelligence": 78.26086956521739,
+      "ece": 0.03408787199413475,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 89
+     },
+     "sealed": {
+      "n": 61,
+      "correct": 53,
+      "accuracy": 0.8688524590163934,
+      "chance": 0.48360655737704916,
+      "chance_corrected_intelligence": 74.60317460317461,
+      "ece": 0.08394993368696115,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 61
+     },
+     "axes": {
+      "intelligence": 75.88336783988959,
+      "calibration": 86.70035758110562,
+      "speed": 85.87126118174852,
+      "cost": 47.99634165370624
+     },
+     "intelligence_before_penalty": 75.88336783988959,
+     "raw_overall_gap_pp": 1.8787990421808787,
+     "matched_gap_pp": 1.878799042180879,
+     "matched_gap_families": {
+      "Everyday photo": {
+       "gap_pp": 1.8787990421808787,
+       "weight": 36.193333333333335
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 85.87126118174852,
+      "raw_p50_s": 0.1704564766259864,
+      "raw_p95_s": 0.18853566306643188,
+      "adjusted_p50_s": 0.4909129532519728,
+      "adjusted_p95_s": 0.5270713261328638,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 47.99634165370624,
+      "raw_score": 47.99634165370624,
+      "usd_per_1000": 0.0541321502037037,
+      "total_usd": 0.008119822530555555,
+      "coverage": 1.0,
+      "source": "measured GPU seconds x $1.19/GPU-hour"
+     },
+     "composite": {
+      "harmonic_before_gates": 69.93941512783732,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 0.9214595248557186
+      },
+      "score": 64.44634023238383
+     }
+    }
+   }
+  },
+  {
+   "rank": 5,
+   "key": "djev_dev_bf16",
+   "name": "djev-dev BF16",
+   "api_flag": false,
+   "prior_exposure": "No evaluation run on this item set before this job.",
+   "score": 38.75871810843354,
+   "tracks": {
+    "all": {
+     "public": {
+      "n": 228,
+      "correct": 153,
+      "accuracy": 0.6710526315789473,
+      "chance": 0.32127192982456143,
+      "chance_corrected_intelligence": 51.534733441033914,
+      "ece": 0.0707193446075585,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 228
+     },
+     "sealed": {
+      "n": 216,
+      "correct": 124,
+      "accuracy": 0.5740740740740741,
+      "chance": 0.2800925925925926,
+      "chance_corrected_intelligence": 40.83601286173633,
+      "ece": 0.1819593786672414,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 216
+     },
+     "axes": {
+      "intelligence": 44.580565064490486,
+      "calibration": 71.39492665072952,
+      "speed": 85.35268068385818,
+      "cost": 46.129309364701776
+     },
+     "intelligence_before_penalty": 44.580565064490486,
+     "raw_overall_gap_pp": 9.697855750487328,
+     "matched_gap_pp": 9.188530790931914,
+     "matched_gap_families": {
+      "Everyday photo": {
+       "gap_pp": 5.24958555903482,
+       "weight": 36.193333333333335
+      },
+      "ScreenSpot": {
+       "gap_pp": 18.243243243243246,
+       "weight": 15.74468085106383
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 85.35268068385818,
+      "raw_p50_s": 0.18831039301585406,
+      "raw_p95_s": 0.2018241269979626,
+      "adjusted_p50_s": 0.5266207860317081,
+      "adjusted_p95_s": 0.5536482539959252,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 46.129309364701776,
+      "raw_score": 46.129309364701776,
+      "usd_per_1000": 0.06247261538413413,
+      "total_usd": 0.027737841230555553,
+      "coverage": 1.0,
+      "source": "measured GPU seconds x $1.19/GPU-hour"
+     },
+     "composite": {
+      "harmonic_before_gates": 57.28018070409399,
+      "gates": {
+       "intelligence": 0.7949707125877078,
+       "speed": 1.0,
+       "cost": 0.8511652729857452
+      },
+      "score": 38.75871810843354
+     }
+    },
+    "core": {
+     "public": {
+      "n": 139,
+      "correct": 71,
+      "accuracy": 0.5107913669064749,
+      "chance": 0.21762589928057555,
+      "chance_corrected_intelligence": 37.4712643678161,
+      "ece": 0.11268547206781754,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 139
+     },
+     "sealed": {
+      "n": 155,
+      "correct": 71,
+      "accuracy": 0.45806451612903226,
+      "chance": 0.2,
+      "chance_corrected_intelligence": 32.258064516129025,
+      "ece": 0.2367309368615647,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 155
+     },
+     "axes": {
+      "intelligence": 32.97730010321779,
+      "calibration": 61.33699516324936,
+      "speed": 85.37931177737522,
+      "cost": 45.89606316909154
+     },
+     "intelligence_before_penalty": 34.082684464219504,
+     "raw_overall_gap_pp": 5.27268507774426,
+     "matched_gap_pp": 18.243243243243242,
+     "matched_gap_families": {
+      "ScreenSpot": {
+       "gap_pp": 18.243243243243246,
+       "weight": 15.74468085106383
+      }
+     },
+     "overfit_penalty_points": 3.243243243243242,
+     "penalty_multiplier": 0.9675675675675676,
+     "speed": {
+      "score": 85.37931177737522,
+      "raw_p50_s": 0.18501371948514134,
+      "raw_p95_s": 0.2036201790906489,
+      "adjusted_p50_s": 0.5200274389702827,
+      "adjusted_p95_s": 0.5572403581812978,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 45.89606316909154,
+      "raw_score": 45.89606316909154,
+      "usd_per_1000": 0.06360109034391534,
+      "total_usd": 0.01869872056111111,
+      "coverage": 1.0,
+      "source": "measured GPU seconds x $1.19/GPU-hour"
+     },
+     "composite": {
+      "harmonic_before_gates": 49.92008779828747,
+      "gates": {
+       "intelligence": 0.4350009288390753,
+       "speed": 1.0,
+       "cost": 0.8425794457684963
+      },
+      "score": 18.296852429255864
+     }
+    },
+    "everyday_photo": {
+     "public": {
+      "n": 89,
+      "correct": 82,
+      "accuracy": 0.9213483146067416,
+      "chance": 0.48314606741573035,
+      "chance_corrected_intelligence": 84.78260869565219,
+      "ece": 0.05470643170228029,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 89
+     },
+     "sealed": {
+      "n": 61,
+      "correct": 53,
+      "accuracy": 0.8688524590163934,
+      "chance": 0.48360655737704916,
+      "chance_corrected_intelligence": 74.60317460317461,
+      "ece": 0.06120859209824996,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 61
+     },
+     "axes": {
+      "intelligence": 78.16597653554176,
+      "calibration": 88.21343280806788,
+      "speed": 85.37957724787815,
+      "cost": 46.59895224783852
+     },
+     "intelligence_before_penalty": 78.16597653554176,
+     "raw_overall_gap_pp": 5.24958555903482,
+     "matched_gap_pp": 5.24958555903482,
+     "matched_gap_families": {
+      "Everyday photo": {
+       "gap_pp": 5.24958555903482,
+       "weight": 36.193333333333335
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 85.37957724787815,
+      "raw_p50_s": 0.19073488446883857,
+      "raw_p95_s": 0.19760493491776288,
+      "adjusted_p50_s": 0.5314697689376772,
+      "adjusted_p95_s": 0.5452098698355258,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 46.59895224783852,
+      "raw_score": 46.59895224783852,
+      "usd_per_1000": 0.060260804462962954,
+      "total_usd": 0.009039120669444444,
+      "coverage": 1.0,
+      "source": "measured GPU seconds x $1.19/GPU-hour"
+     },
+     "composite": {
+      "harmonic_before_gates": 69.80614609550345,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 0.8685849402385339
+      },
+      "score": 60.63256723464524
+     }
+    }
+   }
+  },
+  {
+   "rank": 6,
+   "key": "bonsai_2_27b_pq2_0",
+   "name": "Bonsai-2-27B v2 PQ2_0 + Q8_0 MMProj",
+   "api_flag": false,
+   "prior_exposure": "Measured separately on 24 Sep; clean PNG-normalized rerun scored.",
+   "score": 18.952926197505175,
+   "tracks": {
+    "all": {
+     "public": {
+      "n": 228,
+      "correct": 191,
+      "accuracy": 0.8377192982456141,
+      "chance": 0.32127192982456143,
+      "chance_corrected_intelligence": 76.09046849757675,
+      "ece": 0.053909923413454006,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 228
+     },
+     "sealed": {
+      "n": 216,
+      "correct": 179,
+      "accuracy": 0.8287037037037037,
+      "chance": 0.2800925925925926,
+      "chance_corrected_intelligence": 76.20578778135048,
+      "ece": 0.0479431260432064,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 216
+     },
+     "axes": {
+      "intelligence": 76.16542603202967,
+      "calibration": 89.99369897544139,
+      "speed": 73.87263422266625,
+      "cost": 29.20737246368857
+     },
+     "intelligence_before_penalty": 76.16542603202967,
+     "raw_overall_gap_pp": 0.9015594541910366,
+     "matched_gap_pp": 3.918746569150897,
+     "matched_gap_families": {
+      "Everyday photo": {
+       "gap_pp": 2.1550930189721873,
+       "weight": 36.193333333333335
+      },
+      "ScreenSpot": {
+       "gap_pp": 7.972972972972969,
+       "weight": 15.74468085106383
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 73.87263422266625,
+      "raw_p50_s": 0.8029782474040985,
+      "raw_p95_s": 1.092327805235982,
+      "adjusted_p50_s": 1.755956494808197,
+      "adjusted_p95_s": 2.334655610471964,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 29.20737246368857,
+      "raw_score": 29.20737246368857,
+      "usd_per_1000": 0.22895717148185502,
+      "total_usd": 0.10165698413794362,
+      "coverage": 1.0,
+      "source": "measured GPU seconds x $1.19/GPU-hour"
+     },
+     "composite": {
+      "harmonic_before_gates": 55.543251810087256,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 0.3412282424930533
+      },
+      "score": 18.952926197505175
+     }
+    },
+    "core": {
+     "public": {
+      "n": 139,
+      "correct": 103,
+      "accuracy": 0.7410071942446043,
+      "chance": 0.21762589928057555,
+      "chance_corrected_intelligence": 66.89655172413792,
+      "ece": 0.06919157474417281,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 139
+     },
+     "sealed": {
+      "n": 155,
+      "correct": 120,
+      "accuracy": 0.7741935483870968,
+      "chance": 0.2,
+      "chance_corrected_intelligence": 71.77419354838709,
+      "ece": 0.07308334889219141,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 155
+     },
+     "axes": {
+      "intelligence": 70.06701890989987,
+      "calibration": 85.65575441192301,
+      "speed": 75.38649355730104,
+      "cost": 29.207372463688575
+     },
+     "intelligence_before_penalty": 70.06701890989987,
+     "raw_overall_gap_pp": -3.318635414249249,
+     "matched_gap_pp": 7.972972972972969,
+     "matched_gap_families": {
+      "ScreenSpot": {
+       "gap_pp": 7.972972972972969,
+       "weight": 15.74468085106383
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 75.38649355730104,
+      "raw_p50_s": 0.7267089253291488,
+      "raw_p95_s": 0.8271399894729257,
+      "adjusted_p50_s": 1.6034178506582974,
+      "adjusted_p95_s": 1.8042799789458512,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 29.207372463688575,
+      "raw_score": 29.20737246368857,
+      "usd_per_1000": 0.22895717148185502,
+      "total_usd": 0.06731340841566538,
+      "coverage": 1.0,
+      "source": "measured GPU seconds x $1.19/GPU-hour"
+     },
+     "composite": {
+      "harmonic_before_gates": 54.459115482463474,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 0.34122824249305345
+      },
+      "score": 18.58298826380725
+     }
+    },
+    "everyday_photo": {
+     "public": {
+      "n": 89,
+      "correct": 88,
+      "accuracy": 0.9887640449438202,
+      "chance": 0.48314606741573035,
+      "chance_corrected_intelligence": 97.82608695652173,
+      "ece": 0.0422719529995514,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 89
+     },
+     "sealed": {
+      "n": 61,
+      "correct": 59,
+      "accuracy": 0.9672131147540983,
+      "chance": 0.48360655737704916,
+      "chance_corrected_intelligence": 93.65079365079364,
+      "ece": 0.030905666919615972,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 61
+     },
+     "axes": {
+      "intelligence": 95.11214630779847,
+      "calibration": 93.02322659048133,
+      "speed": 72.65113813816319,
+      "cost": 29.20737246368857
+     },
+     "intelligence_before_penalty": 95.11214630779847,
+     "raw_overall_gap_pp": 2.1550930189721873,
+     "matched_gap_pp": 2.1550930189721873,
+     "matched_gap_families": {
+      "Everyday photo": {
+       "gap_pp": 2.1550930189721873,
+       "weight": 36.193333333333335
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 72.65113813816319,
+      "raw_p50_s": 1.0803800919093192,
+      "raw_p95_s": 1.1001716740429401,
+      "adjusted_p50_s": 2.3107601838186382,
+      "adjusted_p95_s": 2.35034334808588,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 29.20737246368857,
+      "raw_score": 29.20737246368857,
+      "usd_per_1000": 0.22895717148185502,
+      "total_usd": 0.03434357572227825,
+      "coverage": 1.0,
+      "source": "measured GPU seconds x $1.19/GPU-hour"
+     },
+     "composite": {
+      "harmonic_before_gates": 57.74818366170756,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 0.3412282424930533
+      },
+      "score": 19.705311218050525
+     }
+    }
+   }
+  },
+  {
+   "rank": 7,
+   "key": "gpt6_luna",
+   "name": "GPT-6 Luna",
+   "api_flag": true,
+   "prior_exposure": "Before evaluation, the API received stateless, single-turn label-check calls for the 100 public promo-photo candidates and 68 new sealed-photo candidates, including images later dropped. Calls showed the image, question, and options but not the gold key; provider data-collection denial, zero-data-retention, and no-fallback were requested. Human gold-blind adjudication decided inclusion; checker outputs did not determine keep/drop decisions. This job used no fine-tuning and carried no context between calls.",
+   "score": 16.509956607688665,
+   "tracks": {
+    "all": {
+     "public": {
+      "n": 228,
+      "correct": 203,
+      "accuracy": 0.8903508771929824,
+      "chance": 0.32127192982456143,
+      "chance_corrected_intelligence": 83.8449111470113,
+      "ece": 0.027055813953488342,
+      "probability_coverage": 0.9429824561403509,
+      "valid_answer_count": 215
+     },
+     "sealed": {
+      "n": 216,
+      "correct": 189,
+      "accuracy": 0.875,
+      "chance": 0.2800925925925926,
+      "chance_corrected_intelligence": 82.63665594855306,
+      "ece": 0.042414634146341425,
+      "probability_coverage": 0.9490740740740741,
+      "valid_answer_count": 205
+     },
+     "axes": {
+      "intelligence": 83.05954526801344,
+      "calibration": 87.67517787524368,
+      "speed": 61.77419054171388,
+      "cost": 27.905814687003325
+     },
+     "intelligence_before_penalty": 83.05954526801344,
+     "raw_overall_gap_pp": 1.5350877192982448,
+     "matched_gap_pp": 5.721222515655601,
+     "matched_gap_families": {
+      "Everyday photo": {
+       "gap_pp": 4.918032786885251,
+       "weight": 36.193333333333335
+      },
+      "ScreenSpot": {
+       "gap_pp": 7.567567567567568,
+       "weight": 15.74468085106383
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 61.77419054171388,
+      "raw_p50_s": 3.4255253970623016,
+      "raw_p95_s": 19.402324065566063,
+      "adjusted_p50_s": 3.4255253970623016,
+      "adjusted_p95_s": 19.402324065566063,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 27.905814687003325,
+      "raw_score": 29.153368755363473,
+      "usd_per_1000": 0.22990815423529412,
+      "total_usd": 0.09771096555,
+      "coverage": 0.9572072072072072,
+      "source": "OpenRouter usage.cost receipts"
+     },
+     "composite": {
+      "harmonic_before_gates": 53.00252123404549,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 0.31149379733814825
+      },
+      "score": 16.509956607688665
+     }
+    },
+    "core": {
+     "public": {
+      "n": 139,
+      "correct": 114,
+      "accuracy": 0.8201438848920863,
+      "chance": 0.21762589928057555,
+      "chance_corrected_intelligence": 77.01149425287356,
+      "ece": 0.055142857142857125,
+      "probability_coverage": 0.9064748201438849,
+      "valid_answer_count": 126
+     },
+     "sealed": {
+      "n": 155,
+      "correct": 131,
+      "accuracy": 0.8451612903225807,
+      "chance": 0.2,
+      "chance_corrected_intelligence": 80.64516129032259,
+      "ece": 0.05850684931506854,
+      "probability_coverage": 0.9419354838709677,
+      "valid_answer_count": 146
+     },
+     "axes": {
+      "intelligence": 79.37337782721544,
+      "calibration": 82.28917428637735,
+      "speed": 61.70624003160064,
+      "cost": 28.66564726624446
+     },
+     "intelligence_before_penalty": 79.37337782721544,
+     "raw_overall_gap_pp": -2.5017405430494355,
+     "matched_gap_pp": 7.567567567567568,
+     "matched_gap_families": {
+      "ScreenSpot": {
+       "gap_pp": 7.567567567567568,
+       "weight": 15.74468085106383
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 61.70624003160064,
+      "raw_p50_s": 3.438646111637354,
+      "raw_p95_s": 19.633083522319794,
+      "adjusted_p50_s": 3.438646111637354,
+      "adjusted_p95_s": 19.633083522319794,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 28.66564726624446,
+      "raw_score": 30.4249108168804,
+      "usd_per_1000": 0.2085305263537906,
+      "total_usd": 0.0577629558,
+      "coverage": 0.9421768707482994,
+      "source": "OpenRouter usage.cost receipts"
+     },
+     "composite": {
+      "harmonic_before_gates": 52.74141476490841,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 0.3286877332770994
+      },
+      "score": 17.33545606890509
+     }
+    },
+    "everyday_photo": {
+     "public": {
+      "n": 89,
+      "correct": 89,
+      "accuracy": 1.0,
+      "chance": 0.48314606741573035,
+      "chance_corrected_intelligence": 100.0,
+      "ece": 0.012707865168539278,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 89
+     },
+     "sealed": {
+      "n": 61,
+      "correct": 58,
+      "accuracy": 0.9508196721311475,
+      "chance": 0.48360655737704916,
+      "chance_corrected_intelligence": 90.47619047619047,
+      "ece": 0.0025932203389830155,
+      "probability_coverage": 0.9672131147540983,
+      "valid_answer_count": 59
+     },
+     "axes": {
+      "intelligence": 93.8095238095238,
+      "calibration": 96.65323632344816,
+      "speed": 61.804770874668506,
+      "cost": 26.702157085197285
+     },
+     "intelligence_before_penalty": 93.8095238095238,
+     "raw_overall_gap_pp": 4.918032786885251,
+     "matched_gap_pp": 4.918032786885251,
+     "matched_gap_families": {
+      "Everyday photo": {
+       "gap_pp": 4.918032786885251,
+       "weight": 36.193333333333335
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 61.804770874668506,
+      "raw_p50_s": 3.4014896862208843,
+      "raw_p95_s": 19.402324065566063,
+      "adjusted_p50_s": 3.4014896862208843,
+      "adjusted_p95_s": 19.402324065566063,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 26.702157085197285,
+      "raw_score": 27.06299704580806,
+      "usd_per_1000": 0.26991898479729726,
+      "total_usd": 0.03994800975,
+      "coverage": 0.9866666666666667,
+      "source": "OpenRouter usage.cost receipts"
+     },
+     "composite": {
+      "harmonic_before_gates": 53.59322319927924,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 0.28520207720102064
+      },
+      "score": 15.284898580332367
+     }
+    }
+   }
+  },
+  {
+   "rank": 8,
+   "key": "gpt56_luna",
+   "name": "GPT-5.6 Luna",
+   "api_flag": true,
+   "prior_exposure": "No previous photo-label-check call in this job.",
+   "score": 12.566697068147905,
+   "tracks": {
+    "all": {
+     "public": {
+      "n": 228,
+      "correct": 211,
+      "accuracy": 0.9254385964912281,
+      "chance": 0.32127192982456143,
+      "chance_corrected_intelligence": 89.01453957996769,
+      "ece": 0.02671300448430495,
+      "probability_coverage": 0.9780701754385965,
+      "valid_answer_count": 223
+     },
+     "sealed": {
+      "n": 216,
+      "correct": 198,
+      "accuracy": 0.9166666666666666,
+      "chance": 0.2800925925925926,
+      "chance_corrected_intelligence": 88.42443729903535,
+      "ece": 0.02359813084112145,
+      "probability_coverage": 0.9907407407407407,
+      "valid_answer_count": 214
+     },
+     "axes": {
+      "intelligence": 88.63097309736168,
+      "calibration": 93.76234892787524,
+      "speed": 60.80646121878747,
+      "cost": 24.85147276921242
+     },
+     "intelligence_before_penalty": 88.63097309736168,
+     "raw_overall_gap_pp": 0.8771929824561431,
+     "matched_gap_pp": 0.28211479586959903,
+     "matched_gap_families": {
+      "Everyday photo": {
+       "gap_pp": 1.6393442622950838,
+       "weight": 36.193333333333335
+      },
+      "ScreenSpot": {
+       "gap_pp": -2.837837837837842,
+       "weight": 15.74468085106383
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 60.80646121878747,
+      "raw_p50_s": 3.880011420696974,
+      "raw_p95_s": 21.405278079211712,
+      "adjusted_p50_s": 3.880011420696974,
+      "adjusted_p95_s": 21.405278079211712,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 24.85147276921242,
+      "raw_score": 25.02053040709822,
+      "usd_per_1000": 0.3157298571428571,
+      "total_usd": 0.139236867,
+      "coverage": 0.9932432432432432,
+      "source": "OpenRouter usage.cost receipts"
+     },
+     "composite": {
+      "harmonic_before_gates": 50.869432432040426,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 0.2470382795195626
+      },
+      "score": 12.566697068147905
+     }
+    },
+    "core": {
+     "public": {
+      "n": 139,
+      "correct": 122,
+      "accuracy": 0.8776978417266187,
+      "chance": 0.21762589928057555,
+      "chance_corrected_intelligence": 84.36781609195403,
+      "ece": 0.03541791044776123,
+      "probability_coverage": 0.9640287769784173,
+      "valid_answer_count": 134
+     },
+     "sealed": {
+      "n": 155,
+      "correct": 138,
+      "accuracy": 0.8903225806451613,
+      "chance": 0.2,
+      "chance_corrected_intelligence": 86.29032258064517,
+      "ece": 0.03844155844155838,
+      "probability_coverage": 0.9935483870967742,
+      "valid_answer_count": 154
+     },
+     "axes": {
+      "intelligence": 85.61744530960327,
+      "calibration": 90.96641912276633,
+      "speed": 60.121672579635685,
+      "cost": 24.558232070485957
+     },
+     "intelligence_before_penalty": 85.61744530960327,
+     "raw_overall_gap_pp": -1.2624738918542655,
+     "matched_gap_pp": -2.837837837837842,
+     "matched_gap_families": {
+      "ScreenSpot": {
+       "gap_pp": -2.837837837837842,
+       "weight": 15.74468085106383
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 60.121672579635685,
+      "raw_p50_s": 4.1033581122756,
+      "raw_p95_s": 23.696997418999672,
+      "adjusted_p50_s": 4.1033581122756,
+      "adjusted_p95_s": 23.696997418999672,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 24.558232070485957,
+      "raw_score": 24.72643913946189,
+      "usd_per_1000": 0.32293766095890414,
+      "total_usd": 0.094297797,
+      "coverage": 0.9931972789115646,
+      "source": "OpenRouter usage.cost receipts"
+     },
+     "composite": {
+      "harmonic_before_gates": 49.984123197339564,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 0.241242704971138
+      },
+      "score": 12.058305085736803
+     }
+    },
+    "everyday_photo": {
+     "public": {
+      "n": 89,
+      "correct": 89,
+      "accuracy": 1.0,
+      "chance": 0.48314606741573035,
+      "chance_corrected_intelligence": 100.0,
+      "ece": 0.013606741573033654,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 89
+     },
+     "sealed": {
+      "n": 61,
+      "correct": 60,
+      "accuracy": 0.9836065573770492,
+      "chance": 0.48360655737704916,
+      "chance_corrected_intelligence": 96.82539682539682,
+      "ece": 0.014499999999999957,
+      "probability_coverage": 0.9836065573770492,
+      "valid_answer_count": 60
+     },
+     "axes": {
+      "intelligence": 97.93650793650794,
+      "calibration": 96.1278559587401,
+      "speed": 61.40976820805645,
+      "cost": 25.446086530508055
+     },
+     "intelligence_before_penalty": 97.93650793650794,
+     "raw_overall_gap_pp": 1.6393442622950838,
+     "matched_gap_pp": 1.6393442622950838,
+     "matched_gap_families": {
+      "Everyday photo": {
+       "gap_pp": 1.6393442622950838,
+       "weight": 36.193333333333335
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 61.40976820805645,
+      "raw_p50_s": 3.5096979439258575,
+      "raw_p95_s": 20.59460363537073,
+      "adjusted_p50_s": 3.5096979439258575,
+      "adjusted_p95_s": 20.59460363537073,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 25.446086530508055,
+      "raw_score": 25.616865634739654,
+      "usd_per_1000": 0.3016044966442953,
+      "total_usd": 0.04493907,
+      "coverage": 0.9933333333333333,
+      "source": "OpenRouter usage.cost receipts"
+     },
+     "composite": {
+      "harmonic_before_gates": 52.49596189337421,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 0.2590013278872414
+      },
+      "score": 13.596523839101943
+     }
+    }
+   }
+  },
+  {
+   "rank": 9,
+   "key": "gemini31_flash_lite",
+   "name": "Gemini 3.1 Flash Lite",
+   "api_flag": true,
+   "prior_exposure": "No previous photo-label-check call in this job.",
+   "score": 9.24492639715562,
+   "tracks": {
+    "all": {
+     "public": {
+      "n": 228,
+      "correct": 194,
+      "accuracy": 0.8508771929824561,
+      "chance": 0.32127192982456143,
+      "chance_corrected_intelligence": 78.02907915993536,
+      "ece": 0.03476754385964913,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 228
+     },
+     "sealed": {
+      "n": 216,
+      "correct": 198,
+      "accuracy": 0.9166666666666666,
+      "chance": 0.2800925925925926,
+      "chance_corrected_intelligence": 88.42443729903535,
+      "ece": 0.05768518518518521,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 216
+     },
+     "axes": {
+      "intelligence": 84.78606195035036,
+      "calibration": 90.06719785575048,
+      "speed": 61.856468349573426,
+      "cost": 22.07776714007956
+     },
+     "intelligence_before_penalty": 84.78606195035036,
+     "raw_overall_gap_pp": -6.578947368421051,
+     "matched_gap_pp": -0.04096536242056092,
+     "matched_gap_families": {
+      "Everyday photo": {
+       "gap_pp": 0.0,
+       "weight": 36.193333333333335
+      },
+      "ScreenSpot": {
+       "gap_pp": -0.13513513513513375,
+       "weight": 15.74468085106383
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 61.856468349573426,
+      "raw_p50_s": 2.390967261046171,
+      "raw_p95_s": 27.275928013026714,
+      "adjusted_p50_s": 2.390967261046171,
+      "adjusted_p95_s": 27.275928013026714,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 22.07776714007956,
+      "raw_score": 22.07776714007956,
+      "usd_per_1000": 0.39573800675675674,
+      "total_usd": 0.175707675,
+      "coverage": 1.0,
+      "source": "OpenRouter usage.cost receipts"
+     },
+     "composite": {
+      "harmonic_before_gates": 47.4169013404577,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 0.19497112075663067
+      },
+      "score": 9.24492639715562
+     }
+    },
+    "core": {
+     "public": {
+      "n": 139,
+      "correct": 105,
+      "accuracy": 0.7553956834532374,
+      "chance": 0.21762589928057555,
+      "chance_corrected_intelligence": 68.73563218390804,
+      "ece": 0.0811510791366907,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 139
+     },
+     "sealed": {
+      "n": 155,
+      "correct": 137,
+      "accuracy": 0.8838709677419355,
+      "chance": 0.2,
+      "chance_corrected_intelligence": 85.48387096774194,
+      "ece": 0.09219354838709676,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 155
+     },
+     "axes": {
+      "intelligence": 79.62198739340008,
+      "calibration": 82.33426317010907,
+      "speed": 62.57221425552512,
+      "cost": 21.4912566807712
+     },
+     "intelligence_before_penalty": 79.62198739340008,
+     "raw_overall_gap_pp": -12.847528428869815,
+     "matched_gap_pp": -0.13513513513513375,
+     "matched_gap_families": {
+      "ScreenSpot": {
+       "gap_pp": -0.13513513513513375,
+       "weight": 15.74468085106383
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 62.57221425552512,
+      "raw_p50_s": 2.282226175069809,
+      "raw_p95_s": 24.23370921611786,
+      "adjusted_p50_s": 2.282226175069809,
+      "adjusted_p95_s": 24.23370921611786,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 21.4912566807712,
+      "raw_score": 21.4912566807712,
+      "usd_per_1000": 0.41395974489795917,
+      "total_usd": 0.121704165,
+      "coverage": 1.0,
+      "source": "OpenRouter usage.cost receipts"
+     },
+     "composite": {
+      "harmonic_before_gates": 45.86259670853156,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 0.1847496454875171
+      },
+      "score": 8.473098483038175
+     }
+    },
+    "everyday_photo": {
+     "public": {
+      "n": 89,
+      "correct": 89,
+      "accuracy": 1.0,
+      "chance": 0.48314606741573035,
+      "chance_corrected_intelligence": 100.0,
+      "ece": 0.037674157303370856,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 89
+     },
+     "sealed": {
+      "n": 61,
+      "correct": 61,
+      "accuracy": 1.0,
+      "chance": 0.48360655737704916,
+      "chance_corrected_intelligence": 100.0,
+      "ece": 0.03655737704918038,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 61
+     },
+     "axes": {
+      "intelligence": 100.0,
+      "calibration": 92.61034997237059,
+      "speed": 61.24716088211909,
+      "cost": 23.310078130263904
+     },
+     "intelligence_before_penalty": 100.0,
+     "raw_overall_gap_pp": 0.0,
+     "matched_gap_pp": 0.0,
+     "matched_gap_families": {
+      "Everyday photo": {
+       "gap_pp": 0.0,
+       "weight": 36.193333333333335
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 61.24716088211909,
+      "raw_p50_s": 2.485154092311859,
+      "raw_p95_s": 30.194690987467766,
+      "adjusted_p50_s": 2.485154092311859,
+      "adjusted_p95_s": 30.194690987467766,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 23.310078130263904,
+      "raw_score": 23.310078130263904,
+      "usd_per_1000": 0.3600234,
+      "total_usd": 0.05400351,
+      "coverage": 1.0,
+      "source": "OpenRouter usage.cost receipts"
+     },
+     "composite": {
+      "harmonic_before_gates": 49.984307604706615,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 0.217343896975603
+      },
+      "score": 10.863784202434204
+     }
+    }
+   }
+  },
+  {
+   "rank": 10,
+   "key": "gemini38_flash",
+   "name": "Gemini 3.8 Flash",
+   "api_flag": true,
+   "prior_exposure": "Before evaluation, the API received stateless, single-turn label-check calls for the 100 public promo-photo candidates and 68 new sealed-photo candidates, including images later dropped. Calls showed the image, question, and options but not the gold key; provider data-collection denial, zero-data-retention, and no-fallback were requested. Human gold-blind adjudication decided inclusion; checker outputs did not determine keep/drop decisions. This job used no fine-tuning and carried no context between calls.",
+   "score": 0.0019230963883652787,
+   "tracks": {
+    "all": {
+     "public": {
+      "n": 228,
+      "correct": 202,
+      "accuracy": 0.8859649122807017,
+      "chance": 0.32127192982456143,
+      "chance_corrected_intelligence": 83.19870759289175,
+      "ece": 0.13376699029126216,
+      "probability_coverage": 0.9035087719298246,
+      "valid_answer_count": 206
+     },
+     "sealed": {
+      "n": 216,
+      "correct": 200,
+      "accuracy": 0.9259259259259259,
+      "chance": 0.2800925925925926,
+      "chance_corrected_intelligence": 89.71061093247587,
+      "ece": 0.12054950495049503,
+      "probability_coverage": 0.9351851851851852,
+      "valid_answer_count": 202
+     },
+     "axes": {
+      "intelligence": 87.43144476362143,
+      "calibration": 69.29397417153996,
+      "speed": 56.76147955551755,
+      "cost": 1.079614731073832
+     },
+     "intelligence_before_penalty": 87.43144476362143,
+     "raw_overall_gap_pp": -3.9961013645224197,
+     "matched_gap_pp": 3.1906555277294544,
+     "matched_gap_families": {
+      "Everyday photo": {
+       "gap_pp": 1.6393442622950838,
+       "weight": 36.193333333333335
+      },
+      "ScreenSpot": {
+       "gap_pp": 6.756756756756754,
+       "weight": 15.74468085106383
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 56.76147955551755,
+      "raw_p50_s": 5.22262055799365,
+      "raw_p95_s": 40.361153580248356,
+      "adjusted_p50_s": 5.22262055799365,
+      "adjusted_p95_s": 40.361153580248356,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 1.079614731073832,
+      "raw_score": 1.079614731073832,
+      "usd_per_1000": 1.9831071283783785,
+      "total_usd": 0.880499565,
+      "coverage": 1.0,
+      "source": "OpenRouter usage.cost receipts"
+     },
+     "composite": {
+      "harmonic_before_gates": 4.124805335043891,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 0.000466227187020649
+      },
+      "score": 0.0019230963883652787
+     }
+    },
+    "core": {
+     "public": {
+      "n": 139,
+      "correct": 113,
+      "accuracy": 0.8129496402877698,
+      "chance": 0.21762589928057555,
+      "chance_corrected_intelligence": 76.09195402298852,
+      "ece": 0.10648717948717948,
+      "probability_coverage": 0.841726618705036,
+      "valid_answer_count": 117
+     },
+     "sealed": {
+      "n": 155,
+      "correct": 140,
+      "accuracy": 0.9032258064516129,
+      "chance": 0.2,
+      "chance_corrected_intelligence": 87.9032258064516,
+      "ece": 0.10636879432624112,
+      "probability_coverage": 0.9096774193548387,
+      "valid_answer_count": 141
+     },
+     "axes": {
+      "intelligence": 83.76928068223953,
+      "calibration": 69.7361796240427,
+      "speed": 56.679085344098894,
+      "cost": 0.0
+     },
+     "intelligence_before_penalty": 83.76928068223953,
+     "raw_overall_gap_pp": -9.027616616384304,
+     "matched_gap_pp": 6.756756756756754,
+     "matched_gap_families": {
+      "ScreenSpot": {
+       "gap_pp": 6.756756756756754,
+       "weight": 15.74468085106383
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 56.679085344098894,
+      "raw_p50_s": 5.322649825364351,
+      "raw_p95_s": 40.361153580248356,
+      "adjusted_p50_s": 5.322649825364351,
+      "adjusted_p95_s": 40.361153580248356,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 0.0,
+      "raw_score": 0.0,
+      "usd_per_1000": 2.1831975000000003,
+      "total_usd": 0.641860065,
+      "coverage": 1.0,
+      "source": "OpenRouter usage.cost receipts"
+     },
+     "composite": {
+      "harmonic_before_gates": 0.0,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 0.0
+      },
+      "score": 0.0
+     }
+    },
+    "everyday_photo": {
+     "public": {
+      "n": 89,
+      "correct": 89,
+      "accuracy": 1.0,
+      "chance": 0.48314606741573035,
+      "chance_corrected_intelligence": 100.0,
+      "ece": 0.16962921348314614,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 89
+     },
+     "sealed": {
+      "n": 61,
+      "correct": 60,
+      "accuracy": 0.9836065573770492,
+      "chance": 0.48360655737704916,
+      "chance_corrected_intelligence": 96.82539682539682,
+      "ece": 0.15332786885245894,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 61
+     },
+     "axes": {
+      "intelligence": 97.93650793650794,
+      "calibration": 68.1933321053601,
+      "speed": 56.30085090408677,
+      "cost": 3.950467859173159
+     },
+     "intelligence_before_penalty": 97.93650793650794,
+     "raw_overall_gap_pp": 1.6393442622950838,
+     "matched_gap_pp": 1.6393442622950838,
+     "matched_gap_families": {
+      "Everyday photo": {
+       "gap_pp": 1.6393442622950838,
+       "weight": 36.193333333333335
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 56.30085090408677,
+      "raw_p50_s": 5.004384379833937,
+      "raw_p95_s": 46.834323316812515,
+      "adjusted_p50_s": 5.004384379833937,
+      "adjusted_p95_s": 46.834323316812515,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 3.950467859173159,
+      "raw_score": 3.950467859173159,
+      "usd_per_1000": 1.59093,
+      "total_usd": 0.2386395,
+      "coverage": 1.0,
+      "source": "OpenRouter usage.cost receipts"
+     },
+     "composite": {
+      "harmonic_before_gates": 13.52396797593272,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 0.0062424785225440645
+      },
+      "score": 0.08442307962933374
+     }
+    }
+   }
+  },
+  {
+   "rank": 11,
+   "key": "openjev_4b_nli",
+   "name": "OpenJev 4B NLI v2 (official image-premise path)",
+   "api_flag": false,
+   "prior_exposure": "No evaluation run on this item set before this job. The repository includes `code/eval_image_nli.py`; the benchmark wrapper follows its image-premise NLI scoring path. It does not import or execute `train.py`, whose training entry point and dataset-loading code are excluded.",
+   "score": 0.0,
+   "tracks": {
+    "all": {
+     "public": {
+      "n": 228,
+      "correct": 187,
+      "accuracy": 0.8201754385964912,
+      "chance": 0.32127192982456143,
+      "chance_corrected_intelligence": 73.50565428109854,
+      "ece": null,
+      "probability_coverage": 0.0,
+      "valid_answer_count": 228
+     },
+     "sealed": {
+      "n": 216,
+      "correct": 161,
+      "accuracy": 0.7453703703703703,
+      "chance": 0.2800925925925926,
+      "chance_corrected_intelligence": 64.63022508038584,
+      "ece": null,
+      "probability_coverage": 0.0,
+      "valid_answer_count": 216
+     },
+     "axes": {
+      "intelligence": 67.7366253006353,
+      "calibration": 0.0,
+      "speed": 80.35494099548347,
+      "cost": 40.135498772376565
+     },
+     "intelligence_before_penalty": 67.7366253006353,
+     "raw_overall_gap_pp": 7.480506822612087,
+     "matched_gap_pp": 1.0047437889682982,
+     "matched_gap_families": {
+      "Everyday photo": {
+       "gap_pp": 4.733836802357705,
+       "weight": 36.193333333333335
+      },
+      "ScreenSpot": {
+       "gap_pp": -7.567567567567568,
+       "weight": 15.74468085106383
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 80.35494099548347,
+      "raw_p50_s": 0.31785281794145703,
+      "raw_p95_s": 0.5114298069383949,
+      "adjusted_p50_s": 0.7857056358829141,
+      "adjusted_p95_s": 1.1728596138767897,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 40.135498772376565,
+      "raw_score": 40.135498772376565,
+      "usd_per_1000": 0.09896539770177415,
+      "total_usd": 0.04394063657958772,
+      "coverage": 1.0,
+      "source": "measured GPU seconds x $1.19/GPU-hour"
+     },
+     "composite": {
+      "harmonic_before_gates": 0.0,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 0.6443433046829763
+      },
+      "score": 0.0
+     }
+    },
+    "core": {
+     "public": {
+      "n": 139,
+      "correct": 104,
+      "accuracy": 0.7482014388489209,
+      "chance": 0.21762589928057555,
+      "chance_corrected_intelligence": 67.816091954023,
+      "ece": null,
+      "probability_coverage": 0.0,
+      "valid_answer_count": 139
+     },
+     "sealed": {
+      "n": 155,
+      "correct": 107,
+      "accuracy": 0.6903225806451613,
+      "chance": 0.2,
+      "chance_corrected_intelligence": 61.29032258064516,
+      "ece": null,
+      "probability_coverage": 0.0,
+      "valid_answer_count": 155
+     },
+     "axes": {
+      "intelligence": 63.5743418613274,
+      "calibration": 0.0,
+      "speed": 79.63889371448398,
+      "cost": 40.09545752574213
+     },
+     "intelligence_before_penalty": 63.5743418613274,
+     "raw_overall_gap_pp": 5.78788582037596,
+     "matched_gap_pp": -7.567567567567568,
+     "matched_gap_families": {
+      "ScreenSpot": {
+       "gap_pp": -7.567567567567568,
+       "weight": 15.74468085106383
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 79.63889371448398,
+      "raw_p50_s": 0.389116475940682,
+      "raw_p95_s": 0.5103608211502433,
+      "adjusted_p50_s": 0.928232951881364,
+      "adjusted_p95_s": 1.1707216423004865,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 40.09545752574213,
+      "raw_score": 40.09545752574213,
+      "usd_per_1000": 0.09927001385083274,
+      "total_usd": 0.029185384072144827,
+      "coverage": 1.0,
+      "source": "measured GPU seconds x $1.19/GPU-hour"
+     },
+     "composite": {
+      "harmonic_before_gates": 0.0,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 0.6430582856794365
+      },
+      "score": 0.0
+     }
+    },
+    "everyday_photo": {
+     "public": {
+      "n": 89,
+      "correct": 83,
+      "accuracy": 0.9325842696629213,
+      "chance": 0.48314606741573035,
+      "chance_corrected_intelligence": 86.95652173913044,
+      "ece": null,
+      "probability_coverage": 0.0,
+      "valid_answer_count": 89
+     },
+     "sealed": {
+      "n": 61,
+      "correct": 54,
+      "accuracy": 0.8852459016393442,
+      "chance": 0.48360655737704916,
+      "chance_corrected_intelligence": 77.77777777777777,
+      "ece": null,
+      "probability_coverage": 0.0,
+      "valid_answer_count": 61
+     },
+     "axes": {
+      "intelligence": 80.9903381642512,
+      "calibration": 0.0,
+      "speed": 79.5514339384258,
+      "cost": 40.214338391526866
+     },
+     "intelligence_before_penalty": 80.9903381642512,
+     "raw_overall_gap_pp": 4.733836802357705,
+     "matched_gap_pp": 4.733836802357705,
+     "matched_gap_families": {
+      "Everyday photo": {
+       "gap_pp": 4.733836802357705,
+       "weight": 36.193333333333335
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 79.5514339384258,
+      "raw_p50_s": 0.3168250290909782,
+      "raw_p95_s": 0.6324641548562795,
+      "adjusted_p50_s": 0.7836500581819564,
+      "adjusted_p95_s": 1.414928309712559,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 40.214338391526866,
+      "raw_score": 40.214338391526866,
+      "usd_per_1000": 0.09836835004961933,
+      "total_usd": 0.014755252507442898,
+      "coverage": 1.0,
+      "source": "measured GPU seconds x $1.19/GPU-hour"
+     },
+     "composite": {
+      "harmonic_before_gates": 0.0,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 0.6468772049072926
+      },
+      "score": 0.0
+     }
+    }
+   }
+  }
+ ],
+ "preview_tracks": {
+  "status": "announced v0.1 preview tracks; no system measured yet; no scores",
+  "decided": "2026-09-24 (Florian)",
+  "computer_use": {
+   "items_total": 400,
+   "public": 147,
+   "sealed": 253,
+   "public_decision_types": [
+    "target location",
+    "element type",
+    "next action class"
+   ],
+   "sealed_decision_types": [
+    "task completion",
+    "action success",
+    "dialog safety",
+    "blocker status"
+   ],
+   "sealed_origin": "original synthetic local fixtures",
+   "reassigned_to_sealed": 93
+  },
+  "browser_use": {
+   "items_total": 400,
+   "public": 240,
+   "sealed": 160,
+   "public_decision_types": [
+    "target location",
+    "element type",
+    "next action class"
+   ],
+   "sealed_decision_types": [
+    "task completion",
+    "action success",
+    "dialog safety",
+    "blocker status"
+   ],
+   "sealed_origin": "original synthetic local fixtures",
+   "mind2web_public_only": 133,
+   "reassigned_to_sealed": 0
+  },
+  "cross_track_rule": "A public-origin Computer Use or Browser Use row that shares a source row or screenshot with a sealed core item is sealed too.",
+  "kev_flag": "Mind2Web-derived Browser Use rows are public-only and reported separately for Kev, whose training data overlaps Mind2Web.",
+  "scoring": "Same method as the core once measured; the matched-family gap needs decision types present in both parts."
+ }
 }
