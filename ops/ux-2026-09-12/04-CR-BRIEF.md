@@ -1125,13 +1125,13 @@ Source: `/home/flori/jobs/bh-numbers-audit-swarm-20260923/final/PROMPT.md`, Phas
 | CR-139.6 | Correct the historical JevBench v1.1.2 pooled-accuracy fields using official tier counts; for the five unsupported v1.2 reranker rows, add primary-source support or remove unsupported cells, and update the stale source-tag comment. | Exact affected API bytes and version boundaries are verified. Produce a before/after leaderboard preview for Florian and do not publish ranking-related corrections until he approves the preview. No sealed item-level content is read or exposed. |
 | CR-139.7 | Run dataset build, focused regression tests, full test suite, typecheck, and production build; verify the same revision and source snapshot on both production hosts; retain receipts and an independent non-implementer review. | All gates pass, both hosts agree, the independent reviewer verifies every CR-139 row live at desktop/mobile widths in light/dark, and no AA-held or unclear row was silently changed. Keep CR-139 open until the historical-ranking preview receives approval and the accepted release is live. |
 
-## CR-20260925 — ImageJevBench v0.1 final split, sealed-weighted score and overfit penalty (2026-09-24)
+## CR-141 — ImageJevBench v0.1 final split, sealed-weighted score and overfit penalty (2026-09-24)
 
 Owner: `claude:imagejevbench-final` (job `/home/flori/jobs/imagejevbench-final-20260924`). Method: that job's `METHOD.md`.
 
 | ID | Item |
 |---|---|
-| CR-20260925.1 | Serve the frozen final split: 444 = 228 public / 216 sealed (core 139 / 155, photos 89 / 61); family table; honest note that 1/3 public is not reachable without new items. |
-| CR-20260925.2 | 35/65 weighting and 15-point matched-family overfit penalty in the artifact and page; 11 systems incl. Bonsai-2-27B v2. |
-| CR-20260925.3 | Computer Use / Browser Use preview-track section (counts, decision types, cross-track sealing rule, Kev flag, "not measured yet"). |
-| CR-20260925.4 | Validator, tests, build, both-host live verification and sealed-content scan; `/image-jev-bench` prepared on an unpushed branch only. |
+| CR-141.1 | Serve the frozen final split: 444 = 228 public / 216 sealed (core 139 / 155, photos 89 / 61); family table; honest note that 1/3 public is not reachable without new items. |
+| CR-141.2 | 35/65 weighting and 15-point matched-family overfit penalty in the artifact and page; 11 systems incl. Bonsai-2-27B v2. |
+| CR-141.3 | Computer Use / Browser Use preview-track section (counts, decision types, cross-track sealing rule, Kev flag, "not measured yet"). |
+| CR-141.4 | Validator, tests, build, both-host live verification and sealed-content scan; `/image-jev-bench` prepared on an unpushed branch only. |

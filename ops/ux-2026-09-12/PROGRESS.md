@@ -9504,3 +9504,9 @@ board, compare radar and hub head/order. CR-139 remains with its existing remedi
   CR-139.7 open (umbrella release acceptance). **No `ALL-ACCEPTED` line appended.**
 - Report: `ops/ux-2026-09-12/REVIEW-20260924T123004Z.md`.
   Evidence: `/opt/benchmarkheaven/state/ux-evidence/review-20260924T123004Z/`.
+
+## CR-141 — ImageJevBench v0.1 final split preview, live 2026-09-24 (claude:imagejevbench-final)
+
+- **Scope:** noindex preview `/jev-models/multimodal-preview` and the WIP route that reuses it: exposure-driven split 444 = 228 public / 216 sealed, 35/65 chance-corrected weighting, 15-point matched-family overfit penalty, 11 systems (Bonsai added), Computer Use / Browser Use preview-track section. The legacy preview builder now writes `preview.legacy-candidate.json`. Method and frozen split hashes: `/home/flori/jobs/imagejevbench-final-20260924/{METHOD.md,SPLIT-FROZEN.json}`.
+- **Merge:** PR #1, merge commit `643711f90c2c9ed445f9fe6c1e25ed5e4ff2c001`, via the queue's steps under `merge-queue.lock`. Gates on the rebased tree: tsc clean, build clean, `npm test` 1,288 pass / 0 fail / 1 skipped. The build ran before the tests, because `test/production/prerender.mjs` needs `.next`. The ledger entries first used the pre-fix allocator id CR-20260925; this entry renames it to the allocated CR-141.
+- **Live:** benchmarkheaven.com, www and the legacy host all served `643711f9` via the webhook deploy. Preview routes return 200 with noindex and are not in the sitemap. `/image-jev-bench` stays 404; the route is prepared on an unpushed branch pending Florian's go. The sealed-content scan of the live HTML on both hosts found 0 hits, and so did the scan of the repo at `main` (7,512 files).
