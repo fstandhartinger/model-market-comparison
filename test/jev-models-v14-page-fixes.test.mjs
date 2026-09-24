@@ -7,7 +7,8 @@ import { readJevbenchV14, jevV14RowNote } from '../lib/jevbench-v14.mjs';
 // the evergreen v1.3 sections back out of the historical disclosure.
 const { artifact } = await readJevbenchV14();
 const read = (path) => readFile(new URL(path, import.meta.url), 'utf8');
-const [board, compare, page, historySource, css] = await Promise.all([read('../components/JevModelsV14.tsx'), read('../components/JevCompareV14.tsx'), read('../app/jev-models/page.tsx'), read('../components/JevHistoryContent.tsx'), read('../app/globals.css')]);
+const [boardServer, boardShared, boardClient, compare, page, historySource, css] = await Promise.all([read('../components/JevModelsV14.tsx'), read('../components/JevBoardShared.tsx'), read('../components/JevBoardInteractive.tsx'), read('../components/JevCompareV14.tsx'), read('../app/jev-models/page.tsx'), read('../components/JevHistoryContent.tsx'), read('../app/globals.css')]);
+const board = [boardServer, boardShared, boardClient].join('\n'); // CR-151 split the board
 
 test('a † marker appears only for row-specific notes, never for shared provenance', () => {
   assert.equal(jevV14RowNote('already on the live v1.3.0 board | re-run on a throwaway RunPod pod with the original recipe; deviations in its manifest'), null);

@@ -6,6 +6,7 @@ import { CostUnitNote } from '../../components/JevModelsV12';
 import { JevCostsDisclosure } from '../../components/JevCostsDisclosure';
 import { CustomEvaluationOffer } from '../../components/CustomEvaluationOffer';
 import { readJevbenchV142, jevbenchV142View } from '../../lib/jevbench-v142.mjs';
+import { readJevbenchV141 } from '../../lib/jevbench-v141.mjs';
 import { JevModelsV14Board } from '../../components/JevModelsV14';
 import { JevCapabilityLazy } from '../../components/JevCapabilityLazy';
 import { JevBoardIntentLinks } from '../../components/JevBenchSeoBlocks';
@@ -79,6 +80,9 @@ const currentNotMeasured = [
 export default async function JevModelsPage() {
   const v14Result = await readJevbenchV142();
   const v14 = jevbenchV142View(v14Result);
+  // CR-151: the previous release's systems, so the board can mark and filter what is new in this one.
+  const previousRelease = (await readJevbenchV141()).artifact;
+  const previous = { revision: previousRelease.revision, keys: previousRelease.systems.map((row) => row.key) };
   const v12 = await readJevbenchV12();
   const costUnit = v12.artifact.cost_unit;
   const costCorrection = (v12.artifact.cost_correction ?? null) as CostCorrection | null;
@@ -168,7 +172,7 @@ export default async function JevModelsPage() {
       </p>
     </header>
 
-    <JevModelsV14Board artifact={v14.artifact} sha256={v14.sha256} />
+    <JevModelsV14Board artifact={v14.artifact} sha256={v14.sha256} previous={previous} capabilityHref="#jev14-capability-views" />
 
 
     {/* Page fix (Florian 23 Sep 2026): the v1.3 page's "what the run says" findings, recomputed from the v1.4 board. */}
