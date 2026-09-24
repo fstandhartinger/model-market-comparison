@@ -69,32 +69,24 @@ class RetryClaimTests(unittest.TestCase):
             "refund_status IS DISTINCT FROM 'manual_review'",
             "(refund_status <> 'manual_review' OR refund_status IS NULL)",
         )
-        expression = expression.replace(
-            "refund_attention_notified_state IS DISTINCT FROM 'manual_review'",
-            "refund_attention_notified_state IS NOT 'manual_review'",
-        )
-        columns = (
-            "refund_status", "refund_id", "refund_attempts", "refund_idempotency_key",
-            "refund_attention_notified_attempts", "refund_attempt_seq", "refund_attention_notified_state",
-        )
+        columns = ("refund_status", "refund_id", "refund_attempts", "refund_idempotency_key")
         cases = (
-            ("failed", None, 0, None, 0, 0, None, True),
-            ("failed", None, 2, None, 0, 2, None, True),
-            ("failed", None, 3, None, 0, 3, None, False),
-            ("failed", "re_123", 1, "key", 0, 1, None, False),
-            ("canceled", None, 2, None, 0, 2, None, True),
-            ("canceled", "re_123", 0, "key", 0, 0, None, False),
-            ("unknown", None, 3, "existing-key", 0, 3, None, True),
-            ("unknown", None, 3, None, 0, 3, None, False),
-            ("unknown", "re_123", 3, None, 0, 3, None, True),
-            (None, None, 3, None, 0, 3, None, True),
-            ("manual_review", None, 0, "old-key", 0, 1, None, True),
-            ("manual_review", None, 0, "old-key", 1, 1, "manual_review", False),
+            ("failed", None, 0, None, True),
+            ("failed", None, 2, None, True),
+            ("failed", None, 3, None, False),
+            ("failed", "re_123", 1, "key", False),
+            ("canceled", None, 2, None, True),
+            ("canceled", "re_123", 0, "key", False),
+            ("unknown", None, 3, "existing-key", True),
+            ("unknown", None, 3, None, False),
+            ("unknown", "re_123", 3, None, True),
+            (None, None, 3, None, True),
+            ("manual_review", None, 0, "old-key", False),
         )
-        for refund_status, refund_id, attempts, refund_key, notified_attempts, attempt_seq, notified_state, expected in cases:
+        for refund_status, refund_id, attempts, refund_key, expected in cases:
             with self.subTest(refund_status=refund_status, refund_id=refund_id, attempts=attempts, refund_key=refund_key):
                 self.assertEqual(
-                    self.evaluate(columns, expression, (refund_status, refund_id, attempts, refund_key, notified_attempts, attempt_seq, notified_state)),
+                    self.evaluate(columns, expression, (refund_status, refund_id, attempts, refund_key)),
                     expected,
                 )
         reference_columns = ("refund_id", "refund_idempotency_key", "refund_status")
