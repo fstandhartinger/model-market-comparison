@@ -9611,9 +9611,11 @@ of a repair-agent cycle and a ~08:00 publication.
 Not a repo file (that tree is not under git); backup `self-heal.sh.bak-20260924-budget`, full diff in
 the evidence directory.
 
-- `RuntimeMaxSec` is now **derived** from named budgets (`WAIT_S` 1200, `RETRY_BUDGET_S` 7200,
-  `REPAIR_S` 7200, `ALERT_RESERVE_S` 600 → 16,500 s) instead of a literal, so the unit can never be
-  smaller than the chain it holds. `RETRY_BUDGET_S` is 7200 because a full gated run has taken ~2 h.
+- `RuntimeMaxSec` is now **derived** from named budgets (`WAIT_S` 1200, `RETRY_BUDGET_S` 10800,
+  `REPAIR_S` 7200, `ALERT_RESERVE_S` 600 → 20,100 s) instead of a literal, so the unit can never be
+  smaller than the chain it holds. `RETRY_BUDGET_S` is the real ceiling a retry can occupy —
+  `run.sh` wraps `daily.mjs` in `timeout --signal=TERM --kill-after=30s 3h` — rather than the ~2 h a
+  run has been observed to take (23 Sep: 09:57→11:56Z), so the derivation cannot understate it again.
 - The repair agent is bounded by the **remaining** chain budget minus the alert reserve, not by a
   fixed 7200 s. A long retry now shortens the agent; it can no longer silence the alert.
 - Below `MIN_REPAIR_S` (900 s) the agent is not started at all and that is written to `RESULT.md`.
