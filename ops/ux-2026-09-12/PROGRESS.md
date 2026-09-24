@@ -9418,6 +9418,8 @@ board, compare radar and hub head/order. CR-139 remains with its existing remedi
 | CR-139.5 | verified | `3ceb4cd8`; review gate 20260924T123004Z; screenshots in `/opt/benchmarkheaven/state/ux-evidence/review-20260924T123004Z/` | HealthBench Professional, Real-SWE lower-bound, benchmark-sized wording, and subscription plan notes (`catalog snapshot`, per-plan `Source checked`) confirmed live on both hosts via `/benchmarks` and the home Subscriptions `<details>`. |
 | CR-139.6 | in-progress | `/home/flori/jobs/bh-numbers-audit-swarm-20260923/final/historical-preview/` | Local preview retained; no production historical-ranking correction was approved or claimed. |
 | CR-139.7 | open | `live-http-receipt.json`; failed delegate attempts recorded above | Independent review and owner preview decision are still required before release acceptance. |
+| CR-143.1 | Ingest introducing-mentalhealthbench from the bookmark folder (not in the registry): primary source, versioned registry entry, gauntlet, live check | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter206-cr143/` | `mentalhealthbench::snapshot-2026-09-23`; 17 Figure 5(a) values, retained PDF/hash, taxonomy, judged caveat, Benchmaxxing tier, collection recipe, generated dataset, tests | Implemented 2026-09-24 by codex-luna. Source is the OpenAI paper and release page; preliminary because values are source-published judged results, not an independent run. Independent production/live gate remains required before verified. |
+| CR-143.2 | Any candidate that turns out to be an already-carried benchmark under another name: close the row and add the alias to the registry entry | closed | `/opt/benchmarkheaven/state/ux-evidence/iter206-cr143/SOURCE-REVIEW.md` | No duplicate found: registry search covered benchmark ids/names/medical-safety descriptions; new dated snapshot is distinct by task set, rubric and protocol | Closed 2026-09-24: MentalHealthBench is a new 2026-09-23 release, not an alias of HealthBench Professional, MLCR-AA or another carried family. |
 
 ## Iteration 201 — 2026-09-24 11:03 UTC (codex-luna, work): deferred for active writers
 
@@ -9510,3 +9512,29 @@ board, compare radar and hub head/order. CR-139 remains with its existing remedi
 - **Scope:** noindex preview `/jev-models/multimodal-preview` and the WIP route that reuses it: exposure-driven split 444 = 228 public / 216 sealed, 35/65 chance-corrected weighting, 15-point matched-family overfit penalty, 11 systems (Bonsai added), Computer Use / Browser Use preview-track section. The legacy preview builder now writes `preview.legacy-candidate.json`. Method and frozen split hashes: `/home/flori/jobs/imagejevbench-final-20260924/{METHOD.md,SPLIT-FROZEN.json}`.
 - **Merge:** PR #1, merge commit `643711f90c2c9ed445f9fe6c1e25ed5e4ff2c001`, via the queue's steps under `merge-queue.lock`. Gates on the rebased tree: tsc clean, build clean, `npm test` 1,288 pass / 0 fail / 1 skipped. The build ran before the tests, because `test/production/prerender.mjs` needs `.next`. The ledger entries first used the pre-fix allocator id CR-20260925; this entry renames it to the allocated CR-141.
 - **Live:** benchmarkheaven.com, www and the legacy host all served `643711f9` via the webhook deploy. Preview routes return 200 with noindex and are not in the sitemap. `/image-jev-bench` stays 404; the route is prepared on an unpushed branch pending Florian's go. The sealed-content scan of the live HTML on both hosts found 0 hits, and so did the scan of the repo at `main` (7,512 files).
+
+## Iteration 206 — 2026-09-24 15:12 → 16:20 UTC (codex-luna, work): CR-143 MentalHealthBench intake implemented
+
+- Read the required authority documents and newest review before choosing the highest-value open
+  intake row. The X bookmark points to OpenAI's 2026-09-23 MentalHealthBench release and paper.
+- Added `mentalhealthbench::snapshot-2026-09-23` to the registry, taxonomy, judged caveats and
+  Benchmaxxing tiers. The retained PDF is
+  `data/raw/benchmarks/daily-evidence/2026-09-24-mentalhealthbench/MentalHealthBench.pdf`,
+  SHA-256 `f4ce5da8db2c7c3ec3512363f57b82a07367b30eb1b5ff20f0349f09bfcabd75`.
+- Added the 17 exact Figure 5(a) overall task-clipped values (57.3, 53.9, 52.4, 50.2, 48.6,
+  47.0, 46.4, 44.9, 44.5, 42.9, 41.7, 41.3, 35.5, 33.5, 32.1, 32.1, 29.5). They are
+  `preliminary` source observations: the paper's default-effort protocol does not identify one
+  exact local effort row for most models, so only the exact GPT-4o March 2025 and Gemini 2.5 Pro
+  catalog identities are joined; no max/high effort is inferred.
+- The benchmark is explicitly `judged` and outside Benchmaxxing because GPT-5.6 Sol grades
+  expert-authored rubric criteria. A fail-closed collection recipe and source hash are recorded
+  in `data/SCRAPING.md`; no cost or confidence interval was invented.
+- Verification: registry validator passed; score/evidence validator passed (18,624 observations,
+  192 source files); dedicated MentalHealthBench tests passed 2/2; `node scripts/build-dataset.mjs`
+  passed with 871 models / 676 families / 96 providers / 3,036 offers; full `npm test` passed
+  1,281/1,281 with one existing skip; `npx tsc --noEmit -p .` passed; and `npm run build`
+  passed with 133 static pages. An independent live deployment gate remains before this row can
+  be promoted from implemented to verified.
+- Evidence: `/opt/benchmarkheaven/state/ux-evidence/iter206-cr143/`. A free-model mechanical
+  inspection attempt was bounded and stopped without output; all model mapping and values above
+  were checked against the retained paper and local catalog by codex-luna.

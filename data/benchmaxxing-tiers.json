@@ -387,6 +387,10 @@
     "charxiv-reasoning": {
       "tier": "judged",
       "reason": "GPT-4o extracts each final answer from the model's response and scores it 0/1 against the ground-truth answer (README: \"scores graded by GPT-4o\"; rubric in src/constants.py of github.com/princeton-nlp/CharXiv); judge-graded boards stay outside the signal, as for Surge Chartography."
+    },
+    "mentalhealthbench": {
+      "tier": "judged",
+      "reason": "Expert-authored rubric criteria are scored by GPT-5.6 Sol at high reasoning effort; this is a judged score, not a deterministic task-accuracy signal, so it stays outside Benchmaxxing."
     }
   }
 }

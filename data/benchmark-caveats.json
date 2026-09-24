@@ -176,6 +176,11 @@
       "quote": "--evaluator-llm <model name> # The LLM to use for evaluation.",
       "field": "evidence.excerpt",
       "why": "No verifier or reference state decides: an LLM evaluator reads the agent's trajectory and rules each task rubric met or not (the README's --evaluator-llm; the page's rubric-based sliding-window evaluator), in conversations whose user side is also a model (--user-llm)."
+    },
+    "mentalhealthbench": {
+      "quote": "Each task is graded against expert-authored rubrics by GPT-5.6 Sol at high reasoning effort.",
+      "field": "scoring.notes",
+      "why": "Each response is scored against expert-authored rubrics by a judge model; the task-clipped score is therefore a judged rating, not deterministic task accuracy."
     }
   },
   "considered_not_judged": {

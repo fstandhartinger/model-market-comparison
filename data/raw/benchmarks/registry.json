@@ -19522,6 +19522,69 @@
           "excerpt": "\"overall\":{\"anthropic/claude-opus-5-5\":{\"accuracy\":75.938,...,\"cost_per_test\":9.330415}}"
         }
       ]
+    },
+    {
+      "id": "mentalhealthbench::snapshot-2026-09-23",
+      "name": "MentalHealthBench",
+      "version": "snapshot-2026-09-23",
+      "version_status": "snapshot",
+      "family": "mentalhealthbench",
+      "category": "Safety/Alignment",
+      "one_sentence_description": "Expert-informed evaluation of AI capabilities in realistic mental health conversations.",
+      "scoring": {
+        "metric": "Mean task-clipped rubric score across four sampled responses per conversation",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Source-published task-clipped score; higher is better. Each task is graded against expert-authored rubrics by GPT-5.6 Sol at high reasoning effort. The source reports default reasoning effort for evaluated models; no unreported effort is inferred."
+      },
+      "maintainer": "OpenAI",
+      "source_type": "vendor_report",
+      "primary_url": "https://openai.com/index/introducing-mentalhealthbench/",
+      "publication_urls": [
+        {
+          "url": "https://openai.com/index/introducing-mentalhealthbench/",
+          "type": "vendor_report",
+          "role": "OpenAI release post and benchmark entry point"
+        },
+        {
+          "url": "https://cdn.openai.com/ctf-cdn/MentalHealthBench_A_Comprehensive_Benchmark_of_AI_Capabilities_in_Realistic_Mental_Health_Conversations.pdf",
+          "type": "vendor_report",
+          "role": "MentalHealthBench paper, Figure 5 overall model performance"
+        }
+      ],
+      "how_to_collect": {
+        "command": "Download the retained PDF, verify its SHA-256, extract Figure 5, and update only after manual review of the model labels, default-effort protocol, and task-clipped metric.",
+        "format": "OpenAI PDF (pdftotext -layout text layer)",
+        "locator": "Figure 5(a), Overall model performance, Task-clipped score (%); 17 rows; values read from the bar labels.",
+        "version_guard": "Require the 2026-09-23 MentalHealthBench paper and the exact Figure 5(a) 17-row model/value set. Any changed task set, rubric, sampling count, grader, effort protocol or model label is a new reviewed snapshot.",
+        "notes": "This is a judged vendor report, not an independent run. Keep source model identities unresolved when the paper’s default effort does not match one exact catalog configuration."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source.",
+        "check_recommendation": "Check on a revised paper or a new OpenAI release; do not imply a source schedule."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-24",
+      "last_verified": "2026-09-24",
+      "evidence": [
+        {
+          "url": "https://cdn.openai.com/ctf-cdn/MentalHealthBench_A_Comprehensive_Benchmark_of_AI_Capabilities_in_Realistic_Mental_Health_Conversations.pdf",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-24-mentalhealthbench/MentalHealthBench.pdf",
+          "sha256": "f4ce5da8db2c7c3ec3512363f57b82a07367b30eb1b5ff20f0349f09bfcabd75",
+          "fetched_at": "2026-09-24T16:01:50.907Z",
+          "source_sha256": "f4ce5da8db2c7c3ec3512363f57b82a07367b30eb1b5ff20f0349f09bfcabd75",
+          "excerpt": "Figure 5(a): 17 model rows with task-clipped scores; paper states four sampled completions per task and GPT-5.6 Sol high-reasoning grading."
+        }
+      ]
     }
   ],
   "aa_field_map": [
