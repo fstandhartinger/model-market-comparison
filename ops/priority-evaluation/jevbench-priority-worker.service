@@ -1,0 +1,16 @@
+[Unit]
+Description=Process JevBench priority evaluation notices and deadline refunds
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 %h/bin/jevbench-priority-worker.py cycle
+TimeoutStartSec=180
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=%h/.notify
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6

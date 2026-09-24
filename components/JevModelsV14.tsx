@@ -39,6 +39,7 @@ function SystemName({ row, note }: { row: JevV14System; note: string | null }) {
         {note && <NoteMarker row={row} note={note} />}
       </span>
     </span>
+    {row.priority_run === true && <span className="bh-thin-tag ml-2 align-middle" data-bh-jev14-priority-run={row.key}>priority run</span>}
     {row.api_flag && <span className="bh-thin-tag ml-2 align-middle" data-bh-jev14-api-flag={row.key} title={row.api_exposure_note ?? apiExplanation} aria-label={apiExplanation}>API</span>}
     <span className="bh-muted block text-[11px] leading-tight">by {row.repo
       ? <a href={row.repo} target="_blank" rel="noopener noreferrer" className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent">{row.author}</a>
@@ -87,6 +88,7 @@ export function JevScoreBar({ row, reference = false }: { row: JevV14System; ref
     <span className="bh-muted tabular col-start-1 row-start-1 text-right text-xs">{row.rank ?? ''}</span>
     <span className="col-start-2 row-start-1 min-w-0 sm:truncate sm:text-right" title={row.display}>
       <Link href={`/jev-models/${encodeURIComponent(row.key)}`} title={row.display} className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent hover:decoration-current">{shortName(row.display)}</Link>
+      {row.priority_run === true && <span className="bh-thin-tag ml-1.5 align-middle" data-bh-jev14-priority-run={row.key}>priority run</span>}
       {!row.ranked && <span className="bh-muted whitespace-nowrap" title={row.not_ranked_because ?? undefined}> ({NOT_RANKED[row.listing] ?? row.listing})</span>}
       {row.api_flag && <span className="bh-thin-tag ml-1.5 align-middle" title={row.api_exposure_note ?? apiExplanation}>API</span>}
     </span>

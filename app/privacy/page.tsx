@@ -8,7 +8,7 @@ export const metadata: Metadata = { title: "Privacy policy" };
 export default function PrivacyPage() {
   return <article className="max-w-3xl text-sm leading-relaxed text-gray-300">
     <h1 className="text-2xl font-bold text-inherit">Privacy policy</h1>
-    <p className="bh-muted mt-1">Last updated: September 17, 2026</p>
+    <p className="bh-muted mt-1">Last updated: September 24, 2026</p>
 
     <h2 className="mt-6 mb-2 font-semibold">Who is responsible</h2>
     <p>productivity-boost.com Betriebs UG (haftungsbeschränkt) &amp; Co. KG, Reichenbergerstr. 2, 94036 Passau, Germany,
@@ -61,6 +61,21 @@ export default function PrivacyPage() {
       its <a className="text-accent" href="https://policies.google.com/privacy" rel="noopener noreferrer" target="_blank">privacy policy</a>.</p>
     <p className="mt-2">While you are signed in, strictly necessary cookies keep the session (for up to 30 days) and protect
       sign-in requests against forgery. They are required for the account to work (§ 25(2) TDDDG).</p>
+
+    <h2 className="mt-6 mb-2 font-semibold">Priority evaluation requests</h2>
+    <p>When you request a paid priority evaluation, we process your email address, model name, model and code links,
+      access instructions, optional notes, selected benchmark, result visibility, payment status and the dates needed to
+      manage the request. We use this information to review and run the requested evaluation, contact you, issue refunds
+      when due, and meet accounting obligations (Art. 6(1)(b) and (c) GDPR). Do not enter passwords, API keys or other
+      access tokens in the form. Credentials needed for an evaluation must be sent separately using the encrypted method
+      we provide after review.</p>
+    <p className="mt-2">The request is stored in our own PostgreSQL database on Hetzner servers in the European Union.
+      Stripe processes checkout, payment and billing information as our payment provider; applicable tax details and
+      payment receipts are handled through Stripe. We keep request details for as long as needed to complete the service,
+      handle disputes and refunds, and meet statutory retention duties. Payment and tax records are retained for the
+      periods required by law. You can ask us about access, correction or deletion at
+      <a className="text-accent" href="mailto:info@productivity-boost.com"> info@productivity-boost.com</a>; legal
+      retention duties may limit deletion of accounting records.</p>
 
     <h2 className="mt-6 mb-2 font-semibold">Deleting your data</h2>
     <p>Your account data is kept until you delete it. On the <Link className="text-accent" href="/account">Account</Link> page,
