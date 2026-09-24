@@ -42,4 +42,6 @@ test('CR-152 serves v1.4.2 as the live board with a pinned page, API and fairnes
   assert.match(board, /Sort by Intelligence/);
   assert.match(sitemap, /"\/jev-models\/v1\.4\.2"/);
   assert.match(sitemap, /"\/jev-models\/v1\.4\.1"/);
+  // The temporary upload notice and its preview images (main 7c8d0212/811f0dd9) are gone with the release.
+  assert.doesNotMatch(livePage, /data-bh-release-notice|v142-preview/);
 });
