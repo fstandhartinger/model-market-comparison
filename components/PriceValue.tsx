@@ -29,7 +29,8 @@ function SourceLine({ source }: { source: PriceSource }) {
   }
   return <li><span className="text-gray-400">{source.label}: </span>
     {source.url ? <a href={source.url} target="_blank" rel="noreferrer" className="text-accent underline">{source.source}</a> : source.source}
-    {source.date && <span className="text-gray-400"> · {source.date.slice(0, 24).replace(/T.*?(?= to |$)/g, "")}</span>}</li>;
+    {source.date && <span className="text-gray-400"> · {source.date.slice(0, 24).replace(/T.*?(?= to |$)/g, "")}</span>}
+    {source.note && <span className="text-gray-500"> · {source.note}</span>}</li>;
 }
 
 /** Native modal: usable from keyboard/touch, outside table/chart overflow, with
