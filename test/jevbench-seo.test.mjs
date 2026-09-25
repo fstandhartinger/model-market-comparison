@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import {
   JEV_SEO_PATHS,
+  JEV_COMPARISONS,
   JEV_TOP_FIVE_COMPARISONS,
   readJevbenchSeoData,
 } from '../lib/jevbench-seo.mjs';
@@ -17,15 +18,23 @@ test('JevBench intent routes use the hash-checked current public release', async
   assert.deepEqual(JEV_SEO_PATHS, {
     alternatives: '/jev-models/alternatives',
     chooser: '/jev-models/how-to-choose',
+    openSource: '/jev-models/open-source-jev',
   });
 });
 
-test('comparison pages keep their four ranked rivals against Jev 1.13.0', async () => {
+test('comparison pages keep their ranked rivals against Jev 1.13.0', async () => {
   const data = await readJevbenchSeoData();
-  assert.equal(data.comparisons.length, 4);
-  assert.deepEqual(data.comparisons.map((pair) => pair.rival.key), JEV_TOP_FIVE_COMPARISONS.map((pair) => pair.key));
+  // v1.4.2 top five minus Jev, the two earlier top-five rivals, and Laya (seo-routes-finish, 25 Sep 2026).
+  assert.equal(data.comparisons.length, 7);
+  assert.deepEqual(JEV_TOP_FIVE_COMPARISONS.slice(0, 4).map((pair) => pair.key), ['decider-4b-v2', 'jevk5-v02', 'cygnet', 'hopper']);
+  assert.deepEqual(data.comparisons.map((pair) => pair.rival.key), JEV_COMPARISONS.map((pair) => pair.key));
   assert.ok(data.comparisons.every((pair) => data.ranked.some((row) => row.key === pair.rival.key)));
-  assert.deepEqual(data.comparisons.map((pair) => pair.slug), JEV_TOP_FIVE_COMPARISONS.map((pair) => pair.slug));
+  assert.deepEqual(data.comparisons.map((pair) => pair.slug), JEV_COMPARISONS.map((pair) => pair.slug));
+  for (const pair of JEV_COMPARISONS) {
+    const page = readFileSync(new URL(`../app/jev-models/${pair.slug}/page.tsx`, import.meta.url), 'utf8');
+    assert.match(page, new RegExp(`rivalKey="${pair.key}"`));
+    assert.match(page, new RegExp(`const PATH = '/jev-models/${pair.slug}'`));
+  }
   assert.ok(data.comparisons.every((pair) => pair.jev.key === 'jev-1.13.0'));
 });
 
@@ -67,7 +76,8 @@ test('alternatives guide reuses the board score bars and keeps the reference fir
   assert.match(bar, /\$\/1k dec\./);
   assert.match(guides, /data-bh-jev-guides=\{current\}/);
   assert.match(guides, /const sibling = current === 'alternatives'/);
-  assert.doesNotMatch(guides, /jev-vs-/);
+  const intentLinks = guides.slice(guides.indexOf('export function JevIntentLinks'), guides.indexOf('export function JevBoardIntentLinks'));
+  assert.doesNotMatch(intentLinks, /jev-vs-/);
 });
 
 test('pair pages render a fixed JevCompareV14 radar pair and an expandable values table', () => {
@@ -101,5 +111,5 @@ test('dynamic chooser and open-row links target stable anchors in the live v1.4.
   assert.match(chooser, /<JevRowLink row=\{fastest\}/);
   assert.match(chooser, /<JevRowLink row=\{cheapest\}/);
   assert.match(chooser, /<JevRowLink row=\{row\}/);
-  assert.match(alternatives, /<JevRowLink row=\{row\}/);
+  assert.match(alternatives, /<JevRowLink row=\{bestOpen\}/);
 });

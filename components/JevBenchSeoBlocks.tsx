@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { SITE_URL } from '../lib/seo';
+import { JEV_COMPARISONS } from '../lib/jevbench-seo.mjs';
 
 type Faq = { question: string; answer: string };
 type Artifact = {
@@ -9,6 +10,7 @@ type Artifact = {
   protocol: string;
   score_one_liner: string;
 };
+export type StructuredListItem = { name: string; url?: string | null };
 
 export type SeoRow = {
   key: string;
@@ -54,7 +56,14 @@ export function opennessLabel(row: SeoRow): string {
   return 'Unknown in the published row';
 }
 
-export function DatasetFaqJsonLd({ path, artifact, faq }: { path: string; artifact: Artifact; faq: Faq[] }) {
+export function DatasetFaqJsonLd({ path, artifact, faq, items, itemListName, variables }: {
+  path: string;
+  artifact: Artifact;
+  faq: Faq[];
+  items?: StructuredListItem[];
+  itemListName?: string;
+  variables?: string[];
+}) {
   const canonical = new URL(path, SITE_URL).toString();
   const json = {
     '@context': 'https://schema.org',
@@ -70,7 +79,7 @@ export function DatasetFaqJsonLd({ path, artifact, faq }: { path: string; artifa
         dateModified: artifact.generated_utc,
         version: artifact.revision,
         measurementTechnique: artifact.score_one_liner,
-        variableMeasured: ['JevBench Score', 'Intelligence', 'Calibration', 'Speed', 'Cost', 'sealed accuracy'],
+        variableMeasured: variables ?? ['JevBench Score', 'Intelligence', 'Calibration', 'Speed', 'Cost', 'sealed accuracy'],
         distribution: {
           '@type': 'DataDownload',
           encodingFormat: 'application/json',
@@ -78,6 +87,19 @@ export function DatasetFaqJsonLd({ path, artifact, faq }: { path: string; artifa
         },
         citation: 'https://github.com/fstandhartinger/jevbench/blob/v1.4.2/docs/METHOD-v1.4.md',
       },
+      // Only for a list the page shows in full, in the same order.
+      ...(items?.length ? [{
+        '@type': 'ItemList',
+        '@id': `${canonical}#item-list`,
+        name: itemListName ?? `Systems in JevBench ${artifact.revision}`,
+        itemListOrder: 'https://schema.org/ItemListOrderAscending',
+        numberOfItems: items.length,
+        itemListElement: items.map(({ name, url }, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          item: { '@type': 'Thing', name, ...(url ? { url } : {}) },
+        })),
+      }] : []),
       {
         '@type': 'FAQPage',
         '@id': `${canonical}#faq`,
@@ -108,14 +130,22 @@ export function JevFaq({ items }: { items: Faq[] }) {
   );
 }
 
-export function JevIntentLinks({ current }: { current: 'alternatives' | 'chooser' }) {
+const JEV_GUIDES = [
+  { key: 'alternatives', href: '/jev-models/alternatives', label: 'Jev alternatives' },
+  { key: 'chooser', href: '/jev-models/how-to-choose', label: 'How to choose a Jev-class model' },
+  { key: 'openSource', href: '/jev-models/open-source-jev', label: 'Is Jev open source?' },
+] as const;
+
+export function JevIntentLinks({ current }: { current: 'alternatives' | 'chooser' | 'openSource' }) {
   const sibling = current === 'alternatives'
     ? { href: '/jev-models/how-to-choose', label: 'How to choose a Jev-class model' }
     : { href: '/jev-models/alternatives', label: 'Jev alternatives' };
+  const others = JEV_GUIDES.filter((guide) => guide.key !== current && guide.href !== sibling.href);
   return (
     <nav className="mt-5 flex flex-wrap gap-x-4 gap-y-2 text-sm" aria-label="JevBench guides" data-bh-jev-guides={current}>
       <Link className="text-accent underline" href="/jev-models">Live JevBench board</Link>
       <Link className="text-accent underline" href={sibling.href}>{sibling.label}</Link>
+      {others.map((guide) => <Link className="text-accent underline" href={guide.href} key={guide.href}>{guide.label}</Link>)}
       <a className="text-accent underline" href="https://github.com/fstandhartinger/jevbench">JevBench method and repository</a>
     </nav>
   );
@@ -125,6 +155,8 @@ export function JevBoardIntentLinks() {
   return <p className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-sm" aria-label="JevBench decision guides" data-bh-jev-board-guides>
     <Link className="text-accent underline" href="/jev-models/alternatives">Compare Jev alternatives</Link>
     <Link className="text-accent underline" href="/jev-models/how-to-choose">Choose a Jev-class model by use case</Link>
+    <Link className="text-accent underline" href="/jev-models/open-source-jev">Is Jev open source? Open-weight options</Link>
+    {JEV_COMPARISONS.map((pair) => <Link className="text-accent underline" href={`/jev-models/${pair.slug}`} key={pair.slug}>Jev vs {pair.label}</Link>)}
   </p>;
 }
 

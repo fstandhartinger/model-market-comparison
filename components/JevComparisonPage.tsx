@@ -28,6 +28,23 @@ function radarRow(row: SeoRow): JevCompareRow {
   };
 }
 
+type Conditions = {
+  endpoint_condition?: string | null;
+  speed?: { hardware?: string | null; measured_where?: string | null; adjustment?: string | null } | null;
+  cost?: { basis?: string | null } | null;
+};
+
+/** Where and how the row was measured, as published; the speed adjustment is labeled an assumption in the artifact. */
+function MeasurementConditions({ row }: { row: SeoRow }) {
+  const c = row as unknown as Conditions;
+  const setup = c.speed?.hardware ?? c.speed?.measured_where ?? c.endpoint_condition ?? null;
+  return <dl className="mt-3 space-y-2 text-sm" data-bh-jev-pair-conditions={row.key}>
+    <div><dt className="font-medium">Measured on</dt><dd className="bh-muted">{setup ?? 'not stated in the published row'}{c.endpoint_condition && setup !== c.endpoint_condition ? ` · ${c.endpoint_condition}` : ''}</dd></div>
+    {c.speed?.adjustment && <div><dt className="font-medium">Speed adjustment</dt><dd className="bh-muted">{c.speed.adjustment}</dd></div>}
+    {c.cost?.basis && <div><dt className="font-medium">Cost basis</dt><dd className="bh-muted break-words">{c.cost.basis}</dd></div>}
+  </dl>;
+}
+
 export async function JevComparisonPage({ rivalKey, path, label }: { rivalKey: string; path: string; label: string }) {
   const data = await readJevbenchSeoData();
   const pair = data.comparisons.find((item: { key: string }) => item.key === rivalKey);
@@ -49,7 +66,13 @@ export async function JevComparisonPage({ rivalKey, path, label }: { rivalKey: s
       question: 'Can I compare the cost values as actual bills?',
       answer: `${jev.display}: ${costBasisLabel(jev.cost?.kind)} at ${usdPerThousand(jev.cost?.usd_per_1000)}. ${rival.display}: ${costBasisLabel(rival.cost?.kind)} at ${usdPerThousand(rival.cost?.usd_per_1000)}. Estimated and announced bases are not measured charges; inspect the board’s full row disclosure.`,
     },
+    {
+      question: `Is ${label} open source, and is Jev?`,
+      answer: `The published row lists ${rival.display} with license note “${rival.licence || 'not stated'}”. Jev 1.13.0 is listed as “${jev.licence || 'not stated'}”: TypeSafe AI serves it through its own API and has not published its weights. Check each linked source for the exact terms.`,
+    },
   ];
+  // Florian's approved v1.4.2 sentence, shown wherever the new #1 is compared with Jev.
+  const topFiveNote = rival.rank === 1 ? (data.artifact as { top_five_note?: string }).top_five_note ?? null : null;
 
   const values: Array<[string, string, string]> = [
     ['Published rank', `#${jev.rank}`, `#${rival.rank}`],
@@ -71,6 +94,7 @@ export async function JevComparisonPage({ rivalKey, path, label }: { rivalKey: s
       <p className="bh-eyebrow">JevBench by Benchmark Heaven · released {data.artifact.revision}</p>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">Jev vs {label}: published benchmark comparison</h1>
       <p className="bh-muted mt-3 max-w-3xl">A side-by-side view of Jev 1.13.0 and {rival.display} from the same hash-checked {data.artifact.revision} aggregate. The overall score is a composite; compare the separate measures against your use case.</p>
+      {topFiveNote && <p className="mt-3 max-w-3xl" data-bh-jev-top-five-note>{topFiveNote}</p>}
     </header>
 
     <JevCompareV14
@@ -105,6 +129,7 @@ export async function JevComparisonPage({ rivalKey, path, label }: { rivalKey: s
         <h2 className="text-lg font-semibold"><Link className="text-accent underline" href={`/jev-models/${encodeURIComponent(row.key)}`}>{row.display}</Link></h2>
         <p className="bh-muted mt-2 text-sm">{opennessLabel(row)}. License note: {row.licence || 'unknown in the published row'}.</p>
         {row.repo && <p className="mt-2 text-sm"><a className="text-accent underline" href={row.repo}>Published source</a></p>}
+        <MeasurementConditions row={row} />
       </article>)}
     </section>
 

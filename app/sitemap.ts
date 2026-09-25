@@ -4,7 +4,7 @@ import { SITE_URL } from "../lib/seo";
 import { readJevbenchV12, jevbenchV12View } from "../lib/jevbench-v12.mjs";
 import { readJevbenchV142, jevbenchV142View } from "../lib/jevbench-v142.mjs";
 
-const PAGES = ["/", "/benchmarks", "/compare", "/benchmaxxing", "/charts", "/scatter", "/eu", "/jev-models", "/jev-models/alternatives", "/jev-models/how-to-choose", "/jev-models/jev-vs-jevk5", "/jev-models/jev-vs-hopper", "/jev-models/jev-vs-winnow-12b-q8", "/jev-models/jev-vs-reflex-4b", "/jev-models/v1", "/jev-models/v1.4", "/jev-models/v1.4.1", "/jev-models/v1.4.2", "/providers", "/provider-explorer", "/gateways", "/about", "/privacy", "/terms", "/impressum"];
+const PAGES = ["/", "/benchmarks", "/compare", "/benchmaxxing", "/charts", "/scatter", "/eu", "/jev-models", "/jev-models/alternatives", "/jev-models/how-to-choose", "/jev-models/open-source-jev", "/jev-models/jev-vs-decider-4b-v2", "/jev-models/jev-vs-jevk5", "/jev-models/jev-vs-cygnet", "/jev-models/jev-vs-hopper", "/jev-models/jev-vs-winnow-12b-q8", "/jev-models/jev-vs-reflex-4b", "/jev-models/jev-vs-laya", "/jev-models/v1", "/jev-models/v1.4", "/jev-models/v1.4.1", "/jev-models/v1.4.2", "/providers", "/provider-explorer", "/gateways", "/about", "/privacy", "/terms", "/impressum"];
 
 // CR-62.2: the public pages plus one page per model family (the family URL resolves to its model page).
 // CR-129 (2026-09-23): one entry per JevBench system, the same way. The multimodal preview track is not
