@@ -11835,7 +11835,8 @@ Local gates for this documentation-only diff: `node scripts/build-dataset.mjs` r
 
 Status `implemented` below means the product work is live per the 13:40 review, but this
 documentation author has not promoted it to `verified`. Rows that the review did not establish
-are open. Evidence paths are relative to `/opt/benchmarkheaven/state/ux-evidence/` unless absolute.
+are open. This iteration's documentation rows remain `in-progress` until PR #23 is merged and
+deployed. Evidence paths are relative to `/opt/benchmarkheaven/state/ux-evidence/` unless absolute.
 
 | ID | Requirement (short) | Status | Evidence | Notes |
 |---|---|---|---|---|
@@ -11859,12 +11860,12 @@ are open. Evidence paths are relative to `/opt/benchmarkheaven/state/ux-evidence
 | CR-158.2 | Capability bubble charts before official score | implemented | same | Live page checked; full interaction criterion still needs independent review. |
 | CR-158.3 | Official composite with weight controls follows | implemented | same | Live page checked; pinned-page F-190 remains open. |
 | CR-158.4 | Anti-gaming price addendum and future release boundary | open | `/home/flori/DECISIONS.md` 25 Sep 15:15 | Approved; verify the dated method file and later score application without editing frozen v1.4.2. |
-| CR-159.1 | Restore the missing source-backed CR acceptance ledger | implemented | this commit's 03/04/PROGRESS diff | Different-engine review still required for `verified`; CR-148/160 remain separate open work. |
+| CR-159.1 | Restore the missing source-backed CR acceptance ledger | in-progress | PR #23, branch `jobs/bh-ux-iter223-20260925`; this commit's 03/04/PROGRESS diff | Awaiting queue merge and deployment before `implemented`; different-engine review still required for `verified`. CR-148/160 remain separate open work. |
 | CR-159.2 | Independently check field-name presentation live | verified | `iter223-f182/verification.json` | Codex Luna checked Claude's two-commit fix at deployed `f07e5651` on canonical and legacy, 1440/390 × light/dark: 8/8 contexts, 24 visible mentions inside `<code>`, 0 outside, no page overflow. |
 | F-182 | Keep sourced dataset field names formatted as code on the JevBench hub | verified | `iter223-f182/verification.json` | Different-engine sign-off of the Claude implementation, as required by the ledger. |
 | CR-160.1 | Audit MentalHealthBench first-party source and reuse terms | open | Git `e0051b32` intake capture; CR-160 allocation | Intake post is only a pointer; no result is inferred from it. |
 | CR-160.2 | Versioned, sourced ingestion and independent live check | open | — | Depends on CR-160.1. |
-| D206 | Missing requirement/acceptance documentation | implemented | CR-159.1 | The 7 previously missing CRs now have source references and acceptance rows; non-implementer review still owed. |
+| D206 | Missing requirement/acceptance documentation | in-progress | CR-159.1 | Source references and acceptance rows are in PR #23 but not merged or deployed; non-implementer review still owed. |
 | F-190 | Pinned v1.4.2 page below 14,000 px | open | `iter223-f190/comparison.json` | Reversible local probe: removing CR-158's extra `previous`/`sealedFamilyN` props reduced desktop height from 14,876 to 14,634 px, still above budget. Probe reverted; no product change claimed. Layout decision remains open. |
 
 No `ALL-ACCEPTED`: the CR-160 intake, F-190 and the other open rows remain. This iteration
