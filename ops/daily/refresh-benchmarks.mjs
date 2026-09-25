@@ -286,24 +286,31 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
   const capture = await exec('python3', ['scripts/capture-benchmark-sources.py', join(temporary, 'urls.json'), evidenceDir], { timeout: 1_800_000, maxBuffer: 8_000_000 });
   await writeFile(join(temporary, 'capture.log'), capture.stdout + capture.stderr);
   for (const receipt of await json(join(evidenceDir, 'manifest.json'))) captured.set(captureKey(receipt), receipt);
-  // D201: the declared-PDF documents, in their own directory so their manifest does not overwrite
-  // the one just read, with the retained text layer copied up beside every other capture of the run.
+  // D201: the declared-PDF documents. The capture runs in the run's scratch directory, not in the
+  // evidence directory, because the script writes its own `manifest.json` and a `<host>-robots.txt`
+  // and would overwrite the manifest just read. Only the retained text layer is copied into the
+  // evidence directory, and its receipt is appended to that directory's manifest — so the manifest
+  // still describes every file beside it, which is the whole point of keeping one.
   // A thrown capture is recorded and the run continues: those entries then report exactly what they
   // reported before this change, so this path can never cost a publication.
   if (documentUrls.size) {
-    const documentDir = join(evidenceDir, 'documents');
+    const documentDir = join(temporary, 'documents');
     try {
       await mkdir(documentDir, { recursive: true });
       await put(join(temporary, 'document-urls.json'), [...documentUrls]);
       const documents = await exec('python3', ['scripts/capture-vendor-documents.py', join(temporary, 'document-urls.json'), documentDir], { timeout: 1_800_000, maxBuffer: 8_000_000 });
       await writeFile(join(temporary, 'capture-documents.log'), documents.stdout + documents.stderr);
+      const manifestPath = join(evidenceDir, 'manifest.json');
+      const manifest = await json(manifestPath);
       for (const receipt of await json(join(documentDir, 'manifest.json'))) {
         if (receipt.file) {
           const target = join(evidenceDir, `${receipt.sha256.slice(0, 20)}.gz`);
           await cp(receipt.file, target); receipt.file = target;
         }
+        manifest.push(receipt);
         captured.set(captureKey(receipt), receipt);
       }
+      await put(manifestPath, manifest);
     } catch (error) { fail('vendor-documents', error); }
   }
   const current = (source) => {
