@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import { withFieldNames } from './jevFieldNames';
 
 type Capacity = {
   rank: number | null;
@@ -121,13 +122,6 @@ function rowNote(row: Capacity) {
     row.notes || null,
   ].filter((part): part is string => part != null);
   return parts.length === 0 ? null : parts.join(' ');
-}
-
-// F-182: a source note may name a model-card field; it is set in code type, never as prose.
-const FIELD_NAMES = /(max_seq_len|long_policy|usage\.input_tokens)/g;
-
-function withFieldNames(text: string) {
-  return text.split(FIELD_NAMES).map((part, index) => index % 2 === 1 ? <code key={index}>{part}</code> : part);
 }
 
 function firstSentence(text: string) {

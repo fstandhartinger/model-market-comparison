@@ -60,10 +60,12 @@ test('context page uses theme-aware labels and charts exact limits with distinct
   // F-182 (Fable pass 34): the training markers stay distinct, but the page spells them in words.
   assert.match(source, /Trained sequence length/);
   assert.match(source, /Training state limit/);
-  // the only place a dataset key may appear is the helper that sets a quoted one in code type.
-  const copy = source.replace(/const FIELD_NAMES = [^\n]*\n/, '');
-  assert.equal(/max_seq_len|long_policy|usage\.input_tokens/.test(copy), false, 'no dataset keys in the page copy');
-  assert.match(source, /function withFieldNames/);
+  // Review gate 2026-09-25: the helper moved to components/jevFieldNames.tsx, because the hub's cost
+  // bases quote the same keys. This file now carries no dataset key at all, and still routes sourced
+  // prose through the shared helper that sets a quoted one in code type.
+  assert.equal(/max_seq_len|long_policy|usage\.input_tokens/.test(source), false, 'no dataset keys in the page copy');
+  assert.match(source, /import \{ withFieldNames \} from '\.\/jevFieldNames'/);
+  assert.match(source, /withFieldNames\(row\.basis\)/);
 });
 
 test('F-180: the context table and its notes are disclosures, and the chart lists 25 bars first', () => {

@@ -13,6 +13,7 @@ import { JevCapabilityLazy } from '../../components/JevCapabilityLazy';
 import { JevCapabilityRanking, jevClassView } from '../../components/JevCapabilityRanking';
 import { JevBubbleCharts } from '../../components/JevBubbleChart';
 import { JevBoardIntentLinks } from '../../components/JevBenchSeoBlocks';
+import { withFieldNames } from '../../components/jevFieldNames';
 import { JevContextLazy } from '../../components/JevContextLazy';
 import { JevHistoryLazy } from '../../components/JevHistoryLazy';
 
@@ -241,7 +242,7 @@ export default async function JevModelsPage() {
         <p className="bh-muted mt-2">Systems with a public tariff (per token or per request) are priced at that tariff times the tokens we measured. Systems without one — open weights, author demos, models we ran locally — are priced as if a <b className="text-gray-200">large inference provider</b> hosted them: the OpenRouter list price of the same weights; if OpenRouter does not list them, the nearest larger sibling; if no model of that size class is on OpenRouter, the DeepInfra list price of the same weights or of the nearest larger model of the same class. We do not use per-minute GPU rental or our own CPU time — providers buy capacity in bulk or own the hardware, and price accordingly. Price × tokens per decision = $ per 1,000 decisions, marked &ldquo;est.&rdquo;.</p>
         <p className="bh-muted mt-2" data-bh-jev-price-rules><b className="text-gray-200">Price rules from v1.4.3 and v1.5 on</b> (disclosed before any v1.5 result): only public, bookable list prices that have been in effect for at least 30 days count; promotions, subsidies, credits and free tiers do not. The scoring price is never below the market reference price of the system&apos;s base model, found the same way as the estimates above. A later price change triggers a re-score with a visible note on the row.</p>
         <ul className="mt-3 space-y-1.5" data-bh-jev-cost-rows>
-          {v14Estimated.map((r) => <li key={r.key}><b>{short(r.display)}</b> — <span className="whitespace-nowrap">~{usd(r.cost.usd_per_1000)} <span className="bh-thin-tag">est.</span></span> per 1,000 decisions: <span className="bh-muted">{r.cost.basis.replace(/^ESTIMATE: (hosted-provider price, )?/, '')}</span></li>)}
+          {v14Estimated.map((r) => <li key={r.key}><b>{short(r.display)}</b> — <span className="whitespace-nowrap">~{usd(r.cost.usd_per_1000)} <span className="bh-thin-tag">est.</span></span> per 1,000 decisions: <span className="bh-muted">{withFieldNames(r.cost.basis.replace(/^ESTIMATE: (hosted-provider price, )?/, ''))}</span></li>)}
         </ul>
         {prices.size_classes && <details className="mt-3"><summary className="cursor-pointer text-accent">Reference prices by size class ($ per million input / output tokens)</summary>
           <ul className="bh-muted mt-2 space-y-1" data-bh-jev-cost-classes>

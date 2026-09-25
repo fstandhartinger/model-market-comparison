@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { readJevbenchV14, jevV14RowNote } from '../lib/jevbench-v14.mjs';
+import { readJevbenchV142 } from '../lib/jevbench-v142.mjs';
 
 // /jev-models v1.4 page fixes (Florian 23 Sep 2026): bar chart and four-radar compare restored, † only on real notes,
 // the evergreen v1.3 sections back out of the historical disclosure.
@@ -49,4 +50,20 @@ test('evergreen sections sit outside the historical v1.3 disclosure and read v1.
   assert.match(historySource, /id="held-out-diagnostic"/);
   assert.match(page, /v14Credits\.map/);
   assert.match(page, /v14Estimated\.map/);
+});
+
+// F-182 (review gate 2026-09-25T13:40Z): the v1.4.2 artifact's cost bases quote the server's own
+// `usage.input_tokens`, and the hub prints those bases verbatim. Our own copy uses words, not keys,
+// so a sourced field name must reach the page inside <code> — as the context notes already do.
+test('F-182: sourced field names on the hub are set in code type, not as prose', async () => {
+  const helper = await read('../components/jevFieldNames.tsx');
+  assert.match(helper, /max_seq_len\|long_policy\|usage\\\.input_tokens/);
+  assert.match(helper, /<code key=\{index\}>/);
+  // Both renderers of sourced prose route through the helper.
+  assert.match(page, /withFieldNames\(r\.cost\.basis\.replace\(/);
+  assert.match(await read('../components/JevContextLength.tsx'), /withFieldNames\(row\.basis\)/);
+  // The artifact really does carry the field name, so the wrapper is load-bearing, not decorative.
+  const v142 = (await readJevbenchV142()).artifact;
+  const estimated = v142.systems.filter((row) => row.cost?.kind === 'estimate' && typeof row.cost?.basis === 'string');
+  assert.ok(estimated.some((row) => /usage\.input_tokens/.test(row.cost.basis)), 'expected a published cost basis naming the field');
 });
