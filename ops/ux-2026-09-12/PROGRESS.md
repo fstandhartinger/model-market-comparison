@@ -10961,3 +10961,33 @@ failing), `node --test test/d193-2-protocol-excerpts.test.mjs` (19) and
 155/155, and `/models/glm-5.3::max` at 286,854 rather than 309,464). The one judgement worth
 challenging rather than re-running is D193.2's AA pin: it deliberately arms the guard on the whole
 Intelligence Index composition table, so AA adding another column will fail the board again.
+
+## Fable pass 35 — 2026-09-25 ~04:10 UTC (claude-fable, design authority; "what changed since pass 34")
+
+The changed surface since pass 34 is CR-152, the JevBench v1.4.2 board (PR #15): a new #1, the fairness sentence with a
+"Sort by Intelligence" disclosure, the pinned `/jev-models/v1.4.2` page, the leaf pages on v1.4.2, and the artifact's new class
+`system-one-open`. Judged live at revision `5c9ef1e7` on the canonical host, 1440/390 × light/dark: 125 shots + `metrics.json`
+and the pinned page's `{desktop,mobile}_light-v142*.png` + `metrics-v142.json` in
+`/opt/benchmarkheaven/state/ux-evidence/fable-20260925-pass35/canonical/`. Verdict, decisions and directives F-189–F-192 in
+`DESIGN-DIRECTIVES.md` (pass 35); pass 34's F-187/F-188 stay open (F-188 is unblocked now that the release cut has merged).
+
+**Wrong number fixed (F-191, surgical, Fable):** every ranked leaf page's points sentence read `ranked[0]` and called it Jev —
+"2.1 points behind Jev 1.13.0's 64.1" on JevK5's page beside the strip's "Jev 1.13.0 (63.3)", "0.0 points ahead of Jev 1.13.0's 64.1"
+on decider-4b v2's own page — and its radar pair compared against a third choice. One `referenceFor()` (Jev 1.13.0; on Jev's page the
+best other system) now feeds the tick, the sentence, the radar pair (A = the page's system, B = the reference; `JevCompareV14` honours a
+fixed pair's order) and the heading "Against ⟨reference⟩". F-183 shipped with it (sub-line "⟨class⟩ · by ⟨author⟩ · API…", the row note
+under "Availability and evidence", the release sentence at its end, no "hash-checked"/"name-only", the method link follows the revision).
+
+Gates before the push: `npx tsc --noEmit -p .` rc 0; `node --test test/` **1,331 pass / 0 fail**; `node scripts/build-dataset.mjs` rc 0
+(timestamp-only churn restored); local dev-server verification `verify-fable-pass35-design.mjs` **ONLY=F-191 60/60, ONLY=F-183 48/48**
+(`…/fable-20260925-pass35/local-F-191/`, `…/local-F-183/`). Post-deploy live runs are recorded below this entry by the same pass.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| F-191 | implemented (Fable) | `…/fable-20260925-pass35/canonical/desktop_light-sys-jevk5-v02.png` (before), `…/local-F-191/` 60/60, live run below | Needs a non-Fable engine to run `ONLY=F-191` on both hosts before `verified`. |
+| F-183 | implemented (Fable) | `…/local-F-183/` 48/48, live run below | Two recorded deviations (note under Availability, unlabelled class omitted) in the directives' Done log. Needs a non-Fable engine (`ONLY=F-183`). |
+| F-189 | open | `…/canonical/mobile_light-hub.png`, `metrics.json` → `firstBarY` 852 at 390 (pass 34: 662) | The chart's "Rank by" control replaces CR-152's boxed note + 89-row table. `[judgment]`, claude-opus or codex-luna. |
+| F-190 | open | `…/canonical/desktop_light-v142.png`, `metrics-v142.json` (17,417 px, first bar y 861) | The pinned page is the board: no "Frozen top five" list, no live-dated context section. `[mechanical]`. |
+| F-192 | open | `…/canonical/desktop_dark-hub-chart-vp.png` (the #1 and #4 bars in the llm-baseline green) | `system-one-open` gets its own swatch; the label is the data owner's → **CR-152.1** for the JevBench release job (name the class). Until then the key in `<code>`. |
+| F-188 | open | `…/canonical/desktop_light-alt.png` | Unchanged from pass 34; unblocked. |
+| F-187 | open | — | Before `/image-jev-bench` publishes. |

@@ -54,8 +54,10 @@ export function JevCompareV14({ rows, sealedDecisions, hardDecisions, fixedPair 
 }) {
   const ranked = rows.filter((r) => r.rank !== null);
   const unranked = rows.filter((r) => r.rank === null);
-  const first = ranked.find((r) => r.key === "jev-1.13.0") ?? ranked[0] ?? rows[0];
-  const second = ranked.find((r) => r.key !== first?.key) ?? ranked[1] ?? rows.find((r) => r.key !== first?.key) ?? first;
+  // F-191 (Fable pass 35): a fixed pair keeps the caller's order — on a leaf page A is the page's own system and B its reference,
+  // the same roles the score strip draws (dot = this row, tick = the reference).
+  const first = fixedPair ? rows[0] : ranked.find((r) => r.key === "jev-1.13.0") ?? ranked[0] ?? rows[0];
+  const second = fixedPair ? rows.find((r) => r.key !== first?.key) ?? first : ranked.find((r) => r.key !== first?.key) ?? ranked[1] ?? rows.find((r) => r.key !== first?.key) ?? first;
   if (!first || !second) return <p className="bh-muted text-sm">Comparison data is not published for this system.</p>;
   const [a, setA] = useState(first.key);
   const [b, setB] = useState(second.key);

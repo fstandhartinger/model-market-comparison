@@ -2,15 +2,21 @@ import Link from 'next/link';
 import { JevBenchRelatedLinks } from './JevBenchRelatedLinks';
 import { JevCompareV14, type JevCompareRow } from './JevCompareV14';
 import { JevAxisBand, typeColour } from './JevSystemCharts';
+import { JEV_TYPE_LABEL } from './jevTypes';
 import type { JevV14System } from '../lib/jevbench-v14.mjs';
 import { costBasisLabel, one, percent, usdPerThousand } from './JevBenchSeoBlocks';
 
 const short = (value: string) => value.split(' (')[0].split(', formerly')[0];
 const axisKeys = ['intelligence', 'calibration', 'speed', 'cost'] as const;
+/** F-183/F-191 (Fable pass 35): the one system a page measures itself against — Jev 1.13.0, the benchmark's namesake, or on Jev's
+ *  own page the best-ranked other system. The strip's tick, the points sentence, the radar pair and its heading all use this one row. */
+const referenceFor = (row: JevV14System, ranked: JevV14System[]) => row.key === 'jev-1.13.0'
+  ? ranked.find((r) => r.key !== 'jev-1.13.0') ?? null
+  : ranked.find((r) => r.key === 'jev-1.13.0') ?? ranked.find((r) => r.key !== row.key) ?? null;
 const openness = (row: JevV14System) => row.open === 'yes' ? 'Code and weights marked open in the published row' : row.open === 'weights' ? 'Weights marked open in the published row' : row.open === 'no' ? 'Marked closed in the published row' : 'Unknown in the published row';
 
 function ScoreStrip({ row, ranked }: { row: JevV14System; ranked: JevV14System[] }) {
-  const reference = row.key === 'jev-1.13.0' ? ranked.find((r) => r.rank === 2) : ranked.find((r) => r.key === 'jev-1.13.0');
+  const reference = referenceFor(row, ranked);
   const score = row.jevbench_score ?? 0;
   return <figure className="mt-4" data-bh-jev-system-strip={row.key}>
     <div className="relative h-8 w-full min-w-[300px]">
@@ -33,7 +39,10 @@ function compareRow(row: JevV14System): JevCompareRow {
   return { key: row.key, name: short(row.display), cls: row.class, rank: row.rank, listing: row.listing, score: row.jevbench_score, axes, tiers: { easy: tiers.easy ?? null, standard: tiers.standard ?? null, judge: tiers.judge ?? null, hard: tiers.hard ?? null, sealed: row.sealed_accuracy }, hard, sealed };
 }
 
-export function JevV141SystemDetail({ row, revision, generated, ranked }: { row: JevV14System; revision: string; generated: string; ranked: JevV14System[] }) {
+export function JevV141SystemDetail({ row, revision, generated, ranked, note = null }: { row: JevV14System; revision: string; generated: string; ranked: JevV14System[]; note?: string | null }) {
+  const reference = referenceFor(row, ranked);
+  const classLabel = JEV_TYPE_LABEL[row.class] ?? null;
+  const subLine = [classLabel, row.author ? `by ${row.author}` : null].filter(Boolean).join(' · ');
   const path = `/jev-models/${encodeURIComponent(row.key)}`;
   const axes = row.axes ?? { intelligence: null, calibration: null, speed: null, cost: null };
   const description = `Published ${revision} aggregate detail for ${row.display}, including its JevBench Score, axes, accuracy aggregates, cost evidence and openness fields.`;
@@ -62,7 +71,7 @@ export function JevV141SystemDetail({ row, revision, generated, ranked }: { row:
     <header className="bh-page-head mt-3">
       <div className="bh-eyebrow">JevBench by Benchmark Heaven · {revision} · individual system</div>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">{row.display}</h1>
-      <p className="bh-muted mt-2 max-w-3xl">This detail uses the public, hash-checked {revision} aggregate. Scores and ranks can change when a new release is published; the page preview remains name-only.</p>
+      <p className="bh-muted mt-2 max-w-3xl" data-bh-jev-system-subline>{subLine}{row.api_flag && <> · <span title={row.api_exposure_note ?? "The operator's endpoint received sealed item text, without answers."}>API endpoint saw sealed item text</span></>}</p>
       <JevBenchRelatedLinks systemKey={row.key} />
     </header>
 
@@ -72,7 +81,7 @@ export function JevV141SystemDetail({ row, revision, generated, ranked }: { row:
           <h2 id="jev-v141-system-summary" className="text-xl font-semibold">JevBench {revision} score</h2>
           <p className="mt-2 text-3xl font-bold tabular-nums">{one(row.jevbench_score)}</p>
           <p className="bh-muted mt-1">{row.ranked && row.rank != null ? `Rank #${row.rank} of ${ranked.length} ranked systems.` : `${row.listing === 'honorable_mention' ? 'Honorable mention' : 'Partial run'}, not ranked — ${row.not_ranked_because ?? 'the published run is incomplete'}.`}</p>
-          {row.ranked && row.rank != null && row.key !== 'jev-1.13.0' && ranked[0] && <p className="bh-muted mt-2 text-sm">{one(Math.abs(row.jevbench_score! - ranked[0].jevbench_score!))} points {row.jevbench_score! >= ranked[0].jevbench_score! ? 'ahead of' : 'behind'} Jev 1.13.0&apos;s {one(ranked[0].jevbench_score)}.</p>}
+          {row.ranked && row.rank != null && reference && reference.jevbench_score != null && <p className="bh-muted mt-2 text-sm" data-bh-jev-system-delta={reference.key}>{one(Math.abs(row.jevbench_score! - reference.jevbench_score))} points {row.jevbench_score! >= reference.jevbench_score ? 'ahead of' : 'behind'} {short(reference.display)}&apos;s {one(reference.jevbench_score)}.</p>}
           <ScoreStrip row={row} ranked={ranked} />
         </section>
 
@@ -87,7 +96,7 @@ export function JevV141SystemDetail({ row, revision, generated, ranked }: { row:
       </div>
 
       <section className="bh-panel min-w-0 p-4 sm:p-5" aria-labelledby="jev-v141-system-accuracy" data-bh-jev-system-radar>
-        <JevCompareV14 rows={[row, ...(ranked[0]?.key === row.key ? ranked.slice(1, 2) : [ranked[0]])].map(compareRow)} sealedDecisions={308} hardDecisions={47} fixedPair heading="Accuracy per tier, incl. sealed" />
+        <JevCompareV14 rows={[row, ...(reference ? [reference] : [])].map(compareRow)} sealedDecisions={308} hardDecisions={47} fixedPair heading={reference ? `Against ${short(reference.display)}` : 'Accuracy per tier, incl. sealed'} />
       </section>
     </div>
 
@@ -98,10 +107,12 @@ export function JevV141SystemDetail({ row, revision, generated, ranked }: { row:
         <div><dt className="font-semibold">License note</dt><dd className="bh-muted">{row.licence || 'Unknown in the published row.'}</dd></div>
         <div><dt className="font-semibold">Cost evidence</dt><dd className="bh-muted">{costBasisLabel(row.cost?.kind)}; the board’s row disclosure contains the published basis.</dd></div>
         {row.endpoint_condition && <div><dt className="font-semibold">Endpoint condition</dt><dd className="bh-muted">{row.endpoint_condition}</dd></div>}
+        {note && <div data-bh-jev-system-note><dt className="font-semibold">Note on this row</dt><dd className="bh-muted">{note}</dd></div>}
         {row.repo && <div><dt className="font-semibold">Published source</dt><dd><a className="text-accent underline" href={row.repo}>{row.repo}</a></dd></div>}
       </dl>
+      <p className="bh-muted mt-3 text-sm">From the public {revision} aggregate. Scores and ranks can change when a new release is published.</p>
     </section>
 
-    <p className="bh-muted mt-8 max-w-3xl text-sm">Read the <Link className="text-accent underline" href="/jev-models">full board</Link> and <a className="text-accent underline" href="https://github.com/fstandhartinger/jevbench/blob/v1.4.1/docs/METHOD-v1.4.md">published method</a>. The overall score is a composite, not raw accuracy.</p>
+    <p className="bh-muted mt-8 max-w-3xl text-sm">Read the <Link className="text-accent underline" href="/jev-models">full board</Link> and <a className="text-accent underline" href={`https://github.com/fstandhartinger/jevbench/blob/${revision}/docs/METHOD-v1.4.md`}>published method</a>. The overall score is a composite, not raw accuracy.</p>
   </>;
 }
