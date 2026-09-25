@@ -67,7 +67,6 @@ export interface EndpointEfficiency {
   or_model_id: string;
   endpoint_tag: string;
   provider: string;
-  endpoint_id: string | null;
   cache_hit_rate: (EfficiencyObservation & {
     total_tokens: number;
     source_provider_name: string;
@@ -79,7 +78,10 @@ export interface EndpointEfficiency {
   cache_read_per_1m: EfficiencyObservation | null;
   cache_write_per_1m: EfficiencyObservation | null;
   status: string;
-  attempts: EfficiencyAttempt[];
+  /** D195: collection diagnostics. Present in the dataset and in /api/dataset; omitted from the
+   *  per-page subset a model page serialises, which renders neither (see `pageEndpoint`). */
+  endpoint_id?: string | null;
+  attempts?: EfficiencyAttempt[];
 }
 
 export interface EfficiencyDataset {

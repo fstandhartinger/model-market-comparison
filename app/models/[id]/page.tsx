@@ -11,6 +11,7 @@ import { clientData, hasScoreEvidence, isThinComposite, thinCompositeNote } from
 import { compositeBenchmaxxingSignals } from "../../../lib/composite-signals";
 import { CompositeScoreValue } from "../../../components/CompositeScoreValue";
 import { cacheHitBaseline } from "../../../lib/effective-cost.mjs";
+import { pageEndpoint } from "../../../lib/cost";
 import { ModelDetailOffers } from "../../../components/ModelDetailOffers";
 
 import { getBenchmarkView } from '../../../lib/benchmark-data';
@@ -60,10 +61,18 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
   if (!clientModel) notFound();
   // CR-62.1: only this model's endpoint observations reach the page (the full table is 1.1 MB); the
   // catalog-wide typical cache-hit rate those prices fall back to is computed here from the full table.
+  // D195: and only the fields the offers panel reads. `lib/cost.ts` looks an endpoint up by
+  // (or_model_id, endpoint_tag) and then reads provider, status, cache_hit_rate and the two cache
+  // prices — with the whole cache-hit citation, so the modal's provenance is unchanged. `attempts`
+  // (per-endpoint collection diagnostics) and `endpoint_id` are never rendered and were 20 KB of the
+  // heaviest model page's RSC payload, which is what pushed it over CR-62.1's 300 KB crawler bound.
+  // They stay in the dataset and in /api/dataset; this narrowing is the page payload only.
   const endpoints = data.efficiency?.openrouter_endpoints ?? {};
   const efficiency = data.efficiency && {
     ...data.efficiency,
-    openrouter_endpoints: Object.fromEntries(offers.flatMap((o) => o.or_model_id && endpoints[o.or_model_id] ? [[o.or_model_id, endpoints[o.or_model_id]]] : [])),
+    openrouter_endpoints: Object.fromEntries(offers.flatMap((o) => o.or_model_id && endpoints[o.or_model_id]
+      ? [[o.or_model_id, Object.fromEntries(Object.entries(endpoints[o.or_model_id])
+          .map(([tag, endpoint]) => [tag, pageEndpoint(endpoint)]))]] : [])),
     cache_hit_baseline: cacheHitBaseline(data.efficiency, data.generated_at),
   };
   const pricingData = { efficiency, sourceDates: data.sourceDates, generated_at: data.generated_at };

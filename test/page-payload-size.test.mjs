@@ -59,3 +59,52 @@ test("the layout no longer inlines the Options sheet lists; model-page evidence 
   assert.match(sheet, /<SheetRows\b/);
   assert.match(sheet, /<LazyMissingCoverage\b/);
 });
+
+// D195 (2026-09-25): the heaviest model page had drifted to 309,464 bytes of initial HTML, over
+// CR-62.1's 300 KB crawler bound. Measured on the live page, the largest single item was not rendered
+// content at all: `efficiency.openrouter_endpoints[<this model>]` is 32 endpoint records, and 20 KB of
+// them are `attempts` (per-endpoint collection diagnostics) and `endpoint_id`, which nothing on the
+// page reads. The narrowing is payload-only — every field the price modal cites still travels, and the
+// dataset and /api/dataset are untouched.
+test("D195: a model page serialises only the endpoint fields its price modal reads", async () => {
+  const ts = (await import("typescript")).default;
+  const src = read("lib/cost.ts");
+  const compiled = ts.transpileModule(src, { compilerOptions: { module: ts.ModuleKind.ES2022, target: ts.ScriptTarget.ES2022 } })
+    .outputText.replace(/from "\.\/([a-z-]+\.mjs)"/g, (_, f) => `from "${new URL(`../lib/${f}`, import.meta.url).href}"`);
+  const { pageEndpoint, PAGE_ENDPOINT_FIELDS } = await import(`data:text/javascript;base64,${Buffer.from(compiled).toString("base64")}`);
+
+  // The list is only safe while it covers every field the lookup below it actually reads.
+  const reads = new Set([...src.matchAll(/\b(?:endpoint|exactEndpoint)\??\.([a-z_]+)/g)].map((m) => m[1]));
+  for (const field of reads) {
+    assert.ok(PAGE_ENDPOINT_FIELDS.includes(field),
+      `lib/cost.ts reads endpoint.${field}, so the page payload must keep it`);
+  }
+  assert.ok(reads.size >= 5, `expected the endpoint lookup to read several fields, saw ${reads.size}`);
+
+  const efficiency = JSON.parse(read("data/dataset.json")).efficiency;
+  const models = Object.entries(efficiency?.openrouter_endpoints ?? {});
+  assert.ok(models.length > 0, "the dataset carries OpenRouter endpoint observations");
+  const size = (v) => JSON.stringify(v).length;
+  const [heaviestId, heaviest] = models.sort((a, b) => size(b[1]) - size(a[1]))[0];
+  const records = Object.values(heaviest);
+
+  // Exactly the two diagnostic fields go, and nothing else — including nothing inside the citation.
+  for (const full of records) {
+    const lean = pageEndpoint(full);
+    const dropped = Object.keys(full).filter((k) => !Object.hasOwn(lean, k));
+    assert.deepEqual(dropped.sort(), Object.keys(full).filter((k) => ["attempts", "endpoint_id"].includes(k)).sort(),
+      `${heaviestId}/${full.endpoint_tag}: only the diagnostics may be dropped`);
+    for (const key of Object.keys(lean)) assert.deepEqual(lean[key], full[key], `${key} travels unchanged`);
+  }
+  // The price modal's citation is the reason cache_hit_rate is kept whole.
+  const cited = records.find((r) => r.cache_hit_rate);
+  if (cited) {
+    for (const field of ["value", "source", "url", "collected_at", "basis", "definition"]) {
+      assert.ok(Object.hasOwn(pageEndpoint(cited).cache_hit_rate, field),
+        `the cache-hit citation keeps ${field}`);
+    }
+  }
+  // And the saving is the one D195 needs: the page was 9,464 bytes over the bound.
+  const saved = size(heaviest) - size(Object.fromEntries(Object.entries(heaviest).map(([t, e]) => [t, pageEndpoint(e)])));
+  assert.ok(saved > 15_000, `expected the narrowing to save well over the 9,464-byte overshoot, saved ${saved}`);
+});

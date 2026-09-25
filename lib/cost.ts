@@ -1,5 +1,5 @@
 import type { ClientOffer, ClientModel, ClientData } from "./client-model";
-import type { ScoreKey } from "./types";
+import type { ScoreKey, EndpointEfficiency } from "./types";
 import { effectiveCost, fixedCost, cacheHitBaseline, FIXED_BLENDS, DEFAULT_BLEND, FALLBACK_OUTPUT_TOKENS, FALLBACK_IO_RATIO, type EffectiveCostResult, type CacheHitBaseline } from "./effective-cost.mjs";
 import { REGION_BUCKETS, allRegions, countryBucket, hostingBucket, regionStateFromLegacy } from "./regions.mjs";
 import { isFreeRoute } from "./free-route.mjs";
@@ -19,6 +19,18 @@ export interface PriceContext extends PriceSettings { model: ClientModel; data: 
 /** 2026-09-15: the exact wording shown for a proxied I/O-ratio source; only the "[link]" after it is a link. */
 export const IO_PROXY_TEXT = "Proxied from publicly available LLM usage statistics from an inference provider";
 /** `proxy`: the I/O ratio comes from a provider's global usage statistics, not from this model. */
+/** D195: the fields of an `EndpointEfficiency` this file actually reads, and therefore the only ones a
+ *  page has to serialise into its RSC payload. `attempts` (per-endpoint collection diagnostics) and
+ *  `endpoint_id` are never rendered; on the heaviest model page they were 20 KB of the 309 KB that
+ *  crossed CR-62.1's 300 KB crawler bound. The cache-hit observation is kept whole, so the price
+ *  modal still cites its source, url, date, basis and definition. The dataset keeps every field.
+ *  Keep this list in step with the endpoint lookup in `priceContext` below. */
+export const PAGE_ENDPOINT_FIELDS = ["or_model_id", "endpoint_tag", "provider", "status",
+  "cache_hit_rate", "cache_read_per_1m", "cache_write_per_1m"] as const;
+export const pageEndpoint = (endpoint: EndpointEfficiency): EndpointEfficiency =>
+  Object.fromEntries(PAGE_ENDPOINT_FIELDS.filter((f) => endpoint[f] !== undefined)
+    .map((f) => [f, endpoint[f]])) as unknown as EndpointEfficiency;
+
 export interface PriceSource { label: string; source: string; url?: string; date?: string; basis?: string; note?: string; proxy?: boolean }
 /** How the cache-hit rate applied to input tokens was chosen, and whether the route bills cache reads below input. */
 export interface PriceCache { kind: "observed" | "baseline" | "none"; rate: number; discounted: boolean }
