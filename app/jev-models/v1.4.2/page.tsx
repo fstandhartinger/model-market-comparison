@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { readJevbenchV142, jevbenchV142View } from '../../../lib/jevbench-v142.mjs';
+import { readJevbenchV141 } from '../../../lib/jevbench-v141.mjs';
 import { JevModelsV14Board } from '../../../components/JevModelsV14';
 import { JevCapabilityChart } from '../../../components/JevCapabilityChart';
 
@@ -52,7 +53,7 @@ export default async function JevModelsV142Page() {
         <a className="text-accent underline" href="/jev-models" data-bh-jev-live-link>View live board</a>
       </p>
     </header>
-    <JevModelsV14Board artifact={view.artifact} sha256={view.sha256} />
+    <JevModelsV14Board artifact={view.artifact} sha256={view.sha256} previous={{ revision: 'v1.4.1', keys: (await readJevbenchV141()).artifact.systems.map((row) => row.key) }} capabilityHref="#jev14-capability-views" />
     <JevCapabilityChart systems={view.systems} revision={view.revision} />
   </>;
 }
