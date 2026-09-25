@@ -11568,3 +11568,53 @@ already acceptable. Final gates: `npm test` **1,359 tests, 1,358 pass, 0 fail, 1
 
 D202's production proof is still the next daily's `source-health.json`: those five ids must read
 `retained_manual_snapshot`. That is unchanged by this iteration and still pending.
+
+### D204 — the quarantined score rows that reached no report
+
+Picked up while reading D192 (*"23 `BENCHMARK RETAINED` lines on 2026-09-24 and the timeout hid them"*).
+Two corrections to that row first, both measured: the visibility premise no longer holds — the
+benchmark **arms** do reach `source-health.md`, 31 of them in today's report, and the count is now
+**38**, not 23. What is genuinely invisible is a different class.
+
+`source-health.mjs` keeps `score-batch-<n>` out of its per-source table, and that is correct: a batch is
+a per-run unit, so `score-batch-7` is a different set of rows in every run and a "failing since" date or
+a consecutive-run streak would be meaningless for it. What nobody had noticed is that **nothing else
+picked them up either**. A disputed row does not make its source fail, so `staleSources` never sees the
+batches, `run-report.json` does not carry them, and the summary that reaches Florian does not mention
+them. The only trace was `BENCHMARK RETAINED score-batch-3: 15 rows quarantined…` in a run log nobody
+opens. Counted independently of the new code, straight out of the committed evidence of
+`2026-09-25T08-50-35-039Z`: **11 batches, 72 rows** reviewed and not published, invisible everywhere.
+
+This is the failure `source-health.mjs` was written against — its own header says a retained failure
+*"keeps the old values on the site, which is correct, but nobody saw it"* — applied to the one class it
+excludes. The rows are therefore **counted, not listed**, which is the reporting shape a per-run unit
+supports. `fail()` now records the count structurally (`quarantined_rows`) instead of leaving it in a
+prose sentence a report would have to parse; runs written before that still report by reading the reason
+`fail()` itself wrote, and a batch whose count cannot be established either way is named in
+`unknown_batches` rather than counted as zero — a silent zero is the defect, so the repair must not be
+able to produce one. Checked before changing the shape: `daily-checks.json` is written and never read,
+and nothing validates a check entry against a closed schema, so the added field cannot fail a build.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D204 | implemented | `…/iter217-d204/` (`independent-count.json` 72/11; `source-health-real.md`; `summary-line-today.txt`); `test/d204-quarantined-score-rows.test.mjs` 9/9 | claude-opus, iteration 217 (implementer — **needs another engine**). Production proof is the next run's `summary.txt` carrying the line. |
+| D192 | open (count corrected) | `…/2026-09-25T05-17…/reports/refresh-benchmarks.log`; `reports/source-health.md` | **38**, not 23, and not a visibility problem: the arms are in `source-health.md`. Still one repair each. |
+
+Verified on real data rather than only in unit tests: the report prints *"72 score row(s) quarantined
+across 11 batch(es)"* for the newest run with `unknown_batches` empty, so the historical fallback read
+all eleven real batches, and the summary line it produces is
+`Zurueckgehaltene Score-Zeilen (geprueft, nicht veroeffentlicht): 72 in 11 Batch(es)`. `daily.mjs` has
+no exported summary builder, so the contract is pinned from both ends: that `writeSourceHealth` puts the
+field in the json `daily.mjs` opens, and that `daily.mjs` reads and prints it behind a guard that adds
+no line when nothing was quarantined.
+
+Gates: `npm test` **1,368 tests, 1,367 pass, 0 fail, 1 skipped** rc 0 · `npx tsc --noEmit -p .` rc 0 ·
+`build-dataset.mjs` rc 0, 871 / 674 / 96 / 3,121, timestamp-only churn discarded.
+
+**Not started, deliberately.** The `score-batch` disputes themselves are the biggest block by row count
+(~70/day) and share one recurring critic finding — *"set basis to 'derived'"* on publisher-computed cost
+rows. That is a provenance decision on published numbers, it is approval-bound, and validating it needs
+producer/critic rounds; starting it with ~2 h left in a checkout two JevBench jobs are also using is how
+half-finished work gets stranded. It wants its own iteration. The ~12 arms reporting *"producer
+uncertainty cannot be overruled by a critic pass"* are **not** one bug: the producer flagged those rows
+itself and the quarantine is the design working, so each is a separate data repair.
