@@ -1175,3 +1175,14 @@ Capability-first decision in `/home/flori/DECISIONS.md`, and the live regression
 | CR-163.2 | Keep the ten decision guides available while making the phone header short. | One copy of each guide link in the DOM. On phones a ≥44 px labelled control starts collapsed, expands all ten links, and closes again; desktop shows all ten links. Keyboard operation works. |
 | CR-163.3 | Keep the method and score distinctions honest. | The short pre-chart line says Capability averages Intelligence and Calibration and names the leading row; the full 2× cost/latency rule, limits, fallback disclosure, and links to bubble charts and official JevBench Score remain reachable below the ranking. Published artifacts and scores are unchanged. |
 | CR-163.4 | Repair F-189/F-193's live verifier for Florian's newer layout. | Verify the current `View by` switch, one unboxed approved fairness sentence, Intelligence ordering and return to Overall, and the first Capability row's 720 px budget on both hosts at 1440/390 in light/dark; save screenshots and DOM receipts. The removed two-button `Rank by` selector and the old Composite-first y position are no longer acceptance criteria. |
+
+## CR-164 — JevBench row rhythm and frozen-page height
+
+Source: workstream repair in `03-CHANGE-REQUESTS-VERBATIM.md`, F-184/F-190 in
+`DESIGN-DIRECTIVES.md`, and live measurements in `REVIEW-20260925T155004Z.md`.
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-164.1 | Align Capability bar-row heights after CR-158 added Jev-class notes. | On the live hub at 1440 px in light and dark, every `[data-bh-jev14-capability-row]` is within 2 px of the others. At 390 px, notes remain readable and there is no horizontal page overflow. |
+| CR-164.2 | Keep the frozen v1.4.2 board primary while retaining its artifact-derived Capability charts. | The charts are reachable through a labelled, keyboard-operable disclosure, closed by default. The official frozen board, compare view, source hash and share link remain visible. At 1440 px the page height is under 14,000 px in both themes; the F-190 browser checks pass on both hosts. |
+| CR-164.3 | Verify the repair without changing published measurements. | Dataset build, full tests, TypeScript and production build pass; the changed page and live hub are checked at 1440/390 in light/dark on both public hosts, with screenshots and DOM receipts. JevBench artifact hashes, scores and official ranks are unchanged. |
