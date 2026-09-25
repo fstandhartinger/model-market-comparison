@@ -10762,3 +10762,138 @@ acceptance and a subsequent published run's `run_retention` receipt. Existing in
 receipts for F-176/F-181/F-186/CR-142 are retained as historical evidence, but this gate adds
 no fresh promotion. The deployed JevBench banner was also found to be stale (“in a few
 minutes”); its copy was corrected locally and needs deployment plus a browser recheck.
+
+## Iteration 213 (claude-opus, 2026-09-25 02:50–05:0x UTC)
+
+Two filed rows closed, both by measuring the thing that was assumed. D193.2's last five
+references and D193.3 turned out to be one finding; D195, filed as a product decision, turned
+out to be 20 KB of diagnostics nobody renders.
+
+### D193.2 / D193.3 — 16 armed references are 0, and the JevBench metric they were hiding
+
+Iteration 212 left five references as "decisions, not edits": the three AA Intelligence Index
+composition-table references and the two `jevbench*` rows. Both groups are answerable, and the
+first one corrects that iteration's own reading.
+
+**The AA composition table was not a v4.3 → v4.3.2 change, and not a hand-copy error either.**
+The old excerpt is *verbatim* in the 2026-09-21T02:24Z capture the reference names — the test
+`AA methodology evidence: every active AA identity quotes a passage present in the capture it
+names` proves it, and it was green all along. Word-diffed against the 2026-09-24T19:31Z capture
+it differs in exactly eleven tokens, every one of them a column **AA added**: the `Private`
+header and its ten per-row ✓/✗ marks. Same ten evaluations, same four category weights
+(Agents 30 / Coding 20 / General 30 / Scientific Reasoning 20), same per-evaluation weights
+summing to 100 %, still v4.3.2. So the guard was right to refuse — a real source edit — and no
+Composite input moved. The three references move to the newer capture, retained with its receipt
+at `data/raw/benchmarks/daily-evidence/2026-09-24-aa-methodology/`, and pin the table as AA now
+prints it.
+
+**Recorded trade-off, because it will come back.** Pinning the whole table means the guard fires
+whenever AA adds a column, which is what just cost two iterations. It is kept anyway: this table
+*is* the Intelligence Index definition and the Composite depends on it, so an edit there is
+exactly what somebody should have to look at. The narrower pins used elsewhere in D193.2
+(LisanBench's `num_models`, ProgramBench's task count) leave out fields that move with every new
+*model*; a column is not that.
+
+**D193.3 is a registry decision, and the answer is that the row was simply stale.**
+`jevbench::v1.1`'s `scoring.metric` said `0.6 x Capability + 0.2 x Speed + 0.2 x Cost`. That was
+the headline of revisions v1.1 and v1.1.1. The evidence the row pins is tag **v1.1.2**, whose
+headline is Balanced 33:33:33 — and the artifact's own `revision_history` records that as
+**Florian's decision of 19 Sep 2026**, with 60:20:20 kept as the preset "Emphasis on Accuracy"
+and as one of six `sensitivity_weightings`. So this is not a source changing under us; it is our
+description never having followed our own change. The metric now states what the pinned artifact
+publishes, the superseded headline is written into `scoring.notes` rather than erased, and the
+stale `$0.01–$10` cost scale becomes the widened `$0.001–$10` the same revision introduced.
+
+Scope, checked before editing: both `jevbench*` rows carry **0 observations** in `scores.json`
+and are `manual_required` in `collections`, and `/jev-models` has stated the Balanced headline
+since CR-86 (`components/JevModelsV11.tsx:87,256`). No published value was relabelled.
+
+Both JevBench excerpts were digests of fields from **non-adjacent** places in a sorted-key JSON
+document, which is why neither could ever match. Each now pins the contiguous block that carries
+the protocol identity, and `jevbench::v1.1` gains a **second** reference pinning the
+`revision_note` — the passage that states the headline weighting, i.e. the one a reviewer needs
+in order to check `scoring.metric` at all. That passage was unreadable for six days because the
+reference it lived on always failed; a guard that always fails reports nothing.
+
+Re-scanned against the same 2026-09-24T19:20Z captures
+(`/opt/benchmarkheaven/state/ux-evidence/iter213-d193/scan-v6.json`):
+**413 protocol references · 0 failing · 133 verbatim · 4 retired · 246 latent** — down from 5
+failing, and from the 16 that opened D193.2. `test/d193-2-protocol-excerpts.test.mjs` grows from
+11 to **17 tests**, including one that reads both captures and shows the Private column is the
+whole difference, and two that bind the new metric to the artifact and to the 0-observation scope.
+
+Shipped in `e32451f3`. **Verified live** on `benchmarkheaven.com/api/dataset` at that revision:
+all three AA references carry `Tool Usage Private` and name the `2026-09-24-aa-methodology`
+capture; `jevbench::v1.1` serves the Balanced metric, the D193.3 note and both evidence
+references.
+
+### D195 — the 300 KB overshoot is diagnostics, not content
+
+Iteration 212 filed this as "a content-vs-SEO trade on the benchmark sheet, i.e. a product/design
+decision". Measured chunk by chunk on the live `/models/glm-5.3::max` instead of reasoned about,
+it is not. The page is 310,452 bytes: 24 flight chunks totalling 164,492, one of them 106,121.
+Inside that chunk the benchmark sheet is **8.5 KB**, and the single largest item on the whole page
+is `efficiency.openrouter_endpoints["z-ai/glm-5.3"]` at **51,293 bytes**.
+
+All 32 of those endpoint records are genuinely used — every one is named by one of the page's 37
+offers, so CR-62.1's per-model narrowing is already tight and narrowing by endpoint tag saves
+exactly 0 bytes. But **20.5 KB of them is `attempts` (per-endpoint collection diagnostics) and
+`endpoint_id`**, and `lib/cost.ts` reads neither. The overshoot was 9,464 bytes.
+
+`pageEndpoint` (in `lib/cost.ts`, beside the lookup whose field list it mirrors) keeps the seven
+fields that lookup reads — including the whole `cache_hit_rate` observation, so the price modal
+still cites source, url, date, basis and definition. Nothing rendered changes; the dataset and
+`/api/dataset` keep every field. The test re-derives every `endpoint?.x` the reader touches from
+`lib/cost.ts`'s own source and fails if one is not carried, then checks against the real dataset
+that exactly those two keys are dropped, that the citation survives whole, and that the saving
+clears the overshoot.
+
+Shipped in `9c7ae3a4`. **`verify-cr-62.mjs` at that revision: 155/155 on all three hosts** —
+canonical, `www` and the legacy Mintapis alias
+(`/opt/benchmarkheaven/state/ux-evidence/iter213-d195/{canonical,www,legacy}/`). Against iteration
+212's own receipt at `23967375`, taken the same day with the same verifier:
+
+| Page | 2026-09-25 (before) | 2026-09-25 (after) | Δ |
+|---|---:|---:|---:|
+| `/models/glm-5.3::max` | 309,464 | **286,854** | −22,610 |
+| `/models/kimi-k3::max` | 297,490 | 282,874 | −14,616 |
+| `/models/claude-opus-5::max` | 297,237 | 289,030 | −8,207 |
+| `/models/glm-5.2::max` | 294,799 | 288,326 | −6,473 |
+| `/models/gpt-5.6-sol::max` | 273,083 | 267,945 | −5,138 |
+| `/models/claude-fable-5.1` | 270,363 | 267,331 | −3,032 |
+
+The heaviest page is now 13.1 KB under the bound, and **every one of the other sixteen measured
+pages is byte-identical (+0)** — which is the evidence that nothing rendered moved. The per-page
+saving tracks how many OpenRouter endpoints a model has, so the headroom this buys is roughly six
+months at the +30 KB/8 days drift iteration 212 measured; the drift itself is untouched and the
+class will reach the bound again.
+
+The first `www` run returned 154/155 on a `net::ERR_NETWORK_CHANGED` during a navigation — a
+transport fault, not a check. Re-run from a cleared out dir: 155/155. Both receipts' `sizes` for
+`/models/glm-5.3::max` agree at 286,854 across all four crawler user agents.
+
+### Gates
+
+`node --test test/` **1,328 tests / 1,327 pass / 0 fail / 1 skip** (the CR-74.4 calibration test
+skips off its 2026-09-17 dataset snapshot, as designed) · `npx tsc --noEmit -p .` rc 0 ·
+`node scripts/build-dataset.mjs` rc 0, **871 / 676 / 96 / 3,036**, and the only dataset diff is
+the registry text itself — no score, price, rank or count moved. Logs in
+`/opt/benchmarkheaven/state/ux-evidence/iter213-d193/`.
+
+### One-writer note
+
+`jobs/release-v142-ship-20260925` merged PR #15 (CR-152, the JevBench v1.4.2 board and the removal
+of the temporary preview notice) into this checkout **between** this iteration's `git fetch` and
+its commit, so `e32451f3`'s parent is that merge. Nothing was lost: everything was staged by path,
+and all three gates were re-run on the merged tree before the push. Both pushes were well clear of
+the 05:17 run's lock.
+
+### Ledger rows
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D193.2 | implemented (16 of 16 references repaired) | `/opt/benchmarkheaven/state/ux-evidence/iter213-d193/scan-v6.json` (413 references, **0 failing**); `test/d193-2-protocol-excerpts.test.mjs` (17 tests); `data/raw/benchmarks/daily-evidence/{2026-09-24-aa-methodology,2026-09-25-d193-2}/`; live `/api/dataset` at `e32451f3` | The AA trio moves to the 2026-09-24 capture and pins the table with the `Private` column AA added; both `jevbench*` rows pin contiguous identity blocks. Implemented by claude-opus — **needs a non-claude-opus sign-off**. |
+| D193.3 | implemented | `data/raw/benchmarks/registry.json` (`jevbench::v1.1` `scoring.metric` + `scoring.notes`); the artifact's `revision`/`revision_history`; `test/d193-2-protocol-excerpts.test.mjs` (2 dedicated tests); live `/api/dataset` at `e32451f3` | The row described the v1.1/v1.1.1 headline while pinning the v1.1.2 artifact. Corrected to Balanced 33:33:33 with the old headline recorded, not erased; 0 observations on either row, so no value was relabelled. Implemented by claude-opus — **needs a non-claude-opus sign-off**. |
+| D195 | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter213-d195/{canonical,www,legacy}/verification.json` (**155/155 per host** at `9c7ae3a4`); `test/page-payload-size.test.mjs` | 309,464 → 286,854 B by dropping `attempts` and `endpoint_id` from the page's endpoint payload; nothing rendered changed and sixteen other pages are byte-identical. Not the benchmark-sheet decision it was filed as. Implemented by claude-opus — **needs a non-claude-opus sign-off**. |
+| CR-62.4 | in-progress | `…/iter213-d195/{canonical,www,legacy}/` | The measurable half is 155/155 on three hosts again, which is what iteration 89 had. The open acceptance is still only Florian confirming the share card in X chat and WhatsApp; no second Telegram was sent. |
+| D191, D192 | open | unchanged | Not attempted. D192's 15 remaining retentions are mostly protocol-review wording disputes, which need the daily reviewer rather than an edit. |
