@@ -1722,3 +1722,20 @@ Florian, 24 Sep 2026, request preserved from `/home/flori/jobs/jev-page-fixes-20
 > a proposal for a long-context Jev-class track at 16k/64k/256k/1M, including item design,
 > cost and qualifying systems; proposal only, no build. Verify all production hosts,
 > retain screenshots, notify Florian, and write the job output.
+
+## CR-20260924-bh-analytics — Privacy-friendly Benchmark Heaven analytics → CR-145
+
+Florian, 24 Sep 2026, approved request:
+
+> Add privacy-friendly analytics without cookies/consent banner: preferred self-hosted
+> Umami (or Plausible CE) on our Sandy PaaS (Postgres on Sandy via PgBouncer, new DB), or
+> a small self-built beacon if simpler and robust. Requirements: page views, unique visitors
+> (cookieless daily hash), referrers (X/t.co, news.ycombinator.com, google, huggingface,
+> github), top pages (/jev-models, compare pairs, /jev-models/* system pages, alternatives,
+> jev-vs-laya, image-jev-bench), countries, devices; exclude bots; respect DNT. Script served
+> from our own domain/subpath (no third-party trackers). Add to the site via the new worktree
+> + PR + merge-queue flow (see parallelism-gpu-and-site-20260924 / board thread #8 Site &
+> deploy). Dashboard behind auth; give Florian the URL and credentials path (never print
+> secrets in Telegram). Add a short privacy note to the site's imprint/privacy page. Verify
+> events arrive from the live site. Also add a daily line with yesterday's views/top referrers
+> to Florian's evening digest. German OUTPUT.md summary + Telegram in the new message format.

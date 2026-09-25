@@ -1,0 +1,10 @@
+[Unit]
+Description=Daily Benchmark Heaven Umami data retention
+
+[Timer]
+OnCalendar=*-*-* 17:45:00 UTC
+Persistent=true
+Unit=umami-retention.service
+
+[Install]
+WantedBy=timers.target
