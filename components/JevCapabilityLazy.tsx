@@ -9,7 +9,7 @@ const JevCapabilityChart = dynamic(
   { ssr: false },
 );
 
-export function JevCapabilityLazy({ revision }: { revision: string }) {
+export function JevCapabilityLazy({ revision, only3d = false }: { revision: string; only3d?: boolean }) {
   const [systems, setSystems] = useState<JevV14System[] | null>(null);
   const [error, setError] = useState(false);
 
@@ -27,5 +27,5 @@ export function JevCapabilityLazy({ revision }: { revision: string }) {
 
   if (error) return <p className="bh-muted mt-12 text-sm" role="alert">Capability views are unavailable right now.</p>;
   if (!systems) return <p className="bh-muted mt-12 text-sm" role="status">Loading capability views…</p>;
-  return <JevCapabilityChart systems={systems} revision={revision} />;
+  return <JevCapabilityChart systems={systems} revision={revision} only3d={only3d} />;
 }

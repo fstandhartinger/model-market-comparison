@@ -1,0 +1,14 @@
+{
+  "note": "Best public source for JevBench systems whose results row has no working repo link (Florian, 25 Sep 2026: every model name links to its best source: Hugging Face model page, GitHub repo, or vendor/API docs for closed models; project homepage as fallback). Keys are JevBench system keys. Each URL answered HTTP 200 when checked.",
+  "checked_utc": "2026-09-25T10:40:00Z",
+  "links": {
+    "gpt-6-luna": { "url": "https://developers.openai.com/api/docs/models/gpt-6-luna", "kind": "vendor API docs", "source": "OpenAI developer docs, model page" },
+    "gpt-6-luna-low": { "url": "https://developers.openai.com/api/docs/models/gpt-6-luna", "kind": "vendor API docs", "source": "OpenAI developer docs, model page (same model, low reasoning effort)" },
+    "gpt-5.6-luna": { "url": "https://developers.openai.com/api/docs/models/gpt-5.6-luna", "kind": "vendor API docs", "source": "OpenAI developer docs, model page" },
+    "gemini-3.1-flash-lite": { "url": "https://ai.google.dev/gemini-api/docs/models/gemini-3.1-flash-lite", "kind": "vendor API docs", "source": "Google Gemini API docs, model page" },
+    "deepseek-flash": { "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash", "kind": "Hugging Face model page", "source": "open weights published by DeepSeek" },
+    "qwen3.8-27b": { "url": "https://huggingface.co/Qwen/Qwen3.8-27B", "kind": "Hugging Face model page", "source": "open weights published by Qwen; measured through the Chutes TEE endpoint" },
+    "kushal-gemma4-31b-it-autoloops": { "url": "https://www.autoloops.ai", "kind": "project homepage", "source": "Autoloops, the hosted service that was measured (no public model page)" },
+    "mirror": { "url": "https://www.bluusun.com", "kind": "project homepage", "source": "Bluusun Decision API homepage; the repo link in the v1.4.2 row (github.com/Bluusun/Decision-API) answers 404" }
+  }
+}

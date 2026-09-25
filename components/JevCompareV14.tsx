@@ -9,19 +9,43 @@ import { JEV_TYPE_LABEL, JEV_TYPE_VAR } from "./jevTypes";
 // pinned v1.4 artifact; no sealed item text, gold or per-item result reaches this component. The pair lives in ?compare=a,b.
 
 export type JevCompareRow = {
-  key: string; name: string; cls: string; rank: number | null; listing: string; score: number | null;
-  axes: Record<"intelligence" | "calibration" | "speed" | "cost", number | null>;
+  key: string; name: string; cls: string; rank: number | null; listing: string; score: number | null; source?: string | null;
+  axes: Record<"intelligence" | "calibration" | "speed" | "cost", number | null> | null;
   tiers: Record<"easy" | "standard" | "judge" | "hard" | "sealed", number | null>;
   hard: Record<string, { accuracy: number | null; n: number }> | null;
   sealed: Record<string, number | null> | null;
 };
 
-const FAMILY: Record<string, string> = { jev: "blue", "jev-service": "blue", "jev-rebuild": "orange", "llm-baseline": "green", "small-tool-model": "violet", classifier: "magenta", "decision-api": "yellow", reranker: "teal", "raw-logit-control": "grey", "native-logit": "lime" };
+const FAMILY: Record<string, string> = { jev: "blue", "jev-service": "blue", "jev-rebuild": "orange", "llm-baseline": "green", "small-tool-model": "violet", classifier: "magenta", "decision-api": "yellow", reranker: "teal", "raw-logit-control": "grey", "native-logit": "lime", "system-one-open": "red" };
 const colour = (cls: string) => `rgb(var(${JEV_TYPE_VAR[cls] ?? JEV_TYPE_VAR["llm-baseline"]}))`;
 
 const AXES = [["intelligence", "Intelligence"], ["calibration", "Calibration"], ["speed", "Speed"], ["cost", "Cost"]] as const;
 const TIERS = [["easy", "Easy"], ["standard", "Standard"], ["judge", "Judge"], ["hard", "Hard"], ["sealed", "Sealed"]] as const;
 export const HARD_FAMILIES: [string, string][] = [["adversarial", "Adversarial"], ["ambiguous", "Ambiguous"], ["judge_hard", "Judge"], ["long_policy", "Long policy"], ["multi_hop", "Multi-hop"], ["probability", "Probability"], ["routing_hard", "Routing"], ["temporal_numeric", "Temporal / numeric"], ["tradeoff", "Trade-off"], ["trap", "Trap"]];
+// CR-153 (Florian 25 Sep 2026): one radar for the current v1.4 question set — the 220 hard-tier decisions (public and held
+// out) pooled with the 308 sealed decisions, family by family. Each spoke is correct answers over decisions across both sets,
+// so every measured system has a value; the family names differ slightly between the two sets and are matched here.
+export const CURRENT_FAMILIES: { key: string; label: string; hard: string[]; sealed: string[] }[] = [
+  { key: "ambiguous", label: "Ambiguous / abstain", hard: ["ambiguous"], sealed: ["ambiguous_abstain"] },
+  { key: "judge", label: "Judge", hard: ["judge_hard"], sealed: ["judge_hard"] },
+  { key: "long_policy", label: "Long policy", hard: ["long_policy"], sealed: ["long_policy"] },
+  { key: "multi_hop", label: "Multi-hop", hard: ["multi_hop"], sealed: ["multi_hop"] },
+  { key: "probability", label: "Probability", hard: ["probability"], sealed: ["probability"] },
+  { key: "temporal_numeric", label: "Temporal / numeric", hard: ["temporal_numeric"], sealed: ["temporal_numeric"] },
+  { key: "tradeoff", label: "Trade-off", hard: ["tradeoff"], sealed: ["tradeoff"] },
+  { key: "routing", label: "Routing", hard: ["routing_hard"], sealed: [] },
+  { key: "trap", label: "Trap / adversarial", hard: ["trap", "adversarial"], sealed: ["trap_adversarial"] },
+  { key: "paraphrase", label: "Paraphrase", hard: [], sealed: ["paraphrase_robustness"] },
+  { key: "safety", label: "Safety judge", hard: [], sealed: ["safety_judge"] },
+];
+
+/** Pooled share correct over the hard and sealed decisions of one family; null when either half is unpublished. */
+export function currentFamilyAccuracy(r: JevCompareRow, f: (typeof CURRENT_FAMILIES)[number], hardN: Record<string, number>, sealedN: Record<string, number>): number | null {
+  let correct = 0, n = 0;
+  for (const k of f.hard) { const v = r.hard?.[k]; if (!v || v.accuracy === null) return null; correct += Math.round(v.accuracy * v.n); n += v.n; }
+  for (const k of f.sealed) { const v = r.sealed?.[k]; if (v === null || v === undefined || !sealedN[k]) return null; correct += Math.round(v * sealedN[k]); n += sealedN[k]; }
+  return n ? correct / n : null;
+}
 export const SEALED_FAMILIES: [string, string][] = [["ambiguous_abstain", "Ambiguous / abstain"], ["judge_hard", "Judge"], ["long_policy", "Long policy"], ["multi_hop", "Multi-hop"], ["paraphrase_robustness", "Paraphrase"], ["probability", "Probability"], ["safety_judge", "Safety judge"], ["temporal_numeric", "Temporal / numeric"], ["tradeoff", "Trade-off"], ["trap_adversarial", "Trap / adversarial"]];
 
 const one = (v: number | null) => (v === null ? "—" : v.toFixed(1));
@@ -49,8 +73,9 @@ function parsePair(search: string, keys: Set<string>): [string, string] | null {
   return a && b && a !== b && keys.has(a) && keys.has(b) ? [a, b] : null;
 }
 
-export function JevCompareV14({ rows, sealedDecisions, hardDecisions, fixedPair = false, heading }: {
+export function JevCompareV14({ rows, sealedDecisions, hardDecisions, fixedPair = false, heading, hardFamilyN, sealedFamilyN }: {
   rows: JevCompareRow[]; sealedDecisions: number; hardDecisions: number; fixedPair?: boolean; heading?: string;
+  hardFamilyN?: Record<string, number>; sealedFamilyN?: Record<string, number>;
 }) {
   const ranked = rows.filter((r) => r.rank !== null);
   const unranked = rows.filter((r) => r.rank === null);
@@ -81,16 +106,24 @@ export function JevCompareV14({ rows, sealedDecisions, hardDecisions, fixedPair 
   const pair = [A, B], s = series(A, B);
   const axisSpokes: Spoke[] = AXES.map(([k, label]) => ({
     key: k, lines: [label], thin: [false, false],
-    values: pair.map((r) => r.axes[k] ?? 0),
-    texts: pair.map((r) => (r.axes[k] === null ? "none (0)" : one(r.axes[k]))),
+    // A partial run (Needle 3) publishes no axes at all; it draws at 0 and says so instead of breaking the page.
+    values: pair.map((r) => r.axes?.[k] ?? 0),
+    texts: pair.map((r) => (r.axes == null ? "not scored" : r.axes[k] == null ? "none (0)" : one(r.axes[k]))),
   }));
   const tierSpokes = accuracySpokes(pair, TIERS, (r, k) => r.tiers[k as keyof JevCompareRow["tiers"]]);
-  const hardSpokes = accuracySpokes(pair, HARD_FAMILIES, (r, k) => r.hard?.[k]?.accuracy ?? null);
+  const pooled = hardFamilyN && sealedFamilyN ? { hard: hardFamilyN, sealed: sealedFamilyN } : null;
+  const hardSpokes = pooled
+    ? accuracySpokes(pair, CURRENT_FAMILIES.map((f) => [f.key, f.label] as const), (r, k) => currentFamilyAccuracy(r, CURRENT_FAMILIES.find((f) => f.key === k)!, pooled.hard, pooled.sealed))
+    : accuracySpokes(pair, HARD_FAMILIES, (r, k) => r.hard?.[k]?.accuracy ?? null);
   const sealedSpokes = accuracySpokes(pair, SEALED_FAMILIES, (r, k) => r.sealed?.[k] ?? null);
   const missingFor = (spokes: Spoke[]) => pair.filter((_, k) => spokes.every((sp) => sp.values[k] === null)).map((r) => r.name);
+  // A partial run has only some families of the pooled set (Needle 3: hard tier, no sealed run), so name it when any spoke is empty.
+  const partlyMissingFor = (spokes: Spoke[]) => pair.filter((_, k) => spokes.some((sp) => sp.values[k] === null)).map((r) => r.name);
   const missingSentence = (key: string, names: string[]) => {
     if (key === "sealed") return `${names.join(" and ")} has no sealed family breakdown.`;
-    if (key === "hard") return `${names.join(" and ")} ${names.length === 1 ? "has" : "have"} no published v1.2 hard-tier family breakdown.`;
+    if (key === "hard") return pooled
+      ? `${names.join(" and ")} ${names.length === 1 ? "was" : "were"} not run on the full v1.4 question set (a partial run); families without both hard-tier and sealed results are left out (—).`
+      : `${names.join(" and ")} ${names.length === 1 ? "has" : "have"} no published v1.2 hard-tier family breakdown.`;
     return `${names.join(" and ")} has no published accuracy-tier results.`;
   };
   const status = (r: JevCompareRow) => r.rank !== null ? `#${r.rank}` : r.listing === "honorable_mention" ? "honorable mention, not ranked" : "partial run, not ranked";
@@ -109,14 +142,18 @@ export function JevCompareV14({ rows, sealedDecisions, hardDecisions, fixedPair 
   const figures: { key: string; title: string; note: string; spokes: Spoke[]; missing: string[]; size: { w: number; h: number; r: number } }[] = [
     { key: "axes", title: "The four score axes", note: "0–100, the values in the table. A label-only system has no calibration (counted as 0).", spokes: axisSpokes, missing: [], size: { w: 420, h: 320, r: 96 } },
     { key: "tiers", title: "Accuracy per tier, incl. sealed", note: `Share correct per tier; Sealed = the ${sealedDecisions} private decisions, aggregate only.`, spokes: tierSpokes, missing: missingFor(tierSpokes), size: { w: 440, h: 340, r: 100 } },
-    { key: "hard", title: "Hard tier by family (v1.2 topics)", note: `Share correct within each family of the ${hardDecisions} v1.2 hard-tier decisions (public and held-out).`, spokes: hardSpokes, missing: missingFor(hardSpokes), size: { w: 460, h: 370, r: 100 } },
+    pooled
+      ? { key: "hard", title: "Current question set by family (hard + sealed)", note: `Share correct per family across the ${hardDecisions} hard-tier decisions (public and held out) and the ${sealedDecisions} sealed decisions of v1.4, pooled; Routing is hard-tier only, Paraphrase and Safety judge sealed only.`, spokes: hardSpokes, missing: partlyMissingFor(hardSpokes), size: { w: 460, h: 370, r: 100 } }
+      : { key: "hard", title: "Hard tier by family (v1.2 topics)", note: `Share correct within each family of the ${hardDecisions} v1.2 hard-tier decisions (public and held-out).`, spokes: hardSpokes, missing: missingFor(hardSpokes), size: { w: 460, h: 370, r: 100 } },
     { key: "sealed", title: "Sealed set by family", note: "Share correct within each sealed family — system-level aggregates; the items stay private.", spokes: sealedSpokes, missing: missingFor(sealedSpokes), size: { w: 460, h: 370, r: 100 } },
   ];
   return <section id="compare" className="mt-8 scroll-mt-6" aria-labelledby="jev14-compare" data-bh-jev14-compare data-bh-jev14-pair-mode={fixedPair ? 'fixed' : 'selectable'} data-bh-jev14-compare-a={A.key} data-bh-jev14-compare-b={B.key}>
     <h2 id="jev14-compare" className="text-2xl font-semibold">{heading ?? 'Compare two systems'}</h2>
     <p className="bh-muted mt-1 max-w-3xl text-sm">{fixedPair
       ? 'Four radars compare this fixed pair across the score axes, accuracy per tier, and accuracy by family on the hard tier and sealed set. Further out is better on every spoke.'
-      : 'Pick any two. Four radars: the score axes, accuracy per tier including the sealed set, and accuracy by family on the v1.2 hard tier and on the sealed set. Further out is better on every spoke; the link keeps the pair.'}</p>
+      : pooled
+        ? 'Pick any two. Four radars: the score axes, accuracy per tier including the sealed set, accuracy by family on the current v1.4 question set (hard tier and sealed set together), and the sealed set alone. Further out is better on every spoke; the link keeps the pair.'
+        : 'Pick any two. Four radars: the score axes, accuracy per tier including the sealed set, and accuracy by family on the v1.2 hard tier and on the sealed set. Further out is better on every spoke; the link keeps the pair.'}</p>
     <div className="bh-panel mt-3 p-3 sm:p-4">
       {!fixedPair && <div className="flex flex-col gap-2 sm:flex-row sm:items-end">
         {pick("jev14-compare-a", "System A", A.key, setA, B.key)}
@@ -125,15 +162,15 @@ export function JevCompareV14({ rows, sealedDecisions, hardDecisions, fixedPair 
       </div>}
       <div className="mt-3 flex flex-wrap items-start justify-between gap-2">
         <ul className="space-y-1 text-[13px]" aria-label="Legend" data-bh-jev14-compare-legend>
-          {pair.map((r, k) => <li key={k}><Swatch s={s[k]} /><b>{k === 0 ? "A" : "B"}: {r.name}</b> <span className="bh-muted" data-bh-jev14-class={r.cls} data-bh-jev14-class-labelled={JEV_TYPE_LABEL[r.cls] ? '1' : '0'}>— {JEV_TYPE_LABEL[r.cls] ?? <code title="Class named in the v1.4.2 artifact; description pending">{r.cls}</code>} · </span><span className="whitespace-nowrap" data-bh-jev14-compare-score={r.score === null ? "" : r.score.toFixed(3)}>Score {one(r.score)} ({status(r)})</span></li>)}
+          {pair.map((r, k) => <li key={k}><Swatch s={s[k]} /><b>{k === 0 ? "A" : "B"}: {r.source ? <a href={r.source} target="_blank" rel="noopener noreferrer" className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent" data-bh-jev-source={r.key}>{r.name}</a> : r.name}</b> <span className="bh-muted" data-bh-jev14-class={r.cls} data-bh-jev14-class-labelled={JEV_TYPE_LABEL[r.cls] ? '1' : '0'}>— {JEV_TYPE_LABEL[r.cls] ?? <code title="Class named in the v1.4.2 artifact; description pending">{r.cls}</code>} · </span><span className="whitespace-nowrap" data-bh-jev14-compare-score={r.score === null ? "" : r.score.toFixed(3)}>Score {one(r.score)} ({status(r)})</span></li>)}
         </ul>
         {!fixedPair && <button type="button" className="bh-button text-xs font-semibold" onClick={copy} data-bh-jev14-compare-copy>{copied ? "Link copied" : "Copy link to this pair"}</button>}
       </div>
       <div className="mt-3 grid gap-x-6 gap-y-5 lg:grid-cols-2">
-        {figures.map((f) => <figure key={f.key} className="min-w-0" data-bh-jev14-radar={f.key}>
+        {figures.map((f) => <figure key={f.key} className="min-w-0" data-bh-jev14-radar={f.key} data-bh-jev14-radar-pooled={f.key === "hard" && pooled ? "1" : undefined}>
           <h3 className="text-base font-semibold">{f.title}</h3>
           {f.missing.length > 0 && <p className="bh-muted mt-1 text-[12px]" data-bh-jev14-radar-missing={f.key}>{missingSentence(f.key, f.missing)}</p>}
-          {f.missing.length < 2
+          {missingFor(f.spokes).length < 2
             ? <Radar spokes={f.spokes} series={s} size={f.size} id={`jev14-radar-${f.key}`} title={`Radar: ${f.title.toLowerCase()}, two systems`} desc={desc(f.title, f.spokes)} />
             : <p className="bh-muted mt-3 text-[12px]">Neither selected system has a published series for this view.</p>}
           <figcaption className="bh-muted text-[12px]">{f.note}</figcaption>

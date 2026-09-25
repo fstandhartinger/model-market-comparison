@@ -29,30 +29,30 @@ test('CR-152 serves v1.4.2 as the live board with a pinned page, API and fairnes
     read('../app/api/jevbench/v1.4.2/route.ts'),
     read('../app/jev-models/v1.4.2/page.tsx'),
     read('../app/jev-models/page.tsx'),
-    read('../components/JevModelsV14.tsx'),
+    Promise.all(['JevModelsV14', 'JevBoardShared', 'JevBoardInteractive'].map((f) => read(`../components/${f}.tsx`))).then((files) => files.join('\n')), // CR-151 split the board
     read('../app/sitemap.ts'),
   ]);
   assert.match(route, /readJevbenchV142\(\)/);
   assert.match(route, /'X-Content-SHA256': sha256/);
   assert.match(page, /canonical = '\/jev-models\/v1\.4\.2'/);
-  assert.match(livePage, /readJevbenchV142\(\)/);
+  assert.match(livePage, /readJevbenchV142(WithFamilies)?\(\)/); // CR-153: the pinned artifact plus its family supplement
   assert.match(livePage, /href="\/jev-models\/v1\.4\.2" data-bh-jev-version-share/);
-  assert.match(livePage, /data-bh-jev-live-head/);
-  assert.match(livePage, /compactMobile/);
-  // F-189 (Fable pass 35, decision 2): CR-152's "visible Intelligence ordering" is the rank-by control, not a
-  // second table of the numbers the chart already draws. The board must still offer the ordering, and must not
-  // ship the 89-row disclosure it replaces.
-  const rankBy = await read('../components/JevRankBy.tsx');
-  assert.match(rankBy, /data-bh-jev14-top-five-note/);
-  assert.match(rankBy, /data-bh-jev14-rank-by/);
-  assert.match(rankBy, /aria-pressed=\{m === metric\}/);
-  assert.match(rankBy, /metric === 'score' \? rows : \[\.\.\.rows\]\.sort/);
-  assert.match(board, /data-bh-jev14-compact/);
-  assert.match(board, /data-bh-jev14-chart-eyebrow/);
-  assert.doesNotMatch(board, /data-bh-jev14-sort-intelligence/);
-  assert.doesNotMatch(board, /Sort by Intelligence/);
+  // F-189 (Fable pass 35, decision 2): CR-152's "visible Intelligence ordering" is a control, not a second table of the
+  // numbers the chart already draws. CR-151 (Florian 25 Sep): that control is the "View by" switch (it supersedes the
+  // two-button rank-by); the approved sentence sits beside it with a one-click Intelligence ordering.
+  assert.match(board, /data-bh-jev14-top-five-note/);
+  assert.match(board, /aria-pressed=\{view === v\}/);
+  assert.match(board, /\['intelligence', 'Intelligence'\]/);
+  assert.match(board, /onClick=\{\(\) => choose\('intelligence'\)\} data-bh-jev14-sort-intelligence/);
+  assert.doesNotMatch(board, /<details[^>]*data-bh-jev14-sort-intelligence/);
   assert.match(sitemap, /"\/jev-models\/v1\.4\.2"/);
   assert.match(sitemap, /"\/jev-models\/v1\.4\.1"/);
   // The temporary upload notice and its preview images (main 7c8d0212/811f0dd9) are gone with the release.
   assert.doesNotMatch(livePage, /data-bh-release-notice|v142-preview/);
+  // F-193 (main, 25 Sep): the live board's phone view stays compact; the flag now reaches the interactive chart.
+  assert.match(livePage, /data-bh-jev-live-head/);
+  assert.match(livePage, /compactMobile/);
+  const interactive = await read('../components/JevBoardInteractive.tsx');
+  assert.match(interactive, /data-bh-jev14-compact/);
+  assert.match(interactive, /data-bh-jev14-chart-eyebrow/);
 });

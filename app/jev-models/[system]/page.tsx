@@ -9,6 +9,7 @@ import { JevBenchRelatedLinks } from '../../../components/JevBenchRelatedLinks';
 import { JevV141SystemDetail } from '../../../components/JevV141SystemDetail';
 import type { JevV14System } from '../../../lib/jevbench-v14.mjs';
 import { readJevbenchV142, jevbenchV142View } from '../../../lib/jevbench-v142.mjs';
+import { readJevbenchV142WithFamilies } from '../../../lib/jevbench-v142-families.mjs';
 import { jevV14RowNote } from '../../../lib/jevbench-v14.mjs';
 import { previewMetadata } from '../../../lib/seo';
 
@@ -54,12 +55,14 @@ async function findRow(key: string): Promise<{ row: JevV12Row; view: JevV12View;
   return { row, view, all, topics: jevbenchV12TopicsView(await readJevbenchV12Topics(v12.artifact)) };
 }
 
-async function findV141Row(key: string): Promise<{ row: JevV14System; view: { revision: string; generated: string; ranked: JevV14System[] }; note: string | null } | null> {
-  const result = await readJevbenchV142();
+async function findV141Row(key: string): Promise<{ row: JevV14System; view: { revision: string; generated: string; ranked: JevV14System[] }; note: string | null; sealedFamilyN: Record<string, number>; hardFamilyN: Record<string, number> } | null> {
+  // CR-153: with the family supplement, so every v1.4.2 leaf page draws the current-question-set family radar.
+  const result = await readJevbenchV142WithFamilies();
   const view = jevbenchV142View(result);
   const row = view.systems.find((candidate) => candidate.key === key);
   // readJevbenchV142 validates the ranked rows' numeric fields before this narrow is applied.
-  return row ? { row, view, note: jevV14RowNote((result.artifact as { footnotes?: Record<string, string> }).footnotes?.[key]) } : null;
+  const hardFamilyN = (result.artifact.hard_dataset as { families?: Record<string, number> } | undefined)?.families ?? {};
+  return row ? { row, view, note: jevV14RowNote((result.artifact as { footnotes?: Record<string, string> }).footnotes?.[key]), sealedFamilyN: result.sealedFamilyN, hardFamilyN } : null;
 }
 
 /** F-167: what this system's number is read against — Jev 1.13.0 everywhere, and on Jev's own page the
@@ -108,7 +111,7 @@ export default async function JevSystemPage({ params }: { params: Promise<{ syst
   const { system } = await params;
   const key = decodeURIComponent(system);
   const current = await findV141Row(key);
-  if (current) return <JevV141SystemDetail row={current.row} ranked={current.view.ranked} revision={current.view.revision} generated={current.view.generated} note={current.note} />;
+  if (current) return <JevV141SystemDetail row={current.row} ranked={current.view.ranked} revision={current.view.revision} generated={current.view.generated} note={current.note} sealedFamilyN={current.sealedFamilyN} hardFamilyN={current.hardFamilyN} />;
   const found = await findRow(key);
   if (!found) {
     notFound();

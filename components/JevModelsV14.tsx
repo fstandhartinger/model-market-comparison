@@ -1,112 +1,58 @@
-import type { CSSProperties } from 'react';
-import Link from 'next/link';
 import { jevV14RowNote, type JevV14Artifact, type JevV14System } from '../lib/jevbench-v14.mjs';
 import { JevCompareV14, type JevCompareRow } from './JevCompareV14';
-import { JevRankBy } from './JevRankBy';
-import { JevScoreBar, JevScoreBarHeader, toBarRow } from './JevScoreBar';
-import { JEV_TYPE_LABEL, jevLegendTypes, jevTypeVarName } from './jevTypes';
+import { shortName, type JevBoardViewRow } from './JevBoardShared';
+import { jevSourceUrl } from './jevSystemLinks';
+import { JevScoreChart, JevAxesTable, type JevFairness, type JevPreset } from './JevBoardInteractive';
+import { OFFICIAL_WEIGHTS, isOfficialWeights, type JevWeights } from '../lib/jevbench-axis-weights.mjs';
 
+// F-188/F-189: the alternatives guide draws its bars with components/JevScoreBar.tsx; the board re-exports them.
+import { JevScoreBar, JevScoreBarHeader, toBarRow } from './JevScoreBar';
 export { JevScoreBar, JevScoreBarHeader, toBarRow };
 
-const one = (value: number | null | undefined) => value == null ? '—' : value.toFixed(1);
-const f0 = (value: number | null | undefined) => value == null ? '–' : value.toFixed(0);
-const percent = (value: number | null | undefined) => value == null ? '—' : `${(value * 100).toFixed(1)}%`;
-const percentagePoints = (value: number | null | undefined) => value == null ? '—' : `${value > 0 ? '+' : ''}${value.toFixed(1)} pp`;
-const seconds = (value: number | null | undefined) => value == null ? '—' : `${value.toFixed(2)} s`;
-const dollars = (value: number | null | undefined) => value == null ? '—' : `$${value.toFixed(value < 0.01 ? 4 : 3)}`;
-const shortName = (value: string) => value.split(' (')[0].split(', formerly')[0];
-const apiExplanation = "API — the operator's endpoint received sealed item text, without answers.";
-const typeVar = (cls: string) => ({ '--jev-t': `var(${jevTypeVarName(cls)})` }) as CSSProperties;
-const NOT_RANKED: Record<string, string> = { honorable_mention: 'honorable mention', partial: 'partial run' };
-const CHART_TOP = 20;
+// The artifact's `open` field is not filled consistently (JevK5, for example, has none although code and weights are
+// Apache-2.0), so a row without the field counts as open unless its licence says proprietary or closed weights.
+const openSource = (row: JevV14System) => {
+  const open = row.open as unknown;
+  if (open === 'no' || open === false) return false;
+  if (open === 'yes' || open === true || open === 'weights') return true;
+  return !/proprietary|closed weights|weights not published|hosted service/i.test(row.licence ?? '');
+};
 
-/** A row-specific note: a small † glued to the name that opens the note in place (tap or click), with the note as tooltip too. */
-function NoteMarker({ row, note }: { row: JevV14System; note: string }) {
-  return <details className="bh-jev14-note" data-bh-jev14-note={row.key}>
-    <summary title={note} aria-label={`Note on ${shortName(row.display)}`}>†</summary>
-    <span className="bh-jev14-note-body" role="note">{note}</span>
-  </details>;
+/** Only the fields the chart and table render travel to the client, not the per-family aggregates. */
+function viewRow(row: JevV14System, note: string | null, previousKeys: Set<string> | null): JevBoardViewRow {
+  return {
+    key: row.key, display: row.display, author: row.author, repo: jevSourceUrl(row.key, row.repo), class: row.class,
+    rank: row.rank, ranked: row.ranked, listing: row.listing, not_ranked_because: row.not_ranked_because,
+    priority_run: row.priority_run === true, api_flag: row.api_flag === true, api_exposure_note: row.api_exposure_note,
+    jevbench_score: row.jevbench_score,
+    axes: { intelligence: row.axes?.intelligence ?? null, calibration: row.axes?.calibration ?? null, speed: row.axes?.speed ?? null, cost: row.axes?.cost ?? null },
+    public_accuracy: row.public_accuracy, sealed_accuracy: row.sealed_accuracy, public_minus_sealed_gap_pp: row.public_minus_sealed_gap_pp,
+    cost: { kind: row.cost?.kind, usd_per_1000: row.cost?.usd_per_1000 ?? null, basis: row.cost?.basis },
+    speed: { p50_s_raw: row.speed?.p50_s_raw ?? null, ...(row.speed?.adjustment ? { adjustment: row.speed.adjustment } : {}) },
+    endpoint_kind: row.endpoint_kind, endpoint_condition: row.endpoint_condition,
+    note, openSource: openSource(row), isNew: previousKeys !== null && !previousKeys.has(row.key),
+  };
 }
 
-function SystemName({ row, note }: { row: JevV14System; note: string | null }) {
-  const name = shortName(row.display);
-  const rawVariant = row.display.startsWith(name) ? row.display.slice(name.length).replace(/^[ ,]*\(?|\)$/g, '') : '';
-  const variant = rawVariant && !row.author.includes(rawVariant) ? rawVariant : '';
-  const href = `/jev-models/${encodeURIComponent(row.key)}`;
-  const cut = name.lastIndexOf(' ');
-  // The † stays outside the link but shares a no-wrap box with the final word.
-  return <div>
-    <span className="font-semibold" title={row.display}>
-      {cut > 0 && <Link href={href} title={row.display}>{name.slice(0, cut + 1)}</Link>}
-      <span className="whitespace-nowrap">
-        <Link href={href} title={row.display}>{cut > 0 ? name.slice(cut + 1) : name}</Link>
-        {note && <NoteMarker row={row} note={note} />}
-      </span>
-    </span>
-    {row.priority_run === true && <span className="bh-thin-tag ml-2 align-middle" data-bh-jev14-priority-run={row.key}>priority run</span>}
-    {row.api_flag && <span className="bh-thin-tag ml-2 align-middle" data-bh-jev14-api-flag={row.key} title={row.api_exposure_note ?? apiExplanation} aria-label={apiExplanation}>API</span>}
-    <span className="bh-muted block text-[11px] leading-tight">by {row.repo
-      ? <a href={row.repo} target="_blank" rel="noopener noreferrer" className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent">{row.author}</a>
-      : row.author}{variant ? ` · ${variant}` : ''}</span>
-  </div>;
+/** Florian 25 Sep 2026: when the #1 is not the strongest reasoner near the top, say so next to the View by switch.
+ *  Compared within the top five: instruction-model baselines far down the ranking have higher Intelligence, so a
+ *  field-wide "strongest reasoner" would not be the claim the sentence makes. */
+function fairnessOf(ranked: JevV14System[]): JevFairness {
+  const topFive = ranked.slice(0, 5);
+  const [lead] = topFive;
+  const top = [...topFive].sort((a, b) => (b.axes.intelligence ?? 0) - (a.axes.intelligence ?? 0))[0];
+  if (!lead || !top || top.key === lead.key || lead.axes.intelligence == null || top.axes.intelligence == null) return null;
+  const leadsOn = (['calibration', 'speed', 'cost'] as const).filter((axis) => (lead.axes[axis] ?? -1) > (top.axes[axis] ?? -1));
+  return { leadName: shortName(lead.display), topName: shortName(top.display), leadInt: lead.axes.intelligence, topInt: top.axes.intelligence, leadsOn };
 }
 
-function CostValue({ row }: { row: JevV14System }) {
-  const value = dollars(row.cost?.usd_per_1000);
-  const kind = row.cost?.kind;
-  return <span title={row.cost?.basis} className="whitespace-nowrap">
-    {kind === 'estimate' ? `~${value}` : value}
-    {kind === 'estimate' && <span className="bh-thin-tag ml-1">est.</span>}
-    {kind === 'announced' && <span className="bh-thin-tag ml-1">announced</span>}
-  </span>;
-}
-
-function Row({ row, note }: { row: JevV14System; note: string | null }) {
-  const rankLabel = row.rank ?? '—';
-  return <tr id={`jev14-row-${row.key}`} data-bh-jev14-row={row.key} data-bh-jev14-ranked={row.ranked ? '1' : '0'} className={row.ranked ? '' : 'bh-jev11-partial'}>
-    <td className="bh-muted tabular">{rankLabel}</td>
-    <th scope="row" className="bh-jev-sticky text-left font-normal"><SystemName row={row} note={note} />
-      {!row.ranked && <span className="bh-thin-tag mt-1 inline-block" title={row.not_ranked_because ?? undefined}>{row.listing.replace(/_/g, ' ')} · not ranked</span>}
-    </th>
-    <td className="tabular"><b className="text-lg" data-bh-jev14-score>{one(row.jevbench_score)}</b></td>
-    <td className="tabular">{one(row.axes?.intelligence)}</td>
-    <td className="tabular">{one(row.axes?.calibration)}</td>
-    <td className="tabular">{one(row.axes?.speed)}</td>
-    <td className="tabular">{one(row.axes?.cost)}</td>
-    <td className="tabular">{percent(row.public_accuracy)}</td>
-    <td className="tabular">{percent(row.sealed_accuracy)}</td>
-    <td className="tabular whitespace-nowrap">{percentagePoints(row.public_minus_sealed_gap_pp)}</td>
-    <td className="tabular"><CostValue row={row} /></td>
-    <td className="tabular whitespace-nowrap" title={row.speed?.adjustment ?? undefined}>{seconds(row.speed?.p50_s_raw)}</td>
-    <td className="text-[12px]" title={row.endpoint_condition}>{row.endpoint_kind === 'api' ? 'API' : row.endpoint_kind === 'gpu' ? 'RunPod GPU' : row.endpoint_kind === 'demo' ? 'author demo' : row.endpoint_kind === 'cpu' ? 'CPU' : row.endpoint_kind ?? '—'}</td>
-  </tr>;
-}
-
-/** The v1.3 page's hero bar chart, restored with the v1.4 scores: every system, top 20 open, the rest one tap away. */
-/** CR-152 (Florian, 25 Sep 2026): the fairness sentence next to the top five and a visible Intelligence ordering.
- *  F-189 (Fable pass 35): the sentence keeps its words and loses its box; the ordering is the JevRankBy control,
- *  not the 89-row table of the numbers the chart already draws. */
-function ScoreChart({ revision, ranked, unranked, publicDecisions, sealedDecisions, topFiveNote, compactMobile }: { revision: string; ranked: JevV14System[]; unranked: JevV14System[]; publicDecisions: number; sealedDecisions: number; topFiveNote?: string | null; compactMobile?: boolean }) {
-  const all = [...ranked, ...unranked];
-  const types = jevLegendTypes(all.map((r) => r.class));
-  const subtitle = <><span className="bh-jevc-official mr-2">Official</span>· four axes 0–100, equal-weight harmonic mean · <a href="#jev14-changes" className="text-accent underline">What changed in v1.4 ↓</a></>;
-  const chartId = 'jev14-chart';
-  return <figure id={chartId} className="bh-panel mt-6 p-4 sm:p-5" data-bh-jev14-chart data-bh-jev14-compact={compactMobile ? '1' : undefined} aria-labelledby="jev14-chart-title">
-    <p className="bh-eyebrow" data-bh-jev14-chart-eyebrow>JevBench {revision}</p>
-    <h2 id="jev14-chart-title" className="mt-1 text-xl font-bold leading-snug sm:text-2xl">JevBench Score: {ranked.length} ranked systems</h2>
-    <JevRankBy rows={all.map(toBarRow)} top={CHART_TOP} note={topFiveNote} subtitle={subtitle} />
-    <div className="mt-2 hidden grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_19rem] gap-x-2 text-[11px] sm:grid" aria-hidden="true">
-      <span /><span /><span className="bh-muted flex justify-between tabular"><span>0</span><span>20</span><span>40</span><span>60</span><span>80</span><span>100</span></span>
-    </div>
-    <p className="mt-3 text-center text-[13px] sm:text-sm" data-bh-jev14-formula>
-      Score = 4 / (1/I + 1/C + 1/S + 1/K) <span className="bh-muted">(each 0–100; × (axis / 50)² for Intelligence, Speed or Cost below 50)</span>
-    </p>
-    <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px]" aria-label="Legend" data-bh-jev14-legend>
-      {types.map((t) => <li key={t} style={typeVar(t)} data-bh-jev14-class={t} data-bh-jev14-class-labelled={JEV_TYPE_LABEL[t] ? '1' : '0'}><span className="bh-jevc-swatch mr-1.5" />{JEV_TYPE_LABEL[t] ?? <code title="Class named in the v1.4.2 artifact; description pending">{t}</code>}</li>)}
-      {unranked.length > 0 && <li><span className="bh-jevc-swatch is-partial mr-1.5" />Shown, not ranked</li>}
-    </ul>
-    <figcaption className="bh-muted mt-3 text-[11.5px] leading-snug">I, C, S, K = Intelligence, Calibration, Speed, Cost; ~ est. = <a href="#jev-costs" className="text-accent underline">estimated cost</a>; ann. = announced price; API = the operator&apos;s endpoint saw sealed item text, without answers. Names link to each project.</figcaption>
-  </figure>;
+/** Florian 25 Sep 2026: weight-slider presets. The official equal weights first, then the artifact's published presets,
+ *  then Capability only (the page headline's measure), as whole-number slider positions. */
+function presetsOf(artifact: JevV14Artifact): JevPreset[] {
+  const published = (artifact.presets ?? {}) as Record<string, Partial<Record<keyof JevWeights, number>>>;
+  const toWeights = (w: Partial<Record<keyof JevWeights, number>>): JevWeights => ({ intelligence: Math.round(100 * (w.intelligence ?? 0)), calibration: Math.round(100 * (w.calibration ?? 0)), speed: Math.round(100 * (w.speed ?? 0)), cost: Math.round(100 * (w.cost ?? 0)) });
+  const rest = Object.entries(published).filter(([, w]) => !isOfficialWeights(toWeights(w))).map(([name, w]) => ({ name: name.replace(/^Emphasis on /, ''), weights: toWeights(w) }));
+  return [{ name: 'Official 25:25:25:25', weights: OFFICIAL_WEIGHTS }, ...rest, { name: 'Capability only', weights: { intelligence: 50, calibration: 50, speed: 0, cost: 0 } }];
 }
 
 function compareRow(row: JevV14System): JevCompareRow {
@@ -114,48 +60,41 @@ function compareRow(row: JevV14System): JevCompareRow {
   const sealed = (row.sealed_aggregate as { by_family?: Record<string, number | null> } | null)?.by_family ?? null;
   const tiers = (row.tiers ?? {}) as Record<string, number | null>;
   return {
-    key: row.key, name: shortName(row.display), cls: row.class, rank: row.rank, listing: row.listing, score: row.jevbench_score,
+    key: row.key, name: shortName(row.display), cls: row.class, rank: row.rank, listing: row.listing, score: row.jevbench_score, source: jevSourceUrl(row.key, row.repo),
     axes: row.axes, tiers: { easy: tiers.easy ?? null, standard: tiers.standard ?? null, judge: tiers.judge ?? null, hard: tiers.hard ?? null, sealed: row.sealed_accuracy },
     hard: hard ? Object.fromEntries(Object.entries(hard).map(([k, v]) => [k, { accuracy: v.accuracy, n: v.n }])) : null,
     sealed,
   };
 }
 
-export function JevModelsV14Board({ artifact, sha256, compactMobile = false }: { artifact: JevV14Artifact; sha256: string; compactMobile?: boolean }) {
+export function JevModelsV14Board({ artifact, sha256, previous, capabilityHref, sealedFamilyN, compactMobile = false }: { artifact: JevV14Artifact; sha256: string; previous?: { revision: string; keys: string[] }; capabilityHref?: string; sealedFamilyN?: Record<string, number>; compactMobile?: boolean }) {
   const ranked = artifact.systems.filter((row) => row.listing === 'ranked').sort((a, b) => (a.rank ?? 999) - (b.rank ?? 999));
   const unranked = artifact.systems.filter((row) => row.listing !== 'ranked').sort((a, b) => (b.jevbench_score ?? -1) - (a.jevbench_score ?? -1));
   const rows = [...ranked, ...unranked];
   const noteOf = new Map(rows.map((row) => [row.key, jevV14RowNote(artifact.footnotes?.[row.key])]));
   const notes = rows.filter((row) => noteOf.get(row.key));
+  const previousKeys = previous ? new Set(previous.keys) : null;
+  const viewRows = rows.map((row) => viewRow(row, noteOf.get(row.key) ?? null, previousKeys));
+  const newLabel = previousKeys && viewRows.some((row) => row.isNew) ? artifact.revision : null;
   const publicDecisions = artifact.tiers.easy + artifact.tiers.standard + artifact.tiers.judge + artifact.tiers.hard;
   const sealedDecisions = artifact.tiers.sealed;
   return <section className="mt-8" aria-labelledby="jev14-board" data-bh-jevbench-v14>
     <h2 id="jev14-board" className="sr-only">JevBench {artifact.revision} ranking</h2>
-    <ScoreChart revision={artifact.revision} ranked={ranked} unranked={unranked} publicDecisions={publicDecisions} sealedDecisions={sealedDecisions} topFiveNote={typeof artifact.top_five_note === 'string' ? artifact.top_five_note : null} compactMobile={compactMobile} />
+    <JevScoreChart revision={artifact.revision} rows={viewRows} rankedCount={ranked.length} newLabel={newLabel} fairness={fairnessOf(ranked)} approvedNote={typeof artifact.top_five_note === 'string' ? artifact.top_five_note : null} capabilityHref={capabilityHref ?? null} presets={presetsOf(artifact)} compactMobile={compactMobile} />
 
-    <h2 id="jev14-table" className="mt-10 text-xl font-semibold">Axes, accuracy, latency and cost</h2>
-    <p className="bh-muted mt-1 max-w-4xl text-sm">Every system with its four axes, public and sealed accuracy and the gap between them. On a phone the name column stays put while the table scrolls sideways. <span className="whitespace-nowrap">† = a note on that system</span> — tap it to read.</p>
-    <div className="bh-table-wrap mt-3">
-      <table className="bh-table bh-jev-table" data-bh-jev14-table>
-        <thead><tr>
-          <th scope="col">#</th><th scope="col" className="bh-jev-sticky">System</th><th scope="col">JevBench Score</th>
-          <th scope="col">Intelligence</th><th scope="col">Calibration</th><th scope="col">Speed</th><th scope="col">Cost axis</th>
-          <th scope="col">Public accuracy<br /><span className="bh-muted text-[11px]">{publicDecisions}</span></th>
-          <th scope="col">Sealed accuracy<br /><span className="bh-muted text-[11px]">{sealedDecisions}</span></th>
-          <th scope="col">Public − sealed gap</th><th scope="col">Cost / 1,000</th><th scope="col">p50 latency</th><th scope="col">Endpoint</th>
-        </tr></thead>
-        <tbody>{rows.map((row) => <Row key={row.key} row={row} note={noteOf.get(row.key) ?? null} />)}</tbody>
-      </table>
-    </div>
+    <JevCompareV14 rows={rows.map(compareRow)} sealedDecisions={sealedDecisions} hardDecisions={artifact.tiers.hard} hardFamilyN={sealedFamilyN ? (artifact.hard_dataset as { families?: Record<string, number> } | undefined)?.families : undefined} sealedFamilyN={sealedFamilyN} />
+
+    {/* CR-151 (Florian 25 Sep 2026): the numeric table follows the compare view; it sorts, filters and shades like the chart. */}
+    <h2 id="jev14-table" className="mt-10 scroll-mt-6 text-xl font-semibold">Axes, accuracy, latency and cost</h2>
+    <p className="bh-muted mt-1 max-w-4xl text-sm">Every system with its four axes, public and sealed accuracy and the gap between them. Click a column heading to sort; filter by name, type, openness, API flag{newLabel ? ' or release' : ''}. On a phone the name column stays put while the table scrolls sideways. <span className="whitespace-nowrap">† = a note on that system</span> — tap it to read.</p>
+    <JevAxesTable rows={viewRows} publicDecisions={publicDecisions} sealedDecisions={sealedDecisions} newLabel={newLabel} />
     <p className="bh-muted mt-2 text-xs" data-bh-jev14-api-note>API = the operator's endpoint received sealed item text during evaluation; the answers and item-level results are not published. The sealed text and answers remain private; only system-level aggregates appear here. Cost is per 1,000 decisions. Hover endpoint, cost and API labels for their recorded details.</p>
     <details className="mt-3 text-xs" data-bh-jev14-notes>
       <summary className="cursor-pointer text-accent">All {notes.length} system notes and disclosures</summary>
       <ul className="bh-muted mt-2 space-y-1">{notes.map((row) => <li key={row.key} id={`jev14-note-${row.key}`}>† <b className="text-gray-200">{row.display}</b>: {noteOf.get(row.key)}</li>)}</ul>
       <p className="bh-muted mt-2">Rows without a † have no note beyond the shared provenance: every row was measured or re-run with its recorded recipe, and deviations are in its run manifest.</p>
     </details>
-    <p className="bh-muted mt-2 text-xs">Artifact: <a className="text-accent underline" href={`/api/jevbench/${artifact.revision.slice(1)}`}>{artifact.revision} results JSON</a> · SHA-256 <code title={sha256}>{sha256.slice(0, 12)}…</code> · <a className="text-accent underline" href={`https://github.com/fstandhartinger/jevbench/releases/tag/${artifact.revision}`}>JevBench {artifact.revision} release and method</a></p>
-
-    <JevCompareV14 rows={rows.map(compareRow)} sealedDecisions={sealedDecisions} hardDecisions={artifact.tiers.hard} />
+    <p className="bh-muted mt-2 text-xs">Artifact: <a className="text-accent underline" href={`/api/jevbench/${artifact.revision}`}>{artifact.revision} results JSON</a> · SHA-256 <code title={sha256}>{sha256.slice(0, 12)}…</code> · <a className="text-accent underline" href={`https://github.com/fstandhartinger/jevbench/releases/tag/${artifact.revision}`}>JevBench {artifact.revision} release and method</a></p>
 
     <section id="jev14-changes" className="bh-panel mt-10 max-w-5xl scroll-mt-6 p-5" aria-labelledby="jev14-changes-head" data-bh-jev14-changes>
       <h3 id="jev14-changes-head" className="text-lg font-semibold">What changed in v1.4</h3>
