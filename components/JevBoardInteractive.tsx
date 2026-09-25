@@ -5,7 +5,7 @@ import {
   JevScoreBar, HeatLegend, heatLevel, heatScales, heatStyle, one, percent, percentagePoints, seconds, dollars, shortName,
   apiExplanation, typeVar, METRIC_LABEL, type BarMetric, type HeatColumn, type HeatScales, type JevBoardViewRow,
 } from './JevBoardShared';
-import { JEV_TYPE_LABEL } from './jevTypes';
+import { JEV_TYPE_LABEL, jevLegendTypes } from './jevTypes';
 
 // CR-151 (Florian 25 Sep 2026): the score chart and the axes table become readable in more than one way. Axis cells are
 // shaded by their standing within the column, both views sort and filter, and a "View by" switch above the chart says
@@ -32,7 +32,7 @@ function FilterBar({ rows, filters, setFilters, shown, newLabel, idPrefix }: { r
   // Phones show the search box and one toggle; the selects open on demand so the ranking starts near the top.
   const [more, setMore] = useState(false);
   const active = [filters.type, filters.open, filters.api].filter(Boolean).length + (filters.fresh ? 1 : 0);
-  const types = Object.keys(JEV_TYPE_LABEL).filter((t) => rows.some((r) => r.class === t));
+  const types = jevLegendTypes(rows.map((r) => r.class));
   const hasNew = newLabel !== null && rows.some((r) => r.isNew);
   const set = (patch: Partial<Filters>) => setFilters({ ...filters, ...patch });
   return <div className={`bh-jev-filters mt-3 ${more ? 'is-open' : ''}`} role="search" aria-label="Filter systems" data-bh-jev-filters={idPrefix}>
@@ -44,7 +44,7 @@ function FilterBar({ rows, filters, setFilters, shown, newLabel, idPrefix }: { r
     <label className="bh-jev-filter-more"><span className="sr-only">System type</span>
       <select className="bh-input" value={filters.type} onChange={(e) => set({ type: e.target.value })} data-bh-jev-filter="type">
         <option value="">All types</option>
-        {types.map((t) => <option key={t} value={t}>{JEV_TYPE_LABEL[t]}</option>)}
+        {types.map((t) => <option key={t} value={t}>{JEV_TYPE_LABEL[t] ?? `${t} (description pending)`}</option>)}
       </select></label>
     <label className="bh-jev-filter-more"><span className="sr-only">Open code or weights</span>
       <select className="bh-input" value={filters.open} onChange={(e) => set({ open: e.target.value as Filters['open'] })} data-bh-jev-filter="open">
@@ -145,7 +145,7 @@ export function JevScoreChart({ revision, rows, rankedCount, newLabel, fairness,
   const metric = metricOf(view);
   const shown = useMemo(() => sortRows(applyFilters(rows, filters), sort, official), [rows, filters, sort, official]);
   const unranked = rows.filter((r) => !r.ranked).length;
-  const types = Object.keys(JEV_TYPE_LABEL).filter((t) => rows.some((r) => r.class === t));
+  const types = jevLegendTypes(rows.map((r) => r.class));
 
   // ?view=intelligence opens that view, so a reader can share it; the compare pair keeps its own parameter.
   useEffect(() => {
@@ -222,7 +222,7 @@ export function JevScoreChart({ revision, rows, rankedCount, newLabel, fairness,
       Score = 4 / (1/I + 1/C + 1/S + 1/K) <span className="bh-muted">(each 0–100; × (axis / 50)² for Intelligence, Speed or Cost below 50)</span>
     </p>
     <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px]" aria-label="Legend" data-bh-jev14-legend>
-      {types.map((t) => <li key={t} style={typeVar(t)}><span className="bh-jevc-swatch mr-1.5" />{JEV_TYPE_LABEL[t]}</li>)}
+      {types.map((t) => <li key={t} style={typeVar(t)} data-bh-jev14-class={t} data-bh-jev14-class-labelled={JEV_TYPE_LABEL[t] ? '1' : '0'}><span className="bh-jevc-swatch mr-1.5" />{JEV_TYPE_LABEL[t] ?? <code title="Class named in the artifact; description pending">{t}</code>}</li>)}
       {unranked > 0 && <li><span className="bh-jevc-swatch is-partial mr-1.5" />Shown, not ranked</li>}
     </ul>
     <figcaption className="bh-muted mt-3 text-[11.5px] leading-snug">I, C, S, K = Intelligence, Calibration, Speed, Cost; ~ est. = <a href="#jev-costs" className="text-accent underline">estimated cost</a>; ann. = announced price; API = the operator&apos;s endpoint saw sealed item text, without answers{newLabel ? <>; new = first listed in {newLabel}</> : null}; $/1k = US dollars per 1,000 decisions. <span className="hidden sm:inline">Click a column heading to sort. </span>Names link to each project.</figcaption>

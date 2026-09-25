@@ -1,6 +1,6 @@
 import type { CSSProperties, ReactNode } from 'react';
 import Link from 'next/link';
-import { JEV_TYPE_VAR } from './jevTypes';
+import { jevTypeVarName } from './jevTypes';
 
 // CR-151 (Florian 25 Sep 2026): the pieces the score chart and the axes table share. This module has no Node imports and
 // no client directive, so both the server board and the interactive client views can use it.
@@ -28,7 +28,7 @@ export const seconds = (value: number | null | undefined) => value == null ? '�
 export const dollars = (value: number | null | undefined) => value == null ? '—' : `$${value.toFixed(value < 0.01 ? 4 : 3)}`;
 export const shortName = (value: string) => value.split(' (')[0].split(', formerly')[0];
 export const apiExplanation = "API — the operator's endpoint received sealed item text, without answers.";
-export const typeVar = (cls: string) => ({ '--jev-t': `var(${JEV_TYPE_VAR[cls] ?? JEV_TYPE_VAR['llm-baseline']})` }) as CSSProperties;
+export const typeVar = (cls: string) => ({ '--jev-t': `var(${jevTypeVarName(cls)})` }) as CSSProperties;
 export const NOT_RANKED: Record<string, string> = { honorable_mention: 'honorable mention', partial: 'partial run' };
 
 // ---- Heat shading: each column shaded by where a value sits between the column's weakest and strongest system ----

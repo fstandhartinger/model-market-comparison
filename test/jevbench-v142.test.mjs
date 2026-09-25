@@ -37,16 +37,14 @@ test('CR-152 serves v1.4.2 as the live board with a pinned page, API and fairnes
   assert.match(page, /canonical = '\/jev-models\/v1\.4\.2'/);
   assert.match(livePage, /readJevbenchV142\(\)/);
   assert.match(livePage, /href="\/jev-models\/v1\.4\.2" data-bh-jev-version-share/);
-  // F-189 (Fable pass 35, decision 2): CR-152's "visible Intelligence ordering" is the rank-by control, not a
-  // second table of the numbers the chart already draws. The board must still offer the ordering, and must not
-  // ship the 89-row disclosure it replaces.
-  const rankBy = await read('../components/JevRankBy.tsx');
-  assert.match(rankBy, /data-bh-jev14-top-five-note/);
-  assert.match(rankBy, /data-bh-jev14-rank-by/);
-  assert.match(rankBy, /aria-pressed=\{m === metric\}/);
-  assert.match(rankBy, /metric === 'score' \? rows : \[\.\.\.rows\]\.sort/);
-  assert.doesNotMatch(board, /data-bh-jev14-sort-intelligence/);
-  assert.doesNotMatch(board, /Sort by Intelligence/);
+  // F-189 (Fable pass 35, decision 2): CR-152's "visible Intelligence ordering" is a control, not a second table of the
+  // numbers the chart already draws. CR-151 (Florian 25 Sep): that control is the "View by" switch (it supersedes the
+  // two-button rank-by); the approved sentence sits beside it with a one-click Intelligence ordering.
+  assert.match(board, /data-bh-jev14-top-five-note/);
+  assert.match(board, /aria-pressed=\{view === v\}/);
+  assert.match(board, /\['intelligence', 'Intelligence'\]/);
+  assert.match(board, /onClick=\{\(\) => choose\('intelligence'\)\} data-bh-jev14-sort-intelligence/);
+  assert.doesNotMatch(board, /<details[^>]*data-bh-jev14-sort-intelligence/);
   assert.match(sitemap, /"\/jev-models\/v1\.4\.2"/);
   assert.match(sitemap, /"\/jev-models\/v1\.4\.1"/);
   // The temporary upload notice and its preview images (main 7c8d0212/811f0dd9) are gone with the release.
