@@ -110,6 +110,66 @@ export const PROTOCOL_REVIEW_CRITERIA = [
 // One archive can carry several sources, so a member is keyed by URL and member name.
 export const captureKey = (source) => source.zip_member ? `${source.url}#zip:${source.zip_member}` : source.url;
 
+// D201 (2026-09-25): a registry entry whose collection recipe names `capture-vendor-documents.py`
+// and whose format declares a PDF cannot be probed by `capture-benchmark-sources.py` — that script
+// holds a 12 MB bound and retains original bytes, and today's only such document, the Claude Opus
+// 5.5 system card, is a 17.8 MB PDF. So the daily downloaded 12 MB of it every run, threw it away
+// with "Response exceeds 12MB bound", and reported all seven registry entries that name it as
+// `source_unreachable_or_manual` — a false failure on every run since 2026-09-23, on rows whose
+// values were collected from that very document and pin its text-layer sha256.
+//
+// `capture-vendor-documents.py` is the reviewed path for exactly this case: same robots check, same
+// crawl delay, same challenge stop, a 32 MB bound, and for a PDF it retains the `pdftotext -layout`
+// text layer while recording the document's own digest and length. The scope is the entry's
+// `primary_url` only — the document the declared format describes. A secondary PDF in the same
+// entry's `evidence` (the HealthBench Professional paper) is a reference, not the source of a
+// value, is under the generic bound, and keeps its existing capture path and sha.
+export function vendorDocumentUrls(entries) {
+  const urls = new Set();
+  for (const entry of entries ?? []) {
+    const how = entry?.how_to_collect ?? {};
+    if (!/capture-vendor-documents\.py/.test(how.command ?? '')) continue;
+    if (!/\bPDF\b/.test(how.format ?? '')) continue;
+    if (entry.primary_url) urls.add(entry.primary_url);
+  }
+  return urls;
+}
+
+/**
+ * What one run fetches, decided before anything is fetched: `urls` is the queue for
+ * `scripts/capture-benchmark-sources.py`, `documentUrls` the queue for
+ * `scripts/capture-vendor-documents.py`. Pure, so the split is testable without a network call.
+ */
+export function captureTargets({ registry, plan, vendor }) {
+  const urls = new Map();
+  const documentUrls = vendorDocumentUrls(registry.entries);
+  const add = (source) => {
+    // D201: a declared-PDF vendor document is the other capturer's, wherever it is named.
+    if (source?.url && documentUrls.has(source.url)) return;
+    // Vite SPA pages pin a hashed module bundle; only the stable page is queued,
+    // and the bundle is discovered from its capture receipt.
+    if (source?.page_url && source.follow_module_script) { urls.set(source.page_url, { url: source.page_url, follow_module_script: true }); return; }
+    if (!source?.url || !source.url.startsWith('https://')) return;
+    if (/(^|\.)(x\.com|twitter\.com)$/.test(new URL(source.url).hostname)) return;
+    // A file shipped only inside an archive is captured as that one member (see capture-benchmark-sources.py).
+    if (source.zip_member) { urls.set(captureKey(source), { url: source.url, zip_member: source.zip_member }); return; }
+    urls.set(source.url, source.url === 'https://uncommon-sandpiper-321.convex.cloud/api/query'
+      ? { url: source.url, method: 'POST', body: { path: 'runs:getLeaderboard', args: {}, format: 'json' } } : source.url);
+  };
+  // 2026-09-15: a reviewed manual snapshot (e.g. a ZIP-only source whose maintainer site blocks crawlers)
+  // is never fetched by the daily run; its committed rows are retained unchanged.
+  const manual = new Set(plan.entries.filter((spec) => spec.refresh === 'manual').map((spec) => spec.benchmark_id));
+  for (const entry of registry.entries) { if (manual.has(entry.id)) continue; add({ url: entry.primary_url }); for (const source of entry.evidence ?? []) add(source); }
+  for (const spec of plan.entries) {
+    if (manual.has(spec.benchmark_id)) continue;
+    add(spec.source); for (const key of ['method_source', 'categories_source', 'frontend_source', 'detail_source', 'config_source']) add(spec.parser?.[key]);
+    // One-file-per-run sources (BU Bench): every run file is a primary source of its own row.
+    for (const run of spec.parser?.runs ?? []) add(run);
+  }
+  for (const row of vendor.observations) add(row.source);
+  return { urls, documentUrls };
+}
+
 const textSource = async (source, recipe) => {
   const { stdout } = await exec('python3', ['ops/daily/public-candidate.py', 'text', source.file, ...(recipe ? [recipe] : [])], { maxBuffer: 16_000_000, timeout: 30_000 });
   return stdout;
@@ -180,29 +240,7 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
   // `sink` is `checks` for every arm that runs in source order; the public-spec loop below
   // hands in its own per-spec slot so a parallel phase still reports in spec order.
   const fail = (id, error, sink = checks) => { const reason = error.message ?? String(error); sink.push({ id, status: 'retained_after_failure', reason }); console.error(`BENCHMARK RETAINED ${id}: ${reason}`); };
-  const urls = new Map();
-  const add = (source) => {
-    // Vite SPA pages pin a hashed module bundle; only the stable page is queued,
-    // and the bundle is discovered from its capture receipt.
-    if (source?.page_url && source.follow_module_script) { urls.set(source.page_url, { url: source.page_url, follow_module_script: true }); return; }
-    if (!source?.url || !source.url.startsWith('https://')) return;
-    if (/(^|\.)(x\.com|twitter\.com)$/.test(new URL(source.url).hostname)) return;
-    // A file shipped only inside an archive is captured as that one member (see capture-benchmark-sources.py).
-    if (source.zip_member) { urls.set(captureKey(source), { url: source.url, zip_member: source.zip_member }); return; }
-    urls.set(source.url, source.url === 'https://uncommon-sandpiper-321.convex.cloud/api/query'
-      ? { url: source.url, method: 'POST', body: { path: 'runs:getLeaderboard', args: {}, format: 'json' } } : source.url);
-  };
-  // 2026-09-15: a reviewed manual snapshot (e.g. a ZIP-only source whose maintainer site blocks crawlers)
-  // is never fetched by the daily run; its committed rows are retained unchanged.
-  const manual = new Set(plan.entries.filter((spec) => spec.refresh === 'manual').map((spec) => spec.benchmark_id));
-  for (const entry of registry.entries) { if (manual.has(entry.id)) continue; add({ url: entry.primary_url }); for (const source of entry.evidence ?? []) add(source); }
-  for (const spec of plan.entries) {
-    if (manual.has(spec.benchmark_id)) continue;
-    add(spec.source); for (const key of ['method_source', 'categories_source', 'frontend_source', 'detail_source', 'config_source']) add(spec.parser?.[key]);
-    // One-file-per-run sources (BU Bench): every run file is a primary source of its own row.
-    for (const run of spec.parser?.runs ?? []) add(run);
-  }
-  for (const row of vendor.observations) add(row.source);
+  const { urls, documentUrls } = captureTargets({ registry, plan, vendor });
   // AA's model page was already fetched by efficiency; never fetch it again.
   const live = (await readFile(join(runDir, 'sources', 'live-manifest.jsonl'), 'utf8')).trim().split('\n').map(JSON.parse);
   const captured = new Map();
@@ -218,6 +256,26 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
   const capture = await exec('python3', ['scripts/capture-benchmark-sources.py', join(temporary, 'urls.json'), evidenceDir], { timeout: 1_800_000, maxBuffer: 8_000_000 });
   await writeFile(join(temporary, 'capture.log'), capture.stdout + capture.stderr);
   for (const receipt of await json(join(evidenceDir, 'manifest.json'))) captured.set(captureKey(receipt), receipt);
+  // D201: the declared-PDF documents, in their own directory so their manifest does not overwrite
+  // the one just read, with the retained text layer copied up beside every other capture of the run.
+  // A thrown capture is recorded and the run continues: those entries then report exactly what they
+  // reported before this change, so this path can never cost a publication.
+  if (documentUrls.size) {
+    const documentDir = join(evidenceDir, 'documents');
+    try {
+      await mkdir(documentDir, { recursive: true });
+      await put(join(temporary, 'document-urls.json'), [...documentUrls]);
+      const documents = await exec('python3', ['scripts/capture-vendor-documents.py', join(temporary, 'document-urls.json'), documentDir], { timeout: 1_800_000, maxBuffer: 8_000_000 });
+      await writeFile(join(temporary, 'capture-documents.log'), documents.stdout + documents.stderr);
+      for (const receipt of await json(join(documentDir, 'manifest.json'))) {
+        if (receipt.file) {
+          const target = join(evidenceDir, `${receipt.sha256.slice(0, 20)}.gz`);
+          await cp(receipt.file, target); receipt.file = target;
+        }
+        captured.set(captureKey(receipt), receipt);
+      }
+    } catch (error) { fail('vendor-documents', error); }
+  }
   const current = (source) => {
     if (source.page_url && source.follow_module_script) {
       // The current source is the bundle discovered from this run's page capture.
