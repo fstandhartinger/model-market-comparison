@@ -1162,3 +1162,13 @@ Source: Florian's request preserved verbatim as `CR-20260924jev-page-fixes` in
 | CR-142.4 | Replace the coarse input-length buckets with `<2k`, `2–8k`, `8–16k`, `16–64k`, `64–256k`, `256k–1M`, `≥1M`; add a logarithmic exact published context-limit chart with training and serving limits shown separately where known. | Public aggregate buckets reconcile for each included system. All 82 exact source-backed context rows are represented; unknowns and training markers are clear, and the existing source links and notes remain. |
 | CR-142.5 | Write `PROPOSAL-LONG-CONTEXT.md` for a possible Jev-class track at 16k/64k/256k/1M, including item design, running cost, and qualifying systems. | Proposal only; no benchmark track or items are built. |
 | CR-142.6 | Verify the deployed page on `benchmarkheaven.com`, `www.benchmarkheaven.com`, and `model-market-comparison.app.mintapis.com`; retain screenshots and results, then notify Florian as requested. | Hosts serve the merged revision and matching aggregates; light/dark desktop and 390 px screenshots are retained; deployment and notification receipts are recorded. |
+
+## CR-162 — repair the JevBench hub after CR-158
+
+Source: the CR-142 cost-axis request, Fable directives F-181/F-184, and the independently measured
+regressions in `REVIEW-20260925T134004Z.md`. This is review remediation, not a new Florian request.
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-162.1 | Keep the cost-axis 10 px text floor on the live hub's headline ranking and cost bubble chart. | At 1440 and 390 px, light and dark, inspect **every visible** `[data-bh-jev14-cost-axis]`: at least one exists, none has rendered text below 10 px; the context-axis check F-181 remains green. Do not restore a duplicate full Capability suite ahead of the approved page order. |
+| CR-162.2 | Keep desktop Capability rows one height without losing their per-row Jev-class notes. | At 1440 px, light and dark, every `[data-bh-jev14-capability-row]` differs in height by at most 2 px. Keyboard opens and closes the full desktop note without changing that height. At 390 px the note remains visible and the page has no horizontal overflow. |

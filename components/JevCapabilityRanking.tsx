@@ -66,7 +66,7 @@ export function JevCapabilityRanking({ systems, revision, officialHref }: { syst
         <summary className="cursor-pointer text-sm font-semibold text-accent">Show all {numbered.length} Jev-class systems ({numbered.length - HEADLINE_TOP} more)</summary>
         <ol className="mt-2.5 space-y-2.5">{numbered.slice(HEADLINE_TOP).map(bar)}</ol>
       </details>}
-      <div className="mt-2 hidden gap-x-2 sm:grid sm:grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_15rem]" aria-hidden="true">
+      <div className="mt-2 hidden gap-x-2 sm:grid sm:grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_15rem]" aria-hidden="true" data-bh-jev14-cost-axis>
         <span /><span />
         <div className="relative col-start-3 row-start-1 h-4">
           {costTicks(costBounds).map((tick, i, all) => <span key={tick} className={`absolute top-0 whitespace-nowrap font-mono text-[10px] text-[var(--muted)] ${i === 0 ? '' : i === all.length - 1 ? '-translate-x-full' : '-translate-x-1/2'}`} style={{ left: `${costAxisPosition(tick, costBounds)}%` }}>{usd(tick)}</span>)}

@@ -11817,3 +11817,30 @@ watching every other accepted row in the same file. This gate ran both verifiers
 No `ALL-ACCEPTED`: five accepted design rows are back to **open**, CR-156/CR-158 have no acceptance
 criteria in the authoritative documents, D205 needs Florian, four D-rows await a daily run, and X6's
 line-by-line audit has no passing receipt from this gate.
+
+## Iteration 225 (codex-luna, work) — CR-162 hub axis and Capability rows
+
+Allocated CR-162 to `jobs/bh-ux-f181-f184-20260925`. This addresses the two CR-158 regressions
+identified in `REVIEW-20260925T134004Z.md` without changing the approved Capability-first page
+order or the official score data. The live hub's ranking cost ticks and cost bubble x-axis now
+carry F-181's axis selector, and the verifier checks every visible axis rather than an absent
+legacy chart. Desktop per-row notes have keyboard-operated disclosures; the full note is shown
+when opened, and phone rows retain their existing visible note line.
+
+Local production-shaped browser evidence (shared Chrome, 1440/390 px, light/dark) is under
+`/opt/benchmarkheaven/state/ux-evidence/iter225-cr162/`: F-181 **12/12**, F-184 **6/6**,
+and `local-interaction.json` shows 28 px desktop row height before/after opening a note,
+the full note text, a visible phone note, no horizontal page overflow, and two/one visible
+cost axes on desktop/phone. The **entire** pass-34 verifier also passed locally, **74/74**,
+with no narrowed group (`iter225-cr162/local-pass34-all/verification.json`). Required gates:
+dataset build 871/674/96/3,121 (timestamp-only churn discarded), `npm test` 1,385 pass / 0 fail
+/ 1 skip, typecheck and production build passed. These are **local** checks; the PR must merge and a different
+engine must repeat the browser checks on both public hosts before F-181/F-184 or CR-162 may be
+called verified.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| CR-162.1 | in-progress | `iter225-cr162/local-f181/verification-F-181.json` | Local 12/12. Await merge, deploy, both-host independent review. |
+| CR-162.2 | in-progress | `iter225-cr162/local-f184/verification-F-184.json`; `iter225-cr162/local-interaction.json` | Local 6/6 plus keyboard and phone checks. Await merge, deploy, both-host independent review. |
+| F-181 | open | same local evidence | Cost axes restored locally; live regression remains until deployed and independently checked. |
+| F-184 | open | same local evidence | Rows uniform locally; live regression remains until deployed and independently checked. |
