@@ -11933,3 +11933,15 @@ them live and promotes them to `verified`.
 | CR-164.2 | implemented | `iter227-cr164/live-{canonical,legacy}/verification.json`, `live-f190-{canonical,legacy}/` | Frozen page 12,137 px; closed chart disclosure keyboard-opens; independent sign-off pending. |
 | CR-164.3 | implemented | `iter227-cr164/live-revisions.json`, `iter227-cr164/*-final.log` | Queue and local gates green; both hosts checked; independent sign-off pending. |
 | F-184, F-190 | implemented | `iter227-cr164/live-f184-{canonical,legacy}/`, `live-f190-{canonical,legacy}/` | Review gate must recheck before restoring verified. |
+
+## Iteration 228 (codex-luna coordination, opencode-kimi independent review) — CR-165
+
+CR-165 was allocated to `jobs/bh-ux-independent-signoff-20260925` for a different-engine
+live review of the already-deployed CR-163 and CR-164 repairs. Review evidence is being
+collected at `/opt/benchmarkheaven/state/ux-evidence/iter228-kimi-independent/`.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| CR-165.1 | in-progress | `iter228-kimi-independent/` | Kimi must independently adjudicate CR-163, F-189 and F-193 on both live hosts. |
+| CR-165.2 | in-progress | `iter228-kimi-independent/` | Kimi must independently adjudicate CR-164, F-184 and F-190 on both live hosts. |
+| CR-165.3 | in-progress | `iter228-kimi-independent/` | Ledger statuses will follow the independent verdict; no self-sign-off. |
