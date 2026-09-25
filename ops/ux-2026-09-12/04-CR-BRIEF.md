@@ -1162,3 +1162,47 @@ Source: Florian's request preserved verbatim as `CR-20260924jev-page-fixes` in
 | CR-142.4 | Replace the coarse input-length buckets with `<2k`, `2–8k`, `8–16k`, `16–64k`, `64–256k`, `256k–1M`, `≥1M`; add a logarithmic exact published context-limit chart with training and serving limits shown separately where known. | Public aggregate buckets reconcile for each included system. All 82 exact source-backed context rows are represented; unknowns and training markers are clear, and the existing source links and notes remain. |
 | CR-142.5 | Write `PROPOSAL-LONG-CONTEXT.md` for a possible Jev-class track at 16k/64k/256k/1M, including item design, running cost, and qualifying systems. | Proposal only; no benchmark track or items are built. |
 | CR-142.6 | Verify the deployed page on `benchmarkheaven.com`, `www.benchmarkheaven.com`, and `model-market-comparison.app.mintapis.com`; retain screenshots and results, then notify Florian as requested. | Hosts serve the merged revision and matching aggregates; light/dark desktop and 390 px screenshots are retained; deployment and notification receipts are recorded. |
+
+## CR-143 / CR-148 / CR-151–153 / CR-156 / CR-158 / CR-160 — source-backed acceptance repair (2026-09-25)
+
+Source locations and the CR-143 number collision are recorded at the end of
+`03-CHANGE-REQUESTS-VERBATIM.md`. The job prompts are preserved as job-origin scope, not
+represented as direct Florian quotations. Later dated decisions in `/home/flori/DECISIONS.md`
+win where a job prompt differs.
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-143.1 | Independent sign-off of CR-139.2 cache provenance | A different engine checks the exact live offer, condition, route, source date and cache-read locator on both hosts, desktop/mobile and light/dark; the existing Codex receipt records the result. This is not the MentalHealthBench intake. |
+| CR-148.1 | Preserve the bookmark intake's three ops-file edits outside the deploy checkout | The original `e0051b32` patch is traceable, the CR-143 collision is resolved to CR-160, and no intake text or open task is lost. Do not mark the transfer complete solely because a PR was opened. |
+| CR-151.1 | JevBench score chart-table shades each axis and cost cell relative to that column | The strongest axis value has the greatest green emphasis; lower measured $/1k is better; ties and missing/estimated values are honest and readable in both themes. A small legend explains the scale. |
+| CR-151.2 | Score chart-table has View by, sortable columns and filters | View by Overall, Intelligence, Calibration, Speed, Cost and Capability; sorting works by click and keyboard; name, open weights, API flag, new-release and class filters operate without changing the official score. Fairness copy stays adjacent. |
+| CR-151.3 | Axes table has the same usable controls and follows Compare | Sort/filter and value shading work in the numeric table; its heading appears after Compare, with API/estimated/partial labels and no invented missing values. |
+| CR-152.1 | Publish the approved JevBench v1.4.2 aggregate release | Hash-checked released artifact and exact approved roster/top-five; independent recomputation, price-basis and sealed-integrity gates pass. No item-level sealed content enters public code or HTML. |
+| CR-152.2 | Serve the release at live and frozen URLs | `/api/jevbench/v1.4.2` and `/jev-models/v1.4.2` serve the exact frozen artifact; the live board points to it until a later release. Existing frozen versions remain unchanged. |
+| CR-152.3 | Present the new #1 fairly and verify production | Official method stays unchanged; the fairness sentence and Intelligence sort are next to the score view; both public hosts serve the same revision and artifact hash, checked at desktop/mobile widths in light/dark. |
+| CR-152.4 | Finish the release surfaces | The JevBench GitHub release/tag and Hugging Face Space read the exact approved v1.4.2 artifact; the public API returns its hash header; author messages remain drafts and ImageJevBench remains outside this approval. |
+| CR-153.1 | Compare uses current-set public hard and sealed family aggregates | Every measured system has a source-backed family value or a clear unavailable state; the supplement reconciles with each published hard-tier aggregate without changing the frozen score artifact. |
+| CR-153.2 | Intelligence view and cost series | View by Intelligence hides general-purpose LLMs by default with an obvious control to include them; the capability chart's cost series is a thinner red secondary line on a labelled log scale. |
+| CR-153.3 | Model links and visual interactions | Each chart-table, axes-table and compare-view model name opens its verified best source; bubble charts identify system and values on hover/focus/tap and label the top five permanently. |
+| CR-153.4 | Reconcile the earlier 24/25 Sep page requests | The owning job's OUTPUT lists every earlier JevBench page request as done or still open with evidence, and no CR-151 work is silently duplicated or discarded. |
+| CR-156.1 | Publish the v1.4.2 Jev alternatives and pair routes | Jev-vs-Laya, Jev-vs-decider-4b-v2, Jev-vs-Cygnet, open-source Jev, alternatives, chooser and the other top-five pairs return 200; every displayed rank/axis comes from the released artifact. |
+| CR-156.2 | Search and source metadata | New pages have accurate title/description/canonical, structured data and internal links; all indexable routes appear in the sitemap; open-weight claims follow explicit artifact/licence evidence. |
+| CR-156.3 | Submit and track the new routes | IndexNow and verified Search Console submissions have receipts; the SEO loop checks the intended queries without claiming immediate indexing or a rank it has not measured. |
+| CR-158.1 | Capability-first Jev-class headline | Jev-class means cost per decision ≤ 2× Jev 1.13.0 and median latency ≤ 2× Jev 1.13.0. The top ranking is the mean of Intelligence and Calibration among qualifying systems, with non-qualifiers explained separately; this is a presentation rule, not a new JevBench score. |
+| CR-158.2 | Bubble charts before the official score | Capability vs Cost and Capability vs Speed appear after the qualifying ranking, with source-backed values, labelled axes, hover/focus/tap values and permanent top-five labels. |
+| CR-158.3 | Official composite and controls remain available | The official JevBench Score chart follows the bubble charts, with weight controls above and below and filtering/sorting nearby. Altering weights is visibly non-official. Compare and axes sections remain reachable. |
+| CR-158.4 | Preserve the approved anti-gaming price method separately | The dated v1.5 price addendum records the ≥30-day public list-price rule, base-model market-reference floor and re-score trigger; a v1.4.x re-score applies it only in a new release and respects the top-five gate. No frozen artifact is rewritten. |
+| CR-159.1 | Repair the source and acceptance ledger for the seven previously undocumented CR numbers | Each CR has a source pointer in 03, a checkable row here, and a seeded row in PROGRESS. Preserve the distinction between job-origin summaries and Florian's verbatim words; retain the CR-143/CR-160 collision note. |
+| CR-159.2 | Independently verify the deployed F-182 field-name fix | On both hosts at 1440/390 in light/dark, every visible `usage.input_tokens` mention is formatted as a field name in `<code>`, none appears as raw prose, and the page has no horizontal overflow. Implementer and verifier are different engines. |
+| CR-160.1 | Audit MentalHealthBench from the bookmark pointer | Read OpenAI's first-party method/results and licence/redistribution terms; establish benchmark version, metric/direction, model identity, date and exact result provenance before publishing any number. If evidence or reuse rights are insufficient, record the reason and publish no score. |
+| CR-160.2 | Integrate only verified results through the normal intake | Add versioned registry and refresh recipe, raw capture and source-backed results where permitted; build/test/typecheck and an independent both-host live check at desktop/mobile light/dark. The bookmark post itself is never treated as a measurement. |
+
+## CR-161 — Frozen JevBench page height and chart access (2026-09-25)
+
+Source: F-190 in `DESIGN-DIRECTIVES.md`, with the regression measured by
+`REVIEW-20260925T134004Z.md`. This row tracks a repair of that accepted design directive;
+it adds no scoring or release-data change.
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-161.1 | Keep the artifact-derived capability, cost and speed charts reachable from the frozen v1.4.2 page without letting the secondary suite bury the board or stretch the initial page past its design budget. | On the pinned page, the board precedes the secondary chart disclosure; the disclosure is keyboard and touch operable, reveals both scatter plots and the cost axis, and starts collapsed. At 1440 px in light and dark, initial document height is below 14,000 px. At 390 px in light and dark, neither state overflows horizontally. The artifact, official ranking, metadata and live hub remain unchanged. A different engine checks both production hosts after merge. |

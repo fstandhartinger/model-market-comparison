@@ -11817,3 +11817,86 @@ watching every other accepted row in the same file. This gate ran both verifiers
 No `ALL-ACCEPTED`: five accepted design rows are back to **open**, CR-156/CR-158 have no acceptance
 criteria in the authoritative documents, D205 needs Florian, four D-rows await a daily run, and X6's
 line-by-line audit has no passing receipt from this gate.
+
+## Iteration 223 (codex-luna, work) — CR-159 acceptance seeding and F-182 independent check
+
+The previous review found shipped CR identifiers without acceptance rows. The source appendix in
+`03-CHANGE-REQUESTS-VERBATIM.md` now points to each original job prompt and dated decision;
+`04-CR-BRIEF.md` defines checkable criteria; this table seeds the corresponding ledger rows.
+These prompts are labelled as job-origin scope, never passed off as direct Florian quotes.
+The 24 Sep bookmark intake reused already-allocated CR-143; its MentalHealthBench pointer is
+now **CR-160** (allocated 25 Sep), while CR-143 remains the CR-139.2 independent sign-off.
+The original intake capture remains in Git commit `e0051b32` and still needs transfer/ingestion.
+
+Local gates for this documentation-only diff: `node scripts/build-dataset.mjs` rc 0
+(871 models, 674 families, 96 providers, 3,121 offers; timestamp-only dataset churn discarded),
+`npm test` rc 0 (1,386 tests, 1,385 pass, 0 fail, 1 skip),
+`npx tsc --noEmit -p .` rc 0, `npm run build` rc 0, and `git diff --check` clean.
+
+Status `implemented` below means the product work is live per the 13:40 review, but this
+documentation author has not promoted it to `verified`. Rows that the review did not establish
+are open. This iteration's documentation rows remain `in-progress` until PR #23 is merged and
+deployed. Evidence paths are relative to `/opt/benchmarkheaven/state/ux-evidence/` unless absolute.
+
+| ID | Requirement (short) | Status | Evidence | Notes |
+|---|---|---|---|---|
+| CR-143.1 | Independent CR-139.2 cost/cache provenance sign-off | verified | `iter205-cr139-2-codex/verification.json` | Existing Codex verification of Fable implementation; this row predates this documentation repair. |
+| CR-148.1 | Preserve bookmark intake patch in an isolated merged change | open | Git `e0051b32`; PR #10 | The original patch is retained, but the repository's current 03/04/ledger lacks it; CR-160 gives the benchmark request a distinct ID. Check PR merge/transfer state before closing. |
+| CR-151.1 | Shaded JevBench score chart-table | implemented | `review-20260925T134004Z/`; `/home/flori/jobs/site-v142-gauntlet-20260925/OUTPUT.md` | Shipped in CR-158/PR #22; needs criterion-by-criterion independent review. |
+| CR-151.2 | View-by, sort and filters by score/axis | implemented | same | Shipped in CR-158/PR #22. |
+| CR-151.3 | Sortable/filterable axes table after Compare | implemented | same | Shipped in CR-158/PR #22. |
+| CR-152.1 | Exact v1.4.2 aggregate release and top-five gate | implemented | `review-20260925T134004Z/`; `/home/flori/jobs/release-v142-ship-20260925/OUTPUT.md` | Frozen artifact already live; review of every release gate is still owed under the newly seeded criterion. |
+| CR-152.2 | Versioned API and pinned/live pages | implemented | same | Both hosts served v1.4.2 at the reviewed revision. |
+| CR-152.3 | Fair #1 copy, Intelligence sort, production verification | implemented | same | Existing live checks, now to be judged against the source-backed criterion. |
+| CR-152.4 | GitHub release, Hugging Face Space and exact API hash | open | `/home/flori/jobs/release-v142-ship-20260925/OUTPUT.md` | Source job has receipts; this iteration did not independently recheck release/Space bytes. |
+| CR-153.1 | Current-set hard/sealed family comparison | implemented | `review-20260925T134004Z/` | Nine supplemented rows independently reconcile to 220 hard-tier decisions; verify the remaining UI states. |
+| CR-153.2 | Intelligence view and thin red cost series | implemented | same | Shipped in CR-158/PR #22. |
+| CR-153.3 | Source links and bubble interactions | open | `/home/flori/jobs/jev-page-requests-final-20260925/OUTPUT.md`; board #1318/#1324 | The review did not inspect every link or all tap/focus states. |
+| CR-153.4 | Reconcile earlier JevBench page requests | open | `/home/flori/jobs/jev-page-requests-final-20260925/OUTPUT.md` | Needs a source-by-source completeness check against the 24/25 Sep request set. |
+| CR-156.1 | Artifact-backed alternatives and pair routes | implemented | `review-20260925T134004Z/seo-routes.txt` | Ten routes live; #2 vs #41 and axes independently re-derived in the review. |
+| CR-156.2 | Canonicals, JSON-LD, sitemap, open-weight basis | implemented | same | Ten routes found in sitemap; 60 open-weight rows reproduced. |
+| CR-156.3 | Indexing submissions and rank tracking | implemented | `/home/flori/jobs/seo-routes-finish-20260925/OUTPUT.md`; board #1351 | Source job reports receipts; an independent receipt check remains. |
+| CR-158.1 | Jev-class Capability ranking using 2× rule | implemented | `review-20260925T134004Z/`; `/home/flori/jobs/jev-page-restructure-20260925/verify-results-live.json` | Live page checked; new layout created F-189/F-193/F-184 regressions that remain open. |
+| CR-158.2 | Capability bubble charts before official score | implemented | same | Live page checked; full interaction criterion still needs independent review. |
+| CR-158.3 | Official composite with weight controls follows | implemented | same | Live page checked; pinned-page F-190 remains open. |
+| CR-158.4 | Anti-gaming price addendum and future release boundary | open | `/home/flori/DECISIONS.md` 25 Sep 15:15 | Approved; verify the dated method file and later score application without editing frozen v1.4.2. |
+| CR-159.1 | Restore the missing source-backed CR acceptance ledger | in-progress | PR #23, branch `jobs/bh-ux-iter223-20260925`; this commit's 03/04/PROGRESS diff | Awaiting queue merge and deployment before `implemented`; different-engine review still required for `verified`. CR-148/160 remain separate open work. |
+| CR-159.2 | Independently check field-name presentation live | verified | `iter223-f182/verification.json` | Codex Luna checked Claude's two-commit fix at deployed `f07e5651` on canonical and legacy, 1440/390 × light/dark: 8/8 contexts, 24 visible mentions inside `<code>`, 0 outside, no page overflow. |
+| F-182 | Keep sourced dataset field names formatted as code on the JevBench hub | verified | `iter223-f182/verification.json` | Different-engine sign-off of the Claude implementation, as required by the ledger. |
+| CR-160.1 | Audit MentalHealthBench first-party source and reuse terms | open | Git `e0051b32` intake capture; CR-160 allocation | Intake post is only a pointer; no result is inferred from it. |
+| CR-160.2 | Versioned, sourced ingestion and independent live check | open | — | Depends on CR-160.1. |
+| D206 | Missing requirement/acceptance documentation | in-progress | CR-159.1 | Source references and acceptance rows are in PR #23 but not merged or deployed; non-implementer review still owed. |
+| F-190 | Pinned v1.4.2 page below 14,000 px | open | `iter223-f190/comparison.json` | Reversible local probe: removing CR-158's extra `previous`/`sealedFamilyN` props reduced desktop height from 14,876 to 14,634 px, still above budget. Probe reverted; no product change claimed. Layout decision remains open. |
+
+No `ALL-ACCEPTED`: the CR-160 intake, F-190 and the other open rows remain. This iteration
+created no large intermediate data beyond a local `.next` build, which is removed before exit.
+
+## Iteration 224 (codex-luna, work) — CR-161 / F-190 pinned-page height
+
+The 13:40 review found the frozen v1.4.2 page at 14,876 px on a 1440 px desktop after
+CR-158. The page still has its frozen board and the artifact-derived capability suite.
+The secondary suite is now a native disclosure after the board: readers see the official
+ranking first and can open all capability/cost/speed views on the same page. The frozen
+artifact, official score, ranking, preview metadata and live hub are untouched. The
+old F-190 comparison of the pinned board's first bar to the *live hub's* first bar is
+superseded by Florian's later CR-158 page order: the live hub now leads with a different
+Capability ranking and two charts, while the pinned release leads with its frozen board.
+
+Local evidence: `/opt/benchmarkheaven/state/ux-evidence/iter224-codex-f190/`.
+`verify-cr-161.mjs` in the shared Chrome (desktop 1440 and phone 390, light/dark)
+passed **4/4**: initial desktop height **12,091 px**, disclosure collapsed, board before
+the disclosure, both scatter plots and the cost axis visible after opening, touch and
+Enter/Space operation, and no page overflow in either state. Screenshots and the structured
+receipt are retained. Gates:
+`node scripts/build-dataset.mjs` rc 0 (871 models / 674 families / 96 providers /
+3,121 offers), `npm test` 1,386 total / 1,385 pass / 0 fail / 1 skip,
+`npx tsc --noEmit -p .` rc 0, `npm run build` rc 0. Timestamp-only dataset churn was
+discarded.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| CR-161.1 | in-progress | `iter224-codex-f190/local/verification.json`; local screenshots and gate logs | Local browser and gates pass. Production merge and different-engine sign-off remain. |
+| F-190 | in-progress | same | The measured 14,000 px height regression is repaired locally; only a different engine may restore `verified` after live deployment. |
+
+No `ALL-ACCEPTED`: the queued CR-159 ledger PR and the other open rows still require their
+own acceptance work.
