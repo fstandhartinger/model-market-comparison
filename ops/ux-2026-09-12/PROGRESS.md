@@ -11489,3 +11489,18 @@ Gates after D202: `npm test` **1,354 tests, 1,353 pass, 0 fail, 1 skipped** rc 0
 rc 0 · `node scripts/build-dataset.mjs` rc 0, 871 / 676 / 96 / 3,036 (the twenty registry lines and
 the two generated timestamps). `c03264d6`, `609ce01f` and `5273989c` are committed and **unpushed**
 while the in-flight daily holds `state/run.lock`.
+
+**Two follow-ups, both found by re-reading the change rather than by a test.** `d35ec225`: the first
+D201 version captured into `daily-evidence/<run>/documents/`, a committed directory — so every run
+would have added a second `manifest.json` and a `<host>-robots.txt` there, and the evidence
+directory's own manifest would not have listed the `.gz` beside it. The capture now runs in the run's
+scratch directory and only the retained text layer is copied into the evidence directory, with its
+receipt appended to that directory's manifest. `f5b07453`: `how_to_collect.access` decides whether a
+URL is fetched at all and what the health report prints, so an entry declaring `mode` without
+`reason` would have reached `source-health.md` as `undefined` and stayed there; the registry
+validator (run by `scripts/build-dataset.mjs:520` on every build) now refuses a half-written
+declaration, and only `browser_only` is a known mode because a new mode needs code that honours it.
+
+Final gates for the iteration: `npm test` **1,355 tests, 1,354 pass, 0 fail, 1 skipped** rc 0 ·
+`npx tsc --noEmit -p .` rc 0 · `node scripts/build-dataset.mjs` rc 0, 871 / 676 / 96 / 3,036,
+timestamp-only churn.
