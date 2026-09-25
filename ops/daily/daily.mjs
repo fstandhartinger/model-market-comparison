@@ -429,6 +429,9 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     if (!dryRun) await writeJSONAtomic(statePath, health);
     const benchmarks = await readJSON(join(reports, 'source-health.json')).catch(() => null);
     report.stale_sources = staleSources({ collectors: health.collectors, benchmarks, day });
+    // D204: reviewed-but-unpublished score rows. They are not a stale *source* — no source is failing —
+    // so nothing above counts them, and 72 of them passed unseen on 2026-09-25.
+    report.quarantined_scores = benchmarks?.quarantine?.batches ? benchmarks.quarantine : null;
   } catch (error) { report.stale_sources = null; console.error(`SOURCE HEALTH FAILED: ${redact(error.message)}`); }
   const summary = [
     `STATUS: ${report.exit_code === 0 ? 'ok' : 'problem'}`,
@@ -456,6 +459,7 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     // as a name and a date while the state file held "Mistral pricing: no priced chat models" — the
     // sentence that names the cause and would have been acted on the first morning.
     ...(report.stale_sources?.length ? [`Veraltete Quellen (>= 3 Tage): ${report.stale_sources.length} — ${report.stale_sources.map((x) => `${x.id} (zuletzt gut: ${x.last_ok ?? 'nie'}${x.stale_days == null ? '' : `, seit ${x.stale_days} Tagen`}): ${x.reason ?? 'Grund nicht aufgezeichnet'}`).join('; ')}`] : []),
+    ...(report.quarantined_scores ? [`Zurueckgehaltene Score-Zeilen (geprueft, nicht veroeffentlicht): ${report.quarantined_scores.rows} in ${report.quarantined_scores.batches} Batch(es)${report.quarantined_scores.unknown_batches?.length ? `; Anzahl unbekannt fuer ${report.quarantined_scores.unknown_batches.join(', ')}` : ''}`] : []),
     report.error ? `FEHLER: ${report.error.split('\n').filter(Boolean).at(-1).slice(0, 800)}` : 'Build, Tests, Typpruefung und Quellpruefung erfolgreich.',
   ].join('\n') + '\n';
   await writeFile(join(home, 'last-summary.txt'), summary);

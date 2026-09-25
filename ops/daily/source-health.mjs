@@ -16,8 +16,27 @@ export const STATUS_KIND = {
   source_changed_retained: 'attention', contested: 'attention',
   retained_manual_snapshot: 'manual', manual_required: 'manual', source_reachable_protocol_date_retained: 'no_adapter',
 };
-// Per-run bookkeeping rows, not sources.
+// Per-run bookkeeping rows, not sources. `score-batch-7` is a different set of rows in every run, so
+// "failing since" and a consecutive-run streak are meaningless for it — it must stay out of the table.
 const NOT_A_SOURCE = /^(score-batch-\d+|benchmark-history)$/;
+const SCORE_BATCH = /^score-batch-\d+$/;
+// D204: excluding the batches from the per-source table left their quarantined rows reported nowhere —
+// 72 rows on 2026-09-25, and not one of them in source-health, the run report or the run summary. They
+// are a per-run total rather than a per-source history, so they are counted, not listed. Runs written
+// before the count was recorded structurally still report, by reading the reason this file's own
+// `fail()` wrote ("<n> rows quarantined: …"); a batch whose count cannot be established is named in
+// `unknown_batches` rather than silently counted as zero.
+const QUARANTINED_ROWS = /^(\d+) rows quarantined\b/;
+export function quarantineTotals(run) {
+  const batches = (run?.checks ?? []).filter((c) => SCORE_BATCH.test(c.id) && STATUS_KIND[c.status] === 'failing');
+  let rows = 0; const unknown = [];
+  for (const b of batches) {
+    const counted = Number.isInteger(b.quarantined_rows) ? b.quarantined_rows
+      : Number(QUARANTINED_ROWS.exec(b.reason ?? '')?.[1] ?? NaN);
+    if (Number.isFinite(counted)) rows += counted; else unknown.push(b.id);
+  }
+  return { rows, batches: batches.length, unknown_batches: unknown };
+}
 
 // A failed subprocess reason is the command line plus its traceback; the last line names the actual error.
 // 20 Sep 2026 (iteration 134): a captured step failure is a whole stdout+stderr transcript, and its
@@ -75,7 +94,7 @@ export function sourceHealth(reports, { plan = { entries: [] } } = {}) {
   sources.sort((a, b) => order[a.kind] - order[b.kind] || (a.failing_since ?? '').localeCompare(b.failing_since ?? '') || a.id.localeCompare(b.id));
   const count = (k) => sources.filter((s) => s.kind === k).length;
   return { generated_from_runs: runs.length, newest_run: runs[0].checked_at, oldest_run: runs.at(-1).checked_at,
-    totals: Object.fromEntries(Object.keys(order).map((k) => [k, count(k)])), sources };
+    totals: Object.fromEntries(Object.keys(order).map((k) => [k, count(k)])), quarantine: quarantineTotals(runs[0]), sources };
 }
 
 export function healthMarkdown(health) {
@@ -83,6 +102,11 @@ export function healthMarkdown(health) {
   const lines = [`# Benchmark source health — newest run ${health.newest_run}`, '',
     `${health.generated_from_runs} runs (${day(health.oldest_run)} … ${day(health.newest_run)}). ` +
     Object.entries(health.totals).filter(([, n]) => n).map(([k, n]) => `${n} ${k.replace('_', ' ')}`).join(' · '), ''];
+  const q = health.quarantine;
+  if (q?.batches) {
+    lines.push(`Newest run: **${q.rows} score row(s) quarantined** across ${q.batches} batch(es) — reviewed, not published, and not listed below: a batch is a per-run unit, not a source.`
+      + (q.unknown_batches?.length ? ` Row count not recorded for ${q.unknown_batches.join(', ')}.` : ''), '');
+  }
   const failing = health.sources.filter((s) => s.kind === 'failing' || s.kind === 'attention' || s.kind === 'unknown');
   lines.push(failing.length ? '| Source | Status | Failing since | Runs | Last OK | Reason |' : 'No failing sources.');
   if (failing.length) lines.push('| --- | --- | --- | --- | --- | --- |');

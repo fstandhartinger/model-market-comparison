@@ -269,7 +269,9 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
   const checks = [], reviews = [], changedIds = new Set(), evidenceById = new Map();
   // `sink` is `checks` for every arm that runs in source order; the public-spec loop below
   // hands in its own per-spec slot so a parallel phase still reports in spec order.
-  const fail = (id, error, sink = checks) => { const reason = error.message ?? String(error); sink.push({ id, status: 'retained_after_failure', reason }); console.error(`BENCHMARK RETAINED ${id}: ${reason}`); };
+  // `extra` carries structured facts a report should not have to re-read out of the prose reason
+  // (D204: the quarantined row count). The reason text is unchanged — it is what a human reads.
+  const fail = (id, error, sink = checks, extra = {}) => { const reason = error.message ?? String(error); sink.push({ id, status: 'retained_after_failure', reason, ...extra }); console.error(`BENCHMARK RETAINED ${id}: ${reason}`); };
   const { urls, documentUrls } = captureTargets({ registry, plan, vendor });
   // AA's model page was already fetched by efficiency; never fetch it again.
   const live = (await readFile(join(runDir, 'sources', 'live-manifest.jsonl'), 'utf8')).trim().split('\n').map(JSON.parse);
@@ -608,7 +610,7 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
     const result = outcome.value;
     reviews.push({ scope: 'scores', ...result.manifest });
     for (const fp of result.fingerprints) { accepted.add(fp.id); fingerprints.push(fp); }
-    if (result.quarantined.length) fail(`score-batch-${unit.batch}`, new Error(`${result.quarantined.length} rows quarantined: ${result.errors.join('; ')}`));
+    if (result.quarantined.length) fail(`score-batch-${unit.batch}`, new Error(`${result.quarantined.length} rows quarantined: ${result.errors.join('; ')}`), checks, { quarantined_rows: result.quarantined.length });
   }
   // CR-73.2: a vendor extraction becomes reusable only now, and only when every slot it produced
   // was accepted by the different-family critic in the batches above. A unit with one quarantined
