@@ -57,7 +57,7 @@ export default async function JevAlternativesPage() {
       score: row.jevbench_score,
       model: row.underlying ?? '',
       sizeNote: MODEL_SIZE_NOTES[row.key],
-      runSetup: setup.speed?.hardware ?? setup.speed?.measured_where ?? setup.endpoint_condition ?? '',
+      runSetup: setup.speed?.hardware ?? setup.endpoint_condition ?? setup.speed?.measured_where ?? '',
       licence: row.licence,
       sourceUrl: row.key === 'mirror' ? MIRROR_BASE : row.repo,
       sourceLabel: row.key === 'mirror' ? 'DeBERTa-v3-large base model card' : 'Published source or weights',
@@ -81,11 +81,11 @@ export default async function JevAlternativesPage() {
     },
     {
       question: 'Does the recorded hardware show a minimum deployment requirement?',
-      answer: `No. The table reports the setup used for each benchmark run. ${cpuRows.length} of these rows were measured on four CPU threads; most others ran on a single rented GPU. It is not a minimum VRAM or hardware guarantee for another revision, quantization, context length or serving stack.`,
+      answer: `No. The table reports the setup used for each benchmark run. ${cpuRows.length} of these rows were measured on four CPU threads; most others ran on a rented GPU or the author’s own endpoint. It is not a minimum VRAM or hardware guarantee for another revision, quantization, context length or serving stack.`,
     },
     {
       question: 'Are cost and speed values directly measured?',
-      answer: 'The board labels cost evidence as measured, estimated or announced. Self-hosted rows usually carry an estimated cost from a comparable hosted price, and their speed includes a published ×2 + 0.15 s adjustment that is an assumption, not a measurement.',
+      answer: 'The board labels cost evidence as measured, estimated or announced. Self-hosted rows usually carry an estimated cost from a comparable hosted price, and rows served on our own hardware carry a published speed adjustment (such as ×2 + 0.15 s) that is an assumption, not a measurement.',
     },
   ];
 

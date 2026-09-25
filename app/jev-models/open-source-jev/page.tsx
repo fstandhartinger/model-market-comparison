@@ -21,7 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
 type Setup = { endpoint_condition?: string | null; speed?: { hardware?: string | null; measured_where?: string | null; adjustment?: string | null } | null };
 const setupOf = (row: SeoRow) => {
   const s = row as unknown as Setup;
-  return s.speed?.hardware ?? s.speed?.measured_where ?? s.endpoint_condition ?? 'not stated';
+  return s.speed?.hardware ?? s.endpoint_condition ?? s.speed?.measured_where ?? 'not stated';
 };
 const onCpu = (row: SeoRow) => /ryzen|cpu/i.test(`${(row as unknown as Setup).speed?.hardware ?? ''} ${(row as unknown as Setup).endpoint_condition ?? ''}`);
 
@@ -50,12 +50,12 @@ export default async function OpenSourceJevPage() {
     {
       question: 'Can I run an open Jev alternative on a CPU?',
       answer: bestCpu
-        ? `Yes, some were measured on four CPU threads of an AMD Ryzen 5 3600. The highest-ranked of them is ${bestCpu.display} at #${bestCpu.rank} (JevBench Score ${one(bestCpu.jevbench_score)}). Most higher-ranked open models were measured on one rented GPU.`
+        ? `Yes, some were measured on four CPU threads of an AMD Ryzen 5 3600. The highest-ranked of them is ${bestCpu.display} at #${bestCpu.rank} (JevBench Score ${one(bestCpu.jevbench_score)}). Most higher-ranked open models were measured on a rented GPU or the author’s own endpoint.`
         : 'None of the open-weight rows in this release was measured on a CPU.',
     },
     {
       question: 'Are the costs of open models measured?',
-      answer: 'Mostly not. A self-hosted model has no bill of its own, so its cost is usually estimated from a comparable hosted model’s price and labeled as an estimate. Self-hosted speed also includes a published ×2 + 0.15 s adjustment, which is an assumption rather than a measurement.',
+      answer: 'Mostly not. A self-hosted model has no bill of its own, so its cost is usually estimated from a comparable hosted model’s price and labeled as an estimate. Rows served on our own hardware also carry a published speed adjustment (such as ×2 + 0.15 s), which is an assumption rather than a measurement.',
     },
   ];
 
@@ -101,7 +101,7 @@ export default async function OpenSourceJevPage() {
     <section className="mt-6 grid gap-4 md:grid-cols-2">
       <article className="bh-panel p-5" aria-labelledby="open-jev-why">
         <h2 id="open-jev-why" className="text-lg font-semibold">What you give up and gain by self-hosting</h2>
-        <p className="bh-muted mt-2 text-sm">Jev was measured through its production API from a server in Germany, network included, at a measured {usdPerThousand(jev.cost?.usd_per_1000)}. Open models were measured on evaluator-owned hardware; their speed carries an assumed ×2 + 0.15 s adjustment and their cost is usually an estimate from a comparable hosted price. Self-hosting keeps decisions on your own hardware, which the API cannot.</p>
+        <p className="bh-muted mt-2 text-sm">Jev was measured through its production API from a server in Germany, network included, at a measured {usdPerThousand(jev.cost?.usd_per_1000)}. Most open models were measured on GPUs we rented or on their authors’ endpoints; rows on our own hardware carry an assumed speed adjustment, and their cost is usually an estimate from a comparable hosted price. Self-hosting keeps decisions on your own hardware, which the API cannot.</p>
       </article>
       <article className="bh-panel p-5" aria-labelledby="open-jev-licence">
         <h2 id="open-jev-licence" className="text-lg font-semibold">Read the license, not just the label</h2>

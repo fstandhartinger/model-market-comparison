@@ -37,7 +37,7 @@ type Conditions = {
 /** Where and how the row was measured, as published; the speed adjustment is labeled an assumption in the artifact. */
 function MeasurementConditions({ row }: { row: SeoRow }) {
   const c = row as unknown as Conditions;
-  const setup = c.speed?.hardware ?? c.speed?.measured_where ?? c.endpoint_condition ?? null;
+  const setup = c.speed?.hardware ?? c.endpoint_condition ?? c.speed?.measured_where ?? null;
   return <dl className="mt-3 space-y-2 text-sm" data-bh-jev-pair-conditions={row.key}>
     <div><dt className="font-medium">Measured on</dt><dd className="bh-muted">{setup ?? 'not stated in the published row'}{c.endpoint_condition && setup !== c.endpoint_condition ? ` · ${c.endpoint_condition}` : ''}</dd></div>
     {c.speed?.adjustment && <div><dt className="font-medium">Speed adjustment</dt><dd className="bh-muted">{c.speed.adjustment}</dd></div>}
