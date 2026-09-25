@@ -11158,3 +11158,80 @@ fix rounds once, at the point of render.
 | F-187 | open | — | Unchanged: before `/image-jev-bench` publishes, as directed. |
 | CR-152.1 | open | `…/iter214-pass35/F-192-*/` | Filed by Fable in pass 35 for the JevBench release job: name the class `system-one-open` in `RELEASE-v1.4.2.md` or an artifact `classes` map. Until it lands the key ships in `<code>`; the site needs no further change when it does, only a `JEV_TYPE_LABEL` entry. |
 | D191, D192, D193.2, D193.3, D195, D196, D194, CR-140.5, CR-62.4 | unchanged | — | Not attempted. D193.2/D193.3/D195/D196/D194 are claude-opus work awaiting a non-claude-opus sign-off, which this engine cannot give. The 2026-09-25T05:17Z run is still D191's test and nothing here goes near that path; the last push was well clear of its lock. |
+
+## Iteration 215 (claude-opus, 2026-09-25 04:50–05:1x UTC) — why the daily has not published since 2026-09-23
+
+`state/pipeline-streak.json` stood at `failures_in_row: 4`, `last_ok_day: 2026-09-23`. D191's two
+recorded causes are both gone: `fetch-aa` **succeeded** in the 00:41 run (2,356 ms, the amended
+approval consumed) and `refresh-benchmarks` ran its full 73 minutes without a timeout. The run still
+published nothing, and the reason was neither of them.
+
+### D197 (new) — a generated file was corrected and its input was not
+
+`refresh-benchmarks` ends in `scripts/ingest-benchmark-scores.mjs`, which threw:
+
+```
+Error: Unreviewed vendor score: self-reported:claude-opus-55-healthbench-professional
+    at verifyScoreEvidence (lib/benchmark-score-evidence.mjs:63:113)
+```
+
+CR-139 (`3ceb4cd8`, 2026-09-24) corrected that row after the HealthBench point-unit gauntlet — `unit`
+`percent` → `points` and a rewritten `protocol` — and minted a fresh approval over the corrected row
+(`score-approvals.json`, `observation_sha256` `848766b4…`, superseding the 2026-09-22 one). It wrote
+the new `unit` into **both** `scores.json` and its input `self-reported-candidates.json`, but the new
+`protocol` only into `scores.json`.
+
+So the published file verified — its digest is the approval's — while every *fresh* ingest rebuilt the
+row from the input, produced the old protocol, hashed to something else, found no approval and threw
+**before any publication**. The whole daily failed on one 586-character string, and it would have kept
+failing every day: the approval cannot be re-minted against a row the input no longer produces.
+
+**Replayed offline first** (memory rule: replay a failing arm against its own capture). The ingest in
+the failed run's own `work/` clone reproduces the throw exactly. `--draft` output against the committed
+`scores.json` named the single divergence — one row, one field, `protocol` — out of 18,607 observations.
+
+**The input now carries the approved text, and the text is right.** The old wording said production
+safeguards "fell back to Claude Opus 4.8 for cyber and Claude Opus 5 for biology". The primary capture
+(`data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/95a7b26f5d4497072d97.gz`, line 6989)
+says: *"Claude Opus 4.8 was the grader model. Claude Opus 5.5 was run with safety classifiers enabled
+and a refusal fallback to Claude Opus 5. Scores were averaged over five trials. No tools or customized
+system prompts were provided to any model."* Opus 4.8 is the **grader**, not a fallback — the reviewed
+protocol is the accurate one and the input was the stale copy. Table 8.1.A's caption (line 5893)
+confirms the standard-configuration sentence, and the printed row (line 5886) confirms 65.6.
+
+**No number moves.** After the repair, `node scripts/ingest-benchmark-scores.mjs` run for real writes a
+`data/raw/benchmarks/scores.json` that is **byte-identical** to the committed one (`cmp` clean), and
+`build-dataset` changes only its two generated timestamps, which were restored.
+
+### The invariant the suite was missing
+
+D174 (2026-09-23) pinned *which form* of a row an approval binds, after the same symptom. It did not
+pin that the published row and its input are the same row, so this second instance of the same failure
+mode went unnoticed for a day. `test/d197-published-rows-regenerate.test.mjs` now checks all **1,443**
+self-reported observations in `scores.json` against the five input files
+(`public-observations.json` 1,299 · `self-reported-candidates.json` 136 · `vendor-candidates.json` 8;
+none is derived), allowing a reviewed identity join — `subject.model_id`, `join_note`,
+`identity_review` — as the only difference the ingest may make. It is **red on the pre-fix tree**,
+naming exactly `self-reported:claude-opus-55-healthbench-professional: self-reported-candidates.json
+and scores.json disagree on protocol`, and green after. A second, fixture-only test pins the check's own
+logic in both directions.
+
+The rule this encodes, for whoever next corrects a reviewed row: **fix the input, then regenerate.** A
+correction written into `scores.json` alone survives its own commit and kills the next unattended run.
+
+### Gates
+
+`node scripts/build-dataset.mjs` 871 / 676 / 96 / 3,036 ✓ · `npm test` **1,334 tests, 1,333 pass, 0
+fail, 1 skipped** (the CR-74.4 calibration test, which skips unless the dataset is the 2026-09-17
+snapshot) rc 0 · `npx tsc --noEmit -p .` rc 0. Pushed as `6466f5a5` at 05:08 UTC, **nine minutes before
+the 05:17 run's clone**, so the production test is today's run and not tomorrow's.
+
+### Rows
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D197 | implemented (production proof pending) | `6466f5a5`; `test/d197-published-rows-regenerate.test.mjs` (red before / green after); the 00:41 run's `reports/run-report.json` `error`; replay in `runs/2026-09-25T00-41-03-131Z-1717799/work` | claude-opus, iteration 215 (implementer — **needs another engine**). The 05:17 run is the proof: `refresh-benchmarks` must reach `published: true`. If it does, `pipeline-streak.json` returns to `failures_in_row: 0` and D191's streak ends with it. |
+| D191 | in-progress (both recorded causes cleared; a third found) | the 00:41 run: `fetch-aa` ok 2,356 ms, `refresh-benchmarks` 73 min without timeout | The streak was **not** AA's approval or the benchmark budget after iteration 210's work — it was D197. Keep the row open until a run publishes. |
+| D192 | open (15 of 23) | unchanged | The 00:41 run retained again, and two patterns are now named: `score-batch-15` lost 15 rows to *"Critic did not echo the exact frozen artifact hash"* three rounds running, and batches 20–22 to *"worker: No supported viable worker model found"* — which per the worker-prefix rule means the worker-runner died before choosing a model, not a review dispute. Both are separate from the publication blocker fixed here. |
+| F-189, F-190, F-192, F-188 | implemented | unchanged (iteration 214) | Still owed a non-claude-opus sign-off. |
+| D193.2, D193.3, D195, D196, D194, CR-140.5, CR-62.4, F-193, F-187, CR-152.1 | unchanged | — | Not attempted. D193.2's five remaining references and D195 are claude-opus work awaiting a non-claude-opus sign-off; F-193 is for the design authority. |
