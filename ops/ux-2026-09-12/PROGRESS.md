@@ -11831,7 +11831,10 @@ Local production-shaped browser evidence (shared Chrome, 1440/390 px, light/dark
 `/opt/benchmarkheaven/state/ux-evidence/iter225-cr162/`: F-181 **12/12**, F-184 **6/6**,
 and `local-interaction.json` shows 28 px desktop row height before/after opening a note,
 the full note text, a visible phone note, no horizontal page overflow, and two/one visible
-cost axes on desktop/phone. These are **local** checks; the PR must merge and a different
+cost axes on desktop/phone. The **entire** pass-34 verifier also passed locally, **74/74**,
+with no narrowed group (`iter225-cr162/local-pass34-all/verification.json`). Required gates:
+dataset build 871/674/96/3,121 (timestamp-only churn discarded), `npm test` 1,385 pass / 0 fail
+/ 1 skip, typecheck and production build passed. These are **local** checks; the PR must merge and a different
 engine must repeat the browser checks on both public hosts before F-181/F-184 or CR-162 may be
 called verified.
 
