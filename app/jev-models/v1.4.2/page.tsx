@@ -55,7 +55,10 @@ export default async function JevModelsV142Page() {
         <a className="text-accent underline" href="/jev-models" data-bh-jev-live-link>View live board</a>
       </p>
     </header>
-    <JevModelsV14Board artifact={view.artifact} sha256={view.sha256} previous={{ revision: 'v1.4.1', keys: (await readJevbenchV141()).artifact.systems.map((row) => row.key) }} capabilityHref="#jev14-capability-views" sealedFamilyN={view.sealedFamilyN} />
-    <JevCapabilityChart systems={view.systems} revision={view.revision} />
+    <JevModelsV14Board artifact={view.artifact} sha256={view.sha256} previous={{ revision: 'v1.4.1', keys: (await readJevbenchV141()).artifact.systems.map((row) => row.key) }} sealedFamilyN={view.sealedFamilyN} />
+    <details className="bh-panel mt-8 p-4 sm:p-5" data-bh-jev-frozen-capability>
+      <summary className="cursor-pointer text-lg font-semibold text-accent">Explore Capability, cost and speed charts</summary>
+      <JevCapabilityChart systems={view.systems} revision={view.revision} />
+    </details>
   </>;
 }

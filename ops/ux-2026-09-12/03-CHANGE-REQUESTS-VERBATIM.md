@@ -1735,3 +1735,12 @@ superseded by CR-151's `View by` switch. Restore the first headline row to the p
 viewport, keep the ten JevBench guides reachable, keep the complete class rule and approved
 fairness sentence available, and update the verifier to the current control and page order.
 Do not alter the Jev-class rule, published measurements, scores, or official ranks.
+
+## CR-164 — Repair JevBench row rhythm and frozen-page height (workstream repair, 2026-09-25)
+
+This is a repair filed by the UX workstream from `REVIEW-20260925T155004Z.md`, **not a new
+verbatim Florian message**. The review found 91 Capability rows at mixed 28/43 px heights
+after CR-158 added per-row class notes, and the frozen `/jev-models/v1.4.2` page at 14,876 px
+on a 1440 px desktop against F-190's 14,000 px target. Keep the row notes readable, the
+artifact-derived Capability charts reachable, and the frozen page's board as its primary
+content. Do not change measurements, official ranks, the Jev-class rule or sealed data.

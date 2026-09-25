@@ -95,7 +95,7 @@ export function CapabilityBar({ row, capability, position, costBounds, rankLabel
 
   return <li
     style={typeVar(row.class)}
-    className="grid grid-cols-[1.4rem_minmax(0,1fr)_3.3rem] items-center gap-x-2 text-sm sm:grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_15rem]"
+    className="grid grid-cols-[1.4rem_minmax(0,1fr)_3.3rem] items-center gap-x-2 text-sm sm:min-h-[43px] sm:grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_15rem]"
     data-bh-jev14-capability-row={row.key}
     data-bh-jev14-capability-value={capability.toFixed(3)}
     data-bh-jev14-cost={cost == null ? '' : String(cost)}
@@ -119,7 +119,7 @@ export function CapabilityBar({ row, capability, position, costBounds, rankLabel
       <span className="sm:hidden">Cost </span>{cost == null ? '—' : usd(cost)}{row.cost?.kind === 'estimate' && cost != null ? ' est.' : ''}
       <span className="hidden sm:inline"> · I {one(intelligence)} · C {one(calibration)}</span>
     </span>
-    {note && <span className="bh-muted col-start-2 row-start-4 mt-0.5 min-w-0 text-[11px] leading-snug sm:col-start-3 sm:col-end-6 sm:row-start-2 sm:mt-0">{note}</span>}
+    {note && <span className="bh-muted col-start-2 row-start-4 mt-0.5 min-w-0 text-[11px] leading-snug sm:col-start-3 sm:col-end-6 sm:row-start-2 sm:mt-0" data-bh-jev-capability-note>{note}</span>}
   </li>;
 }
 

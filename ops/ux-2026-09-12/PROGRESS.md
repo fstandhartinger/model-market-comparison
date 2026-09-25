@@ -11889,3 +11889,22 @@ remain **implemented** pending an independent engine's live sign-off.
 | CR-163.4 | implemented | same | Current View-by, fairness and order checks pass on both hosts; stale Rank-by requirement superseded. |
 | F-189 | implemented | same | View-by and approved fairness checks pass; an independent non-Codex gate must promote to verified. |
 | F-193 | implemented | same | New Capability first-row budget passes; an independent non-Codex gate must promote to verified. |
+
+## Iteration 227 (codex-luna, work) — CR-164 JevBench presentation repair
+
+CR-164 was allocated to `jobs/bh-ux-jev-polish-20260925`. The 15:50 UTC independent
+review measured mixed 28/43 px Capability rows and a 14,876 px frozen v1.4.2 page.
+The repair keeps class notes and artifact-derived charts, and does not edit benchmark data.
+Local production receipts: `/opt/benchmarkheaven/state/ux-evidence/iter227-cr164/`.
+The existing F-184 browser group passed 6/6 (all 91 rows measured 43 px), F-190
+passed 18/18 (frozen page 12,137 px in both desktop themes), and the focused
+CR-164 check passed 24/24 at 1440/390 px in light/dark, including keyboard opening,
+visible notes and no horizontal overflow. `build-dataset` passed (871 models / 674
+families / 96 providers / 3,121 offers), `npm test` 1,385 pass / 0 fail / 1 skip,
+TypeScript passed, and the production build passed. Live receipts follow the merge.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| CR-164.1 | in-progress | `iter227-cr164/local-f184/`, `local-final/` | Desktop rows aligned at 43 px; mobile notes visible locally; live gate pending. |
+| CR-164.2 | in-progress | `iter227-cr164/local-f190/`, `local-final/` | Frozen page 12,137 px locally; keyboard opens charts; live gate pending. |
+| CR-164.3 | in-progress | `/tmp/bh-cr164-{npm-test,tsc,build}-final.log` | Gates green; both-host live verification pending. |
