@@ -38,7 +38,7 @@ function FilterBar({ rows, filters, setFilters, shown, newLabel, idPrefix }: { r
   return <div className={`bh-jev-filters mt-3 ${more ? 'is-open' : ''}`} role="search" aria-label="Filter systems" data-bh-jev-filters={idPrefix}>
     <label className="bh-jev-filter-search">
       <span className="sr-only">Search systems by name or author</span>
-      <input type="search" className="bh-input" placeholder="Search name or author" value={filters.q} onChange={(e) => set({ q: e.target.value })} data-bh-jev-filter="q" />
+      <input type="search" className="bh-input" placeholder="Search name" value={filters.q} onChange={(e) => set({ q: e.target.value })} data-bh-jev-filter="q" />
     </label>
     <button type="button" className="bh-jev-filter-toggle sm:hidden" aria-expanded={more} onClick={() => setMore(!more)} data-bh-jev-filter-toggle>Filters{active ? ` (${active})` : ''} {more ? '▲' : '▼'}</button>
     <label className="bh-jev-filter-more"><span className="sr-only">System type</span>
@@ -91,7 +91,8 @@ const sortValue = (row: JevBoardViewRow, key: SortKey): number | string | null =
  *  the ranked ones, by score. */
 function sortRows(rows: JevBoardViewRow[], sort: Sort, official: Map<string, number>) {
   const byOfficial = (a: JevBoardViewRow, b: JevBoardViewRow) => (official.get(a.key) ?? 0) - (official.get(b.key) ?? 0);
-  if (sort.key === 'rank') return [...rows].sort((a, b) => sort.dir === 'asc' ? byOfficial(a, b) : byOfficial(b, a));
+  // Reversing the official order keeps the unranked rows last: they have no rank to reverse.
+  if (sort.key === 'rank') return [...rows].sort((a, b) => a.ranked !== b.ranked ? (a.ranked ? -1 : 1) : sort.dir === 'asc' || !a.ranked ? byOfficial(a, b) : byOfficial(b, a));
   const sign = sort.dir === 'asc' ? 1 : -1;
   return [...rows].sort((a, b) => {
     const x = sortValue(a, sort.key), y = sortValue(b, sort.key);
@@ -316,14 +317,14 @@ export function JevAxesTable({ rows, publicDecisions, sealedDecisions, newLabel 
   const captionId = useId();
   return <>
     <FilterBar rows={rows} filters={filters} setFilters={setFilters} shown={shown.length} newLabel={newLabel} idPrefix="table" />
-    <p className="bh-muted mt-2 text-xs"><HeatLegend latency /> Badges: <span className="bh-thin-tag bh-flag-tag">API</span> sealed text went to the operator&apos;s endpoint · <span className="bh-thin-tag bh-est-tag">est.</span> estimated price · <span className="bh-thin-tag">announced</span> announced, not yet bookable price · <span className="bh-thin-tag bh-partial-tag">not ranked</span> partial run or honorable mention{newLabel ? <> · <span className="bh-new-tag">new</span> first listed in {newLabel}</> : null}.</p>
+    <p className="bh-muted mt-2 text-xs"><HeatLegend latency /> Badges: <span className="bh-thin-tag bh-flag-tag">API</span> sealed text went to the operator&apos;s endpoint · <span className="bh-thin-tag bh-est-tag">est.</span> estimated price · <span className="bh-thin-tag">announced</span> price not yet bookable · <span className="bh-thin-tag bh-partial-tag">not ranked</span> partial run or honorable mention{newLabel ? <> · <span className="bh-new-tag">new</span> first listed in {newLabel}</> : null}.</p>
     <div className="bh-table-wrap mt-3">
       <table className="bh-table bh-jev-table" data-bh-jev14-table aria-describedby={captionId}>
         <thead><tr>
           <Th k="rank" sort={sort} toggle={toggle}>#</Th><Th k="name" sort={sort} toggle={toggle} sticky>System</Th><Th k="score" sort={sort} toggle={toggle}>JevBench Score</Th>
           <Th k="intelligence" sort={sort} toggle={toggle}>Intelligence</Th><Th k="calibration" sort={sort} toggle={toggle}>Calibration</Th><Th k="speed" sort={sort} toggle={toggle}>Speed</Th><Th k="cost" sort={sort} toggle={toggle}>Cost axis</Th>
-          <Th k="public" sort={sort} toggle={toggle}><>Public accuracy<br /><span className="bh-muted text-[11px]">{publicDecisions}</span></></Th>
-          <Th k="sealed" sort={sort} toggle={toggle}><>Sealed accuracy<br /><span className="bh-muted text-[11px]">{sealedDecisions}</span></></Th>
+          <Th k="public" sort={sort} toggle={toggle}><>Public accuracy<br /><span className="bh-muted text-[11px]">n = {publicDecisions}</span></></Th>
+          <Th k="sealed" sort={sort} toggle={toggle}><>Sealed accuracy<br /><span className="bh-muted text-[11px]">n = {sealedDecisions}</span></></Th>
           <Th k="gap" sort={sort} toggle={toggle}>Public − sealed gap</Th><Th k="usd" sort={sort} toggle={toggle}>$/1k decisions</Th><Th k="latency" sort={sort} toggle={toggle}>p50 latency</Th><th scope="col">Endpoint</th>
         </tr></thead>
         <tbody>{shown.map((row) => <Row key={row.key} row={row} heat={heat} />)}</tbody>

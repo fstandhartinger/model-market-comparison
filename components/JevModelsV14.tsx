@@ -83,7 +83,7 @@ export function JevModelsV14Board({ artifact, sha256, previous, capabilityHref }
       <ul className="bh-muted mt-2 space-y-1">{notes.map((row) => <li key={row.key} id={`jev14-note-${row.key}`}>† <b className="text-gray-200">{row.display}</b>: {noteOf.get(row.key)}</li>)}</ul>
       <p className="bh-muted mt-2">Rows without a † have no note beyond the shared provenance: every row was measured or re-run with its recorded recipe, and deviations are in its run manifest.</p>
     </details>
-    <p className="bh-muted mt-2 text-xs">Artifact: <a className="text-accent underline" href={`/api/jevbench/${artifact.revision.slice(1)}`}>{artifact.revision} results JSON</a> · SHA-256 <code title={sha256}>{sha256.slice(0, 12)}…</code> · <a className="text-accent underline" href={`https://github.com/fstandhartinger/jevbench/releases/tag/${artifact.revision}`}>JevBench {artifact.revision} release and method</a></p>
+    <p className="bh-muted mt-2 text-xs">Artifact: <a className="text-accent underline" href={`/api/jevbench/${artifact.revision}`}>{artifact.revision} results JSON</a> · SHA-256 <code title={sha256}>{sha256.slice(0, 12)}…</code> · <a className="text-accent underline" href={`https://github.com/fstandhartinger/jevbench/releases/tag/${artifact.revision}`}>JevBench {artifact.revision} release and method</a></p>
 
     <section id="jev14-changes" className="bh-panel mt-10 max-w-5xl scroll-mt-6 p-5" aria-labelledby="jev14-changes-head" data-bh-jev14-changes>
       <h3 id="jev14-changes-head" className="text-lg font-semibold">What changed in v1.4</h3>
