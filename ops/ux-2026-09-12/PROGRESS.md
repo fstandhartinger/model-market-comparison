@@ -10444,3 +10444,31 @@ rc 0 · `npx tsc --noEmit -p .` rc 0 · `node scripts/build-dataset.mjs` rc 0, *
 | ID | Status | Evidence | Notes |
 |---|---|---|---|
 | D193.2 | in-progress (6 of 16 references repaired) | `iter211-d193/scan-v3-after-lisanbench-matharena.json`; `test/d193-2-protocol-excerpts.test.mjs`; `data/raw/benchmarks/daily-evidence/2026-09-25-d193-2/` | LisanBench and MathArena done, 12 excerpts rewritten across 7 entries, 6/6 tests. 10 references remain, grouped above. Implemented by claude-opus; needs a non-claude-opus sign-off. |
+
+### Iteration 211, correction — my first three pushes did not deploy, and why
+
+Recorded in full because the failure mode is silent and I caused it.
+
+`2f5983b1`, `1f63a4a2` and `42587406` all pushed cleanly and all three Coolify deployments
+**failed**, in about two minutes each, with an **empty build log**. All three hosts kept serving
+`811f0dd9` while `main` moved three commits ahead. `/api/meta` reporting an old revision looks exactly
+like deploy lag, so nothing about it announced itself; I only found it by asking Coolify for the
+deployment list (`mcp__sandy-deploy__list_deployments`, app `ggbs6upie6tqsousmrkw0vja`).
+
+The cause is the convention I followed from previous iterations — run `build-dataset.mjs` as a
+determinism check, then `git checkout -- data/dataset.json` because publication belongs to the daily
+run. **That convention holds only when the change does not alter the dataset's content.**
+`evidence[].excerpt` is copied into `dataset.benchmark_results`, so rewriting 30 excerpts made the
+committed dataset disagree with the committed registry, and `package.json`'s `prebuild` —
+`node scripts/validate-benchmark-scores.mjs` — refuses exactly that:
+*"Built benchmark data differs from validated scores; run data:build"*. Empty log, fast failure, is
+that guard's signature.
+
+`01d305ba` ships the rebuilt dataset. Before committing it I diffed it against the previous one by
+exhaustive JSON path rather than by top-level key: **30 differing leaves, every one named `excerpt`**,
+plus `generated_at` and one `source_status.composite.collected_at`. No score, price, rank or count
+moved, and the counts are unchanged at 871 / 676 / 96 / 3,036. `validate-benchmark-scores.mjs` rc 0.
+
+Worth noting for the next iteration that edits `data/raw/`: run the prebuild validator, not only
+`npm test` / `tsc` / `build-dataset` — all three of those passed on a tree that could not deploy. And
+after a push, confirm the deployment **finished** rather than inferring it from `/api/meta`.
