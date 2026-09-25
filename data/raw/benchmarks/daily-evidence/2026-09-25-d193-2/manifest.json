@@ -88,5 +88,55 @@
     "sha256": "1ee21c293a38f88cb7c2135d2205d97ee6f6620a1982be1320d8a4c7fe2a50b0",
     "bytes": 22349,
     "note": "D193.2: the LisanBench README from the same run; 22,350 bytes, under the bound. Carries the three methodology passages the collection plan already requires verbatim."
+  },
+  {
+    "url": "https://aider.chat/docs/leaderboards/",
+    "retrieved_at": "2026-09-24T19:32:00.727669+00:00",
+    "method": "GET",
+    "status": 200,
+    "file": "data/raw/benchmarks/daily-evidence/2026-09-25-d193-2/cea6cab3ac65e4d41cce072fcac5540497d757b3a6f72d997b7c3607b44c470e.gz",
+    "sha256": "cea6cab3ac65e4d41cce072fcac5540497d757b3a6f72d997b7c3607b44c470e",
+    "bytes": 569855,
+    "note": "D193.2: the Aider leaderboards page from the 2026-09-24T19:20Z run; 386,394 bytes of extracted text, so the review sees only the excerpt. The old excerpt was the page's own two sentences with the line breaks removed and the typographic apostrophe replaced, so it could never match the extracted text. Nothing had changed: the sentence and its 225-exercise, six-language claim are present and current."
+  },
+  {
+    "url": "https://raw.githubusercontent.com/Imbernoulli/MLS-Bench/main/README.md",
+    "retrieved_at": "2026-09-24T19:38:06.744768+00:00",
+    "method": "GET",
+    "status": 200,
+    "file": "data/raw/benchmarks/daily-evidence/2026-09-25-d193-2/d1bd5f205f6100e01df8220b6ba5d703ba0dbf1623014c53bcc5317871485ee3.gz",
+    "sha256": "d1bd5f205f6100e01df8220b6ba5d703ba0dbf1623014c53bcc5317871485ee3",
+    "bytes": 86891,
+    "note": "D193.2: the MLS-Bench README from the 2026-09-24T19:20Z run; 86,892 bytes of extracted text. The old excerpt joined three separate passages with ellipses and stripped the Markdown emphasis markers, so it could never match. Nothing had changed: the Lite subset sentence, the geometric-to-arithmetic mean note and both adoption lines are all present."
+  },
+  {
+    "url": "https://programbench.com/",
+    "retrieved_at": "2026-09-24T19:35:31.204962+00:00",
+    "method": "GET",
+    "status": 200,
+    "file": "data/raw/benchmarks/daily-evidence/2026-09-25-d193-2/7efa63c912e1ec18459e6d97b6842612ed7a6bed189ccf9db5f0313d81866ab7.gz",
+    "sha256": "7efa63c912e1ec18459e6d97b6842612ed7a6bed189ccf9db5f0313d81866ab7",
+    "bytes": 392133,
+    "note": "D193.2: the ProgramBench board from the 2026-09-24T19:20Z run; 74,302 bytes of extracted text. The old excerpt was an editorial locator note, never a passage of the page. Nothing had changed: the hero paragraph, the 200-task count and the mini-SWE-agent harness are all present. The task count and the board's update date are deliberately not pinned - both move whenever ProgramBench evaluates another model."
+  },
+  {
+    "url": "https://internscience.github.io/ResearchClawBench-Home/data/leaderboard.json",
+    "retrieved_at": "2026-09-24T19:36:06.969731+00:00",
+    "method": "GET",
+    "status": 200,
+    "file": "data/raw/benchmarks/daily-evidence/2026-09-25-d193-2/5d538e012068a8fec9fe974c4080b78879e92f3cc0ba412934cda59a7a087320.gz",
+    "sha256": "5d538e012068a8fec9fe974c4080b78879e92f3cc0ba412934cda59a7a087320",
+    "bytes": 355121,
+    "note": "D193.2: the ResearchClawBench leaderboard payload from the same run; 355,122 bytes of extracted text and no prose in it at all, so it becomes a literal field locator in the form protocol() excludes from a packet. Everything the old excerpt named - the tasks, agents, scores and frontier keys, Astronomy_000, Physics_003 and the ResearchHarness (Claude-Opus-4.8) agent - is still present."
+  },
+  {
+    "url": "https://internscience.github.io/ResearchClawBench-Home/static/app.js",
+    "retrieved_at": "2026-09-24T19:36:09.700688+00:00",
+    "method": "GET",
+    "status": 200,
+    "file": "data/raw/benchmarks/daily-evidence/2026-09-25-d193-2/3d1f147a79b09329806d23b301143952c2d1e3a0d947a3612caafad63239038f.gz",
+    "sha256": "3d1f147a79b09329806d23b301143952c2d1e3a0d947a3612caafad63239038f",
+    "bytes": 119735,
+    "note": "D193.2: the ResearchClawBench page script from the 2026-09-24T19:20Z run; 119,736 bytes of extracted text, over the review bound. The old excerpt paraphrased the scoring function with a literal ellipsis in the middle of it, so it could never match. Nothing had changed: the entry now pins the function verbatim, which is what states that an agent's headline is the arithmetic mean of its finite per-task scores."
   }
 ]

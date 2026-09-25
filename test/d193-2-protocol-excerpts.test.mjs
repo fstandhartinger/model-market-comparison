@@ -159,3 +159,110 @@ test('D193.2: reformatting, a changed dictionary and a dropped column all still 
       /methodology passage changed/, `a payload description must not pass as a passage: ${note.slice(0, 40)}`);
   }
 });
+
+// D193.2, second group (iteration 212). Three more references, one per entry, each of which had
+// simply never been examined. Checked first for what the broken excerpt was hiding, per D193.3 —
+// and in all three cases the answer is nothing: the sources say exactly what the registry claims,
+// and every excerpt failed for a mechanical reason.
+//
+//   * `aider-polyglot` quoted the page's own two sentences with the line breaks taken out and the
+//     typographic apostrophe replaced by a plain one. The extracted text breaks lines mid-sentence,
+//     so it could never match. The pin is now the half-sentence that carries the protocol —
+//     225 Exercism exercises across six named languages — which is contiguous in the extraction.
+//   * `mls-bench-lite` joined three separate passages of the README with ellipses and dropped the
+//     Markdown emphasis markers. The pin is now the one sentence that defines the Lite identity,
+//     with its `**` markers, exactly as the README writes it.
+//   * `programbench` was an editorial locator note and never a passage at all. The pin is now the
+//     board's hero paragraph. The **200 tasks** count and the *Updated Sep. 9, 2026* line are
+//     deliberately left out: both move whenever ProgramBench evaluates another model, and a guard
+//     that fires on a new model is D193 over again.
+const SECOND_GROUP = {
+  'aider-polyglot::snapshot-2026-09-10': 'https://aider.chat/docs/leaderboards/',
+  'mls-bench-lite::30-tasks': 'https://raw.githubusercontent.com/Imbernoulli/MLS-Bench/main/README.md',
+  'programbench::1': 'https://programbench.com/',
+};
+
+test('D193.2: the three newly examined references quote their own source', () => {
+  for (const [id, url] of Object.entries(SECOND_GROUP)) {
+    const reference = entry(id).evidence.find((s) => s.url === url);
+    assert.ok(reference, `${id}: ${url} is still a reference of this entry`);
+    const body = bodies.get(url);
+    assert.ok(body, `${id}: ${url} is in the retained capture set`);
+    assert.doesNotThrow(() => protocolSourceContent(id, reference, body), `${id}: ${url}`);
+    // Forced, so a source shrinking under the review bound cannot make this pass vacuously.
+    assert.equal(protocolSourceContent(id, { ...reference, review_content: 'excerpt' }, body),
+      reference.excerpt, `${id}: ${url} does not quote its own source`);
+    // The guard collapses whitespace on both sides, so uniqueness is asked the same way.
+    assert.equal(body.replace(/\s+/g, ' ').split(reference.excerpt.replace(/\s+/g, ' ').trim()).length - 1, 1,
+      `${id}: the pin should occur exactly once in the source`);
+  }
+});
+
+test('D193.2: none of the three broken excerpts was hiding a changed source', () => {
+  const aider = bodies.get(SECOND_GROUP['aider-polyglot::snapshot-2026-09-10']);
+  for (const language of ['C++', 'Go', 'Java', 'JavaScript', 'Python', 'Rust']) {
+    assert.ok(aider.includes(language), `aider: ${language} is still one of the polyglot languages`);
+  }
+  assert.match(aider, /225 challenging Exercism coding exercises/);
+  // The old excerpt's first sentence is still there too — only its whitespace differs.
+  assert.match(aider, /Aider excels with LLMs skilled at writing and\s+editing\s+code,/);
+
+  const mls = bodies.get(SECOND_GROUP['mls-bench-lite::30-tasks']);
+  assert.match(mls, /geometric mean; switched to arithmetic mean/);
+  for (const adopter of ['adopted by Alibaba (Qwen)', 'adopted by Moonshot (Kimi)']) {
+    assert.ok(mls.includes(adopter), `mls-bench: "${adopter}" is still in the README`);
+  }
+
+  const program = bodies.get(SECOND_GROUP['programbench::1']);
+  assert.ok(program.includes('200 tasks'), 'programbench: the task count is still stated');
+  assert.ok(program.includes('mini-SWE-agent'), 'programbench: the harness is still named');
+});
+
+test('D193.2: the ProgramBench pin leaves out what moves with every new evaluation', () => {
+  const pin = entry('programbench::1').evidence
+    .find((s) => s.url === SECOND_GROUP['programbench::1']).excerpt;
+  for (const volatile of ['200 tasks', 'Updated Sep. 9, 2026']) {
+    assert.ok(!pin.includes(volatile), `${volatile} is deliberately not pinned`);
+    assert.ok(bodies.get(SECOND_GROUP['programbench::1']).includes(volatile),
+      `the capture does carry "${volatile}", so leaving it out is a choice and not an absence`);
+  }
+});
+
+// D193.2, fourth group. The two `researchclawbench::40-tasks` references iteration 211 called
+// "unfixable as written": both excerpts carried a literal `…` in the middle of the passage they
+// claimed to quote. Checked for what they were hiding first — again nothing. The two get the two
+// treatments this file already established:
+//
+//   * `app.js` is the page's own scoring code, so it is pinned verbatim. This is the passage that
+//     states an agent's headline number: the arithmetic mean of its finite per-task scores.
+//   * `leaderboard.json` is 355 KB of tasks, agents and scores with no prose whatsoever, so it
+//     becomes a `literal field` locator, exactly as LisanBench's `rankings.json` did.
+const RCB = 'researchclawbench::40-tasks';
+const RCB_APP = 'https://internscience.github.io/ResearchClawBench-Home/static/app.js';
+const RCB_BOARD = 'https://internscience.github.io/ResearchClawBench-Home/data/leaderboard.json';
+
+test('D193.2: the ResearchClawBench scoring function is pinned verbatim and occurs once', () => {
+  const reference = entry(RCB).evidence.find((s) => s.url === RCB_APP);
+  const body = bodies.get(RCB_APP);
+  assert.ok(body, 'the app.js capture is retained');
+  assert.equal(protocolSourceContent(RCB, { ...reference, review_content: 'excerpt' }, body), reference.excerpt);
+  assert.equal(body.replace(/\s+/g, ' ').split(reference.excerpt.replace(/\s+/g, ' ').trim()).length - 1, 1);
+  // The pin has to be the mean, not a paraphrase of it: that is the number the board ranks on.
+  assert.match(reference.excerpt, /scores\.reduce\(\(a, b\) => a \+ b, 0\) \/ scores\.length/);
+  assert.ok(!reference.excerpt.includes('…'), 'no ellipsis survives in the pin');
+});
+
+test('D193.2: the ResearchClawBench payload is a field locator, and it was hiding nothing', () => {
+  const reference = entry(RCB).evidence.find((s) => s.url === RCB_BOARD);
+  assert.match(reference.excerpt, /literal field/, 'a prose-free payload is a locator, not a passage');
+  const body = bodies.get(RCB_BOARD);
+  assert.ok(body, 'the leaderboard.json capture is retained');
+  // Everything the broken excerpt claimed is still in the payload, which is why this is a
+  // formatting repair and not a source change.
+  for (const claim of ['"tasks"', '"agents"', '"scores"', '"frontier"', 'Astronomy_000', 'Physics_003',
+    'ResearchHarness (Claude-Opus-4.8)']) {
+    assert.ok(body.includes(claim), `leaderboard.json still carries ${claim}`);
+  }
+  assert.ok(body.includes(reference.excerpt.split(' ')[0].replaceAll('"', '')),
+    'the locator names a field the payload really has');
+});

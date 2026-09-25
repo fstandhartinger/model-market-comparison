@@ -2096,7 +2096,7 @@
           "file": "ops/rebuild-2026-09/evidence/phase-04/sources/a-5b92e98d55fe.txt",
           "sha256": "0705a263a3ede2065f49501d636deee6af7124918fc03095127853fc4b8c74c5",
           "fetched_at": "2026-09-10T21:45:25.463000+00:00",
-          "excerpt": "Aider excels with LLMs skilled at writing and editing code, and uses benchmarks to evaluate an LLM's ability to follow instructions and edit code successfully without human intervention. Aider's polyglot benchmark tests LLMs on 225 challenging Exercism coding exercises across C++, Go, Java, JavaScript, Python, and Rust."
+          "excerpt": "tests LLMs on 225 challenging Exercism coding exercises across C++, Go, Java, JavaScript, Python, and Rust."
         }
       ]
     },
@@ -8816,7 +8816,7 @@
           "file": "data/raw/benchmarks/daily-evidence/2026-09-21-programbench/7efa63c912e1ec18459e.gz",
           "sha256": "3f7a2ec87414edb7615faf081a79e044aa111a1519217bc5da7c1dd34fa56296",
           "fetched_at": "2026-09-21T00:48:03.447305+00:00",
-          "excerpt": "Leaderboard: 'AI agents rebuild programs from binaries and documentation'; 21-row board (Claude Opus 5 (xhigh) 74.7 ... GPT 5 mini 16.0); 'Evaluated with mini-SWE-agent · 200 tasks · Updated Sep. 9, 2026'; per-row provider, mean score, cost/calls/tokens per task, publication date."
+          "excerpt": "Given only a compiled binary and its documentation, agents must architect and implement a complete codebase that reproduces the original program's behavior."
         },
         {
           "url": "https://programbench.com/extended/",
@@ -9145,7 +9145,7 @@
           "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/5d538e012068a8fec9fe.gz",
           "sha256": "f9d7e272456ec9929d807386358dfc53f5f5ccbbd3e51120f910992df549c39b",
           "fetched_at": "2026-09-21T20:48:40.424571+00:00",
-          "excerpt": "{\"tasks\": [\"Astronomy_000\", … \"Physics_003\"], \"agents\": [… \"ResearchHarness (Claude-Opus-4.8)\" …], \"scores\": {…}, \"frontier\": {…}}"
+          "excerpt": "\"frontier\" (literal field in the captured leaderboard.json; gzip source retained)"
         },
         {
           "url": "https://internscience.github.io/ResearchClawBench-Home/",
@@ -9159,7 +9159,7 @@
           "file": "data/raw/benchmarks/daily-evidence/2026-09-21-researchclawbench/3d1f147a79b09329806d.gz",
           "sha256": "45ce61f6c68d24987c331a927f2a3229d86c5af5ad5ce79a2b62286f172437c6",
           "fetched_at": "2026-09-21T20:48:45.551320+00:00",
-          "excerpt": "function getAverageAgentScore(data, agent) { … return scores.length ? scores.reduce((a, b) => a + b, 0) / scores.length : -Infinity; }"
+          "excerpt": "function getAverageAgentScore(data, agent) { const entries = Object.values(data?.scores?.[agent] || {}).filter(Boolean); const scores = entries.map(e => e.score).filter(Number.isFinite); return scores.length ? scores.reduce((a, b) => a + b, 0) / scores.length : -Infinity; }"
         },
         {
           "url": "https://raw.githubusercontent.com/InternScience/ResearchClawBench/main/README.md",
@@ -16067,7 +16067,7 @@
           "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/d1bd5f205f6100e01df8.gz",
           "sha256": "188e23dfa3ade939119b61ddf8934ae72b6f879a224753b86cab4674d1911fcf",
           "fetched_at": "2026-09-22T05:03:46.322990+00:00",
-          "excerpt": "MLS-Bench-Lite is a 30-task subset of the full 140-task suite, spanning all 12 research domains. … Scoring: the main results table in the arXiv paper previously aggregated tasks within each area by geometric mean; switched to arithmetic mean … MLS-Bench adopted by Alibaba (Qwen) Qwen3.8-Max … adopted by Moonshot (Kimi) Kimi K3"
+          "excerpt": "**MLS-Bench-Lite** is a **30-task subset** of the full 140-task suite, spanning **all 12 research domains**."
         }
       ]
     },
