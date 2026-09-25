@@ -266,3 +266,157 @@ test('D193.2: the ResearchClawBench payload is a field locator, and it was hidin
   assert.ok(body.includes(reference.excerpt.split(' ')[0].replaceAll('"', '')),
     'the locator names a field the payload really has');
 });
+
+// D193.2, fifth and last group (iteration 213). The five references iteration 212 left as
+// "decisions, not edits". Both decisions turned out to be answerable, and one of them corrects a
+// hypothesis this file itself carried:
+//
+//   * The three AA entries share one reference — the Intelligence Index composition table on the
+//     methodology page. Iteration 212 filed it as a Composite-touching change (v4.3 → v4.3.2). It
+//     is not that either. The old excerpt was verbatim in the 2026-09-21T02:24Z capture it names;
+//     word-diffed against the 2026-09-24T19:31Z one it differs in exactly eleven tokens, all of
+//     them a column AA *added*: the `Private` header and its ten per-row ✓/✗ values. So the source
+//     really did change — the guard was right to refuse — but what changed is a new disclosure
+//     column, not the index: the same ten evaluations, the same four category weights, the same
+//     per-evaluation weightings, still v4.3.2. The three references therefore move to the newer
+//     capture and pin the table as AA now prints it. No Composite input moved.
+//   * The two `jevbench*` references were blocked on D193.3, which is settled in the same
+//     iteration: `jevbench::v1.1`'s `scoring.metric` now states the Balanced 33:33:33 headline the
+//     pinned tag v1.1.2 artifact publishes. Both excerpts were digests of fields from
+//     non-adjacent places in a sorted-key JSON document, so they could never match. Each now pins
+//     the contiguous block that carries the protocol identity, and v1.1 gains a second reference
+//     pinning the `revision_note` — the passage that states the headline weighting, and the one a
+//     reviewer needs to check `scoring.metric` against. A guard that always fails reports nothing;
+//     that is why this passage was unreadable for six days.
+const AA_TABLE_ENTRIES = ['aa-briefcase::1.1', 'aa-gdp-pdf::snapshot-2026-09-21', 'aa-gdpval::2.1'];
+const AA_METHODOLOGY = 'https://artificialanalysis.ai/methodology/intelligence-benchmarking';
+const JEV = {
+  'jevbench::v1': 'https://raw.githubusercontent.com/fstandhartinger/jevbench/main/results/jevbench-v1-results.json',
+  'jevbench::v1.1': 'https://raw.githubusercontent.com/fstandhartinger/jevbench/v1.1.2/results/v1.1/jevbench-v1.1-results.json',
+};
+const tableReference = (id) =>
+  entry(id).evidence.find((s) => s.url === AA_METHODOLOGY && /^Category Evaluation Questions/.test(s.excerpt));
+
+test('D193.2: the AA composition table is pinned verbatim for all three entries, identically', () => {
+  const body = bodies.get(AA_METHODOLOGY);
+  assert.ok(body, 'the AA methodology capture is retained');
+  const pins = new Set();
+  for (const id of AA_TABLE_ENTRIES) {
+    const reference = tableReference(id);
+    assert.ok(reference, `${id}: the composition-table reference`);
+    pins.add(reference.excerpt);
+    assert.equal(protocolSourceContent(id, { ...reference, review_content: 'excerpt' }, body),
+      reference.excerpt, `${id}: the table pin does not quote its own source`);
+    assert.equal(body.replace(/\s+/g, ' ').split(reference.excerpt).length - 1, 1,
+      `${id}: the table pin should occur exactly once`);
+  }
+  // One table, one pin: three entries citing it must not drift apart.
+  assert.equal(pins.size, 1, 'the three entries pin the same passage');
+});
+
+test('D193.2: what changed in the AA table is a new column, not the index composition', () => {
+  const pin = tableReference('aa-briefcase::1.1').excerpt;
+  // The index the page describes, and the ten evaluations it says make it up.
+  assert.match(bodies.get(AA_METHODOLOGY), /Artificial Analysis Intelligence Index v4\.3\.2/);
+  const composition = [['AA-Briefcase v1.1', '15%'], ['GDPval-AA v2.1', '10%'],
+    ['AutomationBench-AA', '5%'], ['Terminal-Bench 4.0', '10%'], ['SciCode', '10%'],
+    ['AA-Omniscience', '15%'], ['GDP.pdf', '10%'], ['AA-LCR v1.1', '5%'],
+    ['HLE (Humanity’s Last Exam)'.replace('’', "'"), '10%'], ['CritPt', '10%']];
+  for (const [evaluation, weight] of composition) {
+    assert.ok(pin.includes(evaluation), `the pin names ${evaluation}`);
+  }
+  // The four category weights the page states, and the per-evaluation weights summing to 100 %.
+  for (const category of ['Agents (30%)', 'Coding (20%)', 'General (30%)', 'Scientific Reasoning (20%)']) {
+    assert.ok(pin.includes(category), `the pin names ${category}`);
+  }
+  assert.equal(composition.reduce((sum, [, w]) => sum + Number.parseInt(w, 10), 0), 100);
+  // The eleven tokens that made the old excerpt fail: a column AA added, not a changed index.
+  assert.ok(pin.includes('Tool Usage Private'), 'the Private column is part of the table');
+  assert.equal((pin.match(/ [✓✗] [✓✗] /g) ?? []).length + (pin.match(/ [✓✗] [✓✗]$/g) ?? []).length, 10,
+    'every one of the ten rows carries both its Tool Usage and its Private symbol');
+});
+
+test('D193.2: the older AA capture is what the old pin quoted, and it is the column that moved', () => {
+  // The honest record of the change: the predecessor capture the three references used to name has
+  // the table without the Private column, and today's has it. That is the whole difference, and it
+  // is why the guard started failing on 2026-09-24 rather than on the day the excerpt was written.
+  const before = execFileSync('python3',
+    ['ops/daily/public-candidate.py', 'text',
+      'data/raw/benchmarks/daily-evidence/2026-09-21-aa-methodology/dc576b98ac473011f36a.gz'],
+    { cwd: repo, encoding: 'utf8', maxBuffer: 32_000_000 }).replace(/\s+/g, ' ');
+  const after = bodies.get(AA_METHODOLOGY).replace(/\s+/g, ' ');
+  assert.ok(before.includes('Scoring Intelligence Index Weighting Tool Usage Agents (30%)'),
+    'the 2026-09-21 capture prints the table without a Private column');
+  assert.ok(!before.includes('Tool Usage Private'), 'and it really does not carry one');
+  assert.ok(after.includes('Scoring Intelligence Index Weighting Tool Usage Private Agents (30%)'),
+    'the 2026-09-24 capture adds it');
+  // Both captures still describe the same index version, which is what rules out a re-basing.
+  for (const text of [before, after]) {
+    assert.ok(text.includes('Artificial Analysis Intelligence Index v4.3.2'));
+  }
+  // And the pin is checked against the capture it now names, not against a newer one by accident.
+  const reference = tableReference('aa-briefcase::1.1');
+  assert.equal(reference.file,
+    'data/raw/benchmarks/daily-evidence/2026-09-24-aa-methodology/c97fd4e69b482e88e472.gz');
+  assert.equal(createHash('sha256').update(readFileSync(new URL(reference.file, repo))).digest('hex'),
+    reference.sha256, 'the registry hash is the gzip hash of the capture it names');
+});
+
+test('D193.2/D193.3: both JevBench artifacts are pinned verbatim on contiguous blocks', () => {
+  for (const [id, url] of Object.entries(JEV)) {
+    const body = bodies.get(url);
+    assert.ok(body, `${id}: the artifact capture is retained`);
+    const references = packetReferences(entry(id)).filter((r) => r.url === url);
+    assert.ok(references.length >= 1, `${id}: at least one reviewed reference`);
+    for (const reference of references) {
+      assert.equal(protocolSourceContent(id, { ...reference, review_content: 'excerpt' }, body),
+        reference.excerpt, `${id}: ${reference.excerpt.slice(0, 40)}… does not quote its own source`);
+      assert.equal(body.replace(/\s+/g, ' ').split(reference.excerpt).length - 1, 1,
+        `${id}: the pin should occur exactly once`);
+      // The shape that broke both: fields collected from non-adjacent places in sorted-key JSON.
+      assert.match(reference.excerpt, /^"[a-z_]+": /, `${id}: a pin starts where a JSON line starts`);
+      assert.ok(!/—/.test(reference.excerpt), `${id}: no editorial sentence survives in the pin`);
+    }
+    // Whatever else it pins, the identity of the protocol has to be in the packet.
+    assert.ok(references.some((r) => r.excerpt.includes(`"protocol": "${id}"`)),
+      `${id}: the reviewed references state the protocol id`);
+  }
+});
+
+test('D193.3: the registry metric is the one the pinned v1.1.2 artifact publishes', () => {
+  const e = entry('jevbench::v1.1');
+  const artifact = read('data/raw/benchmarks/jevbench/v1.1/jevbench-v1.1-results.json');
+  // The fetched copy and the committed copy really are the same bytes, so the pin binds both.
+  const receipt = captures.find((c) => c.url === JEV['jevbench::v1.1']);
+  assert.equal(receipt.sha256, e.evidence[0].sha256,
+    'the retained capture hashes to the sha256 the registry declares');
+  assert.equal(artifact.revision, 'v1.1.2');
+  // Balanced, not 60:20:20 — the defect D193.3 named.
+  for (const part of ['capability', 'speed', 'cost']) {
+    assert.ok(Math.abs(artifact.weights[part] - 1 / 3) < 1e-9, `${part} is weighted 1/3`);
+  }
+  assert.match(e.scoring.metric, /\(Capability \+ Speed \+ Cost\) \/ 3/);
+  assert.match(e.scoring.metric, /Balanced 33:33:33/);
+  assert.match(e.scoring.metric, /v1\.1\.2/);
+  assert.ok(!/0\.6 x Capability/.test(e.scoring.metric),
+    'the superseded 60:20:20 headline is no longer stated as the metric');
+  // The old headline is recorded rather than erased, and named as what it now is.
+  assert.match(e.scoring.notes, /60:20:20/);
+  assert.match(e.scoring.notes, /Emphasis on Accuracy/);
+  assert.ok(Object.keys(artifact.sensitivity_weightings).some((k) => /60:20:20|Emphasis on Accuracy/.test(k))
+    || JSON.stringify(artifact.sensitivity_weightings).includes('0.6'),
+    'and 60:20:20 really does survive as one of the published weightings');
+  // The Cost scale the same revision widened; the registry stated the pre-v1.1.2 one.
+  assert.match(e.scoring.notes, /\$0\.001 = 100/);
+  assert.match(artifact.scoring.cost, /\$0\.001 per 1,000 = 100/);
+});
+
+test('D193.3: no published value was relabelled by the metric correction', () => {
+  const scores = read('data/raw/benchmarks/scores.json');
+  for (const id of Object.keys(JEV)) {
+    assert.equal(scores.observations.filter((o) => o.benchmark_id === id).length, 0,
+      `${id}: the metric correction may only touch a row that carries no observation`);
+    assert.ok(scores.collections.some((c) => c.benchmark_id === id && c.status === 'manual_required'),
+      `${id}: the row is still declared manual_required rather than silently collected`);
+  }
+});
