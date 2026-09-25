@@ -63,9 +63,14 @@ case "$MODE" in
       esac
     done ;;
   *)
-    # Florian 25.09.2026: work goes to Codex GPT-6 Sol xhigh first to spare the Claude session limit.
-    if   [ "$codex_ok" = 1 ];  then echo codex-luna
-    elif [ "$claude_ok" = 1 ]; then echo claude-opus
+    # Florian 25.09.2026, binding (~/AGENTS.md §6 "Limit awareness", same text in
+    # ~/.hermes/model-economy-policy.md, announced on agent-board #1822 at 19:53 UTC):
+    # "Claude Code with Opus 5.5 is our best model. While Claude is under its pace line, use it
+    # for real work too, not only judgement: unused weekly Claude allowance expires at the reset."
+    # This supersedes the 16:08 UTC commit b92b3126 ("Codex GPT-6 Sol xhigh first"), which named
+    # no source document. The `quota-pace allow` gates above already stop each engine at its line.
+    if   [ "$claude_ok" = 1 ]; then echo claude-opus
+    elif [ "$codex_ok" = 1 ];  then echo codex-luna
     elif [ "$kimi_ok" = 1 ];   then echo opencode-kimi
     else echo opencode-nex; fi ;;
 esac

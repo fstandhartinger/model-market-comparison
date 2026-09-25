@@ -115,9 +115,11 @@ case "$ENGINE" in
     fi ;;
   codex-luna)
     case "$(codex login status 2>&1 | head -1)" in *ChatGPT*) ;; *) echo "ABORT: codex not on ChatGPT subscription" >> "$LOG"; rm -f "$STATE/running"; exit 1;; esac
-    EFFORT=xhigh  # Florian 25.09.2026: Codex GPT-6 Sol xhigh for all roles
+    # Florian 25.09.2026, binding (~/AGENTS.md §6 / ~/.hermes/model-economy-policy.md):
+    # "GPT-6 Luna at xhigh is the default. GPT-6 Sol only for the hardest tasks."
+    EFFORT=xhigh
     run_with_codex_cap timeout 10800 codex exec --dangerously-bypass-approvals-and-sandbox \
-      -m "${BH_CODEX_MODEL:-gpt-6-sol}" -c model_reasoning_effort="$EFFORT" -c tools.web_search=true -C "$REPO" "$PROMPT" < /dev/null; rc=$? ;;
+      -m "${BH_CODEX_MODEL:-gpt-6-luna}" -c model_reasoning_effort="$EFFORT" -c tools.web_search=true -C "$REPO" "$PROMPT" < /dev/null; rc=$? ;;
   opencode-kimi|opencode-nex)
     # 16 Sep 2026: opencode-kimi = best healthy premium-free route (Union Alpha via OpenRouter / AI/ML API /
     # OpenCode Zen, else the free chain) from ~/bin/opencode-best; opencode-nex = quickest healthy free model
