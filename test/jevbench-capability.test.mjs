@@ -82,7 +82,7 @@ test('Three.js is pinned locally, integrity checked, and loaded after the sectio
   assert.ok(source.includes(sri(three)), 'the Three.js asset must match its SRI pin');
   assert.ok(source.includes(sri(controls)), 'the OrbitControls asset must match its SRI pin');
   assert.match(source, /new IntersectionObserver/);
-  assert.match(source, /if \(!visible \|\| !box\) return/);
+  assert.match(source, /if \(!visible \|\| !box \|\| fallback\) return/, 'fallback does not retry WebGL');
   assert.match(source, /appendPinnedScript\(THREE_SRC/);
   assert.doesNotMatch(source, /https?:\/\//);
   assert.match(license, /Copyright © 2010-2021 three\.js authors/);
