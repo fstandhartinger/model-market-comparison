@@ -34,7 +34,7 @@ function RankingRow({ item, rank, costBounds, referenceCost, note }: {
     <span className="bh-muted tabular col-start-1 row-start-1 text-right">{rank || '–'}</span>
     <span className="col-start-2 row-start-1 min-w-0 truncate sm:text-right" title={row.display}>
       {link ? <a href={link} target="_blank" rel="noopener noreferrer" className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent" data-bh-jev-source={row.key}>{name}</a> : name}
-      <button type="button" className="ml-1 rounded px-0.5 text-accent focus:outline focus:outline-2" aria-label={`Details for ${row.display}`} aria-describedby={`jev-cap-tip-${row.key}`}>ⓘ</button>
+      <button type="button" className="bh-jev-info relative ml-1 inline-flex h-4 min-h-0 w-4 shrink-0 items-center justify-center rounded text-accent before:absolute before:-inset-3 before:content-[''] focus:outline focus:outline-2" aria-label={`Details for ${row.display}`} aria-describedby={`jev-cap-tip-${row.key}`}>ⓘ</button>
     </span>
     <span className="col-start-2 col-end-7 row-start-2 mt-0.5 flex min-w-0 flex-col justify-center gap-[3px] sm:col-start-3 sm:col-end-4 sm:row-start-1 sm:mt-0" aria-hidden="true">
       <span className="bh-jevc-grid flex h-[10px] rounded-sm"><span className={'bh-jevc-bar' + (row.ranked ? '' : ' is-partial')} style={{ width: `${Math.max(0, Math.min(100, capability))}%` }} /></span>

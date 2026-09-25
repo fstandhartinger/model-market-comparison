@@ -88,6 +88,19 @@ test('Three.js is pinned locally, integrity checked, and loaded after the sectio
   assert.match(license, /Copyright © 2010-2021 three\.js authors/);
 });
 
+test('CR-169 / D207: the ⓘ trigger is a small inline glyph that does not stretch the ranking row', () => {
+  // The global `button { min-height: 44px }` floor (app/globals.css) turned the info glyph into a
+  // 44 px tall control, which pushed the first Jev-class row down until it sat behind the compact
+  // fast-lane banner on a 390 px phone (review gate 2026-09-25T19:20Z, D207). The trigger keeps a
+  // 40 px tap area with the `before:` layer but must stay visually one line tall.
+  const source = readFileSync(path.join(root, 'components/JevCapabilityRanking.tsx'), 'utf8');
+  const trigger = source.match(/<button[^>]*bh-jev-info[^>]*>/);
+  assert.ok(trigger, 'the ranking ⓘ trigger is present');
+  assert.match(trigger[0], /min-h-0/, 'the trigger opts out of the 44 px button floor');
+  assert.match(trigger[0], /before:-inset-3 before:content-\[''\]/, 'the tap area is kept by the before: layer');
+  assert.doesNotMatch(trigger[0], /min-h-\[?44/, 'the trigger does not re-add a 44 px minimum');
+});
+
 test('F-184 (Fable pass 34): the capability rows share one height and the header names the value columns', () => {
   const source = readFileSync(path.join(root, 'components/JevCapabilityChart.tsx'), 'utf8');
   // the trailing value column never wraps at sm+, on a track wide enough for the longest string
