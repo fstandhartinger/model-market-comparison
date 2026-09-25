@@ -12021,3 +12021,46 @@ No `ALL-ACCEPTED`: D207 is a live defect on the flagship page's first phone scre
 need Florian, D206 is only partly closed, D209 is uncommitted in the shared checkout, F-181 and D192 are open,
 four D-rows await a daily run, and
 X6's line-by-line audit still has no passing receipt from any gate.
+
+## Iteration 230 — work (claude-opus), 2026-09-25 20:0x–21:0x UTC — D207 fixed live, D208 record reopened
+
+Commit `8421a89e`, deployed and serving on all three hosts from 20:39:36 UTC. Gates before the push:
+`node scripts/build-dataset.mjs` rc 0 (871/674/96/3,121; the only diff was the two `generated_at`
+timestamps and it was discarded), `npm test` **1,390 tests, 1,389 pass, 0 fail, 1 skip**,
+`npx tsc --noEmit -p .` rc 0. Evidence: `/opt/benchmarkheaven/state/ux-evidence/iter230-d207/`.
+
+**D207 — the fast-lane banner no longer covers the first phone result.** The 19:20 gate measured the
+defect and declined to fix it, reading the choice as the design authority's. Re-read of Florian's own
+CR-167 text settles it without a design call: he named the remedy himself — the bar must be "fixed at
+the bottom … and **not covering content on mobile (reserve space or make it compact)**". Only the
+first half had shipped. So the phone form is now compact: the bar starts as one 44 px teaser line
+("Are you a model developer? Priority evaluations +"), and his full copy with "Don't show again" and
+"Request an evaluation" is one tap away. The close ✕ stays reachable while collapsed. **Desktop is
+untouched** (73 px, both buttons, no teaser).
+
+The collapsed height is 55 px by construction — 3 px border + 4 + 44 + 4, every value in `px` so a
+larger browser text scale cannot grow it, and the teaser label is `nowrap`. Measured live, 390×844,
+light and dark, canonical *and* legacy: banner top **789**, first `[data-bh-jev-class-list] > li`
+bottom **778.2** → **10.8 px of clearance** against a budget of 65.8. On `/image-jev-bench` the first
+ranking row ends at 711.5, clearing by 77.5. At 1.3× browser text scale the bar is still 55 px.
+
+Two things to carry forward. First, the fix is a **disclosure, not a shortening**: "Don't show again"
+now costs two taps on a phone instead of one. That is the price of Florian's "make it compact" and it
+is recorded here so he can overrule it. Second, 10.8 px is not much room — if the `/jev-models` head
+grows again the row will come back down onto the bar, and the test below is what fails first.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| CR-167.2 | open → **implemented** | `iter230-d207/{canonical,legacy,www}/verification.json` **76/76 each**; `gate-banner-{canonical,legacy}/` **178/178 each** | Implemented by this engine, so it cannot be set `verified` here. A different engine re-runs the two verifiers live. |
+| D207 | open → **implemented** | same | Fix live at `8421a89e` on all three hosts. The measurement that filed it is re-taken and inverted: row bottom 778.2 ≤ banner top 789. |
+| CR-163.1 | open → **implemented** | `iter230-d207/{canonical,legacy}/metrics.json` | Its own code was never wrong; its *purpose* — the first Jev-class row on the first phone screen — is live again. Needs a non-implementer re-check together with CR-167.2. |
+| D208 | open → **implemented (record written), needs an independent review** | `CR-67.5-CONSENT-DECISION.md` §6 | The record now has a dated §6 that reopens itself against the banner's beacon, walks the §3 conditions one by one, decides, and states its residuals. Two findings changed the picture: **the beacon stores and reads nothing on the device** (its payload is the event name and the page group, both already known to the server), and **Umami is not an external provider** — `bh-analytics.app.mintapis.com` resolves to `65.109.49.103`, the same Sandy/Hetzner host that serves the site, and the browser never contacts it; the forward is server-to-server on one machine. Decision: no consent required, the CR-67.6 no-banner branch stands. Residuals recorded, not hidden: the forwarded User-Agent is the only visitor-derived field and the three counts do not need it (one-line minimisation available, **not** taken here because it is another job's shipped code); Umami's own retention on our instance is not recorded anywhere and the record refuses to claim one; the endpoint is unauthenticated, so treat the counters as a floor-quality signal. Like §5 this needs a reviewer that is not the author. |
+| — | new | `test/fastlane-banner-compact.test.mjs` | 4 tests in `npm test`, no browser. It re-derives the collapsed height from the CSS declarations rather than pinning their text, so tightening a value passes and growing one fails — negative-checked by raising the padding to 12 px (71 px → red). |
+| — | new | `ops/ux-2026-09-12/bin/verify-cr-167-2.mjs` | 76 live checks: 2 routes × 2 themes collapsed and expanded, a 1.3× text-scale pass and a desktop pass. Every height budget has a **visibility companion** — row bottom against banner top — which is the check pass-35 structurally cannot make. |
+| — | changed | `ops/ux-2026-09-12/bin/verify-review-20260925T192004Z-banner.mjs` | The 19:20 gate's harness clicked `.bh-fastlane-primary` on a phone and now timed out on it, because that control is behind the disclosure. Adapted, not weakened: the DOM probe is extracted so it runs **twice** per route — once on the bar as a first-time visitor meets it, once with the disclosure open — geometry is judged on the collapsed default, the offer's copy/contrast/controls on the open one, and a **new** check per phone context asserts the bar starts collapsed with the close control still reachable. 170/172 → **178/178 on both hosts**. |
+| F-189, F-183, F-190, F-191, F-192 | verified (unchanged) | `iter230-d207/pass35-canonical/verification.json` | `verify-fable-pass35-design.mjs` with **no `ONLY=`** re-run on canonical at `8421a89e`: **190/190**, unchanged by the compact bar. Note for the record that the page-side budget was never the issue: the row still sits at 699 as a document offset; what changed is that the bar it now clears starts at 789 instead of 699. |
+| D209 | open (unchanged) — **and it is blocking the merge queue** | `bh-merge-queue --status`; board thread #8 | Still uncommitted in the shared checkout and still not touched here, per the one-writer rule. New fact this iteration: `bh-merge-queue` refuses to run while the deploy checkout has local changes (`deploy checkout has local changes; preserving them and pausing`), so **ready PR #34 (CR-169) cannot land** while these two files sit dirty. Also checked, because it bears on whoever owns them: neither `gpt-6-sol` (committed) nor `gpt-6-luna` (the uncommitted edit) appears in `~/.codex/models_cache.json`, which lists `gpt-6-astra`, `gpt-5.6-sol`, `gpt-5.6-luna`, `gpt-5.6-terra`. Both spellings look wrong, which may be what the edit was reaching for. Posted to board thread #8. |
+| D206 | open (unchanged) | — | CR-151, CR-153, CR-156, CR-158, CR-143, CR-148, CR-152 still have no requirement entry. Not worked this iteration. |
+
+Not done here and still open: F-181, D192, D205 (needs Florian), D206, the four D-rows awaiting a daily
+run, and X6's line-by-line audit. **`ALL-ACCEPTED` is not appended.**
