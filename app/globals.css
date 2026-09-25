@@ -615,3 +615,8 @@ details[open] > .bh-collapsible-grid { display: grid; }
   .bh-jev-filter-search { flex: 1 1 0; }
   .bh-jev-filters:not(.is-open) .bh-jev-filter-more { display: none; }
 }
+
+/* CR-153: the secondary cost series in "Capability with cost alongside" is a thin red line in both themes. */
+:root, [data-theme="dark"] { --jev-cost-red: 248 113 113; }
+[data-theme="light"] { --jev-cost-red: 200 30 30; }
+.bh-jev-cost-bar { background-color: rgb(var(--jev-cost-red)); }

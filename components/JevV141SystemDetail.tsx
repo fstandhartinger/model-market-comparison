@@ -39,7 +39,7 @@ function compareRow(row: JevV14System): JevCompareRow {
   return { key: row.key, name: short(row.display), cls: row.class, rank: row.rank, listing: row.listing, score: row.jevbench_score, axes, tiers: { easy: tiers.easy ?? null, standard: tiers.standard ?? null, judge: tiers.judge ?? null, hard: tiers.hard ?? null, sealed: row.sealed_accuracy }, hard, sealed };
 }
 
-export function JevV141SystemDetail({ row, revision, generated, ranked, note = null }: { row: JevV14System; revision: string; generated: string; ranked: JevV14System[]; note?: string | null }) {
+export function JevV141SystemDetail({ row, revision, generated, ranked, note = null, sealedFamilyN, hardFamilyN }: { row: JevV14System; revision: string; generated: string; ranked: JevV14System[]; note?: string | null; sealedFamilyN?: Record<string, number>; hardFamilyN?: Record<string, number> }) {
   const reference = referenceFor(row, ranked);
   // F-192: an unlabelled class is still named on the leaf — as its key in code font, not as another class's label.
   const classLabel = JEV_TYPE_LABEL[row.class] ?? null;
@@ -98,7 +98,7 @@ export function JevV141SystemDetail({ row, revision, generated, ranked, note = n
       </div>
 
       <section className="bh-panel min-w-0 p-4 sm:p-5" aria-labelledby="jev-v141-system-accuracy" data-bh-jev-system-radar>
-        <JevCompareV14 rows={[row, ...(reference ? [reference] : [])].map(compareRow)} sealedDecisions={308} hardDecisions={47} fixedPair heading={reference ? `Against ${short(reference.display)}` : 'Accuracy per tier, incl. sealed'} />
+        <JevCompareV14 rows={[row, ...(reference ? [reference] : [])].map(compareRow)} sealedDecisions={308} hardDecisions={sealedFamilyN ? 220 : 47} hardFamilyN={hardFamilyN} sealedFamilyN={sealedFamilyN} fixedPair heading={reference ? `Against ${short(reference.display)}` : 'Accuracy per tier, incl. sealed'} />
       </section>
     </div>
 

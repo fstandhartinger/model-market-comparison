@@ -104,9 +104,10 @@ function CapabilityBar({ row, capability, position, costBounds }: {
         : shortName(row.display)}
       {row.api_flag && <span className="bh-thin-tag ml-1.5 align-middle" title={row.api_exposure_note ?? undefined}>API</span>}
     </span>
-    <span className="col-start-2 row-start-2 mt-1 flex flex-col justify-center gap-1 sm:col-start-3 sm:row-start-1 sm:mt-0" aria-hidden="true">
+    <span className="col-start-2 row-start-2 mt-1 flex flex-col justify-center gap-[3px] sm:col-start-3 sm:row-start-1 sm:mt-0" aria-hidden="true">
       <span className="bh-jevc-grid flex h-[10px] rounded-sm"><span className={'bh-jevc-bar' + (row.ranked ? '' : ' is-partial')} style={{ width: width.toFixed(4) + '%' }} /></span>
-      <span className="bh-jevc-grid flex h-[7px] rounded-sm" title={`Cost ${cost == null ? 'not reported' : usd(cost) + ' per 1,000 decisions' + (row.cost?.kind === 'estimate' ? ', estimated' : '')}; logarithmic scale, lower is better`}><span className="block h-full rounded-sm" style={{ width: costWidth.toFixed(4) + '%', backgroundColor: 'var(--muted)' }} /></span>
+      {/* CR-153 (Florian 25 Sep 2026): the cost bar is a thin red line, so it reads as secondary to the Capability bar. */}
+      <span className="flex h-[3px] rounded-full" title={`Cost ${cost == null ? 'not reported' : usd(cost) + ' per 1,000 decisions' + (row.cost?.kind === 'estimate' ? ', estimated' : '')}; logarithmic scale, lower is better`} data-bh-jev14-cost-bar><span className="bh-jev-cost-bar block h-full rounded-full" style={{ width: costWidth.toFixed(4) + '%' }} /></span>
     </span>
     <b className="tabular col-start-3 row-span-2 row-start-1 self-center text-right text-base sm:col-start-4 sm:row-span-1 sm:text-lg">{one(capability)}</b>
     <span className="bh-muted col-start-2 row-start-3 mt-0.5 min-w-0 font-mono text-[10.5px] sm:col-start-5 sm:row-start-1 sm:mt-0 sm:whitespace-nowrap sm:text-right sm:text-[12px]">
@@ -197,7 +198,7 @@ export function JevCapabilityChart({ systems, revision }: { systems: JevV14Syste
     <figure className="bh-panel mt-5 p-4 sm:p-5" data-bh-jev14-capability-chart aria-labelledby="jev14-capability-bars-title">
       <p className="bh-eyebrow">Top {Math.min(CHART_TOP, all.length)} by Capability</p>
       <h3 id="jev14-capability-bars-title" className="mt-1 text-xl font-bold leading-snug">Capability with cost alongside</h3>
-      <p className="bh-muted mt-1 text-sm">Each system has a wide Capability bar and a narrower cost bar. The cost scale is logarithmic: longer bars mean higher cost, so shorter is cheaper.</p>
+      <p className="bh-muted mt-1 text-sm">Each system has a wide Capability bar and a thin red cost line beneath it. The cost scale is logarithmic: a longer red line means higher cost, so shorter is cheaper.</p>
       <div className="mt-4 hidden grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_15rem] gap-x-2 text-[11px] sm:grid" aria-hidden="true">
         <span /><span />
         <span className="bh-muted flex justify-between font-mono"><span>0</span><span>20</span><span>40</span><span>60</span><span>80</span><span>100</span></span>
@@ -229,9 +230,9 @@ export function JevCapabilityChart({ systems, revision }: { systems: JevV14Syste
       </div>
       <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px]" aria-label="System types" data-bh-jev14-capability-legend>
         {types.map((type) => <li key={type} style={typeVar(type)} data-bh-jev14-class={type} data-bh-jev14-class-labelled={JEV_TYPE_LABEL[type] ? '1' : '0'}><span className="bh-jevc-swatch mr-1.5" />{JEV_TYPE_LABEL[type] ?? <code title="Class named in the v1.4.2 artifact; description pending">{type}</code>}</li>)}
-        <li><span className="mr-1.5 inline-block h-1.5 w-3 rounded-sm bg-[rgb(var(--muted))] align-middle" />Cost per 1,000 decisions · log scale</li>
+        <li><span className="bh-jev-cost-bar mr-1.5 inline-block h-[3px] w-4 rounded-full align-middle" />Cost per 1,000 decisions · log scale (thin red line)</li>
       </ul>
-      <figcaption className="bh-muted mt-3 text-[11.5px] leading-snug">Cost bars use the right-hand scale, from {usd(minCost)} to {usd(maxCost)} per 1,000 decisions. Free cost is placed at the cheapest edge; missing cost is shown as —.</figcaption>
+      <figcaption className="bh-muted mt-3 text-[11.5px] leading-snug">Red cost lines use the scale printed under the bars, from {usd(minCost)} to {usd(maxCost)} per 1,000 decisions. Free cost is placed at the cheapest edge; missing cost is shown as —.</figcaption>
     </figure>
 
     <div className="mt-5 grid min-w-0 gap-4 lg:grid-cols-2">

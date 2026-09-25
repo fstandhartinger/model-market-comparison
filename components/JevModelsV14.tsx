@@ -56,7 +56,7 @@ function compareRow(row: JevV14System): JevCompareRow {
   };
 }
 
-export function JevModelsV14Board({ artifact, sha256, previous, capabilityHref }: { artifact: JevV14Artifact; sha256: string; previous?: { revision: string; keys: string[] }; capabilityHref?: string }) {
+export function JevModelsV14Board({ artifact, sha256, previous, capabilityHref, sealedFamilyN }: { artifact: JevV14Artifact; sha256: string; previous?: { revision: string; keys: string[] }; capabilityHref?: string; sealedFamilyN?: Record<string, number> }) {
   const ranked = artifact.systems.filter((row) => row.listing === 'ranked').sort((a, b) => (a.rank ?? 999) - (b.rank ?? 999));
   const unranked = artifact.systems.filter((row) => row.listing !== 'ranked').sort((a, b) => (b.jevbench_score ?? -1) - (a.jevbench_score ?? -1));
   const rows = [...ranked, ...unranked];
@@ -71,7 +71,7 @@ export function JevModelsV14Board({ artifact, sha256, previous, capabilityHref }
     <h2 id="jev14-board" className="sr-only">JevBench {artifact.revision} ranking</h2>
     <JevScoreChart revision={artifact.revision} rows={viewRows} rankedCount={ranked.length} newLabel={newLabel} fairness={fairnessOf(ranked)} approvedNote={typeof artifact.top_five_note === 'string' ? artifact.top_five_note : null} capabilityHref={capabilityHref ?? null} />
 
-    <JevCompareV14 rows={rows.map(compareRow)} sealedDecisions={sealedDecisions} hardDecisions={artifact.tiers.hard} />
+    <JevCompareV14 rows={rows.map(compareRow)} sealedDecisions={sealedDecisions} hardDecisions={artifact.tiers.hard} hardFamilyN={sealedFamilyN ? (artifact.hard_dataset as { families?: Record<string, number> } | undefined)?.families : undefined} sealedFamilyN={sealedFamilyN} />
 
     {/* CR-151 (Florian 25 Sep 2026): the numeric table follows the compare view; it sorts, filters and shades like the chart. */}
     <h2 id="jev14-table" className="mt-10 scroll-mt-6 text-xl font-semibold">Axes, accuracy, latency and cost</h2>

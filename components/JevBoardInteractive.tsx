@@ -133,6 +133,7 @@ type View = 'overall' | 'intelligence' | 'calibration' | 'speed' | 'cost';
 const VIEWS: [View, string][] = [['overall', 'Overall'], ['intelligence', 'Intelligence'], ['calibration', 'Calibration'], ['speed', 'Speed'], ['cost', 'Cost']];
 const viewOf = (sort: Sort): View => sort.key === 'intelligence' || sort.key === 'calibration' || sort.key === 'speed' || sort.key === 'cost' ? sort.key : sort.key === 'usd' ? 'cost' : 'overall';
 const metricOf = (view: View): BarMetric => (view === 'overall' ? 'score' : view);
+const GENERAL_LLM = 'llm-baseline';
 
 export type JevFairness = { leadName: string; topName: string; leadInt: number; topInt: number; leadsOn: string[] } | null;
 
@@ -143,7 +144,12 @@ export function JevScoreChart({ revision, rows, rankedCount, newLabel, fairness,
   const { sort, setSort, toggle } = useSort(OFFICIAL);
   const view = viewOf(sort);
   const metric = metricOf(view);
-  const shown = useMemo(() => sortRows(applyFilters(rows, filters), sort, official), [rows, filters, sort, official]);
+  // CR-153 (Florian 25 Sep 2026): the Intelligence view ranks the Jev-class field; general-purpose LLMs (GPT-6 Luna,
+  // DeepSeek and the other instruction-model baselines) reach Intelligence 93–97 and are hidden there unless asked for.
+  const [hideLlms, setHideLlms] = useState(true);
+  const llmCount = useMemo(() => rows.filter((r) => r.class === GENERAL_LLM).length, [rows]);
+  const hidingLlms = view === 'intelligence' && hideLlms && llmCount > 0;
+  const shown = useMemo(() => sortRows(applyFilters(rows, filters), sort, official).filter((r) => !hidingLlms || r.class !== GENERAL_LLM), [rows, filters, sort, official, hidingLlms]);
   const unranked = rows.filter((r) => !r.ranked).length;
   const types = jevLegendTypes(rows.map((r) => r.class));
 
@@ -190,6 +196,10 @@ export function JevScoreChart({ revision, rows, rankedCount, newLabel, fairness,
       </p> : null}
       {!approvedNote && !fairness && <p className="bh-muted mt-2 text-[13px] leading-snug" data-bh-jev-viewby-hint>The official order weighs Intelligence, Calibration, Speed and Cost equally. Each button re-sorts the same systems by one axis<span className="hidden sm:inline">, and the column headings sort too</span>.</p>}
       {view !== 'overall' && <p className="mt-2 text-[13px]" data-bh-jev-view-note><span className="bh-jevc-notdefault">Not the official order</span> <span className="bh-muted">Bars show {METRIC_LABEL[metric]} (0–100). The bold number stays the JevBench Score and # the official rank.</span></p>}
+      {view === 'intelligence' && llmCount > 0 && <p className="mt-2 text-[13px]" data-bh-jev-llm-toggle-row>
+        <label className="bh-jev-filter-check inline-flex items-center gap-1.5 font-semibold"><input type="checkbox" checked={hideLlms} onChange={(e) => setHideLlms(e.target.checked)} data-bh-jev-hide-llms /> Hide general-purpose LLMs</label>{' '}
+        <span className="bh-muted" data-bh-jev-llm-toggle-note>{hideLlms ? `${llmCount} instruction-model baselines (e.g. GPT-6 Luna, DeepSeek) are hidden, so this is the Intelligence ranking of the Jev-class field.` : `Showing the ${llmCount} instruction-model baselines too; they reason well but are slow or costly per decision.`}</span>
+      </p>}
     </div>
 
     <FilterBar rows={rows} filters={filters} setFilters={setFilters} shown={shown.length} newLabel={newLabel} idPrefix="chart" />
@@ -212,7 +222,7 @@ export function JevScoreChart({ revision, rows, rankedCount, newLabel, fairness,
     {shown.length === 0 && <p className="bh-muted mt-3 text-sm" data-bh-jev-filter-empty>No system matches these filters.</p>}
     <ol className="mt-2 space-y-2.5 sm:mt-1" data-bh-jev14-bars>{top.map(bar)}</ol>
     {rest.length > 0 && <details className="mt-2.5" data-bh-jev14-bars-more>
-      <summary className="cursor-pointer text-sm font-semibold text-accent">{isFiltered(filters) ? `Show all ${shown.length} matching systems` : `Show all ${rows.length} systems (${rest.filter((r) => r.ranked).length} more ranked, ${rest.filter((r) => !r.ranked).length} more not ranked)`}</summary>
+      <summary className="cursor-pointer text-sm font-semibold text-accent">{isFiltered(filters) || hidingLlms ? `Show all ${shown.length} matching systems` : `Show all ${rows.length} systems (${rest.filter((r) => r.ranked).length} more ranked, ${rest.filter((r) => !r.ranked).length} more not ranked)`}</summary>
       <ol className="mt-2.5 space-y-2.5">{rest.map(bar)}</ol>
     </details>}
     <div className="mt-2 hidden grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_21rem] gap-x-2 text-[11px] sm:grid" aria-hidden="true">

@@ -5,7 +5,8 @@ import { JEVBENCH_REPO } from '../../lib/jevbench.mjs';
 import { CostUnitNote } from '../../components/JevModelsV12';
 import { JevCostsDisclosure } from '../../components/JevCostsDisclosure';
 import { CustomEvaluationOffer } from '../../components/CustomEvaluationOffer';
-import { readJevbenchV142, jevbenchV142View } from '../../lib/jevbench-v142.mjs';
+import { jevbenchV142View } from '../../lib/jevbench-v142.mjs';
+import { readJevbenchV142WithFamilies } from '../../lib/jevbench-v142-families.mjs';
 import { readJevbenchV141 } from '../../lib/jevbench-v141.mjs';
 import { JevModelsV14Board } from '../../components/JevModelsV14';
 import { JevCapabilityLazy } from '../../components/JevCapabilityLazy';
@@ -78,7 +79,7 @@ const currentNotMeasured = [
 ];
 
 export default async function JevModelsPage() {
-  const v14Result = await readJevbenchV142();
+  const v14Result = await readJevbenchV142WithFamilies();
   const v14 = jevbenchV142View(v14Result);
   // CR-151: the previous release's systems, so the board can mark and filter what is new in this one.
   const previousRelease = (await readJevbenchV141()).artifact;
@@ -172,7 +173,7 @@ export default async function JevModelsPage() {
       </p>
     </header>
 
-    <JevModelsV14Board artifact={v14.artifact} sha256={v14.sha256} previous={previous} capabilityHref="#jev14-capability-views" />
+    <JevModelsV14Board artifact={v14.artifact} sha256={v14.sha256} previous={previous} capabilityHref="#jev14-capability-views" sealedFamilyN={v14Result.sealedFamilyN} />
 
 
     {/* Page fix (Florian 23 Sep 2026): the v1.3 page's "what the run says" findings, recomputed from the v1.4 board. */}

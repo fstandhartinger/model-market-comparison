@@ -35,7 +35,7 @@ test('CR-152 serves v1.4.2 as the live board with a pinned page, API and fairnes
   assert.match(route, /readJevbenchV142\(\)/);
   assert.match(route, /'X-Content-SHA256': sha256/);
   assert.match(page, /canonical = '\/jev-models\/v1\.4\.2'/);
-  assert.match(livePage, /readJevbenchV142\(\)/);
+  assert.match(livePage, /readJevbenchV142(WithFamilies)?\(\)/); // CR-153: the pinned artifact plus its family supplement
   assert.match(livePage, /href="\/jev-models\/v1\.4\.2" data-bh-jev-version-share/);
   // F-189 (Fable pass 35, decision 2): CR-152's "visible Intelligence ordering" is a control, not a second table of the
   // numbers the chart already draws. CR-151 (Florian 25 Sep): that control is the "View by" switch (it supersedes the
