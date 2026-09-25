@@ -485,7 +485,7 @@ export function JevCapability3D({ points, costBounds }: { points: Point[]; costB
     <div ref={boxRef} className={`relative overflow-hidden rounded-lg border border-line bg-black/[.02] dark:bg-white/[.02] ${expanded ? 'h-[min(72vh,850px)] min-h-[350px]' : 'h-[350px] sm:h-[460px]'}`} data-bh-jev14-capability-3d-view>
       {fallback && <Projected3D points={points} costBounds={costBounds} jevClassOnly={jevClassOnly} tipRef={tipRef} resetViewRef={resetViewRef} />}
       <div className="pointer-events-none absolute left-2 top-2 z-10 grid gap-1 rounded-md border border-line bg-panel/90 px-2 py-1.5 text-[11px] font-semibold leading-tight shadow-sm sm:left-3 sm:top-3 sm:text-xs" data-bh-jev14-3d-axes>
-        <span>Capability</span><span>Cost · cheaper is better</span><span>Speed · faster is better</span>
+        <span>Capability ↑ · 0–100</span><span>Cost · $/1k tasks (log), cheaper →</span><span>Speed · 0–100, faster →</span>
       </div>
       <div ref={tipRef} hidden role="status" className="pointer-events-none absolute z-10 max-w-[230px] whitespace-pre-line rounded-lg border border-line bg-panel px-3 py-2 text-xs shadow-xl" />
       {!visible && <p className="bh-muted absolute inset-x-4 top-1/2 -translate-y-1/2 text-center text-sm">Scroll here to load the interactive 3D view.</p>}

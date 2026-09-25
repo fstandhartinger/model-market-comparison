@@ -200,9 +200,9 @@ function AccuracyChart({ systems, labels, excluded, topRanked }: { systems: Leng
       </g>)}
       {active.map(({ label }, position) => <g key={label}>
         <line x1={x(position)} x2={x(position)} y1={top} y2={plotBottom} stroke="rgb(var(--line) / .42)" />
-        <text x={x(position)} y={plotBottom + 18} textAnchor="middle" fill="var(--muted)" fontSize="10.5">{label}</text>
+        <text x={x(position)} y={plotBottom + 18} textAnchor="middle" fill="var(--muted)" fontSize="9.5">{INPUT_BUCKET_RANGES[label] ?? label}</text>
       </g>)}
-      <text x={(left + plotRight) / 2} y={height - 9} textAnchor="middle" fill="var(--text)" fontSize="10">Actual input tokens per decision</text>
+      <text x={(left + plotRight) / 2} y={height - 9} textAnchor="middle" fill="var(--text)" fontSize="10" className="hidden sm:block">Actual input tokens per decision</text>
       {systems.map((system, systemIndex) => {
         const points = drawn(system);
         return <g key={system.key}>
@@ -222,6 +222,7 @@ function AccuracyChart({ systems, labels, excluded, topRanked }: { systems: Leng
       })}
     </svg>
     </div>
+    <p className="bh-muted mt-1 text-[11px] sm:hidden">Horizontal axis: actual input tokens per decision.</p>
     <p className="bh-muted mt-2 min-h-5 text-xs" data-bh-jev-context-point-tooltip>{pointDetails
       ? <><b className="text-[var(--text)]">#{pointDetails.system.rank} {pointDetails.system.system}</b> · {INPUT_BUCKET_RANGES[pointDetails.bucket.label] ?? pointDetails.bucket.label} input tokens · {percent(pointDetails.bucket.accuracy)} accuracy · {pointDetails.bucket.correct}/{pointDetails.bucket.n} correct{pointDetails.bucket.n < THIN_BUCKET ? ' · small sample' : ''}</>
       : 'Hover, focus, or tap a point for its system, input range, accuracy, and sample size.'}</p>
