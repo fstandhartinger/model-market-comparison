@@ -1162,3 +1162,16 @@ Source: Florian's request preserved verbatim as `CR-20260924jev-page-fixes` in
 | CR-142.4 | Replace the coarse input-length buckets with `<2k`, `2–8k`, `8–16k`, `16–64k`, `64–256k`, `256k–1M`, `≥1M`; add a logarithmic exact published context-limit chart with training and serving limits shown separately where known. | Public aggregate buckets reconcile for each included system. All 82 exact source-backed context rows are represented; unknowns and training markers are clear, and the existing source links and notes remain. |
 | CR-142.5 | Write `PROPOSAL-LONG-CONTEXT.md` for a possible Jev-class track at 16k/64k/256k/1M, including item design, running cost, and qualifying systems. | Proposal only; no benchmark track or items are built. |
 | CR-142.6 | Verify the deployed page on `benchmarkheaven.com`, `www.benchmarkheaven.com`, and `model-market-comparison.app.mintapis.com`; retain screenshots and results, then notify Florian as requested. | Hosts serve the merged revision and matching aggregates; light/dark desktop and 390 px screenshots are retained; deployment and notification receipts are recorded. |
+
+## CR-163 — Mobile JevBench headline shortlist after the Capability-first redesign
+
+Source: the workstream repair recorded in `03-CHANGE-REQUESTS-VERBATIM.md`, the newer 25 Sep
+Capability-first decision in `/home/flori/DECISIONS.md`, and the live regression measured in
+`REVIEW-20260925T134004Z.md`. This changes presentation and acceptance checks only.
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-163.1 | The live `/jev-models` page shows the first Jev-class Capability row in the phone's first viewport. | At 390 px, light and dark, first `[data-bh-jev-class-list] > li` starts at y ≤ 720; Capability stays before bubble charts and the official board; no horizontal page overflow. Desktop 1440 px remains legible. |
+| CR-163.2 | Keep the ten decision guides available while making the phone header short. | One copy of each guide link in the DOM. On phones a ≥44 px labelled control starts collapsed, expands all ten links, and closes again; desktop shows all ten links. Keyboard operation works. |
+| CR-163.3 | Keep the method and score distinctions honest. | The short pre-chart line says Capability averages Intelligence and Calibration and names the leading row; the full 2× cost/latency rule, limits, fallback disclosure, and links to bubble charts and official JevBench Score remain reachable below the ranking. Published artifacts and scores are unchanged. |
+| CR-163.4 | Repair F-189/F-193's live verifier for Florian's newer layout. | Verify the current `View by` switch, one unboxed approved fairness sentence, Intelligence ordering and return to Overall, and the first Capability row's 720 px budget on both hosts at 1440/390 in light/dark; save screenshots and DOM receipts. The removed two-button `Rank by` selector and the old Composite-first y position are no longer acceptance criteria. |

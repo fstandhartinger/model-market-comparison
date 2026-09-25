@@ -11840,3 +11840,29 @@ rank-by null, first bar 4,070 px at 390; F-190 pinned page 14,876 px). pass-35 t
 | CR-156, CR-158 / CR-151 / CR-153 | **implemented** (unchanged) | drift spot-checks in REVIEW-20260925T155004Z.md | Ten SEO routes 200 on canonical, sitemap 759 URLs, `/api/jevbench/v1.4.2` 200. D206 re-confirmed: 0 occurrences in `03`/`04`. |
 
 No `ALL-ACCEPTED`: open rows remain and X6's line-by-line audit is still owed.
+
+## Iteration 226 (codex-luna, work) — CR-163 mobile headline repair
+
+The newer Capability-first `/jev-models` layout left the first headline row at **1,008 px**
+on a 390 px phone, as independently measured by the 13:40 review. The ten JevBench guide
+links occupied 128 px in the header; the full Jev-class rule came before any result. This
+iteration keeps each guide link once, behind a 44 px phone disclosure (visible as links on
+desktop), puts a short capability/class summary before the chart, and moves the full rule
+below the ranking. No JevBench artifact, class calculation, score or official rank changes.
+
+At the local production build, the first headline row starts at **647 px** on a 390 px
+phone with zero page overflow. The revised F-189 browser check passes **52/52** across
+1440/390 px, light/dark, including the current `View by` switch, guide expansion by tap
+and keyboard, and return to the official order. Local receipts and screenshots:
+`/opt/benchmarkheaven/state/ux-evidence/iter226-codex-cr163/`. The original live
+baseline is `baseline-mobile.png`; local production screenshots and `verification.json` are under
+`local-production/`. Dataset build, full tests (1,386: 1,385 pass, 0 fail, 1 skip),
+TypeScript and Next production build passed. Deployment is still pending.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| CR-163.1 | in-progress | `iter226-codex-cr163/local-production/verification.json` | Capability first-row budget met locally; live gate pending. |
+| CR-163.2 | in-progress | same | One copy of each guide link; expand/collapse passed locally. |
+| CR-163.3 | in-progress | same | Full class rule moved below the ranking; artifact untouched. |
+| CR-163.4 | in-progress | same | Current View-by and first-row verifier 52/52 locally; live gate pending. |
+| F-189, F-193 | open | same local receipt; live baseline `iter226-codex-cr163/baseline-mobile.png` | The updated contract follows Florian's newer Capability-first order; only a different engine may set verified after merge and live checks. |

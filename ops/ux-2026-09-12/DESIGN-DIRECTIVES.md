@@ -297,6 +297,13 @@ and the counts line under it keeps the page honest (P4).
 
 ### F-189 — "Rank by" is a control on the chart; the fairness sentence is its caption `[judgment]`
 
+**25 Sep 2026 supersession for the live hub:** Florian's later CR-151 `View by` switch and
+CR-158 Capability-first page order replaced the two-button `Rank by` control and moved the
+Composite chart below the bubble charts. The old selector and the Composite bar's 720 px
+position are historical. F-189 now checks the `View by` switch and the approved fairness
+sentence; F-193 applies the 720 px first-row budget to the new Capability headline. CR-163
+records the repair and acceptance checks. Frozen version pages keep their own F-190 contract.
+
 *Where:* `components/JevModelsV14.tsx` — `TopFiveNote` (delete) and `ScoreChart` (the eyebrow/h2/subtitle line, `header`, the `<ol
 data-bh-jev14-bars>` and its "Show all" disclosure); a new client component (`components/JevRankBy.tsx`, `"use client"`) that owns the bar list;
 `app/jev-models/page.tsx` and `app/jev-models/v1.4.2/page.tsx` render it through `JevModelsV14Board` unchanged; `test/jevbench-v142.test.mjs`

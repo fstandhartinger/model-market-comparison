@@ -1,6 +1,7 @@
 // Fable pass-35 live verifier (non-Fable engines run it before flipping a row to verified).
 // Usage: node verify-fable-pass35-design.mjs <base> <outDir>   ONLY=F-191 (or F-183, F-189, F-190, F-192) restricts the groups.
-// Groups: F-191 the leaf's one reference; F-183 the leaf head/foot copy; F-189 the chart's rank-by control; F-190 the pinned page;
+// Run under ~/.locks/chrome-9333.lock. Groups: F-191 the leaf's one reference; F-183 the leaf head/foot copy;
+// F-189 the live board's capability-first ranking and View-by control; F-190 the pinned page;
 // F-192 the system-one-open class. Writes <outDir>/verification.json and exits 1 on any failing check in the selected groups.
 import { createRequire } from 'node:module';
 import fs from 'node:fs/promises';
@@ -16,11 +17,14 @@ const want = (g) => !ONLY || g === ONLY;
 const LEAVES = ['jevk5-v02', 'jev-1.13.0', 'decider-4b-v2'];
 const txt = (s) => String(s ?? '').replace(/\s+/g, ' ').trim();
 
+const browser = await chromium.connectOverCDP('http://127.0.0.1:9333');
+try {
 for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { width: 1440, height: 1000 }], ['mobile', { width: 390, height: 844 }]]) {
   const ctx = `${kind}_${theme}`;
-  const b = await chromium.launch({ ignoreDefaultArgs: ['--hide-scrollbars'] });
-  const c = await b.newContext({ viewport: vp, isMobile: kind === 'mobile', hasTouch: kind === 'mobile', colorScheme: theme, deviceScaleFactor: 1 });
+  const c = await browser.newContext({ viewport: vp, isMobile: kind === 'mobile', hasTouch: kind === 'mobile', colorScheme: theme, deviceScaleFactor: 1 });
+  try {
   const p = await c.newPage(); p.setDefaultTimeout(20000);
+  const pageErrors = []; p.on('pageerror', (error) => pageErrors.push(String(error.message)));
   const go = async (path) => { await p.goto(BASE + path, { waitUntil: 'domcontentloaded', timeout: 60000 }); await p.evaluate((t) => document.documentElement.setAttribute('data-theme', t), theme); await p.waitForLoadState('networkidle').catch(() => {}); await p.waitForTimeout(600); };
 
   if (want('F-191') || want('F-183')) for (const key of LEAVES) {
@@ -66,6 +70,12 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
       const firstBar = document.querySelector('[data-bh-jev14-bar]');
       const before = []; if (chart && firstBar) { const w = document.createTreeWalker(chart, NodeFilter.SHOW_ELEMENT); let n; while ((n = w.nextNode())) { if (n === firstBar || n.contains(firstBar)) { if (n === firstBar) break; else continue; } if (/^(TABLE|DETAILS)$/.test(n.tagName)) before.push(n.tagName); } }
       const rankBy = document.querySelector('[data-bh-jev14-rank-by]');
+      const viewBy = document.querySelector('[data-bh-jev-viewby]');
+      const headline = document.querySelector('[data-bh-jev-class-list] > li');
+      const guides = document.querySelector('[data-bh-jev-board-guides]');
+      const guideToggle = guides?.querySelector('[data-bh-jev-board-guides-toggle]');
+      const summary = document.querySelector('[data-bh-jev-class-summary]');
+      const method = document.querySelector('[data-bh-jev-class-rule]');
       const note = [...document.querySelectorAll('[data-bh-jev14-top-five-note]')];
       // Iteration 214: "unboxed" cannot be read from border-style — Tailwind's preflight sets `border-style: solid`
       // with `border-width: 0` on every element, so the original `borderStyle === 'none'` test fails on a bare <p>.
@@ -100,10 +110,52 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
         .filter((el) => ![...el.querySelectorAll('code')].some((c) => t(c) === el.getAttribute('data-bh-jev14-class')))
         .map((el) => `${el.tagName}[${el.getAttribute('data-bh-jev14-class')}]: ${t(el).slice(0, 60)}`);
       const unlabelledShown = classNodes.filter((el) => el.getAttribute('data-bh-jev14-class-labelled') === '0').length;
-      return { bareKey, unlabelledShown, allBars, byIntel, byOrder, before, rankBy: rankBy ? [...rankBy.querySelectorAll('button')].map((b) => ({ t: t(b), pressed: b.getAttribute('aria-pressed') })) : null, notes: note.length, noteBox, firstBarY: firstBar ? Math.round(firstBar.getBoundingClientRect().y + scrollY) : null, firstName, legend, bar1, llmColor };
+      return { bareKey, unlabelledShown, allBars, byIntel, byOrder, before, rankBy: rankBy ? [...rankBy.querySelectorAll('button')].map((b) => ({ t: t(b), pressed: b.getAttribute('aria-pressed') })) : null,
+        viewBy: viewBy ? [...viewBy.querySelectorAll('button[data-bh-jev-view]')].map((b) => ({ t: t(b), view: b.getAttribute('data-bh-jev-view'), pressed: b.getAttribute('aria-pressed') })) : null,
+        capabilityJump: !!viewBy?.querySelector('a[data-bh-jev-view="capability"]'),
+        firstHeadlineY: headline ? Math.round(headline.getBoundingClientRect().y + scrollY) : null,
+        firstHeadlineName: t(headline?.querySelector('[data-bh-jev-source]') ?? headline?.children[1]),
+        guideLinks: guides?.querySelectorAll('a').length ?? 0,
+        guideToggle: guideToggle ? { expanded: guideToggle.getAttribute('aria-expanded'), height: Math.round(guideToggle.getBoundingClientRect().height) } : null,
+        guideVisible: guides ? [...guides.querySelectorAll('a')].filter((a) => a.getBoundingClientRect().width > 0).length : 0,
+        summaryBefore: !!summary && !!headline && summary.getBoundingClientRect().y < headline.getBoundingClientRect().y,
+        methodAfter: !!method && !!headline && method.getBoundingClientRect().y > headline.getBoundingClientRect().y,
+        methodComplete: !!method && /median latency/.test(t(method)) && /Speed axis/.test(t(method)) && !!method.querySelector('a[href="#jev-bubbles"]') && !!method.querySelector('a[href="#jev14-chart-title"]'),
+        overflow: document.documentElement.scrollWidth > innerWidth + 1,
+        notes: note.length, noteBox, firstBarY: firstBar ? Math.round(firstBar.getBoundingClientRect().y + scrollY) : null, firstName, legend, bar1, llmColor };
     });
     await p.screenshot({ path: `${OUT}/${ctx}-hub.png` });
-    if (want('F-189')) {
+    if (want('F-189') && m.viewBy) {
+      check('F-189', ctx, 'View by has five metric buttons, Overall pressed, and a Capability return link', m.viewBy.length === 5 && m.viewBy.filter((b) => b.pressed === 'true').length === 1 && m.viewBy.find((b) => b.view === 'overall')?.pressed === 'true' && m.capabilityJump, JSON.stringify(m.viewBy));
+      check('F-189', ctx, 'approved fairness sentence appears once without a box', m.notes === 1 && m.noteBox && m.noteBox.every((b) => b.w === 0 && !b.shadow && !b.bg), JSON.stringify(m.noteBox));
+      check('F-189', ctx, 'the capability ranking leads the live board', m.firstHeadlineY != null && m.firstHeadlineY < m.firstBarY, `${m.firstHeadlineY} vs ${m.firstBarY}`);
+      check('F-189', ctx, 'decision guides appear only once', m.guideLinks === 10, String(m.guideLinks));
+      check('F-189', ctx, 'short class summary precedes the bars and full method follows them', m.summaryBefore && m.methodAfter && m.methodComplete, JSON.stringify({summaryBefore:m.summaryBefore,methodAfter:m.methodAfter,methodComplete:m.methodComplete}));
+      check('F-189', ctx, 'no horizontal page overflow', !m.overflow, String(m.overflow));
+      if (kind === 'mobile') {
+        check('F-189', ctx, 'first headline row at y ≤ 720 on a phone', m.firstHeadlineY <= 720, String(m.firstHeadlineY));
+        check('F-189', ctx, 'guides start collapsed behind a 44 px tap target', m.guideToggle?.expanded === 'false' && m.guideToggle.height >= 44, JSON.stringify(m.guideToggle));
+        await p.locator('[data-bh-jev-board-guides-toggle]').click();
+        check('F-189', ctx, 'guides expand by tap with all ten links visible', await p.locator('[data-bh-jev-board-guides-toggle]').getAttribute('aria-expanded') === 'true' && await p.locator('[data-bh-jev-board-guides] a:visible').count() === 10, '');
+        await p.locator('[data-bh-jev-board-guides-toggle]').click();
+        await p.locator('[data-bh-jev-board-guides-toggle]').focus(); await p.keyboard.press('Enter');
+        check('F-189', ctx, 'guides open by keyboard', await p.locator('[data-bh-jev-board-guides-toggle]').getAttribute('aria-expanded') === 'true', '');
+        await p.keyboard.press('Space');
+        check('F-189', ctx, 'guides close by keyboard', await p.locator('[data-bh-jev-board-guides-toggle]').getAttribute('aria-expanded') === 'false', '');
+      } else check('F-189', ctx, 'all ten guides visible on desktop', m.guideVisible === 10, String(m.guideVisible));
+      await p.locator('button[data-bh-jev-view="intelligence"]').click();
+      const intel = await p.evaluate(() => ({ pressed: document.querySelector('button[data-bh-jev-view="intelligence"]')?.getAttribute('aria-pressed'),
+        view: document.querySelector('[data-bh-jev14-chart]')?.getAttribute('data-bh-jev14-view'),
+        rows: [...document.querySelectorAll('[data-bh-jev14-bars] > li')].map((li) => li.getAttribute('data-bh-jev14-bar')),
+        axes: [...document.querySelectorAll('[data-bh-jev14-bars] > li')].map((li) => Number((li.querySelector('[data-bh-jev14-bar-axes]')?.textContent ?? '').match(/I\s*(\d+(?:\.\d+)?)/)?.[1] ?? NaN)),
+        hideLlms: document.querySelector('[data-bh-jev-hide-llms]')?.checked }));
+      check('F-189', ctx, 'Intelligence view selects and sorts its bars', intel.pressed === 'true' && intel.view === 'intelligence' && intel.rows.length >= 10 && intel.rows.every((v, i) => v && intel.rows.indexOf(v) === i) && intel.axes.every((v, i) => Number.isFinite(v) && (!i || intel.axes[i - 1] >= v)), JSON.stringify(intel).slice(0, 300));
+      check('F-189', ctx, 'Intelligence view hides general-purpose LLM baselines by default', intel.hideLlms === true, String(intel.hideLlms));
+      await p.locator('button[data-bh-jev-view="overall"]').click();
+      const back = await p.evaluate(() => ({ pressed: document.querySelector('button[data-bh-jev-view="overall"]')?.getAttribute('aria-pressed'), rows: [...document.querySelectorAll('[data-bh-jev14-bars] > li')].map((li) => li.getAttribute('data-bh-jev14-bar')) }));
+      check('F-189', ctx, 'Overall restores the official order', back.pressed === 'true' && JSON.stringify(back.rows) === JSON.stringify(m.allBars.slice(0, back.rows.length).map((r) => r.key)), JSON.stringify(back.rows.slice(0, 3)));
+    }
+    if (want('F-189') && !m.viewBy) {
       check('F-189', ctx, 'rank-by control with two buttons, one pressed', m.rankBy && m.rankBy.length === 2 && m.rankBy.filter((b) => b.pressed === 'true').length === 1, JSON.stringify(m.rankBy));
       check('F-189', ctx, 'no table or disclosure between the chart title and the first bar', m.before.length === 0, JSON.stringify(m.before));
       check('F-189', ctx, 'fairness sentence exactly once, unboxed', m.notes === 1 && m.noteBox && m.noteBox.every((b) => b.w === 0 && !b.shadow && !b.bg), JSON.stringify(m.noteBox));
@@ -152,8 +204,10 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
     check('F-190', ctx, 'at most 5 blocks before the board', m.blocksBefore != null && m.blocksBefore <= 5, String(m.blocksBefore));
     if (kind === 'desktop') check('F-190', ctx, 'page height under 14,000 px at 1440', m.h < 14000, String(m.h));
   }
-  await b.close();
+  check('errors', ctx, 'no page errors', pageErrors.length === 0, JSON.stringify(pageErrors));
+  } finally { await c.close(); }
 }
+} finally { await browser.close(); }
 const pass = checks.filter((c) => c.ok).length;
 await fs.writeFile(`${OUT}/verification.json`, JSON.stringify({ base: BASE, at: new Date().toISOString(), only: ONLY, pass, total: checks.length, checks }, null, 1));
 for (const c of checks.filter((c) => !c.ok)) console.log(`FAIL ${c.group} ${c.ctx} ${c.name} :: ${String(c.detail).slice(0, 200)}`);
