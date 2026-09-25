@@ -11999,6 +11999,16 @@ now assert the interactive fallback message and that WebGL is not retried after
 fallback. `CI=true npm test` passes 1,385/1,386 (one intentional skip). No scoring
 or model data changed.
 
+Live at 33b337e3 (PR #34, merged 21:38 UTC): the same browser script passes 134/134
+on benchmarkheaven.com and www, and touch pinch-zoom passes 2/2.
+
+CR-169.1 (follow-up): on the live page the name's ellipsis also clipped the ⓘ details
+trigger, so 43 of 91 rows at 390 px and 13 at 1440 px had no visible tap target.
+The trigger now sits beside the truncated name instead of inside it; CR-167.2's
+16 px glyph and `before:` tap area are kept unchanged. Local check: 0 clipped
+triggers at both widths, row heights unchanged (43/52/67 px on mobile, 43 px on
+desktop). `CI=true npm test` 1,391/1,392 (one skip). Presentation only.
+
 ## Review gate 20260925T192004Z (claude-opus) — CR-166/CR-167 reviewed for the first time
 
 Report: `REVIEW-20260925T192004Z.md`. Range `d78ddfd7..f81ad56a`, 18 commits / 39 files. Local gates
