@@ -1,0 +1,50 @@
+export type JevV15Axes = { intelligence: number | null; calibration: number | null; speed: number | null; cost: number | null };
+export type JevV15Option = 'A' | 'B' | 'C';
+export type JevV15Type = 'choice' | 'noul' | 'score';
+export type JevV15Cell = { cc: number | null; tiers: Record<'easy' | 'standard' | 'judge' | 'hard', number | null>; n: Record<'easy' | 'standard' | 'judge' | 'hard', number> };
+export type JevV15System = {
+  key: string; display: string; author: string; repo: string | null; class: string; licence: string; open: string;
+  addendum: { id: string; release: string; label: string } | null;
+  endpoint_kind: string | null; endpoint_condition: string | null; gpu?: string | null;
+  api_flag: boolean; api_exposure_note: string | null;
+  status: { status: string; rows?: number; missing?: number; answered_ok?: number };
+  full_coverage?: boolean; support?: Record<JevV15Type, string | null>;
+  axes: JevV15Axes; scores: Record<JevV15Option, number | null>; views: Record<string, number | null>;
+  composite_ci95: Partial<Record<JevV15Option, [number, number]>> | null;
+  jevbench_score: number | null;
+  intelligence: null | {
+    I_open: number | null; I_sealed: number | null; base: number | null; gap: number | null; excess: number | null; penalty: number | null;
+    per_type_split: Record<string, JevV15Cell>;
+  };
+  validity?: Partial<Record<JevV15Type, { n: number; invalid_rate: number | null }>>;
+  calibration: { score: number | null; parts: Partial<Record<JevV15Type, Record<string, number | null>>> };
+  speed: { p50_s_raw: number | null; p95_s_raw: number | null; p50_s_adjusted: number | null; p95_s_adjusted: number | null; n?: number; adjustment: string | null };
+  cost: { kind: string; usd_per_1000: number | null; basis: string };
+  rank: number | null; ranked: boolean; listing: 'ranked' | 'partial' | 'unranked' | 'unpriced'; not_ranked_because: string | null;
+  ranks: Record<JevV15Option, number | null>;
+  not_scored_reason?: string;
+};
+export type JevV15NotMeasured = { key: string; display: string; author: string; status: string; reason: string | null; addendum: JevV15System['addendum']; rows?: number; missing?: number; answered_ok?: number };
+export type JevV15Marker = { upper: string; lower: string; tie: boolean; diff_ci95: [number, number]; p_upper_wins: number };
+export type JevV15Artifact = {
+  benchmark: 'JevBench'; revision: string; protocol: string; status: string; run_kind: 'diagnostic' | 'official';
+  source_sha256: string; method_sha256: string; pricing_addendum_sha256: string;
+  sample: { open: number; sealed: number; total: number; published_open: number };
+  types: Record<JevV15Type, number>; tier_weights: Record<string, number>; sealed_share_of_intelligence: number;
+  G_med: number | null; G_med_flag_gt10: boolean; headline: JevV15Option;
+  options: Record<JevV15Option, { weights: Record<keyof JevV15Axes, number>; intelligence_floor: number }>;
+  views: string[]; n_ranked: number;
+  board: Record<JevV15Option, { order: string[]; leader_wording: string | null; markers: JevV15Marker[] }>;
+  systems: JevV15System[]; not_measured: JevV15NotMeasured[]; roster_count: number;
+};
+
+export const JEVBENCH_V15_PREVIEW_ARTIFACT: string;
+export const JEVBENCH_V15_PREVIEW_ROUTE: string;
+export const JEVBENCH_V15_OPTIONS: JevV15Option[];
+export const JEVBENCH_V15_AXES: (keyof JevV15Axes)[];
+export const JEVBENCH_V15_TYPES: JevV15Type[];
+export const JEVBENCH_V15_METHOD_URL: string;
+export const JEVBENCH_V15_PRICING_URL: string;
+export function jevV15Composite(axes: JevV15Axes, weights: Record<keyof JevV15Axes, number>, floor: number): number | null;
+export function validateJevbenchV15Preview(artifact: unknown): JevV15Artifact;
+export function readJevbenchV15Preview(root?: string): Promise<{ artifact: JevV15Artifact; sha256: string }>;
