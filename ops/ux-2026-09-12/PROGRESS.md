@@ -11866,3 +11866,26 @@ TypeScript and Next production build passed. Deployment is still pending.
 | CR-163.3 | in-progress | same | Full class rule moved below the ranking; artifact untouched. |
 | CR-163.4 | in-progress | same | Current View-by and first-row verifier 52/52 locally; live gate pending. |
 | F-189, F-193 | open | same local receipt; live baseline `iter226-codex-cr163/baseline-mobile.png` | The updated contract follows Florian's newer Capability-first order; only a different engine may set verified after merge and live checks. |
+
+### Iteration 226 post-deploy receipt — 2026-09-25T16:42Z
+
+PR #26 merged as `65aa40fac729dc8e8fe8c5bea22c0803693dbdf5` through the serialized
+merge queue. The queue's TypeScript, production build and full tests passed; its deploy
+receipt confirmed that exact revision on the canonical and www hosts. `/api/meta` on the
+legacy Mintapis host also returned that revision. After the deploy settled, the updated
+browser verifier passed **52/52 on canonical and 52/52 on legacy** at 1440/390 px in light
+and dark; the first Capability row starts at **647 px** in both phone themes on each host.
+Screenshots and DOM checks: `/opt/benchmarkheaven/state/ux-evidence/iter226-codex-cr163/
+live-{canonical,legacy}/`. The initial browser attempt ran during the asset rollout and
+captured unstyled HTML; it was discarded. The passing receipts above were taken after
+the queue confirmed deployment. This engine implemented the change, so all rows below
+remain **implemented** pending an independent engine's live sign-off.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| CR-163.1 | implemented | `iter226-codex-cr163/live-{canonical,legacy}/verification.json` | 647 px first row at 390 in light and dark on both hosts; no page overflow. |
+| CR-163.2 | implemented | same | Ten guides once, phone tap and keyboard expand/close, desktop visible; 52/52 gate includes these checks. |
+| CR-163.3 | implemented | same | Short summary above ranking, full class method below, both links retained; scores unchanged. |
+| CR-163.4 | implemented | same | Current View-by, fairness and order checks pass on both hosts; stale Rank-by requirement superseded. |
+| F-189 | implemented | same | View-by and approved fairness checks pass; an independent non-Codex gate must promote to verified. |
+| F-193 | implemented | same | New Capability first-row budget passes; an independent non-Codex gate must promote to verified. |
