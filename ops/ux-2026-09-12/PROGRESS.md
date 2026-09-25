@@ -11735,3 +11735,28 @@ under `iter220-codex-f193/post-deploy/`. The same source changes passed `npm tes
 
 No `ALL-ACCEPTED`: CR-152.1 and the other open rows remain governed by their existing evidence and
 approval gates.
+
+## Iteration 221 (codex-luna, work) — F-187 responsive Image JevBench preview
+
+The unlinked Image JevBench preview already had the aggregate bar ranking required before publication,
+but its wide detail table let the rank and system identity disappear in the horizontal scrollport on a
+phone. The change keeps the bar ranking before the detail table, adds a semantic label to each ranking
+table, and pins the rank and system columns with an opaque surface background while the metric columns
+scroll. No scores, ordering inputs, artifacts, or publication status changed; the preview remains
+noindex and unlinked.
+
+Local evidence: `test/image-jev-public-examples.test.mjs` and `test/fable-pass30.test.mjs` **9/9**;
+`npm test` **1,369 tests, 1,368 pass, 0 fail, 1 skipped**; `npx tsc --noEmit -p .` rc 0;
+`npm run build` rc 0; `node scripts/build-dataset.mjs` rc 0 with the generated timestamp-only churn
+discarded. Commit `b05e6fe5` is pushed.
+
+Post-deploy server-rendered live evidence is in `/opt/benchmarkheaven/state/ux-evidence/iter221-codex-f187/`:
+canonical, www and legacy all returned HTTP 200, the exact deployed revision, identical preview HTML
+hashes, noindex metadata, the bar marker before the whole-candidate detail table, and the pinned rank /
+system classes. The receipt records the desktop 1440px and mobile 390px viewport contracts. A different
+engine still owes the browser-level visual sign-off; this implementer therefore leaves F-187 **implemented**,
+not **verified**.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| F-187 | **implemented** | `/opt/benchmarkheaven/state/ux-evidence/iter221-codex-f187/verification.json`; `b05e6fe5` | Responsive presentation is shipped and live on all configured hosts. Needs a different engine's browser-level visual verification before promotion to verified. |
