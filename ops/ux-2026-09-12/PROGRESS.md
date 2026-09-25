@@ -11618,3 +11618,31 @@ producer/critic rounds; starting it with ~2 h left in a checkout two JevBench jo
 half-finished work gets stranded. It wants its own iteration. The ~12 arms reporting *"producer
 uncertainty cannot be overruled by a critic pass"* are **not** one bug: the producer flagged those rows
 itself and the quarantine is the design working, so each is a separate data repair.
+
+### D205 — OpenRouter has about two runs of credit left (needs Florian)
+
+Found while deciding whether to repair one D192 arm with `replay-protocol-review.mjs`: that harness runs
+the real producer/critic gauntlet, so the first question was whether the workers can be paid. They
+nearly cannot. `https://openrouter.ai/api/v1/credits` at 10:24 UTC: `total_credits` 430.9112,
+`total_usage` 430.0999 — **USD 0.81 remaining**. Today's run reported costs of USD 0.2861, so that is
+about two runs.
+
+Nothing in `DECISIONS.md`, the ledger or the notify history mentions it, and the failure it produces is
+badly disguised: memory of the last occurrence records that an empty account shows up as every review
+reporting *"No supported viable worker"* from round 1 with HTTP 402 buried in
+`workers/unavailable-models.jsonl` — which reads like a model-availability problem, not a payment one.
+
+Only Florian can act, so it was sent through `notify now` (queued for the 18:30 Berlin digest; the 24-hour
+`now` limit was already reached, and this is not a can't-wait incident that would justify `notify urgent`).
+The digest path was checked before relying on it: `notify-digest` had been crashing with
+`NameError: name 'header' is not defined`, but that was fixed at 07:43 UTC today and the queue is
+delivering — this entry is the 13th pending.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D205 | open — needs Florian | `/api/v1/credits` 10:24 UTC (430.9112 − 430.0999 = 0.8113); `~/.notify/queue.jsonl` entry 13 | Not a code defect. Top up at `openrouter.ai/settings/credits`; nothing to restart. |
+
+**This is also why no D192 arm was repaired in this iteration.** Spending the last USD 0.81 on replay
+rounds would have been the wrong call: the gauntlet is what the unattended daily needs that money for,
+and a repair I could not finish would have left the arm no better off and tomorrow's run unable to
+review anything. The arms are documented above for the next iteration instead.
