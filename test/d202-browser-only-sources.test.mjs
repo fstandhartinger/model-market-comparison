@@ -66,3 +66,19 @@ test('an undeclared entry is untouched', () => {
   const { urls } = captureTargets({ registry, plan, vendor });
   assert.ok(urls.has('https://www.anthropic.com/claude-opus-5-5'));
 });
+
+// A half-written access declaration would reach the health report as `undefined`, so the registry
+// validator refuses it. `validateBenchmarkRegistry` is what `build-dataset` runs, so this fails the build.
+test('an incomplete access declaration fails the registry validation', async () => {
+  const { validateBenchmarkRegistry } = await import('../lib/benchmark-registry.mjs');
+  const good = registry.entries.find(browserOnly);
+  const clone = (access) => ({
+    ...registry,
+    entries: registry.entries.map((e) => (e.id === good.id ? { ...e, how_to_collect: { ...e.how_to_collect, access } } : e)),
+  });
+  assert.doesNotThrow(() => validateBenchmarkRegistry(clone(good.how_to_collect.access)));
+  assert.doesNotThrow(() => validateBenchmarkRegistry(clone(undefined)), 'the field stays optional');
+  for (const bad of [null, {}, { mode: 'browser_only' }, { reason: 'x' }, { mode: 'manual', reason: 'x' }, { mode: 'browser_only', reason: '  ' }, 'browser_only']) {
+    assert.throws(() => validateBenchmarkRegistry(clone(bad)), /incomplete access declaration/, `refused: ${JSON.stringify(bad)}`);
+  }
+});
