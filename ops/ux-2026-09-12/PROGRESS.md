@@ -11504,3 +11504,15 @@ declaration, and only `browser_only` is a known mode because a new mode needs co
 Final gates for the iteration: `npm test` **1,355 tests, 1,354 pass, 0 fail, 1 skipped** rc 0 ·
 `npx tsc --noEmit -p .` rc 0 · `node scripts/build-dataset.mjs` rc 0, 871 / 676 / 96 / 3,036,
 timestamp-only churn.
+
+**Push plan, if this iteration ends before the lock frees.** Seven commits `c03264d6..96d45864` are
+committed, gated and unpushed; `git log origin/main..HEAD` lists only this iteration's work. The
+in-flight daily (`runs/2026-09-25T08-37-53-519Z-389468`, detached at `70da862b`) holds
+`state/run.lock`, and `.git/hooks/pre-push` refuses `main` until it is free — correctly, so do not
+override. When it frees: `git fetch origin main`, rebase, and **if the run published, its commit also
+rewrote `data/dataset.json`** — resolve that file by taking the published side, then re-run
+`node scripts/build-dataset.mjs` so `5273989c`'s five `registry.json` entries are in the built
+dataset again (a `data/raw` edit whose dataset is restored rather than rebuilt makes prebuild refuse
+every deploy), re-run `npm test` and `npx tsc --noEmit -p .`, and push **the explicit sha**
+(`git push origin <sha>:refs/heads/main`), not `HEAD` — the self-heal repair job shares this checkout
+and a `HEAD` push published its commit once already today.
