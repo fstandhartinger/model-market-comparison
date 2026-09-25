@@ -12,6 +12,13 @@ mkdir -p "$STATE" /opt/benchmarkheaven/logs/ux
 exec 9>"$STATE/tick.lock"; flock -n 9 || exit 0
 [ -f "$STATE/finished" ] && exit 0
 
+# D194 (2026-09-25): an iteration log is 6-21 MB of text and nothing ever compressed them, so this
+# directory reached 2.0 GB while the box's disk watchdog was refusing every agent's build at 91 %.
+# gzip is lossless and ~10:1 here; three days keeps the recent ones readable with plain grep/tail,
+# and the hung-iteration check below only ever looks at the newest `*-*.log`, which is never touched.
+find /opt/benchmarkheaven/logs/ux -maxdepth 1 -name '*-*.log' ! -name tick.log -mtime +3 -print0 \
+  | xargs -0 -r -P 2 gzip -9 2>/dev/null || true
+
 # Launch sprint pause (Claude Code, 17 Sep 2026): a separate sprint job owns the repo until this time.
 if [ -f "$STATE/paused-until" ] && [ "$(date +%s)" -lt "$(cat "$STATE/paused-until")" ]; then
   echo "$(date -u +%FT%TZ) paused for launch sprint until $(date -u -d @$(cat "$STATE/paused-until") +%H:%MZ)"; exit 0

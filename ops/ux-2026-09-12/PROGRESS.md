@@ -10492,3 +10492,248 @@ Still outstanding and not claimable from here: the receipt D193 actually asks fo
 run in which one of these boards changes and is **ingested** rather than retained. That is the
 2026-09-25T05:17Z run or a later one, and it is also D191's test. Nothing in this iteration touches
 the run's path, and the last push was at 00:22 UTC, clear of the run's lock window.
+
+---
+
+## Iteration 212 (claude-opus, 2026-09-25 00:30–02:xx UTC) — the disk gate, and the retention nobody bounded
+
+### D194 — the box was at 91 % and every agent's build was refused
+
+Not a Benchmark Heaven feature, but it was blocking all of them. Agent board thread #8 had four
+consecutive `warning` posts from `codex:session-5c30f52294` (#1107, #1110, #1119, #1126, #1130)
+saying the site queue "paused before builds/tests" on the disk watchdog — 90.3 %, then 90.8 %,
+then 91.6 %, 39 GB available. The queue had been stalled on it for hours, and the posts all
+reported job-local cleanup that had already been done, so nobody was finding the actual bytes.
+
+**Immediate: 16 GB, in one command.** `sudo docker builder prune -f` — the BuildKit cache was
+**18.3 GB with 0 active entries**, and pruning it also released the intermediate images it pinned
+(53 → 49 images, all 49 still active; 23.54 GB → 17.09 GB). No running container, no volume and no
+tagged Coolify image was touched, so every rollback target survives; the only cost is uncached
+layers on the next build. Disk **374 G → 358 G used, 91 % → 87 %, 40 GB → 56 GB available**.
+Posted to board #8 as entry **#1136** so the blocked jobs could re-check and resume.
+
+**Durable: the retention that had no bound.** `ops/daily/compact-run.mjs` compacts a run only when
+it published *and* live-verified, on the stated ground that only then is the run's data in Git.
+Everything else keeps its whole staging tree "for investigation and owner acceptance" — and nothing
+ever bounded that. Measured: `/opt/benchmarkheaven-daily/runs` held **26 GB across 90 directories**.
+Of the last 52 runs, **8 published** (each compacted to ~30 MB) and the other 44 kept
+450 MB – 3 GB each.
+
+What makes those directories big is not the evidence:
+
+| Part | Size/run | Why it is reproducible |
+|---|---|---|
+| `work/.git` + `work/node_modules` | ~1.1 GB | `git clone` + `npm ci` from the base sha the report records |
+| `work/data` | ~841 MB | the clone's checkout of that same sha |
+| `before/raw` | ~752 MB | a byte copy of the repo's **tracked** `data/raw` at the base sha (`git ls-files data/raw` = 4,392 files, nothing untracked); read only *within* its own run by `live-retention.mjs` and `review-live.mjs` — no run reads another run's copy |
+| `benchmark-candidates/` | ~66 MB | the run's own scratch for `public-candidate.py` |
+| **kept:** `reports/` `sources/` `workers/` `gauntlet/` `review/` | ~135 MB | the evidence a later reader actually needs — untouched |
+
+`ops/daily/prune-runs.mjs` applies the same compaction to runs that are past an age bound, and
+`compact-run.mjs` is refactored so both callers share one `compactRunDirectory` (which now also
+tolerates a run that failed before writing `dataset-after.json` — an ordinary outcome, not an error).
+`daily.mjs` calls it at the end of every non-dry run, so this maintains itself.
+
+The policy, and why each rule is there:
+
+- **`RETAIN_STAGING_DAYS = 3`** — a failing arm gets replayed against its own capture within a day
+  or two; three days is the bound, and `--retain-days` moves it without a code change.
+- **`RETAIN_STAGING_RUNS = 3`** — the three newest staging trees survive any age, so a quiet or
+  fully-green pipeline still leaves something to investigate. A run that was already compacted
+  holds no staging tree and does **not** fill this window — otherwise three published days in a row
+  would expose every failed run, and there is a test for exactly that.
+- **`SETTLE_HOURS = 6`** — a directory with no `run-report.json` that was written recently may be a
+  run that is executing now, and is never touched.
+
+**No lock is taken, deliberately.** A run that is still executing is by construction the newest run
+and is hours old, so all three rules independently exclude it; taking `state/run.lock` would only
+make a scheduled run skip itself while a deletion ran. (The 00:41 price-drift run started while this
+iteration was measuring, and was correctly outside the plan.)
+
+`test/daily-prune-runs.test.mjs`, **8 tests**: the pure planner is exercised per rule and at the
+documented day boundary (a minute inside is kept, a minute outside is not), and the executor is run
+against a real temporary tree — only the named runs lose staging, the retained evidence is
+byte-identical afterwards, `dataset-before.json.gz` round-trips, and a second sweep is a no-op.
+
+Applied once by hand at 00:40 UTC: **20 of 90 runs pruned, 6.74 GB freed**, 16 runs kept as `recent`,
+54 already had no staging. `runs/` **26 GB → 20 GB**; disk **86 %, 60 GB available**. Receipt:
+`/opt/benchmarkheaven/state/ux-evidence/iter212-d194/prune-receipt.json` (it names every pruned
+directory and every kept one with its reason). Steady state is now ~3 days of runs instead of
+unbounded.
+
+**Third reclaim, lossless: this workstream's own iteration logs.** `/opt/benchmarkheaven/logs/ux`
+held **1,968 MB** across 331 files — an iteration log is 6–21 MB of text and nothing had ever
+compressed one. 230 logs older than three days were `gzip -9`'d: **1,968 MB → 889 MB, 1.08 GB
+freed**, nothing deleted (`zcat` reads every one; spot-checked at 502,807 lines). Ground rule 8 asks
+for bounded logs, so this is now durable too — `tick.sh` runs the same `find … -mtime +3 | gzip` at
+every tick, before any early return. Three days keeps recent logs greppable with plain `tail`, and
+the hung-iteration watchdog a few lines below only ever reads the newest `*-*.log`, which the rule
+never touches.
+
+**Not reclaimed, and named here so the next iteration sees it coming:**
+`/opt/benchmarkheaven/state/ux-evidence` is **4.5 GB across 607 directories** and grows with every
+verifier run. It is deliberately left alone — every one of those paths is cited as the evidence for a
+ledger row, and deleting them would unprove claims rather than save space. The largest single
+directory is 131 MB, so this is a watch item, not a backlog.
+
+### D195 — the heaviest model pages have crossed CR-62.1's 300 KB crawler bound
+
+Found by re-running the existing `ops/ux-2026-09-12/bin/verify-cr-62.mjs` at `23967375` against all
+three hosts: **151/155 per host**, the same four failures on each.
+
+`/models/glm-5.3::max` is **309,464 bytes** of initial HTML for every one of the four crawler user
+agents — over CR-62.1's 300 KB bound. It is not one page: the whole heavy class sits at the ceiling,
+and it is drifting up steadily rather than having regressed at one commit. Against iteration 89's
+own receipt (`iter89-final2/canonical/cr-62/verification.json`, 155/155 at `1a0c256`, 2026-09-17):
+
+| Page | 2026-09-17 | 2026-09-25 | Δ |
+|---|---|---|---|
+| `/models/glm-5.3::max` | 273,231 | **309,464** | +36,233 (+13.3 %) |
+| `/models/kimi-k3::max` | 267,839 | 297,490 | +29,651 |
+| `/models/claude-opus-5::max` | 260,307 | 297,237 | +36,930 |
+| `/models/glm-5.2::max` | 267,046 | 294,799 | +27,753 |
+| `/models/gpt-5.6-sol::max` | 243,464 | 273,083 | +29,619 |
+| `/models/claude-fable-5.1` | 230,521 | 270,363 | +39,842 |
+
+Three more pages are within 6 KB of the bound, so this crosses again on the next benchmark or offer
+that lands. **Stated honestly: the preview card itself is not broken.** The og/twitter tags live in a
+`<head>` of **3,618 bytes**, so a crawler that truncates still has the whole card — the four failures
+are the explicit acceptance criterion Florian wrote, not an observed broken preview.
+
+Where the bytes are, measured on the live page rather than guessed: head 3,618 · rendered body
+139,921 · Next.js flight payload **165,068** in 41 `<script>` chunks, one of them 106 KB. The body's
+benchmark-sheet category panels are ~100 KB of that body. The sheet **already applies CR-62.1's own
+fix** — `BenchmarkSheet.tsx` passes compact row data to the client `SheetRows` rather than a server
+tree, and that data is only 26 KB of rows and 5 KB of descriptions across 45 rows — so the remaining
+cost is the rendered rows themselves plus RSC's duplicate of the tree, and getting under the bound
+means not rendering them until hydration (the closed-disclosure pattern `/jev-models` uses). That is
+a content-vs-SEO trade on a page covered by several verifiers, i.e. a product/design decision, so it
+is filed rather than guessed at here.
+
+**One correction to my own working assumption**, recorded because it nearly cost a duplicate file: I
+wrote a fresh `verify-cr-62-4.mjs` before checking, and `verify-cr-62.mjs` already existed from
+iteration 89 and is strictly more thorough (22 pages including the five heavy model pages, the share
+image, robots/sitemap, the page-data API and post-hydration render checks, versus my 6 pages). Mine
+was deleted unused; the numbers above are the existing verifier's.
+
+### CR-62.4 — the measurable half is re-confirmed; the Telegram was already sent
+
+The crawler-UA half re-ran today on all three hosts (above). The `notify now` CR-62.4 asks for went
+out on **2026-09-16 22:58 UTC** with the share card and `https://benchmarkheaven.com/?v=2026-09-17`
+(iteration 89's row); the outstanding acceptance is only Florian confirming the card in X chat and
+WhatsApp, so **no second Telegram was sent** — re-sending would be noise, not progress. The row stays
+in-progress, now with a same-day measurement and one real defect (D195) attached.
+
+### F-176(b) — still correct live
+
+`ONLY=F-176 verify-fable-pass34-design.mjs` on `benchmarkheaven.com` at `23967375`: **16/16**
+(`/opt/benchmarkheaven/state/ux-evidence/iter212-f176/canonical/`). The credit renders as
+`3D view: three.js r128 (MIT).`, and `three.js r128 is included under its MIT license.` is absent
+beside the chart in all four states. The `verified` row from iteration 208 is the current truth; the
+later gate's `open ((b))` row reflects a revision before that fix deployed. Nothing to do.
+
+### Gates
+
+`node --test test/` **1,319 tests / 1,318 pass / 0 fail / 1 skip**, rc 0 · `npx tsc --noEmit -p .`
+rc 0 (empty log) · `node scripts/build-dataset.mjs` rc 0, deterministic **871 / 676 / 96 / 3,036** ·
+`node scripts/validate-benchmark-scores.mjs` (the `prebuild` guard) **rc 0**. Logs in
+`/opt/benchmarkheaven/state/ux-evidence/iter212-gates/`.
+
+`data/dataset.json` is **committed rather than restored**, per `01d305ba`'s lesson: `evidence[].excerpt`
+is part of `benchmark_results`, so a registry excerpt change that leaves the dataset behind makes the
+prebuild guard refuse every deploy with an empty log. A path diff of the rebuilt dataset finds
+**exactly 5 differing leaves, every one named `excerpt`**, plus `generated_at` and one `collected_at`.
+No score, price, rank or count moved.
+
+The 00:41 price-drift run held `state/run.lock` for the whole iteration — it was still inside
+`refresh-benchmarks`, which is the step iteration 210 parallelised, so it is also that fix's first
+production exercise. The gates above ran in the primary checkout, which a daily run explicitly
+ignores (it publishes from its own clone of `origin/main`), but **nothing was pushed until the run
+finished**: a push mid-run makes its publish a non-fast-forward, which is the same hazard the
+05:17–07:45 window exists for.
+
+### Ledger rows
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D194 | implemented | `ops/daily/prune-runs.mjs`; `ops/daily/compact-run.mjs`; `ops/ux-2026-09-12/bin/tick.sh`; `test/daily-prune-runs.test.mjs` (8 tests); `/opt/benchmarkheaven/state/ux-evidence/iter212-d194/prune-receipt.json`; agent board #8 entries #1136 and #1155 | Docker build cache 16 GB + run staging 6.74 GB + iteration logs 1.08 GB; disk 91 % → 86 %, 40 GB → 60 GB free. Implemented by claude-opus — needs a non-claude-opus sign-off, and the receipt it really wants is the `run_retention` block in the next published run's `run-report.json`. |
+| D195 | open | `/opt/benchmarkheaven/state/ux-evidence/iter212-cr62/{canonical,www,legacy}/verification.json` (151/155 per host); `iter89-final2/canonical/cr-62/verification.json` (155/155 at `1a0c256`) | `/models/glm-5.3::max` 309,464 B > 300 KB on all three hosts; the whole heavy class is at the ceiling and rising ~30 KB/8 days. Preview cards unaffected (head is 3,618 B). The fix is a content-vs-SEO decision on the benchmark sheet, not a mechanical edit. |
+| CR-62.4 | in-progress | `…/iter212-cr62/{canonical,www,legacy}/` | Crawler-UA half re-measured today on three hosts; the `notify now` was sent 2026-09-16 22:58 UTC and Florian's confirmation is still the only open acceptance. D195 is attached to this row. |
+| F-176 | verified ((b)) | `/opt/benchmarkheaven/state/ux-evidence/iter212-f176/canonical/` | `ONLY=F-176 verify-fable-pass34-design.mjs` 16/16 at `23967375`; the later gate’s `open` row predates the deploy. |
+| D191 | in-progress | unchanged | Untouched on purpose. Iteration 210 addressed both causes and the 2026-09-25T05:17Z run is the test; nothing here goes near that path, and the last push was well clear of its lock. |
+| D192, D193.2, D193.3 | open | unchanged | Not attempted. |
+
+### D193.2, third group — the three references nobody had looked at yet (10 armed → 7)
+
+Same iteration, in the window while the 00:41 price-drift run held the lock. `aider-polyglot`,
+`mls-bench-lite` and `programbench` were the three in iteration 211's table marked "one each, not yet
+examined". Each was checked for what its broken excerpt was hiding **before** it was replaced, per
+D193.3's lesson, and in all three the answer is the same: **nothing**. The sources say exactly what
+the registry claims; every one failed for a mechanical reason.
+
+| Entry | Why it could never match | What it pins now |
+|---|---|---|
+| `aider-polyglot::snapshot-2026-09-10` | the page's own two sentences with the line breaks removed and `’` replaced by `'`; the extracted text breaks lines mid-sentence (`writing and\nediting\n code,`) | `tests LLMs on 225 challenging Exercism coding exercises across C++, Go, Java, JavaScript, Python, and Rust.` — the half-sentence that carries the protocol, contiguous in the extraction |
+| `mls-bench-lite::30-tasks` | three separate README passages joined with `…`, with the Markdown emphasis markers stripped | `**MLS-Bench-Lite** is a **30-task subset** of the full 140-task suite, spanning **all 12 research domains**.` — the sentence that defines the Lite identity, `**` markers and all |
+| `programbench::1` | an editorial locator note, never a passage of the page at all | the board's hero paragraph, *"Given only a compiled binary and its documentation, agents must architect and implement a complete codebase that reproduces the original program's behavior."* |
+
+**What is deliberately left out of the ProgramBench pin:** the `200 tasks` count and the
+`Updated Sep. 9, 2026` line. Both move whenever ProgramBench evaluates another model, and a guard
+that fires on a new model is D193 over again. The test asserts both that the pin omits them *and*
+that the capture carries them, so the omission reads as a choice rather than an absence — the same
+shape as the LisanBench `num_models` test.
+
+**One correction to my own edit.** The ProgramBench hero paragraph is two lines in the extraction,
+and I first pinned it with its newline. `protocolSourceContent` collapses whitespace on both sides
+before comparing, so the pin matched — but what a reviewer is handed is the *collapsed* string, not
+the stored one. The excerpt is therefore stored collapsed, which is what the review actually sees.
+
+Captures retained with receipts in the existing `data/raw/benchmarks/daily-evidence/2026-09-25-d193-2/`
+(now 12 entries, 13 files). Worth recording because it cost a round: that manifest's `sha256` is the
+**decompressed body** hash and `bytes` the body length, while the daily run's own manifest that the
+files were copied from uses the **gzip** hash — the three new rows were written with the wrong one
+and all 12 now hash-verify against their bodies.
+
+Re-scanned against the same 2026-09-24T19:20Z captures
+(`/opt/benchmarkheaven/state/ux-evidence/iter212-d193-2/scan-v4.json`): **413 protocol references ·
+126 verbatim · 7 failing · 4 retired · 246 latent** — down from 10 failing. The 7 that remain are the
+AA Intelligence Index trio (a Composite-touching registry decision), the two `jevbench*` rows
+(blocked on D193.3) and the two `researchclawbench` references whose excerpts contain literal `…`
+ellipses.
+
+`test/d193-2-protocol-excerpts.test.mjs` grows from 6 to **9 tests**, three of them new: the pins
+resolve and quote their own source and occur exactly once, none of the three sources had changed,
+and the ProgramBench volatile fields are omitted by choice.
+
+### D193.2, fourth group — the two ResearchClawBench references (7 armed → 5)
+
+Iteration 211 filed these as "unfixable as written": both excerpts carried a literal `…` in the
+middle of the passage they claimed to quote. They are fixable — what they needed was the two
+treatments this repair had already established, applied to the two kinds of file:
+
+- **`static/app.js`** (119,736 extracted bytes) is the page's own scoring code, so it is pinned
+  **verbatim**: `function getAverageAgentScore(data, agent) { … scores.reduce((a, b) => a + b, 0) /
+  scores.length : -Infinity; }` — one line after the guard's whitespace collapse, occurring exactly
+  once. This is the passage that states what an agent's headline number *is*: the arithmetic mean of
+  its finite per-task scores. The old excerpt paraphrased it with an ellipsis through the middle.
+- **`data/leaderboard.json`** (355,122 extracted bytes) is tasks, agents and scores with **no prose
+  in it at all**, so it becomes a `literal field` locator — the same treatment LisanBench's
+  `rankings.json` got, and the form `protocol()` excludes from a review packet.
+
+Checked for what they were hiding, as before: **nothing**. Every claim the old excerpt made —
+the `tasks`, `agents`, `scores` and `frontier` keys, `Astronomy_000`, `Physics_003` and the
+`ResearchHarness (Claude-Opus-4.8)` agent — is still in the payload, and the test asserts all seven.
+
+Re-scanned (`…/iter212-d193-2/scan-v5.json`): **412 protocol references · 127 verbatim · 5 failing ·
+4 retired · 246 latent**. The reference count drops by one because the payload is now a locator
+rather than a reviewed reference. `test/d193-2-protocol-excerpts.test.mjs` is at **11 tests**.
+
+**The 5 that remain are the two groups that are decisions, not edits**, and this iteration
+deliberately leaves both: the three `artificialanalysis.ai/methodology/intelligence-benchmarking`
+references, whose failing passage is the Intelligence Index composition table that really did change
+(v4.3 → v4.3.2) and which touches the Composite; and the two `jevbench*` rows, blocked on D193.3 —
+the registry states a metric the pinned v1.1.2 artifact no longer publishes.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D193.2 | in-progress (11 of 16 references repaired) | `…/iter212-d193-2/scan-v5.json`; `test/d193-2-protocol-excerpts.test.mjs` (11 tests); `data/raw/benchmarks/daily-evidence/2026-09-25-d193-2/` (14 entries) | aider-polyglot, mls-bench-lite, programbench and both researchclawbench references done. The 5 left are the AA Intelligence Index trio and the two `jevbench*` rows — a Composite-touching registry decision and D193.3 respectively, neither of which may be repinned mechanically. Implemented by claude-opus; needs a non-claude-opus sign-off. |
