@@ -1197,3 +1197,39 @@ different engine from Codex, which implemented both repairs.
 | CR-165.1 | Independently review CR-163.1–163.4, F-189 and F-193 on the deployed pages. | Current `View by` behavior, the 720 px phone first-row budget, guides, method copy, desktop/mobile and both themes pass on both hosts; save screenshot and DOM receipts and name the live revision. |
 | CR-165.2 | Independently review CR-164.1–164.3, F-184 and F-190 on the deployed pages. | Uniform desktop row heights, readable phone notes, closed/keyboard-openable frozen charts, page-height limit and no overflow pass on both hosts; confirm published benchmark artifacts did not change. |
 | CR-165.3 | Record the different-engine verdict without overstating it. | Only passing rows become verified in `PROGRESS.md`; failing or unproven rows retain their earlier status and a concrete reason. The review and evidence paths are retained under `/opt/benchmarkheaven/state/ux-evidence/`. |
+
+## CR-166 — Public Image JevBench v0.1 release
+
+Source: Florian's "let's release the ImageJevBench!" preserved in `03-CHANGE-REQUESTS-VERBATIM.md`
+and `/home/flori/jobs/imagejev-release-20260925/PROMPT.md`. Seeded by the review gate
+`REVIEW-20260925T192004Z.md` after the work was already live (D206); the acceptance column states
+what that gate actually measured against Florian's words.
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-166.1 | Publish the public route `/image-jev-bench`, in nav, sitemap and canonical/OG tags, linked from `/jev-models`; keep or redirect the WIP preview route. | The route returns 200 on every public host with a self-canonical and OG tags, appears in the live `sitemap.xml` and in the nav, `/jev-models` carries the link, and `/wip-oiifi41ouv1f/image-jev` redirects permanently to it while `/jev-models/multimodal-preview` stays `noindex`. |
+| CR-166.2 | Lead with the ranking: the composite-score section moves above "Split"; split and method details follow. | On the live page the composite bars and the radar both precede the split heading, and the source pins in `test/jevbench-multimodal-preview.test.mjs` assert that order. |
+| CR-166.3 | Add a four-axis comparison radar reusing the `/jev-models` component, with two searchable pickers defaulting to leader vs runner-up. | The live page renders the radar over Intelligence, Calibration, Speed and Cost, with two `role="combobox"` search inputs, a swap control, a table fallback, and defaults `ranked[0]` vs `ranked[1]`. |
+| CR-166.4 | Aggregate data only; no sealed item ids, questions or images; licence credits kept; every published number derivable from the frozen artifact. | `sealed_item_details_included` is `false` and no per-item field reaches the artifact; the four licence-cleanup images are gone from the repository and 404 live; every licence credit and change note is on the page; and each published composite reproduces from the artifact's own axes by the documented method. The changed split is disclosed as such, including its synthetic share and the retired items. |
+
+## CR-167 — Fast-lane banner and Stripe LIVE
+
+Source: Florian's 25 Sep request preserved in `03-CHANGE-REQUESTS-VERBATIM.md`. It supersedes
+CR-140.5's hold on linking `/jev-models/request-evaluation` from the JevBench pages. Seeded by the
+review gate `REVIEW-20260925T192004Z.md` (D206).
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-167.1 | A cookie-banner-style bar on `/jev-models*` and `/image-jev-bench*`: on-brand accent colour, fixed to the bottom, readable in light and dark. | On both public hosts, at 1440 and 390 px in light and dark, the bar is `position: fixed; bottom: 0`, spans the layout viewport, sits above page content, and its body copy clears 4.5:1 contrast against the banner's own background. It appears on no other route. |
+| CR-167.2 | It must not cover content on mobile — reserve space or make it compact. | At 390 px the banner does not hide page content: the last content of the document clears it at full scroll **and** the first result row of the page it sits on remains visible above it. |
+| CR-167.3 | Primary "Don't show again" in localStorage inside try/catch; secondary "Request an evaluation" to the fast-lane page; a × that hides it for the session only. | All three controls are at least 44 px tall and named; "Don't show again" writes `bh-fastlane-banner-hidden` and survives a reload and a route change; × writes `bh-fastlane-banner-closed` in session storage only and a fresh session sees the banner again; the link points at `/jev-models/request-evaluation`, which returns 200. |
+| CR-167.4 | Track view, click and dismiss through the existing Umami analytics. | The browser sends the three named events to a first-party endpoint that answers 204 and forwards them without the visitor's IP address, honouring DNT and Global Privacy Control, and `/privacy` describes exactly what is sent. |
+| CR-167.5 | Stripe must be LIVE, verified by a Checkout Session created and expired without paying; no real charge. | The deployed checkout endpoint produces `cs_live_` Sessions with `livemode: true`, host-matched success/cancel URLs and the registered company name; the live webhook endpoint is enabled and rejects unsigned posts; every verification Session is expired unpaid with no PaymentIntent. |
+
+## CR-168 — Banner event origin behind the ingress
+
+Source: the follow-up fix recorded in `03-CHANGE-REQUESTS-VERBATIM.md`.
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-168.1 | Derive the banner endpoint's expected origin from the ingress-provided public host, as the checkout CSRF guard already does, so events are not dropped behind Coolify. | On both public hosts a real browser's banner beacon is answered 204 and the event reaches Umami; a post whose `Origin` does not match the public origin, or whose host is not an allowed public host, is still refused. |

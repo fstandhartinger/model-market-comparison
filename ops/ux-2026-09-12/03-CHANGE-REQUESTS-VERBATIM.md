@@ -1753,3 +1753,61 @@ both public hosts at desktop and phone widths in light and dark, check the relev
 acceptance criteria and retained screenshots, and record a pass or a concrete failure for
 each row. A prior implementer receipt alone does not close a row. Keep artifact hashes,
 scores, official ranks, and the Jev-class rule unchanged.
+
+## CR-166 — "let's release the ImageJevBench!" (Florian, 25 Sep 2026, ~18:00 UTC)
+
+Preserved from `/home/flori/jobs/imagejev-release-20260925/PROMPT.md`. Florian's approval — the
+top-five preview rule was satisfied because he had seen the clean-split preview (PR #21, CR-157).
+Seeded into this document by the review gate `REVIEW-20260925T192004Z.md`, which found the work
+already live with no entry here and no ledger row (D206).
+
+> Florian: "let's release the ImageJevBench!" This is the approval that was pending (top-5 preview
+> rule satisfied: he saw the clean-split preview). […]
+> A) Page. Merge #21's content (or supersede it), then:
+>    1. Add the public route /image-jev-bench (it is 404 today and a test asserts that: flip the
+>       test). Add it to nav, sitemap and canonical/OG tags, and link it from /jev-models. Keep the
+>       WIP preview route or redirect it.
+>    2. Move the composite-score section (the leader ranking) up to where the "Split" section is
+>       now, so the ranking is the first thing after the intro. Split and method details move below it.
+>    3. Add comparison radar charts over Intelligence, Calibration, Speed and Cost, like the
+>       "Compare two systems" radar on /jev-models. Reuse that component: two searchable system
+>       pickers, default leader vs runner-up.
+>    4. Same data guarantees as before: aggregate only, no sealed item ids, questions or images;
+>       licence credits kept.
+> B) Launch video. […] It must show the current clean-split ranking […] Show only public-split
+> images whose licence allows it. The four files removed in the licence clean-up (mind2web-5,
+> screenspot-337, geometry-0, clevr-1) and any image of the same sources/licences must not appear.
+> Sealed items never appear. […] End card: the ACTUAL measured cost […] never present an estimate
+> as a measurement. […] Do NOT post publicly; he posts himself or says "go".
+> Verify live (desktop/mobile, light/dark) and send screenshots via ~/bin/notify.
+
+## CR-167 — Fast-lane banner on JevBench + ImageJevBench, and Stripe in LIVE mode (Florian, 25 Sep 2026)
+
+Preserved from `/home/flori/jobs/fastlane-banner-live-20260925/PROMPT.md`. This is the newer
+instruction that supersedes CR-140.5's "do not add the JevBench page link until Florian approves
+the preview": Florian here asks for exactly that link. Seeded by the review gate
+`REVIEW-20260925T192004Z.md` (D206).
+
+> 1. Banner, like a cookie banner:
+>    - An intense, on-brand accent colour, fixed at the bottom, readable in light and dark, and
+>      **not covering content on mobile (reserve space or make it compact)**.
+>    - Default/primary button "Don't show again": remembered in localStorage, wrapped in try/catch.
+>      Secondary button: "Request an evaluation", linking to the existing fast-lane request page.
+>    - A close ×: hides it for this session only.
+>    - Copy (polish it, keep the meaning): "Are you a model developer? Want an extra evaluation, or
+>      your model evaluated sooner? Running this benchmark takes a lot of compute and time, so we
+>      charge for priority runs. Request an extra evaluation →"
+>    - Track impressions and clicks with the existing Umami analytics (event names
+>      fastlane_banner_view/click/dismiss).
+> 2. Stripe must be LIVE, not test mode. Check the configured keys and the checkout session mode
+>    (livemode:true), webhook endpoint (live), price objects, success/cancel URLs, receipts,
+>    business name and statement descriptor. […] Verify with a live Checkout Session that you create
+>    and then expire without paying. Do NOT make a real charge.
+> 3. Verify live on both pages: desktop and mobile, light and dark; dismiss persists; the link
+>    works; the checkout opens in live mode. Send screenshots to Florian via ~/bin/notify.
+
+## CR-168 — Banner event origin behind the ingress (follow-up fix, 2026-09-25)
+
+Not a separate Florian request: the follow-up PR #33 to CR-167, because the banner's analytics
+endpoint compared the `Origin` header against Next.js's internal localhost URL behind Coolify and
+therefore dropped every event. Seeded by the review gate `REVIEW-20260925T192004Z.md` (D206).

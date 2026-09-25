@@ -11977,3 +11977,47 @@ this sign-off: production-build pass is receipt- and deploy-evidenced (no build 
 the 390 px frozen-page height (14,890 px) is outside the as-written CR-164.2 budget, which
 binds only at 1440 px; screenshot parity was compared manually over the saved PNGs; the
 shared browser was used only under `flock` with all contexts closed.
+
+## Review gate 20260925T192004Z (claude-opus) — CR-166/CR-167 reviewed for the first time
+
+Report: `REVIEW-20260925T192004Z.md`. Range `d78ddfd7..f81ad56a`, 18 commits / 39 files. Local gates
+green (`build-dataset` rc 0 at 871/674/96/3,121; `npm test` 1,386 tests, 1,385 pass, 0 fail, 1 skip;
+`tsc` rc 0); all three hosts served `f81ad56a` at 19:21 UTC. Verifiers, **all groups, both hosts**:
+pass-34 **70/74** (F-181 only), pass-35 **190/190**, `verify-cr-164` **24/24**, and this gate's own
+banner harness **170/172**. Evidence:
+`/opt/benchmarkheaven/state/ux-evidence/review-20260925T192004Z/`.
+
+The Kimi CR-165 sign-off was taken at `ce53174f`; two product deploys landed after it — the public
+Image JevBench release (CR-166) and the fast-lane banner (CR-167 + CR-168). Neither had been
+reviewed. Not accepted: **D207** and **D208** are new, D205 needs Florian, D206 only partly closed.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| F-184 | **verified** | `pass34-{canonical,legacy}/verification.json` (70/74, F-184 green); `cr164-{canonical,legacy}/` 24/24 | codex-luna's CR-164 work signed off here on the live deploy. All 91 capability rows one height in both desktop themes on both hosts. |
+| F-190 | **verified** | `pass35-{canonical,legacy}/verification.json` (F-190 14/14 per host); `banner-*/metrics.json` | Pinned `/jev-models/v1.4.2` measures **12,210 px** at 1440 in both themes *including* the banner's 73 px reserved padding, against the 14,000 budget. |
+| F-189 | **verified** (re-proven) | `pass35-{canonical,legacy}/` (F-189 48/48 per host) | Re-proven two deploys after the Kimi sign-off. See CR-163.1 below: the checks pass, the row is not visible. |
+| F-183, F-191, F-192, F-182 | **verified** (unchanged) | `pass35-*` (48/48, 60/60, 16/16); `pass34-*` (F-182 green) | Re-run live at this revision on both hosts. |
+| CR-164.1, CR-164.2, CR-164.3 | verified (unchanged) | `cr164-{canonical,legacy}/verification.json` 24/24 | Independently re-proven here, not read from the earlier receipt. |
+| CR-163.2, CR-163.3, CR-163.4 | verified (unchanged) | `pass35-*` F-189 group | Guides, summary, full method and the View-by switch all green. |
+| CR-163.1 | **open** | `banner-{canonical,legacy}/metrics.json`, `mobile_{light,dark}-hub.png` | Was verified at 647 px at 18:11. Live now: first `[data-bh-jev-class-list] > li` at y **699**, height 79, bottom 778 — and the banner's top edge is at y **699**. The 720 px number still holds; the row is entirely behind the banner. See D207. |
+| CR-166.1 | **verified** | `image-jev-bench-served.html`; live 200 + self-canonical + OG on all hosts; `sitemap.xml` 760 URLs | `/wip-oiifi41ouv1f/image-jev` **308**s to `/image-jev-bench`; `/jev-models/multimodal-preview` still `noindex, nofollow`; nav and the `/jev-models` link present. |
+| CR-166.2 | **verified** | served HTML heading offsets | `bars-heading` (26,411) and the radar both precede `split-heading` (45,761). |
+| CR-166.3 | **verified** | served HTML | Four-axis radar, two `role="combobox"` pickers, swap control, table fallback, defaults Jev-Omni vs decider-2b-vision (ranks 1 and 2). |
+| CR-166.4 | **verified** | `imagejev-reconciliation.txt` | Every count reconciles exactly (228/456/93 by family; retired 45+31+17; 500+184=684; 62+299=361; 123+333=456; synthetic 483 = 184+299 = 70.6140%). **All twelve published composites reproduce from the artifact** by the documented method, the nine gated ones once the gate is applied as ∏ min(1, axis/50)² over intelligence/speed/cost. The four licence-cleanup images 404 live. `sealed_item_details_included` false, no per-item field. The page itself discloses the 70.6% synthetic share, the 93 retired items, the easier-fresh-items caveat and that the split is not comparable with the earlier preview. |
+| CR-167.1, CR-167.3, CR-167.4, CR-168.1 | **verified** | `banner-{canonical,legacy}/verification.json` 170/172 per host | Fixed bottom bar at `z-index: 70`, full layout width, 8.99:1 copy contrast, three ≥44 px named controls, absent from `/` and `/benchmarks`, session-only ×, permanent "Don't show again" that holds across routes, beacon answered **204** in every context, zero page errors. |
+| CR-167.2 | **open** | same receipts (the 2 failures per host) | "Not covering content on mobile" is unmet. See D207. |
+| CR-167.5 | **implemented** | `request-evaluation-served.html`; `/home/flori/jobs/fastlane-banner-live-20260925/STRIPE-VERIFY.md` | No Stripe credential in this session and this gate did **not** create a live Checkout Session — that is not a read-only review action. Externally checkable parts hold (200, no publishable key, no TEST MODE notice, $49/$99 tiers). Owed an independent live-mode read. |
+| D207 | **open (new)** | `banner-{canonical,legacy}/`, `mobile_{light,dark}-hub.png` | The 145 px phone banner (17% of a 390×844 viewport) covers the whole first Jev-class row on `/jev-models`, both themes, both hosts — the defect CR-163 fixed five hours earlier. CR-166's new Image JevBench head line added the 52 px that moved the row from 647 to 699. **Not mechanically fixable:** at 647 the row's bottom is 726, still 27 px behind a 699 banner top; clearing a 79 px row needs a banner ≤118 px at y 647 or ≤66 px at y 699, and 66 px cannot hold Florian's copy above a 44 px button row. Choosing between CR-163's first-viewport intent and CR-167's dictated copy is the design authority's call. pass-35 reads 190/190 because its check is a document offset and cannot see a fixed overlay. |
+| D208 | **open (new)** | `CR-67.5-CONSENT-DECISION.md` §3; `components/FastlaneBanner.tsx`; `app/api/fastlane-banner-event/route.ts`; the `test/visit-stats.test.mjs` rename | The record's own reopening list names "client-side script/beacon" and "an external analytics provider"; the banner adds a `sendBeacon` and forwards to a Umami service on a second host. The record is unchanged; only the test *name* that carried its premise was rewritten. The implementation is careful (event name + page group only, origin and host allow-lists, 256-byte cap, DNT/GPC honoured client **and** server, no IP forwarded, pinned Umami origin, `/privacy` updated the same day) — the gap is the unrevisited decision, which needs Florian or a fresh record. Residual: the endpoint is unauthenticated, so the three counters can be inflated by a non-browser client (accuracy, not privacy). |
+| D206 | **open (partly closed)** | `03`/`04` diffs; `*.bak-gate-20260925T192004Z` | CR-163–165 were seeded by the workstream. CR-166, CR-167 and CR-168 repeated the pattern (claimed in job `RESULT.md` and PR titles, absent from commit subjects, `03`, `04` and this ledger) while shipping a public benchmark release and a monetisation banner; this gate seeded all three from Florian's verbatim prompts. Still open: CR-151, CR-153, CR-156, CR-158, CR-143, CR-148, CR-152 have no requirement entry. Recorded conflict: CR-140.5's "do not add the JevBench page link" is superseded by CR-167, Florian's later same-day request for exactly that link. |
+| D205 | **open — needs Florian** | `d205-credits.txt` | `/api/v1/credits` 19:31 UTC: 430.9112268 − 430.774278105 = **USD 0.137** left (0.81 at 10:24, 0.475 at 13:53). Re-queued to the digest with Why/Steps/Time. Not a code defect. |
+| F-181 | open (unchanged) | `pass34-{canonical,legacy}/verification.json` | Four contexts per host, `small: null` — `[data-bh-jev14-cost-axis]` is still absent from the `only3d` hub. |
+| D200, D201, D202, D204 | implemented (unchanged) | — | Still awaiting an unattended daily run that contains them; none since 08:37. |
+| D192, F-187, F-193, CR-152.1, CR-62.4, CR-140.5 | unchanged | — | Not re-litigated. CR-140.5's link clause is superseded by CR-167 (above). |
+
+| D209 | **open (new)** | `git diff` of `ops/ux-2026-09-12/bin/{pick-engine,iterate}.sh` at 19:45 UTC | Uncommitted in the shared checkout and not touched by this gate (one-writer rule): `pick-engine.sh`'s default branch is flipped back from `codex-luna` first to `claude-opus` first **with Florian's 25.09.2026 directive comment deleted**, and `iterate.sh` changes the Codex model from `gpt-6-sol` to `gpt-6-luna` while the line above still reads "Codex GPT-6 Sol xhigh for all roles". Both contradict the decision the 15:50 gate committed at `b92b3126`, and no newer authorisation appears in `/home/flori/DECISIONS.md` or either requirement document. If they land, the next tick can pick `claude-opus` again — spending the session limit Florian asked to spare and risking a self-sign-off, since only a different engine may set `verified`. |
+
+No `ALL-ACCEPTED`: D207 is a live defect on the flagship page's first phone screen, D208 and D205
+need Florian, D206 is only partly closed, D209 is uncommitted in the shared checkout, F-181 and D192 are open,
+four D-rows await a daily run, and
+X6's line-by-line audit still has no passing receipt from any gate.
