@@ -6,6 +6,8 @@ import { validatePrioritySubmission } from '../../../../lib/priority-evaluation.
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
+const BENCHMARK_LABELS: Record<string, string> = { jevbench: 'JevBench', imagejevbench: 'ImageJevBench' };
+
 const json = (body: unknown, status = 200) => NextResponse.json(body, { status, headers: { 'Cache-Control': 'no-store' } });
 
 function activeStripeConfig() {
@@ -38,7 +40,8 @@ async function createCheckoutSession(input: {
   p.set('line_items[0][price_data][tax_behavior]', 'exclusive');
   p.set('line_items[0][price_data][unit_amount]', String(input.quote.totalAmount));
   p.set('line_items[0][price_data][product_data][name]', 'Priority model evaluation');
-  p.set('line_items[0][price_data][product_data][description]', `Earlier scheduling for ${input.benchmarks.join(' and ')}`);
+  const benchmarkNames = input.benchmarks.map((b) => BENCHMARK_LABELS[b] ?? b);
+  p.set('line_items[0][price_data][product_data][description]', `Earlier scheduling for ${benchmarkNames.join(' and ')}${input.visibility === 'private' ? ' (private report)' : ''}`);
   p.set('line_items[0][quantity]', '1');
   p.set('client_reference_id', input.id);
   p.set('metadata[priority_request_id]', input.id);
