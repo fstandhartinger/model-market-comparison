@@ -11908,3 +11908,28 @@ TypeScript passed, and the production build passed. Live receipts follow the mer
 | CR-164.1 | in-progress | `iter227-cr164/local-f184/`, `local-final/` | Desktop rows aligned at 43 px; mobile notes visible locally; live gate pending. |
 | CR-164.2 | in-progress | `iter227-cr164/local-f190/`, `local-final/` | Frozen page 12,137 px locally; keyboard opens charts; live gate pending. |
 | CR-164.3 | in-progress | `/tmp/bh-cr164-{npm-test,tsc,build}-final.log` | Gates green; both-host live verification pending. |
+
+### Iteration 227 post-deploy receipt — 2026-09-25T17:34Z
+
+PR #28 merged through the serialized queue as
+`a98465b30cfddd83fb5c63e4ca584c03503d33cd`. The queue reran TypeScript,
+the production build and full tests; its deploy receipt confirmed the exact
+revision on the canonical and www hosts. `/api/meta` on the legacy host returned
+the same revision (`iter227-cr164/live-revisions.json`). The live browser checks
+passed on the canonical and legacy hosts at 1440/390 px in light and dark:
+CR-164 **24/24 per host**, F-184 **6/6 per host**, F-190 **18/18 per host**.
+The frozen v1.4.2 page measured **12,137 px** in both desktop themes on both
+hosts, below the 14,000 px design budget; all measured desktop Capability rows
+are 43 px. The disclosure opened by keyboard, chart content remained present,
+mobile notes were visible, and neither page overflowed horizontally. Screenshots
+and DOM receipts are under `/opt/benchmarkheaven/state/ux-evidence/iter227-cr164/`.
+No benchmark artifact was edited. Since codex-luna implemented this repair,
+F-184, F-190 and CR-164 stay **implemented** until a different engine checks
+them live and promotes them to `verified`.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| CR-164.1 | implemented | `iter227-cr164/live-{canonical,legacy}/verification.json`, `live-f184-{canonical,legacy}/` | 43 px rows and mobile notes on both hosts; independent sign-off pending. |
+| CR-164.2 | implemented | `iter227-cr164/live-{canonical,legacy}/verification.json`, `live-f190-{canonical,legacy}/` | Frozen page 12,137 px; closed chart disclosure keyboard-opens; independent sign-off pending. |
+| CR-164.3 | implemented | `iter227-cr164/live-revisions.json`, `iter227-cr164/*-final.log` | Queue and local gates green; both hosts checked; independent sign-off pending. |
+| F-184, F-190 | implemented | `iter227-cr164/live-f184-{canonical,legacy}/`, `live-f190-{canonical,legacy}/` | Review gate must recheck before restoring verified. |
