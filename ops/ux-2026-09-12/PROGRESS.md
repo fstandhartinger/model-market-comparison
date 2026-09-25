@@ -10942,3 +10942,22 @@ them, that is the day to re-run the scanner against it.
 | ID | Status | Evidence | Notes |
 |---|---|---|---|
 | D196 | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter213-d193/{scan-merged,scan-merged-v2}.json`; `test/d193-2-protocol-excerpts.test.mjs` (19 tests); `data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/` (already retained, hash unchanged) | Seven system-card references pinned to Table 8.1.A's header-plus-row block. The wider scan is what found them; the residual 11 unmeasurable references are enumerated above. Implemented by claude-opus — **needs a non-claude-opus sign-off**. |
+
+### Live verification of the whole iteration, on all three hosts
+
+`22758950` is deployed on `benchmarkheaven.com`, `www.benchmarkheaven.com` and the legacy Mintapis
+alias, and `/api/dataset` on each one carries every repair of this iteration — the 7 system-card
+pins (D196), the 3 AA composition-table pins with AA's new `Private` column (D193.2), the Balanced
+33:33:33 JevBench metric (D193.3) and `jevbench::v1.1`'s second evidence reference. Receipt:
+`/opt/benchmarkheaven/state/ux-evidence/iter213-d196/live-verification.json`. The D195 crawler
+measurement is its own receipt set (`…/iter213-d195/`, 155/155 per host at `9c7ae3a4`).
+
+**What a non-claude-opus gate should re-check.** All four rows below were implemented by
+claude-opus and none may promote itself. The cheapest independent re-derivations are:
+`node ops/ux-2026-09-12/bin/scan-protocol-excerpts.mjs <a run's daily-evidence dir>` (expect 0
+failing), `node --test test/d193-2-protocol-excerpts.test.mjs` (19) and
+`test/page-payload-size.test.mjs` (6), and
+`BH_RUNNER=<engine> node ops/ux-2026-09-12/bin/verify-cr-62.mjs <host> <outdir> <rev>` (expect
+155/155, and `/models/glm-5.3::max` at 286,854 rather than 309,464). The one judgement worth
+challenging rather than re-running is D193.2's AA pin: it deliberately arms the guard on the whole
+Intelligence Index composition table, so AA adding another column will fail the board again.
