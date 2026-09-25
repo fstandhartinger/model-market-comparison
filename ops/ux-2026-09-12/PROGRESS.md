@@ -11516,3 +11516,55 @@ dataset again (a `data/raw` edit whose dataset is restored rather than rebuilt m
 every deploy), re-run `npm test` and `npx tsc --noEmit -p .`, and push **the explicit sha**
 (`git push origin <sha>:refs/heads/main`), not `HEAD` — the self-heal repair job shares this checkout
 and a `HEAD` push published its commit once already today.
+
+## Iteration 217 (claude-opus, work) — D203: the launcher handed the next agent a stopped rebase
+
+This iteration opened on a wedged checkout: `UU data/dataset.json`, a detached HEAD, and iteration
+216's **eight gated commits stranded** mid-rebase. It was not another writer. `iterate.sh:25` starts
+every iteration with `git pull --rebase --autostash -q origin main || echo "warn: pull failed"`, the
+daily published `5dbcd095` ("Refresh Benchmark Heaven data 2026-09-25") at 09:53 while those commits
+were unpushed, and the 10:00 pull stopped replaying at commit 3 of 8. The `||` swallowed it and
+launched the agent onto the conflict anyway.
+
+**First, iteration 216's work was landed.** Its own push plan prescribed the resolution and it is the
+one the conflict deserved independently: `data/dataset.json` is generated, so it was resolved by
+taking the published side and re-running `build-dataset.mjs` so `5273989c`'s five `registry.json`
+entries are re-projected — never hand-merged. Verified before continuing: the rebuilt dataset differs
+from the published one by **exactly 24 lines** (the twenty `access` lines and the two generated
+timestamps), and the auto-merged `registry.json` differs from the published one by **exactly the
+twenty** access lines and nothing else. Gates re-run on the rebased tree: `npm test` **1,355 tests,
+1,354 pass, 0 fail, 1 skipped** rc 0 · `npx tsc --noEmit -p .` rc 0 · `build-dataset.mjs` rc 0,
+871 / 674 / 96 / 3,121 (the counts moved with the refreshed data, not with the edit). Pushed as the
+**explicit sha** `ef2790b5:refs/heads/main`, not `HEAD`, because the self-heal job shares this
+checkout — `5dbcd095..ef2790b5`, all eight commits this iteration's predecessor's own work.
+
+**Then the cause.** A stopped rebase does not leave the checkout as it found it, and two things make
+that worse than a plain failure: an agent that does not notice can commit the conflict markers or
+`git rebase --abort` the work away, and every other job sharing this checkout — the merge queue, the
+self-heal repair job — needs a clean index and blocks until someone clears it. The launcher now
+restores the pre-pull state and *tells the agent*: `--autostash` means `git rebase --abort` returns
+the branch, the local commits and another writer's uncommitted files exactly as they were, and the
+prompt carries the reason plus the only correct resolution for the generated dataset. The three
+outcomes are distinguished — conflict-and-aborted, could-not-abort, and pull-failed-without-a-rebase
+(network, a lock, a hook) — because a note that claims an abort that did not happen is its own defect.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D203 | implemented | `test/d203-iterate-rebase-abort.test.mjs` 4/4; negative check below | claude-opus, iteration 217 (implementer — **needs another engine**). |
+
+The test drives the **real** `iterate.sh` against a scratch origin/work pair reproducing this
+morning's shape (ahead 1, behind 1, conflicting generated file), which is why `iterate.sh` now takes
+`BH_UX_REPO`/`BH_UX_STATE`/`BH_UX_LOGS` overrides defaulting to the real paths. It asserts the pull
+really did conflict before asserting the repair, so it cannot pass on a scenario that never failed,
+and it covers the case that matters for a shared checkout: a conflict **with another writer's tracked
+and untracked uncommitted files present** — both survive, and no stash is orphaned.
+
+**Negative check (a suite that passes on the defect proves nothing).** Run against a copy of the
+launcher with the block reverted to the old one-liner, the two defect-targeting tests **fail** and the
+two control tests (clean fast-forward, unreachable remote) pass on both versions — those paths were
+already acceptable. Final gates: `npm test` **1,359 tests, 1,358 pass, 0 fail, 1 skipped** rc 0 ·
+`npx tsc --noEmit -p .` rc 0 · `build-dataset.mjs` rc 0, 871 / 674 / 96 / 3,121, timestamp-only churn
+(discarded, not committed).
+
+D202's production proof is still the next daily's `source-health.json`: those five ids must read
+`retained_manual_snapshot`. That is unchanged by this iteration and still pending.
