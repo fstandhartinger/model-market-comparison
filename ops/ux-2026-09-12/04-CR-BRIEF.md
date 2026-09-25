@@ -1196,3 +1196,13 @@ win where a job prompt differs.
 | CR-159.2 | Independently verify the deployed F-182 field-name fix | On both hosts at 1440/390 in light/dark, every visible `usage.input_tokens` mention is formatted as a field name in `<code>`, none appears as raw prose, and the page has no horizontal overflow. Implementer and verifier are different engines. |
 | CR-160.1 | Audit MentalHealthBench from the bookmark pointer | Read OpenAI's first-party method/results and licence/redistribution terms; establish benchmark version, metric/direction, model identity, date and exact result provenance before publishing any number. If evidence or reuse rights are insufficient, record the reason and publish no score. |
 | CR-160.2 | Integrate only verified results through the normal intake | Add versioned registry and refresh recipe, raw capture and source-backed results where permitted; build/test/typecheck and an independent both-host live check at desktop/mobile light/dark. The bookmark post itself is never treated as a measurement. |
+
+## CR-161 — Frozen JevBench page height and chart access (2026-09-25)
+
+Source: F-190 in `DESIGN-DIRECTIVES.md`, with the regression measured by
+`REVIEW-20260925T134004Z.md`. This row tracks a repair of that accepted design directive;
+it adds no scoring or release-data change.
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-161.1 | Keep the artifact-derived capability, cost and speed charts reachable from the frozen v1.4.2 page without letting the secondary suite bury the board or stretch the initial page past its design budget. | On the pinned page, the board precedes the secondary chart disclosure; the disclosure is keyboard and touch operable, reveals both scatter plots and the cost axis, and starts collapsed. At 1440 px in light and dark, initial document height is below 14,000 px. At 390 px in light and dark, neither state overflows horizontally. The artifact, official ranking, metadata and live hub remain unchanged. A different engine checks both production hosts after merge. |

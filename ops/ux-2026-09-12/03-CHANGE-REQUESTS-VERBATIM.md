@@ -1776,3 +1776,13 @@ scope summaries**, not invented quotations from Florian. The acceptance rows are
   `https://x.com/OpenAI/status/2102837574092161102` linking to
   `https://openai.com/index/introducing-mentalhealthbench/`. As with every bookmark intake,
   that post is a discovery pointer; result values require first-party source and reuse review.
+
+## CR-161 — Restore the pinned JevBench page's release focus (2026-09-25)
+
+This is a **source-backed work item, not a new verbatim Florian quotation**. The source is
+`DESIGN-DIRECTIVES.md`, F-190 (Fable pass 35), and the independent
+`REVIEW-20260925T134004Z.md`. F-190 requires the frozen `/jev-models/v1.4.2` page to lead
+with its board, omit live-dated context, retain artifact-derived capability views, and
+stay below 14,000 px at a 1440 px viewport. The 25 Sep CR-158 merge raised the measured
+page height to 14,876 px. CR-161 restores that height without altering the frozen
+artifact, scoring, metadata, top-five order or live hub layout.

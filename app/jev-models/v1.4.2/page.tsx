@@ -56,6 +56,9 @@ export default async function JevModelsV142Page() {
       </p>
     </header>
     <JevModelsV14Board artifact={view.artifact} sha256={view.sha256} previous={{ revision: 'v1.4.1', keys: (await readJevbenchV141()).artifact.systems.map((row) => row.key) }} capabilityHref="#jev14-capability-views" sealedFamilyN={view.sealedFamilyN} />
-    <JevCapabilityChart systems={view.systems} revision={view.revision} />
+    <details className="mt-8" data-bh-jev-pinned-capability-disclosure>
+      <summary className="cursor-pointer text-accent">Explore capability, cost and speed for this release</summary>
+      <JevCapabilityChart systems={view.systems} revision={view.revision} />
+    </details>
   </>;
 }

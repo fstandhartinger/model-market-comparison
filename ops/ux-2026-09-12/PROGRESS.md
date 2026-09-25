@@ -11870,3 +11870,33 @@ deployed. Evidence paths are relative to `/opt/benchmarkheaven/state/ux-evidence
 
 No `ALL-ACCEPTED`: the CR-160 intake, F-190 and the other open rows remain. This iteration
 created no large intermediate data beyond a local `.next` build, which is removed before exit.
+
+## Iteration 224 (codex-luna, work) — CR-161 / F-190 pinned-page height
+
+The 13:40 review found the frozen v1.4.2 page at 14,876 px on a 1440 px desktop after
+CR-158. The page still has its frozen board and the artifact-derived capability suite.
+The secondary suite is now a native disclosure after the board: readers see the official
+ranking first and can open all capability/cost/speed views on the same page. The frozen
+artifact, official score, ranking, preview metadata and live hub are untouched. The
+old F-190 comparison of the pinned board's first bar to the *live hub's* first bar is
+superseded by Florian's later CR-158 page order: the live hub now leads with a different
+Capability ranking and two charts, while the pinned release leads with its frozen board.
+
+Local evidence: `/opt/benchmarkheaven/state/ux-evidence/iter224-codex-f190/`.
+`verify-cr-161.mjs` in the shared Chrome (desktop 1440 and phone 390, light/dark)
+passed **4/4**: initial desktop height **12,091 px**, disclosure collapsed, board before
+the disclosure, both scatter plots and the cost axis visible after opening, touch and
+Enter/Space operation, and no page overflow in either state. Screenshots and the structured
+receipt are retained. Gates:
+`node scripts/build-dataset.mjs` rc 0 (871 models / 674 families / 96 providers /
+3,121 offers), `npm test` 1,386 total / 1,385 pass / 0 fail / 1 skip,
+`npx tsc --noEmit -p .` rc 0, `npm run build` rc 0. Timestamp-only dataset churn was
+discarded.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| CR-161.1 | in-progress | `iter224-codex-f190/local/verification.json`; local screenshots and gate logs | Local browser and gates pass. Production merge and different-engine sign-off remain. |
+| F-190 | in-progress | same | The measured 14,000 px height regression is repaired locally; only a different engine may restore `verified` after live deployment. |
+
+No `ALL-ACCEPTED`: the queued CR-159 ledger PR and the other open rows still require their
+own acceptance work.
