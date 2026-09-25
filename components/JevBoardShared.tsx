@@ -108,7 +108,10 @@ export function JevScoreBar({ row, reference = false, metric = 'score', heat, is
     data-bh-jev14-bar={row.key} data-bh-jev14-bar-score={s == null ? '' : s.toFixed(3)} data-bh-jev14-bar-metric={metric === 'score' ? undefined : metric} data-bh-jev14-reference={reference ? '1' : undefined} aria-label={label}>
     <span className="bh-muted tabular col-start-1 row-start-1 text-right text-xs">{row.rank ?? ''}</span>
     <span className="col-start-2 row-start-1 min-w-0 sm:truncate sm:text-right" title={row.display}>
-      <Link href={`/jev-models/${encodeURIComponent(row.key)}`} title={row.display} className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent hover:decoration-current">{name ?? shortName(row.display)}</Link>
+      {/* Florian 25 Sep 2026: the name opens the model's best source (repo, Hugging Face or vendor docs); rows without one keep the system page. */}
+      {row.repo
+        ? <a href={row.repo} target="_blank" rel="noopener noreferrer" title={`${row.display} — opens ${row.repo.replace(/^https:\/\/(www\.)?/, '').split('/')[0]}`} className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent hover:decoration-current" data-bh-jev-source={row.key}>{name ?? shortName(row.display)}</a>
+        : <Link href={`/jev-models/${encodeURIComponent(row.key)}`} title={row.display} className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent hover:decoration-current">{name ?? shortName(row.display)}</Link>}
       {row.priority_run === true && <span className="bh-thin-tag ml-1.5 align-middle" data-bh-jev14-priority-run={row.key}>priority run</span>}
       {!row.ranked && <span className="bh-muted whitespace-nowrap" title={row.not_ranked_because ?? undefined}> ({NOT_RANKED[row.listing] ?? row.listing})</span>}
       {row.api_flag && <span className="bh-thin-tag bh-flag-tag ml-1.5 align-middle" title={row.api_exposure_note ?? apiExplanation}>API</span>}

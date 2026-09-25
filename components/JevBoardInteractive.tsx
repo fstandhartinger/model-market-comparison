@@ -254,23 +254,26 @@ function SystemName({ row }: { row: JevBoardViewRow }) {
   const name = shortName(row.display);
   const rawVariant = row.display.startsWith(name) ? row.display.slice(name.length).replace(/^[ ,]*\(?|\)$/g, '') : '';
   const variant = rawVariant && !row.author.includes(rawVariant) ? rawVariant : '';
-  const href = `/jev-models/${encodeURIComponent(row.key)}`;
+  const page = `/jev-models/${encodeURIComponent(row.key)}`;
+  // Florian 25 Sep 2026: the name opens the model's best source; the system page stays one click away ("details").
+  const href = row.repo ?? page;
+  const NameLink = ({ children }: { children: ReactNode }) => row.repo
+    ? <a href={row.repo} target="_blank" rel="noopener noreferrer" title={row.display} data-bh-jev-source={row.key}>{children}</a>
+    : <Link href={page} title={row.display}>{children}</Link>;
   const cut = name.lastIndexOf(' ');
   // The † stays outside the link but shares a no-wrap box with the final word.
   return <div>
     <span className="font-semibold" title={row.display}>
-      {cut > 0 && <Link href={href} title={row.display}>{name.slice(0, cut + 1)}</Link>}
+      {cut > 0 && <NameLink>{name.slice(0, cut + 1)}</NameLink>}
       <span className="whitespace-nowrap">
-        <Link href={href} title={row.display}>{cut > 0 ? name.slice(cut + 1) : name}</Link>
+        <NameLink>{cut > 0 ? name.slice(cut + 1) : name}</NameLink>
         {row.note && <NoteMarker row={row} note={row.note} />}
       </span>
     </span>
     {row.priority_run === true && <span className="bh-thin-tag ml-2 align-middle" data-bh-jev14-priority-run={row.key}>priority run</span>}
     {row.api_flag && <span className="bh-thin-tag bh-flag-tag ml-2 align-middle" data-bh-jev14-api-flag={row.key} title={row.api_exposure_note ?? apiExplanation} aria-label={apiExplanation}>API</span>}
     {row.isNew && <span className="bh-new-tag ml-2 align-middle" data-bh-jev14-new={row.key}>new</span>}
-    <span className="bh-muted block text-[11px] leading-tight">by {row.repo
-      ? <a href={row.repo} target="_blank" rel="noopener noreferrer" className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent">{row.author}</a>
-      : row.author}{variant ? ` · ${variant}` : ''}</span>
+    <span className="bh-muted block text-[11px] leading-tight">by {row.author}{variant ? ` · ${variant}` : ''}{href !== page && <> · <Link href={page} className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent" data-bh-jev-details={row.key}>details</Link></>}</span>
   </div>;
 }
 

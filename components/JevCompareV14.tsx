@@ -9,7 +9,7 @@ import { JEV_TYPE_LABEL, JEV_TYPE_VAR } from "./jevTypes";
 // pinned v1.4 artifact; no sealed item text, gold or per-item result reaches this component. The pair lives in ?compare=a,b.
 
 export type JevCompareRow = {
-  key: string; name: string; cls: string; rank: number | null; listing: string; score: number | null;
+  key: string; name: string; cls: string; rank: number | null; listing: string; score: number | null; source?: string | null;
   axes: Record<"intelligence" | "calibration" | "speed" | "cost", number | null> | null;
   tiers: Record<"easy" | "standard" | "judge" | "hard" | "sealed", number | null>;
   hard: Record<string, { accuracy: number | null; n: number }> | null;
@@ -162,7 +162,7 @@ export function JevCompareV14({ rows, sealedDecisions, hardDecisions, fixedPair 
       </div>}
       <div className="mt-3 flex flex-wrap items-start justify-between gap-2">
         <ul className="space-y-1 text-[13px]" aria-label="Legend" data-bh-jev14-compare-legend>
-          {pair.map((r, k) => <li key={k}><Swatch s={s[k]} /><b>{k === 0 ? "A" : "B"}: {r.name}</b> <span className="bh-muted" data-bh-jev14-class={r.cls} data-bh-jev14-class-labelled={JEV_TYPE_LABEL[r.cls] ? '1' : '0'}>— {JEV_TYPE_LABEL[r.cls] ?? <code title="Class named in the v1.4.2 artifact; description pending">{r.cls}</code>} · </span><span className="whitespace-nowrap" data-bh-jev14-compare-score={r.score === null ? "" : r.score.toFixed(3)}>Score {one(r.score)} ({status(r)})</span></li>)}
+          {pair.map((r, k) => <li key={k}><Swatch s={s[k]} /><b>{k === 0 ? "A" : "B"}: {r.source ? <a href={r.source} target="_blank" rel="noopener noreferrer" className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent" data-bh-jev-source={r.key}>{r.name}</a> : r.name}</b> <span className="bh-muted" data-bh-jev14-class={r.cls} data-bh-jev14-class-labelled={JEV_TYPE_LABEL[r.cls] ? '1' : '0'}>— {JEV_TYPE_LABEL[r.cls] ?? <code title="Class named in the v1.4.2 artifact; description pending">{r.cls}</code>} · </span><span className="whitespace-nowrap" data-bh-jev14-compare-score={r.score === null ? "" : r.score.toFixed(3)}>Score {one(r.score)} ({status(r)})</span></li>)}
         </ul>
         {!fixedPair && <button type="button" className="bh-button text-xs font-semibold" onClick={copy} data-bh-jev14-compare-copy>{copied ? "Link copied" : "Copy link to this pair"}</button>}
       </div>

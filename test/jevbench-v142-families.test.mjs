@@ -55,3 +55,12 @@ test('CR-153: compare pools hard and sealed families; the Intelligence view hide
   assert.match(css, /\.bh-jev-cost-bar \{ background-color: rgb\(var\(--jev-cost-red\)\); \}/);
   assert.match(route, /'X-Content-SHA256': sha256/);
 });
+
+test('CR-153: every v1.4.2 system has a source link; the dated overrides are https and name real systems', async () => {
+  const { artifact } = await readJevbenchV142();
+  const links = JSON.parse(await read('../data/raw/benchmarks/jevbench/jev-system-links.json')).links;
+  const keys = new Set(artifact.systems.map((row) => row.key));
+  for (const [key, link] of Object.entries(links)) { assert.ok(keys.has(key), key); assert.match(link.url, /^https:\/\//); assert.ok(link.kind && link.source, key); }
+  const unlinked = artifact.systems.filter((row) => !(links[row.key]?.url ?? row.repo)).map((row) => row.key);
+  assert.deepEqual(unlinked, []);
+});

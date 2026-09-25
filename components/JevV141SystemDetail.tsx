@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { JevBenchRelatedLinks } from './JevBenchRelatedLinks';
 import { JevCompareV14, type JevCompareRow } from './JevCompareV14';
+import { jevSourceUrl } from './jevSystemLinks';
 import { JevAxisBand, typeColour } from './JevSystemCharts';
 import { JEV_TYPE_LABEL } from './jevTypes';
 import type { JevV14System } from '../lib/jevbench-v14.mjs';
@@ -36,7 +37,7 @@ function compareRow(row: JevV14System): JevCompareRow {
   const axes = row.axes ?? { intelligence: null, calibration: null, speed: null, cost: null };
   const hard = (row.hard as { by_family?: Record<string, { accuracy: number | null; n: number }> } | null)?.by_family ?? null;
   const sealed = (row.sealed_aggregate as { by_family?: Record<string, number | null> } | null)?.by_family ?? null;
-  return { key: row.key, name: short(row.display), cls: row.class, rank: row.rank, listing: row.listing, score: row.jevbench_score, axes, tiers: { easy: tiers.easy ?? null, standard: tiers.standard ?? null, judge: tiers.judge ?? null, hard: tiers.hard ?? null, sealed: row.sealed_accuracy }, hard, sealed };
+  return { key: row.key, name: short(row.display), source: jevSourceUrl(row.key, row.repo), cls: row.class, rank: row.rank, listing: row.listing, score: row.jevbench_score, axes, tiers: { easy: tiers.easy ?? null, standard: tiers.standard ?? null, judge: tiers.judge ?? null, hard: tiers.hard ?? null, sealed: row.sealed_accuracy }, hard, sealed };
 }
 
 export function JevV141SystemDetail({ row, revision, generated, ranked, note = null, sealedFamilyN, hardFamilyN }: { row: JevV14System; revision: string; generated: string; ranked: JevV14System[]; note?: string | null; sealedFamilyN?: Record<string, number>; hardFamilyN?: Record<string, number> }) {

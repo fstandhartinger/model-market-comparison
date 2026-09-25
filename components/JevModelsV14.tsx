@@ -1,6 +1,7 @@
 import { jevV14RowNote, type JevV14Artifact, type JevV14System } from '../lib/jevbench-v14.mjs';
 import { JevCompareV14, type JevCompareRow } from './JevCompareV14';
 import { shortName, type JevBoardViewRow } from './JevBoardShared';
+import { jevSourceUrl } from './jevSystemLinks';
 import { JevScoreChart, JevAxesTable, type JevFairness } from './JevBoardInteractive';
 
 // F-188/F-189: the alternatives guide draws its bars with components/JevScoreBar.tsx; the board re-exports them.
@@ -19,7 +20,7 @@ const openSource = (row: JevV14System) => {
 /** Only the fields the chart and table render travel to the client, not the per-family aggregates. */
 function viewRow(row: JevV14System, note: string | null, previousKeys: Set<string> | null): JevBoardViewRow {
   return {
-    key: row.key, display: row.display, author: row.author, repo: row.repo, class: row.class,
+    key: row.key, display: row.display, author: row.author, repo: jevSourceUrl(row.key, row.repo), class: row.class,
     rank: row.rank, ranked: row.ranked, listing: row.listing, not_ranked_because: row.not_ranked_because,
     priority_run: row.priority_run === true, api_flag: row.api_flag === true, api_exposure_note: row.api_exposure_note,
     jevbench_score: row.jevbench_score,
@@ -49,7 +50,7 @@ function compareRow(row: JevV14System): JevCompareRow {
   const sealed = (row.sealed_aggregate as { by_family?: Record<string, number | null> } | null)?.by_family ?? null;
   const tiers = (row.tiers ?? {}) as Record<string, number | null>;
   return {
-    key: row.key, name: shortName(row.display), cls: row.class, rank: row.rank, listing: row.listing, score: row.jevbench_score,
+    key: row.key, name: shortName(row.display), cls: row.class, rank: row.rank, listing: row.listing, score: row.jevbench_score, source: jevSourceUrl(row.key, row.repo),
     axes: row.axes, tiers: { easy: tiers.easy ?? null, standard: tiers.standard ?? null, judge: tiers.judge ?? null, hard: tiers.hard ?? null, sealed: row.sealed_accuracy },
     hard: hard ? Object.fromEntries(Object.entries(hard).map(([k, v]) => [k, { accuracy: v.accuracy, n: v.n }])) : null,
     sealed,

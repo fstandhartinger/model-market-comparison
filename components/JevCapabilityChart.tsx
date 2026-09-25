@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react';
+import { jevSourceUrl } from './jevSystemLinks';
 import { jevbenchCapabilityRows } from '../lib/jevbench-capability.mjs';
 import type { JevV14System } from '../lib/jevbench-v14.mjs';
 import { JEV_TYPE_LABEL, jevLegendTypes, jevTypeVarName } from './jevTypes';
@@ -99,8 +100,8 @@ function CapabilityBar({ row, capability, position, costBounds }: {
   >
     <span className="bh-muted tabular col-start-1 row-start-1 text-right text-xs">{position + 1}</span>
     <span className="col-start-2 row-start-1 min-w-0 truncate sm:text-right" title={row.display}>
-      {row.repo
-        ? <a href={row.repo} target="_blank" rel="noopener noreferrer" className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent hover:decoration-current">{shortName(row.display)}</a>
+      {jevSourceUrl(row.key, row.repo)
+        ? <a href={jevSourceUrl(row.key, row.repo)!} target="_blank" rel="noopener noreferrer" className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent hover:decoration-current" data-bh-jev-source={row.key}>{shortName(row.display)}</a>
         : shortName(row.display)}
       {row.api_flag && <span className="bh-thin-tag ml-1.5 align-middle" title={row.api_exposure_note ?? undefined}>API</span>}
     </span>
