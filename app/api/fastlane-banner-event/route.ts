@@ -1,3 +1,5 @@
+import { publicOrigin } from "../../../lib/account-sync.mjs";
+
 const UMAMI_ORIGIN = "https://bh-analytics.app.mintapis.com";
 const HOSTS = new Set(["benchmarkheaven.com", "www.benchmarkheaven.com"]);
 const EVENTS = new Set(["fastlane_banner_view", "fastlane_banner_click", "fastlane_banner_dismiss"]);
@@ -38,10 +40,12 @@ async function readSmallBody(request: Request) {
 }
 
 export async function POST(request: Request) {
-  const url = new URL(request.url);
-  const origin = request.headers.get("origin");
-  const hostname = url.hostname.toLowerCase();
-  if (url.protocol !== "https:" || !HOSTS.has(hostname) || origin !== url.origin) return noContent();
+  // Next.js sees its internal localhost URL behind Coolify. The ingress-provided
+  // host is the public origin, as in the site's existing checkout CSRF guard.
+  const origin = publicOrigin(request.headers);
+  if (!origin || request.headers.get("origin") !== origin) return noContent();
+  const hostname = new URL(origin).hostname;
+  if (!HOSTS.has(hostname)) return noContent();
   if (["1", "yes"].includes(request.headers.get("dnt") || "") || request.headers.get("sec-gpc") === "1") return noContent();
   if (request.headers.get("content-type")?.split(";", 1)[0] !== "application/json") return noContent();
   if (Number(request.headers.get("content-length") || 0) > 256) return noContent();
