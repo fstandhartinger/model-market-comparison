@@ -12185,3 +12185,81 @@ Not done here and still open: F-181 (checker fixed by iteration 230, awaiting a 
 D192, D205 (needs Florian), D207/CR-167.2/CR-163.1 and D208 (all implemented by iteration 230,
 awaiting an independent engine), the four D-rows awaiting a daily run, and X6's line-by-line audit.
 **`ALL-ACCEPTED` is not appended.**
+
+### Iteration 231 addendum — X6 has its first receipt, and PR #34 landed
+
+**The merge queue is working again, end to end.** `bh-merge-queue` cleared its checkout preflight
+once `7b011d66` landed, cleared the hosts-current preflight at 21:25:22, hit one more stop at
+21:30:11 (`PR #34 needs owner rebase` — **caused by this iteration's own two commits moving main
+under a branch that had been waiting since 19:5x**), and **merged PR #34 (CR-169) at 21:38:40 UTC
+as `33b337e3`** after its owner rebased. D209's ~105-minute blockage is fully resolved.
+
+One process lesson, recorded because it cost another job a rebase: PR #34's top commit is literally
+"move progress entry away from the ledger tail to avoid append conflicts", and it still conflicted,
+because this iteration appended to `PROGRESS.md` *and* inserted into `03`/`04` in the same window.
+Moving off the tail only defends against another tail-appender. **While a ready PR touches
+`ops/ux-2026-09-12/*.md`, a docs commit straight to main will cost it a rebase** — check
+`bh-merge-queue --status` before pushing documentation. Also logged for the queue's owner: at
+21:30:11 it printed `could not remove ready label PR #34: RuntimeError`; the merge succeeded eight
+minutes later, so nothing is stuck, but a silent GitHub API failure there is worth a look.
+
+**X6 — first receipt, still open.** Report:
+`/opt/benchmarkheaven/state/ux-evidence/iter231-x6/X6-PARTIAL-RECEIPT.md`. Every gate since
+13 September has recorded that X6 "still has no passing receipt from any gate". This is the first
+one; it is partial, so X6 stays `open` and **`ALL-ACCEPTED` is not written**.
+
+All 53 checklist IDs have a ledger row, and 52 of them read `verified` — so the audit's real
+question was whether those claims still describe the live site after two weeks of CRs. Checked live
+on canonical at `5c8b1960`, 1440 and 390, light and dark, 0 page errors:
+
+**Among everything checked, the live site deviates from the 12 September verbatim text in exactly
+four places, and all four are authorised by a later Florian instruction already recorded in `03`.**
+No unauthorised drift was found.
+
+| Verbatim | Live | Authorising later instruction |
+|---|---|---|
+| R5.2 Simple = top **15** | `SIMPLE_LIMIT = 30`; 26 rows | `03`:63 — "let's add actually up to 30 models … even in simple mode"; `LABEL_LIMIT = 15` matches the "annotate maximum 15" half |
+| R5.3 score slider default **> 85** | **76**, floor 70 | CR-20260915c, `03`:166 — derived default, "don't put the capability value slider lower than 65" |
+| R5.6 wizard step 1 = "Are you a company?" | step 1 of 5 = data residency | CR-16, `03`:107 — "not the opening question in guided mode" |
+| R4.9 rename the TEE filter → "Strong confidential guarantees" | the filter is **removed** | `03`:184 — "lets remove that '✓ Strong confidential guarantees' filter". The TEE *data* is retained (`offer.tee`, the TEE badge in `ModelExplorer`); only the control went. |
+
+Confirmed faithful live, with the measurement rather than an impression: R1.1 (`aria-sort`
+descending; 100 / 97.2 / 97.1 / 94.9), R1.2, R1.3, R1.4 + R1.7 (exactly two header triggers, "About
+the Capability Score column" / "About the Adjusted Cost column"), R1.5 (the "Chutes global fallback"
+sentence is gone), R1.6, **R1.8** (desktop hover *and* keyboard focus open the tooltip; a phone tap
+opens a real `<dialog>` with a 44 px ✕ that closes it), R2.1, R2.2, R3.1, R4.2 (blend value `20`),
+R4.3 + R4.5 (both inside MORE SETTINGS), R4.6 (no exclude-Chinese checkbox at all now — `Hosted in`
+has China/EU/US/Other all checked, so nothing is excluded by default), R4.8 (a REGIONAL section),
+R4.10, R4.11 (moved beside the table rather than into extra settings — an interpretation, recorded),
+R5.1, R5.4, R6.1, R7.1/R7.2 (`/icon.svg`, `/apple-icon.png`, `og:image` all 200), B1, B4, B5, B6
+(45-axis radar).
+
+**Not audited here, which is why X6 stays open:** R4.1 and X4 (design judgement, Fable's call), R4.4,
+R6.2, R6.3, R8.1, R9.1, H1–H3, B2, B3, B7, X1–X3, X5, X7 — and **the legacy host**, since everything
+above is canonical only.
+
+Two false alarms chased down and deliberately **not** filed, recorded so the next auditor does not
+re-chase them: `verify-live-review.mjs` reports `info_tooltip: 0` and `score_info_present: 0`, but
+its selectors are stale — the live ones are `[data-bh-infotip-trigger]` (132 on the homepage) and
+`[data-bh-infotip-panel]`, and R1.4/R1.7/R1.8 all pass. And the regional/confidentiality filters are
+not in the header **Options** dialog at all; they live in the inline `[data-bh-options-inline]`
+`<details>` on the page, with "One variant" and "Hide deprecated" one level deeper in MORE SETTINGS.
+Reading either as a defect would have produced a false finding.
+
+One observation offered as an observation, not a defect claim: **`/favicon.ico` returns 404.** The
+site declares `rel="icon"` → `/icon.svg` and `apple-touch-icon` → `/apple-icon.png`, both 200, which
+is the modern convention and satisfies R7.2 as written; a client requesting `/favicon.ico` directly
+still gets nothing.
+
+**The reusable lesson, and the most useful thing this audit produced:** R5.2 and R5.3 look like live
+defects to any checker that reads only `00-REQUIREMENTS-VERBATIM.md` and this ledger, because the
+authorising text sits hundreds of lines away in `03` with no back reference from the requirement it
+changes. **Grep `03` for the feature by name before filing one of these as a defect.**
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| X6 | open → **open (first partial receipt)** | `iter231-x6/X6-PARTIAL-RECEIPT.md`, `live-canonical/`, `probe/`, `probe2/`, `r18/`, `filters/`, `filters2/` | No longer "no passing receipt from any gate". Partial by design: canonical host only, and the research/data/design rows above are untouched. `ALL-ACCEPTED` not written. |
+| R1.4, R1.7, R1.8 | verified (re-proven) | `iter231-x6/r18/r18.json`, `r18/mobile-modal.png` | Re-proven against the *correct* selectors after the standing harness's stale ones read zero. |
+| R4.9 | verified (unchanged) — **basis corrected** | `03`:184; `filters2/filters2.json` | The ledger row implies a rename shipped. What actually shipped is Florian's later removal of the filter. Same verdict, accurate reason. |
+| R5.2, R5.3, R5.6 | verified (unchanged) — **basis recorded** | `03`:63, `03`:166, `03`:107 | Each live value differs from the verbatim text and is authorised by a later instruction. Recorded so a future gate does not file them as regressions. |
+| D209 | resolved (confirmed end to end) | queue log 21:38:40; `33b337e3` | PR #34 merged after the blockage cleared. |
