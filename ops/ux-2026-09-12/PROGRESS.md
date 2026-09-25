@@ -11783,3 +11783,37 @@ verification receipt, so no browser-level promotion to **verified** is claimed i
 | ID | Status | Evidence | Notes |
 |---|---|---|---|
 | F-187 | **implemented** | `/opt/benchmarkheaven/state/ux-evidence/iter222-kimi-f187/raw-results.json`; `b33b1058` | Defect corrected and deployed on all configured hosts; independent post-fix browser sign-off remains owed. |
+
+## Review gate 20260925T134004Z (claude-opus) — six live regressions, F-187 promoted
+
+Full report: `REVIEW-20260925T134004Z.md`. Range `72d626b0..54f862f2` (13 commits), including the two
+merge-queue PRs that landed during the gate: #19 (CR-156, JevBench SEO routes) and #22 (CR-158,
+Capability-first `/jev-models`, carrying CR-151 and CR-153).
+
+Gates at `3095497e`: build rc 0 (871/674/96/3,121), `npm test` 1,385/1,384/0-fail/1-skip, `tsc` rc 0.
+With this gate's two fixes: `npm test` 1,386/1,385/0-fail/1-skip, `tsc` rc 0, `npm run build` rc 0.
+Evidence: `/opt/benchmarkheaven/state/ux-evidence/review-20260925T134004Z/`.
+
+**Why five of these were invisible.** Every gate since iteration 208 ran `verify-fable-pass34-design`
+with `ONLY=F-188` and pass-35 one group at a time. A narrowed run proves the group it names and stops
+watching every other accepted row in the same file. This gate ran both verifiers with all groups.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| F-187 | **verified** | `review-20260925T134004Z/f187-{canonical,legacy}/verification.json` (112/112 per host) | Implementer codex-luna. This gate wrote `bin/verify-review-20260925T134004Z-f187.mjs`: both preview routes × 1440/390 × light/dark; sticky at `left: 0` / `left: 56px`, unmoved within 1 px after scrolling the wrapper to its maximum, computed background **alpha 1**, no overlap, noindex, bar-before-table, no page overflow. |
+| F-193 | **open** | `review-20260925T134004Z/{canonical-pass35,cr158-F-189}/verification.json` | The 720 px first-bar budget it was created to hold is unmet again: **748 px** after the CR-156 merge (the board-guides row went from 2 links to 10, and F-193's compact-phone CSS targets exactly that row), then **4,070 px** after CR-158 put two charts ahead of the board. Verified at 659 px five hours earlier. |
+| F-189 | **open** | same receipts; `f189-super` measurements | Same budget. Also: `data-bh-jev14-rank-by` is `null` in all four contexts — CR-158 deleted `JevRankBy.tsx`. That part is *not* a loss of function (CR-151's View-by switch supersedes it; the live page carries the fairness sentence and a one-click "Sort by Intelligence ↓"), but pass-35's selector is stale and no updated verifier exists. On mobile the **new** headline ranking's first row is at 1,008 px, so the intent is unmet by either board. |
+| F-181 | **open** | `review-20260925T134004Z/post-pass34-{canonical,legacy}/` (4/4 contexts fail, both hosts) | Was **verified** at iteration 208. `[data-bh-jev14-cost-axis]` is no longer on the hub: CR-158 renders `<JevCapabilityLazy … only3d />`, so the capability-with-cost chart that carried the axis is gone. |
+| F-184 | **open** | same receipts (2/2 desktop contexts fail, both hosts) | 91 capability rows at two heights, 28 px and 43 px. CR-158 reuses `CapabilityBar` with an optional per-row `note` (why a system is outside the Jev-class limits); a row carrying one is 15 px taller. Iteration 208 measured 79 rows all 28 px. |
+| F-190 | **open** | `review-20260925T134004Z/cr158-pass35-canonical/verification.json` (144/152) | Was **verified** by the 11:20 gate (14/14 per host). The pinned `/jev-models/v1.4.2` page is **14,876 px** at 1440 in both desktop themes; the budget is 14,000. CR-158 passes `previous` and `sealedFamilyN` into the pinned board, adding the release filter, the "new" marking and the sealed family breakdown to a page whose point is a frozen presentation. Its other three checks still pass. |
+| F-183, F-191, F-192 | **verified** (unchanged) | same receipt | Re-run at the CR-158 deploy by this gate: all green. |
+| F-182 | **implemented** | `dcbf8d9c`, `54f862f2`; `review-20260925T134004Z/{post,final}-pass34-*` | Fixed by this gate, so not promoted. `usage.input_tokens` was back in the hub's visible copy (4/4 contexts, both hosts) via the v1.4.2 artifact. Of the three artifact fields carrying it, `cost.basis` and `footnotes` reach the page (`scoring_note` has no renderer); all three renderers now route through `components/jevFieldNames.tsx`, the precedent iteration 208 set. Re-verified at the final deploy `54f862f2`: `ONLY=F-182` pass-34 **8/8 on canonical and 8/8 on legacy**, and the served hub has 0 occurrences outside `<code>` against 24 inside it. `test/jev-context-length.test.mjs`'s pin was made stricter — that file must now contain no dataset key at all, instead of carving the helper's own regex line out first. |
+| CR-156 | **implemented** | this report's SEO section; `review-20260925T134004Z/seo-routes.txt` | Live on both hosts: all ten routes 200, self-canonical, JSON-LD, all ten in the live `sitemap.xml` (759 URLs). Numbers re-derived from the artifact, not from the job's receipt: jev-vs-laya's #2 / #41 and all eight axis values match to one decimal; the open-weight inventory reproduces at exactly 60 rows with no invented openness claim. Not **verified** — there is no CR-156 acceptance in `00`/`03`/`04` to verify it against (D206). |
+| CR-158 / CR-151 / CR-153 | **implemented** | this report | The family supplement reconciles: all nine systems sum to 220 hard-tier decisions and their derived accuracy equals the published `tiers.hard` to 10 decimals; `sealed_family_n` sums to 308. It also repaired a live broken link — the hub's "results JSON" href and the Dataset JSON-LD `contentUrl` used `revision.slice(1)` and pointed at `/api/jevbench/1.4.2`, which **404s**; both now resolve to `/api/jevbench/v1.4.2` (200). Same D206 caveat. |
+| D206 | **open (new)** | `grep` of `03`/`04`/`PROGRESS.md` | `CR-151`, `CR-153`, `CR-156` and `CR-158` are in commit subjects, code comments and tests and shipped ~2,600 lines today, but appear in neither `03-CHANGE-REQUESTS-VERBATIM.md` nor `04-CR-BRIEF.md`, and had no ledger row. (`CR-143`, `CR-148`, `CR-152` are in the ledger but likewise absent from both requirement documents.) The jobs keep their own `PROMPT.md`/`OUTPUT.md`, so the work is traceable — but the acceptance criteria a review gate is told to check against do not exist in the authoritative documents. |
+| D205 | **open** | `/api/v1/credits` at 13:53 UTC | 430.9112 − 430.4360 = **USD 0.475** remaining, down from 0.48 at 11:20. Needs Florian; not a code defect. |
+| D200, D201, D202, D204 | **implemented** | unchanged | Still await an unattended daily run that contains them; none has run since 08:37. |
+
+No `ALL-ACCEPTED`: five accepted design rows are back to **open**, CR-156/CR-158 have no acceptance
+criteria in the authoritative documents, D205 needs Florian, four D-rows await a daily run, and X6's
+line-by-line audit has no passing receipt from this gate.
