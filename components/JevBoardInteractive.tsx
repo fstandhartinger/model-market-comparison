@@ -197,8 +197,8 @@ export function JevScoreChart({ revision, rows, rankedCount, newLabel, fairness,
       {!approvedNote && !fairness && <p className="bh-muted mt-2 text-[13px] leading-snug" data-bh-jev-viewby-hint>The official order weighs Intelligence, Calibration, Speed and Cost equally. Each button re-sorts the same systems by one axis<span className="hidden sm:inline">, and the column headings sort too</span>.</p>}
       {view !== 'overall' && <p className="mt-2 text-[13px]" data-bh-jev-view-note><span className="bh-jevc-notdefault">Not the official order</span> <span className="bh-muted">Bars show {METRIC_LABEL[metric]} (0–100). The bold number stays the JevBench Score and # the official rank.</span></p>}
       {view === 'intelligence' && llmCount > 0 && <p className="mt-2 text-[13px]" data-bh-jev-llm-toggle-row>
-        <label className="bh-jev-filter-check inline-flex items-center gap-1.5 font-semibold"><input type="checkbox" checked={hideLlms} onChange={(e) => setHideLlms(e.target.checked)} data-bh-jev-hide-llms /> Hide general-purpose LLMs</label>{' '}
-        <span className="bh-muted" data-bh-jev-llm-toggle-note>{hideLlms ? `${llmCount} instruction-model baselines (e.g. GPT-6 Luna, DeepSeek) are hidden, so this is the Intelligence ranking of the Jev-class field.` : `Showing the ${llmCount} instruction-model baselines too; they reason well but are slow or costly per decision.`}</span>
+        <label className="bh-jev-filter-check inline-flex min-h-[32px] cursor-pointer items-center gap-2 py-1 pr-1 font-semibold"><input type="checkbox" className="h-5 w-5" checked={hideLlms} onChange={(e) => setHideLlms(e.target.checked)} data-bh-jev-hide-llms /> Hide general-purpose LLMs</label>{' '}
+        <span className="bh-muted" data-bh-jev-llm-toggle-note>{hideLlms ? `Hides the ${llmCount} general-purpose LLM baselines (e.g. GPT-6 Luna, DeepSeek); the bars below leave them out.` : `Showing the ${llmCount} general-purpose LLM baselines (e.g. GPT-6 Luna, DeepSeek) too.`}</span>
       </p>}
     </div>
 

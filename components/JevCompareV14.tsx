@@ -33,8 +33,8 @@ export const CURRENT_FAMILIES: { key: string; label: string; hard: string[]; sea
   { key: "probability", label: "Probability", hard: ["probability"], sealed: ["probability"] },
   { key: "temporal_numeric", label: "Temporal / numeric", hard: ["temporal_numeric"], sealed: ["temporal_numeric"] },
   { key: "tradeoff", label: "Trade-off", hard: ["tradeoff"], sealed: ["tradeoff"] },
-  { key: "trap", label: "Trap / adversarial", hard: ["trap", "adversarial"], sealed: ["trap_adversarial"] },
   { key: "routing", label: "Routing", hard: ["routing_hard"], sealed: [] },
+  { key: "trap", label: "Trap / adversarial", hard: ["trap", "adversarial"], sealed: ["trap_adversarial"] },
   { key: "paraphrase", label: "Paraphrase", hard: [], sealed: ["paraphrase_robustness"] },
   { key: "safety", label: "Safety judge", hard: [], sealed: ["safety_judge"] },
 ];
@@ -117,10 +117,12 @@ export function JevCompareV14({ rows, sealedDecisions, hardDecisions, fixedPair 
     : accuracySpokes(pair, HARD_FAMILIES, (r, k) => r.hard?.[k]?.accuracy ?? null);
   const sealedSpokes = accuracySpokes(pair, SEALED_FAMILIES, (r, k) => r.sealed?.[k] ?? null);
   const missingFor = (spokes: Spoke[]) => pair.filter((_, k) => spokes.every((sp) => sp.values[k] === null)).map((r) => r.name);
+  // A partial run has only some families of the pooled set (Needle 3: hard tier, no sealed run), so name it when any spoke is empty.
+  const partlyMissingFor = (spokes: Spoke[]) => pair.filter((_, k) => spokes.some((sp) => sp.values[k] === null)).map((r) => r.name);
   const missingSentence = (key: string, names: string[]) => {
     if (key === "sealed") return `${names.join(" and ")} has no sealed family breakdown.`;
     if (key === "hard") return pooled
-      ? `${names.join(" and ")} ${names.length === 1 ? "was" : "were"} not run on the full v1.4 question set (a partial run), so there is no family breakdown to draw.`
+      ? `${names.join(" and ")} ${names.length === 1 ? "was" : "were"} not run on the full v1.4 question set (a partial run); families without both hard-tier and sealed results are left out (—).`
       : `${names.join(" and ")} ${names.length === 1 ? "has" : "have"} no published v1.2 hard-tier family breakdown.`;
     return `${names.join(" and ")} has no published accuracy-tier results.`;
   };
@@ -141,7 +143,7 @@ export function JevCompareV14({ rows, sealedDecisions, hardDecisions, fixedPair 
     { key: "axes", title: "The four score axes", note: "0–100, the values in the table. A label-only system has no calibration (counted as 0).", spokes: axisSpokes, missing: [], size: { w: 420, h: 320, r: 96 } },
     { key: "tiers", title: "Accuracy per tier, incl. sealed", note: `Share correct per tier; Sealed = the ${sealedDecisions} private decisions, aggregate only.`, spokes: tierSpokes, missing: missingFor(tierSpokes), size: { w: 440, h: 340, r: 100 } },
     pooled
-      ? { key: "hard", title: "Current question set by family (hard + sealed)", note: `Share correct per family across the ${hardDecisions} hard-tier decisions (public and held out) and the ${sealedDecisions} sealed decisions of v1.4, pooled; Routing is hard-tier only, Paraphrase and Safety judge sealed only.`, spokes: hardSpokes, missing: missingFor(hardSpokes), size: { w: 460, h: 370, r: 100 } }
+      ? { key: "hard", title: "Current question set by family (hard + sealed)", note: `Share correct per family across the ${hardDecisions} hard-tier decisions (public and held out) and the ${sealedDecisions} sealed decisions of v1.4, pooled; Routing is hard-tier only, Paraphrase and Safety judge sealed only.`, spokes: hardSpokes, missing: partlyMissingFor(hardSpokes), size: { w: 460, h: 370, r: 100 } }
       : { key: "hard", title: "Hard tier by family (v1.2 topics)", note: `Share correct within each family of the ${hardDecisions} v1.2 hard-tier decisions (public and held-out).`, spokes: hardSpokes, missing: missingFor(hardSpokes), size: { w: 460, h: 370, r: 100 } },
     { key: "sealed", title: "Sealed set by family", note: "Share correct within each sealed family — system-level aggregates; the items stay private.", spokes: sealedSpokes, missing: missingFor(sealedSpokes), size: { w: 460, h: 370, r: 100 } },
   ];
@@ -168,7 +170,7 @@ export function JevCompareV14({ rows, sealedDecisions, hardDecisions, fixedPair 
         {figures.map((f) => <figure key={f.key} className="min-w-0" data-bh-jev14-radar={f.key} data-bh-jev14-radar-pooled={f.key === "hard" && pooled ? "1" : undefined}>
           <h3 className="text-base font-semibold">{f.title}</h3>
           {f.missing.length > 0 && <p className="bh-muted mt-1 text-[12px]" data-bh-jev14-radar-missing={f.key}>{missingSentence(f.key, f.missing)}</p>}
-          {f.missing.length < 2
+          {missingFor(f.spokes).length < 2
             ? <Radar spokes={f.spokes} series={s} size={f.size} id={`jev14-radar-${f.key}`} title={`Radar: ${f.title.toLowerCase()}, two systems`} desc={desc(f.title, f.spokes)} />
             : <p className="bh-muted mt-3 text-[12px]">Neither selected system has a published series for this view.</p>}
           <figcaption className="bh-muted text-[12px]">{f.note}</figcaption>
