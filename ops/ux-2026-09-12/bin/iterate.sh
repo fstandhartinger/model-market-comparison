@@ -5,10 +5,12 @@
 #   role:   work | review | design
 set -uo pipefail
 ENGINE="${1:?engine}"; ROLE="${2:-work}"
-REPO=/opt/model-market-comparison
+# Paths are overridable so the rebase-safety behaviour can be tested against a scratch repo
+# (test/d203-iterate-rebase-abort.test.mjs); the defaults are the real ones.
+REPO="${BH_UX_REPO:-/opt/model-market-comparison}"
 WS=$REPO/ops/ux-2026-09-12
-STATE=/opt/benchmarkheaven/state/ux
-LOGS=/opt/benchmarkheaven/logs/ux
+STATE="${BH_UX_STATE:-/opt/benchmarkheaven/state/ux}"
+LOGS="${BH_UX_LOGS:-/opt/benchmarkheaven/logs/ux}"
 mkdir -p "$STATE" "$LOGS" /opt/benchmarkheaven/state/ux-evidence
 TS=$(date -u +%Y%m%dT%H%M%SZ)
 LOG="$LOGS/$TS-$ROLE-$ENGINE.log"
@@ -22,7 +24,39 @@ export PATH="$HOME/.local/bin:$HOME/.opencode/bin:$HOME/.npm-global/bin:/usr/loc
 unset OPENAI_API_KEY OPENAI_BASE_URL ANTHROPIC_API_KEY ANTHROPIC_AUTH_TOKEN
 
 cd "$REPO" || exit 1
-git pull --rebase --autostash -q origin main >> "$LOG" 2>&1 || echo "warn: pull failed" >> "$LOG"
+# A stopped rebase leaves conflict markers in the worktree and a detached HEAD, and every other job
+# sharing this checkout (merge queue, self-heal) needs a clean index. Never hand that to an agent:
+# on failure restore the pre-pull state and say so in the prompt. (25 Sep 2026: the daily published
+# while an iteration was mid-flight; the agent was launched onto a conflicted data/dataset.json.)
+GIT_STATE_NOTE=""
+if ! git pull --rebase --autostash -q origin main >> "$LOG" 2>&1; then
+  echo "warn: pull failed" >> "$LOG"
+  if [ -d .git/rebase-merge ] || [ -d .git/rebase-apply ]; then
+    if git rebase --abort >> "$LOG" 2>&1; then
+      echo "warn: rebase conflicted; aborted and restored the pre-pull worktree" >> "$LOG"
+      GIT_STATE_NOTE="
+
+IMPORTANT — the automatic \`git pull --rebase origin main\` that starts every iteration hit a conflict
+and was aborted, so this checkout is back at its pre-pull state and is NOT up to date with
+origin/main. Any local commits are intact and unpushed. Rebase deliberately before other work:
+\`data/dataset.json\` is generated, so resolve it by taking origin's side
+(\`git checkout --ours data/dataset.json\`) and re-running \`node scripts/build-dataset.mjs\` so the
+data/raw edits are re-projected — never hand-merge it — then re-run the gates before pushing."
+    else
+      GIT_STATE_NOTE="
+
+IMPORTANT — the automatic \`git pull --rebase origin main\` failed AND could not be aborted. This
+checkout may still hold conflict markers or a detached HEAD. Inspect \`git status\` and
+\`.git/rebase-merge\` and repair it before any other work; do not commit or push until it is sane."
+    fi
+  else
+    GIT_STATE_NOTE="
+
+IMPORTANT — the automatic \`git pull --rebase origin main\` that starts every iteration failed
+(network, a lock, or a hook). This checkout may be behind origin/main; check
+\`git log origin/main..HEAD\` and fetch before you commit or push."
+  fi
+fi
 
 ROLE_TEXT=""
 case "$ROLE" in
@@ -48,7 +82,7 @@ Delegation: bulk and mechanical work goes to free models via
   bash ops/ux-2026-09-12/bin/delegate.sh --help
 (OpenCode with nex-agi/nex-n2.5-pro:free via OpenRouter, or Kimi K3 via Chutes). Verify their output; never let an unverified number ship.
 
-Hard rules: keep main green (build-dataset, npm test, tsc) before pushing; no invented data; respect robots.txt/rate limits; never use API-key billing for codex or claude; do not disturb other services on this server; keep the iteration under ~3 hours and exit cleanly. Evidence goes to /opt/benchmarkheaven/state/ux-evidence/."
+Hard rules: keep main green (build-dataset, npm test, tsc) before pushing; no invented data; respect robots.txt/rate limits; never use API-key billing for codex or claude; do not disturb other services on this server; keep the iteration under ~3 hours and exit cleanly. Evidence goes to /opt/benchmarkheaven/state/ux-evidence/.$GIT_STATE_NOTE"
 
 echo "=== $TS $ROLE $ENGINE start ===" >> "$LOG"
 echo "$ENGINE $ROLE $TS $$" > "$STATE/running"
