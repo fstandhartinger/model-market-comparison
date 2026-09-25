@@ -143,10 +143,12 @@ export function routeLabel(candidate) {
   return 'openrouter';
 }
 
-export function selectModel(catalog, dataset, { model, critic = false, producers = [], smokeTest = false, maxPricePer1M = Infinity, excludeModels = [], scheduled = false, freeRouter = [], freeRouteRole: role = 'critic' } = {}) {
+export function selectModel(catalog, dataset, { model, critic = false, producers = [], smokeTest = false, maxPricePer1M = Infinity, excludeModels = [], hardExcludeModels = [], scheduled = false, freeRouter = [], freeRouteRole: role = 'critic' } = {}) {
   if (typeof maxPricePer1M !== 'number' || maxPricePer1M <= 0 || Number.isNaN(maxPricePer1M)) throw new Error('Invalid worker price ceiling');
-  if (!Array.isArray(excludeModels) || excludeModels.some((m) => typeof m !== 'string' || !m.includes('/'))) throw new Error('Invalid excluded worker model IDs');
-  const excluded = new Set(excludeModels);
+  for (const list of [excludeModels, hardExcludeModels]) {
+    if (!Array.isArray(list) || list.some((m) => typeof m !== 'string' || !m.includes('/'))) throw new Error('Invalid excluded worker model IDs');
+  }
+  const excluded = new Set([...excludeModels, ...hardExcludeModels]);
   if (model && excluded.has(model)) throw new Error('Pinned worker is excluded after a recorded failure');
   const avoid = new Set(producers.map(vendorFamily));
   if (critic && (!producers.length || producers.some((id) => !id.includes('/')))) throw new Error('Critic requires explicit producer model IDs (or valid last-successful producer state)');
@@ -179,6 +181,14 @@ export function selectModel(catalog, dataset, { model, critic = false, producers
 // impossible when the whitelist has only one remaining different family. Keep
 // producer failures excluded; only a critic may retry its excluded pool, and
 // only after the normal selection has no viable scheduled candidate.
+// D199 (2026-09-25): "transient" was never enforced, and the relaxation is unbounded — it re-offers
+// every paid model the run has excluded, whatever it was excluded for, on every later call. Measured on
+// the 00:41 run: `z-ai/glm-5.3-flash` was struck off as critic at 01:14 and then answered **57 more**
+// critic calls, failing every one of them (wrong round, wrong hash, incomplete coverage), because it was
+// the only different-family critic left on the scheduled whitelist. All 22 score batches published
+// nothing and the step spent 73 minutes. `hardExcludeModels` is the bound: the caller, which is the only
+// side that knows *why* a route was excluded, names the routes whose failures were the model's own
+// answers rather than the transport's, and those stay excluded even here.
 export function selectModelForWorker(catalog, dataset, options = {}) {
   try { return selectModel(catalog, dataset, options); }
   catch (error) {
@@ -186,7 +196,8 @@ export function selectModelForWorker(catalog, dataset, options = {}) {
       // 2026-09-17 (CR-67.3): a failed free router route stays excluded. Re-offering it cost the 06:07 run three
       // 300 s router timeouts and ~20 slow max-effort critic calls, and the benchmark step ran out of time.
       const freeIds = new Set((options.freeRouter ?? []).map((c) => c.id));
-      return selectModel(catalog, dataset, { ...options, excludeModels: options.excludeModels.filter((id) => freeIds.has(id)) });
+      const hard = new Set(options.hardExcludeModels ?? []);
+      return selectModel(catalog, dataset, { ...options, excludeModels: options.excludeModels.filter((id) => freeIds.has(id) || hard.has(id)) });
     }
     throw error;
   }

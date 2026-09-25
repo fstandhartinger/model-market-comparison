@@ -34,11 +34,14 @@ BH_WORKER_MAX_PRICE_PER_1M optionally caps live input/output prices for completi
 BH_WORKER_REASONING_EFFORT optionally selects a catalog-supported effort for completion calls.
 BH_WORKER_DISABLE_OPTIONAL_REASONING=1 disables thinking only where the live catalog marks it optional.
 BH_WORKER_EXCLUDE_MODELS is a comma-separated list of previously failed model IDs for a run.
+BH_WORKER_HARD_EXCLUDE_MODELS is the subset of those whose failures were the model's own answers, not the
+transport's: the critic's last-resort retry of its excluded pool may re-offer the rest, never these.
 BH_WORKER_FREE_ROUTER=1 (set by the daily run) offers qualified, healthy free workers behind the local router first
 (BH_LLM_ROUTER_URL, default http://127.0.0.1:4010; health from BH_LLM_HEALTH, default ~/.llm-health.json; key LLM_ROUTER_MASTER_KEY).
 Smoke success never qualifies a model. No permission or model fallback is implicit.`;
 
-const options = { producers: [], images: [], excludeModels: (process.env.BH_WORKER_EXCLUDE_MODELS || '').split(',').filter(Boolean), timeout: 600, maxTokens: 8192,
+const options = { producers: [], images: [], excludeModels: (process.env.BH_WORKER_EXCLUDE_MODELS || '').split(',').filter(Boolean),
+  hardExcludeModels: (process.env.BH_WORKER_HARD_EXCLUDE_MODELS || '').split(',').filter(Boolean), timeout: 600, maxTokens: 8192,
   maxPricePer1M: process.env.BH_WORKER_MAX_PRICE_PER_1M === undefined ? Infinity : Number(process.env.BH_WORKER_MAX_PRICE_PER_1M) };
 const args = process.argv.slice(2);
 let task;
@@ -227,7 +230,7 @@ try {
   const attempt = Number.parseInt(process.env.BH_WORKER_ATTEMPT ?? '1', 10);
   const metadata = { started_at: new Date().toISOString(), mode: options.agent ? 'agent' : options.critic ? 'critic' : options.smokeTest ? 'smoke_test' : 'oneshot', requested_model: options.agent ? 'chutes/moonshotai/Kimi-K3-TEE' : chosen.id, producers: options.producers, qualification: chosen, input_sha256: createHash('sha256').update(task).digest('hex'),
     route: options.agent ? 'opencode:chutes' : routeLabel(chosen), attempt: Number.isInteger(attempt) && attempt > 0 ? attempt : 1,
-    free_route_role: options.agent ? null : role, free_routes_offered: freeRouter.map((c) => c.id), excluded_models: [...options.excludeModels],
+    free_route_role: options.agent ? null : role, free_routes_offered: freeRouter.map((c) => c.id), excluded_models: [...options.excludeModels], hard_excluded_models: [...options.hardExcludeModels],
     catalog: { source: catalogReceipt.source, fetched_at: catalogReceipt.fetched_at } };
   attemptMetadata = metadata;
   if (!options.agent && chosen.transport !== 'router' && process.env.BH_WORKER_DISABLE_OPTIONAL_REASONING === '1' && catalog.find((m) => m.id === chosen.id)?.reasoning?.mandatory === false) reasoning = { enabled: false, exclude: true };
