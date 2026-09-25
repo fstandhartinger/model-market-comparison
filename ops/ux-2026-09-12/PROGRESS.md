@@ -9418,6 +9418,8 @@ board, compare radar and hub head/order. CR-139 remains with its existing remedi
 | CR-139.5 | verified | `3ceb4cd8`; review gate 20260924T123004Z; screenshots in `/opt/benchmarkheaven/state/ux-evidence/review-20260924T123004Z/` | HealthBench Professional, Real-SWE lower-bound, benchmark-sized wording, and subscription plan notes (`catalog snapshot`, per-plan `Source checked`) confirmed live on both hosts via `/benchmarks` and the home Subscriptions `<details>`. |
 | CR-139.6 | in-progress | `/home/flori/jobs/bh-numbers-audit-swarm-20260923/final/historical-preview/` | Local preview retained; no production historical-ranking correction was approved or claimed. |
 | CR-139.7 | open | `live-http-receipt.json`; failed delegate attempts recorded above | Independent review and owner preview decision are still required before release acceptance. |
+| CR-143.1 | Ingest introducing-mentalhealthbench from the bookmark folder (not in the registry): primary source, versioned registry entry, gauntlet, live check | open | | | Filed 2026-09-24 15:12 UTC by the daily X bookmark intake; source https://x.com/OpenAI/status/2102837574092161102 |
+| CR-143.2 | Any candidate that turns out to be an already-carried benchmark under another name: close the row and add the alias to the registry entry | open | | | Filed 2026-09-24 15:12 UTC by the daily X bookmark intake |
 
 ## Iteration 201 — 2026-09-24 11:03 UTC (codex-luna, work): deferred for active writers
 
