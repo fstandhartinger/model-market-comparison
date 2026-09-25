@@ -1,4 +1,5 @@
 import { jevV14RowNote, type JevV14Artifact, type JevV14System } from '../lib/jevbench-v14.mjs';
+import { withFieldNames } from './jevFieldNames';
 import { JevCompareV14, type JevCompareRow } from './JevCompareV14';
 import { shortName, type JevBoardViewRow } from './JevBoardShared';
 import { jevSourceUrl } from './jevSystemLinks';
@@ -91,7 +92,7 @@ export function JevModelsV14Board({ artifact, sha256, previous, capabilityHref, 
     <p className="bh-muted mt-2 text-xs" data-bh-jev14-api-note>API = the operator's endpoint received sealed item text during evaluation; the answers and item-level results are not published. The sealed text and answers remain private; only system-level aggregates appear here. Cost is per 1,000 decisions. Hover endpoint, cost and API labels for their recorded details.</p>
     <details className="mt-3 text-xs" data-bh-jev14-notes>
       <summary className="cursor-pointer text-accent">All {notes.length} system notes and disclosures</summary>
-      <ul className="bh-muted mt-2 space-y-1">{notes.map((row) => <li key={row.key} id={`jev14-note-${row.key}`}>† <b className="text-gray-200">{row.display}</b>: {noteOf.get(row.key)}</li>)}</ul>
+      <ul className="bh-muted mt-2 space-y-1">{notes.map((row) => <li key={row.key} id={`jev14-note-${row.key}`}>† <b className="text-gray-200">{row.display}</b>: {withFieldNames(noteOf.get(row.key) as string)}</li>)}</ul>
       <p className="bh-muted mt-2">Rows without a † have no note beyond the shared provenance: every row was measured or re-run with its recorded recipe, and deviations are in its run manifest.</p>
     </details>
     <p className="bh-muted mt-2 text-xs">Artifact: <a className="text-accent underline" href={`/api/jevbench/${artifact.revision}`}>{artifact.revision} results JSON</a> · SHA-256 <code title={sha256}>{sha256.slice(0, 12)}…</code> · <a className="text-accent underline" href={`https://github.com/fstandhartinger/jevbench/releases/tag/${artifact.revision}`}>JevBench {artifact.revision} release and method</a></p>

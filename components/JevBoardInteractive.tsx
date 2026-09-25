@@ -7,6 +7,7 @@ import {
 } from './JevBoardShared';
 import { JEV_TYPE_LABEL, jevLegendTypes } from './jevTypes';
 import { JEV_AXES, OFFICIAL_WEIGHTS, isOfficialWeights, weightedJevScore, type JevAxis, type JevWeights } from '../lib/jevbench-axis-weights.mjs';
+import { withFieldNames } from './jevFieldNames';
 
 // CR-151 (Florian 25 Sep 2026): the score chart and the axes table become readable in more than one way. Axis cells are
 // shaded by their standing within the column, both views sort and filter, and a "View by" switch above the chart says
@@ -301,7 +302,7 @@ const joinWords = (words: string[]) => words.length < 2 ? words.join('') : `${wo
 function NoteMarker({ row, note }: { row: JevBoardViewRow; note: string }) {
   return <details className="bh-jev14-note" data-bh-jev14-note={row.key}>
     <summary title={note} aria-label={`Note on ${shortName(row.display)}`}>†</summary>
-    <span className="bh-jev14-note-body" role="note">{note}</span>
+    <span className="bh-jev14-note-body" role="note">{withFieldNames(note)}</span>
   </details>;
 }
 

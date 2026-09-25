@@ -59,11 +59,16 @@ test('F-182: sourced field names on the hub are set in code type, not as prose',
   const helper = await read('../components/jevFieldNames.tsx');
   assert.match(helper, /max_seq_len\|long_policy\|usage\\\.input_tokens/);
   assert.match(helper, /<code key=\{index\}>/);
-  // Both renderers of sourced prose route through the helper.
+  // Every renderer of sourced prose routes through the helper. The artifact carries the field name in
+  // two places the hub prints — `cost.basis` (the estimates list) and `footnotes` (the † notes, both in
+  // the board's note marker and in the "all system notes" disclosure). `scoring_note` is not rendered.
   assert.match(page, /withFieldNames\(r\.cost\.basis\.replace\(/);
+  assert.match(board, /withFieldNames\(noteOf\.get\(row\.key\)/);
+  assert.match(board, /role="note">\{withFieldNames\(note\)\}/);
   assert.match(await read('../components/JevContextLength.tsx'), /withFieldNames\(row\.basis\)/);
   // The artifact really does carry the field name, so the wrapper is load-bearing, not decorative.
   const v142 = (await readJevbenchV142()).artifact;
   const estimated = v142.systems.filter((row) => row.cost?.kind === 'estimate' && typeof row.cost?.basis === 'string');
   assert.ok(estimated.some((row) => /usage\.input_tokens/.test(row.cost.basis)), 'expected a published cost basis naming the field');
+  assert.ok(Object.values(v142.footnotes ?? {}).some((note) => /usage\.input_tokens/.test(String(note))), 'expected a published footnote naming the field');
 });
