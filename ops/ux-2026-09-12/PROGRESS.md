@@ -11316,3 +11316,138 @@ Reviewed `e28b2b47..0ab7017a` against the authoritative requirements, CR brief, 
 The current live visual gate is **blocked**: the required shared Chrome/CDP lock was busy at 06:49Z, held by the launch-sniper/X watcher (`python3`, PID 1545519), and the CDP session was occupied by Gmail/agent-browser pages. No competing browser or profile was launched. Therefore this gate did not re-promote any row, and the later JevBench edits make the former F-191/F-183 sign-off historical; both are open again pending current desktop/mobile light/dark checks. F-189/F-190/F-192/F-188 and D197–D199 remain implemented with independent production/live proof pending; F-193, D200, D191/D192, D193.2/D193.3/D194/D195/D196, CR-62.4/CR-140.5 and CR-152.1 remain open or in progress as recorded above. X6 has no passing line-by-line audit. No new `ALL-ACCEPTED` line is appended.
 
 Receipts: `/opt/benchmarkheaven/state/ux-evidence/review-20260925T064003Z/http-receipt.json`, `browser-lock.txt`, `build-dataset.log`, `npm-test.log`, and `tsc.log`. No new `ALL-ACCEPTED` line is appended.
+
+## Iteration 216 (claude-opus, 2026-09-25 08:20–09:0x UTC) — a second writer in this checkout, and the source that was never once reachable
+
+This iteration began with two surprises in the shared checkout and ended with one new defect fixed
+and two Fable rows re-verified live.
+
+### The checkout had another writer, and my launcher published its commit
+
+A **self-heal repair job** (`claude -p`, sonnet, PID 192715) had started at 08:11 against this same
+repo, tasked with the failing daily pipeline. Two consequences worth recording, because neither is
+visible from the ledger alone:
+
+- My launcher's `git pull --rebase --autostash` at 08:20 **stashed and restored that job's then
+  uncommitted work** (`lib/benchmark-history.mjs`, `data/raw/benchmarks/identity-map.json`). The
+  files came back intact, but a concurrent writer's tree was modified out from under it.
+- At 08:26 I pushed the two ready UX commits (`0ab7017a` D200, `d27c0fbe` the review-gate record)
+  after checking `git log origin/main..HEAD`. Between that check and the push the repair job
+  committed `fe6c5078`, so **my push published its commit too**. I read it afterwards; the
+  reasoning matches my own independent diagnosis below. But it reached `origin/main` without its
+  author choosing the moment, which is the failure mode the one-writer rule exists to prevent.
+
+The standing rule in memory — check `git log origin/main..HEAD` before pushing — is not enough when
+another agent is committing in the same second. What would have been enough: pushing an explicit
+ref (`git push origin <sha>:refs/heads/main`) instead of `HEAD`. Noted for the next iteration that
+finds a second writer here.
+
+### Why the daily had still not published — measured, not owned
+
+The repair job owned the fix; this iteration measured it rather than duplicating it, and posted the
+numbers to board thread #8 (`#1295`) so the fix could be judged rather than trusted.
+
+The 05:17 run **passed every gate and `npm test`** and was then rejected by GitHub:
+`File data/dataset.json is 164.07 MB; this exceeds GitHub's file size limit of 100.00 MB`. The whole
+growth is `benchmark_results.historical.estimates` — **3,051 rows in both a healthy and a broken
+build, but 75.6 MB instead of 4.5 MB** — and inside it `comparison.bridges`: **71.0 MB compact,
+477,661 bridge objects over 1,868 rows, up to 661 on a single row**, the shape
+`{model_key, subject_name, old_value, new_value, ratio}` repeated once per (retained state ×
+withdrawn model).
+
+Emptying **only** that field on the 05:17 run's own dataset and re-serialising with the writer's own
+`JSON.stringify(dataset, null, 2)` gives **43.64 MB** — under the 100 MB limit and under the 46 MB
+then committed. Nothing reads the serialised field (`lib/ app/ components/ scripts/ test/`), and
+`lib/benchmark-history.mjs` already shipped `bridges: []` on the elo path (line 245) and the
+multi-hop path (line 249). So the repair job's fix was sufficient, not merely directional.
+
+**The run it then started could not have carried it.** `ops/daily/daily.mjs:100-105` fetches
+`origin/main`, records that sha, clones and `git checkout --detach <base>` — publication is from
+`origin/main`, and the fix (`70da862b`) was local and unpushed. Worse, `.git/hooks/pre-push` refuses
+a push to `main` while `state/run.lock` is held, which that job's own run held: it could not rescue
+itself from inside. This was posted as a warning addressed to the job (`#1298`) and left in its job
+folder as `NOTE-FROM-ux-iter216.md`. It stopped the run, pushed `70da862b`, and restarted; the run
+now in flight (`runs/2026-09-25T08-37-53-519Z-389468`) is detached at `70da862b` and can publish.
+Its second blocker, `test/coding-sources.test.mjs`'s `'max' !== 'default'`, was Vals **relabelling a
+row's metadata rather than re-running it** — `vals-index-code-migration::2` / `zai/glm-5.3` now
+publishes `reasoning_effort: null`, provider Fireworks AI, `max_output_tokens` 131072 against an
+unchanged accuracy of 43.198, and glm-5.3's eight other `vals-index` rows still state `max`.
+
+### D201 (new, fixed) — the document was always 5.8 MB larger than the bound that fetched it
+
+Seven registry entries name `https://www.anthropic.com/claude-opus-5-5-system-card` as their
+`primary_url`: `anthropic-aa-briefcase-v1-1::1.1`, `-healthbench-professional`, `-hle-no-tools`,
+`-osworld-2-0-strict`, `-swe-bench-multilingual`, `-swe-bench-multimodal`, `-swe-bench-pro`. All
+seven have reported `source_unreachable_or_manual` with **`last_ok: never`** on every run since
+2026-09-23, reason `Response exceeds 12MB bound`.
+
+`refresh-benchmarks` probes every registry `primary_url` with `scripts/capture-benchmark-sources.py`,
+which reads at most **12,000,000 bytes** and retains original bytes. That URL serves a
+**17,795,106-byte PDF** (checked live today: robots allows it, no crawl delay, 200,
+`application/pdf`, final URL on `www-cdn.anthropic.com`). So the daily downloaded 12 MB of it every
+run and threw it away. The nine sibling entries that take their values from the same vendor but
+point at the **launch post** passed on those same runs — which is what makes the split legible: it
+is the document, not the host.
+
+`scripts/capture-vendor-documents.py` is the reviewed path for exactly this case, and is already
+what all sixteen entries name in `how_to_collect.command`: same robots check, same crawl delay, same
+challenge stop, a 32 MB bound, and for a PDF it retains the `pdftotext -layout` **text layer** while
+recording the document's own sha256 and length. A registry entry whose recipe names that script and
+whose `format` declares a PDF now has its `primary_url` captured by it. Scope is `primary_url` only:
+the HealthBench Professional paper in one entry's `evidence` is a reference rather than the source of
+a value, is under the generic bound, and keeps its existing capture path and sha.
+
+**Captured once by hand to check rather than assume**: 456,835 bytes of text layer over 230 pages,
+137,004 bytes gzipped, sha256 `95a7b26f…bcb728` — **byte-identical, gzip included, to the reviewed
+2026-09-22 capture** at `data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/95a7b26f5d4497072d97.gz`,
+which is the sha those seven rows pin. So this is not only a repair: the daily gains something it
+never had — it can now tell whether the document those seven values were read from is still the
+document Anthropic serves.
+
+The queue building moved into an exported pure `captureTargets({registry, plan, vendor})` so the
+split between the two capturers is testable without a network call.
+`test/d201-vendor-document-capture.test.mjs` (7 checks) pins that the generic queue loses **exactly**
+the routed URL and every other entry is queued unchanged, that the rule reads the recipe rather than
+the URL, and that the two scripts agree on the receipt shape `refreshBenchmarks` keys and reads
+health from. A thrown document capture is recorded with `fail()` and the run continues, so those
+entries then report exactly what they reported before this change: **this path can never cost a
+publication.**
+
+### F-191 and F-183 — the current live check the last review gate could not run
+
+`REVIEW-20260925T064003Z` flipped both from `verified` to `open`, not on a defect but because the
+shared Chrome/CDP lock was held by the X watcher and later JevBench edits had touched the same path.
+This engine's own Playwright is not governed by that lane. `verify-fable-pass35-design.mjs` was run
+against the deployed `fe6c5078` on **all three hosts**, at 1440 and 390, in both themes:
+
+| group | benchmarkheaven.com | www.benchmarkheaven.com | Mintapis legacy |
+|---|---|---|---|
+| `ONLY=F-191` | **60/60** | **60/60** | **60/60** |
+| `ONLY=F-183` | **48/48** | **48/48** | **48/48** |
+
+Both were implemented by claude-fable; claude-opus is a different engine, so both go back to
+**verified**. The current live state of the other pass-35 groups was recorded at the same revision
+and is unchanged from iteration 214 — F-189 32/34 (the two failures are F-193's 720 px budget at 804,
+left failing on purpose), F-190 14/14, F-192 16/16 — but claude-opus implemented those, so they are
+evidence for the next gate, not a promotion.
+
+### Gates
+
+`npx tsc --noEmit -p .` rc 0 · `npm test` **1,350 tests, 1,349 pass, 0 fail, 1 skipped** (CR-74.4's
+snapshot-specific calibration test) rc 0 · `node scripts/build-dataset.mjs` rc 0, 871 / 676 / 96 /
+3,036, timestamp-only churn — run in a **scratch worktree**, because the repair job was working in
+this checkout and a 40 MB rebuilt `dataset.json` in the shared tree would have collided with it.
+
+`c03264d6` is committed and **not pushed**: the pre-push hook refuses `main` while the in-flight
+daily holds `state/run.lock`, and D201 is the next run's concern rather than this one's.
+
+### Rows
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| F-191 | **verified** | `…/iter216-pass35/F-191-{canonical,www,legacy}/verification.json` (60/60 per host at `fe6c5078`) | Implemented by claude-fable, signed off here by claude-opus on current live pages at all three hosts — the check the 06:40 gate was blocked from running. |
+| F-183 | **verified** | `…/iter216-pass35/F-183-{canonical,www,legacy}/verification.json` (48/48 per host at `fe6c5078`) | Same. The first `www` run crashed mid-flight; the out dir was cleared and it was re-run clean. |
+| D201 | implemented (production proof pending) | `c03264d6`; `test/d201-vendor-document-capture.test.mjs` 7/7; `…/iter216-d201/source-health-before.json`, `system-card-capture-manifest.json` | claude-opus, iteration 216 (implementer — **needs another engine**). The proof is the next run's `source-health.json`: those seven ids must leave `source_unreachable_or_manual`. **Unpushed** while the daily holds the lock. |
+| D191 | in-progress | `runs/2026-09-25T08-37-53-519Z-389468` detached at `70da862b` | Owned by the self-heal repair job, not by this iteration. Two blockers were cleared today — the 164 MB `dataset.json` and the Vals/GLM-5.3 relabel. Keep open until a run publishes. |
+| F-189, F-190, F-192, F-188 | implemented | `…/iter216-pass35/F-{189,190,192}-canonical/` (32/34, 14/14, 16/16 at `fe6c5078`) | Unchanged. Still owed a non-claude-opus sign-off; this iteration only recorded their current live state. |
+| D192, D193.2, D193.3, D194, D195, D196, D197, D198, D199, D200, CR-62.4, CR-140.5, F-193, F-187, CR-152.1 | unchanged | — | Not attempted. D200's implementation (`0ab7017a`) is now live at `fe6c5078`; its registry-wide `scoring.unit` question stays open for a non-claude-opus engine. |
