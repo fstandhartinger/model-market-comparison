@@ -11451,3 +11451,41 @@ daily holds `state/run.lock`, and D201 is the next run's concern rather than thi
 | D191 | in-progress | `runs/2026-09-25T08-37-53-519Z-389468` detached at `70da862b` | Owned by the self-heal repair job, not by this iteration. Two blockers were cleared today — the 164 MB `dataset.json` and the Vals/GLM-5.3 relabel. Keep open until a run publishes. |
 | F-189, F-190, F-192, F-188 | implemented | `…/iter216-pass35/F-{189,190,192}-canonical/` (32/34, 14/14, 16/16 at `fe6c5078`) | Unchanged. Still owed a non-claude-opus sign-off; this iteration only recorded their current live state. |
 | D192, D193.2, D193.3, D194, D195, D196, D197, D198, D199, D200, CR-62.4, CR-140.5, F-193, F-187, CR-152.1 | unchanged | — | Not attempted. D200's implementation (`0ab7017a`) is now live at `fe6c5078`; its registry-wide `scoring.unit` question stays open for a non-claude-opus engine. |
+
+### D202 (new, fixed) — the other half of the never-collected list
+
+After D201 the `source_unreachable_or_manual` bucket held exactly five entries, all with
+`last_ok: never`, all sharing one URL: `https://openai.com/index/introducing-gpt-6-sol-and-luna/`.
+Their own `how_to_collect.notes` has said since they were added that *"openai.com/index/* answers a
+plain HTTP client with a challenge page although robots.txt allows the path, so the retained bytes
+were taken from one load in the shared desktop Chrome"*. Re-checked today with our user agent:
+**robots allows the path, no crawl delay, and the server answers HTTP 403.** So the daily fetched a
+URL it had been told it could not fetch, on every run, and filed five sources that are working
+exactly as reviewed as failures — which the stale-source line that reaches Florian counted.
+
+The vocabulary already existed: the fifty plan-level manual snapshots (`refresh: "manual"`) report
+`retained_manual_snapshot` with a reviewed reason. Those five have no collection-plan entry, so
+nothing could reach them. They now declare `how_to_collect.access = {mode, reason}`; the run queues
+that URL to **neither** capturer and reports `retained_manual_snapshot` carrying the registry's own
+reason. `how_to_collect` is not in `protocolReviewRow`'s field allowlist (only `version_guard` is
+taken from it), so the new field cannot enter a protocol packet or start a dispute — checked before
+the edit, because a new daily dispute on five quiet sources would have been a worse defect than the
+one being fixed.
+
+A URL is left alone only when **every** entry naming it — as `primary_url` or in `evidence` —
+declares browser-only access, so one entry's access mode can never silently drop another entry's
+source; `test/d202-browser-only-sources.test.mjs` covers both directions. Also checked: nothing else
+uses the `openai.com` host, so the capture script's 403 host-block (`blocked.add(host)`) was not
+suppressing other captures, and `cdn.openai.com` is a separate host.
+
+`registry.json` is carried whole into `dataset.json`, so this ships the rebuilt dataset rather than
+restoring it — the trap recorded after the last registry edit that was committed without it.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D202 | implemented (production proof pending) | `5273989c`; `test/d202-browser-only-sources.test.mjs` 4/4; `…/iter216-d202/openai-403-check.json` | claude-opus, iteration 216 (implementer — **needs another engine**). The proof is the next run's `source-health.json`: those five ids must read `retained_manual_snapshot`, and `source_unreachable_or_manual` should be empty once D201 lands with it. |
+
+Gates after D202: `npm test` **1,354 tests, 1,353 pass, 0 fail, 1 skipped** rc 0 · `npx tsc --noEmit -p .`
+rc 0 · `node scripts/build-dataset.mjs` rc 0, 871 / 676 / 96 / 3,036 (the twenty registry lines and
+the two generated timestamps). `c03264d6`, `609ce01f` and `5273989c` are committed and **unpushed**
+while the in-flight daily holds `state/run.lock`.
