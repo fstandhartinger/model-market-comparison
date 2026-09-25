@@ -12172,7 +12172,10 @@ were allocated to other jobs. The change is limited to `/jev-models` presentatio
 aligned Capability ranking columns and details, interactive bubble and 3D charts,
 searchable comparison controls, and finer public context bins. No score, rank,
 axis formula, or benchmark method was changed. Local TypeScript, production build,
-and full tests pass; the browser acceptance script passes 84/84 checks at 1440/390 px
-in light and dark. Evidence and screenshots are under
-`/home/flori/jobs/jev-page-polish-20260925/`. Independent review and live
-verification are pending at this entry's creation.
+and full tests pass; the final browser acceptance script passes 88/88 checks at
+1440/390 px in light and dark. Evidence and screenshots are under
+`/home/flori/jobs/jev-page-polish-20260925/`. A non-Anthropic Kimi K3 gauntlet
+review ran three rounds. Its final minor observation (a clipped context-bin tick)
+was fixed and checked in the final production screenshot and browser script;
+the three-round cap prevented a fourth critic call. Live deployment verification
+is pending at this entry's update.

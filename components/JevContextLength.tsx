@@ -174,7 +174,8 @@ function AccuracyChart({ systems, labels, excluded, topRanked }: { systems: Leng
   const active = labels.map((label, index) => ({ label, index })).filter(({ index }) => systems.some((system) => system.buckets[index]?.accuracy != null));
   const empty = labels.filter((_, index) => !active.some((bucket) => bucket.index === index));
   const lastDrawn = active.length ? active[active.length - 1].label : null;
-  const width = 740, height = 305, left = 52, right = 18, top = 16, bottom = 57;
+  // Reserve room for the full last inclusive bin label, including on narrow scrollers.
+  const width = 740, height = 305, left = 52, right = 60, top = 16, bottom = 57;
   const plotRight = width - right, plotBottom = height - bottom;
   const x = (position: number) => left + (plotRight - left) * (active.length < 2 ? 0 : position / (active.length - 1));
   const y = (value: number) => top + (plotBottom - top) * (1 - value);
