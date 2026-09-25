@@ -48,5 +48,5 @@ test('CR-131 v1.4 board explains the scoring and required exposure disclosures',
   assert.match(page, /<JevModelsV14Board artifact=\{v14\.artifact\} sha256=\{v14\.sha256\} previous=\{previous\}/);
   const pinnedPage = await readFile(new URL('../app/jev-models/v1.4/page.tsx', import.meta.url), 'utf8');
   assert.match(pinnedPage, /readJevbenchV14\(\)/);
-  assert.match(board, /href=\{`\/api\/jevbench\/\$\{artifact\.revision\.slice\(1\)\}`\}/);
+  assert.match(board, /href=\{`\/api\/jevbench\/\$\{artifact\.revision\}`\}/); // CR-151: the route keeps the v (/api/jevbench/1.4.2 was a 404)
 });

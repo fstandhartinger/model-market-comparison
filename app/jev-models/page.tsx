@@ -145,7 +145,7 @@ export default async function JevModelsPage() {
         license: 'https://github.com/fstandhartinger/jevbench/blob/main/LICENSE',
         isAccessibleForFree: true,
         variableMeasured: ['JevBench Score', 'Intelligence', 'Calibration', 'Speed', 'Cost'],
-        distribution: [{ '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: `https://benchmarkheaven.com/api/jevbench/${v14.revision.slice(1)}` }],
+        distribution: [{ '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: `https://benchmarkheaven.com/api/jevbench/${v14.revision}` }],
       },
       {
         '@type': 'FAQPage', '@id': 'https://benchmarkheaven.com/jev-models#faq',
@@ -164,7 +164,7 @@ export default async function JevModelsPage() {
       <p className="bh-muted mt-3 max-w-3xl text-xs leading-relaxed" data-bh-jev-meta>
         Scored {day(v14.generated)} · protocol <code>{v14.artifact.protocol}</code> · {v14.publicDecisions} public + {v14.sealedDecisions} sealed aggregate decisions · one request at a time from a server in Germany ·{' '}
         <a className="text-accent underline" href={JEVBENCH_REPO}>harness, public tasks &amp; scoring rules (MIT)</a> ·{' '}
-        <a className="text-accent underline" href={`/api/jevbench/${v14.revision.slice(1)}`} data-bh-jev-sha={v14.sha256}>results JSON</a> <span className="whitespace-nowrap">sha256 <code title={v14.sha256}>{v14.sha256.slice(0, 12)}…</code></span> ·{' '}
+        <a className="text-accent underline" href={`/api/jevbench/${v14.revision}`} data-bh-jev-sha={v14.sha256}>results JSON</a> <span className="whitespace-nowrap">sha256 <code title={v14.sha256}>{v14.sha256.slice(0, 12)}…</code></span> ·{' '}
         <a className="text-accent underline" href="/jev-models/v1" data-bh-jev-v1-link>v1.0 results</a>
       </p>
       <p className="mt-3 max-w-3xl text-sm" data-bh-jev-version-share-row>
