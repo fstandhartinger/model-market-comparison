@@ -10,5 +10,5 @@ test('F-176(a): the 3D view has no "ready" announcement', () => {
   assert.equal(src.includes('Interactive 3D view ready.'), false, 'the ready sentence is gone');
   assert.match(src, /setStatus\(''\)/, 'the ready state clears the live region');
   assert.match(src, /Loading the interactive 3D view/, 'the loading state stays');
-  assert.match(src, /could not (load|create) the interactive 3D view/, 'the failure states stay');
+  assert.match(src, /Using the interactive 3D fallback/, 'the fallback state stays');
 });

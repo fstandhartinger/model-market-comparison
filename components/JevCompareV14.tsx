@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { Radar, Swatch, type Series, type Spoke } from "./JevRadars";
 import { JEV_TYPE_LABEL, JEV_TYPE_VAR } from "./jevTypes";
 
@@ -73,6 +73,67 @@ function parsePair(search: string, keys: Set<string>): [string, string] | null {
   return a && b && a !== b && keys.has(a) && keys.has(b) ? [a, b] : null;
 }
 
+function SystemCombobox({ id, label, value, other, ranked, unranked, onChange }: {
+  id: string; label: string; value: string; other: string; ranked: JevCompareRow[]; unranked: JevCompareRow[]; onChange: (key: string) => void;
+}) {
+  const container = useRef<HTMLDivElement>(null);
+  const input = useRef<HTMLInputElement>(null);
+  const list = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState('');
+  const [active, setActive] = useState(0);
+  const options = [...ranked, ...unranked].filter((row) => row.key !== other);
+  const selected = options.find((row) => row.key === value);
+  const filtered = options.filter((row) => `${row.name} ${row.rank ?? ''} ${row.listing}`.toLocaleLowerCase().includes(query.trim().toLocaleLowerCase()));
+  const activeIndex = Math.min(active, Math.max(0, filtered.length - 1));
+
+  useEffect(() => {
+    if (open) list.current?.querySelector(`[data-option-index="${activeIndex}"]`)?.scrollIntoView({ block: 'nearest' });
+  }, [activeIndex, open]);
+
+  const close = () => { setOpen(false); setQuery(''); setActive(0); };
+  const choose = (row: JevCompareRow) => { onChange(row.key); close(); input.current?.focus(); };
+  const onKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      event.preventDefault();
+      if (!open) { setOpen(true); setQuery(''); setActive(event.key === 'ArrowDown' ? 0 : options.length - 1); }
+      else setActive((index) => Math.max(0, Math.min(filtered.length - 1, index + (event.key === 'ArrowDown' ? 1 : -1))));
+    } else if (event.key === 'Enter' && open && filtered[activeIndex]) {
+      event.preventDefault(); choose(filtered[activeIndex]);
+    } else if (event.key === 'Escape' && open) {
+      event.preventDefault(); close();
+    } else if (event.key === 'Tab') close();
+  };
+
+  return <div ref={container} className="relative min-w-0 flex-1 text-[13px]" onBlur={(event) => {
+    if (container.current?.contains(event.relatedTarget as Node | null)) return;
+    // Touch browsers may blur the input before dispatching an option's click.
+    if (event.relatedTarget == null) window.setTimeout(() => {
+      if (!container.current?.contains(document.activeElement)) close();
+    }, 150);
+    else close();
+  }}>
+    <label htmlFor={id} className="bh-muted mb-1 block font-semibold">{label}</label>
+    <div className="relative">
+      <input ref={input} id={id} type="text" role="combobox" aria-autocomplete="list" aria-expanded={open} aria-controls={`${id}-options`}
+        aria-activedescendant={open && filtered.length ? `${id}-option-${activeIndex}` : undefined}
+        autoComplete="off" spellCheck={false} className="bh-input min-h-11 w-full pr-9" value={open ? query : selected?.name ?? ''}
+        placeholder={open ? 'Search systems…' : undefined} onFocus={() => { setOpen(true); setQuery(''); setActive(0); }}
+        onChange={(event) => { setOpen(true); setQuery(event.target.value); setActive(0); }} onKeyDown={onKeyDown}
+        data-bh-jev14-compare-pick={id.endsWith('a') ? 'a' : 'b'} />
+      <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[var(--muted)]" aria-hidden="true">⌄</span>
+    </div>
+    {open && <div ref={list} id={`${id}-options`} role="listbox" aria-label={`${label} systems`}
+      className="absolute z-30 mt-1 max-h-64 w-full overflow-y-auto overscroll-contain rounded-md border border-[rgb(var(--line))] bg-[rgb(var(--surface))] p-1 shadow-lg">
+      {filtered.length ? filtered.map((row, index) => <div key={row.key} id={`${id}-option-${index}`} role="option" aria-selected={row.key === value}
+        data-option-index={index} className={`cursor-pointer rounded px-3 py-2.5 ${index === activeIndex ? 'bg-[rgb(var(--surface-2))]' : ''}`}
+        onMouseEnter={() => setActive(index)} onMouseDown={(event) => event.preventDefault()} onClick={() => choose(row)}>
+        <span className="font-medium">{row.name}</span><span className="bh-muted ml-2 text-xs">{row.rank === null ? row.listing === 'honorable_mention' ? 'Honorable mention' : 'Partial run' : `#${row.rank}`}</span>
+      </div>) : <p className="bh-muted px-3 py-2.5">No matching systems</p>}
+    </div>}
+  </div>;
+}
+
 export function JevCompareV14({ rows, sealedDecisions, hardDecisions, fixedPair = false, heading, hardFamilyN, sealedFamilyN }: {
   rows: JevCompareRow[]; sealedDecisions: number; hardDecisions: number; fixedPair?: boolean; heading?: string;
   hardFamilyN?: Record<string, number>; sealedFamilyN?: Record<string, number>;
@@ -127,13 +188,6 @@ export function JevCompareV14({ rows, sealedDecisions, hardDecisions, fixedPair 
     return `${names.join(" and ")} has no published accuracy-tier results.`;
   };
   const status = (r: JevCompareRow) => r.rank !== null ? `#${r.rank}` : r.listing === "honorable_mention" ? "honorable mention, not ranked" : "partial run, not ranked";
-  const option = (r: JevCompareRow) => <option key={r.key} value={r.key}>{r.rank !== null ? `${r.rank}. ` : ""}{r.name}{r.rank === null ? ` (${r.listing === "honorable_mention" ? "honorable mention" : "partial"})` : ""}</option>;
-  const pick = (id: string, label: string, value: string, set: (k: string) => void, other: string) => <label className="block min-w-0 flex-1 text-[13px]" htmlFor={id}>
-    <span className="bh-muted mb-1 block font-semibold">{label}</span>
-    <select id={id} className="bh-input w-full" value={value} onChange={(e) => set(e.target.value)} data-bh-jev14-compare-pick={id.endsWith("a") ? "a" : "b"}>
-      <optgroup label="Ranked">{ranked.filter((r) => r.key !== other).map(option)}</optgroup>
-      {unranked.length > 0 && <optgroup label="Not ranked">{unranked.filter((r) => r.key !== other).map(option)}</optgroup>}
-    </select></label>;
   const desc = (title: string, spokes: Spoke[]) => `${title}, ${s[0].name} vs ${s[1].name}. ` + spokes.map((sp) => `${sp.lines.join(" ")}: ${sp.texts[0]} vs ${sp.texts[1]}`).join("; ") + ".";
   const copy = async () => {
     const u = new URL(window.location.href); u.searchParams.set("compare", `${A.key},${B.key}`); u.hash = "compare";
@@ -156,9 +210,9 @@ export function JevCompareV14({ rows, sealedDecisions, hardDecisions, fixedPair 
         : 'Pick any two. Four radars: the score axes, accuracy per tier including the sealed set, and accuracy by family on the v1.2 hard tier and on the sealed set. Further out is better on every spoke; the link keeps the pair.'}</p>
     <div className="bh-panel mt-3 p-3 sm:p-4">
       {!fixedPair && <div className="flex flex-col gap-2 sm:flex-row sm:items-end">
-        {pick("jev14-compare-a", "System A", A.key, setA, B.key)}
+        <SystemCombobox id="jev14-compare-a" label="System A" value={A.key} other={B.key} ranked={ranked} unranked={unranked} onChange={setA} />
         <button type="button" className="bh-button shrink-0 self-end text-sm font-semibold sm:self-auto" onClick={() => { setA(B.key); setB(A.key); }} aria-label="Swap system A and system B" data-bh-jev14-compare-swap>⇄ Swap</button>
-        {pick("jev14-compare-b", "System B", B.key, setB, A.key)}
+        <SystemCombobox id="jev14-compare-b" label="System B" value={B.key} other={A.key} ranked={ranked} unranked={unranked} onChange={setB} />
       </div>}
       <div className="mt-3 flex flex-wrap items-start justify-between gap-2">
         <ul className="space-y-1 text-[13px]" aria-label="Legend" data-bh-jev14-compare-legend>
