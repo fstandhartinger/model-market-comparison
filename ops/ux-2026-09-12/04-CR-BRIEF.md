@@ -1186,3 +1186,14 @@ Source: workstream repair in `03-CHANGE-REQUESTS-VERBATIM.md`, F-184/F-190 in
 | CR-164.1 | Align Capability bar-row heights after CR-158 added Jev-class notes. | On the live hub at 1440 px in light and dark, every `[data-bh-jev14-capability-row]` is within 2 px of the others. At 390 px, notes remain readable and there is no horizontal page overflow. |
 | CR-164.2 | Keep the frozen v1.4.2 board primary while retaining its artifact-derived Capability charts. | The charts are reachable through a labelled, keyboard-operable disclosure, closed by default. The official frozen board, compare view, source hash and share link remain visible. At 1440 px the page height is under 14,000 px in both themes; the F-190 browser checks pass on both hosts. |
 | CR-164.3 | Verify the repair without changing published measurements. | Dataset build, full tests, TypeScript and production build pass; the changed page and live hub are checked at 1440/390 in light/dark on both public hosts, with screenshots and DOM receipts. JevBench artifact hashes, scores and official ranks are unchanged. |
+
+## CR-165 — Independent live sign-off of CR-163 and CR-164
+
+Source: workstream review gate in `03-CHANGE-REQUESTS-VERBATIM.md`. The reviewer must use a
+different engine from Codex, which implemented both repairs.
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-165.1 | Independently review CR-163.1–163.4, F-189 and F-193 on the deployed pages. | Current `View by` behavior, the 720 px phone first-row budget, guides, method copy, desktop/mobile and both themes pass on both hosts; save screenshot and DOM receipts and name the live revision. |
+| CR-165.2 | Independently review CR-164.1–164.3, F-184 and F-190 on the deployed pages. | Uniform desktop row heights, readable phone notes, closed/keyboard-openable frozen charts, page-height limit and no overflow pass on both hosts; confirm published benchmark artifacts did not change. |
+| CR-165.3 | Record the different-engine verdict without overstating it. | Only passing rows become verified in `PROGRESS.md`; failing or unproven rows retain their earlier status and a concrete reason. The review and evidence paths are retained under `/opt/benchmarkheaven/state/ux-evidence/`. |

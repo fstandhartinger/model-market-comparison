@@ -11933,3 +11933,47 @@ them live and promotes them to `verified`.
 | CR-164.2 | implemented | `iter227-cr164/live-{canonical,legacy}/verification.json`, `live-f190-{canonical,legacy}/` | Frozen page 12,137 px; closed chart disclosure keyboard-opens; independent sign-off pending. |
 | CR-164.3 | implemented | `iter227-cr164/live-revisions.json`, `iter227-cr164/*-final.log` | Queue and local gates green; both hosts checked; independent sign-off pending. |
 | F-184, F-190 | implemented | `iter227-cr164/live-f184-{canonical,legacy}/`, `live-f190-{canonical,legacy}/` | Review gate must recheck before restoring verified. |
+
+## Iteration 228 (codex-luna coordination, opencode-kimi independent review) — CR-165
+
+CR-165 was allocated to `jobs/bh-ux-independent-signoff-20260925` for a different-engine
+live review of the already-deployed CR-163 and CR-164 repairs. Review evidence is being
+collected at `/opt/benchmarkheaven/state/ux-evidence/iter228-kimi-independent/`.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| CR-165.1 | in-progress | `iter228-kimi-independent/` | Kimi must independently adjudicate CR-163, F-189 and F-193 on both live hosts. |
+| CR-165.2 | in-progress | `iter228-kimi-independent/` | Kimi must independently adjudicate CR-164, F-184 and F-190 on both live hosts. |
+| CR-165.3 | in-progress | `iter228-kimi-independent/` | Ledger statuses will follow the independent verdict; no self-sign-off. |
+
+### FINAL STATUS — 2026-09-25 (Kimi K3 independent review closes CR-165)
+
+The different-engine review (`iter228-kimi-independent/REVIEW.md`, run 18:08–18:11 UTC)
+returned **PASS** on every row. Both live hosts (`benchmarkheaven.com`,
+`model-market-comparison.app.mintapis.com`) served revision `ce53174f`
+(`ce53174ff4d97c1f75e0aa3c0e1a6674a6c1356b`, `/api/meta`, dataset 871/674/96/3,121) at
+review time. Verdicts below are the Kimi evidence, not assumptions; evidence root is
+`/opt/benchmarkheaven/state/ux-evidence/iter228-kimi-independent/`.
+
+| ID | Status | Evidence | Notes / caveats from REVIEW.md |
+|---|---|---|---|
+| CR-163.1 | verified | `f189-{canonical,legacy}/verification.json`, `mobile_*-hub.png`; `cr164-*/phone_*-hub.png` | First Jev-class row at y = 647 px ≤ 720 at 390 px in light and dark on both hosts; Capability leads bubble charts/board; no horizontal overflow in all 8 contexts. |
+| CR-163.2 | verified | `f189-{canonical,legacy}/verification.json` | Exactly ten guide links once in DOM; phone toggle starts collapsed (≥44 px), tap and keyboard (Enter/Space) expand and close; desktop shows all ten. |
+| CR-163.3 | verified | `f189-{canonical,legacy}/verification.json`; screenshots; REVIEW.md Artifact section | Short pre-chart line names the leading row; full 2× cost/latency rule, limits, fallback and both links below the ranking; scores/artifacts unchanged. |
+| CR-163.4 | verified | `f189-{canonical,legacy}/verification.json` (52/52 each) | Current `View by` switch, Overall pressed + Capability return link, one unboxed approved fairness sentence, Intelligence ordering and restore; stale `Rank by` branch correctly absent. |
+| F-189 | verified | `f189-{canonical,legacy}/` | 52/52 on canonical and 52/52 on legacy at 1440/390 px, light/dark; zero page errors. |
+| F-193 | verified | `f189-{canonical,legacy}/verification.json` | 720 px first-row budget holds at 647 px in both phone themes on both hosts. |
+| CR-164.1 | verified | `f184-{canonical,legacy}/verification-F-184.json`, `cr164-{canonical,legacy}/verification.json` | All 91 capability rows exactly 43 px at 1440 in light/dark on both hosts (Δ 0 ≤ 2 px); 43/43 phone notes present, no overflow at 390 px. |
+| CR-164.2 | verified | `f190-{canonical,legacy}/verification.json`, `cr164-{canonical,legacy}/` | Frozen-chart disclosure closed by default and keyboard-openable; board, compare view, source hash and share link present; 12,137 px < 14,000 at 1440 both themes. Caveat: 390 px height is 14,890 px — budget applies only at 1440 as written, not a defect. |
+| CR-164.3 | verified | `build-dataset.log`, `npm-test.log` (1,385 pass / 0 fail / 1 skip), `tsc.log`; live receipts; REVIEW.md Artifact section | Dataset 871/674/96/3,121 matches live `/api/meta`; tsc clean; artifact SHA-256 `ac14e206…e5be` byte-identical on both hosts; top-5 ranks unchanged. Caveat: no standalone production-build log in the folder — gate met via merge-queue receipt plus live deploy of the exact revision (a failing build would have blocked the verified deploy). |
+| F-184 | verified | `f184-{canonical,legacy}/` | 6/6 per host: 43 px uniform rows (n=91) in desktop light and dark; no page errors in any context. |
+| F-190 | verified | `f190-{canonical,legacy}/` | 18/18 per host: no "Frozen top five" h2, no "Context length" section, one block before the board, 12,137 px < 14,000 at 1440 both themes, no page errors. |
+| CR-165.1 | verified | `iter228-kimi-independent/REVIEW.md`, `f189-{canonical,legacy}/` | Different engine adjudicated CR-163.1–.4, F-189, F-193 live on both hosts at revision `ce53174f` with saved screenshot/DOM receipts. |
+| CR-165.2 | verified | `iter228-kimi-independent/REVIEW.md`, `f184-*/verification-F-184.json`, `f190-*/verification.json`, `cr164-{canonical,legacy}/verification.json` | Different engine adjudicated CR-164.1–.3, F-184, F-190 live on both hosts; published benchmark artifacts confirmed unchanged (hash- and rank-compared). |
+| CR-165.3 | verified | `iter228-kimi-independent/REVIEW.md`; this table | Only PASS rows promoted to verified; no row failed, so no demotions. Review and evidence retained under `/opt/benchmarkheaven/state/ux-evidence/`. No self-sign-off: statuses above follow the Kimi verdict verbatim. |
+
+Remaining review limits, carried verbatim from REVIEW.md so later readers do not over-read
+this sign-off: production-build pass is receipt- and deploy-evidenced (no build log file);
+the 390 px frozen-page height (14,890 px) is outside the as-written CR-164.2 budget, which
+binds only at 1440 px; screenshot parity was compared manually over the saved PNGs; the
+shared browser was used only under `flock` with all contexts closed.

@@ -1744,3 +1744,12 @@ after CR-158 added per-row class notes, and the frozen `/jev-models/v1.4.2` page
 on a 1440 px desktop against F-190's 14,000 px target. Keep the row notes readable, the
 artifact-derived Capability charts reachable, and the frozen page's board as its primary
 content. Do not change measurements, official ranks, the Jev-class rule or sealed data.
+
+## CR-165 — Independent sign-off of the deployed JevBench repairs (workstream gate, 2026-09-25)
+
+This is a review gate for CR-163 and CR-164, **not a new Florian request**. Their
+implementing engine was Codex. A different engine must inspect the current live pages on
+both public hosts at desktop and phone widths in light and dark, check the relevant
+acceptance criteria and retained screenshots, and record a pass or a concrete failure for
+each row. A prior implementer receipt alone does not close a row. Keep artifact hashes,
+scores, official ranks, and the Jev-class rule unchanged.
