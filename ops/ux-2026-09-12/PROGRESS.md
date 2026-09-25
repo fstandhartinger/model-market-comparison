@@ -11978,6 +11978,27 @@ the 390 px frozen-page height (14,890 px) is outside the as-written CR-164.2 bud
 binds only at 1440 px; screenshot parity was compared manually over the saved PNGs; the
 shared browser was used only under `flock` with all contexts closed.
 
+## JevBench v1.4.2 presentation polish — CR-169
+
+CR-169 is reserved for `jev-page-polish-20260925` after CR-165 through CR-168
+were allocated to other jobs. The change is limited to `/jev-models` presentation:
+aligned Capability ranking columns and details, interactive bubble and 3D charts,
+searchable comparison controls, and finer public context bins. No score, rank,
+axis formula, or benchmark method was changed. Local TypeScript, production build,
+and full tests pass; the expanded browser acceptance script passes 126/126 checks at
+1440/390 px in light and dark. Evidence and screenshots are under
+`/home/flori/jobs/jev-page-polish-20260925/`. A non-Anthropic Kimi K3 gauntlet
+review ran three rounds. Its final minor observation (a clipped context-bin tick)
+was fixed and checked in the final production screenshot and browser script;
+the three-round cap prevented a fourth critic call. Live deployment verification
+is pending at this entry's update.
+
+The first queue attempt built and typechecked but failed two legacy source-pin tests
+that expected the old 3D error sentence and the pre-fallback load guard. The tests
+now assert the interactive fallback message and that WebGL is not retried after
+fallback. `CI=true npm test` passes 1,385/1,386 (one intentional skip). No scoring
+or model data changed.
+
 ## Review gate 20260925T192004Z (claude-opus) — CR-166/CR-167 reviewed for the first time
 
 Report: `REVIEW-20260925T192004Z.md`. Range `d78ddfd7..f81ad56a`, 18 commits / 39 files. Local gates
@@ -12164,24 +12185,3 @@ Not done here and still open: F-181 (checker fixed by iteration 230, awaiting a 
 D192, D205 (needs Florian), D207/CR-167.2/CR-163.1 and D208 (all implemented by iteration 230,
 awaiting an independent engine), the four D-rows awaiting a daily run, and X6's line-by-line audit.
 **`ALL-ACCEPTED` is not appended.**
-
-## JevBench v1.4.2 presentation polish — CR-169
-
-CR-169 is reserved for `jev-page-polish-20260925` after CR-165 through CR-168
-were allocated to other jobs. The change is limited to `/jev-models` presentation:
-aligned Capability ranking columns and details, interactive bubble and 3D charts,
-searchable comparison controls, and finer public context bins. No score, rank,
-axis formula, or benchmark method was changed. Local TypeScript, production build,
-and full tests pass; the expanded browser acceptance script passes 126/126 checks at
-1440/390 px in light and dark. Evidence and screenshots are under
-`/home/flori/jobs/jev-page-polish-20260925/`. A non-Anthropic Kimi K3 gauntlet
-review ran three rounds. Its final minor observation (a clipped context-bin tick)
-was fixed and checked in the final production screenshot and browser script;
-the three-round cap prevented a fourth critic call. Live deployment verification
-is pending at this entry's update.
-
-The first queue attempt built and typechecked but failed two legacy source-pin tests
-that expected the old 3D error sentence and the pre-fallback load guard. The tests
-now assert the interactive fallback message and that WebGL is not retried after
-fallback. `CI=true npm test` passes 1,385/1,386 (one intentional skip). No scoring
-or model data changed.
