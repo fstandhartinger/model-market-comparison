@@ -8,6 +8,7 @@ import { pageDataVersion } from "../lib/page-data";
 import { AaCredit } from "../components/AaCredit";
 import { EpochCredit } from "../components/EpochCredit";
 import { WebMcpTools } from "../components/WebMcpTools";
+import { FastlaneBanner } from "../components/FastlaneBanner";
 
 const BRAND_CLAIM = "The most detailed cost–capability analysis in AI.";
 const BRAND_LINE = "Every model. Every Benchmark. Actual Costs.";
@@ -65,6 +66,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               {" "}Payments go to productivity-boost.com Betriebs UG (haftungsbeschränkt) &amp; Co. KG, the one-person company behind this project.
             </p>
           </footer>
+          <FastlaneBanner />
           </AccountProvider>
         </SettingsProvider>
       </body>

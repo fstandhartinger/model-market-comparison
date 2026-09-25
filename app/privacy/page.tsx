@@ -8,7 +8,7 @@ export const metadata: Metadata = { title: "Privacy policy" };
 export default function PrivacyPage() {
   return <article className="max-w-3xl text-sm leading-relaxed text-gray-300">
     <h1 className="text-2xl font-bold text-inherit">Privacy policy</h1>
-    <p className="bh-muted mt-1">Last updated: September 24, 2026</p>
+    <p className="bh-muted mt-1">Last updated: September 25, 2026</p>
 
     <h2 className="mt-6 mb-2 font-semibold">Who is responsible</h2>
     <p>productivity-boost.com Betriebs UG (haftungsbeschränkt) &amp; Co. KG, Reichenbergerstr. 2, 94036 Passau, Germany,
@@ -20,7 +20,7 @@ export default function PrivacyPage() {
       browser&apos;s local storage and are not sent to us. To deliver pages, our server necessarily processes technical request
       data such as your IP address, the requested page and your browser type; this is used to run and secure the service
       (Art. 6(1)(f) GDPR) and, without your IP address, for the aggregate <a className="text-accent" href="#visitor-statistics">visitor
-      statistics</a> below. We use no tracking or advertising of any kind.</p>
+      statistics</a> below. We use no advertising. The priority-evaluation banner sends the interaction counts described below.</p>
 
     <h2 id="visitor-statistics" className="mt-6 mb-2 font-semibold">Visitor statistics</h2>
     <p>To see which pages are read and how people find the site, our server counts the page loads it delivers. For each
@@ -52,6 +52,14 @@ export default function PrivacyPage() {
         a single person; you can still object by email to <a className="text-accent" href="mailto:info@productivity-boost.com">info@productivity-boost.com</a>,
         and we will answer and explain how to switch on one of these signals.</li>
     </ul>
+    <p className="mt-2">The priority-evaluation banner separately sends three interaction counts to our
+      self-hosted Umami service: when the banner appears, when its request link is used, and when it is dismissed.
+      The event payload contains only the event name and whether the visitor was on a JevBench or ImageJevBench page;
+      it contains no query string or form data. The server forwards the browser User-Agent to Umami, but not the
+      visitor&apos;s IP address. This uses our legitimate interest in understanding whether the
+      paid-evaluation offer is useful (Art. 6(1)(f) GDPR). It honors Do Not Track and Global Privacy Control.
+      The banner saves your dismissal choice in your browser&apos;s local storage, or in session storage when you use
+      the close button. You can remove that choice through your browser settings.</p>
 
     <h2 className="mt-6 mb-2 font-semibold">Accounts (Sign in with Google)</h2>
     <p>If you choose to sign in, Google shares your Google account ID, email address, name and profile picture link with us.
