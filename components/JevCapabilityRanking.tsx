@@ -43,15 +43,12 @@ export function JevCapabilityRanking({ systems, revision, officialHref }: { syst
   return <section id="jev-capability" className="mt-8 scroll-mt-6" aria-labelledby="jev-capability-title" data-bh-jev-capability-ranking>
     <p className="bh-eyebrow">JevBench {revision} · headline ranking</p>
     <h2 id="jev-capability-title" className="mt-1 text-2xl font-bold leading-snug sm:text-3xl">Capability ranking of Jev-class systems</h2>
-    <p className="mt-2 max-w-4xl text-[15px]">
-      Capability is the mean of <b>Intelligence</b> (how often the decision is right) and <b>Calibration</b> (how well its probabilities match reality).
-      {lead && <> Among Jev-class systems, <b>{shortName(lead.r.row.display)}</b> leads with {one(lead.r.capability)}.</>}
-      {' '}Speed and cost are not part of this number: they decide who counts as Jev-class, and the <a className="text-accent underline" href="#jev-bubbles">charts below</a> and the <a className="text-accent underline" href={officialHref}>official JevBench Score</a> weigh them in.
+    <p className="mt-2 max-w-4xl text-[15px] leading-snug">
+      Capability averages <b>Intelligence</b> and <b>Calibration</b>.
+      {lead && <> <b>{shortName(lead.r.row.display)}</b> leads the Jev-class systems with {one(lead.r.capability)}.</>}
     </p>
-    <p className="bh-panel mt-3 max-w-4xl p-3 text-[13.5px] leading-snug" data-bh-jev-class-rule>
-      <b>Jev-class</b> = cost per decision at most 2× Jev 1.13.0&apos;s <span className="whitespace-nowrap">(≤ {usd(limits.cost)} per 1,000 decisions)</span> <b>and</b> median latency at most 2× Jev 1.13.0&apos;s <span className="whitespace-nowrap">(≤ {secs(limits.latency)}</span>, the adjusted p50 that the Speed axis uses).
-      {' '}{inside.length} of {rows.length} systems qualify; the other {outside.length}, including the general-purpose LLMs, are listed below the divider.
-      {speedFallback.length > 0 && <span className="bh-muted"> {speedFallback.map((r) => shortName(r.row.display)).join(', ')} {speedFallback.length === 1 ? 'has' : 'have'} no recorded median latency (carried from v1.3); for {speedFallback.length === 1 ? 'it' : 'them'} the Speed axis decides, at the 2× latency equivalent (Speed ≥ {one(limits.speedFloor)}).</span>}
+    <p className="bh-muted mt-2 text-[13px] leading-snug" data-bh-jev-class-summary>
+      Jev-class means at most 2× Jev&apos;s cost and median latency. <a className="text-accent underline" href="#jev-class-method">How we choose ↘</a>
     </p>
 
     <figure className="bh-panel mt-4 p-4 sm:p-5" data-bh-jev-capability-bars aria-labelledby="jev-capability-title">
@@ -81,5 +78,11 @@ export function JevCapabilityRanking({ systems, revision, officialHref }: { syst
         <ol className="mt-2.5 space-y-2.5">{outside.map(outsideBar)}</ol>
       </details>
     </figure>
+    <p id="jev-class-method" className="bh-panel mt-3 max-w-4xl scroll-mt-6 p-3 text-[13.5px] leading-snug" data-bh-jev-class-rule>
+      <b>Jev-class</b> = cost per decision at most 2× Jev 1.13.0&apos;s <span className="whitespace-nowrap">(≤ {usd(limits.cost)} per 1,000 decisions)</span> <b>and</b> median latency at most 2× Jev 1.13.0&apos;s <span className="whitespace-nowrap">(≤ {secs(limits.latency)}</span>, the adjusted p50 that the Speed axis uses).
+      {' '}{inside.length} of {rows.length} systems qualify; the other {outside.length}, including the general-purpose LLMs, are listed below the divider in the ranking.
+      {speedFallback.length > 0 && <span className="bh-muted"> {speedFallback.map((r) => shortName(r.row.display)).join(', ')} {speedFallback.length === 1 ? 'has' : 'have'} no recorded median latency (carried from v1.3); for {speedFallback.length === 1 ? 'it' : 'them'} the Speed axis decides, at the 2× latency equivalent (Speed ≥ {one(limits.speedFloor)}).</span>}
+      {' '}The <a className="text-accent underline" href="#jev-bubbles">charts below</a> show speed and cost beside Capability; the <a className="text-accent underline" href={officialHref}>official JevBench Score</a> weighs all four axes.
+    </p>
   </section>;
 }

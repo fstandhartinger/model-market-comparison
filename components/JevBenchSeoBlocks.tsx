@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { SITE_URL } from '../lib/seo';
 import { JEV_COMPARISONS } from '../lib/jevbench-seo.mjs';
+import { JevBoardGuides } from './JevBoardGuides';
 
 type Faq = { question: string; answer: string };
 type Artifact = {
@@ -152,12 +153,12 @@ export function JevIntentLinks({ current }: { current: 'alternatives' | 'chooser
 }
 
 export function JevBoardIntentLinks() {
-  return <p className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-sm" aria-label="JevBench decision guides" data-bh-jev-board-guides>
-    <Link className="text-accent underline" href="/jev-models/alternatives">Compare Jev alternatives</Link>
-    <Link className="text-accent underline" href="/jev-models/how-to-choose">Choose a Jev-class model by use case</Link>
-    <Link className="text-accent underline" href="/jev-models/open-source-jev">Is Jev open source? Open-weight options</Link>
-    {JEV_COMPARISONS.map((pair) => <Link className="text-accent underline" href={`/jev-models/${pair.slug}`} key={pair.slug}>Jev vs {pair.label}</Link>)}
-  </p>;
+  return <JevBoardGuides links={[
+    { href: '/jev-models/alternatives', label: 'Compare Jev alternatives' },
+    { href: '/jev-models/how-to-choose', label: 'Choose a Jev-class model by use case' },
+    { href: '/jev-models/open-source-jev', label: 'Is Jev open source? Open-weight options' },
+    ...JEV_COMPARISONS.map((pair) => ({ href: `/jev-models/${pair.slug}`, label: `Jev vs ${pair.label}` })),
+  ]} />;
 }
 
 export function JevRowLink({ row, children }: { row: SeoRow; children?: ReactNode }) {

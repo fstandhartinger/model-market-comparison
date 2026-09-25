@@ -26,7 +26,8 @@ test('new SEO routes are canonical, in the sitemap and linked from the hub and g
   }
   assert.match(read('app/jev-models/open-source-jev/page.tsx'), /const PATH = '\/jev-models\/open-source-jev'/);
   assert.match(read('app/jev-models/open-source-jev/page.tsx'), /jevIntentMetadata\(/);
-  assert.match(blocks, /href="\/jev-models\/open-source-jev"/);
+  assert.match(blocks, /href: '\/jev-models\/open-source-jev'/);
+  assert.match(blocks, /<JevBoardGuides links=/);
   assert.match(blocks, /JEV_COMPARISONS\.map/);
   assert.match(related, /JEV_COMPARISONS/);
 });

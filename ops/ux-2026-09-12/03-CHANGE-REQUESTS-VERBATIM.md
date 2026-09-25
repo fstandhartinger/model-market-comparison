@@ -1722,3 +1722,16 @@ Florian, 24 Sep 2026, request preserved from `/home/flori/jobs/jev-page-fixes-20
 > a proposal for a long-context Jev-class track at 16k/64k/256k/1M, including item design,
 > cost and qualifying systems; proposal only, no build. Verify all production hosts,
 > retain screenshots, notify Florian, and write the job output.
+
+## CR-163 — Restore the mobile JevBench headline shortlist (workstream repair, 2026-09-25)
+
+This is a repair filed by the UX workstream from `REVIEW-20260925T134004Z.md`, **not a new
+verbatim Florian message**. Florian's newer, binding 25 Sep decision in
+`/home/flori/DECISIONS.md` makes the Jev-class Capability ranking the page headline, followed
+by bubble charts and then the official Composite board. The review measured the first
+Capability row at **1,008 px** on a 390 px phone and the old Composite bar at **4,070 px**;
+the earlier F-193 first-row budget was 720 px. The old F-189 two-button `Rank by` control was
+superseded by CR-151's `View by` switch. Restore the first headline row to the phone's first
+viewport, keep the ten JevBench guides reachable, keep the complete class rule and approved
+fairness sentence available, and update the verifier to the current control and page order.
+Do not alter the Jev-class rule, published measurements, scores, or official ranks.
