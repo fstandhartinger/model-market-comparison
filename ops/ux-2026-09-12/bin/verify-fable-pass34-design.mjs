@@ -12,6 +12,8 @@
 import { createRequire } from 'node:module';
 const require = createRequire('/home/flori/n8n-local/');
 const { chromium } = require('playwright');
+// On Sandy, run with BH_CDP=http://127.0.0.1:9333 under the shared Chrome flock.
+const sharedBrowser = process.env.BH_CDP ? await chromium.connectOverCDP(process.env.BH_CDP) : null;
 const fs = await import('node:fs/promises');
 const BASE = (process.argv[2] || 'https://benchmarkheaven.com').replace(/\/$/, '');
 const OUT = process.argv[3] || '/tmp/verify-fable-pass34';
@@ -24,7 +26,7 @@ const txt = (s) => String(s || '').replace(/\s+/g, ' ').trim();
 const scrollThrough = async (p) => { await p.evaluate(async () => { for (let y = 0; y < document.body.scrollHeight; y += 700) { window.scrollTo(0, y); await new Promise((r) => setTimeout(r, 70)); } window.scrollTo(0, 0); }); await p.waitForLoadState('networkidle').catch(() => {}); await p.waitForTimeout(1500); };
 for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { width: 1440, height: 1000 }], ['mobile', { width: 390, height: 844 }]]) {
   const tag = `${kind}_${theme}`; const mobile = kind === 'mobile';
-  const b = await chromium.launch({ ignoreDefaultArgs: ['--hide-scrollbars'] });
+  const b = sharedBrowser ?? await chromium.launch({ ignoreDefaultArgs: ['--hide-scrollbars'] });
   const c = await b.newContext({ viewport: vp, isMobile: mobile, hasTouch: mobile, colorScheme: theme, deviceScaleFactor: mobile ? 2 : 1 });
   await c.addInitScript((t) => { try { localStorage.setItem('theme', t); localStorage.setItem('bh-theme', t); } catch {} }, theme);
   const p = await c.newPage(); const errs = []; p.on('pageerror', (e) => errs.push(String(e.message).slice(0, 200)));
@@ -36,7 +38,9 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
       const suite = document.querySelector('[data-bh-jev14-capability-suite]');
       const credit = document.querySelector('#credit');
       const small = (root) => [...root.querySelectorAll('*')].filter((e) => [...e.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim()) && e.getBoundingClientRect().width > 1).map((e) => ({ px: parseFloat(getComputedStyle(e).fontSize), t: t(e).slice(0, 30) })).filter((x) => x.px < 10);
-      const costAxis = document.querySelector('[data-bh-jev14-cost-axis]');
+      // The live hub has a cost scale under both the headline ranking and its cost bubble chart.
+      // Ignore the ranking's desktop-only scale on phones, and inspect every scale actually drawn.
+      const costAxes = [...document.querySelectorAll('[data-bh-jev14-cost-axis]')].filter((axis) => axis.getBoundingClientRect().width > 1);
       const ctxAxis = document.querySelector('ol[aria-label="Published context limits by system"]')?.previousElementSibling;
       const notes = [...document.querySelectorAll('summary')].filter((s) => /Basis, training and serving notes/.test(t(s))).length;
       const ctxPanel = [...document.querySelectorAll('h2, h3, summary')].find((e) => /Context limits by system/.test(t(e)));
@@ -55,7 +59,7 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
       const usedBuckets = new Set(titles.map((x) => (x.match(/· ([^:]+) tokens:/) || [])[1]).filter(Boolean));
       const thin = titles.filter((x) => { const m = x.match(/\((\d+)\/(\d+)\)/); return m && Number(m[2]) < 20; }).length;
       const thinMarked = accSvg ? accSvg.querySelectorAll('[data-bh-thin]').length : 0;
-      return { suiteText: suite ? t(suite) : null, creditText: credit ? String(credit.textContent || '').replace(/\s+/g, ' ').trim() : null, smallCost: costAxis ? small(costAxis) : null, smallCtx: ctxAxis ? small(ctxAxis) : null, notes, ctxTableClosed: ctxTable ? !ctxTable.open : false, ctxTableFound: !!ctxPanel && !!ctxTableEl, ctxTableSummary, fieldNames, capRows, buckets, usedBuckets: [...usedBuckets], thin, thinMarked };
+      return { suiteText: suite ? t(suite) : null, creditText: credit ? String(credit.textContent || '').replace(/\s+/g, ' ').trim() : null, costAxisCount: costAxes.length, smallCost: costAxes.flatMap(small), smallCtx: ctxAxis ? small(ctxAxis) : null, notes, ctxTableClosed: ctxTable ? !ctxTable.open : false, ctxTableFound: !!ctxPanel && !!ctxTableEl, ctxTableSummary, fieldNames, capRows, buckets, usedBuckets: [...usedBuckets], thin, thinMarked };
     });
     if (want('F-176')) {
       check('F-176', `${tag} (b) capability suite present`, !!hub.suiteText, {});
@@ -63,7 +67,7 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
       check('F-176', `${tag} (b) Credit names three.js`, hub.creditText && /3D view: three\.js/.test(hub.creditText), { credit: (hub.creditText || '').slice(0, 120) });
     }
     if (want('F-181')) {
-      check('F-181', `${tag} cost axis has no text under 10 px`, hub.smallCost && hub.smallCost.length === 0, { small: hub.smallCost });
+      check('F-181', `${tag} visible cost axes have no text under 10 px`, hub.costAxisCount > 0 && hub.smallCost.length === 0, { axes: hub.costAxisCount, small: hub.smallCost });
       check('F-181', `${tag} context axis has no text under 10 px`, hub.smallCtx && hub.smallCtx.length === 0, { small: hub.smallCtx });
     }
     if (want('F-180')) {
@@ -104,7 +108,7 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
     check('F-188', `${tag} chooser has no "/ 100 benchmark score"`, !choose, {});
   }
   check('errors', `${tag} no page errors`, errs.length === 0, { errs });
-  await c.close(); await b.close();
+  await c.close(); if (!sharedBrowser) await b.close();
 }
 await fs.writeFile(`${OUT}/verification${ONLY ? '-' + ONLY : ''}.json`, JSON.stringify({ base: BASE, at: new Date().toISOString(), pass: results.filter((r) => r.ok).length, fail: failed, results }, null, 1));
 console.log(`${results.length - failed}/${results.length} checks passed`);

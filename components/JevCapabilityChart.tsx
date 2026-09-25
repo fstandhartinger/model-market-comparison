@@ -103,11 +103,17 @@ export function CapabilityBar({ row, capability, position, costBounds, rankLabel
     title={label}
   >
     <span className="bh-muted tabular col-start-1 row-start-1 text-right text-xs">{rankLabel ?? position + 1}</span>
-    <span className="col-start-2 row-start-1 min-w-0 truncate sm:text-right" title={row.display}>
-      {jevSourceUrl(row.key, row.repo)
-        ? <a href={jevSourceUrl(row.key, row.repo)!} target="_blank" rel="noopener noreferrer" className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent hover:decoration-current" data-bh-jev-source={row.key}>{shortName(row.display)}</a>
-        : shortName(row.display)}
-      {row.api_flag && <span className="bh-thin-tag ml-1.5 align-middle" title={row.api_exposure_note ?? undefined}>API</span>}
+    <span className="col-start-2 row-start-1 flex min-w-0 items-center gap-1.5 sm:justify-end" title={row.display}>
+      <span className="min-w-0 truncate">
+        {jevSourceUrl(row.key, row.repo)
+          ? <a href={jevSourceUrl(row.key, row.repo)!} target="_blank" rel="noopener noreferrer" className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent hover:decoration-current" data-bh-jev-source={row.key}>{shortName(row.display)}</a>
+          : shortName(row.display)}
+        {row.api_flag && <span className="bh-thin-tag ml-1.5 align-middle" title={row.api_exposure_note ?? undefined}>API</span>}
+      </span>
+      {note && <details className="relative z-10 hidden shrink-0 sm:block" data-bh-jev14-row-note={row.key}>
+        <summary className="cursor-pointer list-none rounded border border-[rgb(var(--line))] px-1 !min-h-0 !py-0 !mb-0 text-[10px] leading-[18px] text-[var(--muted)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--accent))]" aria-label={`Note for ${row.display}`}>Note</summary>
+        <span className="bh-panel absolute right-0 top-full z-20 mt-1 block w-64 rounded p-2 text-left text-xs leading-snug shadow-lg">{note}</span>
+      </details>}
     </span>
     <span className="col-start-2 row-start-2 mt-1 flex flex-col justify-center gap-[3px] sm:col-start-3 sm:row-start-1 sm:mt-0" aria-hidden="true">
       <span className="bh-jevc-grid flex h-[10px] rounded-sm"><span className={'bh-jevc-bar' + (row.ranked ? '' : ' is-partial')} style={{ width: width.toFixed(4) + '%' }} /></span>
@@ -119,7 +125,7 @@ export function CapabilityBar({ row, capability, position, costBounds, rankLabel
       <span className="sm:hidden">Cost </span>{cost == null ? '—' : usd(cost)}{row.cost?.kind === 'estimate' && cost != null ? ' est.' : ''}
       <span className="hidden sm:inline"> · I {one(intelligence)} · C {one(calibration)}</span>
     </span>
-    {note && <span className="bh-muted col-start-2 row-start-4 mt-0.5 min-w-0 text-[11px] leading-snug sm:col-start-3 sm:col-end-6 sm:row-start-2 sm:mt-0">{note}</span>}
+    {note && <span className="bh-muted col-start-2 row-start-4 mt-0.5 min-w-0 text-[11px] leading-snug sm:hidden">{note}</span>}
   </li>;
 }
 

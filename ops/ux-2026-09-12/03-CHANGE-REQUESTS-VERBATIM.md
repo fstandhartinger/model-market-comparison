@@ -1722,3 +1722,13 @@ Florian, 24 Sep 2026, request preserved from `/home/flori/jobs/jev-page-fixes-20
 > a proposal for a long-context Jev-class track at 16k/64k/256k/1M, including item design,
 > cost and qualifying systems; proposal only, no build. Verify all production hosts,
 > retain screenshots, notify Florian, and write the job output.
+
+## CR-162 — restore JevBench hub chart and row contracts (2026-09-25)
+
+This is an **independent review remediation**, not a new message from Florian. The originating
+request is CR-20260924jev-page-fixes above (the visible logarithmic cost axis), and the design
+acceptance is F-181/F-184 in `DESIGN-DIRECTIVES.md`. The live regression and its measurements are
+recorded verbatim in `REVIEW-20260925T134004Z.md`: CR-158 removed the component that carried
+`data-bh-jev14-cost-axis` from the live hub, and per-row Jev-class explanations made desktop
+Capability rows 28 or 43 pixels high. Restore the axis check on the cost scales the hub actually
+renders, and keep those explanations reachable while making the default desktop rows uniform.

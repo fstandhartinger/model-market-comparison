@@ -136,12 +136,14 @@ export function JevBubbleChart({ id, kind, points, costLimit, referenceName }: {
           <line x1={L} x2={W - R} y1={y(t)} y2={y(t)} stroke="rgb(var(--line) / .7)" />
           <text x={L - 6} y={y(t) + 4} textAnchor="end" fill="var(--muted)" fontSize="11">{t}</text>
         </g>)}
-        {xTicks.map((t) => <g key={`x${t.v}`}>
-          <line x1={x(t.v)} x2={x(t.v)} y1={T} y2={H - B} stroke="rgb(var(--line) / .55)" />
-          <text x={x(t.v)} y={H - B + 15} textAnchor="middle" fill="var(--muted)" fontSize="11">{t.label}</text>
-          {t.sub && <text x={x(t.v)} y={H - B + 27} textAnchor="middle" fill="var(--muted)" fontSize="9.5">{t.sub}</text>}
-        </g>)}
-        <text x={(L + W - R) / 2} y={H - 5} textAnchor="middle" fill="var(--text)" fontSize="11">{kind === 'cost' ? '$ per 1,000 decisions (log) · ← cheaper' : 'Speed axis · faster →'}</text>
+        <g data-bh-jev14-cost-axis={kind === 'cost' ? '' : undefined}>
+          {xTicks.map((t) => <g key={`x${t.v}`}>
+            <line x1={x(t.v)} x2={x(t.v)} y1={T} y2={H - B} stroke="rgb(var(--line) / .55)" />
+            <text x={x(t.v)} y={H - B + 15} textAnchor="middle" fill="var(--muted)" fontSize="11">{t.label}</text>
+            {t.sub && <text x={x(t.v)} y={H - B + 27} textAnchor="middle" fill="var(--muted)" fontSize="9.5">{t.sub}</text>}
+          </g>)}
+          <text x={(L + W - R) / 2} y={H - 5} textAnchor="middle" fill="var(--text)" fontSize="11">{kind === 'cost' ? '$ per 1,000 decisions (log) · ← cheaper' : 'Speed axis · faster →'}</text>
+        </g>
         <text x={11} y={(T + H - B) / 2} textAnchor="middle" fill="var(--text)" fontSize="11" transform={`rotate(-90 11 ${(T + H - B) / 2})`}>Capability ↑</text>
         {limitX != null && limitX > L && limitX < W - R && <g data-bh-jev-bubble-limit>
           <line x1={limitX} x2={limitX} y1={T} y2={H - B} stroke="var(--muted)" strokeDasharray="4 4" />
