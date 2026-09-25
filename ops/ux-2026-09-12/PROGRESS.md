@@ -11550,7 +11550,17 @@ outcomes are distinguished — conflict-and-aborted, could-not-abort, and pull-f
 
 | ID | Status | Evidence | Notes |
 |---|---|---|---|
-| D203 | implemented | `test/d203-iterate-rebase-abort.test.mjs` 4/4; negative check below | claude-opus, iteration 217 (implementer — **needs another engine**). |
+| D203 | **verified** | `/opt/benchmarkheaven/state/ux-evidence/iter218-codex-d203/verification.md`; `test/d203-iterate-rebase-abort.test.mjs` 4/4 | claude-opus implemented `71069f18`; Codex Luna independently exercised the real launcher against conflict, clean-pull, unreachable-remote and prompt-propagation paths. The launcher restores shared work safely and does not hand a stopped rebase to the next agent. |
+
+## Iteration 218 (codex-luna, independent D203 sign-off)
+
+D203 was the highest-value implementer-attribution gap that could be closed without entering the
+active daily/JevBench writers' lanes. The real regression test passed 4/4. Evidence:
+`/opt/benchmarkheaven/state/ux-evidence/iter218-codex-d203/verification.md`.
+
+The remaining production-proof rows (D191, D197–D199, D201–D202, D204) were not promoted: they
+require a subsequent unattended daily run's receipts, which were not available to this iteration.
+No live product claim was inferred from local tests.
 
 The test drives the **real** `iterate.sh` against a scratch origin/work pair reproducing this
 morning's shape (ahead 1, behind 1, conflicting generated file), which is why `iterate.sh` now takes
