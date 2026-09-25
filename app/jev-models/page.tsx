@@ -151,7 +151,7 @@ export default async function JevModelsPage() {
   };
   return <>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, '\\u003c') }} />
-    <header className="bh-page-head">
+    <header className="bh-page-head" data-bh-jev-live-head>
       {/* F-160 (Fable pass 30): the eyebrow is a div — CustomEvaluationOffer mounts a <div> toast inside it after 6 s, which is invalid inside a <p>. */}
       <div className="bh-eyebrow flex flex-nowrap items-center"><span><span className="sm:hidden">JevBench {v14.revision}</span><span className="hidden sm:inline">JevBench {v14.revision} · our own benchmark</span></span><CustomEvaluationOffer /></div>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">JevBench by Benchmark Heaven</h1>
@@ -168,7 +168,7 @@ export default async function JevModelsPage() {
       </p>
     </header>
 
-    <JevModelsV14Board artifact={v14.artifact} sha256={v14.sha256} />
+    <JevModelsV14Board artifact={v14.artifact} sha256={v14.sha256} compactMobile />
 
 
     {/* Page fix (Florian 23 Sep 2026): the v1.3 page's "what the run says" findings, recomputed from the v1.4 board. */}

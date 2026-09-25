@@ -86,13 +86,13 @@ function Row({ row, note }: { row: JevV14System; note: string | null }) {
 /** CR-152 (Florian, 25 Sep 2026): the fairness sentence next to the top five and a visible Intelligence ordering.
  *  F-189 (Fable pass 35): the sentence keeps its words and loses its box; the ordering is the JevRankBy control,
  *  not the 89-row table of the numbers the chart already draws. */
-function ScoreChart({ revision, ranked, unranked, publicDecisions, sealedDecisions, topFiveNote }: { revision: string; ranked: JevV14System[]; unranked: JevV14System[]; publicDecisions: number; sealedDecisions: number; topFiveNote?: string | null }) {
+function ScoreChart({ revision, ranked, unranked, publicDecisions, sealedDecisions, topFiveNote, compactMobile }: { revision: string; ranked: JevV14System[]; unranked: JevV14System[]; publicDecisions: number; sealedDecisions: number; topFiveNote?: string | null; compactMobile?: boolean }) {
   const all = [...ranked, ...unranked];
   const types = jevLegendTypes(all.map((r) => r.class));
   const subtitle = <><span className="bh-jevc-official mr-2">Official</span>· four axes 0–100, equal-weight harmonic mean · <a href="#jev14-changes" className="text-accent underline">What changed in v1.4 ↓</a></>;
   const chartId = 'jev14-chart';
-  return <figure id={chartId} className="bh-panel mt-6 p-4 sm:p-5" data-bh-jev14-chart aria-labelledby="jev14-chart-title">
-    <p className="bh-eyebrow">JevBench {revision}</p>
+  return <figure id={chartId} className="bh-panel mt-6 p-4 sm:p-5" data-bh-jev14-chart data-bh-jev14-compact={compactMobile ? '1' : undefined} aria-labelledby="jev14-chart-title">
+    <p className="bh-eyebrow" data-bh-jev14-chart-eyebrow>JevBench {revision}</p>
     <h2 id="jev14-chart-title" className="mt-1 text-xl font-bold leading-snug sm:text-2xl">JevBench Score: {ranked.length} ranked systems</h2>
     <JevRankBy rows={all.map(toBarRow)} top={CHART_TOP} note={topFiveNote} subtitle={subtitle} />
     <div className="mt-2 hidden grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_19rem] gap-x-2 text-[11px] sm:grid" aria-hidden="true">
@@ -121,7 +121,7 @@ function compareRow(row: JevV14System): JevCompareRow {
   };
 }
 
-export function JevModelsV14Board({ artifact, sha256 }: { artifact: JevV14Artifact; sha256: string }) {
+export function JevModelsV14Board({ artifact, sha256, compactMobile = false }: { artifact: JevV14Artifact; sha256: string; compactMobile?: boolean }) {
   const ranked = artifact.systems.filter((row) => row.listing === 'ranked').sort((a, b) => (a.rank ?? 999) - (b.rank ?? 999));
   const unranked = artifact.systems.filter((row) => row.listing !== 'ranked').sort((a, b) => (b.jevbench_score ?? -1) - (a.jevbench_score ?? -1));
   const rows = [...ranked, ...unranked];
@@ -131,7 +131,7 @@ export function JevModelsV14Board({ artifact, sha256 }: { artifact: JevV14Artifa
   const sealedDecisions = artifact.tiers.sealed;
   return <section className="mt-8" aria-labelledby="jev14-board" data-bh-jevbench-v14>
     <h2 id="jev14-board" className="sr-only">JevBench {artifact.revision} ranking</h2>
-    <ScoreChart revision={artifact.revision} ranked={ranked} unranked={unranked} publicDecisions={publicDecisions} sealedDecisions={sealedDecisions} topFiveNote={typeof artifact.top_five_note === 'string' ? artifact.top_five_note : null} />
+    <ScoreChart revision={artifact.revision} ranked={ranked} unranked={unranked} publicDecisions={publicDecisions} sealedDecisions={sealedDecisions} topFiveNote={typeof artifact.top_five_note === 'string' ? artifact.top_five_note : null} compactMobile={compactMobile} />
 
     <h2 id="jev14-table" className="mt-10 text-xl font-semibold">Axes, accuracy, latency and cost</h2>
     <p className="bh-muted mt-1 max-w-4xl text-sm">Every system with its four axes, public and sealed accuracy and the gap between them. On a phone the name column stays put while the table scrolls sideways. <span className="whitespace-nowrap">† = a note on that system</span> — tap it to read.</p>

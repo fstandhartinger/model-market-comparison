@@ -45,7 +45,7 @@ test('CR-131 v1.4 board explains the scoring and required exposure disclosures',
   assert.match(board, /operator's endpoint received sealed item text, without answers/);
   assert.match(board, /Hopper's public-half development and JevK5's public-set selection/);
   assert.match(board, /system-level aggregates appear here/);
-  assert.match(page, /<JevModelsV14Board artifact=\{v14\.artifact\} sha256=\{v14\.sha256\} \/>/);
+  assert.match(page, /<JevModelsV14Board artifact=\{v14\.artifact\} sha256=\{v14\.sha256\} compactMobile \/>/);
   const pinnedPage = await readFile(new URL('../app/jev-models/v1.4/page.tsx', import.meta.url), 'utf8');
   assert.match(pinnedPage, /readJevbenchV14\(\)/);
   assert.match(board, /href=\{`\/api\/jevbench\/\$\{artifact\.revision\.slice\(1\)\}`\}/);

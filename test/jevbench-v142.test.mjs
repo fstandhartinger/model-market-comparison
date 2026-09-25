@@ -37,6 +37,8 @@ test('CR-152 serves v1.4.2 as the live board with a pinned page, API and fairnes
   assert.match(page, /canonical = '\/jev-models\/v1\.4\.2'/);
   assert.match(livePage, /readJevbenchV142\(\)/);
   assert.match(livePage, /href="\/jev-models\/v1\.4\.2" data-bh-jev-version-share/);
+  assert.match(livePage, /data-bh-jev-live-head/);
+  assert.match(livePage, /compactMobile/);
   // F-189 (Fable pass 35, decision 2): CR-152's "visible Intelligence ordering" is the rank-by control, not a
   // second table of the numbers the chart already draws. The board must still offer the ordering, and must not
   // ship the 89-row disclosure it replaces.
@@ -45,6 +47,8 @@ test('CR-152 serves v1.4.2 as the live board with a pinned page, API and fairnes
   assert.match(rankBy, /data-bh-jev14-rank-by/);
   assert.match(rankBy, /aria-pressed=\{m === metric\}/);
   assert.match(rankBy, /metric === 'score' \? rows : \[\.\.\.rows\]\.sort/);
+  assert.match(board, /data-bh-jev14-compact/);
+  assert.match(board, /data-bh-jev14-chart-eyebrow/);
   assert.doesNotMatch(board, /data-bh-jev14-sort-intelligence/);
   assert.doesNotMatch(board, /Sort by Intelligence/);
   assert.match(sitemap, /"\/jev-models\/v1\.4\.2"/);

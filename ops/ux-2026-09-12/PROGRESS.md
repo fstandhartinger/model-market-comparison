@@ -11708,3 +11708,27 @@ rc 0 (871/674/96/3,121), `npm test` 1,368/1,367/0-fail/1-skip rc 0, `tsc` rc 0.
 Not accepted: open rows remain (F-193/CR-152.1 by design, D192 arms, CR-62.4, CR-140.5, F-187,
 D205 needs Florian, four rows await the next unattended daily) and X6's line-by-line audit is
 outstanding. No `ALL-ACCEPTED`.
+
+## Iteration 220 (codex-luna, F-193 mobile JevBench shortlist)
+
+F-193 was the highest-value product item that could be completed without touching the held data
+decisions or spending the remaining OpenRouter credit. The live `/jev-models` page had its first
+chart bar at **804 px** on a 390 px phone, while F-189's accepted mobile budget is `y <= 720`.
+The live page now opts into a compact phone layout: tighter but still readable header copy and
+guide spacing, a smaller gap before the board, and a compact chart that hides only its duplicate
+version eyebrow. The required provenance, fairness sentence, and two-button `Rank by` control stay
+visible; frozen release pages do not opt in.
+
+Local evidence: `/opt/benchmarkheaven/state/ux-evidence/iter220-codex-f193/` — F-189 is 34/34
+and F-190 is 14/14 at the local production-shaped Next app, in both light and dark mobile modes.
+The measured first bar is **659 px**. The same source changes passed `npm test` (1,368 tests,
+1,367 pass, 0 fail, 1 skipped), `npx tsc --noEmit -p .`, `node scripts/build-dataset.mjs`
+(871 / 674 / 96 / 3,121; timestamp-only churn discarded), and `npm run build`.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| F-193 | implemented (live proof pending) | `iter220-codex-f193/local-F-189/verification.json`; local first-bar measurement 659 px | Codex Luna implementation; canonical deployment verification is required before marking verified. |
+| F-189 | implemented (live proof pending) | `iter220-codex-f193/local-F-189/verification.json` (34/34) | The two prior live failures were the first-bar budget now addressed by F-193; the fairness and rank-control checks remain green. |
+
+No `ALL-ACCEPTED`: CR-152.1 and the other open rows remain governed by their existing evidence and
+approval gates until the deployed proof is available.

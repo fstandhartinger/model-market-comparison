@@ -308,6 +308,21 @@ details[open] > .bh-collapsible-grid { display: grid; }
 [data-theme="light"] .recharts-text { fill: var(--muted); }
 [data-theme="light"] .recharts-cartesian-grid line { stroke: rgb(var(--line)); }
 @media (max-width: 639px) { .bh-page-head h1 { font-size: 28px; } .bh-panel { border-radius: 10px; } .bh-table th, .bh-table td { padding: 12px; } }
+/* F-193: the live board's phone view should put the actual shortlist on screen without
+   removing the provenance, fairness sentence, or rank control. The frozen release pages
+   keep their fuller release header and chart identity. */
+@media (max-width: 639px) {
+  [data-bh-jev-live-head] [data-bh-jev-own] { margin-top: 8px; font-size: 16px; line-height: 1.35; }
+  [data-bh-jev-live-head] [data-bh-jev-board-guides] { margin-top: 8px; gap: 6px 12px; font-size: 13px; line-height: 1.25; }
+  [data-bh-jev-live-head] [data-bh-jev-meta] { margin-top: 8px; line-height: 1.35; }
+  [data-bh-jev-live-head] [data-bh-jev-version-share-row] { margin-top: 8px; }
+  [data-bh-jev-live-head] { margin-bottom: 12px; }
+  [data-bh-jev-live-head] + [data-bh-jevbench-v14] { margin-top: 12px; }
+  [data-bh-jev14-compact] { margin-top: 12px; padding: 12px; }
+  [data-bh-jev14-compact] [data-bh-jev14-chart-eyebrow] { display: none; }
+  [data-bh-jev14-compact] #jev14-chart-title { margin-top: 0; }
+  [data-bh-jev14-compact] [data-bh-jev14-top-five-note] { margin-top: 8px; line-height: 1.35; }
+}
 @media (prefers-reduced-motion: reduce) { *, ::before, ::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } }
 
 /* Benchmark Heaven — Observatory identity. UI/data keep the system sans. */
