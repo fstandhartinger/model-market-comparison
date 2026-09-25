@@ -420,3 +420,68 @@ test('D193.3: no published value was relabelled by the metric correction', () =>
       `${id}: the row is still declared manual_required rather than silently collected`);
   }
 });
+
+// D196 (iteration 213). Found by asking the scanner the same question against a *wider* capture set:
+// the 2026-09-24T19:20Z run does not fetch every source, so 30 references were reported `unmeasured`
+// and their guard state was simply unknown. Six of those nine URLs are fetched by some daily run, and
+// merging each one's newest capture into the set surfaced a seventh group in exactly the D193 shape —
+// the seven Claude Opus 5.5 system-card entries, whose excerpts read
+// `"<Benchmark>: <row> (columns: Claude Opus 5.5 | …)"`. Neither the `"<Benchmark>: "` prefix nor the
+// `(columns: …)` annotation is in the card; it is our own reading, and it already lives where it
+// belongs, in each entry's `how_to_collect.locator`.
+//
+// Checked first for what they were hiding, per D193.3: nothing. Every value is in the card's Table
+// 8.1.A byte for byte. Each pin is now the contiguous block from that table's column header down to
+// the entry's own row, so the excerpt itself proves both the numbers and which column is Opus 5.5 —
+// the one thing the old annotation was there to say. Intermediate rows are inside the pin on purpose:
+// a system card is a frozen PDF, so a vendor revising a published number is exactly what should fail.
+const CARD = 'https://www.anthropic.com/claude-opus-5-5-system-card';
+const CARD_FILE = 'data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/95a7b26f5d4497072d97.gz';
+const CARD_ROWS = {
+  'anthropic-swe-bench-pro::snapshot-2026-09-22': 'SWE-bench Pro 89.9 79.2 81.2 –',
+  'anthropic-swe-bench-multilingual::snapshot-2026-09-22': 'SWE-bench Multilingual 93.9 89.5 89.1 -',
+  'anthropic-swe-bench-multimodal::snapshot-2026-09-22': 'SWE-bench Multimodal 61.4 59.4 54.7 -',
+  'anthropic-hle-no-tools::snapshot-2026-09-22': 'Humanity’s Last Exam No tools 64.4 56.6 60.9 –',
+  'anthropic-osworld-2-0-strict::2.0': 'OSWorld 2.0 (partial/strict) 81.8/48.7 74.0/37.2 80.7/42.8 –',
+  'anthropic-healthbench-professional::snapshot-2026-09-22': 'HealthBench Professional 65.6 59.8 62.1 63.4',
+  'anthropic-aa-briefcase-v1-1::1.1': 'AA-Briefcase v1.1 1822 1673 1678 1569',
+};
+const cardText = execFileSync('python3', ['ops/daily/public-candidate.py', 'text', CARD_FILE],
+  { cwd: repo, encoding: 'utf8', maxBuffer: 32_000_000 });
+
+test('D196: the seven system-card references quote the card, header row and all', () => {
+  assert.equal(createHash('sha256').update(readFileSync(new URL(CARD_FILE, repo))).digest('hex'),
+    entry('anthropic-swe-bench-pro::snapshot-2026-09-22').evidence
+      .find((s) => s.url === CARD).sha256, 'the retained card still matches its receipt');
+  const flat = cardText.replace(/\s+/g, ' ');
+  for (const [id, row] of Object.entries(CARD_ROWS)) {
+    const reference = entry(id).evidence.find((s) => s.url === CARD);
+    assert.ok(reference, `${id}: the system-card reference`);
+    assert.equal(protocolSourceContent(id, { ...reference, review_content: 'excerpt' }, cardText),
+      reference.excerpt, `${id}: the pin does not quote the card`);
+    assert.equal(flat.split(reference.excerpt).length - 1, 1, `${id}: the pin should occur exactly once`);
+    // The pin has to carry the column header, which is the only thing that says 89.9 is Opus 5.5's.
+    assert.ok(reference.excerpt.startsWith('Evaluation Claude family models Other models Claude Claude Claude GPT-6 Opus 5.5 Opus 5 Fable 5.1 Astra'),
+      `${id}: the pin opens with Table 8.1.A's column header`);
+    assert.ok(reference.excerpt.endsWith(row), `${id}: the pin ends on this entry's own row`);
+    // The shapes that made the old excerpts fail must not come back.
+    assert.ok(!/\(columns:/.test(reference.excerpt), `${id}: no editorial column annotation in the pin`);
+    assert.ok(!reference.excerpt.includes(`${row.split(' ')[0]}: `), `${id}: no "<Benchmark>: " prefix in the pin`);
+    // The mapping the annotation used to carry still has a home, and it is the right one.
+    assert.match(entry(id).how_to_collect.locator, /Claude Opus 5\.5/);
+  }
+});
+
+test('D196: none of the seven was hiding a revised system card', () => {
+  const flat = cardText.replace(/\s+/g, ' ');
+  for (const row of Object.values(CARD_ROWS)) {
+    assert.ok(flat.includes(row), `Table 8.1.A still prints "${row}"`);
+  }
+  // And the card is still the one the entries name: same table, same four columns, same caption.
+  assert.ok(flat.includes('[Table 8.1.A] Capability evaluation summary.'));
+  assert.ok(flat.includes('8.1 Evaluation summary'));
+  // A revised number must fail closed rather than pass on the neighbouring rows.
+  const probe = entry('anthropic-aa-briefcase-v1-1::1.1').evidence.find((s) => s.url === CARD);
+  assert.throws(() => protocolSourceContent('probe', { ...probe, review_content: 'excerpt' },
+    cardText.replace('1822', '1823')), /methodology passage changed/);
+});
