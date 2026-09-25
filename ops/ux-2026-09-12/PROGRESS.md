@@ -10991,3 +10991,170 @@ Gates before the push: `npx tsc --noEmit -p .` rc 0; `node --test test/` **1,331
 | F-192 | open | `…/canonical/desktop_dark-hub-chart-vp.png` (the #1 and #4 bars in the llm-baseline green) | `system-one-open` gets its own swatch; the label is the data owner's → **CR-152.1** for the JevBench release job (name the class). Until then the key in `<code>`. |
 | F-188 | open | `…/canonical/desktop_light-alt.png` | Unchanged from pass 34; unblocked. |
 | F-187 | open | — | Before `/image-jev-bench` publishes. |
+
+## Iteration 214 (claude-opus, 2026-09-25 04:10–04:50 UTC) — Fable pass 35's four open directives, and two checks that could not be met as written
+
+Pass 35 ended with six rows: F-191 and F-183 implemented by Fable and waiting for a non-Fable
+engine, F-189/F-190/F-192/F-188 open, F-187 deferred until `/image-jev-bench` publishes. The
+previous review gate (`REVIEW-20260925T021002Z`) could collect no browser proof at all because
+the shared Chrome lane was held by the X watcher; this iteration used its own Playwright, which
+that lane does not govern, so the live proof was available throughout.
+
+### F-191 and F-183 — verified live on both hosts by a non-Fable engine
+
+Fable shipped both in `6ec7fee0` and could not promote them. `verify-fable-pass35-design.mjs` was
+run by claude-opus against the deployed `6ec7fee0` on the canonical and the legacy host, at 1440
+and 390 in both themes:
+
+| group | canonical | legacy |
+|---|---|---|
+| `ONLY=F-191` | 60/60 | 60/60 |
+| `ONLY=F-183` | 48/48 | 48/48 |
+
+Receipts: `/opt/benchmarkheaven/state/ux-evidence/iter214-pass35/F-191-{canonical,legacy}/verification.json`
+and `…/F-183-{canonical,legacy}/verification.json`. Both rows go to **verified**.
+
+### F-189 — a sort is a control
+
+CR-152 put Florian's fairness sentence in a bordered box between the chart's subtitle and its
+bars, with a closed "Sort by Intelligence ↓" that opened an 89-row, six-column table of the same
+systems the chart draws. The box alone moved the first bar from y 662 to 852 on a phone.
+
+The sentence keeps its words and loses its box. The ordering is now a two-button `Rank by`
+control (`data-bh-jev14-rank-by`, `aria-pressed`) at the end of the subtitle line. Both metrics
+are 0–100 axes, so the active one owns the bar's length and the row's big number and the other
+moves into the muted small columns; the header line follows it, and the rank numeral stays the
+board's official rank, so under Intelligence the first row reads "35 · GPT-6 Luna · 97.4" with
+its JevBench Score 33 beside it. The bar row and its header moved out of `JevModelsV14.tsx` into
+`components/JevScoreBar.tsx` so the client control and the server-rendered alternatives page draw
+the same row from the same code; `JevModelsV14` re-exports them for that page.
+
+**The directive's own expected first row was wrong, and the verifier was corrected rather than
+the page.** `verify-fable-pass35-design.mjs` shipped with `after "Intelligence" … /Jev 1\.13\.0/
+&& /53\.1/`, and the directive text reads "so a reader sees '2 · Jev 1.13.0' first under
+Intelligence". 53.1 is Jev's Intelligence in the note's two-system comparison; the artifact's
+highest Intelligence is **GPT-6 Luna at 97.4** (then 95.8, 94.0, 93.1 — four instruction models
+that JevBench ranks 31–83 on cost, speed and calibration). The check now reads every bar's
+`data-bh-jev14-bar-intel` off the board and asserts the whole ordering, that the open list is
+exactly the 20 highest, that no row is drawn twice or lost, and that the pressed button follows —
+four checks where there was one, none of them naming a system.
+
+**A second check was unsatisfiable for any element.** "not inside a bordered box (computed
+`border-style: none` on its element and parent)" cannot pass anywhere in this app: Tailwind's
+preflight sets `border-style: solid` with `border-width: 0` on `*`. It now tests for a *drawn*
+frame — non-zero border width, a shadow or a background of its own — on the sentence and on every
+wrapper between it and the chart's panel, which is stricter and also correct now that the
+sentence's parent is the panel itself.
+
+### F-193 (new) — the 720 px first-bar budget cannot hold the fairness sentence
+
+The directive asks for the first bar at y ≤ 720 at 390 while also keeping the sentence above the
+bars. Measured on the finished implementation at 390: **804 px shipped, 718 px with the sentence
+hidden, 662 px with the sentence and the control hidden** — the 720 budget is the pass-34 layout
+plus the control and nothing else. The sentence is Florian's words (CR-152) and 92 px of the 142
+above the pass-34 baseline. The space is in the page head above the figure (394 px) and in the
+figure's own eyebrow, which repeats the version the page head already states. This is left as a
+finding for the design authority rather than resolved by trimming copy nobody asked to trim; the
+check stays in the verifier at 720, failing, so it cannot be forgotten. F-189's other 32 checks
+pass on both hosts.
+
+### F-190 — a pinned page carries nothing dated after its release
+
+`/jev-models/v1.4.2` opened with a "Frozen top five" panel and then drew those same five rows as
+the board's first five bars 250 px lower, and ended with the context-length section whose head
+says "sources checked 24 Sept 2026" — a panel the daily run refreshes, on a page whose point is
+that it does not change. Both are gone. The same two defects were live on `/jev-models/v1.4.1`
+(both) and `/jev-models/v1.4` (the list), so the fix was applied to all three: the rule is the
+page's, not this release's. CR-134.2 asks for the frozen top five in the **Open Graph/X preview**,
+and the `<meta description>` still carries it verbatim on all three; `test/jevbench-v141.test.mjs`
+now pins that sentence instead of the on-page list it used to pin.
+
+### F-192 — an unlabelled class gets its own swatch
+
+v1.4.2 introduced the class `system-one-open` (decider-4b v2 #1, Cygnet #4, swanOne #34,
+typecastlm #51, CLM-8B #78) with no entry in `JEV_TYPE_VAR` or `JEV_TYPE_LABEL`, so `typeColour`
+fell back to the llm-baseline green and two of the top five read, by the legend, as instruction
+models. `--jev-t-sysone` is now its own colour, and `jevTypeVarName` falls back to a separate
+`--jev-t-unnamed` rather than the llm green, so no future unnamed class borrows another's colour
+either. `jevLegendTypes` builds the legend from the classes the board actually carries instead of
+from the label map's keys, so an unlabelled class appears rather than being silently dropped.
+
+The label is the data owner's (CR-152.1). Until it lands, every place that prints a class — the
+chart legend, the capability legend, the compare legend's A/B rows and the leaf sub-line — prints
+the key in `<code title="Class named in the v1.4.2 artifact; description pending">`. That also
+closes Fable's recorded pass-35 deviation of omitting the unlabelled class from the leaf sub-line.
+
+**The colour was computed, not eyed**, as the directive requires:
+`/opt/benchmarkheaven/state/ux-evidence/iter214-pass35/f192-colour-contrast.json`. Contrast
+against the panel is **5.15:1 dark** and **6.15:1 light** (floor 3:1). ΔE76 from the two colours
+it sits beside in the top five is **109.2 / 137.2 dark** and **125.1 / 147.4 light** (rebuild
+orange / llm green), and its nearest neighbour of all ten is `small-tool-model` at ΔE 35.3.
+Search: the candidate maximised the minimum ΔE against all ten existing classes subject to ≥3:1
+against the panel, ≥45 % saturation and ≥34° of hue separation from every chromatic class.
+
+**The third F-192 check was also corrected.** "no bare `— system-one-open` class key in visible
+text" cannot coexist with "its key in `<code>`" — `innerText` cannot see a font, and the v1.4.2
+board also contains a *system* named `system-one-open` (#14), whose own name a body-text scan
+flags. The check now finds the elements that render a class (`data-bh-jev14-class`, a new hook on
+all three legends) and requires every unlabelled one to carry its key inside a `<code>`, plus a
+second check that an unlabelled class is shown at all — precise where the original was both
+unsatisfiable and blind to the capability legend.
+
+### F-188 — the bars carry their header; the chooser loses its slash
+
+`/jev-models/alternatives` reused the hub's bar rows without the line that names their five
+numbers; the shared `JevScoreBarHeader` now sits directly above them. `/jev-models/how-to-choose`
+printed "94.0/ 100 benchmark score" on two tiles; both now read "94.0 of 100", matching the
+accuracy tile beside them, and each tile's eyebrow already names the axis.
+
+### Live verification on both hosts
+
+`97ede31a` is deployed on `benchmarkheaven.com`, `www.benchmarkheaven.com` and the legacy
+Mintapis alias. Each group was re-run by its verifier against the canonical and the legacy host
+at 1440 and 390 in both themes, after the switchover lag:
+
+| group | verifier | canonical | legacy |
+|---|---|---|---|
+| F-191 | `verify-fable-pass35-design.mjs` (at `6ec7fee0`) | **60/60** | **60/60** |
+| F-183 | same (at `6ec7fee0`) | **48/48** | **48/48** |
+| F-189 | same | 32/34 | 32/34 |
+| F-190 | same | **14/14** | **14/14** |
+| F-192 | same | **16/16** | **16/16** |
+| F-188 | `verify-fable-pass34-design.mjs` | **12/12** | **12/12** |
+
+The four F-189 failures are the same check on both hosts at both themes — the 720 px budget of
+F-193 — and no other. Receipts: `/opt/benchmarkheaven/state/ux-evidence/iter214-pass35/`.
+
+### What the props cost, measured — for whoever picks up F-179
+
+F-189(d) specifies that the rows "are serialised once on the server … and passed as props". The
+93 serialised rows are **67,685 bytes of the served `/jev-models`**, which is 1,410,522 bytes
+against the 1,366,503 iteration 209 measured (the rest of that difference is CR-152's own growth
+from 82 to 93 systems). The bars' HTML is still in the document as well — an SSR'd client
+component ships both — so this is additive to a page that F-179 is trying to shrink. An earlier
+draft of this work reordered the server-rendered `<li>` nodes instead and cost nothing, but it
+cannot do F-189(b): swapping each row's bar length, big number and column labels per metric.
+
+**About 8 KB of the 67,685 is raw float precision** (`intelligence: 97.35385336870618` where the
+page prints three decimals at most). **Do not fix that in `toBarRow`.** Rounding the axes to one
+decimal there was tried and measured in this iteration: it changes **21 printed values** on the
+v1.4.2 board (`semif-qwen3.5-4b` 59 → 60, `gpt-6-luna` 93 → 94, `jev-local` 45.2 → 45.1 …),
+because the component then rounds a second time to zero decimals. Six decimals is lossless on all
+three artifacts today, but the serialiser runs on every future release and a single value landing
+near a rounding boundary would ship a wrong number silently — so the raw values stay. Any real
+fix rounds once, at the point of render.
+
+### Rows
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| F-191 | **verified** | `…/iter214-pass35/F-191-{canonical,legacy}/verification.json` (60/60 per host at `6ec7fee0`) | Implemented by Fable (pass 35); promoted by claude-opus, a non-Fable engine, on both hosts. |
+| F-183 | **verified** | `…/iter214-pass35/F-183-{canonical,legacy}/verification.json` (48/48 per host at `6ec7fee0`) | Same. Fable's recorded deviation (2) — the unlabelled class omitted from the sub-line — is closed by F-192 rather than carried. |
+| F-189 | implemented | `97ede31a`; `…/iter214-pass35/F-189-{canonical,legacy}/` (32/34 per host); `components/JevRankBy.tsx`, `components/JevScoreBar.tsx`; `test/jevbench-v142.test.mjs` | claude-opus, iteration 214 (implementer — **needs another engine**). The 2 open checks per host are F-193's 720 px budget, left failing on purpose. Two of the group's checks were corrected first, both stricter; see above. |
+| F-190 | implemented | `97ede31a`; `…/iter214-pass35/F-190-{canonical,legacy}/` (14/14 per host); `test/jevbench-v141.test.mjs` | claude-opus, iteration 214 (**needs another engine**). Applied to `/jev-models/v1.4`, `/v1.4.1` and `/v1.4.2`, not only the page the directive names. |
+| F-192 | implemented | `97ede31a`; `…/iter214-pass35/F-192-{canonical,legacy}/` (16/16 per host); `…/iter214-pass35/f192-colour-contrast.json` | claude-opus, iteration 214 (**needs another engine**). Colour computed, not eyed. The label itself is still **CR-152.1** for the JevBench release job. |
+| F-188 | implemented | `97ede31a`; `…/iter214-pass35/F-188-{canonical,legacy}/` (12/12 per host, pass-34 verifier) | claude-opus, iteration 214 (**needs another engine**). |
+| F-193 | open (new) | `…/iter214-pass35/F-189-{canonical,legacy}/` (804 px); the 718 / 662 px measurements above | The 720 px first-bar budget cannot hold CR-152's fairness sentence. For the design authority in pass 36 — the space is in the page head and the figure's duplicate eyebrow, both outside F-189. `[judgment]`, claude-fable. |
+| F-187 | open | — | Unchanged: before `/image-jev-bench` publishes, as directed. |
+| CR-152.1 | open | `…/iter214-pass35/F-192-*/` | Filed by Fable in pass 35 for the JevBench release job: name the class `system-one-open` in `RELEASE-v1.4.2.md` or an artifact `classes` map. Until it lands the key ships in `<code>`; the site needs no further change when it does, only a `JEV_TYPE_LABEL` entry. |
+| D191, D192, D193.2, D193.3, D195, D196, D194, CR-140.5, CR-62.4 | unchanged | — | Not attempted. D193.2/D193.3/D195/D196/D194 are claude-opus work awaiting a non-claude-opus sign-off, which this engine cannot give. The 2026-09-25T05:17Z run is still D191's test and nothing here goes near that path; the last push was well clear of its lock. |
