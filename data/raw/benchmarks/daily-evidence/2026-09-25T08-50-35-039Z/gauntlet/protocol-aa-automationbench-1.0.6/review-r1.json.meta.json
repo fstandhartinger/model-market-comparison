@@ -1,0 +1,79 @@
+{
+  "started_at": "2026-09-25T09:14:03.112Z",
+  "mode": "critic",
+  "requested_model": "deepseek/deepseek-v4-flash-0731",
+  "producers": [
+    "z-ai/glm-5.3-flash"
+  ],
+  "qualification": {
+    "id": "deepseek/deepseek-v4-flash-0731",
+    "family": "deepseek",
+    "free": false,
+    "input_per_1m": 0.03,
+    "output_per_1m": 0.32,
+    "context": 1310720,
+    "aa_intelligence_index": 34.3,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "deepseek-v4-flash-0731::max"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "deepseek-v4-flash-0731::max",
+        "index": 34.3
+      }
+    ]
+  },
+  "input_sha256": "8dd344640eb3fd8c4e821e94ca215398cc13194619487146a90a5961ffdc9126",
+  "route": "openrouter",
+  "attempt": 1,
+  "free_route_role": "critic",
+  "free_routes_offered": [
+    "chutes/moonshotai/Kimi-K3-TEE"
+  ],
+  "excluded_models": [
+    "chutes/moonshotai/Kimi-K3-TEE"
+  ],
+  "hard_excluded_models": [],
+  "catalog": {
+    "source": "run-cache",
+    "fetched_at": "2026-09-25T08:42:16.727Z"
+  },
+  "reasoning": {
+    "effort": "low",
+    "exclude": true
+  },
+  "response_format_mode": null,
+  "response_schema_sha256": null,
+  "images": [],
+  "actual_model": "deepseek/deepseek-v4-flash-0731",
+  "usage": {
+    "prompt_tokens": 2502,
+    "completion_tokens": 2644,
+    "total_tokens": 5146,
+    "cost": 0.00106847334,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 2427,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.001079266,
+      "upstream_inference_prompt_cost": 0.000021666,
+      "upstream_inference_completions_cost": 0.0010576
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 2328,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "finish_reason": "stop",
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "provider": "OpenInference",
+  "session_id": null,
+  "finished_at": "2026-09-25T09:15:46.910Z",
+  "output_sha256": "263166ad2af9bd0245c93bca43167d38a1e557f6e842b97c057df9b6d973d700"
+}

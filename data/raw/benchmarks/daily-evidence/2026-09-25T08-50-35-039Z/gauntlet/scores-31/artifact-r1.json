@@ -1,0 +1,410 @@
+[
+  {
+    "id": "public:6d4d5402f84bd1b57190229c",
+    "benchmark_id": "surge-chartography::100-tasks",
+    "subject": {
+      "source_id": "GPT 6 Astra (Max reasoning)",
+      "name": "GPT 6 Astra (Max reasoning)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 71,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://surgehq.ai/benchmarks/chartography",
+      "retrieved_at": "2026-09-25T08:56:49.057046+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/33473570af32c1da25c5.gz",
+      "sha256": "33473570af32c1da25c50d9c8b1ef23188fceec34a32f73e6991d19d46fa021c",
+      "locator": "surge_benchmark_board; source row 0; GPT 6 Astra (Max reasoning); field value"
+    },
+    "protocol": "Chartography (Surge AI): 100 expert-written questions on real professional charts (Kaplan-Meier curves, candlesticks, contour maps, Sankey diagrams, Bode plots and more), the chart attached inline and no tools; each answer is judged against the golden answer and its expert-set acceptable range by one model-graded call (judge Gemini 3.5 Flash; the judge never sees the chart); leaderboard configuration ten runs per task; value = the board's accuracy (mean over tasks and runs, percent) for the row's model and stated setting; Surge runs the models itself; source row: {\"brand\":\"GPT\",\"stated_setting\":\"Max reasoning\",\"board\":\"Chartography\"}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://raw.githubusercontent.com/surge-ai/chartography/main/README.md",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b588ba1f8ab0ce492657.gz",
+        "sha256": "b588ba1f8ab0ce4926577c8c05312c46d705a85b755d8e8d4ec79a376982852f",
+        "retrieved_at": "2026-09-25T08:56:51.752141+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:cc3a7b1bd86cc82a56aaa7ff",
+    "benchmark_id": "surge-chartography::100-tasks",
+    "subject": {
+      "source_id": "GPT 6 Astra (Medium reasoning)",
+      "name": "GPT 6 Astra (Medium reasoning)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 70,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://surgehq.ai/benchmarks/chartography",
+      "retrieved_at": "2026-09-25T08:56:49.057046+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/33473570af32c1da25c5.gz",
+      "sha256": "33473570af32c1da25c50d9c8b1ef23188fceec34a32f73e6991d19d46fa021c",
+      "locator": "surge_benchmark_board; source row 1; GPT 6 Astra (Medium reasoning); field value"
+    },
+    "protocol": "Chartography (Surge AI): 100 expert-written questions on real professional charts (Kaplan-Meier curves, candlesticks, contour maps, Sankey diagrams, Bode plots and more), the chart attached inline and no tools; each answer is judged against the golden answer and its expert-set acceptable range by one model-graded call (judge Gemini 3.5 Flash; the judge never sees the chart); leaderboard configuration ten runs per task; value = the board's accuracy (mean over tasks and runs, percent) for the row's model and stated setting; Surge runs the models itself; source row: {\"brand\":\"GPT\",\"stated_setting\":\"Medium reasoning\",\"board\":\"Chartography\"}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://raw.githubusercontent.com/surge-ai/chartography/main/README.md",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b588ba1f8ab0ce492657.gz",
+        "sha256": "b588ba1f8ab0ce4926577c8c05312c46d705a85b755d8e8d4ec79a376982852f",
+        "retrieved_at": "2026-09-25T08:56:51.752141+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:fb0923f970bc8bff1e7dce53",
+    "benchmark_id": "surge-chartography::100-tasks",
+    "subject": {
+      "source_id": "Claude Opus 5.5 (Adaptive/Max)",
+      "name": "Claude Opus 5.5 (Adaptive/Max)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 66.3,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://surgehq.ai/benchmarks/chartography",
+      "retrieved_at": "2026-09-25T08:56:49.057046+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/33473570af32c1da25c5.gz",
+      "sha256": "33473570af32c1da25c50d9c8b1ef23188fceec34a32f73e6991d19d46fa021c",
+      "locator": "surge_benchmark_board; source row 2; Claude Opus 5.5 (Adaptive/Max); field value"
+    },
+    "protocol": "Chartography (Surge AI): 100 expert-written questions on real professional charts (Kaplan-Meier curves, candlesticks, contour maps, Sankey diagrams, Bode plots and more), the chart attached inline and no tools; each answer is judged against the golden answer and its expert-set acceptable range by one model-graded call (judge Gemini 3.5 Flash; the judge never sees the chart); leaderboard configuration ten runs per task; value = the board's accuracy (mean over tasks and runs, percent) for the row's model and stated setting; Surge runs the models itself; source row: {\"brand\":\"Claude\",\"stated_setting\":\"Adaptive/Max\",\"board\":\"Chartography\"}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://raw.githubusercontent.com/surge-ai/chartography/main/README.md",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b588ba1f8ab0ce492657.gz",
+        "sha256": "b588ba1f8ab0ce4926577c8c05312c46d705a85b755d8e8d4ec79a376982852f",
+        "retrieved_at": "2026-09-25T08:56:51.752141+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:a8b95f1d7330323e76ed1f5e",
+    "benchmark_id": "surge-chartography::100-tasks",
+    "subject": {
+      "source_id": "Claude Opus 5.5 (Adaptive/High)",
+      "name": "Claude Opus 5.5 (Adaptive/High)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 59.4,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://surgehq.ai/benchmarks/chartography",
+      "retrieved_at": "2026-09-25T08:56:49.057046+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/33473570af32c1da25c5.gz",
+      "sha256": "33473570af32c1da25c50d9c8b1ef23188fceec34a32f73e6991d19d46fa021c",
+      "locator": "surge_benchmark_board; source row 3; Claude Opus 5.5 (Adaptive/High); field value"
+    },
+    "protocol": "Chartography (Surge AI): 100 expert-written questions on real professional charts (Kaplan-Meier curves, candlesticks, contour maps, Sankey diagrams, Bode plots and more), the chart attached inline and no tools; each answer is judged against the golden answer and its expert-set acceptable range by one model-graded call (judge Gemini 3.5 Flash; the judge never sees the chart); leaderboard configuration ten runs per task; value = the board's accuracy (mean over tasks and runs, percent) for the row's model and stated setting; Surge runs the models itself; source row: {\"brand\":\"Claude\",\"stated_setting\":\"Adaptive/High\",\"board\":\"Chartography\"}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://raw.githubusercontent.com/surge-ai/chartography/main/README.md",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b588ba1f8ab0ce492657.gz",
+        "sha256": "b588ba1f8ab0ce4926577c8c05312c46d705a85b755d8e8d4ec79a376982852f",
+        "retrieved_at": "2026-09-25T08:56:51.752141+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:f974157dcc4deb74e1244350",
+    "benchmark_id": "surge-chartography::100-tasks",
+    "subject": {
+      "source_id": "GPT 6 Sol (Max reasoning)",
+      "name": "GPT 6 Sol (Max reasoning)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 53.6,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://surgehq.ai/benchmarks/chartography",
+      "retrieved_at": "2026-09-25T08:56:49.057046+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/33473570af32c1da25c5.gz",
+      "sha256": "33473570af32c1da25c50d9c8b1ef23188fceec34a32f73e6991d19d46fa021c",
+      "locator": "surge_benchmark_board; source row 4; GPT 6 Sol (Max reasoning); field value"
+    },
+    "protocol": "Chartography (Surge AI): 100 expert-written questions on real professional charts (Kaplan-Meier curves, candlesticks, contour maps, Sankey diagrams, Bode plots and more), the chart attached inline and no tools; each answer is judged against the golden answer and its expert-set acceptable range by one model-graded call (judge Gemini 3.5 Flash; the judge never sees the chart); leaderboard configuration ten runs per task; value = the board's accuracy (mean over tasks and runs, percent) for the row's model and stated setting; Surge runs the models itself; source row: {\"brand\":\"GPT\",\"stated_setting\":\"Max reasoning\",\"board\":\"Chartography\"}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://raw.githubusercontent.com/surge-ai/chartography/main/README.md",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b588ba1f8ab0ce492657.gz",
+        "sha256": "b588ba1f8ab0ce4926577c8c05312c46d705a85b755d8e8d4ec79a376982852f",
+        "retrieved_at": "2026-09-25T08:56:51.752141+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:1b1061d4d451f817d4884cb5",
+    "benchmark_id": "surge-chartography::100-tasks",
+    "subject": {
+      "source_id": "GPT 6 Sol (Medium reasoning)",
+      "name": "GPT 6 Sol (Medium reasoning)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 46.5,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://surgehq.ai/benchmarks/chartography",
+      "retrieved_at": "2026-09-25T08:56:49.057046+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/33473570af32c1da25c5.gz",
+      "sha256": "33473570af32c1da25c50d9c8b1ef23188fceec34a32f73e6991d19d46fa021c",
+      "locator": "surge_benchmark_board; source row 5; GPT 6 Sol (Medium reasoning); field value"
+    },
+    "protocol": "Chartography (Surge AI): 100 expert-written questions on real professional charts (Kaplan-Meier curves, candlesticks, contour maps, Sankey diagrams, Bode plots and more), the chart attached inline and no tools; each answer is judged against the golden answer and its expert-set acceptable range by one model-graded call (judge Gemini 3.5 Flash; the judge never sees the chart); leaderboard configuration ten runs per task; value = the board's accuracy (mean over tasks and runs, percent) for the row's model and stated setting; Surge runs the models itself; source row: {\"brand\":\"GPT\",\"stated_setting\":\"Medium reasoning\",\"board\":\"Chartography\"}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://raw.githubusercontent.com/surge-ai/chartography/main/README.md",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b588ba1f8ab0ce492657.gz",
+        "sha256": "b588ba1f8ab0ce4926577c8c05312c46d705a85b755d8e8d4ec79a376982852f",
+        "retrieved_at": "2026-09-25T08:56:51.752141+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:01d3714fadc6536ac5008d12",
+    "benchmark_id": "surge-chartography::100-tasks",
+    "subject": {
+      "source_id": "GPT 6 Luna (Max reasoning)",
+      "name": "GPT 6 Luna (Max reasoning)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 29.1,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://surgehq.ai/benchmarks/chartography",
+      "retrieved_at": "2026-09-25T08:56:49.057046+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/33473570af32c1da25c5.gz",
+      "sha256": "33473570af32c1da25c50d9c8b1ef23188fceec34a32f73e6991d19d46fa021c",
+      "locator": "surge_benchmark_board; source row 24; GPT 6 Luna (Max reasoning); field value"
+    },
+    "protocol": "Chartography (Surge AI): 100 expert-written questions on real professional charts (Kaplan-Meier curves, candlesticks, contour maps, Sankey diagrams, Bode plots and more), the chart attached inline and no tools; each answer is judged against the golden answer and its expert-set acceptable range by one model-graded call (judge Gemini 3.5 Flash; the judge never sees the chart); leaderboard configuration ten runs per task; value = the board's accuracy (mean over tasks and runs, percent) for the row's model and stated setting; Surge runs the models itself; source row: {\"brand\":\"GPT\",\"stated_setting\":\"Max reasoning\",\"board\":\"Chartography\"}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://raw.githubusercontent.com/surge-ai/chartography/main/README.md",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b588ba1f8ab0ce492657.gz",
+        "sha256": "b588ba1f8ab0ce4926577c8c05312c46d705a85b755d8e8d4ec79a376982852f",
+        "retrieved_at": "2026-09-25T08:56:51.752141+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:6372c92f4338e027c30e0ae1",
+    "benchmark_id": "surge-chartography::100-tasks",
+    "subject": {
+      "source_id": "GPT 6 Luna (Medium reasoning)",
+      "name": "GPT 6 Luna (Medium reasoning)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 26.7,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://surgehq.ai/benchmarks/chartography",
+      "retrieved_at": "2026-09-25T08:56:49.057046+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/33473570af32c1da25c5.gz",
+      "sha256": "33473570af32c1da25c50d9c8b1ef23188fceec34a32f73e6991d19d46fa021c",
+      "locator": "surge_benchmark_board; source row 29; GPT 6 Luna (Medium reasoning); field value"
+    },
+    "protocol": "Chartography (Surge AI): 100 expert-written questions on real professional charts (Kaplan-Meier curves, candlesticks, contour maps, Sankey diagrams, Bode plots and more), the chart attached inline and no tools; each answer is judged against the golden answer and its expert-set acceptable range by one model-graded call (judge Gemini 3.5 Flash; the judge never sees the chart); leaderboard configuration ten runs per task; value = the board's accuracy (mean over tasks and runs, percent) for the row's model and stated setting; Surge runs the models itself; source row: {\"brand\":\"GPT\",\"stated_setting\":\"Medium reasoning\",\"board\":\"Chartography\"}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://raw.githubusercontent.com/surge-ai/chartography/main/README.md",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b588ba1f8ab0ce492657.gz",
+        "sha256": "b588ba1f8ab0ce4926577c8c05312c46d705a85b755d8e8d4ec79a376982852f",
+        "retrieved_at": "2026-09-25T08:56:51.752141+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:566bc6b04a30b91637231d59",
+    "benchmark_id": "surge-chartography::100-tasks",
+    "subject": {
+      "source_id": "Grok 4.7 (High reasoning)",
+      "name": "Grok 4.7 (High reasoning)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 17.4,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://surgehq.ai/benchmarks/chartography",
+      "retrieved_at": "2026-09-25T08:56:49.057046+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/33473570af32c1da25c5.gz",
+      "sha256": "33473570af32c1da25c50d9c8b1ef23188fceec34a32f73e6991d19d46fa021c",
+      "locator": "surge_benchmark_board; source row 41; Grok 4.7 (High reasoning); field value"
+    },
+    "protocol": "Chartography (Surge AI): 100 expert-written questions on real professional charts (Kaplan-Meier curves, candlesticks, contour maps, Sankey diagrams, Bode plots and more), the chart attached inline and no tools; each answer is judged against the golden answer and its expert-set acceptable range by one model-graded call (judge Gemini 3.5 Flash; the judge never sees the chart); leaderboard configuration ten runs per task; value = the board's accuracy (mean over tasks and runs, percent) for the row's model and stated setting; Surge runs the models itself; source row: {\"brand\":\"Grok\",\"stated_setting\":\"High reasoning\",\"board\":\"Chartography\"}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://raw.githubusercontent.com/surge-ai/chartography/main/README.md",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b588ba1f8ab0ce492657.gz",
+        "sha256": "b588ba1f8ab0ce4926577c8c05312c46d705a85b755d8e8d4ec79a376982852f",
+        "retrieved_at": "2026-09-25T08:56:51.752141+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:78260b04aa80e20a27b4bf4d",
+    "benchmark_id": "surge-chartography::100-tasks",
+    "subject": {
+      "source_id": "Grok 4.7 (xHigh reasoning)",
+      "name": "Grok 4.7 (xHigh reasoning)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 14.7,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://surgehq.ai/benchmarks/chartography",
+      "retrieved_at": "2026-09-25T08:56:49.057046+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/33473570af32c1da25c5.gz",
+      "sha256": "33473570af32c1da25c50d9c8b1ef23188fceec34a32f73e6991d19d46fa021c",
+      "locator": "surge_benchmark_board; source row 51; Grok 4.7 (xHigh reasoning); field value"
+    },
+    "protocol": "Chartography (Surge AI): 100 expert-written questions on real professional charts (Kaplan-Meier curves, candlesticks, contour maps, Sankey diagrams, Bode plots and more), the chart attached inline and no tools; each answer is judged against the golden answer and its expert-set acceptable range by one model-graded call (judge Gemini 3.5 Flash; the judge never sees the chart); leaderboard configuration ten runs per task; value = the board's accuracy (mean over tasks and runs, percent) for the row's model and stated setting; Surge runs the models itself; source row: {\"brand\":\"Grok\",\"stated_setting\":\"xHigh reasoning\",\"board\":\"Chartography\"}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://raw.githubusercontent.com/surge-ai/chartography/main/README.md",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b588ba1f8ab0ce492657.gz",
+        "sha256": "b588ba1f8ab0ce4926577c8c05312c46d705a85b755d8e8d4ec79a376982852f",
+        "retrieved_at": "2026-09-25T08:56:51.752141+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:5e1f4be5507f30c7b2685295",
+    "benchmark_id": "surge-chartography::100-tasks",
+    "subject": {
+      "source_id": "DeepSeek V4.1 Flash (Max reasoning)",
+      "name": "DeepSeek V4.1 Flash (Max reasoning)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 11.6,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://surgehq.ai/benchmarks/chartography",
+      "retrieved_at": "2026-09-25T08:56:49.057046+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/33473570af32c1da25c5.gz",
+      "sha256": "33473570af32c1da25c50d9c8b1ef23188fceec34a32f73e6991d19d46fa021c",
+      "locator": "surge_benchmark_board; source row 59; DeepSeek V4.1 Flash (Max reasoning); field value"
+    },
+    "protocol": "Chartography (Surge AI): 100 expert-written questions on real professional charts (Kaplan-Meier curves, candlesticks, contour maps, Sankey diagrams, Bode plots and more), the chart attached inline and no tools; each answer is judged against the golden answer and its expert-set acceptable range by one model-graded call (judge Gemini 3.5 Flash; the judge never sees the chart); leaderboard configuration ten runs per task; value = the board's accuracy (mean over tasks and runs, percent) for the row's model and stated setting; Surge runs the models itself; source row: {\"brand\":\"DeepSeek\",\"stated_setting\":\"Max reasoning\",\"board\":\"Chartography\"}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://raw.githubusercontent.com/surge-ai/chartography/main/README.md",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b588ba1f8ab0ce492657.gz",
+        "sha256": "b588ba1f8ab0ce4926577c8c05312c46d705a85b755d8e8d4ec79a376982852f",
+        "retrieved_at": "2026-09-25T08:56:51.752141+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:4e978e16a8401db2a25fef03",
+    "benchmark_id": "surge-chartography::100-tasks",
+    "subject": {
+      "source_id": "DeepSeek V4.1 Flash (High reasoning)",
+      "name": "DeepSeek V4.1 Flash (High reasoning)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 10.8,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://surgehq.ai/benchmarks/chartography",
+      "retrieved_at": "2026-09-25T08:56:49.057046+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/33473570af32c1da25c5.gz",
+      "sha256": "33473570af32c1da25c50d9c8b1ef23188fceec34a32f73e6991d19d46fa021c",
+      "locator": "surge_benchmark_board; source row 62; DeepSeek V4.1 Flash (High reasoning); field value"
+    },
+    "protocol": "Chartography (Surge AI): 100 expert-written questions on real professional charts (Kaplan-Meier curves, candlesticks, contour maps, Sankey diagrams, Bode plots and more), the chart attached inline and no tools; each answer is judged against the golden answer and its expert-set acceptable range by one model-graded call (judge Gemini 3.5 Flash; the judge never sees the chart); leaderboard configuration ten runs per task; value = the board's accuracy (mean over tasks and runs, percent) for the row's model and stated setting; Surge runs the models itself; source row: {\"brand\":\"DeepSeek\",\"stated_setting\":\"High reasoning\",\"board\":\"Chartography\"}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://raw.githubusercontent.com/surge-ai/chartography/main/README.md",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b588ba1f8ab0ce492657.gz",
+        "sha256": "b588ba1f8ab0ce4926577c8c05312c46d705a85b755d8e8d4ec79a376982852f",
+        "retrieved_at": "2026-09-25T08:56:51.752141+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "id": "simple-bench::snapshot-2026-09-10",
+    "version": "snapshot-2026-09-10",
+    "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+    "status": "active",
+    "version_status": "snapshot",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "MCQ leaderboard 'Score (AVG@5)': percent accuracy averaged over 5 runs (temperature 0.7, top-p 0.95 except o1 series)",
+      "unit": "percent",
+      "range": [
+        null,
+        null
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "description": "A multiple-choice text benchmark of over 200 questions covering spatio-temporal reasoning, social intelligence, and linguistic adversarial robustness, on which a non-specialized human baseline outperforms every tested LLM.",
+    "maintainer": "SimpleBench Team (AI Explained)"
+  }
+]

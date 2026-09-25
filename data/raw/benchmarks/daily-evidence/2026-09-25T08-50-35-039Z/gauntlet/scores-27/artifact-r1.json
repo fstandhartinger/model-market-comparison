@@ -1,0 +1,126 @@
+[
+  {
+    "id": "public:2e194db58646fcef0e6aaa55",
+    "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+    "subject": {
+      "source_id": "claude/claude-opus-5-5 [xhigh]",
+      "name": "claude/claude-opus-5-5 [xhigh]",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 109.57,
+    "unit": "percent of roofline",
+    "basis": "derived",
+    "source": {
+      "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+      "retrieved_at": "2026-09-25T08:52:47.843081+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/c3e22679c1c23c355c86.gz",
+      "sha256": "c3e22679c1c23c355c86fc8e8af4e7d40e344ce5e39a9cef4aef958cdc83f404",
+      "locator": "kernelbench_cuda_board; source row 1; claude/claude-opus-5-5 [xhigh]; field peak_fraction"
+    },
+    "protocol": "KernelBench-CUDA 02_deepseek_nsa (RTX PRO 6000 Blackwell, environment v2_containerized): DeepSeek Native Sparse Attention block (block top-n + sparse attention); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"claude/claude-opus-5-5 [xhigh]\",\"harness\":\"claude\",\"stated_effort\":\"xhigh\",\"stated_model\":\"claude-opus-5-5\",\"annotation_verdict\":\"interesting\",\"run_id\":\"20260922_121858_claude_claude-opus-5-5_02_deepseek_nsa\",\"elapsed_seconds\":5825,\"problem\":\"02_deepseek_nsa\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":1.0957,\"percent_of_roofline\":109.57}",
+    "comparison_key": null,
+    "source_basis": "measured",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        1.0957
+      ]
+    }
+  },
+  {
+    "id": "public:cc171012abcb29c31ff63aae",
+    "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+    "subject": {
+      "source_id": "codex/gpt-6-luna [xhigh]",
+      "name": "codex/gpt-6-luna [xhigh]",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 3.7699999999999996,
+    "unit": "percent of roofline",
+    "basis": "derived",
+    "source": {
+      "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+      "retrieved_at": "2026-09-25T08:52:47.843081+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/c3e22679c1c23c355c86.gz",
+      "sha256": "c3e22679c1c23c355c86fc8e8af4e7d40e344ce5e39a9cef4aef958cdc83f404",
+      "locator": "kernelbench_cuda_board; source row 2; codex/gpt-6-luna [xhigh]; field peak_fraction"
+    },
+    "protocol": "KernelBench-CUDA 02_deepseek_nsa (RTX PRO 6000 Blackwell, environment v2_containerized): DeepSeek Native Sparse Attention block (block top-n + sparse attention); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"codex/gpt-6-luna [xhigh]\",\"harness\":\"codex\",\"stated_effort\":\"xhigh\",\"stated_model\":\"gpt-6-luna\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260922_123323_codex_gpt-6-luna_02_deepseek_nsa\",\"elapsed_seconds\":13682,\"problem\":\"02_deepseek_nsa\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0377,\"percent_of_roofline\":3.7699999999999996}",
+    "comparison_key": null,
+    "source_basis": "measured",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.0377
+      ]
+    }
+  },
+  {
+    "id": "public:9f124d4e7d6ee2c68271dddf",
+    "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+    "subject": {
+      "source_id": "codex/gpt-6-sol [xhigh]",
+      "name": "codex/gpt-6-sol [xhigh]",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 3.7600000000000002,
+    "unit": "percent of roofline",
+    "basis": "derived",
+    "source": {
+      "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+      "retrieved_at": "2026-09-25T08:52:47.843081+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/c3e22679c1c23c355c86.gz",
+      "sha256": "c3e22679c1c23c355c86fc8e8af4e7d40e344ce5e39a9cef4aef958cdc83f404",
+      "locator": "kernelbench_cuda_board; source row 3; codex/gpt-6-sol [xhigh]; field peak_fraction"
+    },
+    "protocol": "KernelBench-CUDA 02_deepseek_nsa (RTX PRO 6000 Blackwell, environment v2_containerized): DeepSeek Native Sparse Attention block (block top-n + sparse attention); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"codex/gpt-6-sol [xhigh]\",\"harness\":\"codex\",\"stated_effort\":\"xhigh\",\"stated_model\":\"gpt-6-sol\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260922_123318_codex_gpt-6-sol_02_deepseek_nsa\",\"elapsed_seconds\":10421,\"problem\":\"02_deepseek_nsa\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0376,\"percent_of_roofline\":3.7600000000000002}",
+    "comparison_key": null,
+    "source_basis": "measured",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.0376
+      ]
+    }
+  },
+  {
+    "id": "public:449f02df5e11307bebd850b4",
+    "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+    "subject": {
+      "source_id": "grok/grok-4.7 [xhigh]",
+      "name": "grok/grok-4.7 [xhigh]",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 10.02,
+    "unit": "percent of roofline",
+    "basis": "derived",
+    "source": {
+      "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+      "retrieved_at": "2026-09-25T08:52:47.843081+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/c3e22679c1c23c355c86.gz",
+      "sha256": "c3e22679c1c23c355c86fc8e8af4e7d40e344ce5e39a9cef4aef958cdc83f404",
+      "locator": "kernelbench_cuda_board; source row 5; grok/grok-4.7 [xhigh]; field peak_fraction"
+    },
+    "protocol": "KernelBench-CUDA 02_deepseek_nsa (RTX PRO 6000 Blackwell, environment v2_containerized): DeepSeek Native Sparse Attention block (block top-n + sparse attention); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"grok/grok-4.7 [xhigh]\",\"harness\":\"grok\",\"stated_effort\":\"xhigh\",\"stated_model\":\"grok-4.7\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260917_005835_grok_grok-4.7_02_deepseek_nsa\",\"elapsed_seconds\":3526,\"problem\":\"02_deepseek_nsa\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.1002,\"percent_of_roofline\":10.02}",
+    "comparison_key": null,
+    "source_basis": "measured",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.1002
+      ]
+    }
+  }
+]

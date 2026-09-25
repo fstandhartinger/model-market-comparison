@@ -1,0 +1,170 @@
+[
+  {
+    "id": "public:5b86059b1a9faceb1ec1bed5",
+    "benchmark_id": "vals-index-finance-agent::2",
+    "subject": {
+      "source_id": "anthropic/claude-opus-5-5",
+      "name": "anthropic/claude-opus-5-5",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 58.587,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 7; anthropic/claude-opus-5-5; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component finance_agent; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"finance_agent\",\"accuracy\":58.587,\"stderr\":0.17,\"cost_per_test\":9.025984,\"latency\":1987.81,\"compute_effort\":\"max\",\"reasoning_effort\":null,\"max_output_tokens\":128000,\"provider\":\"Anthropic\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:46e3b5931d2aafc6bcd0697a",
+    "benchmark_id": "vals-index-finance-agent::2",
+    "subject": {
+      "source_id": "xiaomi/mimo-v2.6-pro",
+      "name": "xiaomi/mimo-v2.6-pro",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 57.339,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 10; xiaomi/mimo-v2.6-pro; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component finance_agent; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"finance_agent\",\"accuracy\":57.339,\"stderr\":0.574,\"cost_per_test\":0.198909,\"latency\":648.075,\"compute_effort\":null,\"reasoning_effort\":null,\"max_output_tokens\":128000,\"provider\":\"Xiaomi\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:9aed6fcc9d6659f82949e3c6",
+    "benchmark_id": "vals-index-finance-agent::2",
+    "subject": {
+      "source_id": "xiaomi/mimo-v2.6-flash",
+      "name": "xiaomi/mimo-v2.6-flash",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 56.277,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 14; xiaomi/mimo-v2.6-flash; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component finance_agent; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"finance_agent\",\"accuracy\":56.277,\"stderr\":0.462,\"cost_per_test\":0.071536,\"latency\":421.99,\"compute_effort\":null,\"reasoning_effort\":null,\"max_output_tokens\":128000,\"provider\":\"Xiaomi\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:939627dabf1adc94cf66ca4d",
+    "benchmark_id": "vals-index-finance-agent::2",
+    "subject": {
+      "source_id": "ant/ling-3.0-flash-af-rc3",
+      "name": "ant/ling-3.0-flash-af-rc3",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 54.927,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 18; ant/ling-3.0-flash-af-rc3; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component finance_agent; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"finance_agent\",\"accuracy\":54.927,\"stderr\":0.679,\"cost_per_test\":0.044792,\"latency\":375.066,\"compute_effort\":null,\"reasoning_effort\":null,\"max_output_tokens\":131072,\"provider\":\"Ant\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:7f876c8e3b2005d44afcca03",
+    "benchmark_id": "vals-index-finance-agent::2",
+    "subject": {
+      "source_id": "grok/grok-4.7",
+      "name": "grok/grok-4.7",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 52.251,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 27; grok/grok-4.7; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component finance_agent; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"finance_agent\",\"accuracy\":52.251,\"stderr\":0.355,\"cost_per_test\":5.007566,\"latency\":932.724,\"compute_effort\":null,\"reasoning_effort\":\"xhigh\",\"max_output_tokens\":null,\"provider\":\"SpaceXAI\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:6f419959e480604c819b8ff1",
+    "benchmark_id": "vals-index-finance-agent::2",
+    "subject": {
+      "source_id": "openai/gpt-6-luna",
+      "name": "openai/gpt-6-luna",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 49.873,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 33; openai/gpt-6-luna; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component finance_agent; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"finance_agent\",\"accuracy\":49.873,\"stderr\":0.232,\"cost_per_test\":0.124338,\"latency\":897.881,\"compute_effort\":null,\"reasoning_effort\":\"max\",\"max_output_tokens\":128000,\"provider\":\"OpenAI\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:6cab9e342d7ae98d4832d09e",
+    "benchmark_id": "vals-index-finance-agent::2",
+    "subject": {
+      "source_id": "openai/gpt-6-sol",
+      "name": "openai/gpt-6-sol",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 49.05,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 36; openai/gpt-6-sol; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component finance_agent; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"finance_agent\",\"accuracy\":49.05,\"stderr\":0.58,\"cost_per_test\":2.122121,\"latency\":539.907,\"compute_effort\":null,\"reasoning_effort\":\"max\",\"max_output_tokens\":128000,\"provider\":\"OpenAI\"}",
+    "comparison_key": null
+  }
+]

@@ -1,0 +1,120 @@
+{
+  "type": "object",
+  "properties": {
+    "artifact_id": {
+      "type": "string",
+      "enum": [
+        "scores-24"
+      ]
+    },
+    "artifact_sha256": {
+      "type": "string",
+      "enum": [
+        "70f4bd078645cd7760963b5d02982ee136774b15eaf6d6d51df9083c9932ccd2"
+      ]
+    },
+    "round": {
+      "type": "integer",
+      "enum": [
+        1
+      ]
+    },
+    "verdict": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "revise",
+        "blocked"
+      ]
+    },
+    "coverage_checked": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "public:94174acb54395a1a9e7e8985",
+          "public:4c5c8ce18cfe7f60bccf64ec",
+          "public:92a4f08c5ea81e0bbdd8c123",
+          "public:c737d43673bf9bd910540ee8",
+          "public:09884fe43f0c4dabbd78f95c",
+          "public:d28ea86c9aa9200933c22f38",
+          "public:0b50aee3fd1edd9f5d2b0e8c",
+          "public:285dad114cde14bcf4c3b5df",
+          "public:430bbd316a22df4068cbffb7",
+          "public:c5a7f7d6432745ea755f807b",
+          "c1"
+        ]
+      }
+    },
+    "errors_found": {
+      "type": "integer"
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "blocker",
+              "major",
+              "minor"
+            ]
+          },
+          "location": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          },
+          "repair": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "severity",
+          "location",
+          "evidence",
+          "repair"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "fixed": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "uncertainties": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "missing_evidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "artifact_id",
+    "artifact_sha256",
+    "round",
+    "verdict",
+    "coverage_checked",
+    "errors_found",
+    "findings",
+    "fixed",
+    "uncertainties",
+    "missing_evidence"
+  ],
+  "additionalProperties": false
+}

@@ -1,5 +1,5 @@
 {
-  "collected_at": "2026-09-23T09:59:02.628Z",
+  "collected_at": "2026-09-25T08:41:14.119Z",
   "models": {
     "moonshotai/kimi-k3": {
       "or_model_id": "moonshotai/kimi-k3",
@@ -10035,6 +10035,222 @@
         "basis": "measured",
         "status": "available"
       }
+    },
+    "aion-labs/aion-3.5": {
+      "or_model_id": "aion-labs/aion-3.5",
+      "model_permaslug": "aion-labs/aion-3.5-20260923",
+      "variant": "standard",
+      "endpoints": [
+        {
+          "or_model_id": "aion-labs/aion-3.5",
+          "endpoint_tag": "aion-labs",
+          "provider": "AionLabs",
+          "endpoint_id": "09b1fc56-3888-42bd-b7a0-926851c7f9d6",
+          "cache_read_per_1m": 0.75,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.5960260332844031,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "AionLabs",
+          "source_provider_slug": "aion-labs",
+          "total_tokens": 77102126
+        }
+      ],
+      "usage": {
+        "status": "incomplete_window",
+        "input_output_ratio": null,
+        "daily": [
+          {
+            "date": "2026-09-24",
+            "total_prompt_tokens": 146726146,
+            "total_completion_tokens": 16327493,
+            "count": 13464
+          },
+          {
+            "date": "2026-09-23",
+            "total_prompt_tokens": 53889402,
+            "total_completion_tokens": 11402572,
+            "count": 7407
+          }
+        ]
+      },
+      "source_updated_at": "2026-09-25T08:40:36.779Z",
+      "window": {
+        "start_date": "2026-09-18",
+        "end_date": "2026-09-24"
+      },
+      "provenance": {
+        "source": "OpenRouter model-page usage",
+        "url": "https://openrouter.ai/aion-labs/aion-3.5",
+        "collected_at": "2026-09-25T08:41:16.455Z",
+        "basis": "measured"
+      },
+      "response_sha256": "9d9f592a8bb67a773c03dfce93a49ca436e3946c1d0f5327cfd370531f2e965c",
+      "cache": {
+        "unjoined": [],
+        "returned_summaries": 1,
+        "summary_window": null,
+        "chart_date_range": {
+          "first": "2026-09-23 00:00:00",
+          "last": "2026-09-25 00:00:00"
+        },
+        "provenance": {
+          "source": "OpenRouter effective pricing statistics",
+          "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=aion-labs%2Faion-3.5-20260923&variant=standard&shape=v7",
+          "collected_at": "2026-09-25T08:41:18.618Z",
+          "basis": "measured"
+        },
+        "response_sha256": "d95fd7dadb41101d10293af8bb90578ffadd4084ca0380dfb1360238d3ff0f20"
+      },
+      "cache_attempt": {
+        "source": "OpenRouter effective pricing statistics",
+        "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=aion-labs%2Faion-3.5-20260923&variant=standard&shape=v7",
+        "collected_at": "2026-09-25T08:41:18.618Z",
+        "basis": "measured",
+        "status": "available"
+      }
+    },
+    "aion-labs/aion-3.5-mini": {
+      "or_model_id": "aion-labs/aion-3.5-mini",
+      "model_permaslug": "aion-labs/aion-3.5-mini-20260923",
+      "variant": "standard",
+      "endpoints": [
+        {
+          "or_model_id": "aion-labs/aion-3.5-mini",
+          "endpoint_tag": "aion-labs",
+          "provider": "AionLabs",
+          "endpoint_id": "60ac3bdc-90ec-4769-9193-2c00b4d79562",
+          "cache_read_per_1m": 0.18,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.7258170993940846,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "AionLabs",
+          "source_provider_slug": "aion-labs",
+          "total_tokens": 38659217
+        }
+      ],
+      "usage": {
+        "status": "incomplete_window",
+        "input_output_ratio": null,
+        "daily": [
+          {
+            "date": "2026-09-24",
+            "total_prompt_tokens": 92965113,
+            "total_completion_tokens": 20415274,
+            "count": 25123
+          },
+          {
+            "date": "2026-09-23",
+            "total_prompt_tokens": 39510984,
+            "total_completion_tokens": 12794919,
+            "count": 6546
+          }
+        ]
+      },
+      "source_updated_at": "2026-09-25T08:40:29.839Z",
+      "window": {
+        "start_date": "2026-09-18",
+        "end_date": "2026-09-24"
+      },
+      "provenance": {
+        "source": "OpenRouter model-page usage",
+        "url": "https://openrouter.ai/aion-labs/aion-3.5-mini",
+        "collected_at": "2026-09-25T08:41:20.623Z",
+        "basis": "measured"
+      },
+      "response_sha256": "79de2f760b0cb4d2b1e62bcb58868ecb4496687b844b882a1e42c0834939f35e",
+      "cache": {
+        "unjoined": [],
+        "returned_summaries": 1,
+        "summary_window": null,
+        "chart_date_range": {
+          "first": "2026-09-23 00:00:00",
+          "last": "2026-09-25 00:00:00"
+        },
+        "provenance": {
+          "source": "OpenRouter effective pricing statistics",
+          "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=aion-labs%2Faion-3.5-mini-20260923&variant=standard&shape=v7",
+          "collected_at": "2026-09-25T08:41:22.666Z",
+          "basis": "measured"
+        },
+        "response_sha256": "4a60a63612cef651423959f6a79dc92066ad3c0b0a49a73f3ab420fdc9a724b3"
+      },
+      "cache_attempt": {
+        "source": "OpenRouter effective pricing statistics",
+        "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=aion-labs%2Faion-3.5-mini-20260923&variant=standard&shape=v7",
+        "collected_at": "2026-09-25T08:41:22.666Z",
+        "basis": "measured",
+        "status": "available"
+      }
+    },
+    "fireworks/ember-1": {
+      "or_model_id": "fireworks/ember-1",
+      "model_permaslug": "fireworks/ember-1-20260923",
+      "variant": "standard",
+      "endpoints": [
+        {
+          "or_model_id": "fireworks/ember-1",
+          "endpoint_tag": "fireworks",
+          "provider": "Fireworks",
+          "endpoint_id": "b89a2f05-4051-4446-a9b0-7bc8ae7b7c90",
+          "cache_read_per_1m": 0.3,
+          "cache_write_per_1m": null,
+          "cache_hit_rate": 0.9070500918493215,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Fireworks",
+          "source_provider_slug": "fireworks",
+          "total_tokens": 329169962
+        }
+      ],
+      "usage": {
+        "status": "incomplete_window",
+        "input_output_ratio": null,
+        "daily": [
+          {
+            "date": "2026-09-24",
+            "total_prompt_tokens": 464137818,
+            "total_completion_tokens": 12996197,
+            "count": 23742
+          }
+        ]
+      },
+      "source_updated_at": "2026-09-25T08:41:20.776Z",
+      "window": {
+        "start_date": "2026-09-18",
+        "end_date": "2026-09-24"
+      },
+      "provenance": {
+        "source": "OpenRouter model-page usage",
+        "url": "https://openrouter.ai/fireworks/ember-1",
+        "collected_at": "2026-09-25T08:41:24.667Z",
+        "basis": "measured"
+      },
+      "response_sha256": "3bfedae636c74714b78b886af8d7753d2fa339ce536762051116779fa21b8c77",
+      "cache": {
+        "unjoined": [],
+        "returned_summaries": 1,
+        "summary_window": null,
+        "chart_date_range": {
+          "first": "2026-09-24 00:00:00",
+          "last": "2026-09-25 00:00:00"
+        },
+        "provenance": {
+          "source": "OpenRouter effective pricing statistics",
+          "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=fireworks%2Fember-1-20260923&variant=standard&shape=v7",
+          "collected_at": "2026-09-25T08:41:26.740Z",
+          "basis": "measured"
+        },
+        "response_sha256": "8763d66ab505eea7d1ec43d528c9d603bd8582946f66edef7e61b3b0bc8bd552"
+      },
+      "cache_attempt": {
+        "source": "OpenRouter effective pricing statistics",
+        "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=fireworks%2Fember-1-20260923&variant=standard&shape=v7",
+        "collected_at": "2026-09-25T08:41:26.740Z",
+        "basis": "measured",
+        "status": "available"
+      }
     }
   },
   "attempts": {
@@ -10513,236 +10729,264 @@
       "collected_at": "2026-09-23T09:59:17.627Z",
       "status": "available",
       "http_status": 200
+    },
+    "aion-labs/aion-3.5": {
+      "source": "OpenRouter model page",
+      "url": "https://openrouter.ai/aion-labs/aion-3.5",
+      "collected_at": "2026-09-25T08:41:16.455Z",
+      "status": "incomplete_window",
+      "http_status": 200
+    },
+    "aion-labs/aion-3.5-mini": {
+      "source": "OpenRouter model page",
+      "url": "https://openrouter.ai/aion-labs/aion-3.5-mini",
+      "collected_at": "2026-09-25T08:41:20.623Z",
+      "status": "incomplete_window",
+      "http_status": 200
+    },
+    "fireworks/ember-1": {
+      "source": "OpenRouter model page",
+      "url": "https://openrouter.ai/fireworks/ember-1",
+      "collected_at": "2026-09-25T08:41:24.667Z",
+      "status": "incomplete_window",
+      "http_status": 200
+    },
+    "google/gemini-3.1-pro-preview": {
+      "source": "OpenRouter model page",
+      "url": "https://openrouter.ai/google/gemini-3.1-pro-preview",
+      "collected_at": "2026-09-25T08:41:28.743Z",
+      "status": "fetch_or_parse_failed",
+      "reason": "OpenRouter provider table query missing"
     }
   },
   "rankings": {
     "rows": [
       {
-        "model_permaslug": "openai/gpt-6-astra-20260903",
+        "model_permaslug": "stealth/space-bunny-alpha",
         "variant": "standard",
-        "variant_permaslug": "openai/gpt-6-astra-20260903",
-        "date": "2026-09-22 00:00:00",
-        "total_prompt_tokens": 1828444299114,
-        "total_completion_tokens": 20439533922,
-        "total_requests": 32283424,
-        "input_output_ratio": 89.45626187424764
+        "variant_permaslug": "stealth/space-bunny-alpha",
+        "date": "2026-09-24 00:00:00",
+        "total_prompt_tokens": 2907848454445,
+        "total_completion_tokens": 35766997593,
+        "total_requests": 26166343,
+        "input_output_ratio": 81.29976375244027
       },
       {
-        "model_permaslug": "deepseek/deepseek-v4.1-flash-20260910",
+        "model_permaslug": "xiaomi/mimo-v2.6-flash-20260921",
         "variant": "standard",
-        "variant_permaslug": "deepseek/deepseek-v4.1-flash-20260910",
-        "date": "2026-09-22 00:00:00",
-        "total_prompt_tokens": 17562456032358,
-        "total_completion_tokens": 272386641009,
-        "total_requests": 293970473,
-        "input_output_ratio": 64.47620179646664
+        "variant_permaslug": "xiaomi/mimo-v2.6-flash-20260921",
+        "date": "2026-09-24 00:00:00",
+        "total_prompt_tokens": 1794499138216,
+        "total_completion_tokens": 30555549260,
+        "total_requests": 22685713,
+        "input_output_ratio": 58.72907480557592
+      },
+      {
+        "model_permaslug": "typesafe/jev-1.13-20260917",
+        "variant": "standard",
+        "variant_permaslug": "typesafe/jev-1.13-20260917",
+        "date": "2026-09-24 00:00:00",
+        "total_prompt_tokens": 1657958367866,
+        "total_completion_tokens": 195006207527,
+        "total_requests": 578073350,
+        "input_output_ratio": 8.50207995371862
       },
       {
         "model_permaslug": "z-ai/glm-5.3-flash-20260826",
         "variant": "standard",
         "variant_permaslug": "z-ai/glm-5.3-flash-20260826",
-        "date": "2026-09-22 00:00:00",
-        "total_prompt_tokens": 18160721050271,
-        "total_completion_tokens": 263644863150,
-        "total_requests": 414078776,
-        "input_output_ratio": 68.88327287430785
+        "date": "2026-09-24 00:00:00",
+        "total_prompt_tokens": 18802276476705,
+        "total_completion_tokens": 232482571580,
+        "total_requests": 395716083,
+        "input_output_ratio": 80.87606889807185
+      },
+      {
+        "model_permaslug": "deepseek/deepseek-v4.1-flash-20260910",
+        "variant": "standard",
+        "variant_permaslug": "deepseek/deepseek-v4.1-flash-20260910",
+        "date": "2026-09-24 00:00:00",
+        "total_prompt_tokens": 18622031503903,
+        "total_completion_tokens": 283460886194,
+        "total_requests": 320317516,
+        "input_output_ratio": 65.69524195715003
       },
       {
         "model_permaslug": "nvidia/nemotron-3-ultra-550b-a55b-20260604",
         "variant": "free",
         "variant_permaslug": "nvidia/nemotron-3-ultra-550b-a55b-20260604:free",
-        "date": "2026-09-22 00:00:00",
-        "total_prompt_tokens": 5070622383902,
-        "total_completion_tokens": 20082087446,
-        "total_requests": 35949277,
-        "input_output_ratio": 252.49478658713736
+        "date": "2026-09-24 00:00:00",
+        "total_prompt_tokens": 4964781479241,
+        "total_completion_tokens": 20066412931,
+        "total_requests": 35781687,
+        "input_output_ratio": 247.4174879343312
       },
       {
         "model_permaslug": "z-ai/glm-5.3-20260816",
         "variant": "standard",
         "variant_permaslug": "z-ai/glm-5.3-20260816",
-        "date": "2026-09-22 00:00:00",
-        "total_prompt_tokens": 3095457654611,
-        "total_completion_tokens": 46112606645,
-        "total_requests": 37016497,
-        "input_output_ratio": 67.12822977979799
+        "date": "2026-09-24 00:00:00",
+        "total_prompt_tokens": 3156086658775,
+        "total_completion_tokens": 46860582608,
+        "total_requests": 40487985,
+        "input_output_ratio": 67.35056380276833
       },
       {
         "model_permaslug": "z-ai/glm-5.2-20260616",
         "variant": "standard",
         "variant_permaslug": "z-ai/glm-5.2-20260616",
-        "date": "2026-09-22 00:00:00",
-        "total_prompt_tokens": 1650328966002,
-        "total_completion_tokens": 54974783502,
-        "total_requests": 54596284,
-        "input_output_ratio": 30.019744706078935
-      },
-      {
-        "model_permaslug": "meta/muse-spark-1.3-contributor-20260902",
-        "variant": "standard",
-        "variant_permaslug": "meta/muse-spark-1.3-contributor-20260902",
-        "date": "2026-09-22 00:00:00",
-        "total_prompt_tokens": 2143403083703,
-        "total_completion_tokens": 39741234253,
-        "total_requests": 46105517,
-        "input_output_ratio": 53.93398378262995
-      },
-      {
-        "model_permaslug": "openai/gpt-5.6-sol-20260709",
-        "variant": "standard",
-        "variant_permaslug": "openai/gpt-5.6-sol-20260709",
-        "date": "2026-09-22 00:00:00",
-        "total_prompt_tokens": 1876774821077,
-        "total_completion_tokens": 25286788265,
-        "total_requests": 34187069,
-        "input_output_ratio": 74.21958065250561
-      },
-      {
-        "model_permaslug": "moonshotai/kimi-k3-20260715",
-        "variant": "standard",
-        "variant_permaslug": "moonshotai/kimi-k3-20260715",
-        "date": "2026-09-22 00:00:00",
-        "total_prompt_tokens": 1431764485007,
-        "total_completion_tokens": 22707224591,
-        "total_requests": 24108666,
-        "input_output_ratio": 63.05325775367895
-      },
-      {
-        "model_permaslug": "poolside/laguna-s-2.1-20260720",
-        "variant": "free",
-        "variant_permaslug": "poolside/laguna-s-2.1-20260720:free",
-        "date": "2026-09-22 00:00:00",
-        "total_prompt_tokens": 1182879436678,
-        "total_completion_tokens": 10371315943,
-        "total_requests": 13720906,
-        "input_output_ratio": 114.05297487599641
+        "date": "2026-09-24 00:00:00",
+        "total_prompt_tokens": 1625139173552,
+        "total_completion_tokens": 58349695569,
+        "total_requests": 56623826,
+        "input_output_ratio": 27.851716409218135
       },
       {
         "model_permaslug": "upstage/solar-pro4-20260810",
         "variant": "standard",
         "variant_permaslug": "upstage/solar-pro4-20260810",
-        "date": "2026-09-22 00:00:00",
-        "total_prompt_tokens": 1707956944275,
-        "total_completion_tokens": 18287931985,
-        "total_requests": 22234622,
-        "input_output_ratio": 93.3925686991776
-      },
-      {
-        "model_permaslug": "minimax/minimax-m3-20260531",
-        "variant": "standard",
-        "variant_permaslug": "minimax/minimax-m3-20260531",
-        "date": "2026-09-22 00:00:00",
-        "total_prompt_tokens": 1450477760342,
-        "total_completion_tokens": 24632793910,
-        "total_requests": 29159841,
-        "input_output_ratio": 58.88401314286805
-      },
-      {
-        "model_permaslug": "anthropic/claude-sonnet-5-20260630",
-        "variant": "standard",
-        "variant_permaslug": "anthropic/claude-sonnet-5-20260630",
-        "date": "2026-09-22 00:00:00",
-        "total_prompt_tokens": 1466874124498,
-        "total_completion_tokens": 23507142362,
-        "total_requests": 30394071,
-        "input_output_ratio": 62.401209892243045
-      },
-      {
-        "model_permaslug": "tencent/hy3-20260706",
-        "variant": "standard",
-        "variant_permaslug": "tencent/hy3-20260706",
-        "date": "2026-09-22 00:00:00",
-        "total_prompt_tokens": 4139235113825,
-        "total_completion_tokens": 68117927534,
-        "total_requests": 62535054,
-        "input_output_ratio": 60.76572297005022
+        "date": "2026-09-24 00:00:00",
+        "total_prompt_tokens": 1723038887802,
+        "total_completion_tokens": 17757948300,
+        "total_requests": 21940901,
+        "input_output_ratio": 97.02916455737176
       },
       {
         "model_permaslug": "tencent/hy4-preview-20260827",
         "variant": "standard",
         "variant_permaslug": "tencent/hy4-preview-20260827",
-        "date": "2026-09-22 00:00:00",
-        "total_prompt_tokens": 12830522950358,
-        "total_completion_tokens": 110714276469,
-        "total_requests": 113033846,
-        "input_output_ratio": 115.88860406770166
+        "date": "2026-09-24 00:00:00",
+        "total_prompt_tokens": 12242751517053,
+        "total_completion_tokens": 105648473242,
+        "total_requests": 108000911,
+        "input_output_ratio": 115.88195400618395
       },
       {
         "model_permaslug": "google/gemini-3.8-flash-20260902",
         "variant": "standard",
         "variant_permaslug": "google/gemini-3.8-flash-20260902",
-        "date": "2026-09-22 00:00:00",
-        "total_prompt_tokens": 2156960615083,
-        "total_completion_tokens": 60781634472,
-        "total_requests": 60663118,
-        "input_output_ratio": 35.487045286296755
+        "date": "2026-09-24 00:00:00",
+        "total_prompt_tokens": 2063776698900,
+        "total_completion_tokens": 60614500433,
+        "total_requests": 62355861,
+        "input_output_ratio": 34.04757416389479
+      },
+      {
+        "model_permaslug": "meta/muse-spark-1.3-contributor-20260902",
+        "variant": "standard",
+        "variant_permaslug": "meta/muse-spark-1.3-contributor-20260902",
+        "date": "2026-09-24 00:00:00",
+        "total_prompt_tokens": 1962351153842,
+        "total_completion_tokens": 39071509350,
+        "total_requests": 44235768,
+        "input_output_ratio": 50.22460576742475
+      },
+      {
+        "model_permaslug": "minimax/minimax-m3-20260531",
+        "variant": "standard",
+        "variant_permaslug": "minimax/minimax-m3-20260531",
+        "date": "2026-09-24 00:00:00",
+        "total_prompt_tokens": 1412872665400,
+        "total_completion_tokens": 25961916746,
+        "total_requests": 30131430,
+        "input_output_ratio": 54.420968960917875
+      },
+      {
+        "model_permaslug": "anthropic/claude-sonnet-5-20260630",
+        "variant": "standard",
+        "variant_permaslug": "anthropic/claude-sonnet-5-20260630",
+        "date": "2026-09-24 00:00:00",
+        "total_prompt_tokens": 1430898166252,
+        "total_completion_tokens": 24739345493,
+        "total_requests": 32298229,
+        "input_output_ratio": 57.83896613824617
+      },
+      {
+        "model_permaslug": "openai/gpt-5.6-sol-20260709",
+        "variant": "standard",
+        "variant_permaslug": "openai/gpt-5.6-sol-20260709",
+        "date": "2026-09-24 00:00:00",
+        "total_prompt_tokens": 1711207863758,
+        "total_completion_tokens": 25858684384,
+        "total_requests": 33525043,
+        "input_output_ratio": 66.1753644673743
       },
       {
         "model_permaslug": "deepseek/deepseek-v4-flash-20260423",
         "variant": "standard",
         "variant_permaslug": "deepseek/deepseek-v4-flash-20260423",
-        "date": "2026-09-22 00:00:00",
-        "total_prompt_tokens": 3320502543448,
-        "total_completion_tokens": 189603978119,
-        "total_requests": 369883754,
-        "input_output_ratio": 17.512831620884942
-      },
-      {
-        "model_permaslug": "xiaomi/mimo-v2.5-20260422",
-        "variant": "standard",
-        "variant_permaslug": "xiaomi/mimo-v2.5-20260422",
-        "date": "2026-09-22 00:00:00",
-        "total_prompt_tokens": 6380523770286,
-        "total_completion_tokens": 53303388370,
-        "total_requests": 88208802,
-        "input_output_ratio": 119.70202955947657
+        "date": "2026-09-24 00:00:00",
+        "total_prompt_tokens": 3202670700537,
+        "total_completion_tokens": 205180500015,
+        "total_requests": 363531370,
+        "input_output_ratio": 15.60904033425625
       },
       {
         "model_permaslug": "deepseek/deepseek-v4-flash-20260731",
         "variant": "standard",
         "variant_permaslug": "deepseek/deepseek-v4-flash-20260731",
-        "date": "2026-09-22 00:00:00",
-        "total_prompt_tokens": 8125488244262,
-        "total_completion_tokens": 513440690987,
-        "total_requests": 542810679,
-        "input_output_ratio": 15.825563471882544
+        "date": "2026-09-24 00:00:00",
+        "total_prompt_tokens": 7812414397857,
+        "total_completion_tokens": 489366512266,
+        "total_requests": 542005676,
+        "input_output_ratio": 15.964342066811644
+      },
+      {
+        "model_permaslug": "tencent/hy3-20260706",
+        "variant": "standard",
+        "variant_permaslug": "tencent/hy3-20260706",
+        "date": "2026-09-24 00:00:00",
+        "total_prompt_tokens": 3498913177084,
+        "total_completion_tokens": 58136257312,
+        "total_requests": 54369426,
+        "input_output_ratio": 60.184699512154246
+      },
+      {
+        "model_permaslug": "xiaomi/mimo-v2.5-20260422",
+        "variant": "standard",
+        "variant_permaslug": "xiaomi/mimo-v2.5-20260422",
+        "date": "2026-09-24 00:00:00",
+        "total_prompt_tokens": 4885463568118,
+        "total_completion_tokens": 42188096011,
+        "total_requests": 69437942,
+        "input_output_ratio": 115.80194486246022
       },
       {
         "model_permaslug": "openai/gpt-5.6-luna-20260709",
         "variant": "standard",
         "variant_permaslug": "openai/gpt-5.6-luna-20260709",
-        "date": "2026-09-22 00:00:00",
-        "total_prompt_tokens": 8521592854676,
-        "total_completion_tokens": 147372048807,
-        "total_requests": 313161842,
-        "input_output_ratio": 57.8236709312223
+        "date": "2026-09-24 00:00:00",
+        "total_prompt_tokens": 8557320989804,
+        "total_completion_tokens": 138686510924,
+        "total_requests": 301280173,
+        "input_output_ratio": 61.70261933039327
       }
     ],
     "window": {
-      "start_date": "2026-09-16",
-      "end_date": "2026-09-22"
+      "start_date": "2026-09-18",
+      "end_date": "2026-09-24"
     },
     "provenance": {
       "source": "OpenRouter weekly model rankings",
       "url": "https://openrouter.ai/rankings?view=week",
-      "collected_at": "2026-09-23T09:59:03.189Z",
+      "collected_at": "2026-09-25T08:41:14.442Z",
       "basis": "measured"
     },
-    "response_sha256": "5e9a6096f224d5048f50a9f93490cd50128085d077e42805fe1f38c7966e6bd9"
+    "response_sha256": "867ffebf828513ce5bd349ed339a1f8e435b3a04fd48854242bba1e86037700e"
   },
   "rankings_attempt": {
     "source": "OpenRouter weekly model rankings",
     "url": "https://openrouter.ai/rankings?view=week",
-    "collected_at": "2026-09-23T09:59:03.189Z",
+    "collected_at": "2026-09-25T08:41:14.442Z",
     "basis": "measured",
     "status": "available"
   },
   "coverage": {
-    "catalog_models": 454,
-    "eligible_page_models": 325,
+    "catalog_models": 460,
+    "eligible_page_models": 331,
     "pages_selected": 4,
-    "pages_succeeded_this_run": 4,
-    "retained_model_pages": 61,
+    "pages_succeeded_this_run": 3,
+    "retained_model_pages": 64,
     "policy": "At most four model pages per normal daily run, oldest-attempt first; explicit initial batches capped at twelve. Per-observation dates are retained."
   }
 }

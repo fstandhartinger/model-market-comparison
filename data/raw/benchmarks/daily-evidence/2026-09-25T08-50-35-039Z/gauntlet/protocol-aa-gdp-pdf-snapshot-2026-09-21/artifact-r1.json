@@ -1,0 +1,22 @@
+[
+  {
+    "id": "aa-gdp-pdf::snapshot-2026-09-21",
+    "version": "snapshot-2026-09-21",
+    "version_guard": "No public version was verified: this identity freezes the methodology observed on 2026-09-21 (LiteParse 2.5.0 with English OCR; page images first, then task and full extracted text; text-only fallback when images do not fit). Review task set, document delivery, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+    "status": "active",
+    "version_status": "snapshot",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "All-pass fraction of attempts where every task criterion passes; five attempts per task",
+      "unit": "fraction",
+      "range": [
+        0,
+        1
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. Keep raw units; do not normalize before phase-05 validation."
+    },
+    "description": "Tests professional reasoning over long PDFs with AA document preparation and grading.",
+    "maintainer": "Artificial Analysis"
+  }
+]

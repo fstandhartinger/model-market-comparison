@@ -1,7 +1,7 @@
 {
   "source": "Mistral AI (La Plateforme) — mistral.ai/pricing/api (first-party, public)",
   "region": "eu (France)",
-  "collected_at": "2026-09-24",
+  "collected_at": "2026-09-25",
   "method": "scripts/fetch-mistral-catalog.mjs: one GET of the server-rendered pricing page; every <mistral-block-card-model> with both an 'Input (/M tokens)' and an 'Output (/M tokens)' USD price is a chat/text model (OCR per 1000 pages, embeddings, classifiers, TTS/transcription and unpriced Labs endpoints drop out); duplicate cards must agree; identity is the card's normalized model name against the curated snapshot, because the page dropped its copy-to-clipboard API id on ~16 Sep 2026 — a model the snapshot does not name has its id read from the docs model page the card links ('Click to copy: <id>'), recorded in docs_sources, mapping=derived. The same redesign made cached input a client-side toggle, so a row that already published one has it re-read from its docs page (docs_sources reason=cache_read) and diff.cache_read_dropped names any row that lost it anyway; rows that never had a cached price are not resolved, so cached-input coverage is not complete. A resolved docs page must state the same list prices as the pricing card or the refresh fails closed. Region eu (Mistral hosts in the EU unless the US endpoint is chosen). See mistral.method.md.",
   "models": [
     {
@@ -111,13 +111,13 @@
       "model_name": "GLM 5.3",
       "reason": "cache_read",
       "url": "https://docs.mistral.ai/models/zai-glm-5-3",
-      "response_sha256": "59296d984c49db21a0f48462ce8e1dd5ae7836a581827bde9d2c951323fcf2dc"
+      "response_sha256": "a5aa8c3daf297dff1861b8780131e1361e78c34ed34c911429718445fda60768"
     },
     {
       "model_name": "GLM 5.2",
       "reason": "cache_read",
       "url": "https://docs.mistral.ai/models/zai-glm-5-2",
-      "response_sha256": "eb9ebb6f0a561c7a9a31a8f94f4925146d7ec5bc07390ebe9a0ed5be2ee7d6b0"
+      "response_sha256": "8ec82606492d3d9571df36385b82afca592e4b96578f763aa0159ea36720ba2c"
     }
   ]
 }

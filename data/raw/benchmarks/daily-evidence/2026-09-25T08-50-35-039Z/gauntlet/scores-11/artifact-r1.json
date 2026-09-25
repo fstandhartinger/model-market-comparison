@@ -1,0 +1,244 @@
+[
+  {
+    "id": "public:67233a905d8d48625a3d1ead",
+    "benchmark_id": "vals-index::2",
+    "subject": {
+      "source_id": "anthropic/claude-opus-5-5",
+      "name": "anthropic/claude-opus-5-5",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 69.689,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 0; anthropic/claude-opus-5-5; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component overall; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"overall\",\"accuracy\":69.689,\"stderr\":0.937,\"cost_per_test\":22.295559,\"latency\":4320.731,\"compute_effort\":\"max\",\"reasoning_effort\":null,\"max_output_tokens\":128000,\"provider\":\"Anthropic\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:9bb572354a0d657dd6962be5",
+    "benchmark_id": "vals-index::2",
+    "subject": {
+      "source_id": "openai/gpt-6-sol",
+      "name": "openai/gpt-6-sol",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 62.569,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 7; openai/gpt-6-sol; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component overall; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"overall\",\"accuracy\":62.569,\"stderr\":0.954,\"cost_per_test\":7.564103,\"latency\":1593.734,\"compute_effort\":null,\"reasoning_effort\":\"max\",\"max_output_tokens\":128000,\"provider\":\"OpenAI\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:8130b3af5b786ad762713fbb",
+    "benchmark_id": "vals-index::2",
+    "subject": {
+      "source_id": "grok/grok-4.7",
+      "name": "grok/grok-4.7",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 60.215,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 11; grok/grok-4.7; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component overall; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"overall\",\"accuracy\":60.215,\"stderr\":1.079,\"cost_per_test\":11.917904,\"latency\":1975.967,\"compute_effort\":null,\"reasoning_effort\":\"xhigh\",\"max_output_tokens\":null,\"provider\":\"SpaceXAI\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:3f846b27cdf5a6600015a112",
+    "benchmark_id": "vals-index::2",
+    "subject": {
+      "source_id": "xiaomi/mimo-v2.6-flash",
+      "name": "xiaomi/mimo-v2.6-flash",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 59.584,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 15; xiaomi/mimo-v2.6-flash; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component overall; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"overall\",\"accuracy\":59.584,\"stderr\":1.133,\"cost_per_test\":0.19671,\"latency\":2701.771,\"compute_effort\":null,\"reasoning_effort\":null,\"max_output_tokens\":128000,\"provider\":\"Xiaomi\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:77fcfd91a646ed118fe1682e",
+    "benchmark_id": "vals-index::2",
+    "subject": {
+      "source_id": "xiaomi/mimo-v2.6-pro",
+      "name": "xiaomi/mimo-v2.6-pro",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 59.47,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 16; xiaomi/mimo-v2.6-pro; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component overall; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"overall\",\"accuracy\":59.47,\"stderr\":1.177,\"cost_per_test\":0.38918,\"latency\":3139.768,\"compute_effort\":null,\"reasoning_effort\":null,\"max_output_tokens\":128000,\"provider\":\"Xiaomi\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:de502b42739c05c24efc4129",
+    "benchmark_id": "vals-index::2",
+    "subject": {
+      "source_id": "openai/gpt-6-luna",
+      "name": "openai/gpt-6-luna",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 58.45,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 19; openai/gpt-6-luna; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component overall; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"overall\",\"accuracy\":58.45,\"stderr\":1.107,\"cost_per_test\":0.418873,\"latency\":1590.457,\"compute_effort\":null,\"reasoning_effort\":\"max\",\"max_output_tokens\":128000,\"provider\":\"OpenAI\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:a413b6c92578d24a79d2123d",
+    "benchmark_id": "vals-index::2",
+    "subject": {
+      "source_id": "deepseek/deepseek-v4-flash-0731",
+      "name": "deepseek/deepseek-v4-flash-0731",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 53.568,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 29; deepseek/deepseek-v4-flash-0731; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component overall; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"overall\",\"accuracy\":53.568,\"stderr\":1.21,\"cost_per_test\":0.839765,\"latency\":2094.581,\"compute_effort\":null,\"reasoning_effort\":\"high\",\"max_output_tokens\":384000,\"provider\":\"DeepSeek\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:676ba43f7c8165f6d64dc32b",
+    "benchmark_id": "vals-index::2",
+    "subject": {
+      "source_id": "deepseek/deepseek-v4-pro-0813",
+      "name": "deepseek/deepseek-v4-pro-0813",
+      "model_id": "deepseek-v4-pro-0813::max",
+      "variant": null,
+      "harness": null
+    },
+    "value": 52.368,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 32; deepseek/deepseek-v4-pro-0813; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component overall; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"overall\",\"accuracy\":52.368,\"stderr\":1.136,\"cost_per_test\":3.282301,\"latency\":3498.495,\"compute_effort\":null,\"reasoning_effort\":\"max\",\"max_output_tokens\":384000,\"provider\":\"DeepSeek\"}",
+    "comparison_key": null,
+    "join_note": "Reviewed identity map 2026-09-16: label states model deepseek-v4-pro-0813 and setting max; exact catalog configuration deepseek-v4-pro-0813::max"
+  },
+  {
+    "id": "public:2ca999686c9ea88298ca2703",
+    "benchmark_id": "vals-index::2",
+    "subject": {
+      "source_id": "deepseek/deepseek-v4-pro",
+      "name": "deepseek/deepseek-v4-pro",
+      "model_id": "deepseek-v4-pro::max",
+      "variant": null,
+      "harness": null
+    },
+    "value": 42.888,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 40; deepseek/deepseek-v4-pro; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component overall; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"overall\",\"accuracy\":42.888,\"stderr\":1.194,\"cost_per_test\":0.940927,\"latency\":1427.349,\"compute_effort\":null,\"reasoning_effort\":\"max\",\"max_output_tokens\":384000,\"provider\":\"DeepSeek\"}",
+    "comparison_key": null,
+    "join_note": "Reviewed identity map 2026-09-16: label states model deepseek-v4-pro and setting max; exact catalog configuration deepseek-v4-pro::max"
+  },
+  {
+    "id": "public:6a6ea2759030bc895005e8ba",
+    "benchmark_id": "vals-index::2",
+    "subject": {
+      "source_id": "ant/ling-3.0-flash-af-rc3",
+      "name": "ant/ling-3.0-flash-af-rc3",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 32.553,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 50; ant/ling-3.0-flash-af-rc3; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component overall; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"overall\",\"accuracy\":32.553,\"stderr\":0.966,\"cost_per_test\":0.109173,\"latency\":1072.857,\"compute_effort\":null,\"reasoning_effort\":null,\"max_output_tokens\":131072,\"provider\":\"Ant\"}",
+    "comparison_key": null
+  }
+]

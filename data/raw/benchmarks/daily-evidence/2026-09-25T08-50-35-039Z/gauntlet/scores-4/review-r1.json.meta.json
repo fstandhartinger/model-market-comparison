@@ -1,0 +1,80 @@
+{
+  "started_at": "2026-09-25T09:45:27.315Z",
+  "mode": "critic",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "producers": [
+    "z-ai/glm-5.3-flash"
+  ],
+  "qualification": {
+    "id": "deepseek/deepseek-v4.1-flash",
+    "family": "deepseek",
+    "free": false,
+    "input_per_1m": 0.3,
+    "output_per_1m": 1.2,
+    "context": 1048576,
+    "aa_intelligence_index": 39.5,
+    "aa_source": "exact_family_slug",
+    "matched_model_ids": [
+      "deepseek-v4.1-flash::max"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "deepseek-v4.1-flash::max",
+        "index": 39.5
+      }
+    ]
+  },
+  "input_sha256": "030303b47ff8c89af97e49338d1f56a1676f34d3815dfee2757d8ac41cfc0daf",
+  "route": "openrouter",
+  "attempt": 1,
+  "free_route_role": "critic",
+  "free_routes_offered": [
+    "chutes/moonshotai/Kimi-K3-TEE"
+  ],
+  "excluded_models": [
+    "chutes/moonshotai/Kimi-K3-TEE",
+    "deepseek/deepseek-v4-flash-0731"
+  ],
+  "hard_excluded_models": [],
+  "catalog": {
+    "source": "run-cache",
+    "fetched_at": "2026-09-25T08:42:16.727Z"
+  },
+  "reasoning": {
+    "effort": "low",
+    "exclude": true
+  },
+  "response_format_mode": null,
+  "response_schema_sha256": null,
+  "images": [],
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "usage": {
+    "prompt_tokens": 28226,
+    "completion_tokens": 1583,
+    "total_tokens": 29809,
+    "cost": 0.01011470328,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 512,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.010216872,
+      "upstream_inference_prompt_cost": 0.008317272,
+      "upstream_inference_completions_cost": 0.0018996
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1202,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "finish_reason": "stop",
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "provider": "Together",
+  "session_id": null,
+  "finished_at": "2026-09-25T09:45:36.139Z",
+  "output_sha256": "20456162e298c117b085c5fd15d253e9f54f399c312b0c6d0a374da8df7410b1"
+}

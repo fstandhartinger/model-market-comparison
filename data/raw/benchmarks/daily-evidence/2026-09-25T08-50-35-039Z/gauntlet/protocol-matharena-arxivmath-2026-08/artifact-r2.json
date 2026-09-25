@@ -1,0 +1,22 @@
+[
+  {
+    "id": "matharena-arxivmath::2026-08",
+    "version": "2026-08",
+    "version_guard": "The competition table must keep exactly the twelve published leaderboard columns (Rank, Model Name, Provider, Accuracy (± 95% CI), Cost, Output Tokens, Input Tokens, Average Retries, Average Time, Open, Parameters, Active Parameters) and exactly 57 problems in its per-problem grid (MathArena's competitions card for 08/2026 reads \"57 problems\"). A different problem count or another monthly edition is a different identity; editions are never averaged.",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Accuracy (average performance on the competition) with a 95% confidence interval (normal approximation)",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Run by MathArena (SRI Lab, ETH Zurich, with INSAIT) on the August 2026 edition (57 problems). The 95% interval, cost, token counts and the source's own \"released after competition release\" flag stay in each observation's protocol. A model released after the problems were published may have seen them; the flag says so, it is not a correction. Monthly editions are separate identities and editions are never averaged. Secondary benchmark, never a Composite input."
+    },
+    "description": "Research-level math problems with a checkable final answer, drawn from arXiv papers submitted in August 2026; each edition is restricted to papers published within the last month to reduce training-data contamination.",
+    "maintainer": "MathArena (SRI Lab, ETH Zurich; INSAIT)"
+  }
+]

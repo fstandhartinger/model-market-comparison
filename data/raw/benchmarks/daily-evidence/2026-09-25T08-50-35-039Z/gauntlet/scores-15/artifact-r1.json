@@ -1,0 +1,219 @@
+[
+  {
+    "id": "public:00464a61c1ecc1099dd19180",
+    "benchmark_id": "vals-index-vibe-code-bench::2",
+    "subject": {
+      "source_id": "anthropic/claude-opus-5-5",
+      "name": "anthropic/claude-opus-5-5",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 90.294,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 1; anthropic/claude-opus-5-5; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component vibe_code_bench; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"vibe_code_bench\",\"accuracy\":90.294,\"stderr\":1.526,\"cost_per_test\":35.774773,\"latency\":5766.524,\"compute_effort\":\"max\",\"reasoning_effort\":null,\"max_output_tokens\":128000,\"provider\":\"Anthropic\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:b6ed8f0ad326276a4975211c",
+    "benchmark_id": "vals-index-vibe-code-bench::2",
+    "subject": {
+      "source_id": "openai/gpt-6-sol",
+      "name": "openai/gpt-6-sol",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 87.824,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 5; openai/gpt-6-sol; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component vibe_code_bench; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"vibe_code_bench\",\"accuracy\":87.824,\"stderr\":2.526,\"cost_per_test\":26.356012,\"latency\":2336.393,\"compute_effort\":null,\"reasoning_effort\":\"max\",\"max_output_tokens\":128000,\"provider\":\"OpenAI\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:9fc902b340fdfde3ca67f82d",
+    "benchmark_id": "vals-index-vibe-code-bench::2",
+    "subject": {
+      "source_id": "grok/grok-4.7",
+      "name": "grok/grok-4.7",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 86.175,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 6; grok/grok-4.7; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component vibe_code_bench; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"vibe_code_bench\",\"accuracy\":86.175,\"stderr\":2.181,\"cost_per_test\":15.82706,\"latency\":2147.065,\"compute_effort\":null,\"reasoning_effort\":\"xhigh\",\"max_output_tokens\":null,\"provider\":\"SpaceXAI\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:bad9e14c302b44fde7cc5382",
+    "benchmark_id": "vals-index-vibe-code-bench::2",
+    "subject": {
+      "source_id": "xiaomi/mimo-v2.6-pro",
+      "name": "xiaomi/mimo-v2.6-pro",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 85.223,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 8; xiaomi/mimo-v2.6-pro; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component vibe_code_bench; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"vibe_code_bench\",\"accuracy\":85.223,\"stderr\":3.392,\"cost_per_test\":1.043846,\"latency\":3646.574,\"compute_effort\":null,\"reasoning_effort\":null,\"max_output_tokens\":128000,\"provider\":\"Xiaomi\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:d89f7177d5ce5460589e402b",
+    "benchmark_id": "vals-index-vibe-code-bench::2",
+    "subject": {
+      "source_id": "openai/gpt-6-luna",
+      "name": "openai/gpt-6-luna",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 81.649,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 14; openai/gpt-6-luna; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component vibe_code_bench; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"vibe_code_bench\",\"accuracy\":81.649,\"stderr\":3.377,\"cost_per_test\":1.345703,\"latency\":2219.515,\"compute_effort\":null,\"reasoning_effort\":\"max\",\"max_output_tokens\":128000,\"provider\":\"OpenAI\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:becfaee3ebdbe7f6d3430dc0",
+    "benchmark_id": "vals-index-vibe-code-bench::2",
+    "subject": {
+      "source_id": "xiaomi/mimo-v2.6-flash",
+      "name": "xiaomi/mimo-v2.6-flash",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 78.96,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 18; xiaomi/mimo-v2.6-flash; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component vibe_code_bench; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"vibe_code_bench\",\"accuracy\":78.96,\"stderr\":4.045,\"cost_per_test\":0.563041,\"latency\":3013.012,\"compute_effort\":null,\"reasoning_effort\":null,\"max_output_tokens\":128000,\"provider\":\"Xiaomi\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:8b4a17b4f6b4cb6617302029",
+    "benchmark_id": "vals-index-vibe-code-bench::2",
+    "subject": {
+      "source_id": "zai/glm-5.3",
+      "name": "zai/glm-5.3",
+      "model_id": "glm-5.3::max",
+      "variant": null,
+      "harness": null
+    },
+    "value": 78.125,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 20; zai/glm-5.3; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component vibe_code_bench; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"vibe_code_bench\",\"accuracy\":78.125,\"stderr\":3.94,\"cost_per_test\":12.450185,\"latency\":3847.197,\"compute_effort\":null,\"reasoning_effort\":\"max\",\"max_output_tokens\":131072,\"provider\":\"Zhipu AI\"}",
+    "comparison_key": null,
+    "join_note": "Reviewed identity map 2026-09-16: label states model glm-5.3 and setting max; exact catalog configuration glm-5.3::max"
+  },
+  {
+    "id": "public:cac0994dfc5813aac27f2f6b",
+    "benchmark_id": "vals-index-vibe-code-bench::2",
+    "subject": {
+      "source_id": "zai/glm-5.3-flash",
+      "name": "zai/glm-5.3-flash",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 30.759,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 47; zai/glm-5.3-flash; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component vibe_code_bench; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"vibe_code_bench\",\"accuracy\":30.759,\"stderr\":5.277,\"cost_per_test\":2.348805,\"latency\":5027.281,\"compute_effort\":null,\"reasoning_effort\":\"max\",\"max_output_tokens\":131072,\"provider\":\"Zhipu AI\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:0a0cddbd28923560e12b3e77",
+    "benchmark_id": "vals-index-vibe-code-bench::2",
+    "subject": {
+      "source_id": "ant/ling-3.0-flash-af-rc3",
+      "name": "ant/ling-3.0-flash-af-rc3",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 3.4,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 60; ant/ling-3.0-flash-af-rc3; field accuracy"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), component vibe_code_bench; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.; source row: {\"task\":\"vibe_code_bench\",\"accuracy\":3.4,\"stderr\":1.291,\"cost_per_test\":0.233022,\"latency\":1451.032,\"compute_effort\":null,\"reasoning_effort\":null,\"max_output_tokens\":131072,\"provider\":\"Ant\"}",
+    "comparison_key": null
+  }
+]

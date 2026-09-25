@@ -1,0 +1,22 @@
+[
+  {
+    "id": "vals-index-legal-research::2",
+    "version": "2",
+    "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Legal Research Bench accuracy",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Legal sector component; private benchmark. Vals AI publishes accuracy with a standard error per model; independent evaluator, secondary benchmark, not a Composite input."
+    },
+    "description": "Case and statute research with citation-backed answers.",
+    "maintainer": "Vals AI"
+  }
+]

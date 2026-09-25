@@ -1,0 +1,22 @@
+[
+  {
+    "id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+    "version": "rtx-pro-6000",
+    "version_guard": "schema_version must stay 1, hardware.name must contain “RTX PRO 6000”, and the problem must stay in the stated four-problem deck. A scored cell must be correct, audited (clean/interesting) and appear in the published per_problem ranked list with the same value. Another hardware board (e.g. H100/B200) is a different identity.",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Peak fraction of the problem’s hardware roofline, geomean over the frozen shape sweep (dense-equivalent FLOPs where relevant), achieved by one audited agent session; rendered by the site as “% of roofline”",
+      "unit": "percent of roofline",
+      "range": [
+        0,
+        null
+      ],
+      "higher_better": true,
+      "notes": "Published by Elliot Arledge’s kernelbench.com (independent site, not the Stanford KernelBench); values are baked from the maintainer’s benchmarks/cuda/results/leaderboard.json (schema_version 1, environment v2_containerized, hardware RTX PRO 6000 Blackwell Workstation, sm_120a, 96 GB VRAM). A cell is scored only under the site’s own validity rule: correct and audited (“clean” or “interesting”); flagged, suspect, “bug” (published by the maintainer as unreliable) and unaudited cells are never scored, and the published per_problem ranked list is the cross-check — it still holds the two rejected cells the rule excludes, so the validity rule wins. Published values are roofline fractions rendered by the site as “% of roofline”: they are relative to the problem’s dense-equivalent roofline, not latencies (the SPEC’s latency-anchored rule makes milliseconds the honest headline for the decode and NSA problems; elapsed_seconds stays in each observation’s protocol), and values above 100% mean the measured kernel beat the conservative roofline (Opus 5 reaches 196.10% on 04). One unlimited agent session per cell; the agent harness (codex, claude, grok, kinetic-claude, deepseek-claude, muse, or-fable, or-opus, zai-claude, agy) stays in each observation’s protocol. Community benchmark, never a Composite input."
+    },
+    "description": "Fuse GLM-5.2’s MoE forward pass (256+shared experts, top-8 routing) as one CUDA kernel over a frozen shape sweep; Triton, vLLM and other DSLs are banned — CUDA/PTX/CUTLASS only.",
+    "maintainer": "Elliot Arledge (kernelbench.com)"
+  }
+]

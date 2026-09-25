@@ -1,0 +1,20 @@
+{
+  "artifact_id": "protocol-aa-apex-agents-snapshot-2026-09-10",
+  "artifact_sha256": "ed015caa0cf961062828ce8256454a7d2810194909bca9bb6d00b65f5844e59a",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "aa-apex-agents::snapshot-2026-09-10",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot independently recompute hashes or execute transport/qualification checks; relies on owner-supplied hashes and qualification receipt.",
+    "The primary protocol excerpt contains no public version string; the row's snapshot version, version_status, and no-public-version guard were treated as consistent with that absence rather than as a verified public release version.",
+    "Source 2 is a generated capture-comparison summary rather than maintainer protocol text; it was used only for the status inference described in criterion c2."
+  ],
+  "missing_evidence": []
+}

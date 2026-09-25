@@ -1,0 +1,126 @@
+[
+  {
+    "id": "public:0267e4584b2ab0097950dc6a",
+    "benchmark_id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+    "subject": {
+      "source_id": "claude/claude-opus-5-5 [xhigh]",
+      "name": "claude/claude-opus-5-5 [xhigh]",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 10.36,
+    "unit": "percent of roofline",
+    "basis": "derived",
+    "source": {
+      "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+      "retrieved_at": "2026-09-25T08:52:47.843081+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/c3e22679c1c23c355c86.gz",
+      "sha256": "c3e22679c1c23c355c86fc8e8af4e7d40e344ce5e39a9cef4aef958cdc83f404",
+      "locator": "kernelbench_cuda_board; source row 1; claude/claude-opus-5-5 [xhigh]; field peak_fraction"
+    },
+    "protocol": "KernelBench-CUDA 01_glm52_fused_moe (RTX PRO 6000 Blackwell, environment v2_containerized): GLM-5.2 MoE (256+shared experts, top-8) fused forward, CUDA/PTX/CUTLASS only (Triton/vLLM banned); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"claude/claude-opus-5-5 [xhigh]\",\"harness\":\"claude\",\"stated_effort\":\"xhigh\",\"stated_model\":\"claude-opus-5-5\",\"annotation_verdict\":\"clean\",\"run_id\":\"20260922_121828_claude_claude-opus-5-5_01_glm52_fused_moe\",\"elapsed_seconds\":8500,\"problem\":\"01_glm52_fused_moe\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.1036,\"percent_of_roofline\":10.36}",
+    "comparison_key": null,
+    "source_basis": "measured",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.1036
+      ]
+    }
+  },
+  {
+    "id": "public:d75c18a6f929793bf3850b6e",
+    "benchmark_id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+    "subject": {
+      "source_id": "codex/gpt-6-luna [xhigh]",
+      "name": "codex/gpt-6-luna [xhigh]",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 7.9799999999999995,
+    "unit": "percent of roofline",
+    "basis": "derived",
+    "source": {
+      "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+      "retrieved_at": "2026-09-25T08:52:47.843081+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/c3e22679c1c23c355c86.gz",
+      "sha256": "c3e22679c1c23c355c86fc8e8af4e7d40e344ce5e39a9cef4aef958cdc83f404",
+      "locator": "kernelbench_cuda_board; source row 2; codex/gpt-6-luna [xhigh]; field peak_fraction"
+    },
+    "protocol": "KernelBench-CUDA 01_glm52_fused_moe (RTX PRO 6000 Blackwell, environment v2_containerized): GLM-5.2 MoE (256+shared experts, top-8) fused forward, CUDA/PTX/CUTLASS only (Triton/vLLM banned); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"codex/gpt-6-luna [xhigh]\",\"harness\":\"codex\",\"stated_effort\":\"xhigh\",\"stated_model\":\"gpt-6-luna\",\"annotation_verdict\":\"interesting\",\"run_id\":\"20260922_123253_codex_gpt-6-luna_01_glm52_fused_moe\",\"elapsed_seconds\":10760,\"problem\":\"01_glm52_fused_moe\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0798,\"percent_of_roofline\":7.9799999999999995}",
+    "comparison_key": null,
+    "source_basis": "measured",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.0798
+      ]
+    }
+  },
+  {
+    "id": "public:93282105325bafe1f0c7336c",
+    "benchmark_id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+    "subject": {
+      "source_id": "codex/gpt-6-sol [xhigh]",
+      "name": "codex/gpt-6-sol [xhigh]",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 9.36,
+    "unit": "percent of roofline",
+    "basis": "derived",
+    "source": {
+      "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+      "retrieved_at": "2026-09-25T08:52:47.843081+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/c3e22679c1c23c355c86.gz",
+      "sha256": "c3e22679c1c23c355c86fc8e8af4e7d40e344ce5e39a9cef4aef958cdc83f404",
+      "locator": "kernelbench_cuda_board; source row 3; codex/gpt-6-sol [xhigh]; field peak_fraction"
+    },
+    "protocol": "KernelBench-CUDA 01_glm52_fused_moe (RTX PRO 6000 Blackwell, environment v2_containerized): GLM-5.2 MoE (256+shared experts, top-8) fused forward, CUDA/PTX/CUTLASS only (Triton/vLLM banned); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"codex/gpt-6-sol [xhigh]\",\"harness\":\"codex\",\"stated_effort\":\"xhigh\",\"stated_model\":\"gpt-6-sol\",\"annotation_verdict\":\"interesting\",\"run_id\":\"20260922_123248_codex_gpt-6-sol_01_glm52_fused_moe\",\"elapsed_seconds\":8065,\"problem\":\"01_glm52_fused_moe\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0936,\"percent_of_roofline\":9.36}",
+    "comparison_key": null,
+    "source_basis": "measured",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.0936
+      ]
+    }
+  },
+  {
+    "id": "public:a0d45d49c629ce550be75677",
+    "benchmark_id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+    "subject": {
+      "source_id": "grok/grok-4.7 [xhigh]",
+      "name": "grok/grok-4.7 [xhigh]",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 9.48,
+    "unit": "percent of roofline",
+    "basis": "derived",
+    "source": {
+      "url": "https://raw.githubusercontent.com/Infatoshi/kernelbench.com/master/benchmarks/cuda/results/leaderboard.json",
+      "retrieved_at": "2026-09-25T08:52:47.843081+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/c3e22679c1c23c355c86.gz",
+      "sha256": "c3e22679c1c23c355c86fc8e8af4e7d40e344ce5e39a9cef4aef958cdc83f404",
+      "locator": "kernelbench_cuda_board; source row 5; grok/grok-4.7 [xhigh]; field peak_fraction"
+    },
+    "protocol": "KernelBench-CUDA 01_glm52_fused_moe (RTX PRO 6000 Blackwell, environment v2_containerized): GLM-5.2 MoE (256+shared experts, top-8) fused forward, CUDA/PTX/CUTLASS only (Triton/vLLM banned); value = peak_fraction (geomean over the frozen shape sweep) × 100, percent of roofline, higher is better and unbounded above 100. Measured by kernelbench.com from audited agent sessions on RTX PRO 6000 Blackwell. Only correct audited (clean/interesting) cells are scored per the site’s own validity rule; the run_id, elapsed_seconds, harness and stated effort stay in the source row. not a Composite input.; source row: {\"label\":\"grok/grok-4.7 [xhigh]\",\"harness\":\"grok\",\"stated_effort\":\"xhigh\",\"stated_model\":\"grok-4.7\",\"annotation_verdict\":\"interesting\",\"run_id\":\"20260917_005805_grok_grok-4.7_01_glm52_fused_moe\",\"elapsed_seconds\":6066,\"problem\":\"01_glm52_fused_moe\",\"hardware\":\"RTX PRO 6000 Blackwell Workstation\",\"peak_fraction\":0.0948,\"percent_of_roofline\":9.48}",
+    "comparison_key": null,
+    "source_basis": "measured",
+    "derivation": {
+      "formula": "Source value × 100 to registry units",
+      "inputs": [
+        0.0948
+      ]
+    }
+  }
+]

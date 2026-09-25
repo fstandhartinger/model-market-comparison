@@ -1,0 +1,410 @@
+[
+  {
+    "id": "public:0022ec0aa9ffccd74869e930",
+    "benchmark_id": "surge-gdp-pdf::100-tasks",
+    "subject": {
+      "source_id": "GPT 6 Astra (Medium reasoning)",
+      "name": "GPT 6 Astra (Medium reasoning)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 35.4,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://surgehq.ai/benchmarks/gdp-pdf",
+      "retrieved_at": "2026-09-25T08:56:52.006023+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/d96f0b4afd09e8149c48.gz",
+      "sha256": "d96f0b4afd09e8149c48c5a3fa3548ded963f2397e0e81109f990d9b70cd4901",
+      "locator": "surge_benchmark_board; source row 0; GPT 6 Astra (Medium reasoning); field value"
+    },
+    "protocol": "GDP.pdf (Surge AI): 100 held-out tasks, each a real professional prompt with its PDF documents, no tools; a response passes only when every rubric criterion is satisfied (all_pass), judged by Gemini 3.5 Flash; leaderboard configuration five runs per task; value = the board's all-pass rate (percent) for the row's model and stated setting; Surge runs the models itself; source row: {\"brand\":\"GPT\",\"stated_setting\":\"Medium reasoning\",\"board\":\"GDP.pdf\"}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://raw.githubusercontent.com/surge-ai/gdp-pdf/main/README.md",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/fda47ebf36bf4299b5d6.gz",
+        "sha256": "fda47ebf36bf4299b5d69288978de80e06fa6a001b8bc75550eb1f38d8e9e148",
+        "retrieved_at": "2026-09-25T08:56:54.375049+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:1e56c9a3e44a4755db414598",
+    "benchmark_id": "surge-gdp-pdf::100-tasks",
+    "subject": {
+      "source_id": "GPT 6 Astra (Max reasoning)",
+      "name": "GPT 6 Astra (Max reasoning)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 34.2,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://surgehq.ai/benchmarks/gdp-pdf",
+      "retrieved_at": "2026-09-25T08:56:52.006023+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/d96f0b4afd09e8149c48.gz",
+      "sha256": "d96f0b4afd09e8149c48c5a3fa3548ded963f2397e0e81109f990d9b70cd4901",
+      "locator": "surge_benchmark_board; source row 1; GPT 6 Astra (Max reasoning); field value"
+    },
+    "protocol": "GDP.pdf (Surge AI): 100 held-out tasks, each a real professional prompt with its PDF documents, no tools; a response passes only when every rubric criterion is satisfied (all_pass), judged by Gemini 3.5 Flash; leaderboard configuration five runs per task; value = the board's all-pass rate (percent) for the row's model and stated setting; Surge runs the models itself; source row: {\"brand\":\"GPT\",\"stated_setting\":\"Max reasoning\",\"board\":\"GDP.pdf\"}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://raw.githubusercontent.com/surge-ai/gdp-pdf/main/README.md",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/fda47ebf36bf4299b5d6.gz",
+        "sha256": "fda47ebf36bf4299b5d69288978de80e06fa6a001b8bc75550eb1f38d8e9e148",
+        "retrieved_at": "2026-09-25T08:56:54.375049+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:7ebe26ee1c65b0dcad0654fd",
+    "benchmark_id": "surge-gdp-pdf::100-tasks",
+    "subject": {
+      "source_id": "Claude Opus 5.5 (Adaptive/High)",
+      "name": "Claude Opus 5.5 (Adaptive/High)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 31.4,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://surgehq.ai/benchmarks/gdp-pdf",
+      "retrieved_at": "2026-09-25T08:56:52.006023+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/d96f0b4afd09e8149c48.gz",
+      "sha256": "d96f0b4afd09e8149c48c5a3fa3548ded963f2397e0e81109f990d9b70cd4901",
+      "locator": "surge_benchmark_board; source row 2; Claude Opus 5.5 (Adaptive/High); field value"
+    },
+    "protocol": "GDP.pdf (Surge AI): 100 held-out tasks, each a real professional prompt with its PDF documents, no tools; a response passes only when every rubric criterion is satisfied (all_pass), judged by Gemini 3.5 Flash; leaderboard configuration five runs per task; value = the board's all-pass rate (percent) for the row's model and stated setting; Surge runs the models itself; source row: {\"brand\":\"Claude\",\"stated_setting\":\"Adaptive/High\",\"board\":\"GDP.pdf\"}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://raw.githubusercontent.com/surge-ai/gdp-pdf/main/README.md",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/fda47ebf36bf4299b5d6.gz",
+        "sha256": "fda47ebf36bf4299b5d69288978de80e06fa6a001b8bc75550eb1f38d8e9e148",
+        "retrieved_at": "2026-09-25T08:56:54.375049+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:da47e3af321d2e2b1007e050",
+    "benchmark_id": "surge-gdp-pdf::100-tasks",
+    "subject": {
+      "source_id": "Claude Opus 5.5 (Adaptive/Max)",
+      "name": "Claude Opus 5.5 (Adaptive/Max)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 30.6,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://surgehq.ai/benchmarks/gdp-pdf",
+      "retrieved_at": "2026-09-25T08:56:52.006023+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/d96f0b4afd09e8149c48.gz",
+      "sha256": "d96f0b4afd09e8149c48c5a3fa3548ded963f2397e0e81109f990d9b70cd4901",
+      "locator": "surge_benchmark_board; source row 4; Claude Opus 5.5 (Adaptive/Max); field value"
+    },
+    "protocol": "GDP.pdf (Surge AI): 100 held-out tasks, each a real professional prompt with its PDF documents, no tools; a response passes only when every rubric criterion is satisfied (all_pass), judged by Gemini 3.5 Flash; leaderboard configuration five runs per task; value = the board's all-pass rate (percent) for the row's model and stated setting; Surge runs the models itself; source row: {\"brand\":\"Claude\",\"stated_setting\":\"Adaptive/Max\",\"board\":\"GDP.pdf\"}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://raw.githubusercontent.com/surge-ai/gdp-pdf/main/README.md",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/fda47ebf36bf4299b5d6.gz",
+        "sha256": "fda47ebf36bf4299b5d69288978de80e06fa6a001b8bc75550eb1f38d8e9e148",
+        "retrieved_at": "2026-09-25T08:56:54.375049+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:8261982bf7a7979b4542329f",
+    "benchmark_id": "surge-gdp-pdf::100-tasks",
+    "subject": {
+      "source_id": "GPT 6 Sol (Max reasoning)",
+      "name": "GPT 6 Sol (Max reasoning)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 26.4,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://surgehq.ai/benchmarks/gdp-pdf",
+      "retrieved_at": "2026-09-25T08:56:52.006023+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/d96f0b4afd09e8149c48.gz",
+      "sha256": "d96f0b4afd09e8149c48c5a3fa3548ded963f2397e0e81109f990d9b70cd4901",
+      "locator": "surge_benchmark_board; source row 10; GPT 6 Sol (Max reasoning); field value"
+    },
+    "protocol": "GDP.pdf (Surge AI): 100 held-out tasks, each a real professional prompt with its PDF documents, no tools; a response passes only when every rubric criterion is satisfied (all_pass), judged by Gemini 3.5 Flash; leaderboard configuration five runs per task; value = the board's all-pass rate (percent) for the row's model and stated setting; Surge runs the models itself; source row: {\"brand\":\"GPT\",\"stated_setting\":\"Max reasoning\",\"board\":\"GDP.pdf\"}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://raw.githubusercontent.com/surge-ai/gdp-pdf/main/README.md",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/fda47ebf36bf4299b5d6.gz",
+        "sha256": "fda47ebf36bf4299b5d69288978de80e06fa6a001b8bc75550eb1f38d8e9e148",
+        "retrieved_at": "2026-09-25T08:56:54.375049+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:6ea2ee0934bf5333f572a6d2",
+    "benchmark_id": "surge-gdp-pdf::100-tasks",
+    "subject": {
+      "source_id": "GPT 6 Sol (Medium reasoning)",
+      "name": "GPT 6 Sol (Medium reasoning)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 26,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://surgehq.ai/benchmarks/gdp-pdf",
+      "retrieved_at": "2026-09-25T08:56:52.006023+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/d96f0b4afd09e8149c48.gz",
+      "sha256": "d96f0b4afd09e8149c48c5a3fa3548ded963f2397e0e81109f990d9b70cd4901",
+      "locator": "surge_benchmark_board; source row 12; GPT 6 Sol (Medium reasoning); field value"
+    },
+    "protocol": "GDP.pdf (Surge AI): 100 held-out tasks, each a real professional prompt with its PDF documents, no tools; a response passes only when every rubric criterion is satisfied (all_pass), judged by Gemini 3.5 Flash; leaderboard configuration five runs per task; value = the board's all-pass rate (percent) for the row's model and stated setting; Surge runs the models itself; source row: {\"brand\":\"GPT\",\"stated_setting\":\"Medium reasoning\",\"board\":\"GDP.pdf\"}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://raw.githubusercontent.com/surge-ai/gdp-pdf/main/README.md",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/fda47ebf36bf4299b5d6.gz",
+        "sha256": "fda47ebf36bf4299b5d69288978de80e06fa6a001b8bc75550eb1f38d8e9e148",
+        "retrieved_at": "2026-09-25T08:56:54.375049+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:0f69a689669e36c214307607",
+    "benchmark_id": "surge-gdp-pdf::100-tasks",
+    "subject": {
+      "source_id": "GPT 6 Luna (Max reasoning)",
+      "name": "GPT 6 Luna (Max reasoning)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 23,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://surgehq.ai/benchmarks/gdp-pdf",
+      "retrieved_at": "2026-09-25T08:56:52.006023+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/d96f0b4afd09e8149c48.gz",
+      "sha256": "d96f0b4afd09e8149c48c5a3fa3548ded963f2397e0e81109f990d9b70cd4901",
+      "locator": "surge_benchmark_board; source row 20; GPT 6 Luna (Max reasoning); field value"
+    },
+    "protocol": "GDP.pdf (Surge AI): 100 held-out tasks, each a real professional prompt with its PDF documents, no tools; a response passes only when every rubric criterion is satisfied (all_pass), judged by Gemini 3.5 Flash; leaderboard configuration five runs per task; value = the board's all-pass rate (percent) for the row's model and stated setting; Surge runs the models itself; source row: {\"brand\":\"GPT\",\"stated_setting\":\"Max reasoning\",\"board\":\"GDP.pdf\"}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://raw.githubusercontent.com/surge-ai/gdp-pdf/main/README.md",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/fda47ebf36bf4299b5d6.gz",
+        "sha256": "fda47ebf36bf4299b5d69288978de80e06fa6a001b8bc75550eb1f38d8e9e148",
+        "retrieved_at": "2026-09-25T08:56:54.375049+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:344225f5e11967e37402b472",
+    "benchmark_id": "surge-gdp-pdf::100-tasks",
+    "subject": {
+      "source_id": "Grok 4.7 (xHigh reasoning)",
+      "name": "Grok 4.7 (xHigh reasoning)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 22.8,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://surgehq.ai/benchmarks/gdp-pdf",
+      "retrieved_at": "2026-09-25T08:56:52.006023+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/d96f0b4afd09e8149c48.gz",
+      "sha256": "d96f0b4afd09e8149c48c5a3fa3548ded963f2397e0e81109f990d9b70cd4901",
+      "locator": "surge_benchmark_board; source row 21; Grok 4.7 (xHigh reasoning); field value"
+    },
+    "protocol": "GDP.pdf (Surge AI): 100 held-out tasks, each a real professional prompt with its PDF documents, no tools; a response passes only when every rubric criterion is satisfied (all_pass), judged by Gemini 3.5 Flash; leaderboard configuration five runs per task; value = the board's all-pass rate (percent) for the row's model and stated setting; Surge runs the models itself; source row: {\"brand\":\"Grok\",\"stated_setting\":\"xHigh reasoning\",\"board\":\"GDP.pdf\"}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://raw.githubusercontent.com/surge-ai/gdp-pdf/main/README.md",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/fda47ebf36bf4299b5d6.gz",
+        "sha256": "fda47ebf36bf4299b5d69288978de80e06fa6a001b8bc75550eb1f38d8e9e148",
+        "retrieved_at": "2026-09-25T08:56:54.375049+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:8a8709f868a091a53c2c0f52",
+    "benchmark_id": "surge-gdp-pdf::100-tasks",
+    "subject": {
+      "source_id": "Grok 4.7 (High reasoning)",
+      "name": "Grok 4.7 (High reasoning)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 21.2,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://surgehq.ai/benchmarks/gdp-pdf",
+      "retrieved_at": "2026-09-25T08:56:52.006023+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/d96f0b4afd09e8149c48.gz",
+      "sha256": "d96f0b4afd09e8149c48c5a3fa3548ded963f2397e0e81109f990d9b70cd4901",
+      "locator": "surge_benchmark_board; source row 24; Grok 4.7 (High reasoning); field value"
+    },
+    "protocol": "GDP.pdf (Surge AI): 100 held-out tasks, each a real professional prompt with its PDF documents, no tools; a response passes only when every rubric criterion is satisfied (all_pass), judged by Gemini 3.5 Flash; leaderboard configuration five runs per task; value = the board's all-pass rate (percent) for the row's model and stated setting; Surge runs the models itself; source row: {\"brand\":\"Grok\",\"stated_setting\":\"High reasoning\",\"board\":\"GDP.pdf\"}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://raw.githubusercontent.com/surge-ai/gdp-pdf/main/README.md",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/fda47ebf36bf4299b5d6.gz",
+        "sha256": "fda47ebf36bf4299b5d69288978de80e06fa6a001b8bc75550eb1f38d8e9e148",
+        "retrieved_at": "2026-09-25T08:56:54.375049+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:e230f9c3e755763c5cb38d8c",
+    "benchmark_id": "surge-gdp-pdf::100-tasks",
+    "subject": {
+      "source_id": "GPT 6 Luna (Medium reasoning)",
+      "name": "GPT 6 Luna (Medium reasoning)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 20.4,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://surgehq.ai/benchmarks/gdp-pdf",
+      "retrieved_at": "2026-09-25T08:56:52.006023+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/d96f0b4afd09e8149c48.gz",
+      "sha256": "d96f0b4afd09e8149c48c5a3fa3548ded963f2397e0e81109f990d9b70cd4901",
+      "locator": "surge_benchmark_board; source row 26; GPT 6 Luna (Medium reasoning); field value"
+    },
+    "protocol": "GDP.pdf (Surge AI): 100 held-out tasks, each a real professional prompt with its PDF documents, no tools; a response passes only when every rubric criterion is satisfied (all_pass), judged by Gemini 3.5 Flash; leaderboard configuration five runs per task; value = the board's all-pass rate (percent) for the row's model and stated setting; Surge runs the models itself; source row: {\"brand\":\"GPT\",\"stated_setting\":\"Medium reasoning\",\"board\":\"GDP.pdf\"}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://raw.githubusercontent.com/surge-ai/gdp-pdf/main/README.md",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/fda47ebf36bf4299b5d6.gz",
+        "sha256": "fda47ebf36bf4299b5d69288978de80e06fa6a001b8bc75550eb1f38d8e9e148",
+        "retrieved_at": "2026-09-25T08:56:54.375049+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:72c2aa885a2882c024dbbc03",
+    "benchmark_id": "surge-gdp-pdf::100-tasks",
+    "subject": {
+      "source_id": "DeepSeek V4.1 Flash (Max reasoning)",
+      "name": "DeepSeek V4.1 Flash (Max reasoning)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 19.8,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://surgehq.ai/benchmarks/gdp-pdf",
+      "retrieved_at": "2026-09-25T08:56:52.006023+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/d96f0b4afd09e8149c48.gz",
+      "sha256": "d96f0b4afd09e8149c48c5a3fa3548ded963f2397e0e81109f990d9b70cd4901",
+      "locator": "surge_benchmark_board; source row 27; DeepSeek V4.1 Flash (Max reasoning); field value"
+    },
+    "protocol": "GDP.pdf (Surge AI): 100 held-out tasks, each a real professional prompt with its PDF documents, no tools; a response passes only when every rubric criterion is satisfied (all_pass), judged by Gemini 3.5 Flash; leaderboard configuration five runs per task; value = the board's all-pass rate (percent) for the row's model and stated setting; Surge runs the models itself; source row: {\"brand\":\"DeepSeek\",\"stated_setting\":\"Max reasoning\",\"board\":\"GDP.pdf\"}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://raw.githubusercontent.com/surge-ai/gdp-pdf/main/README.md",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/fda47ebf36bf4299b5d6.gz",
+        "sha256": "fda47ebf36bf4299b5d69288978de80e06fa6a001b8bc75550eb1f38d8e9e148",
+        "retrieved_at": "2026-09-25T08:56:54.375049+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  },
+  {
+    "id": "public:731668ddd728b937e2da4686",
+    "benchmark_id": "surge-gdp-pdf::100-tasks",
+    "subject": {
+      "source_id": "DeepSeek V4.1 Flash (High reasoning)",
+      "name": "DeepSeek V4.1 Flash (High reasoning)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 18.2,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://surgehq.ai/benchmarks/gdp-pdf",
+      "retrieved_at": "2026-09-25T08:56:52.006023+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/d96f0b4afd09e8149c48.gz",
+      "sha256": "d96f0b4afd09e8149c48c5a3fa3548ded963f2397e0e81109f990d9b70cd4901",
+      "locator": "surge_benchmark_board; source row 29; DeepSeek V4.1 Flash (High reasoning); field value"
+    },
+    "protocol": "GDP.pdf (Surge AI): 100 held-out tasks, each a real professional prompt with its PDF documents, no tools; a response passes only when every rubric criterion is satisfied (all_pass), judged by Gemini 3.5 Flash; leaderboard configuration five runs per task; value = the board's all-pass rate (percent) for the row's model and stated setting; Surge runs the models itself; source row: {\"brand\":\"DeepSeek\",\"stated_setting\":\"High reasoning\",\"board\":\"GDP.pdf\"}",
+    "comparison_key": null,
+    "supporting_sources": [
+      {
+        "url": "https://raw.githubusercontent.com/surge-ai/gdp-pdf/main/README.md",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/fda47ebf36bf4299b5d6.gz",
+        "sha256": "fda47ebf36bf4299b5d69288978de80e06fa6a001b8bc75550eb1f38d8e9e148",
+        "retrieved_at": "2026-09-25T08:56:54.375049+00:00",
+        "published_at": null,
+        "locator": "method_source"
+      }
+    ]
+  }
+]

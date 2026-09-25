@@ -1,0 +1,15 @@
+{
+  "artifact_id": "protocol-aa-gdp-pdf-snapshot-2026-09-21",
+  "artifact_sha256": "a6c3c2dfefaccbb7f66bf92fc5971b903bd5375e426f34caf89f65f15ee13a1f",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": ["aa-gdp-pdf::snapshot-2026-09-21", "c1", "c2"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot independently recompute row or source SHA-256 hashes or execute transport/qualification checks; owner-computed hashes are accepted as binding.",
+    "No formal public protocol version appears in the excerpt, but the row explicitly disclaims one in version_guard and otherwise matches the protocol identity, metric, units and description; treated as acceptable snapshot continuity rather than missing evidence."
+  ],
+  "missing_evidence": []
+}

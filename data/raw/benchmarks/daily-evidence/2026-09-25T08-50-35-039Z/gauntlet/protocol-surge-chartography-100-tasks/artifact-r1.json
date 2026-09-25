@@ -1,0 +1,22 @@
+[
+  {
+    "id": "surge-chartography::100-tasks",
+    "version": "100-tasks",
+    "version_guard": "The page must still state \"Chartography is our benchmark for professional chart understanding.\"; exactly one `lead-rank-corecraft-list` list; every row has one brand, one name and one `data-score` equal to its printed number, 0–100, with a \"%\" unit; labels unique. The repository README must still state: the 100-task set, the chart attached inline with no tools, the leaderboard configuration (ten runs per task, Gemini 3.5 Flash as the judge) and the accuracy definition. Another task set, judge, run count or tool setting is a new identity, never a silent update of this one.",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "The board's accuracy: the share of answers inside the expert-set acceptable range of the golden answer, judged per answer by Gemini 3.5 Flash, averaged over the 100 tasks and ten runs per task",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "No tools: the chart is attached inline. The judge sees the question, the golden answer and the response, never the chart. Surge runs every model itself with the published Inspect harness (github.com/surge-ai/chartography); the board shows one row per model and stated setting. A different task set, judge, run count or a tool-enabled run is a new identity. The with-tools figure DeepSeek prints on its V4.1 Flash card stays the separate vendor snapshot deepseek-chartography-w-tools::snapshot-2026-09-10."
+    },
+    "description": "Can a model read the charts professionals rely on — Kaplan-Meier curves, candlesticks, contour maps, Sankey diagrams, Bode plots, wind roses — from the image alone, to an expert-set precision?",
+    "maintainer": "Surge AI (evals team)"
+  }
+]

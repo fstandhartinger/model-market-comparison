@@ -1,0 +1,244 @@
+[
+  {
+    "id": "public:a1e347c697ecbf9cbe1cdd3f",
+    "benchmark_id": "vals-index-cost::2",
+    "subject": {
+      "source_id": "anthropic/claude-opus-5-5",
+      "name": "anthropic/claude-opus-5-5",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 22.295559,
+    "unit": "USD",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 0; anthropic/claude-opus-5-5; field cost_per_test"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), overall; published cost per test in USD per model slug; accuracy and latency retained as context, not converted.; source row: {\"task\":\"overall\",\"accuracy\":69.689,\"stderr\":0.937,\"cost_per_test\":22.295559,\"latency\":4320.731,\"compute_effort\":\"max\",\"reasoning_effort\":null,\"max_output_tokens\":128000,\"provider\":\"Anthropic\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:a594d429d2d8b9ed7cccb731",
+    "benchmark_id": "vals-index-cost::2",
+    "subject": {
+      "source_id": "openai/gpt-6-sol",
+      "name": "openai/gpt-6-sol",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 7.564103,
+    "unit": "USD",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 7; openai/gpt-6-sol; field cost_per_test"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), overall; published cost per test in USD per model slug; accuracy and latency retained as context, not converted.; source row: {\"task\":\"overall\",\"accuracy\":62.569,\"stderr\":0.954,\"cost_per_test\":7.564103,\"latency\":1593.734,\"compute_effort\":null,\"reasoning_effort\":\"max\",\"max_output_tokens\":128000,\"provider\":\"OpenAI\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:138b4b98eed11d05a988ca90",
+    "benchmark_id": "vals-index-cost::2",
+    "subject": {
+      "source_id": "grok/grok-4.7",
+      "name": "grok/grok-4.7",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 11.917904,
+    "unit": "USD",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 11; grok/grok-4.7; field cost_per_test"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), overall; published cost per test in USD per model slug; accuracy and latency retained as context, not converted.; source row: {\"task\":\"overall\",\"accuracy\":60.215,\"stderr\":1.079,\"cost_per_test\":11.917904,\"latency\":1975.967,\"compute_effort\":null,\"reasoning_effort\":\"xhigh\",\"max_output_tokens\":null,\"provider\":\"SpaceXAI\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:6c86080f9cd09963355bc6b5",
+    "benchmark_id": "vals-index-cost::2",
+    "subject": {
+      "source_id": "xiaomi/mimo-v2.6-flash",
+      "name": "xiaomi/mimo-v2.6-flash",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 0.19671,
+    "unit": "USD",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 15; xiaomi/mimo-v2.6-flash; field cost_per_test"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), overall; published cost per test in USD per model slug; accuracy and latency retained as context, not converted.; source row: {\"task\":\"overall\",\"accuracy\":59.584,\"stderr\":1.133,\"cost_per_test\":0.19671,\"latency\":2701.771,\"compute_effort\":null,\"reasoning_effort\":null,\"max_output_tokens\":128000,\"provider\":\"Xiaomi\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:fa6556a769df5d1cc5863886",
+    "benchmark_id": "vals-index-cost::2",
+    "subject": {
+      "source_id": "xiaomi/mimo-v2.6-pro",
+      "name": "xiaomi/mimo-v2.6-pro",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 0.38918,
+    "unit": "USD",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 16; xiaomi/mimo-v2.6-pro; field cost_per_test"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), overall; published cost per test in USD per model slug; accuracy and latency retained as context, not converted.; source row: {\"task\":\"overall\",\"accuracy\":59.47,\"stderr\":1.177,\"cost_per_test\":0.38918,\"latency\":3139.768,\"compute_effort\":null,\"reasoning_effort\":null,\"max_output_tokens\":128000,\"provider\":\"Xiaomi\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:efe195ebf1cf6366655459ad",
+    "benchmark_id": "vals-index-cost::2",
+    "subject": {
+      "source_id": "openai/gpt-6-luna",
+      "name": "openai/gpt-6-luna",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 0.418873,
+    "unit": "USD",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 19; openai/gpt-6-luna; field cost_per_test"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), overall; published cost per test in USD per model slug; accuracy and latency retained as context, not converted.; source row: {\"task\":\"overall\",\"accuracy\":58.45,\"stderr\":1.107,\"cost_per_test\":0.418873,\"latency\":1590.457,\"compute_effort\":null,\"reasoning_effort\":\"max\",\"max_output_tokens\":128000,\"provider\":\"OpenAI\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:e8e87cc10333ff1238065dc1",
+    "benchmark_id": "vals-index-cost::2",
+    "subject": {
+      "source_id": "deepseek/deepseek-v4-flash-0731",
+      "name": "deepseek/deepseek-v4-flash-0731",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 0.839765,
+    "unit": "USD",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 29; deepseek/deepseek-v4-flash-0731; field cost_per_test"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), overall; published cost per test in USD per model slug; accuracy and latency retained as context, not converted.; source row: {\"task\":\"overall\",\"accuracy\":53.568,\"stderr\":1.21,\"cost_per_test\":0.839765,\"latency\":2094.581,\"compute_effort\":null,\"reasoning_effort\":\"high\",\"max_output_tokens\":384000,\"provider\":\"DeepSeek\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:d3bbb815362b998459940c41",
+    "benchmark_id": "vals-index-cost::2",
+    "subject": {
+      "source_id": "deepseek/deepseek-v4-pro-0813",
+      "name": "deepseek/deepseek-v4-pro-0813",
+      "model_id": "deepseek-v4-pro-0813::max",
+      "variant": null,
+      "harness": null
+    },
+    "value": 3.282301,
+    "unit": "USD",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 32; deepseek/deepseek-v4-pro-0813; field cost_per_test"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), overall; published cost per test in USD per model slug; accuracy and latency retained as context, not converted.; source row: {\"task\":\"overall\",\"accuracy\":52.368,\"stderr\":1.136,\"cost_per_test\":3.282301,\"latency\":3498.495,\"compute_effort\":null,\"reasoning_effort\":\"max\",\"max_output_tokens\":384000,\"provider\":\"DeepSeek\"}",
+    "comparison_key": null,
+    "join_note": "Reviewed identity map 2026-09-16: label states model deepseek-v4-pro-0813 and setting max; exact catalog configuration deepseek-v4-pro-0813::max"
+  },
+  {
+    "id": "public:2ffc018ad92f782b3b1ba356",
+    "benchmark_id": "vals-index-cost::2",
+    "subject": {
+      "source_id": "deepseek/deepseek-v4-pro",
+      "name": "deepseek/deepseek-v4-pro",
+      "model_id": "deepseek-v4-pro::max",
+      "variant": null,
+      "harness": null
+    },
+    "value": 0.940927,
+    "unit": "USD",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 40; deepseek/deepseek-v4-pro; field cost_per_test"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), overall; published cost per test in USD per model slug; accuracy and latency retained as context, not converted.; source row: {\"task\":\"overall\",\"accuracy\":42.888,\"stderr\":1.194,\"cost_per_test\":0.940927,\"latency\":1427.349,\"compute_effort\":null,\"reasoning_effort\":\"max\",\"max_output_tokens\":384000,\"provider\":\"DeepSeek\"}",
+    "comparison_key": null,
+    "join_note": "Reviewed identity map 2026-09-16: label states model deepseek-v4-pro and setting max; exact catalog configuration deepseek-v4-pro::max"
+  },
+  {
+    "id": "public:6e8e935d3674a15c04c46591",
+    "benchmark_id": "vals-index-cost::2",
+    "subject": {
+      "source_id": "ant/ling-3.0-flash-af-rc3",
+      "name": "ant/ling-3.0-flash-af-rc3",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 0.109173,
+    "unit": "USD",
+    "basis": "measured",
+    "source": {
+      "url": "https://www.vals.ai/benchmarks/vals_index",
+      "retrieved_at": "2026-09-25T08:55:53.407615+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/b99902ee631d2073658f.gz",
+      "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+      "locator": "astro_props; source row 50; ant/ling-3.0-flash-af-rc3; field cost_per_test"
+    },
+    "protocol": "Vals Index v2 (updated 2026-09-10), overall; published cost per test in USD per model slug; accuracy and latency retained as context, not converted.; source row: {\"task\":\"overall\",\"accuracy\":32.553,\"stderr\":0.966,\"cost_per_test\":0.109173,\"latency\":1072.857,\"compute_effort\":null,\"reasoning_effort\":null,\"max_output_tokens\":131072,\"provider\":\"Ant\"}",
+    "comparison_key": null
+  }
+]

@@ -1,15 +1,15 @@
 {
   "source": "Scaleway Generative APIs — scaleway.com/en/pricing/model-as-a-service (first-party, public)",
   "region": "eu (Paris)",
-  "collected_at": "2026-09-24",
-  "currency_note": "Source prices are EUR/1M; converted to USD using the ECB reference rate EUR/USD = 1.1411 published 2026-09-23 (latest available on 2026-09-24).",
+  "collected_at": "2026-09-25",
+  "currency_note": "Source prices are EUR/1M; converted to USD using the ECB reference rate EUR/USD = 1.1367 published 2026-09-24 (latest available on 2026-09-25).",
   "method": "scripts/fetch-scaleway-catalog.mjs: one GET of the pricing page, reading the page's own structured catalog (__NEXT_DATA__ … catalogProducts.generativeApis.models); fr-par perMillionTokens input/output (and cached input) EUR prices from {units,nanos}; models without the chat task or without both token prices (embeddings, audio transcription) omitted; USD = EUR × ECB daily reference rate, rounded to cents; curated names kept by API slug; new slugs mapping=derived. EU-sovereign Paris region, ZDR by default. See scaleway.method.md.",
   "models": [
     {
       "model_name": "GLM 5.2",
       "provider_org": "Z.ai",
       "input_per_1m_usd": 2.05,
-      "output_per_1m_usd": 6.28,
+      "output_per_1m_usd": 6.25,
       "region": "eu",
       "api_model_id": "glm-5.2",
       "context_length": 256000,
@@ -19,7 +19,7 @@
     {
       "model_name": "DeepSeek V4 Flash 0731",
       "provider_org": "DeepSeek",
-      "input_per_1m_usd": 0.46,
+      "input_per_1m_usd": 0.45,
       "output_per_1m_usd": 0.91,
       "cache_read_per_1m_usd": 0.09,
       "region": "eu",
@@ -32,7 +32,7 @@
       "model_name": "qwen3.8-27b",
       "provider_org": "Alibaba",
       "input_per_1m_usd": 0.68,
-      "output_per_1m_usd": 3.77,
+      "output_per_1m_usd": 3.75,
       "cache_read_per_1m_usd": 0.14,
       "region": "eu",
       "api_model_id": "qwen3.8-27b",
@@ -43,7 +43,7 @@
     {
       "model_name": "Gemma 4 26B",
       "provider_org": "Google",
-      "input_per_1m_usd": 0.29,
+      "input_per_1m_usd": 0.28,
       "output_per_1m_usd": 0.57,
       "region": "eu",
       "api_model_id": "gemma-4-26b-a4b-it",
@@ -55,7 +55,7 @@
       "model_name": "Mistral Medium 3.5",
       "provider_org": "Mistral",
       "input_per_1m_usd": 1.71,
-      "output_per_1m_usd": 8.56,
+      "output_per_1m_usd": 8.53,
       "region": "eu",
       "api_model_id": "mistral-medium-3.5-128b",
       "context_length": 256000,
@@ -65,8 +65,8 @@
     {
       "model_name": "Llama 3.3 70B",
       "provider_org": "Meta",
-      "input_per_1m_usd": 1.03,
-      "output_per_1m_usd": 1.03,
+      "input_per_1m_usd": 1.02,
+      "output_per_1m_usd": 1.02,
       "region": "eu",
       "api_model_id": "llama-3.3-70b-instruct",
       "context_length": 128000,
@@ -76,8 +76,8 @@
     {
       "model_name": "Qwen3 235B",
       "provider_org": "Alibaba",
-      "input_per_1m_usd": 0.86,
-      "output_per_1m_usd": 2.57,
+      "input_per_1m_usd": 0.85,
+      "output_per_1m_usd": 2.56,
       "region": "eu",
       "api_model_id": "qwen3-235b-a22b-instruct-2507",
       "context_length": 250000,
@@ -131,7 +131,7 @@
     {
       "model_name": "Qwen 3.6 35B",
       "provider_org": "Alibaba",
-      "input_per_1m_usd": 0.29,
+      "input_per_1m_usd": 0.28,
       "output_per_1m_usd": 1.71,
       "region": "eu",
       "api_model_id": "qwen3.6-35b-a3b",
@@ -143,7 +143,7 @@
       "model_name": "Qwen 3.5 397B",
       "provider_org": "Alibaba",
       "input_per_1m_usd": 0.68,
-      "output_per_1m_usd": 4.11,
+      "output_per_1m_usd": 4.09,
       "region": "eu",
       "api_model_id": "qwen3.5-397b-a17b",
       "context_length": 250000,
@@ -151,8 +151,8 @@
       "notes": "€0.60/€3.60; qwen3.5-397b-a17b; vision+text; status general_availability"
     }
   ],
-  "fx_eur_usd": 1.1411,
-  "response_sha256": "e4c640d5506328e2bf7e0bfa57c5507152257a62304e46516c72478018fbdf7e",
+  "fx_eur_usd": 1.1367,
+  "response_sha256": "958ba24a48a9d1779a08b0aea9e9e4ebd6418ddcabc084fdb46c7d95c716cb85",
   "skipped": [
     "whisper-large-v3",
     "qwen3-embedding-8b",

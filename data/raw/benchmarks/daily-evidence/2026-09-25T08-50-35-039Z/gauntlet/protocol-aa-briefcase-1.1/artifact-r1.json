@@ -1,0 +1,22 @@
+[
+  {
+    "id": "aa-briefcase::1.1",
+    "version": "1.1",
+    "version_guard": "Verify the published version 1.1 before reading results. v1.1 changed only how Elo ratings are fitted (Crowd-BT) and AA states 'Whilst Elo scores shift, rank ordering is largely preserved'; earlier values therefore stay under aa-briefcase::snapshot-2026-09-10 (our policy: a re-fitted scale is a separate identity).",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Combined Elo (Crowd-BT fit) from rubric task success, analytical quality and presentation comparisons",
+      "unit": "Elo",
+      "range": [
+        null,
+        null
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. Keep raw units; do not normalize before phase-05 validation."
+    },
+    "description": "Tests multi-week professional knowledge-work projects with linked tasks and large source collections.",
+    "maintainer": "Artificial Analysis"
+  }
+]

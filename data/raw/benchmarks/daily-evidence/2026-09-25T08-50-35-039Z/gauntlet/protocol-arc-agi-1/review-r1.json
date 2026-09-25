@@ -1,0 +1,33 @@
+{
+  "artifact_id": "protocol-arc-agi-1",
+  "artifact_sha256": "f18ac10676a1140d92f001ae20cf7e8b60e01f94e3265184d194ed2d9c520855",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": ["arc-agi::1", "c1", "c2"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "major",
+      "location": "row arc-agi::1 scoring.metric/scoring.unit",
+      "evidence": "SOURCE 1 excerpt describes only 'performance' and 'cost-per-task' and 'scatter plot'; it does not contain 'semi-private', 'exact grid', 'solution rate', or 'percent'.",
+      "repair": "Supply a primary protocol excerpt that states the exact metric and unit for ARC-AGI-1, or align the row to values the supplied source actually supports."
+    },
+    {
+      "id": "f2",
+      "severity": "major",
+      "location": "row arc-agi::1 version_status",
+      "evidence": "SOURCE 1 excerpt does not state 'published' for ARC-AGI-1; it only has 'Verified' navigation and notes that preview results are unofficial.",
+      "repair": "Provide protocol text establishing version_status, or change version_status to the value supported by the evidence."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Owner hashes, transport and qualification checks cannot be independently re-executed in this review; that is a limitation, not a numeric defect.",
+    "SOURCE 1 says ARC-AGI has 'evolved from' ARC-AGI-1/2 to ARC-AGI-3, but does not use explicit supersession wording; whether superseded_by should be non-null is ambiguous."
+  ],
+  "missing_evidence": [
+    "Metric specification for ARC-AGI-1 ('Semi-private exact grid task solution rate', unit 'percent') is absent from SOURCE 1.",
+    "version_status value 'published' is absent from SOURCE 1."
+  ]
+}

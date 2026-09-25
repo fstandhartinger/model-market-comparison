@@ -1,0 +1,428 @@
+[
+  {
+    "id": "public:68928afcb10fbe9ce5dafeee",
+    "benchmark_id": "livebench::2026-06-25",
+    "subject": {
+      "source_id": "union-alpha",
+      "name": "union-alpha",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 76.13,
+    "unit": "points",
+    "basis": "derived",
+    "source": {
+      "url": "https://livebench.ai/table_2026_06_25.csv",
+      "retrieved_at": "2026-09-25T08:53:05.230387+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/05f59189a82813c44668.gz",
+      "sha256": "05f59189a82813c446681b0c5902a559ef9c5d55263a2bb0ae2d1868fb5ecb2d",
+      "locator": "livebench; source row 57; union-alpha; field value"
+    },
+    "protocol": "Release 2026-06-25; seven category means with equal category weights, published 2-decimal overall and explicit Grok-3 exceptions. Complete task scores required.",
+    "comparison_key": null,
+    "source_basis": "measured",
+    "derivation": {
+      "formula": "Mean of seven category means, rounded to the published 2 decimals; source Grok-3 Thinking=72 and Grok-3=58 overrides retained.",
+      "inputs": [
+        75,
+        70,
+        98,
+        80,
+        81.69,
+        82.609,
+        59.091,
+        50,
+        55,
+        97,
+        95,
+        97.059,
+        92.115,
+        74.572,
+        53.154,
+        96.078,
+        97.333,
+        80.334,
+        80,
+        57.217,
+        58.767,
+        60.9,
+        61.233
+      ]
+    },
+    "supporting_sources": [
+      {
+        "url": "https://livebench.ai/categories_2026_06_25.json",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/dad300ad18655b69db72.gz",
+        "sha256": "dad300ad18655b69db720e1b88fc5a5eac06c5b2f0e52c2bf50f10ff057674f3",
+        "retrieved_at": "2026-09-25T08:53:07.882715+00:00",
+        "published_at": null,
+        "locator": "categories_source"
+      },
+      {
+        "url": "https://livebench.ai/static/js/main.20d28c99.js",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/0f3cc9bd340d2bd8766b.gz",
+        "sha256": "0f3cc9bd340d2bd8766b9fc09c07f82aa9826e84a3cf1fbaf6a60b2119ee5be0",
+        "retrieved_at": "2026-09-25T08:58:42.066320+00:00",
+        "published_at": null,
+        "locator": "frontend_source"
+      }
+    ]
+  },
+  {
+    "id": "public:63d8bd6823e0833988de2b96",
+    "benchmark_id": "livebench::2026-06-25",
+    "subject": {
+      "source_id": "grok-4.7-xhigh",
+      "name": "grok-4.7-xhigh",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 77.4,
+    "unit": "points",
+    "basis": "derived",
+    "source": {
+      "url": "https://livebench.ai/table_2026_06_25.csv",
+      "retrieved_at": "2026-09-25T08:53:05.230387+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/05f59189a82813c44668.gz",
+      "sha256": "05f59189a82813c446681b0c5902a559ef9c5d55263a2bb0ae2d1868fb5ecb2d",
+      "locator": "livebench; source row 58; grok-4.7-xhigh; field value"
+    },
+    "protocol": "Release 2026-06-25; seven category means with equal category weights, published 2-decimal overall and explicit Grok-3 exceptions. Complete task scores required.",
+    "comparison_key": null,
+    "source_basis": "measured",
+    "derivation": {
+      "formula": "Mean of seven category means, rounded to the published 2 decimals; source Grok-3 Thinking=72 and Grok-3=58 overrides retained.",
+      "inputs": [
+        84.615,
+        86,
+        94,
+        66,
+        76.056,
+        78.261,
+        63.636,
+        43.333,
+        55,
+        98,
+        96,
+        97.059,
+        91.653,
+        85.727,
+        44.923,
+        100,
+        98,
+        72.416,
+        70,
+        78.05,
+        69.967,
+        74.917,
+        78.167
+      ]
+    },
+    "supporting_sources": [
+      {
+        "url": "https://livebench.ai/categories_2026_06_25.json",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/dad300ad18655b69db72.gz",
+        "sha256": "dad300ad18655b69db720e1b88fc5a5eac06c5b2f0e52c2bf50f10ff057674f3",
+        "retrieved_at": "2026-09-25T08:53:07.882715+00:00",
+        "published_at": null,
+        "locator": "categories_source"
+      },
+      {
+        "url": "https://livebench.ai/static/js/main.20d28c99.js",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/0f3cc9bd340d2bd8766b.gz",
+        "sha256": "0f3cc9bd340d2bd8766b9fc09c07f82aa9826e84a3cf1fbaf6a60b2119ee5be0",
+        "retrieved_at": "2026-09-25T08:58:42.066320+00:00",
+        "published_at": null,
+        "locator": "frontend_source"
+      }
+    ]
+  },
+  {
+    "id": "public:830a6df2395393713067cf5c",
+    "benchmark_id": "livebench::2026-06-25",
+    "subject": {
+      "source_id": "claude-opus-5-5-max-effort",
+      "name": "claude-opus-5-5-max-effort",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 83.22,
+    "unit": "points",
+    "basis": "derived",
+    "source": {
+      "url": "https://livebench.ai/table_2026_06_25.csv",
+      "retrieved_at": "2026-09-25T08:53:05.230387+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/05f59189a82813c44668.gz",
+      "sha256": "05f59189a82813c446681b0c5902a559ef9c5d55263a2bb0ae2d1868fb5ecb2d",
+      "locator": "livebench; source row 59; claude-opus-5-5-max-effort; field value"
+    },
+    "protocol": "Release 2026-06-25; seven category means with equal category weights, published 2-decimal overall and explicit Grok-3 exceptions. Complete task scores required.",
+    "comparison_key": null,
+    "source_basis": "measured",
+    "derivation": {
+      "formula": "Mean of seven category means, rounded to the published 2 decimals; source Grok-3 Thinking=72 and Grok-3=58 overrides retained.",
+      "inputs": [
+        84.615,
+        100,
+        98,
+        86,
+        91.549,
+        86.957,
+        81.818,
+        63.333,
+        70,
+        98,
+        100,
+        97.059,
+        93.251,
+        90.555,
+        52.327,
+        98.039,
+        99.333,
+        77.477,
+        82,
+        64.267,
+        58.667,
+        70.917,
+        69.1
+      ]
+    },
+    "supporting_sources": [
+      {
+        "url": "https://livebench.ai/categories_2026_06_25.json",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/dad300ad18655b69db72.gz",
+        "sha256": "dad300ad18655b69db720e1b88fc5a5eac06c5b2f0e52c2bf50f10ff057674f3",
+        "retrieved_at": "2026-09-25T08:53:07.882715+00:00",
+        "published_at": null,
+        "locator": "categories_source"
+      },
+      {
+        "url": "https://livebench.ai/static/js/main.20d28c99.js",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/0f3cc9bd340d2bd8766b.gz",
+        "sha256": "0f3cc9bd340d2bd8766b9fc09c07f82aa9826e84a3cf1fbaf6a60b2119ee5be0",
+        "retrieved_at": "2026-09-25T08:58:42.066320+00:00",
+        "published_at": null,
+        "locator": "frontend_source"
+      }
+    ]
+  },
+  {
+    "id": "public:3fcb52f18ef1627f958123d5",
+    "benchmark_id": "livebench::2026-06-25",
+    "subject": {
+      "source_id": "claude-opus-5-5-xhigh-effort",
+      "name": "claude-opus-5-5-xhigh-effort",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 82.06,
+    "unit": "points",
+    "basis": "derived",
+    "source": {
+      "url": "https://livebench.ai/table_2026_06_25.csv",
+      "retrieved_at": "2026-09-25T08:53:05.230387+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/05f59189a82813c44668.gz",
+      "sha256": "05f59189a82813c446681b0c5902a559ef9c5d55263a2bb0ae2d1868fb5ecb2d",
+      "locator": "livebench; source row 60; claude-opus-5-5-xhigh-effort; field value"
+    },
+    "protocol": "Release 2026-06-25; seven category means with equal category weights, published 2-decimal overall and explicit Grok-3 exceptions. Complete task scores required.",
+    "comparison_key": null,
+    "source_basis": "measured",
+    "derivation": {
+      "formula": "Mean of seven category means, rounded to the published 2 decimals; source Grok-3 Thinking=72 and Grok-3=58 overrides retained.",
+      "inputs": [
+        84.615,
+        100,
+        98,
+        80,
+        91.549,
+        86.957,
+        72.727,
+        53.333,
+        70,
+        99,
+        99,
+        97.059,
+        92.153,
+        90.37,
+        51,
+        98.039,
+        99.333,
+        77.163,
+        80,
+        64.683,
+        63,
+        71.183,
+        69.333
+      ]
+    },
+    "supporting_sources": [
+      {
+        "url": "https://livebench.ai/categories_2026_06_25.json",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/dad300ad18655b69db72.gz",
+        "sha256": "dad300ad18655b69db720e1b88fc5a5eac06c5b2f0e52c2bf50f10ff057674f3",
+        "retrieved_at": "2026-09-25T08:53:07.882715+00:00",
+        "published_at": null,
+        "locator": "categories_source"
+      },
+      {
+        "url": "https://livebench.ai/static/js/main.20d28c99.js",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/0f3cc9bd340d2bd8766b.gz",
+        "sha256": "0f3cc9bd340d2bd8766b9fc09c07f82aa9826e84a3cf1fbaf6a60b2119ee5be0",
+        "retrieved_at": "2026-09-25T08:58:42.066320+00:00",
+        "published_at": null,
+        "locator": "frontend_source"
+      }
+    ]
+  },
+  {
+    "id": "public:2b856c46cee7fbbe8d44bab2",
+    "benchmark_id": "livebench::2026-06-25",
+    "subject": {
+      "source_id": "gpt-6-sol-max",
+      "name": "gpt-6-sol-max",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 79.25,
+    "unit": "points",
+    "basis": "derived",
+    "source": {
+      "url": "https://livebench.ai/table_2026_06_25.csv",
+      "retrieved_at": "2026-09-25T08:53:05.230387+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/05f59189a82813c44668.gz",
+      "sha256": "05f59189a82813c446681b0c5902a559ef9c5d55263a2bb0ae2d1868fb5ecb2d",
+      "locator": "livebench; source row 61; gpt-6-sol-max; field value"
+    },
+    "protocol": "Release 2026-06-25; seven category means with equal category weights, published 2-decimal overall and explicit Grok-3 exceptions. Complete task scores required.",
+    "comparison_key": null,
+    "source_basis": "measured",
+    "derivation": {
+      "formula": "Mean of seven category means, rounded to the published 2 decimals; source Grok-3 Thinking=72 and Grok-3=58 overrides retained.",
+      "inputs": [
+        84.615,
+        100,
+        96,
+        74,
+        83.099,
+        80.435,
+        63.636,
+        40,
+        55,
+        98,
+        99,
+        97.059,
+        91.365,
+        89.549,
+        54.019,
+        100,
+        100,
+        77.896,
+        78,
+        70.083,
+        69.283,
+        66.933,
+        68
+      ]
+    },
+    "supporting_sources": [
+      {
+        "url": "https://livebench.ai/categories_2026_06_25.json",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/dad300ad18655b69db72.gz",
+        "sha256": "dad300ad18655b69db720e1b88fc5a5eac06c5b2f0e52c2bf50f10ff057674f3",
+        "retrieved_at": "2026-09-25T08:53:07.882715+00:00",
+        "published_at": null,
+        "locator": "categories_source"
+      },
+      {
+        "url": "https://livebench.ai/static/js/main.20d28c99.js",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/0f3cc9bd340d2bd8766b.gz",
+        "sha256": "0f3cc9bd340d2bd8766b9fc09c07f82aa9826e84a3cf1fbaf6a60b2119ee5be0",
+        "retrieved_at": "2026-09-25T08:58:42.066320+00:00",
+        "published_at": null,
+        "locator": "frontend_source"
+      }
+    ]
+  },
+  {
+    "id": "public:ee9c75731647f2ce82e62325",
+    "benchmark_id": "livebench::2026-06-25",
+    "subject": {
+      "source_id": "gpt-6-luna-max",
+      "name": "gpt-6-luna-max",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 72.03,
+    "unit": "points",
+    "basis": "derived",
+    "source": {
+      "url": "https://livebench.ai/table_2026_06_25.csv",
+      "retrieved_at": "2026-09-25T08:53:05.230387+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/05f59189a82813c44668.gz",
+      "sha256": "05f59189a82813c446681b0c5902a559ef9c5d55263a2bb0ae2d1868fb5ecb2d",
+      "locator": "livebench; source row 62; gpt-6-luna-max; field value"
+    },
+    "protocol": "Release 2026-06-25; seven category means with equal category weights, published 2-decimal overall and explicit Grok-3 exceptions. Complete task scores required.",
+    "comparison_key": null,
+    "source_basis": "measured",
+    "derivation": {
+      "formula": "Mean of seven category means, rounded to the published 2 decimals; source Grok-3 Thinking=72 and Grok-3=58 overrides retained.",
+      "inputs": [
+        73.077,
+        96,
+        96,
+        62,
+        77.465,
+        80.435,
+        63.636,
+        40,
+        50,
+        98,
+        74,
+        94.118,
+        90.376,
+        70.494,
+        49.615,
+        100,
+        100,
+        57.483,
+        64,
+        49.7,
+        55.433,
+        63.283,
+        55.317
+      ]
+    },
+    "supporting_sources": [
+      {
+        "url": "https://livebench.ai/categories_2026_06_25.json",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/dad300ad18655b69db72.gz",
+        "sha256": "dad300ad18655b69db720e1b88fc5a5eac06c5b2f0e52c2bf50f10ff057674f3",
+        "retrieved_at": "2026-09-25T08:53:07.882715+00:00",
+        "published_at": null,
+        "locator": "categories_source"
+      },
+      {
+        "url": "https://livebench.ai/static/js/main.20d28c99.js",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/0f3cc9bd340d2bd8766b.gz",
+        "sha256": "0f3cc9bd340d2bd8766b9fc09c07f82aa9826e84a3cf1fbaf6a60b2119ee5be0",
+        "retrieved_at": "2026-09-25T08:58:42.066320+00:00",
+        "published_at": null,
+        "locator": "frontend_source"
+      }
+    ]
+  }
+]

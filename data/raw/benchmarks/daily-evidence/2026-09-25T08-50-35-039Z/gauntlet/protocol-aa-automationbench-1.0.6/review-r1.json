@@ -1,0 +1,21 @@
+{
+  "artifact_id": "protocol-aa-automationbench-1.0.6",
+  "artifact_sha256": "494465db9ea5ad178ae8664a8288e373fee755127ebe1e081b029cc6affc3287",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "aa-automationbench::1.0.6",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Cannot independently recompute the supplied row or payload hashes; row identity is accepted from the owner-bound sha256 values in the packet.",
+    "Source 1 uses the phrase 'percentage of objectives completed' while the row records unit 'fraction'. These are consistent if raw values are stored as 0-1 proportions, but the exact stored representation should be reconfirmed during validation.",
+    "version_status 'published' is supported by the protocol text being published and by the explicit 'AutomationBench dataset version 1.0.6', though the excerpt does not contain a literal 'published' status field.",
+    "Source 2 is a generated capture-comparison summary, not maintainer prose; it is treated only as the affirmative activity evidence described in criterion c2, not as methodology or version evidence."
+  ],
+  "missing_evidence": []
+}

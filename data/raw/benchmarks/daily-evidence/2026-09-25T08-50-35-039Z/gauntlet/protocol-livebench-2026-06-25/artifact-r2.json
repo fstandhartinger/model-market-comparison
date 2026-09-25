@@ -1,0 +1,22 @@
+[
+  {
+    "id": "livebench::2026-06-25",
+    "version": "2026-06-25",
+    "version_guard": "Verify the published version 2026-06-25 before reading results.",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Overall mean of category averages, with source-published exceptions retained",
+      "unit": "points",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Register the verified website release; do not combine dated releases. The release files publish per-task columns (table_2026_06_25.csv) and a seven-category map (categories_2026_06_25.json), never an overall column, so the overall is the mean of the seven category means. The site’s own front-end bundle hardcodes two per-model overall values instead of that mean — grok-3-thinking 72 and grok-3 58 — and those source-published overrides are retained with attribution."
+    },
+    "description": "A periodically refreshed suite of objectively graded tasks with separate category scores and an overall category mean.",
+    "maintainer": "LiveBench team"
+  }
+]

@@ -1,0 +1,38 @@
+{
+  "artifact_id": "protocol-aa-gdpval-2.1",
+  "artifact_sha256": "8379cfe55f41b7535223839ed9044d8def6e36f35e12e790424a27befda3cf21",
+  "round": 1,
+  "verdict": "blocked",
+  "coverage_checked": [
+    "aa-gdpval::2.1",
+    "c1",
+    "c2"
+  ],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "row aa-gdpval::2.1, field description (c1)",
+      "evidence": "Candidate description: \"Tests professional knowledge-work deliverables across occupations using AA's Stirrup harness.\" Primary excerpt supports \"GDPval-AA v2.1\", \"Agentic task completion with file outputs\", \"Pairwise comparison (Elo) by judge panel, anchored to DeepSeek V4.1 Flash (max) at 1600\", and the OpenAI GDPval dataset and Stirrup harness. It does not contain or support \"professional knowledge-work deliverables across occupations\" or any mention of \"occupations\".",
+      "repair": "Revise the description to only claims supported by the primary excerpt, e.g. \"Agentic task completion with file outputs on the public OpenAI GDPval dataset using AA's Stirrup harness,\" or supply primary-source text establishing the current wording."
+    },
+    {
+      "id": "F2",
+      "severity": "major",
+      "location": "row aa-gdpval::2.1, field version_guard (c1)",
+      "evidence": "Candidate version_guard attributes to Artificial Analysis the exact quote: \"Whilst Elo scores shift, rank ordering is largely preserved.\" The supplied primary excerpt does not contain that sentence or equivalent wording; it supports only the Crowd-BT refit and the DeepSeek V4.1 Flash (max) anchor at 1600.",
+      "repair": "Remove the unsupported exact quotation and attribution, or add the missing primary-source passage to the evidence excerpt. Until then, replace the guard's quoted claim with supported text about the Crowd-BT fit and 1600 anchor."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute row hashes, source hashes, or transport/qualification checks; I relied on owner-provided hashes and metadata as supplied. This is a limitation of this read-only review, not a numeric source gap.",
+    "The primary excerpt is bounded/truncated, so the missing text supporting the exact quote in version_guard could exist on the full page; however, it is not present in the supplied evidence, so I cannot verify it.",
+    "The phrase 'v2 values therefore stay under aa-gdpval::2' is ambiguous as to whether it refers to the previous v2.0 values or to the current v2.1 row; I did not treat it as a factual contradiction because the stated policy treats a re-fitted scale as a separate identity."
+  ],
+  "missing_evidence": [
+    "Primary protocol wording establishing the row description \"Tests professional knowledge-work deliverables across occupations\" or any source wording equivalent to \"occupations\" / \"professional knowledge-work deliverables\".",
+    "Primary protocol wording supporting the exact Artificial Analysis quotation \"Whilst Elo scores shift, rank ordering is largely preserved\" used in version_guard."
+  ]
+}

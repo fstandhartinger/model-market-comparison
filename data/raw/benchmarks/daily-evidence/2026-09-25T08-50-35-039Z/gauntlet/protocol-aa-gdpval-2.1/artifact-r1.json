@@ -1,0 +1,22 @@
+[
+  {
+    "id": "aa-gdpval::2.1",
+    "version": "2.1",
+    "version_guard": "Verify the published version 2.1 before reading results. v2.1 changed only how the Elo scale is fixed (Crowd-BT fit, DeepSeek V4.1 Flash (max) pinned at 1600) and AA states 'Whilst Elo scores shift, rank ordering is largely preserved'; v2 values therefore stay under aa-gdpval::2 (our policy: a re-fitted scale is a separate identity).",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Crowd-BT Elo from pairwise judge-panel comparisons, DeepSeek V4.1 Flash (max) anchored at 1600",
+      "unit": "Elo",
+      "range": [
+        null,
+        null
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. Keep raw units; do not normalize before phase-05 validation."
+    },
+    "description": "Tests professional knowledge-work deliverables across occupations using AA's Stirrup harness.",
+    "maintainer": "Artificial Analysis"
+  }
+]

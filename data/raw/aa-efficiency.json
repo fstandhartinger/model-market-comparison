@@ -3,7 +3,7 @@
   "basis": "measured",
   "interpretation": "benchmark_proxy",
   "caveat": "AA Intelligence Index benchmark token accounting. Ratios are BENCHMARK PROXIES, never typical user I/O usage; usage ratios must come from OpenRouter/Chutes sources.",
-  "collected_at": "2026-09-23T09:57:55.637Z",
+  "collected_at": "2026-09-25T08:39:11.380Z",
   "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
   "data_fields": {
     "tokens_per_task": "intelligenceIndexOutputTokensPerTask {reasoning, answer, output} (measured)",
@@ -13,19 +13,41 @@
   "attempts": [
     {
       "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
-      "fetched_at": "2026-09-23T09:57:55.427Z",
+      "fetched_at": "2026-09-25T08:39:11.177Z",
       "http_status": 200,
-      "bytes": 3997137,
-      "sha256": "2c25becf8833e77b7166d348f75612ef25e0ce58f6424d5a4614ab829ec5a9ac"
+      "bytes": 3935025,
+      "sha256": "8b5327aa8a700df5b699cb1df822a8e7bf8314e632a01789da18e0ab098247ae"
     }
   ],
   "coverage": {
-    "published_rows": 166,
+    "published_rows": 170,
     "scored_denominator": 664,
     "denominator_source": "Leaderboard rows carrying a finite intelligenceIndex inside the same model-page Flight payload"
   },
-  "count": 166,
+  "count": 170,
   "rows": [
+    {
+      "source_id": "08242385-ee91-4de6-be7f-271a6d9780ce",
+      "slug": "apodex-1-1",
+      "name": "Apodex 1.1",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 46172.90418115436,
+        "answer": 25261.583800757315,
+        "output": 71434.48798191168
+      },
+      "canonical_token_counts": {
+        "input": 5757448102,
+        "output": 232032805,
+        "answer": 44256906,
+        "reasoning": 187775899
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 24.81307805592403,
+        "reasoning_output_share": 0.6463671188186588
+      }
+    },
     {
       "source_id": "8014c311-fa23-4a4b-8485-8a864db8a113",
       "slug": "celeris-1",
@@ -709,6 +731,28 @@
       }
     },
     {
+      "source_id": "73c96f99-0de3-4668-a4bd-b106a0fe18f2",
+      "slug": "deepseek-v4-1-flash-non-reasoning",
+      "name": "DeepSeek V4.1 Flash (Non-Reasoning)",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 0,
+        "answer": 33698.98527659433,
+        "output": 33698.98527659433
+      },
+      "canonical_token_counts": {
+        "input": 5855128147,
+        "output": 44506509,
+        "answer": 44506509,
+        "reasoning": 0
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 131.55667066585698,
+        "reasoning_output_share": 0
+      }
+    },
+    {
       "source_id": "fe4c0848-e284-4e52-a79d-cdc28392f1a9",
       "slug": "deepseek-v4-flash",
       "name": "DeepSeek V4 Flash 0731 (Reasoning, Max Effort)",
@@ -1190,6 +1234,28 @@
         "basis": "derived",
         "input_output_ratio": 35.87162944695006,
         "reasoning_output_share": 0.6792972768470384
+      }
+    },
+    {
+      "source_id": "cc1e488b-8ba4-464d-875d-690166b15ad3",
+      "slug": "glm-5-3-low",
+      "name": "GLM-5.3 (low)",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 20919.107903812885,
+        "answer": 9122.091190537685,
+        "output": 30041.19909435057
+      },
+      "canonical_token_counts": {
+        "input": 2077619112,
+        "output": 87587945,
+        "answer": 13315928,
+        "reasoning": 74272017
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 23.7203774103845,
+        "reasoning_output_share": 0.6963473008554725
       }
     },
     {
@@ -2664,6 +2730,28 @@
         "basis": "derived",
         "input_output_ratio": 14.283352970203794,
         "reasoning_output_share": 0.587052240852633
+      }
+    },
+    {
+      "source_id": "765c9f31-95ec-4f14-900a-80614c3b0777",
+      "slug": "mercury-2-5",
+      "name": "Mercury 2.5",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 8437.833446126484,
+        "answer": 660.1215780224895,
+        "output": 9097.955024148974
+      },
+      "canonical_token_counts": {
+        "input": 1098901142,
+        "output": 35253099,
+        "answer": 2594069,
+        "reasoning": 32659030
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 31.171760020303463,
+        "reasoning_output_share": 0.9274428620200573
       }
     },
     {

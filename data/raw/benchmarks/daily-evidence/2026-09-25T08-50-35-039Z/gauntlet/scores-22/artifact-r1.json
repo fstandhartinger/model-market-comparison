@@ -1,0 +1,293 @@
+[
+  {
+    "id": "public:089936697ef1aaafa2efb78b",
+    "benchmark_id": "matharena-brokenarxiv::2026-06",
+    "subject": {
+      "source_id": "DeepSeek-V4.1-Flash (Max)",
+      "name": "DeepSeek-V4.1-Flash (Max)",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 39.35,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://matharena.ai/competition_tables/arxiv_false--june",
+      "retrieved_at": "2026-09-25T08:53:34.749818+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/f76cc5576b643688f1de.gz",
+      "sha256": "f76cc5576b643688f1de0510f5b5281cf4a45af0e21e911367c8327c4170de62",
+      "locator": "matharena_table; source row 16; DeepSeek-V4.1-Flash (Max); field accuracy"
+    },
+    "protocol": "BrokenArXiv 06/2026 (MathArena): 54 problems from arXiv papers submitted in June 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; not a Composite input.; source row: {\"rank\":\"16\",\"model\":\"DeepSeek-V4.1-Flash (Max)\",\"provider\":\"DeepSeek\",\"accuracy\":\"39.35% ± 9.21%\",\"cost\":\"$0.034\",\"output_tokens\":\"56911\",\"released_after_competition\":true,\"open_weights\":\"✔️\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:44dcf32a30e5301c153b0ec5",
+    "benchmark_id": "matharena-brokenarxiv::2026-06",
+    "subject": {
+      "source_id": "Grok 4.5",
+      "name": "Grok 4.5",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 29.32,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://matharena.ai/competition_tables/arxiv_false--june",
+      "retrieved_at": "2026-09-25T08:53:34.749818+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/f76cc5576b643688f1de.gz",
+      "sha256": "f76cc5576b643688f1de0510f5b5281cf4a45af0e21e911367c8327c4170de62",
+      "locator": "matharena_table; source row 17; Grok 4.5; field accuracy"
+    },
+    "protocol": "BrokenArXiv 06/2026 (MathArena): 54 problems from arXiv papers submitted in June 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; not a Composite input.; source row: {\"rank\":\"17\",\"model\":\"Grok 4.5\",\"provider\":\"xAI\",\"accuracy\":\"29.32% ± 7.01%\",\"cost\":\"$0.33\",\"output_tokens\":\"55167\",\"released_after_competition\":true,\"open_weights\":\"❌\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:ea823ac8eeca3265a7ac70be",
+    "benchmark_id": "matharena-brokenarxiv::2026-06",
+    "subject": {
+      "source_id": "Gemini 3.8 Flash",
+      "name": "Gemini 3.8 Flash",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 20.83,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://matharena.ai/competition_tables/arxiv_false--june",
+      "retrieved_at": "2026-09-25T08:53:34.749818+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/f76cc5576b643688f1de.gz",
+      "sha256": "f76cc5576b643688f1de0510f5b5281cf4a45af0e21e911367c8327c4170de62",
+      "locator": "matharena_table; source row 18; Gemini 3.8 Flash; field accuracy"
+    },
+    "protocol": "BrokenArXiv 06/2026 (MathArena): 54 problems from arXiv papers submitted in June 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; not a Composite input.; source row: {\"rank\":\"18\",\"model\":\"Gemini 3.8 Flash\",\"provider\":\"Google\",\"accuracy\":\"20.83% ± 7.66%\",\"cost\":\"$0.16\",\"output_tokens\":\"43220\",\"released_after_competition\":true,\"open_weights\":\"❌\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:8977e402e49d69f6e092f07a",
+    "benchmark_id": "matharena-brokenarxiv::2026-06",
+    "subject": {
+      "source_id": "Gemini 3.1 Pro Preview",
+      "name": "Gemini 3.1 Pro Preview",
+      "model_id": "gemini-3.1-pro-preview::default",
+      "variant": null,
+      "harness": null
+    },
+    "value": 17.59,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://matharena.ai/competition_tables/arxiv_false--june",
+      "retrieved_at": "2026-09-25T08:53:34.749818+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/f76cc5576b643688f1de.gz",
+      "sha256": "f76cc5576b643688f1de0510f5b5281cf4a45af0e21e911367c8327c4170de62",
+      "locator": "matharena_table; source row 19; Gemini 3.1 Pro Preview; field accuracy"
+    },
+    "protocol": "BrokenArXiv 06/2026 (MathArena): 54 problems from arXiv papers submitted in June 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; not a Composite input.; source row: {\"rank\":\"19\",\"model\":\"Gemini 3.1 Pro Preview\",\"provider\":\"Google\",\"accuracy\":\"17.59% ± 5.86%\",\"cost\":\"$0.33\",\"output_tokens\":\"27866\",\"released_after_competition\":false,\"open_weights\":\"❌\"}",
+    "comparison_key": null,
+    "join_note": "Reviewed identity map 2026-09-16: label names gemini-3.1-pro-preview without a setting; the catalog has exactly one configuration, the default (gemini-3.1-pro-preview::default)"
+  },
+  {
+    "id": "public:d23d70b836c5b8876d30a87f",
+    "benchmark_id": "matharena-brokenarxiv::2026-06",
+    "subject": {
+      "source_id": "DeepSeek-v4-Flash (Max)",
+      "name": "DeepSeek-v4-Flash (Max)",
+      "model_id": "deepseek-v4-flash::max",
+      "variant": null,
+      "harness": null
+    },
+    "value": 16.67,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://matharena.ai/competition_tables/arxiv_false--june",
+      "retrieved_at": "2026-09-25T08:53:34.749818+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/f76cc5576b643688f1de.gz",
+      "sha256": "f76cc5576b643688f1de0510f5b5281cf4a45af0e21e911367c8327c4170de62",
+      "locator": "matharena_table; source row 20; DeepSeek-v4-Flash (Max); field accuracy"
+    },
+    "protocol": "BrokenArXiv 06/2026 (MathArena): 54 problems from arXiv papers submitted in June 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; not a Composite input.; source row: {\"rank\":\"20\",\"model\":\"DeepSeek-v4-Flash (Max)\",\"provider\":\"DeepSeek\",\"accuracy\":\"16.67% ± 5.74%\",\"cost\":\"$0.037\",\"output_tokens\":\"133312\",\"released_after_competition\":false,\"open_weights\":\"✔️\"}",
+    "comparison_key": null,
+    "join_note": "Reviewed identity map 2026-09-16: label states model deepseek-v4-flash and setting max; exact catalog configuration deepseek-v4-flash::max"
+  },
+  {
+    "id": "public:5ef56984064ab99345a404dc",
+    "benchmark_id": "matharena-brokenarxiv::2026-06",
+    "subject": {
+      "source_id": "Step 3.7 Flash",
+      "name": "Step 3.7 Flash",
+      "model_id": "step-3.7-flash::default",
+      "variant": null,
+      "harness": null
+    },
+    "value": 15.74,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://matharena.ai/competition_tables/arxiv_false--june",
+      "retrieved_at": "2026-09-25T08:53:34.749818+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/f76cc5576b643688f1de.gz",
+      "sha256": "f76cc5576b643688f1de0510f5b5281cf4a45af0e21e911367c8327c4170de62",
+      "locator": "matharena_table; source row 21; Step 3.7 Flash; field accuracy"
+    },
+    "protocol": "BrokenArXiv 06/2026 (MathArena): 54 problems from arXiv papers submitted in June 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; not a Composite input.; source row: {\"rank\":\"21\",\"model\":\"Step 3.7 Flash\",\"provider\":\"StepFun\",\"accuracy\":\"15.74% ± 5.61%\",\"cost\":\"$0.027\",\"output_tokens\":\"90855\",\"released_after_competition\":false,\"open_weights\":\"✔️\"}",
+    "comparison_key": null,
+    "join_note": "Reviewed identity map 2026-09-16: label names step-3.7-flash without a setting; the catalog has exactly one configuration, the default (step-3.7-flash::default)"
+  },
+  {
+    "id": "public:6efa1cb7fdf6e9f9f808cf8b",
+    "benchmark_id": "matharena-brokenarxiv::2026-06",
+    "subject": {
+      "source_id": "GLM 5.2",
+      "name": "GLM 5.2",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 14.2,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://matharena.ai/competition_tables/arxiv_false--june",
+      "retrieved_at": "2026-09-25T08:53:34.749818+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/f76cc5576b643688f1de.gz",
+      "sha256": "f76cc5576b643688f1de0510f5b5281cf4a45af0e21e911367c8327c4170de62",
+      "locator": "matharena_table; source row 22; GLM 5.2; field accuracy"
+    },
+    "protocol": "BrokenArXiv 06/2026 (MathArena): 54 problems from arXiv papers submitted in June 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; not a Composite input.; source row: {\"rank\":\"22\",\"model\":\"GLM 5.2\",\"provider\":\"Z.ai\",\"accuracy\":\"14.20% ± 5.37%\",\"cost\":\"$0.14\",\"output_tokens\":\"35214\",\"released_after_competition\":true,\"open_weights\":\"✔️\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:104ed8b9637a62036d2fa074",
+    "benchmark_id": "matharena-brokenarxiv::2026-06",
+    "subject": {
+      "source_id": "Gemini 3.5 Flash",
+      "name": "Gemini 3.5 Flash",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 12.35,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://matharena.ai/competition_tables/arxiv_false--june",
+      "retrieved_at": "2026-09-25T08:53:34.749818+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/f76cc5576b643688f1de.gz",
+      "sha256": "f76cc5576b643688f1de0510f5b5281cf4a45af0e21e911367c8327c4170de62",
+      "locator": "matharena_table; source row 23; Gemini 3.5 Flash; field accuracy"
+    },
+    "protocol": "BrokenArXiv 06/2026 (MathArena): 54 problems from arXiv papers submitted in June 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; not a Composite input.; source row: {\"rank\":\"23\",\"model\":\"Gemini 3.5 Flash\",\"provider\":\"Google\",\"accuracy\":\"12.35% ± 5.07%\",\"cost\":\"$0.32\",\"output_tokens\":\"35318\",\"released_after_competition\":false,\"open_weights\":\"❌\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:b6d8e12a5747a3b5346de454",
+    "benchmark_id": "matharena-brokenarxiv::2026-06",
+    "subject": {
+      "source_id": "Gemini 3.6 Flash",
+      "name": "Gemini 3.6 Flash",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 12.04,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://matharena.ai/competition_tables/arxiv_false--june",
+      "retrieved_at": "2026-09-25T08:53:34.749818+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/f76cc5576b643688f1de.gz",
+      "sha256": "f76cc5576b643688f1de0510f5b5281cf4a45af0e21e911367c8327c4170de62",
+      "locator": "matharena_table; source row 24; Gemini 3.6 Flash; field accuracy"
+    },
+    "protocol": "BrokenArXiv 06/2026 (MathArena): 54 problems from arXiv papers submitted in June 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; not a Composite input.; source row: {\"rank\":\"24\",\"model\":\"Gemini 3.6 Flash\",\"provider\":\"Google\",\"accuracy\":\"12.04% ± 6.14%\",\"cost\":\"$0.15\",\"output_tokens\":\"20328\",\"released_after_competition\":true,\"open_weights\":\"❌\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:2a3e7af1d8b903ba3206859f",
+    "benchmark_id": "matharena-brokenarxiv::2026-06",
+    "subject": {
+      "source_id": "Gemini 3.7 Flash",
+      "name": "Gemini 3.7 Flash",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 11.11,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://matharena.ai/competition_tables/arxiv_false--june",
+      "retrieved_at": "2026-09-25T08:53:34.749818+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/f76cc5576b643688f1de.gz",
+      "sha256": "f76cc5576b643688f1de0510f5b5281cf4a45af0e21e911367c8327c4170de62",
+      "locator": "matharena_table; source row 25; Gemini 3.7 Flash; field accuracy"
+    },
+    "protocol": "BrokenArXiv 06/2026 (MathArena): 54 problems from arXiv papers submitted in June 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; not a Composite input.; source row: {\"rank\":\"25\",\"model\":\"Gemini 3.7 Flash\",\"provider\":\"Google\",\"accuracy\":\"11.11% ± 5.93%\",\"cost\":\"$0.078\",\"output_tokens\":\"20783\",\"released_after_competition\":true,\"open_weights\":\"❌\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:e38adaeae94a8286561eb8bc",
+    "benchmark_id": "matharena-brokenarxiv::2026-06",
+    "subject": {
+      "source_id": "Qwen3.6-35B",
+      "name": "Qwen3.6-35B",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 3.4,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://matharena.ai/competition_tables/arxiv_false--june",
+      "retrieved_at": "2026-09-25T08:53:34.749818+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/f76cc5576b643688f1de.gz",
+      "sha256": "f76cc5576b643688f1de0510f5b5281cf4a45af0e21e911367c8327c4170de62",
+      "locator": "matharena_table; source row 26; Qwen3.6-35B; field accuracy"
+    },
+    "protocol": "BrokenArXiv 06/2026 (MathArena): 54 problems from arXiv papers submitted in June 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; not a Composite input.; source row: {\"rank\":\"26\",\"model\":\"Qwen3.6-35B\",\"provider\":\"Qwen\",\"accuracy\":\"3.40% ± 2.79%\",\"cost\":\"N/A\",\"output_tokens\":\"38763\",\"released_after_competition\":false,\"open_weights\":\"✔️\"}",
+    "comparison_key": null
+  },
+  {
+    "id": "public:921788e88135c9c165d94b95",
+    "benchmark_id": "matharena-brokenarxiv::2026-06",
+    "subject": {
+      "source_id": "Qwen3.5-2B",
+      "name": "Qwen3.5-2B",
+      "model_id": null,
+      "variant": null,
+      "harness": null
+    },
+    "value": 2.78,
+    "unit": "percent",
+    "basis": "measured",
+    "source": {
+      "url": "https://matharena.ai/competition_tables/arxiv_false--june",
+      "retrieved_at": "2026-09-25T08:53:34.749818+00:00",
+      "published_at": null,
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/f76cc5576b643688f1de.gz",
+      "sha256": "f76cc5576b643688f1de0510f5b5281cf4a45af0e21e911367c8327c4170de62",
+      "locator": "matharena_table; source row 27; Qwen3.5-2B; field accuracy"
+    },
+    "protocol": "BrokenArXiv 06/2026 (MathArena): 54 problems from arXiv papers submitted in June 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; not a Composite input.; source row: {\"rank\":\"27\",\"model\":\"Qwen3.5-2B\",\"provider\":\"Qwen\",\"accuracy\":\"2.78% ± 2.53%\",\"cost\":\"N/A\",\"output_tokens\":\"35179\",\"released_after_competition\":false,\"open_weights\":\"✔️\"}",
+    "comparison_key": null
+  }
+]

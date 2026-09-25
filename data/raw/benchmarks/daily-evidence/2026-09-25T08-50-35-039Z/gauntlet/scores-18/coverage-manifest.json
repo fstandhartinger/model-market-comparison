@@ -1,0 +1,173 @@
+{
+  "artifact_id": "scores-18",
+  "rounds_used": 1,
+  "rows": {
+    "total": 10,
+    "accepted": [],
+    "quarantined": [
+      "public:a1e347c697ecbf9cbe1cdd3f",
+      "public:a594d429d2d8b9ed7cccb731",
+      "public:138b4b98eed11d05a988ca90",
+      "public:6c86080f9cd09963355bc6b5",
+      "public:fa6556a769df5d1cc5863886",
+      "public:efe195ebf1cf6366655459ad",
+      "public:e8e87cc10333ff1238065dc1",
+      "public:d3bbb815362b998459940c41",
+      "public:2ffc018ad92f782b3b1ba356",
+      "public:6e8e935d3674a15c04c46591"
+    ]
+  },
+  "producer_flagged": [
+    "public:a1e347c697ecbf9cbe1cdd3f",
+    "public:a594d429d2d8b9ed7cccb731",
+    "public:138b4b98eed11d05a988ca90",
+    "public:6c86080f9cd09963355bc6b5",
+    "public:fa6556a769df5d1cc5863886",
+    "public:efe195ebf1cf6366655459ad",
+    "public:e8e87cc10333ff1238065dc1",
+    "public:d3bbb815362b998459940c41",
+    "public:2ffc018ad92f782b3b1ba356",
+    "public:6e8e935d3674a15c04c46591"
+  ],
+  "criteria": [
+    "c1"
+  ],
+  "coverage": {
+    "producer": {
+      "complete": true,
+      "model": "z-ai/glm-5.3-flash",
+      "rows_covered": 10
+    },
+    "critic": [
+      {
+        "round": 1,
+        "verdict": "pass",
+        "coverage_complete": true,
+        "missing_rows": [],
+        "missing_criteria": []
+      }
+    ],
+    "final": {
+      "rows_covered": 10,
+      "criteria_covered": 1,
+      "complete": true
+    }
+  },
+  "receipts": [
+    {
+      "round": 1,
+      "role": "producer",
+      "reused_from_round": null,
+      "requested_model": "z-ai/glm-5.3-flash",
+      "model": "z-ai/glm-5.3-flash",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0.00068223375,
+      "out": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/gauntlet/scores-18/producer-r1.json",
+      "output_sha256": "0183ff40486562a4cfc801adc95131d017add115452b19c402cd44f5daf145b1",
+      "qualification": {
+        "id": "z-ai/glm-5.3-flash",
+        "family": "z-ai",
+        "free": false,
+        "input_per_1m": 0.045,
+        "output_per_1m": 0.14,
+        "context": 1310720,
+        "aa_intelligence_index": 41.8,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "glm-5.3-flash::default"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "glm-5.3-flash::default",
+            "index": 41.8
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 12041,
+        "completion_tokens": 1052,
+        "total_tokens": 13093,
+        "cost": 0.00068223375,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.000689125,
+          "upstream_inference_prompt_cost": 0.000541845,
+          "upstream_inference_completions_cost": 0.00014728
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 208,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    },
+    {
+      "round": 1,
+      "role": "critic",
+      "requested_model": "deepseek/deepseek-v4.1-flash",
+      "model": "deepseek/deepseek-v4.1-flash",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0.01346337828,
+      "out": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/gauntlet/scores-18/review-r1.json",
+      "output_sha256": "e42453abb9aff89921cb4735cdf1295cbc425881195350e161f64b53abe13eee",
+      "qualification": {
+        "id": "deepseek/deepseek-v4.1-flash",
+        "family": "deepseek",
+        "free": false,
+        "input_per_1m": 0.3,
+        "output_per_1m": 1.2,
+        "context": 1048576,
+        "aa_intelligence_index": 39.5,
+        "aa_source": "exact_family_slug",
+        "matched_model_ids": [
+          "deepseek-v4.1-flash::max"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "deepseek-v4.1-flash::max",
+            "index": 39.5
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 12885,
+        "completion_tokens": 8237,
+        "total_tokens": 21122,
+        "cost": 0.01346337828,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 512,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.013599372,
+          "upstream_inference_prompt_cost": 0.003714972,
+          "upstream_inference_completions_cost": 0.0098844
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 7574,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    }
+  ]
+}
