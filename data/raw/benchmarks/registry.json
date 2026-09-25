@@ -17634,6 +17634,10 @@
         "identity_policy": "source_label",
         "locator": "Section \"Professional work\", table with header \"Model (and effort) | Score | Cost per task\"; column \"Score\" of the row whose label names the model and effort (e.g. \"GPT-6 Sol (xhigh)\").",
         "version_guard": "Require the printed version 1.0.6 (the figure caption reads \"In AutomationBench 1.0.6\"). AA's own AutomationBench run (aa-automationbench::1.0.6) is a different implementation and keeps its own identity.",
+        "access": {
+          "mode": "browser_only",
+          "reason": "A plain HTTP client is answered with HTTP 403 although robots.txt allows the path (re-checked 2026-09-25); the retained bytes are a reviewed browser capture. The daily does not fetch this URL, and the entry reports retained_manual_snapshot rather than an unreachable source."
+        },
         "notes": "openai.com/index/* answers a plain HTTP client with a challenge page although robots.txt allows the path, so the retained bytes were taken from one load in the shared desktop Chrome (see the capture_note in the run manifest). Capture only; never execute downloaded JavaScript. Only values OpenAI prints as text are accepted: the chart datapoints carry no printed values and are not read. Competitor cells in this post are OpenAI quoting other reports ('Evaluations of competitor models were taken from publicly available reports') and are refused as secondary quotes. Basis stays self_reported."
       },
       "update_cadence": {
@@ -17707,6 +17711,10 @@
         "identity_policy": "source_label",
         "locator": "Section \"Professional work\", table with header \"Model (and effort) | Score | Cost per task\"; column \"Cost per task\" of the row whose label names the model and effort. Only absolute USD amounts are read; cells printed as a multiple of GPT-6 Sol's cost are not an absolute value and are refused.",
         "version_guard": "Require the printed version 1.0.6 (the figure caption reads \"In AutomationBench 1.0.6\").",
+        "access": {
+          "mode": "browser_only",
+          "reason": "A plain HTTP client is answered with HTTP 403 although robots.txt allows the path (re-checked 2026-09-25); the retained bytes are a reviewed browser capture. The daily does not fetch this URL, and the entry reports retained_manual_snapshot rather than an unreachable source."
+        },
         "notes": "openai.com/index/* answers a plain HTTP client with a challenge page although robots.txt allows the path, so the retained bytes were taken from one load in the shared desktop Chrome (see the capture_note in the run manifest). Capture only; never execute downloaded JavaScript. Only values OpenAI prints as text are accepted: the chart datapoints carry no printed values and are not read. Competitor cells in this post are OpenAI quoting other reports ('Evaluations of competitor models were taken from publicly available reports') and are refused as secondary quotes. Basis stays self_reported."
       },
       "update_cadence": {
@@ -17780,6 +17788,10 @@
         "identity_policy": "source_label",
         "locator": "Section \"Professional work\", the sentence \"On Agents' Last Exam ... GPT-6 Sol at max effort scores 56.4%\"; the printed percentage for the named model and effort.",
         "version_guard": "Require the printed version V1 (the figure caption reads \"In Agents' Last Exam V1\"). StepFun's ALE-CLI identity and any other operator's run are separate identities.",
+        "access": {
+          "mode": "browser_only",
+          "reason": "A plain HTTP client is answered with HTTP 403 although robots.txt allows the path (re-checked 2026-09-25); the retained bytes are a reviewed browser capture. The daily does not fetch this URL, and the entry reports retained_manual_snapshot rather than an unreachable source."
+        },
         "notes": "openai.com/index/* answers a plain HTTP client with a challenge page although robots.txt allows the path, so the retained bytes were taken from one load in the shared desktop Chrome (see the capture_note in the run manifest). Capture only; never execute downloaded JavaScript. Only values OpenAI prints as text are accepted: the chart datapoints carry no printed values and are not read. Competitor cells in this post are OpenAI quoting other reports ('Evaluations of competitor models were taken from publicly available reports') and are refused as secondary quotes. Basis stays self_reported."
       },
       "update_cadence": {
@@ -17853,6 +17865,10 @@
         "identity_policy": "source_label",
         "locator": "Section \"Coding\", the sentences \"GPT-6 Sol at max effort scores 68.8%\" and \"GPT-6 Luna at max effort scores 66.6%\"; the printed percentage for the named model and effort.",
         "version_guard": "Require the printed version 1.1 (\"On DeepSWE v1.1\", caption \"In DeepSWE 1.1\"). Datacurve's own board (deepswe::snapshot-2026-09-15) and other vendors' DeepSWE v1.1 tables keep their own identities.",
+        "access": {
+          "mode": "browser_only",
+          "reason": "A plain HTTP client is answered with HTTP 403 although robots.txt allows the path (re-checked 2026-09-25); the retained bytes are a reviewed browser capture. The daily does not fetch this URL, and the entry reports retained_manual_snapshot rather than an unreachable source."
+        },
         "notes": "openai.com/index/* answers a plain HTTP client with a challenge page although robots.txt allows the path, so the retained bytes were taken from one load in the shared desktop Chrome (see the capture_note in the run manifest). Capture only; never execute downloaded JavaScript. Only values OpenAI prints as text are accepted: the chart datapoints carry no printed values and are not read. Competitor cells in this post are OpenAI quoting other reports ('Evaluations of competitor models were taken from publicly available reports') and are refused as secondary quotes. Basis stays self_reported."
       },
       "update_cadence": {
@@ -17926,6 +17942,10 @@
         "identity_policy": "source_label",
         "locator": "Section \"Computer use\", the sentence \"On OSWorld 2.0 offline, GPT-6 Sol at xhigh effort achieves a similar score to Claude Opus 5 at medium effort—60.5% versus 60.3%\"; the printed percentage for the named OpenAI model and effort.",
         "version_guard": "Require the printed release v2026.08.08 and the offline set with partial reward (caption: \"We report the partial reward on the offline set from the v2026.08.08 release\"). XLANG Lab's own board (osworld-2::v2026.08.08) is a different implementation and keeps its identity.",
+        "access": {
+          "mode": "browser_only",
+          "reason": "A plain HTTP client is answered with HTTP 403 although robots.txt allows the path (re-checked 2026-09-25); the retained bytes are a reviewed browser capture. The daily does not fetch this URL, and the entry reports retained_manual_snapshot rather than an unreachable source."
+        },
         "notes": "openai.com/index/* answers a plain HTTP client with a challenge page although robots.txt allows the path, so the retained bytes were taken from one load in the shared desktop Chrome (see the capture_note in the run manifest). Capture only; never execute downloaded JavaScript. Only values OpenAI prints as text are accepted: the chart datapoints carry no printed values and are not read. Competitor cells in this post are OpenAI quoting other reports ('Evaluations of competitor models were taken from publicly available reports') and are refused as secondary quotes. Basis stays self_reported."
       },
       "update_cadence": {

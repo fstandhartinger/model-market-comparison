@@ -135,17 +135,47 @@ export function vendorDocumentUrls(entries) {
   return urls;
 }
 
+// D202 (2026-09-25): `openai.com/index/*` answers this user agent with HTTP 403 although its
+// robots.txt allows the path (re-checked 2026-09-25), so the five entries that take their values
+// from that launch post were captured once in a browser and reviewed — which their own
+// `how_to_collect.notes` has said since they were added. The daily fetched the URL anyway on every
+// run, collected a 403, added the host to the capture script's blocked set, and filed all five as
+// `source_unreachable_or_manual` with `last_ok: never`: a failing row for a source that is working
+// exactly as reviewed. An entry may now declare `how_to_collect.access.mode: "browser_only"`; the
+// run leaves its URL alone and reports it as the retained manual snapshot it is, which is what the
+// plan-level manual snapshots already do (`refresh: "manual"` → `retained_manual_snapshot`).
+//
+// A URL is left alone only when EVERY entry that names it — as `primary_url` or in `evidence` —
+// declares browser-only access, so one entry's access mode can never silently drop another's source.
+export const browserOnly = (entry) => (entry?.how_to_collect?.access?.mode ?? null) === 'browser_only';
+export function browserOnlyUrls(entries) {
+  const named = new Map();
+  for (const entry of entries ?? []) {
+    const urls = new Set([entry?.primary_url, ...(entry?.evidence ?? []).map((s) => s?.url)].filter(Boolean));
+    for (const url of urls) {
+      const seen = named.get(url) ?? { total: 0, browser: 0 };
+      seen.total += 1; if (browserOnly(entry)) seen.browser += 1;
+      named.set(url, seen);
+    }
+  }
+  return new Set([...named].filter(([, seen]) => seen.total === seen.browser).map(([url]) => url));
+}
+
 /**
  * What one run fetches, decided before anything is fetched: `urls` is the queue for
  * `scripts/capture-benchmark-sources.py`, `documentUrls` the queue for
- * `scripts/capture-vendor-documents.py`. Pure, so the split is testable without a network call.
+ * `scripts/capture-vendor-documents.py`, and a browser-only URL is fetched by neither.
+ * Pure, so the split is testable without a network call.
  */
 export function captureTargets({ registry, plan, vendor }) {
   const urls = new Map();
   const documentUrls = vendorDocumentUrls(registry.entries);
+  const skip = browserOnlyUrls(registry.entries);
   const add = (source) => {
     // D201: a declared-PDF vendor document is the other capturer's, wherever it is named.
     if (source?.url && documentUrls.has(source.url)) return;
+    // D202: a reviewed browser-only capture is fetched by neither capturer.
+    if (source?.url && skip.has(source.url)) return;
     // Vite SPA pages pin a hashed module bundle; only the stable page is queued,
     // and the bundle is discovered from its capture receipt.
     if (source?.page_url && source.follow_module_script) { urls.set(source.page_url, { url: source.page_url, follow_module_script: true }); return; }
@@ -602,6 +632,9 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
   // a checked URL is never represented as a new benchmark measurement.
   for (const entry of registry.entries) if (!checks.some((c) => c.id === entry.id) && !protocolCache.has(entry.id)) {
     const receipt = captured.get(entry.primary_url);
+    // D202: a reviewed browser-only source was never fetched, so it has no receipt and is not
+    // unreachable — it is the retained manual snapshot its registry entry declares it to be.
+    if (browserOnly(entry)) { checks.push({ id: entry.id, status: 'retained_manual_snapshot', source_url: entry.primary_url, reason: entry.how_to_collect.access.reason }); continue; }
     checks.push({ id: entry.id, status: receipt?.status === 200 ? 'source_reachable_protocol_date_retained' : 'source_unreachable_or_manual', source_url: entry.primary_url, reason: receipt?.reason ?? 'No newly accepted protocol change' });
   }
   const report = { ok: true, checked_at: at, sources_attempted: captured.size, concurrency, reuse: vendorCache.stats(), reused_units: vendorReused, checks, reviews,
