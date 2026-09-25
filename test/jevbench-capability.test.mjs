@@ -101,6 +101,14 @@ test('CR-169 / D207: the ⓘ trigger is a small inline glyph that does not stret
   assert.doesNotMatch(trigger[0], /min-h-\[?44/, 'the trigger does not re-add a 44 px minimum');
 });
 
+test('CR-169 follow-up: long truncated names keep their ⓘ trigger visible', () => {
+  // On a 390 px phone the name ellipsis also clipped the trigger, so rows with long names had no tap target.
+  const source = readFileSync(path.join(root, 'components/JevCapabilityRanking.tsx'), 'utf8');
+  const nameCell = source.match(/<span className="col-start-2 row-start-1([^"]*)"[^>]*>\s*<span className="min-w-0 truncate">[\s\S]*?<\/span>\s*(?:\{\/\*[\s\S]*?\*\/\}\s*)?<button[^>]*bh-jev-info/);
+  assert.ok(nameCell, 'the ⓘ trigger is a sibling of the truncated name, not inside it');
+  assert.doesNotMatch(nameCell[1], /truncate/, 'the cell that holds the trigger does not clip it');
+});
+
 test('F-184 (Fable pass 34): the capability rows share one height and the header names the value columns', () => {
   const source = readFileSync(path.join(root, 'components/JevCapabilityChart.tsx'), 'utf8');
   // the trailing value column never wraps at sm+, on a track wide enough for the longest string
