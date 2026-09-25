@@ -11817,3 +11817,26 @@ watching every other accepted row in the same file. This gate ran both verifiers
 No `ALL-ACCEPTED`: five accepted design rows are back to **open**, CR-156/CR-158 have no acceptance
 criteria in the authoritative documents, D205 needs Florian, four D-rows await a daily run, and X6's
 line-by-line audit has no passing receipt from this gate.
+
+## Review gate 20260925T155004Z (opencode-kimi) — empty range; F-182 promoted, live state re-proven
+
+Range since the last gate (`f07e5651..HEAD`): **no commits**; `origin/main` equals local HEAD.
+Only the two ops-harness files were dirty in the worktree (Florian's 25.09.2026 engine decision),
+committed separately by this gate. Local gates green at `f07e5651`: build-dataset rc 0
+(871 / 674 / 96 / 3,121), `npm test` 1,386 / 1,385 / 0 fail / 1 skip, `tsc` rc 0; dataset churn
+timestamp-only, discarded. All three hosts serve the identical build marker at 15:58 UTC.
+Evidence: `/opt/benchmarkheaven/state/ux-evidence/review-20260925T155004Z/`.
+
+Verifiers were run with **all** groups on both hosts; every failure the 13:40 gate published
+reproduced to the pixel (F-181 cost axis null 4/4 contexts; F-184 91 rows at 28/43 px; F-189
+rank-by null, first bar 4,070 px at 390; F-190 pinned page 14,876 px). pass-35 totals:
+**144/152 on each host**. No drift.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| F-182 | **verified** | `review-20260925T155004Z/pass34-{canonical,legacy}/` (F-182 group 8/8 across both hosts); `f182-static-count.txt` | Implementer claude-opus (`dcbf8d9c`, `54f862f2`); promoted by this gate under the not-self rule. Independent static count on the served hub: **0** occurrences of `usage.input_tokens` outside script/style/code, **24** in `<code>`, byte-identical on canonical and legacy; `max_seq_len` and `long_policy` absent from text. |
+| F-181, F-184, F-189, F-193, F-190, D205, D206 | **open** (unchanged) | same receipts | Values re-measured, identical to the 13:40 gate; all await design-authority decisions (or Florian, for D205/D206). |
+| F-176, F-180, F-183, F-185, F-186, F-188, F-191, F-192, F-187 | **verified/implemented** (unchanged) | pass-34/35 logs | Green on both hosts. |
+| CR-156, CR-158 / CR-151 / CR-153 | **implemented** (unchanged) | drift spot-checks in REVIEW-20260925T155004Z.md | Ten SEO routes 200 on canonical, sitemap 759 URLs, `/api/jevbench/v1.4.2` 200. D206 re-confirmed: 0 occurrences in `03`/`04`. |
+
+No `ALL-ACCEPTED`: open rows remain and X6's line-by-line audit is still owed.
