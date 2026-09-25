@@ -33,7 +33,7 @@ export default function RequestPriorityEvaluationPage() {
     <section className="mt-7" aria-labelledby="priority-fairness">
       <h2 id="priority-fairness" className="text-xl font-semibold">What the fee does and does not change</h2>
       <ul className="mt-3 list-disc space-y-2 pl-5 text-sm">
-        <li>Payment buys earlier scheduling only. It never buys a different method, score or rank. Every model uses the same frozen task set and rules.</li>
+        <li>Payment buys earlier scheduling only. It never buys a different method, score or rank. Every model uses the same sealed task set and rules.</li>
         <li>We decide which models we evaluate and when. We may also evaluate any model early on our own if it is of public interest.</li>
         <li>Every submission goes through code review. We refuse and fully refund requests that are unsafe or cannot be evaluated fairly.</li>
         <li>After a request passes code review, we provide results within 48 hours. If we miss that deadline, the payment is automatically refunded.</li>
