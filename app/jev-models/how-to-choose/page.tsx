@@ -63,14 +63,14 @@ export default async function HowToChooseJevModelPage() {
       <section className="bh-panel p-5" aria-labelledby="chooser-speed">
         <p className="bh-eyebrow">Fastest (Speed axis)</p>
         <h2 id="chooser-speed" className="mt-1 text-xl font-semibold"><JevRowLink row={fastest} /></h2>
-        <p className="mt-2 text-3xl font-bold tabular-nums">{one(fastest.axes.speed)}<span className="bh-muted ml-2 text-sm font-normal">/ 100 benchmark score</span></p>
+        <p className="mt-2 text-3xl font-bold tabular-nums">{one(fastest.axes.speed)}<span className="bh-muted ml-2 text-sm font-normal">of 100</span></p>
         <p className="bh-muted mt-2 text-sm">This is the published Speed axis. Use the row’s latency conditions when estimating real performance; it is not a universal wall-clock guarantee.</p>
       </section>
 
       <section className="bh-panel p-5" aria-labelledby="chooser-cost">
         <p className="bh-eyebrow">Cheapest per decision (Cost axis)</p>
         <h2 id="chooser-cost" className="mt-1 text-xl font-semibold"><JevRowLink row={cheapest} /></h2>
-        <p className="mt-2 text-3xl font-bold tabular-nums">{one(cheapest.axes.cost)}<span className="bh-muted ml-2 text-sm font-normal">/ 100 benchmark score</span></p>
+        <p className="mt-2 text-3xl font-bold tabular-nums">{one(cheapest.axes.cost)}<span className="bh-muted ml-2 text-sm font-normal">of 100</span></p>
         <p className="mt-2 text-sm">Published cost: {usdPerThousand(cheapest.cost?.usd_per_1000)} <span className="bh-muted">({costBasisLabel(cheapest.cost?.kind)})</span></p>
         <p className="bh-muted mt-2 text-sm">Cost axis is a comparison score. The row’s cost basis distinguishes measured, estimated and announced values.</p>
       </section>

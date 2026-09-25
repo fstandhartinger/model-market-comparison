@@ -2,7 +2,11 @@ import type { CSSProperties } from 'react';
 import Link from 'next/link';
 import { jevV14RowNote, type JevV14Artifact, type JevV14System } from '../lib/jevbench-v14.mjs';
 import { JevCompareV14, type JevCompareRow } from './JevCompareV14';
-import { JEV_TYPE_LABEL, JEV_TYPE_VAR } from './jevTypes';
+import { JevRankBy } from './JevRankBy';
+import { JevScoreBar, JevScoreBarHeader, toBarRow } from './JevScoreBar';
+import { JEV_TYPE_LABEL, jevLegendTypes, jevTypeVarName } from './jevTypes';
+
+export { JevScoreBar, JevScoreBarHeader, toBarRow };
 
 const one = (value: number | null | undefined) => value == null ? '—' : value.toFixed(1);
 const f0 = (value: number | null | undefined) => value == null ? '–' : value.toFixed(0);
@@ -12,7 +16,7 @@ const seconds = (value: number | null | undefined) => value == null ? '—' : `$
 const dollars = (value: number | null | undefined) => value == null ? '—' : `$${value.toFixed(value < 0.01 ? 4 : 3)}`;
 const shortName = (value: string) => value.split(' (')[0].split(', formerly')[0];
 const apiExplanation = "API — the operator's endpoint received sealed item text, without answers.";
-const typeVar = (cls: string) => ({ '--jev-t': `var(${JEV_TYPE_VAR[cls] ?? JEV_TYPE_VAR['llm-baseline']})` }) as CSSProperties;
+const typeVar = (cls: string) => ({ '--jev-t': `var(${jevTypeVarName(cls)})` }) as CSSProperties;
 const NOT_RANKED: Record<string, string> = { honorable_mention: 'honorable mention', partial: 'partial run' };
 const CHART_TOP = 20;
 
@@ -78,75 +82,19 @@ function Row({ row, note }: { row: JevV14System; note: string | null }) {
   </tr>;
 }
 
-export function JevScoreBar({ row, reference = false }: { row: JevV14System; reference?: boolean }) {
-  const s = row.jevbench_score;
-  const usd = row.cost?.usd_per_1000;
-  const kind = row.cost?.kind;
-  const label = `${row.display}: ${one(s)}${row.rank ? `, rank ${row.rank}` : `, ${NOT_RANKED[row.listing] ?? row.listing}, not ranked`}. Intelligence ${one(row.axes?.intelligence)}, calibration ${row.axes?.calibration == null ? 'none' : one(row.axes.calibration)}, speed ${one(row.axes?.speed)}, cost ${one(row.axes?.cost)}.`;
-  return <li style={typeVar(row.class)} className="grid grid-cols-[1.4rem_minmax(0,1fr)_3.3rem] items-center gap-x-2 text-sm sm:grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_19rem]"
-    data-bh-jev14-bar={row.key} data-bh-jev14-bar-score={s == null ? '' : s.toFixed(3)} data-bh-jev14-reference={reference ? '1' : undefined} aria-label={label}>
-    <span className="bh-muted tabular col-start-1 row-start-1 text-right text-xs">{row.rank ?? ''}</span>
-    <span className="col-start-2 row-start-1 min-w-0 sm:truncate sm:text-right" title={row.display}>
-      <Link href={`/jev-models/${encodeURIComponent(row.key)}`} title={row.display} className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent hover:decoration-current">{shortName(row.display)}</Link>
-      {row.priority_run === true && <span className="bh-thin-tag ml-1.5 align-middle" data-bh-jev14-priority-run={row.key}>priority run</span>}
-      {!row.ranked && <span className="bh-muted whitespace-nowrap" title={row.not_ranked_because ?? undefined}> ({NOT_RANKED[row.listing] ?? row.listing})</span>}
-      {row.api_flag && <span className="bh-thin-tag ml-1.5 align-middle" title={row.api_exposure_note ?? apiExplanation}>API</span>}
-    </span>
-    <span className="bh-jevc-grid col-start-2 row-start-2 mt-1 flex h-4 sm:col-start-3 sm:row-start-1 sm:mt-0 sm:h-6" aria-hidden="true">
-      {s != null && <span className={`bh-jevc-bar ${row.ranked ? '' : 'is-partial'} ${reference ? 'is-reference' : ''}`} style={{ width: `${Math.max(0, Math.min(100, s)).toFixed(4)}%` }} />}
-    </span>
-    <b className="tabular col-start-3 row-span-2 row-start-1 self-center text-right text-base sm:col-start-4 sm:row-span-1 sm:text-lg">{one(s)}</b>
-    <span className="bh-muted col-start-2 row-start-3 mt-0.5 min-w-0 font-mono text-[10.5px] sm:col-start-5 sm:row-start-1 sm:mt-0 sm:grid sm:grid-cols-[1fr_1fr_1fr_1fr_2.1fr] sm:whitespace-nowrap sm:text-right sm:text-[12px]">
-      <span className="sm:hidden">I </span><span>{f0(row.axes?.intelligence)}</span><span className="sm:hidden"> · C </span><span>{f0(row.axes?.calibration)}</span>
-      <span className="sm:hidden"> · S </span><span>{f0(row.axes?.speed)}</span><span className="sm:hidden"> · K </span><span>{f0(row.axes?.cost)}</span>
-      <span className="sm:hidden"> · </span><span title={row.cost?.basis}>{`${kind === 'estimate' ? '~' : ''}${dollars(usd)}`}{kind === 'estimate' ? ' est.' : kind === 'announced' ? ' ann.' : ''}</span>
-    </span>
-  </li>;
-}
-
 /** The v1.3 page's hero bar chart, restored with the v1.4 scores: every system, top 20 open, the rest one tap away. */
 /** CR-152 (Florian, 25 Sep 2026): the fairness sentence next to the top five and a visible Intelligence ordering.
- *  Plain <details>, no client JavaScript; the planned "View by" switch replaces it later. */
-function TopFiveNote({ note, ranked }: { note: string; ranked: JevV14System[] }) {
-  const byIntelligence = [...ranked].sort((a, b) => (b.axes?.intelligence ?? -1) - (a.axes?.intelligence ?? -1) || (a.rank ?? 999) - (b.rank ?? 999));
-  return <div className="mt-3 rounded-md border border-white/10 p-3 text-sm" data-bh-jev14-top-five-note>
-    <p>{note}</p>
-    <details className="mt-2" data-bh-jev14-sort-intelligence>
-      <summary className="cursor-pointer font-semibold text-accent">Sort by Intelligence ↓</summary>
-      <div className="bh-table-wrap mt-2">
-        <table className="bh-table text-[13px]">
-          <thead><tr><th scope="col">By Intelligence</th><th scope="col">System</th><th scope="col">Intelligence</th><th scope="col">Calibration</th><th scope="col">JevBench Score</th><th scope="col">Overall rank</th></tr></thead>
-          <tbody>{byIntelligence.map((row, index) => <tr key={row.key}>
-            <td className="tabular">{index + 1}</td>
-            <td><Link className="text-accent underline" href={`/jev-models/${row.key}`}>{shortName(row.display)}</Link>{row.api_flag && <span className="bh-thin-tag ml-1.5 align-middle" title={row.api_exposure_note ?? apiExplanation}>API</span>}</td>
-            <td className="tabular">{one(row.axes?.intelligence)}</td><td className="tabular">{one(row.axes?.calibration)}</td>
-            <td className="tabular">{one(row.jevbench_score)}</td><td className="tabular">#{row.rank}</td>
-          </tr>)}</tbody>
-        </table>
-      </div>
-    </details>
-  </div>;
-}
-
+ *  F-189 (Fable pass 35): the sentence keeps its words and loses its box; the ordering is the JevRankBy control,
+ *  not the 89-row table of the numbers the chart already draws. */
 function ScoreChart({ revision, ranked, unranked, publicDecisions, sealedDecisions, topFiveNote }: { revision: string; ranked: JevV14System[]; unranked: JevV14System[]; publicDecisions: number; sealedDecisions: number; topFiveNote?: string | null }) {
   const all = [...ranked, ...unranked];
-  const types = Object.keys(JEV_TYPE_LABEL).filter((t) => all.some((r) => r.class === t));
-  const header = <div className="mt-4 hidden grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_19rem] gap-x-2 text-[11px] sm:grid" aria-hidden="true">
-    <span /><span /><span /><span />
-    <span className="bh-muted grid grid-cols-[1fr_1fr_1fr_1fr_2.1fr] text-right font-mono"><span>Intel.</span><span>Calib.</span><span>Speed</span><span>Cost</span><span>$/1k dec.</span></span>
-  </div>;
-  const rest = all.slice(CHART_TOP);
-  return <figure className="bh-panel mt-6 p-4 sm:p-5" data-bh-jev14-chart aria-labelledby="jev14-chart-title">
+  const types = jevLegendTypes(all.map((r) => r.class));
+  const subtitle = <><span className="bh-jevc-official mr-2">Official</span>· four axes 0–100, equal-weight harmonic mean · <a href="#jev14-changes" className="text-accent underline">What changed in v1.4 ↓</a></>;
+  const chartId = 'jev14-chart';
+  return <figure id={chartId} className="bh-panel mt-6 p-4 sm:p-5" data-bh-jev14-chart aria-labelledby="jev14-chart-title">
     <p className="bh-eyebrow">JevBench {revision}</p>
     <h2 id="jev14-chart-title" className="mt-1 text-xl font-bold leading-snug sm:text-2xl">JevBench Score: {ranked.length} ranked systems</h2>
-    <p className="bh-muted mt-1 text-sm"><span className="bh-jevc-official mr-2">Official</span>· four axes 0–100, equal-weight harmonic mean · <a href="#jev14-changes" className="text-accent underline">What changed in v1.4 ↓</a></p>
-    {topFiveNote && <TopFiveNote note={topFiveNote} ranked={ranked} />}
-    {header}
-    <ol className="mt-2 space-y-2.5 sm:mt-1" data-bh-jev14-bars>{all.slice(0, CHART_TOP).map((row) => <JevScoreBar key={row.key} row={row} />)}</ol>
-    {rest.length > 0 && <details className="mt-2.5" data-bh-jev14-bars-more>
-      <summary className="cursor-pointer text-sm font-semibold text-accent">Show all {all.length} systems ({ranked.length - Math.min(CHART_TOP, ranked.length)} more ranked, {unranked.length} not ranked)</summary>
-      <ol className="mt-2.5 space-y-2.5">{rest.map((row) => <JevScoreBar key={row.key} row={row} />)}</ol>
-    </details>}
+    <JevRankBy rows={all.map(toBarRow)} top={CHART_TOP} note={topFiveNote} subtitle={subtitle} />
     <div className="mt-2 hidden grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_19rem] gap-x-2 text-[11px] sm:grid" aria-hidden="true">
       <span /><span /><span className="bh-muted flex justify-between tabular"><span>0</span><span>20</span><span>40</span><span>60</span><span>80</span><span>100</span></span>
     </div>
@@ -154,7 +102,7 @@ function ScoreChart({ revision, ranked, unranked, publicDecisions, sealedDecisio
       Score = 4 / (1/I + 1/C + 1/S + 1/K) <span className="bh-muted">(each 0–100; × (axis / 50)² for Intelligence, Speed or Cost below 50)</span>
     </p>
     <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px]" aria-label="Legend" data-bh-jev14-legend>
-      {types.map((t) => <li key={t} style={typeVar(t)}><span className="bh-jevc-swatch mr-1.5" />{JEV_TYPE_LABEL[t]}</li>)}
+      {types.map((t) => <li key={t} style={typeVar(t)} data-bh-jev14-class={t} data-bh-jev14-class-labelled={JEV_TYPE_LABEL[t] ? '1' : '0'}><span className="bh-jevc-swatch mr-1.5" />{JEV_TYPE_LABEL[t] ?? <code title="Class named in the v1.4.2 artifact; description pending">{t}</code>}</li>)}
       {unranked.length > 0 && <li><span className="bh-jevc-swatch is-partial mr-1.5" />Shown, not ranked</li>}
     </ul>
     <figcaption className="bh-muted mt-3 text-[11.5px] leading-snug">I, C, S, K = Intelligence, Calibration, Speed, Cost; ~ est. = <a href="#jev-costs" className="text-accent underline">estimated cost</a>; ann. = announced price; API = the operator&apos;s endpoint saw sealed item text, without answers. Names link to each project.</figcaption>

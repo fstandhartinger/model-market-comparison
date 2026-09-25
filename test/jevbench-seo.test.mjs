@@ -56,8 +56,15 @@ test('alternatives guide reuses the board score bars and keeps the reference fir
   const board = readFileSync(new URL('../components/JevModelsV14.tsx', import.meta.url), 'utf8');
   const guides = readFileSync(new URL('../components/JevBenchSeoBlocks.tsx', import.meta.url), 'utf8');
   assert.match(alternatives, /data-bh-jev-alternatives-bars/);
-  assert.match(alternatives, /JevScoreBar key=\{row\.key\} row=\{row\} reference=\{row\.key === 'jev-1\.13\.0'\}/);
-  assert.match(board, /export function JevScoreBar/);
+  // F-188/F-189: the bar row and its header moved to components/JevScoreBar.tsx so the client rank-by control
+  // and this server page can both draw them; the board re-exports them, and this page still marks Jev the reference.
+  assert.match(alternatives, /JevScoreBar key=\{row\.key\} row=\{toBarRow\(row\)\} reference=\{row\.key === 'jev-1\.13\.0'\}/);
+  assert.match(board, /export \{ JevScoreBar, JevScoreBarHeader, toBarRow \};/);
+  const bar = readFileSync(new URL('../components/JevScoreBar.tsx', import.meta.url), 'utf8');
+  assert.match(bar, /export function JevScoreBar/);
+  // F-188: the five number columns are named above the bars on the alternatives page too.
+  assert.match(alternatives, /<JevScoreBarHeader/);
+  assert.match(bar, /\$\/1k dec\./);
   assert.match(guides, /data-bh-jev-guides=\{current\}/);
   assert.match(guides, /const sibling = current === 'alternatives'/);
   assert.doesNotMatch(guides, /jev-vs-/);

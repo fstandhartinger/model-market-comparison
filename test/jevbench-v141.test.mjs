@@ -54,7 +54,11 @@ test('CR-135 adds a versioned API and pin while retaining the v1.4.0 source pin'
   assert.match(route, /'X-Content-SHA256': sha256/);
   assert.match(page, /readJevbenchV141\(\)/);
   assert.match(page, /canonical = '\/jev-models\/v1\.4\.1'/);
-  assert.match(page, /data-bh-jev-frozen-top-five/);
+  // F-190 (Fable pass 35): the frozen top five is the share preview's, not a list above the board
+  // that draws the same five rows. CR-134.2 asks for it in the Open Graph/X preview.
+  assert.match(page, /const description = `Frozen JevBench \$\{view\.revision\} top five \(JevBench Score\)/);
+  assert.doesNotMatch(page, /data-bh-jev-frozen-top-five/);
+  assert.doesNotMatch(page, /JevContextLength/);
   // CR-152: the live page moved to v1.4.2; the v1.4.1 pin and API stay frozen.
   assert.match(livePage, /canonical: '\/jev-models'/);
   assert.match(frozenV14, /readJevbenchV14\(\)/);

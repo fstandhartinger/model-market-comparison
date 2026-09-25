@@ -67,34 +67,71 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
       const before = []; if (chart && firstBar) { const w = document.createTreeWalker(chart, NodeFilter.SHOW_ELEMENT); let n; while ((n = w.nextNode())) { if (n === firstBar || n.contains(firstBar)) { if (n === firstBar) break; else continue; } if (/^(TABLE|DETAILS)$/.test(n.tagName)) before.push(n.tagName); } }
       const rankBy = document.querySelector('[data-bh-jev14-rank-by]');
       const note = [...document.querySelectorAll('[data-bh-jev14-top-five-note]')];
-      const noteBox = note[0] ? [note[0], note[0].parentElement].map((e) => getComputedStyle(e).borderStyle) : null;
+      // Iteration 214: "unboxed" cannot be read from border-style — Tailwind's preflight sets `border-style: solid`
+      // with `border-width: 0` on every element, so the original `borderStyle === 'none'` test fails on a bare <p>.
+      // A frame is a drawn one: a border with width, a ring/shadow, or a background of its own.
+      const boxOf = (e) => { const cs = getComputedStyle(e); const w = ['Top', 'Right', 'Bottom', 'Left'].map((k) => parseFloat(cs[`border${k}Width`]) || 0);
+        return { w: Math.max(...w), shadow: cs.boxShadow === 'none' ? '' : cs.boxShadow, bg: /^rgba\(0, 0, 0, 0\)$|^transparent$/.test(cs.backgroundColor) ? '' : cs.backgroundColor }; };
+      // The frame must be absent from the sentence and from every wrapper between it and the chart's own panel —
+      // the panel is the chart's frame, not a box around the sentence, so the walk stops before it.
+      const boxChain = []; for (let el = note[0]; el && !el.hasAttribute('data-bh-jev14-chart'); el = el.parentElement) boxChain.push(el);
+      const noteBox = note[0] ? boxChain.map(boxOf) : null;
       const rows = [...document.querySelectorAll('[data-bh-jev14-bars] > li')];
       const firstName = rows[0] ? t(rows[0].querySelector('a')) : null;
+      // Iteration 214: the expected Intelligence order is read off the board, not named in the checker. The
+      // directive's own draft expected "Jev 1.13.0 (53.1)", but the v1.4.2 artifact's highest Intelligence is
+      // GPT-6 Luna at 97.4 — the note's 53.1 is Jev's Intelligence in a two-system comparison, not the maximum.
+      const allBars = [...document.querySelectorAll('li[data-bh-jev14-bar]')].map((li) => ({
+        key: li.getAttribute('data-bh-jev14-bar'),
+        intel: li.getAttribute('data-bh-jev14-bar-intel') === null ? null : Number(li.getAttribute('data-bh-jev14-bar-intel')),
+        order: Number(li.getAttribute('data-bh-jev14-bar-order')),
+      }));
+      const byIntel = [...allBars].sort((a, b) => (b.intel ?? -1) - (a.intel ?? -1) || a.order - b.order).map((r) => r.key);
+      const byOrder = [...allBars].sort((a, b) => a.order - b.order).map((r) => r.key);
       const legend = [...document.querySelectorAll('.bh-jevc-swatch')].map((s) => t(s.parentElement));
       const bar1 = rows[0] ? [...rows[0].querySelectorAll('*')].map((e) => getComputedStyle(e).backgroundColor).find((bg) => bg && bg !== 'rgba(0, 0, 0, 0)') : null;
       const llmSwatch = [...document.querySelectorAll('.bh-jevc-swatch')].find((s) => /Instruction model/.test(t(s.parentElement)));
       const llmColor = llmSwatch ? getComputedStyle(llmSwatch).backgroundColor : null;
-      return { before, rankBy: rankBy ? [...rankBy.querySelectorAll('button')].map((b) => ({ t: t(b), pressed: b.getAttribute('aria-pressed') })) : null, notes: note.length, noteBox, firstBarY: firstBar ? Math.round(firstBar.getBoundingClientRect().y + scrollY) : null, firstName, legend, bar1, llmColor, rawKey: /— system-one-open/.test(document.body.innerText) };
+      // Iteration 214: the directive asks for the unlabelled key "in code font"; innerText cannot see a font, so
+      // the check is that wherever a class key is *rendered as a class* and has no label, it sits in a <code>.
+      // A whole-body text scan cannot do this: a system in the v1.4.2 board is itself named "system-one-open".
+      const classNodes = [...document.querySelectorAll('[data-bh-jev14-class]')];
+      const bareKey = classNodes.filter((el) => el.getAttribute('data-bh-jev14-class-labelled') === '0')
+        .filter((el) => ![...el.querySelectorAll('code')].some((c) => t(c) === el.getAttribute('data-bh-jev14-class')))
+        .map((el) => `${el.tagName}[${el.getAttribute('data-bh-jev14-class')}]: ${t(el).slice(0, 60)}`);
+      const unlabelledShown = classNodes.filter((el) => el.getAttribute('data-bh-jev14-class-labelled') === '0').length;
+      return { bareKey, unlabelledShown, allBars, byIntel, byOrder, before, rankBy: rankBy ? [...rankBy.querySelectorAll('button')].map((b) => ({ t: t(b), pressed: b.getAttribute('aria-pressed') })) : null, notes: note.length, noteBox, firstBarY: firstBar ? Math.round(firstBar.getBoundingClientRect().y + scrollY) : null, firstName, legend, bar1, llmColor };
     });
     await p.screenshot({ path: `${OUT}/${ctx}-hub.png` });
     if (want('F-189')) {
       check('F-189', ctx, 'rank-by control with two buttons, one pressed', m.rankBy && m.rankBy.length === 2 && m.rankBy.filter((b) => b.pressed === 'true').length === 1, JSON.stringify(m.rankBy));
       check('F-189', ctx, 'no table or disclosure between the chart title and the first bar', m.before.length === 0, JSON.stringify(m.before));
-      check('F-189', ctx, 'fairness sentence exactly once, unboxed', m.notes === 1 && m.noteBox && m.noteBox.every((s) => s === 'none'), JSON.stringify(m.noteBox));
+      check('F-189', ctx, 'fairness sentence exactly once, unboxed', m.notes === 1 && m.noteBox && m.noteBox.every((b) => b.w === 0 && !b.shadow && !b.bg), JSON.stringify(m.noteBox));
       if (kind === 'mobile') check('F-189', ctx, 'first bar at y ≤ 720 on a phone', m.firstBarY != null && m.firstBarY <= 720, String(m.firstBarY));
       if (m.rankBy) {
         await p.locator('[data-bh-jev14-rank-by] button', { hasText: 'Intelligence' }).first().click(); await p.waitForTimeout(400);
-        const after = await p.evaluate(() => { const r = document.querySelector('[data-bh-jev14-bars] > li'); return r ? r.textContent.replace(/\s+/g, ' ').trim() : null; });
-        check('F-189', ctx, 'after "Intelligence" the first row is the highest-Intelligence system', after && /Jev 1\.13\.0/.test(after) && /53\.1/.test(after), after);
+        const after = await p.evaluate(() => ({
+          top: [...document.querySelectorAll('[data-bh-jev14-bars] > li')].map((li) => li.getAttribute('data-bh-jev14-bar')),
+          all: [...document.querySelectorAll('li[data-bh-jev14-bar]')].map((li) => li.getAttribute('data-bh-jev14-bar')),
+          pressed: [...document.querySelectorAll('[data-bh-jev14-rank-by] button')].filter((b) => b.getAttribute('aria-pressed') === 'true').map((b) => b.textContent.trim()),
+        }));
+        check('F-189', ctx, 'after "Intelligence" the whole board is in Intelligence order', JSON.stringify(after.all) === JSON.stringify(m.byIntel), `${after.all.slice(0, 3)} vs ${m.byIntel.slice(0, 3)}`);
+        check('F-189', ctx, 'after "Intelligence" the open list is the 20 highest-Intelligence systems', JSON.stringify(after.top) === JSON.stringify(m.byIntel.slice(0, 20)), `${after.top.slice(0, 3)} vs ${m.byIntel.slice(0, 3)}`);
+        check('F-189', ctx, 'no row is drawn twice or lost by the reorder', after.all.length === m.allBars.length && new Set(after.all).size === m.allBars.length, `${after.all.length} of ${m.allBars.length}`);
+        check('F-189', ctx, '"Intelligence" is the pressed button', JSON.stringify(after.pressed) === JSON.stringify(['Intelligence']), JSON.stringify(after.pressed));
         await p.locator('[data-bh-jev14-rank-by] button', { hasText: 'JevBench Score' }).first().click(); await p.waitForTimeout(400);
-        const back = await p.evaluate(() => { const r = document.querySelector('[data-bh-jev14-bars] > li'); return r ? r.textContent.replace(/\s+/g, ' ').trim() : null; });
-        check('F-189', ctx, 'after "JevBench Score" the order is the rank order again', back && back.replace(/\s+/g, ' ').includes(m.firstName), back);
+        const back = await p.evaluate(() => ({
+          top: [...document.querySelectorAll('[data-bh-jev14-bars] > li')].map((li) => li.getAttribute('data-bh-jev14-bar')),
+          first: (document.querySelector('[data-bh-jev14-bars] > li a')?.textContent || '').replace(/\s+/g, ' ').trim(),
+        }));
+        check('F-189', ctx, 'after "JevBench Score" the order is the board\'s rank order again', JSON.stringify(back.top) === JSON.stringify(m.byOrder.slice(0, 20)) && back.first === m.firstName, `${back.first} | ${back.top.slice(0, 3)}`);
       }
     }
     if (want('F-192')) {
       check('F-192', ctx, 'the #1 bar is not the llm-baseline colour', m.bar1 && m.llmColor && m.bar1 !== m.llmColor, `${m.bar1} vs ${m.llmColor}`);
       check('F-192', ctx, 'the legend lists the system-one-open class (code key or its label)', m.legend.some((l) => /system-one-open|System One/i.test(l)), JSON.stringify(m.legend));
-      check('F-192', ctx, 'no bare "— system-one-open" class key in visible text', !m.rawKey, '');
+      check('F-192', ctx, 'every unlabelled class is rendered as its key in <code>', m.bareKey.length === 0, JSON.stringify(m.bareKey).slice(0, 300));
+      check('F-192', ctx, 'the unlabelled class is actually shown somewhere', m.unlabelledShown > 0, String(m.unlabelledShown));
     }
   }
 

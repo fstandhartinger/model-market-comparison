@@ -2,8 +2,6 @@ import type { Metadata } from 'next';
 import { readJevbenchV142, jevbenchV142View } from '../../../lib/jevbench-v142.mjs';
 import { JevModelsV14Board } from '../../../components/JevModelsV14';
 import { JevCapabilityChart } from '../../../components/JevCapabilityChart';
-import { JevContextLength } from '../../../components/JevContextLength';
-import jevContextLengthData from '../../../data/jevbench-context-length.json';
 
 const short = (display: string) => display.split(' (')[0].split(', formerly')[0];
 const one = (score: number | null) => score === null ? '—' : score.toFixed(1);
@@ -41,7 +39,6 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function JevModelsV142Page() {
   const view = await pinnedView();
-  const topFive = view.ranked.slice(0, 5);
   return <>
     <header className="bh-page-head">
       <p className="bh-eyebrow" data-bh-jev-frozen-version>Frozen JevBench release {view.revision}</p>
@@ -55,15 +52,7 @@ export default async function JevModelsV142Page() {
         <a className="text-accent underline" href="/jev-models" data-bh-jev-live-link>View live board</a>
       </p>
     </header>
-    <section className="bh-panel mt-6 max-w-3xl p-5" aria-labelledby="jev-v142-frozen-top-five">
-      <h2 id="jev-v142-frozen-top-five" className="text-xl font-semibold">Frozen top five</h2>
-      <ol className="mt-3 list-decimal space-y-1 pl-6" data-bh-jev-frozen-top-five>
-        {topFive.map((row) => <li key={row.key}><b>{short(row.display)}</b> — {one(row.jevbench_score)}</li>)}
-      </ol>
-      <p className="bh-muted mt-3 text-sm">These ranks and scores come from the frozen {view.revision} release and do not follow changes to the live board.</p>
-    </section>
     <JevModelsV14Board artifact={view.artifact} sha256={view.sha256} />
     <JevCapabilityChart systems={view.systems} revision={view.revision} />
-    <JevContextLength data={jevContextLengthData} />
   </>;
 }

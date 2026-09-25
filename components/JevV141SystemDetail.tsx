@@ -41,8 +41,10 @@ function compareRow(row: JevV14System): JevCompareRow {
 
 export function JevV141SystemDetail({ row, revision, generated, ranked, note = null }: { row: JevV14System; revision: string; generated: string; ranked: JevV14System[]; note?: string | null }) {
   const reference = referenceFor(row, ranked);
+  // F-192: an unlabelled class is still named on the leaf — as its key in code font, not as another class's label.
   const classLabel = JEV_TYPE_LABEL[row.class] ?? null;
-  const subLine = [classLabel, row.author ? `by ${row.author}` : null].filter(Boolean).join(' · ');
+  const classKey = classLabel ? null : (row.class || null);
+  const subLineTail = [row.author ? `by ${row.author}` : null].filter(Boolean).join(' · ');
   const path = `/jev-models/${encodeURIComponent(row.key)}`;
   const axes = row.axes ?? { intelligence: null, calibration: null, speed: null, cost: null };
   const description = `Published ${revision} aggregate detail for ${row.display}, including its JevBench Score, axes, accuracy aggregates, cost evidence and openness fields.`;
@@ -71,7 +73,7 @@ export function JevV141SystemDetail({ row, revision, generated, ranked, note = n
     <header className="bh-page-head mt-3">
       <div className="bh-eyebrow">JevBench by Benchmark Heaven · {revision} · individual system</div>
       <h1 className="mt-1 text-3xl font-bold tracking-tight">{row.display}</h1>
-      <p className="bh-muted mt-2 max-w-3xl" data-bh-jev-system-subline>{subLine}{row.api_flag && <> · <span title={row.api_exposure_note ?? "The operator's endpoint received sealed item text, without answers."}>API endpoint saw sealed item text</span></>}</p>
+      <p className="bh-muted mt-2 max-w-3xl" data-bh-jev-system-subline>{classLabel ? `${classLabel} · ` : null}{classKey && <><code title="Class named in the v1.4.2 artifact; description pending">{classKey}</code>{' · '}</>}{subLineTail}{row.api_flag && <> · <span title={row.api_exposure_note ?? "The operator's endpoint received sealed item text, without answers."}>API endpoint saw sealed item text</span></>}</p>
       <JevBenchRelatedLinks systemKey={row.key} />
     </header>
 

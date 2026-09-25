@@ -562,5 +562,9 @@ details[open] > .bh-collapsible-grid { display: grid; }
 .bh-jev14-note-body { display: block; white-space: normal; font-weight: 400; font-size: 11.5px; line-height: 1.35; color: var(--muted); margin: 4px 0 2px; max-width: 22rem; }
 :root, [data-theme="dark"] { --jev-t-reranker: 45 190 200; --jev-t-control: 150 156 170; --jev-t-native: 160 200 70; }
 [data-theme="light"] { --jev-t-reranker: 0 128 140; --jev-t-control: 105 110 124; --jev-t-native: 92 130 20; }
+/* F-192 (Fable pass 35): a class the artifact names but the repo has no label for gets its own swatch,
+   so it is never drawn in another class's colour. `--jev-t-unnamed` is that swatch. */
+:root, [data-theme="dark"] { --jev-t-sysone: 198 96 250; --jev-t-unnamed: 198 96 250; }
+[data-theme="light"] { --jev-t-sysone: 150 26 214; --jev-t-unnamed: 150 26 214; }
 /* Long project URLs in the credit and note lists break instead of sticking out at 320 px (UX iteration 182 probe). */
 [data-bh-jev-credits] a, [data-bh-jev14-notes] a, [data-bh-jev12-legend] a, [data-bh-jev-cost-rows], [data-bh-jev-availability] { overflow-wrap: anywhere; }

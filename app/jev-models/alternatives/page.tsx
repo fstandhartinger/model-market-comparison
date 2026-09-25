@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { JevScoreBar } from '../../../components/JevModelsV14';
+import { JevScoreBar, JevScoreBarHeader, toBarRow } from '../../../components/JevModelsV14';
 import { readJevbenchSeoData } from '../../../lib/jevbench-seo.mjs';
 import { jevIntentMetadata } from '../../../lib/jevbench-seo-metadata';
 import { costBasisLabel, DatasetFaqJsonLd, JevFaq, JevIntentLinks, JevRowLink, one, percent, type SeoRow } from '../../../components/JevBenchSeoBlocks';
@@ -57,8 +57,9 @@ export default async function JevAlternativesPage() {
     <section className="bh-panel mt-6 p-5" aria-labelledby="jev-alternatives-top-five">
       <h2 id="jev-alternatives-top-five" className="text-xl font-semibold">JevBench Scores in the current top five</h2>
       <p className="bh-muted mt-2">The Jev row is the reference; the other four rows are current alternatives. The overall score is a composite, so check the separate axes for your use case.</p>
-      <ol className="mt-4 space-y-2.5" data-bh-jev-alternatives-bars>
-        {barRows.map((row) => <JevScoreBar key={row.key} row={row} reference={row.key === 'jev-1.13.0'} />)}
+      <JevScoreBarHeader className="mt-4" />
+      <ol className="mt-2 space-y-2.5 sm:mt-1" data-bh-jev-alternatives-bars>
+        {barRows.map((row) => <JevScoreBar key={row.key} row={toBarRow(row)} reference={row.key === 'jev-1.13.0'} />)}
       </ol>
       <details className="mt-4" data-bh-jev-alternatives-values>
         <summary className="cursor-pointer text-sm font-semibold text-accent">All top-five values as a table</summary>

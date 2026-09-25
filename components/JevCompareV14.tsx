@@ -125,7 +125,7 @@ export function JevCompareV14({ rows, sealedDecisions, hardDecisions, fixedPair 
       </div>}
       <div className="mt-3 flex flex-wrap items-start justify-between gap-2">
         <ul className="space-y-1 text-[13px]" aria-label="Legend" data-bh-jev14-compare-legend>
-          {pair.map((r, k) => <li key={k}><Swatch s={s[k]} /><b>{k === 0 ? "A" : "B"}: {r.name}</b> <span className="bh-muted">— {JEV_TYPE_LABEL[r.cls] ?? r.cls} · </span><span className="whitespace-nowrap" data-bh-jev14-compare-score={r.score === null ? "" : r.score.toFixed(3)}>Score {one(r.score)} ({status(r)})</span></li>)}
+          {pair.map((r, k) => <li key={k}><Swatch s={s[k]} /><b>{k === 0 ? "A" : "B"}: {r.name}</b> <span className="bh-muted" data-bh-jev14-class={r.cls} data-bh-jev14-class-labelled={JEV_TYPE_LABEL[r.cls] ? '1' : '0'}>— {JEV_TYPE_LABEL[r.cls] ?? <code title="Class named in the v1.4.2 artifact; description pending">{r.cls}</code>} · </span><span className="whitespace-nowrap" data-bh-jev14-compare-score={r.score === null ? "" : r.score.toFixed(3)}>Score {one(r.score)} ({status(r)})</span></li>)}
         </ul>
         {!fixedPair && <button type="button" className="bh-button text-xs font-semibold" onClick={copy} data-bh-jev14-compare-copy>{copied ? "Link copied" : "Copy link to this pair"}</button>}
       </div>

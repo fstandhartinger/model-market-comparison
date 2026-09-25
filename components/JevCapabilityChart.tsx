@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react';
 import { jevbenchCapabilityRows } from '../lib/jevbench-capability.mjs';
 import type { JevV14System } from '../lib/jevbench-v14.mjs';
-import { JEV_TYPE_LABEL, JEV_TYPE_VAR } from './jevTypes';
+import { JEV_TYPE_LABEL, jevLegendTypes, jevTypeVarName } from './jevTypes';
 import { JevCapability3D } from './JevCapability3D';
 
 const CHART_TOP = 20;
@@ -12,7 +12,7 @@ const shortName = (value: string) => {
   if (clean === 'GPT-6 Luna (default medium reasoning effort)') return 'GPT-6 Luna (medium)';
   return clean.split(' (')[0];
 };
-const typeVar = (cls: string) => ({ '--jev-t': 'var(' + (JEV_TYPE_VAR[cls] ?? JEV_TYPE_VAR['llm-baseline']) + ')' }) as CSSProperties;
+const typeVar = (cls: string) => ({ '--jev-t': 'var(' + jevTypeVarName(cls) + ')' }) as CSSProperties;
 const usd = (value: number) => value === 0 ? 'Free' : value >= 1 ? '$' + value.toFixed(2) : '$' + value.toPrecision(2);
 
 type PlotPoint = {
@@ -34,7 +34,7 @@ function toPlotPoint(row: JevV14System, capability: number): PlotPoint {
     name: shortName(row.display),
     rank: row.rank,
     cls: row.class,
-    colorVariable: JEV_TYPE_VAR[row.class] ?? JEV_TYPE_VAR['llm-baseline'],
+    colorVariable: jevTypeVarName(row.class),
     capability,
     cost: row.cost?.usd_per_1000 ?? null,
     costKind: row.cost?.kind ?? 'unknown',
@@ -180,7 +180,7 @@ export function JevCapabilityChart({ systems, revision }: { systems: JevV14Syste
   const all = jevbenchCapabilityRows(systems);
   const points = all.map(({ row, capability }) => toPlotPoint(row, capability));
   const rest = all.slice(CHART_TOP);
-  const types = Object.keys(JEV_TYPE_LABEL).filter((type) => all.some(({ row }) => row.class === type));
+  const types = jevLegendTypes(all.map(({ row }) => row.class));
   const withoutBothAxes = systems.length - all.length;
   const costBounds = logBounds(points);
   const plotted3d = points.filter((point) => point.cost != null && point.cost >= 0 && point.speed != null);
@@ -228,7 +228,7 @@ export function JevCapabilityChart({ systems, revision }: { systems: JevV14Syste
         <span className="bh-muted text-right tabular">Cost: {usd(minCost)}–{usd(maxCost)} / 1k</span>
       </div>
       <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px]" aria-label="System types" data-bh-jev14-capability-legend>
-        {types.map((type) => <li key={type} style={typeVar(type)}><span className="bh-jevc-swatch mr-1.5" />{JEV_TYPE_LABEL[type]}</li>)}
+        {types.map((type) => <li key={type} style={typeVar(type)} data-bh-jev14-class={type} data-bh-jev14-class-labelled={JEV_TYPE_LABEL[type] ? '1' : '0'}><span className="bh-jevc-swatch mr-1.5" />{JEV_TYPE_LABEL[type] ?? <code title="Class named in the v1.4.2 artifact; description pending">{type}</code>}</li>)}
         <li><span className="mr-1.5 inline-block h-1.5 w-3 rounded-sm bg-[rgb(var(--muted))] align-middle" />Cost per 1,000 decisions · log scale</li>
       </ul>
       <figcaption className="bh-muted mt-3 text-[11.5px] leading-snug">Cost bars use the right-hand scale, from {usd(minCost)} to {usd(maxCost)} per 1,000 decisions. Free cost is placed at the cheapest edge; missing cost is shown as —.</figcaption>
