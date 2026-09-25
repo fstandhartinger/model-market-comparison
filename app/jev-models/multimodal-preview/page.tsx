@@ -59,7 +59,7 @@ function ScoreBars({ systems, track }: { systems: any[]; track: Track }) {
     const v = s.tracks[track].composite.score;
     const color = i === 0 ? 'bg-amber-400' : s.api_flag ? 'bg-pink-400' : 'bg-teal-400';
     return <li key={s.key} className="grid grid-cols-[minmax(0,11rem)_1fr_3.2rem] items-center gap-3 sm:grid-cols-[minmax(0,17rem)_1fr_3.5rem]">
-      <span className="truncate text-sm font-semibold" title={s.name}>{i + 1}. {s.name}{s.api_flag && <span className="ml-1 whitespace-nowrap text-[0.68rem] font-bold text-accent">API</span>}</span>
+      <span className="min-w-0 break-words text-sm font-semibold leading-tight" title={s.name}>{i + 1}. {s.name}{s.api_flag && <span className="ml-1 whitespace-nowrap text-[0.68rem] font-bold text-accent">API</span>}</span>
       <span className="h-5 rounded-md bg-black/10 dark:bg-white/10"><span className={`block h-full rounded-md ${color}`} style={{ width: `${Math.max(0.5, v)}%` }} /></span>
       <span className="text-right font-bold tabular-nums">{score(v)}</span>
     </li>;
