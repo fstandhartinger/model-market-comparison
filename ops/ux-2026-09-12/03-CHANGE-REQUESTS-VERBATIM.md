@@ -1722,3 +1722,57 @@ Florian, 24 Sep 2026, request preserved from `/home/flori/jobs/jev-page-fixes-20
 > a proposal for a long-context Jev-class track at 16k/64k/256k/1M, including item design,
 > cost and qualifying systems; proposal only, no build. Verify all production hosts,
 > retain screenshots, notify Florian, and write the job output.
+
+## 25 Sep 2026 provenance repair — CR-143, CR-148, CR-151, CR-152, CR-153, CR-156, CR-158 and CR-160
+
+The numbered work below was allocated and partly shipped after this file's previous update. The
+original job prompts and dated decisions are the source of record. These are **source pointers and
+scope summaries**, not invented quotations from Florian. The acceptance rows are in `04-CR-BRIEF.md`.
+
+- **CR-143** was allocated 24 Sep 14:40 UTC to `iter205-cr139-2` for an independent CR-139.2
+  cache-provenance sign-off. The Codex receipt is
+  `/opt/benchmarkheaven/state/ux-evidence/iter205-cr139-2-codex/verification.json`.
+- **CR-148** was allocated 24 Sep 16:12 UTC to
+  `jevbench-paid-eval-cr143-transfer-20260924` to preserve three bookmark-intake edits in
+  an isolated PR. Commit `e0051b32` contains the exact intake text and is retained in Git
+  history; check its merge state before calling the transfer complete.
+- **CR-151** was allocated to `site-v142-gauntlet-20260925`. Original scope:
+  `/home/flori/jobs/site-v142-gauntlet-20260925/PROMPT.md` (25 Sep). It asks for
+  column-relative green shading, sortable and filterable JevBench score/axes tables, a
+  compact View-by switch, and the axes table after Compare.
+- **CR-152** was allocated to `release-v142-ship-20260925`. Original scope:
+  `/home/flori/jobs/release-v142-ship-20260925/PROMPT.md`, with the later roster and
+  presentation decisions in `/home/flori/DECISIONS.md` (25 Sep). It ships the exact public
+  v1.4.2 aggregate artifact, API, pinned and live pages, approved roster and fairness copy.
+  Later releases must not rewrite the frozen v1.4.2 artifact.
+- **CR-153** was allocated to `jev-page-requests-final-20260925`. Original scope:
+  `/home/flori/jobs/jev-page-requests-final-20260925/PROMPT.md` (25 Sep), plus the
+  model-link and bubble-tooltip decisions in site-board entries #1318 and #1324. It asks
+  for a current-set hard/sealed family comparison, heat shading, sortable/filterable tables,
+  an Intelligence view hiding general LLMs by default, a thin red cost series, model links,
+  and Compare above the axes table.
+- **CR-156** was allocated to `seo-routes-finish-20260925`. Original scope:
+  `/home/flori/jobs/seo-routes-finish-20260925/PROMPT.md` (25 Sep). It asks for the
+  Jev-vs-Laya, alternatives, open-source and chooser pages, additional v1.4.2 top-five
+  comparisons, artifact-backed numbers, canonical/sitemap/internal links, IndexNow and
+  Search Console submission.
+- **CR-158** was allocated to `jev-page-restructure-20260925`. Original scope:
+  `/home/flori/jobs/jev-page-restructure-20260925/PROMPT.md` and the 25 Sep 13:20–15:15
+  decisions in `/home/flori/DECISIONS.md`. The page must lead with the Jev-class Capability
+  ranking using the 2× Jev cost/latency rule, then two bubble charts, then the official
+  composite with weight controls; the price-rule addendum belongs to the v1.5 method and
+  later v1.4.x re-scores. CR-158 carried CR-151 and CR-153 into PR #22.
+- **CR-159** was allocated 25 Sep to this documentation and verification iteration. It
+  repairs the missing acceptance rows and independently checks Claude's F-182 fix; it
+  does not add a new product requirement or change the approved JevBench method.
+- **CR-160** resolves a number collision: the 24 Sep bookmark-intake patch `e0051b32`
+  labelled MentalHealthBench **CR-143**, although CR-143 had already been allocated to the
+  independent cache-provenance review. The bookmark request keeps its original intake
+  capture and is tracked as CR-160 (allocated 25 Sep); neither task is silently overwritten.
+  Florian's standing instruction, verbatim (18 Sep): “new rule for benchmark heaven: it
+  should look into https://x.com/i/history/bookmarks/2098158441952907558 once a day and
+  check if there are new evals/benchmarks it doesn't have in its list yet, and then add them”.
+  The captured pointer is OpenAI's 23 Sep post
+  `https://x.com/OpenAI/status/2102837574092161102` linking to
+  `https://openai.com/index/introducing-mentalhealthbench/`. As with every bookmark intake,
+  that post is a discovery pointer; result values require first-party source and reuse review.
