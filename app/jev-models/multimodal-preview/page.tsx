@@ -18,9 +18,9 @@ type FamilyCount = { public: number; sealed: number };
 function RankingTable({ systems, track, all = false }: { systems: any[]; track: Track; all?: boolean }) {
   const rows = [...systems].sort((x, y) => y.tracks[track].composite.score - x.tracks[track].composite.score);
   return <div className="mt-4 overflow-x-auto rounded-xl border border-line">
-    <table className={`w-full ${all ? 'min-w-[1300px]' : 'min-w-[1080px]'} text-left text-sm`} data-bh-mm-ranking={track}>
+    <table className={`w-full ${all ? 'min-w-[1300px]' : 'min-w-[1080px]'} text-left text-sm`} data-bh-mm-ranking={track} aria-label={`${track === 'all' ? 'Whole-candidate' : track === 'core' ? 'Licensed core' : 'Everyday photo'} ranking`}>
       <thead><tr>
-        <th className="p-3">#</th><th className="p-3">System</th><th className="p-3 text-right">Composite</th>
+        <th className="sticky left-0 z-[1] w-14 min-w-14 bg-[rgb(var(--surface))] p-3 shadow-[inset_-1px_0_0_rgb(var(--line))]">#</th><th className="sticky left-14 z-[1] w-52 min-w-52 bg-[rgb(var(--surface))] p-3 shadow-[inset_-1px_0_0_rgb(var(--line))]">System</th><th className="p-3 text-right">Composite</th>
         <th className="p-3 text-right">Intelligence</th><th className="p-3 text-right">Calibration</th><th className="p-3 text-right">Speed</th><th className="p-3 text-right">Cost</th>
         {all && <><th className="p-3 text-right">Gap (matched)</th><th className="p-3 text-right">Penalty</th></>}
         <th className="p-3 text-right">Public accuracy</th><th className="p-3 text-right">Sealed accuracy</th><th className="p-3 text-right">USD / 1,000</th>
@@ -29,8 +29,8 @@ function RankingTable({ systems, track, all = false }: { systems: any[]; track: 
       <tbody>{rows.map((s, i) => {
         const t = s.tracks[track];
         return <tr key={s.key} className="border-t border-line">
-          <td className="p-3 font-bold tabular-nums">{i + 1}</td>
-          <th scope="row" className="p-3 font-semibold">
+          <td className="sticky left-0 z-[1] w-14 min-w-14 bg-[rgb(var(--surface))] p-3 font-bold tabular-nums shadow-[inset_-1px_0_0_rgb(var(--line))]">{i + 1}</td>
+          <th scope="row" className="sticky left-14 z-[1] w-52 min-w-52 bg-[rgb(var(--surface))] p-3 font-semibold shadow-[inset_-1px_0_0_rgb(var(--line))]">
             {s.name}{s.api_flag && <span className="ml-2 inline-block rounded-full border border-accent px-2 py-0.5 text-[0.68rem] font-bold text-accent">API</span>}
           </th>
           <td className="p-3 text-right font-bold tabular-nums">{score(t.composite.score)}</td>
