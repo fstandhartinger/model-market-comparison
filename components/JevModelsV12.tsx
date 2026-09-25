@@ -5,6 +5,7 @@ import type { JevAxis, JevTier12, JevV12Row, JevV12View } from "../lib/jevbench-
 import type { JevTaskScope, JevTasksView } from "../lib/jevbench-v12-tasks.mjs";
 import { AXES, AXIS_LABEL, DEFAULT_PRESET, DEFAULT_WEIGHTS, PRESETS, SCORE_NAME, describe, isDefault, normalise, parseParams, percents, rerank, sameWeights, toParam, type JevWeights4 } from "../lib/jevbench-v12-weights.mjs";
 import { DEFAULT_TASK_SCOPE, TASK_SCOPES, parseTaskScope, publicTierSummary, scopeById, scopeDecisions, scopeRows, scopeTierWeights, tasksForScope, toTaskScopeParam } from "../lib/jevbench-v12-scope.mjs";
+import { jevSystemPath } from '../lib/jev-system-slug.mjs';
 
 // CR-92 (Florian 2026-09-19): JevBench v1.2 final. The JevBench Score = geometric mean of Intelligence, Calibration, Speed
 // and Cost, 25 % each, is the hero; the earlier weightings stay as presets (recomputed the same way) with the unmissable
@@ -70,7 +71,7 @@ export function CostUnitNote({ view, className = "", full = false }: { view: Jev
 // axes and the external project link. The row no longer carries the outbound link itself; it stays on
 // the system page and, for a marked system, in the † notes disclosure below the table.
 function SystemLink({ r, children, className = "" }: { r: JevV12Row; children: ReactNode; className?: string }) {
-  return <Link href={`/jev-models/${r.key}`} className={`underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent hover:decoration-current ${className}`} title={r.display} data-bh-jev-system-row-link={r.key}>{children}</Link>;
+  return <Link href={jevSystemPath(r.key)} className={`underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent hover:decoration-current ${className}`} title={r.display} data-bh-jev-system-row-link={r.key}>{children}</Link>;
 }
 
 function ProjectLink({ r, children, className = "" }: { r: JevV12Row; children: ReactNode; className?: string }) {

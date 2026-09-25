@@ -8,6 +8,7 @@ import {
 import { JEV_TYPE_LABEL, jevLegendTypes } from './jevTypes';
 import { JEV_AXES, OFFICIAL_WEIGHTS, isOfficialWeights, weightedJevScore, type JevAxis, type JevWeights } from '../lib/jevbench-axis-weights.mjs';
 import { withFieldNames } from './jevFieldNames';
+import { jevSystemPath } from '../lib/jev-system-slug.mjs';
 
 // CR-151 (Florian 25 Sep 2026): the score chart and the axes table become readable in more than one way. Axis cells are
 // shaded by their standing within the column, both views sort and filter, and a "View by" switch above the chart says
@@ -323,7 +324,7 @@ function SystemName({ row }: { row: JevBoardViewRow }) {
   const name = shortName(row.display);
   const rawVariant = row.display.startsWith(name) ? row.display.slice(name.length).replace(/^[ ,]*\(?|\)$/g, '') : '';
   const variant = rawVariant && !row.author.includes(rawVariant) ? rawVariant : '';
-  const page = `/jev-models/${encodeURIComponent(row.key)}`;
+  const page = jevSystemPath(row.key);
   // Florian 25 Sep 2026: the name opens the model's best source; the system page stays one click away ("details").
   const href = row.repo ?? page;
   const NameLink = ({ children }: { children: ReactNode }) => row.repo

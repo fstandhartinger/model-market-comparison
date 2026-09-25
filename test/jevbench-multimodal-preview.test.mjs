@@ -8,7 +8,7 @@ const expectedRanking = [
   'Mapika decider-2b-vision BF16',
   'Reflex 4B (released stable configuration)',
   'djev-spark NVFP4',
-  'Kushal Patil — Gemma 4 31B IT (Autoloops)',
+  'Autoloops – Gemma 4 31B IT',
   'djev-dev BF16',
   'Bonsai-2-27B v2 PQ2_0 + Q8_0 MMProj',
   'GPT-6 Luna (low reasoning effort)',

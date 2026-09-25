@@ -3,6 +3,7 @@ import { JevCompareV14, type JevCompareRow } from './JevCompareV14';
 import { readJevbenchSeoData } from '../lib/jevbench-seo.mjs';
 import { costBasisLabel, DatasetFaqJsonLd, JevFaq, one, opennessLabel, percent, usdPerThousand, type SeoRow } from './JevBenchSeoBlocks';
 import type { JevV14System } from '../lib/jevbench-v14.mjs';
+import { jevSystemPath } from '../lib/jev-system-slug.mjs';
 
 function higherName(jev: SeoRow, rival: SeoRow): string {
   if (jev.jevbench_score === rival.jevbench_score) return 'The published JevBench Scores are tied.';
@@ -126,7 +127,7 @@ export async function JevComparisonPage({ rivalKey, path, label }: { rivalKey: s
 
     <section className="mt-6 grid gap-4 md:grid-cols-2" aria-label="Model details">
       {[jev, rival].map((row) => <article className="bh-panel p-5" key={row.key}>
-        <h2 className="text-lg font-semibold"><Link className="text-accent underline" href={`/jev-models/${encodeURIComponent(row.key)}`}>{row.display}</Link></h2>
+        <h2 className="text-lg font-semibold"><Link className="text-accent underline" href={jevSystemPath(row.key)}>{row.display}</Link></h2>
         <p className="bh-muted mt-2 text-sm">{opennessLabel(row)}. License note: {row.licence || 'unknown in the published row'}.</p>
         {row.repo && <p className="mt-2 text-sm"><a className="text-accent underline" href={row.repo}>Published source</a></p>}
         <MeasurementConditions row={row} />

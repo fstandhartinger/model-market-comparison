@@ -11,7 +11,7 @@ import {
 test('JevBench intent routes use the hash-checked current public release', async () => {
   const data = await readJevbenchSeoData();
   assert.equal(data.artifact.revision, 'v1.4.2');
-  assert.equal(data.sha256, 'ac14e206dde51ae28e40dc1ea2ff1fecc4a449b941d098e9ecb5618bd533e5be');
+  assert.equal(data.sha256, 'fb81f4e774e7a965eff7b5bed641cff62c7e51c9b28464dca83d5d7725990fcd');
   assert.equal(data.ranked.length, 89);
   // CR-152: decider-4b v2 leads v1.4.2; Jev 1.13.0 is #2 and stays the comparison reference.
   assert.equal(data.topFive[1].key, 'jev-1.13.0');

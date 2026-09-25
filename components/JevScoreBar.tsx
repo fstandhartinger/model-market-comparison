@@ -2,6 +2,7 @@ import type { CSSProperties } from 'react';
 import Link from 'next/link';
 import type { JevV14System } from '../lib/jevbench-v14.mjs';
 import { jevTypeVarName } from './jevTypes';
+import { jevSystemPath } from '../lib/jev-system-slug.mjs';
 
 /** The fields a bar row prints — the board serialises exactly these for the client-side rank-by control (F-189d). */
 export type JevBarRow = {
@@ -58,7 +59,7 @@ export function JevScoreBar({ row, reference = false, order, metric = 'score' }:
     data-bh-jev14-reference={reference ? '1' : undefined} aria-label={label}>
     <span className="bh-muted tabular col-start-1 row-start-1 text-right text-xs">{row.rank ?? ''}</span>
     <span className="col-start-2 row-start-1 min-w-0 sm:truncate sm:text-right" title={row.display}>
-      <Link href={`/jev-models/${encodeURIComponent(row.key)}`} title={row.display} className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent hover:decoration-current">{shortName(row.display)}</Link>
+      <Link href={jevSystemPath(row.key)} title={row.display} className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent hover:decoration-current">{shortName(row.display)}</Link>
       {row.priorityRun && <span className="bh-thin-tag ml-1.5 align-middle" data-bh-jev14-priority-run={row.key}>priority run</span>}
       {!row.ranked && <span className="bh-muted whitespace-nowrap" title={row.notRankedBecause ?? undefined}> ({NOT_RANKED[row.listing] ?? row.listing})</span>}
       {row.apiFlag && <span className="bh-thin-tag ml-1.5 align-middle" title={row.apiNote ?? apiExplanation}>API</span>}

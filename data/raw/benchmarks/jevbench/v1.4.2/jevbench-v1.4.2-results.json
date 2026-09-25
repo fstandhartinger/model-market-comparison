@@ -3,6 +3,11 @@
  "revision": "v1.4.2",
  "revision_log": [
   {
+   "revision": "v1.4.2 display amendment",
+   "date": "2026-09-26",
+   "note": "Display-only amendment at the operator's request: the hosted Gemma system measured through the Autoloops API is now listed as \"Autoloops – Gemma 4 31B IT\" and its author field reads Autoloops. No measurement, score, axis, rank or eligibility changed. The artifact bytes before this amendment had SHA-256 ac14e206dde51ae28e40dc1ea2ff1fecc4a449b941d098e9ecb5618bd533e5be."
+  },
+  {
    "revision": "v1.3.0",
    "date": "2026-09-22",
    "note": "Scoring-only release; the task set and measurements are unchanged. Intelligence is now accuracy above each item's uniform-guessing baseline, aggregated with the existing tier weights. If chance-corrected Intelligence is below 50, the composite receives a growing (Intelligence / 50)^2 penalty. Calibration, Speed, Cost and ranking eligibility are unchanged."
@@ -495,7 +500,7 @@
   "instinct": "Requested in GitHub issue #69. A free evaluation/demo endpoint that speaks TypeSafe's /v1/systemone wire format, so the unchanged typesafe adapter ran it and no mapping of ours was involved; we registered the account and created the key ourselves in their console. The author states frozen Qwen3.8-27B base weights with no fine-tuning, read in one forward pass per question with no autoregressive decoding; the serving stack is not public, so nothing about it could be reviewed and the row rests on the API's own behaviour. Cost is an ESTIMATE: ZooWork publishes no bookable price, so the base model's public reference price is used (OpenRouter model-level qwen/qwen3.8-27b, $0.42/M input, zero output for a direct-logit readout); the author-announced tariff is not used. Classified as a free evaluation/demo endpoint (no SLA, no status page, no terms, pricing 'to be announced'), so the x2 latency adjustment applies. Re-scored when a bookable price is published. | API measurement: sealed item text (no golds) was sent to the operator endpoint; all 842 decisions (534 frozen v1.2 + 308 sealed v1.4) through JevBench's adapter.",
   "jevact": "Requested in GitHub issue #66. The author published an endpoint and an evaluation client, not weights, and his API is not the TypeSafe wire format, so JevBench's own `jevact_api` adapter implements exactly the mapping table in his eval_code.zip: state to state, instructions to the question, the labels with their criteria text as the options in label order, noul as false/true, and results[0].options[i].probability read back as the probability of labels[i] by index. His server answers HTTP 400 with `all inference items exceeded max_context_tokens or contained reserved markers` for an input it cannot take, and his own client and test script record exactly that as one failed item and continue; the adapter therefore surfaces that one documented refusal as the harness's 422 refusal path, which scores it as a wrong answer and does not count toward the stop rule - the same treatment the swanOne and Cygnet packages get for their own 422. Any other 400 or an outage still stops the run. The endpoint reports no token accounting, so cost is the labelled 2B size-class estimate. The endpoint is one machine in China and the latency includes that distance; it is not a production API and gets the standard x2 self-host adjustment, without the +0.15 s that only our own servers carry. | API measurement: sealed item text (no golds) was sent to the operator endpoint; all 842 decisions (534 frozen v1.2 + 308 sealed v1.4) through JevBench's adapter.",
   "verdict-small": "Requested in GitHub issue #73. Run through the author's own `verdict serve` on our CPU, which speaks TypeSafe's /v1/systemone wire format, so JevBench's unchanged typesafe adapter ran it and no mapping of ours was involved. A 118M multilingual bi-encoder: every option is scored against the rendered state by cosine similarity, at the model's own scale (temperature 1.0, no calibrator fitted on JevBench items, as the author states). Structured state is rendered as `key: value` lines by his own code. Code review before the run: the only network call is the Hugging Face download of his own checkpoint, no telemetry, no key, no rule written against public items. The `usage.input_tokens` his server reports is a word count and not a tokeniser count, so the cost is the labelled size-class estimate rather than a measured token price. Self-host latency gets the standard x2 + 0.15 s adjustment. The author's own public-set figures were easy 0.938, standard 0.486, hard 0.396 on an Apple M5 CPU. | Offline measurement of all 842 decisions (534 frozen v1.2 + 308 sealed v1.4) on our own CPU through the author's server; no operator endpoint.",
-  "kushal-gemma4-31b-it-autoloops": "Kushal Patil's Gemma 4 31B IT served through the Autoloops systemone API. Cost = the API's own token usage x Autoloops' published rates ($0.20/M input, $0.45/M output; no output tokens were used). | API measurement: public and sealed item content reached the operator endpoint; no gold labels or answers were sent."
+  "kushal-gemma4-31b-it-autoloops": "Gemma 4 31B IT served through the Autoloops systemone API. Cost = the API's own token usage x Autoloops' published rates ($0.20/M input, $0.45/M output; no output tokens were used). | API measurement: public and sealed item content reached the operator endpoint; no gold labels or answers were sent."
  },
  "superseded_rows": {
   "nimble-9b": {
@@ -8242,8 +8247,8 @@
   },
   {
    "key": "kushal-gemma4-31b-it-autoloops",
-   "display": "Kushal Patil — Gemma 4 31B IT (Autoloops)",
-   "author": "Kushal Patil",
+   "display": "Autoloops – Gemma 4 31B IT",
+   "author": "Autoloops",
    "repo": null,
    "class": "jev",
    "licence": "Gemma terms of use (Google) for the base weights; hosted Autoloops service",

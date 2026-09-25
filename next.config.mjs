@@ -1,3 +1,5 @@
+import { JEV_SYSTEM_SLUG_REDIRECTS } from './lib/jev-system-slug.mjs';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -9,6 +11,10 @@ const nextConfig = {
   },
   // CR-56.3: WebMCP tools may register only in this site's own top-level pages and same-origin frames
   // (a cross-origin frame never gets them; unknown to browsers without WebMCP).
+  // CR-170: renamed JevBench system pages keep their old URL as a permanent redirect.
+  async redirects() {
+    return JEV_SYSTEM_SLUG_REDIRECTS;
+  },
   async headers() {
     return [{ source: "/:path*", headers: [{ key: "Permissions-Policy", value: "tools=(self)" }] }];
   },

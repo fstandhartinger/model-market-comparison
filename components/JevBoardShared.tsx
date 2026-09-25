@@ -1,6 +1,7 @@
 import type { CSSProperties, ReactNode } from 'react';
 import Link from 'next/link';
 import { jevTypeVarName } from './jevTypes';
+import { jevSystemPath } from '../lib/jev-system-slug.mjs';
 
 // CR-151 (Florian 25 Sep 2026): the pieces the score chart and the axes table share. This module has no Node imports and
 // no client directive, so both the server board and the interactive client views can use it.
@@ -111,7 +112,7 @@ export function JevScoreBar({ row, reference = false, metric = 'score', heat, is
       {/* Florian 25 Sep 2026: the name opens the model's best source (repo, Hugging Face or vendor docs); rows without one keep the system page. */}
       {row.repo
         ? <a href={row.repo} target="_blank" rel="noopener noreferrer" title={`${row.display} — opens ${row.repo.replace(/^https:\/\/(www\.)?/, '').split('/')[0]}`} className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent hover:decoration-current" data-bh-jev-source={row.key}>{name ?? shortName(row.display)}</a>
-        : <Link href={`/jev-models/${encodeURIComponent(row.key)}`} title={row.display} className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent hover:decoration-current">{name ?? shortName(row.display)}</Link>}
+        : <Link href={jevSystemPath(row.key)} title={row.display} className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent hover:decoration-current">{name ?? shortName(row.display)}</Link>}
       {row.priority_run === true && <span className="bh-thin-tag ml-1.5 align-middle" data-bh-jev14-priority-run={row.key}>priority run</span>}
       {!row.ranked && <span className="bh-muted whitespace-nowrap" title={row.not_ranked_because ?? undefined}> ({NOT_RANKED[row.listing] ?? row.listing})</span>}
       {row.api_flag && <span className="bh-thin-tag bh-flag-tag ml-1.5 align-middle" title={row.api_exposure_note ?? apiExplanation}>API</span>}
