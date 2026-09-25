@@ -1163,6 +1163,106 @@ Source: Florian's request preserved verbatim as `CR-20260924jev-page-fixes` in
 | CR-142.5 | Write `PROPOSAL-LONG-CONTEXT.md` for a possible Jev-class track at 16k/64k/256k/1M, including item design, running cost, and qualifying systems. | Proposal only; no benchmark track or items are built. |
 | CR-142.6 | Verify the deployed page on `benchmarkheaven.com`, `www.benchmarkheaven.com`, and `model-market-comparison.app.mintapis.com`; retain screenshots and results, then notify Florian as requested. | Hosts serve the merged revision and matching aggregates; light/dark desktop and 390 px screenshots are retained; deployment and notification receipts are recorded. |
 
+## D206 back-fill — CR-143 to CR-158 (seeded 2026-09-25 by iteration 231, claude-opus)
+
+Acceptance rows for the seven CR numbers that shipped between 24 and 25 September with no entry in
+`03-CHANGE-REQUESTS-VERBATIM.md`, none here and no ledger row (**D206**). Each requirement is taken
+from the source named in `03`; read the provenance line there before treating any of it as
+Florian's own words. Backup of the prior file: `04-CR-BRIEF.md.bak-d206-20260925`.
+
+**These rows carry no status.** They say what the CR demands and how one would prove it, written
+from the source text only. This iteration did **not** measure any of them, so no row here is
+claimed implemented or verified; the ledger rows in `PROGRESS.md` are all `open — never verified`
+until an engine runs the checks live. Several of these features have since been restructured by
+CR-158, CR-163 and CR-164, so expect some checks to be superseded rather than failing — that is a
+finding to record, not a reason to soften the check.
+
+## CR-143 — Independent sign-off of the CR-139.2 cache-provenance fix
+
+Source: `03-CHANGE-REQUESTS-VERBATIM.md`. Not a Florian request — an agent-board handoff.
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-143.1 | Record a ledger-only independent sign-off of the deployed `9a229751` `PriceValue.SourceLine` fix. | A verification receipt passes every check on both public hosts at 1440×1000 and 390×844 in light and dark: the pricing modal discloses conditional/cache pricing, the provider and route identity, the source date and the exact cache-read SHA-256 locator, and nothing overflows its container. |
+| CR-143.2 | The sign-off changes nothing. | The PR touches no product code, no benchmark value, no source capture and no pricing input; `tsc`, `npm test` and a deterministic `build-dataset` pass on a clean tree; the timestamp-only `dataset.json` diff is restored, not committed. |
+
+## CR-148 — Preserve the daily-intake CR-143 edits in an isolated reviewed change
+
+Source: `03-CHANGE-REQUESTS-VERBATIM.md`. Release hygiene under Florian's standing 24 Sep workflow
+decision, not a product request.
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-148.1 | Move the three uncommitted bookmark-intake document edits out of the read-only deploy checkout into an isolated reviewed PR. | The PR diff is byte-identical to the preserved patch (SHA-256 `55599d17…e80775`) and touches only `03-CHANGE-REQUESTS-VERBATIM.md`, `04-CR-BRIEF.md` and `PROGRESS.md`; it is reviewed and carries `bh-merge-ready`. |
+| CR-148.2 | Restore the deploy checkout without collateral damage, so the queue's preflight passes. | The restore is limited to those three tracked files; every other tracked and untracked path in the checkout is unchanged afterwards; the restore runs no build, test, merge or deploy; the queue's next pass reports a clean checkout. |
+
+## CR-151 — JevBench board: heat shading, sorting, filtering, View-by switch, axes table moved
+
+Source: Florian's requests as transcribed in `/home/flori/jobs/site-v142-gauntlet-20260925/PROMPT.md`,
+preserved in `03-CHANGE-REQUESTS-VERBATIM.md`. Gated on `/api/jevbench/v1.4.2` returning 200 first.
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-151.1 | Per-column green heat shading on the Intel., Calib., Speed, Cost and $/1k cells, with a tiny legend. | Within each column the cell background opacity is monotone in the value — strongest most opaque, weakest most transparent — and inverted for $/1k, where lower is better; the scale is legible in light and dark; a legend is present. Prove it by reading the computed background of every cell in a column and checking the ordering against the live API's values, not by eye. |
+| CR-151.2 | Columns sortable and filterable. | Every column header sorts on click **and** from the keyboard, exposing its direction (`aria-sort` or an equivalent the checker names); a name search filters rows; the offered filters are those the data supports (open weights / API flag / new in this version / size class). |
+| CR-151.3 | A compact "View by" switch above the chart with the fairness sentence next to it. | The switch is visible without scrolling past the chart, offers the named views, and the v1.4.2 fairness sentence about the #1 versus Jev sits beside it. |
+| CR-151.4 | The "Axes, accuracy, latency and cost" table is sortable, filterable, annotated, and moved below "Compare two systems". | That table carries the same heat shading and badges for API flag, estimated price and partial rows, sorts and filters like the board, and its heading's document position is **after** the "Compare two systems" heading. |
+| CR-151.5 | Numbers equal the live API. | Every rendered value on the page equals `/api/jevbench/v1.4.2` for the same system and axis, at the precision printed. |
+
+## CR-152 — Publish JevBench v1.4.2
+
+Source: Florian's dated approvals in `/home/flori/DECISIONS.md`, quoted in
+`03-CHANGE-REQUESTS-VERBATIM.md`.
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-152.1 | Freeze a complete, hash-verified, integrity-clean roster. | Only rows that are complete (534 frozen + 308 sealed), hash-verified and integrity-clean are in the artifact; rows still under review are absent and recorded as deferred to v1.4.3. |
+| CR-152.2 | Price the roster by the standing base-model price rule. | No author-announced or hypothetical tariff and no free tier is used as a price; Instinct carries the Qwen3.8-27B reference price, visibly labelled an estimate; the rule's re-score condition is written down. |
+| CR-152.3 | The top five are exactly the roster Florian named. | The published top five are decider-4b v2, Jev 1.13.0, JevK5, Cygnet, Hopper, in that order; imajev-4b and every run-13 row are deferred to v1.4.3. |
+| CR-152.4 | Present the new #1 fairly. | The fairness sentence ("Jev 1.13.0 is still the strongest reasoner…; JevBench weighs the four axes equally — sort by Intelligence for raw reasoning") is near the top five, and sorting by Intelligence is reachable from there. |
+| CR-152.5 | Ship the release surfaces. | `/api/jevbench/v1.4.2` returns 200 with its hash header on every public host; the GitHub release and the HF Space are updated by the v1.4.1 procedure; the method is unchanged from v1.4. |
+
+## CR-153 — Finish the remaining /jev-models page requests
+
+Source: Florian's requests as transcribed in
+`/home/flori/jobs/jev-page-requests-final-20260925/PROMPT.md`, preserved in
+`03-CHANGE-REQUESTS-VERBATIM.md`. Items 2–4 restate CR-151 and are not repeated here.
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-153.1 | Replace the Jev-only "hard tier by family" radar with one over the current question set, so every measured system has values. | The compare radar's axes are v1.4 families — public hard plus sealed family aggregates — and every measured system renders a value on every axis, or a clearly marked placeholder naming what is missing. No item-level sealed content appears anywhere. |
+| CR-153.2 | A new "View by: Intelligence" ranking bar chart with a default-on "hide general-purpose LLMs" checkbox. | The view exists; the checkbox is checked on first load and filters out general-purpose LLMs such as GPT-6 Luna and DeepSeek; unchecking it restores them. |
+| CR-153.3 | On the cost-secondary-axis chart, make the cost bars thinner and red. | The cost series is measurably narrower than the capability/intelligence series and rendered in the red accent, in both themes. |
+| CR-153.4 | Account for the older 24/25 Sep request list. | `OUTPUT.md` lists every earlier request with an explicit done / not done, and the not-done ones are finished or carry a stated reason. |
+
+## CR-156 — Publish the JevBench SEO routes on v1.4.2
+
+Source: CR-120's standing instruction (verbatim Florian, 22 Sep) plus the 25 Sep route list from
+`/home/flori/jobs/seo-routes-finish-20260925/PROMPT.md`, preserved in
+`03-CHANGE-REQUESTS-VERBATIM.md`.
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-156.1 | Publish every planned SEO route. | `jev-vs-laya` (404 before this CR), `alternatives`, open-source Jev, how-to-choose and the comparison routes — including `jev-vs-decider-4b-v2` and `jev-vs-cygnet` — all return 200 on every public host. |
+| CR-156.2 | Numbers come from the live v1.4.2 API. | Every figure on those pages equals the live `/api/jevbench/v1.4.2` value for that system and axis; no page states a number that was measured for it separately. |
+| CR-156.3 | Structural SEO is complete. | Each route has a self-canonical, internal links from the JevBench pages, and an entry in the live `sitemap.xml`; IndexNow was submitted after deployment, not before. |
+| CR-156.4 | Search Console. | The sitemap is submitted in the verified `sc-domain:benchmarkheaven.com` property and indexing is requested for the new URLs; the new queries are added to the SEO loop's daily rank measurement. |
+| CR-156.5 | CR-120's standing honesty limit holds. | The structured data describes what the page actually contains, and no page claims third-party GDPR compliance. |
+
+## CR-158 — /jev-models Capability-first restructure and anti-gaming price rules
+
+Source: Florian's 13:20 approval and 15:15 rules in `/home/flori/DECISIONS.md`, plus the page order
+transcribed in `/home/flori/jobs/jev-page-restructure-20260925/PROMPT.md`; both quoted in
+`03-CHANGE-REQUESTS-VERBATIM.md`. Carries CR-151 and CR-153.
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-158.1 | The headline is the Capability ranking (mean of Intelligence and Calibration) of Jev-class systems only, with the rule written on the page and in the method notes. | The first ranking on the page is Capability over Jev-class systems; each listed system satisfies cost per decision ≤ 2× Jev 1.13.0's **and** median latency ≤ 2× Jev's, re-derived from the live API rather than read from the page; the 2× rule is stated in the page copy and in the method notes; systems outside the class are below a divider or behind a toggle, never mixed in. |
+| CR-158.2 | Bubble charts Capability × Cost and Capability × Speed. | Both render, carry hover and tap tooltips with the system name and its values, label the top five permanently, and use log axes where the range warrants it. |
+| CR-158.3 | The composite bar chart keeps weight sliders above **and** below it, with sorting and filters adjacent and the fairness note retained. | Two slider groups exist, one on each side of the chart, and both drive the same weights; sorting and filter controls sit next to the chart; the fairness note is still present. |
+| CR-158.4 | The anti-gaming price rules are a disclosed, frozen addendum, recorded before any v1.5 result. | `METHOD-v1.5-ADDENDUM-PRICING.md` exists in `/home/flori/jobs/jevbench-v15-method-20260925/`, hashes to SHA-256 `2fc44459…20cc`, was board-posted (#1340) before the first v1.5 result, and states all three rules — the ≥30-day bookable list price, the `max(list, base-model reference)` floor, and re-score-with-a-visible-note on a later price change. The same rules are in `DECISIONS.md`. |
+| CR-158.5 | Presentation only. | Scores, official ranks and the scoring method are byte-identical to v1.4.2 across the restructure; the published artifact hash is unchanged. |
+
 ## CR-163 — Mobile JevBench headline shortlist after the Capability-first redesign
 
 Source: the workstream repair recorded in `03-CHANGE-REQUESTS-VERBATIM.md`, the newer 25 Sep

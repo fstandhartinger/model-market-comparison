@@ -12065,3 +12065,102 @@ grows again the row will come back down onto the bar, and the test below is what
 
 Not done here and still open: F-181, D192, D205 (needs Florian), D206, the four D-rows awaiting a daily
 run, and X6's line-by-line audit. **`ALL-ACCEPTED` is not appended.**
+
+## Iteration 231 — work (claude-opus), 2026-09-25 21:1x–21:5x UTC — D209 resolved (queue unblocked), D206 back-filled
+
+Two governance items, no product code. Commits `7b011d66` (ops, deployed and serving 21:17:33 UTC)
+and the documentation commit below. Evidence: `/opt/benchmarkheaven/state/ux-evidence/iter231-d209-d206/`.
+
+### D209 — the premise was backwards, and it had been holding the merge queue for ~90 minutes
+
+Since 19:51 UTC, `ops/ux-2026-09-12/bin/{pick-engine,iterate}.sh` sat dirty in the shared deploy
+checkout. `bh-merge-queue` refuses to run while the checkout is dirty, so **ready PR #34 (CR-169)
+could not land**; four board posts asked the unnamed owner to act, with deadlines at 19:35, 19:40
+and 20:40, and none was answered. The 19:20 gate and iteration 230 both read the edits as an
+unauthorised undo of Florian's 25.09.2026 Codex-first directive (commit `b92b3126`) and left them
+alone under the one-writer rule, which was the right call at the time but left the queue stopped.
+
+**They were not an undo.** A newer, sourced authorisation exists; it simply does not live in
+`/home/flori/DECISIONS.md` or in either requirement document, which is where both gates looked:
+
+- **`~/AGENTS.md` §6, "Limit awareness — binding (Florian, 25 Sep 2026)."** Diffed against
+  `AGENTS.md.bak-20260925-limits`, the entire block is **new**, written at **19:53 UTC — two minutes
+  after the edits**. It says Claude Opus 5.5 takes real work while under its pace line ("unused
+  weekly Claude allowance expires at the reset") and that "GPT-6 Luna at xhigh is the default.
+  GPT-6 Sol only for the hardest tasks".
+- **`~/.hermes/model-economy-policy.md`**, the only model policy `AGENTS.md` recognises, carries the
+  same text and attributes it to Florian, 25 Sep 2026.
+- **agent-board #1822**, 2026-09-25T19:53:51Z, posted as BINDING.
+
+Conversely `b92b3126` was itself committed out of a dirty tree by the 15:50 gate and cited no source
+document, and `pick-engine.sh`'s own header comment ("Order for work: Opus 5, GPT-5.6 Luna, then the
+free chain") never agreed with it. So the edits were kept, not reverted; the deleted directive
+comment was replaced with one that names all three sources, and `iterate.sh`'s stale
+"Codex GPT-6 Sol xhigh for all roles" comment was corrected to match the code it sits above.
+
+**Correction to iteration 230's own note.** That iteration reported neither `gpt-6-sol` nor
+`gpt-6-luna` exists in `~/.codex/models_cache.json`. **`gpt-6-luna` is a real slug** — the cache
+refetched at 21:10 UTC lists `gpt-6-astra`, `gpt-6-sol`, `gpt-6-luna` and the `gpt-5.6-*` family,
+both with `supported_in_api: true` and `xhigh` among their efforts. Iteration 230 read a stale cache.
+
+**Measured at the time of the change** (`quota-pace status`): Claude 48 %, under its pace line;
+Codex 59 %, **OVER PACE — judgement only**; Devin 88 %, over pace. The restored order is what the
+live measurements call for as well as what the policy says.
+
+**Conflict of interest, on the record:** this change was made by `claude-opus` and it puts
+`claude-opus` first in the work branch. It rests on the three external sources above, not on this
+engine's judgement. The `review` branch is untouched and still refuses the implementing engine, so
+the guard against self-sign-off is unaffected. If a later reader weighs those sources differently,
+the change is one commit to revert.
+
+### D206 — the seven remaining CR numbers now have requirement entries
+
+D206 has been open since the 13:40 gate: CR numbers shipping with no entry in the authoritative
+documents and no ledger row. CR-163–165 were seeded by the workstream and CR-166–168 by the 19:20
+gate; the seven that remained were **CR-143, CR-148, CR-151, CR-152, CR-153, CR-156 and CR-158**.
+All seven are now in `03-CHANGE-REQUESTS-VERBATIM.md` (requirement text) and `04-CR-BRIEF.md`
+(acceptance rows), inserted in numeric order into the existing 142→163 gap rather than appended out
+of order. Backups: `*.bak-d206-20260925`.
+
+Iteration 223 (`opencode-kimi`) had already drafted this inventory at
+`/home/flori/jobs/bh-ux-iter223/d206-draft.md` and it never landed. Its sources were re-checked here
+rather than trusted: all five job `PROMPT.md` files exist, the allocation ledger
+`/home/flori/.local/state/bh/cr-allocations.jsonl` carries all seven `cr`/`owner`/`title` rows, and
+the `DECISIONS.md` entries it cites for CR-152 and CR-158 (19:45 approval + 20:20 supersession,
+20:30 price rule, 01:30 roster, 25 Sep GO, 13:20 approval, the two 15:15 rules) are present and were
+quoted verbatim rather than paraphrased.
+
+**Provenance is stated per entry, because most of this is not verbatim Florian and saying otherwise
+in a document titled "verbatim" would be the same failure D206 is about.** Only CR-152 and CR-158-B
+quote text Florian approved directly (the dated `DECISIONS.md` entries). CR-151, CR-153 and CR-156
+are job-prompt transcriptions — an agent wrote his requests down at launch and no raw capture was
+found — and each says so. CR-143 and CR-148 are not Florian requests at all: CR-143 is an
+agent-board handoff, CR-148 is release hygiene under his standing 24 Sep workflow decision, and
+CR-148 has no job directory or `PROMPT.md` in existence, so its text is reconstructed from the board
+thread and the preserved patch header and is labelled as such. Nothing was back-derived from the
+shipped code.
+
+Also recorded in CR-143's entry: the **CR-143 number collision** that has already misled one reader.
+The allocation ledger's CR-143 is the PR #5 cache-provenance sign-off; the `CR-143.1`/`CR-143.2`
+rows the automated bookmark intake filed (MentalHealthBench) are a different thing entirely and are
+covered only as CR-148's payload.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D209 | open → **resolved** | `7b011d66`; `AGENTS.md.bak-20260925-limits` diff; `~/.hermes/model-economy-policy.md`; board #1822, #1849 | Not an unauthorised undo: a newer binding Florian rule, written 19:53 UTC, authorises exactly these two changes. Kept and committed with the sources named, not reverted. The queue's dirty-checkout pause is cleared. |
+| — | — | `bh-merge-queue --status`; queue journal | After the push the checkout is clean and `{"pending_deploy": null, "ready_prs": [{"number": 34, …}]}`. The queue's second condition (both public hosts serving current main) cleared when `7b011d66` finished deploying at 21:17:33 UTC. |
+| D206 | open (partly closed) → **implemented** | `03`/`04` diffs; `*.bak-d206-20260925`; `/home/flori/.local/state/bh/cr-allocations.jsonl` | All seven remaining CR numbers now have a requirement entry and acceptance rows, with per-entry provenance. Implemented by this engine, so a different engine must check the entries against their sources before this is `verified`. **The underlying process gap is not closed** — see below. |
+| CR-143.1/.2, CR-148.1/.2, CR-151.1–.5, CR-152.1–.5, CR-153.1–.4, CR-156.1–.5, CR-158.1–.5 | **open — never verified** | `04-CR-BRIEF.md` | New rows. This iteration wrote the acceptance criteria and **measured none of them**; no row is claimed implemented. CR-158, CR-163 and CR-164 have since restructured several of these surfaces, so some checks are likely superseded rather than failing — that is a finding to record when someone runs them, not a reason to soften a check. |
+
+**D206's process gap stays open even though its back-fill is done.** Seven CRs were reconstructed
+after the fact by three different engines across three gates. Nothing in the pipeline yet stops the
+next job from allocating a CR number, shipping it, and leaving no requirement entry behind: the
+allocation ledger (`cr-allocations.jsonl`) already records every number at allocation time, so the
+cheap fix is a check that fails when a ledger entry has no heading in `03`/`04`. Not built here —
+it belongs to whoever owns `bin/`, and this iteration had already spent its writer window on the
+queue. Recorded so the next reader does not mistake a finished back-fill for a fixed process.
+
+Not done here and still open: F-181 (checker fixed by iteration 230, awaiting a non-claude re-run),
+D192, D205 (needs Florian), D207/CR-167.2/CR-163.1 and D208 (all implemented by iteration 230,
+awaiting an independent engine), the four D-rows awaiting a daily run, and X6's line-by-line audit.
+**`ALL-ACCEPTED` is not appended.**

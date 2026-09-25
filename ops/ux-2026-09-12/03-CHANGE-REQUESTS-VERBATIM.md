@@ -1723,6 +1723,189 @@ Florian, 24 Sep 2026, request preserved from `/home/flori/jobs/jev-page-fixes-20
 > cost and qualifying systems; proposal only, no build. Verify all production hosts,
 > retain screenshots, notify Florian, and write the job output.
 
+## D206 back-fill — CR-143 to CR-158 (seeded 2026-09-25 by iteration 231, claude-opus)
+
+The seven entries that follow were shipped between 24 and 25 September without any entry in this
+document, without an entry in `04-CR-BRIEF.md` and without a ledger row — the governance gap the
+13:40 and 19:20 review gates filed as **D206**. They are seeded here the same way that gate seeded
+CR-166–168: from the sources that exist, with the provenance of each stated plainly. Backup of the
+prior file: `03-CHANGE-REQUESTS-VERBATIM.md.bak-d206-20260925`.
+
+**Read the provenance line on each entry before treating any of it as Florian's words.** Only
+CR-152 and CR-158-B quote text Florian himself approved (the dated `/home/flori/DECISIONS.md`
+entries). CR-151, CR-153 and CR-156 are *job-prompt transcriptions*: an agent wrote down Florian's
+requests when it launched the job, and no raw capture of his own wording was found. CR-143 and
+CR-148 are not Florian requests at all. Nothing below was reconstructed from the shipped code —
+where a source is thin, the entry says so rather than inventing the missing wording.
+
+## CR-143 — Independent sign-off of the CR-139.2 cache-provenance fix (workstream gate, 2026-09-24)
+
+**Provenance: not a Florian request.** Origin is an agent-board handoff; no request from Florian was
+located. Sources: `/home/flori/jobs/iter205-cr139-2/PR_BODY.md` and `BOARD-INBOX.md` (the job has no
+`PROMPT.md`), board thread #8 entries #654/#657/#658, and the allocation ledger
+`/home/flori/.local/state/bh/cr-allocations.jsonl` (`2026-09-24T14:40:46Z`).
+
+A ledger-only independent sign-off of the already-deployed `9a229751` `PriceValue.SourceLine` fix:
+the Fable 5.1 Vertex AI modal must disclose conditional/cache pricing, the provider and route
+identity, the source date and the exact cache-read SHA-256 locator, without overflow. No product
+code, benchmark value, source capture or pricing input may change.
+
+**Note on the CR-143 number collision, because it has already misled one reader.** The allocation
+ledger's CR-143 is this sign-off. Separately, the automated bookmark intake filed rows `CR-143.1`
+and `CR-143.2` (MentalHealthBench ingestion) in the repo ops files; those live only in the CR-148
+patch worktree and are covered here solely as CR-148's payload. The standing rule behind the intake
+("check the X bookmark folder once a day…") is verbatim Florian, 18 Sep 2026; the specific
+MentalHealthBench candidate is intake-generated.
+
+## CR-148 — Preserve the daily-intake CR-143 edits in an isolated reviewed change (release hygiene, 2026-09-24)
+
+**Provenance: not a Florian product request.** It applies his standing 24 Sep workflow decision
+(DECISIONS.md: the site writer slot is abolished; site changes go through an isolated worktree, a
+PR and the serialized queue). This CR has no job directory and no `PROMPT.md` at all; its text is
+reconstructed from the board site thread (mirrored in
+`/home/flori/jobs/bh-analytics-20260924/session.log` at line 5959) and from the header of the
+preserved patch `/home/flori/jobs/parallelism-gpu-and-site-20260924/preserved-cr143-deploy-checkout.patch`
+(SHA-256 `55599d17…e80775`).
+
+Transfer the three uncommitted bookmark-intake document edits
+(`03-CHANGE-REQUESTS-VERBATIM.md`, `04-CR-BRIEF.md`, `PROGRESS.md`) out of the read-only deploy
+checkout into an isolated reviewed PR, so the merge queue's clean-checkout preflight passes again.
+Documents only: no product or data change, no broad reset or clean, and the restore operation runs
+no build, test, merge or deploy.
+
+## CR-151 — JevBench board: heat shading, sorting, filtering, a View-by switch, axes table moved (Florian, 24/25 Sep 2026)
+
+**Provenance: job-prompt transcription, not a verbatim capture.**
+`/home/flori/jobs/site-v142-gauntlet-20260925/PROMPT.md` records these under the heading "Florian's
+requests", but no capture of Florian's own wording was found. Quoted here as written there.
+
+> 1. In the main score chart that doubles as a table (bars + columns Intel., Calib., Speed, Cost,
+>    $/1k): give each axis cell a green background whose opacity scales with the value within that
+>    column (strongest system in the column = most opaque, weakest = most transparent; a readable
+>    scale in both themes; for $/1k lower is better). Then one can instantly see when the #1 is not
+>    the strongest on an axis (e.g. decider-4b v2 has lower Intelligence than Jev). Add a tiny legend.
+> 2. Make its columns easily sortable (click header, clear arrow state, keyboard accessible) and
+>    filterable (search by name; filters e.g. open weights / API flag / new in this version / size
+>    class if data exists).
+> 3. Make it obvious that there are other ways to view the field besides the main ranking: e.g. a
+>    compact "View by: Overall · Intelligence · Calibration · Speed · Cost · Capability" switch above
+>    the chart, and the fairness sentence about the #1 vs Jev (already added in v1.4.2) next to it.
+> 4. Section "Axes, accuracy, latency and cost" (the numeric table below the chart): also sortable,
+>    filterable and visually annotated (same heat shading, badges for API flag / estimated price /
+>    partial rows), and MOVE it to after the "Compare two systems" section.
+
+Gated on `/api/jevbench/v1.4.2` returning 200 first. Presentation only — no scoring or method change.
+
+## CR-152 — Publish JevBench v1.4.2 (Florian, dated DECISIONS.md approvals, 24/25 Sep 2026)
+
+**Provenance: decision-derived.** The requirement is Florian's own dated approvals in
+`/home/flori/DECISIONS.md`, quoted verbatim below; `/home/flori/jobs/release-v142-ship-20260925/PROMPT.md`
+is the execution plan built from them.
+
+> (19:45) RELEASE APPROVAL JevBench v1.4.2 (Florian): publish as soon as the running measurements
+> and final checks (integrity scan, instinct-verify verdict not NOT-LEGIT, tests, live verification)
+> complete successfully. This approval covers any top-5 change in v1.4.2, including Instinct at #1.
+> SUPERSEDED 20:20: Instinct is NOT #1 — no public price exists; use the standing Qwen3.8-27B
+> reference price (reflex-27b precedent), label it, re-score when ZooWork publishes a bookable price.
+> No separate preview needed for the rest. ImageJevBench publication is NOT approved yet (separate
+> go pending).
+
+> (01:30) v1.4.2 roster = Florian's tweet: top 5 decider-4b v2, Jev 1.13.0, JevK5, Cygnet, Hopper.
+> imajev-4b and all run-13 rows -> v1.4.3. All later evaluations only in the next version.
+
+> (25 Sep) v1.4.2 GO with official method; decider-4b v2 #1 presented fairly (Jev strongest reasoner
+> sentence + sort by Intelligence). No formula change; minimum-Intelligence-for-#1 question deferred
+> to v1.5.
+
+The 20:30 base-model price rule applies to the roster's pricing. No formula or method change; rows
+still under review move to v1.4.3; ImageJevBench is explicitly **not** covered (it became CR-166).
+
+## CR-153 — Finish the remaining /jev-models page requests (Florian, 25 Sep 2026)
+
+**Provenance: job-prompt transcription, not a verbatim capture.**
+`/home/flori/jobs/jev-page-requests-final-20260925/PROMPT.md`. Items 2, 3 and 4 restate CR-151; the
+job was told to coordinate on board #8 and take over whatever CR-151 had not finished.
+
+> 1. Compare view: the "hard tier by family" radar is filled only for Jev. Replace it with a radar
+>    based on the CURRENT question set (v1.4 families: public hard + sealed family aggregates that
+>    exist for every measured system) so every system has values; if any system lacks data, measure
+>    it or show a clear placeholder.
+> 2. Main score chart/table: green cell shading per column for Intel., Calib., Speed, Cost and $/1k
+>    (strongest = most opaque, weakest = most transparent; lower is better for $/1k), with a small legend.
+> 3. Move the "Compare two systems" section one section up (Florian's request), and the "Axes,
+>    accuracy, latency and cost" table to after "Compare two systems".
+> 4. All columns sortable (click header, keyboard) and filterable (name search; open weights; API
+>    flag; new in this version; class) in both the chart-table and the axes table.
+> 5. New Intelligence ranking bar chart ("View by: Intelligence") with a checkbox "hide
+>    general-purpose LLMs" (default on) so classic LLMs like GPT-6 Luna / DeepSeek are filtered out.
+> 6. Capability/Intelligence chart with cost on the secondary axis: make the cost bars thinner
+>    (fewer px) and red so they don't dominate.
+> 7. Re-check the older list of requests from 24/25 Sep (DECISIONS.md, site-v142-gauntlet PROMPT.md,
+>    jev-page-fixes-20260924 PROMPT.md): list each as done/not done in OUTPUT.md and finish the
+>    missing ones.
+
+Sealed data appears as family aggregates only, never item level.
+
+## CR-156 — Publish the JevBench SEO routes on v1.4.2 (Florian, 25 Sep 2026; supersedes PR #9 / CR-146)
+
+**Provenance: mixed.** The standing instruction is verbatim Florian from 22 Sep, already in this
+document as CR-20260922c → CR-120. The specific 25 Sep route list is job-derived, from
+`/home/flori/jobs/seo-routes-finish-20260925/PROMPT.md` and its `PR-BODY.md`.
+
+> /jev-models/jev-vs-laya still returns 404; drafts exist in seo-jev-oss-laya-20260924
+> (ALTERNATIVES/JEV-VS-LAYA copy + JSON-LD) and seo-jev-oss-laya-followup-20260924. Publish all
+> planned SEO routes (jev-vs-laya, alternatives, open-source Jev, how-to-choose, comparisons) with
+> numbers from the live v1.4.2 API, sitemap, canonical, internal links, IndexNow; Google Search
+> Console is verified (sc-domain:benchmarkheaven.com): submit the sitemap and request indexing of
+> the new URLs. Verify live. Report ranks in the SEO loop.
+
+The PR body adds `jev-vs-decider-4b-v2` and `jev-vs-cygnet`. Numbers come only from the live v1.4.2
+API — no new measurement. CR-120's standing limit still binds: honest structured data, and no
+third-party GDPR-compliance claims.
+
+## CR-158 — /jev-models Capability-first restructure and anti-gaming price rules (Florian approved, 25 Sep 2026)
+
+**Provenance: decision-derived, with a job-prompt transcription of the layout detail.** Florian's
+approval and the two rules are verbatim in `/home/flori/DECISIONS.md`; the page order below is as
+transcribed in `/home/flori/jobs/jev-page-restructure-20260925/PROMPT.md`. This CR carries CR-151
+and CR-153 and builds on their PRs rather than duplicating them.
+
+Florian's approval and rules, verbatim from DECISIONS.md:
+
+> (13:20) Page restructure (Capability-first, Jev-class filter 2x cost/latency of Jev, bubble
+> charts, then composite with sliders) and anti-gaming price rules (30-day list price, base-model
+> price floor) APPROVED; job jev-page-restructure-20260925.
+
+> (15:15, same job) **Jev-class rule for /jev-models (presentation only):** a system is Jev-class if
+> its cost per decision is at most 2x Jev 1.13.0's AND its median latency is at most 2x Jev 1.13.0's.
+> The page headline is the Capability ranking (mean of Intelligence and Calibration) of Jev-class
+> systems; others are listed below a divider. Tweets and launch texts lead with this Capability ranking.
+
+> (15:15, job jev-page-restructure-20260925, Florian's 13:20 approval) **JevBench PRICE RULES
+> (anti-gaming), binding for v1.5 and v1.4.x from the next re-score (v1.4.3+):** (1) only public,
+> bookable list prices continuously in effect >= 30 days at the price cut-off count; a younger price
+> cut does not count yet (previous >=30-day price is used), increases count at once; promotions,
+> launch discounts, subsidies, credits, free tiers, beta-free, commitment/volume discounts and
+> announced tariffs never count. (2) Price floor: scoring cost = max(cost at list price, cost at the
+> base model's market reference price), per 1,000 decisions from measured tokens; reference price by
+> the same method as the 24 Sep base-model price rule. (3) A later price change (list or floor
+> reference) triggers a re-score with a visible row note; top-5 changes go through the top-5 gate.
+> Frozen as METHOD-v1.5-ADDENDUM-PRICING.md (SHA-256 2fc44459…20cc, board #1340) before any v1.5 result.
+
+Page order, as transcribed in the job prompt:
+
+> 1. Headline: CAPABILITY ranking (mean of Intelligence and Calibration) of Jev-class systems only.
+>    […] (write this rule on the page and in the method notes; general LLMs outside it are listed
+>    below a divider or via a toggle).
+> 2. Bubble charts Capability vs Cost and Capability vs Speed (hover/tap tooltips with name + values,
+>    permanent labels for the top 5, log axes where sensible).
+> 3. Then the composite JevBench score bar chart with the weight sliders (above AND below the chart),
+>    sorting and filters right next to it; the fairness note stays.
+> 4. Everything else as before (compare view, axes table, etc.).
+
+Presentation only; the scoring method is unchanged. The pricing addendum had to be frozen, hashed
+and board-posted **before** any v1.5 result existed.
+
 ## CR-163 — Restore the mobile JevBench headline shortlist (workstream repair, 2026-09-25)
 
 This is a repair filed by the UX workstream from `REVIEW-20260925T134004Z.md`, **not a new
