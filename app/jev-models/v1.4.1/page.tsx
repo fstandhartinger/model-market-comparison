@@ -52,7 +52,7 @@ export default async function JevModelsV141Page() {
         <a className="text-accent underline" href="/jev-models" data-bh-jev-live-link>View live board</a>
       </p>
     </header>
-    <JevModelsV14Board artifact={view.artifact} sha256={view.sha256} />
+    <JevModelsV14Board artifact={view.artifact} sha256={view.sha256} capabilityHref="#jev14-capability-views" />
     <JevCapabilityChart systems={view.systems} revision={view.revision} />
   </>;
 }

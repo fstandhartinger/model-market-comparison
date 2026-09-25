@@ -1,4 +1,5 @@
-import type { CSSProperties } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
+import { jevSourceUrl } from './jevSystemLinks';
 import { jevbenchCapabilityRows } from '../lib/jevbench-capability.mjs';
 import type { JevV14System } from '../lib/jevbench-v14.mjs';
 import { JEV_TYPE_LABEL, jevLegendTypes, jevTypeVarName } from './jevTypes';
@@ -6,14 +7,14 @@ import { JevCapability3D } from './JevCapability3D';
 
 const CHART_TOP = 20;
 const one = (value: number) => value.toFixed(1);
-const shortName = (value: string) => {
+export const shortName = (value: string) => {
   const clean = value.split(', formerly')[0];
   if (clean === 'GPT-6 Luna (low reasoning effort)') return 'GPT-6 Luna (low)';
   if (clean === 'GPT-6 Luna (default medium reasoning effort)') return 'GPT-6 Luna (medium)';
   return clean.split(' (')[0];
 };
 const typeVar = (cls: string) => ({ '--jev-t': 'var(' + jevTypeVarName(cls) + ')' }) as CSSProperties;
-const usd = (value: number) => value === 0 ? 'Free' : value >= 1 ? '$' + value.toFixed(2) : '$' + value.toPrecision(2);
+export const usd = (value: number) => value === 0 ? 'Free' : value >= 1 ? '$' + value.toFixed(2) : '$' + value.toPrecision(2);
 
 type PlotPoint = {
   key: string;
@@ -43,11 +44,11 @@ function toPlotPoint(row: JevV14System, capability: number): PlotPoint {
   };
 }
 
-function positiveCosts(points: PlotPoint[]) {
+function positiveCosts(points: Array<{ cost: number | null }>) {
   return points.flatMap(({ cost }) => cost != null && cost > 0 ? [cost] : []);
 }
 
-function logBounds(points: PlotPoint[]): [number, number] {
+export function logBounds(points: Array<{ cost: number | null }>): [number, number] {
   const values = positiveCosts(points);
   if (!values.length) return [-3, 0];
   const min = Math.log10(Math.min(...values));
@@ -61,11 +62,11 @@ function logCostPosition(cost: number, bounds: [number, number]): number {
   return Math.max(0, Math.min(1, (Math.log10(cost) - min) / (max - min)));
 }
 
-function costAxisPosition(cost: number, bounds: [number, number]): number {
+export function costAxisPosition(cost: number, bounds: [number, number]): number {
   return 4 + 96 * logCostPosition(cost, bounds);
 }
 
-function costTicks(bounds: [number, number]): number[] {
+export function costTicks(bounds: [number, number]): number[] {
   const values: number[] = [];
   for (let exponent = Math.floor(bounds[0]); exponent <= Math.ceil(bounds[1]); exponent += 1) {
     const value = 10 ** exponent;
@@ -75,11 +76,15 @@ function costTicks(bounds: [number, number]): number[] {
   return [10 ** bounds[0], 10 ** bounds[1]];
 }
 
-function CapabilityBar({ row, capability, position, costBounds }: {
+export function CapabilityBar({ row, capability, position, costBounds, rankLabel, note }: {
   row: JevV14System;
   capability: number;
   position: number;
   costBounds: [number, number];
+  /** Replaces the position number, e.g. '–' for rows outside a numbered list. */
+  rankLabel?: string;
+  /** A short line under the bars, e.g. why a system is outside the Jev-class limits. */
+  note?: ReactNode;
 }) {
   const intelligence = row.axes?.intelligence ?? 0;
   const calibration = row.axes?.calibration ?? 0;
@@ -97,22 +102,24 @@ function CapabilityBar({ row, capability, position, costBounds }: {
     aria-label={label}
     title={label}
   >
-    <span className="bh-muted tabular col-start-1 row-start-1 text-right text-xs">{position + 1}</span>
+    <span className="bh-muted tabular col-start-1 row-start-1 text-right text-xs">{rankLabel ?? position + 1}</span>
     <span className="col-start-2 row-start-1 min-w-0 truncate sm:text-right" title={row.display}>
-      {row.repo
-        ? <a href={row.repo} target="_blank" rel="noopener noreferrer" className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent hover:decoration-current">{shortName(row.display)}</a>
+      {jevSourceUrl(row.key, row.repo)
+        ? <a href={jevSourceUrl(row.key, row.repo)!} target="_blank" rel="noopener noreferrer" className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent hover:decoration-current" data-bh-jev-source={row.key}>{shortName(row.display)}</a>
         : shortName(row.display)}
       {row.api_flag && <span className="bh-thin-tag ml-1.5 align-middle" title={row.api_exposure_note ?? undefined}>API</span>}
     </span>
-    <span className="col-start-2 row-start-2 mt-1 flex flex-col justify-center gap-1 sm:col-start-3 sm:row-start-1 sm:mt-0" aria-hidden="true">
+    <span className="col-start-2 row-start-2 mt-1 flex flex-col justify-center gap-[3px] sm:col-start-3 sm:row-start-1 sm:mt-0" aria-hidden="true">
       <span className="bh-jevc-grid flex h-[10px] rounded-sm"><span className={'bh-jevc-bar' + (row.ranked ? '' : ' is-partial')} style={{ width: width.toFixed(4) + '%' }} /></span>
-      <span className="bh-jevc-grid flex h-[7px] rounded-sm" title={`Cost ${cost == null ? 'not reported' : usd(cost) + ' per 1,000 decisions' + (row.cost?.kind === 'estimate' ? ', estimated' : '')}; logarithmic scale, lower is better`}><span className="block h-full rounded-sm" style={{ width: costWidth.toFixed(4) + '%', backgroundColor: 'var(--muted)' }} /></span>
+      {/* CR-153 (Florian 25 Sep 2026): the cost bar is a thin red line, so it reads as secondary to the Capability bar. */}
+      <span className="flex h-[3px] rounded-full" title={`Cost ${cost == null ? 'not reported' : usd(cost) + ' per 1,000 decisions' + (row.cost?.kind === 'estimate' ? ', estimated' : '')}; logarithmic scale, lower is better`} data-bh-jev14-cost-bar><span className="bh-jev-cost-bar block h-full rounded-full" style={{ width: costWidth.toFixed(4) + '%' }} /></span>
     </span>
     <b className="tabular col-start-3 row-span-2 row-start-1 self-center text-right text-base sm:col-start-4 sm:row-span-1 sm:text-lg">{one(capability)}</b>
     <span className="bh-muted col-start-2 row-start-3 mt-0.5 min-w-0 font-mono text-[10.5px] sm:col-start-5 sm:row-start-1 sm:mt-0 sm:whitespace-nowrap sm:text-right sm:text-[12px]">
       <span className="sm:hidden">Cost </span>{cost == null ? '—' : usd(cost)}{row.cost?.kind === 'estimate' && cost != null ? ' est.' : ''}
       <span className="hidden sm:inline"> · I {one(intelligence)} · C {one(calibration)}</span>
     </span>
+    {note && <span className="bh-muted col-start-2 row-start-4 mt-0.5 min-w-0 text-[11px] leading-snug sm:col-start-3 sm:col-end-6 sm:row-start-2 sm:mt-0">{note}</span>}
   </li>;
 }
 
@@ -176,7 +183,7 @@ function Scatter({ id, title, description, points, xKind, costBounds }: {
   </figure>;
 }
 
-export function JevCapabilityChart({ systems, revision }: { systems: JevV14System[]; revision: string }) {
+export function JevCapabilityChart({ systems, revision, only3d = false }: { systems: JevV14System[]; revision: string; only3d?: boolean }) {
   const all = jevbenchCapabilityRows(systems);
   const points = all.map(({ row, capability }) => toPlotPoint(row, capability));
   const rest = all.slice(CHART_TOP);
@@ -188,6 +195,16 @@ export function JevCapabilityChart({ systems, revision }: { systems: JevV14Syste
   const minCost = knownCosts.length ? Math.min(...knownCosts) : 0;
   const maxCost = knownCosts.length ? Math.max(...knownCosts) : 0;
 
+  // Florian 25 Sep 2026: /jev-models opens with the Capability ranking and the bubble charts (JevCapabilityRanking,
+  // JevBubbleCharts); further down it keeps only the 3D view. Version-pinned pages keep the full suite.
+  if (only3d) return <section id="jev14-capability-views" className="mt-12 scroll-mt-6" data-bh-jev14-capability-suite data-bh-jev14-capability-3d aria-labelledby="jev14-capability-3d-title">
+    <p className="bh-eyebrow">JevBench {revision} · additional view</p>
+    <h2 id="jev14-capability-3d-title" className="mt-1 text-2xl font-bold leading-snug">Capability, cost and speed in 3D</h2>
+    <p className="bh-muted mt-2 max-w-5xl text-sm">The 3D view plots Capability vertically, lower cost to the right, and higher Speed toward you. Sphere size follows the JevBench score. Drag to rotate; pinch or scroll to zoom. The view loads when it scrolls into view. The two flat charts are at the <a className="text-accent underline" href="#jev-bubbles">top of the page</a>.</p>
+    <div className="bh-panel mt-4 p-4 sm:p-5"><JevCapability3D points={plotted3d} costBounds={costBounds} /></div>
+    <p className="bh-muted mt-2 text-xs">{plotted3d.length} systems plotted; systems missing cost or Speed are omitted.</p>
+  </section>;
+
   return <section id="jev14-capability-views" className="mt-12 scroll-mt-6" data-bh-jev14-capability-suite aria-labelledby="jev14-capability-title">
     <p className="bh-eyebrow">JevBench {revision} · additional views</p>
     <h2 id="jev14-capability-title" className="mt-1 text-2xl font-bold leading-snug sm:text-3xl">Capability, cost and speed</h2>
@@ -197,7 +214,7 @@ export function JevCapabilityChart({ systems, revision }: { systems: JevV14Syste
     <figure className="bh-panel mt-5 p-4 sm:p-5" data-bh-jev14-capability-chart aria-labelledby="jev14-capability-bars-title">
       <p className="bh-eyebrow">Top {Math.min(CHART_TOP, all.length)} by Capability</p>
       <h3 id="jev14-capability-bars-title" className="mt-1 text-xl font-bold leading-snug">Capability with cost alongside</h3>
-      <p className="bh-muted mt-1 text-sm">Each system has a wide Capability bar and a narrower cost bar. The cost scale is logarithmic: longer bars mean higher cost, so shorter is cheaper.</p>
+      <p className="bh-muted mt-1 text-sm">Each system has a wide Capability bar and a thin red cost line beneath it. The cost scale is logarithmic: a longer red line means higher cost, so shorter is cheaper.</p>
       <div className="mt-4 hidden grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_15rem] gap-x-2 text-[11px] sm:grid" aria-hidden="true">
         <span /><span />
         <span className="bh-muted flex justify-between font-mono"><span>0</span><span>20</span><span>40</span><span>60</span><span>80</span><span>100</span></span>
@@ -229,9 +246,9 @@ export function JevCapabilityChart({ systems, revision }: { systems: JevV14Syste
       </div>
       <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px]" aria-label="System types" data-bh-jev14-capability-legend>
         {types.map((type) => <li key={type} style={typeVar(type)} data-bh-jev14-class={type} data-bh-jev14-class-labelled={JEV_TYPE_LABEL[type] ? '1' : '0'}><span className="bh-jevc-swatch mr-1.5" />{JEV_TYPE_LABEL[type] ?? <code title="Class named in the v1.4.2 artifact; description pending">{type}</code>}</li>)}
-        <li><span className="mr-1.5 inline-block h-1.5 w-3 rounded-sm bg-[rgb(var(--muted))] align-middle" />Cost per 1,000 decisions · log scale</li>
+        <li><span className="bh-jev-cost-bar mr-1.5 inline-block h-[3px] w-4 rounded-full align-middle" />Cost per 1,000 decisions · log scale (thin red line)</li>
       </ul>
-      <figcaption className="bh-muted mt-3 text-[11.5px] leading-snug">Cost bars use the right-hand scale, from {usd(minCost)} to {usd(maxCost)} per 1,000 decisions. Free cost is placed at the cheapest edge; missing cost is shown as —.</figcaption>
+      <figcaption className="bh-muted mt-3 text-[11.5px] leading-snug">Red cost lines use the scale printed under the bars, from {usd(minCost)} to {usd(maxCost)} per 1,000 decisions. Free cost is placed at the cheapest edge; missing cost is shown as —.</figcaption>
     </figure>
 
     <div className="mt-5 grid min-w-0 gap-4 lg:grid-cols-2">

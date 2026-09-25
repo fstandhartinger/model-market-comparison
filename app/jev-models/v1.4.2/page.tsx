@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
-import { readJevbenchV142, jevbenchV142View } from '../../../lib/jevbench-v142.mjs';
+import { jevbenchV142View } from '../../../lib/jevbench-v142.mjs';
+import { readJevbenchV142WithFamilies } from '../../../lib/jevbench-v142-families.mjs';
+import { readJevbenchV141 } from '../../../lib/jevbench-v141.mjs';
 import { JevModelsV14Board } from '../../../components/JevModelsV14';
 import { JevCapabilityChart } from '../../../components/JevCapabilityChart';
 
@@ -7,7 +9,8 @@ const short = (display: string) => display.split(' (')[0].split(', formerly')[0]
 const one = (score: number | null) => score === null ? '—' : score.toFixed(1);
 
 async function pinnedView() {
-  return jevbenchV142View(await readJevbenchV142());
+  const result = await readJevbenchV142WithFamilies();
+  return { ...jevbenchV142View(result), sealedFamilyN: result.sealedFamilyN };
 }
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -52,7 +55,7 @@ export default async function JevModelsV142Page() {
         <a className="text-accent underline" href="/jev-models" data-bh-jev-live-link>View live board</a>
       </p>
     </header>
-    <JevModelsV14Board artifact={view.artifact} sha256={view.sha256} />
+    <JevModelsV14Board artifact={view.artifact} sha256={view.sha256} previous={{ revision: 'v1.4.1', keys: (await readJevbenchV141()).artifact.systems.map((row) => row.key) }} capabilityHref="#jev14-capability-views" sealedFamilyN={view.sealedFamilyN} />
     <JevCapabilityChart systems={view.systems} revision={view.revision} />
   </>;
 }

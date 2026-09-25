@@ -5,9 +5,13 @@ import { JEVBENCH_REPO } from '../../lib/jevbench.mjs';
 import { CostUnitNote } from '../../components/JevModelsV12';
 import { JevCostsDisclosure } from '../../components/JevCostsDisclosure';
 import { CustomEvaluationOffer } from '../../components/CustomEvaluationOffer';
-import { readJevbenchV142, jevbenchV142View } from '../../lib/jevbench-v142.mjs';
+import { jevbenchV142View } from '../../lib/jevbench-v142.mjs';
+import { readJevbenchV142WithFamilies } from '../../lib/jevbench-v142-families.mjs';
+import { readJevbenchV141 } from '../../lib/jevbench-v141.mjs';
 import { JevModelsV14Board } from '../../components/JevModelsV14';
 import { JevCapabilityLazy } from '../../components/JevCapabilityLazy';
+import { JevCapabilityRanking, jevClassView } from '../../components/JevCapabilityRanking';
+import { JevBubbleCharts } from '../../components/JevBubbleChart';
 import { JevBoardIntentLinks } from '../../components/JevBenchSeoBlocks';
 import { JevContextLazy } from '../../components/JevContextLazy';
 import { JevHistoryLazy } from '../../components/JevHistoryLazy';
@@ -77,8 +81,11 @@ const currentNotMeasured = [
 ];
 
 export default async function JevModelsPage() {
-  const v14Result = await readJevbenchV142();
+  const v14Result = await readJevbenchV142WithFamilies();
   const v14 = jevbenchV142View(v14Result);
+  // CR-151: the previous release's systems, so the board can mark and filter what is new in this one.
+  const previousRelease = (await readJevbenchV141()).artifact;
+  const previous = { revision: previousRelease.revision, keys: previousRelease.systems.map((row) => row.key) };
   const v12 = await readJevbenchV12();
   const costUnit = v12.artifact.cost_unit;
   const costCorrection = (v12.artifact.cost_correction ?? null) as CostCorrection | null;
@@ -101,6 +108,9 @@ export default async function JevModelsPage() {
   const v14Honorable = v14.unranked.find((r) => r.listing === 'honorable_mention');
   const v14Partial = v14.unranked.filter((r) => r.listing === 'partial');
   const v14Estimated = v14.systems.filter((r) => r.cost?.kind === 'estimate');
+  // Florian 25 Sep 2026: the page leads with the Capability ranking of Jev-class systems, then the bubble charts.
+  const jevClass = jevClassView(v14.systems);
+  const capabilityLead = jevClass.rows.find((r) => r.inClass && r.row.ranked);
   const v14Credits = v14.systems.filter((r) => !r.key.endsWith('-tools')).sort((a, b) => a.display.localeCompare(b.display));
   const v14Scoring = v14.artifact.scoring as Record<string, string>;
   const usd = (v: number | null | undefined) => (v == null ? '—' : `$${v.toFixed(v < 0.01 ? 4 : 3)}`);
@@ -141,7 +151,7 @@ export default async function JevModelsPage() {
         license: 'https://github.com/fstandhartinger/jevbench/blob/main/LICENSE',
         isAccessibleForFree: true,
         variableMeasured: ['JevBench Score', 'Intelligence', 'Calibration', 'Speed', 'Cost'],
-        distribution: [{ '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: `https://benchmarkheaven.com/api/jevbench/${v14.revision.slice(1)}` }],
+        distribution: [{ '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: `https://benchmarkheaven.com/api/jevbench/${v14.revision}` }],
       },
       {
         '@type': 'FAQPage', '@id': 'https://benchmarkheaven.com/jev-models#faq',
@@ -160,7 +170,7 @@ export default async function JevModelsPage() {
       <p className="bh-muted mt-3 max-w-3xl text-xs leading-relaxed" data-bh-jev-meta>
         Scored {day(v14.generated)} · protocol <code>{v14.artifact.protocol}</code> · {v14.publicDecisions} public + {v14.sealedDecisions} sealed aggregate decisions · one request at a time from a server in Germany ·{' '}
         <a className="text-accent underline" href={JEVBENCH_REPO}>harness, public tasks &amp; scoring rules (MIT)</a> ·{' '}
-        <a className="text-accent underline" href={`/api/jevbench/${v14.revision.slice(1)}`} data-bh-jev-sha={v14.sha256}>results JSON</a> <span className="whitespace-nowrap">sha256 <code title={v14.sha256}>{v14.sha256.slice(0, 12)}…</code></span> ·{' '}
+        <a className="text-accent underline" href={`/api/jevbench/${v14.revision}`} data-bh-jev-sha={v14.sha256}>results JSON</a> <span className="whitespace-nowrap">sha256 <code title={v14.sha256}>{v14.sha256.slice(0, 12)}…</code></span> ·{' '}
         <a className="text-accent underline" href="/jev-models/v1" data-bh-jev-v1-link>v1.0 results</a>
       </p>
       <p className="mt-3 max-w-3xl text-sm" data-bh-jev-version-share-row>
@@ -168,14 +178,20 @@ export default async function JevModelsPage() {
       </p>
     </header>
 
-    <JevModelsV14Board artifact={v14.artifact} sha256={v14.sha256} compactMobile />
+    {/* Florian 25 Sep 2026: new page order — 1. Capability ranking of Jev-class systems, 2. bubble charts, 3. the official
+        composite score with weight sliders, sorting and filters, 4. compare view, axes table and the rest as before. */}
+    <JevCapabilityRanking systems={v14.systems} revision={v14.revision} officialHref="#jev14-chart-title" />
+    <JevBubbleCharts points={jevClass.points} costLimit={jevClass.limits.cost} referenceName="Jev" />
+
+    <JevModelsV14Board artifact={v14.artifact} sha256={v14.sha256} previous={previous} capabilityHref="#jev-capability" sealedFamilyN={v14Result.sealedFamilyN} compactMobile />
 
 
     {/* Page fix (Florian 23 Sep 2026): the v1.3 page's "what the run says" findings, recomputed from the v1.4 board. */}
     <section className="mt-10 max-w-4xl" aria-labelledby="jev14-headline" data-bh-jev14-findings>
       <h2 id="jev14-headline" className="text-xl font-semibold">What the run says</h2>
       <ul className="mt-2 list-disc space-y-1.5 pl-5 text-[15px]">
-        <li><b>{short(v14Lead.display)}</b> leads {v14.revision} with {one(v14Lead.jevbench_score)}: Intelligence {one(v14Lead.axes.intelligence)}, Calibration {one(v14Lead.axes.calibration)}, Speed {one(v14Lead.axes.speed)}, Cost {one(v14Lead.axes.cost)} ({usd(v14Lead.cost.usd_per_1000)} per 1,000 decisions).</li>
+        {capabilityLead && <li data-bh-jev14-capability-lead>Among the {jevClass.rows.filter((r) => r.inClass).length} Jev-class systems, <b>{short(capabilityLead.row.display)}</b> has the highest Capability, {one(capabilityLead.capability)} (Intelligence {one(capabilityLead.row.axes.intelligence)}, Calibration {one(capabilityLead.row.axes.calibration)}).</li>}
+        <li><b>{short(v14Lead.display)}</b> leads the official JevBench Score of {v14.revision} with {one(v14Lead.jevbench_score)}: Intelligence {one(v14Lead.axes.intelligence)}, Calibration {one(v14Lead.axes.calibration)}, Speed {one(v14Lead.axes.speed)}, Cost {one(v14Lead.axes.cost)} ({usd(v14Lead.cost.usd_per_1000)} per 1,000 decisions).</li>
         {v14BestOpen && <li>The best open or open-planned rebuild, <b>{short(v14BestOpen.display)}</b>, is #{v14BestOpen.rank} at {one(v14BestOpen.jevbench_score)} — {one(gap(v14Lead.jevbench_score ?? 0, v14BestOpen.jevbench_score ?? 0))} points behind.</li>}
         {v14TopInt && v14TopInt.key !== v14Lead.key && <li><b>{short(v14TopInt.display)}</b> has the highest Intelligence ({one(v14TopInt.axes.intelligence)}) but places #{v14TopInt.rank}: Speed {one(v14TopInt.axes.speed)}, Cost {one(v14TopInt.axes.cost)} — the harmonic mean does not let accuracy buy back a weak axis.</li>}
         <li>The sealed set is hard for everyone: the best sealed accuracy among ranked systems is {pct(v14TopSealed.sealed_accuracy)} (<b>{short(v14TopSealed.display)}</b>, #{v14Rank(v14TopSealed.key)}); chance is {pct(v14.artifact.sealed_chance)}. Large public-minus-sealed gaps above 25 points reduce Intelligence.</li>
@@ -223,6 +239,7 @@ export default async function JevModelsPage() {
       <JevCostsDisclosure>
         <p className="bh-muted mt-2">{costUnit.worked_example}</p>
         <p className="bh-muted mt-2">Systems with a public tariff (per token or per request) are priced at that tariff times the tokens we measured. Systems without one — open weights, author demos, models we ran locally — are priced as if a <b className="text-gray-200">large inference provider</b> hosted them: the OpenRouter list price of the same weights; if OpenRouter does not list them, the nearest larger sibling; if no model of that size class is on OpenRouter, the DeepInfra list price of the same weights or of the nearest larger model of the same class. We do not use per-minute GPU rental or our own CPU time — providers buy capacity in bulk or own the hardware, and price accordingly. Price × tokens per decision = $ per 1,000 decisions, marked &ldquo;est.&rdquo;.</p>
+        <p className="bh-muted mt-2" data-bh-jev-price-rules><b className="text-gray-200">Price rules from v1.4.3 and v1.5 on</b> (disclosed before any v1.5 result): only public, bookable list prices that have been in effect for at least 30 days count; promotions, subsidies, credits and free tiers do not. The scoring price is never below the market reference price of the system&apos;s base model, found the same way as the estimates above. A later price change triggers a re-score with a visible note on the row.</p>
         <ul className="mt-3 space-y-1.5" data-bh-jev-cost-rows>
           {v14Estimated.map((r) => <li key={r.key}><b>{short(r.display)}</b> — <span className="whitespace-nowrap">~{usd(r.cost.usd_per_1000)} <span className="bh-thin-tag">est.</span></span> per 1,000 decisions: <span className="bh-muted">{r.cost.basis.replace(/^ESTIMATE: (hosted-provider price, )?/, '')}</span></li>)}
         </ul>
@@ -257,7 +274,8 @@ export default async function JevModelsPage() {
       <summary className="cursor-pointer text-sm font-semibold">Method and tiers</summary>
       <div className="bh-muted mt-4 space-y-3 text-sm">
         <p>Built and run by us, not collected from someone else&apos;s leaderboard; the results describe the tested configurations, not every application.</p>
-        <p data-bh-jev14-method-score><b className="text-gray-200">JevBench Score.</b> {v14Scoring.jevbench_score}</p>
+        <p data-bh-jev-class-method><b className="text-gray-200">Capability and Jev-class (headline ranking).</b> Capability = (Intelligence + Calibration) / 2. A system is Jev-class if its cost per decision is at most 2× Jev 1.13.0&apos;s and its median latency (the adjusted p50 that the Speed axis uses) is at most 2× Jev 1.13.0&apos;s; rows without a recorded median latency use the Speed axis at the 2× equivalent ({jevClass.limits.speedFloor.toFixed(1)}). The headline ranks Jev-class systems by Capability; the others, including general-purpose LLMs, are listed below a divider. This is a way of presenting the same measurements; it changes no score and no official rank.</p>
+        <p data-bh-jev14-method-score><b className="text-gray-200">JevBench Score.</b> {v14Scoring.jevbench_score} The weight sliders re-score the same axes with other weights for exploration; only equal weights give the official score and rank.</p>
         <p><b className="text-gray-200">Intelligence.</b> {v14Scoring.intelligence}</p>
         <p data-bh-jev-revision><b className="text-gray-200">Revision {v14.revision}.</b> {String(v14.artifact.revision_note ?? '')}</p>
         <ul className="list-disc space-y-1.5 pl-5">{(['easy', 'standard', 'judge'] as const).map((t) => <li key={t}><b className="text-gray-200">{t}</b>: {v11.tierNotes[t]}</li>)}
@@ -297,7 +315,7 @@ export default async function JevModelsPage() {
       </div>
     </details>
 
-    <JevCapabilityLazy revision={v14.revision} />
+    <JevCapabilityLazy revision={v14.revision} only3d />
     <JevContextLazy />
 
     <JevHistoryLazy />

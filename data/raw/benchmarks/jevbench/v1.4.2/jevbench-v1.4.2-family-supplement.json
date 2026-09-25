@@ -1,0 +1,490 @@
+{
+ "benchmark": "JevBench",
+ "revision": "v1.4.2",
+ "kind": "family-supplement",
+ "created_utc": "2026-09-25T07:33:48.246684+00:00",
+ "base_artifact_sha256": "ac14e206dde51ae28e40dc1ea2ff1fecc4a449b941d098e9ecb5618bd533e5be",
+ "note": "Supplementary system-level aggregates for the pinned v1.4.2 results. It adds the hard-tier per-family breakdown (220 frozen hard decisions, 111 public + 109 held out) for the nine v1.4.2 additions whose rows did not carry one, and the number of sealed decisions per family so hard and sealed family results can be pooled. Computed on 25 Sep 2026 from the same official runs and the frozen scorer; each system's family counts add up to its published hard-tier accuracy x 220. No score, axis or rank changes. No item text, answer or per-item result is included.",
+ "sealed_family_n": {
+  "ambiguous_abstain": 37,
+  "judge_hard": 41,
+  "long_policy": 40,
+  "multi_hop": 38,
+  "paraphrase_robustness": 14,
+  "probability": 28,
+  "safety_judge": 16,
+  "temporal_numeric": 56,
+  "tradeoff": 26,
+  "trap_adversarial": 12
+ },
+ "hard_by_family": {
+  "decider-4b-v2": {
+   "adversarial": {
+    "correct": 11,
+    "n": 12,
+    "accuracy": 0.9167
+   },
+   "ambiguous": {
+    "correct": 10,
+    "n": 14,
+    "accuracy": 0.7143
+   },
+   "judge_hard": {
+    "correct": 17,
+    "n": 33,
+    "accuracy": 0.5152
+   },
+   "long_policy": {
+    "correct": 24,
+    "n": 38,
+    "accuracy": 0.6316
+   },
+   "multi_hop": {
+    "correct": 23,
+    "n": 35,
+    "accuracy": 0.6571
+   },
+   "probability": {
+    "correct": 16,
+    "n": 20,
+    "accuracy": 0.8
+   },
+   "routing_hard": {
+    "correct": 10,
+    "n": 10,
+    "accuracy": 1.0
+   },
+   "temporal_numeric": {
+    "correct": 12,
+    "n": 30,
+    "accuracy": 0.4
+   },
+   "tradeoff": {
+    "correct": 9,
+    "n": 12,
+    "accuracy": 0.75
+   },
+   "trap": {
+    "correct": 16,
+    "n": 16,
+    "accuracy": 1.0
+   }
+  },
+  "cygnet": {
+   "adversarial": {
+    "correct": 12,
+    "n": 12,
+    "accuracy": 1.0
+   },
+   "ambiguous": {
+    "correct": 13,
+    "n": 14,
+    "accuracy": 0.9286
+   },
+   "judge_hard": {
+    "correct": 29,
+    "n": 33,
+    "accuracy": 0.8788
+   },
+   "long_policy": {
+    "correct": 25,
+    "n": 38,
+    "accuracy": 0.6579
+   },
+   "multi_hop": {
+    "correct": 27,
+    "n": 35,
+    "accuracy": 0.7714
+   },
+   "probability": {
+    "correct": 14,
+    "n": 20,
+    "accuracy": 0.7
+   },
+   "routing_hard": {
+    "correct": 10,
+    "n": 10,
+    "accuracy": 1.0
+   },
+   "temporal_numeric": {
+    "correct": 10,
+    "n": 30,
+    "accuracy": 0.3333
+   },
+   "tradeoff": {
+    "correct": 10,
+    "n": 12,
+    "accuracy": 0.8333
+   },
+   "trap": {
+    "correct": 16,
+    "n": 16,
+    "accuracy": 1.0
+   }
+  },
+  "malkuth-4b": {
+   "adversarial": {
+    "correct": 11,
+    "n": 12,
+    "accuracy": 0.9167
+   },
+   "ambiguous": {
+    "correct": 8,
+    "n": 14,
+    "accuracy": 0.5714
+   },
+   "judge_hard": {
+    "correct": 21,
+    "n": 33,
+    "accuracy": 0.6364
+   },
+   "long_policy": {
+    "correct": 10,
+    "n": 38,
+    "accuracy": 0.2632
+   },
+   "multi_hop": {
+    "correct": 24,
+    "n": 35,
+    "accuracy": 0.6857
+   },
+   "probability": {
+    "correct": 6,
+    "n": 20,
+    "accuracy": 0.3
+   },
+   "routing_hard": {
+    "correct": 10,
+    "n": 10,
+    "accuracy": 1.0
+   },
+   "temporal_numeric": {
+    "correct": 4,
+    "n": 30,
+    "accuracy": 0.1333
+   },
+   "tradeoff": {
+    "correct": 6,
+    "n": 12,
+    "accuracy": 0.5
+   },
+   "trap": {
+    "correct": 16,
+    "n": 16,
+    "accuracy": 1.0
+   }
+  },
+  "malkuth-2b": {
+   "adversarial": {
+    "correct": 9,
+    "n": 12,
+    "accuracy": 0.75
+   },
+   "ambiguous": {
+    "correct": 4,
+    "n": 14,
+    "accuracy": 0.2857
+   },
+   "judge_hard": {
+    "correct": 19,
+    "n": 33,
+    "accuracy": 0.5758
+   },
+   "long_policy": {
+    "correct": 10,
+    "n": 38,
+    "accuracy": 0.2632
+   },
+   "multi_hop": {
+    "correct": 17,
+    "n": 35,
+    "accuracy": 0.4857
+   },
+   "probability": {
+    "correct": 6,
+    "n": 20,
+    "accuracy": 0.3
+   },
+   "routing_hard": {
+    "correct": 10,
+    "n": 10,
+    "accuracy": 1.0
+   },
+   "temporal_numeric": {
+    "correct": 4,
+    "n": 30,
+    "accuracy": 0.1333
+   },
+   "tradeoff": {
+    "correct": 4,
+    "n": 12,
+    "accuracy": 0.3333
+   },
+   "trap": {
+    "correct": 15,
+    "n": 16,
+    "accuracy": 0.9375
+   }
+  },
+  "swanone": {
+   "adversarial": {
+    "correct": 12,
+    "n": 12,
+    "accuracy": 1.0
+   },
+   "ambiguous": {
+    "correct": 12,
+    "n": 14,
+    "accuracy": 0.8571
+   },
+   "judge_hard": {
+    "correct": 24,
+    "n": 33,
+    "accuracy": 0.7273
+   },
+   "long_policy": {
+    "correct": 28,
+    "n": 38,
+    "accuracy": 0.7368
+   },
+   "multi_hop": {
+    "correct": 30,
+    "n": 35,
+    "accuracy": 0.8571
+   },
+   "probability": {
+    "correct": 14,
+    "n": 20,
+    "accuracy": 0.7
+   },
+   "routing_hard": {
+    "correct": 10,
+    "n": 10,
+    "accuracy": 1.0
+   },
+   "temporal_numeric": {
+    "correct": 10,
+    "n": 30,
+    "accuracy": 0.3333
+   },
+   "tradeoff": {
+    "correct": 11,
+    "n": 12,
+    "accuracy": 0.9167
+   },
+   "trap": {
+    "correct": 15,
+    "n": 16,
+    "accuracy": 0.9375
+   }
+  },
+  "standardone-8b": {
+   "adversarial": {
+    "correct": 11,
+    "n": 12,
+    "accuracy": 0.9167
+   },
+   "ambiguous": {
+    "correct": 4,
+    "n": 14,
+    "accuracy": 0.2857
+   },
+   "judge_hard": {
+    "correct": 25,
+    "n": 33,
+    "accuracy": 0.7576
+   },
+   "long_policy": {
+    "correct": 15,
+    "n": 38,
+    "accuracy": 0.3947
+   },
+   "multi_hop": {
+    "correct": 22,
+    "n": 35,
+    "accuracy": 0.6286
+   },
+   "probability": {
+    "correct": 10,
+    "n": 20,
+    "accuracy": 0.5
+   },
+   "routing_hard": {
+    "correct": 9,
+    "n": 10,
+    "accuracy": 0.9
+   },
+   "temporal_numeric": {
+    "correct": 8,
+    "n": 30,
+    "accuracy": 0.2667
+   },
+   "tradeoff": {
+    "correct": 5,
+    "n": 12,
+    "accuracy": 0.4167
+   },
+   "trap": {
+    "correct": 16,
+    "n": 16,
+    "accuracy": 1.0
+   }
+  },
+  "typecastlm": {
+   "adversarial": {
+    "correct": 8,
+    "n": 12,
+    "accuracy": 0.6667
+   },
+   "ambiguous": {
+    "correct": 9,
+    "n": 14,
+    "accuracy": 0.6429
+   },
+   "judge_hard": {
+    "correct": 22,
+    "n": 33,
+    "accuracy": 0.6667
+   },
+   "long_policy": {
+    "correct": 20,
+    "n": 38,
+    "accuracy": 0.5263
+   },
+   "multi_hop": {
+    "correct": 20,
+    "n": 35,
+    "accuracy": 0.5714
+   },
+   "probability": {
+    "correct": 8,
+    "n": 20,
+    "accuracy": 0.4
+   },
+   "routing_hard": {
+    "correct": 10,
+    "n": 10,
+    "accuracy": 1.0
+   },
+   "temporal_numeric": {
+    "correct": 9,
+    "n": 30,
+    "accuracy": 0.3
+   },
+   "tradeoff": {
+    "correct": 8,
+    "n": 12,
+    "accuracy": 0.6667
+   },
+   "trap": {
+    "correct": 14,
+    "n": 16,
+    "accuracy": 0.875
+   }
+  },
+  "clm-8b": {
+   "adversarial": {
+    "correct": 4,
+    "n": 12,
+    "accuracy": 0.3333
+   },
+   "ambiguous": {
+    "correct": 4,
+    "n": 14,
+    "accuracy": 0.2857
+   },
+   "judge_hard": {
+    "correct": 15,
+    "n": 33,
+    "accuracy": 0.4545
+   },
+   "long_policy": {
+    "correct": 16,
+    "n": 38,
+    "accuracy": 0.4211
+   },
+   "multi_hop": {
+    "correct": 9,
+    "n": 35,
+    "accuracy": 0.2571
+   },
+   "probability": {
+    "correct": 7,
+    "n": 20,
+    "accuracy": 0.35
+   },
+   "routing_hard": {
+    "correct": 5,
+    "n": 10,
+    "accuracy": 0.5
+   },
+   "temporal_numeric": {
+    "correct": 9,
+    "n": 30,
+    "accuracy": 0.3
+   },
+   "tradeoff": {
+    "correct": 2,
+    "n": 12,
+    "accuracy": 0.1667
+   },
+   "trap": {
+    "correct": 8,
+    "n": 16,
+    "accuracy": 0.5
+   }
+  },
+  "kushal-gemma4-31b-it-autoloops": {
+   "adversarial": {
+    "correct": 12,
+    "n": 12,
+    "accuracy": 1.0
+   },
+   "ambiguous": {
+    "correct": 11,
+    "n": 14,
+    "accuracy": 0.7857
+   },
+   "judge_hard": {
+    "correct": 31,
+    "n": 33,
+    "accuracy": 0.9394
+   },
+   "long_policy": {
+    "correct": 32,
+    "n": 38,
+    "accuracy": 0.8421
+   },
+   "multi_hop": {
+    "correct": 30,
+    "n": 35,
+    "accuracy": 0.8571
+   },
+   "probability": {
+    "correct": 14,
+    "n": 20,
+    "accuracy": 0.7
+   },
+   "routing_hard": {
+    "correct": 10,
+    "n": 10,
+    "accuracy": 1.0
+   },
+   "temporal_numeric": {
+    "correct": 14,
+    "n": 30,
+    "accuracy": 0.4667
+   },
+   "tradeoff": {
+    "correct": 12,
+    "n": 12,
+    "accuracy": 1.0
+   },
+   "trap": {
+    "correct": 16,
+    "n": 16,
+    "accuracy": 1.0
+   }
+  }
+ }
+}

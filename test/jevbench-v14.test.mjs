@@ -5,7 +5,7 @@ import { readJevbenchV14, JEVBENCH_V14_SHA256, JEVBENCH_V14_TOP5 } from '../lib/
 
 const { artifact, sha256 } = await readJevbenchV14();
 const route = await readFile(new URL('../app/api/jevbench/v1.4/route.ts', import.meta.url), 'utf8');
-const board = await readFile(new URL('../components/JevModelsV14.tsx', import.meta.url), 'utf8');
+const board = (await Promise.all(['JevModelsV14', 'JevBoardShared', 'JevBoardInteractive'].map((f) => readFile(new URL(`../components/${f}.tsx`, import.meta.url), 'utf8')))).join('\n'); // CR-151 split the board
 const page = await readFile(new URL('../app/jev-models/page.tsx', import.meta.url), 'utf8');
 
 test('CR-131 API is pinned to the approved aggregate-only v1.4 artifact', () => {
@@ -45,8 +45,8 @@ test('CR-131 v1.4 board explains the scoring and required exposure disclosures',
   assert.match(board, /operator's endpoint received sealed item text, without answers/);
   assert.match(board, /Hopper's public-half development and JevK5's public-set selection/);
   assert.match(board, /system-level aggregates appear here/);
-  assert.match(page, /<JevModelsV14Board artifact=\{v14\.artifact\} sha256=\{v14\.sha256\} compactMobile \/>/);
+  assert.match(page, /<JevModelsV14Board artifact=\{v14\.artifact\} sha256=\{v14\.sha256\} previous=\{previous\}[^\n]*compactMobile \/>/);
   const pinnedPage = await readFile(new URL('../app/jev-models/v1.4/page.tsx', import.meta.url), 'utf8');
   assert.match(pinnedPage, /readJevbenchV14\(\)/);
-  assert.match(board, /href=\{`\/api\/jevbench\/\$\{artifact\.revision\.slice\(1\)\}`\}/);
+  assert.match(board, /href=\{`\/api\/jevbench\/\$\{artifact\.revision\}`\}/); // CR-151: the route keeps the v (/api/jevbench/1.4.2 was a 404)
 });

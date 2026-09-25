@@ -12,7 +12,7 @@ export interface JevV14System {
   rank: number | null;
   jevbench_score: number | null;
   axes: { intelligence: number | null; calibration: number | null; speed: number | null; cost: number | null };
-  speed: { p50_s_raw: number | null; p95_s_raw: number | null; adjustment?: string };
+  speed: { p50_s_raw: number | null; p95_s_raw: number | null; p50_s_adjusted?: number | null; p95_s_adjusted?: number | null; adjustment?: string };
   cost: { kind: string; usd_per_1000: number | null; basis: string };
   endpoint_kind?: string;
   endpoint_condition?: string;
