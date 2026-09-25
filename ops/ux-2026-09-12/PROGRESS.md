@@ -10472,3 +10472,23 @@ moved, and the counts are unchanged at 871 / 676 / 96 / 3,036. `validate-benchma
 Worth noting for the next iteration that edits `data/raw/`: run the prebuild validator, not only
 `npm test` / `tsc` / `build-dataset` — all three of those passed on a tree that could not deploy. And
 after a push, confirm the deployment **finished** rather than inferring it from `/api/meta`.
+
+### Iteration 211 — live verification
+
+`01d305ba` is serving on **all three hosts** (`benchmarkheaven.com`, `www.benchmarkheaven.com`,
+`model-market-comparison.app.mintapis.com`), each with `generated_at 2026-09-25T00:15:45.013Z`. The
+repaired excerpts are live: `evidence[].excerpt` is part of `benchmark_results`, so shipping the
+rebuilt dataset made this checkable rather than something to wait a day for. All 13 repaired entries
+are retained per host at `iter211-d193/live-excerpts-<host>.json`, and a spot check of four
+representative pins (`ugi::snapshot-2026-09-10`, `frontiercode-cost::1.1`, `lisanbench::0.2.0`,
+`matharena-apex::2025`) reads **4/4 on each host**.
+
+One correction to my own reading, since it nearly went into this ledger as a failure: the first
+`/api/dataset` response I checked still showed the old excerpts, and I took that as the change not
+being live. It was a cached response — the same request with a cache-busting query returned the new
+text, and the local committed dataset had it all along. Re-checked with a buster on all three hosts.
+
+Still outstanding and not claimable from here: the receipt D193 actually asks for is the first daily
+run in which one of these boards changes and is **ingested** rather than retained. That is the
+2026-09-25T05:17Z run or a later one, and it is also D191's test. Nothing in this iteration touches
+the run's path, and the last push was at 00:22 UTC, clear of the run's lock window.
