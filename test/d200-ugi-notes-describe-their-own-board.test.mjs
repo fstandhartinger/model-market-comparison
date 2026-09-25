@@ -61,11 +61,10 @@ test('D200: what a UGI note attributes to the board is in the captured protocol 
     assert.ok(text.includes(component), `the board publishes the component ${component}`);
   }
   // What the notes deliberately do *not* claim: the board publishes no unit and no bounds for these
-  // scores, so nothing in a note may assert one. `scoring.unit: "points"` is the registry's own
-  // convention for an unlabelled numeric scale (25 entries share it) and is still disputed by the
-  // daily reviewer — that convention is a registry-wide decision, recorded as the open half of D200.
+  // scores. `score` is our explicit generic display label for that unknown source unit, not a claim
+  // that the values are points, percentages, or on a 0–100 scale.
   for (const id of BOARDS) {
-    assert.equal(entry(id).scoring.unit, 'points');
+    assert.equal(entry(id).scoring.unit, 'score');
     assert.doesNotMatch(entry(id).scoring.notes, /out of 100|percent|0-100/);
   }
 });
