@@ -10737,3 +10737,28 @@ the registry states a metric the pinned v1.1.2 artifact no longer publishes.
 | ID | Status | Evidence | Notes |
 |---|---|---|---|
 | D193.2 | in-progress (11 of 16 references repaired) | `…/iter212-d193-2/scan-v5.json`; `test/d193-2-protocol-excerpts.test.mjs` (11 tests); `data/raw/benchmarks/daily-evidence/2026-09-25-d193-2/` (14 entries) | aider-polyglot, mls-bench-lite, programbench and both researchclawbench references done. The 5 left are the AA Intelligence Index trio and the two `jevbench*` rows — a Composite-touching registry decision and D193.3 respectively, neither of which may be repinned mechanically. Implemented by claude-opus; needs a non-claude-opus sign-off. |
+
+## Review gate 2026-09-25T02:10:02Z (codex-luna)
+
+Scope: `f6271e6..666639d0`, recorded in `REVIEW-20260925T021002Z.md`. The authoritative
+requirements, CR brief, ledger, directives and newest prior review were read in order.
+
+Local gates are green: `node --test test/` = 1,319 tests / 1,318 pass / 0 fail / 1 skip;
+`npx tsc --noEmit -p .` = 0; `node scripts/build-dataset.mjs` = 0 with 871 models, 676
+families, 96 providers and 3,036 offers; `git diff --check` is clean. No `ALL-ACCEPTED` line
+is appended: open/in-progress rows remain and X6 is not complete.
+
+All three hosts answered `/api/meta` and `/jev-models` at revision
+`23967375c479c1c964ee94c579723b76cef76d77`; this is transport evidence only. The required
+desktop/mobile, light/dark browser run was blocked by the shared Chrome lock held by the X
+watcher (PID 1545519). The bounded attempt did not bypass the lock or start a competing browser,
+and produced no screenshot receipt. Therefore this gate promotes no implemented row to
+`verified`.
+
+Current dispositions: F-179 stays open pending the browser disclosure/open-state proof;
+F-180/F-182/F-184/F-185 stay open pending a non-implementer live run; D193.2 stays in-progress
+at 11/16 with five decision-bearing references left; D194 stays open pending independent
+acceptance and a subsequent published run's `run_retention` receipt. Existing independent
+receipts for F-176/F-181/F-186/CR-142 are retained as historical evidence, but this gate adds
+no fresh promotion. The deployed JevBench banner was also found to be stale (“in a few
+minutes”); its copy was corrected locally and needs deployment plus a browser recheck.
