@@ -7,10 +7,11 @@ const expectedRanking = [
   'Mapika decider-2b-vision BF16',
   'Reflex 4B (released stable configuration)',
   'Jev-Omni',
+  'Kushal Patil — Gemma 4 31B IT (Autoloops)',
   'djev-spark NVFP4',
   'djev-dev BF16',
   'Bonsai-2-27B v2 PQ2_0 + Q8_0 MMProj',
-  'GPT-6 Luna',
+  'GPT-6 Luna (low reasoning effort)',
   'GPT-5.6 Luna',
   'Gemini 3.1 Flash Lite',
   'Gemini 3.8 Flash',
@@ -48,10 +49,10 @@ test('Image JevBench v0.1 preview retains aggregate split, exact roster and Jev-
   assert.deepEqual(coreFamilies.reduce((totals, [, counts]) => ({ public: totals.public + counts.public, sealed: totals.sealed + counts.sealed }), { public: 0, sealed: 0 }), { public: 139, sealed: 155 });
   assert.deepEqual(a.weights, { public: 0.35, sealed: 0.65 });
   assert.equal(a.gap_allowance_pp, 15);
-  assert.equal(a.n_systems, 11);
+  assert.equal(a.n_systems, 12);
   assert.deepEqual(a.ranking.map((s) => s.name), expectedRanking);
   assert.deepEqual(a.ranking.slice(0, 5).map((s) => s.name), expectedRanking.slice(0, 5));
-  assert.equal(a.ranking.filter((s) => s.api_flag).length, 4);
+  assert.equal(a.ranking.filter((s) => s.api_flag).length, 5);
   assert.ok(a.ranking.every((s, i) => s.rank === i + 1));
   assert.ok(a.ranking.every((s) => s.tracks.all.public.n === 228 && s.tracks.all.sealed.n === 216));
   assert.ok(a.ranking.every((s) => s.tracks.core.public.n === 139 && s.tracks.core.sealed.n === 155));
@@ -118,7 +119,7 @@ test('preview stays noindex, unlinked, and uses only aggregate candidate content
   assert.match(page, /Split/);
   assert.match(page, /Computer Use and Browser Use tracks \(preview\)/);
   assert.ok(page.indexOf('id="split-heading"') < page.indexOf('id="preview-tracks-heading"'));
-  assert.match(page, /Not measured yet — no scores\. Scored with the same method once systems have run\./);
+  assert.match(page, /Not measured yet — no scores\./);
   assert.match(page, /a\.preview_tracks\.cross_track_rule/);
   assert.match(page, /a\.preview_tracks\.kev_flag/);
   assert.match(page, /formatMatchedGapPp\(t\.matched_gap_pp\)/);

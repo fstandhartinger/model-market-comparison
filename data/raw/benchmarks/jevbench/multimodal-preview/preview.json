@@ -1,11 +1,11 @@
 {
  "benchmark": "Image JevBench v0.1 candidate",
- "revision": "v0.1-final-split-preview",
+ "revision": "v0.1-preview-split-deviation-pending-disposition",
  "status": "preview",
  "built_utc": "2026-09-24",
  "sealed_item_details_included": false,
- "n_systems": 11,
- "method_sha256": "e4df31054f29e74b7c0de03c0e988488caa834a09dd257a5d72ba3cb6b3eaaf9",
+ "n_systems": 12,
+ "method_sha256": "ff61029b8589399de4cec8859643d66678377c50cdeac29d7c3905990d463b9d",
  "split_sha256": "5dd744aa7207eff6c3e1ccac62d27c43e319b76083b97bfcd9538c25a4e0c8dd",
  "split": {
   "items_total": 444,
@@ -68,7 +68,15 @@
   "synthetic_total": 150,
   "synthetic_share_percent": 33.78378378378378,
   "public_tokens_sha256": "c3747596dabab64329b4d8e1565598c53de5f991043b557d8d9b3d12d43d42b4",
-  "sealed_tokens_sha256": "51f09513ac36a6443cd76f6437c2462a0511b261a0176698620c1aa69fdd5f39"
+  "sealed_tokens_sha256": "51f09513ac36a6443cd76f6437c2462a0511b261a0176698620c1aa69fdd5f39",
+  "disposition": {
+   "status": "deviation_pending_waiver_or_new_source_round",
+   "approved_target": "approximately one third public and two thirds sealed",
+   "current_split": "228 public / 216 sealed (51.4% / 48.6%); this does not meet the approved target",
+   "source_pool": "All 444 frozen items are assigned; all 228 public items were already exposed; no unused unseen items remain.",
+   "path_to_target": "Keeping 228 exposed items public would require about 456 sealed items total, or roughly 240 newly sourced and reviewed unseen items (about 684 total).",
+   "release_gate": "Florian must explicitly waive the deviation or authorize a separate source, split review and remeasurement round before release freeze or publication."
+  }
  },
  "method": {
   "split": "An item is public if it was exposed anywhere (Mind2Web-derived, shown in videos or on this page, or present in the public site repository since the 21 Sep preview); every never-exposed item is sealed.",
@@ -76,15 +84,17 @@
   "overfit_penalty": "Matched-family public-minus-sealed accuracy gap (ScreenSpot and Everyday photo, inverse-variance weighted). Above 15 points, Intelligence is multiplied by 1 - (gap - 15)/100. Same rule for every system.",
   "calibration": "10-bin top-label ECE scaled by valid probability coverage, 35% public / 65% sealed; label-only outputs receive zero calibration.",
   "speed": "p50 and p95 whole-call latency; local latency uses the v1.4 2× plus 0.15-second adjustment.",
-  "cost": "Hosted cost uses returned OpenRouter usage receipts; missing receipts are not zero-filled, and the cost axis is scaled by receipt coverage. Local cost uses measured GPU seconds at the measured per-system GPU-hour rate (USD 1.19 for the original nine systems; USD 1.29 for Jev-Omni). Retry calls are tracked separately.",
-  "composite": "Equal-weight harmonic mean of Intelligence, Calibration, Speed, and Cost, followed by the v1.4 intelligence, speed, and cost gates below 50."
+  "cost": "Hosted cost uses returned usage receipts: OpenRouter receipt costs for four endpoints and the saved Autoloops per-request Gemma 4 31B token usage priced at published rates. Missing receipts are not zero-filled; the cost axis is scaled by receipt coverage. Local cost uses measured GPU seconds at the recorded per-system GPU-hour rate.",
+  "composite": "Equal-weight harmonic mean of Intelligence, Calibration, Speed, and Cost, followed by the v1.4 intelligence, speed, and cost gates below 50.",
+  "split_disposition": "The frozen 228/216 split deviates from the approved approximately one-third/two-thirds target. This preview retains it without claiming compliance; release freeze and publication require Florian's explicit waiver or a separately authorized source, split review and remeasurement round."
  },
  "exposure": {
-  "hosted": "All four hosted systems received sealed images and questions through the requested no-retention route with provider fallback disabled; they carry the API flag.",
+  "hosted": "Four OpenRouter systems (GPT-6 Luna low, GPT-5.6 Luna, Gemini 3.1 Flash Lite and Gemini 3.8 Flash) received sealed images and questions through the requested no-retention route with provider fallback disabled. Gemma 4 31B used the Autoloops endpoint and its completed saved result; no provider no-retention claim is made for that endpoint. All five hosted rows carry the API flag.",
   "label_checkers": "GPT-6 Luna and Gemini 3.8 Flash saw 100 public promo-photo candidates and 68 new sealed-photo candidates in stateless single-turn label checks, including candidates later dropped. No gold labels were shown; human gold-blind review decided inclusion.",
   "djev_spark": "djev-spark saw the 100 public promo photos in the earlier inference-only video run, with no training. Its score on the 61 new sealed photo variants is the independent measure.",
   "jev_omni": "This checkpoint was measured on a separate frozen JevBench v1.4 text set before this run. It received no ImageJevBench task input before this evaluation.",
-  "bonsai": "Bonsai-2-27B v2 (PQ2_0 weights, Q8_0 MMProj) was measured offline on 24 Sep; the clean PNG-normalized rerun is scored."
+  "bonsai": "Bonsai-2-27B v2 (PQ2_0 weights, Q8_0 MMProj) was measured offline on 24 Sep; the clean PNG-normalized rerun is scored.",
+  "gemma": "Kushal Patil's Gemma 4 31B IT (Autoloops) public and sealed result files were completed in the Autoloops measurement job and reused here without rerunning. Its returned per-request token usage was costed at the published Gemma 4 31B rates."
  },
  "weights": {
   "public": 0.35,
@@ -713,6 +723,213 @@
   },
   {
    "rank": 4,
+   "key": "kushal_gemma4_31b_it_autoloops",
+   "name": "Kushal Patil — Gemma 4 31B IT (Autoloops)",
+   "api_flag": true,
+   "prior_exposure": "First scored on the ImageJevBench v0.1 final core split in the Autoloops measurement job; reused here without rerunning.",
+   "score": 45.90758103755653,
+   "tracks": {
+    "all": {
+     "public": {
+      "n": 228,
+      "correct": 193,
+      "accuracy": 0.8464912280701754,
+      "chance": 0.32127192982456143,
+      "chance_corrected_intelligence": 77.38287560581583,
+      "ece": 0.14497689536291036,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 228
+     },
+     "sealed": {
+      "n": 216,
+      "correct": 174,
+      "accuracy": 0.8055555555555556,
+      "chance": 0.2800925925925926,
+      "chance_corrected_intelligence": 72.9903536977492,
+      "ece": 0.10196772353343797,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 216
+     },
+     "axes": {
+      "intelligence": 74.52773636557252,
+      "calibration": 76.59581326524935,
+      "speed": 74.52116247720869,
+      "cost": 42.63333830402754
+     },
+     "intelligence_before_penalty": 74.52773636557252,
+     "raw_overall_gap_pp": 4.093567251461982,
+     "matched_gap_pp": 0.8370589054601419,
+     "matched_gap_families": {
+      "Everyday photo": {
+       "gap_pp": -0.09209799226376214,
+       "weight": 36.193333333333335
+      },
+      "ScreenSpot": {
+       "gap_pp": 2.972972972972976,
+       "weight": 15.74468085106383
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 74.52116247720869,
+      "raw_p50_s": 1.6029665991663933,
+      "raw_p95_s": 2.202719919383526,
+      "adjusted_p50_s": 1.6029665991663933,
+      "adjusted_p95_s": 2.202719919383526,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 42.63333830402754,
+      "raw_score": 42.63333830402753,
+      "usd_per_1000": 0.08170000000000001,
+      "total_usd": 0.0362748,
+      "coverage": 1.0,
+      "source": "Autoloops published Gemma 4 31B token rates applied to returned usage receipts"
+     },
+     "composite": {
+      "harmonic_before_gates": 63.14307640443448,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 0.7270406139782648
+      },
+      "score": 45.90758103755653
+     }
+    },
+    "core": {
+     "public": {
+      "n": 139,
+      "correct": 107,
+      "accuracy": 0.7697841726618705,
+      "chance": 0.21762589928057555,
+      "chance_corrected_intelligence": 70.57471264367817,
+      "ece": 0.21712817590960218,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 139
+     },
+     "sealed": {
+      "n": 155,
+      "correct": 115,
+      "accuracy": 0.7419354838709677,
+      "chance": 0.2,
+      "chance_corrected_intelligence": 67.74193548387098,
+      "ece": 0.12779899009768575,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 155
+     },
+     "axes": {
+      "intelligence": 68.7334074898035,
+      "calibration": 68.1871589736287,
+      "speed": 74.24741570925754,
+      "cost": 42.595424080853945
+     },
+     "intelligence_before_penalty": 68.7334074898035,
+     "raw_overall_gap_pp": 2.7848688790902743,
+     "matched_gap_pp": 2.972972972972976,
+     "matched_gap_families": {
+      "ScreenSpot": {
+       "gap_pp": 2.972972972972976,
+       "weight": 15.74468085106383
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 74.24741570925754,
+      "raw_p50_s": 1.6015398651361465,
+      "raw_p95_s": 2.3481220975518227,
+      "adjusted_p50_s": 1.6015398651361465,
+      "adjusted_p95_s": 2.3481220975518227,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 42.595424080853945,
+      "raw_score": 42.595424080853945,
+      "usd_per_1000": 0.08193809523809524,
+      "total_usd": 0.0240898,
+      "coverage": 1.0,
+      "source": "Autoloops published Gemma 4 31B token rates applied to returned usage receipts"
+     },
+     "composite": {
+      "harmonic_before_gates": 60.459797194404636,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 0.7257480610511168
+      },
+      "score": 43.87858058538291
+     }
+    },
+    "everyday_photo": {
+     "public": {
+      "n": 89,
+      "correct": 86,
+      "accuracy": 0.9662921348314607,
+      "chance": 0.48314606741573035,
+      "chance_corrected_intelligence": 93.47826086956523,
+      "ece": 0.06764721073773494,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 89
+     },
+     "sealed": {
+      "n": 61,
+      "correct": 59,
+      "accuracy": 0.9672131147540983,
+      "chance": 0.48360655737704916,
+      "chance_corrected_intelligence": 93.65079365079364,
+      "ece": 0.058558005278611026,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 61
+     },
+     "axes": {
+      "intelligence": 93.5904071773637,
+      "calibration": 87.65215456213912,
+      "speed": 75.4461602008376,
+      "cost": 42.70797176604814
+     },
+     "intelligence_before_penalty": 93.5904071773637,
+     "raw_overall_gap_pp": -0.09209799226376214,
+     "matched_gap_pp": -0.09209799226376214,
+     "matched_gap_families": {
+      "Everyday photo": {
+       "gap_pp": -0.09209799226376214,
+       "weight": 36.193333333333335
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 75.4461602008376,
+      "raw_p50_s": 1.6065124310553074,
+      "raw_p95_s": 1.7762328162789345,
+      "adjusted_p50_s": 1.6065124310553074,
+      "adjusted_p95_s": 1.7762328162789345,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 42.70797176604814,
+      "raw_score": 42.70797176604814,
+      "usd_per_1000": 0.08123333333333335,
+      "total_usd": 0.012185000000000001,
+      "coverage": 1.0,
+      "source": "Autoloops published Gemma 4 31B token rates applied to returned usage receipts"
+     },
+     "composite": {
+      "harmonic_before_gates": 68.07015317504968,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 0.7295883409478261
+      },
+      "score": 49.66319012304889
+     }
+    }
+   },
+   "measurement_source": "Reused completed Autoloops results; no inference rerun"
+  },
+  {
+   "rank": 5,
    "key": "djev_spark_nvfp4",
    "name": "djev-spark NVFP4",
    "api_flag": false,
@@ -918,7 +1135,7 @@
    }
   },
   {
-   "rank": 5,
+   "rank": 6,
    "key": "djev_dev_bf16",
    "name": "djev-dev BF16",
    "api_flag": false,
@@ -1124,7 +1341,7 @@
    }
   },
   {
-   "rank": 6,
+   "rank": 7,
    "key": "bonsai_2_27b_pq2_0",
    "name": "Bonsai-2-27B v2 PQ2_0 + Q8_0 MMProj",
    "api_flag": false,
@@ -1330,9 +1547,9 @@
    }
   },
   {
-   "rank": 7,
+   "rank": 8,
    "key": "gpt6_luna",
-   "name": "GPT-6 Luna",
+   "name": "GPT-6 Luna (low reasoning effort)",
    "api_flag": true,
    "prior_exposure": "Before evaluation, the API received stateless, single-turn label-check calls for the 100 public promo-photo candidates and 68 new sealed-photo candidates, including images later dropped. Calls showed the image, question, and options but not the gold key; provider data-collection denial, zero-data-retention, and no-fallback were requested. Human gold-blind adjudication decided inclusion; checker outputs did not determine keep/drop decisions. This job used no fine-tuning and carried no context between calls.",
    "score": 16.509956607688665,
@@ -1533,10 +1750,11 @@
       "score": 15.284898580332367
      }
     }
-   }
+   },
+   "inference_setting": "OpenRouter reasoning.effort=low"
   },
   {
-   "rank": 8,
+   "rank": 9,
    "key": "gpt56_luna",
    "name": "GPT-5.6 Luna",
    "api_flag": true,
@@ -1742,7 +1960,7 @@
    }
   },
   {
-   "rank": 9,
+   "rank": 10,
    "key": "gemini31_flash_lite",
    "name": "Gemini 3.1 Flash Lite",
    "api_flag": true,
@@ -1948,7 +2166,7 @@
    }
   },
   {
-   "rank": 10,
+   "rank": 11,
    "key": "gemini38_flash",
    "name": "Gemini 3.8 Flash",
    "api_flag": true,
@@ -2154,7 +2372,7 @@
    }
   },
   {
-   "rank": 11,
+   "rank": 12,
    "key": "openjev_4b_nli",
    "name": "OpenJev 4B NLI v2 (official image-premise path)",
    "api_flag": false,
@@ -2402,6 +2620,272 @@
   },
   "cross_track_rule": "A public-origin Computer Use or Browser Use row that shares a source row or screenshot with a sealed core item is sealed too.",
   "kev_flag": "Mind2Web-derived Browser Use rows are public-only and reported separately for Kev, whose training data overlaps Mind2Web.",
-  "scoring": "Same method as the core once measured; the matched-family gap needs decision types present in both parts."
+  "scoring": "Same method as the core once measured; the matched-family gap needs decision types present in both parts.",
+  "scoring_status": "Neither track has a reviewed system or reusable output. Computer Use has no reviewed candidate in the current queue. Browser Use has one candidate requested, not yet evaluated: kev-0.6b-browser-use. Its public, ungated HF adapter is pinned at 08414b0001f6eba32bc69372abfeac5b74718ac0 (model card license: Apache-2.0), with base jaredpalmer/kev-0.6b at dece6dba8d43f0f7ded45e9f5b9df12474d90843. The model takes textual DOM state and uses a pointer head; its serving path and safe head loader are not independently reviewed. Its Mind2Web-derived examples remain public-only. Both tracks still lack a ready matched-family split and measurements, so they remain separate, requested, and unscored outside the core ranking."
+ },
+ "candidate_coverage": {
+  "checked_utc": "2026-09-24T18:02:05+00:00",
+  "included_note": "Gemma 4 31B reuses completed saved results; GPT-6 Luna is the saved low-reasoning-effort setting.",
+  "candidates": [
+   {
+    "candidate": "CUA-S1-4B-0.2 multimodal adapter",
+    "source_revision": "HF 16818868b0cc7813808aae4e87b417657046ab79",
+    "access": "Public, ungated; pinned revision resolves",
+    "status": "requested, not yet evaluated",
+    "reason": "Pinned source and multimodal image path passed source review; the integrated runner’s exact-hash independent review is pending. No weights have been staged and no ImageJevBench inference has run."
+   },
+   {
+    "candidate": "Visual Jev 4B Answer-SFT",
+    "source_revision": "HF 7a3f1bb0d8f7bfbbd8514d968ab7de3518849c8d",
+    "access": "Public, ungated; pinned revision resolves",
+    "status": "requested, not yet evaluated",
+    "reason": "Pinned source and image path passed source review; exact-hash runner review is pending. Training used two and four options while the benchmark includes up to five. No weights have been staged and no inference has run."
+   },
+   {
+    "candidate": "NeoHorse-Jev-4B",
+    "source_revision": "HF 56c36ae625a3ccca47d9a34fb7ca6203b39b309e",
+    "access": "Public, ungated; pinned revision resolves",
+    "status": "requested, not yet evaluated",
+    "reason": "Pinned self-contained multimodal source passed source review; the integrated runner’s exact-hash independent review is pending. No weights have been staged and no inference has run."
+   },
+   {
+    "candidate": "Jevify Qwen3-VL-2B Tier 2",
+    "source_revision": "HF 46e8e72c27b50fe08f671bdf6b0e013acee5aae6",
+    "access": "Public, ungated; pinned revision resolves",
+    "status": "requested, not yet evaluated",
+    "reason": "Pinned Tier 2 vision adapter and image path passed source review; exact-hash runner review is pending. The loader rejects an optional pickle head. No weights have been staged and no inference has run."
+   },
+   {
+    "candidate": "Standard One 3B",
+    "source_revision": "HF c0d23877ec5577f3edcba9e788e658840fa95774",
+    "access": "Public, ungated; pinned revision resolves",
+    "status": "requested, not yet evaluated",
+    "reason": "Pinned image-capable checkpoint and server path passed source review; exact-hash runner review is pending. No weights have been staged and no inference has run."
+   },
+   {
+    "candidate": "Standard One 8B",
+    "source_revision": "HF 5d1285dd77075043b03a8d6c4ef42e3c1c695105",
+    "access": "Public, ungated; pinned revision resolves",
+    "status": "requested, not yet evaluated",
+    "reason": "Pinned image-capable checkpoint and server path passed source review; exact-hash runner review and a fresh pod/disk resource gate are pending. The checkpoint is about 17.9 GB and will be staged only on an owned remote pod. No weights have been staged and no inference has run."
+   },
+   {
+    "candidate": "Sage1 / Levanto Sage",
+    "source_revision": "Hosted image-input beta",
+    "access": "API requires SAGE_API_KEY; no configured key or free grant",
+    "status": "requested, not yet evaluated",
+    "reason": "No-cost access is unavailable. No paid quota was purchased."
+   },
+   {
+    "candidate": "djev-distill-v4",
+    "source_revision": "26B-class checkpoint; exact pin pending",
+    "access": "No checkpoint staged",
+    "status": "requested, not yet evaluated",
+    "reason": "Custom vLLM backend and loader review are incomplete; no model download was attempted."
+   },
+   {
+    "candidate": "yah01/vjev-vision",
+    "source_revision": "HF 2fa8b58e40e5bc351a7d6dd39b953469a8f3ded2; Apache-2.0",
+    "access": "Public, ungated",
+    "status": "requested, not yet evaluated",
+    "reason": "Reviewed loader uses unrestricted torch.load(head.pt); safe loader review is incomplete."
+   },
+   {
+    "candidate": "WIlfLin/JEV-Qwen3.8-Flash-Next-Linear-Runtime",
+    "source_revision": "HF 1847787ff1e695c1d9af0ab3e53b8bd4afca4d78; license other",
+    "access": "Public model metadata; upstream weights about 184 GB",
+    "status": "requested, not yet evaluated",
+    "reason": "License permission and a viable reviewed multi-GPU runtime remain unresolved; no weights were downloaded."
+   },
+   {
+    "candidate": "Visual-Jev generic Qwen3.5-4B scorer",
+    "source_revision": "GitHub 2d68c11011a16e5ef3a473dedc25ef64acf088de; MIT",
+    "access": "Public repository",
+    "status": "requested, not yet evaluated",
+    "reason": "This is distinct from Answer-SFT, but its exact base, runtime and optional image path lack pin-specific review."
+   },
+   {
+    "candidate": "divyanshx11/JEVision",
+    "source_revision": "HF 324698caa13e08c8b92f72a32eff2280b1360303; Apache-2.0",
+    "access": "Public, ungated",
+    "status": "requested, not yet evaluated",
+    "reason": "The pointer-head .pt artifact and incomplete runtime need safe-loader and interface review."
+   },
+   {
+    "candidate": "SeanLiu/Jev-Vision 8B",
+    "source_revision": "Exact inference revision not pinned",
+    "access": "Checkpoint page is public",
+    "status": "requested, not yet evaluated",
+    "reason": "The head is a .pt artifact and its exact inference loader has not passed review."
+   },
+   {
+    "candidate": "Fr0zencr4nE/jev-spatial",
+    "source_revision": "HF 5727eade6e1af2750ff852b1b1e90bb1f41a0602; Apache-2.0 metadata",
+    "access": "Metadata public; previous anonymous weight-file inventory returned HTTP 401",
+    "status": "requested, not yet evaluated",
+    "reason": "No keyless weight staging path is confirmed, and the spatial specialist's general typed-choice interface is unverified."
+   },
+   {
+    "candidate": "Sarashina 2.2 vision JEV mmproj 3B",
+    "source_revision": "HF 09ce275e3473c2127c5d1211a1a644fd93e5b03b; MIT",
+    "access": "Public, ungated",
+    "status": "requested, not yet evaluated",
+    "reason": "The vision-language projection has no reviewed general typed-choice adapter/runtime."
+   },
+   {
+    "candidate": "OhtaMan Gemma 4 E2B IT choice-64",
+    "source_revision": "HF 3d403b990eaada5e70afd86cf4d226d84c820ed6; Apache-2.0",
+    "access": "Public, ungated",
+    "status": "requested, not yet evaluated",
+    "reason": "Image-text metadata is present, but its actual choice interface and inference code are unreviewed."
+   },
+   {
+    "candidate": "MetaSK-Jev 4B policy mix",
+    "source_revision": "HF ea20fe85b28733b1522721dec119bec50947a869; Apache-2.0",
+    "access": "Public, ungated",
+    "status": "requested, not yet evaluated",
+    "reason": "Image-text metadata is present, but its actual image path and typed-choice runtime are unreviewed."
+   },
+   {
+    "candidate": "Jevify Gemma 4 E4B",
+    "source_revision": "HF a6b5a716f5d7dba2949c14f2c9e93227956e935d; Gemma license",
+    "access": "Public, ungated",
+    "status": "requested, not yet evaluated",
+    "reason": "Distinct from measured hosted Gemma 4 31B; local runtime, typed interface and license review are incomplete."
+   },
+   {
+    "candidate": "Jevify Gemma 4 26B-A4B",
+    "source_revision": "HF d4c0d1d455892957d274f68ec64e9fc0881011c8; Gemma license",
+    "access": "Public, ungated",
+    "status": "requested, not yet evaluated",
+    "reason": "Distinct from measured hosted Gemma 4 31B; local runtime, typed interface and license review are incomplete."
+   },
+   {
+    "candidate": "JevAny-27B-SFT",
+    "source_revision": "HF ad7b48b7056a9742f54aacc9b98b6b46dc2ce167; Apache-2.0",
+    "access": "Public, ungated",
+    "status": "requested, not yet evaluated",
+    "reason": "Image/video capability is reported, but the pinned base/runtime and training-data overlap review are incomplete."
+   },
+   {
+    "candidate": "JevAny-27B-RLCR",
+    "source_revision": "HF 078883b2edbab687585bc86fe5508059756c7f09; Apache-2.0",
+    "access": "Public, ungated",
+    "status": "requested, not yet evaluated",
+    "reason": "Distinct adapter; its pinned base/runtime and training-data overlap review are incomplete."
+   },
+   {
+    "candidate": "LFM2.5-VL-3B-Decision-NVFP4",
+    "source_revision": "HF 1ff8bf5567a305617a3b4da70043a3c37b9d691d; license other",
+    "access": "Public, ungated",
+    "status": "requested, not yet evaluated",
+    "reason": "Image/video input is reported, but license terms, decision-head behavior and local runtime are unresolved."
+   },
+   {
+    "candidate": "yeyan00/Jev-Decision",
+    "source_revision": "GitHub eac9d5f3df4424862ea27427b760461cea90e4d9; MIT",
+    "access": "Public repository; exact checkpoint access unknown",
+    "status": "requested, not yet evaluated",
+    "reason": "The checkpoint, image interface and inference runtime are not pinned or reviewed."
+   },
+   {
+    "candidate": "OmniJev 4B / 2B / 0.8B",
+    "source_revision": "Distinct public variants from measured Jev-Omni",
+    "access": "Public model pages",
+    "status": "requested, not yet evaluated",
+    "reason": "Published loaders use unrestricted pickle .pt files; an approved safe loader is unavailable."
+   },
+   {
+    "candidate": "Bonsai-Llama-Jev submission (measured as Bonsai-2-27B v2)",
+    "source_revision": "kyr0/Bonsai-Llama-Jev@7a4cf234c50d54a234c1e05d32a624e160f89bee; prism-ml/Ternary-Bonsai-2-27B-gguf@6ed5e12bf84b7a63069882c91dd9e9218647d17",
+    "access": "Public pinned submission and model artifacts; completed item-level outputs reused from the Bonsai measurement job",
+    "status": "included in ranking (rank 7/12)",
+    "reason": "This submission maps to the existing Bonsai-2-27B v2 PQ2_0 + Q8_0 MMProj row (score 18.9529). The reviewed System One path accepts inline image data; offline_eval.image_body reads each local image and sends it as a data:image data URI in the request state. The final clean run returned 444/444 image predictions. The frozen 228-public / 216-sealed roster was rescored from these saved item outputs; no rerun was done. See receipts/BONSAI-ALIAS-AND-IMAGE-PATH.md."
+   },
+   {
+    "candidate": "AutoJev-27B",
+    "source_revision": "GitHub denis-pplx/autojev ee63c1515980491a742f0bd0685c8dc5ca1f00c3; HF denis-pplx/autojev-27b 6f5b557e037f5edb25c7dc92dbc6553e5a19c015; base Qwen/Qwen3.8-27B 1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0",
+    "access": "Public, ungated; Apache-2.0 weights / MIT code",
+    "status": "requested, not yet evaluated",
+    "reason": "Pinned upstream inference source supports images: DecisionInput.images is typed; model.open_image loads image objects, data URIs or paths; DecisionModel.prepare passes images to the processor; server EvaluationRequest.images flows into model.prepare. However, this continuation has no ImageJevBench offline, local-only, safetensors adapter/controller for AutoJev. The exact-hash-reviewed runner is frozen to six other candidates pending independent PASS. A separate adapter and exact-hash review are required. The public, ungated Apache-2.0 checkpoint is about 52.2 GB and may only be staged on a remote owned pod after fresh disk, watchdog, GPU and spend checks; the current USD 6 approval covers the six-candidate proposal and has not been extended to AutoJev. No weights or task inputs were staged and no predictions were made."
+   },
+   {
+    "candidate": "CLM-8B",
+    "source_revision": "Contrastive-LM/CLM-v0.1-8B reviewed source path",
+    "access": "Public checkpoint; text encoder",
+    "status": "excluded from image ranking",
+    "reason": "The reviewed Engine.answer(state, {decision: question}) adapter and frozen Qwen3-8B encoder have no image argument or image processor."
+   },
+   {
+    "candidate": "Eikos 4B / 27B",
+    "source_revision": "Reviewed LetterAdapter path in scout CODE-REVIEW.md",
+    "access": "Public checkpoint; source reviewed",
+    "status": "excluded from image ranking",
+    "reason": "LetterAdapter.dist(state_text, question, options) receives text only; conditional-generation architecture selection is not image input."
+   },
+   {
+    "candidate": "Main Jev / TypeSafe",
+    "source_revision": "Official documented interface reviewed in candidate sweep",
+    "access": "Official API/interface; no native image field",
+    "status": "excluded from image ranking",
+    "reason": "The documented state/decision interface accepts text, objects and arrays, with no supported image input. A wrapper field is insufficient."
+   },
+   {
+    "candidate": "OpenJev-Vision",
+    "source_revision": "GitHub b83bec97243bd97acbd0ba987f4d7810b8b7b22f; Apache-2.0",
+    "access": "Public repository",
+    "status": "excluded from core ranking",
+    "reason": "The published fixed classifier/head does not expose the general typed dynamic-option interface used by the benchmark."
+   },
+   {
+    "candidate": "hr98w/jev-visual",
+    "source_revision": "GitHub 4382bba455647400951429134ceb012ca155e3fe; MIT",
+    "access": "Public repository",
+    "status": "excluded as a duplicate wrapper",
+    "reason": "A request/runtime wrapper, not a distinct checkpoint or decision head."
+   },
+   {
+    "candidate": "Qevi-2B and Laya Vision 201M/256M",
+    "source_revision": "Candidate sweep source review",
+    "access": "Public model pages; non-commercial terms",
+    "status": "excluded pending license clearance",
+    "reason": "Existing review reports non-commercial or non-commercial/share-alike terms; public-release permission is not established."
+   },
+   {
+    "candidate": "Jev-Omni reuploads and quantizations",
+    "source_revision": "Candidate sweep duplicate audit",
+    "access": "Public reuploads",
+    "status": "excluded as duplicates",
+    "reason": "No distinct model family/runtime is established beyond the already measured Jev-Omni row."
+   },
+   {
+    "candidate": "joyfox/Qwen3.5-0.8B-JEV",
+    "source_revision": "Candidate sweep source review",
+    "access": "Public checkpoint",
+    "status": "excluded from image ranking",
+    "reason": "The decision artifact removes the vision tower; text-only."
+   },
+   {
+    "candidate": "Hanno-Labs/bosun-v3.1 0.6B / 1.7B",
+    "source_revision": "Candidate sweep source review",
+    "access": "Public checkpoint",
+    "status": "excluded from image ranking",
+    "reason": "Qwen3 text decision models; no image path documented in the reviewed release."
+   },
+   {
+    "candidate": "autotrust/JEV",
+    "source_revision": "Candidate sweep source review",
+    "access": "Public source",
+    "status": "excluded from image ranking",
+    "reason": "Typed text/JSON decisions only; no image input documented in the reviewed interface."
+   },
+   {
+    "candidate": "Programalyst/realtime-vision-decision-agent",
+    "source_revision": "Candidate sweep source review",
+    "access": "Public repository",
+    "status": "excluded as an application wrapper",
+    "reason": "Combines vision detection with Jev but is not a distinct model checkpoint."
+   }
+  ]
  }
 }

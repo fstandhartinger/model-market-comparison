@@ -32,6 +32,7 @@ function RankingTable({ systems, track, all = false }: { systems: any[]; track: 
           <td className="p-3 font-bold tabular-nums">{i + 1}</td>
           <th scope="row" className="p-3 font-semibold">
             {s.name}{s.api_flag && <span className="ml-2 inline-block rounded-full border border-accent px-2 py-0.5 text-[0.68rem] font-bold text-accent">API</span>}
+            {s.inference_setting && <p className="bh-muted mt-1 text-xs">Setting: {s.inference_setting}</p>}
           </th>
           <td className="p-3 text-right font-bold tabular-nums">{score(t.composite.score)}</td>
           <td className="p-3 text-right tabular-nums">{score(t.axes.intelligence)}</td>
@@ -63,6 +64,27 @@ function ScoreBars({ systems, track }: { systems: any[]; track: Track }) {
   })}</ol>;
 }
 
+function CandidateCoverageTable({ candidates }: { candidates: any[] }) {
+  return <div className="mt-4 overflow-x-auto rounded-xl border border-line">
+    <table className="w-full min-w-[1050px] text-left text-sm" data-bh-mm-candidate-coverage>
+      <thead><tr>
+        <th scope="col" className="p-3">Candidate</th>
+        <th scope="col" className="p-3">Source revision</th>
+        <th scope="col" className="p-3">Access</th>
+        <th scope="col" className="p-3">Status</th>
+        <th scope="col" className="p-3">Reason</th>
+      </tr></thead>
+      <tbody>{candidates.map((candidate: any) => <tr key={candidate.candidate} className="border-t border-line align-top">
+        <th scope="row" className="p-3 font-semibold">{candidate.candidate}</th>
+        <td className="p-3 text-xs">{candidate.source_revision}</td>
+        <td className="p-3 text-xs">{candidate.access}</td>
+        <td className="p-3 font-semibold">{candidate.status}</td>
+        <td className="p-3">{candidate.reason}</td>
+      </tr>)}</tbody>
+    </table>
+  </div>;
+}
+
 export async function MultimodalPreviewContent({ publicRoute = false }: { publicRoute?: boolean } = {}) {
   const a: any = await readMultimodalPreview();
   const s = a.split;
@@ -86,6 +108,11 @@ export async function MultimodalPreviewContent({ publicRoute = false }: { public
       <p className="bh-muted mt-2 max-w-4xl">The frozen candidate has {s.items_total} items: {s.items_public} public and {s.items_sealed} sealed. This page shows aggregate sealed results only. It contains no sealed task, image, answer key, or per-item prediction.</p>
     </header>
 
+    {!publicRoute && <section className="mt-6 max-w-6xl rounded-xl border-2 border-red-600 bg-red-50 p-5 text-red-950 shadow-sm dark:bg-red-950 dark:text-red-100" role="alert" data-bh-mm-split-deviation>
+      <h2 className="text-lg font-bold">Split target deviation — release disposition required</h2>
+      <p className="mt-2 text-sm">The approved target is approximately one third public and two thirds sealed. This frozen pool is 228 public / 216 sealed ({s.public_percent.toFixed(1)}% / {s.sealed_percent.toFixed(1)}%), so it does not meet that target. All 228 public items were already exposed, and every item in the frozen pool is assigned. Keeping those exposed items public would require about 240 newly sourced and reviewed unseen items to approach the target. Florian must explicitly waive this deviation or authorize a separate source, split review and remeasurement round before release freeze or publication. Scores on this preview use the current frozen split.</p>
+    </section>}
+
     <section className="mt-7 grid max-w-6xl gap-4 sm:grid-cols-2 lg:grid-cols-4" aria-label="Candidate size">
       <article className="bh-panel p-4"><p className="bh-eyebrow">Licensed real-source core</p><p className="mt-1 text-2xl font-bold">{s.licensed_core_total} items</p><p className="bh-muted mt-1 text-sm">{s.licensed_core_public} public · {s.licensed_core_sealed} sealed · six below the earlier target</p></article>
       <article className="bh-panel p-4"><p className="bh-eyebrow">Everyday photo decisions</p><p className="mt-1 text-2xl font-bold">{s.everyday_photo_total} items</p><p className="bh-muted mt-1 text-sm">{s.everyday_photo_public} public · {s.everyday_photo_sealed} new sealed · 100% synthetic</p></article>
@@ -97,7 +124,7 @@ export async function MultimodalPreviewContent({ publicRoute = false }: { public
       <h2 id="split-heading" className="text-2xl font-semibold">Split</h2>
       <div className="bh-panel mt-4 space-y-3 p-5 text-sm">
         <p><b>Public</b> means an item was already exposed anywhere. That includes all {reasons.mind2web_public_only} Mind2Web-derived items because Kev's training data overlaps Mind2Web; the {reasons.shown_in_promo_videos} promo photos shown in videos; the {reasons.shown_on_wip_page_and_status_video} example cards on this page and in the status video; and {reasons['in_public_repo_2026-09-21_preview']} source rows in the public site repository since the 21 Sep preview. The split also counts {reasons.image_in_public_repo} image asset already present in that repository. Every item that has never been exposed is sealed.</p>
-        <p>The goal was one third public, but {s.items_public} of {s.items_total} items were already exposed. Moving any of them into the held-out score would expose public content, so this is the most sealed possible without adding new items and rerunning all {a.n_systems} systems. The audit moved {s.moved_sealed_to_public_exposed} items that had been sealed but were found exposed into public; it moved {s.moved_public_to_sealed_unexposed} items that were public but never shown into sealed.</p>
+        <p>The goal was one third public, but {s.items_public} of {s.items_total} items were already exposed. Moving any of them into the held-out score would expose public content. This is the most sealed possible without adding new items; the ranking reuses the frozen item-level outputs and the completed Gemma 4 run. The audit moved {s.moved_sealed_to_public_exposed} items that had been sealed but were found exposed into public; it moved {s.moved_public_to_sealed_unexposed} items that were public but never shown into sealed.</p>
         <div className="overflow-x-auto rounded-lg border border-line">
           <table className="w-full text-left text-sm" data-bh-mm-family-counts>
             <thead><tr className="border-b border-line"><th scope="col" className="p-3">Family</th><th scope="col" className="p-3 text-right">Public</th><th scope="col" className="p-3 text-right">Sealed</th></tr></thead>
@@ -134,7 +161,7 @@ export async function MultimodalPreviewContent({ publicRoute = false }: { public
         <p><b>Cross-track sealing rule.</b> {a.preview_tracks.cross_track_rule}</p>
         <p><b>Kev / Mind2Web flag.</b> {a.preview_tracks.browser_use.mind2web_public_only} {a.preview_tracks.kev_flag}</p>
       </div>
-      <p className="mt-4 rounded-lg border border-amber-600 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-950 dark:bg-amber-950/40 dark:text-amber-100" role="note" data-bh-mm-unmeasured>Not measured yet — no scores. Scored with the same method once systems have run.</p>
+      <p className="mt-4 rounded-lg border border-amber-600 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-950 dark:bg-amber-950/40 dark:text-amber-100" role="note" data-bh-mm-unmeasured>Not measured yet — no scores. {a.preview_tracks.scoring_status}</p>
     </section>
 
     <section className="mt-8 max-w-6xl rounded-xl border border-emerald-800 bg-emerald-950/30 p-5" aria-labelledby="top-five-heading">
@@ -145,16 +172,22 @@ export async function MultimodalPreviewContent({ publicRoute = false }: { public
       </li>)}</ol>
     </section>
 
+    <section className="mt-10 max-w-6xl" aria-labelledby="candidate-coverage-heading">
+      <h2 id="candidate-coverage-heading" className="text-2xl font-semibold">Candidate coverage and review status</h2>
+      <p className="bh-muted mt-2 max-w-5xl text-sm">The ranking covers {a.n_systems} measured configurations. {a.candidate_coverage.included_note} Candidates below have no score unless listed in the ranking. Requested rows remain visible with the exact access or review blocker; exclusions describe the reviewed interface, license or duplicate status.</p>
+      <CandidateCoverageTable candidates={a.candidate_coverage.candidates} />
+    </section>
+
     <section className="mt-10" aria-labelledby="bars-heading">
       <h2 id="bars-heading" className="text-2xl font-semibold">Composite score</h2>
-      <p className="bh-muted mt-1 text-sm">Whole candidate, {s.items_total} decisions. Bars include all {a.n_systems} systems. Pink bars are hosted APIs; the four axes and Jev-class gates are in the table below.</p>
+      <p className="bh-muted mt-1 text-sm">Whole candidate, {s.items_total} decisions. Bars include all {a.n_systems} systems. Pink bars are hosted APIs; Gemma used Autoloops and no provider no-retention claim is made. The four axes and Jev-class gates are in the table below.</p>
       <ScoreBars systems={a.ranking} track="all" />
     </section>
     <ImageJevExamples />
 
     <section className="mt-9 max-w-none" aria-labelledby="overall-heading">
       <h2 id="overall-heading" className="text-2xl font-semibold">Whole-candidate ranking</h2>
-      <p className="bh-muted mt-2 max-w-5xl text-sm">Ranked by the candidate composite: equal-weight Intelligence, Calibration, Speed and Cost axes, then the unchanged Jev-class gates. Matched gap is signed public-minus-sealed accuracy within the matched families; the penalty column shows the Intelligence multiplier. {systemsOverAllowance === 0 ? `No system currently exceeds the ${a.gap_allowance_pp} pp allowance.` : `${systemsOverAllowance} systems currently exceed the ${a.gap_allowance_pp} pp allowance.`} Hosted systems are marked API because their providers received sealed images and questions.</p>
+      <p className="bh-muted mt-2 max-w-5xl text-sm">Ranked by the candidate composite: equal-weight Intelligence, Calibration, Speed and Cost axes, then the unchanged Jev-class gates. Matched gap is signed public-minus-sealed accuracy within the matched families; the penalty column shows the Intelligence multiplier. {systemsOverAllowance === 0 ? `No system currently exceeds the ${a.gap_allowance_pp} pp allowance.` : `${systemsOverAllowance} systems currently exceed the ${a.gap_allowance_pp} pp allowance.`} Hosted systems are marked API because their providers received sealed images and questions; the Gemma 4 endpoint is identified separately in the exposure note.</p>
       <RankingTable systems={a.ranking} track="all" all />
     </section>
 
@@ -175,7 +208,7 @@ export async function MultimodalPreviewContent({ publicRoute = false }: { public
         <p><b>Speed and cost.</b> These rules are unchanged. Speed uses whole-call p50 and p95 latency; local latency uses the v1.4 2× plus 0.15-second adjustment. Hosted unit cost uses returned per-call usage receipts; missing receipts are not zero-filled, and the Cost axis is scaled by receipt coverage. Retry costs are tracked separately. Local cost uses measured GPU seconds at the recorded per-system GPU-hour rate and excludes loading, downloads, build, and idle time.</p>
         <p><b>Composite and gates.</b> These rules are unchanged. The four axes use an equal-weight harmonic mean, followed by the Jev-class Intelligence, Speed, and Cost gates below 50. Gemini 3.8 Flash's high raw accuracy but near-zero composite reflects its measured cost and the Cost gate; label-only systems have zero Calibration under the inherited convention.</p>
         <p><b>Difficulty balance.</b> The split follows exposure, not a stratified draw, so the parts differ in family mix: browser actions (Mind2Web), chart questions (FinQA) and geometry are public-only, while ScreenSpot-Pro and Android-in-the-Wild are almost entirely sealed. This is why the overfit penalty compares only matched families. Within ScreenSpot, the task-length difficulty proxy tiers split 8/24, 7/24 and 5/26 (public/sealed); the photo track keeps all 17 situations on both sides.</p>
-        <p><b>Exposure.</b> GPT-6 Luna and Gemini 3.8 Flash previously saw public promo-photo candidates and sealed-photo candidates in stateless label-check calls, including candidates later dropped. The checks showed no gold; human gold-blind adjudication decided inclusion. All API systems received sealed inputs and are flagged. Local systems ran without network, credentials, or gold maps.</p>
+        <p><b>Exposure.</b> GPT-6 Luna and Gemini 3.8 Flash previously saw public promo-photo candidates and sealed-photo candidates in stateless label-check calls, including candidates later dropped. The checks showed no gold; human gold-blind adjudication decided inclusion. GPT-6 Luna is the saved low-reasoning-effort setting. Four OpenRouter systems used the requested no-retention route with fallback disabled; Gemma used the Autoloops endpoint and is API-flagged, with no no-retention claim made here. Local systems ran without network, credentials, or gold maps.</p>
       </div>
     </section>
     <p className="bh-muted mt-9 max-w-6xl border-t border-line pt-4 text-xs">Preview only; not part of the JevBench Score. Sealed item-level content remains private. Public/sealed item counts, accuracy, track and score breakdowns are aggregates. Results describe these exact tested configurations and do not establish absence from model training data.</p>
