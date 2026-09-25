@@ -29,32 +29,36 @@ function applyFilters(rows: JevBoardViewRow[], f: Filters) {
 }
 
 function FilterBar({ rows, filters, setFilters, shown, newLabel, idPrefix }: { rows: JevBoardViewRow[]; filters: Filters; setFilters: (f: Filters) => void; shown: number; newLabel: string | null; idPrefix: string }) {
+  // Phones show the search box and one toggle; the selects open on demand so the ranking starts near the top.
+  const [more, setMore] = useState(false);
+  const active = [filters.type, filters.open, filters.api].filter(Boolean).length + (filters.fresh ? 1 : 0);
   const types = Object.keys(JEV_TYPE_LABEL).filter((t) => rows.some((r) => r.class === t));
   const hasNew = newLabel !== null && rows.some((r) => r.isNew);
   const set = (patch: Partial<Filters>) => setFilters({ ...filters, ...patch });
-  return <div className="bh-jev-filters mt-3" role="search" aria-label="Filter systems" data-bh-jev-filters={idPrefix}>
+  return <div className={`bh-jev-filters mt-3 ${more ? 'is-open' : ''}`} role="search" aria-label="Filter systems" data-bh-jev-filters={idPrefix}>
     <label className="bh-jev-filter-search">
       <span className="sr-only">Search systems by name or author</span>
       <input type="search" className="bh-input" placeholder="Search name or author" value={filters.q} onChange={(e) => set({ q: e.target.value })} data-bh-jev-filter="q" />
     </label>
-    <label><span className="sr-only">System type</span>
+    <button type="button" className="bh-jev-filter-toggle sm:hidden" aria-expanded={more} onClick={() => setMore(!more)} data-bh-jev-filter-toggle>Filters{active ? ` (${active})` : ''} {more ? '▲' : '▼'}</button>
+    <label className="bh-jev-filter-more"><span className="sr-only">System type</span>
       <select className="bh-input" value={filters.type} onChange={(e) => set({ type: e.target.value })} data-bh-jev-filter="type">
         <option value="">All types</option>
         {types.map((t) => <option key={t} value={t}>{JEV_TYPE_LABEL[t]}</option>)}
       </select></label>
-    <label><span className="sr-only">Open code or weights</span>
+    <label className="bh-jev-filter-more"><span className="sr-only">Open code or weights</span>
       <select className="bh-input" value={filters.open} onChange={(e) => set({ open: e.target.value as Filters['open'] })} data-bh-jev-filter="open">
         <option value="">Open and closed</option>
         <option value="open">Open code or weights</option>
         <option value="closed">Closed only</option>
       </select></label>
-    <label><span className="sr-only">API flag</span>
+    <label className="bh-jev-filter-more"><span className="sr-only">API flag</span>
       <select className="bh-input" value={filters.api} onChange={(e) => set({ api: e.target.value as Filters['api'] })} data-bh-jev-filter="api">
         <option value="">With and without API flag</option>
         <option value="flagged">API-flagged only</option>
         <option value="unflagged">Without API flag</option>
       </select></label>
-    {hasNew && <label className="bh-jev-filter-check"><input type="checkbox" checked={filters.fresh} onChange={(e) => set({ fresh: e.target.checked })} data-bh-jev-filter="new" /> New in {newLabel}</label>}
+    {hasNew && <label className="bh-jev-filter-check bh-jev-filter-more"><input type="checkbox" checked={filters.fresh} onChange={(e) => set({ fresh: e.target.checked })} data-bh-jev-filter="new" /> New in {newLabel}</label>}
     <span className="bh-muted text-xs" aria-live="polite" data-bh-jev-filter-count>{shown === rows.length ? `All ${rows.length} systems` : `${shown} of ${rows.length} systems`}</span>
     {isFiltered(filters) && <button type="button" className="bh-inline-btn text-xs text-accent underline" onClick={() => setFilters(NO_FILTERS)} data-bh-jev-filter-reset>Clear filters</button>}
   </div>;
@@ -128,7 +132,6 @@ type View = 'overall' | 'intelligence' | 'calibration' | 'speed' | 'cost';
 const VIEWS: [View, string][] = [['overall', 'Overall'], ['intelligence', 'Intelligence'], ['calibration', 'Calibration'], ['speed', 'Speed'], ['cost', 'Cost']];
 const viewOf = (sort: Sort): View => sort.key === 'intelligence' || sort.key === 'calibration' || sort.key === 'speed' || sort.key === 'cost' ? sort.key : sort.key === 'usd' ? 'cost' : 'overall';
 const metricOf = (view: View): BarMetric => (view === 'overall' ? 'score' : view);
-const SHORT_METRIC: Record<BarMetric, string> = { score: 'Score', intelligence: 'Intel.', calibration: 'Calib.', speed: 'Speed', cost: 'Cost' };
 
 export type JevFairness = { leadName: string; topName: string; leadInt: number; topInt: number; leadsOn: string[] } | null;
 
@@ -171,19 +174,21 @@ export function JevScoreChart({ revision, rows, rankedCount, newLabel, fairness,
       <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5" role="group" aria-label="View the field by">
         <span className="text-sm font-semibold">View by:</span>
         {VIEWS.map(([v, label]) => <button key={v} type="button" className="bh-viewby-btn" aria-pressed={view === v} onClick={() => choose(v)} data-bh-jev-view={v}>{label}</button>)}
-        {capabilityHref && <a className="bh-viewby-btn" href={capabilityHref} data-bh-jev-view="capability">Capability ↓</a>}
+        {capabilityHref && <a className="bh-viewby-btn is-jump" href={capabilityHref} data-bh-jev-view="capability" title="Jump to the Capability, cost and speed charts below">Capability ↓</a>}
       </div>
       {/* CR-152 put the release's approved top-five sentence (artifact.top_five_note) above the chart; CR-151 shows it
           verbatim beside the switch it points to. The computed sentence is the fallback for releases without one. */}
       {approvedNote ? <p className="mt-2 text-[13px] leading-snug" data-bh-jev14-top-five-note>
         {approvedNote}{' '}
-        <button type="button" className="bh-inline-btn whitespace-nowrap font-semibold text-accent underline" onClick={() => choose('intelligence')} data-bh-jev14-sort-intelligence>Sort by Intelligence ↓</button>
+        {view === 'intelligence'
+          ? <button type="button" className="bh-inline-btn whitespace-nowrap font-semibold text-accent underline" onClick={() => choose('overall')} data-bh-jev14-sort-official>Back to the official order</button>
+          : <button type="button" className="bh-inline-btn whitespace-nowrap font-semibold text-accent underline" onClick={() => choose('intelligence')} data-bh-jev14-sort-intelligence>Sort by Intelligence ↓</button>}
       </p> : fairness ? <p className="bh-muted mt-2 text-[13px] leading-snug" data-bh-jev-fairness>
         Among the top five, <b className="text-[color:var(--text)]">{fairness.topName}</b> is still the strongest reasoner (Intelligence {one(fairness.topInt)} vs {one(fairness.leadInt)}){fairness.leadsOn.length > 0 ? <>; <b className="text-[color:var(--text)]">{fairness.leadName}</b> leads on {joinWords(fairness.leadsOn)}</> : null}. JevBench weighs Intelligence, Calibration, Speed and Cost equally —{' '}
         <button type="button" className="bh-inline-btn text-accent underline" onClick={() => choose('intelligence')} data-bh-jev-fairness-sort>view by Intelligence</button> for raw reasoning.
       </p> : null}
       {!approvedNote && !fairness && <p className="bh-muted mt-2 text-[13px] leading-snug" data-bh-jev-viewby-hint>The official order weighs Intelligence, Calibration, Speed and Cost equally. Each button re-sorts the same systems by one axis<span className="hidden sm:inline">, and the column headings sort too</span>.</p>}
-      {view !== 'overall' && <p className="mt-2 text-[13px]" data-bh-jev-view-note><span className="bh-jevc-notdefault">Not the official order</span> <span className="bh-muted">Bars and the bold number show {METRIC_LABEL[metric]} (0–100). # is still the official JevBench rank.</span></p>}
+      {view !== 'overall' && <p className="mt-2 text-[13px]" data-bh-jev-view-note><span className="bh-jevc-notdefault">Not the official order</span> <span className="bh-muted">Bars show {METRIC_LABEL[metric]} (0–100). The bold number stays the JevBench Score and # the official rank.</span></p>}
     </div>
 
     <FilterBar rows={rows} filters={filters} setFilters={setFilters} shown={shown.length} newLabel={newLabel} idPrefix="chart" />
@@ -193,7 +198,7 @@ export function JevScoreChart({ revision, rows, rankedCount, newLabel, fairness,
       <SortButton k="rank" label="#" sort={sort} toggle={toggle} className="justify-end" />
       <SortButton k="name" label="System" sort={sort} toggle={toggle} className="justify-end" />
       <span />
-      {metric === 'score' ? <SortButton k="score" label="Score" sort={sort} toggle={toggle} className="justify-end" /> : <span className="bh-muted self-center text-right font-semibold" data-bh-jev14-view-column>{SHORT_METRIC[metric]}</span>}
+      <SortButton k="score" label="Score" sort={sort} toggle={toggle} className="justify-end" />
       <span className="grid grid-cols-[1fr_1fr_1fr_1fr_2.1fr] gap-x-1 text-right font-mono">
         <SortButton k="intelligence" label="Intel." sort={sort} toggle={toggle} className="justify-end" />
         <SortButton k="calibration" label="Calib." sort={sort} toggle={toggle} className="justify-end" />
@@ -206,7 +211,7 @@ export function JevScoreChart({ revision, rows, rankedCount, newLabel, fairness,
     {shown.length === 0 && <p className="bh-muted mt-3 text-sm" data-bh-jev-filter-empty>No system matches these filters.</p>}
     <ol className="mt-2 space-y-2.5 sm:mt-1" data-bh-jev14-bars>{top.map(bar)}</ol>
     {rest.length > 0 && <details className="mt-2.5" data-bh-jev14-bars-more>
-      <summary className="cursor-pointer text-sm font-semibold text-accent">{isFiltered(filters) ? `Show all ${shown.length} matching systems` : `Show all ${rows.length} systems (${rankedCount - Math.min(CHART_TOP, rankedCount)} more ranked, ${unranked} not ranked)`}</summary>
+      <summary className="cursor-pointer text-sm font-semibold text-accent">{isFiltered(filters) ? `Show all ${shown.length} matching systems` : `Show all ${rows.length} systems (${rest.filter((r) => r.ranked).length} more ranked, ${rest.filter((r) => !r.ranked).length} more not ranked)`}</summary>
       <ol className="mt-2.5 space-y-2.5">{rest.map(bar)}</ol>
     </details>}
     <div className="mt-2 hidden grid-cols-[1.6rem_14rem_minmax(0,1fr)_3.2rem_21rem] gap-x-2 text-[11px] sm:grid" aria-hidden="true">
@@ -311,7 +316,7 @@ export function JevAxesTable({ rows, publicDecisions, sealedDecisions, newLabel 
   const captionId = useId();
   return <>
     <FilterBar rows={rows} filters={filters} setFilters={setFilters} shown={shown.length} newLabel={newLabel} idPrefix="table" />
-    <p className="bh-muted mt-2 text-xs"><HeatLegend latency /> Badges: <span className="bh-thin-tag bh-flag-tag">API</span> sealed text went to the operator&apos;s endpoint · <span className="bh-thin-tag bh-est-tag">est.</span> estimated price · <span className="bh-thin-tag bh-partial-tag">not ranked</span> partial run or honorable mention{newLabel ? <> · <span className="bh-new-tag">new</span> first listed in {newLabel}</> : null}.</p>
+    <p className="bh-muted mt-2 text-xs"><HeatLegend latency /> Badges: <span className="bh-thin-tag bh-flag-tag">API</span> sealed text went to the operator&apos;s endpoint · <span className="bh-thin-tag bh-est-tag">est.</span> estimated price · <span className="bh-thin-tag">announced</span> announced, not yet bookable price · <span className="bh-thin-tag bh-partial-tag">not ranked</span> partial run or honorable mention{newLabel ? <> · <span className="bh-new-tag">new</span> first listed in {newLabel}</> : null}.</p>
     <div className="bh-table-wrap mt-3">
       <table className="bh-table bh-jev-table" data-bh-jev14-table aria-describedby={captionId}>
         <thead><tr>
@@ -319,7 +324,7 @@ export function JevAxesTable({ rows, publicDecisions, sealedDecisions, newLabel 
           <Th k="intelligence" sort={sort} toggle={toggle}>Intelligence</Th><Th k="calibration" sort={sort} toggle={toggle}>Calibration</Th><Th k="speed" sort={sort} toggle={toggle}>Speed</Th><Th k="cost" sort={sort} toggle={toggle}>Cost axis</Th>
           <Th k="public" sort={sort} toggle={toggle}><>Public accuracy<br /><span className="bh-muted text-[11px]">{publicDecisions}</span></></Th>
           <Th k="sealed" sort={sort} toggle={toggle}><>Sealed accuracy<br /><span className="bh-muted text-[11px]">{sealedDecisions}</span></></Th>
-          <Th k="gap" sort={sort} toggle={toggle}>Public − sealed gap</Th><Th k="usd" sort={sort} toggle={toggle}>Cost / 1,000</Th><Th k="latency" sort={sort} toggle={toggle}>p50 latency</Th><th scope="col">Endpoint</th>
+          <Th k="gap" sort={sort} toggle={toggle}>Public − sealed gap</Th><Th k="usd" sort={sort} toggle={toggle}>$/1k decisions</Th><Th k="latency" sort={sort} toggle={toggle}>p50 latency</Th><th scope="col">Endpoint</th>
         </tr></thead>
         <tbody>{shown.map((row) => <Row key={row.key} row={row} heat={heat} />)}</tbody>
       </table>

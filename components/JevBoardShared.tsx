@@ -81,7 +81,7 @@ export const heatStyle = (level: number | null) => (level == null ? undefined : 
 export function HeatLegend({ className = '', latency = false }: { className?: string; latency?: boolean }) {
   return <span className={`inline-flex flex-wrap items-center gap-x-1.5 gap-y-0.5 ${className}`} data-bh-jev-heat-legend>
     <span className="bh-heat-key" aria-hidden="true" />
-    <span>Greener = stronger within its column: the shade follows each system&apos;s place in that column, from weakest (faint) to strongest (solid). For $/1k{latency ? ' and latency' : ''}, cheaper{latency ? ' or faster' : ''} is greener.</span>
+    <span title="The shade follows each system's place in that column, from weakest (faint) to strongest (solid).">Greener = stronger within its column{latency ? '; cheaper and faster count as stronger' : '; cheaper counts as stronger for $/1k'}.</span>
   </span>;
 }
 
@@ -117,7 +117,7 @@ export function JevScoreBar({ row, reference = false, metric = 'score', heat, is
     <span className="bh-jevc-grid col-start-2 row-start-2 mt-1 flex h-4 sm:col-start-3 sm:row-start-1 sm:mt-0 sm:h-6" aria-hidden="true">
       {value != null && <span className={`bh-jevc-bar ${row.ranked ? '' : 'is-partial'} ${reference ? 'is-reference' : ''}`} style={{ width: `${Math.max(0, Math.min(100, value)).toFixed(4)}%` }} />}
     </span>
-    <b className="tabular col-start-3 row-span-2 row-start-1 self-center text-right text-base sm:col-start-4 sm:row-span-1 sm:text-lg" data-bh-jev14-bar-value>{one(value)}</b>
+    <b className="tabular col-start-3 row-span-2 row-start-1 self-center text-right text-base sm:col-start-4 sm:row-span-1 sm:text-lg" data-bh-jev14-bar-value>{one(s)}</b>
     <span className="bh-muted col-start-2 row-start-3 mt-0.5 flex min-w-0 flex-wrap gap-x-2 font-mono text-[10.5px] sm:col-start-5 sm:row-start-1 sm:mt-0 sm:grid sm:grid-cols-[1fr_1fr_1fr_1fr_2.1fr] sm:gap-x-1 sm:whitespace-nowrap sm:text-right sm:text-[12px]" data-bh-jev14-bar-axes>
       {(['intelligence', 'calibration', 'speed', 'cost'] as const).map((axis) => <span key={axis} className="whitespace-nowrap sm:block"><span className="sm:hidden">{AXIS_LETTER[axis]} </span><AxisValue level={level(axis)}>{f0(row.axes?.[axis])}</AxisValue></span>)}
       <span className="whitespace-nowrap sm:block"><AxisValue level={level('usd')} title={row.cost?.basis}>{`${kind === 'estimate' ? '~' : ''}${dollars(usd)}`}{kind === 'estimate' ? ' est.' : kind === 'announced' ? ' ann.' : ''}</AxisValue></span>

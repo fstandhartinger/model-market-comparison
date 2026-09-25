@@ -609,3 +609,9 @@ details[open] > .bh-collapsible-grid { display: grid; }
 [data-bh-jev14-chart-sort] .bh-sort-btn { min-height: 0; }
 @media (max-width: 639px) { .bh-viewby-btn { min-height: 44px; } }
 @media (max-width: 639px) { .bh-jev14-note > summary { padding: 10px 8px; margin: -10px -6px; } }
+.bh-viewby-btn.is-jump { border-style: dashed; color: rgb(var(--accent)); }
+.bh-jev-filter-toggle { min-height: 44px; padding: 0 12px; border: 1px solid var(--control-border); border-radius: 8px; font-size: 13px; background: none; color: var(--text); }
+@media (max-width: 639px) {
+  .bh-jev-filter-search { flex: 1 1 0; }
+  .bh-jev-filters:not(.is-open) .bh-jev-filter-more { display: none; }
+}
