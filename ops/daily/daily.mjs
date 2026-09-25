@@ -10,6 +10,7 @@ import { writeJSONAtomic } from '../../lib/snapshot.mjs';
 import { COMMIT_TRAILER, assessCommitScope, parseScope, parseStatusPorcelain, pricesScopeViolations, selectProducerCritic, sourceFreshnessErrors } from './policy.mjs';
 import { executeNotifications } from './notify.mjs';
 import { compactPublishedRun } from './compact-run.mjs';
+import { pruneStaleRuns } from './prune-runs.mjs';
 import { GATE_TIMEOUT_MS, gatedPublish } from './publish-gate.mjs';
 import { staleSources, updateCollectorHealth } from './source-health.mjs';
 import { profileRunDir } from './profile-run.mjs';
@@ -415,6 +416,11 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
   if (after) report.dataset_sha256 = hash(await readFile(join(work, 'data/dataset.json')));
   try { report.storage = await compactPublishedRun({ runDir, published: report.published, liveVerified: report.live_verified, dryRun }); }
   catch (error) { report.storage = { applied: false, error: redact(error.message) }; console.error(`DAILY STORAGE CLEANUP FAILED: ${report.storage.error}`); }
+  // D194: the staging trees of failed and dry runs are kept for investigation, but not forever —
+  // unbounded, they filled the disk to 91 % and the watchdog then refused every agent's build.
+  // A dry run never deletes another run's evidence.
+  try { report.run_retention = dryRun ? { applied: false, reason: 'dry-run' } : await pruneStaleRuns({ home }); }
+  catch (error) { report.run_retention = { applied: false, error: redact(error.message) }; console.error(`DAILY RUN RETENTION FAILED: ${report.run_retention.error}`); }
   // CR-66.9: name secondary sources whose last good data is 3+ days old.
   try {
     const statePath = join(home, 'state', 'collector-health.json');
