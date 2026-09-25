@@ -83,4 +83,6 @@ test('the preview presents a bar ranking before the detail table and keeps ident
   assert.match(preview, /aria-label=\{`\$\{track === 'all' \? 'Whole-candidate'/);
   assert.match(preview, /sticky left-0 z-\[1\].*shadow-\[inset_-1px_0_0_rgb\(var\(--line\)\)\]/);
   assert.match(preview, /sticky left-14 z-\[1\].*System/);
+  assert.doesNotMatch(preview, /bg-\[rgb\(var\(--surface\)\)\]/, 'hex theme variables must not be wrapped in rgb()');
+  assert.match(preview, /bg-\[var\(--surface\)\]/, 'pinned cells need an opaque theme-aware background');
 });
