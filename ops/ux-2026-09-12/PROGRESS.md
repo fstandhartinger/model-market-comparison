@@ -11721,14 +11721,17 @@ visible; frozen release pages do not opt in.
 
 Local evidence: `/opt/benchmarkheaven/state/ux-evidence/iter220-codex-f193/` — F-189 is 34/34
 and F-190 is 14/14 at the local production-shaped Next app, in both light and dark mobile modes.
-The measured first bar is **659 px**. The same source changes passed `npm test` (1,368 tests,
+The measured first bar is **659 px**. After deployment, canonical and the legacy Mintapis host
+both serve `e9485569a780f5cf69156b2a3e25dc8a30dedd6d`; live F-189 is 34/34 and F-190 is 14/14
+on each host, with the first bar at **659 px** in both light and dark mobile modes. Receipts are
+under `iter220-codex-f193/post-deploy/`. The same source changes passed `npm test` (1,368 tests,
 1,367 pass, 0 fail, 1 skipped), `npx tsc --noEmit -p .`, `node scripts/build-dataset.mjs`
 (871 / 674 / 96 / 3,121; timestamp-only churn discarded), and `npm run build`.
 
 | ID | Status | Evidence | Notes |
 |---|---|---|---|
-| F-193 | implemented (live proof pending) | `iter220-codex-f193/local-F-189/verification.json`; local first-bar measurement 659 px | Codex Luna implementation; canonical deployment verification is required before marking verified. |
-| F-189 | implemented (live proof pending) | `iter220-codex-f193/local-F-189/verification.json` (34/34) | The two prior live failures were the first-bar budget now addressed by F-193; the fairness and rank-control checks remain green. |
+| F-193 | **verified** | `iter220-codex-f193/post-deploy/{canonical,legacy}-F-189/verification.json` (34/34 per host; first bar 659 px) | Codex Luna implementation, independently re-read on both live hosts. |
+| F-189 | **verified** | `iter220-codex-f193/post-deploy/{canonical,legacy}-F-189/verification.json` (34/34 per host) | The two prior live failures were the first-bar budget addressed by F-193; fairness and rank-control checks remain green. |
 
 No `ALL-ACCEPTED`: CR-152.1 and the other open rows remain governed by their existing evidence and
-approval gates until the deployed proof is available.
+approval gates.

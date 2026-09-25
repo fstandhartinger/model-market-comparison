@@ -326,7 +326,7 @@ control and nothing else; the sentence costs 92 px on its own and is CR-152, Flo
 The implementer did not trim copy to reach the number. Where the space actually is, if the design authority wants it back: the page head above
 the figure is 394 px at 390 (h1, a 112 px paragraph, a two-link block, a 78 px provenance paragraph, a "Share this version" line), and the
 figure's own eyebrow repeats the version — "JevBench v1.4.2" — that the page head states 430 px higher. Both are outside F-189's scope.
-The 720 check stays in `verify-fable-pass35-design.mjs` and stays failing, so it cannot be lost; F-189's other 32 checks pass.
+Resolution: iteration 220 (`e9485569`) added an explicit live-board compact-mobile treatment that tightens those gaps and hides only the duplicate chart eyebrow; it keeps the provenance, fairness sentence and rank control. The 720 check remains in `verify-fable-pass35-design.mjs` and now passes at 659 px on both configured live hosts, in light and dark mobile modes. Receipts: `/opt/benchmarkheaven/state/ux-evidence/iter220-codex-f193/post-deploy/{canonical,legacy}-F-189/`.
 
 ### F-190 — The pinned page is the board `[mechanical]`
 
