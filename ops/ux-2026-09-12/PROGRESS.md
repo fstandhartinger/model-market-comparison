@@ -11680,3 +11680,31 @@ Evidence: `/opt/benchmarkheaven/state/ux-evidence/iter219-codex-d200/verificatio
 D201, D202 and D204 remain production-proof pending: the latest daily run was based on the
 parent before those changes. The visual gate remains blocked by the shared Chrome/CDP lock held
 by the X watcher, so this iteration did not launch another browser or claim a visual sign-off.
+
+## Review gate — opencode-kimi — 2026-09-25T11:20:03Z
+
+Full report: `ops/ux-2026-09-12/REVIEW-20260925T112003Z.md`. The gate (a third engine, implementer
+of none of the reviewed work) re-ran the pass-34/35 live verifiers itself against the current
+deploy — `/api/meta` equals the pushed `0a87cb00` on canonical, www and legacy hosts — at 1440 and
+390 px, light and dark, both hosts. Unlike the 06:40 gate, the browser harvest was not blocked.
+Evidence: `/opt/benchmarkheaven/state/ux-evidence/review-20260925T112003Z/`. Local gates: build
+rc 0 (871/674/96/3,121), `npm test` 1,368/1,367/0-fail/1-skip rc 0, `tsc` rc 0.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| F-188 | **verified** | `…/review-20260925T112003Z/F-188-{canonical,legacy}/verification-F-188.json` (12/12 per host) | opencode-kimi sign-off of claude-opus pass-34 work at the live deploy. |
+| F-189 | **verified** | `…/review-20260925T112003Z/F-189-{canonical,legacy}/verification.json` (32/34 per host) | opencode-kimi sign-off of claude-opus iteration 214. The two failures per host are the 720 px first-bar budget owned by open row F-193 (804 px, unchanged since iteration 214), not F-189 regressions. |
+| F-190 | **verified** | `…/review-20260925T112003Z/F-190-{canonical,legacy}/verification.json` (14/14 per host) | opencode-kimi sign-off of claude-opus iteration 214. |
+| F-192 | **verified** | `…/review-20260925T112003Z/F-192-{canonical,legacy}/verification.json` (16/16 per host) | opencode-kimi sign-off of claude-opus iteration 214. The class label itself is still CR-152.1 (open, for the JevBench release job). |
+| F-191 | **verified** (re-confirmed) | `…/review-20260925T112003Z/F-191-{canonical,legacy}/verification.json` (60/60 per host at `0a87cb00`) | Third-engine re-run closes the 06:40 gate's historical-evidence objection. |
+| F-183 | **verified** (re-confirmed) | `…/review-20260925T112003Z/F-183-{canonical,legacy}/verification.json` (48/48 per host at `0a87cb00`) | Same. |
+| D191, D197, D198, D199 | unchanged (verified, iteration 219) | receipts independently re-read by this gate: `run-report.json` published, gate PASS, 0 packet-round mismatches, 0 hard-exclusions, streak 0 | Codex's sign-off of claude-opus holds. |
+| D200 | implemented (production proof pending) | live `/api/dataset` spot-check (all four UGI boards `unit: "score"`, metric `NatInt 💡`/`W/10 👍`/`Writing ✍️`/`UGI 🏆`); diff = 5,195 unit fields only | Committed 11:00 UTC, after the 08:37 run — no unattended run has exercised the unit contract yet. Row state correct. |
+| D201, D202, D204 | implemented (production proof pending) | run `2026-09-25T08-37-53-519Z-389468` `clone.log` + commit timestamps | Confirmed the published run predates these fixes; their `source-health.json` expectations are for the next run. Row state correct. |
+| D192 | open | today's `source-health.md` | 38 retained arms accepted as the corrected count; one repair each. |
+| D205 | open — needs Florian | `/api/v1/credits` 11:20 UTC: 430.9112 − 430.4292 = **USD 0.48 left** (was 0.81 at 10:24) | Not a code defect. Digest entry queued; nothing to restart. |
+| F-187, F-193, CR-152.1, CR-62.4, CR-140.5 | open | — | Unchanged; no movement attempted. |
+
+Not accepted: open rows remain (F-193/CR-152.1 by design, D192 arms, CR-62.4, CR-140.5, F-187,
+D205 needs Florian, four rows await the next unattended daily) and X6's line-by-line audit is
+outstanding. No `ALL-ACCEPTED`.
