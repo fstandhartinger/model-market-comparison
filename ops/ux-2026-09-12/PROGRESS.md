@@ -10211,3 +10211,134 @@ means the header line or the `About Benchmarks` text the note points at, for Fro
 revision statement in `data.json`. Deliberately not done by guessing a string that makes the guard
 pass; that is the one thing this guard exists to prevent.
 
+
+## Iteration 211 — 2026-09-24 23:40 → 2026-09-25 01:40 UTC · engine `claude-opus`
+
+Receipts: `/opt/benchmarkheaven/state/ux-evidence/iter211-d193/`. Commits `2f5983b1` (this repair) and
+the rebase-and-push of iteration 210's two unpushed commits (`fc7a9746` D192, `41b2fc95` D193's
+diagnosis), which had been sitting in the working checkout. `origin/main` had moved to `811f0dd9`
+meanwhile; rebased, re-ran every gate on the rebased tree, then pushed.
+
+### D193 — repaired: six benchmarks now pin a passage of their own source
+
+Iteration 210 diagnosed this and deliberately did not repair it, because the repair is a review act on
+four primary sources. Done here, against **the failing run's own captures**, retained byte-for-byte
+with their receipts at `data/raw/benchmarks/daily-evidence/2026-09-24-d193/` (six files, 268 KB).
+
+First, the diagnosis re-derived rather than inherited. Each of the eight excerpts on these six
+entries was matched against the 2026-09-24T19:20Z capture of its own source by longest common prefix:
+
+| entry | reference | extracted bytes | its excerpt matched |
+|---|---|---|---|
+| four `ugi*` | `…/raw/main/ugi-leaderboard-data.csv` | 665,173 | 0 chars (`"Exact score column UGI 🏆"`) |
+| four `ugi*` | `…/raw/main/app.py` | 58,689 | 0 chars |
+| four `ugi*` | the Space landing page | 570 | 0 chars |
+| `frontiercode*` | `…/frontiercode-leaderboard/data.json` | 78,155 | 0 chars |
+| `frontiercode*` | `cognition.com/frontiercode` | 5,402 | 0 chars |
+| `frontiercode*` | `cognition.com/robots.txt` | 89 | 0 chars |
+
+Not one was ever a passage of its source. The repair separates the two kinds of reference these
+entries hold, and **does not invent a string that makes the guard pass**:
+
+- **The oversized payloads are results files, not protocol sources.** The 665 KB CSV and the 78 KB
+  `data.json` carry no methodology prose at all — there is nothing in them to pin. Their excerpts
+  become field locators in the `literal field` form `protocol()` already excludes from a packet
+  (`refresh-benchmarks.mjs:245`), the same form the AA Flight-row references have always used.
+  Nothing is lost: `protocol()` runs only for a spec whose rows have already parsed and changed, and
+  `collect-public-benchmarks.py:1234` raises on a missing `value_field`, so the named column is
+  proven present *before* the review starts. It also stops 665 KB of untrusted values being read to a
+  reviewer as though it were protocol text — the same hazard the MathArena `review_content: "excerpt"`
+  note is about.
+- **The real protocol sources now quote themselves.** The UGI Space's `app.py` has an
+  "About the Benchmarks" section with a paragraph per metric, so each `ugi*` entry pins the passage
+  that names its own column and defines it (`UGI 🏆` → *"Measures a model's knowledge of sensitive
+  topics and its ability to follow instructions when faced with controversial prompts."*, and so on).
+  `cognition.com/frontiercode` carries both the mergeability methodology and the 1.1 revision
+  statement; `frontiercode::1.1` pins the first, `frontiercode-cost::1.1` the second.
+
+  One thing stated rather than stretched: **the FrontierCode page publishes no cost definition.** The
+  registry's `how_to_collect.locator` quotes *"Cost ($): the mean USD spend per rollout"* as rendered
+  leaderboard text, but that label is drawn by the client bundle and is not in the captured document.
+  So the cost entry pins the passage that settles the *version* its costs belong to, not a cost
+  definition it does not have. The locator's claim is left untouched and is worth a look by whoever
+  next reviews that entry.
+
+This is not housekeeping. `app.py` extracts to **58,689 bytes against the 60,000-byte bound** — 1,311
+bytes from the cliff, after which the note it carried would have failed the board on every changed
+day. The landing page and robots.txt were carrying notes too and now quote their own text, so **every
+reference in all six packets is verbatim**, and the bound is no longer what carries them.
+
+`test/d193-protocol-excerpts.test.mjs` (5 tests) replays the shipped guard over those captures:
+every reviewed reference resolves; every excerpt is verbatim *with the excerpt path forced*, so a
+growing source cannot reopen this; each payload reference names a field that really is a CSV column
+or a `v1_1` Main run field, with `subsets.main == 100` asserted; and four rewritten passages plus all
+four old notes still fail closed.
+
+### D193.2 (new) — the same guard is armed on 16 more references, and 4 look failing but are not
+
+`ops/ux-2026-09-12/bin/scan-protocol-excerpts.mjs` asks D193's question of **every** registry
+reference against any capture directory, using the shipped `protocolSourceContent` rather than a
+restatement of it. Against the 19:20 run's captures (`scan-v2.json`):
+
+**418 protocol references · 116 verbatim · 16 failing · 4 retired · 252 latent · 30 not captured.**
+
+None of the 16 was among the 20 boards that run retained — their rows simply did not change that day.
+They are armed and unfired, which is exactly the shape D193 had on 2026-09-23. Grouped by source, so
+each is one review act rather than sixteen:
+
+| source | entries | what the excerpt is |
+|---|---|---|
+| `matharena.ai/competition_tables/*` (4 pages) | `matharena-apex::2025`, `matharena-apex-shortlist::2025`, `matharena-hmmt::2025-11`, `matharena-hmmt::2026-02` | `title="Average performance of the model on the competition t…"` — an HTML attribute fragment, 169 chars, against pages of 0.8–2.1 MB |
+| `lisanbench.com/data/{core,rankings}.json` | `lisanbench::0.2.0` (2 refs) | `per_word: 7700 rows (154 models x 50 starting words)…` — a summary of the payload, not text in it |
+| `internscience.github.io/ResearchClawBench-Home/{data/leaderboard.json,static/app.js}` | `researchclawbench::40-tasks` (2 refs) | elided JSON/JS with `…` in the middle — cannot be verbatim by construction |
+| our own `jevbench-v1{,.1}-results.json` | `jevbench::v1`, `jevbench::v1.1` | a field digest of the artifact |
+| `artificialanalysis.ai/methodology/intelligence-benchmarking` | `aa-briefcase::1.1`, `aa-gdpval::2.1`, `aa-gdp-pdf::snapshot-2026-09-21` | **the Intelligence Index composition table**, 1,474 chars — a real passage that AA changed (v4.3 → v4.3.2) |
+| `aider.chat/docs/leaderboards/`, `github…/MLS-Bench README.md`, `programbench.com/` | `aider-polyglot::snapshot-2026-09-10`, `mls-bench-lite::30-tasks`, `programbench::1` | one each, mixed note/passage |
+
+Two findings inside that list matter more than the count:
+
+1. **The three AA entries' own descriptions still match 100 %.** `aa-briefcase::1.1` (11,528 chars),
+   `aa-gdpval::2.1` (12,000) and `aa-gdp-pdf::snapshot-2026-09-21` (3,334) are exact in today's page.
+   What no longer matches is a **second reference to the same URL** carrying the index-composition
+   table. So this is a genuine upstream change — AA moved the index to v4.3.2 (AutomationBench-AA in,
+   𝜏³-Banking out, Terminal-Bench to 4.0) — and the guard refusing is the guard working. Repinning it
+   is a decision about index membership and weighting, which touches the Composite, so it is
+   **deliberately not done here**. It needs a reviewer who reads the new table and says what changed.
+2. **4 references are not defects at all.** `aa-briefcase::snapshot-2026-09-10`,
+   `aa-gdp-pdf::snapshot-2026-09-10`, `aa-gdpval::2` and `aa-terminal-bench::4.0` are past their
+   `aa_field_map` window, so `refresh-benchmarks.mjs:277` never reviews them; AA having removed their
+   passage is the expected state. The scanner's first run called all 7 AA references failing and
+   over-reported by 4; it now applies the real `aaMappingApplies` and reports them as `retired`. The
+   uncorrected first run is kept at `scan-v1-before-refinement.json` so the correction is legible.
+   It also prints each reference's excerpt, because two references can share a URL and a list that
+   collapses them reads as one repair when it is two.
+
+The 252 `latent` rows are references under the bound whose excerpt is also not verbatim. Most are
+small and editorial by design (a 72-byte robots.txt, a 132-byte vendor page, a `"Terminal-Bench 4.0:
+66.4% | 55.8% | …"` column note) and will plausibly never approach 60,000 bytes, so that number is a
+watch list, not a backlog. The three worth pinning now are the ones already close to the bound:
+`mazur-elimination-game` (58,782), `posttrainbench::1.1` `scores.js` (55,990) and
+`long-horizon-terminal-bench::1.0` `script.js` (50,487).
+
+### Gates
+
+On the rebased tree: `node --test test/` **1,300 tests / 1,299 pass / 0 fail / 1 skip**, rc 0 ·
+`npx tsc --noEmit -p .` rc 0 (empty log) · `node scripts/build-dataset.mjs` rc 0, **871 / 676 / 96 /
+3,036**, the only content change the six rewritten excerpts as they appear in `benchmark_results`
+(`evidence[].excerpt` is API data; no UI renders it), plus `generated_at`/`collected_at`.
+`data/dataset.json` restored. Logs in `iter211-d193/`.
+
+### Ledger rows
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D193 | implemented | `2f5983b1`; `data/raw/benchmarks/registry.json`; `test/d193-protocol-excerpts.test.mjs`; `data/raw/benchmarks/daily-evidence/2026-09-24-d193/`; `iter211-d193/d193-test.log`, `scan-d193-retained.txt` (12/12 references verbatim) | All six entries repaired against the failing run's own captures; 5/5 tests. Implemented by claude-opus — needs a non-claude-opus sign-off and the first run in which one of these six boards changes and is **ingested** rather than retained. |
+| D193.2 | open | `iter211-d193/scan-v2.json`; `ops/ux-2026-09-12/bin/scan-protocol-excerpts.mjs` | 16 armed references across 13 entries, grouped by source above. The AA group is a review decision about Intelligence Index v4.3.2 composition and must not be repinned mechanically. |
+| D192 | open (22 of 23) | `fc7a9746` pushed | The Scale repair is now on `main`. The other 22 retentions from 2026-09-24 are untouched; the four `ugi*` and two `frontiercode*` among them are what D193 just fixed, so **6 of the 23 are addressed** and the remaining 15 (eqbench, arc-agi, vals-index, frontierswe, surge-gdp-pdf, vulcanbench, kernelbench, matharena-brokenarxiv, aa-benchmark-fields) are still open. |
+| D191 | in-progress | unchanged | The 2026-09-25T05:17Z run is still the test: `fetch-aa` consuming the amended approval and `refresh-benchmarks` finishing inside its budget. Nothing in this iteration touches that path. |
+| F-179, F-183, F-187, F-188 | open | unchanged | Not attempted; `app/jev-models/page.tsx` and `components/JevModelsV14.tsx` are in PR #7's and the v1.4.2 release cut's path. |
+
+**One-writer note.** The checkout was clean at start and only these four paths were touched
+(`data/raw/benchmarks/registry.json`, the new evidence directory, the new test, the new scanner).
+`811f0dd9` ("Temporary v1.4.2 preview images") landed on `origin/main` mid-iteration and was rebased
+onto, not reverted. Pushed at 01:3x UTC, well clear of the 05:17 run's lock.
