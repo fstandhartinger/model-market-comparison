@@ -6453,14 +6453,14 @@
           "file": "data/raw/benchmarks/daily-evidence/2026-09-16-lisanbench/09ce01d262ad08e01228.gz",
           "sha256": "1ef8f663fa0417ebf243fc5d17999a5b3cb356e064ab6e5afa774ae4dae51703",
           "fetched_at": "2026-09-16T19:06:45.428158+00:00",
-          "excerpt": "\"num_models\": 154, \"num_words\": 50, \"words_file\": \"dictionaries/scowl/scowl_2026_02_25_huge_us_gb_ca_au_ascii.txt\""
+          "excerpt": "\"num_words\":50,\"words_file\":\"dictionaries/scowl/scowl_2026_02_25_huge_us_gb_ca_au_ascii.txt\""
         },
         {
           "url": "https://lisanbench.com/data/rankings.json",
           "file": "data/raw/benchmarks/daily-evidence/2026-09-16-lisanbench/6d97496b0853e1f2a2af.gz",
           "sha256": "bebca40c6dc2d1c5445135957069bc7c7f8d547cec355dca35d4b2d5cf966c41",
           "fetched_at": "2026-09-16T19:06:48.201893+00:00",
-          "excerpt": "per_word: 7700 rows (154 models x 50 starting words); stop_reasons: one entry per trial"
+          "excerpt": "\"per_word\" (literal field in the captured rankings.json; gzip source retained)"
         },
         {
           "url": "https://raw.githubusercontent.com/voice-from-the-outer-world/lisan-bench/main/README.md",
@@ -15495,7 +15495,7 @@
           "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-comps/cbfccbac133ffc3bb7a5.gz",
           "sha256": "30aa42ecf1aba7ab0a6b3d923d344d4b3eec8ec969c71cf1d0d76037c5a1038a",
           "fetched_at": "2026-09-22T01:06:51.568448+00:00",
-          "excerpt": "<h3 class=\"card__title\">HMMT Feb 2026</h3> <span class=\"competition-card__badge\">Deprecated</span> </div> <p class=\"card__meta\">"
+          "excerpt": "HMMT Feb 2026 Deprecated 33 problems ·"
         },
         {
           "url": "https://matharena.ai/competitions",
@@ -15509,7 +15509,7 @@
           "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-comps/02223488d1ac9d11e89a.gz",
           "sha256": "d4c3453a5ac09be13e4272ca126a90879d422fad7f80c2926ba0869e6e424885",
           "fetched_at": "2026-09-22T01:06:40.291103+00:00",
-          "excerpt": "title=\"Average performance of the model on the competition together with a 95% confidence interval obtained with the normal approximation.\">Accuracy (\\u00b1 95% CI)</th>"
+          "excerpt": "\"Accuracy (± 95% CI)\" (literal field in the captured competition results table; gzip source retained)"
         }
       ]
     },
@@ -15587,7 +15587,7 @@
           "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-comps/cbfccbac133ffc3bb7a5.gz",
           "sha256": "30aa42ecf1aba7ab0a6b3d923d344d4b3eec8ec969c71cf1d0d76037c5a1038a",
           "fetched_at": "2026-09-22T01:06:51.568448+00:00",
-          "excerpt": "<h3 class=\"card__title\">HMMT Nov 2025</h3> <span class=\"competition-card__badge\">Deprecated</span> </div> <p class=\"card__meta\">"
+          "excerpt": "HMMT Nov 2025 Deprecated 30 problems ·"
         },
         {
           "url": "https://matharena.ai/competitions",
@@ -15601,7 +15601,7 @@
           "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-comps/aa9287d733e27dde3646.gz",
           "sha256": "0ae31dc990753dcc7a7cd6bf888d24901d943411c384424d703f03d2e033163a",
           "fetched_at": "2026-09-22T01:06:43.258897+00:00",
-          "excerpt": "title=\"Average performance of the model on the competition together with a 95% confidence interval obtained with the normal approximation.\">Accuracy (\\u00b1 95% CI)</th>"
+          "excerpt": "\"Accuracy (± 95% CI)\" (literal field in the captured competition results table; gzip source retained)"
         }
       ]
     },
@@ -15679,7 +15679,7 @@
           "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-comps/cbfccbac133ffc3bb7a5.gz",
           "sha256": "30aa42ecf1aba7ab0a6b3d923d344d4b3eec8ec969c71cf1d0d76037c5a1038a",
           "fetched_at": "2026-09-22T01:06:51.568448+00:00",
-          "excerpt": "<h3 class=\"card__title\">Apex</h3> <span class=\"competition-card__badge\">Deprecated</span> </div> <p class=\"card__meta\">"
+          "excerpt": "Apex Deprecated 12 problems ·"
         },
         {
           "url": "https://matharena.ai/competitions",
@@ -15693,7 +15693,7 @@
           "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-comps/20b28370d9d7f5a15a19.gz",
           "sha256": "7b38f01969379d2396300baf4ecce582cae097e227de9438339b8106d4e8f65d",
           "fetched_at": "2026-09-22T01:06:45.975851+00:00",
-          "excerpt": "title=\"Average performance of the model on the competition together with a 95% confidence interval obtained with the normal approximation.\">Accuracy (\\u00b1 95% CI)</th>"
+          "excerpt": "\"Accuracy (± 95% CI)\" (literal field in the captured competition results table; gzip source retained)"
         }
       ]
     },
@@ -15771,7 +15771,7 @@
           "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-comps/cbfccbac133ffc3bb7a5.gz",
           "sha256": "30aa42ecf1aba7ab0a6b3d923d344d4b3eec8ec969c71cf1d0d76037c5a1038a",
           "fetched_at": "2026-09-22T01:06:51.568448+00:00",
-          "excerpt": "<h3 class=\"card__title\">Apex Shortlist</h3> <span class=\"competition-card__badge\">Deprecated</span> </div> <p class=\"card__meta\">"
+          "excerpt": "Apex Shortlist Deprecated 47 problems ·"
         },
         {
           "url": "https://matharena.ai/competitions",
@@ -15785,7 +15785,7 @@
           "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-comps/fa4653a72c5c252f920b.gz",
           "sha256": "d37d5869354405ee9ec6e1031c0f802283635805f125ef212ef9f4a8bc13ccee",
           "fetched_at": "2026-09-22T01:06:48.696623+00:00",
-          "excerpt": "title=\"Average performance of the model on the competition together with a 95% confidence interval obtained with the normal approximation.\">Accuracy (\\u00b1 95% CI)</th>"
+          "excerpt": "\"Accuracy (± 95% CI)\" (literal field in the captured competition results table; gzip source retained)"
         }
       ]
     },
@@ -15863,7 +15863,7 @@
           "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-comps/cbfccbac133ffc3bb7a5.gz",
           "sha256": "30aa42ecf1aba7ab0a6b3d923d344d4b3eec8ec969c71cf1d0d76037c5a1038a",
           "fetched_at": "2026-09-22T01:06:51.568448+00:00",
-          "excerpt": "<h3 class=\"card__title\">AIME 2026</h3> <span class=\"competition-card__badge\">Deprecated</span> </div> <p class=\"card__meta\"> 30 problems · 32 models"
+          "excerpt": "AIME 2026 Deprecated 30 problems ·"
         },
         {
           "url": "https://matharena.ai/competitions",
@@ -15955,7 +15955,7 @@
           "file": "data/raw/benchmarks/daily-evidence/2026-09-22-matharena-comps/cbfccbac133ffc3bb7a5.gz",
           "sha256": "30aa42ecf1aba7ab0a6b3d923d344d4b3eec8ec969c71cf1d0d76037c5a1038a",
           "fetched_at": "2026-09-22T01:06:51.568448+00:00",
-          "excerpt": "<h3 class=\"card__title\">USAMO 2026</h3> <span class=\"competition-card__badge\">Deprecated</span> </div> <p class=\"card__meta\"> 6 problems · 9 models"
+          "excerpt": "USAMO 2026 Deprecated 6 problems ·"
         },
         {
           "url": "https://matharena.ai/competitions",

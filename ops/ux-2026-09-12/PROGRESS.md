@@ -10387,3 +10387,60 @@ changed because AA moved the index to v4.3.2.
 | ID | Status | Evidence | Notes |
 |---|---|---|---|
 | D193.3 | open | `iter211-d193/scan-v2.json`; `data/raw/benchmarks/registry.json` (`jevbench::v1.1` `scoring.metric`); the artifact's own `revision_note`/`revision_history` | `scoring.metric` states the 60:20:20 preset; the pinned v1.1.2 artifact's headline is 33:33:33. 0 published observations on either `jevbench*` row, so no value is affected. Needs a registry decision, not an excerpt edit. |
+
+### D193.2, first two groups repaired — 16 armed references down to 10
+
+Same iteration, after the D193 push. Two of the six groups turned out to need no source judgement at
+all, so they are done rather than filed. Captures retained with receipts at
+`data/raw/benchmarks/daily-evidence/2026-09-25-d193-2/` (9 files, 253 KB gz);
+`test/d193-2-protocol-excerpts.test.mjs`, 6 tests.
+
+**Each was checked for what it was hiding first**, per D193.3's lesson. Neither was hiding anything —
+and establishing that took two corrections of my own reading, both recorded here because the second
+one nearly became a false report:
+
+- **`lisanbench::0.2.0`.** `core.json` was quoted with a space after every colon; the file is compact
+  JSON with none, so the excerpt was hand-typed and could never match. The values it names are
+  current, and they are real configuration, so the entry now pins them verbatim:
+  `"num_words":50,"words_file":"dictionaries/scowl/scowl_2026_02_25_huge_us_gb_ca_au_ascii.txt"`.
+  **`num_models` is deliberately left out** — it rises whenever LisanBench adds a model, and a guard
+  that fires on a new model is D193 again. `rankings.json` (1.39 MB, `per_word` rows and
+  `stop_reasons`, no prose whatsoever) becomes a `literal field` locator. Nothing is lost: the plan's
+  `parser.require` already pins `num_words`, `words_file`, a `starting_words_sha256` and three
+  README passages verbatim, and the page and README are both under the bound and pass today.
+- **The four `matharena-*` competition tables.** *I first read this as MathArena having dropped the
+  95% CI from its accuracy column, and that was wrong.* Two things had to be untangled: the payload
+  is a JSON document that **escapes its embedded HTML** (`\"`) and escapes `±` as `±`, and the
+  guard compares against the **extracted** text, not the capture. So the excerpt — a raw HTML
+  attribute fragment with plain quotes — failed for two mechanical reasons at once. Checked against
+  all four captures byte for byte: `Accuracy (± 95% CI)` and its
+  *"together with a 95% confidence interval obtained with the normal approximation."* tooltip are
+  **present and unchanged**. The tables therefore become `literal field` locators naming that column,
+  and the column identity stays enforced where it already was — `require_header` in the plan.
+- **Six `matharena.ai/competitions` badge references**, a bonus from the same page: their excerpts
+  were raw HTML too (`<h3 class="card__title">Apex</h3> <span class="competition-card__badge">…`).
+  They now quote the page's own text — `Apex Deprecated 12 problems ·` — which binds the board, its
+  **Deprecated** status (load-bearing: a deprecated board is `retained`, and
+  `test/matharena-comps.test.mjs` asserts the word) and its problem count, **and stops before the
+  model count**, which the page states next and which rises with every new evaluation. All six pins
+  agree with their own `parser.require_problems` (12 / 47 / 33 / 30 / 30 / 6) — the test asserts that
+  agreement, so a pin cannot drift from the plan.
+
+Re-scanned against the 19:20 captures (`scan-v3-after-lisanbench-matharena.json`):
+**413 protocol references · 123 verbatim · 10 failing · 4 retired · 246 latent** — down from 16
+failing. The 10 that remain, with why each is still filed rather than fixed:
+
+| group | refs | why not here |
+|---|---|---|
+| `artificialanalysis.ai/methodology/intelligence-benchmarking` | 3 | the Intelligence Index composition table changed for real (v4.3 → v4.3.2). A Composite-touching registry decision. |
+| `jevbench::v1`, `jevbench::v1.1` | 2 | blocked on D193.3 — the registry states a metric the pinned artifact no longer publishes. |
+| `researchclawbench::40-tasks` | 2 | both excerpts contain literal `…` ellipses, so they are unfixable as written; needs two third-party files read. |
+| `aider-polyglot`, `mls-bench-lite`, `programbench` | 3 | one each, not yet examined. |
+
+Gates after this second change: `node --test test/` **1,306 tests / 1,305 pass / 0 fail / 1 skip**,
+rc 0 · `npx tsc --noEmit -p .` rc 0 · `node scripts/build-dataset.mjs` rc 0, **871 / 676 / 96 /
+3,036**; `data/dataset.json` restored.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D193.2 | in-progress (6 of 16 references repaired) | `iter211-d193/scan-v3-after-lisanbench-matharena.json`; `test/d193-2-protocol-excerpts.test.mjs`; `data/raw/benchmarks/daily-evidence/2026-09-25-d193-2/` | LisanBench and MathArena done, 12 excerpts rewritten across 7 entries, 6/6 tests. 10 references remain, grouped above. Implemented by claude-opus; needs a non-claude-opus sign-off. |

@@ -1,0 +1,92 @@
+[
+  {
+    "url": "https://lisanbench.com/",
+    "retrieved_at": "2026-09-24T19:34:08.635278+00:00",
+    "method": "GET",
+    "status": 200,
+    "file": "data/raw/benchmarks/daily-evidence/2026-09-25-d193-2/5f63e2c817c511c531a257147f5afcf8f9e5651254e47d54fe782d28589f5bef.gz",
+    "sha256": "5f63e2c817c511c531a257147f5afcf8f9e5651254e47d54fe782d28589f5bef",
+    "bytes": 29371,
+    "note": "D193.2: the LisanBench page from the 2026-09-24T19:20Z run; 11,406 bytes of extracted text, under the review bound and passed in full. Its trials sentence is one of the entry's two real protocol passages."
+  },
+  {
+    "url": "https://lisanbench.com/data/core.json",
+    "retrieved_at": "2026-09-24T19:34:11.428070+00:00",
+    "method": "GET",
+    "status": 200,
+    "file": "data/raw/benchmarks/daily-evidence/2026-09-25-d193-2/09ce01d262ad08e012282fc2286890f489691a0facc1afd3cb4ef2acd801b339.gz",
+    "sha256": "09ce01d262ad08e012282fc2286890f489691a0facc1afd3cb4ef2acd801b339",
+    "bytes": 100474,
+    "note": "D193.2: core.json from the same run; 100,475 bytes of extracted text, over the bound. Compact JSON with no space after any colon, which is why the hand-typed excerpt could never match. Its metadata block states the 50-word set and the exact dictionary file, so the entry now pins that, minus the volatile num_models."
+  },
+  {
+    "url": "https://lisanbench.com/data/rankings.json",
+    "retrieved_at": "2026-09-24T19:34:14.032986+00:00",
+    "method": "GET",
+    "status": 200,
+    "file": "data/raw/benchmarks/daily-evidence/2026-09-25-d193-2/6d97496b0853e1f2a2af91076243759624a09080f7b6e75ad0106471e4b18ce2.gz",
+    "sha256": "6d97496b0853e1f2a2af91076243759624a09080f7b6e75ad0106471e4b18ce2",
+    "bytes": 1386093,
+    "note": "D193.2: rankings.json from the same run; 1,386,094 bytes of extracted text, over the bound, and pure results (per_word rows and stop_reasons). No methodology prose exists in it to pin."
+  },
+  {
+    "url": "https://matharena.ai/competition_tables/apex--apex_2025",
+    "retrieved_at": "2026-09-24T19:37:44.084618+00:00",
+    "method": "GET",
+    "status": 200,
+    "file": "data/raw/benchmarks/daily-evidence/2026-09-25-d193-2/20b28370d9d7f5a15a19fc9e4226c9857cdb07bc42b32ccec508e687b7b9f3fc.gz",
+    "sha256": "20b28370d9d7f5a15a19fc9e4226c9857cdb07bc42b32ccec508e687b7b9f3fc",
+    "bytes": 790586,
+    "note": "D193.2: a MathArena competition results table from the same run, over the review bound. The excerpt pinned on it was a raw HTML attribute fragment, which cannot appear in the extracted text the reviewer is handed, so it could never match."
+  },
+  {
+    "url": "https://matharena.ai/competition_tables/apex--shortlist_2025",
+    "retrieved_at": "2026-09-24T19:37:46.797452+00:00",
+    "method": "GET",
+    "status": 200,
+    "file": "data/raw/benchmarks/daily-evidence/2026-09-25-d193-2/164a1630d5ff46d7fc8583b50b20d19352766bf640d46be1d9c3db503accd644.gz",
+    "sha256": "164a1630d5ff46d7fc8583b50b20d19352766bf640d46be1d9c3db503accd644",
+    "bytes": 2095004,
+    "note": "D193.2: a MathArena competition results table from the same run, over the review bound. The excerpt pinned on it was a raw HTML attribute fragment, which cannot appear in the extracted text the reviewer is handed, so it could never match."
+  },
+  {
+    "url": "https://matharena.ai/competition_tables/hmmt--hmmt_feb_2026",
+    "retrieved_at": "2026-09-24T19:37:41.050123+00:00",
+    "method": "GET",
+    "status": 200,
+    "file": "data/raw/benchmarks/daily-evidence/2026-09-25-d193-2/99cf0776b2d6840fcaeed9740f87f3456d93af52f6ad596119f54f6f1fffaccb.gz",
+    "sha256": "99cf0776b2d6840fcaeed9740f87f3456d93af52f6ad596119f54f6f1fffaccb",
+    "bytes": 1225588,
+    "note": "D193.2: a MathArena competition results table from the same run, over the review bound. The excerpt pinned on it was a raw HTML attribute fragment, which cannot appear in the extracted text the reviewer is handed, so it could never match."
+  },
+  {
+    "url": "https://matharena.ai/competition_tables/hmmt--hmmt_nov_2025",
+    "retrieved_at": "2026-09-24T19:37:41.380401+00:00",
+    "method": "GET",
+    "status": 200,
+    "file": "data/raw/benchmarks/daily-evidence/2026-09-25-d193-2/aa9287d733e27dde3646179a18070c07f558fb51926a8fe90cdf38985d6fce6d.gz",
+    "sha256": "aa9287d733e27dde3646179a18070c07f558fb51926a8fe90cdf38985d6fce6d",
+    "bytes": 810616,
+    "note": "D193.2: a MathArena competition results table from the same run, over the review bound. The excerpt pinned on it was a raw HTML attribute fragment, which cannot appear in the extracted text the reviewer is handed, so it could never match."
+  },
+  {
+    "url": "https://matharena.ai/competitions",
+    "retrieved_at": "2026-09-24T19:34:36.985842+00:00",
+    "method": "GET",
+    "status": 200,
+    "file": "data/raw/benchmarks/daily-evidence/2026-09-25-d193-2/bc6ca644d8d645216461d7a48bd890ed08232e3480935d025112951c632909fc.gz",
+    "sha256": "bc6ca644d8d645216461d7a48bd890ed08232e3480935d025112951c632909fc",
+    "bytes": 69958,
+    "note": "D193.2: the MathArena competitions index from the same run; 33,077 bytes, under the bound. This is where each board's prose and its Deprecated badge live."
+  },
+  {
+    "url": "https://raw.githubusercontent.com/voice-from-the-outer-world/lisan-bench/main/README.md",
+    "retrieved_at": "2026-09-24T19:34:16.748500+00:00",
+    "method": "GET",
+    "status": 200,
+    "file": "data/raw/benchmarks/daily-evidence/2026-09-25-d193-2/1ee21c293a38f88cb7c2135d2205d97ee6f6620a1982be1320d8a4c7fe2a50b0.gz",
+    "sha256": "1ee21c293a38f88cb7c2135d2205d97ee6f6620a1982be1320d8a4c7fe2a50b0",
+    "bytes": 22349,
+    "note": "D193.2: the LisanBench README from the same run; 22,350 bytes, under the bound. Carries the three methodology passages the collection plan already requires verbatim."
+  }
+]
