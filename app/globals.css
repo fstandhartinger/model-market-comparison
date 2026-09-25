@@ -40,6 +40,27 @@ html, body { background: rgb(var(--ink)); color: var(--text); font-family: -appl
    its width on every Simple/Guided/Advanced switch. Overlay scrollbars (phones, macOS default) reserve nothing. */
 html { -webkit-text-size-adjust: 100%; scrollbar-gutter: stable; }
 body { margin: 0; }
+body.bh-fastlane-visible { padding-bottom: var(--bh-fastlane-height, 0px); }
+.bh-fastlane-banner { position: fixed; z-index: 70; bottom: 0; left: 0; right: 0; color: #fff; background: linear-gradient(105deg, #0647c9 0%, #2547c3 55%, #5430a4 100%); border-top: 3px solid #5ae6ff; box-shadow: 0 -10px 28px rgb(4 17 47 / .28); }
+.bh-fastlane-inner { position: relative; display: flex; align-items: center; gap: 20px; max-width: 1400px; margin: auto; padding: 13px 60px 13px 20px; }
+.bh-fastlane-copy { flex: 1 1 30rem; margin: 0; font-size: 14px; line-height: 1.45; }
+.bh-fastlane-copy strong { display: block; font-size: 15px; }
+.bh-fastlane-actions { display: flex; flex: 0 0 auto; flex-wrap: wrap; gap: 9px; }
+.bh-fastlane-actions :is(button, a) { display: inline-flex; min-height: 44px; align-items: center; justify-content: center; border-radius: 8px; padding: 8px 13px; font-size: 14px; font-weight: 700; text-align: center; text-decoration: none; }
+.bh-fastlane-primary { border: 2px solid #fff; background: #fff; color: #123580; cursor: pointer; }
+.bh-fastlane-primary:hover { background: #e8f7ff; }
+.bh-fastlane-secondary { border: 2px solid #fff; color: #fff; }
+.bh-fastlane-secondary:hover { background: rgb(255 255 255 / .16); }
+.bh-fastlane-close { position: absolute; top: 50%; right: 9px; transform: translateY(-50%); width: 44px; min-height: 44px; border: 0; background: none; color: #fff; font-size: 28px; cursor: pointer; }
+.bh-fastlane-banner :focus-visible { outline-color: #fff; }
+@media (max-width: 760px) {
+  .bh-fastlane-inner { display: block; padding: 10px 50px 11px 14px; }
+  .bh-fastlane-copy { font-size: 13px; line-height: 1.32; }
+  .bh-fastlane-copy strong { display: inline; font-size: 13px; margin-right: .3em; }
+  .bh-fastlane-actions { display: flex; margin-top: 8px; gap: 7px; }
+  .bh-fastlane-actions :is(button, a) { flex: 1 1 auto; min-height: 44px; padding: 5px 8px; font-size: 12px; }
+  .bh-fastlane-close { top: 10px; right: 3px; transform: none; }
+}
 main :is(p, li) a { text-decoration: underline; }
 a { color: inherit; text-underline-offset: 3px; }
 button, input, select, textarea { max-width: 100%; font: inherit; }

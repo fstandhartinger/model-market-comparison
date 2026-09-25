@@ -108,7 +108,7 @@ test('CR-67.4: the operator report returns aggregates, folds rows below 3 and ha
   assert.deepEqual(mixed.top_pages.map((r) => r.path), ['(unknown route)', '/', '(other)']);
 });
 
-test('CR-67.4/67.6: the site ships no client analytics, so no consent banner is needed', () => {
+test('CR-67.4/67.6: aggregate visitor counts require no sitewide analytics script', () => {
   const layout = readFileSync(new URL('../app/layout.tsx', import.meta.url), 'utf8');
   assert.doesNotMatch(layout, /plausible|umami|matomo|googletagmanager|gtag|analytics\.js|posthog|clarity|fathom|hotjar/i);
   const counter = readFileSync(new URL('../lib/visit-counter.ts', import.meta.url), 'utf8');
