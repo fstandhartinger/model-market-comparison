@@ -63,8 +63,9 @@ case "$MODE" in
       esac
     done ;;
   *)
-    if   [ "$claude_ok" = 1 ]; then echo claude-opus
-    elif [ "$codex_ok" = 1 ];  then echo codex-luna
+    # Florian 25.09.2026: work goes to Codex GPT-6 Sol xhigh first to spare the Claude session limit.
+    if   [ "$codex_ok" = 1 ];  then echo codex-luna
+    elif [ "$claude_ok" = 1 ]; then echo claude-opus
     elif [ "$kimi_ok" = 1 ];   then echo opencode-kimi
     else echo opencode-nex; fi ;;
 esac
