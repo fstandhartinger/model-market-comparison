@@ -68,19 +68,18 @@ test('source labels disambiguate benchmark IDs from upstream row IDs and point t
   assert.match(finqa?.license ?? '', /MIT annotations; CDLA-Permissive-1\.0 table data/);
 });
 
-test('preview pages retain noindex metadata and the unlisted route renders the same examples', () => {
+test('legacy preview stays noindex and the unlisted route redirects to the public page', () => {
   const preview = readFileSync(path.join(root, 'app/jev-models/multimodal-preview/page.tsx'), 'utf8');
   const wip = readFileSync(path.join(root, 'app/wip-oiifi41ouv1f/image-jev/page.tsx'), 'utf8');
   assert.match(preview, /robots:\s*\{\s*index:\s*false/);
   assert.match(preview, /<ImageJevExamples\s*\/>/);
-  assert.match(wip, /robots:\s*\{\s*index:\s*false/);
-  assert.match(wip, /MultimodalPreviewPage/);
+  assert.match(wip, /permanentRedirect\('\/image-jev-bench'\)/);
 });
 
 test('the preview presents a bar ranking before the detail table and keeps identity visible on narrow screens', () => {
   const preview = readFileSync(path.join(root, 'app/jev-models/multimodal-preview/page.tsx'), 'utf8');
   assert.ok(preview.indexOf('<ScoreBars systems={a.ranking} track="all" />') < preview.indexOf('<RankingTable systems={a.ranking} track="all" all />'));
-  assert.match(preview, /aria-label=\{`\$\{track === 'all' \? 'Whole-candidate'/);
+  assert.match(preview, /aria-label=\{`\$\{track === 'all' \? 'Full benchmark'/);
   assert.match(preview, /sticky left-0 z-\[1\].*shadow-\[inset_-1px_0_0_rgb\(var\(--line\)\)\]/);
   assert.match(preview, /sticky left-14 z-\[1\].*System/);
   assert.doesNotMatch(preview, /bg-\[rgb\(var\(--surface\)\)\]/, 'hex theme variables must not be wrapped in rgb()');

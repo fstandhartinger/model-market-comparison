@@ -37,10 +37,13 @@ export function ImageJevExamples() {
               {example.sourceUrl
                 ? <>Source: <a href={example.sourceUrl} target="_blank" rel="noopener noreferrer" className="text-accent underline">{example.sourceName}</a> · {example.license} · {example.sourceRevision?.slice(0, 12)} · public item {example.sourceItemId}</>
                 : <>Source: {example.sourceName} · public item {example.sourceItemId}</>}
+              {example.licenseLinks?.length ? <> · Licence text: {example.licenseLinks.map((link, index) => <span key={link.url}>{index > 0 && ', '}<a href={link.url} target="_blank" rel="noopener noreferrer" className="text-accent underline">{link.label}</a></span>)}</> : null}
+              {example.changeNote && <span className="mt-1 block" data-bh-mm-example-change>{example.changeNote}</span>}
             </p>
           </div>
         </article>;
       })}
     </div>
+    <p className="bh-muted mt-4 max-w-5xl text-xs" data-bh-mm-example-credits>Screenshot images are adapted from the credited datasets (labelled markers added); the FinQA table is re-rendered by ImageJevBench. Licences: <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="noopener noreferrer" className="text-accent underline">Apache-2.0</a> (ScreenSpot), <a href="https://opensource.org/license/mit" target="_blank" rel="noopener noreferrer" className="text-accent underline">MIT</a> (ScreenSpot-Pro, Geometry3K, FinQA annotations), <a href="https://cdla.dev/permissive-1-0/" target="_blank" rel="noopener noreferrer" className="text-accent underline">CDLA-Permissive-1.0</a> (FinTabNet table data). App and website content shown in screenshots belongs to its respective owners. No Mind2Web or Android-in-the-Wild image is shown.</p>
   </section>;
 }
