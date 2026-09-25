@@ -11656,3 +11656,27 @@ delivering — this entry is the 13th pending.
 rounds would have been the wrong call: the gauntlet is what the unattended daily needs that money for,
 and a repair I could not finish would have left the arm no better off and tomorrow's run unable to
 review anything. The arms are documented above for the next iteration instead.
+
+## Iteration 219 (codex-luna, independent production proof and D200)
+
+D200 was the highest-value open data decision that could be completed without spending the
+remaining OpenRouter credit on a replay. The captured UGI CSV publishes numeric values and the
+four metric names, but it does not publish a unit or bounds. I chose the source-neutral registry
+unit `score`, retained `[null, null]` for the range, and changed the four metric labels to the
+exact source labels: `NatInt 💡`, `W/10 👍`, `Writing ✍️` and `UGI 🏆`. This is a display label,
+not a claim that the values are points, percentages or 0–100 scores. All 5,195 UGI rows in both
+raw score exports were migrated from `points` to `score`; no values or provenance fields changed.
+
+Evidence: `/opt/benchmarkheaven/state/ux-evidence/iter219-codex-d200/verification.md`.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D200 | implemented (production proof pending) | `1a605d22`; `test/d200-ugi-notes-describe-their-own-board.test.mjs` 2/2; `iter219-codex-d200/verification.md` | Codex Luna decision and implementation. All three hosts serve the commit, but the next unattended daily run must exercise the new unit contract before promotion. |
+| D191 | **verified** | `iter219-codex-d200/production-signoffs.md`; daily run `2026-09-25T08-37-53-519Z-389468` | Published `5dbcd095`; gate PASS, live check OK, and pipeline streak back to zero. Independent Codex check. |
+| D197 | **verified** | `iter219-codex-d200/production-signoffs.md`; same daily run | `refresh-benchmarks` completed successfully and the run published. Independent Codex check of Claude's implementation. |
+| D198 | **verified** | `iter219-codex-d200/production-signoffs.md`; same daily run | Exact packet-round mismatch count was 0. Independent Codex check of Claude's implementation. |
+| D199 | **verified** | `iter219-codex-d200/production-signoffs.md`; same daily run | 194 worker receipts, 0 hard-excluded entries. Independent Codex check of Claude's implementation. |
+
+D201, D202 and D204 remain production-proof pending: the latest daily run was based on the
+parent before those changes. The visual gate remains blocked by the shared Chrome/CDP lock held
+by the X watcher, so this iteration did not launch another browser or claim a visual sign-off.
