@@ -10342,3 +10342,48 @@ On the rebased tree: `node --test test/` **1,300 tests / 1,299 pass / 0 fail / 1
 (`data/raw/benchmarks/registry.json`, the new evidence directory, the new test, the new scanner).
 `811f0dd9` ("Temporary v1.4.2 preview images") landed on `origin/main` mid-iteration and was rebased
 onto, not reverted. Pushed at 01:3x UTC, well clear of the 05:17 run's lock.
+
+### D193.3 (new) — a broken excerpt was hiding a real registry/source disagreement
+
+Found while checking whether the two `jevbench*` entries in D193.2's list were a safe mechanical
+repin (they are our own artifacts, so they looked like the lowest-risk group). They are not, and the
+reason is the point of this entry.
+
+`jevbench::v1.1` pins `…/jevbench/v1.1.2/results/v1.1/jevbench-v1.1-results.json` and its excerpt
+claims `"weights": {"capability": 0.6, "cost": 0.2, "speed": 0.2}`. The tag-pinned artifact that URL
+serves says:
+
+```
+"weights": {"capability": 0.3333333333333333, "cost": 0.3333333333333333, "speed": 0.3333333333333333}
+"revision_note": "19 Sep 2026 (v1.1.2): the Main Score is now Balanced 33:33:33 (Capability, Speed
+and Cost weighted equally); the old 60:20:20 default is kept as the preset 'Emphasis on Accuracy'."
+```
+
+The registry's `scoring.metric` for that entry reads *"JevBench Main Score = 0.6 x Capability + 0.2 x
+Speed + 0.2 x Cost"* — which since 2026-09-19 describes the **preset**, not the headline the pinned
+revision publishes. 60:20:20 survives in the artifact only as one of six `sensitivity_weightings`.
+
+So the registry row and the source it pins disagree about the metric. That is precisely what the
+protocol guard exists to refuse — *"a changed configuration cannot silently reuse the existing
+identity"* — and it would have refused, except the excerpt is a hand-assembled digest of fields from
+three different places in a sorted-key JSON document (`benchmark`, then `protocol`, then
+`n_decisions_per_system`, which are not adjacent), so it fails for the wrong reason every time and the
+real signal never surfaced. **A guard that always fails reports nothing.**
+
+Scope, stated narrowly because it is smaller than it first looks: `data/raw/benchmarks/scores.json`
+carries **0 observations** for `jevbench::v1.1` and **0** for `jevbench::v1`. Both are superseded by
+the v1.4.x board, whose values reach the dataset through `data/raw/benchmarks/jevbench/`, not through
+these rows. So no published number is wrong today — this is a stale registry *description* of two
+retired identities, and no value moved. It is filed rather than fixed because correcting a published
+entry's `scoring.metric` is a registry act (which revision the row is for, and whether a re-weighted
+headline is the same identity at all), not an excerpt edit, and because `jevbench::v1.1`'s
+`version_status` is still `published`.
+
+The transferable lesson, and the reason D193.2 should not be worked mechanically: **check what each
+broken excerpt was hiding before replacing it.** Three of D193.2's sixteen are already known to be in
+this category — the AA trio's failing reference is the Intelligence Index composition table, which
+changed because AA moved the index to v4.3.2.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D193.3 | open | `iter211-d193/scan-v2.json`; `data/raw/benchmarks/registry.json` (`jevbench::v1.1` `scoring.metric`); the artifact's own `revision_note`/`revision_history` | `scoring.metric` states the 60:20:20 preset; the pinned v1.1.2 artifact's headline is 33:33:33. 0 published observations on either `jevbench*` row, so no value is affected. Needs a registry decision, not an excerpt edit. |
