@@ -1,4 +1,5 @@
 export type PublicImageJevOption = { label: string; text: string };
+export type PublicImageJevLicenseLink = { label: string; url: string };
 export type PublicImageJevExample = {
   key: string;
   split: 'public';
@@ -17,6 +18,8 @@ export type PublicImageJevExample = {
   license: string;
   sourceRevision: string | null;
   sourceRow: string;
+  licenseLinks?: PublicImageJevLicenseLink[];
+  changeNote?: string;
 };
 
 export declare const PUBLIC_IMAGE_JEV_EXAMPLES: PublicImageJevExample[];

@@ -1,54 +1,88 @@
 {
  "benchmark": "Image JevBench v0.1 candidate",
- "revision": "v0.1-preview-split-deviation-pending-disposition",
+ "revision": "v0.1-clean-split-20260925",
  "status": "preview",
- "built_utc": "2026-09-24",
+ "built_utc": "2026-09-25",
  "sealed_item_details_included": false,
  "n_systems": 12,
- "method_sha256": "ff61029b8589399de4cec8859643d66678377c50cdeac29d7c3905990d463b9d",
- "split_sha256": "5dd744aa7207eff6c3e1ccac62d27c43e319b76083b97bfcd9538c25a4e0c8dd",
+ "method_sha256": "e7eaa2acffb7fd9655480311b96feafd528f112452fcebb170e48ceeacd555a3",
+ "split_sha256": "4cb721cd36c4fbe4320ec1d5420f56bedd82e060c2c634b3fe7c420353d51224",
  "split": {
-  "items_total": 444,
+  "items_total": 684,
   "items_public": 228,
-  "items_sealed": 216,
-  "public_percent": 51.35,
-  "sealed_percent": 48.65,
+  "items_sealed": 456,
+  "items_retired": 93,
+  "public_percent": 33.33,
+  "sealed_percent": 66.67,
   "previous_split": {
-   "public": 265,
-   "sealed": 179
+   "public": 228,
+   "sealed": 216
   },
-  "licensed_core_total": 294,
+  "frozen_utc": "2026-09-25T07:33:55.192882+00:00",
+  "kept_sealed": 123,
+  "fresh_sealed": 333,
+  "core_total": 500,
+  "core_public": 139,
+  "core_sealed": 361,
+  "licensed_core_total": 201,
   "licensed_core_public": 139,
-  "licensed_core_sealed": 155,
-  "licensed_core_target_shortfall": 6,
+  "licensed_core_sealed": 62,
+  "pool_core_sealed": 299,
   "family_counts": {
    "Android-in-the-Wild (AITW_Single mirror)": {
     "public": 0,
-    "sealed": 28
+    "sealed": 11,
+    "retired": 17
    },
    "Everyday photo": {
     "public": 89,
-    "sealed": 61
+    "sealed": 95,
+    "retired": 0
    },
    "FinQA": {
     "public": 20,
-    "sealed": 0
+    "sealed": 0,
+    "retired": 0
    },
    "Geometry3K": {
     "public": 19,
-    "sealed": 0
+    "sealed": 0,
+    "retired": 0
    },
    "Multimodal-Mind2Web": {
     "public": 79,
-    "sealed": 0
+    "sealed": 0,
+    "retired": 0
+   },
+   "Pool: charts": {
+    "public": 0,
+    "sealed": 79,
+    "retired": 0
+   },
+   "Pool: documents": {
+    "public": 0,
+    "sealed": 102,
+    "retired": 0
+   },
+   "Pool: inventory": {
+    "public": 0,
+    "sealed": 61,
+    "retired": 0
+   },
+   "Pool: safety inspection": {
+    "public": 0,
+    "sealed": 57,
+    "retired": 0
    },
    "ScreenSpot": {
     "public": 20,
-    "sealed": 74
+    "sealed": 29,
+    "retired": 45
    },
    "ScreenSpot-Pro": {
     "public": 1,
-    "sealed": 53
+    "sealed": 22,
+    "retired": 31
    }
   },
   "public_reason_counts": {
@@ -58,43 +92,41 @@
    "shown_on_wip_page_and_status_video": 8,
    "image_in_public_repo": 1
   },
-  "moved_sealed_to_public_exposed": 26,
-  "moved_public_to_sealed_unexposed": 93,
-  "everyday_photo_total": 150,
+  "everyday_photo_total": 184,
   "everyday_photo_public": 89,
-  "everyday_photo_sealed": 61,
+  "everyday_photo_sealed": 95,
+  "everyday_photo_sealed_fresh": 34,
   "everyday_photo_synthetic": true,
   "everyday_photo_situations": 17,
-  "synthetic_total": 150,
-  "synthetic_share_percent": 33.78378378378378,
-  "public_tokens_sha256": "c3747596dabab64329b4d8e1565598c53de5f991043b557d8d9b3d12d43d42b4",
-  "sealed_tokens_sha256": "51f09513ac36a6443cd76f6437c2462a0511b261a0176698620c1aa69fdd5f39",
+  "synthetic_total": 483,
+  "synthetic_share_percent": 70.6140350877193,
   "disposition": {
-   "status": "deviation_pending_waiver_or_new_source_round",
+   "status": "compliant",
    "approved_target": "approximately one third public and two thirds sealed",
-   "current_split": "228 public / 216 sealed (51.4% / 48.6%); this does not meet the approved target",
-   "source_pool": "All 444 frozen items are assigned; all 228 public items were already exposed; no unused unseen items remain.",
-   "path_to_target": "Keeping 228 exposed items public would require about 456 sealed items total, or roughly 240 newly sourced and reviewed unseen items (about 684 total).",
-   "release_gate": "Florian must explicitly waive the deviation or authorize a separate source, split review and remeasurement round before release freeze or publication."
+   "current_split": "228 public / 456 sealed (33.3% / 66.7%); meets the approved target",
+   "retired": "93 items (ScreenSpot 45, ScreenSpot-Pro 31, Android-in-the-Wild 17) were moved from public to sealed on 24 Sep while their inputs and every system's predictions sat in a non-sealed job folder. They are retired: not scored and not relabelled.",
+   "fresh_items": "333 fresh sealed items were drawn from our private synthetic rotation pool (stratified by family and difficulty, seeded draw); all 12 systems were run on them with the same code, pinned revisions, prompts and settings as their original v0.1 run.",
+   "frozen_before_results": "Split counts and hashes were frozen and posted before any system saw a fresh item."
   }
  },
  "method": {
-  "split": "An item is public if it was exposed anywhere (Mind2Web-derived, shown in videos or on this page, or present in the public site repository since the 21 Sep preview); every never-exposed item is sealed.",
+  "split": "An item is public if it was exposed anywhere (Mind2Web-derived, shown in videos or on this page, or present in the public site repository since the 21 Sep preview). Sealed items are the never-exposed v0.1 items plus 333 fresh items from our private synthetic rotation pool. 93 items whose inputs and predictions were stored outside the sealed store are retired.",
   "intelligence": "Chance-corrected accuracy per part, weighted 35% public / 65% sealed.",
   "overfit_penalty": "Matched-family public-minus-sealed accuracy gap (ScreenSpot and Everyday photo, inverse-variance weighted). Above 15 points, Intelligence is multiplied by 1 - (gap - 15)/100. Same rule for every system.",
   "calibration": "10-bin top-label ECE scaled by valid probability coverage, 35% public / 65% sealed; label-only outputs receive zero calibration.",
-  "speed": "p50 and p95 whole-call latency; local latency uses the v1.4 2× plus 0.15-second adjustment.",
+  "speed": "p50 and p95 whole-call latency; local latency uses the v1.4 2× plus 0.15-second adjustment. For self-hosted systems the original run's timings are combined with the fresh-item run on the same GPU type.",
   "cost": "Hosted cost uses returned usage receipts: OpenRouter receipt costs for four endpoints and the saved Autoloops per-request Gemma 4 31B token usage priced at published rates. Missing receipts are not zero-filled; the cost axis is scaled by receipt coverage. Local cost uses measured GPU seconds at the recorded per-system GPU-hour rate.",
   "composite": "Equal-weight harmonic mean of Intelligence, Calibration, Speed, and Cost, followed by the v1.4 intelligence, speed, and cost gates below 50.",
-  "split_disposition": "The frozen 228/216 split deviates from the approved approximately one-third/two-thirds target. This preview retains it without claiming compliance; release freeze and publication require Florian's explicit waiver or a separately authorized source, split review and remeasurement round."
+  "difficulty_caveat": "The 333 fresh sealed items are our own synthetic images and renders. They are easier for frontier API models than the older real-source items, so sealed accuracy is higher than on the earlier split for most hosted systems."
  },
  "exposure": {
-  "hosted": "Four OpenRouter systems (GPT-6 Luna low, GPT-5.6 Luna, Gemini 3.1 Flash Lite and Gemini 3.8 Flash) received sealed images and questions through the requested no-retention route with provider fallback disabled. Gemma 4 31B used the Autoloops endpoint and its completed saved result; no provider no-retention claim is made for that endpoint. All five hosted rows carry the API flag.",
+  "hosted": "Four OpenRouter systems (GPT-6 Luna low, GPT-5.6 Luna, Gemini 3.1 Flash Lite and Gemini 3.8 Flash) received sealed images and questions through the requested no-retention route with provider fallback disabled, for the original items and the fresh items alike. Gemma 4 31B used the Autoloops endpoint; no provider no-retention claim is made for that endpoint. All five hosted rows carry the API flag.",
   "label_checkers": "GPT-6 Luna and Gemini 3.8 Flash saw 100 public promo-photo candidates and 68 new sealed-photo candidates in stateless single-turn label checks, including candidates later dropped. No gold labels were shown; human gold-blind review decided inclusion.",
-  "djev_spark": "djev-spark saw the 100 public promo photos in the earlier inference-only video run, with no training. Its score on the 61 new sealed photo variants is the independent measure.",
+  "djev_spark": "djev-spark saw the 100 public promo photos in the earlier inference-only video run, with no training. Its score on the 95 sealed photo items is the independent measure.",
   "jev_omni": "This checkpoint was measured on a separate frozen JevBench v1.4 text set before this run. It received no ImageJevBench task input before this evaluation.",
   "bonsai": "Bonsai-2-27B v2 (PQ2_0 weights, Q8_0 MMProj) was measured offline on 24 Sep; the clean PNG-normalized rerun is scored.",
-  "gemma": "Kushal Patil's Gemma 4 31B IT (Autoloops) public and sealed result files were completed in the Autoloops measurement job and reused here without rerunning. Its returned per-request token usage was costed at the published Gemma 4 31B rates."
+  "gemma": "Kushal Patil's Gemma 4 31B IT (Autoloops): results on the original items are reused from the completed Autoloops measurement; the 333 fresh sealed items were run on 25 Sep with the original Autoloops runner. Returned per-request token usage is costed at the published Gemma 4 31B rates.",
+  "fresh_pool": "The fresh pool items were authored with Claude and reviewed by OpenAI Codex as a blind critic, and the pool photos were generated with an OpenAI image model. This is disclosed for the two OpenAI rows. Self-hosted systems ran the fresh items on one rented GPU pod in offline containers with read-only inputs."
  },
  "weights": {
   "public": 0.35,
@@ -105,423 +137,13 @@
  "ranking": [
   {
    "rank": 1,
-   "key": "decider_2b_vision",
-   "name": "Mapika decider-2b-vision BF16",
-   "api_flag": false,
-   "prior_exposure": "No evaluation run on this item set before this job.",
-   "score": 70.01889938021766,
-   "tracks": {
-    "all": {
-     "public": {
-      "n": 228,
-      "correct": 151,
-      "accuracy": 0.6622807017543859,
-      "chance": 0.32127192982456143,
-      "chance_corrected_intelligence": 50.242326332794825,
-      "ece": 0.1080686080795735,
-      "probability_coverage": 1.0,
-      "valid_answer_count": 228
-     },
-     "sealed": {
-      "n": 216,
-      "correct": 163,
-      "accuracy": 0.7546296296296297,
-      "chance": 0.2800925925925926,
-      "chance_corrected_intelligence": 65.91639871382637,
-      "ece": 0.07139999420638177,
-      "probability_coverage": 1.0,
-      "valid_answer_count": 216
-     },
-     "axes": {
-      "intelligence": 60.43047338046533,
-      "calibration": 83.15319818760022,
-      "speed": 88.55558964891941,
-      "cost": 57.93355711957896
-     },
-     "intelligence_before_penalty": 60.43047338046533,
-     "raw_overall_gap_pp": -9.234892787524373,
-     "matched_gap_pp": -0.7119779988693553,
-     "matched_gap_families": {
-      "Everyday photo": {
-       "gap_pp": -1.491987474673051,
-       "weight": 36.193333333333335
-      },
-      "ScreenSpot": {
-       "gap_pp": 1.0810810810810811,
-       "weight": 15.74468085106383
-      }
-     },
-     "overfit_penalty_points": 0.0,
-     "penalty_multiplier": 1.0,
-     "speed": {
-      "score": 88.55558964891941,
-      "raw_p50_s": 0.09228803194127977,
-      "raw_p95_s": 0.13340885704383254,
-      "adjusted_p50_s": 0.33457606388255956,
-      "adjusted_p95_s": 0.4168177140876651,
-      "latency_coverage": 1.0
-     },
-     "cost": {
-      "score": 57.93355711957896,
-      "raw_score": 57.93355711957896,
-      "usd_per_1000": 0.02524728965906051,
-      "total_usd": 0.011209796608622867,
-      "coverage": 1.0,
-      "source": "measured GPU seconds x $1.19/GPU-hour"
-     },
-     "composite": {
-      "harmonic_before_gates": 70.01889938021766,
-      "gates": {
-       "intelligence": 1.0,
-       "speed": 1.0,
-       "cost": 1.0
-      },
-      "score": 70.01889938021766
-     }
-    },
-    "core": {
-     "public": {
-      "n": 139,
-      "correct": 75,
-      "accuracy": 0.539568345323741,
-      "chance": 0.21762589928057555,
-      "chance_corrected_intelligence": 41.149425287356316,
-      "ece": 0.1241921044920938,
-      "probability_coverage": 1.0,
-      "valid_answer_count": 139
-     },
-     "sealed": {
-      "n": 155,
-      "correct": 110,
-      "accuracy": 0.7096774193548387,
-      "chance": 0.2,
-      "chance_corrected_intelligence": 63.70967741935485,
-      "ece": 0.08026810953726363,
-      "probability_coverage": 1.0,
-      "valid_answer_count": 155
-     },
-     "axes": {
-      "intelligence": 55.813589173155364,
-      "calibration": 80.87169844570916,
-      "speed": 89.67494685612841,
-      "cost": 60.366992977953174
-     },
-     "intelligence_before_penalty": 55.813589173155364,
-     "raw_overall_gap_pp": -17.010907403109776,
-     "matched_gap_pp": 1.0810810810810811,
-     "matched_gap_families": {
-      "ScreenSpot": {
-       "gap_pp": 1.0810810810810811,
-       "weight": 15.74468085106383
-      }
-     },
-     "overfit_penalty_points": 0.0,
-     "penalty_multiplier": 1.0,
-     "speed": {
-      "score": 89.67494685612841,
-      "raw_p50_s": 0.07886400900315493,
-      "raw_p95_s": 0.10010892385616899,
-      "adjusted_p50_s": 0.3077280180063099,
-      "adjusted_p95_s": 0.350217847712338,
-      "latency_coverage": 1.0
-     },
-     "cost": {
-      "score": 60.366992977953174,
-      "raw_score": 60.36699297795318,
-      "usd_per_1000": 0.02094595827488672,
-      "total_usd": 0.006158111732816696,
-      "coverage": 1.0,
-      "source": "measured GPU seconds x $1.19/GPU-hour"
-     },
-     "composite": {
-      "harmonic_before_gates": 68.9669687052892,
-      "gates": {
-       "intelligence": 1.0,
-       "speed": 1.0,
-       "cost": 1.0
-      },
-      "score": 68.9669687052892
-     }
-    },
-    "everyday_photo": {
-     "public": {
-      "n": 89,
-      "correct": 76,
-      "accuracy": 0.8539325842696629,
-      "chance": 0.48314606741573035,
-      "chance_corrected_intelligence": 71.73913043478261,
-      "ece": 0.09504013570223432,
-      "probability_coverage": 1.0,
-      "valid_answer_count": 89
-     },
-     "sealed": {
-      "n": 61,
-      "correct": 53,
-      "accuracy": 0.8688524590163934,
-      "chance": 0.48360655737704916,
-      "chance_corrected_intelligence": 74.60317460317461,
-      "ece": 0.08820538574334152,
-      "probability_coverage": 1.0,
-      "valid_answer_count": 61
-     },
-     "axes": {
-      "intelligence": 73.6007591442374,
-      "calibration": 81.8804903542092,
-      "speed": 87.68411364929105,
-      "cost": 54.17965022875221
-     },
-     "intelligence_before_penalty": 73.6007591442374,
-     "raw_overall_gap_pp": -1.491987474673051,
-     "matched_gap_pp": -1.491987474673051,
-     "matched_gap_families": {
-      "Everyday photo": {
-       "gap_pp": -1.491987474673051,
-       "weight": 36.193333333333335
-      }
-     },
-     "overfit_penalty_points": 0.0,
-     "penalty_multiplier": 1.0,
-     "speed": {
-      "score": 87.68411364929105,
-      "raw_p50_s": 0.12761053699068725,
-      "raw_p95_s": 0.1353132410440594,
-      "adjusted_p50_s": 0.4052210739813745,
-      "adjusted_p95_s": 0.4206264820881188,
-      "latency_coverage": 1.0
-     },
-     "cost": {
-      "score": 54.17965022875221,
-      "raw_score": 54.17965022875221,
-      "usd_per_1000": 0.03367789917204115,
-      "total_usd": 0.005051684875806172,
-      "coverage": 1.0,
-      "source": "measured GPU seconds x $1.19/GPU-hour"
-     },
-     "composite": {
-      "harmonic_before_gates": 71.86305204296275,
-      "gates": {
-       "intelligence": 1.0,
-       "speed": 1.0,
-       "cost": 1.0
-      },
-      "score": 71.86305204296275
-     }
-    }
-   }
-  },
-  {
-   "rank": 2,
-   "key": "reflex_4b",
-   "name": "Reflex 4B (released stable configuration)",
-   "api_flag": false,
-   "prior_exposure": "No evaluation run on this item set before this job.",
-   "score": 68.0985993861034,
-   "tracks": {
-    "all": {
-     "public": {
-      "n": 228,
-      "correct": 184,
-      "accuracy": 0.8070175438596491,
-      "chance": 0.32127192982456143,
-      "chance_corrected_intelligence": 71.5670436187399,
-      "ece": 0.1334701563347419,
-      "probability_coverage": 1.0,
-      "valid_answer_count": 228
-     },
-     "sealed": {
-      "n": 216,
-      "correct": 167,
-      "accuracy": 0.7731481481481481,
-      "chance": 0.2800925925925926,
-      "chance_corrected_intelligence": 68.48874598070738,
-      "ece": 0.09286448180898176,
-      "probability_coverage": 1.0,
-      "valid_answer_count": 216
-     },
-     "axes": {
-      "intelligence": 69.56615015401877,
-      "calibration": 78.58470642140044,
-      "speed": 86.62443917313291,
-      "cost": 49.96568083345824
-     },
-     "intelligence_before_penalty": 69.56615015401877,
-     "raw_overall_gap_pp": 3.386939571150094,
-     "matched_gap_pp": 2.383637888044396,
-     "matched_gap_families": {
-      "Everyday photo": {
-       "gap_pp": 4.125990053416839,
-       "weight": 36.193333333333335
-      },
-      "ScreenSpot": {
-       "gap_pp": -1.6216216216216273,
-       "weight": 15.74468085106383
-      }
-     },
-     "overfit_penalty_points": 0.0,
-     "penalty_multiplier": 1.0,
-     "speed": {
-      "score": 86.62443917313291,
-      "raw_p50_s": 0.15307909448165447,
-      "raw_p95_s": 0.16345729399472475,
-      "adjusted_p50_s": 0.45615818896330895,
-      "adjusted_p95_s": 0.4769145879894495,
-      "latency_coverage": 1.0
-     },
-     "cost": {
-      "score": 49.96568083345824,
-      "raw_score": 49.96568083345824,
-      "usd_per_1000": 0.04653831328873161,
-      "total_usd": 0.020663011100196835,
-      "coverage": 1.0,
-      "source": "measured GPU seconds x $1.19/GPU-hour"
-     },
-     "composite": {
-      "harmonic_before_gates": 68.19217920946772,
-      "gates": {
-       "intelligence": 1.0,
-       "speed": 1.0,
-       "cost": 0.9986277044604063
-      },
-      "score": 68.0985993861034
-     }
-    },
-    "core": {
-     "public": {
-      "n": 139,
-      "correct": 103,
-      "accuracy": 0.7410071942446043,
-      "chance": 0.21762589928057555,
-      "chance_corrected_intelligence": 66.89655172413792,
-      "ece": 0.15674186144161914,
-      "probability_coverage": 1.0,
-      "valid_answer_count": 139
-     },
-     "sealed": {
-      "n": 155,
-      "correct": 114,
-      "accuracy": 0.7354838709677419,
-      "chance": 0.2,
-      "chance_corrected_intelligence": 66.93548387096773,
-      "ece": 0.11061206170371977,
-      "probability_coverage": 1.0,
-      "valid_answer_count": 155
-     },
-     "axes": {
-      "intelligence": 66.9218576195773,
-      "calibration": 74.6485016776031,
-      "speed": 87.02263582643465,
-      "cost": 50.82102457516124
-     },
-     "intelligence_before_penalty": 66.9218576195773,
-     "raw_overall_gap_pp": 0.5523323276862335,
-     "matched_gap_pp": -1.6216216216216273,
-     "matched_gap_families": {
-      "ScreenSpot": {
-       "gap_pp": -1.6216216216216273,
-       "weight": 15.74468085106383
-      }
-     },
-     "overfit_penalty_points": 0.0,
-     "penalty_multiplier": 1.0,
-     "speed": {
-      "score": 87.02263582643465,
-      "raw_p50_s": 0.135005445452407,
-      "raw_p95_s": 0.161290287040174,
-      "adjusted_p50_s": 0.420010890904814,
-      "adjusted_p95_s": 0.47258057408034804,
-      "latency_coverage": 1.0
-     },
-     "cost": {
-      "score": 50.82102457516124,
-      "raw_score": 50.82102457516124,
-      "usd_per_1000": 0.043581199652555754,
-      "total_usd": 0.01281287269785139,
-      "coverage": 1.0,
-      "source": "measured GPU seconds x $1.19/GPU-hour"
-     },
-     "composite": {
-      "harmonic_before_gates": 67.21889689695496,
-      "gates": {
-       "intelligence": 1.0,
-       "speed": 1.0,
-       "cost": 1.0
-      },
-      "score": 67.21889689695496
-     }
-    },
-    "everyday_photo": {
-     "public": {
-      "n": 89,
-      "correct": 81,
-      "accuracy": 0.9101123595505618,
-      "chance": 0.48314606741573035,
-      "chance_corrected_intelligence": 82.60869565217392,
-      "ece": 0.10618323705286409,
-      "probability_coverage": 1.0,
-      "valid_answer_count": 89
-     },
-     "sealed": {
-      "n": 61,
-      "correct": 53,
-      "accuracy": 0.8688524590163934,
-      "chance": 0.48360655737704916,
-      "chance_corrected_intelligence": 74.60317460317461,
-      "ece": 0.07085615081139021,
-      "probability_coverage": 1.0,
-      "valid_answer_count": 61
-     },
-     "axes": {
-      "intelligence": 77.40510697032437,
-      "calibration": 83.3558738008188,
-      "speed": 86.3949716642636,
-      "cost": 48.4364183616248
-     },
-     "intelligence_before_penalty": 77.40510697032437,
-     "raw_overall_gap_pp": 4.125990053416839,
-     "matched_gap_pp": 4.125990053416839,
-     "matched_gap_families": {
-      "Everyday photo": {
-       "gap_pp": 4.125990053416839,
-       "weight": 36.193333333333335
-      }
-     },
-     "overfit_penalty_points": 0.0,
-     "penalty_multiplier": 1.0,
-     "speed": {
-      "score": 86.3949716642636,
-      "raw_p50_s": 0.15673863445408642,
-      "raw_p95_s": 0.17242546705529094,
-      "adjusted_p50_s": 0.46347726890817287,
-      "adjusted_p95_s": 0.4948509341105819,
-      "latency_coverage": 1.0
-     },
-     "cost": {
-      "score": 48.4364183616248,
-      "raw_score": 48.4364183616248,
-      "usd_per_1000": 0.052334256015636293,
-      "total_usd": 0.007850138402345445,
-      "coverage": 1.0,
-      "source": "measured GPU seconds x $1.19/GPU-hour"
-     },
-     "composite": {
-      "harmonic_before_gates": 70.00819356960486,
-      "gates": {
-       "intelligence": 1.0,
-       "speed": 1.0,
-       "cost": 0.9384346494809377
-      },
-      "score": 65.69811459328577
-     }
-    }
-   }
-  },
-  {
-   "rank": 3,
    "key": "jev_omni",
    "name": "Jev-Omni",
    "api_flag": false,
    "prior_exposure": "This checkpoint was measured on a separate frozen JevBench v1.4 text set before this run. It received no ImageJevBench task input before this evaluation.",
-   "score": 55.627382518052855,
+   "score": 73.10053647043314,
+   "previous_rank": 3,
+   "previous_score": 55.63,
    "tracks": {
     "all": {
      "public": {
@@ -535,60 +157,60 @@
       "valid_answer_count": 228
      },
      "sealed": {
-      "n": 216,
-      "correct": 128,
-      "accuracy": 0.5925925925925926,
-      "chance": 0.2800925925925926,
-      "chance_corrected_intelligence": 43.40836012861735,
-      "ece": 0.09711254261036997,
+      "n": 456,
+      "correct": 368,
+      "accuracy": 0.8070175438596491,
+      "chance": 0.3435672514619883,
+      "chance_corrected_intelligence": 70.60133630289532,
+      "ece": 0.04747264368997854,
       "probability_coverage": 1.0,
-      "valid_answer_count": 216
+      "valid_answer_count": 456
      },
      "axes": {
-      "intelligence": 46.25259078796315,
-      "calibration": 83.44405529116375,
-      "speed": 89.94839872362184,
-      "cost": 59.48707347669823
+      "intelligence": 63.92802530124383,
+      "calibration": 89.89724215081463,
+      "speed": 89.68343733284763,
+      "cost": 59.51521419000006
      },
-     "intelligence_before_penalty": 46.25259078796315,
-     "raw_overall_gap_pp": 7.8460038986354785,
-     "matched_gap_pp": 1.6741178109202812,
+     "intelligence_before_penalty": 63.92802530124383,
+     "raw_overall_gap_pp": -13.596491228070173,
+     "matched_gap_pp": -1.0237709087070417,
      "matched_gap_families": {
       "Everyday photo": {
-       "gap_pp": -2.9471357524405883,
-       "weight": 36.193333333333335
+       "gap_pp": -4.707273802483735,
+       "weight": 45.95108695652174
       },
       "ScreenSpot": {
-       "gap_pp": 12.297297297297305,
-       "weight": 15.74468085106383
+       "gap_pp": 13.275862068965516,
+       "weight": 11.83673469387755
       }
      },
      "overfit_penalty_points": 0.0,
      "penalty_multiplier": 1.0,
      "speed": {
-      "score": 89.94839872362184,
-      "raw_p50_s": 0.07424040790647268,
-      "raw_p95_s": 0.09451717603951693,
-      "adjusted_p50_s": 0.2984808158129454,
-      "adjusted_p95_s": 0.3390343520790339,
+      "score": 89.68343733284763,
+      "raw_p50_s": 0.0758669595234096,
+      "raw_p95_s": 0.10323875397443771,
+      "adjusted_p50_s": 0.30173391904681923,
+      "adjusted_p95_s": 0.35647750794887545,
       "latency_coverage": 1.0
      },
      "cost": {
-      "score": 59.48707347669823,
-      "raw_score": 59.48707347669823,
-      "usd_per_1000": 0.022409433819796595,
-      "total_usd": 0.009949788615989687,
+      "score": 59.51521419000006,
+      "raw_score": 59.51521419000006,
+      "usd_per_1000": 0.02236108437490742,
+      "total_usd": 0.015294981712436677,
       "coverage": 1.0,
       "source": "measured GPU seconds x $1.29/GPU-hour"
      },
      "composite": {
-      "harmonic_before_gates": 65.00645829584295,
+      "harmonic_before_gates": 73.10053647043314,
       "gates": {
-       "intelligence": 0.8557208618395095,
+       "intelligence": 1.0,
        "speed": 1.0,
        "cost": 1.0
       },
-      "score": 55.627382518052855
+      "score": 73.10053647043314
      }
     },
     "core": {
@@ -603,56 +225,56 @@
       "valid_answer_count": 139
      },
      "sealed": {
-      "n": 155,
-      "correct": 70,
-      "accuracy": 0.45161290322580644,
-      "chance": 0.2,
-      "chance_corrected_intelligence": 31.451612903225804,
-      "ece": 0.1373494367460633,
+      "n": 361,
+      "correct": 276,
+      "accuracy": 0.7645429362880887,
+      "chance": 0.30932594644506,
+      "chance_corrected_intelligence": 65.9090909090909,
+      "ece": 0.05630967555474952,
       "probability_coverage": 1.0,
-      "valid_answer_count": 155
+      "valid_answer_count": 361
      },
      "axes": {
-      "intelligence": 33.55849091583241,
-      "calibration": 76.77998514363921,
-      "speed": 89.85484440153232,
-      "cost": 59.019694213024515
+      "intelligence": 55.955851619644726,
+      "calibration": 87.31515409851,
+      "speed": 89.66783933083256,
+      "cost": 59.16945127084789
      },
-     "intelligence_before_penalty": 33.55849091583241,
-     "raw_overall_gap_pp": 5.917846368066843,
-     "matched_gap_pp": 12.297297297297305,
+     "intelligence_before_penalty": 55.955851619644726,
+     "raw_overall_gap_pp": -25.375156938161382,
+     "matched_gap_pp": 13.275862068965518,
      "matched_gap_families": {
       "ScreenSpot": {
-       "gap_pp": 12.297297297297305,
-       "weight": 15.74468085106383
+       "gap_pp": 13.275862068965516,
+       "weight": 11.83673469387755
       }
      },
      "overfit_penalty_points": 0.0,
      "penalty_multiplier": 1.0,
      "speed": {
-      "score": 89.85484440153232,
-      "raw_p50_s": 0.07570168096572161,
-      "raw_p95_s": 0.0965289669111371,
-      "adjusted_p50_s": 0.30140336193144324,
-      "adjusted_p95_s": 0.34305793382227423,
+      "score": 89.66783933083256,
+      "raw_p50_s": 0.07669283542782068,
+      "raw_p95_s": 0.1029061684384942,
+      "adjusted_p50_s": 0.3033856708556414,
+      "adjusted_p95_s": 0.35581233687698843,
       "latency_coverage": 1.0
      },
      "cost": {
-      "score": 59.019694213024515,
-      "raw_score": 59.01969421302452,
-      "usd_per_1000": 0.023227913116705932,
-      "total_usd": 0.0068290064563115436,
+      "score": 59.16945127084789,
+      "raw_score": 59.16945127084789,
+      "usd_per_1000": 0.022962453559366863,
+      "total_usd": 0.011481226779683431,
       "coverage": 1.0,
       "source": "measured GPU seconds x $1.29/GPU-hour"
      },
      "composite": {
-      "harmonic_before_gates": 56.42106832766596,
+      "harmonic_before_gates": 69.7144899099971,
       "gates": {
-       "intelligence": 0.45046892501920244,
+       "intelligence": 1.0,
        "speed": 1.0,
        "cost": 1.0
       },
-      "score": 25.415937997998654
+      "score": 69.7144899099971
      }
     },
     "everyday_photo": {
@@ -667,274 +289,485 @@
       "valid_answer_count": 89
      },
      "sealed": {
-      "n": 61,
-      "correct": 58,
-      "accuracy": 0.9508196721311475,
-      "chance": 0.48360655737704916,
-      "chance_corrected_intelligence": 90.47619047619047,
-      "ece": 0.06400529896114039,
+      "n": 95,
+      "correct": 92,
+      "accuracy": 0.968421052631579,
+      "chance": 0.47368421052631576,
+      "chance_corrected_intelligence": 94.0,
+      "ece": 0.05582772766312779,
       "probability_coverage": 1.0,
-      "valid_answer_count": 61
+      "valid_answer_count": 95
      },
      "axes": {
-      "intelligence": 88.48343685300206,
-      "calibration": 86.67799141721532,
-      "speed": 90.13390969363553,
-      "cost": 60.45483413322506
+      "intelligence": 90.77391304347826,
+      "calibration": 87.74107568595696,
+      "speed": 89.73876812954164,
+      "cost": 60.503951219121234
      },
-     "intelligence_before_penalty": 88.48343685300206,
-     "raw_overall_gap_pp": -2.9471357524405883,
-     "matched_gap_pp": -2.9471357524405883,
+     "intelligence_before_penalty": 90.77391304347826,
+     "raw_overall_gap_pp": -4.707273802483735,
+     "matched_gap_pp": -4.707273802483735,
      "matched_gap_families": {
       "Everyday photo": {
-       "gap_pp": -2.9471357524405883,
-       "weight": 36.193333333333335
+       "gap_pp": -4.707273802483735,
+       "weight": 45.95108695652174
       }
      },
      "overfit_penalty_points": 0.0,
      "penalty_multiplier": 1.0,
      "speed": {
-      "score": 90.13390969363553,
-      "raw_p50_s": 0.07092946395277977,
-      "raw_p95_s": 0.09111392963677645,
-      "adjusted_p50_s": 0.29185892790555956,
-      "adjusted_p95_s": 0.3322278592735529,
+      "score": 89.73876812954164,
+      "raw_p50_s": 0.07283346028998494,
+      "raw_p95_s": 0.1045934334397316,
+      "adjusted_p50_s": 0.2956669205799699,
+      "adjusted_p95_s": 0.3591868668794632,
       "latency_coverage": 1.0
      },
      "cost": {
-      "score": 60.45483413322506,
-      "raw_score": 60.454834133225056,
-      "usd_per_1000": 0.020805214397854273,
-      "total_usd": 0.0031207821596781413,
+      "score": 60.503951219121234,
+      "raw_score": 60.50395121912123,
+      "usd_per_1000": 0.020726928982354592,
+      "total_usd": 0.003813754932753245,
       "coverage": 1.0,
       "source": "measured GPU seconds x $1.29/GPU-hour"
      },
      "composite": {
-      "harmonic_before_gates": 79.24812207554079,
+      "harmonic_before_gates": 79.8644645344476,
       "gates": {
        "intelligence": 1.0,
        "speed": 1.0,
        "cost": 1.0
       },
-      "score": 79.24812207554079
+      "score": 79.8644645344476
+     }
+    }
+   }
+  },
+  {
+   "rank": 2,
+   "key": "decider_2b_vision",
+   "name": "Mapika decider-2b-vision BF16",
+   "api_flag": false,
+   "prior_exposure": "No evaluation run on this item set before this job.",
+   "score": 66.76719561944587,
+   "previous_rank": 1,
+   "previous_score": 70.02,
+   "tracks": {
+    "all": {
+     "public": {
+      "n": 228,
+      "correct": 151,
+      "accuracy": 0.6622807017543859,
+      "chance": 0.32127192982456143,
+      "chance_corrected_intelligence": 50.242326332794825,
+      "ece": 0.1080686080795735,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 228
+     },
+     "sealed": {
+      "n": 456,
+      "correct": 319,
+      "accuracy": 0.6995614035087719,
+      "chance": 0.3435672514619883,
+      "chance_corrected_intelligence": 54.23162583518931,
+      "ece": 0.08442935014232464,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 456
+     },
+     "axes": {
+      "intelligence": 52.83537100935124,
+      "calibration": 81.45938191592765,
+      "speed": 88.17295804101039,
+      "cost": 57.58530042466801
+     },
+     "intelligence_before_penalty": 52.83537100935124,
+     "raw_overall_gap_pp": -3.7280701754386025,
+     "matched_gap_pp": -4.445361457923478,
+     "matched_gap_families": {
+      "Everyday photo": {
+       "gap_pp": -4.080425783560027,
+       "weight": 45.95108695652174
+      },
+      "ScreenSpot": {
+       "gap_pp": -5.862068965517242,
+       "weight": 11.83673469387755
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 88.17295804101039,
+      "raw_p50_s": 0.09148534969426692,
+      "raw_p95_s": 0.15370106231421232,
+      "adjusted_p50_s": 0.33297069938853385,
+      "adjusted_p95_s": 0.45740212462842467,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 57.58530042466801,
+      "raw_score": 57.58530042466801,
+      "usd_per_1000": 0.02593124205899595,
+      "total_usd": 0.01773696956835323,
+      "coverage": 1.0,
+      "source": "measured GPU seconds x $1.19/GPU-hour"
+     },
+     "composite": {
+      "harmonic_before_gates": 66.76719561944587,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 1.0
+      },
+      "score": 66.76719561944587
+     }
+    },
+    "core": {
+     "public": {
+      "n": 139,
+      "correct": 75,
+      "accuracy": 0.539568345323741,
+      "chance": 0.21762589928057555,
+      "chance_corrected_intelligence": 41.149425287356316,
+      "ece": 0.1241921044920938,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 139
+     },
+     "sealed": {
+      "n": 361,
+      "correct": 234,
+      "accuracy": 0.6481994459833795,
+      "chance": 0.30932594644506,
+      "chance_corrected_intelligence": 49.06417112299465,
+      "ece": 0.09783067080584011,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 361
+     },
+     "axes": {
+      "intelligence": 46.29401008052123,
+      "calibration": 78.58856548079422,
+      "speed": 88.57474981575113,
+      "cost": 59.08963928019652
+     },
+     "intelligence_before_penalty": 46.29401008052123,
+     "raw_overall_gap_pp": -10.863110065963856,
+     "matched_gap_pp": -5.862068965517242,
+     "matched_gap_families": {
+      "ScreenSpot": {
+       "gap_pp": -5.862068965517242,
+       "weight": 11.83673469387755
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 88.57474981575113,
+      "raw_p50_s": 0.07704337895847857,
+      "raw_p95_s": 0.15329558588564396,
+      "adjusted_p50_s": 0.30408675791695716,
+      "adjusted_p95_s": 0.45659117177128794,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 59.08963928019652,
+      "raw_score": 59.08963928019652,
+      "usd_per_1000": 0.023103548599317337,
+      "total_usd": 0.011551774299658668,
+      "coverage": 1.0,
+      "source": "measured GPU seconds x $1.19/GPU-hour"
+     },
+     "composite": {
+      "harmonic_before_gates": 63.960187115157,
+      "gates": {
+       "intelligence": 0.8572541477341605,
+       "speed": 1.0,
+       "cost": 1.0
+      },
+      "score": 54.83013569432135
+     }
+    },
+    "everyday_photo": {
+     "public": {
+      "n": 89,
+      "correct": 76,
+      "accuracy": 0.8539325842696629,
+      "chance": 0.48314606741573035,
+      "chance_corrected_intelligence": 71.73913043478261,
+      "ece": 0.09504013570223432,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 89
+     },
+     "sealed": {
+      "n": 95,
+      "correct": 85,
+      "accuracy": 0.8947368421052632,
+      "chance": 0.47368421052631576,
+      "chance_corrected_intelligence": 80.0,
+      "ece": 0.06301993123287197,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 95
+     },
+     "axes": {
+      "intelligence": 77.1086956521739,
+      "calibration": 85.15459944057024,
+      "speed": 87.2531023213892,
+      "cost": 54.20393224015386
+     },
+     "intelligence_before_penalty": 77.1086956521739,
+     "raw_overall_gap_pp": -4.080425783560027,
+     "matched_gap_pp": -4.080425783560027,
+     "matched_gap_families": {
+      "Everyday photo": {
+       "gap_pp": -4.080425783560027,
+       "weight": 45.95108695652174
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 87.2531023213892,
+      "raw_p50_s": 0.1299353438662365,
+      "raw_p95_s": 0.15462169144302607,
+      "adjusted_p50_s": 0.40987068773247304,
+      "adjusted_p95_s": 0.45924338288605215,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 54.20393224015386,
+      "raw_score": 54.20393224015386,
+      "usd_per_1000": 0.033615191677687825,
+      "total_usd": 0.00618519526869456,
+      "coverage": 1.0,
+      "source": "measured GPU seconds x $1.19/GPU-hour"
+     },
+     "composite": {
+      "harmonic_before_gates": 73.23082197271445,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 1.0
+      },
+      "score": 73.23082197271445
+     }
+    }
+   }
+  },
+  {
+   "rank": 3,
+   "key": "reflex_4b",
+   "name": "Reflex 4B (released stable configuration)",
+   "api_flag": false,
+   "prior_exposure": "No evaluation run on this item set before this job.",
+   "score": 65.3783959350721,
+   "previous_rank": 2,
+   "previous_score": 68.1,
+   "tracks": {
+    "all": {
+     "public": {
+      "n": 228,
+      "correct": 184,
+      "accuracy": 0.8070175438596491,
+      "chance": 0.32127192982456143,
+      "chance_corrected_intelligence": 71.5670436187399,
+      "ece": 0.1334701563347419,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 228
+     },
+     "sealed": {
+      "n": 456,
+      "correct": 333,
+      "accuracy": 0.7302631578947368,
+      "chance": 0.3435672514619883,
+      "chance_corrected_intelligence": 58.9086859688196,
+      "ece": 0.05364844661808349,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 456
+     },
+     "axes": {
+      "intelligence": 63.3391111462917,
+      "calibration": 83.68279099621721,
+      "speed": 86.14442285916016,
+      "cost": 49.352784060324126
+     },
+     "intelligence_before_penalty": 63.3391111462917,
+     "raw_overall_gap_pp": 7.675438596491224,
+     "matched_gap_pp": -0.5537268600712056,
+     "matched_gap_families": {
+      "Everyday photo": {
+       "gap_pp": 2.5901833234772353,
+       "weight": 45.95108695652174
+      },
+      "ScreenSpot": {
+       "gap_pp": -12.758620689655176,
+       "weight": 11.83673469387755
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 86.14442285916016,
+      "raw_p50_s": 0.1536201221169904,
+      "raw_p95_s": 0.1906949318945408,
+      "adjusted_p50_s": 0.4572402442339808,
+      "adjusted_p95_s": 0.5313898637890816,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 49.352784060324126,
+      "raw_score": 49.35278406032413,
+      "usd_per_1000": 0.04877985795400915,
+      "total_usd": 0.03336542284054226,
+      "coverage": 1.0,
+      "source": "measured GPU seconds x $1.19/GPU-hour"
+     },
+     "composite": {
+      "harmonic_before_gates": 67.1043935576149,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 0.9742789178019934
+      },
+      "score": 65.3783959350721
+     }
+    },
+    "core": {
+     "public": {
+      "n": 139,
+      "correct": 103,
+      "accuracy": 0.7410071942446043,
+      "chance": 0.21762589928057555,
+      "chance_corrected_intelligence": 66.89655172413792,
+      "ece": 0.15674186144161914,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 139
+     },
+     "sealed": {
+      "n": 361,
+      "correct": 249,
+      "accuracy": 0.6897506925207756,
+      "chance": 0.30932594644506,
+      "chance_corrected_intelligence": 55.08021390374331,
+      "ece": 0.050051326904794406,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 361
+     },
+     "axes": {
+      "intelligence": 59.21593214088142,
+      "calibration": 82.52139720146339,
+      "speed": 86.50252312694212,
+      "cost": 49.90497113226348
+     },
+     "intelligence_before_penalty": 59.21593214088142,
+     "raw_overall_gap_pp": 5.125650172382867,
+     "matched_gap_pp": -12.758620689655176,
+     "matched_gap_families": {
+      "ScreenSpot": {
+       "gap_pp": -12.758620689655176,
+       "weight": 11.83673469387755
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 86.50252312694212,
+      "raw_p50_s": 0.1362847457639873,
+      "raw_p95_s": 0.1897399928420782,
+      "adjusted_p50_s": 0.42256949152797463,
+      "adjusted_p95_s": 0.5294799856841564,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 49.90497113226348,
+      "raw_score": 49.90497113226348,
+      "usd_per_1000": 0.046755671168687604,
+      "total_usd": 0.023377835584343802,
+      "coverage": 1.0,
+      "source": "measured GPU seconds x $1.19/GPU-hour"
+     },
+     "composite": {
+      "harmonic_before_gates": 66.00240020083291,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 0.9962024574848206
+      },
+      "score": 65.75175327996637
+     }
+    },
+    "everyday_photo": {
+     "public": {
+      "n": 89,
+      "correct": 81,
+      "accuracy": 0.9101123595505618,
+      "chance": 0.48314606741573035,
+      "chance_corrected_intelligence": 82.60869565217392,
+      "ece": 0.10618323705286409,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 89
+     },
+     "sealed": {
+      "n": 95,
+      "correct": 84,
+      "accuracy": 0.8842105263157894,
+      "chance": 0.47368421052631576,
+      "chance_corrected_intelligence": 77.99999999999999,
+      "ece": 0.09103046994963457,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 95
+     },
+     "axes": {
+      "intelligence": 79.61304347826086,
+      "calibration": 80.73321231284702,
+      "speed": 86.05995728018075,
+      "cost": 47.9607170941817
+     },
+     "intelligence_before_penalty": 79.61304347826086,
+     "raw_overall_gap_pp": 2.5901833234772353,
+     "matched_gap_pp": 2.5901833234772353,
+     "matched_gap_families": {
+      "Everyday photo": {
+       "gap_pp": 2.5901833234772353,
+       "weight": 45.95108695652174
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 86.05995728018075,
+      "raw_p50_s": 0.1575043679913506,
+      "raw_p95_s": 0.191387084312737,
+      "adjusted_p50_s": 0.4650087359827012,
+      "adjusted_p95_s": 0.532774168625474,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 47.9607170941817,
+      "raw_score": 47.9607170941817,
+      "usd_per_1000": 0.0542803655228177,
+      "total_usd": 0.009987587256198457,
+      "coverage": 1.0,
+      "source": "measured GPU seconds x $1.19/GPU-hour"
+     },
+     "composite": {
+      "harmonic_before_gates": 69.66525069578289,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 0.9200921536752532
+      },
+      "score": 64.09845054900931
      }
     }
    }
   },
   {
    "rank": 4,
-   "key": "kushal_gemma4_31b_it_autoloops",
-   "name": "Kushal Patil — Gemma 4 31B IT (Autoloops)",
-   "api_flag": true,
-   "prior_exposure": "First scored on the ImageJevBench v0.1 final core split in the Autoloops measurement job; reused here without rerunning.",
-   "score": 45.90758103755653,
-   "tracks": {
-    "all": {
-     "public": {
-      "n": 228,
-      "correct": 193,
-      "accuracy": 0.8464912280701754,
-      "chance": 0.32127192982456143,
-      "chance_corrected_intelligence": 77.38287560581583,
-      "ece": 0.14497689536291036,
-      "probability_coverage": 1.0,
-      "valid_answer_count": 228
-     },
-     "sealed": {
-      "n": 216,
-      "correct": 174,
-      "accuracy": 0.8055555555555556,
-      "chance": 0.2800925925925926,
-      "chance_corrected_intelligence": 72.9903536977492,
-      "ece": 0.10196772353343797,
-      "probability_coverage": 1.0,
-      "valid_answer_count": 216
-     },
-     "axes": {
-      "intelligence": 74.52773636557252,
-      "calibration": 76.59581326524935,
-      "speed": 74.52116247720869,
-      "cost": 42.63333830402754
-     },
-     "intelligence_before_penalty": 74.52773636557252,
-     "raw_overall_gap_pp": 4.093567251461982,
-     "matched_gap_pp": 0.8370589054601419,
-     "matched_gap_families": {
-      "Everyday photo": {
-       "gap_pp": -0.09209799226376214,
-       "weight": 36.193333333333335
-      },
-      "ScreenSpot": {
-       "gap_pp": 2.972972972972976,
-       "weight": 15.74468085106383
-      }
-     },
-     "overfit_penalty_points": 0.0,
-     "penalty_multiplier": 1.0,
-     "speed": {
-      "score": 74.52116247720869,
-      "raw_p50_s": 1.6029665991663933,
-      "raw_p95_s": 2.202719919383526,
-      "adjusted_p50_s": 1.6029665991663933,
-      "adjusted_p95_s": 2.202719919383526,
-      "latency_coverage": 1.0
-     },
-     "cost": {
-      "score": 42.63333830402754,
-      "raw_score": 42.63333830402753,
-      "usd_per_1000": 0.08170000000000001,
-      "total_usd": 0.0362748,
-      "coverage": 1.0,
-      "source": "Autoloops published Gemma 4 31B token rates applied to returned usage receipts"
-     },
-     "composite": {
-      "harmonic_before_gates": 63.14307640443448,
-      "gates": {
-       "intelligence": 1.0,
-       "speed": 1.0,
-       "cost": 0.7270406139782648
-      },
-      "score": 45.90758103755653
-     }
-    },
-    "core": {
-     "public": {
-      "n": 139,
-      "correct": 107,
-      "accuracy": 0.7697841726618705,
-      "chance": 0.21762589928057555,
-      "chance_corrected_intelligence": 70.57471264367817,
-      "ece": 0.21712817590960218,
-      "probability_coverage": 1.0,
-      "valid_answer_count": 139
-     },
-     "sealed": {
-      "n": 155,
-      "correct": 115,
-      "accuracy": 0.7419354838709677,
-      "chance": 0.2,
-      "chance_corrected_intelligence": 67.74193548387098,
-      "ece": 0.12779899009768575,
-      "probability_coverage": 1.0,
-      "valid_answer_count": 155
-     },
-     "axes": {
-      "intelligence": 68.7334074898035,
-      "calibration": 68.1871589736287,
-      "speed": 74.24741570925754,
-      "cost": 42.595424080853945
-     },
-     "intelligence_before_penalty": 68.7334074898035,
-     "raw_overall_gap_pp": 2.7848688790902743,
-     "matched_gap_pp": 2.972972972972976,
-     "matched_gap_families": {
-      "ScreenSpot": {
-       "gap_pp": 2.972972972972976,
-       "weight": 15.74468085106383
-      }
-     },
-     "overfit_penalty_points": 0.0,
-     "penalty_multiplier": 1.0,
-     "speed": {
-      "score": 74.24741570925754,
-      "raw_p50_s": 1.6015398651361465,
-      "raw_p95_s": 2.3481220975518227,
-      "adjusted_p50_s": 1.6015398651361465,
-      "adjusted_p95_s": 2.3481220975518227,
-      "latency_coverage": 1.0
-     },
-     "cost": {
-      "score": 42.595424080853945,
-      "raw_score": 42.595424080853945,
-      "usd_per_1000": 0.08193809523809524,
-      "total_usd": 0.0240898,
-      "coverage": 1.0,
-      "source": "Autoloops published Gemma 4 31B token rates applied to returned usage receipts"
-     },
-     "composite": {
-      "harmonic_before_gates": 60.459797194404636,
-      "gates": {
-       "intelligence": 1.0,
-       "speed": 1.0,
-       "cost": 0.7257480610511168
-      },
-      "score": 43.87858058538291
-     }
-    },
-    "everyday_photo": {
-     "public": {
-      "n": 89,
-      "correct": 86,
-      "accuracy": 0.9662921348314607,
-      "chance": 0.48314606741573035,
-      "chance_corrected_intelligence": 93.47826086956523,
-      "ece": 0.06764721073773494,
-      "probability_coverage": 1.0,
-      "valid_answer_count": 89
-     },
-     "sealed": {
-      "n": 61,
-      "correct": 59,
-      "accuracy": 0.9672131147540983,
-      "chance": 0.48360655737704916,
-      "chance_corrected_intelligence": 93.65079365079364,
-      "ece": 0.058558005278611026,
-      "probability_coverage": 1.0,
-      "valid_answer_count": 61
-     },
-     "axes": {
-      "intelligence": 93.5904071773637,
-      "calibration": 87.65215456213912,
-      "speed": 75.4461602008376,
-      "cost": 42.70797176604814
-     },
-     "intelligence_before_penalty": 93.5904071773637,
-     "raw_overall_gap_pp": -0.09209799226376214,
-     "matched_gap_pp": -0.09209799226376214,
-     "matched_gap_families": {
-      "Everyday photo": {
-       "gap_pp": -0.09209799226376214,
-       "weight": 36.193333333333335
-      }
-     },
-     "overfit_penalty_points": 0.0,
-     "penalty_multiplier": 1.0,
-     "speed": {
-      "score": 75.4461602008376,
-      "raw_p50_s": 1.6065124310553074,
-      "raw_p95_s": 1.7762328162789345,
-      "adjusted_p50_s": 1.6065124310553074,
-      "adjusted_p95_s": 1.7762328162789345,
-      "latency_coverage": 1.0
-     },
-     "cost": {
-      "score": 42.70797176604814,
-      "raw_score": 42.70797176604814,
-      "usd_per_1000": 0.08123333333333335,
-      "total_usd": 0.012185000000000001,
-      "coverage": 1.0,
-      "source": "Autoloops published Gemma 4 31B token rates applied to returned usage receipts"
-     },
-     "composite": {
-      "harmonic_before_gates": 68.07015317504968,
-      "gates": {
-       "intelligence": 1.0,
-       "speed": 1.0,
-       "cost": 0.7295883409478261
-      },
-      "score": 49.66319012304889
-     }
-    }
-   },
-   "measurement_source": "Reused completed Autoloops results; no inference rerun"
-  },
-  {
-   "rank": 5,
    "key": "djev_spark_nvfp4",
    "name": "djev-spark NVFP4",
    "api_flag": false,
    "prior_exposure": "Saw the 100 public promo photos in the earlier video run through inference only; no training. Its score on the new sealed photo variants is the clean split measurement.",
-   "score": 41.55750809880439,
+   "score": 49.37682723222856,
+   "previous_rank": 5,
+   "previous_score": 41.56,
    "tracks": {
     "all": {
      "public": {
@@ -948,60 +781,60 @@
       "valid_answer_count": 228
      },
      "sealed": {
-      "n": 216,
-      "correct": 127,
-      "accuracy": 0.5879629629629629,
-      "chance": 0.2800925925925926,
-      "chance_corrected_intelligence": 42.7652733118971,
-      "ece": 0.13007406635000932,
+      "n": 456,
+      "correct": 307,
+      "accuracy": 0.6732456140350878,
+      "chance": 0.3435672514619883,
+      "chance_corrected_intelligence": 50.2227171492205,
+      "ece": 0.08800994992966876,
       "probability_coverage": 1.0,
-      "valid_answer_count": 216
+      "valid_answer_count": 456
      },
      "axes": {
-      "intelligence": 44.2513856495021,
-      "calibration": 78.83297645909568,
-      "speed": 85.90690899433434,
-      "cost": 47.4804182949381
+      "intelligence": 49.09872414376231,
+      "calibration": 84.30131159373994,
+      "speed": 83.51197048814885,
+      "cost": 45.94795279892405
      },
-     "intelligence_before_penalty": 44.2513856495021,
-     "raw_overall_gap_pp": 5.238791423001954,
-     "matched_gap_pp": 4.094897627559309,
+     "intelligence_before_penalty": 49.09872414376231,
+     "raw_overall_gap_pp": -3.289473684210531,
+     "matched_gap_pp": 3.4405919215377594,
      "matched_gap_families": {
       "Everyday photo": {
-       "gap_pp": 1.8787990421808787,
-       "weight": 36.193333333333335
+       "gap_pp": 1.3956238911886354,
+       "weight": 45.95108695652174
       },
       "ScreenSpot": {
-       "gap_pp": 9.189189189189184,
-       "weight": 15.74468085106383
+       "gap_pp": 11.379310344827587,
+       "weight": 11.83673469387755
       }
      },
      "overfit_penalty_points": 0.0,
      "penalty_multiplier": 1.0,
      "speed": {
-      "score": 85.90690899433434,
-      "raw_p50_s": 0.1682967705419287,
-      "raw_p95_s": 0.18870160006918013,
-      "adjusted_p50_s": 0.48659354108385744,
-      "adjusted_p95_s": 0.5274032001383603,
+      "score": 83.51197048814885,
+      "raw_p50_s": 0.17325984255876392,
+      "raw_p95_s": 0.37357646506279707,
+      "adjusted_p50_s": 0.49651968511752786,
+      "adjusted_p95_s": 0.8971529301255942,
       "latency_coverage": 1.0
      },
      "cost": {
-      "score": 47.4804182949381,
-      "raw_score": 47.4804182949381,
-      "usd_per_1000": 0.056318713231981975,
-      "total_usd": 0.025005508675,
+      "score": 45.94795279892405,
+      "raw_score": 45.94795279892405,
+      "usd_per_1000": 0.06334829153265108,
+      "total_usd": 0.043330231408333336,
       "coverage": 1.0,
       "source": "measured GPU seconds x $1.19/GPU-hour"
      },
      "composite": {
-      "harmonic_before_gates": 58.83648158456181,
+      "harmonic_before_gates": 60.63598703255462,
       "gates": {
-       "intelligence": 0.783274052760384,
+       "intelligence": 0.9642738850181073,
        "speed": 1.0,
-       "cost": 0.901756048584917
+       "cost": 0.8444857465648611
       },
-      "score": 41.55750809880439
+      "score": 49.37682723222856
      }
     },
     "core": {
@@ -1016,56 +849,56 @@
       "valid_answer_count": 139
      },
      "sealed": {
-      "n": 155,
-      "correct": 74,
-      "accuracy": 0.4774193548387097,
-      "chance": 0.2,
-      "chance_corrected_intelligence": 34.677419354838705,
-      "ece": 0.16478646720298168,
+      "n": 361,
+      "correct": 224,
+      "accuracy": 0.6204986149584487,
+      "chance": 0.30932594644506,
+      "chance_corrected_intelligence": 45.05347593582887,
+      "ece": 0.09972965157694083,
       "probability_coverage": 1.0,
-      "valid_answer_count": 155
+      "valid_answer_count": 361
      },
      "axes": {
-      "intelligence": 34.36790878754171,
-      "calibration": 71.80271633737505,
-      "speed": 85.95706123470069,
-      "cost": 47.224858529952776
+      "intelligence": 41.11234556518532,
+      "calibration": 80.26010236876037,
+      "speed": 83.54572029284503,
+      "cost": 45.807638578569296
      },
-     "intelligence_before_penalty": 34.36790878754171,
-     "raw_overall_gap_pp": 0.45950336504989586,
-     "matched_gap_pp": 9.189189189189184,
+     "intelligence_before_penalty": 41.11234556518532,
+     "raw_overall_gap_pp": -13.848422646924007,
+     "matched_gap_pp": 11.379310344827587,
      "matched_gap_families": {
       "ScreenSpot": {
-       "gap_pp": 9.189189189189184,
-       "weight": 15.74468085106383
+       "gap_pp": 11.379310344827587,
+       "weight": 11.83673469387755
       }
      },
      "overfit_penalty_points": 0.0,
      "penalty_multiplier": 1.0,
      "speed": {
-      "score": 85.95706123470069,
-      "raw_p50_s": 0.1652924990048632,
-      "raw_p95_s": 0.18893298599869013,
-      "adjusted_p50_s": 0.4805849980097264,
-      "adjusted_p95_s": 0.5278659719973803,
+      "score": 83.54572029284503,
+      "raw_p50_s": 0.17407358915079385,
+      "raw_p95_s": 0.36864981055259705,
+      "adjusted_p50_s": 0.4981471783015877,
+      "adjusted_p95_s": 0.8872996211051941,
       "latency_coverage": 1.0
      },
      "cost": {
-      "score": 47.224858529952776,
-      "raw_score": 47.224858529952776,
-      "usd_per_1000": 0.057434306613756606,
-      "total_usd": 0.016885686144444443,
+      "score": 45.807638578569296,
+      "raw_score": 45.807638578569296,
+      "usd_per_1000": 0.06403420873888889,
+      "total_usd": 0.032017104369444445,
       "coverage": 1.0,
       "source": "measured GPU seconds x $1.19/GPU-hour"
      },
      "composite": {
-      "harmonic_before_gates": 52.747508829309886,
+      "harmonic_before_gates": 56.67087062019232,
       "gates": {
-       "intelligence": 0.4724612617715146,
+       "intelligence": 0.6760899831484852,
        "speed": 1.0,
-       "cost": 0.8920749052696213
+       "cost": 0.8393359008579321
       },
-      "score": 22.23153660830832
+      "score": 32.158825990320636
      }
     },
     "everyday_photo": {
@@ -1080,56 +913,264 @@
       "valid_answer_count": 89
      },
      "sealed": {
-      "n": 61,
-      "correct": 53,
-      "accuracy": 0.8688524590163934,
-      "chance": 0.48360655737704916,
-      "chance_corrected_intelligence": 74.60317460317461,
-      "ece": 0.08394993368696115,
+      "n": 95,
+      "correct": 83,
+      "accuracy": 0.8736842105263158,
+      "chance": 0.47368421052631576,
+      "chance_corrected_intelligence": 76.0,
+      "ece": 0.047965802497929796,
       "probability_coverage": 1.0,
-      "valid_answer_count": 61
+      "valid_answer_count": 95
      },
      "axes": {
-      "intelligence": 75.88336783988959,
-      "calibration": 86.70035758110562,
-      "speed": 85.87126118174852,
-      "cost": 47.99634165370624
+      "intelligence": 76.79130434782608,
+      "calibration": 91.37829463567968,
+      "speed": 83.47427984875057,
+      "cost": 46.33705477056459
      },
-     "intelligence_before_penalty": 75.88336783988959,
-     "raw_overall_gap_pp": 1.8787990421808787,
-     "matched_gap_pp": 1.878799042180879,
+     "intelligence_before_penalty": 76.79130434782608,
+     "raw_overall_gap_pp": 1.3956238911886354,
+     "matched_gap_pp": 1.3956238911886354,
      "matched_gap_families": {
       "Everyday photo": {
-       "gap_pp": 1.8787990421808787,
-       "weight": 36.193333333333335
+       "gap_pp": 1.3956238911886354,
+       "weight": 45.95108695652174
       }
      },
      "overfit_penalty_points": 0.0,
      "penalty_multiplier": 1.0,
      "speed": {
-      "score": 85.87126118174852,
-      "raw_p50_s": 0.1704564766259864,
-      "raw_p95_s": 0.18853566306643188,
-      "adjusted_p50_s": 0.4909129532519728,
-      "adjusted_p95_s": 0.5270713261328638,
+      "score": 83.47427984875057,
+      "raw_p50_s": 0.17253568663727492,
+      "raw_p95_s": 0.37881014961749315,
+      "adjusted_p50_s": 0.49507137327454986,
+      "adjusted_p95_s": 0.9076202992349863,
       "latency_coverage": 1.0
      },
      "cost": {
-      "score": 47.99634165370624,
-      "raw_score": 47.99634165370624,
-      "usd_per_1000": 0.0541321502037037,
-      "total_usd": 0.008119822530555555,
+      "score": 46.33705477056459,
+      "raw_score": 46.33705477056459,
+      "usd_per_1000": 0.06148438608091788,
+      "total_usd": 0.01131312703888889,
       "coverage": 1.0,
       "source": "measured GPU seconds x $1.19/GPU-hour"
      },
      "composite": {
-      "harmonic_before_gates": 69.93941512783732,
+      "harmonic_before_gates": 69.53309422440279,
       "gates": {
        "intelligence": 1.0,
        "speed": 1.0,
-       "cost": 0.9214595248557186
+       "cost": 0.858849057924121
       },
-      "score": 64.44634023238383
+      "score": 59.71843246917748
+     }
+    }
+   }
+  },
+  {
+   "rank": 5,
+   "key": "kushal_gemma4_31b_it_autoloops",
+   "name": "Kushal Patil — Gemma 4 31B IT (Autoloops)",
+   "api_flag": true,
+   "prior_exposure": "Original items reused from the Autoloops measurement; fresh sealed items run 25 Sep.",
+   "score": 47.13807675331833,
+   "previous_rank": 4,
+   "previous_score": 45.91,
+   "tracks": {
+    "all": {
+     "public": {
+      "n": 228,
+      "correct": 193,
+      "accuracy": 0.8464912280701754,
+      "chance": 0.32127192982456143,
+      "chance_corrected_intelligence": 77.38287560581583,
+      "ece": 0.14497689536291036,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 228
+     },
+     "sealed": {
+      "n": 456,
+      "correct": 397,
+      "accuracy": 0.8706140350877193,
+      "chance": 0.3435672514619883,
+      "chance_corrected_intelligence": 80.28953229398664,
+      "ece": 0.057469482086970336,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 456
+     },
+     "axes": {
+      "intelligence": 79.27220245312685,
+      "calibration": 82.38058465329013,
+      "speed": 73.88689466428698,
+      "cost": 42.647567959402224
+     },
+     "intelligence_before_penalty": 79.27220245312685,
+     "raw_overall_gap_pp": -2.412280701754388,
+     "matched_gap_pp": 0.6782914119555128,
+     "matched_gap_families": {
+      "Everyday photo": {
+       "gap_pp": -0.21289178001182574,
+       "weight": 45.95108695652174
+      },
+      "ScreenSpot": {
+       "gap_pp": 4.137931034482767,
+       "weight": 11.83673469387755
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 73.88689466428698,
+      "raw_p50_s": 1.4245557002723217,
+      "raw_p95_s": 2.868343099951744,
+      "adjusted_p50_s": 1.4245557002723217,
+      "adjusted_p95_s": 2.868343099951744,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 42.647567959402224,
+      "raw_score": 42.647567959402224,
+      "usd_per_1000": 0.0816108187134503,
+      "total_usd": 0.055821800000000005,
+      "coverage": 1.0,
+      "source": "Autoloops published Gemma 4 31B token rates applied to returned usage receipts"
+     },
+     "composite": {
+      "harmonic_before_gates": 64.79228973749649,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 0.7275260211407324
+      },
+      "score": 47.13807675331833
+     }
+    },
+    "core": {
+     "public": {
+      "n": 139,
+      "correct": 107,
+      "accuracy": 0.7697841726618705,
+      "chance": 0.21762589928057555,
+      "chance_corrected_intelligence": 70.57471264367817,
+      "ece": 0.21712817590960218,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 139
+     },
+     "sealed": {
+      "n": 361,
+      "correct": 305,
+      "accuracy": 0.8448753462603878,
+      "chance": 0.30932594644506,
+      "chance_corrected_intelligence": 77.54010695187165,
+      "ece": 0.06393741460030475,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 361
+     },
+     "axes": {
+      "intelligence": 75.10221894400394,
+      "calibration": 76.48916378828822,
+      "speed": 75.0368593389064,
+      "cost": 42.61714604962486
+     },
+     "intelligence_before_penalty": 75.10221894400394,
+     "raw_overall_gap_pp": -7.509117359851736,
+     "matched_gap_pp": 4.137931034482767,
+     "matched_gap_families": {
+      "ScreenSpot": {
+       "gap_pp": 4.137931034482767,
+       "weight": 11.83673469387755
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 75.0368593389064,
+      "raw_p50_s": 1.104134175926447,
+      "raw_p95_s": 2.8398291543126106,
+      "adjusted_p50_s": 1.104134175926447,
+      "adjusted_p95_s": 2.8398291543126106,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 42.61714604962486,
+      "raw_score": 42.61714604962486,
+      "usd_per_1000": 0.0818016,
+      "total_usd": 0.0409008,
+      "coverage": 1.0,
+      "source": "Autoloops published Gemma 4 31B token rates applied to returned usage receipts"
+     },
+     "composite": {
+      "harmonic_before_gates": 63.310722482871334,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 0.7264884549660221
+      },
+      "score": 45.99450895936379
+     }
+    },
+    "everyday_photo": {
+     "public": {
+      "n": 89,
+      "correct": 86,
+      "accuracy": 0.9662921348314607,
+      "chance": 0.48314606741573035,
+      "chance_corrected_intelligence": 93.47826086956523,
+      "ece": 0.06764721073773494,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 89
+     },
+     "sealed": {
+      "n": 95,
+      "correct": 92,
+      "accuracy": 0.968421052631579,
+      "chance": 0.47368421052631576,
+      "chance_corrected_intelligence": 94.0,
+      "ece": 0.056566737879336235,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 95
+     },
+     "axes": {
+      "intelligence": 93.81739130434784,
+      "calibration": 87.91101932404484,
+      "speed": 73.26606748566935,
+      "cost": 42.73059677917229
+     },
+     "intelligence_before_penalty": 93.81739130434784,
+     "raw_overall_gap_pp": -0.21289178001182574,
+     "matched_gap_pp": -0.2128917800118257,
+     "matched_gap_families": {
+      "Everyday photo": {
+       "gap_pp": -0.21289178001182574,
+       "weight": 45.95108695652174
+      }
+     },
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
+     "speed": {
+      "score": 73.26606748566935,
+      "raw_p50_s": 1.623617745935917,
+      "raw_p95_s": 2.9034173116087914,
+      "adjusted_p50_s": 1.623617745935917,
+      "adjusted_p95_s": 2.9034173116087914,
+      "latency_coverage": 1.0
+     },
+     "cost": {
+      "score": 42.73059677917229,
+      "raw_score": 42.73059677917229,
+      "usd_per_1000": 0.08109239130434782,
+      "total_usd": 0.014921,
+      "coverage": 1.0,
+      "source": "Autoloops published Gemma 4 31B token rates applied to returned usage receipts"
+     },
+     "composite": {
+      "harmonic_before_gates": 67.69854971318252,
+      "gates": {
+       "intelligence": 1.0,
+       "speed": 1.0,
+       "cost": 0.7303615604416835
+      },
+      "score": 49.44441840815887
      }
     }
    }
@@ -1140,7 +1181,9 @@
    "name": "djev-dev BF16",
    "api_flag": false,
    "prior_exposure": "No evaluation run on this item set before this job.",
-   "score": 38.75871810843354,
+   "score": 46.635108691300836,
+   "previous_rank": 6,
+   "previous_score": 38.76,
    "tracks": {
     "all": {
      "public": {
@@ -1154,60 +1197,60 @@
       "valid_answer_count": 228
      },
      "sealed": {
-      "n": 216,
-      "correct": 124,
-      "accuracy": 0.5740740740740741,
-      "chance": 0.2800925925925926,
-      "chance_corrected_intelligence": 40.83601286173633,
-      "ece": 0.1819593786672414,
+      "n": 456,
+      "correct": 302,
+      "accuracy": 0.6622807017543859,
+      "chance": 0.3435672514619883,
+      "chance_corrected_intelligence": 48.55233853006681,
+      "ece": 0.1310125932862789,
       "probability_coverage": 1.0,
-      "valid_answer_count": 216
+      "valid_answer_count": 456
      },
      "axes": {
-      "intelligence": 44.580565064490486,
-      "calibration": 71.39492665072952,
-      "speed": 85.35268068385818,
-      "cost": 46.129309364701776
+      "intelligence": 49.5961767489053,
+      "calibration": 78.01800875025464,
+      "speed": 83.00439624441816,
+      "cost": 44.68574922949426
      },
-     "intelligence_before_penalty": 44.580565064490486,
-     "raw_overall_gap_pp": 9.697855750487328,
-     "matched_gap_pp": 9.188530790931914,
+     "intelligence_before_penalty": 49.5961767489053,
+     "raw_overall_gap_pp": 0.8771929824561431,
+     "matched_gap_pp": 6.569484563784153,
      "matched_gap_families": {
       "Everyday photo": {
-       "gap_pp": 5.24958555903482,
-       "weight": 36.193333333333335
+       "gap_pp": 5.819041986989948,
+       "weight": 45.95108695652174
       },
       "ScreenSpot": {
-       "gap_pp": 18.243243243243246,
-       "weight": 15.74468085106383
+       "gap_pp": 9.482758620689658,
+       "weight": 11.83673469387755
       }
      },
      "overfit_penalty_points": 0.0,
      "penalty_multiplier": 1.0,
      "speed": {
-      "score": 85.35268068385818,
-      "raw_p50_s": 0.18831039301585406,
-      "raw_p95_s": 0.2018241269979626,
-      "adjusted_p50_s": 0.5266207860317081,
-      "adjusted_p95_s": 0.5536482539959252,
+      "score": 83.00439624441816,
+      "raw_p50_s": 0.19291216880083084,
+      "raw_p95_s": 0.3922054972499609,
+      "adjusted_p50_s": 0.5358243376016617,
+      "adjusted_p95_s": 0.9344109944999218,
       "latency_coverage": 1.0
      },
      "cost": {
-      "score": 46.129309364701776,
-      "raw_score": 46.129309364701776,
-      "usd_per_1000": 0.06247261538413413,
-      "total_usd": 0.027737841230555553,
+      "score": 44.68574922949426,
+      "raw_score": 44.68574922949426,
+      "usd_per_1000": 0.06979243632634827,
+      "total_usd": 0.04773802644722222,
       "coverage": 1.0,
       "source": "measured GPU seconds x $1.19/GPU-hour"
      },
      "composite": {
-      "harmonic_before_gates": 57.28018070409399,
+      "harmonic_before_gates": 59.341500628273316,
       "gates": {
-       "intelligence": 0.7949707125877078,
+       "intelligence": 0.9839122992434619,
        "speed": 1.0,
-       "cost": 0.8511652729857452
+       "cost": 0.7987264736804989
       },
-      "score": 38.75871810843354
+      "score": 46.635108691300836
      }
     },
     "core": {
@@ -1222,56 +1265,56 @@
       "valid_answer_count": 139
      },
      "sealed": {
-      "n": 155,
-      "correct": 71,
-      "accuracy": 0.45806451612903226,
-      "chance": 0.2,
-      "chance_corrected_intelligence": 32.258064516129025,
-      "ece": 0.2367309368615647,
+      "n": 361,
+      "correct": 220,
+      "accuracy": 0.6094182825484764,
+      "chance": 0.30932594644506,
+      "chance_corrected_intelligence": 43.449197860962556,
+      "ece": 0.15154753131267482,
       "probability_coverage": 1.0,
-      "valid_answer_count": 155
+      "valid_answer_count": 361
      },
      "axes": {
-      "intelligence": 32.97730010321779,
-      "calibration": 61.33699516324936,
-      "speed": 85.37931177737522,
-      "cost": 45.89606316909154
+      "intelligence": 41.356921138361294,
+      "calibration": 72.41083788460504,
+      "speed": 83.04302639829339,
+      "cost": 44.55400986673379
      },
-     "intelligence_before_penalty": 34.082684464219504,
-     "raw_overall_gap_pp": 5.27268507774426,
-     "matched_gap_pp": 18.243243243243242,
+     "intelligence_before_penalty": 41.356921138361294,
+     "raw_overall_gap_pp": -9.862691564200155,
+     "matched_gap_pp": 9.482758620689658,
      "matched_gap_families": {
       "ScreenSpot": {
-       "gap_pp": 18.243243243243246,
-       "weight": 15.74468085106383
+       "gap_pp": 9.482758620689658,
+       "weight": 11.83673469387755
       }
      },
-     "overfit_penalty_points": 3.243243243243242,
-     "penalty_multiplier": 0.9675675675675676,
+     "overfit_penalty_points": 0.0,
+     "penalty_multiplier": 1.0,
      "speed": {
-      "score": 85.37931177737522,
-      "raw_p50_s": 0.18501371948514134,
-      "raw_p95_s": 0.2036201790906489,
-      "adjusted_p50_s": 0.5200274389702827,
-      "adjusted_p95_s": 0.5572403581812978,
+      "score": 83.04302639829339,
+      "raw_p50_s": 0.19359908578917384,
+      "raw_p95_s": 0.3868839154019952,
+      "adjusted_p50_s": 0.5371981715783477,
+      "adjusted_p95_s": 0.9237678308039904,
       "latency_coverage": 1.0
      },
      "cost": {
-      "score": 45.89606316909154,
-      "raw_score": 45.89606316909154,
-      "usd_per_1000": 0.06360109034391534,
-      "total_usd": 0.01869872056111111,
+      "score": 44.55400986673379,
+      "raw_score": 44.55400986673379,
+      "usd_per_1000": 0.07050171329444445,
+      "total_usd": 0.035250856647222224,
       "coverage": 1.0,
       "source": "measured GPU seconds x $1.19/GPU-hour"
      },
      "composite": {
-      "harmonic_before_gates": 49.92008779828747,
+      "harmonic_before_gates": 55.190336330162765,
       "gates": {
-       "intelligence": 0.4350009288390753,
+       "intelligence": 0.684157970417854,
        "speed": 1.0,
-       "cost": 0.8425794457684963
+       "cost": 0.7940239180820048
       },
-      "score": 18.296852429255864
+      "score": 29.981476461986073
      }
     },
     "everyday_photo": {
@@ -1286,56 +1329,56 @@
       "valid_answer_count": 89
      },
      "sealed": {
-      "n": 61,
-      "correct": 53,
-      "accuracy": 0.8688524590163934,
-      "chance": 0.48360655737704916,
-      "chance_corrected_intelligence": 74.60317460317461,
-      "ece": 0.06120859209824996,
+      "n": 95,
+      "correct": 82,
+      "accuracy": 0.8631578947368421,
+      "chance": 0.47368421052631576,
+      "chance_corrected_intelligence": 74.0,
+      "ece": 0.0639061184748951,
       "probability_coverage": 1.0,
-      "valid_answer_count": 61
+      "valid_answer_count": 95
      },
      "axes": {
-      "intelligence": 78.16597653554176,
-      "calibration": 88.21343280806788,
-      "speed": 85.37957724787815,
-      "cost": 46.59895224783852
+      "intelligence": 77.77391304347826,
+      "calibration": 87.86275437910402,
+      "speed": 82.97056265023701,
+      "cost": 45.050614172025135
      },
-     "intelligence_before_penalty": 78.16597653554176,
-     "raw_overall_gap_pp": 5.24958555903482,
-     "matched_gap_pp": 5.24958555903482,
+     "intelligence_before_penalty": 77.77391304347826,
+     "raw_overall_gap_pp": 5.819041986989948,
+     "matched_gap_pp": 5.819041986989949,
      "matched_gap_families": {
       "Everyday photo": {
-       "gap_pp": 5.24958555903482,
-       "weight": 36.193333333333335
+       "gap_pp": 5.819041986989948,
+       "weight": 45.95108695652174
       }
      },
      "overfit_penalty_points": 0.0,
      "penalty_multiplier": 1.0,
      "speed": {
-      "score": 85.37957724787815,
-      "raw_p50_s": 0.19073488446883857,
-      "raw_p95_s": 0.19760493491776288,
-      "adjusted_p50_s": 0.5314697689376772,
-      "adjusted_p95_s": 0.5452098698355258,
+      "score": 82.97056265023701,
+      "raw_p50_s": 0.19210817047860473,
+      "raw_p95_s": 0.39727675542235374,
+      "adjusted_p50_s": 0.5342163409572095,
+      "adjusted_p95_s": 0.9445535108447075,
       "latency_coverage": 1.0
      },
      "cost": {
-      "score": 46.59895224783852,
-      "raw_score": 46.59895224783852,
-      "usd_per_1000": 0.060260804462962954,
-      "total_usd": 0.009039120669444444,
+      "score": 45.050614172025135,
+      "raw_score": 45.050614172025135,
+      "usd_per_1000": 0.06786505326086957,
+      "total_usd": 0.0124871698,
       "coverage": 1.0,
       "source": "measured GPU seconds x $1.19/GPU-hour"
      },
      "composite": {
-      "harmonic_before_gates": 69.80614609550345,
+      "harmonic_before_gates": 68.38905450290876,
       "gates": {
        "intelligence": 1.0,
        "speed": 1.0,
-       "cost": 0.8685849402385339
+       "cost": 0.8118231349106687
       },
-      "score": 60.63256723464524
+      "score": 55.519816620127976
      }
     }
    }
@@ -1346,7 +1389,9 @@
    "name": "Bonsai-2-27B v2 PQ2_0 + Q8_0 MMProj",
    "api_flag": false,
    "prior_exposure": "Measured separately on 24 Sep; clean PNG-normalized rerun scored.",
-   "score": 18.952926197505175,
+   "score": 19.25753655471137,
+   "previous_rank": 7,
+   "previous_score": 18.95,
    "tracks": {
     "all": {
      "public": {
@@ -1360,60 +1405,60 @@
       "valid_answer_count": 228
      },
      "sealed": {
-      "n": 216,
-      "correct": 179,
-      "accuracy": 0.8287037037037037,
-      "chance": 0.2800925925925926,
-      "chance_corrected_intelligence": 76.20578778135048,
-      "ece": 0.0479431260432064,
+      "n": 456,
+      "correct": 379,
+      "accuracy": 0.831140350877193,
+      "chance": 0.3435672514619883,
+      "chance_corrected_intelligence": 74.2761692650334,
+      "ece": 0.042411625844534784,
       "probability_coverage": 1.0,
-      "valid_answer_count": 216
+      "valid_answer_count": 456
      },
      "axes": {
-      "intelligence": 76.16542603202967,
-      "calibration": 89.99369897544139,
-      "speed": 73.87263422266625,
-      "cost": 29.20737246368857
+      "intelligence": 74.91117399642357,
+      "calibration": 90.71279400126869,
+      "speed": 73.62488236781681,
+      "cost": 29.425502829215585
      },
-     "intelligence_before_penalty": 76.16542603202967,
-     "raw_overall_gap_pp": 0.9015594541910366,
-     "matched_gap_pp": 3.918746569150897,
+     "intelligence_before_penalty": 74.91117399642357,
+     "raw_overall_gap_pp": 0.6578947368421129,
+     "matched_gap_pp": 1.9460092319798783,
      "matched_gap_families": {
       "Everyday photo": {
-       "gap_pp": 2.1550930189721873,
-       "weight": 36.193333333333335
+       "gap_pp": 0.981667652276752,
+       "weight": 45.95108695652174
       },
       "ScreenSpot": {
-       "gap_pp": 7.972972972972969,
-       "weight": 15.74468085106383
+       "gap_pp": 5.689655172413788,
+       "weight": 11.83673469387755
       }
      },
      "overfit_penalty_points": 0.0,
      "penalty_multiplier": 1.0,
      "speed": {
-      "score": 73.87263422266625,
-      "raw_p50_s": 0.8029782474040985,
-      "raw_p95_s": 1.092327805235982,
-      "adjusted_p50_s": 1.755956494808197,
-      "adjusted_p95_s": 2.334655610471964,
+      "score": 73.62488236781681,
+      "raw_p50_s": 0.798913526814431,
+      "raw_p95_s": 1.1666045924648643,
+      "adjusted_p50_s": 1.7478270536288618,
+      "adjusted_p95_s": 2.4832091849297284,
       "latency_coverage": 1.0
      },
      "cost": {
-      "score": 29.20737246368857,
-      "raw_score": 29.20737246368857,
-      "usd_per_1000": 0.22895717148185502,
-      "total_usd": 0.10165698413794362,
+      "score": 29.425502829215585,
+      "raw_score": 29.42550282921559,
+      "usd_per_1000": 0.22515585193897555,
+      "total_usd": 0.15400660272625927,
       "coverage": 1.0,
       "source": "measured GPU seconds x $1.19/GPU-hour"
      },
      "composite": {
-      "harmonic_before_gates": 55.543251810087256,
+      "harmonic_before_gates": 55.60232524294174,
       "gates": {
        "intelligence": 1.0,
        "speed": 1.0,
-       "cost": 0.3412282424930533
+       "cost": 0.3463440867008697
       },
-      "score": 18.952926197505175
+      "score": 19.25753655471137
      }
     },
     "core": {
@@ -1428,56 +1473,56 @@
       "valid_answer_count": 139
      },
      "sealed": {
-      "n": 155,
-      "correct": 120,
-      "accuracy": 0.7741935483870968,
-      "chance": 0.2,
-      "chance_corrected_intelligence": 71.77419354838709,
-      "ece": 0.07308334889219141,
+      "n": 361,
+      "correct": 286,
+      "accuracy": 0.7922437673130194,
+      "chance": 0.30932594644506,
+      "chance_corrected_intelligence": 69.91978609625667,
+      "ece": 0.05759542829258477,
       "probability_coverage": 1.0,
-      "valid_answer_count": 155
+      "valid_answer_count": 361
      },
      "axes": {
-      "intelligence": 70.06701890989987,
-      "calibration": 85.65575441192301,
-      "speed": 75.38649355730104,
-      "cost": 29.207372463688575
+      "intelligence": 68.8616540660151,
+      "calibration": 87.66918408987188,
+      "speed": 74.16306866694471,
+      "cost": 29.47582360131429
      },
-     "intelligence_before_penalty": 70.06701890989987,
-     "raw_overall_gap_pp": -3.318635414249249,
-     "matched_gap_pp": 7.972972972972969,
+     "intelligence_before_penalty": 68.8616540660151,
+     "raw_overall_gap_pp": -5.123657306841512,
+     "matched_gap_pp": 5.689655172413787,
      "matched_gap_families": {
       "ScreenSpot": {
-       "gap_pp": 7.972972972972969,
-       "weight": 15.74468085106383
+       "gap_pp": 5.689655172413788,
+       "weight": 11.83673469387755
       }
      },
      "overfit_penalty_points": 0.0,
      "penalty_multiplier": 1.0,
      "speed": {
-      "score": 75.38649355730104,
-      "raw_p50_s": 0.7267089253291488,
-      "raw_p95_s": 0.8271399894729257,
-      "adjusted_p50_s": 1.6034178506582974,
-      "adjusted_p95_s": 1.8042799789458512,
+      "score": 74.16306866694471,
+      "raw_p50_s": 0.7032082038931549,
+      "raw_p95_s": 1.1567918807268143,
+      "adjusted_p50_s": 1.5564164077863096,
+      "adjusted_p95_s": 2.4635837614536285,
       "latency_coverage": 1.0
      },
      "cost": {
-      "score": 29.207372463688575,
-      "raw_score": 29.20737246368857,
-      "usd_per_1000": 0.22895717148185502,
-      "total_usd": 0.06731340841566538,
+      "score": 29.47582360131429,
+      "raw_score": 29.47582360131429,
+      "usd_per_1000": 0.22428791822280672,
+      "total_usd": 0.11214395911140336,
       "coverage": 1.0,
       "source": "measured GPU seconds x $1.19/GPU-hour"
      },
      "composite": {
-      "harmonic_before_gates": 54.459115482463474,
+      "harmonic_before_gates": 54.54176372040154,
       "gates": {
        "intelligence": 1.0,
        "speed": 1.0,
-       "cost": 0.34122824249305345
+       "cost": 0.34752967079031855
       },
-      "score": 18.58298826380725
+      "score": 18.954881190074488
      }
     },
     "everyday_photo": {
@@ -1492,56 +1537,56 @@
       "valid_answer_count": 89
      },
      "sealed": {
-      "n": 61,
-      "correct": 59,
-      "accuracy": 0.9672131147540983,
-      "chance": 0.48360655737704916,
-      "chance_corrected_intelligence": 93.65079365079364,
-      "ece": 0.030905666919615972,
+      "n": 95,
+      "correct": 93,
+      "accuracy": 0.9789473684210527,
+      "chance": 0.47368421052631576,
+      "chance_corrected_intelligence": 95.99999999999999,
+      "ece": 0.027106282277373703,
       "probability_coverage": 1.0,
-      "valid_answer_count": 61
+      "valid_answer_count": 95
      },
      "axes": {
-      "intelligence": 95.11214630779847,
-      "calibration": 93.02322659048133,
-      "speed": 72.65113813816319,
-      "cost": 29.20737246368857
+      "intelligence": 96.6391304347826,
+      "calibration": 93.51714659397283,
+      "speed": 72.37610834521573,
+      "cost": 29.28973517678125
      },
-     "intelligence_before_penalty": 95.11214630779847,
-     "raw_overall_gap_pp": 2.1550930189721873,
-     "matched_gap_pp": 2.1550930189721873,
+     "intelligence_before_penalty": 96.6391304347826,
+     "raw_overall_gap_pp": 0.981667652276752,
+     "matched_gap_pp": 0.981667652276752,
      "matched_gap_families": {
       "Everyday photo": {
-       "gap_pp": 2.1550930189721873,
-       "weight": 36.193333333333335
+       "gap_pp": 0.981667652276752,
+       "weight": 45.95108695652174
       }
      },
      "overfit_penalty_points": 0.0,
      "penalty_multiplier": 1.0,
      "speed": {
-      "score": 72.65113813816319,
-      "raw_p50_s": 1.0803800919093192,
-      "raw_p95_s": 1.1001716740429401,
-      "adjusted_p50_s": 2.3107601838186382,
-      "adjusted_p95_s": 2.35034334808588,
+      "score": 72.37610834521573,
+      "raw_p50_s": 1.085221514571458,
+      "raw_p95_s": 1.1717755002900958,
+      "adjusted_p50_s": 2.320443029142916,
+      "adjusted_p95_s": 2.4935510005801915,
       "latency_coverage": 1.0
      },
      "cost": {
-      "score": 29.20737246368857,
-      "raw_score": 29.20737246368857,
-      "usd_per_1000": 0.22895717148185502,
-      "total_usd": 0.03434357572227825,
+      "score": 29.28973517678125,
+      "raw_score": 29.28973517678125,
+      "usd_per_1000": 0.22751436747204296,
+      "total_usd": 0.04186264361485591,
       "coverage": 1.0,
       "source": "measured GPU seconds x $1.19/GPU-hour"
      },
      "composite": {
-      "harmonic_before_gates": 57.74818366170756,
+      "harmonic_before_gates": 57.971544294050915,
       "gates": {
        "intelligence": 1.0,
        "speed": 1.0,
-       "cost": 0.3412282424930533
+       "cost": 0.3431554346903908
       },
-      "score": 19.705311218050525
+      "score": 19.893250481898285
      }
     }
    }
@@ -1552,7 +1597,9 @@
    "name": "GPT-6 Luna (low reasoning effort)",
    "api_flag": true,
    "prior_exposure": "Before evaluation, the API received stateless, single-turn label-check calls for the 100 public promo-photo candidates and 68 new sealed-photo candidates, including images later dropped. Calls showed the image, question, and options but not the gold key; provider data-collection denial, zero-data-retention, and no-fallback were requested. Human gold-blind adjudication decided inclusion; checker outputs did not determine keep/drop decisions. This job used no fine-tuning and carried no context between calls.",
-   "score": 16.509956607688665,
+   "score": 16.055574320027326,
+   "previous_rank": 8,
+   "previous_score": 16.51,
    "tracks": {
     "all": {
      "public": {
@@ -1566,60 +1613,60 @@
       "valid_answer_count": 215
      },
      "sealed": {
-      "n": 216,
-      "correct": 189,
-      "accuracy": 0.875,
-      "chance": 0.2800925925925926,
-      "chance_corrected_intelligence": 82.63665594855306,
-      "ece": 0.042414634146341425,
-      "probability_coverage": 0.9490740740740741,
-      "valid_answer_count": 205
+      "n": 456,
+      "correct": 395,
+      "accuracy": 0.8662280701754386,
+      "chance": 0.3435672514619883,
+      "chance_corrected_intelligence": 79.62138084632517,
+      "ece": 0.009137254901960764,
+      "probability_coverage": 0.8947368421052632,
+      "valid_answer_count": 408
      },
      "axes": {
-      "intelligence": 83.05954526801344,
-      "calibration": 87.67517787524368,
-      "speed": 61.77419054171388,
-      "cost": 27.905814687003325
+      "intelligence": 81.09961645156531,
+      "calibration": 88.31355263157896,
+      "speed": 65.70433491235721,
+      "cost": 27.481462725361837
      },
-     "intelligence_before_penalty": 83.05954526801344,
-     "raw_overall_gap_pp": 1.5350877192982448,
-     "matched_gap_pp": 5.721222515655601,
+     "intelligence_before_penalty": 81.09961645156531,
+     "raw_overall_gap_pp": 2.412280701754388,
+     "matched_gap_pp": 11.972400026870625,
      "matched_gap_families": {
       "Everyday photo": {
-       "gap_pp": 4.918032786885251,
-       "weight": 36.193333333333335
+       "gap_pp": 10.526315789473683,
+       "weight": 45.95108695652174
       },
       "ScreenSpot": {
-       "gap_pp": 7.567567567567568,
-       "weight": 15.74468085106383
+       "gap_pp": 17.586206896551726,
+       "weight": 11.83673469387755
       }
      },
      "overfit_penalty_points": 0.0,
      "penalty_multiplier": 1.0,
      "speed": {
-      "score": 61.77419054171388,
-      "raw_p50_s": 3.4255253970623016,
-      "raw_p95_s": 19.402324065566063,
-      "adjusted_p50_s": 3.4255253970623016,
-      "adjusted_p95_s": 19.402324065566063,
+      "score": 65.70433491235721,
+      "raw_p50_s": 2.9051013477146626,
+      "raw_p95_s": 9.255613714456558,
+      "adjusted_p50_s": 2.9051013477146626,
+      "adjusted_p95_s": 9.255613714456558,
       "latency_coverage": 1.0
      },
      "cost": {
-      "score": 27.905814687003325,
-      "raw_score": 29.153368755363473,
-      "usd_per_1000": 0.22990815423529412,
-      "total_usd": 0.09771096555,
-      "coverage": 0.9572072072072072,
+      "score": 27.481462725361837,
+      "raw_score": 29.93203901934315,
+      "usd_per_1000": 0.2165702008757962,
+      "total_usd": 0.13600608615,
+      "coverage": 0.9181286549707602,
       "source": "OpenRouter usage.cost receipts"
      },
      "composite": {
-      "harmonic_before_gates": 53.00252123404549,
+      "harmonic_before_gates": 53.14790676463008,
       "gates": {
        "intelligence": 1.0,
        "speed": 1.0,
-       "cost": 0.31149379733814825
+       "cost": 0.30209231741018083
       },
-      "score": 16.509956607688665
+      "score": 16.055574320027326
      }
     },
     "core": {
@@ -1634,56 +1681,56 @@
       "valid_answer_count": 126
      },
      "sealed": {
-      "n": 155,
-      "correct": 131,
-      "accuracy": 0.8451612903225807,
-      "chance": 0.2,
-      "chance_corrected_intelligence": 80.64516129032259,
-      "ece": 0.05850684931506854,
-      "probability_coverage": 0.9419354838709677,
-      "valid_answer_count": 146
+      "n": 361,
+      "correct": 310,
+      "accuracy": 0.8587257617728532,
+      "chance": 0.30932594644506,
+      "chance_corrected_intelligence": 79.54545454545455,
+      "ece": 0.01194720496894413,
+      "probability_coverage": 0.8919667590027701,
+      "valid_answer_count": 322
      },
      "axes": {
-      "intelligence": 79.37337782721544,
-      "calibration": 82.28917428637735,
-      "speed": 61.70624003160064,
-      "cost": 28.66564726624446
+      "intelligence": 76.62429512124817,
+      "calibration": 84.82011897407283,
+      "speed": 66.92247616813887,
+      "cost": 28.328782149400233
      },
-     "intelligence_before_penalty": 79.37337782721544,
-     "raw_overall_gap_pp": -2.5017405430494355,
-     "matched_gap_pp": 7.567567567567568,
+     "intelligence_before_penalty": 78.65856844305121,
+     "raw_overall_gap_pp": -3.8581876880766863,
+     "matched_gap_pp": 17.586206896551726,
      "matched_gap_families": {
       "ScreenSpot": {
-       "gap_pp": 7.567567567567568,
-       "weight": 15.74468085106383
+       "gap_pp": 17.586206896551726,
+       "weight": 11.83673469387755
       }
      },
-     "overfit_penalty_points": 0.0,
-     "penalty_multiplier": 1.0,
+     "overfit_penalty_points": 2.586206896551726,
+     "penalty_multiplier": 0.9741379310344828,
      "speed": {
-      "score": 61.70624003160064,
-      "raw_p50_s": 3.438646111637354,
-      "raw_p95_s": 19.633083522319794,
-      "adjusted_p50_s": 3.438646111637354,
-      "adjusted_p95_s": 19.633083522319794,
+      "score": 66.92247616813887,
+      "raw_p50_s": 2.5071328580379486,
+      "raw_p95_s": 8.101679049432278,
+      "adjusted_p50_s": 2.5071328580379486,
+      "adjusted_p95_s": 8.101679049432278,
       "latency_coverage": 1.0
      },
      "cost": {
-      "score": 28.66564726624446,
-      "raw_score": 30.4249108168804,
-      "usd_per_1000": 0.2085305263537906,
-      "total_usd": 0.0577629558,
-      "coverage": 0.9421768707482994,
+      "score": 28.328782149400233,
+      "raw_score": 31.267971467329176,
+      "usd_per_1000": 0.19546437615894038,
+      "total_usd": 0.0885453624,
+      "coverage": 0.906,
       "source": "OpenRouter usage.cost receipts"
      },
      "composite": {
-      "harmonic_before_gates": 52.74141476490841,
+      "harmonic_before_gates": 53.274520072732024,
       "gates": {
        "intelligence": 1.0,
        "speed": 1.0,
-       "cost": 0.3286877332770994
+       "cost": 0.32100795922727093
       },
-      "score": 17.33545606890509
+      "score": 17.101544967359988
      }
     },
     "everyday_photo": {
@@ -1698,56 +1745,56 @@
       "valid_answer_count": 89
      },
      "sealed": {
-      "n": 61,
-      "correct": 58,
-      "accuracy": 0.9508196721311475,
-      "chance": 0.48360655737704916,
-      "chance_corrected_intelligence": 90.47619047619047,
-      "ece": 0.0025932203389830155,
-      "probability_coverage": 0.9672131147540983,
-      "valid_answer_count": 59
+      "n": 95,
+      "correct": 85,
+      "accuracy": 0.8947368421052632,
+      "chance": 0.47368421052631576,
+      "chance_corrected_intelligence": 80.0,
+      "ece": 0.0013837209302325348,
+      "probability_coverage": 0.9052631578947369,
+      "valid_answer_count": 86
      },
      "axes": {
-      "intelligence": 93.8095238095238,
-      "calibration": 96.65323632344816,
-      "speed": 61.804770874668506,
-      "cost": 26.702157085197285
+      "intelligence": 87.0,
+      "calibration": 92.78971259609699,
+      "speed": 61.945509385151276,
+      "cost": 25.680404255488536
      },
-     "intelligence_before_penalty": 93.8095238095238,
-     "raw_overall_gap_pp": 4.918032786885251,
-     "matched_gap_pp": 4.918032786885251,
+     "intelligence_before_penalty": 87.0,
+     "raw_overall_gap_pp": 10.526315789473683,
+     "matched_gap_pp": 10.526315789473683,
      "matched_gap_families": {
       "Everyday photo": {
-       "gap_pp": 4.918032786885251,
-       "weight": 36.193333333333335
+       "gap_pp": 10.526315789473683,
+       "weight": 45.95108695652174
       }
      },
      "overfit_penalty_points": 0.0,
      "penalty_multiplier": 1.0,
      "speed": {
-      "score": 61.804770874668506,
-      "raw_p50_s": 3.4014896862208843,
-      "raw_p95_s": 19.402324065566063,
-      "adjusted_p50_s": 3.4014896862208843,
-      "adjusted_p95_s": 19.402324065566063,
+      "score": 61.945509385151276,
+      "raw_p50_s": 3.396045558154583,
+      "raw_p95_s": 18.81375801563263,
+      "adjusted_p50_s": 3.396045558154583,
+      "adjusted_p95_s": 18.81375801563263,
       "latency_coverage": 1.0
      },
      "cost": {
-      "score": 26.702157085197285,
-      "raw_score": 27.06299704580806,
-      "usd_per_1000": 0.26991898479729726,
-      "total_usd": 0.03994800975,
-      "coverage": 0.9866666666666667,
+      "score": 25.680404255488536,
+      "raw_score": 27.00111076005652,
+      "usd_per_1000": 0.2712041357142857,
+      "total_usd": 0.04746072375,
+      "coverage": 0.9510869565217391,
       "source": "OpenRouter usage.cost receipts"
      },
      "composite": {
-      "harmonic_before_gates": 53.59322319927924,
+      "harmonic_before_gates": 51.709832916141224,
       "gates": {
        "intelligence": 1.0,
        "speed": 1.0,
-       "cost": 0.28520207720102064
+       "cost": 0.2637932650901255
       },
-      "score": 15.284898580332367
+      "score": 13.64070566221374
      }
     }
    },
@@ -1759,7 +1806,9 @@
    "name": "GPT-5.6 Luna",
    "api_flag": true,
    "prior_exposure": "No previous photo-label-check call in this job.",
-   "score": 12.566697068147905,
+   "score": 11.047975697309383,
+   "previous_rank": 9,
+   "previous_score": 12.57,
    "tracks": {
     "all": {
      "public": {
@@ -1773,60 +1822,60 @@
       "valid_answer_count": 223
      },
      "sealed": {
-      "n": 216,
-      "correct": 198,
-      "accuracy": 0.9166666666666666,
-      "chance": 0.2800925925925926,
-      "chance_corrected_intelligence": 88.42443729903535,
-      "ece": 0.02359813084112145,
-      "probability_coverage": 0.9907407407407407,
-      "valid_answer_count": 214
+      "n": 456,
+      "correct": 436,
+      "accuracy": 0.956140350877193,
+      "chance": 0.3435672514619883,
+      "chance_corrected_intelligence": 93.3184855233853,
+      "ece": 0.011395604395604456,
+      "probability_coverage": 0.9978070175438597,
+      "valid_answer_count": 455
      },
      "axes": {
-      "intelligence": 88.63097309736168,
-      "calibration": 93.76234892787524,
-      "speed": 60.80646121878747,
-      "cost": 24.85147276921242
+      "intelligence": 91.81210444318914,
+      "calibration": 95.78282894736842,
+      "speed": 62.58216542385738,
+      "cost": 23.486749563738236
      },
-     "intelligence_before_penalty": 88.63097309736168,
-     "raw_overall_gap_pp": 0.8771929824561431,
-     "matched_gap_pp": 0.28211479586959903,
+     "intelligence_before_penalty": 91.81210444318914,
+     "raw_overall_gap_pp": -3.0701754385964897,
+     "matched_gap_pp": -0.8228170014298981,
      "matched_gap_families": {
       "Everyday photo": {
-       "gap_pp": 1.6393442622950838,
-       "weight": 36.193333333333335
+       "gap_pp": 1.0526315789473717,
+       "weight": 45.95108695652174
       },
       "ScreenSpot": {
-       "gap_pp": -2.837837837837842,
-       "weight": 15.74468085106383
+       "gap_pp": -8.103448275862068,
+       "weight": 11.83673469387755
       }
      },
      "overfit_penalty_points": 0.0,
      "penalty_multiplier": 1.0,
      "speed": {
-      "score": 60.80646121878747,
-      "raw_p50_s": 3.880011420696974,
-      "raw_p95_s": 21.405278079211712,
-      "adjusted_p50_s": 3.880011420696974,
-      "adjusted_p95_s": 21.405278079211712,
+      "score": 62.58216542385738,
+      "raw_p50_s": 2.877623327076435,
+      "raw_p95_s": 19.175624303519726,
+      "adjusted_p50_s": 2.877623327076435,
+      "adjusted_p95_s": 19.175624303519726,
       "latency_coverage": 1.0
      },
      "cost": {
-      "score": 24.85147276921242,
-      "raw_score": 25.02053040709822,
-      "usd_per_1000": 0.3157298571428571,
-      "total_usd": 0.139236867,
-      "coverage": 0.9932432432432432,
+      "score": 23.486749563738236,
+      "raw_score": 23.590215420847215,
+      "usd_per_1000": 0.35236504493392073,
+      "total_usd": 0.2399605956,
+      "coverage": 0.9956140350877193,
       "source": "OpenRouter usage.cost receipts"
      },
      "composite": {
-      "harmonic_before_gates": 50.869432432040426,
+      "harmonic_before_gates": 50.06991855268806,
       "gates": {
        "intelligence": 1.0,
        "speed": 1.0,
-       "cost": 0.2470382795195626
+       "cost": 0.22065096202790327
       },
-      "score": 12.566697068147905
+      "score": 11.047975697309383
      }
     },
     "core": {
@@ -1841,56 +1890,56 @@
       "valid_answer_count": 134
      },
      "sealed": {
-      "n": 155,
-      "correct": 138,
-      "accuracy": 0.8903225806451613,
-      "chance": 0.2,
-      "chance_corrected_intelligence": 86.29032258064517,
-      "ece": 0.03844155844155838,
-      "probability_coverage": 0.9935483870967742,
-      "valid_answer_count": 154
+      "n": 361,
+      "correct": 342,
+      "accuracy": 0.9473684210526315,
+      "chance": 0.30932594644506,
+      "chance_corrected_intelligence": 92.37967914438501,
+      "ece": 0.01804709141274234,
+      "probability_coverage": 1.0,
+      "valid_answer_count": 361
      },
      "axes": {
-      "intelligence": 85.61744530960327,
-      "calibration": 90.96641912276633,
-      "speed": 60.121672579635685,
-      "cost": 24.558232070485957
+      "intelligence": 89.57552707603416,
+      "calibration": 94.00481336814205,
+      "speed": 63.08425786032544,
+      "cost": 23.39853135995666
      },
-     "intelligence_before_penalty": 85.61744530960327,
-     "raw_overall_gap_pp": -1.2624738918542655,
-     "matched_gap_pp": -2.837837837837842,
+     "intelligence_before_penalty": 89.57552707603416,
+     "raw_overall_gap_pp": -6.967057932601284,
+     "matched_gap_pp": -8.103448275862068,
      "matched_gap_families": {
       "ScreenSpot": {
-       "gap_pp": -2.837837837837842,
-       "weight": 15.74468085106383
+       "gap_pp": -8.103448275862068,
+       "weight": 11.83673469387755
       }
      },
      "overfit_penalty_points": 0.0,
      "penalty_multiplier": 1.0,
      "speed": {
-      "score": 60.121672579635685,
-      "raw_p50_s": 4.1033581122756,
-      "raw_p95_s": 23.696997418999672,
-      "adjusted_p50_s": 4.1033581122756,
-      "adjusted_p95_s": 23.696997418999672,
+      "score": 63.08425786032544,
+      "raw_p50_s": 2.6089790873229504,
+      "raw_p95_s": 18.840985529124737,
+      "adjusted_p50_s": 2.6089790873229504,
+      "adjusted_p95_s": 18.840985529124737,
       "latency_coverage": 1.0
      },
      "cost": {
-      "score": 24.558232070485957,
-      "raw_score": 24.72643913946189,
-      "usd_per_1000": 0.32293766095890414,
-      "total_usd": 0.094297797,
-      "coverage": 0.9931972789115646,
+      "score": 23.39853135995666,
+      "raw_score": 23.492501365418335,
+      "usd_per_1000": 0.35501765783132533,
+      "total_usd": 0.1767987936,
+      "coverage": 0.996,
       "source": "OpenRouter usage.cost receipts"
      },
      "composite": {
-      "harmonic_before_gates": 49.984123197339564,
+      "harmonic_before_gates": 49.75677832322138,
       "gates": {
        "intelligence": 1.0,
        "speed": 1.0,
-       "cost": 0.241242704971138
+       "cost": 0.21899650792115008
       },
-      "score": 12.058305085736803
+      "score": 10.89656069819226
      }
     },
     "everyday_photo": {
@@ -1905,56 +1954,56 @@
       "valid_answer_count": 89
      },
      "sealed": {
-      "n": 61,
-      "correct": 60,
-      "accuracy": 0.9836065573770492,
-      "chance": 0.48360655737704916,
-      "chance_corrected_intelligence": 96.82539682539682,
-      "ece": 0.014499999999999957,
-      "probability_coverage": 0.9836065573770492,
-      "valid_answer_count": 60
+      "n": 95,
+      "correct": 94,
+      "accuracy": 0.9894736842105263,
+      "chance": 0.47368421052631576,
+      "chance_corrected_intelligence": 97.99999999999999,
+      "ece": 0.014148936170212734,
+      "probability_coverage": 0.9894736842105263,
+      "valid_answer_count": 94
      },
      "axes": {
-      "intelligence": 97.93650793650794,
-      "calibration": 96.1278559587401,
-      "speed": 61.40976820805645,
-      "cost": 25.446086530508055
+      "intelligence": 98.69999999999999,
+      "calibration": 96.54331756357186,
+      "speed": 61.76145918005618,
+      "cost": 23.730223980074403
      },
-     "intelligence_before_penalty": 97.93650793650794,
-     "raw_overall_gap_pp": 1.6393442622950838,
-     "matched_gap_pp": 1.6393442622950838,
+     "intelligence_before_penalty": 98.69999999999999,
+     "raw_overall_gap_pp": 1.0526315789473717,
+     "matched_gap_pp": 1.0526315789473717,
      "matched_gap_families": {
       "Everyday photo": {
-       "gap_pp": 1.6393442622950838,
-       "weight": 36.193333333333335
+       "gap_pp": 1.0526315789473717,
+       "weight": 45.95108695652174
       }
      },
      "overfit_penalty_points": 0.0,
      "penalty_multiplier": 1.0,
      "speed": {
-      "score": 61.40976820805645,
-      "raw_p50_s": 3.5096979439258575,
-      "raw_p95_s": 20.59460363537073,
-      "adjusted_p50_s": 3.5096979439258575,
-      "adjusted_p95_s": 20.59460363537073,
+      "score": 61.76145918005618,
+      "raw_p50_s": 3.3120867535471916,
+      "raw_p95_s": 20.12576411664486,
+      "adjusted_p50_s": 3.3120867535471916,
+      "adjusted_p95_s": 20.12576411664486,
       "latency_coverage": 1.0
      },
      "cost": {
-      "score": 25.446086530508055,
-      "raw_score": 25.616865634739654,
-      "usd_per_1000": 0.3016044966442953,
-      "total_usd": 0.04493907,
-      "coverage": 0.9933333333333333,
+      "score": 23.730223980074403,
+      "raw_score": 23.859897335156774,
+      "usd_per_1000": 0.34514645901639346,
+      "total_usd": 0.063161802,
+      "coverage": 0.9945652173913043,
       "source": "OpenRouter usage.cost receipts"
      },
      "composite": {
-      "harmonic_before_gates": 52.49596189337421,
+      "harmonic_before_gates": 50.74761601972404,
       "gates": {
        "intelligence": 1.0,
        "speed": 1.0,
-       "cost": 0.2590013278872414
+       "cost": 0.22524941205779928
       },
-      "score": 13.596523839101943
+      "score": 11.430870671777797
      }
     }
    }
@@ -1965,7 +2014,9 @@
    "name": "Gemini 3.1 Flash Lite",
    "api_flag": true,
    "prior_exposure": "No previous photo-label-check call in this job.",
-   "score": 9.24492639715562,
+   "score": 9.577237093227275,
+   "previous_rank": 10,
+   "previous_score": 9.24,
    "tracks": {
     "all": {
      "public": {
@@ -1979,60 +2030,60 @@
       "valid_answer_count": 228
      },
      "sealed": {
-      "n": 216,
-      "correct": 198,
-      "accuracy": 0.9166666666666666,
-      "chance": 0.2800925925925926,
-      "chance_corrected_intelligence": 88.42443729903535,
-      "ece": 0.05768518518518521,
+      "n": 456,
+      "correct": 419,
+      "accuracy": 0.918859649122807,
+      "chance": 0.3435672514619883,
+      "chance_corrected_intelligence": 87.6391982182628,
+      "ece": 0.04713596491228077,
       "probability_coverage": 1.0,
-      "valid_answer_count": 216
+      "valid_answer_count": 456
      },
      "axes": {
-      "intelligence": 84.78606195035036,
-      "calibration": 90.06719785575048,
-      "speed": 61.856468349573426,
-      "cost": 22.07776714007956
+      "intelligence": 84.2756565478482,
+      "calibration": 91.43859649122805,
+      "speed": 64.48921606519917,
+      "cost": 22.30771297323649
      },
-     "intelligence_before_penalty": 84.78606195035036,
-     "raw_overall_gap_pp": -6.578947368421051,
-     "matched_gap_pp": -0.04096536242056092,
+     "intelligence_before_penalty": 84.2756565478482,
+     "raw_overall_gap_pp": -6.798245614035093,
+     "matched_gap_pp": -0.24720977323109633,
      "matched_gap_families": {
       "Everyday photo": {
        "gap_pp": 0.0,
-       "weight": 36.193333333333335
+       "weight": 45.95108695652174
       },
       "ScreenSpot": {
-       "gap_pp": -0.13513513513513375,
-       "weight": 15.74468085106383
+       "gap_pp": -1.2068965517241348,
+       "weight": 11.83673469387755
       }
      },
      "overfit_penalty_points": 0.0,
      "penalty_multiplier": 1.0,
      "speed": {
-      "score": 61.856468349573426,
-      "raw_p50_s": 2.390967261046171,
-      "raw_p95_s": 27.275928013026714,
-      "adjusted_p50_s": 2.390967261046171,
-      "adjusted_p95_s": 27.275928013026714,
+      "score": 64.48921606519917,
+      "raw_p50_s": 1.7987379804253578,
+      "raw_p95_s": 19.774726636707783,
+      "adjusted_p50_s": 1.7987379804253578,
+      "adjusted_p95_s": 19.774726636707783,
       "latency_coverage": 1.0
      },
      "cost": {
-      "score": 22.07776714007956,
-      "raw_score": 22.07776714007956,
-      "usd_per_1000": 0.39573800675675674,
-      "total_usd": 0.175707675,
+      "score": 22.30771297323649,
+      "raw_score": 22.30771297323649,
+      "usd_per_1000": 0.38881490131578944,
+      "total_usd": 0.2659493925,
       "coverage": 1.0,
       "source": "OpenRouter usage.cost receipts"
      },
      "composite": {
-      "harmonic_before_gates": 47.4169013404577,
+      "harmonic_before_gates": 48.11385463579876,
       "gates": {
        "intelligence": 1.0,
        "speed": 1.0,
-       "cost": 0.19497112075663067
+       "cost": 0.19905362323852144
       },
-      "score": 9.24492639715562
+      "score": 9.577237093227275
      }
     },
     "core": {
@@ -2047,56 +2098,56 @@
       "valid_answer_count": 139
      },
      "sealed": {
-      "n": 155,
-      "correct": 137,
-      "accuracy": 0.8838709677419355,
-      "chance": 0.2,
-      "chance_corrected_intelligence": 85.48387096774194,
-      "ece": 0.09219354838709676,
+      "n": 361,
+      "correct": 324,
+      "accuracy": 0.8975069252077562,
+      "chance": 0.30932594644506,
+      "chance_corrected_intelligence": 85.16042780748661,
+      "ece": 0.06740720221606644,
       "probability_coverage": 1.0,
-      "valid_answer_count": 155
+      "valid_answer_count": 361
      },
      "axes": {
-      "intelligence": 79.62198739340008,
-      "calibration": 82.33426317010907,
-      "speed": 62.57221425552512,
-      "cost": 21.4912566807712
+      "intelligence": 79.41174933923412,
+      "calibration": 85.55648817234302,
+      "speed": 65.16567354744119,
+      "cost": 21.958382891424364
      },
-     "intelligence_before_penalty": 79.62198739340008,
-     "raw_overall_gap_pp": -12.847528428869815,
-     "matched_gap_pp": -0.13513513513513375,
+     "intelligence_before_penalty": 79.41174933923412,
+     "raw_overall_gap_pp": -14.211124175451884,
+     "matched_gap_pp": -1.2068965517241348,
      "matched_gap_families": {
       "ScreenSpot": {
-       "gap_pp": -0.13513513513513375,
-       "weight": 15.74468085106383
+       "gap_pp": -1.2068965517241348,
+       "weight": 11.83673469387755
       }
      },
      "overfit_penalty_points": 0.0,
      "penalty_multiplier": 1.0,
      "speed": {
-      "score": 62.57221425552512,
-      "raw_p50_s": 2.282226175069809,
-      "raw_p95_s": 24.23370921611786,
-      "adjusted_p50_s": 2.282226175069809,
-      "adjusted_p95_s": 24.23370921611786,
+      "score": 65.16567354744119,
+      "raw_p50_s": 1.6799718365073204,
+      "raw_p95_s": 18.118850603699684,
+      "adjusted_p50_s": 1.6799718365073204,
+      "adjusted_p95_s": 18.118850603699684,
       "latency_coverage": 1.0
      },
      "cost": {
-      "score": 21.4912566807712,
-      "raw_score": 21.4912566807712,
-      "usd_per_1000": 0.41395974489795917,
-      "total_usd": 0.121704165,
+      "score": 21.958382891424364,
+      "raw_score": 21.958382891424364,
+      "usd_per_1000": 0.39938085,
+      "total_usd": 0.199690425,
       "coverage": 1.0,
       "source": "OpenRouter usage.cost receipts"
      },
      "composite": {
-      "harmonic_before_gates": 45.86259670853156,
+      "harmonic_before_gates": 46.966561370112466,
       "gates": {
        "intelligence": 1.0,
        "speed": 1.0,
-       "cost": 0.1847496454875171
+       "cost": 0.1928682316825593
       },
-      "score": 8.473098483038175
+      "score": 9.05835763966399
      }
     },
     "everyday_photo": {
@@ -2111,20 +2162,20 @@
       "valid_answer_count": 89
      },
      "sealed": {
-      "n": 61,
-      "correct": 61,
+      "n": 95,
+      "correct": 95,
       "accuracy": 1.0,
-      "chance": 0.48360655737704916,
+      "chance": 0.47368421052631576,
       "chance_corrected_intelligence": 100.0,
-      "ece": 0.03655737704918038,
+      "ece": 0.034105263157894805,
       "probability_coverage": 1.0,
-      "valid_answer_count": 61
+      "valid_answer_count": 95
      },
      "axes": {
       "intelligence": 100.0,
-      "calibration": 92.61034997237059,
-      "speed": 61.24716088211909,
-      "cost": 23.310078130263904
+      "calibration": 92.9291247782377,
+      "speed": 61.794910732154555,
+      "cost": 23.30719476800066
      },
      "intelligence_before_penalty": 100.0,
      "raw_overall_gap_pp": 0.0,
@@ -2132,35 +2183,35 @@
      "matched_gap_families": {
       "Everyday photo": {
        "gap_pp": 0.0,
-       "weight": 36.193333333333335
+       "weight": 45.95108695652174
       }
      },
      "overfit_penalty_points": 0.0,
      "penalty_multiplier": 1.0,
      "speed": {
-      "score": 61.24716088211909,
-      "raw_p50_s": 2.485154092311859,
-      "raw_p95_s": 30.194690987467766,
-      "adjusted_p50_s": 2.485154092311859,
-      "adjusted_p95_s": 30.194690987467766,
+      "score": 61.794910732154555,
+      "raw_p50_s": 2.4250985458493233,
+      "raw_p95_s": 27.275928013026714,
+      "adjusted_p50_s": 2.4250985458493233,
+      "adjusted_p95_s": 27.275928013026714,
       "latency_coverage": 1.0
      },
      "cost": {
-      "score": 23.310078130263904,
-      "raw_score": 23.310078130263904,
-      "usd_per_1000": 0.3600234,
-      "total_usd": 0.05400351,
+      "score": 23.30719476800066,
+      "raw_score": 23.307194768000656,
+      "usd_per_1000": 0.3601030842391304,
+      "total_usd": 0.0662589675,
       "coverage": 1.0,
       "source": "OpenRouter usage.cost receipts"
      },
      "composite": {
-      "harmonic_before_gates": 49.984307604706615,
+      "harmonic_before_gates": 50.094768178668936,
       "gates": {
        "intelligence": 1.0,
        "speed": 1.0,
-       "cost": 0.217343896975603
+       "cost": 0.21729013118140694
       },
-      "score": 10.863784202434204
+      "score": 10.885098749045143
      }
     }
    }
@@ -2171,7 +2222,9 @@
    "name": "Gemini 3.8 Flash",
    "api_flag": true,
    "prior_exposure": "Before evaluation, the API received stateless, single-turn label-check calls for the 100 public promo-photo candidates and 68 new sealed-photo candidates, including images later dropped. Calls showed the image, question, and options but not the gold key; provider data-collection denial, zero-data-retention, and no-fallback were requested. Human gold-blind adjudication decided inclusion; checker outputs did not determine keep/drop decisions. This job used no fine-tuning and carried no context between calls.",
-   "score": 0.0019230963883652787,
+   "score": 0.0003119165425461845,
+   "previous_rank": 11,
+   "previous_score": 0.0,
    "tracks": {
     "all": {
      "public": {
@@ -2185,60 +2238,60 @@
       "valid_answer_count": 206
      },
      "sealed": {
-      "n": 216,
-      "correct": 200,
-      "accuracy": 0.9259259259259259,
-      "chance": 0.2800925925925926,
-      "chance_corrected_intelligence": 89.71061093247587,
-      "ece": 0.12054950495049503,
-      "probability_coverage": 0.9351851851851852,
-      "valid_answer_count": 202
+      "n": 456,
+      "correct": 430,
+      "accuracy": 0.9429824561403509,
+      "chance": 0.3435672514619883,
+      "chance_corrected_intelligence": 91.3140311804009,
+      "ece": 0.09548611111111116,
+      "probability_coverage": 0.9473684210526315,
+      "valid_answer_count": 432
      },
      "axes": {
-      "intelligence": 87.43144476362143,
-      "calibration": 69.29397417153996,
-      "speed": 56.76147955551755,
-      "cost": 1.079614731073832
+      "intelligence": 88.4736679247727,
+      "calibration": 72.98171052631578,
+      "speed": 58.777793154022525,
+      "cost": 0.5845461724968288
      },
-     "intelligence_before_penalty": 87.43144476362143,
-     "raw_overall_gap_pp": -3.9961013645224197,
-     "matched_gap_pp": 3.1906555277294544,
+     "intelligence_before_penalty": 88.4736679247727,
+     "raw_overall_gap_pp": -5.701754385964919,
+     "matched_gap_pp": 0.8370200474074669,
      "matched_gap_families": {
       "Everyday photo": {
-       "gap_pp": 1.6393442622950838,
-       "weight": 36.193333333333335
+       "gap_pp": 1.0526315789473717,
+       "weight": 45.95108695652174
       },
       "ScreenSpot": {
-       "gap_pp": 6.756756756756754,
-       "weight": 15.74468085106383
+       "gap_pp": 0.0,
+       "weight": 11.83673469387755
       }
      },
      "overfit_penalty_points": 0.0,
      "penalty_multiplier": 1.0,
      "speed": {
-      "score": 56.76147955551755,
-      "raw_p50_s": 5.22262055799365,
-      "raw_p95_s": 40.361153580248356,
-      "adjusted_p50_s": 5.22262055799365,
-      "adjusted_p95_s": 40.361153580248356,
+      "score": 58.777793154022525,
+      "raw_p50_s": 4.831681549549103,
+      "raw_p95_s": 27.42346841841936,
+      "adjusted_p50_s": 4.831681549549103,
+      "adjusted_p95_s": 27.42346841841936,
       "latency_coverage": 1.0
      },
      "cost": {
-      "score": 1.079614731073832,
-      "raw_score": 1.079614731073832,
-      "usd_per_1000": 1.9831071283783785,
-      "total_usd": 0.880499565,
+      "score": 0.5845461724968288,
+      "raw_score": 0.5845461724968288,
+      "usd_per_1000": 2.059911019736842,
+      "total_usd": 1.4089791375,
       "coverage": 1.0,
       "source": "OpenRouter usage.cost receipts"
      },
      "composite": {
-      "harmonic_before_gates": 4.124805335043891,
+      "harmonic_before_gates": 2.2821320729653944,
       "gates": {
        "intelligence": 1.0,
        "speed": 1.0,
-       "cost": 0.000466227187020649
+       "cost": 0.00013667769111227695
       },
-      "score": 0.0019230963883652787
+      "score": 0.0003119165425461845
      }
     },
     "core": {
@@ -2253,45 +2306,45 @@
       "valid_answer_count": 117
      },
      "sealed": {
-      "n": 155,
-      "correct": 140,
-      "accuracy": 0.9032258064516129,
-      "chance": 0.2,
-      "chance_corrected_intelligence": 87.9032258064516,
-      "ece": 0.10636879432624112,
-      "probability_coverage": 0.9096774193548387,
-      "valid_answer_count": 141
+      "n": 361,
+      "correct": 336,
+      "accuracy": 0.9307479224376731,
+      "chance": 0.30932594644506,
+      "chance_corrected_intelligence": 89.97326203208556,
+      "ece": 0.08398219584569733,
+      "probability_coverage": 0.9335180055401662,
+      "valid_answer_count": 337
      },
      "axes": {
-      "intelligence": 83.76928068223953,
-      "calibration": 69.7361796240427,
-      "speed": 56.679085344098894,
+      "intelligence": 85.11480422890159,
+      "calibration": 73.6729295123458,
+      "speed": 59.41325016057441,
       "cost": 0.0
      },
-     "intelligence_before_penalty": 83.76928068223953,
-     "raw_overall_gap_pp": -9.027616616384304,
-     "matched_gap_pp": 6.756756756756754,
+     "intelligence_before_penalty": 85.11480422890159,
+     "raw_overall_gap_pp": -11.779828214990328,
+     "matched_gap_pp": 0.0,
      "matched_gap_families": {
       "ScreenSpot": {
-       "gap_pp": 6.756756756756754,
-       "weight": 15.74468085106383
+       "gap_pp": 0.0,
+       "weight": 11.83673469387755
       }
      },
      "overfit_penalty_points": 0.0,
      "penalty_multiplier": 1.0,
      "speed": {
-      "score": 56.679085344098894,
-      "raw_p50_s": 5.322649825364351,
-      "raw_p95_s": 40.361153580248356,
-      "adjusted_p50_s": 5.322649825364351,
-      "adjusted_p95_s": 40.361153580248356,
+      "score": 59.41325016057441,
+      "raw_p50_s": 4.849581394344568,
+      "raw_p95_s": 23.603191561996937,
+      "adjusted_p50_s": 4.849581394344568,
+      "adjusted_p95_s": 23.603191561996937,
       "latency_coverage": 1.0
      },
      "cost": {
       "score": 0.0,
       "raw_score": 0.0,
-      "usd_per_1000": 2.1831975000000003,
-      "total_usd": 0.641860065,
+      "usd_per_1000": 2.23510023,
+      "total_usd": 1.117550115,
       "coverage": 1.0,
       "source": "OpenRouter usage.cost receipts"
      },
@@ -2317,56 +2370,56 @@
       "valid_answer_count": 89
      },
      "sealed": {
-      "n": 61,
-      "correct": 60,
-      "accuracy": 0.9836065573770492,
-      "chance": 0.48360655737704916,
-      "chance_corrected_intelligence": 96.82539682539682,
-      "ece": 0.15332786885245894,
+      "n": 95,
+      "correct": 94,
+      "accuracy": 0.9894736842105263,
+      "chance": 0.47368421052631576,
+      "chance_corrected_intelligence": 97.99999999999999,
+      "ece": 0.13629473684210525,
       "probability_coverage": 1.0,
-      "valid_answer_count": 61
+      "valid_answer_count": 95
      },
      "axes": {
-      "intelligence": 97.93650793650794,
-      "calibration": 68.1933321053601,
-      "speed": 56.30085090408677,
-      "cost": 3.950467859173159
+      "intelligence": 98.69999999999999,
+      "calibration": 70.40763926670608,
+      "speed": 57.60197009224886,
+      "cost": 4.008550701999113
      },
-     "intelligence_before_penalty": 97.93650793650794,
-     "raw_overall_gap_pp": 1.6393442622950838,
-     "matched_gap_pp": 1.6393442622950838,
+     "intelligence_before_penalty": 98.69999999999999,
+     "raw_overall_gap_pp": 1.0526315789473717,
+     "matched_gap_pp": 1.0526315789473717,
      "matched_gap_families": {
       "Everyday photo": {
-       "gap_pp": 1.6393442622950838,
-       "weight": 36.193333333333335
+       "gap_pp": 1.0526315789473717,
+       "weight": 45.95108695652174
       }
      },
      "overfit_penalty_points": 0.0,
      "penalty_multiplier": 1.0,
      "speed": {
-      "score": 56.30085090408677,
-      "raw_p50_s": 5.004384379833937,
-      "raw_p95_s": 46.834323316812515,
-      "adjusted_p50_s": 5.004384379833937,
-      "adjusted_p95_s": 46.834323316812515,
+      "score": 57.60197009224886,
+      "raw_p50_s": 4.631180215626955,
+      "raw_p95_s": 37.506912000477314,
+      "adjusted_p50_s": 4.631180215626955,
+      "adjusted_p95_s": 37.506912000477314,
       "latency_coverage": 1.0
      },
      "cost": {
-      "score": 3.950467859173159,
-      "raw_score": 3.950467859173159,
-      "usd_per_1000": 1.59093,
-      "total_usd": 0.2386395,
+      "score": 4.008550701999113,
+      "raw_score": 4.008550701999113,
+      "usd_per_1000": 1.5838533831521742,
+      "total_usd": 0.2914290225,
       "coverage": 1.0,
       "source": "OpenRouter usage.cost receipts"
      },
      "composite": {
-      "harmonic_before_gates": 13.52396797593272,
+      "harmonic_before_gates": 13.738058603010359,
       "gates": {
        "intelligence": 1.0,
        "speed": 1.0,
-       "cost": 0.0062424785225440645
+       "cost": 0.006427391492199032
       },
-      "score": 0.08442307962933374
+      "score": 0.0882998809843205
      }
     }
    }
@@ -2378,6 +2431,8 @@
    "api_flag": false,
    "prior_exposure": "No evaluation run on this item set before this job. The repository includes `code/eval_image_nli.py`; the benchmark wrapper follows its image-premise NLI scoring path. It does not import or execute `train.py`, whose training entry point and dataset-loading code are excluded.",
    "score": 0.0,
+   "previous_rank": 12,
+   "previous_score": 0.0,
    "tracks": {
     "all": {
      "public": {
@@ -2391,49 +2446,49 @@
       "valid_answer_count": 228
      },
      "sealed": {
-      "n": 216,
-      "correct": 161,
-      "accuracy": 0.7453703703703703,
-      "chance": 0.2800925925925926,
-      "chance_corrected_intelligence": 64.63022508038584,
+      "n": 456,
+      "correct": 331,
+      "accuracy": 0.7258771929824561,
+      "chance": 0.3435672514619883,
+      "chance_corrected_intelligence": 58.240534521158125,
       "ece": null,
       "probability_coverage": 0.0,
-      "valid_answer_count": 216
+      "valid_answer_count": 456
      },
      "axes": {
-      "intelligence": 67.7366253006353,
+      "intelligence": 63.58332643713727,
       "calibration": 0.0,
-      "speed": 80.35494099548347,
-      "cost": 40.135498772376565
+      "speed": 79.54239020954691,
+      "cost": 40.894060469342406
      },
-     "intelligence_before_penalty": 67.7366253006353,
-     "raw_overall_gap_pp": 7.480506822612087,
-     "matched_gap_pp": 1.0047437889682982,
+     "intelligence_before_penalty": 63.58332643713727,
+     "raw_overall_gap_pp": 9.42982456140351,
+     "matched_gap_pp": 3.9455677859562583,
      "matched_gap_families": {
       "Everyday photo": {
-       "gap_pp": 4.733836802357705,
-       "weight": 36.193333333333335
+       "gap_pp": 9.04790065050266,
+       "weight": 45.95108695652174
       },
       "ScreenSpot": {
-       "gap_pp": -7.567567567567568,
-       "weight": 15.74468085106383
+       "gap_pp": -15.86206896551724,
+       "weight": 11.83673469387755
       }
      },
      "overfit_penalty_points": 0.0,
      "penalty_multiplier": 1.0,
      "speed": {
-      "score": 80.35494099548347,
-      "raw_p50_s": 0.31785281794145703,
-      "raw_p95_s": 0.5114298069383949,
-      "adjusted_p50_s": 0.7857056358829141,
-      "adjusted_p95_s": 1.1728596138767897,
+      "score": 79.54239020954691,
+      "raw_p50_s": 0.31688300403766334,
+      "raw_p95_s": 0.6338340300135314,
+      "adjusted_p50_s": 0.7837660080753267,
+      "adjusted_p95_s": 1.4176680600270628,
       "latency_coverage": 1.0
      },
      "cost": {
-      "score": 40.135498772376565,
-      "raw_score": 40.135498772376565,
-      "usd_per_1000": 0.09896539770177415,
-      "total_usd": 0.04394063657958772,
+      "score": 40.894060469342406,
+      "raw_score": 40.894060469342406,
+      "usd_per_1000": 0.0933679845861834,
+      "total_usd": 0.06386370145694945,
       "coverage": 1.0,
       "source": "measured GPU seconds x $1.19/GPU-hour"
      },
@@ -2442,7 +2497,7 @@
       "gates": {
        "intelligence": 1.0,
        "speed": 1.0,
-       "cost": 0.6443433046829763
+       "cost": 0.6689296726680933
       },
       "score": 0.0
      }
@@ -2459,45 +2514,45 @@
       "valid_answer_count": 139
      },
      "sealed": {
-      "n": 155,
-      "correct": 107,
-      "accuracy": 0.6903225806451613,
-      "chance": 0.2,
-      "chance_corrected_intelligence": 61.29032258064516,
+      "n": 361,
+      "correct": 251,
+      "accuracy": 0.6952908587257618,
+      "chance": 0.30932594644506,
+      "chance_corrected_intelligence": 55.88235294117647,
       "ece": null,
       "probability_coverage": 0.0,
-      "valid_answer_count": 155
+      "valid_answer_count": 361
      },
      "axes": {
-      "intelligence": 63.5743418613274,
+      "intelligence": 60.059161595672755,
       "calibration": 0.0,
-      "speed": 79.63889371448398,
-      "cost": 40.09545752574213
+      "speed": 80.2005597281371,
+      "cost": 41.24742997935621
      },
-     "intelligence_before_penalty": 63.5743418613274,
-     "raw_overall_gap_pp": 5.78788582037596,
-     "matched_gap_pp": -7.567567567567568,
+     "intelligence_before_penalty": 60.059161595672755,
+     "raw_overall_gap_pp": 5.291058012315908,
+     "matched_gap_pp": -15.862068965517238,
      "matched_gap_families": {
       "ScreenSpot": {
-       "gap_pp": -7.567567567567568,
-       "weight": 15.74468085106383
+       "gap_pp": -15.86206896551724,
+       "weight": 11.83673469387755
       }
      },
      "overfit_penalty_points": 0.0,
      "penalty_multiplier": 1.0,
      "speed": {
-      "score": 79.63889371448398,
-      "raw_p50_s": 0.389116475940682,
-      "raw_p95_s": 0.5103608211502433,
-      "adjusted_p50_s": 0.928232951881364,
-      "adjusted_p95_s": 1.1707216423004865,
+      "score": 80.2005597281371,
+      "raw_p50_s": 0.2978153168223798,
+      "raw_p95_s": 0.5653100069612265,
+      "adjusted_p50_s": 0.7456306336447597,
+      "adjusted_p95_s": 1.2806200139224528,
       "latency_coverage": 1.0
      },
      "cost": {
-      "score": 40.09545752574213,
-      "raw_score": 40.09545752574213,
-      "usd_per_1000": 0.09927001385083274,
-      "total_usd": 0.029185384072144827,
+      "score": 41.24742997935621,
+      "raw_score": 41.24742997935621,
+      "usd_per_1000": 0.09086968042108748,
+      "total_usd": 0.04543484021054374,
       "coverage": 1.0,
       "source": "measured GPU seconds x $1.19/GPU-hour"
      },
@@ -2506,7 +2561,7 @@
       "gates": {
        "intelligence": 1.0,
        "speed": 1.0,
-       "cost": 0.6430582856794365
+       "cost": 0.6805401919607575
       },
       "score": 0.0
      }
@@ -2523,45 +2578,45 @@
       "valid_answer_count": 89
      },
      "sealed": {
-      "n": 61,
-      "correct": 54,
-      "accuracy": 0.8852459016393442,
-      "chance": 0.48360655737704916,
-      "chance_corrected_intelligence": 77.77777777777777,
+      "n": 95,
+      "correct": 80,
+      "accuracy": 0.8421052631578947,
+      "chance": 0.47368421052631576,
+      "chance_corrected_intelligence": 69.99999999999999,
       "ece": null,
       "probability_coverage": 0.0,
-      "valid_answer_count": 61
+      "valid_answer_count": 95
      },
      "axes": {
-      "intelligence": 80.9903381642512,
+      "intelligence": 75.93478260869564,
       "calibration": 0.0,
-      "speed": 79.5514339384258,
-      "cost": 40.214338391526866
+      "speed": 79.52896749222134,
+      "cost": 39.97957968474207
      },
-     "intelligence_before_penalty": 80.9903381642512,
-     "raw_overall_gap_pp": 4.733836802357705,
-     "matched_gap_pp": 4.733836802357705,
+     "intelligence_before_penalty": 75.93478260869564,
+     "raw_overall_gap_pp": 9.04790065050266,
+     "matched_gap_pp": 9.04790065050266,
      "matched_gap_families": {
       "Everyday photo": {
-       "gap_pp": 4.733836802357705,
-       "weight": 36.193333333333335
+       "gap_pp": 9.04790065050266,
+       "weight": 45.95108695652174
       }
      },
      "overfit_penalty_points": 0.0,
      "penalty_multiplier": 1.0,
      "speed": {
-      "score": 79.5514339384258,
-      "raw_p50_s": 0.3168250290909782,
-      "raw_p95_s": 0.6324641548562795,
-      "adjusted_p50_s": 0.7836500581819564,
-      "adjusted_p95_s": 1.414928309712559,
+      "score": 79.52896749222134,
+      "raw_p50_s": 0.3175957225030288,
+      "raw_p95_s": 0.6347374077886343,
+      "adjusted_p50_s": 0.7851914450060576,
+      "adjusted_p95_s": 1.4194748155772685,
       "latency_coverage": 1.0
      },
      "cost": {
-      "score": 40.214338391526866,
-      "raw_score": 40.214338391526866,
-      "usd_per_1000": 0.09836835004961933,
-      "total_usd": 0.014755252507442898,
+      "score": 39.97957968474207,
+      "raw_score": 39.97957968474207,
+      "usd_per_1000": 0.10015685460003101,
+      "total_usd": 0.018428861246405706,
       "coverage": 1.0,
       "source": "measured GPU seconds x $1.19/GPU-hour"
      },
@@ -2570,7 +2625,7 @@
       "gates": {
        "intelligence": 1.0,
        "speed": 1.0,
-       "cost": 0.6468772049072926
+       "cost": 0.6393467167074565
       },
       "score": 0.0
      }
@@ -2625,7 +2680,7 @@
  },
  "candidate_coverage": {
   "checked_utc": "2026-09-24T18:02:05+00:00",
-  "included_note": "Gemma 4 31B reuses completed saved results; GPT-6 Luna is the saved low-reasoning-effort setting.",
+  "included_note": "Gemma 4 31B reuses completed saved results on the original items and was run on the fresh items; GPT-6 Luna is the saved low-reasoning-effort setting.",
   "candidates": [
    {
     "candidate": "CUA-S1-4B-0.2 multimodal adapter",

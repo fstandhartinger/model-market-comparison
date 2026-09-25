@@ -75,12 +75,9 @@ const artifact = {
   benchmark: 'JevBench multimodal preview', revision: 'preview-1', generated_at: '2026-09-21T21:55:57.399Z', status: 'preview',
   notice: 'Not part of the JevBench Score. Results may change.', public_real_items: 128, held_out_items_published: 0,
   counts, systems, synthetic: { n: synthetic.length, share_of_evaluated: synthetic.length / (items.length + synthetic.length), rank_worthy: false, scores: synScores },
-  examples: [
-    { id: 'mm-001', image: '/jevbench-multimodal-preview/clevr-1.webp' },
-    { id: 'mm-021', image: '/jevbench-multimodal-preview/geometry-0.webp' },
-    { id: 'mm-111', image: '/jevbench-multimodal-preview/screenspot-337.webp' },
-    { id: 'mm-106', image: '/jevbench-multimodal-preview/mind2web-5.webp' },
-  ].map((e) => { const x = byId.get(e.id); return { ...e, dataset: x.dataset, prompt: x.rubric.instructions, licence: x.license, source_url: x.source_url }; }),
+  // The four legacy example images in the legacy public jevbench-multimodal-preview folder were removed on 25 Sep 2026 (licence clean-up:
+  // a Mind2Web test-split screenshot and unused ScreenSpot/Geometry/CLEVR files). Public examples now live in lib/image-jev-public-examples.mjs.
+  examples: [],
 };
 await writeFile(out, JSON.stringify(artifact, null, 2) + '\n');
 console.log(`Wrote ${path.relative(root, out)}: ${systems.length} systems, ${items.length} public real items, ${synthetic.length} synthetic items`);
