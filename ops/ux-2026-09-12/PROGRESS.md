@@ -12164,3 +12164,15 @@ Not done here and still open: F-181 (checker fixed by iteration 230, awaiting a 
 D192, D205 (needs Florian), D207/CR-167.2/CR-163.1 and D208 (all implemented by iteration 230,
 awaiting an independent engine), the four D-rows awaiting a daily run, and X6's line-by-line audit.
 **`ALL-ACCEPTED` is not appended.**
+
+## JevBench v1.4.2 presentation polish — CR-169
+
+CR-169 is reserved for `jev-page-polish-20260925` after CR-165 through CR-168
+were allocated to other jobs. The change is limited to `/jev-models` presentation:
+aligned Capability ranking columns and details, interactive bubble and 3D charts,
+searchable comparison controls, and finer public context bins. No score, rank,
+axis formula, or benchmark method was changed. Local TypeScript, production build,
+and full tests pass; the browser acceptance script passes 84/84 checks at 1440/390 px
+in light and dark. Evidence and screenshots are under
+`/home/flori/jobs/jev-page-polish-20260925/`. Independent review and live
+verification are pending at this entry's creation.

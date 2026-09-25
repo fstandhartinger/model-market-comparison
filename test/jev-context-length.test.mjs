@@ -45,7 +45,7 @@ test('length analysis only includes reconciled public telemetry and records excl
   }
   assert.equal(contextData.longPolicyItems, 19);
   assert.equal(contextData.longPolicySystems.length, 14);
-  assert.deepEqual(contextData.bucketLabels, ['<2k', '2–8k', '8–16k', '16–64k', '64–256k', '256k–1M', '≥1M']);
+  assert.deepEqual(contextData.bucketLabels, ['<500', '500–999', '1,000–1,999', '2–8k', '8–16k', '16–64k', '64–256k', '256k–1M', '≥1M']);
   for (const row of contextData.lengthSystems) assert.deepEqual(row.buckets.map((bucket) => bucket.label), contextData.bucketLabels);
 });
 

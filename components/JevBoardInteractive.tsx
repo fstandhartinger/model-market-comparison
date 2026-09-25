@@ -200,6 +200,7 @@ export function JevScoreChart({ revision, rows: officialRows, rankedCount, newLa
     const url = new URL(window.location.href);
     if (nextCustom) url.searchParams.set('w', JEV_AXES.map((a) => next[a]).join('-')); else url.searchParams.delete('w');
     window.history.replaceState(window.history.state, '', url.toString());
+    window.dispatchEvent(new CustomEvent('jevbench-weights-change', { detail: { weights: next } }));
   };
   // ?view=intelligence opens that view, so a reader can share it; ?w=40-20-20-20 restores custom weights.
   useEffect(() => {
@@ -207,6 +208,7 @@ export function JevScoreChart({ revision, rows: officialRows, rankedCount, newLa
     const wanted = params.get('view');
     const w = weightsFromUrl(params.get('w'));
     if (w && !isOfficialWeights(w)) { setWeightsState(w); setSort({ key: 'score', dir: 'desc' }); }
+    window.dispatchEvent(new CustomEvent('jevbench-weights-change', { detail: { weights: w ?? OFFICIAL_WEIGHTS } }));
     if (wanted && VIEWS.some(([v]) => v === wanted) && wanted !== 'overall') setSort({ key: wanted as SortKey, dir: 'desc' });
   }, [setSort]);
   const choose = (next: View) => {
@@ -226,7 +228,7 @@ export function JevScoreChart({ revision, rows: officialRows, rankedCount, newLa
   return <figure className="bh-panel mt-6 p-4 sm:p-5" data-bh-jev14-chart data-bh-jev14-view={view} data-bh-jev14-compact={compactMobile ? '1' : undefined} aria-labelledby="jev14-chart-title">
     {/* F-193 (main, 25 Sep): on the live board a phone hides the chart eyebrow and tightens spacing. */}
     <p className="bh-eyebrow" data-bh-jev14-chart-eyebrow>JevBench {revision}</p>
-    <h2 id="jev14-chart-title" className="mt-1 text-xl font-bold leading-snug sm:text-2xl">JevBench Score: {rankedCount} ranked systems</h2>
+    <h2 id="jev14-chart-title" className="mt-1 text-xl font-bold leading-snug sm:text-2xl">JevBench Composite Score: {rankedCount} ranked systems</h2>
     <p className="bh-muted mt-1 text-sm">{custom ? <span className="bh-jevc-notdefault mr-2">Custom weights</span> : <span className="bh-jevc-official mr-2">Official</span>}· four axes 0–100, {custom ? 'your weights' : 'equal-weight'} harmonic mean · <a href="#jev14-changes" className="text-accent underline">What changed in v1.4 ↓</a></p>
     <JevWeightSliders position="above" weights={weights} setWeights={setWeights} presets={presets} />
 

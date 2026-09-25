@@ -1,6 +1,7 @@
 import type { CSSProperties, ReactNode } from 'react';
 import { jevSourceUrl } from './jevSystemLinks';
 import { jevbenchCapabilityRows } from '../lib/jevbench-capability.mjs';
+import { jevClassRows } from '../lib/jevbench-jev-class.mjs';
 import type { JevV14System } from '../lib/jevbench-v14.mjs';
 import { JEV_TYPE_LABEL, jevLegendTypes, jevTypeVarName } from './jevTypes';
 import { JevCapability3D } from './JevCapability3D';
@@ -27,9 +28,11 @@ type PlotPoint = {
   costKind: string;
   speed: number | null;
   jevbenchScore: number | null;
+  inClass: boolean;
+  axes: JevV14System['axes'];
 };
 
-function toPlotPoint(row: JevV14System, capability: number): PlotPoint {
+function toPlotPoint(row: JevV14System, capability: number, inClass: boolean): PlotPoint {
   return {
     key: row.key,
     name: shortName(row.display),
@@ -41,6 +44,8 @@ function toPlotPoint(row: JevV14System, capability: number): PlotPoint {
     costKind: row.cost?.kind ?? 'unknown',
     speed: row.axes?.speed ?? null,
     jevbenchScore: row.jevbench_score ?? null,
+    inClass,
+    axes: row.axes,
   };
 }
 
@@ -185,7 +190,10 @@ function Scatter({ id, title, description, points, xKind, costBounds }: {
 
 export function JevCapabilityChart({ systems, revision, only3d = false }: { systems: JevV14System[]; revision: string; only3d?: boolean }) {
   const all = jevbenchCapabilityRows(systems);
-  const points = all.map(({ row, capability }) => toPlotPoint(row, capability));
+  const classKeys = systems.some((row) => row.key === 'jev-1.13.0')
+    ? new Set(jevClassRows(systems).rows.filter((item) => item.inClass).map((item) => item.row.key))
+    : null; // Historical versions predate the v1.4.2 Jev-class reference.
+  const points = all.map(({ row, capability }) => toPlotPoint(row, capability, classKeys?.has(row.key) ?? true));
   const rest = all.slice(CHART_TOP);
   const types = jevLegendTypes(all.map(({ row }) => row.class));
   const withoutBothAxes = systems.length - all.length;

@@ -150,8 +150,13 @@ function CapacityNotes({ rows, open, onOpenChange }: { rows: Capacity[]; open: b
 }
 
 const THIN_BUCKET = 20;
+const INPUT_BUCKET_RANGES: Record<string, string> = {
+  '<500': '0–499', '500–999': '500–999', '1,000–1,999': '1,000–1,999',
+  '2–8k': '2,000–7,999', '8–16k': '8,000–15,999', '16–64k': '16,000–63,999',
+  '64–256k': '64,000–255,999', '256k–1M': '256,000–999,999', '≥1M': '1,000,000 or more',
+};
 
-// F-185: the drawn axis is the range the data occupies; the seven buckets stay in the data,
+// F-185: the drawn axis is the range the data occupies; all buckets stay in the data,
 // the tooltips, the counts table and the sentence that names the empty ones.
 function upperBound(label: string) {
   return label.replace(/^[<≥]/, '').split('–').pop() ?? label;
@@ -163,6 +168,9 @@ function joinLabels(labels: string[]) {
 }
 
 function AccuracyChart({ systems, labels, excluded, topRanked }: { systems: LengthSystem[]; labels: string[]; excluded: { system: string; reason: string }[]; topRanked: number }) {
+  const [hoveredPoint, setHoveredPoint] = useState<string | null>(null);
+  const [focusedPoint, setFocusedPoint] = useState<string | null>(null);
+  const [pinnedPoint, setPinnedPoint] = useState<string | null>(null);
   const active = labels.map((label, index) => ({ label, index })).filter(({ index }) => systems.some((system) => system.buckets[index]?.accuracy != null));
   const empty = labels.filter((_, index) => !active.some((bucket) => bucket.index === index));
   const lastDrawn = active.length ? active[active.length - 1].label : null;
@@ -174,12 +182,17 @@ function AccuracyChart({ systems, labels, excluded, topRanked }: { systems: Leng
     const bucket = system.buckets[index];
     return bucket == null || bucket.accuracy == null ? [] : [{ position, label, bucket, thin: bucket.n < THIN_BUCKET }];
   });
+  const shownPoint = focusedPoint ?? hoveredPoint ?? pinnedPoint;
+  const pointDetails = systems.flatMap((system) => system.buckets.filter((bucket) => `${system.key}:${bucket.label}` === shownPoint).map((bucket) => ({ system, bucket })))[0];
 
   return <figure className="bh-panel mt-4 min-w-0 p-3 sm:p-5" data-bh-jev-context-chart aria-labelledby="jev-context-chart-heading">
     <h3 id="jev-context-chart-heading" className="text-lg font-semibold">Public accuracy by actual input length</h3>
     <p className="bh-muted mt-1 text-sm" data-bh-jev-context-coverage>{systems.length} of the top {topRanked} systems are plotted; {joinLabels(excluded.map((row) => `${row.system.replace(/\s*\([^)]*\)\s*$/, '')} (${row.reason.replace(/^excluded:\s*/, '')})`))} {excluded.length === 1 ? 'is' : 'are'} not.</p>
-    <svg className="mt-3 block h-auto w-full" viewBox={`0 0 ${width} ${height}`} role="img" aria-labelledby="jev-context-svg-title jev-context-svg-desc">
-      <title id="jev-context-svg-title">JevBench public accuracy across seven input-length buckets</title>
+    <p className="bh-muted mt-1 text-xs" data-bh-jev-context-bin-edges>Input-token bins (inclusive): {labels.map((label) => INPUT_BUCKET_RANGES[label] ?? label).join('; ')}.</p>
+    <p className="bh-muted mt-2 text-xs sm:hidden">Scroll the chart sideways to see every input range.</p>
+    <div className="mt-3 max-w-full overflow-x-auto" data-bh-jev-context-chart-scroll>
+    <svg className="block h-auto min-w-[700px] w-full" viewBox={`0 0 ${width} ${height}`} role="group" aria-labelledby="jev-context-svg-title jev-context-svg-desc">
+      <title id="jev-context-svg-title">JevBench public accuracy across input-length buckets</title>
       <desc id="jev-context-svg-desc">{systems.length} systems are plotted across {labels.join(', ')} input-token buckets. Bucket denominators differ by system and are available in the details table below.</desc>
       {[0, 0.25, 0.5, 0.75, 1].map((tick) => <g key={tick}>
         <line x1={left} x2={plotRight} y1={y(tick)} y2={y(tick)} stroke="rgb(var(--line) / .7)" />
@@ -199,12 +212,19 @@ function AccuracyChart({ systems, labels, excluded, topRanked }: { systems: Leng
             if (point.thin || previous.thin) return null;
             return <line key={`${system.key}-${point.label}`} x1={x(previous.position)} y1={y(previous.bucket.accuracy as number)} x2={x(point.position)} y2={y(point.bucket.accuracy as number)} stroke={palette[systemIndex % palette.length]} strokeWidth="2" strokeLinecap="round" data-bh-jev-context-line={system.key} />;
           })}
-          {points.map(({ label, bucket, position, thin }) => <circle key={`${system.key}-${label}`} cx={x(position)} cy={y(bucket.accuracy as number)} r="4" fill={thin ? 'var(--surface)' : palette[systemIndex % palette.length]} stroke={thin ? palette[systemIndex % palette.length] : 'var(--surface)'} strokeWidth={thin ? 2 : 1.5} tabIndex={0} {...(thin ? { 'data-bh-thin': String(bucket.n) } : {})} data-bh-jev-context-point={`${system.key}:${label}`}>
-            <title>{`#${system.rank} ${system.system} · ${label} tokens: ${percent(bucket.accuracy)} (${bucket.correct}/${bucket.n})${thin ? ` · n = ${bucket.n}` : ''}`}</title>
+          {points.map(({ label, bucket, position, thin }) => <circle key={`${system.key}-${label}`} cx={x(position)} cy={y(bucket.accuracy as number)} r="5" fill={thin ? 'var(--surface)' : palette[systemIndex % palette.length]} stroke={thin ? palette[systemIndex % palette.length] : 'var(--surface)'} strokeWidth={thin ? 2 : 1.5} tabIndex={0} role="button" aria-label={`#${system.rank} ${system.system}, ${INPUT_BUCKET_RANGES[label] ?? label} input tokens, accuracy ${percent(bucket.accuracy)}, ${bucket.correct} correct of ${bucket.n} decisions. Tap for details.`}
+            className="cursor-pointer" onMouseEnter={() => setHoveredPoint(`${system.key}:${label}`)} onMouseLeave={() => setHoveredPoint(null)} onFocus={() => setFocusedPoint(`${system.key}:${label}`)} onBlur={() => setFocusedPoint(null)}
+            onClick={() => setPinnedPoint((current) => current === `${system.key}:${label}` ? null : `${system.key}:${label}`)} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); setPinnedPoint((current) => current === `${system.key}:${label}` ? null : `${system.key}:${label}`); } }}
+            {...(thin ? { 'data-bh-thin': String(bucket.n) } : {})} data-bh-jev-context-point={`${system.key}:${label}`}>
+            <title>{`#${system.rank} ${system.system} · ${INPUT_BUCKET_RANGES[label] ?? label} input tokens: ${percent(bucket.accuracy)} (${bucket.correct}/${bucket.n})${thin ? ` · n = ${bucket.n}` : ''}`}</title>
           </circle>)}
         </g>;
       })}
     </svg>
+    </div>
+    <p className="bh-muted mt-2 min-h-5 text-xs" data-bh-jev-context-point-tooltip>{pointDetails
+      ? <><b className="text-[var(--text)]">#{pointDetails.system.rank} {pointDetails.system.system}</b> · {INPUT_BUCKET_RANGES[pointDetails.bucket.label] ?? pointDetails.bucket.label} input tokens · {percent(pointDetails.bucket.accuracy)} accuracy · {pointDetails.bucket.correct}/{pointDetails.bucket.n} correct{pointDetails.bucket.n < THIN_BUCKET ? ' · small sample' : ''}</>
+      : 'Hover, focus, or tap a point for its system, input range, accuracy, and sample size.'}</p>
     <ul className="mt-3 grid gap-x-4 gap-y-1.5 text-xs sm:grid-cols-2 lg:grid-cols-3" aria-label="Chart systems, with the top five shown first" data-bh-jev-context-top-five>
       {systems.map((system, index) => <li key={system.key} className="flex min-w-0 items-baseline gap-2" data-bh-jev-context-system={system.key}>
         <span className="inline-block h-0.5 w-4 shrink-0" style={{ backgroundColor: palette[index % palette.length] }} aria-hidden="true" />
@@ -232,6 +252,10 @@ function contextTickLabel(value: number) {
 }
 
 function CapacityChart({ rows }: { rows: Capacity[] }) {
+  const [hoveredCapacity, setHoveredCapacity] = useState<string | null>(null);
+  const [focusedCapacity, setFocusedCapacity] = useState<string | null>(null);
+  const [pinnedCapacity, setPinnedCapacity] = useState<string | null>(null);
+  const activeCapacity = rows.find((row) => row.key === (focusedCapacity ?? hoveredCapacity ?? pinnedCapacity));
   const known = rows.flatMap((row) => row.maxContextTokens == null ? [] : [row.maxContextTokens]);
   const maximum = Math.max(CONTEXT_MIN, ...known);
   const barColor = (type: string) => type === 'API cap' ? 'rgb(var(--accent))' : type === 'Trained length' ? 'rgb(var(--accent2))' : 'rgb(var(--warn))';
@@ -254,6 +278,9 @@ function CapacityChart({ rows }: { rows: Capacity[] }) {
         <summary className="cursor-pointer text-sm font-semibold text-accent">Show all {rows.length} systems ({rows.length - CAPACITY_TOP} more)</summary>
         <ol className="m-0 mt-1 list-none p-0">{rows.slice(CAPACITY_TOP).map((row) => capacityRow(row))}</ol>
       </details>}
+      <p className="bh-muted mt-2 min-h-5 text-xs" data-bh-jev-context-capacity-tooltip>{activeCapacity
+        ? <><b className="text-[var(--text)]">{activeCapacity.rank == null ? 'Unranked' : `#${activeCapacity.rank}`} {activeCapacity.system}</b> · {tokens(activeCapacity.maxContextTokens)} published maximum · {activeCapacity.type}{trainingNotes(activeCapacity).length ? ` · ${trainingNotes(activeCapacity).join(' · ')}` : ''}</>
+        : 'Hover, focus, or tap a bar for the system, published maximum, and training limits.'}</p>
     </div>
     <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-[11px]" aria-label="Context chart legend">
       <li><span className="mr-1.5 inline-block h-2 w-3 rounded-sm" style={{ backgroundColor: 'rgb(var(--accent))' }} />API / serving cap</li>
@@ -273,11 +300,12 @@ function CapacityChart({ rows }: { rows: Capacity[] }) {
         return <li key={row.key} className="grid grid-cols-[minmax(0,1fr)_auto] gap-x-2 border-t border-[rgb(var(--line))] py-2 first:border-0" data-bh-jev-context-capacity-row={row.key} aria-label={rowLabel}>
           <span className="min-w-0 truncate text-xs font-medium" title={rowLabel}>{row.rank == null ? 'Unranked' : `#${row.rank}`} {row.system}</span>
           <span className="tabular text-right text-[11px]" title={row.type}>{row.maxContextTokens == null ? 'Unknown' : `${row.maxContextTokens.toLocaleString('en-US')} · ${row.type}`}</span>
-          <div className="relative col-span-2 mt-1 h-3 rounded-sm bg-[rgb(var(--line)/.38)]" role="img" aria-label={rowLabel}>
+          <button type="button" className="relative col-span-2 mt-1 block h-4 w-full rounded-sm bg-[rgb(var(--line)/.38)] text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--accent))]" aria-label={`${rowLabel}. Tap for details.`} title={rowLabel}
+            onMouseEnter={() => setHoveredCapacity(row.key)} onMouseLeave={() => setHoveredCapacity(null)} onFocus={() => setFocusedCapacity(row.key)} onBlur={() => setFocusedCapacity(null)} onClick={() => setPinnedCapacity((current) => current === row.key ? null : row.key)}>
             {row.maxContextTokens != null && <span className="absolute inset-y-0 left-0 min-w-[2px] rounded-sm" style={{ width: `${Math.max(0.8, contextPosition(row.maxContextTokens, maximum))}%`, backgroundColor: barColor(row.type) }} title={`${row.system}: ${tokens(row.maxContextTokens)} (${row.type})`} />}
             {seq != null && <span className="absolute inset-y-[-2px] z-10 border-l-2 border-solid border-[var(--text)]" style={{ left: `${contextPosition(seq, maximum)}%` }} title={`Trained sequence length ${tokens(seq)}`} aria-hidden="true" />}
             {state != null && <span className="absolute inset-y-[-2px] z-10 border-l-2 border-dashed border-[var(--text)]" style={{ left: `${contextPosition(state, maximum)}%` }} title={`Training state limit ${tokens(state)}`} aria-hidden="true" />}
-          </div>
+          </button>
           {note.length > 0 && <span className="bh-muted col-span-2 mt-0.5 text-[10px]">Training configuration: {note.join(' · ')}.</span>}
         </li>;
   }
