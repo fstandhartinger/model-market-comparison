@@ -25,6 +25,9 @@ function appliesTo(pathname: string) {
 export function FastlaneBanner() {
   const pathname = usePathname() || "";
   const [visible, setVisible] = useState(false);
+  // CR-167.2 / D207: the phone form starts as a one-line teaser so the fixed bar cannot cover the
+  // first result row. Tapping it reveals the full offer; desktop always shows the full offer (CSS).
+  const [expanded, setExpanded] = useState(false);
   const bannerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -40,6 +43,7 @@ export function FastlaneBanner() {
       return;
     }
     setVisible(true);
+    setExpanded(false);
     track("fastlane_banner_view", pathname);
   }, [pathname]);
 
@@ -60,7 +64,7 @@ export function FastlaneBanner() {
       document.body.classList.remove("bh-fastlane-visible");
       document.body.style.removeProperty("--bh-fastlane-height");
     };
-  }, [visible]);
+  }, [visible, expanded]);
 
   if (!visible) return null;
 
@@ -80,19 +84,34 @@ export function FastlaneBanner() {
   };
 
   return (
-    <aside ref={bannerRef} className="bh-fastlane-banner" aria-label="Priority model evaluation" data-bh-fastlane-banner>
+    <aside ref={bannerRef} className="bh-fastlane-banner" aria-label="Priority model evaluation" data-bh-fastlane-banner data-bh-fastlane-expanded={expanded ? "yes" : "no"}>
       <div className="bh-fastlane-inner">
-        <p className="bh-fastlane-copy">
-          <strong>Are you a model developer?</strong> Want an extra evaluation, or your model evaluated sooner?
-          Running this benchmark takes a lot of compute and time, so we charge for priority runs.
-        </p>
-        <div className="bh-fastlane-actions">
-          <button type="button" className="bh-fastlane-primary" onClick={() => dismiss(true)}>
-            Don&apos;t show again
-          </button>
-          <Link className="bh-fastlane-secondary" href="/jev-models/request-evaluation" onClick={() => track("fastlane_banner_click", pathname)}>
-            Request an evaluation <span aria-hidden="true">→</span>
-          </Link>
+        <button
+          type="button"
+          className="bh-fastlane-teaser"
+          aria-expanded={expanded}
+          aria-controls="bh-fastlane-body"
+          onClick={() => setExpanded(true)}
+          data-bh-fastlane-teaser
+        >
+          <span className="bh-fastlane-teaser-label">
+            <strong>Are you a model developer?</strong> Priority evaluations
+          </span>
+          <span className="bh-fastlane-teaser-more" aria-hidden="true">+</span>
+        </button>
+        <div className="bh-fastlane-body" id="bh-fastlane-body" data-bh-fastlane-body>
+          <p className="bh-fastlane-copy">
+            <strong>Are you a model developer?</strong> Want an extra evaluation, or your model evaluated sooner?
+            Running this benchmark takes a lot of compute and time, so we charge for priority runs.
+          </p>
+          <div className="bh-fastlane-actions">
+            <button type="button" className="bh-fastlane-primary" onClick={() => dismiss(true)}>
+              Don&apos;t show again
+            </button>
+            <Link className="bh-fastlane-secondary" href="/jev-models/request-evaluation" onClick={() => track("fastlane_banner_click", pathname)}>
+              Request an evaluation <span aria-hidden="true">→</span>
+            </Link>
+          </div>
         </div>
         <button type="button" className="bh-fastlane-close" aria-label="Close priority evaluation banner for this session" onClick={() => dismiss(false)}>
           <span aria-hidden="true">×</span>
