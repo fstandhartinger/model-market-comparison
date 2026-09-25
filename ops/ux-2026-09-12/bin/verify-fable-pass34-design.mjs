@@ -55,7 +55,7 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
       const usedBuckets = new Set(titles.map((x) => (x.match(/· ([^:]+) tokens:/) || [])[1]).filter(Boolean));
       const thin = titles.filter((x) => { const m = x.match(/\((\d+)\/(\d+)\)/); return m && Number(m[2]) < 20; }).length;
       const thinMarked = accSvg ? accSvg.querySelectorAll('[data-bh-thin]').length : 0;
-      return { suiteText: suite ? t(suite) : null, creditText: credit ? String(credit.textContent || '').replace(/\s+/g, ' ').trim() : null, smallCost: costAxis ? small(costAxis) : null, smallCtx: ctxAxis ? small(ctxAxis) : null, notes, ctxTableClosed: ctxTable ? !ctxTable.open : false, ctxTableFound: !!ctxPanel && !!ctxTableEl, ctxTableSummary, fieldNames, capRows, buckets, usedBuckets: [...usedBuckets], thin, thinMarked };
+      return { capability3d: !!document.querySelector('[data-bh-jev14-capability-3d]'), smallSuite: suite ? small(suite) : null, suiteText: suite ? t(suite) : null, creditText: credit ? String(credit.textContent || '').replace(/\s+/g, ' ').trim() : null, smallCost: costAxis ? small(costAxis) : null, smallCtx: ctxAxis ? small(ctxAxis) : null, notes, ctxTableClosed: ctxTable ? !ctxTable.open : false, ctxTableFound: !!ctxPanel && !!ctxTableEl, ctxTableSummary, fieldNames, capRows, buckets, usedBuckets: [...usedBuckets], thin, thinMarked };
     });
     if (want('F-176')) {
       check('F-176', `${tag} (b) capability suite present`, !!hub.suiteText, {});
@@ -63,7 +63,15 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
       check('F-176', `${tag} (b) Credit names three.js`, hub.creditText && /3D view: three\.js/.test(hub.creditText), { credit: (hub.creditText || '').slice(0, 120) });
     }
     if (want('F-181')) {
-      check('F-181', `${tag} cost axis has no text under 10 px`, hub.smallCost && hub.smallCost.length === 0, { small: hub.smallCost });
+      // 2026-09-25, iteration 230: this group read `small: null` in all four contexts on both hosts for
+      // days. That was never a finding about type size — CR-158 made the hub render the capability suite
+      // 3D-only, so `[data-bh-jev14-cost-axis]` is not on this page at all and the old check could not
+      // pass. The directive is about the 10 px tick floor, not about the hub, so the floor is now checked
+      // where those ticks actually render — the pinned version page, below — and the hub gets a check of
+      // its own instead of a hole: the suite is the 3D view CR-158 asks for, and none of its text is
+      // under 10 px. Stricter than before; do not relax it back to "absent counts as pass".
+      check('F-181', `${tag} hub capability suite is CR-158's 3D-only view`, hub.capability3d === true && hub.smallCost === null, { threeD: hub.capability3d, costAxisOnHub: hub.smallCost });
+      check('F-181', `${tag} hub capability suite has no text under 10 px`, hub.smallSuite && hub.smallSuite.length === 0, { small: hub.smallSuite });
       check('F-181', `${tag} context axis has no text under 10 px`, hub.smallCtx && hub.smallCtx.length === 0, { small: hub.smallCtx });
     }
     if (want('F-180')) {
@@ -78,6 +86,22 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
       check('F-185', `${tag} thin points are marked`, hub.thin === hub.thinMarked, { thin: hub.thin, marked: hub.thinMarked });
     }
     await p.screenshot({ path: `${OUT}/${tag}-hub.png` });
+    if (want('F-181')) {
+      // The cost axis lives on the pinned version pages since CR-158 (components/JevCapabilityChart.tsx
+      // renders it only outside `only3d`). This is where F-181's 10 px floor is now proven.
+      await go('/jev-models/v1.4.2');
+      const pinned = await p.evaluate(() => {
+        const ax = document.querySelector('[data-bh-jev14-cost-axis]');
+        if (!ax) return { found: false, small: null };
+        const small = [...ax.querySelectorAll('*')]
+          .filter((e) => [...e.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim()) && e.getBoundingClientRect().width > 1)
+          .map((e) => ({ px: parseFloat(getComputedStyle(e).fontSize), t: String(e.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 30) }));
+        return { found: true, n: small.length, min: small.length ? Math.min(...small.map((x) => x.px)) : null, small: small.filter((x) => x.px < 10) };
+      });
+      check('F-181', `${tag} pinned v1.4.2 still renders the cost axis`, pinned.found && pinned.n > 0, pinned);
+      check('F-181', `${tag} pinned v1.4.2 cost axis has no text under 10 px`, pinned.found && pinned.small.length === 0, pinned);
+      await p.screenshot({ path: `${OUT}/${tag}-pinned-cost-axis.png` });
+    }
   }
   if (want('F-183')) {
     await go('/jev-models/jevk5-v02');
