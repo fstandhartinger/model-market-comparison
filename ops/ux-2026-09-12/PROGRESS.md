@@ -10897,3 +10897,48 @@ the 05:17 run's lock.
 | D195 | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter213-d195/{canonical,www,legacy}/verification.json` (**155/155 per host** at `9c7ae3a4`); `test/page-payload-size.test.mjs` | 309,464 → 286,854 B by dropping `attempts` and `endpoint_id` from the page's endpoint payload; nothing rendered changed and sixteen other pages are byte-identical. Not the benchmark-sheet decision it was filed as. Implemented by claude-opus — **needs a non-claude-opus sign-off**. |
 | CR-62.4 | in-progress | `…/iter213-d195/{canonical,www,legacy}/` | The measurable half is 155/155 on three hosts again, which is what iteration 89 had. The open acceptance is still only Florian confirming the share card in X chat and WhatsApp; no second Telegram was sent. |
 | D191, D192 | open | unchanged | Not attempted. D192's 15 remaining retentions are mostly protocol-review wording disputes, which need the daily reviewer rather than an edit. |
+
+### D196 (new, same iteration) — a seventh D193 group the scan had never been able to see
+
+D193.2's scan reported **30 references as `unmeasured`**: the 2026-09-24T19:20Z run does not fetch
+every source a registry entry cites, and a reference whose URL is not in the capture set cannot be
+judged. Iteration 212 read that as noise. It was a blind spot: those 30 references are the only
+ones whose guard state was *unknown*, which is the same position D193's six were in before anyone
+looked.
+
+Cross-referenced against every URL any retained daily run ever captured: **6 of the 9 distinct URLs
+are fetched by some run**, just not by the one that was scanned. Merging each one's newest capture
+into a temporary set and re-scanning (`…/iter213-d193/scan-merged.json`) surfaced **7 failing
+references**, all on the same source and all in exactly the D193 shape:
+
+| entry | its `excerpt` |
+|---|---|
+| `anthropic-swe-bench-pro::snapshot-2026-09-22` and six siblings | `"<Benchmark>: <table row> (columns: Claude Opus 5.5 \| Claude Opus 5 \| Claude Fable 5.1 \| GPT-6 Astra)"` |
+
+Neither the `"<Benchmark>: "` prefix nor the `(columns: …)` annotation is in the Claude Opus 5.5
+system card. They are our own reading — and that reading already has a home: every one of these
+entries states it in `how_to_collect.locator` ("row …, under 'Claude Opus 5.5' (first column of: …)").
+So the excerpt was carrying a duplicate of the locator in the one field that must be a passage.
+
+**Checked for what they were hiding first**, per D193.3: nothing. Every value is in Table 8.1.A byte
+for byte, the caption and the four-column header are unchanged, and the card's gzip still hashes to
+the `a0c0bbca…` the registry declares. Each pin is now the contiguous block from that table's column
+header down to the entry's own row (134–600 chars), so **the excerpt itself proves both the numbers
+and which column is Opus 5.5** — better than the annotation it replaces, which asserted the mapping
+without quoting anything. Intermediate rows sit inside the longer pins deliberately: a system card is
+a frozen PDF, so a vendor revising a published number is precisely what should fail closed, and the
+test proves it does by flipping AA-Briefcase's 1822 to 1823.
+
+Re-scanned against the merged set (`…/iter213-d193/scan-merged-v2.json`): **413 protocol references ·
+0 failing · 147 verbatim · 4 retired · 251 latent · 11 not in this capture set.**
+
+**The 11 that remain unmeasurable, and why each is not a D193 waiting to happen:** 7 on
+`https://epoch.ai/robots.txt`, 2 on `https://arena.ai/faq`, 1 on `https://swe-rebench.com/` and 1 on
+an X post. No daily run has ever captured the first two or the X post, so the guard never consults
+those excerpts at all; `swe-rebench.com/` is fetched but no retained run still has the capture. They
+are recorded here rather than left as a silent residue — if a collector ever starts fetching one of
+them, that is the day to re-run the scanner against it.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D196 | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter213-d193/{scan-merged,scan-merged-v2}.json`; `test/d193-2-protocol-excerpts.test.mjs` (19 tests); `data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/` (already retained, hash unchanged) | Seven system-card references pinned to Table 8.1.A's header-plus-row block. The wider scan is what found them; the residual 11 unmeasurable references are enumerated above. Implemented by claude-opus — **needs a non-claude-opus sign-off**. |
