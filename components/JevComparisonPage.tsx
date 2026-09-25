@@ -31,7 +31,7 @@ function radarRow(row: SeoRow): JevCompareRow {
 export async function JevComparisonPage({ rivalKey, path, label }: { rivalKey: string; path: string; label: string }) {
   const data = await readJevbenchSeoData();
   const pair = data.comparisons.find((item: { key: string }) => item.key === rivalKey);
-  if (!pair) throw new Error(`Jev comparison ${rivalKey} is not in the published top five`);
+  if (!pair) throw new Error(`Jev comparison ${rivalKey} is not ranked`);
   const jev = pair.jev as SeoRow;
   const rival = pair.rival as SeoRow;
   const faq = [

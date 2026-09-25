@@ -74,9 +74,9 @@ export function DatasetFaqJsonLd({ path, artifact, faq }: { path: string; artifa
         distribution: {
           '@type': 'DataDownload',
           encodingFormat: 'application/json',
-          contentUrl: `${SITE_URL}/api/jevbench/v1.4.1`,
+          contentUrl: `${SITE_URL}/api/jevbench/v1.4.2`,
         },
-        citation: 'https://github.com/fstandhartinger/jevbench/blob/v1.4.1/docs/METHOD-v1.4.md',
+        citation: 'https://github.com/fstandhartinger/jevbench/blob/v1.4.2/docs/METHOD-v1.4.md',
       },
       {
         '@type': 'FAQPage',

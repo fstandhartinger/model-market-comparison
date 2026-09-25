@@ -8,7 +8,7 @@ import { JevAxisBand, JevScoreStrip, typeColour } from '../../../components/JevS
 import { JevBenchRelatedLinks } from '../../../components/JevBenchRelatedLinks';
 import { JevV141SystemDetail } from '../../../components/JevV141SystemDetail';
 import type { JevV14System } from '../../../lib/jevbench-v14.mjs';
-import { readJevbenchV141, jevbenchV141View } from '../../../lib/jevbench-v141.mjs';
+import { readJevbenchV142, jevbenchV142View } from '../../../lib/jevbench-v142.mjs';
 import { previewMetadata } from '../../../lib/seo';
 
 // CR-129 (2026-09-23): Google Trends shows readers searching individual JevBench system names
@@ -54,8 +54,8 @@ async function findRow(key: string): Promise<{ row: JevV12Row; view: JevV12View;
 }
 
 async function findV141Row(key: string): Promise<{ row: JevV14System; view: { revision: string; generated: string; ranked: JevV14System[] } } | null> {
-  const result = await readJevbenchV141();
-  const view = jevbenchV141View(result);
+  const result = await readJevbenchV142();
+  const view = jevbenchV142View(result);
   const row = view.systems.find((candidate) => candidate.key === key);
   // readJevbenchV141 validates the ranked rows' numeric fields before this narrow is applied.
   return row ? { row, view } : null;
@@ -86,7 +86,7 @@ export async function generateStaticParams() {
   const view = jevbenchV12View(await readJevbenchV12());
   const existing = [...view.ranked, ...view.honorable, ...view.partial].map((r) => ({ system: r.key }));
   const existingKeys = new Set(existing.map(({ system }) => system));
-  const current = jevbenchV141View(await readJevbenchV141()).systems.map((r) => ({ system: r.key }));
+  const current = jevbenchV142View(await readJevbenchV142()).systems.map((r) => ({ system: r.key }));
   const currentKeys = new Set(current.map(({ system }) => system));
   return [...current, ...existing.filter(({ system }) => !currentKeys.has(system))].filter(({ system }, index, rows) => rows.findIndex((r) => r.system === system) === index);
 }

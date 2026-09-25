@@ -55,8 +55,7 @@ test('CR-135 adds a versioned API and pin while retaining the v1.4.0 source pin'
   assert.match(page, /readJevbenchV141\(\)/);
   assert.match(page, /canonical = '\/jev-models\/v1\.4\.1'/);
   assert.match(page, /data-bh-jev-frozen-top-five/);
-  assert.match(livePage, /readJevbenchV141\(\)/);
-  assert.match(livePage, /href="\/jev-models\/v1\.4\.1" data-bh-jev-version-share/);
+  // CR-152: the live page moved to v1.4.2; the v1.4.1 pin and API stay frozen.
   assert.match(livePage, /canonical: '\/jev-models'/);
   assert.match(frozenV14, /readJevbenchV14\(\)/);
   assert.match(sitemap, /"\/jev-models\/v1\.4\.1"/);

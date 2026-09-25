@@ -23,7 +23,7 @@ export default async function JevAlternativesPage() {
   const data = await readJevbenchSeoData();
   const topFive = data.topFive as SeoRow[];
   const barRows = topFive as unknown as JevV14System[];
-  const alternatives = topFive.slice(1);
+  const alternatives = topFive.filter((row) => row.key !== 'jev-1.13.0');
   const openRows = data.selfHostable.slice(0, 8) as SeoRow[];
   const faq = [
     {
@@ -56,7 +56,7 @@ export default async function JevAlternativesPage() {
 
     <section className="bh-panel mt-6 p-5" aria-labelledby="jev-alternatives-top-five">
       <h2 id="jev-alternatives-top-five" className="text-xl font-semibold">JevBench Scores in the current top five</h2>
-      <p className="bh-muted mt-2">The Jev row is the reference; the four rows below it are current alternatives. The overall score is a composite, so check the separate axes for your use case.</p>
+      <p className="bh-muted mt-2">The Jev row is the reference; the other four rows are current alternatives. The overall score is a composite, so check the separate axes for your use case.</p>
       <ol className="mt-4 space-y-2.5" data-bh-jev-alternatives-bars>
         {barRows.map((row) => <JevScoreBar key={row.key} row={row} reference={row.key === 'jev-1.13.0'} />)}
       </ol>

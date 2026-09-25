@@ -23,7 +23,7 @@ test('CR-131: the changing JevBench board has evergreen Open Graph and X metadat
   assert.doesNotMatch(metadata, /rank|score|\bleads at\b|systems tested|decisions/i);
   assert.match(page, /const OG_ART_REVISION = 'og4'/);
   assert.match(metadata, /twitter:[\s\S]*title, description/);
-  assert.match(page, /href="\/jev-models\/v1\.4\.1" data-bh-jev-version-share>Share this version/);
+  assert.match(page, /href="\/jev-models\/v1\.4\.2" data-bh-jev-version-share>Share this version/);
 });
 
 test('CR-134: the frozen /jev-models/v1.4 preview uses the immutable artifact and its top five', () => {

@@ -5,7 +5,7 @@ import { JEVBENCH_REPO } from '../../lib/jevbench.mjs';
 import { CostUnitNote } from '../../components/JevModelsV12';
 import { JevCostsDisclosure } from '../../components/JevCostsDisclosure';
 import { CustomEvaluationOffer } from '../../components/CustomEvaluationOffer';
-import { readJevbenchV141, jevbenchV141View } from '../../lib/jevbench-v141.mjs';
+import { readJevbenchV142, jevbenchV142View } from '../../lib/jevbench-v142.mjs';
 import { JevModelsV14Board } from '../../components/JevModelsV14';
 import { JevCapabilityLazy } from '../../components/JevCapabilityLazy';
 import { JevBoardIntentLinks } from '../../components/JevBenchSeoBlocks';
@@ -14,7 +14,7 @@ import { JevHistoryLazy } from '../../components/JevHistoryLazy';
 
 const OG_ART_REVISION = 'og4'; // The live board URL changes; its share card stays evergreen.
 
-// CR-135: v1.4.1 is the default board. The previous public-only v1.3.0 view stays below in a
+// CR-152: v1.4.2 is the default board (CR-135 introduced the v1.4.x default). The previous public-only v1.3.0 view stays below in a
 // labeled historical disclosure; frozen releases remain at their version-pinned URLs.
 export async function generateMetadata(): Promise<Metadata> {
   const title = 'JevBench by Benchmark Heaven — Jev-class model benchmark';
@@ -77,8 +77,8 @@ const currentNotMeasured = [
 ];
 
 export default async function JevModelsPage() {
-  const v14Result = await readJevbenchV141();
-  const v14 = jevbenchV141View(v14Result);
+  const v14Result = await readJevbenchV142();
+  const v14 = jevbenchV142View(v14Result);
   const v12 = await readJevbenchV12();
   const costUnit = v12.artifact.cost_unit;
   const costCorrection = (v12.artifact.cost_correction ?? null) as CostCorrection | null;
@@ -150,15 +150,6 @@ export default async function JevModelsPage() {
     ],
   };
   return <>
-    {/* Temporary release notice (Florian, 25 Sep 2026) — remove when v1.4.2 is live. */}
-    <div role="status" data-bh-release-notice style={{ margin: "12px 0 20px", padding: "18px 20px", borderRadius: 10, border: "2px solid #f2a33a", background: "rgba(242,163,58,0.14)", fontSize: 20, fontWeight: 700, lineHeight: 1.35 }}>
-      🚀 New leaderboard preview (JevBench v1.4.2)
-      <div style={{ fontSize: 14, fontWeight: 400, marginTop: 6, opacity: 0.85 }}>Preview of the new results below. The detailed rankings further down remain v1.4.1 while the new release is being prepared.</div>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 12, marginTop: 14 }}>
-        <img src="/jevbench/v142-preview/top5.png" alt="JevBench v1.4.2 top 5: decider-4b v2 64.13, Jev 1.13.0 63.29, JevK5 v0.2.0 62.04, Cygnet 61.76, Hopper 59.43" style={{ width: "100%", height: "auto", borderRadius: 8 }} />
-        <img src="/jevbench/v142-preview/decider-vs-jev.png" alt="decider-4b v2 vs Jev 1.13.0: Jev leads Intelligence 53.1 vs 49.4 and Calibration 76.3 vs 75.0; decider leads Speed 92.9 vs 83.3 and Cost 60.9 vs 52.0" style={{ width: "100%", height: "auto", borderRadius: 8 }} />
-      </div>
-    </div>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, '\\u003c') }} />
     <header className="bh-page-head">
       {/* F-160 (Fable pass 30): the eyebrow is a div — CustomEvaluationOffer mounts a <div> toast inside it after 6 s, which is invalid inside a <p>. */}
@@ -173,7 +164,7 @@ export default async function JevModelsPage() {
         <a className="text-accent underline" href="/jev-models/v1" data-bh-jev-v1-link>v1.0 results</a>
       </p>
       <p className="mt-3 max-w-3xl text-sm" data-bh-jev-version-share-row>
-        <a className="text-accent underline" href="/jev-models/v1.4.1" data-bh-jev-version-share>Share this version</a>
+        <a className="text-accent underline" href="/jev-models/v1.4.2" data-bh-jev-version-share>Share this version</a>
       </p>
     </header>
 
