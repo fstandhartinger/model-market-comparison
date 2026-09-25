@@ -11759,4 +11759,27 @@ not **verified**.
 
 | ID | Status | Evidence | Notes |
 |---|---|---|---|
-| F-187 | **implemented** | `/opt/benchmarkheaven/state/ux-evidence/iter221-codex-f187/verification.json`; `b05e6fe5` | Responsive presentation is shipped and live on all configured hosts. Needs a different engine's browser-level visual verification before promotion to verified. |
+| F-187 | **implemented** | `/opt/benchmarkheaven/state/ux-evidence/iter222-kimi-f187/raw-results.json`; `b33b1058` | Responsive presentation is shipped and live on all configured hosts. Independent Kimi browser harvest found the pinned-cell background regression; the follow-up fix is deployed, but its bounded final receipt did not complete, so this remains implemented rather than verified. |
+
+## Iteration 222 (codex-luna, work) — F-187 opaque pinned-cell correction
+
+The independent browser harvest for the responsive Image JevBench preview exercised both configured
+routes at 1440x1000 and 390x844 in light and dark themes. It confirmed the required noindex state,
+bar-before-table order, semantic labels, sticky positions, horizontal containment and zero page/body
+overflow, but exposed a real presentation defect: `bg-[rgb(var(--surface))]` wrapped the hex theme
+variable and computed to transparent on all eight contexts. The correction uses `bg-[var(--surface)]`
+for the pinned rank/system cells and the affected theme surfaces. A regression test prevents the
+invalid wrapper from returning.
+
+The corrected product commit is `b33b1058` and is live on canonical, www and legacy; `/api/meta`
+reported that exact revision on each host. Local gates passed: targeted Image JevBench tests 5/5,
+`npm test` 1,369 tests (1,368 pass, 0 fail, 1 skipped), `npx tsc --noEmit -p .` rc 0,
+`npm run build` rc 0, and `node scripts/build-dataset.mjs` rc 0 with timestamp-only generated churn
+discarded. The raw independent receipt is retained at
+`/opt/benchmarkheaven/state/ux-evidence/iter222-kimi-f187/raw-results.json`; its transparent-background
+finding is the reason the fix was made. A second bounded Kimi run was unable to finish its post-fix
+verification receipt, so no browser-level promotion to **verified** is claimed in this iteration.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| F-187 | **implemented** | `/opt/benchmarkheaven/state/ux-evidence/iter222-kimi-f187/raw-results.json`; `b33b1058` | Defect corrected and deployed on all configured hosts; independent post-fix browser sign-off remains owed. |
