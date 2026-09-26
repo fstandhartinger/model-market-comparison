@@ -301,7 +301,13 @@
         "variable": "leaderboardDataCreativeWritingV3",
         "name_field": "model_name",
         "value_field": "elo_score",
-        "scale": 1
+        "scale": 1,
+        "name_markers": {
+          "prefix": {
+            "!": "eqbench's own renderer treats a leading ! as the NSFW badge, strips it and prefixes the display name with 🔞 (same renderer: startsWith('!') then replace(/^!/,'')); the stripped name is the identity the board builds its links from.",
+            "*": "eqbench's own renderer treats a leading * as the 'new model' badge, strips it and prefixes the display name with 🆕 (creative_writing.js / creative_writing_longform.js: startsWith('*') then replace(/^\\*/,'')); the stripped name is the identity the board builds its HuggingFace and per-model report links from."
+          }
+        }
       },
       "status": "collected",
       "reason": "No safely attributable current result parsed from captured evidence. Elo Score column in the leaderboard table",
@@ -367,7 +373,13 @@
         "variable": "leaderboardDataLongformV3",
         "name_field": "model_name",
         "value_field": "overall_score_100",
-        "scale": 1
+        "scale": 1,
+        "name_markers": {
+          "prefix": {
+            "!": "eqbench's own renderer treats a leading ! as the NSFW badge, strips it and prefixes the display name with 🔞 (same renderer: startsWith('!') then replace(/^!/,'')); the stripped name is the identity the board builds its links from.",
+            "*": "eqbench's own renderer treats a leading * as the 'new model' badge, strips it and prefixes the display name with 🆕 (creative_writing.js / creative_writing_longform.js: startsWith('*') then replace(/^\\*/,'')); the stripped name is the identity the board builds its HuggingFace and per-model report links from."
+          }
+        }
       },
       "status": "collected",
       "reason": "No safely attributable current result parsed from captured evidence. Longform leaderboard table: extract the 'Score' column; metric defined under 'Main Metrics -> Score (0-100)'",
@@ -1595,7 +1607,13 @@
           "Model",
           "Money Balance"
         ],
-        "header_rows": 1
+        "header_rows": 1,
+        "name_markers": {
+          "suffix": {
+            " New": "Andon Labs renders a separate 'New' pill after the model name in the Model cell of the Current leaderboard; the row's own logo alt attribute states the model name without it, and the strip is only accepted when it reproduces that alt exactly."
+          },
+          "confirm_with": "name_image_alt"
+        }
       },
       "status": "collected",
       "reason": "No safely attributable current result parsed from captured evidence. 'Current leaderboard' table on the Vending-Bench 2 page: extract the 'Money Balance' column (average across 5 runs)",

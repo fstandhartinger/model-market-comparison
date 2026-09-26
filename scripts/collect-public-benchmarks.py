@@ -5,16 +5,25 @@ from pathlib import Path
 from html.parser import HTMLParser
 
 class Tables(HTMLParser):
+    # `alts` mirrors `tables` cell for cell and holds the alt text of the images inside each cell.
+    # It is evidence, never a score: D219 uses it to confirm that a stripped display badge really
+    # was a badge, because the row states the model's own name in its logo's alt attribute.
     def __init__(self):
-        super().__init__();self.tables=[];self.table=None;self.row=None;self.cell=None
+        super().__init__();self.tables=[];self.alts=[];self.table=None;self.row=None;self.cell=None
+        self.alt_table=None;self.alt_row=None;self.alt_cell=None
     def handle_starttag(self,tag,attrs):
-        if tag=='table':self.table=[];self.tables.append(self.table)
-        elif self.table is not None and tag=='tr':self.row=[];self.table.append(self.row)
-        elif self.row is not None and tag in ['td','th']:self.cell=[];self.row.append(self.cell)
+        if tag=='table':
+            self.table=[];self.tables.append(self.table);self.alt_table=[];self.alts.append(self.alt_table)
+        elif self.table is not None and tag=='tr':
+            self.row=[];self.table.append(self.row);self.alt_row=[];self.alt_table.append(self.alt_row)
+        elif self.row is not None and tag in ['td','th']:
+            self.cell=[];self.row.append(self.cell);self.alt_cell=[];self.alt_row.append(self.alt_cell)
+        elif self.alt_cell is not None and tag=='img':
+            self.alt_cell.extend(v for k,v in attrs if k=='alt' and v)
     def handle_endtag(self,tag):
-        if tag=='table':self.table=None
-        elif tag=='tr':self.row=None
-        elif tag in ['td','th']:self.cell=None
+        if tag=='table':self.table=None;self.alt_table=None
+        elif tag=='tr':self.row=None;self.alt_row=None
+        elif tag in ['td','th']:self.cell=None;self.alt_cell=None
     def handle_data(self,data):
         if self.cell is not None:self.cell.append(data)
 
@@ -89,7 +98,7 @@ def parse(source,spec,load_source):
             if 'model' not in fields or 'score' not in fields:raise ValueError('MCQ row schema changed')
             rows.append(fields)
     elif kind=='html_table':
-        p=Tables();p.feed(source);table=p.tables[spec['table_index']]
+        p=Tables();p.feed(source);table=p.tables[spec['table_index']];cell_alts=p.alts[spec['table_index']]
         if not table or not all(word in text(' '.join(' '.join(c) for c in table[0])) for word in spec['header_contains']):raise ValueError('HTML header/version changed')
         # Opt-in page guards (2026-09-21, Blueprint-Bench 2): statements the page must still make (task, scale,
         # footnotes), and value-cell markers the page defines, kept per row because text() strips `**`.
@@ -109,10 +118,14 @@ def parse(source,spec,load_source):
             if len(cells)!=spec['width']:continue # Detail/footnote rows have a distinct width.
             if sections is not None and section is None:raise ValueError('HTML table row before the first section')
             name=cells[spec['name_column']] if sections is None else section+'|'+cells[spec['name_column']]
+            # D219 (2026-09-26): the name cell's logo states the model's own name in its alt attribute. It is
+            # never a score and never a name on its own; a plan that strips a display badge from the name may
+            # name it as the witness that confirms the strip (`name_markers.confirm_with`).
+            witness=[text(a) for a in cell_alts[index][spec['name_column']]] if index<len(cell_alts) and spec['name_column']<len(cell_alts[index]) else []
             for column,label in spec.get('value_columns',[[spec['value_column'],None]]):
                 raw=' '.join(' '.join(r[column]).split())
                 marked=[meaning for marker,meaning in markers.items() if raw.endswith(marker) and not raw.endswith('*'+marker)]
-                rows.append({'name':name,'value':cells[column], 'source_row':index,'context':{'cells':cells,'configuration':label,'value_column':column,**({'section':section} if sections is not None else {}),**({'marker':marked[0]} if marked else {})}})
+                rows.append({'name':name,'value':cells[column], 'source_row':index,'name_image_alt':witness,'context':{'cells':cells,'configuration':label,'value_column':column,**({'section':section} if sections is not None else {}),**({'marker':marked[0]} if marked else {})}})
         if spec.get('unique_names'):
             names=[row['name'] for row in rows]
             if len(set(names))!=len(names):raise ValueError('Duplicate model rows in HTML table')
@@ -1231,6 +1244,27 @@ def collect(plan,registry,root=Path('.'),evidence=None):
             if rule.get('display_only') and row.get('display') is not True:continue
             raw_name=at(row,rule['name_field']);name=' '.join(str(raw_name).split()) if rule.get('plain_text_names') else text(raw_name)
             if not name:raise ValueError('Missing model name: '+bid+' row '+str(index))
+            # D219 (2026-09-26): some boards carry a *display badge* in the field we read as the model name — a
+            # leading `*`/`!` in eqbench's CSV payload, a trailing "New" pill in Andon Labs' table — and strip it
+            # in their own renderer before anyone sees it. Read as part of the name it invents an identity that
+            # joins to nothing and that changes the day the badge is retired, which is how three arms failed
+            # closed for days. The markers are therefore declared per source with the page's own evidence for
+            # each, never as a global rule: a trailing "New" is a real word in some model names. Where the row
+            # states its own name a second time (`confirm_with`), the strip must reproduce it exactly or fail.
+            markers=rule.get('name_markers') or {}
+            badges=[]
+            while markers:
+                for mark,meaning in markers.get('prefix',{}).items():
+                    if name.startswith(mark) and name[len(mark):].strip():name=name[len(mark):].strip();badges.append(meaning);break
+                else:
+                    for mark,meaning in markers.get('suffix',{}).items():
+                        if name.endswith(mark) and name[:-len(mark)].strip():name=name[:-len(mark)].strip();badges.append(meaning);break
+                    else:break
+            if markers.get('confirm_with'):
+                witness=row.get(markers['confirm_with']) or []
+                if not isinstance(witness,list):witness=[witness]
+                if [w for w in witness if w]!=[name]:raise ValueError(f'{bid} row {index}: {markers["confirm_with"]} {witness!r} does not confirm the model name {name!r}')
+            if badges:row.setdefault('context',{})['display_badges_stripped']=badges
             try:value=numeric(at(row,rule['value_field']))
             except (ValueError,KeyError) as e:raise ValueError(f'{bid} row {index}: {e}') from e
             if value is None:

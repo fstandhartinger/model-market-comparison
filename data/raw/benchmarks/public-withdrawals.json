@@ -19,10 +19,125 @@
         "sha256": "bd2bd59d3d5319e084d0c57898ec5c2369085c4d83d97c56e879d27fc84dd3b2",
         "retrieved_at": "2026-09-20T10:15:44.783341+00:00"
       },
-      "still_absent_at": ["2026-09-21T07:49:32.535173+00:00", "2026-09-21T10:41:29.871016+00:00", "2026-09-21T12:58:00Z"],
+      "still_absent_at": [
+        "2026-09-21T07:49:32.535173+00:00",
+        "2026-09-21T10:41:29.871016+00:00",
+        "2026-09-21T12:58:00Z"
+      ],
       "reason": "MathArena's BrokenArXiv 06/2026 table no longer lists 'Claude-Fable-5.1 (max)' (84.72%, $6.87, 137,272 output tokens). Between the two captures the only other changes are three added rows, among them 'Claude-Fable-5.1 (low)' at 86.57% with a different cost ($1.12) and token count (22,329) — a separate run at a different setting, not a relabel, so it is not treated as the same row. The page gives no reason for the removal. The 21 other prior rows are unchanged to the value.",
       "reviewed_at": "2026-09-21",
       "reviewed_by": "claude-opus iteration 150 (Sandy UX workstream); parser diff of both committed captures, re-fetched live byte-identical at 12:58 UTC"
+    },
+    {
+      "benchmark_id": "vending-bench::2",
+      "id": "public:eb00f7ce84b86d5e90a8314e",
+      "source_id": "Claude Opus 4.6",
+      "last_value": 8017.59,
+      "last_seen": {
+        "url": "https://andonlabs.com/evals/vending-bench-2",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-23T10-16-55-034Z/8b64607fb13e428e0068.gz",
+        "sha256": "8b64607fb13e428e0068d0f112145a6f78ec2044bd62b00fdbea5f7200cd39dc",
+        "retrieved_at": "2026-09-23T10:22:22.759399+00:00"
+      },
+      "first_absent": {
+        "url": "https://andonlabs.com/evals/vending-bench-2",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/555291ab525552d38cde.gz",
+        "sha256": "555291ab525552d38cdefc0da48368d1abf41029d5893e51792202e1a309ca30",
+        "retrieved_at": "2026-09-25T08:55:58.632557+00:00"
+      },
+      "still_absent_at": [
+        "2026-09-26T05:31:42.585743+00:00",
+        "2026-09-26T23:11:31.573949+00:00"
+      ],
+      "absent_from_table_model_cells": [
+        "GPT-6 Astra",
+        "GPT-6 Sol New",
+        "Claude Opus 5",
+        "Claude Opus 4.7",
+        "Grok 4.7 New",
+        "GPT-5.6 Sol",
+        "Claude Opus 5.5 New",
+        "Grok 4.6",
+        "GLM-5.2",
+        "GLM-5.3"
+      ],
+      "reason": "Vending-Bench 2's 'Current leaderboard' table is a fixed ten-row board. Between the two captures below Andon Labs added three entrants — GPT-6 Sol ($14,427.85), Grok 4.7 ($10,536.83) and Claude Opus 5.5 ($9,235.25), each wearing the site's 'New' pill — and the three lowest prior rows fell off the bottom. The page states no retraction and the run is not disowned; the board simply no longer shows it, so the measurement stays visible as a dated 'no longer published' history estimate. The other seven prior rows are unchanged to the cent. The page carries no fuller leaderboard: it has exactly one <table>, its only 'Show more' control expands the agent's system prompt, and the three names appear elsewhere in the capture only as chart colour variables (--color-GPT-5.5: #059669) with no score.",
+      "reviewed_at": "2026-09-26",
+      "reviewed_by": "claude-opus iteration 241 (Sandy UX workstream); parsed both committed captures with the plan's own html_table reader and re-fetched the live page at 2026-09-26T23:11:31Z with the capture script's user agent"
+    },
+    {
+      "benchmark_id": "vending-bench::2",
+      "id": "public:bcff96a74b6c1d69b061ba00",
+      "source_id": "GPT-5.5",
+      "last_value": 7523.84,
+      "last_seen": {
+        "url": "https://andonlabs.com/evals/vending-bench-2",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-23T10-16-55-034Z/8b64607fb13e428e0068.gz",
+        "sha256": "8b64607fb13e428e0068d0f112145a6f78ec2044bd62b00fdbea5f7200cd39dc",
+        "retrieved_at": "2026-09-23T10:22:22.759399+00:00"
+      },
+      "first_absent": {
+        "url": "https://andonlabs.com/evals/vending-bench-2",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/555291ab525552d38cde.gz",
+        "sha256": "555291ab525552d38cdefc0da48368d1abf41029d5893e51792202e1a309ca30",
+        "retrieved_at": "2026-09-25T08:55:58.632557+00:00"
+      },
+      "still_absent_at": [
+        "2026-09-26T05:31:42.585743+00:00",
+        "2026-09-26T23:11:31.573949+00:00"
+      ],
+      "absent_from_table_model_cells": [
+        "GPT-6 Astra",
+        "GPT-6 Sol New",
+        "Claude Opus 5",
+        "Claude Opus 4.7",
+        "Grok 4.7 New",
+        "GPT-5.6 Sol",
+        "Claude Opus 5.5 New",
+        "Grok 4.6",
+        "GLM-5.2",
+        "GLM-5.3"
+      ],
+      "reason": "Vending-Bench 2's 'Current leaderboard' table is a fixed ten-row board. Between the two captures below Andon Labs added three entrants — GPT-6 Sol ($14,427.85), Grok 4.7 ($10,536.83) and Claude Opus 5.5 ($9,235.25), each wearing the site's 'New' pill — and the three lowest prior rows fell off the bottom. The page states no retraction and the run is not disowned; the board simply no longer shows it, so the measurement stays visible as a dated 'no longer published' history estimate. The other seven prior rows are unchanged to the cent. The page carries no fuller leaderboard: it has exactly one <table>, its only 'Show more' control expands the agent's system prompt, and the three names appear elsewhere in the capture only as chart colour variables (--color-GPT-5.5: #059669) with no score.",
+      "reviewed_at": "2026-09-26",
+      "reviewed_by": "claude-opus iteration 241 (Sandy UX workstream); parsed both committed captures with the plan's own html_table reader and re-fetched the live page at 2026-09-26T23:11:31Z with the capture script's user agent"
+    },
+    {
+      "benchmark_id": "vending-bench::2",
+      "id": "public:aac34c2a4d93624222cc341c",
+      "source_id": "GPT-5.6 Terra",
+      "last_value": 7343.21,
+      "last_seen": {
+        "url": "https://andonlabs.com/evals/vending-bench-2",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-23T10-16-55-034Z/8b64607fb13e428e0068.gz",
+        "sha256": "8b64607fb13e428e0068d0f112145a6f78ec2044bd62b00fdbea5f7200cd39dc",
+        "retrieved_at": "2026-09-23T10:22:22.759399+00:00"
+      },
+      "first_absent": {
+        "url": "https://andonlabs.com/evals/vending-bench-2",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/555291ab525552d38cde.gz",
+        "sha256": "555291ab525552d38cdefc0da48368d1abf41029d5893e51792202e1a309ca30",
+        "retrieved_at": "2026-09-25T08:55:58.632557+00:00"
+      },
+      "still_absent_at": [
+        "2026-09-26T05:31:42.585743+00:00",
+        "2026-09-26T23:11:31.573949+00:00"
+      ],
+      "absent_from_table_model_cells": [
+        "GPT-6 Astra",
+        "GPT-6 Sol New",
+        "Claude Opus 5",
+        "Claude Opus 4.7",
+        "Grok 4.7 New",
+        "GPT-5.6 Sol",
+        "Claude Opus 5.5 New",
+        "Grok 4.6",
+        "GLM-5.2",
+        "GLM-5.3"
+      ],
+      "reason": "Vending-Bench 2's 'Current leaderboard' table is a fixed ten-row board. Between the two captures below Andon Labs added three entrants — GPT-6 Sol ($14,427.85), Grok 4.7 ($10,536.83) and Claude Opus 5.5 ($9,235.25), each wearing the site's 'New' pill — and the three lowest prior rows fell off the bottom. The page states no retraction and the run is not disowned; the board simply no longer shows it, so the measurement stays visible as a dated 'no longer published' history estimate. The other seven prior rows are unchanged to the cent. The page carries no fuller leaderboard: it has exactly one <table>, its only 'Show more' control expands the agent's system prompt, and the three names appear elsewhere in the capture only as chart colour variables (--color-GPT-5.5: #059669) with no score.",
+      "reviewed_at": "2026-09-26",
+      "reviewed_by": "claude-opus iteration 241 (Sandy UX workstream); parsed both committed captures with the plan's own html_table reader and re-fetched the live page at 2026-09-26T23:11:31Z with the capture script's user agent"
     }
   ]
 }

@@ -240,6 +240,30 @@ for (const path of ['data/raw/benchmarks/public-observations.json', 'data/raw/be
     rejected.push({ benchmark_id: restatement.benchmark_id, source_id: restatement.from, model_id: null,
       reason: restatement.reason, withheld: true, locator: restatement.previous_locator });
   }
+  // D219 (2026-09-26): a board that carries a *display badge* in the field we read as the model name — eqbench's
+  // leading `*`/`!` in its CSV payload, Andon Labs' trailing "New" pill — never published that spelling as a model
+  // identity; its own renderer strips the badge before display. Reading it as part of the name invented an identity
+  // that joined to nothing and changed the day the badge was retired, which failed three daily arms closed. The
+  // parser now strips the declared marker, and each already-published badged label is corrected here: the row keeps
+  // its public ID and value under the plain name, and the badged spelling is republished as a *withheld* rejection
+  // carrying the old locator — without that second half the retained history states read the badged label's absence
+  // as "no longer published" and bridge the very same measurement back as an estimate (the D180/D186 trap). Only the
+  // locator may suppress it: a model_id here would withhold every retained value of that benchmark x model pair.
+  for (const correction of raw.display_badge_corrections || []) {
+    const row = observations.find((o) => o.id === correction.id);
+    if (!row || row.benchmark_id !== correction.benchmark_id || row.subject.source_id !== correction.to) {
+      throw new Error(`Display-badge correction does not name a published row under its plain name: ${correction.id}`);
+    }
+    if (!correction.marker || !correction.from || correction.from === correction.to || !correction.previous_locator
+      || !correction.reason || !correction.renderer_evidence?.sha256 || !correction.renderer_evidence?.excerpt) {
+      throw new Error(`Display-badge correction is incomplete: ${correction.id}`);
+    }
+    const stripped = correction.marker.startsWith(' ') ? correction.from.slice(0, -correction.marker.length).trim()
+      : correction.from.slice(correction.marker.length).trim();
+    if (stripped !== correction.to) throw new Error(`Display-badge correction does not strip its own marker: ${correction.id}`);
+    rejected.push({ benchmark_id: correction.benchmark_id, source_id: correction.from, model_id: null,
+      reason: correction.reason, withheld: true, locator: correction.previous_locator });
+  }
   for (const c of raw.collections || []) if (!collections.some((old) => old.benchmark_id === c.benchmark_id)) collections.push(c);
 }
 for (const e of registry.entries) if (!collections.some((c) => c.benchmark_id === e.id)) collections.push({ benchmark_id: e.id,
