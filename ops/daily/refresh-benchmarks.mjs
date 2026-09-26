@@ -451,6 +451,11 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
   let publicRows = [...oldPublic.observations];
   const specChecks = plan.entries.map(() => []);
   const pending = [];
+  // Same rule as captureTargets(): a reviewed manual snapshot is retained unchanged, never
+  // refreshed by the daily. feea6470 (D191) moved this check into the split loop without the
+  // set itself, which crashed every run on "manual is not defined" until the clone-level
+  // repair of 2026-09-25; this is the repo-side fix. (test/d191-manual-scope.test.mjs)
+  const manual = new Set(plan.entries.filter((spec) => spec.refresh === 'manual').map((spec) => spec.benchmark_id));
   for (const [index, spec] of plan.entries.entries()) {
     const priorRows = oldPublic.observations.filter((r) => r.benchmark_id === spec.benchmark_id);
     if (!spec.parser) { specChecks[index].push({ id: spec.benchmark_id, status: spec.status, reason: spec.reason }); continue; }

@@ -50,9 +50,19 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
       const acc = [...document.querySelectorAll('h3')].find((e) => /Public accuracy by actual input length/.test(t(e)));
       const accSec = acc && acc.closest('section, div');
       const accSvg = accSec && accSec.querySelector('svg');
-      const buckets = accSvg ? [...accSvg.querySelectorAll('text')].map((x) => t(x)).filter((x) => /k|M/.test(x) && x.length < 10) : [];
+      // CR-169 switched the drawn bucket labels from the compact `2–8k` form to inclusive
+      // full-number ranges (`2,000–7,999`), which no longer matches `/k|M/`, and the tooltip now
+      // reads `… · 2,000–7,999 input tokens: …`, so the old captures carried an ` input` suffix
+      // that matched nothing either — every context then reported an empty axis (buckets: [])
+      // ↑— a false negative, not a finding. Read the page's own inclusive-bin list
+      // (data-bh-jev-context-bin-edges) as the canonical label set so the check follows the
+      // rendered format; fall back to a range pattern that matches both label styles.
+      const binEdgesTxt = t(document.querySelector('[data-bh-jev-context-bin-edges]'));
+      const labelSet = binEdgesTxt ? binEdgesTxt.replace(/^Input-token bins \(inclusive\):\s*/, '').replace(/\.\s*$/, '').split(/;\s*/).map((x) => x.trim()).filter(Boolean) : [];
+      const isBucketLabel = (x) => (labelSet.length ? labelSet.includes(x) : /^[<≥]?[\d,]+[kM]?(?:–[\d,]+[kM]?)?(?: or more)?$/.test(x));
+      const buckets = accSvg ? [...accSvg.querySelectorAll('text')].map((x) => t(x)).filter((x) => isBucketLabel(x)) : [];
       const titles = accSvg ? [...accSvg.querySelectorAll('title')].map((x) => t(x)) : [];
-      const usedBuckets = new Set(titles.map((x) => (x.match(/· ([^:]+) tokens:/) || [])[1]).filter(Boolean));
+      const usedBuckets = new Set(titles.map((x) => (x.match(/· (.+?) (?:input )?tokens:/) || [])[1]).filter(Boolean));
       const thin = titles.filter((x) => { const m = x.match(/\((\d+)\/(\d+)\)/); return m && Number(m[2]) < 20; }).length;
       const thinMarked = accSvg ? accSvg.querySelectorAll('[data-bh-thin]').length : 0;
       return { capability3d: !!document.querySelector('[data-bh-jev14-capability-3d]'), smallSuite: suite ? small(suite) : null, suiteText: suite ? t(suite) : null, creditText: credit ? String(credit.textContent || '').replace(/\s+/g, ' ').trim() : null, smallCost: costAxis ? small(costAxis) : null, smallCtx: ctxAxis ? small(ctxAxis) : null, notes, ctxTableClosed: ctxTable ? !ctxTable.open : false, ctxTableFound: !!ctxPanel && !!ctxTableEl, ctxTableSummary, fieldNames, capRows, buckets, usedBuckets: [...usedBuckets], thin, thinMarked };
