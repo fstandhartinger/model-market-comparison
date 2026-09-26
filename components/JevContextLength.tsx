@@ -183,6 +183,15 @@ function AccuracyChart({ systems, labels, excluded, topRanked }: { systems: Leng
     const bucket = system.buckets[index];
     return bucket == null || bucket.accuracy == null ? [] : [{ position, label, bucket, thin: bucket.n < THIN_BUCKET }];
   });
+  // F-203: the bucket ticks print at 10 px. If the drawn buckets sit closer together than the widest
+  // label needs, every second label is dropped on the narrow side (the last bin always kept) instead of
+  // shrinking the text; the gridline, the <desc>, the bin-edge sentence and every tooltip keep all buckets.
+  const tickFontSize = 10;
+  const tickLabel = (label: string) => INPUT_BUCKET_RANGES[label] ?? label;
+  const tickGap = active.length < 2 ? plotRight - left : (plotRight - left) / (active.length - 1);
+  const widestTick = Math.max(0, ...active.map(({ label }) => tickLabel(label).length * tickFontSize * 0.6));
+  const tickCrowded = widestTick + 6 > tickGap;
+  const showTick = (position: number) => !tickCrowded || position % 2 === (active.length - 1) % 2;
   const shownPoint = focusedPoint ?? hoveredPoint ?? pinnedPoint;
   const pointDetails = systems.flatMap((system) => system.buckets.filter((bucket) => `${system.key}:${bucket.label}` === shownPoint).map((bucket) => ({ system, bucket })))[0];
 
@@ -192,7 +201,7 @@ function AccuracyChart({ systems, labels, excluded, topRanked }: { systems: Leng
     <p className="bh-muted mt-1 text-xs" data-bh-jev-context-bin-edges>Input-token bins (inclusive): {labels.map((label) => INPUT_BUCKET_RANGES[label] ?? label).join('; ')}.</p>
     <p className="bh-muted mt-2 text-xs sm:hidden">Scroll the chart sideways to see every input range.</p>
     <div className="mt-3 max-w-full overflow-x-auto" data-bh-jev-context-chart-scroll>
-    <svg className="block h-auto min-w-[700px] w-full" viewBox={`0 0 ${width} ${height}`} role="group" aria-labelledby="jev-context-svg-title jev-context-svg-desc">
+    <svg className="block h-auto min-w-[740px] w-full" viewBox={`0 0 ${width} ${height}`} role="group" aria-labelledby="jev-context-svg-title jev-context-svg-desc">
       <title id="jev-context-svg-title">JevBench public accuracy across input-length buckets</title>
       <desc id="jev-context-svg-desc">{systems.length} systems are plotted across {labels.join(', ')} input-token buckets. Bucket denominators differ by system and are available in the details table below.</desc>
       {[0, 0.25, 0.5, 0.75, 1].map((tick) => <g key={tick}>
@@ -201,7 +210,7 @@ function AccuracyChart({ systems, labels, excluded, topRanked }: { systems: Leng
       </g>)}
       {active.map(({ label }, position) => <g key={label}>
         <line x1={x(position)} x2={x(position)} y1={top} y2={plotBottom} stroke="rgb(var(--line) / .42)" />
-        <text x={x(position)} y={plotBottom + 18} textAnchor="middle" fill="var(--muted)" fontSize="9.5">{INPUT_BUCKET_RANGES[label] ?? label}</text>
+        {showTick(position) && <text x={x(position)} y={plotBottom + 18} textAnchor="middle" fill="var(--muted)" fontSize={tickFontSize}>{tickLabel(label)}</text>}
       </g>)}
       <text x={(left + plotRight) / 2} y={height - 9} textAnchor="middle" fill="var(--text)" fontSize="10" className="hidden sm:block">Actual input tokens per decision</text>
       {systems.map((system, systemIndex) => {

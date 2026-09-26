@@ -21,3 +21,49 @@ test('F-202: the bubble separator label and its direction hints are 10 px at eve
   assert.ok(sizes.length >= 5, `expected the label and four hint texts, saw ${sizes.length}`);
   assert.ok(sizes.every((s) => s >= 10), `separator text sizes ${sizes.join(', ')}`);
 });
+
+// F-203/F-204/F-205 (iteration 239, claude-opus): the three mechanical directives pass 37 left open.
+const context = readFileSync(new URL('../components/JevContextLength.tsx', import.meta.url), 'utf8');
+const ranking = readFileSync(new URL('../components/JevCapabilityRanking.tsx', import.meta.url), 'utf8');
+
+test('F-203: the input-length bucket ticks are 10 px, and the chart never renders below its own scale', () => {
+  assert.match(context, /const tickFontSize = 10;/);
+  assert.doesNotMatch(context, /fontSize="9\.5"/, 'no 9.5 px text is left in the chart');
+  // The viewBox is 740 wide; a smaller minimum width scaled the whole chart below 1 and drew a 10 px
+  // attribute at 9.46 px on a phone.
+  const view = context.match(/const width = (\d+), height/);
+  assert.ok(view, 'the chart still declares its viewBox width');
+  assert.match(context, new RegExp(`min-w-\\[${view[1]}px\\]`), 'the svg minimum width matches the viewBox width');
+  // The crowding guard drops every second label, always keeping the last bin, rather than shrinking the text.
+  assert.match(context, /const tickCrowded = widestTick \+ 6 > tickGap;/);
+  assert.match(context, /position % 2 === \(active\.length - 1\) % 2/);
+});
+
+test('F-204: one name per axis, "decisions" as the unit, one arrow per direction', () => {
+  assert.doesNotMatch(three, /data-bh-jev14-3d-axes\b/, 'the 3D legend box is gone; the on-plot labels name the axes');
+  assert.doesNotMatch(three, /Toward you/, 'the caption paragraph is gone');
+  // The three on-plot axis names stay (they are what replaces the legend box).
+  assert.match(three, /Cost · \$\/1k decisions · cheaper →/);
+  assert.match(three, /Speed · faster →/);
+  for (const src of [three, ranking, bubble, context]) {
+    assert.doesNotMatch(src, /\$\/1k tasks/);
+    assert.doesNotMatch(src, /per 1,000 tasks/);
+  }
+  assert.match(ranking, /\$\/1k decisions/);
+  assert.match(ranking, /Thin red line = cost per 1,000 decisions;/);
+  assert.match(ranking, /\* = est\. \(estimated cost\)\./, 'the marker legend uses the same word as the tables’ pill');
+  // The flat charts state the direction once, in Florian's top hints.
+  assert.match(bubble, /'\$ per 1,000 decisions \(log\)' : 'Median-latency speed'/);
+});
+
+test('F-205: under 640 px the five labels are one column with leaders that do not cross', () => {
+  assert.match(bubble, /const stacked = viewportWidth < 640;/, 'the column follows the viewport, not the chart: at 1440 the two-up grid gives each chart ~625 px and the directive keeps that placement');
+  assert.match(bubble, /const segCross = \(p: Seg, q: Seg\)/, 'the layout runs the same crossing test as the verifier');
+  const stack = bubble.slice(bubble.indexOf('if (stacked) {'), bubble.indexOf('// the greedy') + 1 || undefined);
+  assert.match(stack, /rowH = Math\.round\(fs \+ 9\)/, 'the row pitch clears the glyph cell plus the halo stroke');
+  assert.match(stack, /sort\(\(a2, b2\) => chosen\[a2\]\.d\.cy - chosen\[b2\]\.d\.cy\)/, 'rows are ordered by the point’s y');
+  assert.match(stack, /for \(let pass = 0; pass < 10; pass\+\+\)/, 'at most ten swaps');
+  assert.match(stack, /laid\.crossings > 0 && items\.length > 3/, 'the fallback labels the top three');
+  // Above 640 px the greedy placement stays, but now rejects a candidate whose leader would cross another.
+  assert.match(bubble, /if \(drawnLeaders\.some\(\(other\) => segCross\(leader, other\)\)\) continue;/);
+});

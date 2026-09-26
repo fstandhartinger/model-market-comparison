@@ -35,7 +35,7 @@ function RankingRow({ item, rank, costBounds, referenceCost, note }: {
     <dt className="text-gray-400">Intelligence</dt><dd className="tabular">{intelligence == null ? 'unknown' : one(intelligence)}</dd>
     <dt className="text-gray-400">Calibration</dt><dd className="tabular">{calibration == null ? 'unknown' : one(calibration)}</dd>
     <dt className="text-gray-400">Cost Score</dt><dd className="tabular">{costScore == null ? 'unknown' : one(costScore)}</dd>
-    <dt className="text-gray-400">Cost per 1,000 tasks</dt><dd className="tabular">{cost == null ? 'unknown' : `${usd(cost)} (${costRatio})`}</dd>
+    <dt className="text-gray-400">Cost per 1,000 decisions</dt><dd className="tabular">{cost == null ? 'unknown' : `${usd(cost)} (${costRatio})`}</dd>
     <dt className="text-gray-400">Median latency</dt><dd className="tabular">{latency == null ? 'not reported (Speed axis used where available)' : secs(latency)}</dd>
     <dt className="text-gray-400">Rank</dt><dd className="tabular">Capability {rank || 'outside Jev-class'} · official {row.rank == null ? 'unranked' : `#${row.rank}`}</dd>
   </dl>;
@@ -119,7 +119,7 @@ export function JevCapabilityRanking({ systems, revision, officialHref }: { syst
         <span className="bh-muted text-right" title="Intelligence Score"><span className="sm:hidden">I</span><span className="hidden sm:inline">Intelligence<br />Score</span></span>
         <span className="bh-muted text-right" title="Cost Score"><span className="sm:hidden">C</span><span className="hidden sm:inline">Cost<br />Score</span></span>
         <span className="bh-muted text-right" title="Capability"><span className="sm:hidden">Cap.</span><span className="hidden sm:inline">Capability</span></span>
-        <span className="bh-muted text-right" title="US dollars per 1,000 tasks"><span className="sm:hidden">$/1k</span><span className="hidden sm:inline">$/1k tasks</span></span>
+        <span className="bh-muted text-right" title="US dollars per 1,000 decisions"><span className="sm:hidden">$/1k</span><span className="hidden sm:inline">$/1k decisions</span></span>
       </div>
       <ol className="mt-2 space-y-2.5 sm:mt-1" data-bh-jev-class-list>{numbered.slice(0, HEADLINE_TOP).map(bar)}</ol>
       {numbered.length > HEADLINE_TOP && <details className="mt-2.5" data-bh-jev-class-more>
@@ -132,7 +132,7 @@ export function JevCapabilityRanking({ systems, revision, officialHref }: { syst
           {costTicks(costBounds).map((tick, i, all) => <span key={tick} className={`absolute top-0 whitespace-nowrap font-mono text-[10px] text-[var(--muted)] ${i === 0 ? '' : i === all.length - 1 ? '-translate-x-full' : '-translate-x-1/2'}`} style={{ left: `${costAxisPosition(tick, costBounds)}%` }}>{usd(tick)}</span>)}
         </div>
       </div>
-      <p className="bh-muted mt-1 text-[11.5px] leading-snug">Wide coloured bar = Capability (0–100). Thin red line = cost per 1,000 tasks; <b>log scale, each gridline = 10×</b>, shorter is cheaper. * = estimated cost. # counts ranked Jev-class systems; &ldquo;–&rdquo; marks unranked or outside systems. Tap ⓘ for the full values, median latency and cost relative to Jev.</p>
+      <p className="bh-muted mt-1 text-[11.5px] leading-snug">Wide coloured bar = Capability (0–100). Thin red line = cost per 1,000 decisions; <b>log scale, each gridline = 10×</b>, shorter is cheaper. * = est. (estimated cost). # counts ranked Jev-class systems; &ldquo;–&rdquo; marks unranked or outside systems. Tap ⓘ for the full values, median latency and cost relative to Jev.</p>
       <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[11.5px]" aria-label="Ranking colour legend" data-bh-jev-capability-legend>
         {types.map((type) => <li key={type} style={{ '--jev-t': `var(${jevTypeVarName(type)})` } as CSSProperties}><span className="bh-jevc-swatch mr-1.5" />{JEV_TYPE_LABEL[type] ?? type}</li>)}
         <li><span className="bh-jev-cost-bar mr-1.5 inline-block h-[3px] w-4 rounded-full align-middle" />Cost line</li>

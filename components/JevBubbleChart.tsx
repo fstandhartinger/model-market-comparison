@@ -27,6 +27,15 @@ const speedToSeconds = (speed: number) => 0.1 * 10 ** ((100 - speed) / 20);
 
 type Box = { x: number; y: number; w: number; h: number };
 const overlaps = (a: Box, b: Box) => a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
+type Seg = { x1: number; y1: number; x2: number; y2: number };
+// Proper segment crossing (shared endpoints and collinear touches do not count), the same test the
+// F-205 verifier runs on the rendered leader lines.
+const side = (ax: number, ay: number, bx: number, by: number, cx: number, cy: number) => Math.sign((bx - ax) * (cy - ay) - (by - ay) * (cx - ax));
+const segCross = (p: Seg, q: Seg) => {
+  const d1 = side(p.x1, p.y1, p.x2, p.y2, q.x1, q.y1), d2 = side(p.x1, p.y1, p.x2, p.y2, q.x2, q.y2);
+  const d3 = side(q.x1, q.y1, q.x2, q.y2, p.x1, p.y1), d4 = side(q.x1, q.y1, q.x2, q.y2, p.x2, p.y2);
+  return d1 !== d2 && d3 !== d4 && d1 !== 0 && d3 !== 0;
+};
 
 function useWidth(fallback: number) {
   const ref = useRef<HTMLDivElement>(null);
@@ -51,8 +60,12 @@ export function JevBubbleChart({ id, kind, points, costLimit, referenceName, act
 }) {
   const { ref, width: W } = useWidth(520);
   const [viewportHeight, setViewportHeight] = useState(700);
+  // F-205 reads "under 640 px" as the viewport, not the chart: at 1440 the two-up grid gives each chart about
+  // 625 px, and the directive keeps the 1440 placement as it is. 1440 is the pre-measurement default so the
+  // desktop path renders first and no column flashes before the first measurement.
+  const [viewportWidth, setViewportWidth] = useState(1440);
   useEffect(() => {
-    const update = () => setViewportHeight(window.innerHeight);
+    const update = () => { setViewportHeight(window.innerHeight); setViewportWidth(window.innerWidth); };
     update(); window.addEventListener('resize', update);
     return () => window.removeEventListener('resize', update);
   }, []);
@@ -109,13 +122,60 @@ export function JevBubbleChart({ id, kind, points, costLimit, referenceName, act
   // Draw the Jev-class systems last so they sit on top, and the larger bubbles first within each group.
   const drawOrder = useMemo(() => [...placed].sort((a, b) => Number(a.p.inClass) - Number(b.p.inClass) || b.r - a.r), [placed]);
 
-  // Permanent labels: the top five Jev-class systems by Capability. Greedy placement around the bubble, avoiding the
-  // other labels, the labelled bubbles and the plot edge; a leader line joins a label that had to move away.
+  // Permanent labels: the top five Jev-class systems by Capability.
+  // F-205: under 640 px the five labels are a single right-aligned column in the plot's upper half, one per row,
+  // ordered top-to-bottom by their point's y, each with a straight leader to its bubble; rows are swapped until no
+  // two leaders cross (at most ten swaps), and if no crossing-free placement exists only the top three are labelled.
+  // At 640 px and above the greedy placement around the bubble stays, now also rejecting a crossing leader.
+  const stacked = viewportWidth < 640;
   const labels = useMemo(() => {
     const leaders = placed.filter((d) => d.p.classRank != null && d.p.classRank <= LABELLED).sort((a, b) => (a.p.classRank ?? 0) - (b.p.classRank ?? 0));
     const taken: Box[] = leaders.map((d) => ({ x: d.cx - d.r, y: d.cy - d.r, w: 2 * d.r, h: 2 * d.r }));
+    const drawnLeaders: Seg[] = [];
     const fs = narrow ? 10.5 : 11.5;
-    const out: { key: string; text: string; x: number; y: number; anchor: 'start' | 'end'; lx: number; ly: number; far: boolean }[] = [];
+    const out: { key: string; text: string; x: number; y: number; anchor: 'start' | 'end'; lx: number; ly: number; far: boolean; ex?: number; ey?: number }[] = [];
+    if (stacked) {
+      // A row has to clear the text box the browser actually draws: the glyph cell (~1.3 em) plus the 3 px halo
+      // stroke this label carries, so the pitch is fs + 9 rather than the 13 px of a bare line of text.
+      const rowH = Math.round(fs + 9);
+      const xEnd = W - R - 4;
+      const room = Math.max(60, xEnd - (L + 16));
+      const items = leaders.map((d) => {
+        let text = `${d.p.classRank}. ${d.p.name}`;
+        let w = text.length * fs * 0.62 + 8;
+        if (w > room) {
+          const keep = Math.max(6, Math.floor((room - 12) / (fs * 0.62)));
+          text = `${text.slice(0, keep).trimEnd()}…`;
+          w = text.length * fs * 0.62 + 8;
+        }
+        return { d, text, w };
+      });
+      const place = (chosen: typeof items) => {
+        const gutter = Math.max(L + 4, xEnd - Math.max(...chosen.map((i) => i.w)) - 6);
+        const top = T + 12;
+        const rows = new Array<number>(chosen.length).fill(0);
+        [...chosen.keys()].sort((a2, b2) => chosen[a2].d.cy - chosen[b2].d.cy).forEach((item, row) => { rows[item] = row; });
+        const seg = (i: number): Seg => ({ x1: chosen[i].d.cx, y1: chosen[i].d.cy, x2: gutter, y2: top + rows[i] * rowH });
+        for (let pass = 0; pass < 10; pass++) {
+          let swapped = false;
+          for (let i = 0; i < chosen.length && !swapped; i++) for (let j = i + 1; j < chosen.length && !swapped; j++) {
+            if (!segCross(seg(i), seg(j))) continue;
+            const t = rows[i]; rows[i] = rows[j]; rows[j] = t; swapped = true;
+          }
+          if (!swapped) break;
+        }
+        let crossings = 0;
+        for (let i = 0; i < chosen.length; i++) for (let j = i + 1; j < chosen.length; j++) if (segCross(seg(i), seg(j))) crossings++;
+        return { crossings, rows, gutter, top };
+      };
+      let chosen = items, laid = place(items);
+      // The directive's fallback: if five cannot be placed without a crossing, label the top three.
+      if (laid.crossings > 0 && items.length > 3) { chosen = items.slice(0, 3); laid = place(chosen); }
+      return chosen.map((it, i) => ({
+        key: it.d.p.key, text: it.text, x: xEnd, y: laid.top + laid.rows[i] * rowH, anchor: 'end' as const,
+        lx: it.d.cx, ly: it.d.cy, far: true, ex: laid.gutter, ey: laid.top + laid.rows[i] * rowH,
+      }));
+    }
     for (const d of leaders) {
       const text = `${d.p.classRank}. ${d.p.name}`;
       const w = text.length * fs * 0.62 + 8, h = fs + 4;
@@ -131,17 +191,19 @@ export function JevBubbleChart({ id, kind, points, costLimit, referenceName, act
         const box: Box = { x: c[2] === 'start' ? c[0] : c[0] - w, y: c[1] - h / 2, w, h };
         if (box.x < L + 1 || box.x + box.w > W - R || box.y < T || box.y + box.h > H - B) continue;
         if (taken.some((t) => overlaps(t, box))) continue;
+        const leader: Seg = { x1: d.cx, y1: d.cy, x2: c[0], y2: c[1] };
+        if (drawnLeaders.some((other) => segCross(leader, other))) continue;
         const covered = placed.filter((o) => o.p.key !== d.p.key && overlaps(box, { x: o.cx - o.r, y: o.cy - o.r, w: 2 * o.r, h: 2 * o.r })).length;
         const cost = covered * 40 + Math.hypot(c[0] - d.cx, c[1] - d.cy);
         if (cost < best) { best = cost; chosen = c; }
       }
-      if (chosen) taken.push({ x: chosen[2] === 'start' ? chosen[0] : chosen[0] - w, y: chosen[1] - h / 2, w, h });
+      if (chosen) { taken.push({ x: chosen[2] === 'start' ? chosen[0] : chosen[0] - w, y: chosen[1] - h / 2, w, h }); drawnLeaders.push({ x1: d.cx, y1: d.cy, x2: chosen[0], y2: chosen[1] }); }
       const c = chosen ?? candidates[0];
       out.push({ key: d.p.key, text, x: c[0], y: c[1], anchor: c[2], lx: d.cx, ly: d.cy, far: Math.hypot(c[0] - d.cx, c[1] - d.cy) > pad + 2 });
     }
     return out;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [placed, narrow, W, H]);
+  }, [placed, narrow, stacked, W, H, L, R, T, B]);
 
   const nearest = (clientX: number, clientY: number, svg: SVGSVGElement) => {
     const rect = svg.getBoundingClientRect();
@@ -282,7 +344,7 @@ export function JevBubbleChart({ id, kind, points, costLimit, referenceName, act
             <text x={x(t.v)} y={H - B + 15} textAnchor="middle" fill="var(--muted)" fontSize="11">{t.label}</text>
             {t.sub && <text x={x(t.v)} y={H - B + 27} textAnchor="middle" fill="var(--muted)" fontSize="10">{t.sub}</text>}</>}
         </g>)}
-        <text x={plotCenterX} y={H - 5} textAnchor="middle" fill="var(--text)" fontSize="11">{kind === 'cost' ? '$ per 1,000 decisions (log) · cheaper →' : 'Median-latency speed · faster →'}</text>
+        <text x={plotCenterX} y={H - 5} textAnchor="middle" fill="var(--text)" fontSize="11">{kind === 'cost' ? '$ per 1,000 decisions (log)' : 'Median-latency speed'}</text>
         <text x={11} y={plotCenterY + 7} textAnchor="middle" fill="var(--text)" fontSize="11" transform={`rotate(-90 11 ${plotCenterY + 7})`}>Capability</text>
         <text x={11} y={plotCenterY - 39} textAnchor="middle" fill="var(--text)" fontSize="13" aria-label="Capability up">↑</text>
         {separator(limitX, 'cost', `2× ${referenceName} cost`, `2× ${referenceName}`, '← pricier', 'cheaper →')}
@@ -293,7 +355,7 @@ export function JevBubbleChart({ id, kind, points, costLimit, referenceName, act
           onFocus={() => setActive(p.key)} onBlur={() => { if (!pinned) setActive(null); }}
           onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(p.key); } }} />)}
         {labels.map((l) => <g key={`l${l.key}`} data-bh-jev-bubble-label={l.key} pointerEvents="none">
-          {l.far && <line x1={l.lx} y1={l.ly} x2={l.x} y2={l.y} stroke="var(--muted)" strokeWidth="0.75" />}
+          {l.far && <line x1={l.lx} y1={l.ly} x2={l.ex ?? l.x} y2={l.ey ?? l.y} stroke="var(--muted)" strokeWidth="0.75" />}
           <text x={l.x} y={l.y + 4} textAnchor={l.anchor} fontSize={narrow ? 10.5 : 11.5} fontWeight="600" fill="var(--text)" stroke="var(--surface)" strokeWidth="3" paintOrder="stroke">{l.text}</text>
         </g>)}
         {activeDot && <circle cx={activeDot.cx} cy={activeDot.cy} r={activeDot.r + 3} fill="none" stroke="var(--text)" strokeWidth="1.5" pointerEvents="none" />}</g>
