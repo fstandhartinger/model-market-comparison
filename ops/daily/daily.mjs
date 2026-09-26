@@ -101,6 +101,21 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     await git('fetch-main', ['fetch', 'origin', 'main']);
     const base = await git('base', ['rev-parse', 'origin/main']);
     report.base = base;
+    // D217 (recurring; twice in five days): the github.com credential helper in ~/.gitconfig has vanished
+    // under this account more than once, and a `git fetch` of a public repo succeeds without it — so the
+    // first thing that notices is the push, after a ~73-minute collection, and the whole day's work is lost
+    // to a message about a username. A no-op `--dry-run` push does authenticate, so the credential is proved
+    // here, in a second, before anything is collected. `GIT_TERMINAL_PROMPT=0` keeps it from ever waiting on
+    // a terminal that is not there. A dry run publishes nothing, so there it is a warning, not a failure.
+    try {
+      await command('push-credential', 'git', ['push', '--dry-run', 'origin', `${base}:refs/heads/main`], repo, 120_000,
+        { ...environment, GIT_TERMINAL_PROMPT: '0' });
+    } catch (error) {
+      const reason = `push-credential: the daily cannot authenticate to GitHub, so a publishing run would lose its work at the push. Check credential.https://github.com.helper in ~/.gitconfig (see /opt/mmc-daily/README.md). ${error.message.slice(-400)}`;
+      if (!dryRun) throw new Error(reason);
+      report.warnings = report.warnings || [];
+      report.warnings.push(reason);
+    }
     await command('clone', 'git', ['clone', '--no-hardlinks', repo, work], repo, 120_000);
     await git('detach-stage', ['checkout', '--detach', base], work);
     const overlayHashes = new Map();
