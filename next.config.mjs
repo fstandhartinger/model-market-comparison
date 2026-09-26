@@ -16,7 +16,11 @@ const nextConfig = {
     return JEV_SYSTEM_SLUG_REDIRECTS;
   },
   async headers() {
-    return [{ source: "/:path*", headers: [{ key: "Permissions-Policy", value: "tools=(self)" }] }];
+    return [
+      { source: "/:path*", headers: [{ key: "Permissions-Policy", value: "tools=(self)" }] },
+      // Unlisted work-in-progress previews (e.g. the unpublished JevBench v1.5 page): never indexed.
+      { source: "/wip-oiifi41ouv1f/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }] },
+    ];
   },
 };
 
