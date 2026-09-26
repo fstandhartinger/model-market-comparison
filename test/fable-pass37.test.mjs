@@ -67,3 +67,12 @@ test('F-205: under 640 px the five labels are one column with leaders that do no
   // Above 640 px the greedy placement stays, but now rejects a candidate whose leader would cross another.
   assert.match(bubble, /if \(drawnLeaders\.some\(\(other\) => segCross\(leader, other\)\)\) continue;/);
 });
+
+test('D216: both 3D render paths push a label clear of one it would print on top of', () => {
+  // The WebGL overlay measures each label once and separates the boxes; the SVG fallback runs the
+  // same rule on estimated widths, because it has no layout to measure.
+  assert.match(three, /const taken: \{ x: number; y: number; w: number; h: number \}\[\] = \[\];/);
+  assert.match(three, /top = hit\.y \+ hit\.h \+ 2;/);
+  assert.match(three, /function declump</);
+  assert.match(three, /\{declump\(rankedPoints/, 'the fallback renders the de-clumped positions');
+});

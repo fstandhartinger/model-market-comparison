@@ -95,6 +95,27 @@ const INITIAL_VIEW: View = { yaw: 0.55, pitch: 0.32, zoom: 1, panX: 0, panY: 0 }
 const clamp = (value: number, minimum: number, maximum: number) => Math.max(minimum, Math.min(maximum, value));
 
 /** Canvas-free projection for browsers that disable WebGL. The same measured point coordinates are used. */
+// D216: the same de-clumping the WebGL overlay does, for the projected SVG fallback. Labels keep their
+// own x; a label that would land on an already-placed one is pushed clear of it, down first and up if the
+// box runs out of room. Width is estimated from the glyph count — the fallback has no layout to measure.
+function declump<T extends { x: number; y: number; w: number; h: number }>(labels: T[], height: number): T[] {
+  const taken: { x: number; y: number; w: number; h: number }[] = [];
+  const out: T[] = [];
+  for (const label of [...labels].sort((a, b) => a.y - b.y)) {
+    const hits = (top: number) => taken.find((t) => label.x < t.x + t.w && t.x < label.x + label.w && top < t.y + t.h && t.y < top + label.h);
+    let top = label.y - label.h;
+    for (let guard = 0; guard < 8; guard++) { const hit = hits(top); if (!hit) break; top = hit.y + hit.h + 2; }
+    if (top + label.h > height - 4) {
+      top = label.y - label.h;
+      for (let guard = 0; guard < 8; guard++) { const hit = hits(top); if (!hit) break; top = hit.y - label.h - 2; }
+      top = Math.max(4, Math.min(top, height - 4 - label.h));
+    }
+    taken.push({ x: label.x, y: top, w: label.w, h: label.h });
+    out.push({ ...label, y: top + label.h });
+  }
+  return out;
+}
+
 function Projected3D({ points, costBounds, jevClassOnly, tipRef, resetViewRef, rankedPoints }: {
   points: Point[];
   costBounds: [number, number];
@@ -220,17 +241,18 @@ function Projected3D({ points, costBounds, jevClassOnly, tipRef, resetViewRef, r
         ))}
       </g>
       <g aria-hidden="true" className="bh-jev-3d-model-labels" data-bh-jev14-3d-model-labels="true" pointerEvents="none" textAnchor="start" fill="var(--muted)" fontSize="11" fontFamily="inherit">
-        {rankedPoints
+        {declump(rankedPoints
           .filter((entry) => entry.point.cost != null && entry.point.speed != null)
           .slice(0, 5)
           .map((entry, index) => {
             const at = coord(entry.point);
-            return (
-              <text key={entry.point.key} data-bh-jev14-3d-model-label={entry.point.key} className="bh-jev-3d-model-label" x={at.x + 8} y={at.y - 8} fill={`rgb(var(${entry.point.colorVariable}))`}>
-                {`#${index + 1} ${entry.point.name}`}
-              </text>
-            );
-          })}
+            const text = `#${index + 1} ${entry.point.name}`;
+            return { entry, text, x: at.x + 8, y: at.y - 8, w: text.length * 11 * 0.6, h: 13 };
+          }), size.height).map(({ entry, text, x, y }) => (
+          <text key={entry.point.key} data-bh-jev14-3d-model-label={entry.point.key} className="bh-jev-3d-model-label" x={x} y={y} fill={`rgb(var(${entry.point.colorVariable}))`}>
+            {text}
+          </text>
+        ))}
       </g>
       {plotted.map(({ point, at }) => {
         const radius = clamp((3 + (point.jevbenchScore ?? 0) / 25) * at.perspective * view.zoom ** 0.25, 3, 9);
@@ -442,7 +464,7 @@ export function JevCapability3D({ points, costBounds }: { points: Point[]; costB
         labelLayer.className = 'bh-jev-3d-labels';
         box.appendChild(labelLayer);
         const fixedRefs: { world: any; el: HTMLElement }[] = [];
-        let modelRefs: { world: any; el: HTMLElement }[] = [];
+        let modelRefs: { world: any; el: HTMLElement; w?: number; h?: number }[] = [];
         const axisDefs: Array<{ name: 'cost' | 'capability' | 'speed'; text: string; anchor: [number, number, number] }> = [
           { name: 'cost', text: 'Cost · $/1k decisions · cheaper →', anchor: [half * 1.16, -half, half * 0.84] },
           { name: 'capability', text: 'Capability 0–100', anchor: [0, half * 1.26, 0] },
@@ -464,13 +486,41 @@ export function JevCapability3D({ points, costBounds }: { points: Point[]; costB
           const h = canvas.clientHeight || box.clientHeight;
           if (!w || !h) return;
           const inset = 6;
-          for (const item of [...fixedRefs, ...modelRefs]) {
+          const projectTo = (item: { world: any }) => {
             const projected = item.world.clone().project(camera);
-            const behind = projected.z > 1;
-            const px = Math.min(Math.max(((projected.x + 1) / 2) * w, inset), w - inset);
-            const py = Math.min(Math.max(((1 - (projected.y + 1) / 2)) * h, inset), h - inset);
-            item.el.style.transform = `translate(${px.toFixed(1)}px, ${py.toFixed(1)}px) translate(-50%, -115%)`;
-            item.el.style.opacity = behind ? '0' : '1';
+            return {
+              behind: projected.z > 1,
+              px: Math.min(Math.max(((projected.x + 1) / 2) * w, inset), w - inset),
+              py: Math.min(Math.max(((1 - (projected.y + 1) / 2)) * h, inset), h - inset),
+            };
+          };
+          const put = (el: HTMLElement, px: number, py: number, behind: boolean) => {
+            el.style.transform = `translate(${px.toFixed(1)}px, ${py.toFixed(1)}px) translate(-50%, -115%)`;
+            el.style.opacity = behind ? '0' : '1';
+          };
+          for (const item of fixedRefs) { const at = projectTo(item); put(item.el, at.px, at.py, at.behind); }
+          // D216: the top five spheres can project within a few pixels of each other, and five labels
+          // on one anchor are unreadable. Place each by its own projection, then push a label that
+          // would land on an already-placed one clear of it — downward first, upward if the box is
+          // out of room. Sizes are measured once per label, so a drag does not force a reflow.
+          const taken: { x: number; y: number; w: number; h: number }[] = [];
+          const sized = modelRefs.map((item) => ({ item, at: projectTo(item) }));
+          for (const entry of sized.filter((e) => e.at.behind)) put(entry.item.el, entry.at.px, entry.at.py, true);
+          for (const entry of sized.filter((e) => !e.at.behind).sort((m, n) => m.at.py - n.at.py)) {
+            const item = entry.item as { world: any; el: HTMLElement; w?: number; h?: number };
+            if (!item.w || !item.h) { item.w = item.el.offsetWidth || 90; item.h = item.el.offsetHeight || 16; }
+            const lw = item.w, lh = item.h;
+            const left = entry.at.px - lw / 2;
+            const hits = (top: number) => taken.find((t) => left < t.x + t.w && t.x < left + lw && top < t.y + t.h && t.y < top + lh);
+            let top = entry.at.py - 1.15 * lh;
+            for (let guard = 0; guard < 8; guard++) { const hit = hits(top); if (!hit) break; top = hit.y + hit.h + 2; }
+            if (top + lh > h - inset) {
+              top = entry.at.py - 1.15 * lh;
+              for (let guard = 0; guard < 8; guard++) { const hit = hits(top); if (!hit) break; top = hit.y - lh - 2; }
+              top = Math.max(inset, Math.min(top, h - inset - lh));
+            }
+            taken.push({ x: left, y: top, w: lw, h: lh });
+            put(item.el, entry.at.px, top + 1.15 * lh, false);
           }
         };
         updateLabelsRef.current = (entries: { point: Point; score: number }[]) => {
@@ -491,7 +541,7 @@ export function JevCapability3D({ points, costBounds }: { points: Point[]; costB
               el.appendChild(dot);
               el.appendChild(document.createTextNode(`#${index + 1} ${entry.point.name}`));
               labelLayer.appendChild(el);
-              modelRefs.push({ world: sphere.position.clone(), el });
+              modelRefs.push({ world: sphere.position.clone(), el, w: 0, h: 0 });
             });
           layoutLabels();
         };
