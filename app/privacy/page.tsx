@@ -8,7 +8,7 @@ export const metadata: Metadata = { title: "Privacy policy" };
 export default function PrivacyPage() {
   return <article className="max-w-3xl text-sm leading-relaxed text-gray-300">
     <h1 className="text-2xl font-bold text-inherit">Privacy policy</h1>
-    <p className="bh-muted mt-1">Last updated: September 25, 2026</p>
+    <p className="bh-muted mt-1">Last updated: September 26, 2026</p>
 
     <h2 className="mt-6 mb-2 font-semibold">Who is responsible</h2>
     <p>productivity-boost.com Betriebs UG (haftungsbeschränkt) &amp; Co. KG, Reichenbergerstr. 2, 94036 Passau, Germany,
@@ -19,32 +19,33 @@ export default function PrivacyPage() {
     <p>You can use every comparison without signing in. Your filters, settings and saved presets are then kept in your
       browser&apos;s local storage and are not sent to us. To deliver pages, our server necessarily processes technical request
       data such as your IP address, the requested page and your browser type; this is used to run and secure the service
-      (Art. 6(1)(f) GDPR) and, without your IP address, for the aggregate <a className="text-accent" href="#visitor-statistics">visitor
-      statistics</a> below. We use no advertising. The priority-evaluation banner sends the interaction counts described below.</p>
+      (Art. 6(1)(f) GDPR). The first-party page statistics below do not store your IP address. The separate Umami page
+      statistics use the trusted client IP and browser type already present in the request to count daily anonymous
+      visitors. We use no advertising. The priority-evaluation banner sends the interaction counts described below.</p>
 
     <h2 id="visitor-statistics" className="mt-6 mb-2 font-semibold">Visitor statistics</h2>
-    <p>To see which pages are read and how people find the site, our server counts the page loads it delivers. For each
+    <p>For our first-party totals, the server counts the page loads it delivers. For each
       day it stores only totals per page and referring website: the number of page loads (opening or reloading a page;
       moving between pages inside the site is not counted), the number of visits (page loads that did not come from
       another page of this site), the requested page (without query parameters) and the host name of the website that
       linked to it (for example <code>news.ycombinator.com</code>, without path or query).</p>
     <ul className="mt-2 list-disc space-y-1 pl-5">
-      <li><strong>What is used:</strong> only HTTP headers your browser sends with the page request itself — the Referer
+      <li><strong>First-party counter data used:</strong> only HTTP headers your browser sends with the page request itself — the Referer
         header (reduced to the host name), the User-Agent header (read in full, only to leave out automated clients, and
         not stored), the Accept, Sec-Fetch-Dest and Sec-Purpose/Purpose headers (to tell a page load from a prefetch or a
         file request) and the Global Privacy Control / Do Not Track signals. These are processed in memory; only the daily
         totals are kept.</li>
-      <li><strong>No device access and no identifiers:</strong> the statistics set no cookie, use no local storage, add no
+      <li><strong>First-party counter storage and identifiers:</strong> these totals set no cookie, use no local storage, add no
         script or pixel, and do not use your IP address. This counter needs no extra request at all; only moving between
         pages inside the site is reported by one small request to our own address, described below. No ID, hash or
-        fingerprint is created, so we cannot count unique visitors or tell whether two page loads came from the same
-        person, and statistics are never linked to accounts. In our assessment no consent is required under § 25 TDDDG
+        fingerprint is created for this counter, so its database cannot count unique visitors or tell whether two page loads came from the same
+        person, and these totals are never linked to accounts. In our assessment no consent is required under § 25 TDDDG
         for this, so there is no cookie banner.</li>
       <li><strong>Purpose and legal basis:</strong> understanding which content is useful and planning capacity; our
         legitimate interest under Art. 6(1)(f) GDPR.</li>
       <li><strong>Where and who:</strong> the totals are kept in our own database on servers of Hetzner Online GmbH in the
-        European Union, which acts as our hosting processor. No analytics provider is involved and nothing is passed to
-        anyone else. Our internal report only shows pages and referring websites with at least 3 page loads; those with
+        European Union, which acts as our hosting processor. No external analytics provider is involved in these first-party totals, and their
+        data is not passed to anyone else. Our internal report only shows pages and referring websites with at least 3 page loads; those with
         fewer than 3 are combined.</li>
       <li><strong>Retention:</strong> daily totals are deleted after 13 months (checked at least hourly). Totals not yet
         written are held in server memory, normally for about a minute and never for more than two days.</li>
@@ -53,16 +54,21 @@ export default function PrivacyPage() {
         a single person; you can still object by email to <a className="text-accent" href="mailto:info@productivity-boost.com">info@productivity-boost.com</a>,
         and we will answer and explain how to switch on one of these signals.</li>
     </ul>
-    <p className="mt-2">We also keep the same page counts in our own self-hosted Umami service, which runs on the same
-      Hetzner server that serves this site: for each page load our server passes on the host name you used and the
-      requested page, taken from a fixed list of the site&apos;s routes. Your browser never contacts that service, and
-      neither your IP address nor your User-Agent is passed on for these page counts &mdash; the request our server makes
-      carries a fixed browser identification that is the same for everybody, so the browser, device and &ldquo;visitor&rdquo;
-      figures in Umami are meaningless and we do not use them. Because a move between pages inside the site is invisible
-      to our server, those moves are reported by one small request from your browser to our own address
-      (<code>/api/page-view</code>), containing only the page path; it sets nothing on your device, reads nothing from it,
-      and is not sent when your browser signals Global Privacy Control or Do Not Track. Legal basis: our legitimate
-      interest in knowing which pages are read (Art. 6(1)(f) GDPR).</p>
+    <p className="mt-2">We also count page views in our own self-hosted Umami service on our Hetzner server. Your browser
+      never contacts Umami: our server sends the public host name and requested page (without query parameters), plus
+      the trusted client IP and the actual User-Agent from the request headers, to calculate anonymous visitor and
+      session counts. <a className="text-accent" href="https://docs.umami.is/docs/metric-definitions" rel="noopener noreferrer" target="_blank">Umami&apos;s metric definitions</a> say it does not retain the raw IP address; it uses the IP to derive approximate
+      location information such as country where available, and the User-Agent to report browser, operating system and
+      device categories. Both are also used to create a salted anonymous session identifier. We use these aggregate
+      breakdowns to understand where visitors come from and which kinds of devices they use. The salt rotates daily, so
+      the visitor figures count daily sessions and do not link a visitor across days. Umami&apos;s normal bot filter remains enabled. The page path is selected from a fixed list of
+      our routes. For in-app page changes, your browser makes one small same-origin request to <code>/api/page-view</code>
+      containing only the new path; it sets no statistics cookie or other storage and does not run when your browser
+      signals Global Privacy Control or Do Not Track. No third-party analytics service is used. Our assessment is that
+      this server-side processing does not require device-storage consent under § 25 TDDDG; it uses our legitimate
+      interest in understanding site use (Art. 6(1)(f) GDPR). The Umami service retains collected analytics data
+      indefinitely unless we delete it manually. The first-party daily page totals described above are deleted after
+      13 months.</p>
     <p className="mt-2">The priority-evaluation banner separately sends three interaction counts to the same
       self-hosted Umami service: when the banner appears, when its request link is used, and when it is dismissed.
       The event payload contains only the event name and whether the visitor was on a JevBench or ImageJevBench page;

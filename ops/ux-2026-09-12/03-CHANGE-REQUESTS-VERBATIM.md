@@ -2010,3 +2010,25 @@ therefore dropped every event. Seeded by the review gate `REVIEW-20260925T192004
 
 > Florian (26 Sep): "Tell me how much page views and downloads all our pages have, also the JevBench and Image Jev Bench pages and benchmarkheaven …"
 Finding: Umami (bh-analytics.app.mintapis.com, website "Benchmark Heaven") reports 0 pageviews / 0 visitors for 24 h, 7 d and 30 d, while the custom events work: fastlane_banner_view 3,671, dismiss 521, click 21 over 7 d. So pageview tracking is broken, probably since the first-party event proxy (CR-167/168/174) or the Umami script setup.
+
+## CR-178 — Florian, 26 Sep 2026 ~19:00 UTC (verbatim)
+
+> Fix the Benchmark Heaven visitor counter: IMPORTANT (Florian, 26 Sep 2026 ~19:00 UTC)
+> Florian: "you must start codex agents on sandy that fix the visitor counter, it's important. So we have no way to see how many people have visited our benchmark?"
+> This is quality work on OUR OWN site (benchmarkheaven.com, repo /opt/model-market-comparison, our own self-hosted Umami at bh-analytics.app.mintapis.com; credentials in ~/.config/bh-analytics/*.env, never print them).
+> Current state:
+> - Umami's API reports 2,736 page views for today but only 1 visitor and 3 visits. Before today it reported 0 page views, while the custom events (fastlane_banner_view 3,671 in 7 days) arrived fine.
+> - The requests audit found that page views are counted only in our own first-party database, by design (board #1993). The UX loop has CR-177 open (ops/ux-2026-09-12/04-CR-BRIEF.md).
+> - Probably page views are now forwarded server-side under a single session or visitor id, so visitors and sessions collapse to 1.
+> Your job:
+> 1. Take ownership of CR-177 and tell the UX loop on board #8, so it doesn't work on the same code in parallel.
+> 2. Find the exact root cause.
+> 3. Fix it so Umami counts page views AND unique visitors/sessions correctly:
+>    - privacy-friendly as today: no third-party trackers, no cookies beyond what Umami's standard script does, a first-party proxy is fine;
+>    - the real client IP and user agent (or a stable per-visitor hash) must reach Umami, e.g. via Umami's documented x-forwarded-for / client headers through our ingress (Coolify/Traefik), or by using the standard browser tracker through our first-party path;
+>    - SPA route changes count;
+>    - bots are excluded as Umami normally does.
+> 4. Verify on both public hosts (benchmarkheaven.com and www): two different test clients count as 2 visitors; route changes count as page views; the API stats (/api/websites/<id>/stats) look plausible.
+> 5. Add the daily sanity check from CR-177.2 (alert via the digest if page views > 0 but visitors ≤ 1, or page views = 0 while events > 0).
+> 6. Backfill if possible: reconstruct unique-visitor counts for the past days from the first-party DB (hashed IP/UA or session ids, if stored) or from proxy access logs. Otherwise say clearly what cannot be recovered.
+> Ship via the normal worktree + PR + merge queue (CR id = max+1 re-checked right before the PR), verify live, update the CR ledger, and write OUTPUT.md. Send Florian ONE short message when it is live, with the first real visitor numbers.

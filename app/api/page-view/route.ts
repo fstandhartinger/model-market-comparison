@@ -1,4 +1,4 @@
-import { navigationPageview, sendPageview } from "../../../lib/umami-pageview.mjs";
+import { clientIdentity, navigationPageview, sendPageview } from "../../../lib/umami-pageview.mjs";
 
 // CR-177.1: in-app navigations. A full page load is counted by `middleware.ts` without any client code;
 // Next.js strips the RSC/prefetch headers before middleware, so a client-router navigation is invisible to
@@ -54,6 +54,6 @@ export async function POST(request: Request) {
   // The path is re-derived from the allow-list of known routes, so nothing a caller writes reaches Umami
   // verbatim, and a request with GPC/DNT, a bot agent or a foreign Origin is dropped here.
   const hit = navigationPageview(request.headers, payload?.path);
-  if (hit) await sendPageview(hit);
+  if (hit) await sendPageview(hit, { identity: clientIdentity(request.headers) });
   return noContent();
 }
