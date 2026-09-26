@@ -12273,3 +12273,88 @@ changes. **Grep `03` for the feature by name before filing one of these as a def
 | R4.9 | verified (unchanged) — **basis corrected** | `03`:184; `filters2/filters2.json` | The ledger row implies a rename shipped. What actually shipped is Florian's later removal of the filter. Same verdict, accurate reason. |
 | R5.2, R5.3, R5.6 | verified (unchanged) — **basis recorded** | `03`:63, `03`:166, `03`:107 | Each live value differs from the verbatim text and is authorised by a later instruction. Recorded so a future gate does not file them as regressions. |
 | D209 | resolved (confirmed end to end) | queue log 21:38:40; `33b337e3` | PR #34 merged after the blockage cleared. |
+
+## Iteration 233 — work (opencode-kimi), 2026-09-26 01:20–02:00 UTC — daily ReferenceError fixed at the repo; four rows verified; two independent reviews
+
+Commit `eb394e5a`, pushed 01:34 and live on all three hosts from 01:38:20 UTC (Coolify deployment
+`dxvnoojapsvemq67u8sdva8u`, status finished). Gates before the push: `node scripts/build-dataset.mjs`
+rc 0 (871/674/96/3,121; timestamp-only dataset churn discarded), `npm test` **1,394 tests, 1,393
+pass, 0 fail, 1 skip**, `npx tsc --noEmit -p .` rc 0. All receipts:
+`/opt/benchmarkheaven/state/ux-evidence/iter233-verify/` (plus the orphaned predecessor's
+`/opt/benchmarkheaven/state/ux-evidence/iter232-*/` it completes).
+
+On arrival the checkout was dirty in exactly one file — `bin/verify-fable-pass34-design.mjs` — the
+pass-34 checker repair the **orphaned opencode-kimi iteration of 22:00 (self-named iter232)** had
+drafted and validated (its `iter232-f185/pass34-{canonical,legacy}` receipts: **86/86 on both hosts**
+at 00:59/01:00 after PR #36) but never committed or recorded; tick cleared its marker. A dirty
+checkout pauses `bh-merge-queue` (D209's lesson), so this iteration read the diff line by line,
+confirmed it is a harness-only false-negative repair (see D210's note), committed it unchanged, and
+re-ran everything itself.
+
+**D210 — `refresh-benchmarks` crashed every daily run on `manual is not defined` (new, repo-fixed here).**
+Today's 00:41 daily run failed rc=1 (`failures_in_row: 1`, notification throttled because the publish
+gate had already spoken): the visible skeleton was `aa-automationbench::1.0.6` critic-blocked
+(retained — the fail-closed gate working), but the fatal tail was the ReferenceError. Root cause:
+`feea6470` (D191, 24 Sep 22:41) moved the manual-snapshot retention check into the split refresh loop
+and left `const manual` behind in `captureTargets()`. No unattended run has passed
+`refresh-benchmarks` since 24 Sep: 25 Sep's 05:17 crashed the same way and only the self-heal
+agent's **clone-level** repair published; the repo bug was never fixed, so today's run crashed
+again. Fix: declare the set inside `refreshBenchmarks` (one line, same rule as line 191), plus
+`test/d191-manual-scope.test.mjs` — it fails against the unfixed code (negative-checked via
+`git stash`: 0 pass / 2 fail → 2 pass / 0 fail). **Runtime proof is owed by the next unattended
+run (05:17 catch-up 07:17):** only then do D200–D204 get the run that contains them, and only then
+does the site publish today's data. Not claimed here. The aa-automationbench retention is recorded
+as correct gate behaviour, not a defect.
+
+**Completed independent live verification at `eb394e5a` (this engine ≠ the implementers):**
+`verify-cr-167-2.mjs` **76/76 canonical, 76/76 legacy**; `verify-review-20260925T192004Z-banner.mjs`
+**178/178 canonical, 178/178 legacy**; `verify-fable-pass34-design.mjs` **86/86 canonical, 86/86
+legacy** — first fully-green pass-34 with the label repair, confirming iter232's 86/86 receipts.
+Earlier same-day receipts agreeing: iter232's cr1672 **76/76 on all three hosts** (23:05–23:06) and
+banner **178/178 canonical rerun / legacy final** (23:11 / 00:29). Zero page errors everywhere.
+
+**D208 — independent review of CR-67.5 §6: ACCEPT.** Written up as
+`ops/ux-2026-09-12/CR-67.5-D208-INDEPENDENT-REVIEW.md` (reviewer this engine). Every §6.1 claim
+re-read against the code (`FastlaneBanner.tsx`, `app/api/fastlane-banner-event/route.ts`) holds;
+the §6.5 proofs all pass (visit-stats 8/8; umami grep ⇒ server route + privacy disclosure only;
+`bh-analytics.app.mintapis.com` → `65.109.49.103`, this same machine). §6.2's condition walk is
+accurate; the no-banner branch standing is defensible as documented. Three observations recorded
+(legacy host's counts silently dropped — accuracy only; prefix matching on subpaths — as stated;
+same-origin beacon carries the session cookie and the route never reads it — "nothing joined"
+true in substance). No new residual found; §6.4's three residuals stand as the record's own.
+
+**D206 — spot-check of the back-fill: ACCEPT.** All seven seeded `03` sections re-read: CR-151's
+four items are verbatim `jobs/site-v142-gauntlet-20260925/PROMPT.md`; CR-152's three
+`DECISIONS.md` quotes exist verbatim (19:45 approval + 20:20 supersession, 01:30 roster, GO);
+CR-153's items 1–5 verbatim from its PROMPT.md; CR-156's 404/route quote matches; CR-158's three
+verbatim decision quotes (13:20 approval, 15:15 Jev-class rule, 15:15 price rules) confirmed;
+CR-143/CR-148 honestly labelled non-Florian with provenance named, and the CR-143 number collision
+documented. The back-fill is what it claims to be. **The process-gap remainder stays open** as
+recorded: nothing yet fails a job that allocates a CR number without a `03`/`04` entry.
+
+**Ops facts for the next iteration:** (1) The 00:41 daily's price phase withdrew **8 OpenRouter
+routes today**, incl. `nex-agi/nex-n2.5-pro:free`, `nex-agi/nex-n2.5-mini:free` and
+`z-ai/glm-5.2:free` (confirmed absent from `/api/v1/models` 01:5x) — `bin/delegate.sh`'s nex
+fallback is dead until the next publication reflects it; Kimi K3 via Chutes remains the working
+delegate. `moonshotai/kimi-k2.6` is PRESENT. (2) The withdrawal is staged but **not yet
+published** — the site still shows yesterday's data until a successful daily run (D210's proof
+point). (3) D205 unchanged: needs Florian; not re-measured this hour.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| CR-167.2 | implemented → **verified** | `iter233-verify/cr1672-{canonical,legacy}/verification.json` 76/76 each at `eb394e5a`; iter232's 76/76 ×3 hosts | Independent of its implementer (claude-opus, iter230). Compact teaser collapses to 55 px by construction; re-proven two deploys after the fix. |
+| D207 | implemented → **verified** | `iter233-verify/banner-{canonical,legacy}/verification.json` **178/178 each**; iter232's banner receipts agree | The banner no longer covers any phone content; clearance re-measured by the harness (visibility-companion check), not by document offset. |
+| CR-163.1 | open → **verified** | same harness run (F-189 family within it stays green) | The first Jev-class row is on the first phone screen again, this time *visibly*, at both themes on both hosts. |
+| F-181 | implemented (checker fixed) → **verified** | `iter233-verify/pass34-{canonical,legacy}/verification.json` **86/86 each** | Checker lineage recorded honestly: substantive fix claude-opus (`e924c911`); label-format repair opencode-kimi (`eb394e5a`, harness-only, false-negative against CR-169's new page format, negative-checked old-vs-new 82/86 → 86/86). The 10 px tick floor holds where the ticks render (`/jev-models/v1.4.2`), and the hub renders ≥10 px throughout. Next gate may re-litigate. |
+| D208 | implemented → **verified** | `ops/ux-2026-09-12/CR-67.5-D208-INDEPENDENT-REVIEW.md`; §6.5 proofs in `iter233-verify/` | Independent review by this engine: ACCEPT, no new residual. |
+| D206 | implemented → **verified** (back-fill) | quote-for-quote spot checks named above | The process-gap remainder is its own open thread (needs a `bin/` owner), unchanged. |
+| D210 | **open → implemented (repo-fixed), runtime proof owed** | `eb394e5a`; `test/d191-manual-scope.test.mjs` | Daily crashed 25 + 26 Sep on `manual is not defined` (ReferenceError since `feea6470`). Fix live in the repo; **next unattended 05:17/07:17 run is the receipt**. A second engine should confirm that run's refresh-benchmarks phase passes root to tail. |
+| D200, D201, D202, D204 | implemented (unchanged) | — | Still await an unattended run containing them; D210 unblocked exactly that. |
+| D205 | open — needs Florian | — | Not a code defect. |
+| D192 | open (unchanged) | — | 38 retained arms; not re-litigated. |
+
+Not done here and still open: everything this engine could not prove (D210's runtime run, the four
+D-rows' attending run, D205/Florian), X6's remaining audit surface (R4.1/X4 design, R4.4, R6.2/R6.3,
+R8.1, R9.1, H1–H3, B2/B3/B7, X1–X3, X5, legacy host), D192, F-181's optional gate re-check, and the
+never-measured CR rows CR-143.1/.2, CR-148.1/.2, CR-151.1–.5, CR-152.1–.5, CR-153.1–.4,
+CR-156.1–.5, CR-158.1–.5 (acceptance checks seeded but unrun). **`ALL-ACCEPTED` is not appended.**
