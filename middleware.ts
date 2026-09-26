@@ -1,6 +1,6 @@
 import { NextResponse, type NextFetchEvent, type NextRequest } from "next/server";
 import { countRequest } from "./lib/visit-counter";
-import { documentPageview, sendPageview } from "./lib/umami-pageview.mjs";
+import { clientIdentity, documentPageview, sendPageview } from "./lib/umami-pageview.mjs";
 
 export function middleware(req: NextRequest, event?: NextFetchEvent) {
   const path = req.nextUrl.pathname;
@@ -13,7 +13,7 @@ export function middleware(req: NextRequest, event?: NextFetchEvent) {
     try {
       const hit = documentPageview(req);
       if (hit) {
-        const forward = sendPageview(hit);
+        const forward = sendPageview(hit, { identity: clientIdentity(req.headers) });
         if (typeof event?.waitUntil === "function") event.waitUntil(forward);
       }
     } catch { /* statistics must never break a page */ }

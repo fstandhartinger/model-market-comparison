@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-// CR-177.2: print one digest line about page-view tracking. Exit code 0 when healthy or unconfigured, 2 when
-// the check found the CR-177 failure (page views 0 while events arrive) or could not read Umami at all.
+// CR-177.2 / CR-178.3: print one digest line about page-view and visitor tracking. Exit code 0 when healthy or
+// unconfigured, 2 when page views are absent while events arrive, visitors are <= 1 despite page views, or Umami
+// cannot be read.
 //
 // Credentials: UMAMI_BASE_URL / UMAMI_WEBSITE_ID / UMAMI_API_KEY from the environment, or from an env file
 // (default /home/flori/.config/bh-analytics/daily-digest.env, mode 600, outside this repository).

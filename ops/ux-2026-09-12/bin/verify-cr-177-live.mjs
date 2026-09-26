@@ -1,4 +1,4 @@
-// Acceptance for CR-177.1 (page views reach our self-hosted Umami) on one host.
+// Acceptance for CR-177/CR-178 (pageviews and anonymous visitors reach our self-hosted Umami) on one host.
 // Usage: node verify-cr-177-live.mjs <base> <outdir>
 // Credentials come from the environment or /home/flori/.config/bh-analytics/daily-digest.env (mode 600) and
 // are never printed or written to evidence: UMAMI_BASE_URL, UMAMI_WEBSITE_ID, UMAMI_API_KEY.
@@ -15,6 +15,10 @@ const fs = await import('node:fs/promises');
 const BASE = (process.argv[2] || 'https://benchmarkheaven.com').replace(/\/$/, '');
 const OUT = process.argv[3] || '/tmp/cr177-verify';
 const CHROME = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36';
+const CLIENTS = [
+  { name: 'Chrome client', userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36' },
+  { name: 'Firefox client', userAgent: 'Mozilla/5.0 (X11; Linux x86_64; rv:132.0) Gecko/20100101 Firefox/132.0' },
+];
 const UMAMI_HOST = 'bh-analytics.app.mintapis.com';
 const RUN = `${Date.now().toString(36)}`;
 // Dry-run helpers for a local `next start` behind no ingress: BH_EXTRA_HEADERS='{"x-forwarded-host":"benchmarkheaven.com"}'
@@ -43,27 +47,25 @@ const api = async (path) => {
 };
 const window = (fromMs) => `startAt=${fromMs}&endAt=${Date.now() + 60_000}`;
 const stats = async (fromMs) => await api(`/api/websites/${SITE}/stats?${window(fromMs)}`);
-/** Umami v3 spells the page dimension `path` (`type=url` answers 400) and its `y` is **visits**, not views:
- *  three forwards to one path answered `stats.pageviews: 3` and `metrics?type=path: [{y:1}]` (checked on a
- *  throwaway website, 26 Sep 2026). Since every forward shares one Umami session (fixed agent, one server
- *  address), a per-path row here means "at least one hit touched this path in the window", and the page-view
- *  count itself is `stats.pageviews`. Both are used below, each for what it can prove. */
+/** Umami v3 spells the page dimension `path` (`type=url` answers 400) and its `y` is **visits**, not views.
+ *  Use `stats.pageviews` for total page views and the path metric only to show that an allowed path was touched. */
 const paths = async (fromMs) => await api(`/api/websites/${SITE}/metrics?${window(fromMs)}&type=path`);
 const countOf = (rows, path) => Number(rows.find((r) => r.x === path)?.y || 0);
 const pv = (s) => (typeof s?.pageviews === 'object' ? Number(s?.pageviews?.value) : Number(s?.pageviews));
+const visitors = (s) => (typeof s?.visitors === 'object' ? Number(s?.visitors?.value) : Number(s?.visitors));
 
 // ── 0. the defect this CR is about: are page views arriving at all? ────────────────────────────
 const dayAgo = Date.now() - 86_400_000;
 const before = await stats(dayAgo).catch((e) => ({ error: e.message }));
-check('Umami answers the stats API', Number.isFinite(pv(before)), `pageviews(24h)=${pv(before)}`);
+check('Umami answers the stats API', Number.isFinite(pv(before)) && Number.isFinite(visitors(before)), `pageviews(24h)=${pv(before)} visitors(24h)=${visitors(before)}`);
 
 const t0 = Date.now() - 2_000;
 const browser = await chromium.launch({ args: ['--disable-dev-shm-usage'] });
 const thirdParty = [];
 const navPosts = [];
 
-async function fresh(extraHTTPHeaders = {}) {
-  const context = await browser.newContext({ userAgent: CHROME, viewport: { width: 1440, height: 900 }, extraHTTPHeaders: { ...EXTRA, ...extraHTTPHeaders } });
+async function fresh(extraHTTPHeaders = {}, userAgent = CHROME) {
+  const context = await browser.newContext({ userAgent, viewport: { width: 1440, height: 900 }, extraHTTPHeaders: { ...EXTRA, ...extraHTTPHeaders } });
   context.on('request', (req) => {
     const url = req.url();
     if (url.includes(UMAMI_HOST)) thirdParty.push(url);
@@ -132,7 +134,20 @@ let inAppTarget = null;
   await context.close();
 }
 
-// ── 5. the endpoint itself: a marker navigation counts, a foreign Origin and an unknown route do not ──
+// ── 5. Two distinct browser clients on this public host produce two anonymous visitors. ───────────
+const visitorBeforeClients = await stats(dayAgo).catch((e) => ({ error: e.message }));
+for (const client of CLIENTS) {
+  // Each host run gets a fresh profile suffix so the second host's check is not
+  // satisfied by the same fixed UAs that the first host already counted.
+  const context = await fresh({}, `${client.userAgent} BH-CR178-${RUN}`);
+  const page = await context.newPage();
+  const path = client.name === 'Chrome client' ? '/jev-models' : '/image-jev-bench';
+  const res = await page.goto(`${BASE}${path}`, { waitUntil: 'domcontentloaded', timeout: 60_000 }).catch(() => null);
+  check(`${client.name} page load answers 200`, res?.status() === 200, `status=${res?.status()}`);
+  await context.close();
+}
+
+// ── 6. the endpoint itself: a marker navigation counts, a foreign Origin and an unknown route do not ──
 {
   const post = async (origin, path) => {
     const res = await fetch(`${BASE}/api/page-view`, {
@@ -154,13 +169,17 @@ await new Promise((r) => setTimeout(r, 5_000));
 
 // ── the numbers ────────────────────────────────────────────────────────────────────────────────
 const after = await stats(dayAgo).catch((e) => ({ error: e.message }));
+const clientsAfter = await stats(dayAgo).catch((e) => ({ error: e.message }));
 const rows = await paths(t0).catch(() => []);
 const perPath = Object.fromEntries(NAMED.concat(['doc', 'gpc', 'dnt', 'nav', 'foreign'].map(marker)).map((p) => [p, countOf(rows, p)]));
 
 check('page views exist at all (the CR-177 defect is gone)', pv(after) > 0, `pageviews(24h)=${pv(after)}`);
-// The run makes exactly 7 countable hits: 3 named pages, 1 marker page load, the `/` load and the in-app
-// navigation of the click test, and 1 marker navigation report. Live visitors can only add to that.
-check('the run added at least its own 7 page views', pv(after) - pv(before) >= 7, `before=${pv(before)} after=${pv(after)}`);
+// The run makes exactly 9 countable hits: the original 7 plus two separate client-profile page loads.
+// Live visitors can only add to the observed pageview/visitor deltas.
+check('the run added at least its own 9 page views', pv(after) - pv(before) >= 9, `before=${pv(before)} after=${pv(after)}`);
+check('two different test clients count as at least two visitors', Number.isFinite(visitors(visitorBeforeClients))
+  && Number.isFinite(visitors(clientsAfter)) && visitors(clientsAfter) - visitors(visitorBeforeClients) >= 2,
+  `before=${visitors(visitorBeforeClients)} after=${visitors(clientsAfter)}`);
 for (const path of NAMED) check(`${path} is counted by name`, perPath[path] >= 1, `visits=${perPath[path]}`);
 check('a page load appears under its own path', perPath[marker('doc')] === 1, `visits=${perPath[marker('doc')]}`);
 check('GPC adds nothing at all — no row for its page', perPath[marker('gpc')] === 0, `visits=${perPath[marker('gpc')]}`);
@@ -175,7 +194,8 @@ const passed = results.filter((r) => r.ok).length;
 await fs.writeFile(`${OUT}/verification.json`, `${JSON.stringify({
   base: BASE, run: RUN, at: new Date().toISOString(),
   pageviews: { before: pv(before), after: pv(after), note: 'stats.pageviews over 24 h — the page-view count' },
-  perPath, perPath_note: 'metrics?type=path counts visits per path, not views; one shared Umami session means a row = "a hit touched this path"',
+  visitors: { before: visitors(visitorBeforeClients), after: visitors(clientsAfter), note: 'stats.visitors over 24 h; two different browser UAs must add at least two anonymous visitors' },
+  perPath, perPath_note: 'metrics?type=path counts visits per path, not views; use stats.pageviews for page views',
   marker_paths: 'the /models/bh-cr177-* rows below are this run\'s own markers',
   paths_in_window: rows, passed, total: results.length, results,
 }, null, 2)}\n`);

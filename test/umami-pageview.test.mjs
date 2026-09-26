@@ -1,10 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { allowForward, documentPageview, FORWARD_UA, navigationPageview, pageviewPayload, sendPageview, UMAMI_ORIGIN } from '../lib/umami-pageview.mjs';
+import { allowForward, clientIdentity, documentPageview, navigationPageview, pageviewPayload, sendPageview, UMAMI_ORIGIN } from '../lib/umami-pageview.mjs';
 
 const CHROME = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36';
-const headers = (extra = {}) => ({ get: (k) => ({ 'user-agent': CHROME, 'sec-fetch-dest': 'document', host: 'benchmarkheaven.com', ...extra }[k.toLowerCase()] ?? null) });
+const headers = (extra = {}) => ({ get: (k) => ({ 'user-agent': CHROME, 'x-real-ip': '203.0.113.10', 'sec-fetch-dest': 'document', host: 'benchmarkheaven.com', ...extra }[k.toLowerCase()] ?? null) });
 const doc = (url, extra = {}, method = 'GET') => ({ method, url, headers: headers(extra) });
 
 test('CR-177.1: a full page load on a public host becomes a page view with the route path only', () => {
@@ -21,6 +21,19 @@ test('CR-177.1: D213 — the two pages Florian asks about are known routes, not 
   for (const path of ['/jev-models', '/jev-models/v1.4.2', '/image-jev-bench']) {
     assert.equal(documentPageview(doc(`https://benchmarkheaven.com${path}`))?.url, path);
   }
+});
+
+test('CR-178.1: use only a valid ingress client IP and a bounded real User-Agent', () => {
+  assert.deepEqual(clientIdentity(headers()), { clientIp: '203.0.113.10', userAgent: CHROME });
+  assert.deepEqual(clientIdentity(headers({ 'x-real-ip': '2001:db8::20' })).clientIp, '2001:db8::20');
+  assert.equal(clientIdentity(headers({ 'x-real-ip': '203.0.113.10, 198.51.100.7' })), null);
+  assert.equal(clientIdentity(headers({ 'x-real-ip': 'not-an-ip' })), null);
+  assert.equal(clientIdentity(headers({ 'x-real-ip': ':1:2:3:4:5:6:7:8' })), null);
+  assert.equal(clientIdentity(headers({ 'x-real-ip': '1:2:3:4:5:6:7:8:' })), null);
+  assert.equal(clientIdentity(headers({ 'x-real-ip': null })), null);
+  assert.equal(clientIdentity(headers({ 'user-agent': '' })), null);
+  assert.equal(clientIdentity(headers({ 'user-agent': 'x'.repeat(513) })), null);
+  assert.equal(clientIdentity(headers({ 'user-agent': 'agent\r\nX-Evil: 1' })), null);
 });
 
 test('CR-177.1: GPC/DNT, prefetches, bots, non-documents, unknown routes and foreign hosts send nothing', () => {
@@ -61,20 +74,23 @@ test('CR-177.1: the payload is a page view (no event name) and carries no identi
   for (const banned of [/ip\b/i, /referr/i, /session/i, /cookie/i, /hash/i, /screen/i, /language/i]) assert.doesNotMatch(JSON.stringify(body), banned);
 });
 
-test('CR-177.1: the forward is server-to-server with a fixed agent, and a missing website id sends nothing', async () => {
+test('CR-178.1: the forward preserves client identity only in Umami request headers', async () => {
   const calls = [];
   const fetchImpl = async (url, init) => { calls.push({ url, init }); return { ok: true }; };
-  assert.equal(await sendPageview({ hostname: 'benchmarkheaven.com', url: '/' }, { website: 'site-id', fetchImpl }), true);
+  const identity = clientIdentity(headers());
+  assert.equal(await sendPageview({ hostname: 'benchmarkheaven.com', url: '/' }, { website: 'site-id', identity, fetchImpl }), true);
   assert.equal(calls[0].url, `${UMAMI_ORIGIN}/api/send`);
-  assert.equal(calls[0].init.headers['user-agent'], FORWARD_UA);
-  assert.doesNotMatch(FORWARD_UA, /bot|crawl|spider|headless|benchmarkheaven/i, 'Umami drops agents its bot filter recognises');
+  assert.equal(calls[0].init.headers['user-agent'], CHROME);
+  assert.equal(calls[0].init.headers['x-bh-client-ip'], '203.0.113.10');
+  assert.equal(calls[0].init.headers['x-forwarded-for'], undefined, 'never forward the caller-controlled XFF chain');
   assert.equal(calls[0].init.redirect, 'error');
   assert.deepEqual(JSON.parse(calls[0].init.body), { type: 'event', payload: { website: 'site-id', hostname: 'benchmarkheaven.com', url: '/' } });
-  assert.equal(await sendPageview({ hostname: 'benchmarkheaven.com', url: '/' }, { website: '', fetchImpl }), false);
-  assert.equal(await sendPageview(null, { website: 'site-id', fetchImpl }), false);
+  assert.equal(await sendPageview({ hostname: 'benchmarkheaven.com', url: '/' }, { website: 'site-id', identity: null, fetchImpl }), false);
+  assert.equal(await sendPageview({ hostname: 'benchmarkheaven.com', url: '/' }, { website: '', identity, fetchImpl }), false);
+  assert.equal(await sendPageview(null, { website: 'site-id', identity, fetchImpl }), false);
   assert.equal(calls.length, 1);
   // A failing Umami is never the visitor's problem.
-  assert.equal(await sendPageview({ hostname: 'benchmarkheaven.com', url: '/' }, { website: 'site-id', fetchImpl: async () => { throw new Error('down'); } }), false);
+  assert.equal(await sendPageview({ hostname: 'benchmarkheaven.com', url: '/' }, { website: 'site-id', identity, fetchImpl: async () => { throw new Error('down'); } }), false);
 });
 
 test('CR-177.1: forwards are capped per minute and the budget refills', () => {
@@ -97,7 +113,14 @@ test('CR-177.1/CR-67.4: the page-view path adds no third-party script and no dev
   assert.match(code, /credentials: "omit"/);
   assert.match(code, /globalPrivacyControl/, 'GPC/DNT stop the report in the browser as well');
   const route = readFileSync(new URL('../app/api/page-view/route.ts', import.meta.url), 'utf8');
+  assert.match(route, /clientIdentity\(request\.headers\)/);
   assert.doesNotMatch(route, /cookies\(|x-forwarded-for|remote-?addr|\.ip\b/i);
+  const middleware = readFileSync(new URL('../middleware.ts', import.meta.url), 'utf8');
+  assert.match(middleware, /clientIdentity\(req\.headers\)/);
+  const privacy = readFileSync(new URL('../app/privacy/page.tsx', import.meta.url), 'utf8');
+  assert.match(privacy, /trusted client IP and the actual User-Agent/);
+  assert.match(privacy, /salt rotates daily/);
+  assert.match(privacy, /retains collected analytics data\s+indefinitely/);
   const layout = readFileSync(new URL('../app/layout.tsx', import.meta.url), 'utf8');
   assert.match(layout, /<PageViewReporter \/>/);
 });
