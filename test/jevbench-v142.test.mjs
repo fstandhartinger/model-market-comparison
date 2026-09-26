@@ -59,3 +59,11 @@ test('CR-152 serves v1.4.2 as the live board with a pinned page, API and fairnes
   assert.match(interactive, /data-bh-jev14-compact/);
   assert.match(interactive, /data-bh-jev14-chart-eyebrow/);
 });
+
+test('CR-151 sorts the displayed endpoint column like every other axes-table header', async () => {
+  const board = await read('../components/JevBoardInteractive.tsx');
+  assert.match(board, /type SortKey = [^;]*\|\s*'endpoint'/);
+  assert.match(board, /endpoint: 'endpoint'/);
+  assert.match(board, /case 'endpoint': return endpointLabel\(row\.endpoint_kind\)\.toLowerCase\(\)/);
+  assert.match(board, /<Th k="endpoint" sort=\{sort\} toggle=\{toggle\}>Endpoint<\/Th>/);
+});

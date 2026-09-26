@@ -218,23 +218,23 @@ async function main() {
         // CR-151.2: sortable headers, click + keyboard
         const ariaSortBefore = await page.locator('[data-bh-jev14-table] thead th[aria-sort]').count();
         check(r, 'cr151_2_aria', ariaSortBefore >= 1, `th[aria-sort]=${ariaSortBefore}`);
-        const firstRow = async () => page.evaluate(() => { const tr = document.querySelector('[data-bh-jev14-table] tbody tr[data-bh-jev14-row]'); return tr ? tr.getAttribute('data-bh-jev14-row') : null; });
-        const rowBefore = await firstRow();
-        const sortBtn = page.locator('[data-bh-jev14-table] thead [data-bh-jev-sort="intelligence"]').first();
-        if (await sortBtn.count()) {
-          await sortBtn.click();
-          await page.waitForTimeout(300);
-          const rowDesc = await firstRow();
-          const dir = await page.locator('[data-bh-jev14-table] thead [data-bh-jev-sort="intelligence"]').first().getAttribute('data-bh-jev-sort-dir').catch(() => null);
-          await sortBtn.focus();
-          await page.keyboard.press('Enter');
-          await page.waitForTimeout(300);
-          const rowAsc = await firstRow();
-          const dir2 = await page.locator('[data-bh-jev14-table] thead [data-bh-jev-sort="intelligence"]').first().getAttribute('data-bh-jev-sort-dir').catch(() => null);
-          check(r, 'cr151_2_sort', rowBefore !== rowDesc && rowDesc !== rowAsc && dir !== dir2, `before=${rowBefore} desc=${rowDesc} asc=${rowAsc} dir=${dir}->${dir2}`);
-        } else {
-          check(r, 'cr151_2_sort', false, 'intelligence sort button not found');
+        const sortKeys = await page.locator('[data-bh-jev14-table] thead [data-bh-jev-sort]').evaluateAll((buttons) => buttons.map((b) => b.getAttribute('data-bh-jev-sort')));
+        const sortResults = [];
+        for (const key of sortKeys) {
+          const selector = `[data-bh-jev14-table] thead [data-bh-jev-sort="${key}"]`;
+          const button = page.locator(selector).first();
+          const beforeClick = await button.getAttribute('data-bh-jev-sort-dir').catch(() => null);
+          await button.click().catch(() => {});
+          await page.waitForTimeout(60);
+          const afterClick = await button.getAttribute('data-bh-jev-sort-dir').catch(() => null);
+          const aria = await button.locator('xpath=..').getAttribute('aria-sort').catch(() => null);
+          await button.focus().catch(() => {});
+          await page.keyboard.press('Enter').catch(() => {});
+          await page.waitForTimeout(60);
+          const afterKeyboard = await button.getAttribute('data-bh-jev-sort-dir').catch(() => null);
+          sortResults.push({ key, click: beforeClick !== afterClick && ['asc', 'desc'].includes(afterClick), aria: ['ascending', 'descending'].includes(aria), keyboard: afterClick !== afterKeyboard && ['asc', 'desc'].includes(afterKeyboard) });
         }
+        check(r, 'cr151_2_sort_all', sortKeys.length === 13 && sortKeys.includes('endpoint') && sortResults.length === sortKeys.length && sortResults.every((x) => x.click && x.aria && x.keyboard), JSON.stringify({ keys: sortKeys, failed: sortResults.filter((x) => !x.click || !x.aria || !x.keyboard) }));
         // CR-151.2b: filter by search
         const filterSel = '[data-bh-jev-filters="table"] [data-bh-jev-filter="q"]';
         const countSel = () => page.locator('[data-bh-jev14-table] tbody tr[data-bh-jev14-row]').count();

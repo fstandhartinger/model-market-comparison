@@ -69,11 +69,11 @@ function FilterBar({ rows, filters, setFilters, shown, newLabel, idPrefix }: { r
 
 // ---- Sorting ----
 
-type SortKey = 'rank' | 'name' | 'score' | 'intelligence' | 'calibration' | 'speed' | 'cost' | 'usd' | 'public' | 'sealed' | 'gap' | 'latency';
+type SortKey = 'rank' | 'name' | 'score' | 'intelligence' | 'calibration' | 'speed' | 'cost' | 'usd' | 'public' | 'sealed' | 'gap' | 'latency' | 'endpoint';
 type Sort = { key: SortKey; dir: 'asc' | 'desc' };
-const SORT_LABEL: Record<SortKey, string> = { rank: 'official rank', name: 'name', score: 'JevBench Score', intelligence: 'Intelligence', calibration: 'Calibration', speed: 'Speed', cost: 'Cost axis', usd: '$ per 1,000 decisions', public: 'public accuracy', sealed: 'sealed accuracy', gap: 'public − sealed gap', latency: 'p50 latency' };
+const SORT_LABEL: Record<SortKey, string> = { rank: 'official rank', name: 'name', score: 'JevBench Score', intelligence: 'Intelligence', calibration: 'Calibration', speed: 'Speed', cost: 'Cost axis', usd: '$ per 1,000 decisions', public: 'public accuracy', sealed: 'sealed accuracy', gap: 'public − sealed gap', latency: 'p50 latency', endpoint: 'endpoint' };
 // First click sorts best-first: highest axis/accuracy, cheapest price, fastest latency, smallest gap, A→Z.
-const FIRST_DIR: Record<SortKey, Sort['dir']> = { rank: 'asc', name: 'asc', score: 'desc', intelligence: 'desc', calibration: 'desc', speed: 'desc', cost: 'desc', usd: 'asc', public: 'desc', sealed: 'desc', gap: 'asc', latency: 'asc' };
+const FIRST_DIR: Record<SortKey, Sort['dir']> = { rank: 'asc', name: 'asc', score: 'desc', intelligence: 'desc', calibration: 'desc', speed: 'desc', cost: 'desc', usd: 'asc', public: 'desc', sealed: 'desc', gap: 'asc', latency: 'asc', endpoint: 'asc' };
 const OFFICIAL: Sort = { key: 'rank', dir: 'asc' };
 
 const sortValue = (row: JevBoardViewRow, key: SortKey): number | string | null => {
@@ -86,6 +86,7 @@ const sortValue = (row: JevBoardViewRow, key: SortKey): number | string | null =
     case 'sealed': return row.sealed_accuracy;
     case 'gap': return row.public_minus_sealed_gap_pp;
     case 'latency': return row.speed?.p50_s_raw ?? null;
+    case 'endpoint': return endpointLabel(row.endpoint_kind).toLowerCase();
     default: return row.axes?.[key] ?? null;
   }
 };
@@ -105,7 +106,7 @@ function sortRows(rows: JevBoardViewRow[], sort: Sort, official: Map<string, num
   });
 }
 
-const dirWords = (sort: Sort) => sort.key === 'name' ? (sort.dir === 'asc' ? 'A to Z' : 'Z to A')
+const dirWords = (sort: Sort) => sort.key === 'name' || sort.key === 'endpoint' ? (sort.dir === 'asc' ? 'A to Z' : 'Z to A')
   : sort.key === 'rank' ? (sort.dir === 'asc' ? '#1 first' : 'last rank first')
   : sort.key === 'usd' ? (sort.dir === 'asc' ? 'cheapest first' : 'most expensive first')
   : sort.key === 'latency' ? (sort.dir === 'asc' ? 'fastest first' : 'slowest first')
@@ -410,7 +411,7 @@ export function JevAxesTable({ rows, publicDecisions, sealedDecisions, newLabel 
           <Th k="intelligence" sort={sort} toggle={toggle}>Intelligence</Th><Th k="calibration" sort={sort} toggle={toggle}>Calibration</Th><Th k="speed" sort={sort} toggle={toggle}>Speed</Th><Th k="cost" sort={sort} toggle={toggle}>Cost axis</Th>
           <Th k="public" sort={sort} toggle={toggle}><>Public accuracy<br /><span className="bh-muted text-[11px]">n = {publicDecisions}</span></></Th>
           <Th k="sealed" sort={sort} toggle={toggle}><>Sealed accuracy<br /><span className="bh-muted text-[11px]">n = {sealedDecisions}</span></></Th>
-          <Th k="gap" sort={sort} toggle={toggle}>Public − sealed gap</Th><Th k="usd" sort={sort} toggle={toggle}>$/1k decisions</Th><Th k="latency" sort={sort} toggle={toggle}>p50 latency</Th><th scope="col">Endpoint</th>
+          <Th k="gap" sort={sort} toggle={toggle}>Public − sealed gap</Th><Th k="usd" sort={sort} toggle={toggle}>$/1k decisions</Th><Th k="latency" sort={sort} toggle={toggle}>p50 latency</Th><Th k="endpoint" sort={sort} toggle={toggle}>Endpoint</Th>
         </tr></thead>
         <tbody>{shown.map((row) => <Row key={row.key} row={row} heat={heat} />)}</tbody>
       </table>
