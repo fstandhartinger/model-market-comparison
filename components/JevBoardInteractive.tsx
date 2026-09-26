@@ -142,7 +142,8 @@ function JevWeightSliders({ position, weights, setWeights, presets }: { position
     <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5">
       <span className="text-sm font-semibold">Weights:</span>
       {presets.map((p) => <button key={p.name} type="button" className="bh-jev-preset" aria-pressed={sameWeights(weights, p.weights)} onClick={() => setWeights(p.weights)} data-bh-jev-preset={p.name}>{p.name}</button>)}
-      {official ? <span className="bh-jevc-official ml-1">Official</span> : <span className="bh-jevc-notdefault ml-1">Custom — not the official ranking</span>}
+      {/* F-196 (Fable pass 36): the official state is already said by the pressed preset and the badge under the h2; only the custom state needs a label here. */}
+      {!official && <span className="bh-jevc-notdefault ml-1">Custom — not the official ranking</span>}
     </div>
     <div className="mt-2 grid grid-cols-2 gap-x-4 gap-y-1 sm:grid-cols-4">
       {JEV_AXES.map((axis) => <label key={axis} className="block text-[12.5px]">

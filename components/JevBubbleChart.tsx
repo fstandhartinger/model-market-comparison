@@ -255,7 +255,7 @@ export function JevBubbleChart({ id, kind, points, costLimit, referenceName, act
         {xTicks.map((t) => <g key={`x${t.v}`}>
           {x(t.v) >= L && x(t.v) <= W - R && <><line x1={x(t.v)} x2={x(t.v)} y1={T} y2={H - B} stroke="rgb(var(--line) / .55)" />
             <text x={x(t.v)} y={H - B + 15} textAnchor="middle" fill="var(--muted)" fontSize="11">{t.label}</text>
-            {t.sub && <text x={x(t.v)} y={H - B + 27} textAnchor="middle" fill="var(--muted)" fontSize="9.5">{t.sub}</text>}</>}
+            {t.sub && <text x={x(t.v)} y={H - B + 27} textAnchor="middle" fill="var(--muted)" fontSize="10">{t.sub}</text>}</>}
         </g>)}
         <text x={plotCenterX} y={H - 5} textAnchor="middle" fill="var(--text)" fontSize="11">{kind === 'cost' ? '$ per 1,000 decisions (log) · cheaper →' : 'Speed axis · faster →'}</text>
         <text x={11} y={plotCenterY + 7} textAnchor="middle" fill="var(--text)" fontSize="11" transform={`rotate(-90 11 ${plotCenterY + 7})`}>Capability</text>

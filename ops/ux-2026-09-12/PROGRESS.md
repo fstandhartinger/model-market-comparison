@@ -11156,7 +11156,7 @@ fix rounds once, at the point of render.
 | F-188 | implemented | `97ede31a`; `…/iter214-pass35/F-188-{canonical,legacy}/` (12/12 per host, pass-34 verifier) | claude-opus, iteration 214 (**needs another engine**). |
 | F-193 | open (new) | `…/iter214-pass35/F-189-{canonical,legacy}/` (804 px); the 718 / 662 px measurements above | The 720 px first-bar budget cannot hold CR-152's fairness sentence. For the design authority in pass 36 — the space is in the page head and the figure's duplicate eyebrow, both outside F-189. `[judgment]`, claude-fable. |
 | F-187 | open | — | Unchanged: before `/image-jev-bench` publishes, as directed. |
-| CR-152.1 | open | `…/iter214-pass35/F-192-*/` | Filed by Fable in pass 35 for the JevBench release job: name the class `system-one-open` in `RELEASE-v1.4.2.md` or an artifact `classes` map. Until it lands the key ships in `<code>`; the site needs no further change when it does, only a `JEV_TYPE_LABEL` entry. |
+| D211 (was mis-filed as "CR-152.1"; renamed by iteration 234 — the allocation ledger's CR-152 is "Publish JevBench v1.4.2") | open | `…/iter214-pass35/F-192-*/` | Filed by Fable in pass 35 for the JevBench release job: name the class `system-one-open` in `RELEASE-v1.4.2.md` or an artifact `classes` map. Until it lands the key ships in `<code>`; the site needs no further change when it does, only a `JEV_TYPE_LABEL` entry. |
 | D191, D192, D193.2, D193.3, D195, D196, D194, CR-140.5, CR-62.4 | unchanged | — | Not attempted. D193.2/D193.3/D195/D196/D194 are claude-opus work awaiting a non-claude-opus sign-off, which this engine cannot give. The 2026-09-25T05:17Z run is still D191's test and nothing here goes near that path; the last push was well clear of its lock. |
 
 ## Iteration 215 (claude-opus, 2026-09-25 04:50–05:1x UTC) — why the daily has not published since 2026-09-23
@@ -12358,3 +12358,42 @@ D-rows' attending run, D205/Florian), X6's remaining audit surface (R4.1/X4 desi
 R8.1, R9.1, H1–H3, B2/B3/B7, X1–X3, X5, legacy host), D192, F-181's optional gate re-check, and the
 never-measured CR rows CR-143.1/.2, CR-148.1/.2, CR-151.1–.5, CR-152.1–.5, CR-153.1–.4,
 CR-156.1–.5, CR-158.1–.5 (acceptance checks seeded but unrun). **`ALL-ACCEPTED` is not appended.**
+
+## Fable pass 36 (claude-fable, design, 2026-09-26 06:20–07:1x UTC) — the Capability-first hub, the banner and the published image benchmark
+
+Design authority pass on what changed since pass 35 (CR-158/163/164/169/169.1 on `/jev-models`, CR-167/167.2 banner, CR-166
+`/image-jev-bench`, today's daily data at `e6f729a0`). Full verdict, six decisions and directives **F-194–F-200** in
+`DESIGN-DIRECTIVES.md` (pass 36 section). Evidence: `/opt/benchmarkheaven/state/ux-evidence/fable-20260926-pass36/canonical/` (95 shots,
+`metrics-<ctx>.json`, `metrics-b-<ctx>.json`; scripts `bin/shoot-fable-pass36.mjs`, `bin/shoot-fable-pass36b.mjs`) and
+`…/fable-20260926-pass36/before/` (the new verifier against the pre-fix live site). The quick views (Simple, Advanced, wizard, Benchmaxxing,
+model page, Benchmarks) were shot on today's data: at the bar, nothing regressed with the refresh.
+
+**Fable shipped three surgical fixes** (gates before the push: `node scripts/build-dataset.mjs` rc 0 — timestamp-only churn discarded;
+`CI=true npm test` **1,397 tests, 1,396 pass, 0 fail, 1 skip**; `npx tsc --noEmit -p .` rc 0; source pins in `test/fable-pass36.test.mjs`):
+F-194 the custom-evaluation toast stacks above the fast-lane banner (was 57 px under it at 1440 and clipped behind the teaser at 390),
+F-195 the speed bubble chart's latency sub-ticks at 10 px (were 9.5), F-196 the weight-slider status pill only in the custom state (the figure
+said "Official" three times). A non-Fable engine runs `bin/verify-fable-pass36-design.mjs <base> <outDir>` with `ONLY=F-194|F-195|F-196` on
+both hosts to flip them to verified. Groups F-197–F-200 of the same verifier are the acceptance checks for the directed work and fail until it
+lands.
+
+**Also committed here, unchanged, from the timed-out iteration 234 (opencode-kimi, 03:10, rc=124):** its one-line ledger rename
+`CR-152.1 → D211` (the allocation ledger's CR-152 is "Publish JevBench v1.4.2"; the class-label request keeps its content) and its draft
+`bin/verify-cr-151-158.mjs` (live acceptance checks for CR-143.1, CR-151.1–.5, CR-152.3/.4, CR-153.1–.3, CR-156.x, CR-158.1–.3/.5 — **unrun**;
+it pins the live API hash `ac14e206…` and aborts if a deployment is in flight). The next work iteration runs it and records the result; nothing
+in it was altered or verified by this pass.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| F-194 | **implemented** (Fable) | `app/globals.css`; `…/fable-20260926-pass36/before/` (overlap 57 px at 1440), `…/after/` once deployed | Toast above the banner via `--bh-fastlane-height`. Needs a non-Fable engine: group F-194 on both hosts. |
+| F-195 | **implemented** (Fable) | `components/JevBubbleChart.tsx`; `test/fable-pass36.test.mjs` | 10 px floor in both bubble charts. Needs a non-Fable engine: group F-195. |
+| F-196 | **implemented** (Fable) | `components/JevBoardInteractive.tsx`; `test/fable-pass36.test.mjs` | One "Official" per figure; keyboard re-score re-checked. Needs a non-Fable engine: group F-196. |
+| F-197 | open (new) | `…/canonical/desktop_light-hub.png` (11 guide links in the head), `metrics-desktop_light.json` (`firstCapY` 633; mobile 714) | The guides fold at every width and follow the Jev-class method panel; first Capability row ≤ 590 at 1440, ≤ 660 at 390. `[mechanical]`, for the work loop. |
+| F-198 | open (new) | `…/canonical/desktop_light-img*.png`, `desktop_light-img-fullranking-crop.png`, `metrics-desktop_light.json` (`IMG heads`: Full ranking at y 10,585 of 14,890) | Image page order, the "Top five" panel and the "Clean split" alert gone, candidate table behind a disclosure, gated rows name their gate, configuration notes out of bold names, Penalty column dropped, "Earlier split" column added. No number changes. `[mechanical]`. |
+| F-199 | open (new) | `…/canonical/mobile_light-hub-chart-vp.png` | Phone: presets in one scrolling line, sliders in a disclosure that opens when custom; the inline "Sort by Intelligence" button goes (one control per sort). Desktop unchanged. `[mechanical]`. |
+| F-200 | open (new) | `…/canonical/mobile_light-hub-rownote-open.png`, `desktop_light-hub-rownote-open.png` | The Capability ⓘ is a 7-row `dl`; a modal with ✕ on phones (R1.8 pattern, `components/InfoTip.tsx`); the 300-character row `title` goes. `[mechanical]`. |
+| CR-1.10, X3, X4 | unchanged | — | The pass ran; its directives are filed; X3 is met again when F-197–F-200 are implemented and verified. |
+| D211, F-165(a), F-187 | unchanged | — | Not touched. |
+| D210 | runtime proof observed | `/opt/mmc-daily/cron.log`: `DAILY END 2026-09-26T05:48:10Z rc=0`, `failures_in_row: 0`; `/api/meta` revision `e6f729a0`, dataset 05:39 UTC | Recorded as an observation, not a verification: the 05:17 run published unattended, the first since 24 Sep. A work engine should still read the run's `run-report.json` root to tail. |
+
+Not done here, on purpose (Fable sparingly): no implementation of F-197–F-200; no run of the iteration-234 verifier; no re-litigation of
+D192/D205. `ALL-ACCEPTED` is not appended.

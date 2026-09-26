@@ -1,5 +1,19 @@
 # DESIGN DIRECTIVES — Benchmark Heaven (design authority: Claude Fable 5.1)
 
+**Pass 36: 2026-09-26 ~06:20 UTC**, the "what changed since pass 35" pass (Florian: Fable sparingly). Since pass 35 the changed surface is
+the **Capability-first JevBench hub** (CR-158: the Jev-class Capability ranking as the headline, two bubble charts, the Composite chart with
+weight sliders above and below, View-by pills; CR-163/CR-164 the phone headline and row rhythm; CR-169/CR-169.1 the presentation polish and the
+ⓘ trigger beside truncated names), the **fast-lane banner** on every JevBench route (CR-167, compact teaser on phones since CR-167.2), the
+**published `/image-jev-bench`** (CR-166: composite bars first, radar compare, clean split), and today's daily data (revision `e6f729a0`, dataset
+05:39 UTC — the first unattended publish since D210). Judged on the canonical host at 1440/390 × light/dark: 95 shots + `metrics-<ctx>.json`
+(page geometry, Capability rows, bubble labels, sliders, banner, first-screen text, min font, "1 <plural>", field names) and the supplement
+`metrics-b-<ctx>.json` (toast-versus-banner boxes at 7 s and 17 s, bubble label overlaps, a keyboard-driven slider re-score, the expanded
+teaser) in `/opt/benchmarkheaven/state/ux-evidence/fable-20260926-pass36/canonical/`; the quick views (Simple, Advanced, wizard,
+Benchmaxxing, a model page, Benchmarks) were shot on today's data and are at the bar. Scripts: `bin/shoot-fable-pass36.mjs`,
+`bin/shoot-fable-pass36b.mjs`; source pin: `test/fable-pass36.test.mjs`; live verifier for non-Fable engines:
+`bin/verify-fable-pass36-design.mjs <base> <outDir>` (groups per directive; `ONLY=F-194`, `ONLY=F-195`, `ONLY=F-196` for the parts Fable
+shipped; it launches its own Chromium). Before-receipt at the pre-fix revision: `…/fable-20260926-pass36/before/verification.json`.
+
 **Pass 35: 2026-09-25 ~04:00 UTC**, the "what changed since pass 34" pass (Florian: Fable sparingly). Since pass 34 the changed surface is
 **CR-152, the JevBench v1.4.2 board** (PR #15, `c0075f10`): a new #1 (decider-4b v2, 64.1) above Jev 1.13.0 (63.3), 93 systems / 89 ranked,
 Florian's fairness sentence with a "Sort by Intelligence" disclosure next to the top five, the pinned `/jev-models/v1.4.2` page, the leaf pages
@@ -39,6 +53,77 @@ Luna. Every delegated diff is reviewed before it lands. Record from passes 8, 11
 the reviewing engine directly.
 
 ---
+
+## Verdict on the live site — pass 36 (2026-09-26), the Capability-first hub, the banner and the published image benchmark
+
+**Pass 35's directives hold on the live site** (F-189 the View-by control, F-190 the pinned page at 12,210 px, F-191/F-183 the leaf reference,
+F-192 the `system-one-open` swatch, F-188 the alternatives header, F-193 the phone first-row budget at 714 px): 0 page errors in all four
+contexts, no "1 <plural>". **The Capability ranking is the best headline the hub has had**: at 1440 the first row sits at y 633 under one
+sentence that names the leader, the bar plus the thin log-scale cost line say two things per row without a second table, the 91 rows share one
+height, the ⓘ sits beside the truncated name (CR-169.1 holds: 10 visible triggers of 16 px with a 44 px hit area), and the two bubble charts are
+the strongest new figure on the site — 50 points each, five labelled leaders with leader lines and zero label overlaps at 1440 and 390, the cost
+axis reversed so "cheaper →" reads left to right, the Jev limits drawn as dashed lines. The banner is Florian's copy in Florian's colour,
+73 px at 1440 and a 55 px teaser on a phone that expands to 145 px with the two buttons. The keyboard re-score works (six ArrowRight presses
+on Intelligence → 55/25/25/25, "Custom weights" everywhere it matters, the official preset resets it). The image page opens with the bars.
+
+**Seven things are not at the bar; three fixed in this pass, four directed.**
+
+1. **Two promotions fight for the bottom edge of the phone.** The custom-evaluation toast (CR-102/106, opens 6 s after load, lands into the
+   eyebrow badge at 17 s) is `position: fixed; bottom: 1rem; z-index: 45`; the fast-lane banner is `bottom: 0; z-index: 70`. Measured 7 s
+   after load: at 1440 the toast's lower **57 px** are under the banner (`metrics-b-desktop_light.json`, `overlapPx`); at 390 only its first
+   two lines show above the teaser, the "See your options" link and "Don't show again" are under it (`mobile_light-overlay-7s.png`,
+   `mobile_dark-hub-caprows-vp.png`). Both are Florian's; neither may hide the other. → **F-194**, fixed by Fable (one CSS rule: while the
+   banner reserves the bottom edge the toast sits above its height).
+2. **9.5 px again.** The speed bubble chart prints its five latency sub-ticks ("≈10 s … ≈100 ms") at `fontSize="9.5"` — the page's smallest
+   text, under the 10 px floor (F-147, F-181). → **F-195**, fixed by Fable.
+3. **"Official" three times in 110 px.** The Composite figure says Official as the badge under its h2, as the pressed preset "Official
+   25:25:25:25", and again as a green status pill at the end of the preset row — in both slider groups (`desktop_light-hub-chart-vp.png`; the
+   figure's `.bh-jevc-official` count is 3). The status pill earns its place only in the custom state. → **F-196**, fixed by Fable.
+4. **The hub head is a link farm before the message.** At 1440 the head is the h1, one sentence, the image link, **eleven guide links in two
+   rows**, a provenance line and "Share this version" — 400 px before the eyebrow "HEADLINE RANKING"; the phone already folds the eleven links
+   behind "Explore JevBench guides ↓" (`components/JevBoardGuides.tsx`, `sm:hidden`), the desktop does not. Pass 34 accepted a three-link
+   guides row; CR-136's four Jev-vs pages and CR-153's guides grew it to eleven. → **F-197**.
+5. **The image page keeps its review paperwork on the public page.** After the bars and the radar it says its top five a second time in a
+   grey-green panel ("Top five by composite score" — the same five names the bars drew 1,300 px higher; pass 35 decision 3), then a bold
+   emerald alert "Clean split — meets the approved one-third / two-thirds target" (governance wording — approved by whom, for the reader?),
+   then 4,000 px of "Candidate coverage and review status" (a 37-row table of "requested, not yet evaluated" with 40-character source hashes)
+   **before** the Full ranking table, which the Composite intro promises ("The four axes and Jev-class gates are in the table below") but
+   which sits at y 10,585 of 14,890. Two systems print **"0.00"** as a score with no reason — Gemini 3.8 Flash is gated by its Cost axis
+   (0.58; USD 2.06 per 1,000 decisions), OpenJev 4B NLI v2 by Calibration 0.00 (it reports no probabilities); a reader sees "useless", the data
+   says "gated". Names carry configuration notes in bold ("Reflex 4B (released stable configuration)", "OpenJev 4B NLI v2 (official
+   image-premise path)"), wrapping bars and cards to two lines. The table has 14 columns and scrolls sideways at 1440; its "Penalty" column is
+   ×1.000 on all twelve rows. → **F-198**.
+6. **On a phone the Composite figure is 1,000 px of controls before its first bar.** The preset pills wrap to five lines, the four sliders take
+   two more rows, then View-by (two rows), the fairness sentence, search and Filters, the legend line — from the h2 to the first bar is more
+   than a viewport (`mobile_light-hub-chart-vp.png`). Florian asked for the sliders above and below the chart and the sorting and filters
+   next to it (CR-158); on a phone that wish is honoured by folding, not by stacking. The inline "Sort by Intelligence ↓" button after the
+   fairness sentence duplicates the "Intelligence" View-by pill 30 px above it (pass 35 decision 2: one control per sort). → **F-199**.
+7. **The Capability ⓘ is a 300-character sentence, and on a phone it covers the next two rows.** "Jev 1.13.0 (TypeSafe AI). Capability 64.7.
+   Intelligence Score 53.1. Calibration 76.3. Cost Score 52.0. Cost $0.040 per 1,000 tasks, 1.00× Jev. Median latency 0.65 s. Capability rank
+   1; official rank #2." is seven label/value pairs set as prose, in a hover panel that a tap on a phone drops over rows 2 and 3 with no close
+   (`mobile_light-hub-rownote-open.png`); the same sentence is the `<li>`'s native `title`. R1.8 already decided this: hover panel on desktop,
+   a small modal with ✕ on phones (`components/InfoTip.tsx`). → **F-200**.
+
+Not defects: the serif h1 (the brand rule for page heads); the hatched "classifier.dev — not ranked (honorable mention)" row inside the
+numbered top ten (the rule says so, the note says so); the weight sliders on the pinned `/jev-models/v1.4.2` (the # stays the official rank, the
+page still says frozen); the amber caveat on the image page (honest, above the bars, one paragraph); the 11 legend swatches under the
+Capability ranking (11 classes are present).
+
+## Decisions in pass 36
+
+1. **Fixed overlays stack; they never hide each other (F-194):** every fixed element at the bottom edge reads the banner's reserved height
+   (`--bh-fastlane-height`) and sits above it. A second promotion on the same edge is a smell the loop should keep in mind, but two of
+   Florian's features on one page are stacked, not arbitrated.
+2. **A state label names the exception, not the default (F-196):** when the control already shows the default (a pressed preset, a badge),
+   a status pill that repeats "Official" is noise; it appears only when the state is not the default.
+3. **The head is the message; navigation folds (F-197)** — extends pass 24's "first screen" rule: a guides row longer than one line is a
+   disclosure at every width and sits after the headline figure, not before it.
+4. **A public benchmark page carries results, not its review trail (F-198)** — extends pass 35 decision 3: the top five once (the bars),
+   governance wording ("approved", "target", "review status") off the page, candidate bookkeeping behind a disclosure, and a zero that a gate
+   produced says which gate produced it.
+5. **A phone folds a control row it cannot fit; it does not stack it (F-199):** presets scroll sideways in one line, sliders open on request
+   (and open by themselves when the state is custom), desktop stays as Florian asked.
+6. **Seven values are a list, and on a phone a list is a modal (F-200)** — R1.8 applies to every ⓘ on the site, not only the Overview table.
 
 ## Verdict on the live site — pass 35 (2026-09-25), the JevBench board at v1.4.2, its pinned page and its leaf pages
 
@@ -292,6 +377,105 @@ held through pass 16) after rejecting Florian's 2026-09-12 draft ("All … every
 and the counts line under it keeps the page honest (P4).
 
 ---
+
+## Directives (pass 36)
+
+### F-194 — The custom-evaluation toast stacks above the fast-lane banner `[mechanical]` — **shipped by Fable (pass 36)**
+
+*Where:* `app/globals.css` (one rule after `.bh-custom-evaluation-toast`). *What:* `body.bh-fastlane-visible .bh-custom-evaluation-toast {
+bottom: calc(var(--bh-fastlane-height, 0px) + 1rem + env(safe-area-inset-bottom, 0px)); }` — the banner already publishes its height on
+`body` and toggles the class (`components/FastlaneBanner.tsx`, `reserve()`), so the toast follows the teaser (55 px), the expanded banner
+(145 px) and the desktop banner (73 px) without JavaScript. *Accept:* `/jev-models` at 1440/390 × light/dark, 7 s after load: banner and toast
+both visible, **0 px overlap**, the toast inside the viewport; by 18 s the toast has landed into the badge (no `.bh-custom-evaluation-toast`);
+group F-194 (`before/`: 57 px overlap at 1440). Implemented by Fable — a non-Fable engine flips it to verified.
+
+### F-195 — Bubble-chart text at the 10 px floor `[mechanical]` — **shipped by Fable (pass 36)**
+
+*Where:* `components/JevBubbleChart.tsx` (the latency sub-tick `<text>`; was `fontSize="9.5"`). *Accept:* both `[data-bh-jev-bubble]` figures
+in all four contexts: no visible SVG text under 10 px, five labels, zero overlaps; `test/fable-pass36.test.mjs` pins every `fontSize` in the
+file ≥ 10; group F-195. Implemented by Fable — a non-Fable engine flips it to verified.
+
+### F-196 — One "Official" per Composite figure `[mechanical]` — **shipped by Fable (pass 36)**
+
+*Where:* `components/JevBoardInteractive.tsx` (`JevWeightSliders`). *What:* the status pill after the presets renders only in the custom
+state ("Custom — not the official ranking"); the official state is said by the pressed preset and the badge under the h2. *Accept:* inside
+`[data-bh-jev14-chart]`: `.bh-jevc-official` visible once and `.bh-jevc-notdefault` zero times on load; after six ArrowRight presses on the
+Intelligence slider `.bh-jevc-notdefault` × 3 (badge + both groups), no preset pressed; after clicking "Official 25:25:25:25" back to 1/0; group
+F-196. Implemented by Fable — a non-Fable engine flips it to verified.
+
+### F-197 — The hub head is the message; the guides fold at every width and follow the headline `[mechanical]`
+
+*Where:* `app/jev-models/page.tsx` (the head block and `<JevBoardIntentLinks />`), `components/JevBoardGuides.tsx`,
+`components/JevBenchSeoBlocks.tsx` (`JevBoardIntentLinks`), `test/jev-models-v14-page-fixes.test.mjs` or `test/jevbench-seo.test.mjs`
+(whichever pins the row).
+*What:* (a) The guides toggle ("Explore JevBench guides ↓" / "Hide … ↑") works at all widths: drop `sm:hidden` on the button and the
+`sm:flex …` expansion on the list; closed by default; the eleven links stay in the HTML (crawlers and screen readers keep them). (b) The
+`<JevBoardIntentLinks />` block moves out of the page head to directly after the Jev-class method panel (`#jev-class-method`), before the
+bubble section, at all widths — the head keeps eyebrow, h1, the one sentence, the Image JevBench line, the provenance line and "Share this
+version". (c) Nothing else in the head changes; the eleven link targets and labels are unchanged.
+*Accept:* hub at 1440/390 × light/dark on a fresh load with the banner up: `[data-bh-jev-board-guides]` has ≥ 11 links, none visible, its
+toggle visible; the guides nav is after `#jev-class-method` in document order and not inside `main .bh-page-head`; the first
+`[data-bh-jev14-capability-row]` at y ≤ **590** at 1440 (now 633) and ≤ **660** at 390 (now 714); `verify-fable-pass35-design.mjs` F-189
+and `verify-cr-163*` still green (the first-row budget only tightens); group F-197.
+
+### F-198 — The image benchmark page is its results; the review trail leaves the page `[mechanical]`
+
+*Where:* `app/jev-models/multimodal-preview/page.tsx` (`MultimodalPreviewContent`, shared by `/image-jev-bench`), `components/ImageJevRadar.tsx`
+(unchanged), `lib/jevbench-multimodal-preview.mjs` (read the gate factors that are already in `tracks.all.composite.gates`), the page's tests
+(`test/*image*`, `test/*multimodal*`).
+*What:* (a) **Order:** head (eyebrow, h1, sentence, size line, the amber caveat) → **Composite score** (the bars) → **Full ranking** (the table,
+moved up from y 10,585) → **Compare two systems** (the radar) → **Examples from public items** → **Results by track** → **Split** → **Computer
+Use and Browser Use tracks (preview)** → **Method and limitations** → a closed `<details>` "Requested and excluded candidates (37)" holding the
+candidate table. (b) **The "Top five by composite score" panel goes**; its one fact that the bars do not carry — "Earlier split: #n · score" —
+becomes a muted column **"Earlier split"** in the Full ranking table (rank and score; "—" for systems without one). The `<meta description>`
+keeps whatever it says. (c) **The "Clean split — meets the approved …" alert goes**; its numbers become the first paragraph of Split in the
+section's ordinary panel style (no emerald border, no `border-2`, no "approved", "target" or "review status" in the copy); the four stat tiles
+stay under it. (d) **A gated row says so:** a row whose composite is below 1 because a gate factor is below 0.5 prints, under its name in the
+bars and in the table's System cell, a muted sub-line `data-bh-mm-gated="<axis>"` — "0.0 · gated by Cost (USD 2.06 per 1,000 decisions)" and
+"0.0 · gated by Calibration (no probabilities reported)"; the Composite intro's last sentence names the gates in words ("A system whose Cost or
+Calibration axis falls under the gate scores 0"). (e) **Names:** in the bars, the top cards and the tables, a parenthetical configuration
+("released stable configuration", "official image-premise path", "low reasoning effort", "Autoloops") leaves the bold name and becomes a muted
+sub-line; quantisation keys such as `PQ2_0` stay the artifact's spelling but inside `<code>`. (f) **Columns:** the Full ranking table drops
+"Penalty" (×1.000 on every row; the intro already says no system exceeds the allowance — keep that sentence) and folds "Cost coverage" into the
+row's note where it is under 100%; the "Source revision" cells of the candidate table print 12 characters in `<code>` with the full hash in
+`title`. No score, rank, gate, split count or hash changes.
+*Accept:* `/image-jev-bench` at 1440/390 × light/dark: h2 order Composite score < Full ranking < Compare two systems < Examples < Split <
+Method; no h2 "Top five by composite score"; no h2 starting "Clean split"; "approved" absent from `main`'s text; two `[data-bh-mm-gated]`
+elements naming Cost and Calibration; no `li`/`tr` containing "0.00" without "gated"; the candidate table inside a closed `<details>`; no
+`<b>`/`<strong>` in a row containing "("; the ranking table without a "Penalty" column and with "Earlier split"; page height at 1440 under
+13,000 px (now 14,890); group F-198.
+
+### F-199 — On a phone the Composite figure folds its controls; one control per sort `[mechanical]`
+
+*Where:* `components/JevBoardInteractive.tsx` (`JevWeightSliders`, `JevScoreChart` — the fairness sentence's inline button around line 247),
+`app/globals.css`, `test/cr-151-jev-board-views.test.mjs` / `test/jev-page-restructure.test.mjs` (whichever pins the button).
+*What:* (a) Under 640 px the preset row is **one line that scrolls sideways** (`flex-nowrap; overflow-x: auto; scroll-snap-type: x
+proximity`, each pill `scroll-snap-align: start`, the row's right edge fading so the overflow is visible), not five wrapped lines. (b) Under
+640 px the four sliders of each group live in a `<details data-bh-jev-weights-more>` whose summary reads "Adjust weights ↓"; it is closed by
+default and **open when the weights are custom** (`?w=…` on load or a non-official preset pressed), so a reader who changed something sees the
+sliders. Above 640 px nothing changes — sliders above and below the chart, as CR-158 asks. (c) The inline "Sort by Intelligence ↓" button after
+the fairness sentence goes; Florian's sentence (`artifact.top_five_note`) keeps its words, the "Intelligence" View-by pill is the control.
+*Accept:* hub and `/jev-models/v1.4.2` at 390 × light/dark: the presets row ≤ 44 px tall with `scrollWidth > clientWidth`; the sliders' details
+closed on load and no slider visible; the weights box ≤ 120 px closed; with `?w=40-20-20-20` the details open; the distance from the figure's
+h2 to the first `[data-bh-jev14-row]` ≤ 700 px (now over 1,000); no button whose text starts "Sort by" in the figure at any width; at 1440
+the four sliders visible without a click; `verify-fable-pass35-design.mjs` F-189 still green; group F-199.
+
+### F-200 — The Capability ⓘ is a list, and a modal on a phone `[mechanical]`
+
+*Where:* `components/JevCapabilityRanking.tsx` (`RankingRow`: the `title` on the `<li>`, the `<button>` and the `role="tooltip"` panel),
+`components/InfoTip.tsx` (the R1.8 pattern: hover/focus panel on desktop, `<dialog>` with ✕ on touch), `test/cr-169*.test.mjs` if it pins the
+trigger.
+*What:* (a) The panel's content is a `<dl>` of seven rows — Capability · Intelligence · Calibration · Cost Score · Cost per 1,000 tasks (with
+"× Jev") · Median latency (or the Speed-axis note) · Rank (Capability #n · official #m) — with the system's display name and class as its
+heading, not one sentence. (b) The ⓘ uses `InfoTip` (or the same behaviour): desktop keeps the hover/focus panel; on touch the tap opens the
+site's small modal with a Close button, so the panel never covers the next rows. (c) The 300-character native `title` on the `<li>` goes (the
+ⓘ is the way in; the name cell keeps its own short `title`). (d) CR-169.1's trigger placement and CR-167.2's 16 px glyph with the 44 px hit
+area stay as they are.
+*Accept:* hub at 1440 × light/dark: hovering the first row's ⓘ shows a panel with ≥ 7 `dt`; at 390 × light/dark: tapping it opens a visible
+`[role=dialog]` with `button[aria-label="Close"]` and the same `dl`, and no `[data-bh-jev-capability-tooltip]` is visible; the row's `title`
+shorter than 80 characters; `verify-cr-167-2.mjs` and `verify-cr-169*` still green; group F-200.
+
+### F-187, F-165, D211 — unchanged (F-187 verified; F-165 data half and D211 for the JevBench release job)
 
 ## Directives (pass 35)
 
@@ -749,6 +933,9 @@ The label half is live and verified (`135a3098`, `4a9dd523`). Open: the identity
 
 | Directive | Commit | Evidence | Verified by |
 |---|---|---|---|
+| F-194 the custom-evaluation toast stacks above the fast-lane banner (`body.bh-fastlane-visible .bh-custom-evaluation-toast { bottom: calc(var(--bh-fastlane-height) + 1rem …) }`) | pass 36 (Fable, surgical: `app/globals.css`) + `test/fable-pass36.test.mjs` | `/opt/benchmarkheaven/state/ux-evidence/fable-20260926-pass36/{before,after}/` (group F-194) | **implemented** — needs a non-Fable engine |
+| F-195 the bubble charts' latency sub-ticks at 10 px (were 9.5) | pass 36 (Fable, surgical: `components/JevBubbleChart.tsx`) | same (group F-195) | **implemented** — needs a non-Fable engine |
+| F-196 the weight-slider status pill only in the custom state; one "Official" per figure | pass 36 (Fable, surgical: `components/JevBoardInteractive.tsx`) | same (group F-196) | **implemented** — needs a non-Fable engine |
 | F-189 a sort is a control: the fairness sentence unboxed under the subtitle, a two-button `Rank by` (JevBench Score / Intelligence) at the subtitle's end, the active metric owning the bar length, the big number and the header labels, the rank numeral staying the board's | `97ede31a` (claude-opus, iteration 214); `components/JevRankBy.tsx`, `components/JevScoreBar.tsx`, `components/JevModelsV14.tsx`; `test/jevbench-v142.test.mjs` | `/opt/benchmarkheaven/state/ux-evidence/iter214-pass35/F-189-{canonical,legacy}/`; `…/local-shots/desktop_light-hub-{score,intelligence}.png` | **verified** — review gate 20260925T112003Z (opencode-kimi, not the implementer): 32/34 per host at the live deploy `0a87cb00`, canonical and legacy; the 2 failures per host are the 720 px budget → **F-193**. `/opt/benchmarkheaven/state/ux-evidence/review-20260925T112003Z/F-189-{canonical,legacy}/`. (Earlier **implemented** state — 32/34 per host; the two check corrections: the expected Intelligence order derived from the board instead of the hard-coded "Jev 1.13.0 / 53.1" (the artifact's highest Intelligence is GPT-6 Luna at 97.4), and "unboxed" read as a drawn frame anywhere between the sentence and the panel instead of `border-style`.) |
 | F-190 a pinned page carries nothing dated after its release: no "Frozen top five" list above the board that draws it, no live-dated context section; the share preview keeps the top five | `97ede31a` (claude-opus, iteration 214); `app/jev-models/v1.4{,.1,.2}/page.tsx`; `test/jevbench-v141.test.mjs` | `…/iter214-pass35/F-190-{canonical,legacy}/` | **verified** — review gate 20260925T112003Z (opencode-kimi, not the implementer): 14/14 per host at `0a87cb00`, canonical and legacy. `/opt/benchmarkheaven/state/ux-evidence/review-20260925T112003Z/F-190-{canonical,legacy}/`. (Earlier **implemented** state — applied to all three pinned pages, not only v1.4.2: v1.4.1 carried both defects and v1.4 the list; the `<meta description>`'s top-five sentence (CR-134.2) is unchanged and pinned by the test in place of the on-page list.) |
 | F-192 the `system-one-open` class has its own swatch (`--jev-t-sysone`) and, until CR-152.1 names it, its key in `<code title="Class named in the v1.4.2 artifact; description pending">` in all three legends and the leaf sub-line | `97ede31a` (claude-opus, iteration 214); `app/globals.css`, `components/jevTypes.ts` (`jevTypeVarName`, `jevLegendTypes`), `JevModelsV14`, `JevCapabilityChart`, `JevCompareV14`, `JevV141SystemDetail` | `…/iter214-pass35/F-192-{canonical,legacy}/`; `…/iter214-pass35/f192-colour-contrast.json` | **verified** — review gate 20260925T112003Z (opencode-kimi, not the implementer): 16/16 per host at `0a87cb00`, canonical and legacy. `/opt/benchmarkheaven/state/ux-evidence/review-20260925T112003Z/F-192-{canonical,legacy}/`. (Earlier **implemented** state — 16/16 per host; needs an engine other than claude-opus.) Contrast computed, not eyed: 5.15:1 dark / 6.15:1 light against the panel (floor 3:1), ΔE76 109–147 from the rebuild orange and llm green it sits beside in the top five, nearest neighbour `small-tool-model` at ΔE 35.3. The unlabelled fallback is a separate `--jev-t-unnamed`, so no future class borrows the llm green either. The group's third check ("no bare `— system-one-open` in visible text") was corrected: it is unsatisfiable beside "its key in `<code>`" and blind to the board's *system* named `system-one-open` (#14); it now targets the elements that render a class (`data-bh-jev14-class`). This closes F-183's recorded deviation (2). |

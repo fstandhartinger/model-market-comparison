@@ -584,6 +584,8 @@ details[open] > .bh-collapsible-grid { display: grid; }
   font-weight: 400; letter-spacing: normal; text-transform: none;
   animation: bh-offer-in .22s ease-out both;
 }
+/* F-194 (Fable pass 36): while the fast-lane banner reserves the bottom edge, the toast stacks above it instead of sliding under it (z 45 < 70). */
+body.bh-fastlane-visible .bh-custom-evaluation-toast { bottom: calc(var(--bh-fastlane-height, 0px) + 1rem + env(safe-area-inset-bottom, 0px)); }
 .bh-custom-evaluation-toast.is-landing { pointer-events: none; animation: bh-offer-land .9s cubic-bezier(.4,0,.2,1) both; }
 .bh-custom-evaluation-badge.is-wiggling { animation: bh-offer-wiggle .34s ease-out both; }
 @keyframes bh-offer-in { from { opacity: 0; transform: translateY(.75rem); } to { opacity: 1; transform: none; } }
