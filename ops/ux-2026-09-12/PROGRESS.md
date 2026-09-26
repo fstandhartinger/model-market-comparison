@@ -12690,5 +12690,5 @@ and `legal/` directory.
 restored); `CI=true npm test` **1,422 tests / 1,421 pass / 0 fail / 1 skip**; `tsc --noEmit -p .` rc 0;
 `git diff --check` clean. The isolated worktree had no dependencies installed, so its ignored `node_modules`
 link pointed read-only to the existing deploy-checkout dependencies during gates; no deployed files changed.
-Seed-only commit `00266591` has been pushed. This iteration's review/docs commit and draft PR follow. No
-`ALL-ACCEPTED` appended.
+Seed-only commit `00266591` and review/docs commit `b0373289` are pushed. Draft PR #44:
+https://github.com/fstandhartinger/model-market-comparison/pull/44. No `ALL-ACCEPTED` appended.
