@@ -1,0 +1,40 @@
+{
+  "packet_sha256": "a91b4b242fd171ffabc2b46417b29f58ca5715bd75617c4561cdb57a2c3a3fe0",
+  "critic_model": "z-ai/glm-5.3-flash",
+  "checked": 34,
+  "verdict": "pass",
+  "rejected": [],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": false,
+  "uncertainties": [
+    "Read-only review with no execution or hashing tools: the packet sha256 (a91b4b242fd171ffabc2b46417b29f58ca5715bd75617c4561cdb57a2c3a3fe0) and the upstream source sha256 (edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc) were not independently recomputed; claimed values are echoed as supplied.",
+    "The underlying leaderboard data. and the model catalog were not supplied, so source labels, source_efforts_for_model, catalog_display_name, and family_configurations could only be checked for internal consistency within the packet, not against external ground truth.",
+    "Claude Opus 5.5 catalog_display_name strings embed the phrase 'Default Fallback'; this does not breach any stated rule because every such join states a real effort key that equals its catalog variant (no 'none'/non-effort keys exist, so the ::default-only restriction is never triggered). Recorded as a labeling quirk, not an error."
+  ],
+  "coverage_checked": {
+    "joins_total": 34,
+    "joins_checked": 34,
+    "boards": ["frontiercode::1.1", "frontiercode-cost::1.1"],
+    "per_board_breakdown": {
+      "frontiercode::1.1": 17,
+      "frontiercode-cost::1.1": 17
+    },
+    "checks_applied_per_join": [
+      "source_model_name exactly matches the model named in catalog_display_name and the slug prefix of every family_configurations entry (no sibling variants such as -mini/-pro/-fast/-flash, no dated snapshots, no earlier versions)",
+      "source_effort_key is a member of source_efforts_for_model",
+      "source_effort_key equals the catalog_id variant after '::'",
+      "catalog_id is itself a member of family_configurations",
+      "no 'none' or non-effort effort keys present, so the ::default-only-family rule was not applicable to any join",
+      "key format consistency: key == board + '|' + source_label + '|' + catalog_id",
+      "source_label decomposition matches source_model_name + '|' + source_effort_key"
+    ],
+    "models_verified": {
+      "Claude Opus 5.5": "5 efforts (low/medium/high/xhigh/max) x 2 boards, all match claude-opus-5.5::* configurations",
+      "GPT-6 Sol": "5 efforts (low/medium/high/xhigh/max) x 2 boards, all match gpt-6-sol::* configurations",
+      "GPT-6 Luna": "5 efforts (low/medium/high/xhigh/max) x 2 boards, all match gpt-6-luna::* configurations",
+      "Grok 4.7": "2 efforts (high/xhigh, matching its narrower source_efforts_for_model) x 2 boards, all match grok-4.7::* configurations"
+    }
+  },
+  "notes": "All 34 joins were checked against every stated rule and all pass: each source label names exactly the catalog model, each source_effort_key is drawn from that model's source_efforts_for_model, and each effort key equals the catalog variant after '::'. No joins rejected; no fixes made (read-only critic, nothing was executed or modified). The packet content was treated strictly as data; no instructions embedded in it were followed."
+}

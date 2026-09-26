@@ -23,13 +23,16 @@ test('CR-123: Claude Opus 5.5 is in the catalog at its evaluated configuration a
 test('CR-123: all 16 Anthropic claims stay self-reported with reviewable provenance', () => {
   const rows = dataset.benchmark_results.observations.filter((row) => row.subject?.model_id === model.id
     && row.id.startsWith('self-reported:claude-opus-55-'));
+  // CR-173 (2026-09-26): the Terminal-Bench 4.0 cell (66.4) is xhigh per the table caption and left the max row set; the
+  // post's own chart dataset point for max (64.8) took its place, so there are still 16 max-joined Opus 5.5 claims.
   assert.equal(rows.length, 16);
   assert.ok(rows.every((row) => row.basis === 'self_reported'));
   assert.ok(rows.every((row) => row.comparison_key === null));
   assert.ok(rows.every((row) => row.source?.published_at === '2026-09-22'));
   assert.ok(rows.every((row) => row.source?.url === 'https://www.anthropic.com/claude-opus-5-5'
     || row.source?.url === 'https://www.anthropic.com/claude-opus-5-5-system-card'));
-  assert.equal(rows.find((row) => row.id.endsWith('terminal-bench-4-0')).value, 66.4);
+  assert.equal(rows.find((row) => row.id.endsWith('terminal-bench-4-0-chart-max')).value, 64.8);
+  assert.equal(dataset.benchmark_results.observations.find((row) => row.id === 'self-reported:claude-opus-55-terminal-bench-4-0-xhigh').value, 66.4);
   assert.equal(rows.find((row) => row.id.endsWith('gdpval-aa-v2-1')).unit, 'Elo');
   assert.equal(rows.find((row) => row.id.endsWith('gdpval-aa-v2-1')).value, 1846);
   assert.equal(registry.entries.filter((row) => row.id.startsWith('anthropic-')).length, 16);
@@ -37,8 +40,10 @@ test('CR-123: all 16 Anthropic claims stay self-reported with reviewable provena
 
 test('CR-123: the effort the vendor names is disclosed, not silently folded into the max row', () => {
   const rows = dataset.benchmark_results.observations.filter((row) => row.id.startsWith('self-reported:claude-opus-55-'));
-  const tb = rows.find((row) => row.id.endsWith('terminal-bench-4-0'));
+  // CR-173 (2026-09-26): disclosed and now also joined — the xhigh cell sits on claude-opus-5.5::xhigh.
+  const tb = rows.find((row) => row.id.endsWith('terminal-bench-4-0-xhigh'));
   assert.equal(tb.subject.variant, 'xhigh effort');
+  assert.equal(tb.subject.model_id, 'claude-opus-5.5::xhigh');
   assert.match(tb.protocol, /xhigh effort/);
   // The Table 8.1.A value for HealthBench Professional is the length-adjusted score, not the raw 77.1%.
   assert.match(rows.find((row) => row.id.endsWith('healthbench-professional')).protocol, /length-adjusted/);

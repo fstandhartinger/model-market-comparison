@@ -18,6 +18,17 @@ const SLUG_BOARDS = ['osworld-2', 'swe-rebench', 'gso', 'hyper-tau-bench', 'lisa
   // 2026-09-18 (iteration 114, CR-82.3/82.4): VulcanBench Frontier v4 (product-name labels with the effort tier in
   // brackets) and KernelBench-CUDA (run-identity labels; one reviewed identity per problem, hardware is the version).
   'vulcanbench-frontier', 'kernelbench-cuda-glm52-fused-moe', 'kernelbench-cuda-deepseek-nsa',
+  // 2026-09-26 (CR-173): ARC Prize's own per-model results pages carry an "ARC Prize Verified" badge and state the
+  // reasoning level per row (GPT-6 Luna, reviewed 2026-09-24 with its own critic receipt); only those rows join.
+  'arc-agi',
+  // 2026-09-26 (CR-173): UGI Leaderboard, first-party `<org>/<slug>` labels with a stated reasoning_effort only.
+  'ugi', 'ugi-natint', 'ugi-writing', 'ugi-willingness',
+  // 2026-09-26 (CR-173, vals-simplebench): SimpleBench product-name labels (setting in parentheses when stated;
+  // an unstated setting joins only a single-default family such as GPT-6 Astra Pro).
+  'simple-bench',
+  // 2026-09-26 (CR-173): Epoch's Furniture Assembly and FrontierMath Erdős (hub slugs), Scale SWE-Bench Pro V2 Full/HARD
+  // (Scale labels), LMArena WebDev and Agent Arena (reviewed display names).
+  'furniture-assembly', 'frontiermath-erdos', 'scale-swe-bench-pro-v2-full', 'scale-swe-bench-pro-v2-hard', 'lmarena-webdev', 'lmarena-agent',
   'kernelbench-cuda-megaqwen-decode', 'kernelbench-cuda-grid-mingru-sps',
   // 2026-09-19 (iteration 117, CR-30.2): two product-name boards from their own primary sites.
   'frontierswe', 'posttrainbench',
@@ -146,7 +157,10 @@ test('identity map: exact existing configurations; measured joins visible; self-
   const catalog = new Set(dataset.models.map((m) => m.id));
   const observations = dataset.benchmark_results.observations;
   assert.ok(map.entries.length >= 80);
-  const SELF_REPORTED = ['frontiercode::1.1', 'frontiercode-cost::1.1', 'cursorbench::4.0', 'cursorbench-cost::4.0', 'swe-bench-pro-public::snapshot-2026-09-10'];
+  // CR-173 (2026-09-26): FrontierCode 1.1 Extended (the full 150-task set) and its cost twin are reviewed vendor boards too;
+  // Terminal-Bench 4.0 board rows join by display name + the row's own reasoning_effort.
+  const SELF_REPORTED = ['frontiercode::1.1', 'frontiercode-cost::1.1', 'frontiercode-extended::1.1', 'frontiercode-extended-cost::1.1',
+    'cursorbench::4.0', 'cursorbench-cost::4.0', 'swe-bench-pro-public::snapshot-2026-09-10', 'terminal-bench::4.0'];
   for (const entry of map.entries.filter((e) => e.basis === 'self_reported')) {
     assert.ok(SELF_REPORTED.includes(entry.benchmark_id), 'self-reported joins cover only the reviewed vendor boards');
     assert.ok(catalog.has(entry.model_id), `${entry.model_id} exists`);

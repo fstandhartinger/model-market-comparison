@@ -123,10 +123,13 @@ test('KernelBench-CUDA joins: reviewed labels only; unaudited, bug and suspect c
   assert.deepEqual(parseKernelbenchCudaLabel('muse/muse-spark-1.3 [ultra]'), { family: 'muse-spark-1.3', effort: 'ultra' }, 'ultra is not a reviewed setting');
   const map = JSON.parse(readFileSync('data/raw/benchmarks/identity-map.json', 'utf8')).entries;
   const per = (id) => map.filter((e) => e.benchmark_id === id).map((e) => e.model_id).sort();
-  assert.deepEqual(per('kernelbench-cuda-glm52-fused-moe::rtx-pro-6000'), ['claude-fable-5.1::max', 'claude-opus-4.8::max', 'claude-opus-5::max', 'grok-4.6::xhigh']);
-  assert.deepEqual(per('kernelbench-cuda-deepseek-nsa::rtx-pro-6000'), ['claude-fable-5.1::max', 'claude-opus-4.8::max', 'claude-opus-5::max', 'gemini-3.8-flash::high', 'glm-5.3-flash::default', 'grok-4.6::xhigh']);
+  // 2026-09-26 (CR-173): the 22 Sep releases' runs (claude/claude-opus-5-5, codex/gpt-6-sol, codex/gpt-6-luna, grok/grok-4.7, all [xhigh]).
+  // D187 withdrew the board-retracted cells (Opus 5 on glm52-fused-moe; Fable 5.1, Opus 5 and Grok 4.6 on deepseek-nsa),
+  // so a regenerated map no longer carries their joins.
+  assert.deepEqual(per('kernelbench-cuda-glm52-fused-moe::rtx-pro-6000'), ['claude-fable-5.1::max', 'claude-opus-4.8::max', 'claude-opus-5.5::xhigh', 'gpt-6-luna::xhigh', 'gpt-6-sol::xhigh', 'grok-4.6::xhigh', 'grok-4.7::xhigh']);
+  assert.deepEqual(per('kernelbench-cuda-deepseek-nsa::rtx-pro-6000'), ['claude-opus-4.8::max', 'claude-opus-5.5::xhigh', 'gemini-3.8-flash::high', 'glm-5.3-flash::default', 'gpt-6-luna::xhigh', 'gpt-6-sol::xhigh', 'grok-4.7::xhigh']);
   assert.deepEqual(per('kernelbench-cuda-megaqwen-decode::rtx-pro-6000'), ['claude-fable-5.1::max', 'claude-opus-4.8::max', 'claude-opus-5::max', 'gemini-3.8-flash::high', 'glm-5.3-flash::default', 'grok-4.6::xhigh']);
-  assert.deepEqual(per('kernelbench-cuda-grid-mingru-sps::rtx-pro-6000'), ['claude-fable-5.1::max', 'claude-opus-4.8::max', 'claude-opus-5::max', 'gemini-3.8-flash::high']);
+  assert.deepEqual(per('kernelbench-cuda-grid-mingru-sps::rtx-pro-6000'), ['claude-fable-5.1::max', 'claude-opus-4.8::max', 'claude-opus-5.5::xhigh', 'claude-opus-5::max', 'gemini-3.8-flash::high', 'gpt-6-luna::xhigh', 'gpt-6-sol::xhigh', 'grok-4.7::xhigh']);
   for (const id of ['kernelbench-cuda-glm52-fused-moe::rtx-pro-6000', 'kernelbench-cuda-deepseek-nsa::rtx-pro-6000', 'kernelbench-cuda-megaqwen-decode::rtx-pro-6000', 'kernelbench-cuda-grid-mingru-sps::rtx-pro-6000'])
     assert.ok(!map.some((e) => e.benchmark_id === id && /kinetic|muse/.test(e.source_id)), 'kinetic and muse labels stay unmatched source identities');
 });

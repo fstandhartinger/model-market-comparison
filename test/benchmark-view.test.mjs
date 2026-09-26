@@ -128,7 +128,10 @@ test('actual source adapter keeps all version identities, values and dated legac
   // and to 750 KB for CR-126's five GPT-6 Sol/Luna launch axes (719.4 → 727.2 KB; four capability axes with one or
   // two vendor rows each, plus the AutomationBench cost-per-task axis).
   // CR-128 adds 27 independently sourced benchmark axes; selected model score rows remain bounded.
-  assert.ok(JSON.stringify(selected).length < 800_000, 'initial benchmark payload bounded to selected models');
+  // CR-173 (2026-09-26): GPT-6 completeness lanes add axes with peer statistics (ARC-AGI-1/2 measured joins,
+  // FrontierCode Extended + cost, OpenAI launch-post cost twins, new Vals/Epoch/Scale/LMArena identities);
+  // the selected model still carries only its own rows. 798.6 → 848.0 KB (axis metadata of 528 axes): 860 KB.
+  assert.ok(JSON.stringify(selected).length < 860_000, 'initial benchmark payload bounded to selected models');
   assert.equal(JSON.stringify(ds), before);
 });
 

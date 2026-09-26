@@ -78,8 +78,9 @@ test('Surge joins: Adaptive/<level> and <level> reasoning are exact; Claude\'s p
   assert.deepEqual(joins.map((j) => j.model_id), ['claude-opus-4.8::max', null, 'gpt-5.4::non-reasoning', null]);
   const map = JSON.parse(readFileSync(new URL('../data/raw/benchmarks/identity-map.json', import.meta.url), 'utf8'));
   const joined = (bid) => map.entries.filter((x) => x.benchmark_id === bid).length;
-  assert.equal(joined('surge-chartography::100-tasks'), 36);
-  assert.equal(joined('surge-gdp-pdf::100-tasks'), 26);
+  // 2026-09-26 (CR-173): +10 / +10 — GPT 6 Astra/Sol/Luna, Grok 4.7 and Claude Opus 5.5 are reviewed names now.
+  assert.equal(joined('surge-chartography::100-tasks'), 46);
+  assert.equal(joined('surge-gdp-pdf::100-tasks'), 36);
   assert.ok(!map.entries.some((x) => x.benchmark_id.startsWith('surge-') && x.model_id === 'claude-opus-4.8::high'));
 });
 

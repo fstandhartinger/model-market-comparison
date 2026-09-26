@@ -1,0 +1,32 @@
+{
+ "artifact_id": "cr173-openai-charts-deepswe-cost",
+ "artifact_sha256": "5bf6a9cac00d229f5fbb03ff5857096525eb5a28d7277485f4ddbdccba07579e",
+ "round": 3,
+ "verdict": "pass",
+ "coverage_checked": [
+  "self-reported:gpt-6-astra-low-openai-deepswe-v1-1-cost",
+  "self-reported:gpt-6-astra-medium-openai-deepswe-v1-1-cost",
+  "self-reported:gpt-6-astra-high-openai-deepswe-v1-1-cost",
+  "self-reported:gpt-6-astra-xhigh-openai-deepswe-v1-1-cost",
+  "self-reported:gpt-6-astra-max-openai-deepswe-v1-1-cost",
+  "self-reported:gpt-6-luna-low-openai-deepswe-v1-1-cost",
+  "self-reported:gpt-6-luna-medium-openai-deepswe-v1-1-cost",
+  "self-reported:gpt-6-luna-high-openai-deepswe-v1-1-cost",
+  "self-reported:gpt-6-luna-xhigh-openai-deepswe-v1-1-cost",
+  "self-reported:gpt-6-luna-max-openai-deepswe-v1-1-cost",
+  "self-reported:gpt-6-sol-low-openai-deepswe-v1-1-cost",
+  "self-reported:gpt-6-sol-medium-openai-deepswe-v1-1-cost",
+  "self-reported:gpt-6-sol-high-openai-deepswe-v1-1-cost",
+  "self-reported:gpt-6-sol-xhigh-openai-deepswe-v1-1-cost",
+  "self-reported:gpt-6-sol-max-openai-deepswe-v1-1-cost"
+ ],
+ "errors_found": 0,
+ "findings": [],
+ "fixed": [],
+ "missing_evidence": [],
+ "uncertainties": [
+  "Completeness interpretation: evidence.skipped_existing_configs entries are keyed to the score benchmark openai-deepswe-v1-1::1.1 (gpt-6-luna::max, gpt-6-sol::max), not the cost benchmark. I read the skip as benchmark-specific, so this cost-only batch correctly contains all 15 cost rows including gpt-6-luna::max and gpt-6-sol::max. If the skip were instead meant by configuration across benchmarks, those two cost rows would have to be removed, but that reading conflicts with the benchmark_id keys in the evidence and would leave the chart's cost series incomplete.",
+  "artifact_sha256, source sha256 values and the Astra-post sha256 are used as supplied data; I have no execution tools to recompute hashes or re-parse the RSC payload, so I verified internal consistency of quoted datapoints against evidence.chart.gpt6_points and evidence.astra_post_points only, not against the underlying files.",
+  "Verbatim-datapoint and cross-check quotes were compared field by field (model, cost_label/x_label, score, cost/x_value, order/pointOrder, modelLabel, effortLabel, code_mode, dataset, record_type, effort_display) and matched the supplied evidence in all 15 cost rows and all 5 Astra protocol cross-checks; residual risk of transcription error in the retained source file itself cannot be excluded without re-extraction."
+ ]
+}

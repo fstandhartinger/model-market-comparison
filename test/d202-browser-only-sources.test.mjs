@@ -15,15 +15,19 @@ const registry = json('data/raw/benchmarks/registry.json');
 const plan = json('data/raw/benchmarks/collection-plan.json');
 const vendor = json('data/raw/benchmarks/vendor-candidates.json');
 
+// CR-173 (2026-09-26): the three cost-per-task identities read from the same post's chart datasets join the five.
 const EXPECTED = [
+  'openai-agents-last-exam-cost::v1',
   'openai-agents-last-exam::v1',
   'openai-automationbench-cost::1.0.6',
   'openai-automationbench::1.0.6',
+  'openai-deepswe-v1-1-cost::1.1',
   'openai-deepswe-v1-1::1.1',
+  'openai-osworld-2-offline-cost::v2026.08.08',
   'openai-osworld-2-offline::v2026.08.08',
 ];
 
-test('the entries that declare browser-only access are the five that share the refusing launch post', () => {
+test('the entries that declare browser-only access are the eight that share the refusing launch post', () => {
   const declared = registry.entries.filter(browserOnly).map((e) => e.id).sort();
   assert.deepEqual(declared, EXPECTED);
   for (const entry of registry.entries.filter(browserOnly)) {

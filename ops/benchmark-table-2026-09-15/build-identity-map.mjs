@@ -4,7 +4,7 @@
 // ops/benchmark-table-2026-09-15/identity-map-review.json. Review the diff of both files before committing.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { identityJoins, parseDeepSweId, parseScaleLabel, parseFrontierCodeId, parseCursorBenchLabel, parseSweBenchProLabel } from '../../lib/coding-identity.mjs';
-import { boardJoins, parseBullshitBenchId, parseApprenticeBenchId, parseValsIndexId, parseOsworld2Id, parseMathArenaLabel, parseWeirdmlV3Label, parseSweRebenchLabel, parseGsoId, parseHyperTauId, parseLisanBenchId, parseVulcanbenchFrontierLabel, parseKernelbenchCudaLabel, parseFrontiersweV2Label, parsePosttrainbenchLabel, parseRsiExamLabel, parseToolathlonVerifiedLabel, parseToolathlonArchiveLabel, parseProgrambenchLabel, parseMcpAtlasLabel, livebenchJoins, parseContextArenaId, parseBlueprintBenchLabel, parseLhtbLabel, parseRnEvalsLabel, parseResearchClawBenchLabel, parseMlsBenchLabel, parseSurgeLabel, parseInterfazeSobLabel, parseVitaBenchLabel, parseMcpmarkVerifiedLabel, parseCharxivLabel } from '../../lib/board-identity.mjs';
+import { boardJoins, parseBullshitBenchId, parseApprenticeBenchId, parseValsIndexId, parseOsworld2Id, parseMathArenaLabel, parseWeirdmlV3Label, parseSweRebenchLabel, parseGsoId, parseHyperTauId, parseLisanBenchId, parseVulcanbenchFrontierLabel, parseKernelbenchCudaLabel, parseFrontiersweV2Label, parsePosttrainbenchLabel, parseRsiExamLabel, parseToolathlonVerifiedLabel, parseToolathlonArchiveLabel, parseProgrambenchLabel, parseMcpAtlasLabel, livebenchJoins, parseContextArenaId, parseBlueprintBenchLabel, parseLhtbLabel, parseRnEvalsLabel, parseResearchClawBenchLabel, parseMlsBenchLabel, parseSurgeLabel, parseInterfazeSobLabel, parseVitaBenchLabel, parseMcpmarkVerifiedLabel, parseCharxivLabel, parseUgiLabel, parseSimpleBenchLabel, parseTerminalBenchRow, parseLmarenaLabel } from '../../lib/board-identity.mjs';
 
 const BOARDS = [
   { prefix: 'deepswe::', parse: parseDeepSweId, basis: 'measured' },
@@ -20,9 +20,15 @@ const BOARDS = [
   { prefix: 'mirrorcode::', parse: parseDeepSweId, basis: 'measured' },
   { prefix: 'epoch-gpqa-diamond::', parse: parseDeepSweId, basis: 'measured' },
   { prefix: 'epoch-swe-bench-verified::', parse: parseDeepSweId, basis: 'measured' },
+  // 2026-09-26 (CR-173): two more Epoch-run boards from the 2026-09-26 archive, same labels (epoch-hub-decisions.json).
+  { prefix: 'furniture-assembly::', parse: parseDeepSweId, basis: 'measured' },
+  { prefix: 'frontiermath-erdos::', parse: parseDeepSweId, basis: 'measured' },
   { prefix: 'swe-atlas-qna::', parse: parseScaleLabel, basis: 'measured' },
   { prefix: 'swe-atlas-test-writing::', parse: parseScaleLabel, basis: 'measured' },
   { prefix: 'swe-atlas-refactoring::', parse: parseScaleLabel, basis: 'measured' },
+  // 2026-09-26 (CR-173): SWE-Bench Pro V2 (Full and HARD tabs of one labs.scale.com page), same Scale label form.
+  { prefix: 'scale-swe-bench-pro-v2-full::', parse: parseScaleLabel, basis: 'measured' },
+  { prefix: 'scale-swe-bench-pro-v2-hard::', parse: parseScaleLabel, basis: 'measured' },
   // Self-reported boards: an entry only takes effect with an independent `review` receipt (added after the critic round).
   // 2026-09-16 (iteration 79): the sibling cost boards were held back because a joined cost row would have counted as a
   // benchmark in "#benchmarks". Since CR-34.3 / F-102 the count excludes cost boards (`capability_available` skips the
@@ -30,9 +36,15 @@ const BOARDS = [
   // already carries — the critic checked all 217, rejected none — now take effect.
   { prefix: 'frontiercode::', parse: parseFrontierCodeId, basis: 'self_reported' },
   { prefix: 'frontiercode-cost::', parse: parseFrontierCodeId, basis: 'self_reported' },
+  // 2026-09-26 (CR-173): the Extended subset (the full 150-task set) is its own identity, same `Model|effort` ids.
+  { prefix: 'frontiercode-extended::', parse: parseFrontierCodeId, basis: 'self_reported' },
+  { prefix: 'frontiercode-extended-cost::', parse: parseFrontierCodeId, basis: 'self_reported' },
   { prefix: 'cursorbench::', parse: parseCursorBenchLabel, basis: 'self_reported' },
   { prefix: 'cursorbench-cost::', parse: parseCursorBenchLabel, basis: 'self_reported' },
   { prefix: 'swe-bench-pro-public::', parse: parseSweBenchProLabel, basis: 'self_reported' },
+  // 2026-09-26 (CR-173): Terminal-Bench 4.0 board rows (self-reported submissions); the effort is the row's own
+  // metadata.reasoning_effort, kept in the protocol by the collector. Joins need their own review receipt.
+  { prefix: 'terminal-bench::4.0', parse: parseTerminalBenchRow, join: boardJoins, basis: 'self_reported' },
   // 2026-09-16 (iteration 79): measured boards whose labels are model slugs (lib/board-identity.mjs). Same policy;
   // a measured row needs no critic receipt, its value was already accepted — only its identity was missing.
   { prefix: 'bullshitbench-v1::', parse: parseBullshitBenchId, join: boardJoins, basis: 'measured' },
@@ -127,6 +139,19 @@ const BOARDS = [
   // lib/board-identity.mjs, and a label naming no setting on a multi-configuration family, an
   // unreviewed setting (`thinking`) or an ambiguous product (`Nemotron 3 Ultra`) joins nothing.
   { prefix: 'mcp-atlas::', parse: parseMcpAtlasLabel, join: boardJoins, basis: 'measured' },
+  // 2026-09-26 (CR-173): UGI Leaderboard, first-party `<org>/<slug>` labels with a stated `reasoning_effort=`
+  // only (lib/board-identity.mjs); the four UGI metrics are one board each.
+  { prefix: 'ugi::', parse: parseUgiLabel, join: boardJoins, basis: 'measured' },
+  { prefix: 'ugi-natint::', parse: parseUgiLabel, join: boardJoins, basis: 'measured' },
+  { prefix: 'ugi-writing::', parse: parseUgiLabel, join: boardJoins, basis: 'measured' },
+  { prefix: 'ugi-willingness::', parse: parseUgiLabel, join: boardJoins, basis: 'measured' },
+  // 2026-09-26 (CR-173, vals-simplebench): SimpleBench product-name labels, setting in parentheses when stated;
+  // a label without one joins only a single-default family (GPT-6 Astra Pro). "GPT-6 Sol", "Claude Opus 5.5" and the
+  // other multi-configuration families state no effort and stay unmatched (lib/board-identity.mjs).
+  { prefix: 'simple-bench::', parse: parseSimpleBenchLabel, join: boardJoins, basis: 'measured' },
+  // 2026-09-26 (CR-173): arena.ai WebDev (Elo) and Agent Arena (net improvement), reviewed display names only.
+  { prefix: 'lmarena-webdev::', parse: parseLmarenaLabel, join: boardJoins, basis: 'measured' },
+  { prefix: 'lmarena-agent::', parse: parseLmarenaLabel, join: boardJoins, basis: 'measured' },
 ];
 const observations = JSON.parse(readFileSync('data/raw/benchmarks/public-observations.json')).observations;
 const catalog = JSON.parse(readFileSync('data/dataset.json')).models.map(({ id, family_key, variant }) => ({ id, family_key, variant }));
@@ -154,6 +179,12 @@ for (const board of BOARDS) {
     else unmatched.push({ benchmark_id: j.row.benchmark_id, source_id: j.row.source_id, reason: j.reason });
   }
   }
+}
+// 2026-09-26 (CR-173): a join reviewed by hand with its own critic receipt (`review`) on a board this
+// builder has no rule for (ARC Prize's per-model results pages, CR-150) is carried over unchanged; a
+// regeneration must never silently drop a reviewed join it cannot re-derive.
+for (const e of previous) {
+  if (e.review && !BOARDS.some((b) => e.benchmark_id.startsWith(b.prefix))) entries.push(e);
 }
 writeFileSync('data/raw/benchmarks/identity-map.json', JSON.stringify({
   schema_version: 1,

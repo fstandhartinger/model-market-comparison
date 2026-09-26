@@ -1,0 +1,24 @@
+```json
+{
+  "artifact_id": "arc-verified-deepseek-v4-flash-0731",
+  "artifact_sha256": "c00519bac35570cdb814dd39d188ceeecfe3ab448eb6dd3536b61016787e0283",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "c1: All 8 rows match excerpt exactly — arc-agi::1: Max 89.0, High 87.0, Low 84.0, None 11.8; arc-agi::2: Max 61.4, High 56.0, Low 46.0, None 2.1; source_variant/source_id labels ('Max','High','Low','None') match table row labels; unit percent on all; no ARC-AGI-3 row (all '—').",
+    "c2: 4 table variants × 2 benchmarks = exactly 8 rows; one arc-agi::1 and one arc-agi::2 per variant; no duplicates, missing, or extras.",
+    "c3: Excerpt shows badge img alt='ARC Prize Verified', h1 'DeepSeek V4 Flash 0731' equals page_model, vendor/date line 'DeepSeek · Jul 31, 2026 · 4 reasoning variants'; basis measured per stated precedent.",
+    "c4: published_at null in all 8 rows; page date appears only as source_row_context.model_release_date='2026-07-31'; owner cross-check confirms release date = modelReleaseDate for all 8 line items.",
+    "c5: Both identity_map_candidates (Max, arc-agi::1 and arc-agi::2) match rows public:76d16849a2342d06244c1889 and public:a8d323e729c65bf0e23ffc4e with proposed_model_id 'deepseek-v4-flash-0731::max', which exists in catalog; High/Low/None correctly unjoined with null proposed_model_id and reasons citing catalog ['deepseek-v4-flash-0731::max']; None non-reasoning config does not exist, so unjoined is correct.",
+    "c6: Protocol quotes the page summary verbatim (verified character-for-character against excerpt <p>); no Semi-Private claim beyond it; release-date statement corroborated by owner cross-check receipt."
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Non-blocking: protocol claim 'the page states no publication date of its own' is an absence claim over the full page; verified against the supplied excerpt (no pub date visible) and the owner cross-check, not against decompressed capture payload content, which is not shown.",
+    "Non-blocking: 'no Semi-Private' labeling in the table itself is unverified; cross-check receipt (v1_Semi_Private/v2_Semi_Private keys) is owner-run output accepted per c3/c4 precedent, not independently checkable from the excerpt."
+  ],
+  "missing_evidence": []
+}
+```

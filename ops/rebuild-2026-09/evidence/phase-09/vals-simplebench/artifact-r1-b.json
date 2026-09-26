@@ -1,0 +1,746 @@
+[
+{
+"benchmark_id": "vals-index::2",
+"id": "public:67233a905d8d48625a3d1ead",
+"source_id": "anthropic/claude-opus-5-5",
+"change": "new",
+"value": 69.689,
+"source_row": {
+"task": "overall",
+"accuracy": 69.689,
+"stderr": 0.937,
+"cost_per_test": 22.295559,
+"latency": 4320.731,
+"compute_effort": "max",
+"reasoning_effort": null,
+"max_output_tokens": 128000,
+"provider": "Anthropic"
+},
+"joined_model_id": "claude-opus-5.5::max"
+},
+{
+"benchmark_id": "vals-index-emb::2",
+"id": "public:c0a0438666eed5a2d22fd3c1",
+"source_id": "anthropic/claude-opus-5-5",
+"change": "new",
+"value": 75.938,
+"source_row": {
+"task": "emb",
+"accuracy": 75.938,
+"stderr": 2.383,
+"cost_per_test": 9.330415,
+"latency": 2106.434,
+"compute_effort": "max",
+"reasoning_effort": null,
+"max_output_tokens": 128000,
+"provider": "Anthropic"
+},
+"joined_model_id": "claude-opus-5.5::max"
+},
+{
+"benchmark_id": "vals-index-emb::2",
+"id": "public:fac4bda08c5862ae478793cd",
+"source_id": "openai/gpt-6-sol",
+"change": "new",
+"value": 71.53,
+"source_row": {
+"task": "emb",
+"accuracy": 71.53,
+"stderr": 2.351,
+"cost_per_test": 1.276882,
+"latency": 621.736,
+"compute_effort": null,
+"reasoning_effort": "max",
+"max_output_tokens": 128000,
+"provider": "OpenAI"
+},
+"joined_model_id": "gpt-6-sol::max"
+},
+{
+"benchmark_id": "vals-index-emb::2",
+"id": "public:31c2087e9faddb78d4fa8514",
+"source_id": "openai/gpt-6-luna",
+"change": "new",
+"value": 68.515,
+"source_row": {
+"task": "emb",
+"accuracy": 68.515,
+"stderr": 2.809,
+"cost_per_test": 0.141708,
+"latency": 1041.052,
+"compute_effort": null,
+"reasoning_effort": "max",
+"max_output_tokens": 128000,
+"provider": "OpenAI"
+},
+"joined_model_id": "gpt-6-luna::max"
+},
+{
+"benchmark_id": "vals-index-emb::2",
+"id": "public:2c89a51c807df8e407ce6bcf",
+"source_id": "grok/grok-4.7",
+"change": "new",
+"value": 66.991,
+"source_row": {
+"task": "emb",
+"accuracy": 66.991,
+"stderr": 3.045,
+"cost_per_test": 9.485004,
+"latency": 2097.023,
+"compute_effort": null,
+"reasoning_effort": "xhigh",
+"max_output_tokens": null,
+"provider": "SpaceXAI"
+},
+"joined_model_id": "grok-4.7::xhigh"
+},
+{
+"benchmark_id": "vals-index-emb::2",
+"id": "public:c66354d0b9b2e652d8b5db0a",
+"source_id": "xiaomi/mimo-v2.6-flash",
+"change": "new",
+"value": 65.459,
+"source_row": {
+"task": "emb",
+"accuracy": 65.459,
+"stderr": 2.709,
+"cost_per_test": 0.108634,
+"latency": 1521.906,
+"compute_effort": null,
+"reasoning_effort": null,
+"max_output_tokens": 128000,
+"provider": "Xiaomi"
+},
+"joined_model_id": "mimo-v2.6-flash::default"
+},
+{
+"benchmark_id": "vals-index-emb::2",
+"id": "public:9ecc9627f98682d0dedb86f4",
+"source_id": "xiaomi/mimo-v2.6-pro",
+"change": "new",
+"value": 62.858,
+"source_row": {
+"task": "emb",
+"accuracy": 62.858,
+"stderr": 3.141,
+"cost_per_test": 0.328999,
+"latency": 3313.924,
+"compute_effort": null,
+"reasoning_effort": null,
+"max_output_tokens": 128000,
+"provider": "Xiaomi"
+},
+"joined_model_id": "mimo-v2.6-pro::default"
+},
+{
+"benchmark_id": "vals-index-emb::2",
+"id": "public:3899728706d836e5a81b0c9e",
+"source_id": "ant/ling-3.0-flash-af-rc3",
+"change": "new",
+"value": 36.832,
+"source_row": {
+"task": "emb",
+"accuracy": 36.832,
+"stderr": 3.325,
+"cost_per_test": 0.179543,
+"latency": 2207.467,
+"compute_effort": null,
+"reasoning_effort": null,
+"max_output_tokens": 131072,
+"provider": "Ant"
+},
+"joined_model_id": null
+},
+{
+"benchmark_id": "vals-index-vibe-code-bench::2",
+"id": "public:00464a61c1ecc1099dd19180",
+"source_id": "anthropic/claude-opus-5-5",
+"change": "new",
+"value": 90.294,
+"source_row": {
+"task": "vibe_code_bench",
+"accuracy": 90.294,
+"stderr": 1.526,
+"cost_per_test": 35.774773,
+"latency": 5766.524,
+"compute_effort": "max",
+"reasoning_effort": null,
+"max_output_tokens": 128000,
+"provider": "Anthropic"
+},
+"joined_model_id": "claude-opus-5.5::max"
+},
+{
+"benchmark_id": "vals-index-vibe-code-bench::2",
+"id": "public:b6ed8f0ad326276a4975211c",
+"source_id": "openai/gpt-6-sol",
+"change": "new",
+"value": 87.824,
+"source_row": {
+"task": "vibe_code_bench",
+"accuracy": 87.824,
+"stderr": 2.526,
+"cost_per_test": 26.356012,
+"latency": 2336.393,
+"compute_effort": null,
+"reasoning_effort": "max",
+"max_output_tokens": 128000,
+"provider": "OpenAI"
+},
+"joined_model_id": "gpt-6-sol::max"
+},
+{
+"benchmark_id": "vals-index-vibe-code-bench::2",
+"id": "public:9fc902b340fdfde3ca67f82d",
+"source_id": "grok/grok-4.7",
+"change": "new",
+"value": 86.175,
+"source_row": {
+"task": "vibe_code_bench",
+"accuracy": 86.175,
+"stderr": 2.181,
+"cost_per_test": 15.82706,
+"latency": 2147.065,
+"compute_effort": null,
+"reasoning_effort": "xhigh",
+"max_output_tokens": null,
+"provider": "SpaceXAI"
+},
+"joined_model_id": "grok-4.7::xhigh"
+},
+{
+"benchmark_id": "vals-index-vibe-code-bench::2",
+"id": "public:bad9e14c302b44fde7cc5382",
+"source_id": "xiaomi/mimo-v2.6-pro",
+"change": "new",
+"value": 85.223,
+"source_row": {
+"task": "vibe_code_bench",
+"accuracy": 85.223,
+"stderr": 3.392,
+"cost_per_test": 1.043846,
+"latency": 3646.574,
+"compute_effort": null,
+"reasoning_effort": null,
+"max_output_tokens": 128000,
+"provider": "Xiaomi"
+},
+"joined_model_id": "mimo-v2.6-pro::default"
+},
+{
+"benchmark_id": "vals-index-vibe-code-bench::2",
+"id": "public:d89f7177d5ce5460589e402b",
+"source_id": "openai/gpt-6-luna",
+"change": "new",
+"value": 81.649,
+"source_row": {
+"task": "vibe_code_bench",
+"accuracy": 81.649,
+"stderr": 3.377,
+"cost_per_test": 1.345703,
+"latency": 2219.515,
+"compute_effort": null,
+"reasoning_effort": "max",
+"max_output_tokens": 128000,
+"provider": "OpenAI"
+},
+"joined_model_id": "gpt-6-luna::max"
+},
+{
+"benchmark_id": "vals-index-vibe-code-bench::2",
+"id": "public:becfaee3ebdbe7f6d3430dc0",
+"source_id": "xiaomi/mimo-v2.6-flash",
+"change": "new",
+"value": 78.96,
+"source_row": {
+"task": "vibe_code_bench",
+"accuracy": 78.96,
+"stderr": 4.045,
+"cost_per_test": 0.563041,
+"latency": 3013.012,
+"compute_effort": null,
+"reasoning_effort": null,
+"max_output_tokens": 128000,
+"provider": "Xiaomi"
+},
+"joined_model_id": "mimo-v2.6-flash::default"
+},
+{
+"benchmark_id": "vals-index-vibe-code-bench::2",
+"id": "public:0a0cddbd28923560e12b3e77",
+"source_id": "ant/ling-3.0-flash-af-rc3",
+"change": "new",
+"value": 3.4,
+"source_row": {
+"task": "vibe_code_bench",
+"accuracy": 3.4,
+"stderr": 1.291,
+"cost_per_test": 0.233022,
+"latency": 1451.032,
+"compute_effort": null,
+"reasoning_effort": null,
+"max_output_tokens": 131072,
+"provider": "Ant"
+},
+"joined_model_id": null
+},
+{
+"benchmark_id": "vals-index-legal-research::2",
+"id": "public:2ad24ccd48315166616df9e3",
+"source_id": "anthropic/claude-opus-5-5",
+"change": "new",
+"value": 50.481,
+"source_row": {
+"task": "legal_research",
+"accuracy": 50.481,
+"stderr": 3.475,
+"cost_per_test": 23.610262,
+"latency": 6749.531,
+"compute_effort": "max",
+"reasoning_effort": null,
+"max_output_tokens": 128000,
+"provider": "Anthropic"
+},
+"joined_model_id": "claude-opus-5.5::max"
+},
+{
+"benchmark_id": "vals-index-legal-research::2",
+"id": "public:8e812ce19fed70e97fa5116a",
+"source_id": "grok/grok-4.7",
+"change": "new",
+"value": 47.115,
+"source_row": {
+"task": "legal_research",
+"accuracy": 47.115,
+"stderr": 3.469,
+"cost_per_test": 4.920812,
+"latency": 1274.337,
+"compute_effort": null,
+"reasoning_effort": "xhigh",
+"max_output_tokens": null,
+"provider": "SpaceXAI"
+},
+"joined_model_id": "grok-4.7::xhigh"
+},
+{
+"benchmark_id": "vals-index-legal-research::2",
+"id": "public:454088b5c15cbebd6c99df5d",
+"source_id": "xiaomi/mimo-v2.6-pro",
+"change": "new",
+"value": 47.115,
+"source_row": {
+"task": "legal_research",
+"accuracy": 47.115,
+"stderr": 3.469,
+"cost_per_test": 0.181201,
+"latency": 1816.322,
+"compute_effort": null,
+"reasoning_effort": null,
+"max_output_tokens": 128000,
+"provider": "Xiaomi"
+},
+"joined_model_id": "mimo-v2.6-pro::default"
+},
+{
+"benchmark_id": "vals-index-legal-research::2",
+"id": "public:5183eaa06f10b93d2f02ea5b",
+"source_id": "xiaomi/mimo-v2.6-flash",
+"change": "new",
+"value": 37.981,
+"source_row": {
+"task": "legal_research",
+"accuracy": 37.981,
+"stderr": 3.373,
+"cost_per_test": 0.070424,
+"latency": 919.689,
+"compute_effort": null,
+"reasoning_effort": null,
+"max_output_tokens": 128000,
+"provider": "Xiaomi"
+},
+"joined_model_id": "mimo-v2.6-flash::default"
+},
+{
+"benchmark_id": "vals-index-legal-research::2",
+"id": "public:5d74d9d193d34ef51d47d906",
+"source_id": "openai/gpt-6-luna",
+"change": "new",
+"value": 30.288,
+"source_row": {
+"task": "legal_research",
+"accuracy": 30.288,
+"stderr": 3.194,
+"cost_per_test": 0.440296,
+"latency": 2547.747,
+"compute_effort": null,
+"reasoning_effort": "max",
+"max_output_tokens": 128000,
+"provider": "OpenAI"
+},
+"joined_model_id": "gpt-6-luna::max"
+},
+{
+"benchmark_id": "vals-index-legal-research::2",
+"id": "public:d300bff218acdbf48b768f83",
+"source_id": "openai/gpt-6-sol",
+"change": "new",
+"value": 28.846,
+"source_row": {
+"task": "legal_research",
+"accuracy": 28.846,
+"stderr": 3.149,
+"cost_per_test": 4.897717,
+"latency": 1449.451,
+"compute_effort": null,
+"reasoning_effort": "max",
+"max_output_tokens": 128000,
+"provider": "OpenAI"
+},
+"joined_model_id": "gpt-6-sol::max"
+},
+{
+"benchmark_id": "vals-index-legal-research::2",
+"id": "public:3d283e51501fddde19a7f43c",
+"source_id": "ant/ling-3.0-flash-af-rc3",
+"change": "new",
+"value": 15.385,
+"source_row": {
+"task": "legal_research",
+"accuracy": 15.385,
+"stderr": 2.508,
+"cost_per_test": 0.028227,
+"latency": 515.464,
+"compute_effort": null,
+"reasoning_effort": null,
+"max_output_tokens": 131072,
+"provider": "Ant"
+},
+"joined_model_id": null
+},
+{
+"benchmark_id": "vals-index-hlab::2",
+"id": "public:efcac3e6710c58937d715f0e",
+"source_id": "grok/grok-4.7",
+"change": "new",
+"value": 12.5,
+"source_row": {
+"task": "legal_agent_benchmark",
+"accuracy": 12.5,
+"stderr": 2.415,
+"cost_per_test": 11.130983,
+"latency": 2524.987,
+"compute_effort": null,
+"reasoning_effort": "xhigh",
+"max_output_tokens": null,
+"provider": "SpaceXAI"
+},
+"joined_model_id": "grok-4.7::xhigh"
+},
+{
+"benchmark_id": "vals-index-hlab::2",
+"id": "public:b5f8bdc44b429bd2026cd3a4",
+"source_id": "xiaomi/mimo-v2.6-flash",
+"change": "new",
+"value": 11.25,
+"source_row": {
+"task": "legal_agent_benchmark",
+"accuracy": 11.25,
+"stderr": 2.287,
+"cost_per_test": 0.085646,
+"latency": 1031.586,
+"compute_effort": null,
+"reasoning_effort": null,
+"max_output_tokens": 128000,
+"provider": "Xiaomi"
+},
+"joined_model_id": "mimo-v2.6-flash::default"
+},
+{
+"benchmark_id": "vals-index-hlab::2",
+"id": "public:d0365c45dc65a2f3b766bf7b",
+"source_id": "xiaomi/mimo-v2.6-pro",
+"change": "new",
+"value": 10.833,
+"source_row": {
+"task": "legal_agent_benchmark",
+"accuracy": 10.833,
+"stderr": 2.166,
+"cost_per_test": 0.216614,
+"latency": 1549.246,
+"compute_effort": null,
+"reasoning_effort": null,
+"max_output_tokens": 128000,
+"provider": "Xiaomi"
+},
+"joined_model_id": "mimo-v2.6-pro::default"
+},
+{
+"benchmark_id": "vals-index-hlab::2",
+"id": "public:741377a95f9efeeb7839a52a",
+"source_id": "anthropic/claude-opus-5-5",
+"change": "new",
+"value": 3.75,
+"source_row": {
+"task": "legal_agent_benchmark",
+"accuracy": 3.75,
+"stderr": 1.28,
+"cost_per_test": 17.569061,
+"latency": 2939.571,
+"compute_effort": "max",
+"reasoning_effort": null,
+"max_output_tokens": 128000,
+"provider": "Anthropic"
+},
+"joined_model_id": "claude-opus-5.5::max"
+},
+{
+"benchmark_id": "vals-index-hlab::2",
+"id": "public:fc7fccbe3f62f4ed66654d38",
+"source_id": "openai/gpt-6-luna",
+"change": "new",
+"value": 2.917,
+"source_row": {
+"task": "legal_agent_benchmark",
+"accuracy": 2.917,
+"stderr": 1.174,
+"cost_per_test": 0.303552,
+"latency": 1051.793,
+"compute_effort": null,
+"reasoning_effort": "max",
+"max_output_tokens": 128000,
+"provider": "OpenAI"
+},
+"joined_model_id": "gpt-6-luna::max"
+},
+{
+"benchmark_id": "vals-index-hlab::2",
+"id": "public:995ab67deb7161c6b162bece",
+"source_id": "openai/gpt-6-sol",
+"change": "new",
+"value": 1.667,
+"source_row": {
+"task": "legal_agent_benchmark",
+"accuracy": 1.667,
+"stderr": 0.823,
+"cost_per_test": 3.358015,
+"latency": 820.101,
+"compute_effort": null,
+"reasoning_effort": "max",
+"max_output_tokens": 128000,
+"provider": "OpenAI"
+},
+"joined_model_id": "gpt-6-sol::max"
+},
+{
+"benchmark_id": "vals-index-hlab::2",
+"id": "public:fb34869b857801a27675bb2d",
+"source_id": "ant/ling-3.0-flash-af-rc3",
+"change": "new",
+"value": 0,
+"source_row": {
+"task": "legal_agent_benchmark",
+"accuracy": 0,
+"stderr": 0,
+"cost_per_test": 0.045991,
+"latency": 357.397,
+"compute_effort": null,
+"reasoning_effort": null,
+"max_output_tokens": 131072,
+"provider": "Ant"
+},
+"joined_model_id": null
+},
+{
+"benchmark_id": "vals-index-cost::2",
+"id": "public:a1e347c697ecbf9cbe1cdd3f",
+"source_id": "anthropic/claude-opus-5-5",
+"change": "new",
+"value": 22.295559,
+"source_row": {
+"task": "overall",
+"accuracy": 69.689,
+"stderr": 0.937,
+"cost_per_test": 22.295559,
+"latency": 4320.731,
+"compute_effort": "max",
+"reasoning_effort": null,
+"max_output_tokens": 128000,
+"provider": "Anthropic"
+},
+"joined_model_id": "claude-opus-5.5::max"
+},
+{
+"benchmark_id": "vals-index-cost::2",
+"id": "public:a594d429d2d8b9ed7cccb731",
+"source_id": "openai/gpt-6-sol",
+"change": "new",
+"value": 7.564103,
+"source_row": {
+"task": "overall",
+"accuracy": 62.569,
+"stderr": 0.954,
+"cost_per_test": 7.564103,
+"latency": 1593.734,
+"compute_effort": null,
+"reasoning_effort": "max",
+"max_output_tokens": 128000,
+"provider": "OpenAI"
+},
+"joined_model_id": "gpt-6-sol::max"
+},
+{
+"benchmark_id": "vals-index-cost::2",
+"id": "public:138b4b98eed11d05a988ca90",
+"source_id": "grok/grok-4.7",
+"change": "new",
+"value": 11.917904,
+"source_row": {
+"task": "overall",
+"accuracy": 60.215,
+"stderr": 1.079,
+"cost_per_test": 11.917904,
+"latency": 1975.967,
+"compute_effort": null,
+"reasoning_effort": "xhigh",
+"max_output_tokens": null,
+"provider": "SpaceXAI"
+},
+"joined_model_id": "grok-4.7::xhigh"
+},
+{
+"benchmark_id": "vals-index-cost::2",
+"id": "public:6c86080f9cd09963355bc6b5",
+"source_id": "xiaomi/mimo-v2.6-flash",
+"change": "new",
+"value": 0.19671,
+"source_row": {
+"task": "overall",
+"accuracy": 59.584,
+"stderr": 1.133,
+"cost_per_test": 0.19671,
+"latency": 2701.771,
+"compute_effort": null,
+"reasoning_effort": null,
+"max_output_tokens": 128000,
+"provider": "Xiaomi"
+},
+"joined_model_id": "mimo-v2.6-flash::default"
+},
+{
+"benchmark_id": "vals-index-cost::2",
+"id": "public:fa6556a769df5d1cc5863886",
+"source_id": "xiaomi/mimo-v2.6-pro",
+"change": "new",
+"value": 0.38918,
+"source_row": {
+"task": "overall",
+"accuracy": 59.47,
+"stderr": 1.177,
+"cost_per_test": 0.38918,
+"latency": 3139.768,
+"compute_effort": null,
+"reasoning_effort": null,
+"max_output_tokens": 128000,
+"provider": "Xiaomi"
+},
+"joined_model_id": "mimo-v2.6-pro::default"
+},
+{
+"benchmark_id": "vals-index-cost::2",
+"id": "public:efe195ebf1cf6366655459ad",
+"source_id": "openai/gpt-6-luna",
+"change": "new",
+"value": 0.418873,
+"source_row": {
+"task": "overall",
+"accuracy": 58.45,
+"stderr": 1.107,
+"cost_per_test": 0.418873,
+"latency": 1590.457,
+"compute_effort": null,
+"reasoning_effort": "max",
+"max_output_tokens": 128000,
+"provider": "OpenAI"
+},
+"joined_model_id": "gpt-6-luna::max"
+},
+{
+"benchmark_id": "vals-index-cost::2",
+"id": "public:e8e87cc10333ff1238065dc1",
+"source_id": "deepseek/deepseek-v4-flash-0731",
+"change": "value",
+"value": 0.839765,
+"previous_value": 0.866315,
+"source_row": {
+"task": "overall",
+"accuracy": 53.568,
+"stderr": 1.21,
+"cost_per_test": 0.839765,
+"latency": 2094.581,
+"compute_effort": null,
+"reasoning_effort": "high",
+"max_output_tokens": 384000,
+"provider": "DeepSeek"
+},
+"joined_model_id": null
+},
+{
+"benchmark_id": "vals-index-cost::2",
+"id": "public:d3bbb815362b998459940c41",
+"source_id": "deepseek/deepseek-v4-pro-0813",
+"change": "value",
+"value": 3.282301,
+"previous_value": 3.376318,
+"source_row": {
+"task": "overall",
+"accuracy": 52.368,
+"stderr": 1.136,
+"cost_per_test": 3.282301,
+"latency": 3498.495,
+"compute_effort": null,
+"reasoning_effort": "max",
+"max_output_tokens": 384000,
+"provider": "DeepSeek"
+},
+"joined_model_id": "deepseek-v4-pro-0813::max"
+},
+{
+"benchmark_id": "vals-index-cost::2",
+"id": "public:2ffc018ad92f782b3b1ba356",
+"source_id": "deepseek/deepseek-v4-pro",
+"change": "value",
+"value": 0.940927,
+"previous_value": 0.898172,
+"source_row": {
+"task": "overall",
+"accuracy": 42.888,
+"stderr": 1.194,
+"cost_per_test": 0.940927,
+"latency": 1427.349,
+"compute_effort": null,
+"reasoning_effort": "max",
+"max_output_tokens": 384000,
+"provider": "DeepSeek"
+},
+"joined_model_id": "deepseek-v4-pro::max"
+},
+{
+"benchmark_id": "vals-index-cost::2",
+"id": "public:6e8e935d3674a15c04c46591",
+"source_id": "ant/ling-3.0-flash-af-rc3",
+"change": "new",
+"value": 0.109173,
+"source_row": {
+"task": "overall",
+"accuracy": 32.553,
+"stderr": 0.966,
+"cost_per_test": 0.109173,
+"latency": 1072.857,
+"compute_effort": null,
+"reasoning_effort": null,
+"max_output_tokens": 131072,
+"provider": "Ant"
+},
+"joined_model_id": null
+}
+]

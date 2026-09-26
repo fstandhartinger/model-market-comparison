@@ -92,7 +92,10 @@ observations.sort((a, b) => a.id.localeCompare(b.id));
 rejected.sort((a, b) => `${a.benchmark_id}${a.source_id}${a.reason}`.localeCompare(`${b.benchmark_id}${b.source_id}${b.reason}`));
 collections.sort((a, b) => a.benchmark_id.localeCompare(b.benchmark_id));
 
-await writeJSONAtomic('data/raw/benchmarks/self-reported-candidates.json', { schema_version: 1, observations, collections, rejected });
+// CR-173: withdrawn rows of carried documents are kept with their reason (D180), never rebuilt away.
+const withdrawn = carried.withdrawn_observations;
+await writeJSONAtomic('data/raw/benchmarks/self-reported-candidates.json', { schema_version: 1, observations, collections, rejected,
+  ...(withdrawn.length ? { withdrawn_observations: withdrawn } : {}) });
 console.log(JSON.stringify({ observations: observations.length, matched: observations.filter((o) => o.subject.model_id).length,
   unmatched: observations.filter((o) => !o.subject.model_id).length, rejected: rejected.length,
   benchmarks: [...new Set(observations.map((o) => o.benchmark_id))].length,

@@ -1,0 +1,72 @@
+{
+  "started_at": "2026-09-26T04:32:51.610Z",
+  "mode": "critic",
+  "requested_model": "z-ai/glm-5.3-flash",
+  "producers": [
+    "anthropic/claude-opus-5-5"
+  ],
+  "qualification": {
+    "id": "z-ai/glm-5.3-flash",
+    "family": "z-ai",
+    "free": false,
+    "input_per_1m": 0.04,
+    "output_per_1m": 0.5,
+    "context": 1310720,
+    "aa_intelligence_index": 41.8,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "glm-5.3-flash::default"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "glm-5.3-flash::default",
+        "index": 41.8
+      }
+    ]
+  },
+  "input_sha256": "f80b5fd758f60f51a1335f2b7b25e0e2f75e7cb2eb0ea53ccff8c5b1d20a321b",
+  "route": "openrouter",
+  "attempt": 1,
+  "free_route_role": "critic",
+  "free_routes_offered": [],
+  "excluded_models": [],
+  "hard_excluded_models": [],
+  "catalog": {
+    "source": "fetched",
+    "fetched_at": "2026-09-26T04:32:51.522Z"
+  },
+  "reasoning": null,
+  "response_format_mode": "json_object",
+  "response_schema_sha256": "376bde7986cc2f8fd182f04e745c607933760bea7c306ea6e8e992b7f70be25a",
+  "images": [],
+  "actual_model": "z-ai/glm-5.3-flash",
+  "usage": {
+    "prompt_tokens": 5625,
+    "completion_tokens": 6966,
+    "total_tokens": 12591,
+    "cost": 0.0042834825,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.00432675,
+      "upstream_inference_prompt_cost": 0.00084375,
+      "upstream_inference_completions_cost": 0.003483
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 6111,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "finish_reason": "stop",
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "provider": "Parasail",
+  "session_id": null,
+  "finished_at": "2026-09-26T04:34:41.273Z",
+  "output_sha256": "8a3470a1f88e38967d63f8b6ed96b8fb4efc6ece9afa8c54b5e38b0f757da33e"
+}

@@ -1,0 +1,269 @@
+{
+  "artifact_id": "arc-verified-moonshot-kimi-k3",
+  "artifact_sha256": "7a18f40b33637e5d5e35bf6fa71d2826cf1987fa7d136c9c965bee6a509f0aa5",
+  "round": 1,
+  "review_scope": "Review our own frozen candidate before publication: 6 measured ARC-AGI-1/ARC-AGI-2 observations parsed from the ARC Prize Verified results page for Kimi K3, and 4 proposed identity joins to catalog configurations.",
+  "acceptance_criteria": [
+    "c1: Every row's value, benchmark (ARC-AGI-1 column -> arc-agi::1, ARC-AGI-2 column -> arc-agi::2) and source variant label must match the included table excerpt exactly; unit percent; no row may come from an ARC-AGI-3 column.",
+    "c2: Coverage: exactly one arc-agi::1 and one arc-agi::2 row per table variant, no duplicates, none missing, no extras.",
+    "c3: The excerpt must show the ARC Prize Verified badge, a title equal to the row model, and the vendor/date line. Basis measured follows our precedent that a Verified per-model page is the evaluator's own published result.",
+    "c4: published_at must be null; the page date is kept only as source_row_context.model_release_date, because the line under the title is the model release date (owner cross-check: it equals modelReleaseDate in ARC Prize's leaderboard JSON for every page; the Kimi K3 page dated Jul 16, 2026 says \"As of July 31, 2026\").",
+    "c5: A proposed_model_id is allowed only when the source variant names an exact configuration listed in catalog_configurations (None -> non-reasoning only where that configuration exists). A variant without its own catalog configuration stays unjoined (proposed_model_id null) with a reason. Check every identity_map_candidates entry against its row.",
+    "c6: The protocol text must state only what the excerpt supports (no Semi-Private claim beyond the page summary).",
+    "Return pass only if every row and join is supported by the supplied evidence; otherwise revise or blocked naming exact row ids. Keep coverage_checked short (one entry per criterion)."
+  ],
+  "source_evidence": [
+    {
+      "source": "ARC Prize Kimi K3 results page",
+      "url": "https://arcprize.org/results/moonshot-kimi-k3",
+      "retrieved_at": "2026-09-26T04:22:47.390700+00:00",
+      "capture_file": "ops/rebuild-2026-09/evidence/phase-09/arc/captures/163ec3ee0ffaedd24ecd.gz",
+      "capture_payload_sha256": "163ec3ee0ffaedd24ecdfefa201541e3c517555296291700246f492590461b3c",
+      "html_excerpt_file": "ops/rebuild-2026-09/evidence/phase-09/arc/excerpts/moonshot-kimi-k3.html",
+      "html_excerpt_sha256": "6c5c7a802dc0fbbd0f998a7c24f81294c1054562b24bce20e4b2a7758171a633",
+      "html_excerpt": "<img src=\"/media/images/badges/arc-prize-verified-badge-dark-color.svg\" alt=\"ARC Prize Verified\" class=\"absolute right-4 top-8 w-[128px] sm:w-[152px]\" style=\"display:block\"/>\n\n<h1 class=\"mb-2\">Kimi K3</h1><div class=\"mb-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-neutral-400\"><span>Moonshot AI</span><span class=\"text-neutral-700\">·</span><span>Jul 16, 2026</span><span class=\"text-neutral-700\">·</span><span>3 reasoning variants</span></div>\n\n<p class=\"mt-5 max-w-[720px] text-[14px] leading-relaxed text-neutral-300\">As of July 31, 2026, Moonshot AI&#x27;s Kimi K3 sets a new high score for open-weight models evaluated by ARC Prize on both ARC-AGI-1 and ARC-AGI-2. At max effort, it scores 94.5% on ARC-AGI-1 Semi-Private at $0.77 per task and 60.4% on ARC-AGI-2 Semi-Private at $1.59 per task. ARC-AGI-3 testing is still in progress.</p>\n\n<table class=\"w-full border-collapse text-sm \"><thead class=\"bg-neutral-900 text-[11px] uppercase tracking-wider text-neutral-400\"><tr><th class=\"px-3 py-1.5 text-left\">Variant</th><th class=\"px-3 py-1.5 text-center whitespace-nowrap\">ARC-AGI-1</th><th class=\"px-3 py-1.5 text-center whitespace-nowrap\">ARC-AGI-2</th><th class=\"px-3 py-1.5 text-center whitespace-nowrap\">ARC-AGI-3</th></tr></thead><tbody><tr class=\"odd:bg-neutral-950 even:bg-neutral-900/50\"><td class=\"px-3 py-1 whitespace-nowrap\"><span class=\"text-neutral-200\" title=\"Kimi K3 (Max)\">Max</span></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] font-bold\">94.5%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] font-bold\">60.4%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">—</div></td></tr><tr class=\"odd:bg-neutral-950 even:bg-neutral-900/50\"><td class=\"px-3 py-1 whitespace-nowrap\"><span class=\"text-neutral-200\" title=\"Kimi K3 (High)\">High</span></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">86.7%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">55.0%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">—</div></td></tr><tr class=\"odd:bg-neutral-950 even:bg-neutral-900/50\"><td class=\"px-3 py-1 whitespace-nowrap\"><span class=\"text-neutral-200\" title=\"Kimi K3 (Low)\">Low</span></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">65.7%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">12.4%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">—</div></td></tr></tbody></table>\n"
+    }
+  ],
+  "owner_crosscheck_receipt": {
+    "file": "ops/rebuild-2026-09/evidence/phase-09/arc/owner-crosscheck.txt",
+    "note": "lines for this page only; owner-run script output",
+    "content": "Owner cross-check 2026-09-26: every results-page row vs ARC Prize leaderboard JSON rows with the same resultsUrl and display name\n(v1.json/v2.json captured 2026-09-26, see leaderboard-json/manifest.json). JSON score x100 rounded half-up to 1 decimal; release date = modelReleaseDate.\narc-agi::1 Kimi K3|Max page 94.5 | json 0.945 v1_Semi_Private 2026-07-16 -> 94.5 OK\narc-agi::1 Kimi K3|High page 86.7 | json 0.8666666666666666 v1_Semi_Private 2026-07-16 -> 86.7 OK\narc-agi::1 Kimi K3|Low page 65.7 | json 0.6566666666666666 v1_Semi_Private 2026-07-16 -> 65.7 OK\narc-agi::2 Kimi K3|Max page 60.4 | json 0.6041666666666666 v2_Semi_Private 2026-07-16 -> 60.4 OK\narc-agi::2 Kimi K3|High page 55.0 | json 0.55 v2_Semi_Private 2026-07-16 -> 55.0 OK\narc-agi::2 Kimi K3|Low page 12.4 | json 0.12361111111111112 v2_Semi_Private 2026-07-16 -> 12.4 OK\n"
+  },
+  "frozen_artifact": {
+    "artifact_id": "arc-verified-moonshot-kimi-k3",
+    "rows": [
+      {
+        "id": "public:c8d256985439c0a0ade012a2",
+        "benchmark_id": "arc-agi::1",
+        "source_id": "Kimi K3|Max",
+        "name": "Kimi K3 (max)",
+        "value": 94.5,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/moonshot-kimi-k3",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:47.390700+00:00",
+        "source_sha256": "163ec3ee0ffaedd24ecdfefa201541e3c517555296291700246f492590461b3c",
+        "locator": "arc_verified_results_page; source row 1; Kimi K3|Max; field value",
+        "source_row_context": {
+          "page_model": "Kimi K3",
+          "page_vendor": "Moonshot AI",
+          "source_variant": "Max",
+          "reasoning_effort": "max",
+          "benchmark_column": "ARC-AGI-1",
+          "cells": [
+            "Max",
+            "94.5%",
+            "60.4%",
+            "—"
+          ],
+          "model_release_date": "2026-07-16"
+        },
+        "proposed_model_id": "kimi-k3::max",
+        "unjoined_reason": null
+      },
+      {
+        "id": "public:625dccf4128f650c31b634e9",
+        "benchmark_id": "arc-agi::1",
+        "source_id": "Kimi K3|High",
+        "name": "Kimi K3 (high)",
+        "value": 86.7,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/moonshot-kimi-k3",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:47.390700+00:00",
+        "source_sha256": "163ec3ee0ffaedd24ecdfefa201541e3c517555296291700246f492590461b3c",
+        "locator": "arc_verified_results_page; source row 2; Kimi K3|High; field value",
+        "source_row_context": {
+          "page_model": "Kimi K3",
+          "page_vendor": "Moonshot AI",
+          "source_variant": "High",
+          "reasoning_effort": "high",
+          "benchmark_column": "ARC-AGI-1",
+          "cells": [
+            "High",
+            "86.7%",
+            "55.0%",
+            "—"
+          ],
+          "model_release_date": "2026-07-16"
+        },
+        "proposed_model_id": null,
+        "unjoined_reason": "not joined: catalog family kimi-k3 has configurations ['kimi-k3::default', 'kimi-k3::low', 'kimi-k3::max']; no configuration for source variant High"
+      },
+      {
+        "id": "public:bd981f939119cec27f89199e",
+        "benchmark_id": "arc-agi::1",
+        "source_id": "Kimi K3|Low",
+        "name": "Kimi K3 (low)",
+        "value": 65.7,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/moonshot-kimi-k3",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:47.390700+00:00",
+        "source_sha256": "163ec3ee0ffaedd24ecdfefa201541e3c517555296291700246f492590461b3c",
+        "locator": "arc_verified_results_page; source row 3; Kimi K3|Low; field value",
+        "source_row_context": {
+          "page_model": "Kimi K3",
+          "page_vendor": "Moonshot AI",
+          "source_variant": "Low",
+          "reasoning_effort": "low",
+          "benchmark_column": "ARC-AGI-1",
+          "cells": [
+            "Low",
+            "65.7%",
+            "12.4%",
+            "—"
+          ],
+          "model_release_date": "2026-07-16"
+        },
+        "proposed_model_id": "kimi-k3::low",
+        "unjoined_reason": null
+      },
+      {
+        "id": "public:4f768ad279a678c55417cb50",
+        "benchmark_id": "arc-agi::2",
+        "source_id": "Kimi K3|Max",
+        "name": "Kimi K3 (max)",
+        "value": 60.4,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/moonshot-kimi-k3",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:47.390700+00:00",
+        "source_sha256": "163ec3ee0ffaedd24ecdfefa201541e3c517555296291700246f492590461b3c",
+        "locator": "arc_verified_results_page; source row 1; Kimi K3|Max; field value",
+        "source_row_context": {
+          "page_model": "Kimi K3",
+          "page_vendor": "Moonshot AI",
+          "source_variant": "Max",
+          "reasoning_effort": "max",
+          "benchmark_column": "ARC-AGI-2",
+          "cells": [
+            "Max",
+            "94.5%",
+            "60.4%",
+            "—"
+          ],
+          "model_release_date": "2026-07-16"
+        },
+        "proposed_model_id": "kimi-k3::max",
+        "unjoined_reason": null
+      },
+      {
+        "id": "public:b1e4957ba07eab7d243ec03d",
+        "benchmark_id": "arc-agi::2",
+        "source_id": "Kimi K3|High",
+        "name": "Kimi K3 (high)",
+        "value": 55.0,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/moonshot-kimi-k3",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:47.390700+00:00",
+        "source_sha256": "163ec3ee0ffaedd24ecdfefa201541e3c517555296291700246f492590461b3c",
+        "locator": "arc_verified_results_page; source row 2; Kimi K3|High; field value",
+        "source_row_context": {
+          "page_model": "Kimi K3",
+          "page_vendor": "Moonshot AI",
+          "source_variant": "High",
+          "reasoning_effort": "high",
+          "benchmark_column": "ARC-AGI-2",
+          "cells": [
+            "High",
+            "86.7%",
+            "55.0%",
+            "—"
+          ],
+          "model_release_date": "2026-07-16"
+        },
+        "proposed_model_id": null,
+        "unjoined_reason": "not joined: catalog family kimi-k3 has configurations ['kimi-k3::default', 'kimi-k3::low', 'kimi-k3::max']; no configuration for source variant High"
+      },
+      {
+        "id": "public:a1dafc00b74e7a3bb2f9995f",
+        "benchmark_id": "arc-agi::2",
+        "source_id": "Kimi K3|Low",
+        "name": "Kimi K3 (low)",
+        "value": 12.4,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/moonshot-kimi-k3",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:47.390700+00:00",
+        "source_sha256": "163ec3ee0ffaedd24ecdfefa201541e3c517555296291700246f492590461b3c",
+        "locator": "arc_verified_results_page; source row 3; Kimi K3|Low; field value",
+        "source_row_context": {
+          "page_model": "Kimi K3",
+          "page_vendor": "Moonshot AI",
+          "source_variant": "Low",
+          "reasoning_effort": "low",
+          "benchmark_column": "ARC-AGI-2",
+          "cells": [
+            "Low",
+            "65.7%",
+            "12.4%",
+            "—"
+          ],
+          "model_release_date": "2026-07-16"
+        },
+        "proposed_model_id": "kimi-k3::low",
+        "unjoined_reason": null
+      }
+    ],
+    "protocol": "Official ARC Prize Kimi K3 results page (Moonshot AI), carrying an ARC Prize Verified badge; the date on the page, 2026-07-16, is the model's release date (it equals modelReleaseDate in ARC Prize's leaderboard v1.json/v2.json captured 2026-09-26), and the page states no publication date of its own. Page summary (visible text, tooltips omitted): \"As of July 31, 2026, Moonshot AI's Kimi K3 sets a new high score for open-weight models evaluated by ARC Prize on both ARC-AGI-1 and ARC-AGI-2. At max effort, it scores 94.5% on ARC-AGI-1 Semi-Private at $0.77 per task and 60.4% on ARC-AGI-2 Semi-Private at $1.59 per task. ARC-AGI-3 testing is still in progress.\" The table lists per-variant ARC-AGI-1 and ARC-AGI-2 percentages. Basis is the evaluator-published benchmark result; source reasoning labels are retained.",
+    "identity_map_candidates": [
+      {
+        "benchmark_id": "arc-agi::1",
+        "source_id": "Kimi K3|Max",
+        "model_id": "kimi-k3::max",
+        "rule": "ARC Prize Kimi K3 results page (ARC Prize Verified) gives the exact source variant Max; the catalog holds exactly the configuration kimi-k3::max.",
+        "basis": "measured"
+      },
+      {
+        "benchmark_id": "arc-agi::1",
+        "source_id": "Kimi K3|Low",
+        "model_id": "kimi-k3::low",
+        "rule": "ARC Prize Kimi K3 results page (ARC Prize Verified) gives the exact source variant Low; the catalog holds exactly the configuration kimi-k3::low.",
+        "basis": "measured"
+      },
+      {
+        "benchmark_id": "arc-agi::2",
+        "source_id": "Kimi K3|Max",
+        "model_id": "kimi-k3::max",
+        "rule": "ARC Prize Kimi K3 results page (ARC Prize Verified) gives the exact source variant Max; the catalog holds exactly the configuration kimi-k3::max.",
+        "basis": "measured"
+      },
+      {
+        "benchmark_id": "arc-agi::2",
+        "source_id": "Kimi K3|Low",
+        "model_id": "kimi-k3::low",
+        "rule": "ARC Prize Kimi K3 results page (ARC Prize Verified) gives the exact source variant Low; the catalog holds exactly the configuration kimi-k3::low.",
+        "basis": "measured"
+      }
+    ],
+    "catalog_configurations": {
+      "kimi-k3": [
+        "kimi-k3::default",
+        "kimi-k3::low",
+        "kimi-k3::max"
+      ]
+    }
+  },
+  "required_verdict_contract": {
+    "artifact_id": "arc-verified-moonshot-kimi-k3",
+    "artifact_sha256": "<artifact_sha256 above>",
+    "round": 1,
+    "verdict": "pass|revise|blocked",
+    "coverage_checked": [
+      "one short entry per criterion id c1..c6"
+    ],
+    "errors_found": 0,
+    "findings": [],
+    "fixed": [],
+    "uncertainties": [],
+    "missing_evidence": []
+  }
+}

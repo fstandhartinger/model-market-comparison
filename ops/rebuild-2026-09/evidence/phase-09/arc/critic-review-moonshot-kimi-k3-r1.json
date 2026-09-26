@@ -1,0 +1,24 @@
+```json
+{
+  "artifact_id": "arc-verified-moonshot-kimi-k3",
+  "artifact_sha256": "7a18f40b33637e5d5e35bf6fa71d2826cf1987fa7d136c9c965bee6a509f0aa5",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "c1: all 6 rows match excerpt exactly (Max 94.5/60.4, High 86.7/55.0, Low 65.7/12.4; AGI-1->arc-agi::1, AGI-2->arc-agi::2); unit percent; zero ARC-AGI-3 rows (that column is '—')",
+    "c2: 3 variants x 2 benchmarks = 6 rows; one per (variant, benchmark); no duplicates, missing, or extras",
+    "c3: excerpt shows ARC Prize Verified badge img, h1 'Kimi K3' equal to page_model, and 'Moonshot AI · Jul 16, 2026 · 3 reasoning variants' line; basis measured fits Verified precedent",
+    "c4: published_at null on all 6 rows; 2026-07-16 appears only as source_row_context.model_release_date; matches owner crosscheck (release date = modelReleaseDate) and page line 'As of July 31, 2026'",
+    "c5: Max->kimi-k3::max and Low->kimi-k3::low exist in catalog (rows c8d2/bd98/4f76/a1da joined, reason null); High unjoined with null proposed_model_id and reason citing catalog list verbatim (rows 625d/b1e4); all 4 identity_map_candidates match their rows exactly; no candidate for High",
+    "c6: protocol quotes page summary verbatim (entity &#x27; decoded); Semi-Private appears only inside the quoted summary; badge/date claims supported by excerpt + owner crosscheck; no publication-date claim"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "sha256 digests (artifact, capture payload, html excerpt) verified for internal consistency only; no tools available to recompute them",
+    "catalog entry kimi-k3::default is intentionally unused: page has no None/default variant, consistent with c5's exact-name rule; noted, not an error"
+  ],
+  "missing_evidence": []
+}
+```

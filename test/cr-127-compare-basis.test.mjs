@@ -64,12 +64,17 @@ test('the measured-basis gate is what keeps a non-measured value out of the perc
   }
   assert.deepEqual(offenders, [], 'a non-measured row must never carry a position under the gate');
   assert.ok(exposed.length > 0, 'the gate would be untested if no non-measured row sat in a measured field');
-  // Today only CR-60.2's chart-read Union Alpha rows sit in a measured field; no axis yet holds both a
-  // measured and a self-reported result. The gate is written so that the day one does, the vendor
-  // claim still gets "developer's claim" rather than a bar.
-  assert.ok(exposed.every((e) => e.endsWith('preliminary')), `unexpected exposed bases: ${exposed.join(', ')}`);
+  // CR-60.2's chart-read Union Alpha rows sit in a measured field. Since CR-173 the ARC-AGI-1/2 axes hold
+  // both ARC Prize's verified GPT-6 Luna rows (measured) and the leaderboard's board submissions
+  // (self-reported) — the day the gate was written for: `offenders` above is still empty, so those vendor
+  // claims get "developer's claim" rather than a bar.
+  assert.ok(exposed.every((e) => e.endsWith('preliminary') || e.endsWith('self_reported')), `unexpected exposed bases: ${exposed.join(', ')}`);
+  assert.ok(exposed.some((e) => e.startsWith('arc-agi::') && e.endsWith('self_reported')), 'the ARC axes exercise the self-reported gate');
   const mixed = view.axes.filter((a) => a.scores.some((r) => r.basis === 'self_reported') && a.scores.some((r) => r.basis === 'measured'));
-  assert.equal(mixed.length, 0, `axes now mix bases (${mixed.map((a) => a.id).join(', ')}); re-read this suite's note`);
+  // CR-173: the ARC-AGI-1/2 axes are the first mixed ones (verified GPT-6 Luna rows beside board submissions); the
+  // gate above holds for them. Any further mixed axis is a new case — re-read this suite's note first.
+  const known = mixed.filter((a) => !/^arc-agi::[12]@@/.test(a.id));
+  assert.equal(known.length, 0, `axes now mix bases (${known.map((a) => a.id).join(', ')}); re-read this suite's note`);
 });
 
 test('Compare prefers a measured row over the same model\'s vendor claim', () => {

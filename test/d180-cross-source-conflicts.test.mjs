@@ -35,8 +35,12 @@ test('no benchmark identity publishes two different measured values for one mode
 
 test('the withdrawn Epoch ECI rows are recorded, reasoned, and not published', async () => {
   const manual = await readJson('data/raw/benchmarks/manual-board-observations.json');
-  const withdrawn = manual.withdrawn_observations ?? [];
+  // CR-173 (2026-09-26): two non-ECI Vals rows were withdrawn later by the same mechanism, each with its own reason
+  // (a superseded vals-index::2 hand row and a VCB 1-100 row attributed to the wrong compute_effort); this test pins
+  // the five ECI rows, so it counts only those.
+  const withdrawn = (manual.withdrawn_observations ?? []).filter((o) => o.source?.url === ECI_URL);
   assert.equal(withdrawn.length, 5, 'the five eci_benchmarks.csv rows stay in the file as evidence');
+  assert.ok((manual.withdrawn_observations ?? []).every((o) => typeof o.withdrawn_reason === 'string' && o.withdrawn_reason.length > 40));
   assert.ok(withdrawn.every((o) => o.source?.url === ECI_URL));
   // Nothing is withdrawn silently: a row without a reason fails the ingest, and this pins it.
   assert.ok(withdrawn.every((o) => typeof o.withdrawn_reason === 'string' && o.withdrawn_reason.includes('D180')));

@@ -1,0 +1,91 @@
+{
+  "source": {
+    "url": "https://www.anthropic.com/claude-opus-5-5",
+    "retrieved_at": "2026-09-22T16:55:28.015660+00:00",
+    "published_at": "2026-09-22",
+    "sha256": "4418b9b4f881510f195fd0dc2aa3e7ee5d8e3868d954c9e75a66ac8fe860e149",
+    "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/4418b9b4f881510f195f.gz"
+  },
+  "caption": "Unless otherwise noted, all Claude Opus 5.5 results use adaptive thinking at max effort. Terminal-Bench 4.0 results are reported for Claude Opus 5.5 at xhigh effort and GPT-6 Astra at high effort, as reported by OpenAI; these represent each model’s highest score.",
+  "system_card": {
+    "url": "https://www.anthropic.com/claude-opus-5-5-system-card",
+    "retrieved_at": "2026-09-22T16:55:31.262433+00:00",
+    "published_at": null,
+    "sha256": "95a7b26f5d4497072d973935ccb674978149f16db396d425b4b544581fcbc728",
+    "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/95a7b26f5d4497072d97.gz",
+    "quotes": [
+      "Claude Opus 5.5 scored 66.36% on Terminal-Bench 4.0 with safeguards enabled",
+      "xhigh thinking effort for Opus 5.5 (which at max effort scores 64.8%, within noise of\nxhigh)",
+      "The numbers reported use Claude Code in --bare mode and\nxhigh thinking effort for Opus 5.5"
+    ],
+    "section_heading": "8.5 Terminal-Bench 4.0",
+    "results_paragraph_verbatim": "Claude Opus 5.5 scored 66.36% on Terminal-Bench 4.0 with safeguards enabled; requests\nflagged by the safeguards were answered by a fallback model following the default\nserver-side fallback policy (2.5% of requests, affecting 10% of trials). For comparison,\nClaude Mythos 5.1 scored 60.9% and Claude Fable 5.1 scored 55.8%, whereas Claude Opus 5\nscored 52.3%. Scores are averaged over five trials per task (330 trials) for Opus 5.5, 10 trials\nper task (660 trials) for Claude Mythos 5.1, and 15 trials per task (990 trials) for Opus 5.\nTreating trials as independent, the standard error is ±2.6 points for Opus 5.5 and ±1.6-2\npoints for the other models. The numbers reported use Claude Code in --bare mode and\nxhigh thinking effort for Opus 5.5 (which at max effort scores 64.8%, within noise of\nxhigh), and max effort for the comparison models."
+  },
+  "page_context_of_chart": "\\\"text\\\":\\\"Coding\\\"}],\\\"markDefs\\\":[],\\\"style\\\":\\\"h2\\\"},{\\\"_ ... \"},{\\\"_key\\\":\\\"9d51ceea7f10\\\",\\\"_type\\\":\\\"viewSwitcher\\\",\\\"m ... \\\"_key\\\":\\\"tuskchartterminalbench\\\",\\\"_t ... \\\"label\\\":\\\"Agentic terminal coding\\\"",
+  "carried_document_record": {
+    "url": "https://www.anthropic.com/claude-opus-5-5",
+    "reviewed_at": "2026-09-22",
+    "reason": "CR-123: Anthropic Claude Opus 5.5 launch post, 9 vendor claims ingested with an independent critic round. CR-173 (2026-09-26): the Terminal-Bench 4.0 row joined at max is withdrawn (the caption says xhigh) and replaced by the xhigh row plus the Opus 5.5 low/medium/high/max points of the post's embedded chart dataset, with their own critic round."
+  },
+  "chart": {
+    "key": "tuskchartterminalbench",
+    "title": "Terminal-Bench 4.0",
+    "subtitle": "Accuracy vs Cost",
+    "y_axis": "Score (%)",
+    "x_axis": "Cost per attempt (USD, log scale)",
+    "csv_lines": [
+      "series,x,y,label,labelPlacement",
+      "opus55,1.29,38.5,low,",
+      "opus55,2.94,57.6,med,",
+      "opus55,3.88,64.2,high,",
+      "opus55,7.35,66.4,xhigh,",
+      "opus55,11.24,64.8,max,",
+      "fable51,5.7,40.2,low,hidden",
+      "fable51,7.8,43.4,med,hidden",
+      "fable51,10.5,49.4,high,hidden",
+      "fable51,15.8,51.3,xhigh,hidden",
+      "fable51,19.5,55.8,max,hidden",
+      "opus5,4.25,28.5,low,hidden",
+      "opus5,7,41.2,med,hidden",
+      "opus5,10.64,47,high,hidden",
+      "opus5,13.48,50.6,xhigh,hidden",
+      "opus5,15.83,52.3,max,hidden",
+      "gpt56sol,1.46,7.9,low,hidden",
+      "gpt56sol,2.69,20.9,med,hidden",
+      "gpt56sol,4.12,26.1,high,hidden",
+      "gpt56sol,5.39,28.5,xhigh,hidden",
+      "gpt56sol,7.89,37.3,max,hidden",
+      "gpt6astra,4.95,49.7,low,hidden",
+      "gpt6astra,6.15,53.9,med,hidden",
+      "gpt6astra,7.21,57.9,high,hidden",
+      "gpt6astra,7.48,57.6,xhigh,hidden",
+      "gpt6astra,10.35,56.7,max,hidden"
+    ]
+  },
+  "printed_table_row": "printed row: 66.4% | 55.8% | 52.3% | 57.9% | 37.3%",
+  "withdrawn_row": {
+    "id": "self-reported:claude-opus-55-terminal-bench-4-0",
+    "benchmark_id": "anthropic-terminal-bench-4-0::4.0",
+    "subject": {
+      "source_id": "https://www.anthropic.com/claude-opus-5-5#Claude-Opus-5.5",
+      "name": "Claude Opus 5.5",
+      "model_id": "claude-opus-5.5::max",
+      "variant": "xhigh effort",
+      "harness": null
+    },
+    "value": 66.4,
+    "unit": "percent",
+    "basis": "self_reported",
+    "source": {
+      "url": "https://www.anthropic.com/claude-opus-5-5",
+      "retrieved_at": "2026-09-22T16:55:28.015660+00:00",
+      "published_at": "2026-09-22",
+      "sha256": "4418b9b4f881510f195fd0dc2aa3e7ee5d8e3868d954c9e75a66ac8fe860e149",
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-22-claude-opus-5-5/4418b9b4f881510f195f.gz",
+      "locator": "Launch post benchmark table, row \"Terminal-Bench 4.0\", under \"Opus 5.5\" (first column of: Opus 5.5 | Fable 5.1 | Opus 5 | GPT-6 Astra | GPT-5.6 Sol); printed row: 66.4% | 55.8% | 52.3% | 57.9% | 37.3%"
+    },
+    "protocol": "Vendor-reported by Anthropic for Claude Opus 5.5 in the Claude Opus 5.5 launch post, printed as \"Terminal-Bench 4.0\". Standard configuration per Anthropic unless noted otherwise (system card Table 8.1.A caption): adaptive thinking at max effort, default sampling, averaged over five trials; production safeguards enabled (when they intervened, cyber tasks fell back to Claude Opus 4.8 and biology/frontier-LLM tasks to Claude Opus 5). Footnote 1: reported at xhigh effort (the model's highest score), standard error ±2.6 pts. System card section 8.5 prints 66.36% (Claude Code --bare, xhigh) and 64.8% at max effort. No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+    "comparison_key": null,
+    "withdrawn_reason": "CR-173 (2026-09-26): withdrawn from publication and replaced by self-reported:claude-opus-55-terminal-bench-4-0-xhigh. The retained launch-post capture's own table caption states the effort of this cell: \"Terminal-Bench 4.0 results are reported for Claude Opus 5.5 at xhigh effort ... these represent each model’s highest score\" (the caption's default, \"adaptive thinking at max effort\", does not apply to it), and the system card section 8.5 prints 66.36% at xhigh and 64.8% at max. This row had attributed the xhigh value 66.4 to claude-opus-5.5::max. Same document, same value, corrected configuration; the post's own chart dataset value for max (64.8) is now its own row."
+  }
+}

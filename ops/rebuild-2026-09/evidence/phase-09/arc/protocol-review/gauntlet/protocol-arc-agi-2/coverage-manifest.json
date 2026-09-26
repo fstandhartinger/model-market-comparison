@@ -1,0 +1,154 @@
+{
+  "artifact_id": "protocol-arc-agi-2",
+  "rounds_used": 1,
+  "rows": {
+    "total": 1,
+    "accepted": [
+      "arc-agi::2"
+    ],
+    "quarantined": []
+  },
+  "producer_flagged": [],
+  "criteria": [
+    "c1",
+    "c2"
+  ],
+  "coverage": {
+    "producer": {
+      "complete": true,
+      "model": "deepseek/deepseek-v4-flash-0731",
+      "rows_covered": 1
+    },
+    "critic": [
+      {
+        "round": 1,
+        "verdict": "pass",
+        "coverage_complete": true,
+        "missing_rows": [],
+        "missing_criteria": []
+      }
+    ],
+    "final": {
+      "rows_covered": 1,
+      "criteria_covered": 2,
+      "complete": true
+    }
+  },
+  "receipts": [
+    {
+      "round": 1,
+      "role": "producer",
+      "reused_from_round": null,
+      "requested_model": "deepseek/deepseek-v4-flash-0731",
+      "model": "deepseek/deepseek-v4-flash-0731",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0.000957606705,
+      "out": "ops/rebuild-2026-09/evidence/phase-09/arc/protocol-review/gauntlet/protocol-arc-agi-2/producer-r1.json",
+      "output_sha256": "b55d7b14088bcef10675243277c189e175d0f8647041d6077aae6e77be4fe60d",
+      "qualification": {
+        "id": "deepseek/deepseek-v4-flash-0731",
+        "family": "deepseek",
+        "free": false,
+        "input_per_1m": 0.020999999999999998,
+        "output_per_1m": 0.32,
+        "context": 1310720,
+        "aa_intelligence_index": 34.3,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "deepseek-v4-flash-0731::max"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "deepseek-v4-flash-0731::max",
+            "index": 34.3
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 8493,
+        "completion_tokens": 2622,
+        "total_tokens": 11115,
+        "cost": 0.000957606705,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 256,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.0009672795,
+          "upstream_inference_prompt_cost": 0.0001806795,
+          "upstream_inference_completions_cost": 0.0007866
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 2505,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    },
+    {
+      "round": 1,
+      "role": "critic",
+      "requested_model": "z-ai/glm-5.3-flash",
+      "model": "z-ai/glm-5.3-flash",
+      "route": "openrouter",
+      "attempt": 1,
+      "cost_usd": 0.0004846446,
+      "out": "ops/rebuild-2026-09/evidence/phase-09/arc/protocol-review/gauntlet/protocol-arc-agi-2/review-r1.json",
+      "output_sha256": "00e2e3fba24c4ade48f2e5c8c1a309f1d5336b1c87a03d86d7cc99f042d95bf0",
+      "qualification": {
+        "id": "z-ai/glm-5.3-flash",
+        "family": "z-ai",
+        "free": false,
+        "input_per_1m": 0.04,
+        "output_per_1m": 0.5,
+        "context": 1310720,
+        "aa_intelligence_index": 41.8,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "glm-5.3-flash::default"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "glm-5.3-flash::default",
+            "index": 41.8
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 9012,
+        "completion_tokens": 600,
+        "total_tokens": 9612,
+        "cost": 0.0004846446,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.00048954,
+          "upstream_inference_prompt_cost": 0.00040554,
+          "upstream_inference_completions_cost": 0.000084
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 330,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    }
+  ]
+}

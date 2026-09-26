@@ -1,0 +1,24 @@
+```json
+{
+  "artifact_id": "arc-verified-openai-gpt-6-astra",
+  "artifact_sha256": "940c7b52694ba5bae4f002e7f2a446c53a8f4fdbc3283339ceb44946ab9ec645",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "c1: pass — all 12 values match excerpt cells exactly (Max 97.5/95.0, XHigh 98.5/93.3, High 98.5/92.1, Medium 97.5/92.1, Low 96.5/85.4, None 86.0/59.6); benchmark_column ARC-AGI-1/ARC-AGI-2 mapping correct; unit percent; no ARC-AGI-3 values (62.71, 98.55, 59.34, 98.44, 54.82, 99.95, 38.59, 17.45, 35.18, 96.72, 98.03 absent from rows); source_variant labels exact; owner cross-check confirms all 12.",
+    "c2: pass — 6 variants (Max, XHigh, High, Medium, Low, None) x exactly one arc-agi::1 and one arc-agi::2 = 12 rows; no duplicates, none missing, no extras.",
+    "c3: pass — excerpt shows ARC Prize Verified badge (alt text), h1 'GPT-6 Astra' equal to rows' page_model, and vendor/date line 'OpenAI · Sep 2, 2026 · 12 harness configurations'.",
+    "c4: pass — all 12 rows published_at null; page date kept only as source_row_context.model_release_date '2026-09-02', matching the excerpt line 'Sep 2, 2026' and the owner cross-check (modelReleaseDate 2026-09-02 on every line).",
+    "c5: pass — 10 identity_map_candidates each match their row's proposed_model_id; Max/XHigh/High/Medium/Low -> exact catalog configurations present in catalog_configurations; None rows unjoined (null) with correct reason since catalog has no gpt-6-astra::none; no other unjoined rows.",
+    "c6: pass — protocol claims are limited to excerpt-supported facts; the only Semi-Private mention is inside the verbatim quoted page summary (verified word-for-word against the excerpt, tooltips declared omitted); release-date claim is backed by the owner cross-check receipt."
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Kimi K3 precedent page cited in c4 rationale is not in the packet; immaterial here because the 2026-09-02 release-date claim is directly supported by this page's owner cross-check receipt.",
+    "Capture and HTML excerpt files are referenced by path/hash but not inlined; hashes could not be independently recomputed in this read-only review. Row source_sha256 matches the supplied capture_payload_sha256, and the inline excerpt supports every checked criterion."
+  ],
+  "missing_evidence": []
+}
+```

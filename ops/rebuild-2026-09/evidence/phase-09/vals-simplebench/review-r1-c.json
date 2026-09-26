@@ -1,0 +1,44 @@
+```json
+{
+  "artifact_id": "cr173-vals-simplebench",
+  "artifact_sha256": "ec01cfa0bad5f27cdca8ae73675e837763cb64554b1be3c791b8f8845cbdddb8",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "C1 values 17/17 rows: public:ab3b3ebb75d3f39847aa021d, public:03d9f304a02c23e688788d34, public:aae482eb54d2da7c8b94a5c9, public:4e2a8121bc60b8c8188a7fc8, public:27d33359fffc5e5cbfb2266b, public:070ecda019307e7168183ac3, public:a71e471ce537b08c02beda45, public:fc968277cb77675ca691fdf1, public:b6c99914b51496478bdcfbc8, public:1334e58b0e5b78cd6f4063d7, public:70fc37b410a0d8f75b00ad18, public:f0c3bdee275c7862624db0f6, public:dff3b6db6699dce9e3d6243e, public:6a3c23b4f070d46877760fcd, public:bfb7d6a80ef90f28a04b8788, public:6ae291775aee6579f293cbea, public:1f2d74744551f0f0009b690b",
+    "C2 joins/nulls 17/17 rows against catalog variants and the supplied identity-map",
+    "C3/C4 registry identity simple-bench::snapshot-2026-09-26 plus supersession of snapshot-2026-09-10",
+    "C3/C4 section A identity decisions vs section D registry entries and retention records (all 20 boards)",
+    "C5 both supplied withdrawn rows (cr128:c65f3728ef6dbcced38b7328, cr128:92418b2acd56002245c86246)",
+    "C6 tier facts for the nine supplied tier entries against packet-quoted metadata"
+  ],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "major",
+      "location": "Section D registry entry, id vals-code-migration::snapshot-2026-09-22, field name",
+      "evidence": "name is \"Code Migration (standalone Vals board, 2026-09-21 snapshot)\" but version is \"snapshot-2026-09-22\", version_guard requires page \"Updated 9/22/2026\", and section A gives page \"Updated 9/22/2026\". 2026-09-21 is the retained superseded identity (vals-code-migration::snapshot-2026-09-21), so the published name misstates the snapshot date and collides with the retained identity.",
+      "repair": "Change the name's date to 2026-09-22 (or remove the date) so it matches the identity version."
+    },
+    {
+      "id": "f2",
+      "severity": "major",
+      "location": "Section D registry entry, id vals-emb::snapshot-2026-09-22, field name",
+      "evidence": "name is \"Excel Modeling Benchmark (standalone Vals board, 2026-09-21 snapshot)\" but version is \"snapshot-2026-09-22\", version_guard requires \"Updated 9/22/2026\", and section A gives page \"Updated 9/22/2026\". 2026-09-21 is the retained superseded identity (vals-emb::snapshot-2026-09-21).",
+      "repair": "Change the name's date to 2026-09-22 (or remove the date) so it matches the identity version."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "The full exact-name list used by parseSimpleBenchLabel is not supplied; the all-null joins for labels like \"Qwen 3.8 2.4T A95B\" (catalog qwen3.8-max: default), \"DeepSeek V4 Pro\" and \"DeepSeek V4 Flash\" (vs the -0813/-0731 families) are accepted as matching the reviewed rule because the supplied identity-map contains exactly the two stated joins and C2 keeps null whenever join conditions are unmet.",
+    "artifact_sha256 and capture file digests are taken as given; no execution environment to recompute hashes.",
+    "simple-bench version_guard's claim \"Same MCQ AVG@5 protocol as snapshot-2026-09-10\" has no supporting excerpt in this packet."
+  ],
+  "missing_evidence": [
+    "Per-row Vals board values (sections A/D excerpts quote only one number per board) are not in this part; noted as covered by other split review parts and not verified here.",
+    "Independent source excerpts for tier-fact metadata in section F (dataset_type private/public; Vals industry finance/healthcare) are not included; only the tier reasons' own quotes and the corpus summary are supplied.",
+    "No excerpt in this packet supports the version_guard protocol-continuity claim for SimpleBench."
+  ]
+}
+```

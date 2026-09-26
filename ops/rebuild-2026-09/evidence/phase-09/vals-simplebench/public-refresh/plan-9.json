@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "entries": [
+    {
+      "benchmark_id": "simple-bench::snapshot-2026-09-26",
+      "parser": {
+        "kind": "simplebench",
+        "name_field": "model",
+        "value_field": "score"
+      },
+      "status": "collected",
+      "reason": "SimpleBench MCQ leaderboard data file (static/js/leaderboard-data.js), captured 2026-09-26.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "HTML/embedded data",
+        "locator": "static/js/leaderboard-data.js, array `leaderboardData` (the MCQ tab; the separately named `openEndedData` board and the human rows are excluded): field `score` per `model`; settings stated on the homepage as 'temperature: 0.7, top-p: 0.95 (except o1 series)'.",
+        "version_guard": "Dated snapshot of the 2026-09-26 capture. Same MCQ AVG@5 protocol as snapshot-2026-09-10; a later capture with new rows becomes a new dated identity in a reviewed change (CR-34.2), a changed task set, metric or settings a new benchmark identity.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Dated snapshot of the 2026-09-26 capture. Same MCQ AVG@5 protocol as snapshot-2026-09-10; a later capture with new rows becomes a new dated identity in a reviewed change (CR-34.2), a changed task set, metric or settings a new benchmark identity.",
+      "source": {
+        "url": "https://simple-bench.com/static/js/leaderboard-data.js",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-26-vals-simplebench/capture/bbcf304f3df1b31fb1ca.gz",
+        "sha256": "bbcf304f3df1b31fb1cacf14207609e6d4251ee8504846d3b9df8d15632d9e72",
+        "retrieved_at": "2026-09-26T04:22:16.565907+00:00"
+      },
+      "protocol": "SimpleBench MCQ AVG@5 board only (temperature 0.7, top-p 0.95 except o1 series); human baselines and open-ended board excluded.",
+      "basis": "measured",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://simple-bench.com/static/js/leaderboard-data.js"
+      ]
+    }
+  ]
+}
