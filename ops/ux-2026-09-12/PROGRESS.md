@@ -12773,3 +12773,116 @@ Not done here, still open: CR-176.6's remaining non-implementer review, CR-156.4
 (needs Florian), D192, X6's remaining audit surface, the CR rows no harness covers (CR-148.1/.2,
 CR-152.1/.2/.5, CR-153.4, CR-158.4), Umami's own retention (CR-67.5 §7.4 residual 1), and F-206 (the CR-172
 job's). **`ALL-ACCEPTED` is not appended.**
+
+## Iteration 240 — work (claude-opus), 2026-09-26 20:20–21:4x UTC — the daily's paid worker route had run out of money
+
+Picked the oldest open data item: **D214**, the 17 stale sources, whose oldest arm `aa-benchmark-fields` had
+been failing **since 2026-09-11 (13 consecutive runs, 15 days)** while the site kept publishing. It turned out
+to be one cause, not seventeen, and it also accounts for most of **D192**'s 38 retained arms. Receipts:
+`/opt/benchmarkheaven/state/ux-evidence/iter240-d218/` (`ROOT-CAUSE.md`, `402-tally.json`,
+`unavailable-models-head.jsonl`, `credits-now.json`, `replay-aa-aime/`, `revision-watch.log`, `d219/`).
+
+### D218 — an empty OpenRouter balance read as twenty broken benchmark sources
+
+`workers/unavailable-models.jsonl` for the 05:17 run holds **35 records, and 34 of them are
+`OpenRouter completion HTTP 402`** on the two paid routes: deepseek 30, z-ai 4. The first is at
+**05:20:47.610Z** and `z-ai/glm-5.3-flash` — a different vendor, a different model, the same key — answers 402
+**1.6 s later**. A status answered identically for every model on one key is a condition of the *account*.
+The balance agrees: the 19:20 gate of 25 Sep recorded $0.137 left (from $0.475 at 13:53 and $0.81 at 10:24)
+and the overnight run spent the rest. `total_credits` now reads **448.9112268** against 25 Sep's
+430.9112268 — exactly **+$18.00**, a top-up that landed during 26 Sep, *after* the 05:17 run had failed.
+
+**This corrects iteration 238's addendum on the record.** It measured the balance at ~19:00 on 26 Sep —
+after the top-up — found $15.95 and a live 200 from the same model, and concluded "the 402 is intermittent or
+request-shaped, not a dead account, and topping up is not the fix". The account **was** dead at 05:20 and
+topping up **was** the fix. The reading was right; it was taken on the far side of a purchase, and only the
+*difference* of the two fields shows that.
+
+**Proof that the stale arm has no data problem at all.** `aa-aime::2025` replayed offline against the 05:17
+run's own capture, with the real producer/critic gauntlet, now that the account is funded:
+`{ accepted: true, fingerprints: 1, quarantined: [], errors: [] }` — one round, zero errors. The receipts name
+**both** routes that answered 402 at 05:20:47, each completing first try: producer
+`deepseek/deepseek-v4-flash-0731` $0.00170277327, critic `z-ai/glm-5.3-flash` $0.0003310956. **$0.002.** A
+source was withheld from the public dataset for fifteen days for two tenths of a cent.
+
+Three defects, each fixed and each proved to bite first:
+
+1. **`402` was missing from the account-level status list.** The guard deciding whether a failure becomes an
+   exclusion read `!/HTTP (401|403|429)/`. 401, 403 and 429 were understood as conditions of the key; 402, the
+   most account-level status there is, was not — so each 402 was filed as that model's own transport failure,
+   both paid routes were struck off for the run, and every later arm reported `worker: No supported viable
+   worker model found`, which names no billing problem at all. **That cascade is where 6 legible failures
+   became 20 illegible ones.** Now one shared exported rule, `ACCOUNT_LEVEL_HTTP`, used at **both** sites that
+   carried the list; a test pins that neither site keeps a private copy. It is terminal for the round as well:
+   another round cannot pay a bill, and the run spent three identical 402s per arm to learn that once.
+2. **The provider's own sentence was discarded unread.** Both non-OK branches threw the bare status and dropped
+   the body — the only part that says what to do. Read live: OpenRouter answers a 400 with *"you requested
+   about 900000001 tokens (1 of text input, 900000000 in the output)"*, and a 402 names the credit shortfall.
+   Because nobody could see it, two engines read the same string on the same day and disagreed.
+   `completionErrorMessage()` now appends it, one line, key-redacted, bounded to 160 characters so it survives
+   `source-health.md`'s clip.
+3. **Nothing read the balance**, which one GET answers. `lib/openrouter-credits.mjs` +
+   `scripts/check-openrouter-credits.mjs` judge it and the daily gate puts one line in the digest Florian
+   already gets, exactly as CR-177.2 does for analytics (`gate.mjs.bak-before-d218-20260926`; the two checks
+   now share one `checkLine` helper so they cannot drift). Live: `OpenRouter: $15.85 left, about 7 days of
+   paid worker calls at $2.30/day.` The threshold is 3 days at the measured spend ($2.30/day — `total_usage`
+   moved $2.29 between 25 Sep 19:31 and 26 Sep 20:26); at $0.137 the line would have read **alert a day
+   before** the run lost 27 sources. One day is not a distribution, which is why the line states the rate
+   itself and nothing but a warning threshold depends on it.
+
+### D219 — the three "Prior public identities disappeared" arms are one retired badge, plus a truncated table
+
+The other named cause in the same receipt. All three arms share it: **a source's "new model" badge is captured
+as part of the model's name**, so the row changes identity the day the source retires the badge. Each source
+spells the badge differently — eqbench puts a leading `*` (and `!` for NSFW) in the CSV payload and strips both
+in its own renderer before display (`creative_writing.js`: `const isNewModel = currentModelName.startsWith('*')`),
+so `*GLM-5.3` was never a label the board showed; Andon Labs appends the word ` New` to the Model cell, which
+is why the live API serves `"name":"GPT-6 Astra New"` as a model name today.
+
+`ops/ux-2026-09-12/bin/diagnose-d219-badge-identities.mjs` re-derives all of it from the two committed
+captures — the last the arms ingested (2026-09-23) and the first that failed closed (2026-09-26) — rather than
+from prose. **Nothing left either eqbench board:** all 12 creative-writing and all 4 longform disappearances
+reappear de-badged, the longform four at an identical value. The reconciler was right to fail closed.
+
+It earned its keep on the first run by finding a **second, stacked cause**: Vending-Bench 2's "Current
+leaderboard" table holds exactly **10 rows**, and the three new entrants pushed `Claude Opus 4.6`, `GPT-5.5`
+and `GPT-5.6 Terra` off the bottom. Those are not a badge change — the capture mentions them six times each
+but only as chart colour variables (`--color-GPT-5.6 Terra: #65A30D`) and carries **no score** for them, and
+its "Show more" control is not in the capture. A blanket de-badge fixes neither them nor the arm.
+
+**Remedy, specified but deliberately not rushed** (it changes the public identity of 20 already-published rows,
+and getting it wrong makes the history bridge republish them as estimates — the D180/D186 trap):
+1. Declare the badge **per source** in `collection-plan.json` and strip it in the parser, the way Toolathlon's
+   reviewed `label_markers` already do. Never a global rule: a trailing "New" is a real word in some model name.
+2. Carry the 17 relabelled rows across with `source_label_restatements` in `public-observations.json` (the D186
+   mechanism), from the badged name to the plain one. On creative-writing the 12 values also moved in the same
+   refresh — an Elo board refits — so a restatement that carries a new value is the ordinary case here.
+3. For the three displaced Vending-Bench rows, first look for the fuller source behind "Show more" (the page's
+   colour variables name dozens of models, so the board is far longer than its table); only if there is none,
+   record them withheld **with their locator**, never delete them.
+4. Simulate the next day's ingest and `npm test` in a scratch worktree before it lands.
+
+Consequence measured while filing: `vending-bench::2`'s published rows still come from a **2026-09-10**
+capture, so GPT-6 Sol ($14,427.85), Grok 4.7 ($10,536.83) and Claude Opus 5.5 ($9,235.25) have been absent
+from the site for 16 days.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D218 (new) | **open → implemented** | `36e0290a`; `ROOT-CAUSE.md`, `402-tally.json`, `credits-now.json`, `replay-aa-aime/` | 34 of 35 exclusion records in the 05:17 run are one 402. Three defects fixed: 402 added to the shared `ACCOUNT_LEVEL_HTTP` rule (and terminal for the round), the provider's error body read instead of discarded, and the balance judged into the daily digest. Written by this engine — a different one should re-run `test/d218-openrouter-credit-exhaustion.test.mjs` and `node scripts/check-openrouter-credits.mjs`. |
+| D214 | open → **diagnosed, cause named** | same receipts | Not 17 independent repairs. 20 of the 27 retained sources are the 402 cascade, 3 are D219, 1 is a malformed round-1 audit. The 00:41 run is the first with both a funded account and these fixes, and is the row's real proof — it should recover the arms on its own. |
+| D192 | open → **largely subsumed** | `402-tally.json`; `reports/source-health.md` | The 38-retained-arm count was never 38 separate data disputes: today's 27 are one billing condition plus D219 plus one malformed audit. What remains after the next run is the honest remainder. |
+| D205 | open (needs Florian) → **resolved by a top-up** | `credits-now.json`; `total_credits` 430.9112268 → 448.9112268 | +$18.00 landed during 26 Sep, by someone other than this loop. ~7 days of headroom at the measured spend; the new digest line is what asks next time, a day early instead of a day late. |
+| D219 (new) | **open — diagnosed, remedy specified, not implemented** | `1bb6b871`; `d219/diagnosis.{json,txt}`, `d219/live-vending-bench.json` | One retired badge across three arms, plus a 10-row truncated board. 20 published identities change, so it needs its own iteration with simulate-next-day. The diagnosis script is the guard: run it before and after. |
+| D217 | open (unchanged) | this section | Pushed with `git -c credential.helper=store` again; the global helper is present, the explicit flag was belt and braces. |
+
+Gates before both pushes: `node scripts/build-dataset.mjs` rc 0 (timestamp-only `generated_at`/`collected_at`
+churn discarded), `CI=true npm test` **1,433 tests / 1,432 pass / 0 fail / 1 skip**, `npx tsc --noEmit -p .`
+rc 0, `npm run build` rc 0. Each D218 test was proved to fail against the unfixed code before it was trusted
+(402 removed from the rule → both D218.1 tests red; body discarded again → D218.2 red). `36e0290a` is live on
+**both** hosts (`revision-watch.log`, 20:47:05 UTC); nothing in this iteration has a UI surface.
+`git log origin/main..HEAD` was checked before each push and no other writer's files were touched.
+
+Not done here, still open: D219's remedy, CR-176.6's remaining non-implementer review, the non-implementer
+sign-offs iteration 239 owes (F-203/F-204/F-205, D215, D216, CR-156.1–.3), CR-156.4, X6's remaining audit
+surface, the CR rows no harness covers (CR-148.1/.2, CR-152.1/.2/.5, CR-153.4, CR-158.4), Umami's own
+retention (CR-67.5 §7.4 residual 1), and F-206 (the CR-172 job's). **`ALL-ACCEPTED` is not appended.**
