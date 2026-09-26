@@ -3,6 +3,8 @@ import type { JevV14System } from './jevbench-v14.mjs';
 export declare const JEV_CLASS_REFERENCE_KEY: string;
 export declare const JEV_CLASS_FACTOR: number;
 export declare function medianLatency(row: JevV14System): number | null;
+export declare function speedFromLatency(seconds: number): number;
+export declare function medianLatencySpeed(row: JevV14System): number | null;
 export type JevClassRow = {
   row: JevV14System; capability: number; inClass: boolean; isReference: boolean;
   cost: number | null; latency: number | null; latencyBasis: 'p50' | 'speed-axis' | 'none';

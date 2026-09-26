@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react';
 import type { JevV14System } from '../lib/jevbench-v14.mjs';
-import { jevClassRows, type JevClassResult, type JevClassRow } from '../lib/jevbench-jev-class.mjs';
+import { jevClassRows, medianLatencySpeed, type JevClassResult, type JevClassRow } from '../lib/jevbench-jev-class.mjs';
 import { logBounds, costAxisPosition, costTicks, shortName, usd } from './JevCapabilityChart';
 import type { JevBubblePoint } from './JevBubbleChart';
 import { jevSourceUrl } from './jevSystemLinks';
@@ -78,7 +78,7 @@ export function jevClassView(systems: JevV14System[]): JevClassResult & { points
   const points: JevBubblePoint[] = result.rows.map((r) => ({
     key: r.row.key, name: shortName(r.row.display), cls: r.row.class, rank: r.row.rank, ranked: !!r.row.ranked,
     capability: r.capability, intelligence: r.row.axes?.intelligence ?? null, calibration: r.row.axes?.calibration ?? null,
-    cost: r.cost, costKind: r.row.cost?.kind ?? 'unknown', speed: r.row.axes?.speed ?? null, latency: r.latency, score: r.row.jevbench_score ?? null,
+    cost: r.cost, costKind: r.row.cost?.kind ?? 'unknown', speed: r.row.axes?.speed ?? null, latency: r.latency, medianSpeed: medianLatencySpeed(r.row), score: r.row.jevbench_score ?? null,
     inClass: r.inClass, classRank: classRank.get(r.row.key) ?? null, isReference: r.isReference, outsideBecause: r.inClass ? null : r.reasons.join(', '),
   }));
   return { ...result, points };
@@ -146,7 +146,7 @@ export function JevCapabilityRanking({ systems, revision, officialHref }: { syst
       </details>
     </figure>
     <p id="jev-class-method" className="bh-panel mt-3 max-w-4xl scroll-mt-6 p-3 text-[13.5px] leading-snug" data-bh-jev-class-rule>
-      <b>Jev-class</b> = cost per decision at most 2× Jev 1.13.0&apos;s <span className="whitespace-nowrap">(≤ {usd(limits.cost)} per 1,000 decisions)</span> <b>and</b> median latency at most 2× Jev 1.13.0&apos;s <span className="whitespace-nowrap">(≤ {secs(limits.latency)}</span>, the adjusted p50 that the Speed axis uses).
+      <b>Jev-class</b> = cost per decision at most 2× Jev 1.13.0&apos;s <span className="whitespace-nowrap">(≤ {usd(limits.cost)} per 1,000 decisions)</span> <b>and</b> median latency at most 2× Jev 1.13.0&apos;s <span className="whitespace-nowrap">(≤ {secs(limits.latency)}</span>, the adjusted p50 — the same median the speed chart plots, not the four-axis Speed score).
       {' '}{inside.length} of {rows.length} systems qualify; the other {outside.length}, including the general-purpose LLMs, are listed below the divider in the ranking.
       {speedFallback.length > 0 && <span className="bh-muted"> {speedFallback.map((r) => shortName(r.row.display)).join(', ')} {speedFallback.length === 1 ? 'has' : 'have'} no recorded median latency (carried from v1.3); for {speedFallback.length === 1 ? 'it' : 'them'} the Speed axis decides, at the 2× latency equivalent (Speed ≥ {one(limits.speedFloor)}).</span>}
       {' '}The <a className="text-accent underline" href="#jev-bubbles">charts below</a> show speed and cost beside Capability; the <a className="text-accent underline" href={officialHref}>official JevBench Score</a> weighs all four axes.

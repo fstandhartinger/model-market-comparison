@@ -1,6 +1,7 @@
 "use client";
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
 import { JEV_TYPE_LABEL, jevLegendTypes, jevTypeVarName } from './jevTypes';
+import { speedFromLatency } from '../lib/jevbench-jev-class.mjs';
 
 // Florian 25 Sep 2026: right under the Capability ranking, two bubble charts — Capability vs cost and Capability vs
 // speed. Hover, focus or tap a bubble for its name and values; the top five Jev-class systems carry permanent labels.
@@ -9,7 +10,7 @@ import { JEV_TYPE_LABEL, jevLegendTypes, jevTypeVarName } from './jevTypes';
 export type JevBubblePoint = {
   key: string; name: string; cls: string; rank: number | null; ranked: boolean;
   capability: number; intelligence: number | null; calibration: number | null;
-  cost: number | null; costKind: string; speed: number | null; latency: number | null; score: number | null;
+  cost: number | null; costKind: string; speed: number | null; latency: number | null; medianSpeed: number | null; score: number | null;
   inClass: boolean; classRank: number | null; isReference: boolean; outsideBecause: string | null;
 };
 
@@ -75,8 +76,14 @@ export function JevBubbleChart({ id, kind, points, costLimit, referenceName, act
   const plotted = useMemo(() => points.filter((p) => (kind === 'cost' ? p.cost != null && p.cost > 0 : p.speed != null)), [points, kind]);
   const omitted = points.length - plotted.length;
   const reference = points.find((p) => p.isReference);
-  const latencyLimit = reference?.speed != null ? reference.speed - 20 * Math.log10(2) : null;
-  const xValue = (p: JevBubblePoint) => (kind === 'cost' ? Math.log10(p.cost as number) : (p.speed as number));
+  // CR-176.3: the Speed axis in this chart is the median-latency Speed (the adjusted p50 the Jev-class gate
+  // uses), not the published composite Speed axis (a p50/p95 blend). A row with median ≪ 2× Jev but p95 ≫ p50
+  // passes the p50 gate yet scores low on the blend, so plotting the blend puts it on the wrong side of the line.
+  // Plotting, the gate and the line all use the one median definition now; v1.3 carryovers with no recorded
+  // median fall back to the composite Speed axis, exactly as the Jev-class rule does.
+  const plotSpeed = (p: JevBubblePoint) => (p.medianSpeed != null ? p.medianSpeed : (p.speed as number));
+  const latencyLimit = reference != null ? (reference.latency != null ? speedFromLatency(2 * reference.latency) : (reference.speed != null ? reference.speed - 20 * Math.log10(2) : null)) : null;
+  const xValue = (p: JevBubblePoint) => (kind === 'cost' ? Math.log10(p.cost as number) : plotSpeed(p));
   const [xMin, xMax] = useMemo(() => {
     const xs = plotted.map(xValue);
     if (kind === 'cost') {
@@ -207,6 +214,24 @@ export function JevBubbleChart({ id, kind, points, costLimit, referenceName, act
   };
 
   const activeDot = placed.find((d) => d.p.key === active) ?? null;
+  // CR-176.1/.2: the dashed limit line's caption sits on the LEFT of the line, with small direction arrows
+  // across the top of the chart explaining which side is which. On a phone a short caption is used so it
+  // stays left of the line without crossing the axis.
+  const separator = (value: number | null, marker: string, fullLabel: string, shortLabel: string, leftArrow: string, rightArrow: string) => {
+    if (value == null || value <= L || value >= W - R) return null;
+    const widthOf = (text: string) => text.length * (narrow ? 5.2 : 6) + 4;
+    const label = value - 5 - widthOf(fullLabel) >= L ? fullLabel : shortLabel;
+    const hborder = 4;
+    return <g data-bh-jev-separator={marker} {...(marker === 'cost' ? { 'data-bh-jev-bubble-limit': '' } : { 'data-bh-jev-bubble-latency-limit': '' })}>
+      <line x1={value} x2={value} y1={T} y2={H - B} stroke="var(--muted)" strokeDasharray="4 4" />
+      <text x={Math.max(hborder, value - 5)} y={T + 25} textAnchor="end" fill="var(--muted)" fontSize={narrow ? 9 : 10}
+        stroke="var(--surface)" strokeWidth="3" paintOrder="stroke" data-bh-jev-separator-label>{label}</text>
+      {value - 6 - widthOf(leftArrow) >= hborder ? <text x={value - 6} y={T - 9} textAnchor="end" fill="var(--muted)" fontSize={narrow ? 9 : 10}>{leftArrow}</text>
+        : value - 6 >= hborder ? <text x={value - 4} y={T - 9} textAnchor="end" fill="var(--muted)" fontSize={narrow ? 9 : 10}>←</text> : null}
+      {value + 6 + widthOf(rightArrow) <= W - hborder ? <text x={value + 6} y={T - 9} textAnchor="start" fill="var(--muted)" fontSize={narrow ? 9 : 10}>{rightArrow}</text>
+        : value + 6 <= W - hborder ? <text x={value + 4} y={T - 9} textAnchor="start" fill="var(--muted)" fontSize={narrow ? 9 : 10}>→</text> : null}
+    </g>;
+  };
   const xTicks: { v: number; label: string; sub?: string }[] = kind === 'cost'
     ? Array.from({ length: Math.floor(xMax) - Math.ceil(xMin) + 1 }, (_, i) => Math.ceil(xMin) + i).map((e) => ({ v: e, label: usd(10 ** e) }))
     : Array.from({ length: Math.floor((xMax - xMin) / 10) + 1 }, (_, i) => xMin + 10 * i).filter((v, i, all) => !narrow || i % 2 === 0 || i === all.length - 1).map((v) => ({ v, label: String(v), sub: `≈${secs(speedToSeconds(v))}` }));
@@ -230,7 +255,7 @@ export function JevBubbleChart({ id, kind, points, costLimit, referenceName, act
         </button>
       </div>
     </div>
-    <p className="bh-muted mt-1 text-sm">{hint} {kind === 'cost' ? 'Cost is USD per 1,000 decisions on a log scale.' : 'Speed is the JevBench Speed axis; it is a log scale of latency, so each 20 points is 10× faster (typical latency under the numbers).'}</p>
+    <p className="bh-muted mt-1 text-sm">{hint} {kind === 'cost' ? 'Cost is USD per 1,000 decisions on a log scale. The dashed line is 2× Jev’s cost.' : 'Speed here is the median-latency speed — the same adjusted median (p50) latency the Jev-class limit uses — a log scale, so each 20 points is 10× faster (median under the numbers). The dashed line is 2× Jev’s median latency.'}</p>
     {expanded && <p className="bh-muted mt-1 text-xs">Wheel or pinch to zoom. Drag to pan. Use Reset view to return to the full chart.</p>}
     <div ref={ref} className="relative mt-3 w-full" onPointerLeave={(e) => { if (e.pointerType === 'mouse' && !pinned && pointers.current.size === 0) setActive(null); }}>
       <svg ref={svgRef} width={W} height={H} viewBox={`0 0 ${W} ${H}`} className={`block select-none ${expanded ? 'cursor-grab touch-none active:cursor-grabbing' : 'touch-manipulation'}`}
@@ -257,17 +282,11 @@ export function JevBubbleChart({ id, kind, points, costLimit, referenceName, act
             <text x={x(t.v)} y={H - B + 15} textAnchor="middle" fill="var(--muted)" fontSize="11">{t.label}</text>
             {t.sub && <text x={x(t.v)} y={H - B + 27} textAnchor="middle" fill="var(--muted)" fontSize="10">{t.sub}</text>}</>}
         </g>)}
-        <text x={plotCenterX} y={H - 5} textAnchor="middle" fill="var(--text)" fontSize="11">{kind === 'cost' ? '$ per 1,000 decisions (log) · cheaper →' : 'Speed axis · faster →'}</text>
+        <text x={plotCenterX} y={H - 5} textAnchor="middle" fill="var(--text)" fontSize="11">{kind === 'cost' ? '$ per 1,000 decisions (log) · cheaper →' : 'Median-latency speed · faster →'}</text>
         <text x={11} y={plotCenterY + 7} textAnchor="middle" fill="var(--text)" fontSize="11" transform={`rotate(-90 11 ${plotCenterY + 7})`}>Capability</text>
         <text x={11} y={plotCenterY - 39} textAnchor="middle" fill="var(--text)" fontSize="13" aria-label="Capability up">↑</text>
-        {limitX != null && limitX > L && limitX < W - R && <g data-bh-jev-bubble-limit>
-          <line x1={limitX} x2={limitX} y1={T} y2={H - B} stroke="var(--muted)" strokeDasharray="4 4" />
-          <text x={Math.max(L + 4, Math.min(W - R - 76, limitX + 4))} y={T + 25} fill="var(--muted)" fontSize="10">2× {referenceName} cost</text>
-        </g>}
-        {latencyLimitX != null && latencyLimitX > L && latencyLimitX < W - R && <g data-bh-jev-bubble-latency-limit>
-          <line x1={latencyLimitX} x2={latencyLimitX} y1={T} y2={H - B} stroke="var(--muted)" strokeDasharray="4 4" />
-          <text x={Math.max(L + 4, Math.min(W - R - 90, latencyLimitX + 4))} y={T + 25} fill="var(--muted)" fontSize="10">2× {referenceName} latency</text>
-        </g>}
+        {separator(limitX, 'cost', `2× ${referenceName} cost`, `2× ${referenceName}`, '← pricier', 'cheaper →')}
+        {separator(latencyLimitX, 'latency', `2× ${referenceName} latency`, `2× ${referenceName}`, '← slower', 'faster →')}
         <g clipPath={`url(#${id}-plot-clip)`}>{drawOrder.map(({ p, cx, cy, r }) => <circle key={p.key} cx={cx} cy={cy} r={r}
           fill={colour(p.cls)} fillOpacity={p.inClass ? 0.85 : 0.18} stroke={p.inClass ? 'var(--surface)' : colour(p.cls)} strokeWidth={p.isReference ? 2.5 : 1.25}
           tabIndex={0} role="button" aria-label={`${p.name}: Capability ${one(p.capability)}`} data-bh-jev-bubble-point={p.key} data-bh-highlighted={active === p.key}
@@ -284,7 +303,7 @@ export function JevBubbleChart({ id, kind, points, costLimit, referenceName, act
         <b className="block text-[13px] leading-tight">{activeDot.p.name}</b>
         <span className="block">Capability <b>{one(activeDot.p.capability)}</b> <span className="bh-muted">(I {one(activeDot.p.intelligence)} · C {one(activeDot.p.calibration)})</span></span>
         <span className="block">Cost {activeDot.p.cost == null ? '—' : `${usd(activeDot.p.cost)}${activeDot.p.costKind === 'estimate' ? ' est.' : ''}`} <span className="bh-muted">/ 1,000 decisions</span></span>
-        <span className="block">Speed {one(activeDot.p.speed)}{activeDot.p.latency != null && <span className="bh-muted"> · median {secs(activeDot.p.latency)}</span>}</span>
+        <span className="block">Speed {kind === 'speed' ? one(plotSpeed(activeDot.p)) : one(activeDot.p.speed)}{kind === 'speed' && activeDot.p.medianSpeed != null && <span className="bh-muted"> (median)</span>}{kind === 'speed' && activeDot.p.medianSpeed == null && <span className="bh-muted"> (Speed-axis fallback)</span>}{activeDot.p.latency != null && <span className="bh-muted"> · median {secs(activeDot.p.latency)}</span>}</span>
         <span className="block">JevBench Score {one(activeDot.p.score)}{activeDot.p.rank != null ? <span className="bh-muted"> · official #{activeDot.p.rank}</span> : <span className="bh-muted"> · not ranked</span>}</span>
         <span className="block">{activeDot.p.inClass ? <>Jev-class{activeDot.p.classRank != null ? ` · Capability #${activeDot.p.classRank}` : ''}</> : <span className="bh-muted">Outside Jev-class: {activeDot.p.outsideBecause}</span>}</span>
       </div>}

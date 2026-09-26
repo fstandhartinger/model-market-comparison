@@ -3,7 +3,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { jevClassRows, medianLatency } from '../lib/jevbench-jev-class.mjs';
+import { jevClassRows, medianLatency, medianLatencySpeed, speedFromLatency } from '../lib/jevbench-jev-class.mjs';
 import { weightedJevScore, OFFICIAL_WEIGHTS, isOfficialWeights } from '../lib/jevbench-axis-weights.mjs';
 
 const read = (p) => readFileSync(new URL(p, import.meta.url), 'utf8');
@@ -48,6 +48,33 @@ test('Jev-class = cost and median latency each at most 2x Jev 1.13.0', () => {
   assert.equal(jevk5.inClass, true);
   assert.ok(Math.abs(limits.speedFloor - (reference.speed - 20 * Math.log10(2))) < 1e-9);
   assert.equal(medianLatency({ speed: { p50_s_raw: 0.3, adjustment: 'x2 + 0.15 s' } }), null, 'raw latency of a self-hosted row is not the adjusted one');
+});
+
+// CR-176.3: the Capability-vs-speed bubble chart must agree with the latency line. It plots the median-latency
+// speed (speedFromLatency of the adjusted p50, the latency the gate uses), NOT the published composite Speed axis
+// (a p50/p95 blend). With live v1.4.2 data the blend moved 7 in-class systems to the wrong side of the line.
+test('CR-176.3: every in-class row plots at or right of the latency line on the speed chart', () => {
+  const { reference, rows } = jevClassRows(artifact.systems);
+  const line = speedFromLatency(2 * reference.latency);
+  assert.ok(Math.abs(line - (speedFromLatency(reference.latency) - 20 * Math.log10(2))) < 1e-12, 'line = 2x the reference median latency');
+  let checked = 0, withMedian = 0;
+  for (const r of rows) {
+    if (!r.inClass) continue;
+    const plotted = medianLatencySpeed(r.row) ?? r.row.axes?.speed; // the chart's plotSpeed: median fallback to composite
+    assert.ok(plotted != null, r.row.key);
+    assert.ok(plotted >= line - 1e-9, `${r.row.key}: plotted ${plotted} < line ${line}`);
+    checked += 1;
+    if (medianLatencySpeed(r.row) != null) withMedian += 1;
+  }
+  assert.ok(checked >= 40, `only ${checked} checked`);
+  assert.ok(withMedian >= checked - 3, 'only the v1.3 carryovers should lack a median');
+});
+
+test('CR-176.4/.5: $/1k keeps numeric sort but loses the green heat in the board views', () => {
+  const chart = read('../components/JevBoardInteractive.tsx');
+  assert.match(chart, /label="\$\/1k decisions"/); // CR-176.4: header names the unit
+  assert.ok(!/HeatTd heat=\{heat\} column="usd"/.test(chart), 'no heat on the $/1k table cell');
+  assert.match(chart, /k="usd" label="\$\/1k/);
 });
 
 test('page order: Capability headline, bubble charts, then the composite chart with sliders, compare and table', () => {

@@ -281,7 +281,7 @@ export function JevScoreChart({ revision, rows: officialRows, rankedCount, newLa
         <SortButton k="calibration" label="Calib." sort={sort} toggle={toggle} className="justify-end" />
         <SortButton k="speed" label="Speed" sort={sort} toggle={toggle} className="justify-end" />
         <SortButton k="cost" label="Cost" sort={sort} toggle={toggle} className="justify-end" />
-        <SortButton k="usd" label="$/1k" sort={sort} toggle={toggle} className="justify-end" title="Sort by US dollars per 1,000 decisions" />
+        <SortButton k="usd" label="$/1k decisions" sort={sort} toggle={toggle} className="justify-end" title="Sort by US dollars per 1,000 decisions" />
       </span>
     </div>
     <p className="sr-only" aria-live="polite" data-bh-jev-sort-status>{status}</p>
@@ -304,7 +304,7 @@ export function JevScoreChart({ revision, rows: officialRows, rankedCount, newLa
       {types.map((t) => <li key={t} style={typeVar(t)} data-bh-jev14-class={t} data-bh-jev14-class-labelled={JEV_TYPE_LABEL[t] ? '1' : '0'}><span className="bh-jevc-swatch mr-1.5" />{JEV_TYPE_LABEL[t] ?? <code title="Class named in the artifact; description pending">{t}</code>}</li>)}
       {unranked > 0 && <li><span className="bh-jevc-swatch is-partial mr-1.5" />Shown, not ranked</li>}
     </ul>
-    <figcaption className="bh-muted mt-3 text-[11.5px] leading-snug">I, C, S, K = Intelligence, Calibration, Speed, Cost; ~ est. = <a href="#jev-costs" className="text-accent underline">estimated cost</a>; ann. = announced price; API = the operator&apos;s endpoint saw sealed item text, without answers{newLabel ? <>; new = first listed in {newLabel}</> : null}; $/1k = US dollars per 1,000 decisions. <span className="hidden sm:inline">Click a column heading to sort. </span>Names link to each project.</figcaption>
+    <figcaption className="bh-muted mt-3 text-[11.5px] leading-snug">I, C, S, K = Intelligence, Calibration, Speed, Cost; the est. pill = <a href="#jev-costs" className="text-accent underline">estimated cost</a>; ann. = announced price; API = the operator&apos;s endpoint saw sealed item text, without answers{newLabel ? <>; new = first listed in {newLabel}</> : null}; $/1k decisions = US dollars per 1,000 decisions (not heat-shaded). <span className="hidden sm:inline">Click a column heading to sort. </span>Names link to each project.</figcaption>
   </figure>;
 }
 
@@ -346,13 +346,14 @@ function SystemName({ row }: { row: JevBoardViewRow }) {
   </div>;
 }
 
+// CR-176.5: cost in this table is not heat-shaded, and est./ann. sit as pills left of a right-aligned tabular number.
 function CostValue({ row }: { row: JevBoardViewRow }) {
   const value = dollars(row.cost?.usd_per_1000);
   const kind = row.cost?.kind;
-  return <span title={row.cost?.basis} className="whitespace-nowrap">
-    {kind === 'estimate' ? `~${value}` : value}
-    {kind === 'estimate' && <span className="bh-thin-tag bh-est-tag ml-1" data-bh-jev14-est={row.key}>est.</span>}
-    {kind === 'announced' && <span className="bh-thin-tag ml-1">announced</span>}
+  return <span title={row.cost?.basis} className="tabular whitespace-nowrap" data-bh-jev14-cost-cell>
+    {kind === 'estimate' && <span className="bh-thin-tag bh-est-tag mr-1 align-middle" data-bh-jev14-est={row.key}>est.</span>}
+    {kind === 'announced' && <span className="bh-thin-tag mr-1 align-middle" data-bh-jev14-ann={row.key}>ann.</span>}
+    {value}
   </span>;
 }
 
@@ -377,7 +378,8 @@ function Row({ row, heat }: { row: JevBoardViewRow; heat: HeatScales }) {
     <HeatTd heat={heat} column="public" row={row}>{percent(row.public_accuracy)}</HeatTd>
     <HeatTd heat={heat} column="sealed" row={row}>{percent(row.sealed_accuracy)}</HeatTd>
     <td className="tabular whitespace-nowrap">{percentagePoints(row.public_minus_sealed_gap_pp)}</td>
-    <HeatTd heat={heat} column="usd" row={row}><CostValue row={row} /></HeatTd>
+    {/* CR-176.5: no green heat on the $/1k column. */}
+    <td className="tabular whitespace-nowrap text-right" data-bh-jev14-usd><CostValue row={row} /></td>
     <HeatTd heat={heat} column="latency" row={row} className="whitespace-nowrap"><span title={row.speed?.adjustment ?? undefined}>{seconds(row.speed?.p50_s_raw)}</span></HeatTd>
     <td className="text-[12px]" title={row.endpoint_condition}>{endpointLabel(row.endpoint_kind)}</td>
   </tr>;
@@ -399,7 +401,7 @@ export function JevAxesTable({ rows, publicDecisions, sealedDecisions, newLabel 
   const captionId = useId();
   return <>
     <FilterBar rows={rows} filters={filters} setFilters={setFilters} shown={shown.length} newLabel={newLabel} idPrefix="table" />
-    <p className="bh-muted mt-2 text-xs"><HeatLegend latency /> Badges: <span className="bh-thin-tag bh-flag-tag">API</span> sealed text went to the operator&apos;s endpoint · <span className="bh-thin-tag bh-est-tag">est.</span> estimated price · <span className="bh-thin-tag">announced</span> price not yet bookable · <span className="bh-thin-tag bh-partial-tag">not ranked</span> partial run or honorable mention{newLabel ? <> · <span className="bh-new-tag">new</span> first listed in {newLabel}</> : null}.</p>
+    <p className="bh-muted mt-2 text-xs"><HeatLegend latency /> Badges: <span className="bh-thin-tag bh-flag-tag">API</span> sealed text went to the operator&apos;s endpoint · <span className="bh-thin-tag bh-est-tag">est.</span> estimated price · <span className="bh-thin-tag">ann.</span> announced price not yet bookable · <span className="bh-thin-tag bh-partial-tag">not ranked</span> partial run or honorable mention{newLabel ? <> · <span className="bh-new-tag">new</span> first listed in {newLabel}</> : null}.</p>
     <div className="bh-table-wrap mt-3">
       <table className="bh-table bh-jev-table" data-bh-jev14-table aria-describedby={captionId}>
         <thead><tr>
