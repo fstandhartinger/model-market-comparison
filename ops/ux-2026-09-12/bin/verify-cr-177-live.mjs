@@ -137,7 +137,9 @@ let inAppTarget = null;
 // ── 5. Two distinct browser clients on this public host produce two anonymous visitors. ───────────
 const visitorBeforeClients = await stats(dayAgo).catch((e) => ({ error: e.message }));
 for (const client of CLIENTS) {
-  const context = await fresh({}, client.userAgent);
+  // Each host run gets a fresh profile suffix so the second host's check is not
+  // satisfied by the same fixed UAs that the first host already counted.
+  const context = await fresh({}, `${client.userAgent} BH-CR178-${RUN}`);
   const page = await context.newPage();
   const path = client.name === 'Chrome client' ? '/jev-models' : '/image-jev-bench';
   const res = await page.goto(`${BASE}${path}`, { waitUntil: 'domcontentloaded', timeout: 60_000 }).catch(() => null);
