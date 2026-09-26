@@ -12890,3 +12890,17 @@ Not done here, still open: D219's remedy, CR-176.6's remaining non-implementer r
 sign-offs iteration 239 owes (F-203/F-204/F-205, D215, D216, CR-156.1–.3), CR-156.4, X6's remaining audit
 surface, the CR rows no harness covers (CR-148.1/.2, CR-152.1/.2/.5, CR-153.4, CR-158.4), Umami's own
 retention (CR-67.5 §7.4 residual 1), and F-206 (the CR-172 job's). **`ALL-ACCEPTED` is not appended.**
+
+## CR-178 ledger seeding — 2026-09-26 (review gate)
+
+The five acceptance rows in `04-CR-BRIEF.md` were missing from this ledger at review start
+(HEAD `0340d89f`). Seeded here as `open` before recording any independent review result; CR-178
+implementation had already merged in PR #45. This seed-only commit preserves the section 0 rule.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| CR-178.1 | open | — | First-party relay must forward only validated ingress IP and bounded actual UA through configured Umami headers; retain DNT/GPC and bot/prefetch/route checks; no identity in body, path, query, or browser storage. |
+| CR-178.2 | open | — | Both public hosts must count two distinct test clients, full loads and SPA changes; custom events and normal bot filtering continue. |
+| CR-178.3 | open | — | Daily check must alert for pageviews > 0 with visitors ≤ 1, or pageviews = 0 while events > 0. |
+| CR-178.4 | open | — | Privacy and consent records must describe IP/UA handling, aggregate breakdowns, retention, daily salt, and historical reconstruction limits. |
+| CR-178.5 | open | — | Normal isolated worktree/PR/queue, independent privacy review, live verification on both hosts, and CR ledger/OUTPUT updates. |
