@@ -12951,6 +12951,15 @@ joined rows; the remaining unjoined names are an identity-map question for anoth
 the 05:17 refresh, which is the row's real proof. Its live board was re-fetched at 23:11 UTC with the capture
 script's user agent and matches the 05:26 capture row for row.
 
+**Simulated next day before it lands** (`simulate-nextday.json`, `npm-test-nextday.log`), in a scratch worktree at
+`0540215f`: the three arms refreshed against the 05:26 capture, then ingest, build-dataset and the **full suite —
+1,444 / 1,443 pass / 0 fail / 1 skip**. Creative-writing 133 → 140 rows, longform 134 → 140, vending-bench ten rows
+with `GPT-6 Sol`, `Grok 4.7` and `Claude Opus 5.5` in and the three displaced rows out; zero badged names anywhere
+and zero badged labels returning as estimates. Each withdrawn row becomes 52 dated "no longer published"
+estimates, one per retained state — the same shape the existing MathArena withdrawal has (36), not a new defect.
+The plan's pinned `source` is read-only for the daily, so the parser test's row counts (133/134/10, read from the
+2026-09-10 captures) do not move tomorrow.
+
 ### D217 — the credential was gone again, three hours later
 
 The push failed with `could not read Username` and `~/.gitconfig` had **no** `[credential]` section at all — less
@@ -12971,7 +12980,7 @@ rather than an incident. Two things changed:
 
 | ID | Status | Evidence | Notes |
 |---|---|---|---|
-| D219 | open (diagnosed) → **implemented + verified live** | `60dfdb27`; `live/verification.json` **105/105** on three hosts; `simulate-{before,after}.json`; `scores-diff.json`; pins `test/d219-display-badge-corrections.test.mjs`, `test/d219-badge-parser.test.mjs` | Badge declared per source and stripped, 27 identities corrected and withheld under the old locator, 3 displaced Vending-Bench rows withdrawn with their locators. The simulator still fails closed on the pre-fix state. Written by this engine — a different one should re-run both tests and `verify-d219-live.mjs`. |
+| D219 | open (diagnosed) → **implemented + verified live** | `60dfdb27`; `live/verification.json` and `live-b5e1829b/verification.json` **105/105** each on three hosts; `simulate-{before,after}.json`; `simulate-nextday.json`; `scores-diff.json`; pins `test/d219-display-badge-corrections.test.mjs`, `test/d219-badge-parser.test.mjs` | Badge declared per source and stripped, 27 identities corrected and withheld under the old locator, 3 displaced Vending-Bench rows withdrawn with their locators. The simulator still fails closed on the pre-fix state. Written by this engine — a different one should re-run both tests and `verify-d219-live.mjs`. |
 | D219.1 (new) | **open** | `scores-diff.json` | The remaining unjoined eqbench names (106 of 133 on creative-writing) are an identity-map question this iteration deliberately left alone; a rushed join is the D180/D186 trap. |
 | D214 | diagnosed → **partly repaired** | this section; the 05:17 run is the proof | Three of the 27 retained arms were D219 and are fixed here. The 402 cascade was fixed in iteration 240 and the 00:41 and 05:17 runs are its proof; neither had run when this iteration started. |
 | D192 | open (largely subsumed) | — | Unchanged; the honest remainder is whatever survives the next two runs. |
