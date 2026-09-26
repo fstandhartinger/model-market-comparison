@@ -1,0 +1,752 @@
+{
+ "method": "AudioJevBench v0.1 (METHOD.md) on JevBench v1.5 scorer",
+ "G_med": null,
+ "gap_allowance": 15.0,
+ "blend": [
+  0.25,
+  0.75
+ ],
+ "difficulty_mismatch_flag": null,
+ "systems": [
+  {
+   "key": "gemini-3.5-flash-lite (gemini-direct)",
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "support_families": null,
+   "table": "public-only (provisional)",
+   "api_flag": true,
+   "sealed_route": false,
+   "n_items_scored": 6,
+   "n_rows": 6,
+   "n_error_rows": 0,
+   "I_public": 88.88888888888889,
+   "I_sealed": null,
+   "base": null,
+   "gap": null,
+   "excess": null,
+   "penalty": null,
+   "Intelligence": null,
+   "typed": {
+    "open/choice": 77.77777777777777,
+    "open/noul": 100.0,
+    "open/score": 100.0,
+    "sealed/choice": null,
+    "sealed/noul": null,
+    "sealed/score": null
+   },
+   "typed_n": {
+    "open/choice": 3,
+    "open/noul": 2,
+    "open/score": 1,
+    "sealed/choice": 0,
+    "sealed/noul": 0,
+    "sealed/score": 0
+   },
+   "planned_weight": 1.0,
+   "Calibration": 50.0,
+   "calibration_parts": {
+    "choice": {
+     "ece_hard": null,
+     "ece_score": null,
+     "mean_tvd": null,
+     "n_tvd": 0,
+     "n": 3,
+     "n_ece_hard": 0,
+     "score": null
+    },
+    "noul": {
+     "ece": 0.0,
+     "brier": 0.0,
+     "n": 2,
+     "score": 100.0,
+     "abstention_rate": 0.0
+    },
+    "score": {
+     "nrps": 0.0,
+     "top_ece": 0.0,
+     "n": 1,
+     "interval90_coverage": 1.0,
+     "interval90_width": 0.0,
+     "score": 100.0
+    }
+   },
+   "p50_s": 1.4074908643960953,
+   "p95_s": 1.6275636713951827,
+   "p50_adj_s": 1.4074908643960953,
+   "p95_adj_s": 1.6275636713951827,
+   "n_latency": 4,
+   "Speed": 76.4001642787619,
+   "cost": {
+    "usd_per_1000": 0.19221666666666667,
+    "basis": "tokens",
+    "list_usd_per_1000": 0.19221666666666667,
+    "floor_usd_per_1000": null,
+    "floor_binds": false,
+    "estimate": false,
+    "source": "OR snapshot list price",
+    "note": "no base-model floor"
+   },
+   "Cost": 31.48626875066671,
+   "composite": {
+    "A": 20.84415364360651,
+    "B": 22.69944210124653,
+    "C": 20.84415364360651
+   },
+   "headline": 22.69944210124653,
+   "views": {
+    "Intelligence only": 35.24924870539417,
+    "Emphasis on Accuracy 60:20:20": 25.226452482064392,
+    "Emphasis on Speed 20:60:20": 24.09877459605508,
+    "Emphasis on Cost 20:20:60": 16.57576782732185,
+    "Balanced 33:33:33": 21.206532261266165
+   },
+   "Capability": 69.44444444444444,
+   "jev_class": false,
+   "robustness": {
+    "clean": {
+     "acc": 0.8333333333333334,
+     "n": 6
+    },
+    "noisy_le5db": {
+     "acc": null,
+     "n": 0
+    },
+    "english": {
+     "acc": 0.8333333333333334,
+     "n": 6
+    },
+    "non_english": {
+     "acc": null,
+     "n": 0
+    },
+    "background_talker": {
+     "acc": null,
+     "n": 0
+    },
+    "overlap": {
+     "acc": null,
+     "n": 0
+    },
+    "speaker_verification": {
+     "acc": null,
+     "n": 0
+    },
+    "sound_event": {
+     "acc": 0.5,
+     "n": 2
+    },
+    "sound_under_speech": {
+     "acc": null,
+     "n": 0
+    },
+    "snr_15db": {
+     "acc": null,
+     "n": 0
+    },
+    "snr_10db": {
+     "acc": null,
+     "n": 0
+    },
+    "snr_5db": {
+     "acc": null,
+     "n": 0
+    },
+    "snr_0db": {
+     "acc": null,
+     "n": 0
+    },
+    "noise_slope_clean_minus_le5db": null,
+    "language_gap_en_minus_non_en": null
+   },
+   "I_public_ci95": [
+    77.77777777777777,
+    100.0
+   ]
+  },
+  {
+   "key": "gpt-audio-mini (openai-direct)",
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "support_families": null,
+   "table": "public-only (provisional)",
+   "api_flag": true,
+   "sealed_route": false,
+   "n_items_scored": 6,
+   "n_rows": 6,
+   "n_error_rows": 0,
+   "I_public": 81.51388888888889,
+   "I_sealed": null,
+   "base": null,
+   "gap": null,
+   "excess": null,
+   "penalty": null,
+   "Intelligence": null,
+   "typed": {
+    "open/choice": 77.77777777777777,
+    "open/noul": 100.0,
+    "open/score": 70.5,
+    "sealed/choice": null,
+    "sealed/noul": null,
+    "sealed/score": null
+   },
+   "typed_n": {
+    "open/choice": 3,
+    "open/noul": 2,
+    "open/score": 1,
+    "sealed/choice": 0,
+    "sealed/noul": 0,
+    "sealed/score": 0
+   },
+   "planned_weight": 1.0,
+   "Calibration": 39.003437500000004,
+   "calibration_parts": {
+    "choice": {
+     "ece_hard": null,
+     "ece_score": null,
+     "mean_tvd": null,
+     "n_tvd": 0,
+     "n": 3,
+     "n_ece_hard": 0,
+     "score": null
+    },
+    "noul": {
+     "ece": 0.030000000000000023,
+     "brier": 0.0013000000000000021,
+     "n": 2,
+     "score": 94.0,
+     "abstention_rate": 0.0
+    },
+    "score": {
+     "nrps": 0.039724999999999996,
+     "top_ece": 0.36,
+     "n": 1,
+     "interval90_coverage": 1.0,
+     "interval90_width": 0.5,
+     "score": 62.01375
+    }
+   },
+   "p50_s": 0.9638411924242973,
+   "p95_s": 1.9767179179936643,
+   "p50_adj_s": 0.9638411924242973,
+   "p95_adj_s": 1.9767179179936643,
+   "n_latency": 4,
+   "Speed": 77.20049817905138,
+   "cost": {
+    "usd_per_1000": 0.8949333333333334,
+    "basis": "tokens",
+    "list_usd_per_1000": 0.8949333333333334,
+    "floor_usd_per_1000": null,
+    "floor_binds": false,
+    "estimate": true,
+    "source": null,
+    "note": "no base-model floor"
+   },
+   "Cost": 11.446279467131689,
+   "composite": {
+    "A": 1.5165738004351959,
+    "B": 1.741182042123218,
+    "C": 1.5165738004351959
+   },
+   "headline": 1.741182042123218,
+   "views": {
+    "Intelligence only": 4.271892298618249,
+    "Emphasis on Accuracy 60:20:20": 1.9109672953152663,
+    "Emphasis on Speed 20:60:20": 1.8920515002541345,
+    "Emphasis on Cost 20:20:60": 0.9120115548918306,
+    "Balanced 33:33:33": 1.3964534196591671
+   },
+   "Capability": 60.258663194444445,
+   "jev_class": false,
+   "robustness": {
+    "clean": {
+     "acc": 0.80875,
+     "n": 6
+    },
+    "noisy_le5db": {
+     "acc": null,
+     "n": 0
+    },
+    "english": {
+     "acc": 0.80875,
+     "n": 6
+    },
+    "non_english": {
+     "acc": null,
+     "n": 0
+    },
+    "background_talker": {
+     "acc": null,
+     "n": 0
+    },
+    "overlap": {
+     "acc": null,
+     "n": 0
+    },
+    "speaker_verification": {
+     "acc": null,
+     "n": 0
+    },
+    "sound_event": {
+     "acc": 0.5,
+     "n": 2
+    },
+    "sound_under_speech": {
+     "acc": null,
+     "n": 0
+    },
+    "snr_15db": {
+     "acc": null,
+     "n": 0
+    },
+    "snr_10db": {
+     "acc": null,
+     "n": 0
+    },
+    "snr_5db": {
+     "acc": null,
+     "n": 0
+    },
+    "snr_0db": {
+     "acc": null,
+     "n": 0
+    },
+    "noise_slope_clean_minus_le5db": null,
+    "language_gap_en_minus_non_en": null
+   },
+   "I_public_ci95": [
+    70.40277777777777,
+    92.625
+   ]
+  },
+  {
+   "key": "gpt-realtime-2.1-mini (openai-direct)",
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "support_families": null,
+   "table": "public-only (provisional)",
+   "api_flag": true,
+   "sealed_route": false,
+   "n_items_scored": 6,
+   "n_rows": 6,
+   "n_error_rows": 6,
+   "I_public": -72.22222222222221,
+   "I_sealed": null,
+   "base": null,
+   "gap": null,
+   "excess": null,
+   "penalty": null,
+   "Intelligence": null,
+   "typed": {
+    "open/choice": -44.444444444444436,
+    "open/noul": -100.0,
+    "open/score": -100.0,
+    "sealed/choice": null,
+    "sealed/noul": null,
+    "sealed/score": null
+   },
+   "typed_n": {
+    "open/choice": 3,
+    "open/noul": 2,
+    "open/score": 1,
+    "sealed/choice": 0,
+    "sealed/noul": 0,
+    "sealed/score": 0
+   },
+   "planned_weight": 1.0,
+   "Calibration": 0.0,
+   "calibration_parts": {},
+   "p50_s": null,
+   "p95_s": null,
+   "p50_adj_s": null,
+   "p95_adj_s": null,
+   "n_latency": 0,
+   "Speed": null,
+   "cost": {
+    "usd_per_1000": 2.065466666666667,
+    "basis": "tokens",
+    "list_usd_per_1000": 2.065466666666667,
+    "floor_usd_per_1000": null,
+    "floor_binds": false,
+    "estimate": false,
+    "source": null,
+    "note": "no base-model floor"
+   },
+   "Cost": 0.549454283505554,
+   "composite": {
+    "A": null,
+    "B": null,
+    "C": null
+   },
+   "headline": null,
+   "views": {
+    "Intelligence only": 0.0,
+    "Emphasis on Accuracy 60:20:20": null,
+    "Emphasis on Speed 20:60:20": null,
+    "Emphasis on Cost 20:20:60": null,
+    "Balanced 33:33:33": null
+   },
+   "Capability": 0.0,
+   "jev_class": false,
+   "robustness": {
+    "clean": {
+     "acc": 0.0,
+     "n": 6
+    },
+    "noisy_le5db": {
+     "acc": null,
+     "n": 0
+    },
+    "english": {
+     "acc": 0.0,
+     "n": 6
+    },
+    "non_english": {
+     "acc": null,
+     "n": 0
+    },
+    "background_talker": {
+     "acc": null,
+     "n": 0
+    },
+    "overlap": {
+     "acc": null,
+     "n": 0
+    },
+    "speaker_verification": {
+     "acc": null,
+     "n": 0
+    },
+    "sound_event": {
+     "acc": 0.0,
+     "n": 2
+    },
+    "sound_under_speech": {
+     "acc": null,
+     "n": 0
+    },
+    "snr_15db": {
+     "acc": null,
+     "n": 0
+    },
+    "snr_10db": {
+     "acc": null,
+     "n": 0
+    },
+    "snr_5db": {
+     "acc": null,
+     "n": 0
+    },
+    "snr_0db": {
+     "acc": null,
+     "n": 0
+    },
+    "noise_slope_clean_minus_le5db": null,
+    "language_gap_en_minus_non_en": null
+   },
+   "I_public_ci95": [
+    -72.22222222222221,
+    -72.22222222222221
+   ]
+  },
+  {
+   "key": "clap (local-cpu, diagnostic)",
+   "support": {
+    "choice": "native"
+   },
+   "support_families": [
+    "sound_event"
+   ],
+   "table": "partial coverage, public-only",
+   "api_flag": false,
+   "sealed_route": true,
+   "n_items_scored": 2,
+   "n_rows": 2,
+   "n_error_rows": 0,
+   "I_public": 100.0,
+   "I_sealed": null,
+   "base": null,
+   "gap": null,
+   "excess": null,
+   "penalty": null,
+   "Intelligence": null,
+   "typed": {
+    "open/choice": 100.0,
+    "open/noul": null,
+    "open/score": null,
+    "sealed/choice": null,
+    "sealed/noul": null,
+    "sealed/score": null
+   },
+   "typed_n": {
+    "open/choice": 2,
+    "open/noul": 0,
+    "open/score": 0,
+    "sealed/choice": 0,
+    "sealed/noul": 0,
+    "sealed/score": 0
+   },
+   "planned_weight": 0.5,
+   "Calibration": 0.0,
+   "calibration_parts": {
+    "choice": {
+     "ece_hard": null,
+     "ece_score": null,
+     "mean_tvd": null,
+     "n_tvd": 0,
+     "n": 2,
+     "n_ece_hard": 0,
+     "score": null
+    }
+   },
+   "p50_s": null,
+   "p95_s": null,
+   "p50_adj_s": null,
+   "p95_adj_s": null,
+   "n_latency": 0,
+   "Speed": null,
+   "cost": {
+    "usd_per_1000": 0.001,
+    "basis": "override",
+    "list_usd_per_1000": 0.001,
+    "floor_usd_per_1000": null,
+    "floor_binds": false,
+    "estimate": true,
+    "source": "placeholder for smoke",
+    "note": "no base-model floor"
+   },
+   "Cost": 100.0,
+   "composite": {
+    "A": null,
+    "B": null,
+    "C": null
+   },
+   "headline": null,
+   "views": {
+    "Intelligence only": 100.0,
+    "Emphasis on Accuracy 60:20:20": null,
+    "Emphasis on Speed 20:60:20": null,
+    "Emphasis on Cost 20:20:60": null,
+    "Balanced 33:33:33": null
+   },
+   "Capability": 50.0,
+   "jev_class": false,
+   "robustness": {
+    "clean": {
+     "acc": 1.0,
+     "n": 2
+    },
+    "noisy_le5db": {
+     "acc": null,
+     "n": 0
+    },
+    "english": {
+     "acc": 1.0,
+     "n": 2
+    },
+    "non_english": {
+     "acc": null,
+     "n": 0
+    },
+    "background_talker": {
+     "acc": null,
+     "n": 0
+    },
+    "overlap": {
+     "acc": null,
+     "n": 0
+    },
+    "speaker_verification": {
+     "acc": null,
+     "n": 0
+    },
+    "sound_event": {
+     "acc": 1.0,
+     "n": 2
+    },
+    "sound_under_speech": {
+     "acc": null,
+     "n": 0
+    },
+    "snr_15db": {
+     "acc": null,
+     "n": 0
+    },
+    "snr_10db": {
+     "acc": null,
+     "n": 0
+    },
+    "snr_5db": {
+     "acc": null,
+     "n": 0
+    },
+    "snr_0db": {
+     "acc": null,
+     "n": 0
+    },
+    "noise_slope_clean_minus_le5db": null,
+    "language_gap_en_minus_non_en": null
+   },
+   "I_public_ci95": [
+    100.0,
+    100.0
+   ]
+  },
+  {
+   "key": "ast (local-cpu, diagnostic)",
+   "support": {
+    "choice": "native"
+   },
+   "support_families": [
+    "sound_event"
+   ],
+   "table": "partial coverage, public-only",
+   "api_flag": false,
+   "sealed_route": true,
+   "n_items_scored": 2,
+   "n_rows": 2,
+   "n_error_rows": 0,
+   "I_public": 100.0,
+   "I_sealed": null,
+   "base": null,
+   "gap": null,
+   "excess": null,
+   "penalty": null,
+   "Intelligence": null,
+   "typed": {
+    "open/choice": 100.0,
+    "open/noul": null,
+    "open/score": null,
+    "sealed/choice": null,
+    "sealed/noul": null,
+    "sealed/score": null
+   },
+   "typed_n": {
+    "open/choice": 2,
+    "open/noul": 0,
+    "open/score": 0,
+    "sealed/choice": 0,
+    "sealed/noul": 0,
+    "sealed/score": 0
+   },
+   "planned_weight": 0.5,
+   "Calibration": 0.0,
+   "calibration_parts": {
+    "choice": {
+     "ece_hard": null,
+     "ece_score": null,
+     "mean_tvd": null,
+     "n_tvd": 0,
+     "n": 2,
+     "n_ece_hard": 0,
+     "score": null
+    }
+   },
+   "p50_s": null,
+   "p95_s": null,
+   "p50_adj_s": null,
+   "p95_adj_s": null,
+   "n_latency": 0,
+   "Speed": null,
+   "cost": {
+    "usd_per_1000": 0.001,
+    "basis": "override",
+    "list_usd_per_1000": 0.001,
+    "floor_usd_per_1000": null,
+    "floor_binds": false,
+    "estimate": true,
+    "source": "placeholder for smoke",
+    "note": "no base-model floor"
+   },
+   "Cost": 100.0,
+   "composite": {
+    "A": null,
+    "B": null,
+    "C": null
+   },
+   "headline": null,
+   "views": {
+    "Intelligence only": 100.0,
+    "Emphasis on Accuracy 60:20:20": null,
+    "Emphasis on Speed 20:60:20": null,
+    "Emphasis on Cost 20:20:60": null,
+    "Balanced 33:33:33": null
+   },
+   "Capability": 50.0,
+   "jev_class": false,
+   "robustness": {
+    "clean": {
+     "acc": 1.0,
+     "n": 2
+    },
+    "noisy_le5db": {
+     "acc": null,
+     "n": 0
+    },
+    "english": {
+     "acc": 1.0,
+     "n": 2
+    },
+    "non_english": {
+     "acc": null,
+     "n": 0
+    },
+    "background_talker": {
+     "acc": null,
+     "n": 0
+    },
+    "overlap": {
+     "acc": null,
+     "n": 0
+    },
+    "speaker_verification": {
+     "acc": null,
+     "n": 0
+    },
+    "sound_event": {
+     "acc": 1.0,
+     "n": 2
+    },
+    "sound_under_speech": {
+     "acc": null,
+     "n": 0
+    },
+    "snr_15db": {
+     "acc": null,
+     "n": 0
+    },
+    "snr_10db": {
+     "acc": null,
+     "n": 0
+    },
+    "snr_5db": {
+     "acc": null,
+     "n": 0
+    },
+    "snr_0db": {
+     "acc": null,
+     "n": 0
+    },
+    "noise_slope_clean_minus_le5db": null,
+    "language_gap_en_minus_non_en": null
+   },
+   "I_public_ci95": [
+    100.0,
+    100.0
+   ]
+  }
+ ],
+ "preview_meta": {
+  "source": "harness/runs/smoke/scores.json",
+  "source_sha256": "33e5da8e2e16cdee8e26e2fcaf72fb233a28128795102f5f4f8c285ce9b810cf",
+  "exported_at": "2026-09-26 04:35 UTC"
+ }
+}

@@ -10,7 +10,11 @@ const nextConfig = {
   // CR-56.3: WebMCP tools may register only in this site's own top-level pages and same-origin frames
   // (a cross-origin frame never gets them; unknown to browsers without WebMCP).
   async headers() {
-    return [{ source: "/:path*", headers: [{ key: "Permissions-Policy", value: "tools=(self)" }] }];
+    return [
+      { source: "/:path*", headers: [{ key: "Permissions-Policy", value: "tools=(self)" }] },
+      // Unlisted AudioJevBench WIP preview: never indexed, even if a link leaks.
+      { source: "/wip-33gyqg9xwm5y/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }] },
+    ];
   },
 };
 
