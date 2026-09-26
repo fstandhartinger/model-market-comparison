@@ -1,6 +1,6 @@
 {
   "version": "2026-09-18",
-  "note": "Benchmaxxing calibration tier table (job bh-benchmaxxing-calibration-20260917). Keyed by benchmark family (registry id before '::'). Tiers: headline = public question set that labs quote in release posts, so it is the board most exposed to targeted tuning and contamination; heldout = private/unpublished questions, tasks created after most training cutoffs, or a held-out split, which a lab cannot tune toward; domain = a vertical professional domain (legal, finance, spreadsheet, medical) whose gaps mostly show specialisation; secondary = public but rarely quoted, or measures a trait rather than task skill; aggregate = an index built from other boards (never compared); judged = graded by votes or a judge model (already outside the signal). Only benchmark facts decide a tier, never who scores well on it. 2026-09-19 (CR-54.2): six Epoch AI Benchmarking Hub boards joined with deliberate tiers; math_level_5 (2021 legacy, saturated MATH-500 precedent) and frontiermath_erdos (all five published rows score 0, not in ECI, benchmark_metadata leaves its source file blank) were excluded — see data/raw/benchmarks/epoch-hub-decisions.json.",
+  "note": "Benchmaxxing calibration tier table (job bh-benchmaxxing-calibration-20260917). Keyed by benchmark family (registry id before '::'). Tiers: headline = public question set that labs quote in release posts, so it is the board most exposed to targeted tuning and contamination; heldout = private/unpublished questions, tasks created after most training cutoffs, or a held-out split, which a lab cannot tune toward; domain = a vertical professional domain (legal, finance, spreadsheet, medical) whose gaps mostly show specialisation; secondary = public but rarely quoted, or measures a trait rather than task skill; aggregate = an index built from other boards (never compared); judged = graded by votes or a judge model (already outside the signal). Only benchmark facts decide a tier, never who scores well on it. 2026-09-19 (CR-54.2): six Epoch AI Benchmarking Hub boards joined with deliberate tiers; math_level_5 (2021 legacy, saturated MATH-500 precedent) and frontiermath_erdos (all five published rows score 0, not in ECI, benchmark_metadata leaves its source file blank) were excluded — see data/raw/benchmarks/epoch-hub-decisions.json. 2026-09-26 (CR-173): furniture-assembly and frontiermath-erdos (heldout, Epoch hub archive of 2026-09-26; the erdos exclusion was revisited because a non-zero result is now published), the two SWE-Bench Pro V2 boards (secondary) and LMArena WebDev/Agent (judged).",
   "tiers": {
     "aa-aime": {
       "tier": "headline",
@@ -161,6 +161,46 @@
       "tier": "domain",
       "domain": "Legal",
       "reason": "Case and statute research."
+    },
+    "vals-code-migration": {
+      "tier": "secondary",
+      "reason": "CR-173: standalone board of the Vals private Code Migration task set, which already enters the signal as a heldout board through its Vals Index component (vals-index-code-migration); kept out of the pairs so one task set is not counted twice."
+    },
+    "vals-vibe-code-bench": {
+      "tier": "secondary",
+      "reason": "CR-173: standalone Vibe Code Bench v1.1 board; the same Vals private app-building tasks already enter the signal as a heldout board through the Vals Index component (vals-index-vibe-code-bench); kept out of the pairs so one task set is not counted twice."
+    },
+    "vals-proofbench-v1-1": {
+      "tier": "heldout",
+      "reason": "CR-173: Vals private theorem-proving set (page metadata dataset_type private); labs cannot tune toward unpublished proofs."
+    },
+    "vals-programbench": {
+      "tier": "headline",
+      "reason": "CR-173: public ProgramBench task set (page metadata dataset_type public) run by Vals; our self-reported corpus has lab release material quoting ProgramBench (DeepSeek, Xiaomi MiMo, StepFun), so it is a board a training team can aim at."
+    },
+    "vals-ioi": {
+      "tier": "secondary",
+      "reason": "CR-173: public olympiad problems (IOI 2024-2026; page metadata dataset_type public) run by Vals; no lab release post in our self-reported corpus quotes it, so public yet rarely quoted (MCPMark precedent)."
+    },
+    "vals-emb": {
+      "tier": "domain",
+      "domain": "Finance",
+      "reason": "CR-173: standalone EMB board; financial models in spreadsheets, as vals-index-emb."
+    },
+    "vals-tax-agent-bench": {
+      "tier": "domain",
+      "domain": "Finance",
+      "reason": "CR-173: research-grade US tax questions (Vals industry finance, private set); a gap shows specialisation."
+    },
+    "vals-medscribe": {
+      "tier": "domain",
+      "domain": "Medical",
+      "reason": "CR-173: doctors' administrative documentation (Vals industry healthcare, private set)."
+    },
+    "vals-medcode": {
+      "tier": "domain",
+      "domain": "Medical",
+      "reason": "CR-173: medical billing support (Vals industry healthcare, private set)."
     },
     "aa-mlcr": {
       "tier": "domain",
@@ -387,6 +427,34 @@
     "charxiv-reasoning": {
       "tier": "judged",
       "reason": "GPT-4o extracts each final answer from the model's response and scores it 0/1 against the ground-truth answer (README: \"scores graded by GPT-4o\"; rubric in src/constants.py of github.com/princeton-nlp/CharXiv); judge-graded boards stay outside the signal, as for Surge Chartography."
+    },
+    "arc-agi": {
+      "tier": "heldout",
+      "reason": "CR-173 (2026-09-26): ARC Prize scores verified results on its Semi-Private Evaluation Set, which its testing policy lists under Private Tasks (\"not publicly available\"); the policy itself notes possible limited leakage because tasks are sent to provider APIs, so this is held-out rather than sealed."
+    },
+    "furniture-assembly": {
+      "tier": "heldout",
+      "reason": "Photos of Epoch AI’s own IKEA builds with deliberate mistakes, released 2026-09-23 and not published as a question set; run only by Epoch AI (CR-173)."
+    },
+    "frontiermath-erdos": {
+      "tier": "heldout",
+      "reason": "68 Erdős problems that were open as of August 2026, resolved only by a machine-checked Lean proof; no answer key exists to train toward (CR-173)."
+    },
+    "scale-swe-bench-pro-v2-full": {
+      "tier": "secondary",
+      "reason": "Public copyleft task set (SWE-Bench Pro V2, 642 tasks, released 2026-09-22 with a locked protocol), run by Scale itself; new split, not yet a release-post headline (CR-173)."
+    },
+    "scale-swe-bench-pro-v2-hard": {
+      "tier": "secondary",
+      "reason": "Hard subset of the public SWE-Bench Pro V2 split, run by Scale itself under the same locked protocol; public tasks, rarely quoted (CR-173)."
+    },
+    "lmarena-webdev": {
+      "tier": "judged",
+      "reason": "Ranked by pairwise community votes (Bradley-Terry), already outside the accuracy signal (CR-173)."
+    },
+    "lmarena-agent": {
+      "tier": "judged",
+      "reason": "Ranked by user feedback and behavioural signals from Agent Mode sessions relative to the average model, not task accuracy (CR-173)."
     }
   }
 }

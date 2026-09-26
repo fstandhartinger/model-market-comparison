@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "entries": [
+    {
+      "benchmark_id": "vals-index-cost::2",
+      "parser": {
+        "kind": "astro_props",
+        "component": "/_astro/BenchmarkView.",
+        "row_path": "benchmarkView.tasks.overall",
+        "require": {
+          "benchmarkView.metadata.benchmark": "Vals Index",
+          "benchmarkView.metadata.version": "2"
+        },
+        "name_field": "name",
+        "value_field": "cost_per_test",
+        "plain_text_names": true,
+        "context_keys": [
+          "accuracy",
+          "stderr",
+          "cost_per_test",
+          "latency",
+          "compute_effort",
+          "reasoning_effort",
+          "max_output_tokens",
+          "provider"
+        ],
+        "ignored_nested_fields": [
+          "token_totals"
+        ]
+      },
+      "status": "collected",
+      "reason": "Vals AI publishes a USD cost per test next to the index score; it is not a score and never enters the Composite.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/vals-index-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
+        "format": "Astro island props embedded in the server-rendered page",
+        "locator": "Astro island BenchmarkView props (decoded [type, value] pairs): benchmarkView.tasks.overall, one entry per model slug; field cost_per_test. Guard benchmarkView.metadata.version == \"2\".",
+        "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
+        "notes": "robots.txt allows the whole site (User-agent: * / Allow: /). One page request; no API call, no JavaScript execution. The index version is part of the identity: a new Vals Index version or component set is a new registry identity. Model slugs stay source labels; no catalog join or effort inference."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
+      "source": {
+        "url": "https://www.vals.ai/benchmarks/vals_index",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-26-vals-simplebench/capture/b99902ee631d2073658f.gz",
+        "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+        "retrieved_at": "2026-09-26T04:22:13.903077+00:00"
+      },
+      "protocol": "Vals Index v2 (source metadata.version \"2\"; Vals re-dates the page when it adds models, so the page date is carried by each row's own capture, not by this identity), overall; published cost per test in USD per model slug; accuracy and latency retained as context, not converted.",
+      "basis": "measured",
+      "minimum_rows": 55,
+      "source_urls": [
+        "https://www.vals.ai/benchmarks/vals_index"
+      ]
+    }
+  ]
+}

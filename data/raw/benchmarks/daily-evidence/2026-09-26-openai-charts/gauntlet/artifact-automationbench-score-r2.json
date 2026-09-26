@@ -1,0 +1,453 @@
+{
+  "schema_version": 1,
+  "observations": [
+    {
+      "id": "self-reported:gpt-6-astra-low-openai-automationbench-1-0-6",
+      "benchmark_id": "openai-automationbench::1.0.6",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#automationbench/GPT-6 Astra/low",
+        "name": "GPT-6 Astra",
+        "model_id": "gpt-6-astra::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 30.3,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "Chart dataset field \"score\" is a fraction (the chart formats it as a percentage); value = score x 100 in registry units (percent)",
+        "inputs": [
+          0.303
+        ]
+      },
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"AutomationBench 1.0.6, chart dataset entry model GPT-6 Astra with effortLabel low\", under \"score\" (a fraction; stored x100 in percent, see derivation). Section \"Professional work\", figure \"AutomationBench\" (chart component id 6Wjade52MYfGKn3j2msH9N, dotcomConfig.linkId \"automationbench\"; figure caption: \"In AutomationBench 1.0.6, AI agents are tested on end-to-end workflows using 47 tools across sales, marketing, operations, support, finance, and HR. The datapoint for Claude Fable 5.1 understates its actual cost, as it omits the cost of the Opus 5 fallbacks, which occurred on ~40% of tasks.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Astra\" and effortLabel \"low\"; exact datapoint: {\"model\":\"GPT-6 Astra\",\"cost_label\":\"$$1.08\",\"score\":0.303,\"cost\":1.08,\"order\":0,\"modelLabel\":\"GPT-6 Astra\",\"effortLabel\":\"low\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Astra at low reasoning effort on AutomationBench 1.0.6 (figure caption as quoted in the locator), taken from the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available. Cross-check: OpenAI's earlier GPT-6 Astra launch post (2026-09-03; Wayback copy https://web.archive.org/web/20260920053907id_/https://openai.com/index/gpt-6-astra/, sha256 28dd99f38f5b866d258624acb06096052eb946e4299d22d2b515b66566eefa7a) charts this Astra configuration in \"AutomationBench\" as {\"effort_display\":\"Low\",\"mode\":\"Cost\",\"model_display\":\"GPT-6 Astra\",\"score\":0.303,\"x_label\":\"$$1.09\",\"x_value\":1.087119,\"series_order\":1}. This row carries only the 2026-09-22 dataset value.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"low\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-astra::low and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-astra-medium-openai-automationbench-1-0-6",
+      "benchmark_id": "openai-automationbench::1.0.6",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#automationbench/GPT-6 Astra/medium",
+        "name": "GPT-6 Astra",
+        "model_id": "gpt-6-astra::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 34.1,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "Chart dataset field \"score\" is a fraction (the chart formats it as a percentage); value = score x 100 in registry units (percent)",
+        "inputs": [
+          0.341
+        ]
+      },
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"AutomationBench 1.0.6, chart dataset entry model GPT-6 Astra with effortLabel medium\", under \"score\" (a fraction; stored x100 in percent, see derivation). Section \"Professional work\", figure \"AutomationBench\" (chart component id 6Wjade52MYfGKn3j2msH9N, dotcomConfig.linkId \"automationbench\"; figure caption: \"In AutomationBench 1.0.6, AI agents are tested on end-to-end workflows using 47 tools across sales, marketing, operations, support, finance, and HR. The datapoint for Claude Fable 5.1 understates its actual cost, as it omits the cost of the Opus 5 fallbacks, which occurred on ~40% of tasks.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Astra\" and effortLabel \"medium\"; exact datapoint: {\"model\":\"GPT-6 Astra\",\"cost_label\":\"$$1.27\",\"score\":0.341,\"cost\":1.27,\"order\":1,\"modelLabel\":\"GPT-6 Astra\",\"effortLabel\":\"medium\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Astra at medium reasoning effort on AutomationBench 1.0.6 (figure caption as quoted in the locator), taken from the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available. Cross-check: OpenAI's earlier GPT-6 Astra launch post (2026-09-03; Wayback copy https://web.archive.org/web/20260920053907id_/https://openai.com/index/gpt-6-astra/, sha256 28dd99f38f5b866d258624acb06096052eb946e4299d22d2b515b66566eefa7a) charts this Astra configuration in \"AutomationBench\" as {\"effort_display\":\"Medium\",\"mode\":\"Cost\",\"model_display\":\"GPT-6 Astra\",\"score\":0.341,\"x_label\":\"$$1.29\",\"x_value\":1.2853265,\"series_order\":2}. This row carries only the 2026-09-22 dataset value.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"medium\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-astra::medium and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-astra-high-openai-automationbench-1-0-6",
+      "benchmark_id": "openai-automationbench::1.0.6",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#automationbench/GPT-6 Astra/high",
+        "name": "GPT-6 Astra",
+        "model_id": "gpt-6-astra::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 37.1,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "Chart dataset field \"score\" is a fraction (the chart formats it as a percentage); value = score x 100 in registry units (percent)",
+        "inputs": [
+          0.371
+        ]
+      },
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"AutomationBench 1.0.6, chart dataset entry model GPT-6 Astra with effortLabel high\", under \"score\" (a fraction; stored x100 in percent, see derivation). Section \"Professional work\", figure \"AutomationBench\" (chart component id 6Wjade52MYfGKn3j2msH9N, dotcomConfig.linkId \"automationbench\"; figure caption: \"In AutomationBench 1.0.6, AI agents are tested on end-to-end workflows using 47 tools across sales, marketing, operations, support, finance, and HR. The datapoint for Claude Fable 5.1 understates its actual cost, as it omits the cost of the Opus 5 fallbacks, which occurred on ~40% of tasks.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Astra\" and effortLabel \"high\"; exact datapoint: {\"model\":\"GPT-6 Astra\",\"cost_label\":\"$$1.44\",\"score\":0.371,\"cost\":1.44,\"order\":2,\"modelLabel\":\"GPT-6 Astra\",\"effortLabel\":\"high\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Astra at high reasoning effort on AutomationBench 1.0.6 (figure caption as quoted in the locator), taken from the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available. Cross-check: OpenAI's earlier GPT-6 Astra launch post (2026-09-03; Wayback copy https://web.archive.org/web/20260920053907id_/https://openai.com/index/gpt-6-astra/, sha256 28dd99f38f5b866d258624acb06096052eb946e4299d22d2b515b66566eefa7a) charts this Astra configuration in \"AutomationBench\" as {\"effort_display\":\"High\",\"mode\":\"Cost\",\"model_display\":\"GPT-6 Astra\",\"score\":0.371,\"x_label\":\"$$1.46\",\"x_value\":1.4558175,\"series_order\":3}. This row carries only the 2026-09-22 dataset value.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"high\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-astra::high and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-astra-xhigh-openai-automationbench-1-0-6",
+      "benchmark_id": "openai-automationbench::1.0.6",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#automationbench/GPT-6 Astra/xhigh",
+        "name": "GPT-6 Astra",
+        "model_id": "gpt-6-astra::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 39.0,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "Chart dataset field \"score\" is a fraction (the chart formats it as a percentage); value = score x 100 in registry units (percent)",
+        "inputs": [
+          0.39
+        ]
+      },
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"AutomationBench 1.0.6, chart dataset entry model GPT-6 Astra with effortLabel xhigh\", under \"score\" (a fraction; stored x100 in percent, see derivation). Section \"Professional work\", figure \"AutomationBench\" (chart component id 6Wjade52MYfGKn3j2msH9N, dotcomConfig.linkId \"automationbench\"; figure caption: \"In AutomationBench 1.0.6, AI agents are tested on end-to-end workflows using 47 tools across sales, marketing, operations, support, finance, and HR. The datapoint for Claude Fable 5.1 understates its actual cost, as it omits the cost of the Opus 5 fallbacks, which occurred on ~40% of tasks.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Astra\" and effortLabel \"xhigh\"; exact datapoint: {\"model\":\"GPT-6 Astra\",\"cost_label\":\"$$1.50\",\"score\":0.39,\"cost\":1.5,\"order\":3,\"modelLabel\":\"GPT-6 Astra\",\"effortLabel\":\"xhigh\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Astra at xhigh reasoning effort on AutomationBench 1.0.6 (figure caption as quoted in the locator), taken from the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available. Cross-check: OpenAI's earlier GPT-6 Astra launch post (2026-09-03; Wayback copy https://web.archive.org/web/20260920053907id_/https://openai.com/index/gpt-6-astra/, sha256 28dd99f38f5b866d258624acb06096052eb946e4299d22d2b515b66566eefa7a) charts this Astra configuration in \"AutomationBench\" as {\"effort_display\":\"Xhigh\",\"mode\":\"Cost\",\"model_display\":\"GPT-6 Astra\",\"score\":0.39,\"x_label\":\"$$1.53\",\"x_value\":1.5305975,\"series_order\":4}. This row carries only the 2026-09-22 dataset value.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"xhigh\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-astra::xhigh and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-astra-max-openai-automationbench-1-0-6",
+      "benchmark_id": "openai-automationbench::1.0.6",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#automationbench/GPT-6 Astra/max",
+        "name": "GPT-6 Astra",
+        "model_id": "gpt-6-astra::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 41.4,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "Chart dataset field \"score\" is a fraction (the chart formats it as a percentage); value = score x 100 in registry units (percent)",
+        "inputs": [
+          0.414
+        ]
+      },
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"AutomationBench 1.0.6, chart dataset entry model GPT-6 Astra with effortLabel max\", under \"score\" (a fraction; stored x100 in percent, see derivation). Section \"Professional work\", figure \"AutomationBench\" (chart component id 6Wjade52MYfGKn3j2msH9N, dotcomConfig.linkId \"automationbench\"; figure caption: \"In AutomationBench 1.0.6, AI agents are tested on end-to-end workflows using 47 tools across sales, marketing, operations, support, finance, and HR. The datapoint for Claude Fable 5.1 understates its actual cost, as it omits the cost of the Opus 5 fallbacks, which occurred on ~40% of tasks.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Astra\" and effortLabel \"max\"; exact datapoint: {\"model\":\"GPT-6 Astra\",\"cost_label\":\"$$1.73\",\"score\":0.414,\"cost\":1.73,\"order\":4,\"modelLabel\":\"GPT-6 Astra\",\"effortLabel\":\"max\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Astra at max reasoning effort on AutomationBench 1.0.6 (figure caption as quoted in the locator), taken from the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available. Cross-check: OpenAI's earlier GPT-6 Astra launch post (2026-09-03; Wayback copy https://web.archive.org/web/20260920053907id_/https://openai.com/index/gpt-6-astra/, sha256 28dd99f38f5b866d258624acb06096052eb946e4299d22d2b515b66566eefa7a) charts this Astra configuration in \"AutomationBench\" as {\"effort_display\":\"Max\",\"mode\":\"Cost\",\"model_display\":\"GPT-6 Astra\",\"score\":0.414,\"x_label\":\"$$1.77\",\"x_value\":1.770966,\"series_order\":5}. This row carries only the 2026-09-22 dataset value.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"max\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-astra::max and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-luna-low-openai-automationbench-1-0-6",
+      "benchmark_id": "openai-automationbench::1.0.6",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#automationbench/GPT-6 Luna/low",
+        "name": "GPT-6 Luna",
+        "model_id": "gpt-6-luna::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 1.2,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "Chart dataset field \"score\" is a fraction (the chart formats it as a percentage); value = score x 100 in registry units (percent)",
+        "inputs": [
+          0.012
+        ]
+      },
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"AutomationBench 1.0.6, chart dataset entry model GPT-6 Luna with effortLabel low\", under \"score\" (a fraction; stored x100 in percent, see derivation). Section \"Professional work\", figure \"AutomationBench\" (chart component id 6Wjade52MYfGKn3j2msH9N, dotcomConfig.linkId \"automationbench\"; figure caption: \"In AutomationBench 1.0.6, AI agents are tested on end-to-end workflows using 47 tools across sales, marketing, operations, support, finance, and HR. The datapoint for Claude Fable 5.1 understates its actual cost, as it omits the cost of the Opus 5 fallbacks, which occurred on ~40% of tasks.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Luna\" and effortLabel \"low\"; exact datapoint: {\"model\":\"GPT-6 Luna\",\"cost_label\":\"$$0.0060\",\"score\":0.012,\"cost\":0.006,\"order\":0,\"modelLabel\":\"GPT-6 Luna\",\"effortLabel\":\"low\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Luna at low reasoning effort on AutomationBench 1.0.6 (figure caption as quoted in the locator), taken from the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"low\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-luna::low and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-luna-medium-openai-automationbench-1-0-6",
+      "benchmark_id": "openai-automationbench::1.0.6",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#automationbench/GPT-6 Luna/medium",
+        "name": "GPT-6 Luna",
+        "model_id": "gpt-6-luna::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 9.4,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "Chart dataset field \"score\" is a fraction (the chart formats it as a percentage); value = score x 100 in registry units (percent)",
+        "inputs": [
+          0.094
+        ]
+      },
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"AutomationBench 1.0.6, chart dataset entry model GPT-6 Luna with effortLabel medium\", under \"score\" (a fraction; stored x100 in percent, see derivation). Section \"Professional work\", figure \"AutomationBench\" (chart component id 6Wjade52MYfGKn3j2msH9N, dotcomConfig.linkId \"automationbench\"; figure caption: \"In AutomationBench 1.0.6, AI agents are tested on end-to-end workflows using 47 tools across sales, marketing, operations, support, finance, and HR. The datapoint for Claude Fable 5.1 understates its actual cost, as it omits the cost of the Opus 5 fallbacks, which occurred on ~40% of tasks.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Luna\" and effortLabel \"medium\"; exact datapoint: {\"model\":\"GPT-6 Luna\",\"cost_label\":\"$$0.016\",\"score\":0.094,\"cost\":0.0163,\"order\":1,\"modelLabel\":\"GPT-6 Luna\",\"effortLabel\":\"medium\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Luna at medium reasoning effort on AutomationBench 1.0.6 (figure caption as quoted in the locator), taken from the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"medium\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-luna::medium and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-luna-high-openai-automationbench-1-0-6",
+      "benchmark_id": "openai-automationbench::1.0.6",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#automationbench/GPT-6 Luna/high",
+        "name": "GPT-6 Luna",
+        "model_id": "gpt-6-luna::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 14.5,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "Chart dataset field \"score\" is a fraction (the chart formats it as a percentage); value = score x 100 in registry units (percent)",
+        "inputs": [
+          0.145
+        ]
+      },
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"AutomationBench 1.0.6, chart dataset entry model GPT-6 Luna with effortLabel high\", under \"score\" (a fraction; stored x100 in percent, see derivation). Section \"Professional work\", figure \"AutomationBench\" (chart component id 6Wjade52MYfGKn3j2msH9N, dotcomConfig.linkId \"automationbench\"; figure caption: \"In AutomationBench 1.0.6, AI agents are tested on end-to-end workflows using 47 tools across sales, marketing, operations, support, finance, and HR. The datapoint for Claude Fable 5.1 understates its actual cost, as it omits the cost of the Opus 5 fallbacks, which occurred on ~40% of tasks.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Luna\" and effortLabel \"high\"; exact datapoint: {\"model\":\"GPT-6 Luna\",\"cost_label\":\"$$0.021\",\"score\":0.145,\"cost\":0.0208,\"order\":2,\"modelLabel\":\"GPT-6 Luna\",\"effortLabel\":\"high\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Luna at high reasoning effort on AutomationBench 1.0.6 (figure caption as quoted in the locator), taken from the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"high\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-luna::high and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-luna-xhigh-openai-automationbench-1-0-6",
+      "benchmark_id": "openai-automationbench::1.0.6",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#automationbench/GPT-6 Luna/xhigh",
+        "name": "GPT-6 Luna",
+        "model_id": "gpt-6-luna::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 12.6,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "Chart dataset field \"score\" is a fraction (the chart formats it as a percentage); value = score x 100 in registry units (percent)",
+        "inputs": [
+          0.126
+        ]
+      },
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"AutomationBench 1.0.6, chart dataset entry model GPT-6 Luna with effortLabel xhigh\", under \"score\" (a fraction; stored x100 in percent, see derivation). Section \"Professional work\", figure \"AutomationBench\" (chart component id 6Wjade52MYfGKn3j2msH9N, dotcomConfig.linkId \"automationbench\"; figure caption: \"In AutomationBench 1.0.6, AI agents are tested on end-to-end workflows using 47 tools across sales, marketing, operations, support, finance, and HR. The datapoint for Claude Fable 5.1 understates its actual cost, as it omits the cost of the Opus 5 fallbacks, which occurred on ~40% of tasks.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Luna\" and effortLabel \"xhigh\"; exact datapoint: {\"model\":\"GPT-6 Luna\",\"cost_label\":\"$$0.025\",\"score\":0.126,\"cost\":0.0245,\"order\":3,\"modelLabel\":\"GPT-6 Luna\",\"effortLabel\":\"xhigh\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Luna at xhigh reasoning effort on AutomationBench 1.0.6 (figure caption as quoted in the locator), taken from the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"xhigh\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-luna::xhigh and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-luna-max-openai-automationbench-1-0-6",
+      "benchmark_id": "openai-automationbench::1.0.6",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#automationbench/GPT-6 Luna/max",
+        "name": "GPT-6 Luna",
+        "model_id": "gpt-6-luna::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 20.7,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "Chart dataset field \"score\" is a fraction (the chart formats it as a percentage); value = score x 100 in registry units (percent)",
+        "inputs": [
+          0.207
+        ]
+      },
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"AutomationBench 1.0.6, chart dataset entry model GPT-6 Luna with effortLabel max\", under \"score\" (a fraction; stored x100 in percent, see derivation). Section \"Professional work\", figure \"AutomationBench\" (chart component id 6Wjade52MYfGKn3j2msH9N, dotcomConfig.linkId \"automationbench\"; figure caption: \"In AutomationBench 1.0.6, AI agents are tested on end-to-end workflows using 47 tools across sales, marketing, operations, support, finance, and HR. The datapoint for Claude Fable 5.1 understates its actual cost, as it omits the cost of the Opus 5 fallbacks, which occurred on ~40% of tasks.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Luna\" and effortLabel \"max\"; exact datapoint: {\"model\":\"GPT-6 Luna\",\"cost_label\":\"$$0.037\",\"score\":0.207,\"cost\":0.0367,\"order\":4,\"modelLabel\":\"GPT-6 Luna\",\"effortLabel\":\"max\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Luna at max reasoning effort on AutomationBench 1.0.6 (figure caption as quoted in the locator), taken from the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"max\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-luna::max and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-sol-low-openai-automationbench-1-0-6",
+      "benchmark_id": "openai-automationbench::1.0.6",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#automationbench/GPT-6 Sol/low",
+        "name": "GPT-6 Sol",
+        "model_id": "gpt-6-sol::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 21.16,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "Chart dataset field \"score\" is a fraction (the chart formats it as a percentage); value = score x 100 in registry units (percent)",
+        "inputs": [
+          0.2116
+        ]
+      },
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"AutomationBench 1.0.6, chart dataset entry model GPT-6 Sol with effortLabel low\", under \"score\" (a fraction; stored x100 in percent, see derivation). Section \"Professional work\", figure \"AutomationBench\" (chart component id 6Wjade52MYfGKn3j2msH9N, dotcomConfig.linkId \"automationbench\"; figure caption: \"In AutomationBench 1.0.6, AI agents are tested on end-to-end workflows using 47 tools across sales, marketing, operations, support, finance, and HR. The datapoint for Claude Fable 5.1 understates its actual cost, as it omits the cost of the Opus 5 fallbacks, which occurred on ~40% of tasks.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Sol\" and effortLabel \"low\"; exact datapoint: {\"model\":\"GPT-6 Sol\",\"cost_label\":\"$$0.19\",\"score\":0.2116,\"cost\":0.1861,\"order\":0,\"modelLabel\":\"GPT-6 Sol\",\"effortLabel\":\"low\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Sol at low reasoning effort on AutomationBench 1.0.6 (figure caption as quoted in the locator), taken from the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"low\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-sol::low and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-sol-medium-openai-automationbench-1-0-6",
+      "benchmark_id": "openai-automationbench::1.0.6",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#automationbench/GPT-6 Sol/medium",
+        "name": "GPT-6 Sol",
+        "model_id": "gpt-6-sol::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 26.94,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "Chart dataset field \"score\" is a fraction (the chart formats it as a percentage); value = score x 100 in registry units (percent)",
+        "inputs": [
+          0.2694
+        ]
+      },
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"AutomationBench 1.0.6, chart dataset entry model GPT-6 Sol with effortLabel medium\", under \"score\" (a fraction; stored x100 in percent, see derivation). Section \"Professional work\", figure \"AutomationBench\" (chart component id 6Wjade52MYfGKn3j2msH9N, dotcomConfig.linkId \"automationbench\"; figure caption: \"In AutomationBench 1.0.6, AI agents are tested on end-to-end workflows using 47 tools across sales, marketing, operations, support, finance, and HR. The datapoint for Claude Fable 5.1 understates its actual cost, as it omits the cost of the Opus 5 fallbacks, which occurred on ~40% of tasks.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Sol\" and effortLabel \"medium\"; exact datapoint: {\"model\":\"GPT-6 Sol\",\"cost_label\":\"$$0.21\",\"score\":0.2694,\"cost\":0.2098,\"order\":1,\"modelLabel\":\"GPT-6 Sol\",\"effortLabel\":\"medium\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Sol at medium reasoning effort on AutomationBench 1.0.6 (figure caption as quoted in the locator), taken from the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"medium\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-sol::medium and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-sol-high-openai-automationbench-1-0-6",
+      "benchmark_id": "openai-automationbench::1.0.6",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#automationbench/GPT-6 Sol/high",
+        "name": "GPT-6 Sol",
+        "model_id": "gpt-6-sol::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 31.2,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "Chart dataset field \"score\" is a fraction (the chart formats it as a percentage); value = score x 100 in registry units (percent)",
+        "inputs": [
+          0.312
+        ]
+      },
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"AutomationBench 1.0.6, chart dataset entry model GPT-6 Sol with effortLabel high\", under \"score\" (a fraction; stored x100 in percent, see derivation). Section \"Professional work\", figure \"AutomationBench\" (chart component id 6Wjade52MYfGKn3j2msH9N, dotcomConfig.linkId \"automationbench\"; figure caption: \"In AutomationBench 1.0.6, AI agents are tested on end-to-end workflows using 47 tools across sales, marketing, operations, support, finance, and HR. The datapoint for Claude Fable 5.1 understates its actual cost, as it omits the cost of the Opus 5 fallbacks, which occurred on ~40% of tasks.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Sol\" and effortLabel \"high\"; exact datapoint: {\"model\":\"GPT-6 Sol\",\"cost_label\":\"$$0.24\",\"score\":0.312,\"cost\":0.2368,\"order\":2,\"modelLabel\":\"GPT-6 Sol\",\"effortLabel\":\"high\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Sol at high reasoning effort on AutomationBench 1.0.6 (figure caption as quoted in the locator), taken from the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"high\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-sol::high and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-sol-max-openai-automationbench-1-0-6",
+      "benchmark_id": "openai-automationbench::1.0.6",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#automationbench/GPT-6 Sol/max",
+        "name": "GPT-6 Sol",
+        "model_id": "gpt-6-sol::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 31.96,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "Chart dataset field \"score\" is a fraction (the chart formats it as a percentage); value = score x 100 in registry units (percent)",
+        "inputs": [
+          0.3196
+        ]
+      },
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"AutomationBench 1.0.6, chart dataset entry model GPT-6 Sol with effortLabel max\", under \"score\" (a fraction; stored x100 in percent, see derivation). Section \"Professional work\", figure \"AutomationBench\" (chart component id 6Wjade52MYfGKn3j2msH9N, dotcomConfig.linkId \"automationbench\"; figure caption: \"In AutomationBench 1.0.6, AI agents are tested on end-to-end workflows using 47 tools across sales, marketing, operations, support, finance, and HR. The datapoint for Claude Fable 5.1 understates its actual cost, as it omits the cost of the Opus 5 fallbacks, which occurred on ~40% of tasks.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Sol\" and effortLabel \"max\"; exact datapoint: {\"model\":\"GPT-6 Sol\",\"cost_label\":\"$$0.34\",\"score\":0.3196,\"cost\":0.3406,\"order\":4,\"modelLabel\":\"GPT-6 Sol\",\"effortLabel\":\"max\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI for GPT-6 Sol at max reasoning effort on AutomationBench 1.0.6 (figure caption as quoted in the locator), taken from the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"max\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-sol::max and never an effort alias."
+    }
+  ]
+}

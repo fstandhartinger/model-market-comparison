@@ -76,6 +76,11 @@
       "field": "scoring.metric",
       "why": "Rubric items decide the score; tests only gate it."
     },
+    "frontiercode-extended": {
+      "quote": "weighted aggregate of the rubric items",
+      "field": "scoring.metric",
+      "why": "Rubric items decide the score; tests only gate it (CR-173: the same grading as the Main subset, on the full 150-task set)."
+    },
     "japanese-rp-bench-aratako": {
       "quote": "averaged over 4 judge models",
       "field": "scoring.metric",
@@ -243,7 +248,7 @@
     },
     "arc-agi": {
       "contamination": "Scored on the semi-private set, which is not published.",
-      "quote": "Semi-private exact grid task solution rate",
+      "quote": "Semi-private evaluation set task solution rate",
       "field": "scoring.metric"
     },
     "ifbench": {

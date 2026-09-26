@@ -1,0 +1,3256 @@
+{
+  "candidates": {
+    "frontiercode::1.1": {
+      "rows": 115,
+      "prior": 98,
+      "changed": 17
+    },
+    "frontiercode-cost::1.1": {
+      "rows": 115,
+      "prior": 98,
+      "changed": 17
+    }
+  },
+  "changed": [
+    {
+      "row": {
+        "id": "public:4f12e8261bb656b38a5235b6",
+        "benchmark_id": "frontiercode::1.1",
+        "subject": {
+          "source_id": "Claude Opus 5.5|low",
+          "name": "Claude Opus 5.5 · low",
+          "model_id": null,
+          "variant": null,
+          "harness": "claude-code"
+        },
+        "value": 47.3,
+        "unit": "percent",
+        "basis": "derived",
+        "source": {
+          "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+          "retrieved_at": "2026-09-26T04:23:00.682196+00:00",
+          "published_at": null,
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+          "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+          "locator": "effort_runs_json; source row 0; Claude Opus 5.5|low; field new_score"
+        },
+        "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"Claude Opus 5.5\",\"effort\":\"low\",\"subset\":\"main\",\"harness\":\"claude-code\",\"new_score\":0.473,\"correct\":0.5175,\"flagged_rate\":0,\"cost\":0.4036,\"tokens\":9061}",
+        "comparison_key": null,
+        "source_basis": "self_reported",
+        "derivation": {
+          "formula": "Source value × 100 to registry units",
+          "inputs": [
+            0.473
+          ]
+        },
+        "supporting_sources": [
+          {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00",
+            "published_at": null,
+            "locator": "method_source"
+          }
+        ]
+      },
+      "native_source_row": {
+        "source_row": {
+          "new_score": 0.473,
+          "correct": 0.5175,
+          "tokens": 9061,
+          "cost": 0.4036,
+          "duration_min": 4.87,
+          "tool_calls": 16.4,
+          "steps": 34.3,
+          "ote": null,
+          "flagged_rate": 0,
+          "name": "Claude Opus 5.5 · low",
+          "id": "Claude Opus 5.5|low",
+          "harness": "claude-code",
+          "source_row": 0,
+          "context": {
+            "model": "Claude Opus 5.5",
+            "effort": "low",
+            "subset": "main",
+            "harness": "claude-code",
+            "new_score": 0.473,
+            "correct": 0.5175,
+            "flagged_rate": 0,
+            "cost": 0.4036,
+            "tokens": 9061
+          }
+        },
+        "parser": {
+          "kind": "effort_runs_json",
+          "row_path": "v1_1",
+          "subset": "main",
+          "require": {
+            "subsets.main": 100
+          },
+          "name_field": "name",
+          "value_field": "new_score",
+          "id_field": "id",
+          "harness_field": "harness",
+          "plain_text_names": true,
+          "scale": 100,
+          "context_keys": [
+            "new_score",
+            "correct",
+            "flagged_rate",
+            "cost",
+            "tokens"
+          ],
+          "method_source": {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+          }
+        },
+        "source_index": 0
+      },
+      "prior": null
+    },
+    {
+      "row": {
+        "id": "public:9bd0fdee8f06a7f740e36367",
+        "benchmark_id": "frontiercode::1.1",
+        "subject": {
+          "source_id": "Claude Opus 5.5|medium",
+          "name": "Claude Opus 5.5 · medium",
+          "model_id": null,
+          "variant": null,
+          "harness": "claude-code"
+        },
+        "value": 54.64,
+        "unit": "percent",
+        "basis": "derived",
+        "source": {
+          "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+          "retrieved_at": "2026-09-26T04:23:00.682196+00:00",
+          "published_at": null,
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+          "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+          "locator": "effort_runs_json; source row 1; Claude Opus 5.5|medium; field new_score"
+        },
+        "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"Claude Opus 5.5\",\"effort\":\"medium\",\"subset\":\"main\",\"harness\":\"claude-code\",\"new_score\":0.5464,\"correct\":0.596,\"flagged_rate\":0,\"cost\":0.8016,\"tokens\":18519}",
+        "comparison_key": null,
+        "source_basis": "self_reported",
+        "derivation": {
+          "formula": "Source value × 100 to registry units",
+          "inputs": [
+            0.5464
+          ]
+        },
+        "supporting_sources": [
+          {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00",
+            "published_at": null,
+            "locator": "method_source"
+          }
+        ]
+      },
+      "native_source_row": {
+        "source_row": {
+          "new_score": 0.5464,
+          "correct": 0.596,
+          "tokens": 18519,
+          "cost": 0.8016,
+          "duration_min": 6.34,
+          "tool_calls": 35.1,
+          "steps": 64,
+          "ote": null,
+          "flagged_rate": 0,
+          "name": "Claude Opus 5.5 · medium",
+          "id": "Claude Opus 5.5|medium",
+          "harness": "claude-code",
+          "source_row": 1,
+          "context": {
+            "model": "Claude Opus 5.5",
+            "effort": "medium",
+            "subset": "main",
+            "harness": "claude-code",
+            "new_score": 0.5464,
+            "correct": 0.596,
+            "flagged_rate": 0,
+            "cost": 0.8016,
+            "tokens": 18519
+          }
+        },
+        "parser": {
+          "kind": "effort_runs_json",
+          "row_path": "v1_1",
+          "subset": "main",
+          "require": {
+            "subsets.main": 100
+          },
+          "name_field": "name",
+          "value_field": "new_score",
+          "id_field": "id",
+          "harness_field": "harness",
+          "plain_text_names": true,
+          "scale": 100,
+          "context_keys": [
+            "new_score",
+            "correct",
+            "flagged_rate",
+            "cost",
+            "tokens"
+          ],
+          "method_source": {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+          }
+        },
+        "source_index": 1
+      },
+      "prior": null
+    },
+    {
+      "row": {
+        "id": "public:2401765576e3c0590d9762c3",
+        "benchmark_id": "frontiercode::1.1",
+        "subject": {
+          "source_id": "Claude Opus 5.5|high",
+          "name": "Claude Opus 5.5 · high",
+          "model_id": null,
+          "variant": null,
+          "harness": "claude-code"
+        },
+        "value": 53.99,
+        "unit": "percent",
+        "basis": "derived",
+        "source": {
+          "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+          "retrieved_at": "2026-09-26T04:23:00.682196+00:00",
+          "published_at": null,
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+          "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+          "locator": "effort_runs_json; source row 2; Claude Opus 5.5|high; field new_score"
+        },
+        "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"Claude Opus 5.5\",\"effort\":\"high\",\"subset\":\"main\",\"harness\":\"claude-code\",\"new_score\":0.5399,\"correct\":0.589,\"flagged_rate\":0,\"cost\":1.0896,\"tokens\":26143}",
+        "comparison_key": null,
+        "source_basis": "self_reported",
+        "derivation": {
+          "formula": "Source value × 100 to registry units",
+          "inputs": [
+            0.5399
+          ]
+        },
+        "supporting_sources": [
+          {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00",
+            "published_at": null,
+            "locator": "method_source"
+          }
+        ]
+      },
+      "native_source_row": {
+        "source_row": {
+          "new_score": 0.5399,
+          "correct": 0.589,
+          "tokens": 26143,
+          "cost": 1.0896,
+          "duration_min": 7.2,
+          "tool_calls": 43.1,
+          "steps": 74.6,
+          "ote": null,
+          "flagged_rate": 0,
+          "name": "Claude Opus 5.5 · high",
+          "id": "Claude Opus 5.5|high",
+          "harness": "claude-code",
+          "source_row": 2,
+          "context": {
+            "model": "Claude Opus 5.5",
+            "effort": "high",
+            "subset": "main",
+            "harness": "claude-code",
+            "new_score": 0.5399,
+            "correct": 0.589,
+            "flagged_rate": 0,
+            "cost": 1.0896,
+            "tokens": 26143
+          }
+        },
+        "parser": {
+          "kind": "effort_runs_json",
+          "row_path": "v1_1",
+          "subset": "main",
+          "require": {
+            "subsets.main": 100
+          },
+          "name_field": "name",
+          "value_field": "new_score",
+          "id_field": "id",
+          "harness_field": "harness",
+          "plain_text_names": true,
+          "scale": 100,
+          "context_keys": [
+            "new_score",
+            "correct",
+            "flagged_rate",
+            "cost",
+            "tokens"
+          ],
+          "method_source": {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+          }
+        },
+        "source_index": 2
+      },
+      "prior": null
+    },
+    {
+      "row": {
+        "id": "public:194a115799accdd3e35ddad1",
+        "benchmark_id": "frontiercode::1.1",
+        "subject": {
+          "source_id": "Claude Opus 5.5|xhigh",
+          "name": "Claude Opus 5.5 · xhigh",
+          "model_id": null,
+          "variant": null,
+          "harness": "claude-code"
+        },
+        "value": 51.42,
+        "unit": "percent",
+        "basis": "derived",
+        "source": {
+          "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+          "retrieved_at": "2026-09-26T04:23:00.682196+00:00",
+          "published_at": null,
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+          "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+          "locator": "effort_runs_json; source row 3; Claude Opus 5.5|xhigh; field new_score"
+        },
+        "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"Claude Opus 5.5\",\"effort\":\"xhigh\",\"subset\":\"main\",\"harness\":\"claude-code\",\"new_score\":0.5142,\"correct\":0.568,\"flagged_rate\":0,\"cost\":2.2545,\"tokens\":60182}",
+        "comparison_key": null,
+        "source_basis": "self_reported",
+        "derivation": {
+          "formula": "Source value × 100 to registry units",
+          "inputs": [
+            0.5142
+          ]
+        },
+        "supporting_sources": [
+          {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00",
+            "published_at": null,
+            "locator": "method_source"
+          }
+        ]
+      },
+      "native_source_row": {
+        "source_row": {
+          "new_score": 0.5142,
+          "correct": 0.568,
+          "tokens": 60182,
+          "cost": 2.2545,
+          "duration_min": 11.21,
+          "tool_calls": 61.9,
+          "steps": 97.9,
+          "ote": null,
+          "flagged_rate": 0,
+          "name": "Claude Opus 5.5 · xhigh",
+          "id": "Claude Opus 5.5|xhigh",
+          "harness": "claude-code",
+          "source_row": 3,
+          "context": {
+            "model": "Claude Opus 5.5",
+            "effort": "xhigh",
+            "subset": "main",
+            "harness": "claude-code",
+            "new_score": 0.5142,
+            "correct": 0.568,
+            "flagged_rate": 0,
+            "cost": 2.2545,
+            "tokens": 60182
+          }
+        },
+        "parser": {
+          "kind": "effort_runs_json",
+          "row_path": "v1_1",
+          "subset": "main",
+          "require": {
+            "subsets.main": 100
+          },
+          "name_field": "name",
+          "value_field": "new_score",
+          "id_field": "id",
+          "harness_field": "harness",
+          "plain_text_names": true,
+          "scale": 100,
+          "context_keys": [
+            "new_score",
+            "correct",
+            "flagged_rate",
+            "cost",
+            "tokens"
+          ],
+          "method_source": {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+          }
+        },
+        "source_index": 3
+      },
+      "prior": null
+    },
+    {
+      "row": {
+        "id": "public:d68ce0c9239acd20fb5134b8",
+        "benchmark_id": "frontiercode::1.1",
+        "subject": {
+          "source_id": "Claude Opus 5.5|max",
+          "name": "Claude Opus 5.5 · max",
+          "model_id": null,
+          "variant": null,
+          "harness": "claude-code"
+        },
+        "value": 54.43,
+        "unit": "percent",
+        "basis": "derived",
+        "source": {
+          "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+          "retrieved_at": "2026-09-26T04:23:00.682196+00:00",
+          "published_at": null,
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+          "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+          "locator": "effort_runs_json; source row 4; Claude Opus 5.5|max; field new_score"
+        },
+        "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"Claude Opus 5.5\",\"effort\":\"max\",\"subset\":\"main\",\"harness\":\"claude-code\",\"new_score\":0.5443,\"correct\":0.6,\"flagged_rate\":0.008,\"cost\":6.191,\"tokens\":165811}",
+        "comparison_key": null,
+        "source_basis": "self_reported",
+        "derivation": {
+          "formula": "Source value × 100 to registry units",
+          "inputs": [
+            0.5443
+          ]
+        },
+        "supporting_sources": [
+          {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00",
+            "published_at": null,
+            "locator": "method_source"
+          }
+        ]
+      },
+      "native_source_row": {
+        "source_row": {
+          "new_score": 0.5443,
+          "correct": 0.6,
+          "tokens": 165811,
+          "cost": 6.191,
+          "duration_min": 25.01,
+          "tool_calls": 99.4,
+          "steps": 150.4,
+          "ote": null,
+          "flagged_rate": 0.008,
+          "name": "Claude Opus 5.5 · max",
+          "id": "Claude Opus 5.5|max",
+          "harness": "claude-code",
+          "source_row": 4,
+          "context": {
+            "model": "Claude Opus 5.5",
+            "effort": "max",
+            "subset": "main",
+            "harness": "claude-code",
+            "new_score": 0.5443,
+            "correct": 0.6,
+            "flagged_rate": 0.008,
+            "cost": 6.191,
+            "tokens": 165811
+          }
+        },
+        "parser": {
+          "kind": "effort_runs_json",
+          "row_path": "v1_1",
+          "subset": "main",
+          "require": {
+            "subsets.main": 100
+          },
+          "name_field": "name",
+          "value_field": "new_score",
+          "id_field": "id",
+          "harness_field": "harness",
+          "plain_text_names": true,
+          "scale": 100,
+          "context_keys": [
+            "new_score",
+            "correct",
+            "flagged_rate",
+            "cost",
+            "tokens"
+          ],
+          "method_source": {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+          }
+        },
+        "source_index": 4
+      },
+      "prior": null
+    },
+    {
+      "row": {
+        "id": "public:372ac94acfb1b3b83ee190ba",
+        "benchmark_id": "frontiercode::1.1",
+        "subject": {
+          "source_id": "GPT-6 Sol|low",
+          "name": "GPT-6 Sol · low",
+          "model_id": null,
+          "variant": null,
+          "harness": "codex"
+        },
+        "value": 37.28,
+        "unit": "percent",
+        "basis": "derived",
+        "source": {
+          "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+          "retrieved_at": "2026-09-26T04:23:00.682196+00:00",
+          "published_at": null,
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+          "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+          "locator": "effort_runs_json; source row 5; GPT-6 Sol|low; field new_score"
+        },
+        "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"GPT-6 Sol\",\"effort\":\"low\",\"subset\":\"main\",\"harness\":\"codex\",\"new_score\":0.3728,\"correct\":0.416,\"flagged_rate\":0.002,\"cost\":0.4324,\"tokens\":6463.0}",
+        "comparison_key": null,
+        "source_basis": "self_reported",
+        "derivation": {
+          "formula": "Source value × 100 to registry units",
+          "inputs": [
+            0.3728
+          ]
+        },
+        "supporting_sources": [
+          {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00",
+            "published_at": null,
+            "locator": "method_source"
+          }
+        ]
+      },
+      "native_source_row": {
+        "source_row": {
+          "new_score": 0.3728,
+          "correct": 0.416,
+          "tokens": 6463,
+          "cost": 0.4324,
+          "tool_calls": null,
+          "steps": null,
+          "ote": null,
+          "flagged_rate": 0.002,
+          "name": "GPT-6 Sol · low",
+          "id": "GPT-6 Sol|low",
+          "harness": "codex",
+          "source_row": 5,
+          "context": {
+            "model": "GPT-6 Sol",
+            "effort": "low",
+            "subset": "main",
+            "harness": "codex",
+            "new_score": 0.3728,
+            "correct": 0.416,
+            "flagged_rate": 0.002,
+            "cost": 0.4324,
+            "tokens": 6463
+          }
+        },
+        "parser": {
+          "kind": "effort_runs_json",
+          "row_path": "v1_1",
+          "subset": "main",
+          "require": {
+            "subsets.main": 100
+          },
+          "name_field": "name",
+          "value_field": "new_score",
+          "id_field": "id",
+          "harness_field": "harness",
+          "plain_text_names": true,
+          "scale": 100,
+          "context_keys": [
+            "new_score",
+            "correct",
+            "flagged_rate",
+            "cost",
+            "tokens"
+          ],
+          "method_source": {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+          }
+        },
+        "source_index": 5
+      },
+      "prior": null
+    },
+    {
+      "row": {
+        "id": "public:13a18198fb784faced66c163",
+        "benchmark_id": "frontiercode::1.1",
+        "subject": {
+          "source_id": "GPT-6 Sol|medium",
+          "name": "GPT-6 Sol · medium",
+          "model_id": null,
+          "variant": null,
+          "harness": "codex"
+        },
+        "value": 45.92,
+        "unit": "percent",
+        "basis": "derived",
+        "source": {
+          "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+          "retrieved_at": "2026-09-26T04:23:00.682196+00:00",
+          "published_at": null,
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+          "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+          "locator": "effort_runs_json; source row 6; GPT-6 Sol|medium; field new_score"
+        },
+        "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"GPT-6 Sol\",\"effort\":\"medium\",\"subset\":\"main\",\"harness\":\"codex\",\"new_score\":0.4592,\"correct\":0.508,\"flagged_rate\":0.0,\"cost\":0.7659,\"tokens\":11518.0}",
+        "comparison_key": null,
+        "source_basis": "self_reported",
+        "derivation": {
+          "formula": "Source value × 100 to registry units",
+          "inputs": [
+            0.4592
+          ]
+        },
+        "supporting_sources": [
+          {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00",
+            "published_at": null,
+            "locator": "method_source"
+          }
+        ]
+      },
+      "native_source_row": {
+        "source_row": {
+          "new_score": 0.4592,
+          "correct": 0.508,
+          "tokens": 11518,
+          "cost": 0.7659,
+          "tool_calls": null,
+          "steps": null,
+          "ote": null,
+          "flagged_rate": 0,
+          "name": "GPT-6 Sol · medium",
+          "id": "GPT-6 Sol|medium",
+          "harness": "codex",
+          "source_row": 6,
+          "context": {
+            "model": "GPT-6 Sol",
+            "effort": "medium",
+            "subset": "main",
+            "harness": "codex",
+            "new_score": 0.4592,
+            "correct": 0.508,
+            "flagged_rate": 0,
+            "cost": 0.7659,
+            "tokens": 11518
+          }
+        },
+        "parser": {
+          "kind": "effort_runs_json",
+          "row_path": "v1_1",
+          "subset": "main",
+          "require": {
+            "subsets.main": 100
+          },
+          "name_field": "name",
+          "value_field": "new_score",
+          "id_field": "id",
+          "harness_field": "harness",
+          "plain_text_names": true,
+          "scale": 100,
+          "context_keys": [
+            "new_score",
+            "correct",
+            "flagged_rate",
+            "cost",
+            "tokens"
+          ],
+          "method_source": {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+          }
+        },
+        "source_index": 6
+      },
+      "prior": null
+    },
+    {
+      "row": {
+        "id": "public:a407d784e0aef9c6d6047206",
+        "benchmark_id": "frontiercode::1.1",
+        "subject": {
+          "source_id": "GPT-6 Sol|high",
+          "name": "GPT-6 Sol · high",
+          "model_id": null,
+          "variant": null,
+          "harness": "codex"
+        },
+        "value": 47.699999999999996,
+        "unit": "percent",
+        "basis": "derived",
+        "source": {
+          "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+          "retrieved_at": "2026-09-26T04:23:00.682196+00:00",
+          "published_at": null,
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+          "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+          "locator": "effort_runs_json; source row 7; GPT-6 Sol|high; field new_score"
+        },
+        "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"GPT-6 Sol\",\"effort\":\"high\",\"subset\":\"main\",\"harness\":\"codex\",\"new_score\":0.477,\"correct\":0.528,\"flagged_rate\":0.0,\"cost\":1.0393,\"tokens\":16481.0}",
+        "comparison_key": null,
+        "source_basis": "self_reported",
+        "derivation": {
+          "formula": "Source value × 100 to registry units",
+          "inputs": [
+            0.477
+          ]
+        },
+        "supporting_sources": [
+          {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00",
+            "published_at": null,
+            "locator": "method_source"
+          }
+        ]
+      },
+      "native_source_row": {
+        "source_row": {
+          "new_score": 0.477,
+          "correct": 0.528,
+          "tokens": 16481,
+          "cost": 1.0393,
+          "tool_calls": null,
+          "steps": null,
+          "ote": null,
+          "flagged_rate": 0,
+          "name": "GPT-6 Sol · high",
+          "id": "GPT-6 Sol|high",
+          "harness": "codex",
+          "source_row": 7,
+          "context": {
+            "model": "GPT-6 Sol",
+            "effort": "high",
+            "subset": "main",
+            "harness": "codex",
+            "new_score": 0.477,
+            "correct": 0.528,
+            "flagged_rate": 0,
+            "cost": 1.0393,
+            "tokens": 16481
+          }
+        },
+        "parser": {
+          "kind": "effort_runs_json",
+          "row_path": "v1_1",
+          "subset": "main",
+          "require": {
+            "subsets.main": 100
+          },
+          "name_field": "name",
+          "value_field": "new_score",
+          "id_field": "id",
+          "harness_field": "harness",
+          "plain_text_names": true,
+          "scale": 100,
+          "context_keys": [
+            "new_score",
+            "correct",
+            "flagged_rate",
+            "cost",
+            "tokens"
+          ],
+          "method_source": {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+          }
+        },
+        "source_index": 7
+      },
+      "prior": null
+    },
+    {
+      "row": {
+        "id": "public:7874e22669bf2b6526dc811f",
+        "benchmark_id": "frontiercode::1.1",
+        "subject": {
+          "source_id": "GPT-6 Sol|xhigh",
+          "name": "GPT-6 Sol · xhigh",
+          "model_id": null,
+          "variant": null,
+          "harness": "codex"
+        },
+        "value": 48.449999999999996,
+        "unit": "percent",
+        "basis": "derived",
+        "source": {
+          "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+          "retrieved_at": "2026-09-26T04:23:00.682196+00:00",
+          "published_at": null,
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+          "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+          "locator": "effort_runs_json; source row 8; GPT-6 Sol|xhigh; field new_score"
+        },
+        "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"GPT-6 Sol\",\"effort\":\"xhigh\",\"subset\":\"main\",\"harness\":\"codex\",\"new_score\":0.4845,\"correct\":0.5353,\"flagged_rate\":0.002,\"cost\":1.325,\"tokens\":22773.0}",
+        "comparison_key": null,
+        "source_basis": "self_reported",
+        "derivation": {
+          "formula": "Source value × 100 to registry units",
+          "inputs": [
+            0.4845
+          ]
+        },
+        "supporting_sources": [
+          {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00",
+            "published_at": null,
+            "locator": "method_source"
+          }
+        ]
+      },
+      "native_source_row": {
+        "source_row": {
+          "new_score": 0.4845,
+          "correct": 0.5353,
+          "tokens": 22773,
+          "cost": 1.325,
+          "tool_calls": null,
+          "steps": null,
+          "ote": null,
+          "flagged_rate": 0.002,
+          "name": "GPT-6 Sol · xhigh",
+          "id": "GPT-6 Sol|xhigh",
+          "harness": "codex",
+          "source_row": 8,
+          "context": {
+            "model": "GPT-6 Sol",
+            "effort": "xhigh",
+            "subset": "main",
+            "harness": "codex",
+            "new_score": 0.4845,
+            "correct": 0.5353,
+            "flagged_rate": 0.002,
+            "cost": 1.325,
+            "tokens": 22773
+          }
+        },
+        "parser": {
+          "kind": "effort_runs_json",
+          "row_path": "v1_1",
+          "subset": "main",
+          "require": {
+            "subsets.main": 100
+          },
+          "name_field": "name",
+          "value_field": "new_score",
+          "id_field": "id",
+          "harness_field": "harness",
+          "plain_text_names": true,
+          "scale": 100,
+          "context_keys": [
+            "new_score",
+            "correct",
+            "flagged_rate",
+            "cost",
+            "tokens"
+          ],
+          "method_source": {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+          }
+        },
+        "source_index": 8
+      },
+      "prior": null
+    },
+    {
+      "row": {
+        "id": "public:9568d9e7431dfc8a04237e5e",
+        "benchmark_id": "frontiercode::1.1",
+        "subject": {
+          "source_id": "GPT-6 Sol|max",
+          "name": "GPT-6 Sol · max",
+          "model_id": null,
+          "variant": null,
+          "harness": "codex"
+        },
+        "value": 49.27,
+        "unit": "percent",
+        "basis": "derived",
+        "source": {
+          "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+          "retrieved_at": "2026-09-26T04:23:00.682196+00:00",
+          "published_at": null,
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+          "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+          "locator": "effort_runs_json; source row 9; GPT-6 Sol|max; field new_score"
+        },
+        "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"GPT-6 Sol\",\"effort\":\"max\",\"subset\":\"main\",\"harness\":\"codex\",\"new_score\":0.4927,\"correct\":0.543,\"flagged_rate\":0.0,\"cost\":2.0651,\"tokens\":41277.0}",
+        "comparison_key": null,
+        "source_basis": "self_reported",
+        "derivation": {
+          "formula": "Source value × 100 to registry units",
+          "inputs": [
+            0.4927
+          ]
+        },
+        "supporting_sources": [
+          {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00",
+            "published_at": null,
+            "locator": "method_source"
+          }
+        ]
+      },
+      "native_source_row": {
+        "source_row": {
+          "new_score": 0.4927,
+          "correct": 0.543,
+          "tokens": 41277,
+          "cost": 2.0651,
+          "tool_calls": null,
+          "steps": null,
+          "ote": null,
+          "flagged_rate": 0,
+          "name": "GPT-6 Sol · max",
+          "id": "GPT-6 Sol|max",
+          "harness": "codex",
+          "source_row": 9,
+          "context": {
+            "model": "GPT-6 Sol",
+            "effort": "max",
+            "subset": "main",
+            "harness": "codex",
+            "new_score": 0.4927,
+            "correct": 0.543,
+            "flagged_rate": 0,
+            "cost": 2.0651,
+            "tokens": 41277
+          }
+        },
+        "parser": {
+          "kind": "effort_runs_json",
+          "row_path": "v1_1",
+          "subset": "main",
+          "require": {
+            "subsets.main": 100
+          },
+          "name_field": "name",
+          "value_field": "new_score",
+          "id_field": "id",
+          "harness_field": "harness",
+          "plain_text_names": true,
+          "scale": 100,
+          "context_keys": [
+            "new_score",
+            "correct",
+            "flagged_rate",
+            "cost",
+            "tokens"
+          ],
+          "method_source": {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+          }
+        },
+        "source_index": 9
+      },
+      "prior": null
+    },
+    {
+      "row": {
+        "id": "public:12a38954d39ae277fa09a34f",
+        "benchmark_id": "frontiercode::1.1",
+        "subject": {
+          "source_id": "GPT-6 Luna|low",
+          "name": "GPT-6 Luna · low",
+          "model_id": null,
+          "variant": null,
+          "harness": "codex"
+        },
+        "value": 25.66,
+        "unit": "percent",
+        "basis": "derived",
+        "source": {
+          "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+          "retrieved_at": "2026-09-26T04:23:00.682196+00:00",
+          "published_at": null,
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+          "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+          "locator": "effort_runs_json; source row 10; GPT-6 Luna|low; field new_score"
+        },
+        "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"GPT-6 Luna\",\"effort\":\"low\",\"subset\":\"main\",\"harness\":\"codex\",\"new_score\":0.2566,\"correct\":0.292,\"flagged_rate\":0.0,\"cost\":0.0199,\"tokens\":7325.0}",
+        "comparison_key": null,
+        "source_basis": "self_reported",
+        "derivation": {
+          "formula": "Source value × 100 to registry units",
+          "inputs": [
+            0.2566
+          ]
+        },
+        "supporting_sources": [
+          {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00",
+            "published_at": null,
+            "locator": "method_source"
+          }
+        ]
+      },
+      "native_source_row": {
+        "source_row": {
+          "new_score": 0.2566,
+          "correct": 0.292,
+          "tokens": 7325,
+          "cost": 0.0199,
+          "tool_calls": null,
+          "steps": null,
+          "ote": null,
+          "flagged_rate": 0,
+          "name": "GPT-6 Luna · low",
+          "id": "GPT-6 Luna|low",
+          "harness": "codex",
+          "source_row": 10,
+          "context": {
+            "model": "GPT-6 Luna",
+            "effort": "low",
+            "subset": "main",
+            "harness": "codex",
+            "new_score": 0.2566,
+            "correct": 0.292,
+            "flagged_rate": 0,
+            "cost": 0.0199,
+            "tokens": 7325
+          }
+        },
+        "parser": {
+          "kind": "effort_runs_json",
+          "row_path": "v1_1",
+          "subset": "main",
+          "require": {
+            "subsets.main": 100
+          },
+          "name_field": "name",
+          "value_field": "new_score",
+          "id_field": "id",
+          "harness_field": "harness",
+          "plain_text_names": true,
+          "scale": 100,
+          "context_keys": [
+            "new_score",
+            "correct",
+            "flagged_rate",
+            "cost",
+            "tokens"
+          ],
+          "method_source": {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+          }
+        },
+        "source_index": 10
+      },
+      "prior": null
+    },
+    {
+      "row": {
+        "id": "public:5b59c57adc78913ebbdc9d33",
+        "benchmark_id": "frontiercode::1.1",
+        "subject": {
+          "source_id": "GPT-6 Luna|medium",
+          "name": "GPT-6 Luna · medium",
+          "model_id": null,
+          "variant": null,
+          "harness": "codex"
+        },
+        "value": 35.53,
+        "unit": "percent",
+        "basis": "derived",
+        "source": {
+          "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+          "retrieved_at": "2026-09-26T04:23:00.682196+00:00",
+          "published_at": null,
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+          "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+          "locator": "effort_runs_json; source row 11; GPT-6 Luna|medium; field new_score"
+        },
+        "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"GPT-6 Luna\",\"effort\":\"medium\",\"subset\":\"main\",\"harness\":\"codex\",\"new_score\":0.3553,\"correct\":0.4,\"flagged_rate\":0.0,\"cost\":0.0512,\"tokens\":21248.0}",
+        "comparison_key": null,
+        "source_basis": "self_reported",
+        "derivation": {
+          "formula": "Source value × 100 to registry units",
+          "inputs": [
+            0.3553
+          ]
+        },
+        "supporting_sources": [
+          {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00",
+            "published_at": null,
+            "locator": "method_source"
+          }
+        ]
+      },
+      "native_source_row": {
+        "source_row": {
+          "new_score": 0.3553,
+          "correct": 0.4,
+          "tokens": 21248,
+          "cost": 0.0512,
+          "tool_calls": null,
+          "steps": null,
+          "ote": null,
+          "flagged_rate": 0,
+          "name": "GPT-6 Luna · medium",
+          "id": "GPT-6 Luna|medium",
+          "harness": "codex",
+          "source_row": 11,
+          "context": {
+            "model": "GPT-6 Luna",
+            "effort": "medium",
+            "subset": "main",
+            "harness": "codex",
+            "new_score": 0.3553,
+            "correct": 0.4,
+            "flagged_rate": 0,
+            "cost": 0.0512,
+            "tokens": 21248
+          }
+        },
+        "parser": {
+          "kind": "effort_runs_json",
+          "row_path": "v1_1",
+          "subset": "main",
+          "require": {
+            "subsets.main": 100
+          },
+          "name_field": "name",
+          "value_field": "new_score",
+          "id_field": "id",
+          "harness_field": "harness",
+          "plain_text_names": true,
+          "scale": 100,
+          "context_keys": [
+            "new_score",
+            "correct",
+            "flagged_rate",
+            "cost",
+            "tokens"
+          ],
+          "method_source": {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+          }
+        },
+        "source_index": 11
+      },
+      "prior": null
+    },
+    {
+      "row": {
+        "id": "public:20600df0446527fb8d43b12f",
+        "benchmark_id": "frontiercode::1.1",
+        "subject": {
+          "source_id": "GPT-6 Luna|high",
+          "name": "GPT-6 Luna · high",
+          "model_id": null,
+          "variant": null,
+          "harness": "codex"
+        },
+        "value": 37.26,
+        "unit": "percent",
+        "basis": "derived",
+        "source": {
+          "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+          "retrieved_at": "2026-09-26T04:23:00.682196+00:00",
+          "published_at": null,
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+          "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+          "locator": "effort_runs_json; source row 12; GPT-6 Luna|high; field new_score"
+        },
+        "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"GPT-6 Luna\",\"effort\":\"high\",\"subset\":\"main\",\"harness\":\"codex\",\"new_score\":0.3726,\"correct\":0.4193,\"flagged_rate\":0.002,\"cost\":0.0646,\"tokens\":28999.0}",
+        "comparison_key": null,
+        "source_basis": "self_reported",
+        "derivation": {
+          "formula": "Source value × 100 to registry units",
+          "inputs": [
+            0.3726
+          ]
+        },
+        "supporting_sources": [
+          {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00",
+            "published_at": null,
+            "locator": "method_source"
+          }
+        ]
+      },
+      "native_source_row": {
+        "source_row": {
+          "new_score": 0.3726,
+          "correct": 0.4193,
+          "tokens": 28999,
+          "cost": 0.0646,
+          "tool_calls": null,
+          "steps": null,
+          "ote": null,
+          "flagged_rate": 0.002,
+          "name": "GPT-6 Luna · high",
+          "id": "GPT-6 Luna|high",
+          "harness": "codex",
+          "source_row": 12,
+          "context": {
+            "model": "GPT-6 Luna",
+            "effort": "high",
+            "subset": "main",
+            "harness": "codex",
+            "new_score": 0.3726,
+            "correct": 0.4193,
+            "flagged_rate": 0.002,
+            "cost": 0.0646,
+            "tokens": 28999
+          }
+        },
+        "parser": {
+          "kind": "effort_runs_json",
+          "row_path": "v1_1",
+          "subset": "main",
+          "require": {
+            "subsets.main": 100
+          },
+          "name_field": "name",
+          "value_field": "new_score",
+          "id_field": "id",
+          "harness_field": "harness",
+          "plain_text_names": true,
+          "scale": 100,
+          "context_keys": [
+            "new_score",
+            "correct",
+            "flagged_rate",
+            "cost",
+            "tokens"
+          ],
+          "method_source": {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+          }
+        },
+        "source_index": 12
+      },
+      "prior": null
+    },
+    {
+      "row": {
+        "id": "public:0b34b4c07bcb644ee56a8e03",
+        "benchmark_id": "frontiercode::1.1",
+        "subject": {
+          "source_id": "GPT-6 Luna|xhigh",
+          "name": "GPT-6 Luna · xhigh",
+          "model_id": null,
+          "variant": null,
+          "harness": "codex"
+        },
+        "value": 37.1,
+        "unit": "percent",
+        "basis": "derived",
+        "source": {
+          "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+          "retrieved_at": "2026-09-26T04:23:00.682196+00:00",
+          "published_at": null,
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+          "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+          "locator": "effort_runs_json; source row 13; GPT-6 Luna|xhigh; field new_score"
+        },
+        "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"GPT-6 Luna\",\"effort\":\"xhigh\",\"subset\":\"main\",\"harness\":\"codex\",\"new_score\":0.371,\"correct\":0.418,\"flagged_rate\":0.0,\"cost\":0.07,\"tokens\":33153.0}",
+        "comparison_key": null,
+        "source_basis": "self_reported",
+        "derivation": {
+          "formula": "Source value × 100 to registry units",
+          "inputs": [
+            0.371
+          ]
+        },
+        "supporting_sources": [
+          {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00",
+            "published_at": null,
+            "locator": "method_source"
+          }
+        ]
+      },
+      "native_source_row": {
+        "source_row": {
+          "new_score": 0.371,
+          "correct": 0.418,
+          "tokens": 33153,
+          "cost": 0.07,
+          "tool_calls": null,
+          "steps": null,
+          "ote": null,
+          "flagged_rate": 0,
+          "name": "GPT-6 Luna · xhigh",
+          "id": "GPT-6 Luna|xhigh",
+          "harness": "codex",
+          "source_row": 13,
+          "context": {
+            "model": "GPT-6 Luna",
+            "effort": "xhigh",
+            "subset": "main",
+            "harness": "codex",
+            "new_score": 0.371,
+            "correct": 0.418,
+            "flagged_rate": 0,
+            "cost": 0.07,
+            "tokens": 33153
+          }
+        },
+        "parser": {
+          "kind": "effort_runs_json",
+          "row_path": "v1_1",
+          "subset": "main",
+          "require": {
+            "subsets.main": 100
+          },
+          "name_field": "name",
+          "value_field": "new_score",
+          "id_field": "id",
+          "harness_field": "harness",
+          "plain_text_names": true,
+          "scale": 100,
+          "context_keys": [
+            "new_score",
+            "correct",
+            "flagged_rate",
+            "cost",
+            "tokens"
+          ],
+          "method_source": {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+          }
+        },
+        "source_index": 13
+      },
+      "prior": null
+    },
+    {
+      "row": {
+        "id": "public:6fe6fb66f04e445d21bda17e",
+        "benchmark_id": "frontiercode::1.1",
+        "subject": {
+          "source_id": "GPT-6 Luna|max",
+          "name": "GPT-6 Luna · max",
+          "model_id": null,
+          "variant": null,
+          "harness": "codex"
+        },
+        "value": 42.42,
+        "unit": "percent",
+        "basis": "derived",
+        "source": {
+          "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+          "retrieved_at": "2026-09-26T04:23:00.682196+00:00",
+          "published_at": null,
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+          "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+          "locator": "effort_runs_json; source row 14; GPT-6 Luna|max; field new_score"
+        },
+        "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"GPT-6 Luna\",\"effort\":\"max\",\"subset\":\"main\",\"harness\":\"codex\",\"new_score\":0.4242,\"correct\":0.478,\"flagged_rate\":0.0,\"cost\":0.1027,\"tokens\":56553.0}",
+        "comparison_key": null,
+        "source_basis": "self_reported",
+        "derivation": {
+          "formula": "Source value × 100 to registry units",
+          "inputs": [
+            0.4242
+          ]
+        },
+        "supporting_sources": [
+          {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00",
+            "published_at": null,
+            "locator": "method_source"
+          }
+        ]
+      },
+      "native_source_row": {
+        "source_row": {
+          "new_score": 0.4242,
+          "correct": 0.478,
+          "tokens": 56553,
+          "cost": 0.1027,
+          "tool_calls": null,
+          "steps": null,
+          "ote": null,
+          "flagged_rate": 0,
+          "name": "GPT-6 Luna · max",
+          "id": "GPT-6 Luna|max",
+          "harness": "codex",
+          "source_row": 14,
+          "context": {
+            "model": "GPT-6 Luna",
+            "effort": "max",
+            "subset": "main",
+            "harness": "codex",
+            "new_score": 0.4242,
+            "correct": 0.478,
+            "flagged_rate": 0,
+            "cost": 0.1027,
+            "tokens": 56553
+          }
+        },
+        "parser": {
+          "kind": "effort_runs_json",
+          "row_path": "v1_1",
+          "subset": "main",
+          "require": {
+            "subsets.main": 100
+          },
+          "name_field": "name",
+          "value_field": "new_score",
+          "id_field": "id",
+          "harness_field": "harness",
+          "plain_text_names": true,
+          "scale": 100,
+          "context_keys": [
+            "new_score",
+            "correct",
+            "flagged_rate",
+            "cost",
+            "tokens"
+          ],
+          "method_source": {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+          }
+        },
+        "source_index": 14
+      },
+      "prior": null
+    },
+    {
+      "row": {
+        "id": "public:42bc73085cff3f9adb853c9e",
+        "benchmark_id": "frontiercode::1.1",
+        "subject": {
+          "source_id": "Grok 4.7|high",
+          "name": "Grok 4.7 · high",
+          "model_id": null,
+          "variant": null,
+          "harness": "grok-build"
+        },
+        "value": 47.589999999999996,
+        "unit": "percent",
+        "basis": "derived",
+        "source": {
+          "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+          "retrieved_at": "2026-09-26T04:23:00.682196+00:00",
+          "published_at": null,
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+          "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+          "locator": "effort_runs_json; source row 113; Grok 4.7|high; field new_score"
+        },
+        "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"Grok 4.7\",\"effort\":\"high\",\"subset\":\"main\",\"harness\":\"grok-build\",\"new_score\":0.4759,\"correct\":0.531,\"flagged_rate\":0.013,\"cost\":6.6472,\"tokens\":82717.0}",
+        "comparison_key": null,
+        "source_basis": "self_reported",
+        "derivation": {
+          "formula": "Source value × 100 to registry units",
+          "inputs": [
+            0.4759
+          ]
+        },
+        "supporting_sources": [
+          {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00",
+            "published_at": null,
+            "locator": "method_source"
+          }
+        ]
+      },
+      "native_source_row": {
+        "source_row": {
+          "new_score": 0.4759,
+          "correct": 0.531,
+          "tokens": 82717,
+          "cost": 6.6472,
+          "tool_calls": null,
+          "steps": null,
+          "ote": null,
+          "flagged_rate": 0.013,
+          "name": "Grok 4.7 · high",
+          "id": "Grok 4.7|high",
+          "harness": "grok-build",
+          "source_row": 113,
+          "context": {
+            "model": "Grok 4.7",
+            "effort": "high",
+            "subset": "main",
+            "harness": "grok-build",
+            "new_score": 0.4759,
+            "correct": 0.531,
+            "flagged_rate": 0.013,
+            "cost": 6.6472,
+            "tokens": 82717
+          }
+        },
+        "parser": {
+          "kind": "effort_runs_json",
+          "row_path": "v1_1",
+          "subset": "main",
+          "require": {
+            "subsets.main": 100
+          },
+          "name_field": "name",
+          "value_field": "new_score",
+          "id_field": "id",
+          "harness_field": "harness",
+          "plain_text_names": true,
+          "scale": 100,
+          "context_keys": [
+            "new_score",
+            "correct",
+            "flagged_rate",
+            "cost",
+            "tokens"
+          ],
+          "method_source": {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+          }
+        },
+        "source_index": 113
+      },
+      "prior": null
+    },
+    {
+      "row": {
+        "id": "public:be140745966b836160b9c7b3",
+        "benchmark_id": "frontiercode::1.1",
+        "subject": {
+          "source_id": "Grok 4.7|xhigh",
+          "name": "Grok 4.7 · xhigh",
+          "model_id": null,
+          "variant": null,
+          "harness": "grok-build"
+        },
+        "value": 45.59,
+        "unit": "percent",
+        "basis": "derived",
+        "source": {
+          "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+          "retrieved_at": "2026-09-26T04:23:00.682196+00:00",
+          "published_at": null,
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+          "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+          "locator": "effort_runs_json; source row 114; Grok 4.7|xhigh; field new_score"
+        },
+        "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.; source row: {\"model\":\"Grok 4.7\",\"effort\":\"xhigh\",\"subset\":\"main\",\"harness\":\"grok-build\",\"new_score\":0.4559,\"correct\":0.509,\"flagged_rate\":0.008,\"cost\":8.2891,\"tokens\":99182.0}",
+        "comparison_key": null,
+        "source_basis": "self_reported",
+        "derivation": {
+          "formula": "Source value × 100 to registry units",
+          "inputs": [
+            0.4559
+          ]
+        },
+        "supporting_sources": [
+          {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00",
+            "published_at": null,
+            "locator": "method_source"
+          }
+        ]
+      },
+      "native_source_row": {
+        "source_row": {
+          "new_score": 0.4559,
+          "correct": 0.509,
+          "tokens": 99182,
+          "cost": 8.2891,
+          "tool_calls": null,
+          "steps": null,
+          "ote": null,
+          "flagged_rate": 0.008,
+          "name": "Grok 4.7 · xhigh",
+          "id": "Grok 4.7|xhigh",
+          "harness": "grok-build",
+          "source_row": 114,
+          "context": {
+            "model": "Grok 4.7",
+            "effort": "xhigh",
+            "subset": "main",
+            "harness": "grok-build",
+            "new_score": 0.4559,
+            "correct": 0.509,
+            "flagged_rate": 0.008,
+            "cost": 8.2891,
+            "tokens": 99182
+          }
+        },
+        "parser": {
+          "kind": "effort_runs_json",
+          "row_path": "v1_1",
+          "subset": "main",
+          "require": {
+            "subsets.main": 100
+          },
+          "name_field": "name",
+          "value_field": "new_score",
+          "id_field": "id",
+          "harness_field": "harness",
+          "plain_text_names": true,
+          "scale": 100,
+          "context_keys": [
+            "new_score",
+            "correct",
+            "flagged_rate",
+            "cost",
+            "tokens"
+          ],
+          "method_source": {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+          }
+        },
+        "source_index": 114
+      },
+      "prior": null
+    },
+    {
+      "row": {
+        "id": "public:12128c1ffa036e461e35d64e",
+        "benchmark_id": "frontiercode-cost::1.1",
+        "subject": {
+          "source_id": "Claude Opus 5.5|low",
+          "name": "Claude Opus 5.5 · low",
+          "model_id": null,
+          "variant": null,
+          "harness": "claude-code"
+        },
+        "value": 0.4036,
+        "unit": "USD",
+        "basis": "self_reported",
+        "source": {
+          "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+          "retrieved_at": "2026-09-26T04:23:00.682196+00:00",
+          "published_at": null,
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+          "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+          "locator": "effort_runs_json; source row 0; Claude Opus 5.5|low; field cost"
+        },
+        "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"Claude Opus 5.5\",\"effort\":\"low\",\"subset\":\"main\",\"harness\":\"claude-code\",\"new_score\":0.473,\"correct\":0.5175,\"flagged_rate\":0,\"cost\":0.4036,\"tokens\":9061}",
+        "comparison_key": null,
+        "supporting_sources": [
+          {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00",
+            "published_at": null,
+            "locator": "method_source"
+          }
+        ]
+      },
+      "native_source_row": {
+        "source_row": {
+          "cost": 0.4036,
+          "correct": 0.5175,
+          "new_score": 0.473,
+          "tokens": 9061,
+          "duration_min": 4.87,
+          "tool_calls": 16.4,
+          "steps": 34.3,
+          "ote": null,
+          "flagged_rate": 0,
+          "name": "Claude Opus 5.5 · low",
+          "id": "Claude Opus 5.5|low",
+          "harness": "claude-code",
+          "source_row": 0,
+          "context": {
+            "model": "Claude Opus 5.5",
+            "effort": "low",
+            "subset": "main",
+            "harness": "claude-code",
+            "new_score": 0.473,
+            "correct": 0.5175,
+            "flagged_rate": 0,
+            "cost": 0.4036,
+            "tokens": 9061
+          }
+        },
+        "parser": {
+          "kind": "effort_runs_json",
+          "row_path": "v1_1",
+          "subset": "main",
+          "require": {
+            "subsets.main": 100
+          },
+          "name_field": "name",
+          "value_field": "cost",
+          "id_field": "id",
+          "harness_field": "harness",
+          "plain_text_names": true,
+          "context_keys": [
+            "new_score",
+            "correct",
+            "flagged_rate",
+            "cost",
+            "tokens"
+          ],
+          "method_source": {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+          }
+        },
+        "source_index": 0
+      },
+      "prior": null
+    },
+    {
+      "row": {
+        "id": "public:4202ad72ec468f1bca9903a5",
+        "benchmark_id": "frontiercode-cost::1.1",
+        "subject": {
+          "source_id": "Claude Opus 5.5|medium",
+          "name": "Claude Opus 5.5 · medium",
+          "model_id": null,
+          "variant": null,
+          "harness": "claude-code"
+        },
+        "value": 0.8016,
+        "unit": "USD",
+        "basis": "self_reported",
+        "source": {
+          "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+          "retrieved_at": "2026-09-26T04:23:00.682196+00:00",
+          "published_at": null,
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+          "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+          "locator": "effort_runs_json; source row 1; Claude Opus 5.5|medium; field cost"
+        },
+        "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"Claude Opus 5.5\",\"effort\":\"medium\",\"subset\":\"main\",\"harness\":\"claude-code\",\"new_score\":0.5464,\"correct\":0.596,\"flagged_rate\":0,\"cost\":0.8016,\"tokens\":18519}",
+        "comparison_key": null,
+        "supporting_sources": [
+          {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00",
+            "published_at": null,
+            "locator": "method_source"
+          }
+        ]
+      },
+      "native_source_row": {
+        "source_row": {
+          "cost": 0.8016,
+          "correct": 0.596,
+          "new_score": 0.5464,
+          "tokens": 18519,
+          "duration_min": 6.34,
+          "tool_calls": 35.1,
+          "steps": 64,
+          "ote": null,
+          "flagged_rate": 0,
+          "name": "Claude Opus 5.5 · medium",
+          "id": "Claude Opus 5.5|medium",
+          "harness": "claude-code",
+          "source_row": 1,
+          "context": {
+            "model": "Claude Opus 5.5",
+            "effort": "medium",
+            "subset": "main",
+            "harness": "claude-code",
+            "new_score": 0.5464,
+            "correct": 0.596,
+            "flagged_rate": 0,
+            "cost": 0.8016,
+            "tokens": 18519
+          }
+        },
+        "parser": {
+          "kind": "effort_runs_json",
+          "row_path": "v1_1",
+          "subset": "main",
+          "require": {
+            "subsets.main": 100
+          },
+          "name_field": "name",
+          "value_field": "cost",
+          "id_field": "id",
+          "harness_field": "harness",
+          "plain_text_names": true,
+          "context_keys": [
+            "new_score",
+            "correct",
+            "flagged_rate",
+            "cost",
+            "tokens"
+          ],
+          "method_source": {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+          }
+        },
+        "source_index": 1
+      },
+      "prior": null
+    },
+    {
+      "row": {
+        "id": "public:f4bb76e9c291754cc60a9e36",
+        "benchmark_id": "frontiercode-cost::1.1",
+        "subject": {
+          "source_id": "Claude Opus 5.5|high",
+          "name": "Claude Opus 5.5 · high",
+          "model_id": null,
+          "variant": null,
+          "harness": "claude-code"
+        },
+        "value": 1.0896,
+        "unit": "USD",
+        "basis": "self_reported",
+        "source": {
+          "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+          "retrieved_at": "2026-09-26T04:23:00.682196+00:00",
+          "published_at": null,
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+          "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+          "locator": "effort_runs_json; source row 2; Claude Opus 5.5|high; field cost"
+        },
+        "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"Claude Opus 5.5\",\"effort\":\"high\",\"subset\":\"main\",\"harness\":\"claude-code\",\"new_score\":0.5399,\"correct\":0.589,\"flagged_rate\":0,\"cost\":1.0896,\"tokens\":26143}",
+        "comparison_key": null,
+        "supporting_sources": [
+          {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00",
+            "published_at": null,
+            "locator": "method_source"
+          }
+        ]
+      },
+      "native_source_row": {
+        "source_row": {
+          "cost": 1.0896,
+          "correct": 0.589,
+          "new_score": 0.5399,
+          "tokens": 26143,
+          "duration_min": 7.2,
+          "tool_calls": 43.1,
+          "steps": 74.6,
+          "ote": null,
+          "flagged_rate": 0,
+          "name": "Claude Opus 5.5 · high",
+          "id": "Claude Opus 5.5|high",
+          "harness": "claude-code",
+          "source_row": 2,
+          "context": {
+            "model": "Claude Opus 5.5",
+            "effort": "high",
+            "subset": "main",
+            "harness": "claude-code",
+            "new_score": 0.5399,
+            "correct": 0.589,
+            "flagged_rate": 0,
+            "cost": 1.0896,
+            "tokens": 26143
+          }
+        },
+        "parser": {
+          "kind": "effort_runs_json",
+          "row_path": "v1_1",
+          "subset": "main",
+          "require": {
+            "subsets.main": 100
+          },
+          "name_field": "name",
+          "value_field": "cost",
+          "id_field": "id",
+          "harness_field": "harness",
+          "plain_text_names": true,
+          "context_keys": [
+            "new_score",
+            "correct",
+            "flagged_rate",
+            "cost",
+            "tokens"
+          ],
+          "method_source": {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+          }
+        },
+        "source_index": 2
+      },
+      "prior": null
+    },
+    {
+      "row": {
+        "id": "public:d3cd32ca97d2036f7b513c58",
+        "benchmark_id": "frontiercode-cost::1.1",
+        "subject": {
+          "source_id": "Claude Opus 5.5|xhigh",
+          "name": "Claude Opus 5.5 · xhigh",
+          "model_id": null,
+          "variant": null,
+          "harness": "claude-code"
+        },
+        "value": 2.2545,
+        "unit": "USD",
+        "basis": "self_reported",
+        "source": {
+          "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+          "retrieved_at": "2026-09-26T04:23:00.682196+00:00",
+          "published_at": null,
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+          "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+          "locator": "effort_runs_json; source row 3; Claude Opus 5.5|xhigh; field cost"
+        },
+        "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"Claude Opus 5.5\",\"effort\":\"xhigh\",\"subset\":\"main\",\"harness\":\"claude-code\",\"new_score\":0.5142,\"correct\":0.568,\"flagged_rate\":0,\"cost\":2.2545,\"tokens\":60182}",
+        "comparison_key": null,
+        "supporting_sources": [
+          {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00",
+            "published_at": null,
+            "locator": "method_source"
+          }
+        ]
+      },
+      "native_source_row": {
+        "source_row": {
+          "cost": 2.2545,
+          "correct": 0.568,
+          "new_score": 0.5142,
+          "tokens": 60182,
+          "duration_min": 11.21,
+          "tool_calls": 61.9,
+          "steps": 97.9,
+          "ote": null,
+          "flagged_rate": 0,
+          "name": "Claude Opus 5.5 · xhigh",
+          "id": "Claude Opus 5.5|xhigh",
+          "harness": "claude-code",
+          "source_row": 3,
+          "context": {
+            "model": "Claude Opus 5.5",
+            "effort": "xhigh",
+            "subset": "main",
+            "harness": "claude-code",
+            "new_score": 0.5142,
+            "correct": 0.568,
+            "flagged_rate": 0,
+            "cost": 2.2545,
+            "tokens": 60182
+          }
+        },
+        "parser": {
+          "kind": "effort_runs_json",
+          "row_path": "v1_1",
+          "subset": "main",
+          "require": {
+            "subsets.main": 100
+          },
+          "name_field": "name",
+          "value_field": "cost",
+          "id_field": "id",
+          "harness_field": "harness",
+          "plain_text_names": true,
+          "context_keys": [
+            "new_score",
+            "correct",
+            "flagged_rate",
+            "cost",
+            "tokens"
+          ],
+          "method_source": {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+          }
+        },
+        "source_index": 3
+      },
+      "prior": null
+    },
+    {
+      "row": {
+        "id": "public:29dd4adda3f0b74cbb7538f8",
+        "benchmark_id": "frontiercode-cost::1.1",
+        "subject": {
+          "source_id": "Claude Opus 5.5|max",
+          "name": "Claude Opus 5.5 · max",
+          "model_id": null,
+          "variant": null,
+          "harness": "claude-code"
+        },
+        "value": 6.191,
+        "unit": "USD",
+        "basis": "self_reported",
+        "source": {
+          "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+          "retrieved_at": "2026-09-26T04:23:00.682196+00:00",
+          "published_at": null,
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+          "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+          "locator": "effort_runs_json; source row 4; Claude Opus 5.5|max; field cost"
+        },
+        "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"Claude Opus 5.5\",\"effort\":\"max\",\"subset\":\"main\",\"harness\":\"claude-code\",\"new_score\":0.5443,\"correct\":0.6,\"flagged_rate\":0.008,\"cost\":6.191,\"tokens\":165811}",
+        "comparison_key": null,
+        "supporting_sources": [
+          {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00",
+            "published_at": null,
+            "locator": "method_source"
+          }
+        ]
+      },
+      "native_source_row": {
+        "source_row": {
+          "cost": 6.191,
+          "correct": 0.6,
+          "new_score": 0.5443,
+          "tokens": 165811,
+          "duration_min": 25.01,
+          "tool_calls": 99.4,
+          "steps": 150.4,
+          "ote": null,
+          "flagged_rate": 0.008,
+          "name": "Claude Opus 5.5 · max",
+          "id": "Claude Opus 5.5|max",
+          "harness": "claude-code",
+          "source_row": 4,
+          "context": {
+            "model": "Claude Opus 5.5",
+            "effort": "max",
+            "subset": "main",
+            "harness": "claude-code",
+            "new_score": 0.5443,
+            "correct": 0.6,
+            "flagged_rate": 0.008,
+            "cost": 6.191,
+            "tokens": 165811
+          }
+        },
+        "parser": {
+          "kind": "effort_runs_json",
+          "row_path": "v1_1",
+          "subset": "main",
+          "require": {
+            "subsets.main": 100
+          },
+          "name_field": "name",
+          "value_field": "cost",
+          "id_field": "id",
+          "harness_field": "harness",
+          "plain_text_names": true,
+          "context_keys": [
+            "new_score",
+            "correct",
+            "flagged_rate",
+            "cost",
+            "tokens"
+          ],
+          "method_source": {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+          }
+        },
+        "source_index": 4
+      },
+      "prior": null
+    },
+    {
+      "row": {
+        "id": "public:281adbe645b1e673ff5db075",
+        "benchmark_id": "frontiercode-cost::1.1",
+        "subject": {
+          "source_id": "GPT-6 Sol|low",
+          "name": "GPT-6 Sol · low",
+          "model_id": null,
+          "variant": null,
+          "harness": "codex"
+        },
+        "value": 0.4324,
+        "unit": "USD",
+        "basis": "self_reported",
+        "source": {
+          "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+          "retrieved_at": "2026-09-26T04:23:00.682196+00:00",
+          "published_at": null,
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+          "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+          "locator": "effort_runs_json; source row 5; GPT-6 Sol|low; field cost"
+        },
+        "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"GPT-6 Sol\",\"effort\":\"low\",\"subset\":\"main\",\"harness\":\"codex\",\"new_score\":0.3728,\"correct\":0.416,\"flagged_rate\":0.002,\"cost\":0.4324,\"tokens\":6463.0}",
+        "comparison_key": null,
+        "supporting_sources": [
+          {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00",
+            "published_at": null,
+            "locator": "method_source"
+          }
+        ]
+      },
+      "native_source_row": {
+        "source_row": {
+          "cost": 0.4324,
+          "correct": 0.416,
+          "new_score": 0.3728,
+          "tokens": 6463,
+          "tool_calls": null,
+          "steps": null,
+          "ote": null,
+          "flagged_rate": 0.002,
+          "name": "GPT-6 Sol · low",
+          "id": "GPT-6 Sol|low",
+          "harness": "codex",
+          "source_row": 5,
+          "context": {
+            "model": "GPT-6 Sol",
+            "effort": "low",
+            "subset": "main",
+            "harness": "codex",
+            "new_score": 0.3728,
+            "correct": 0.416,
+            "flagged_rate": 0.002,
+            "cost": 0.4324,
+            "tokens": 6463
+          }
+        },
+        "parser": {
+          "kind": "effort_runs_json",
+          "row_path": "v1_1",
+          "subset": "main",
+          "require": {
+            "subsets.main": 100
+          },
+          "name_field": "name",
+          "value_field": "cost",
+          "id_field": "id",
+          "harness_field": "harness",
+          "plain_text_names": true,
+          "context_keys": [
+            "new_score",
+            "correct",
+            "flagged_rate",
+            "cost",
+            "tokens"
+          ],
+          "method_source": {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+          }
+        },
+        "source_index": 5
+      },
+      "prior": null
+    },
+    {
+      "row": {
+        "id": "public:044fbbb34eb6e76e5537e1c9",
+        "benchmark_id": "frontiercode-cost::1.1",
+        "subject": {
+          "source_id": "GPT-6 Sol|medium",
+          "name": "GPT-6 Sol · medium",
+          "model_id": null,
+          "variant": null,
+          "harness": "codex"
+        },
+        "value": 0.7659,
+        "unit": "USD",
+        "basis": "self_reported",
+        "source": {
+          "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+          "retrieved_at": "2026-09-26T04:23:00.682196+00:00",
+          "published_at": null,
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+          "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+          "locator": "effort_runs_json; source row 6; GPT-6 Sol|medium; field cost"
+        },
+        "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"GPT-6 Sol\",\"effort\":\"medium\",\"subset\":\"main\",\"harness\":\"codex\",\"new_score\":0.4592,\"correct\":0.508,\"flagged_rate\":0.0,\"cost\":0.7659,\"tokens\":11518.0}",
+        "comparison_key": null,
+        "supporting_sources": [
+          {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00",
+            "published_at": null,
+            "locator": "method_source"
+          }
+        ]
+      },
+      "native_source_row": {
+        "source_row": {
+          "cost": 0.7659,
+          "correct": 0.508,
+          "new_score": 0.4592,
+          "tokens": 11518,
+          "tool_calls": null,
+          "steps": null,
+          "ote": null,
+          "flagged_rate": 0,
+          "name": "GPT-6 Sol · medium",
+          "id": "GPT-6 Sol|medium",
+          "harness": "codex",
+          "source_row": 6,
+          "context": {
+            "model": "GPT-6 Sol",
+            "effort": "medium",
+            "subset": "main",
+            "harness": "codex",
+            "new_score": 0.4592,
+            "correct": 0.508,
+            "flagged_rate": 0,
+            "cost": 0.7659,
+            "tokens": 11518
+          }
+        },
+        "parser": {
+          "kind": "effort_runs_json",
+          "row_path": "v1_1",
+          "subset": "main",
+          "require": {
+            "subsets.main": 100
+          },
+          "name_field": "name",
+          "value_field": "cost",
+          "id_field": "id",
+          "harness_field": "harness",
+          "plain_text_names": true,
+          "context_keys": [
+            "new_score",
+            "correct",
+            "flagged_rate",
+            "cost",
+            "tokens"
+          ],
+          "method_source": {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+          }
+        },
+        "source_index": 6
+      },
+      "prior": null
+    },
+    {
+      "row": {
+        "id": "public:c34fad1f31ca99df0cd9f08f",
+        "benchmark_id": "frontiercode-cost::1.1",
+        "subject": {
+          "source_id": "GPT-6 Sol|high",
+          "name": "GPT-6 Sol · high",
+          "model_id": null,
+          "variant": null,
+          "harness": "codex"
+        },
+        "value": 1.0393,
+        "unit": "USD",
+        "basis": "self_reported",
+        "source": {
+          "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+          "retrieved_at": "2026-09-26T04:23:00.682196+00:00",
+          "published_at": null,
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+          "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+          "locator": "effort_runs_json; source row 7; GPT-6 Sol|high; field cost"
+        },
+        "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"GPT-6 Sol\",\"effort\":\"high\",\"subset\":\"main\",\"harness\":\"codex\",\"new_score\":0.477,\"correct\":0.528,\"flagged_rate\":0.0,\"cost\":1.0393,\"tokens\":16481.0}",
+        "comparison_key": null,
+        "supporting_sources": [
+          {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00",
+            "published_at": null,
+            "locator": "method_source"
+          }
+        ]
+      },
+      "native_source_row": {
+        "source_row": {
+          "cost": 1.0393,
+          "correct": 0.528,
+          "new_score": 0.477,
+          "tokens": 16481,
+          "tool_calls": null,
+          "steps": null,
+          "ote": null,
+          "flagged_rate": 0,
+          "name": "GPT-6 Sol · high",
+          "id": "GPT-6 Sol|high",
+          "harness": "codex",
+          "source_row": 7,
+          "context": {
+            "model": "GPT-6 Sol",
+            "effort": "high",
+            "subset": "main",
+            "harness": "codex",
+            "new_score": 0.477,
+            "correct": 0.528,
+            "flagged_rate": 0,
+            "cost": 1.0393,
+            "tokens": 16481
+          }
+        },
+        "parser": {
+          "kind": "effort_runs_json",
+          "row_path": "v1_1",
+          "subset": "main",
+          "require": {
+            "subsets.main": 100
+          },
+          "name_field": "name",
+          "value_field": "cost",
+          "id_field": "id",
+          "harness_field": "harness",
+          "plain_text_names": true,
+          "context_keys": [
+            "new_score",
+            "correct",
+            "flagged_rate",
+            "cost",
+            "tokens"
+          ],
+          "method_source": {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+          }
+        },
+        "source_index": 7
+      },
+      "prior": null
+    },
+    {
+      "row": {
+        "id": "public:696514db72e7b9a68e4dc9a8",
+        "benchmark_id": "frontiercode-cost::1.1",
+        "subject": {
+          "source_id": "GPT-6 Sol|xhigh",
+          "name": "GPT-6 Sol · xhigh",
+          "model_id": null,
+          "variant": null,
+          "harness": "codex"
+        },
+        "value": 1.325,
+        "unit": "USD",
+        "basis": "self_reported",
+        "source": {
+          "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+          "retrieved_at": "2026-09-26T04:23:00.682196+00:00",
+          "published_at": null,
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+          "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+          "locator": "effort_runs_json; source row 8; GPT-6 Sol|xhigh; field cost"
+        },
+        "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"GPT-6 Sol\",\"effort\":\"xhigh\",\"subset\":\"main\",\"harness\":\"codex\",\"new_score\":0.4845,\"correct\":0.5353,\"flagged_rate\":0.002,\"cost\":1.325,\"tokens\":22773.0}",
+        "comparison_key": null,
+        "supporting_sources": [
+          {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00",
+            "published_at": null,
+            "locator": "method_source"
+          }
+        ]
+      },
+      "native_source_row": {
+        "source_row": {
+          "cost": 1.325,
+          "correct": 0.5353,
+          "new_score": 0.4845,
+          "tokens": 22773,
+          "tool_calls": null,
+          "steps": null,
+          "ote": null,
+          "flagged_rate": 0.002,
+          "name": "GPT-6 Sol · xhigh",
+          "id": "GPT-6 Sol|xhigh",
+          "harness": "codex",
+          "source_row": 8,
+          "context": {
+            "model": "GPT-6 Sol",
+            "effort": "xhigh",
+            "subset": "main",
+            "harness": "codex",
+            "new_score": 0.4845,
+            "correct": 0.5353,
+            "flagged_rate": 0.002,
+            "cost": 1.325,
+            "tokens": 22773
+          }
+        },
+        "parser": {
+          "kind": "effort_runs_json",
+          "row_path": "v1_1",
+          "subset": "main",
+          "require": {
+            "subsets.main": 100
+          },
+          "name_field": "name",
+          "value_field": "cost",
+          "id_field": "id",
+          "harness_field": "harness",
+          "plain_text_names": true,
+          "context_keys": [
+            "new_score",
+            "correct",
+            "flagged_rate",
+            "cost",
+            "tokens"
+          ],
+          "method_source": {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+          }
+        },
+        "source_index": 8
+      },
+      "prior": null
+    },
+    {
+      "row": {
+        "id": "public:6a394ffb172c7ce353c4bb41",
+        "benchmark_id": "frontiercode-cost::1.1",
+        "subject": {
+          "source_id": "GPT-6 Sol|max",
+          "name": "GPT-6 Sol · max",
+          "model_id": null,
+          "variant": null,
+          "harness": "codex"
+        },
+        "value": 2.0651,
+        "unit": "USD",
+        "basis": "self_reported",
+        "source": {
+          "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+          "retrieved_at": "2026-09-26T04:23:00.682196+00:00",
+          "published_at": null,
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+          "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+          "locator": "effort_runs_json; source row 9; GPT-6 Sol|max; field cost"
+        },
+        "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"GPT-6 Sol\",\"effort\":\"max\",\"subset\":\"main\",\"harness\":\"codex\",\"new_score\":0.4927,\"correct\":0.543,\"flagged_rate\":0.0,\"cost\":2.0651,\"tokens\":41277.0}",
+        "comparison_key": null,
+        "supporting_sources": [
+          {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00",
+            "published_at": null,
+            "locator": "method_source"
+          }
+        ]
+      },
+      "native_source_row": {
+        "source_row": {
+          "cost": 2.0651,
+          "correct": 0.543,
+          "new_score": 0.4927,
+          "tokens": 41277,
+          "tool_calls": null,
+          "steps": null,
+          "ote": null,
+          "flagged_rate": 0,
+          "name": "GPT-6 Sol · max",
+          "id": "GPT-6 Sol|max",
+          "harness": "codex",
+          "source_row": 9,
+          "context": {
+            "model": "GPT-6 Sol",
+            "effort": "max",
+            "subset": "main",
+            "harness": "codex",
+            "new_score": 0.4927,
+            "correct": 0.543,
+            "flagged_rate": 0,
+            "cost": 2.0651,
+            "tokens": 41277
+          }
+        },
+        "parser": {
+          "kind": "effort_runs_json",
+          "row_path": "v1_1",
+          "subset": "main",
+          "require": {
+            "subsets.main": 100
+          },
+          "name_field": "name",
+          "value_field": "cost",
+          "id_field": "id",
+          "harness_field": "harness",
+          "plain_text_names": true,
+          "context_keys": [
+            "new_score",
+            "correct",
+            "flagged_rate",
+            "cost",
+            "tokens"
+          ],
+          "method_source": {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+          }
+        },
+        "source_index": 9
+      },
+      "prior": null
+    },
+    {
+      "row": {
+        "id": "public:810ce9c40797578dd1c5cd9d",
+        "benchmark_id": "frontiercode-cost::1.1",
+        "subject": {
+          "source_id": "GPT-6 Luna|low",
+          "name": "GPT-6 Luna · low",
+          "model_id": null,
+          "variant": null,
+          "harness": "codex"
+        },
+        "value": 0.0199,
+        "unit": "USD",
+        "basis": "self_reported",
+        "source": {
+          "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+          "retrieved_at": "2026-09-26T04:23:00.682196+00:00",
+          "published_at": null,
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+          "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+          "locator": "effort_runs_json; source row 10; GPT-6 Luna|low; field cost"
+        },
+        "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"GPT-6 Luna\",\"effort\":\"low\",\"subset\":\"main\",\"harness\":\"codex\",\"new_score\":0.2566,\"correct\":0.292,\"flagged_rate\":0.0,\"cost\":0.0199,\"tokens\":7325.0}",
+        "comparison_key": null,
+        "supporting_sources": [
+          {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00",
+            "published_at": null,
+            "locator": "method_source"
+          }
+        ]
+      },
+      "native_source_row": {
+        "source_row": {
+          "cost": 0.0199,
+          "correct": 0.292,
+          "new_score": 0.2566,
+          "tokens": 7325,
+          "tool_calls": null,
+          "steps": null,
+          "ote": null,
+          "flagged_rate": 0,
+          "name": "GPT-6 Luna · low",
+          "id": "GPT-6 Luna|low",
+          "harness": "codex",
+          "source_row": 10,
+          "context": {
+            "model": "GPT-6 Luna",
+            "effort": "low",
+            "subset": "main",
+            "harness": "codex",
+            "new_score": 0.2566,
+            "correct": 0.292,
+            "flagged_rate": 0,
+            "cost": 0.0199,
+            "tokens": 7325
+          }
+        },
+        "parser": {
+          "kind": "effort_runs_json",
+          "row_path": "v1_1",
+          "subset": "main",
+          "require": {
+            "subsets.main": 100
+          },
+          "name_field": "name",
+          "value_field": "cost",
+          "id_field": "id",
+          "harness_field": "harness",
+          "plain_text_names": true,
+          "context_keys": [
+            "new_score",
+            "correct",
+            "flagged_rate",
+            "cost",
+            "tokens"
+          ],
+          "method_source": {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+          }
+        },
+        "source_index": 10
+      },
+      "prior": null
+    },
+    {
+      "row": {
+        "id": "public:7d8695ff61177d102f6c0367",
+        "benchmark_id": "frontiercode-cost::1.1",
+        "subject": {
+          "source_id": "GPT-6 Luna|medium",
+          "name": "GPT-6 Luna · medium",
+          "model_id": null,
+          "variant": null,
+          "harness": "codex"
+        },
+        "value": 0.0512,
+        "unit": "USD",
+        "basis": "self_reported",
+        "source": {
+          "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+          "retrieved_at": "2026-09-26T04:23:00.682196+00:00",
+          "published_at": null,
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+          "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+          "locator": "effort_runs_json; source row 11; GPT-6 Luna|medium; field cost"
+        },
+        "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"GPT-6 Luna\",\"effort\":\"medium\",\"subset\":\"main\",\"harness\":\"codex\",\"new_score\":0.3553,\"correct\":0.4,\"flagged_rate\":0.0,\"cost\":0.0512,\"tokens\":21248.0}",
+        "comparison_key": null,
+        "supporting_sources": [
+          {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00",
+            "published_at": null,
+            "locator": "method_source"
+          }
+        ]
+      },
+      "native_source_row": {
+        "source_row": {
+          "cost": 0.0512,
+          "correct": 0.4,
+          "new_score": 0.3553,
+          "tokens": 21248,
+          "tool_calls": null,
+          "steps": null,
+          "ote": null,
+          "flagged_rate": 0,
+          "name": "GPT-6 Luna · medium",
+          "id": "GPT-6 Luna|medium",
+          "harness": "codex",
+          "source_row": 11,
+          "context": {
+            "model": "GPT-6 Luna",
+            "effort": "medium",
+            "subset": "main",
+            "harness": "codex",
+            "new_score": 0.3553,
+            "correct": 0.4,
+            "flagged_rate": 0,
+            "cost": 0.0512,
+            "tokens": 21248
+          }
+        },
+        "parser": {
+          "kind": "effort_runs_json",
+          "row_path": "v1_1",
+          "subset": "main",
+          "require": {
+            "subsets.main": 100
+          },
+          "name_field": "name",
+          "value_field": "cost",
+          "id_field": "id",
+          "harness_field": "harness",
+          "plain_text_names": true,
+          "context_keys": [
+            "new_score",
+            "correct",
+            "flagged_rate",
+            "cost",
+            "tokens"
+          ],
+          "method_source": {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+          }
+        },
+        "source_index": 11
+      },
+      "prior": null
+    },
+    {
+      "row": {
+        "id": "public:eddb9f3e36588ecd21c96617",
+        "benchmark_id": "frontiercode-cost::1.1",
+        "subject": {
+          "source_id": "GPT-6 Luna|high",
+          "name": "GPT-6 Luna · high",
+          "model_id": null,
+          "variant": null,
+          "harness": "codex"
+        },
+        "value": 0.0646,
+        "unit": "USD",
+        "basis": "self_reported",
+        "source": {
+          "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+          "retrieved_at": "2026-09-26T04:23:00.682196+00:00",
+          "published_at": null,
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+          "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+          "locator": "effort_runs_json; source row 12; GPT-6 Luna|high; field cost"
+        },
+        "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"GPT-6 Luna\",\"effort\":\"high\",\"subset\":\"main\",\"harness\":\"codex\",\"new_score\":0.3726,\"correct\":0.4193,\"flagged_rate\":0.002,\"cost\":0.0646,\"tokens\":28999.0}",
+        "comparison_key": null,
+        "supporting_sources": [
+          {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00",
+            "published_at": null,
+            "locator": "method_source"
+          }
+        ]
+      },
+      "native_source_row": {
+        "source_row": {
+          "cost": 0.0646,
+          "correct": 0.4193,
+          "new_score": 0.3726,
+          "tokens": 28999,
+          "tool_calls": null,
+          "steps": null,
+          "ote": null,
+          "flagged_rate": 0.002,
+          "name": "GPT-6 Luna · high",
+          "id": "GPT-6 Luna|high",
+          "harness": "codex",
+          "source_row": 12,
+          "context": {
+            "model": "GPT-6 Luna",
+            "effort": "high",
+            "subset": "main",
+            "harness": "codex",
+            "new_score": 0.3726,
+            "correct": 0.4193,
+            "flagged_rate": 0.002,
+            "cost": 0.0646,
+            "tokens": 28999
+          }
+        },
+        "parser": {
+          "kind": "effort_runs_json",
+          "row_path": "v1_1",
+          "subset": "main",
+          "require": {
+            "subsets.main": 100
+          },
+          "name_field": "name",
+          "value_field": "cost",
+          "id_field": "id",
+          "harness_field": "harness",
+          "plain_text_names": true,
+          "context_keys": [
+            "new_score",
+            "correct",
+            "flagged_rate",
+            "cost",
+            "tokens"
+          ],
+          "method_source": {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+          }
+        },
+        "source_index": 12
+      },
+      "prior": null
+    },
+    {
+      "row": {
+        "id": "public:89b7b9b1e97fd6559c21f9a5",
+        "benchmark_id": "frontiercode-cost::1.1",
+        "subject": {
+          "source_id": "GPT-6 Luna|xhigh",
+          "name": "GPT-6 Luna · xhigh",
+          "model_id": null,
+          "variant": null,
+          "harness": "codex"
+        },
+        "value": 0.07,
+        "unit": "USD",
+        "basis": "self_reported",
+        "source": {
+          "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+          "retrieved_at": "2026-09-26T04:23:00.682196+00:00",
+          "published_at": null,
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+          "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+          "locator": "effort_runs_json; source row 13; GPT-6 Luna|xhigh; field cost"
+        },
+        "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"GPT-6 Luna\",\"effort\":\"xhigh\",\"subset\":\"main\",\"harness\":\"codex\",\"new_score\":0.371,\"correct\":0.418,\"flagged_rate\":0.0,\"cost\":0.07,\"tokens\":33153.0}",
+        "comparison_key": null,
+        "supporting_sources": [
+          {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00",
+            "published_at": null,
+            "locator": "method_source"
+          }
+        ]
+      },
+      "native_source_row": {
+        "source_row": {
+          "cost": 0.07,
+          "correct": 0.418,
+          "new_score": 0.371,
+          "tokens": 33153,
+          "tool_calls": null,
+          "steps": null,
+          "ote": null,
+          "flagged_rate": 0,
+          "name": "GPT-6 Luna · xhigh",
+          "id": "GPT-6 Luna|xhigh",
+          "harness": "codex",
+          "source_row": 13,
+          "context": {
+            "model": "GPT-6 Luna",
+            "effort": "xhigh",
+            "subset": "main",
+            "harness": "codex",
+            "new_score": 0.371,
+            "correct": 0.418,
+            "flagged_rate": 0,
+            "cost": 0.07,
+            "tokens": 33153
+          }
+        },
+        "parser": {
+          "kind": "effort_runs_json",
+          "row_path": "v1_1",
+          "subset": "main",
+          "require": {
+            "subsets.main": 100
+          },
+          "name_field": "name",
+          "value_field": "cost",
+          "id_field": "id",
+          "harness_field": "harness",
+          "plain_text_names": true,
+          "context_keys": [
+            "new_score",
+            "correct",
+            "flagged_rate",
+            "cost",
+            "tokens"
+          ],
+          "method_source": {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+          }
+        },
+        "source_index": 13
+      },
+      "prior": null
+    },
+    {
+      "row": {
+        "id": "public:00f31303697fb77100fa1396",
+        "benchmark_id": "frontiercode-cost::1.1",
+        "subject": {
+          "source_id": "GPT-6 Luna|max",
+          "name": "GPT-6 Luna · max",
+          "model_id": null,
+          "variant": null,
+          "harness": "codex"
+        },
+        "value": 0.1027,
+        "unit": "USD",
+        "basis": "self_reported",
+        "source": {
+          "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+          "retrieved_at": "2026-09-26T04:23:00.682196+00:00",
+          "published_at": null,
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+          "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+          "locator": "effort_runs_json; source row 14; GPT-6 Luna|max; field cost"
+        },
+        "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"GPT-6 Luna\",\"effort\":\"max\",\"subset\":\"main\",\"harness\":\"codex\",\"new_score\":0.4242,\"correct\":0.478,\"flagged_rate\":0.0,\"cost\":0.1027,\"tokens\":56553.0}",
+        "comparison_key": null,
+        "supporting_sources": [
+          {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00",
+            "published_at": null,
+            "locator": "method_source"
+          }
+        ]
+      },
+      "native_source_row": {
+        "source_row": {
+          "cost": 0.1027,
+          "correct": 0.478,
+          "new_score": 0.4242,
+          "tokens": 56553,
+          "tool_calls": null,
+          "steps": null,
+          "ote": null,
+          "flagged_rate": 0,
+          "name": "GPT-6 Luna · max",
+          "id": "GPT-6 Luna|max",
+          "harness": "codex",
+          "source_row": 14,
+          "context": {
+            "model": "GPT-6 Luna",
+            "effort": "max",
+            "subset": "main",
+            "harness": "codex",
+            "new_score": 0.4242,
+            "correct": 0.478,
+            "flagged_rate": 0,
+            "cost": 0.1027,
+            "tokens": 56553
+          }
+        },
+        "parser": {
+          "kind": "effort_runs_json",
+          "row_path": "v1_1",
+          "subset": "main",
+          "require": {
+            "subsets.main": 100
+          },
+          "name_field": "name",
+          "value_field": "cost",
+          "id_field": "id",
+          "harness_field": "harness",
+          "plain_text_names": true,
+          "context_keys": [
+            "new_score",
+            "correct",
+            "flagged_rate",
+            "cost",
+            "tokens"
+          ],
+          "method_source": {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+          }
+        },
+        "source_index": 14
+      },
+      "prior": null
+    },
+    {
+      "row": {
+        "id": "public:a485bfda81d58c42dd65df6b",
+        "benchmark_id": "frontiercode-cost::1.1",
+        "subject": {
+          "source_id": "Grok 4.7|high",
+          "name": "Grok 4.7 · high",
+          "model_id": null,
+          "variant": null,
+          "harness": "grok-build"
+        },
+        "value": 6.6472,
+        "unit": "USD",
+        "basis": "self_reported",
+        "source": {
+          "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+          "retrieved_at": "2026-09-26T04:23:00.682196+00:00",
+          "published_at": null,
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+          "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+          "locator": "effort_runs_json; source row 113; Grok 4.7|high; field cost"
+        },
+        "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"Grok 4.7\",\"effort\":\"high\",\"subset\":\"main\",\"harness\":\"grok-build\",\"new_score\":0.4759,\"correct\":0.531,\"flagged_rate\":0.013,\"cost\":6.6472,\"tokens\":82717.0}",
+        "comparison_key": null,
+        "supporting_sources": [
+          {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00",
+            "published_at": null,
+            "locator": "method_source"
+          }
+        ]
+      },
+      "native_source_row": {
+        "source_row": {
+          "cost": 6.6472,
+          "correct": 0.531,
+          "new_score": 0.4759,
+          "tokens": 82717,
+          "tool_calls": null,
+          "steps": null,
+          "ote": null,
+          "flagged_rate": 0.013,
+          "name": "Grok 4.7 · high",
+          "id": "Grok 4.7|high",
+          "harness": "grok-build",
+          "source_row": 113,
+          "context": {
+            "model": "Grok 4.7",
+            "effort": "high",
+            "subset": "main",
+            "harness": "grok-build",
+            "new_score": 0.4759,
+            "correct": 0.531,
+            "flagged_rate": 0.013,
+            "cost": 6.6472,
+            "tokens": 82717
+          }
+        },
+        "parser": {
+          "kind": "effort_runs_json",
+          "row_path": "v1_1",
+          "subset": "main",
+          "require": {
+            "subsets.main": 100
+          },
+          "name_field": "name",
+          "value_field": "cost",
+          "id_field": "id",
+          "harness_field": "harness",
+          "plain_text_names": true,
+          "context_keys": [
+            "new_score",
+            "correct",
+            "flagged_rate",
+            "cost",
+            "tokens"
+          ],
+          "method_source": {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+          }
+        },
+        "source_index": 113
+      },
+      "prior": null
+    },
+    {
+      "row": {
+        "id": "public:64e09fdcd713014e81b00d05",
+        "benchmark_id": "frontiercode-cost::1.1",
+        "subject": {
+          "source_id": "Grok 4.7|xhigh",
+          "name": "Grok 4.7 · xhigh",
+          "model_id": null,
+          "variant": null,
+          "harness": "grok-build"
+        },
+        "value": 8.2891,
+        "unit": "USD",
+        "basis": "self_reported",
+        "source": {
+          "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+          "retrieved_at": "2026-09-26T04:23:00.682196+00:00",
+          "published_at": null,
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+          "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+          "locator": "effort_runs_json; source row 114; Grok 4.7|xhigh; field cost"
+        },
+        "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"Grok 4.7\",\"effort\":\"xhigh\",\"subset\":\"main\",\"harness\":\"grok-build\",\"new_score\":0.4559,\"correct\":0.509,\"flagged_rate\":0.008,\"cost\":8.2891,\"tokens\":99182.0}",
+        "comparison_key": null,
+        "supporting_sources": [
+          {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00",
+            "published_at": null,
+            "locator": "method_source"
+          }
+        ]
+      },
+      "native_source_row": {
+        "source_row": {
+          "cost": 8.2891,
+          "correct": 0.509,
+          "new_score": 0.4559,
+          "tokens": 99182,
+          "tool_calls": null,
+          "steps": null,
+          "ote": null,
+          "flagged_rate": 0.008,
+          "name": "Grok 4.7 · xhigh",
+          "id": "Grok 4.7|xhigh",
+          "harness": "grok-build",
+          "source_row": 114,
+          "context": {
+            "model": "Grok 4.7",
+            "effort": "xhigh",
+            "subset": "main",
+            "harness": "grok-build",
+            "new_score": 0.4559,
+            "correct": 0.509,
+            "flagged_rate": 0.008,
+            "cost": 8.2891,
+            "tokens": 99182
+          }
+        },
+        "parser": {
+          "kind": "effort_runs_json",
+          "row_path": "v1_1",
+          "subset": "main",
+          "require": {
+            "subsets.main": 100
+          },
+          "name_field": "name",
+          "value_field": "cost",
+          "id_field": "id",
+          "harness_field": "harness",
+          "plain_text_names": true,
+          "context_keys": [
+            "new_score",
+            "correct",
+            "flagged_rate",
+            "cost",
+            "tokens"
+          ],
+          "method_source": {
+            "url": "https://cognition.com/frontiercode",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+            "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+            "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+          }
+        },
+        "source_index": 114
+      },
+      "prior": null
+    }
+  ]
+}

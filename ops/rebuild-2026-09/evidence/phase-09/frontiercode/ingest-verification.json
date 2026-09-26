@@ -1,0 +1,2053 @@
+{
+  "generated_at": "2026-09-26",
+  "note": "Local regeneration check (npm run -s data:benchmarks; node scripts/build-dataset.mjs; node --test test/ 1403 pass / 0 fail) on lane/frontiercode; generated outputs are not committed.",
+  "joined_rows": 204,
+  "by_board": {
+    "frontiercode::1.1": 17,
+    "frontiercode-cost::1.1": 17,
+    "frontiercode-extended::1.1": 85,
+    "frontiercode-extended-cost::1.1": 85
+  },
+  "rows": [
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Opus 5.5|low",
+      "model_id": "claude-opus-5.5::low",
+      "value": 47.3,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Opus 5.5|medium",
+      "model_id": "claude-opus-5.5::medium",
+      "value": 54.64,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Opus 5.5|high",
+      "model_id": "claude-opus-5.5::high",
+      "value": 53.99,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Opus 5.5|xhigh",
+      "model_id": "claude-opus-5.5::xhigh",
+      "value": 51.42,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Opus 5.5|max",
+      "model_id": "claude-opus-5.5::max",
+      "value": 54.43,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-6 Sol|low",
+      "model_id": "gpt-6-sol::low",
+      "value": 37.28,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-6 Sol|medium",
+      "model_id": "gpt-6-sol::medium",
+      "value": 45.92,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-6 Sol|high",
+      "model_id": "gpt-6-sol::high",
+      "value": 47.699999999999996,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-6 Sol|xhigh",
+      "model_id": "gpt-6-sol::xhigh",
+      "value": 48.449999999999996,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-6 Sol|max",
+      "model_id": "gpt-6-sol::max",
+      "value": 49.27,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-6 Luna|low",
+      "model_id": "gpt-6-luna::low",
+      "value": 25.66,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-6 Luna|medium",
+      "model_id": "gpt-6-luna::medium",
+      "value": 35.53,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-6 Luna|high",
+      "model_id": "gpt-6-luna::high",
+      "value": 37.26,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-6 Luna|xhigh",
+      "model_id": "gpt-6-luna::xhigh",
+      "value": 37.1,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-6 Luna|max",
+      "model_id": "gpt-6-luna::max",
+      "value": 42.42,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Grok 4.7|high",
+      "model_id": "grok-4.7::high",
+      "value": 47.589999999999996,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Grok 4.7|xhigh",
+      "model_id": "grok-4.7::xhigh",
+      "value": 45.59,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-cost::1.1",
+      "source_id": "Claude Opus 5.5|low",
+      "model_id": "claude-opus-5.5::low",
+      "value": 0.4036,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-cost::1.1",
+      "source_id": "Claude Opus 5.5|medium",
+      "model_id": "claude-opus-5.5::medium",
+      "value": 0.8016,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-cost::1.1",
+      "source_id": "Claude Opus 5.5|high",
+      "model_id": "claude-opus-5.5::high",
+      "value": 1.0896,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-cost::1.1",
+      "source_id": "Claude Opus 5.5|xhigh",
+      "model_id": "claude-opus-5.5::xhigh",
+      "value": 2.2545,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-cost::1.1",
+      "source_id": "Claude Opus 5.5|max",
+      "model_id": "claude-opus-5.5::max",
+      "value": 6.191,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-cost::1.1",
+      "source_id": "GPT-6 Sol|low",
+      "model_id": "gpt-6-sol::low",
+      "value": 0.4324,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-cost::1.1",
+      "source_id": "GPT-6 Sol|medium",
+      "model_id": "gpt-6-sol::medium",
+      "value": 0.7659,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-cost::1.1",
+      "source_id": "GPT-6 Sol|high",
+      "model_id": "gpt-6-sol::high",
+      "value": 1.0393,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-cost::1.1",
+      "source_id": "GPT-6 Sol|xhigh",
+      "model_id": "gpt-6-sol::xhigh",
+      "value": 1.325,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-cost::1.1",
+      "source_id": "GPT-6 Sol|max",
+      "model_id": "gpt-6-sol::max",
+      "value": 2.0651,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-cost::1.1",
+      "source_id": "GPT-6 Luna|low",
+      "model_id": "gpt-6-luna::low",
+      "value": 0.0199,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-cost::1.1",
+      "source_id": "GPT-6 Luna|medium",
+      "model_id": "gpt-6-luna::medium",
+      "value": 0.0512,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-cost::1.1",
+      "source_id": "GPT-6 Luna|high",
+      "model_id": "gpt-6-luna::high",
+      "value": 0.0646,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-cost::1.1",
+      "source_id": "GPT-6 Luna|xhigh",
+      "model_id": "gpt-6-luna::xhigh",
+      "value": 0.07,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-cost::1.1",
+      "source_id": "GPT-6 Luna|max",
+      "model_id": "gpt-6-luna::max",
+      "value": 0.1027,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-cost::1.1",
+      "source_id": "Grok 4.7|high",
+      "model_id": "grok-4.7::high",
+      "value": 6.6472,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-cost::1.1",
+      "source_id": "Grok 4.7|xhigh",
+      "model_id": "grok-4.7::xhigh",
+      "value": 8.2891,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Claude Opus 5.5|low",
+      "model_id": "claude-opus-5.5::low",
+      "value": 60.33,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Claude Opus 5.5|medium",
+      "model_id": "claude-opus-5.5::medium",
+      "value": 65.27,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Claude Opus 5.5|high",
+      "model_id": "claude-opus-5.5::high",
+      "value": 65.2,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Claude Opus 5.5|xhigh",
+      "model_id": "claude-opus-5.5::xhigh",
+      "value": 63.53,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Claude Opus 5.5|max",
+      "model_id": "claude-opus-5.5::max",
+      "value": 63.580000000000005,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-6 Sol|low",
+      "model_id": "gpt-6-sol::low",
+      "value": 50.55,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-6 Sol|medium",
+      "model_id": "gpt-6-sol::medium",
+      "value": 57.11000000000001,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-6 Sol|high",
+      "model_id": "gpt-6-sol::high",
+      "value": 59.62,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-6 Sol|xhigh",
+      "model_id": "gpt-6-sol::xhigh",
+      "value": 59.13,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-6 Sol|max",
+      "model_id": "gpt-6-sol::max",
+      "value": 60.69,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-6 Luna|low",
+      "model_id": "gpt-6-luna::low",
+      "value": 39.07,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-6 Luna|medium",
+      "model_id": "gpt-6-luna::medium",
+      "value": 50.14999999999999,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-6 Luna|high",
+      "model_id": "gpt-6-luna::high",
+      "value": 51.300000000000004,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-6 Luna|xhigh",
+      "model_id": "gpt-6-luna::xhigh",
+      "value": 51.43,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-6 Luna|max",
+      "model_id": "gpt-6-luna::max",
+      "value": 56.10000000000001,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Claude Fable 5|low",
+      "model_id": "claude-fable-5::low",
+      "value": 60.8,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Claude Fable 5|medium",
+      "model_id": "claude-fable-5::medium",
+      "value": 62.79,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Claude Fable 5|high",
+      "model_id": "claude-fable-5::high",
+      "value": 64.25,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Claude Fable 5|xhigh",
+      "model_id": "claude-fable-5::xhigh",
+      "value": 64.94,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Claude Fable 5|max",
+      "model_id": "claude-fable-5::max",
+      "value": 63.629999999999995,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-5.6 Sol|low",
+      "model_id": "gpt-5.6-sol::low",
+      "value": 49.99,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-5.6 Sol|medium",
+      "model_id": "gpt-5.6-sol::medium",
+      "value": 54.67999999999999,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-5.6 Sol|high",
+      "model_id": "gpt-5.6-sol::high",
+      "value": 58.74,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-5.6 Sol|xhigh",
+      "model_id": "gpt-5.6-sol::xhigh",
+      "value": 59.98,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-5.6 Sol|max",
+      "model_id": "gpt-5.6-sol::max",
+      "value": 60.550000000000004,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Claude Opus 4.8|low",
+      "model_id": "claude-opus-4.8::low",
+      "value": 50.83,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Claude Opus 4.8|medium",
+      "model_id": "claude-opus-4.8::medium",
+      "value": 55.37,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Claude Opus 4.8|high",
+      "model_id": "claude-opus-4.8::high",
+      "value": 55.63,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Claude Opus 4.8|xhigh",
+      "model_id": "claude-opus-4.8::xhigh",
+      "value": 59.45,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Claude Opus 4.8|max",
+      "model_id": "claude-opus-4.8::max",
+      "value": 59.599999999999994,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-5.5|low",
+      "model_id": "gpt-5.5::low",
+      "value": 45.550000000000004,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-5.5|medium",
+      "model_id": "gpt-5.5::medium",
+      "value": 51.370000000000005,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-5.5|high",
+      "model_id": "gpt-5.5::high",
+      "value": 53.99,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-5.5|xhigh",
+      "model_id": "gpt-5.5::xhigh",
+      "value": 56.66,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Grok 4.5|high",
+      "model_id": "grok-4.5::high",
+      "value": 56.55,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Grok 4.6|low",
+      "model_id": "grok-4.6::low",
+      "value": 55.02,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Grok 4.6|medium",
+      "model_id": "grok-4.6::medium",
+      "value": 59.62,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Grok 4.6|high",
+      "model_id": "grok-4.6::high",
+      "value": 61.309999999999995,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Claude Sonnet 5|low",
+      "model_id": "claude-sonnet-5::low",
+      "value": 44.46,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Claude Sonnet 5|medium",
+      "model_id": "claude-sonnet-5::medium",
+      "value": 49.28,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Claude Sonnet 5|high",
+      "model_id": "claude-sonnet-5::high",
+      "value": 52.71,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Claude Sonnet 5|xhigh",
+      "model_id": "claude-sonnet-5::xhigh",
+      "value": 56.18,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Claude Sonnet 5|max",
+      "model_id": "claude-sonnet-5::max",
+      "value": 54.85,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-5.6 Terra|low",
+      "model_id": "gpt-5.6-terra::low",
+      "value": 37.79,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-5.6 Terra|medium",
+      "model_id": "gpt-5.6-terra::medium",
+      "value": 47.660000000000004,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-5.6 Terra|high",
+      "model_id": "gpt-5.6-terra::high",
+      "value": 50.86000000000001,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-5.6 Terra|xhigh",
+      "model_id": "gpt-5.6-terra::xhigh",
+      "value": 52.629999999999995,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-5.6 Terra|max",
+      "model_id": "gpt-5.6-terra::max",
+      "value": 55.84,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-5.6 Luna|low",
+      "model_id": "gpt-5.6-luna::low",
+      "value": 29.020000000000003,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-5.6 Luna|medium",
+      "model_id": "gpt-5.6-luna::medium",
+      "value": 41.17,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-5.6 Luna|high",
+      "model_id": "gpt-5.6-luna::high",
+      "value": 50.519999999999996,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-5.6 Luna|xhigh",
+      "model_id": "gpt-5.6-luna::xhigh",
+      "value": 54.50000000000001,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-5.6 Luna|max",
+      "model_id": "gpt-5.6-luna::max",
+      "value": 55.059999999999995,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Claude Opus 4.7|medium",
+      "model_id": "claude-opus-4.7::medium",
+      "value": 44.75,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Claude Opus 4.7|max",
+      "model_id": "claude-opus-4.7::max",
+      "value": 53.93,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Composer 2.5|none",
+      "model_id": "composer-2.5::default",
+      "value": 40.75,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "MiniMax M3|none",
+      "model_id": "minimax-m3::default",
+      "value": 28.54,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Claude Opus 5|low",
+      "model_id": "claude-opus-5::low",
+      "value": 55.75,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Claude Opus 5|medium",
+      "model_id": "claude-opus-5::medium",
+      "value": 63.629999999999995,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Claude Opus 5|high",
+      "model_id": "claude-opus-5::high",
+      "value": 58.45,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Claude Opus 5|xhigh",
+      "model_id": "claude-opus-5::xhigh",
+      "value": 56.87,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Claude Opus 5|max",
+      "model_id": "claude-opus-5::max",
+      "value": 58.940000000000005,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Gemini 3.6 Flash|high",
+      "model_id": "gemini-3.6-flash::high",
+      "value": 47.58,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Gemini 3.7 Flash|low",
+      "model_id": "gemini-3.7-flash::low",
+      "value": 51.849999999999994,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Gemini 3.7 Flash|medium",
+      "model_id": "gemini-3.7-flash::medium",
+      "value": 56.269999999999996,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Gemini 3.7 Flash|high",
+      "model_id": "gemini-3.7-flash::high",
+      "value": 54.74,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-5.4-mini|medium",
+      "model_id": "gpt-5.4-mini::medium",
+      "value": 35.06,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-5.4-mini|xhigh",
+      "model_id": "gpt-5.4-mini::xhigh",
+      "value": 43.01,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Claude Sonnet 4.6|medium",
+      "model_id": "claude-sonnet-4.6::medium",
+      "value": 37.49,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Claude Sonnet 4.6|max",
+      "model_id": "claude-sonnet-4.6::max",
+      "value": 40,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Claude Fable 5.1|low",
+      "model_id": "claude-fable-5.1::low",
+      "value": 61.62,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Claude Fable 5.1|medium",
+      "model_id": "claude-fable-5.1::medium",
+      "value": 63.6,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Claude Fable 5.1|high",
+      "model_id": "claude-fable-5.1::high",
+      "value": 62.68,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Claude Fable 5.1|xhigh",
+      "model_id": "claude-fable-5.1::xhigh",
+      "value": 61.35,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Claude Fable 5.1|max",
+      "model_id": "claude-fable-5.1::max",
+      "value": 62.029999999999994,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GLM 5.3|max",
+      "model_id": "glm-5.3::max",
+      "value": 52.629999999999995,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Gemini 3.8 Flash|medium",
+      "model_id": "gemini-3.8-flash::medium",
+      "value": 53.449999999999996,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Gemini 3.8 Flash|high",
+      "model_id": "gemini-3.8-flash::high",
+      "value": 51.239999999999995,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-6 Astra|low",
+      "model_id": "gpt-6-astra::low",
+      "value": 57.4,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-6 Astra|medium",
+      "model_id": "gpt-6-astra::medium",
+      "value": 60.25,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-6 Astra|high",
+      "model_id": "gpt-6-astra::high",
+      "value": 63.07000000000001,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-6 Astra|xhigh",
+      "model_id": "gpt-6-astra::xhigh",
+      "value": 62.12,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "GPT-6 Astra|max",
+      "model_id": "gpt-6-astra::max",
+      "value": 64.48,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Grok 4.7|high",
+      "model_id": "grok-4.7::high",
+      "value": 59.35,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "source_id": "Grok 4.7|xhigh",
+      "model_id": "grok-4.7::xhigh",
+      "value": 56.989999999999995,
+      "unit": "percent",
+      "basis": "derived",
+      "source_basis": "self_reported",
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Claude Opus 5.5|low",
+      "model_id": "claude-opus-5.5::low",
+      "value": 0.3464,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Claude Opus 5.5|medium",
+      "model_id": "claude-opus-5.5::medium",
+      "value": 0.6666,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Claude Opus 5.5|high",
+      "model_id": "claude-opus-5.5::high",
+      "value": 0.903,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Claude Opus 5.5|xhigh",
+      "model_id": "claude-opus-5.5::xhigh",
+      "value": 1.8587,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Claude Opus 5.5|max",
+      "model_id": "claude-opus-5.5::max",
+      "value": 5.2832,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-6 Sol|low",
+      "model_id": "gpt-6-sol::low",
+      "value": 0.3816,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-6 Sol|medium",
+      "model_id": "gpt-6-sol::medium",
+      "value": 0.6581,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-6 Sol|high",
+      "model_id": "gpt-6-sol::high",
+      "value": 0.8708,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-6 Sol|xhigh",
+      "model_id": "gpt-6-sol::xhigh",
+      "value": 1.1054,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-6 Sol|max",
+      "model_id": "gpt-6-sol::max",
+      "value": 1.6627,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-6 Luna|low",
+      "model_id": "gpt-6-luna::low",
+      "value": 0.0177,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-6 Luna|medium",
+      "model_id": "gpt-6-luna::medium",
+      "value": 0.043,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-6 Luna|high",
+      "model_id": "gpt-6-luna::high",
+      "value": 0.0532,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-6 Luna|xhigh",
+      "model_id": "gpt-6-luna::xhigh",
+      "value": 0.0576,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-6 Luna|max",
+      "model_id": "gpt-6-luna::max",
+      "value": 0.0831,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Claude Fable 5|low",
+      "model_id": "claude-fable-5::low",
+      "value": 4.0311,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Claude Fable 5|medium",
+      "model_id": "claude-fable-5::medium",
+      "value": 5.8428,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Claude Fable 5|high",
+      "model_id": "claude-fable-5::high",
+      "value": 7.711,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Claude Fable 5|xhigh",
+      "model_id": "claude-fable-5::xhigh",
+      "value": 10.5282,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Claude Fable 5|max",
+      "model_id": "claude-fable-5::max",
+      "value": 15.4885,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-5.6 Sol|low",
+      "model_id": "gpt-5.6-sol::low",
+      "value": 1.6667,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-5.6 Sol|medium",
+      "model_id": "gpt-5.6-sol::medium",
+      "value": 2.3007,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-5.6 Sol|high",
+      "model_id": "gpt-5.6-sol::high",
+      "value": 2.9349,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-5.6 Sol|xhigh",
+      "model_id": "gpt-5.6-sol::xhigh",
+      "value": 3.4541,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-5.6 Sol|max",
+      "model_id": "gpt-5.6-sol::max",
+      "value": 4.253,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Claude Opus 4.8|low",
+      "model_id": "claude-opus-4.8::low",
+      "value": 2.2736,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Claude Opus 4.8|medium",
+      "model_id": "claude-opus-4.8::medium",
+      "value": 3.062,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Claude Opus 4.8|high",
+      "model_id": "claude-opus-4.8::high",
+      "value": 3.5377,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Claude Opus 4.8|xhigh",
+      "model_id": "claude-opus-4.8::xhigh",
+      "value": 5.5793,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Claude Opus 4.8|max",
+      "model_id": "claude-opus-4.8::max",
+      "value": 8.0501,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-5.5|low",
+      "model_id": "gpt-5.5::low",
+      "value": 1.434,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-5.5|medium",
+      "model_id": "gpt-5.5::medium",
+      "value": 1.9847,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-5.5|high",
+      "model_id": "gpt-5.5::high",
+      "value": 2.6054,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-5.5|xhigh",
+      "model_id": "gpt-5.5::xhigh",
+      "value": 3.3393,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Grok 4.5|high",
+      "model_id": "grok-4.5::high",
+      "value": 1.0863,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Grok 4.6|low",
+      "model_id": "grok-4.6::low",
+      "value": 0.8005,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Grok 4.6|medium",
+      "model_id": "grok-4.6::medium",
+      "value": 1.6501,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Grok 4.6|high",
+      "model_id": "grok-4.6::high",
+      "value": 2.3827,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Claude Sonnet 5|low",
+      "model_id": "claude-sonnet-5::low",
+      "value": 2.0339,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Claude Sonnet 5|medium",
+      "model_id": "claude-sonnet-5::medium",
+      "value": 3.1582,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Claude Sonnet 5|high",
+      "model_id": "claude-sonnet-5::high",
+      "value": 4.974,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Claude Sonnet 5|xhigh",
+      "model_id": "claude-sonnet-5::xhigh",
+      "value": 8.231,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Claude Sonnet 5|max",
+      "model_id": "claude-sonnet-5::max",
+      "value": 14.0943,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-5.6 Terra|low",
+      "model_id": "gpt-5.6-terra::low",
+      "value": 0.4489,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-5.6 Terra|medium",
+      "model_id": "gpt-5.6-terra::medium",
+      "value": 0.7151,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-5.6 Terra|high",
+      "model_id": "gpt-5.6-terra::high",
+      "value": 1.0168,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-5.6 Terra|xhigh",
+      "model_id": "gpt-5.6-terra::xhigh",
+      "value": 1.1737,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-5.6 Terra|max",
+      "model_id": "gpt-5.6-terra::max",
+      "value": 1.5696,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-5.6 Luna|low",
+      "model_id": "gpt-5.6-luna::low",
+      "value": 0.0584,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-5.6 Luna|medium",
+      "model_id": "gpt-5.6-luna::medium",
+      "value": 0.115,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-5.6 Luna|high",
+      "model_id": "gpt-5.6-luna::high",
+      "value": 0.2002,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-5.6 Luna|xhigh",
+      "model_id": "gpt-5.6-luna::xhigh",
+      "value": 0.2622,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-5.6 Luna|max",
+      "model_id": "gpt-5.6-luna::max",
+      "value": 0.3074,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Claude Opus 4.7|medium",
+      "model_id": "claude-opus-4.7::medium",
+      "value": 2.7316,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Claude Opus 4.7|max",
+      "model_id": "claude-opus-4.7::max",
+      "value": 7.6144,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Composer 2.5|none",
+      "model_id": "composer-2.5::default",
+      "value": 2.5688,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "MiniMax M3|none",
+      "model_id": "minimax-m3::default",
+      "value": 0.5922,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Claude Opus 5|low",
+      "model_id": "claude-opus-5::low",
+      "value": 2.1469,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Claude Opus 5|medium",
+      "model_id": "claude-opus-5::medium",
+      "value": 3.511,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Claude Opus 5|high",
+      "model_id": "claude-opus-5::high",
+      "value": 5.8448,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Claude Opus 5|xhigh",
+      "model_id": "claude-opus-5::xhigh",
+      "value": 7.438,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Claude Opus 5|max",
+      "model_id": "claude-opus-5::max",
+      "value": 9.6843,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Gemini 3.6 Flash|high",
+      "model_id": "gemini-3.6-flash::high",
+      "value": 3.5961,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Gemini 3.7 Flash|low",
+      "model_id": "gemini-3.7-flash::low",
+      "value": 1.4335,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Gemini 3.7 Flash|medium",
+      "model_id": "gemini-3.7-flash::medium",
+      "value": 1.5323,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Gemini 3.7 Flash|high",
+      "model_id": "gemini-3.7-flash::high",
+      "value": 1.7948,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-5.4-mini|medium",
+      "model_id": "gpt-5.4-mini::medium",
+      "value": 0.6716,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-5.4-mini|xhigh",
+      "model_id": "gpt-5.4-mini::xhigh",
+      "value": 1.2621,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Claude Sonnet 4.6|medium",
+      "model_id": "claude-sonnet-4.6::medium",
+      "value": 1.9375,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Claude Sonnet 4.6|max",
+      "model_id": "claude-sonnet-4.6::max",
+      "value": 2.4401,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Claude Fable 5.1|low",
+      "model_id": "claude-fable-5.1::low",
+      "value": 1.9427,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Claude Fable 5.1|medium",
+      "model_id": "claude-fable-5.1::medium",
+      "value": 2.6825,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Claude Fable 5.1|high",
+      "model_id": "claude-fable-5.1::high",
+      "value": 4.2833,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Claude Fable 5.1|xhigh",
+      "model_id": "claude-fable-5.1::xhigh",
+      "value": 7.7022,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Claude Fable 5.1|max",
+      "model_id": "claude-fable-5.1::max",
+      "value": 10.7206,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GLM 5.3|max",
+      "model_id": "glm-5.3::max",
+      "value": 13.7873,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Gemini 3.8 Flash|medium",
+      "model_id": "gemini-3.8-flash::medium",
+      "value": 2.2053,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Gemini 3.8 Flash|high",
+      "model_id": "gemini-3.8-flash::high",
+      "value": 2.2608,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-6 Astra|low",
+      "model_id": "gpt-6-astra::low",
+      "value": 1.4997,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-6 Astra|medium",
+      "model_id": "gpt-6-astra::medium",
+      "value": 2.102,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-6 Astra|high",
+      "model_id": "gpt-6-astra::high",
+      "value": 2.624,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-6 Astra|xhigh",
+      "model_id": "gpt-6-astra::xhigh",
+      "value": 2.8602,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "GPT-6 Astra|max",
+      "model_id": "gpt-6-astra::max",
+      "value": 3.9329,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Grok 4.7|high",
+      "model_id": "grok-4.7::high",
+      "value": 5.594,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "source_id": "Grok 4.7|xhigh",
+      "model_id": "grok-4.7::xhigh",
+      "value": 7.0044,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source_basis": null,
+      "identity_review": "ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended/packet.json"
+    }
+  ]
+}

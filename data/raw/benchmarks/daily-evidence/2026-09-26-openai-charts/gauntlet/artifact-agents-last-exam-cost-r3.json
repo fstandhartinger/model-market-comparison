@@ -1,0 +1,380 @@
+{
+  "schema_version": 1,
+  "observations": [
+    {
+      "id": "self-reported:gpt-6-astra-low-openai-agents-last-exam-v1-cost",
+      "benchmark_id": "openai-agents-last-exam-cost::v1",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#agents-last-exam/GPT-6 Astra/low",
+        "name": "GPT-6 Astra",
+        "model_id": "gpt-6-astra::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 3.0726,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"Agents' Last Exam V1 cost per task, chart dataset entry model GPT-6 Astra with effortLabel low\", under \"cost\" (USD; the chart tooltip prints it as cost_label \"$3.07\"; x axis title \"Cost per task\"). Section \"Professional work\", figure \"Agents' Last Exam\" (chart component id 5cBUMiABWcTUjY3l0Y4iaz, dotcomConfig.linkId \"agents-last-exam\"; figure caption: \"In Agents’ Last Exam V1, AI agents are evaluated on long-horizon, economically valuable tasks spanning 55 sub-industries, covering most major fields of professional work performed on a computer.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Astra\" and effortLabel \"low\"; exact datapoint: {\"model\":\"GPT-6 Astra\",\"cost_label\":\"$$3.07\",\"score\":0.534,\"cost\":3.0726,\"order\":0,\"modelLabel\":\"GPT-6 Astra\",\"effortLabel\":\"low\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI as GPT-6 Astra's USD cost per Agents’ Last Exam V1 task at low reasoning effort, the x-axis value (\"Cost per task\") of the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available. Cross-check: OpenAI's earlier GPT-6 Astra launch post (2026-09-03; Wayback copy https://web.archive.org/web/20260920053907id_/https://openai.com/index/gpt-6-astra/, sha256 28dd99f38f5b866d258624acb06096052eb946e4299d22d2b515b66566eefa7a) charts this Astra configuration in \"Agents’ Last Exam\" as {\"effort_display\":\"Low\",\"model\":\"GPT-6 Astra\",\"model_display\":\"GPT-6 Astra\",\"pointOrder\":0,\"score\":0.534,\"x_label\":\"$$3.57\",\"x_metric\":\"api_cost_usd\",\"x_value\":3.5706361085526312,\"seriesId\":\"series-4\"}. This row carries only the 2026-09-22 dataset value.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"low\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-astra::low and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-astra-medium-openai-agents-last-exam-v1-cost",
+      "benchmark_id": "openai-agents-last-exam-cost::v1",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#agents-last-exam/GPT-6 Astra/medium",
+        "name": "GPT-6 Astra",
+        "model_id": "gpt-6-astra::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 4.1046,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"Agents' Last Exam V1 cost per task, chart dataset entry model GPT-6 Astra with effortLabel medium\", under \"cost\" (USD; the chart tooltip prints it as cost_label \"$4.10\"; x axis title \"Cost per task\"). Section \"Professional work\", figure \"Agents' Last Exam\" (chart component id 5cBUMiABWcTUjY3l0Y4iaz, dotcomConfig.linkId \"agents-last-exam\"; figure caption: \"In Agents’ Last Exam V1, AI agents are evaluated on long-horizon, economically valuable tasks spanning 55 sub-industries, covering most major fields of professional work performed on a computer.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Astra\" and effortLabel \"medium\"; exact datapoint: {\"model\":\"GPT-6 Astra\",\"cost_label\":\"$$4.10\",\"score\":0.5762,\"cost\":4.1046,\"order\":1,\"modelLabel\":\"GPT-6 Astra\",\"effortLabel\":\"medium\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI as GPT-6 Astra's USD cost per Agents’ Last Exam V1 task at medium reasoning effort, the x-axis value (\"Cost per task\") of the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available. Cross-check: OpenAI's earlier GPT-6 Astra launch post (2026-09-03; Wayback copy https://web.archive.org/web/20260920053907id_/https://openai.com/index/gpt-6-astra/, sha256 28dd99f38f5b866d258624acb06096052eb946e4299d22d2b515b66566eefa7a) charts this Astra configuration in \"Agents’ Last Exam\" as {\"effort_display\":\"Medium\",\"model\":\"GPT-6 Astra\",\"model_display\":\"GPT-6 Astra\",\"pointOrder\":1,\"score\":0.5761999999999999,\"x_label\":\"$$4.84\",\"x_metric\":\"api_cost_usd\",\"x_value\":4.8440037598684205,\"seriesId\":\"series-4\"}. This row carries only the 2026-09-22 dataset value.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"medium\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-astra::medium and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-astra-high-openai-agents-last-exam-v1-cost",
+      "benchmark_id": "openai-agents-last-exam-cost::v1",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#agents-last-exam/GPT-6 Astra/high",
+        "name": "GPT-6 Astra",
+        "model_id": "gpt-6-astra::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 4.6396,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"Agents' Last Exam V1 cost per task, chart dataset entry model GPT-6 Astra with effortLabel high\", under \"cost\" (USD; the chart tooltip prints it as cost_label \"$4.64\"; x axis title \"Cost per task\"). Section \"Professional work\", figure \"Agents' Last Exam\" (chart component id 5cBUMiABWcTUjY3l0Y4iaz, dotcomConfig.linkId \"agents-last-exam\"; figure caption: \"In Agents’ Last Exam V1, AI agents are evaluated on long-horizon, economically valuable tasks spanning 55 sub-industries, covering most major fields of professional work performed on a computer.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Astra\" and effortLabel \"high\"; exact datapoint: {\"model\":\"GPT-6 Astra\",\"cost_label\":\"$$4.64\",\"score\":0.5778,\"cost\":4.6396,\"order\":2,\"modelLabel\":\"GPT-6 Astra\",\"effortLabel\":\"high\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI as GPT-6 Astra's USD cost per Agents’ Last Exam V1 task at high reasoning effort, the x-axis value (\"Cost per task\") of the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available. Cross-check: OpenAI's earlier GPT-6 Astra launch post (2026-09-03; Wayback copy https://web.archive.org/web/20260920053907id_/https://openai.com/index/gpt-6-astra/, sha256 28dd99f38f5b866d258624acb06096052eb946e4299d22d2b515b66566eefa7a) charts this Astra configuration in \"Agents’ Last Exam\" as {\"effort_display\":\"High\",\"model\":\"GPT-6 Astra\",\"model_display\":\"GPT-6 Astra\",\"pointOrder\":2,\"score\":0.5778,\"x_label\":\"$$5.18\",\"x_metric\":\"api_cost_usd\",\"x_value\":5.184669082236843,\"seriesId\":\"series-4\"}. This row carries only the 2026-09-22 dataset value.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"high\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-astra::high and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-astra-xhigh-openai-agents-last-exam-v1-cost",
+      "benchmark_id": "openai-agents-last-exam-cost::v1",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#agents-last-exam/GPT-6 Astra/xhigh",
+        "name": "GPT-6 Astra",
+        "model_id": "gpt-6-astra::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 5.397,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"Agents' Last Exam V1 cost per task, chart dataset entry model GPT-6 Astra with effortLabel xhigh\", under \"cost\" (USD; the chart tooltip prints it as cost_label \"$5.40\"; x axis title \"Cost per task\"). Section \"Professional work\", figure \"Agents' Last Exam\" (chart component id 5cBUMiABWcTUjY3l0Y4iaz, dotcomConfig.linkId \"agents-last-exam\"; figure caption: \"In Agents’ Last Exam V1, AI agents are evaluated on long-horizon, economically valuable tasks spanning 55 sub-industries, covering most major fields of professional work performed on a computer.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Astra\" and effortLabel \"xhigh\"; exact datapoint: {\"model\":\"GPT-6 Astra\",\"cost_label\":\"$$5.40\",\"score\":0.5829,\"cost\":5.397,\"order\":3,\"modelLabel\":\"GPT-6 Astra\",\"effortLabel\":\"xhigh\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI as GPT-6 Astra's USD cost per Agents’ Last Exam V1 task at xhigh reasoning effort, the x-axis value (\"Cost per task\") of the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available. Cross-check: OpenAI's earlier GPT-6 Astra launch post (2026-09-03; Wayback copy https://web.archive.org/web/20260920053907id_/https://openai.com/index/gpt-6-astra/, sha256 28dd99f38f5b866d258624acb06096052eb946e4299d22d2b515b66566eefa7a) charts this Astra configuration in \"Agents’ Last Exam\" as {\"effort_display\":\"Xhigh\",\"model\":\"GPT-6 Astra\",\"model_display\":\"GPT-6 Astra\",\"pointOrder\":3,\"score\":0.5829,\"x_label\":\"$$5.95\",\"x_metric\":\"api_cost_usd\",\"x_value\":5.945660519736842,\"seriesId\":\"series-4\"}. This row carries only the 2026-09-22 dataset value.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"xhigh\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-astra::xhigh and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-astra-max-openai-agents-last-exam-v1-cost",
+      "benchmark_id": "openai-agents-last-exam-cost::v1",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#agents-last-exam/GPT-6 Astra/max",
+        "name": "GPT-6 Astra",
+        "model_id": "gpt-6-astra::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 6.2337,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"Agents' Last Exam V1 cost per task, chart dataset entry model GPT-6 Astra with effortLabel max\", under \"cost\" (USD; the chart tooltip prints it as cost_label \"$6.23\"; x axis title \"Cost per task\"). Section \"Professional work\", figure \"Agents' Last Exam\" (chart component id 5cBUMiABWcTUjY3l0Y4iaz, dotcomConfig.linkId \"agents-last-exam\"; figure caption: \"In Agents’ Last Exam V1, AI agents are evaluated on long-horizon, economically valuable tasks spanning 55 sub-industries, covering most major fields of professional work performed on a computer.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Astra\" and effortLabel \"max\"; exact datapoint: {\"model\":\"GPT-6 Astra\",\"cost_label\":\"$$6.23\",\"score\":0.5926,\"cost\":6.2337,\"order\":4,\"modelLabel\":\"GPT-6 Astra\",\"effortLabel\":\"max\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI as GPT-6 Astra's USD cost per Agents’ Last Exam V1 task at max reasoning effort, the x-axis value (\"Cost per task\") of the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available. Cross-check: OpenAI's earlier GPT-6 Astra launch post (2026-09-03; Wayback copy https://web.archive.org/web/20260920053907id_/https://openai.com/index/gpt-6-astra/, sha256 28dd99f38f5b866d258624acb06096052eb946e4299d22d2b515b66566eefa7a) charts this Astra configuration in \"Agents’ Last Exam\" as {\"effort_display\":\"Max\",\"model\":\"GPT-6 Astra\",\"model_display\":\"GPT-6 Astra\",\"pointOrder\":4,\"score\":0.5926,\"x_label\":\"$$7.28\",\"x_metric\":\"api_cost_usd\",\"x_value\":7.283618832236842,\"seriesId\":\"series-4\"}. This row carries only the 2026-09-22 dataset value.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"max\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-astra::max and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-luna-low-openai-agents-last-exam-v1-cost",
+      "benchmark_id": "openai-agents-last-exam-cost::v1",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#agents-last-exam/GPT-6 Luna/low",
+        "name": "GPT-6 Luna",
+        "model_id": "gpt-6-luna::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 0.0247,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"Agents' Last Exam V1 cost per task, chart dataset entry model GPT-6 Luna with effortLabel low\", under \"cost\" (USD; the chart tooltip prints it as cost_label \"$0.025\"; x axis title \"Cost per task\"). Section \"Professional work\", figure \"Agents' Last Exam\" (chart component id 5cBUMiABWcTUjY3l0Y4iaz, dotcomConfig.linkId \"agents-last-exam\"; figure caption: \"In Agents’ Last Exam V1, AI agents are evaluated on long-horizon, economically valuable tasks spanning 55 sub-industries, covering most major fields of professional work performed on a computer.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Luna\" and effortLabel \"low\"; exact datapoint: {\"model\":\"GPT-6 Luna\",\"cost_label\":\"$$0.025\",\"score\":0.3632,\"cost\":0.0247,\"order\":0,\"modelLabel\":\"GPT-6 Luna\",\"effortLabel\":\"low\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI as GPT-6 Luna's USD cost per Agents’ Last Exam V1 task at low reasoning effort, the x-axis value (\"Cost per task\") of the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"low\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-luna::low and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-luna-medium-openai-agents-last-exam-v1-cost",
+      "benchmark_id": "openai-agents-last-exam-cost::v1",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#agents-last-exam/GPT-6 Luna/medium",
+        "name": "GPT-6 Luna",
+        "model_id": "gpt-6-luna::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 0.1054,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"Agents' Last Exam V1 cost per task, chart dataset entry model GPT-6 Luna with effortLabel medium\", under \"cost\" (USD; the chart tooltip prints it as cost_label \"$0.11\"; x axis title \"Cost per task\"). Section \"Professional work\", figure \"Agents' Last Exam\" (chart component id 5cBUMiABWcTUjY3l0Y4iaz, dotcomConfig.linkId \"agents-last-exam\"; figure caption: \"In Agents’ Last Exam V1, AI agents are evaluated on long-horizon, economically valuable tasks spanning 55 sub-industries, covering most major fields of professional work performed on a computer.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Luna\" and effortLabel \"medium\"; exact datapoint: {\"model\":\"GPT-6 Luna\",\"cost_label\":\"$$0.11\",\"score\":0.4684,\"cost\":0.1054,\"order\":1,\"modelLabel\":\"GPT-6 Luna\",\"effortLabel\":\"medium\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI as GPT-6 Luna's USD cost per Agents’ Last Exam V1 task at medium reasoning effort, the x-axis value (\"Cost per task\") of the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"medium\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-luna::medium and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-luna-high-openai-agents-last-exam-v1-cost",
+      "benchmark_id": "openai-agents-last-exam-cost::v1",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#agents-last-exam/GPT-6 Luna/high",
+        "name": "GPT-6 Luna",
+        "model_id": "gpt-6-luna::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 0.1117,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"Agents' Last Exam V1 cost per task, chart dataset entry model GPT-6 Luna with effortLabel high\", under \"cost\" (USD; the chart tooltip prints it as cost_label \"$0.11\"; x axis title \"Cost per task\"). Section \"Professional work\", figure \"Agents' Last Exam\" (chart component id 5cBUMiABWcTUjY3l0Y4iaz, dotcomConfig.linkId \"agents-last-exam\"; figure caption: \"In Agents’ Last Exam V1, AI agents are evaluated on long-horizon, economically valuable tasks spanning 55 sub-industries, covering most major fields of professional work performed on a computer.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Luna\" and effortLabel \"high\"; exact datapoint: {\"model\":\"GPT-6 Luna\",\"cost_label\":\"$$0.11\",\"score\":0.436,\"cost\":0.1117,\"order\":2,\"modelLabel\":\"GPT-6 Luna\",\"effortLabel\":\"high\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI as GPT-6 Luna's USD cost per Agents’ Last Exam V1 task at high reasoning effort, the x-axis value (\"Cost per task\") of the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"high\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-luna::high and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-luna-xhigh-openai-agents-last-exam-v1-cost",
+      "benchmark_id": "openai-agents-last-exam-cost::v1",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#agents-last-exam/GPT-6 Luna/xhigh",
+        "name": "GPT-6 Luna",
+        "model_id": "gpt-6-luna::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 0.1105,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"Agents' Last Exam V1 cost per task, chart dataset entry model GPT-6 Luna with effortLabel xhigh\", under \"cost\" (USD; the chart tooltip prints it as cost_label \"$0.11\"; x axis title \"Cost per task\"). Section \"Professional work\", figure \"Agents' Last Exam\" (chart component id 5cBUMiABWcTUjY3l0Y4iaz, dotcomConfig.linkId \"agents-last-exam\"; figure caption: \"In Agents’ Last Exam V1, AI agents are evaluated on long-horizon, economically valuable tasks spanning 55 sub-industries, covering most major fields of professional work performed on a computer.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Luna\" and effortLabel \"xhigh\"; exact datapoint: {\"model\":\"GPT-6 Luna\",\"cost_label\":\"$$0.11\",\"score\":0.4789,\"cost\":0.1105,\"order\":3,\"modelLabel\":\"GPT-6 Luna\",\"effortLabel\":\"xhigh\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI as GPT-6 Luna's USD cost per Agents’ Last Exam V1 task at xhigh reasoning effort, the x-axis value (\"Cost per task\") of the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"xhigh\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-luna::xhigh and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-luna-max-openai-agents-last-exam-v1-cost",
+      "benchmark_id": "openai-agents-last-exam-cost::v1",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#agents-last-exam/GPT-6 Luna/max",
+        "name": "GPT-6 Luna",
+        "model_id": "gpt-6-luna::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 0.1545,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"Agents' Last Exam V1 cost per task, chart dataset entry model GPT-6 Luna with effortLabel max\", under \"cost\" (USD; the chart tooltip prints it as cost_label \"$0.15\"; x axis title \"Cost per task\"). Section \"Professional work\", figure \"Agents' Last Exam\" (chart component id 5cBUMiABWcTUjY3l0Y4iaz, dotcomConfig.linkId \"agents-last-exam\"; figure caption: \"In Agents’ Last Exam V1, AI agents are evaluated on long-horizon, economically valuable tasks spanning 55 sub-industries, covering most major fields of professional work performed on a computer.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Luna\" and effortLabel \"max\"; exact datapoint: {\"model\":\"GPT-6 Luna\",\"cost_label\":\"$$0.15\",\"score\":0.5089,\"cost\":0.1545,\"order\":4,\"modelLabel\":\"GPT-6 Luna\",\"effortLabel\":\"max\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI as GPT-6 Luna's USD cost per Agents’ Last Exam V1 task at max reasoning effort, the x-axis value (\"Cost per task\") of the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"max\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-luna::max and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-sol-low-openai-agents-last-exam-v1-cost",
+      "benchmark_id": "openai-agents-last-exam-cost::v1",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#agents-last-exam/GPT-6 Sol/low",
+        "name": "GPT-6 Sol",
+        "model_id": "gpt-6-sol::low",
+        "variant": "low",
+        "harness": null
+      },
+      "value": 0.8641,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"Agents' Last Exam V1 cost per task, chart dataset entry model GPT-6 Sol with effortLabel low\", under \"cost\" (USD; the chart tooltip prints it as cost_label \"$0.86\"; x axis title \"Cost per task\"). Section \"Professional work\", figure \"Agents' Last Exam\" (chart component id 5cBUMiABWcTUjY3l0Y4iaz, dotcomConfig.linkId \"agents-last-exam\"; figure caption: \"In Agents’ Last Exam V1, AI agents are evaluated on long-horizon, economically valuable tasks spanning 55 sub-industries, covering most major fields of professional work performed on a computer.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Sol\" and effortLabel \"low\"; exact datapoint: {\"model\":\"GPT-6 Sol\",\"cost_label\":\"$$0.86\",\"score\":0.4868,\"cost\":0.8641,\"order\":0,\"modelLabel\":\"GPT-6 Sol\",\"effortLabel\":\"low\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI as GPT-6 Sol's USD cost per Agents’ Last Exam V1 task at low reasoning effort, the x-axis value (\"Cost per task\") of the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"low\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-sol::low and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-sol-medium-openai-agents-last-exam-v1-cost",
+      "benchmark_id": "openai-agents-last-exam-cost::v1",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#agents-last-exam/GPT-6 Sol/medium",
+        "name": "GPT-6 Sol",
+        "model_id": "gpt-6-sol::medium",
+        "variant": "medium",
+        "harness": null
+      },
+      "value": 1.2664,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"Agents' Last Exam V1 cost per task, chart dataset entry model GPT-6 Sol with effortLabel medium\", under \"cost\" (USD; the chart tooltip prints it as cost_label \"$1.27\"; x axis title \"Cost per task\"). Section \"Professional work\", figure \"Agents' Last Exam\" (chart component id 5cBUMiABWcTUjY3l0Y4iaz, dotcomConfig.linkId \"agents-last-exam\"; figure caption: \"In Agents’ Last Exam V1, AI agents are evaluated on long-horizon, economically valuable tasks spanning 55 sub-industries, covering most major fields of professional work performed on a computer.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Sol\" and effortLabel \"medium\"; exact datapoint: {\"model\":\"GPT-6 Sol\",\"cost_label\":\"$$1.27\",\"score\":0.5306,\"cost\":1.2664,\"order\":1,\"modelLabel\":\"GPT-6 Sol\",\"effortLabel\":\"medium\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI as GPT-6 Sol's USD cost per Agents’ Last Exam V1 task at medium reasoning effort, the x-axis value (\"Cost per task\") of the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"medium\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-sol::medium and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-sol-high-openai-agents-last-exam-v1-cost",
+      "benchmark_id": "openai-agents-last-exam-cost::v1",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#agents-last-exam/GPT-6 Sol/high",
+        "name": "GPT-6 Sol",
+        "model_id": "gpt-6-sol::high",
+        "variant": "high",
+        "harness": null
+      },
+      "value": 1.5302,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"Agents' Last Exam V1 cost per task, chart dataset entry model GPT-6 Sol with effortLabel high\", under \"cost\" (USD; the chart tooltip prints it as cost_label \"$1.53\"; x axis title \"Cost per task\"). Section \"Professional work\", figure \"Agents' Last Exam\" (chart component id 5cBUMiABWcTUjY3l0Y4iaz, dotcomConfig.linkId \"agents-last-exam\"; figure caption: \"In Agents’ Last Exam V1, AI agents are evaluated on long-horizon, economically valuable tasks spanning 55 sub-industries, covering most major fields of professional work performed on a computer.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Sol\" and effortLabel \"high\"; exact datapoint: {\"model\":\"GPT-6 Sol\",\"cost_label\":\"$$1.53\",\"score\":0.5258,\"cost\":1.5302,\"order\":2,\"modelLabel\":\"GPT-6 Sol\",\"effortLabel\":\"high\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI as GPT-6 Sol's USD cost per Agents’ Last Exam V1 task at high reasoning effort, the x-axis value (\"Cost per task\") of the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"high\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-sol::high and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-sol-xhigh-openai-agents-last-exam-v1-cost",
+      "benchmark_id": "openai-agents-last-exam-cost::v1",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#agents-last-exam/GPT-6 Sol/xhigh",
+        "name": "GPT-6 Sol",
+        "model_id": "gpt-6-sol::xhigh",
+        "variant": "xhigh",
+        "harness": null
+      },
+      "value": 1.668,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"Agents' Last Exam V1 cost per task, chart dataset entry model GPT-6 Sol with effortLabel xhigh\", under \"cost\" (USD; the chart tooltip prints it as cost_label \"$1.67\"; x axis title \"Cost per task\"). Section \"Professional work\", figure \"Agents' Last Exam\" (chart component id 5cBUMiABWcTUjY3l0Y4iaz, dotcomConfig.linkId \"agents-last-exam\"; figure caption: \"In Agents’ Last Exam V1, AI agents are evaluated on long-horizon, economically valuable tasks spanning 55 sub-industries, covering most major fields of professional work performed on a computer.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Sol\" and effortLabel \"xhigh\"; exact datapoint: {\"model\":\"GPT-6 Sol\",\"cost_label\":\"$$1.67\",\"score\":0.5539,\"cost\":1.668,\"order\":3,\"modelLabel\":\"GPT-6 Sol\",\"effortLabel\":\"xhigh\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI as GPT-6 Sol's USD cost per Agents’ Last Exam V1 task at xhigh reasoning effort, the x-axis value (\"Cost per task\") of the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"xhigh\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-sol::xhigh and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-sol-max-openai-agents-last-exam-v1-cost",
+      "benchmark_id": "openai-agents-last-exam-cost::v1",
+      "subject": {
+        "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#agents-last-exam/GPT-6 Sol/max",
+        "name": "GPT-6 Sol",
+        "model_id": "gpt-6-sol::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 2.9313,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+        "retrieved_at": "2026-09-22T18:36:59.118516+00:00",
+        "published_at": "2026-09-22",
+        "sha256": "de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-22-gpt-6-sol-luna/de4e8f71186ee5dad44f.gz",
+        "locator": "Launch post, row \"Agents' Last Exam V1 cost per task, chart dataset entry model GPT-6 Sol with effortLabel max\", under \"cost\" (USD; the chart tooltip prints it as cost_label \"$2.93\"; x axis title \"Cost per task\"). Section \"Professional work\", figure \"Agents' Last Exam\" (chart component id 5cBUMiABWcTUjY3l0Y4iaz, dotcomConfig.linkId \"agents-last-exam\"; figure caption: \"In Agents’ Last Exam V1, AI agents are evaluated on long-horizon, economically valuable tasks spanning 55 sub-industries, covering most major fields of professional work performed on a computer.\"). The chart's embedded Vega-Lite dataset vegaLiteSpec.data.values in the page's RSC payload (self.__next_f.push chunks), the entry with model \"GPT-6 Sol\" and effortLabel \"max\"; exact datapoint: {\"model\":\"GPT-6 Sol\",\"cost_label\":\"$$2.93\",\"score\":0.5636,\"cost\":2.9313,\"order\":4,\"modelLabel\":\"GPT-6 Sol\",\"effortLabel\":\"max\"}"
+      },
+      "protocol": "Vendor-reported by OpenAI as GPT-6 Sol's USD cost per Agents’ Last Exam V1 task at max reasoning effort, the x-axis value (\"Cost per task\") of the exact dataset embedded in the launch post's chart, not read off the image. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null,
+      "join_note": "The chart dataset labels this point with reasoning effort \"max\" (effortLabel), and the catalog has that exact configuration, so the row joins gpt-6-sol::max and never an effort alias."
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "artifact_id": "gpt6-luna-arc-v1-v2",
+  "task": "Independently transcribe a bounded set of verified ARC Prize scores from the supplied primary-source HTML excerpt.",
+  "primary_source": {
+    "url": "https://arcprize.org/results/openai-gpt-6-luna",
+    "published_at": "2026-09-22",
+    "retrieved_at": "2026-09-24T20:22:51.069121+00:00",
+    "sha256": "184926c7cd259eddc3f756ea32e5d8f2ef078543bf96cbe35d4460e0849f842e"
+  },
+  "extraction_rules": {
+    "score_columns": [
+      "ARC-AGI-1",
+      "ARC-AGI-2"
+    ],
+    "excluded_columns": [
+      "ARC-AGI-3 (Standard harness)",
+      "ARC-AGI-3 (Provider Adapter harness)"
+    ],
+    "source_variant_to_catalog_effort": {
+      "Max": "max",
+      "XHigh": "xhigh",
+      "High": "high",
+      "Medium": "medium",
+      "Low": "low",
+      "None": "none"
+    },
+    "catalog_ids": {
+      "max": "gpt-6-luna::max",
+      "xhigh": "gpt-6-luna::xhigh",
+      "high": "gpt-6-luna::high",
+      "medium": "gpt-6-luna::medium",
+      "low": "gpt-6-luna::low",
+      "non-reasoning": "gpt-6-luna::non-reasoning"
+    },
+    "source_id_rule": "Exact page title, a vertical bar, and the exact Variant cell; for example GPT-6 Luna|Max.",
+    "name_rule": "Use the existing catalog display name for the exact mapped model id.",
+    "units": "Percent, copy the numeric percentage without the percent sign.",
+    "basis": "measured, because the ARC Prize source labels the page ARC Prize Verified and the table Verified scores.",
+    "date_rule": "Published date from the source page metadata; retrieval date from this receipt.",
+    "coverage": "All six variant rows for ARC-AGI-1 and ARC-AGI-2; 12 rows total."
+  },
+  "required_json_schema": {
+    "rows": [
+      {
+        "benchmark_id": "arc-agi::1 or arc-agi::2",
+        "source_id": "GPT-6 Luna|Max (exact page variant)",
+        "model_id": "mapped gpt-6-luna model id",
+        "reasoning_effort": "max/xhigh/high/medium/low/none",
+        "value": "numeric percent from one of ARC-AGI-1 or ARC-AGI-2 columns"
+      }
+    ]
+  },
+  "coverage": "Return exactly 12 rows: six page variants for each of ARC-AGI-1 and ARC-AGI-2. Do not return metadata inside each row; the primary source metadata applies to all rows.",
+  "raw_primary_source_excerpt_html": "<img src=\"/media/images/badges/arc-prize-verified-badge-dark-color.svg\" alt=\"ARC Prize Verified\" class=\"absolute right-4 top-8 w-[128px] sm:w-[152px]\" style=\"display:block\"/>\n\n<h1 class=\"mb-2\">GPT-6 Luna</h1><div class=\"mb-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-neutral-400\"><span>OpenAI</span><span class=\"text-neutral-700\">·</span><span>Sep 22, 2026</span><span class=\"text-neutral-700\">·</span><span>12 harness configurations</span></div>\n\n<p class=\"mt-5 max-w-[720px] text-[14px] leading-relaxed text-neutral-300\">GPT-6 Luna&#x27;s best Semi-Private scores are 86.7% on v1 and 59.3% on v2, both at max reasoning. On v3, it reaches 0.2% with the <span class=\"relative inline-block\"><span class=\"peer cursor-help underline decoration-dotted\">Standard harness</span><span role=\"tooltip\" class=\"pointer-events-none invisible absolute left-1/2 top-full z-50 mt-2 w-72 max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded border border-neutral-700 bg-neutral-950 px-3 py-2 text-left text-[12px] font-normal normal-case leading-relaxed tracking-normal text-neutral-200 opacity-0 shadow-xl transition-opacity peer-hover:visible peer-hover:opacity-100\">Standard harness enables a model to carry forward notes it chooses to keep with it throughout the environment.</span></span> at medium reasoning and 0.6% with the <span class=\"relative inline-block\"><span class=\"peer cursor-help underline decoration-dotted\">Provider Adapter harness</span><span role=\"tooltip\" class=\"pointer-events-none invisible absolute left-1/2 top-full z-50 mt-2 w-72 max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded border border-neutral-700 bg-neutral-950 px-3 py-2 text-left text-[12px] font-normal normal-case leading-relaxed tracking-normal text-neutral-200 opacity-0 shadow-xl transition-opacity peer-hover:visible peer-hover:opacity-100\">The Provider Adapter harness preserves opaque reasoning state between requests and uses compaction for longer conversations, allowing the model to reuse prior work.</span></span> at max reasoning.</p>\n\n<table class=\"w-full border-collapse text-sm table-fixed\" style=\"min-width:800px\"><colgroup><col class=\"w-[16%]\"/><col span=\"4\" class=\"w-[21%]\"/></colgroup><thead class=\"bg-neutral-900 text-[11px] uppercase tracking-wider text-neutral-400\"><tr><th class=\"px-3 py-1.5 text-left\">Variant</th><th class=\"px-3 py-1.5 text-center whitespace-nowrap\">ARC-AGI-1</th><th class=\"px-3 py-1.5 text-center whitespace-nowrap\">ARC-AGI-2</th><th class=\"px-3 py-1.5 text-center whitespace-nowrap\"><span class=\"block\">ARC-AGI-3</span><span class=\"block\">(Standard harness)</span></th><th class=\"px-3 py-1.5 text-center whitespace-nowrap\"><span class=\"block\">ARC-AGI-3</span><span class=\"block\">(Provider Adapter harness)</span></th></tr></thead><tbody><tr class=\"odd:bg-neutral-950 even:bg-neutral-900/50\"><td class=\"px-3 py-1 whitespace-nowrap\"><span class=\"text-neutral-200\" title=\"GPT-6 Luna (Max)\">Max</span></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] font-bold\">86.7%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] font-bold\">59.3%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">0.10%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] font-bold\">0.59%</div></td></tr><tr class=\"odd:bg-neutral-950 even:bg-neutral-900/50\"><td class=\"px-3 py-1 whitespace-nowrap\"><span class=\"text-neutral-200\" title=\"GPT-6 Luna (XHigh)\">XHigh</span></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">73.0%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">41.9%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">0.16%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">0.51%</div></td></tr><tr class=\"odd:bg-neutral-950 even:bg-neutral-900/50\"><td class=\"px-3 py-1 whitespace-nowrap\"><span class=\"text-neutral-200\" title=\"GPT-6 Luna (High)\">High</span></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">70.3%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">31.4%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">0.18%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">0.38%</div></td></tr><tr class=\"odd:bg-neutral-950 even:bg-neutral-900/50\"><td class=\"px-3 py-1 whitespace-nowrap\"><span class=\"text-neutral-200\" title=\"GPT-6 Luna (Medium)\">Medium</span></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">61.0%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">18.1%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] font-bold\">0.19%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">0.32%</div></td></tr><tr class=\"odd:bg-neutral-950 even:bg-neutral-900/50\"><td class=\"px-3 py-1 whitespace-nowrap\"><span class=\"text-neutral-200\" title=\"GPT-6 Luna (Low)\">Low</span></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">37.7%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">4.6%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">0.03%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">0.24%</div></td></tr><tr class=\"odd:bg-neutral-950 even:bg-neutral-900/50\"><td class=\"px-3 py-1 whitespace-nowrap\"><span class=\"text-neutral-200\" title=\"GPT-6 Luna (None)\">None</span></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">8.8%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">0.0%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">0.03%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">0.05%</div></td></tr></tbody></table>\n",
+  "transcription_instructions": "Use the embedded raw HTML excerpt as the only source evidence. Parse the numeric percentage cells in the Verified scores table. Return exactly 12 rows as requested; no per-row metadata is required."
+}

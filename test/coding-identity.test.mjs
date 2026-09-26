@@ -78,10 +78,29 @@ test('identity receipt: the committed Kimi verdict covers every self-reported jo
   const verdict = JSON.parse(readFileSync(`${dir}/verdict.json`));
   assert.equal(verdict.packet_sha256, sha(readFileSync(`${dir}/packet.json`)));
   assert.equal(verdict.checked, packet.joins.length);
-  const joined = JSON.parse(readFileSync('data/raw/benchmarks/scores.json')).observations.filter((o) => o.identity_review);
+  // 2026-09-26 (CR-173): the Terminal-Bench 4.0 joins carry their own receipt (packet + GLM-5.3-Flash verdict under
+  // data/raw/benchmarks/daily-evidence/2026-09-26-epoch-scale-arena/gauntlet/); this suite pins the Kimi packet's rows,
+  // and every other receipt must verify on its own.
+  const all = JSON.parse(readFileSync('data/raw/benchmarks/scores.json')).observations.filter((o) => o.identity_review);
+  const joined = all.filter((o) => o.identity_review.packet_file === `${dir}/packet.json`);
+  for (const other of all.filter((o) => !joined.includes(o))) await verifyIdentityReview(other);
+  // After the CR-173 lane merge the other receipts also cover FrontierCode (Main + Extended) and ARC Prize's verified pages;
+  // each verified above, so only the Terminal-Bench count is pinned here.
+  assert.equal(all.filter((o) => !joined.includes(o) && o.benchmark_id === 'terminal-bench::4.0').length, 18, 'the 18 reviewed Terminal-Bench 4.0 joins');
   const approved = new Set(packet.joins.map((j) => j.key).filter((k) => !verdict.rejected.some((r) => r.key === k)));
+  // 2026-09-26 (CR-173): the FrontierCode rows Cognition added on Sep 21-22 carry their own receipt
+  // (ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review/); every other join is still the Kimi packet's.
+  // The Extended boards added the same day carry a second receipt (identity-review-extended/).
+  const laterDirs = ['ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review', 'ops/rebuild-2026-09/evidence/phase-09/frontiercode/identity-review-extended'];
+  for (const later of laterDirs) {
+    const laterPacket = JSON.parse(readFileSync(`${later}/packet.json`)), laterVerdict = JSON.parse(readFileSync(`${later}/verdict.json`));
+    assert.equal(laterVerdict.packet_sha256, sha(readFileSync(`${later}/packet.json`)));
+    assert.equal(laterVerdict.checked, laterPacket.joins.length);
+    for (const j of laterPacket.joins) if (!laterVerdict.rejected.some((r) => r.key === j.key)) approved.add(j.key);
+  }
   assert.ok(joined.length > 0 && joined.every((x) => approved.has(identityKey(x))), 'every joined row is an approved packet join');
-  const o = joined[0];
+  assert.ok(joined.every((x) => [dir, ...laterDirs].map((d) => `${d}/packet.json`).includes(x.identity_review.packet_file)), 'every receipt names one of the reviewed packets');
+  const o = joined.find((x) => x.identity_review.packet_file === `${dir}/packet.json`);
   await verifyIdentityReview(o);
   const root = mkdtempSync('/tmp/bh-receipt-');
   mkdirSync(join(root, dir), { recursive: true });

@@ -1,0 +1,15 @@
+[
+  {
+    "artifactId": "frontiercode-1.1-cr173-2026-09-26",
+    "round": 1,
+    "accepted": true,
+    "rows": 17,
+    "review_sha256": "8a3470a1f88e38967d63f8b6ed96b8fb4efc6ece9afa8c54b5e38b0f757da33e"
+  },
+  {
+    "artifactId": "frontiercode-cost-1.1-cr173-2026-09-26",
+    "round": 1,
+    "accepted": false,
+    "reason": "verdict pass, errors 0, findings [], missing [\"The full data.json capture (sha256 edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc) was not supplied, only a partial extract; the complete 'efforts' arrays for GPT-6 Sol, GPT-6 Luna, and Grok 4.7 are needed to fully verify criterion 5 (no effort inference) for rows 5-17.\",\"The frozen full row objects from the artifact were not supplied; harness, unit, basis, and model_id fields , coverage 0 missing, sha true"
+  }
+]

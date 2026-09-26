@@ -1,0 +1,433 @@
+{
+  "artifact_id": "arc-verified-anthropic-claude-fable-5-1",
+  "artifact_sha256": "7c13e238922592786e64c93ebe00e53a740cde71f78e0653c61b8f38a5dac6f8",
+  "round": 1,
+  "review_scope": "Review our own frozen candidate before publication: 10 measured ARC-AGI-1/ARC-AGI-2 observations parsed from the ARC Prize Verified results page for Claude Fable 5.1, and 10 proposed identity joins to catalog configurations.",
+  "acceptance_criteria": [
+    "c1: Every row's value, benchmark (ARC-AGI-1 column -> arc-agi::1, ARC-AGI-2 column -> arc-agi::2) and source variant label must match the included table excerpt exactly; unit percent; no row may come from an ARC-AGI-3 column.",
+    "c2: Coverage: exactly one arc-agi::1 and one arc-agi::2 row per table variant, no duplicates, none missing, no extras.",
+    "c3: The excerpt must show the ARC Prize Verified badge, a title equal to the row model, and the vendor/date line. Basis measured follows our precedent that a Verified per-model page is the evaluator's own published result.",
+    "c4: published_at must be null; the page date is kept only as source_row_context.model_release_date, because the line under the title is the model release date (owner cross-check: it equals modelReleaseDate in ARC Prize's leaderboard JSON for every page; the Kimi K3 page dated Jul 16, 2026 says \"As of July 31, 2026\").",
+    "c5: A proposed_model_id is allowed only when the source variant names an exact configuration listed in catalog_configurations (None -> non-reasoning only where that configuration exists). A variant without its own catalog configuration stays unjoined (proposed_model_id null) with a reason. Check every identity_map_candidates entry against its row.",
+    "c6: The protocol text must state only what the excerpt supports (no Semi-Private claim beyond the page summary).",
+    "Return pass only if every row and join is supported by the supplied evidence; otherwise revise or blocked naming exact row ids. Keep coverage_checked short (one entry per criterion)."
+  ],
+  "source_evidence": [
+    {
+      "source": "ARC Prize Claude Fable 5.1 results page",
+      "url": "https://arcprize.org/results/anthropic-claude-fable-5-1",
+      "retrieved_at": "2026-09-26T04:22:41.610517+00:00",
+      "capture_file": "ops/rebuild-2026-09/evidence/phase-09/arc/captures/5959850473af57806dab.gz",
+      "capture_payload_sha256": "5959850473af57806dab2f53c41a2e9083971347c2dc2f3c569471b28e9d22fe",
+      "html_excerpt_file": "ops/rebuild-2026-09/evidence/phase-09/arc/excerpts/anthropic-claude-fable-5-1.html",
+      "html_excerpt_sha256": "1c9115d3d974097802da0795e287017da47075bf2995a82e79445e26c71c0364",
+      "html_excerpt": "<img src=\"/media/images/badges/arc-prize-verified-badge-dark-color.svg\" alt=\"ARC Prize Verified\" class=\"absolute right-4 top-8 w-[128px] sm:w-[152px]\" style=\"display:block\"/>\n\n<h1 class=\"mb-2\">Claude Fable 5.1</h1><div class=\"mb-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-neutral-400\"><span>Anthropic</span><span class=\"text-neutral-700\">·</span><span>Sep 1, 2026</span><span class=\"text-neutral-700\">·</span><span>5 reasoning variants</span></div>\n\n<p class=\"mt-5 max-w-[720px] text-[14px] leading-relaxed text-neutral-300\">At max effort, Claude Fable 5.1 scores 97.5% on ARC-AGI-1 Semi-Private at $1.40 per task and 90.0% on ARC-AGI-2 Semi-Private at $4.49 per task.</p>\n\n<table class=\"w-full border-collapse text-sm \"><thead class=\"bg-neutral-900 text-[11px] uppercase tracking-wider text-neutral-400\"><tr><th class=\"px-3 py-1.5 text-left\">Variant</th><th class=\"px-3 py-1.5 text-center whitespace-nowrap\">ARC-AGI-1</th><th class=\"px-3 py-1.5 text-center whitespace-nowrap\">ARC-AGI-2</th><th class=\"px-3 py-1.5 text-center whitespace-nowrap\">ARC-AGI-3</th></tr></thead><tbody><tr class=\"odd:bg-neutral-950 even:bg-neutral-900/50\"><td class=\"px-3 py-1 whitespace-nowrap\"><span class=\"text-neutral-200\" title=\"Claude Fable 5.1 (Max)\">Max</span></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] font-bold\">97.5%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] font-bold\">90.0%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">—</div></td></tr><tr class=\"odd:bg-neutral-950 even:bg-neutral-900/50\"><td class=\"px-3 py-1 whitespace-nowrap\"><span class=\"text-neutral-200\" title=\"Claude Fable 5.1 (XHigh)\">XHigh</span></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">96.5%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] font-bold\">90.0%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">—</div></td></tr><tr class=\"odd:bg-neutral-950 even:bg-neutral-900/50\"><td class=\"px-3 py-1 whitespace-nowrap\"><span class=\"text-neutral-200\" title=\"Claude Fable 5.1 (High)\">High</span></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">96.0%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">88.8%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">—</div></td></tr><tr class=\"odd:bg-neutral-950 even:bg-neutral-900/50\"><td class=\"px-3 py-1 whitespace-nowrap\"><span class=\"text-neutral-200\" title=\"Claude Fable 5.1 (Medium)\">Medium</span></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">94.5%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">86.3%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">—</div></td></tr><tr class=\"odd:bg-neutral-950 even:bg-neutral-900/50\"><td class=\"px-3 py-1 whitespace-nowrap\"><span class=\"text-neutral-200\" title=\"Claude Fable 5.1 (Low)\">Low</span></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">90.0%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">78.3%</div></td><td class=\"px-3 py-1 text-center\"><div class=\"text-[14px] \">—</div></td></tr></tbody></table>\n"
+    }
+  ],
+  "owner_crosscheck_receipt": {
+    "file": "ops/rebuild-2026-09/evidence/phase-09/arc/owner-crosscheck.txt",
+    "note": "lines for this page only; owner-run script output",
+    "content": "Owner cross-check 2026-09-26: every results-page row vs ARC Prize leaderboard JSON rows with the same resultsUrl and display name\n(v1.json/v2.json captured 2026-09-26, see leaderboard-json/manifest.json). JSON score x100 rounded half-up to 1 decimal; release date = modelReleaseDate.\narc-agi::1 Claude Fable 5.1|Max page 97.5 | json 0.975 v1_Semi_Private 2026-09-01 -> 97.5 OK\narc-agi::1 Claude Fable 5.1|XHigh page 96.5 | json 0.965 v1_Semi_Private 2026-09-01 -> 96.5 OK\narc-agi::1 Claude Fable 5.1|High page 96.0 | json 0.96 v1_Semi_Private 2026-09-01 -> 96.0 OK\narc-agi::1 Claude Fable 5.1|Medium page 94.5 | json 0.945 v1_Semi_Private 2026-09-01 -> 94.5 OK\narc-agi::1 Claude Fable 5.1|Low page 90.0 | json 0.9 v1_Semi_Private 2026-09-01 -> 90.0 OK\narc-agi::2 Claude Fable 5.1|Max page 90.0 | json 0.9 v2_Semi_Private 2026-09-01 -> 90.0 OK\narc-agi::2 Claude Fable 5.1|XHigh page 90.0 | json 0.9 v2_Semi_Private 2026-09-01 -> 90.0 OK\narc-agi::2 Claude Fable 5.1|High page 88.8 | json 0.8875 v2_Semi_Private 2026-09-01 -> 88.8 OK\narc-agi::2 Claude Fable 5.1|Medium page 86.3 | json 0.8625 v2_Semi_Private 2026-09-01 -> 86.3 OK\narc-agi::2 Claude Fable 5.1|Low page 78.3 | json 0.7833333333333333 v2_Semi_Private 2026-09-01 -> 78.3 OK\n"
+  },
+  "frozen_artifact": {
+    "artifact_id": "arc-verified-anthropic-claude-fable-5-1",
+    "rows": [
+      {
+        "id": "public:55d559cc2cd1d85dbd6634e5",
+        "benchmark_id": "arc-agi::1",
+        "source_id": "Claude Fable 5.1|Max",
+        "name": "Claude Fable 5.1 (max)",
+        "value": 97.5,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/anthropic-claude-fable-5-1",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:41.610517+00:00",
+        "source_sha256": "5959850473af57806dab2f53c41a2e9083971347c2dc2f3c569471b28e9d22fe",
+        "locator": "arc_verified_results_page; source row 1; Claude Fable 5.1|Max; field value",
+        "source_row_context": {
+          "page_model": "Claude Fable 5.1",
+          "page_vendor": "Anthropic",
+          "source_variant": "Max",
+          "reasoning_effort": "max",
+          "benchmark_column": "ARC-AGI-1",
+          "cells": [
+            "Max",
+            "97.5%",
+            "90.0%",
+            "—"
+          ],
+          "model_release_date": "2026-09-01"
+        },
+        "proposed_model_id": "claude-fable-5.1::max",
+        "unjoined_reason": null
+      },
+      {
+        "id": "public:b959efe909c3dda8286f9ae7",
+        "benchmark_id": "arc-agi::1",
+        "source_id": "Claude Fable 5.1|XHigh",
+        "name": "Claude Fable 5.1 (xhigh)",
+        "value": 96.5,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/anthropic-claude-fable-5-1",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:41.610517+00:00",
+        "source_sha256": "5959850473af57806dab2f53c41a2e9083971347c2dc2f3c569471b28e9d22fe",
+        "locator": "arc_verified_results_page; source row 2; Claude Fable 5.1|XHigh; field value",
+        "source_row_context": {
+          "page_model": "Claude Fable 5.1",
+          "page_vendor": "Anthropic",
+          "source_variant": "XHigh",
+          "reasoning_effort": "xhigh",
+          "benchmark_column": "ARC-AGI-1",
+          "cells": [
+            "XHigh",
+            "96.5%",
+            "90.0%",
+            "—"
+          ],
+          "model_release_date": "2026-09-01"
+        },
+        "proposed_model_id": "claude-fable-5.1::xhigh",
+        "unjoined_reason": null
+      },
+      {
+        "id": "public:4c668a0f4d373682d1b5d30d",
+        "benchmark_id": "arc-agi::1",
+        "source_id": "Claude Fable 5.1|High",
+        "name": "Claude Fable 5.1 (high)",
+        "value": 96.0,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/anthropic-claude-fable-5-1",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:41.610517+00:00",
+        "source_sha256": "5959850473af57806dab2f53c41a2e9083971347c2dc2f3c569471b28e9d22fe",
+        "locator": "arc_verified_results_page; source row 3; Claude Fable 5.1|High; field value",
+        "source_row_context": {
+          "page_model": "Claude Fable 5.1",
+          "page_vendor": "Anthropic",
+          "source_variant": "High",
+          "reasoning_effort": "high",
+          "benchmark_column": "ARC-AGI-1",
+          "cells": [
+            "High",
+            "96.0%",
+            "88.8%",
+            "—"
+          ],
+          "model_release_date": "2026-09-01"
+        },
+        "proposed_model_id": "claude-fable-5.1::high",
+        "unjoined_reason": null
+      },
+      {
+        "id": "public:b7695fef6c7c03d58a20d6f6",
+        "benchmark_id": "arc-agi::1",
+        "source_id": "Claude Fable 5.1|Medium",
+        "name": "Claude Fable 5.1 (medium)",
+        "value": 94.5,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/anthropic-claude-fable-5-1",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:41.610517+00:00",
+        "source_sha256": "5959850473af57806dab2f53c41a2e9083971347c2dc2f3c569471b28e9d22fe",
+        "locator": "arc_verified_results_page; source row 4; Claude Fable 5.1|Medium; field value",
+        "source_row_context": {
+          "page_model": "Claude Fable 5.1",
+          "page_vendor": "Anthropic",
+          "source_variant": "Medium",
+          "reasoning_effort": "medium",
+          "benchmark_column": "ARC-AGI-1",
+          "cells": [
+            "Medium",
+            "94.5%",
+            "86.3%",
+            "—"
+          ],
+          "model_release_date": "2026-09-01"
+        },
+        "proposed_model_id": "claude-fable-5.1::medium",
+        "unjoined_reason": null
+      },
+      {
+        "id": "public:955b0334d213292ed4c4168f",
+        "benchmark_id": "arc-agi::1",
+        "source_id": "Claude Fable 5.1|Low",
+        "name": "Claude Fable 5.1 (low)",
+        "value": 90.0,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/anthropic-claude-fable-5-1",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:41.610517+00:00",
+        "source_sha256": "5959850473af57806dab2f53c41a2e9083971347c2dc2f3c569471b28e9d22fe",
+        "locator": "arc_verified_results_page; source row 5; Claude Fable 5.1|Low; field value",
+        "source_row_context": {
+          "page_model": "Claude Fable 5.1",
+          "page_vendor": "Anthropic",
+          "source_variant": "Low",
+          "reasoning_effort": "low",
+          "benchmark_column": "ARC-AGI-1",
+          "cells": [
+            "Low",
+            "90.0%",
+            "78.3%",
+            "—"
+          ],
+          "model_release_date": "2026-09-01"
+        },
+        "proposed_model_id": "claude-fable-5.1::low",
+        "unjoined_reason": null
+      },
+      {
+        "id": "public:45d8a3bb9b1a39ef39df09fb",
+        "benchmark_id": "arc-agi::2",
+        "source_id": "Claude Fable 5.1|Max",
+        "name": "Claude Fable 5.1 (max)",
+        "value": 90.0,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/anthropic-claude-fable-5-1",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:41.610517+00:00",
+        "source_sha256": "5959850473af57806dab2f53c41a2e9083971347c2dc2f3c569471b28e9d22fe",
+        "locator": "arc_verified_results_page; source row 1; Claude Fable 5.1|Max; field value",
+        "source_row_context": {
+          "page_model": "Claude Fable 5.1",
+          "page_vendor": "Anthropic",
+          "source_variant": "Max",
+          "reasoning_effort": "max",
+          "benchmark_column": "ARC-AGI-2",
+          "cells": [
+            "Max",
+            "97.5%",
+            "90.0%",
+            "—"
+          ],
+          "model_release_date": "2026-09-01"
+        },
+        "proposed_model_id": "claude-fable-5.1::max",
+        "unjoined_reason": null
+      },
+      {
+        "id": "public:c29f0f39bc1241d63e49527f",
+        "benchmark_id": "arc-agi::2",
+        "source_id": "Claude Fable 5.1|XHigh",
+        "name": "Claude Fable 5.1 (xhigh)",
+        "value": 90.0,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/anthropic-claude-fable-5-1",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:41.610517+00:00",
+        "source_sha256": "5959850473af57806dab2f53c41a2e9083971347c2dc2f3c569471b28e9d22fe",
+        "locator": "arc_verified_results_page; source row 2; Claude Fable 5.1|XHigh; field value",
+        "source_row_context": {
+          "page_model": "Claude Fable 5.1",
+          "page_vendor": "Anthropic",
+          "source_variant": "XHigh",
+          "reasoning_effort": "xhigh",
+          "benchmark_column": "ARC-AGI-2",
+          "cells": [
+            "XHigh",
+            "96.5%",
+            "90.0%",
+            "—"
+          ],
+          "model_release_date": "2026-09-01"
+        },
+        "proposed_model_id": "claude-fable-5.1::xhigh",
+        "unjoined_reason": null
+      },
+      {
+        "id": "public:d5f311b6036f1247a2df5c36",
+        "benchmark_id": "arc-agi::2",
+        "source_id": "Claude Fable 5.1|High",
+        "name": "Claude Fable 5.1 (high)",
+        "value": 88.8,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/anthropic-claude-fable-5-1",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:41.610517+00:00",
+        "source_sha256": "5959850473af57806dab2f53c41a2e9083971347c2dc2f3c569471b28e9d22fe",
+        "locator": "arc_verified_results_page; source row 3; Claude Fable 5.1|High; field value",
+        "source_row_context": {
+          "page_model": "Claude Fable 5.1",
+          "page_vendor": "Anthropic",
+          "source_variant": "High",
+          "reasoning_effort": "high",
+          "benchmark_column": "ARC-AGI-2",
+          "cells": [
+            "High",
+            "96.0%",
+            "88.8%",
+            "—"
+          ],
+          "model_release_date": "2026-09-01"
+        },
+        "proposed_model_id": "claude-fable-5.1::high",
+        "unjoined_reason": null
+      },
+      {
+        "id": "public:7c6e7cbf029953778bf5d49f",
+        "benchmark_id": "arc-agi::2",
+        "source_id": "Claude Fable 5.1|Medium",
+        "name": "Claude Fable 5.1 (medium)",
+        "value": 86.3,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/anthropic-claude-fable-5-1",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:41.610517+00:00",
+        "source_sha256": "5959850473af57806dab2f53c41a2e9083971347c2dc2f3c569471b28e9d22fe",
+        "locator": "arc_verified_results_page; source row 4; Claude Fable 5.1|Medium; field value",
+        "source_row_context": {
+          "page_model": "Claude Fable 5.1",
+          "page_vendor": "Anthropic",
+          "source_variant": "Medium",
+          "reasoning_effort": "medium",
+          "benchmark_column": "ARC-AGI-2",
+          "cells": [
+            "Medium",
+            "94.5%",
+            "86.3%",
+            "—"
+          ],
+          "model_release_date": "2026-09-01"
+        },
+        "proposed_model_id": "claude-fable-5.1::medium",
+        "unjoined_reason": null
+      },
+      {
+        "id": "public:1adb2e9555937c5783deb284",
+        "benchmark_id": "arc-agi::2",
+        "source_id": "Claude Fable 5.1|Low",
+        "name": "Claude Fable 5.1 (low)",
+        "value": 78.3,
+        "unit": "percent",
+        "basis": "measured",
+        "source_url": "https://arcprize.org/results/anthropic-claude-fable-5-1",
+        "published_at": null,
+        "retrieved_at": "2026-09-26T04:22:41.610517+00:00",
+        "source_sha256": "5959850473af57806dab2f53c41a2e9083971347c2dc2f3c569471b28e9d22fe",
+        "locator": "arc_verified_results_page; source row 5; Claude Fable 5.1|Low; field value",
+        "source_row_context": {
+          "page_model": "Claude Fable 5.1",
+          "page_vendor": "Anthropic",
+          "source_variant": "Low",
+          "reasoning_effort": "low",
+          "benchmark_column": "ARC-AGI-2",
+          "cells": [
+            "Low",
+            "90.0%",
+            "78.3%",
+            "—"
+          ],
+          "model_release_date": "2026-09-01"
+        },
+        "proposed_model_id": "claude-fable-5.1::low",
+        "unjoined_reason": null
+      }
+    ],
+    "protocol": "Official ARC Prize Claude Fable 5.1 results page (Anthropic), carrying an ARC Prize Verified badge; the date on the page, 2026-09-01, is the model's release date (it equals modelReleaseDate in ARC Prize's leaderboard v1.json/v2.json captured 2026-09-26), and the page states no publication date of its own. Page summary (visible text, tooltips omitted): \"At max effort, Claude Fable 5.1 scores 97.5% on ARC-AGI-1 Semi-Private at $1.40 per task and 90.0% on ARC-AGI-2 Semi-Private at $4.49 per task.\" The table lists per-variant ARC-AGI-1 and ARC-AGI-2 percentages. Basis is the evaluator-published benchmark result; source reasoning labels are retained.",
+    "identity_map_candidates": [
+      {
+        "benchmark_id": "arc-agi::1",
+        "source_id": "Claude Fable 5.1|Max",
+        "model_id": "claude-fable-5.1::max",
+        "rule": "ARC Prize Claude Fable 5.1 results page (ARC Prize Verified) gives the exact source variant Max; the catalog holds exactly the configuration claude-fable-5.1::max.",
+        "basis": "measured"
+      },
+      {
+        "benchmark_id": "arc-agi::1",
+        "source_id": "Claude Fable 5.1|XHigh",
+        "model_id": "claude-fable-5.1::xhigh",
+        "rule": "ARC Prize Claude Fable 5.1 results page (ARC Prize Verified) gives the exact source variant XHigh; the catalog holds exactly the configuration claude-fable-5.1::xhigh.",
+        "basis": "measured"
+      },
+      {
+        "benchmark_id": "arc-agi::1",
+        "source_id": "Claude Fable 5.1|High",
+        "model_id": "claude-fable-5.1::high",
+        "rule": "ARC Prize Claude Fable 5.1 results page (ARC Prize Verified) gives the exact source variant High; the catalog holds exactly the configuration claude-fable-5.1::high.",
+        "basis": "measured"
+      },
+      {
+        "benchmark_id": "arc-agi::1",
+        "source_id": "Claude Fable 5.1|Medium",
+        "model_id": "claude-fable-5.1::medium",
+        "rule": "ARC Prize Claude Fable 5.1 results page (ARC Prize Verified) gives the exact source variant Medium; the catalog holds exactly the configuration claude-fable-5.1::medium.",
+        "basis": "measured"
+      },
+      {
+        "benchmark_id": "arc-agi::1",
+        "source_id": "Claude Fable 5.1|Low",
+        "model_id": "claude-fable-5.1::low",
+        "rule": "ARC Prize Claude Fable 5.1 results page (ARC Prize Verified) gives the exact source variant Low; the catalog holds exactly the configuration claude-fable-5.1::low.",
+        "basis": "measured"
+      },
+      {
+        "benchmark_id": "arc-agi::2",
+        "source_id": "Claude Fable 5.1|Max",
+        "model_id": "claude-fable-5.1::max",
+        "rule": "ARC Prize Claude Fable 5.1 results page (ARC Prize Verified) gives the exact source variant Max; the catalog holds exactly the configuration claude-fable-5.1::max.",
+        "basis": "measured"
+      },
+      {
+        "benchmark_id": "arc-agi::2",
+        "source_id": "Claude Fable 5.1|XHigh",
+        "model_id": "claude-fable-5.1::xhigh",
+        "rule": "ARC Prize Claude Fable 5.1 results page (ARC Prize Verified) gives the exact source variant XHigh; the catalog holds exactly the configuration claude-fable-5.1::xhigh.",
+        "basis": "measured"
+      },
+      {
+        "benchmark_id": "arc-agi::2",
+        "source_id": "Claude Fable 5.1|High",
+        "model_id": "claude-fable-5.1::high",
+        "rule": "ARC Prize Claude Fable 5.1 results page (ARC Prize Verified) gives the exact source variant High; the catalog holds exactly the configuration claude-fable-5.1::high.",
+        "basis": "measured"
+      },
+      {
+        "benchmark_id": "arc-agi::2",
+        "source_id": "Claude Fable 5.1|Medium",
+        "model_id": "claude-fable-5.1::medium",
+        "rule": "ARC Prize Claude Fable 5.1 results page (ARC Prize Verified) gives the exact source variant Medium; the catalog holds exactly the configuration claude-fable-5.1::medium.",
+        "basis": "measured"
+      },
+      {
+        "benchmark_id": "arc-agi::2",
+        "source_id": "Claude Fable 5.1|Low",
+        "model_id": "claude-fable-5.1::low",
+        "rule": "ARC Prize Claude Fable 5.1 results page (ARC Prize Verified) gives the exact source variant Low; the catalog holds exactly the configuration claude-fable-5.1::low.",
+        "basis": "measured"
+      }
+    ],
+    "catalog_configurations": {
+      "claude-fable-5.1": [
+        "claude-fable-5.1::high",
+        "claude-fable-5.1::low",
+        "claude-fable-5.1::max",
+        "claude-fable-5.1::medium",
+        "claude-fable-5.1::xhigh"
+      ]
+    }
+  },
+  "required_verdict_contract": {
+    "artifact_id": "arc-verified-anthropic-claude-fable-5-1",
+    "artifact_sha256": "<artifact_sha256 above>",
+    "round": 1,
+    "verdict": "pass|revise|blocked",
+    "coverage_checked": [
+      "one short entry per criterion id c1..c6"
+    ],
+    "errors_found": 0,
+    "findings": [],
+    "fixed": [],
+    "uncertainties": [],
+    "missing_evidence": []
+  }
+}

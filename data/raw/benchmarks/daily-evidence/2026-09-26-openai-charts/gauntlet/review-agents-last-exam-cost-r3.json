@@ -1,0 +1,32 @@
+{
+ "artifact_id": "cr173-openai-charts-agents-last-exam-cost",
+ "artifact_sha256": "69c54319164a47c7ad7c4ffdfbf95076a188c9731ffa5d63fa4ce8612cc8c5fd",
+ "round": 3,
+ "verdict": "pass",
+ "coverage_checked": [
+  "self-reported:gpt-6-astra-low-openai-agents-last-exam-v1-cost",
+  "self-reported:gpt-6-astra-medium-openai-agents-last-exam-v1-cost",
+  "self-reported:gpt-6-astra-high-openai-agents-last-exam-v1-cost",
+  "self-reported:gpt-6-astra-xhigh-openai-agents-last-exam-v1-cost",
+  "self-reported:gpt-6-astra-max-openai-agents-last-exam-v1-cost",
+  "self-reported:gpt-6-luna-low-openai-agents-last-exam-v1-cost",
+  "self-reported:gpt-6-luna-medium-openai-agents-last-exam-v1-cost",
+  "self-reported:gpt-6-luna-high-openai-agents-last-exam-v1-cost",
+  "self-reported:gpt-6-luna-xhigh-openai-agents-last-exam-v1-cost",
+  "self-reported:gpt-6-luna-max-openai-agents-last-exam-v1-cost",
+  "self-reported:gpt-6-sol-low-openai-agents-last-exam-v1-cost",
+  "self-reported:gpt-6-sol-medium-openai-agents-last-exam-v1-cost",
+  "self-reported:gpt-6-sol-high-openai-agents-last-exam-v1-cost",
+  "self-reported:gpt-6-sol-xhigh-openai-agents-last-exam-v1-cost",
+  "self-reported:gpt-6-sol-max-openai-agents-last-exam-v1-cost"
+ ],
+ "errors_found": 0,
+ "findings": [],
+ "fixed": [],
+ "missing_evidence": [],
+ "uncertainties": [
+  "All checks were performed solely against the supplied evidence strings in this packet; as a read-only reviewer I did not fetch the page, decompress any file, or recompute sha256 values. Value, locator, and cross-check verification therefore certifies internal consistency with evidence.chart.gpt6_points, evidence.astra_post_points and evidence.source, not independent ground truth.",
+  "Criterion 4 was read as benchmark-specific: evidence.skipped_existing_configs lists [\"openai-agents-last-exam::v1\", \"gpt-6-sol::max\"], i.e. a score-benchmark row already accepted from the post's printed text; it does not suppress the cost row self-reported:gpt-6-sol-max-openai-agents-last-exam-v1-cost, so 15 cost rows (one per GPT-6 datapoint, no duplicates) satisfies completeness for this cost batch.",
+  "Astra cross-check datapoints in protocol text (x_value/x_label, e.g. low: 3.5706361085526312 / \"$$3.57\") differ from the 2026-09-22 chart values; per the criterion this is disclosure only and each quoted datapoint was verified verbatim against evidence.astra_post_points for the same effort (low, medium, high, xhigh, max all matched exactly, including medium score 0.5761999999999999 and effort_display \"Xhigh\")."
+ ]
+}

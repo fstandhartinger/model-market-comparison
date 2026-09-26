@@ -1,0 +1,24 @@
+```json
+{
+  "artifact_id": "arc-verified-openai-gpt-6-luna",
+  "artifact_sha256": "0a727a17aafa0a164e302c0712d6131ba0df5cda36ab98a85da6bed04651572d",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "c1: all 12 values match the excerpt cells (arc-agi::1 from ARC-AGI-1 column, arc-agi::2 from ARC-AGI-2 column); variant labels match; unit percent throughout; no ARC-AGI-3 column values used.",
+    "c2: 6 variants (Max, XHigh, High, Medium, Low, None) x 2 benchmarks = 12 rows, exactly one per (variant, benchmark); no duplicates, none missing, no extras.",
+    "c3: excerpt shows the ARC Prize Verified badge img, h1 'GPT-6 Luna' equal to page_model, and vendor/date line 'OpenAI · Sep 22, 2026 · 12 harness configurations'; basis measured follows the stated Verified-page precedent.",
+    "c4: published_at null on all 12 rows; source_row_context.model_release_date 2026-09-22 matches the page line and the receipt's modelReleaseDate for all 12 cross-check lines.",
+    "c5: all 12 proposed_model_ids are exact entries in catalog_configurations['gpt-6-luna'] (None -> gpt-6-luna::non-reasoning exists); each of the 12 identity_map_candidates matches its row one-to-one on benchmark_id, source_id, and model_id == proposed_model_id.",
+    "c6: protocol quotes the page summary verbatim and asserts nothing beyond the excerpt (badge, release date via receipt, table listing); no Semi-Private claims beyond the summary."
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "The receipt evidences modelReleaseDate agreement only for this page's 12 rows; c4's broader 'every page' claim (including the Kimi K3 example) is outside the supplied evidence and was not needed for this artifact.",
+    "Row name casing ('GPT-6 Luna (max)' vs page title 'GPT-6 Luna (Max)'; '(Non-reasoning)' capitalized while others lowercase) is not governed by c1-c6; noted as cosmetic, not counted as an error."
+  ],
+  "missing_evidence": []
+}
+```

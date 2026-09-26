@@ -1,0 +1,46 @@
+{
+  "artifact_id": "cr173-effort-fixes-opus55-tb4",
+  "artifact_sha256": "95dadf5ff8b36941c3447cb6736ff3c5412f320df7deccf086a9a9d80ec828e9",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "self-reported:claude-opus-55-terminal-bench-4-0-xhigh",
+    "self-reported:claude-opus-55-terminal-bench-4-0-chart-low",
+    "self-reported:claude-opus-55-terminal-bench-4-0-chart-medium",
+    "self-reported:claude-opus-55-terminal-bench-4-0-chart-high",
+    "self-reported:claude-opus-55-terminal-bench-4-0-chart-max"
+  ],
+  "errors_found": 3,
+  "findings": [
+    {
+      "location": "self-reported:claude-opus-55-terminal-bench-4-0-xhigh -> supporting_sources[0].locator",
+      "severity": "high",
+      "evidence": "The locator's second quotation, \"The numbers reported use Claude Code in --bare mode and xhigh thinking effort for Opus 5.5\", does not appear in evidence.system_card.quotes. The supplied verbatim extracts are only (1) \"Claude Opus 5.5 scored 66.36% on Terminal-Bench 4.0 with safeguards enabled\" and (2) \"xhigh thinking effort for Opus 5.5 (which at max effort scores 64.8%, within noise of xhigh)\" (line break rendered as space). Extract (2) shares the substring \"xhigh thinking effort for Opus 5.5\" but is a different sentence. Criterion 5 requires the supporting_sources locators to quote the system card text verbatim; this quotation is unverifiable against the supplied evidence. (The locator's first quotation matches extract (1) verbatim, and the value 66.4 agrees with 66.36% at the printed precision.)",
+      "repair": "If the sentence exists in the retained system-card capture, add it verbatim to evidence.system_card.quotes so the locator can be verified (evidence-completeness fix). Otherwise replace the second quotation in the locator with attested text, e.g. quote the extract containing \"xhigh thinking effort for Opus 5.5\". Keep the verified 66.36% quotation unchanged."
+    },
+    {
+      "location": "protocol of all five rows: self-reported:claude-opus-55-terminal-bench-4-0-xhigh, -chart-low, -chart-medium, -chart-high, -chart-max",
+      "severity": "medium",
+      "evidence": "Every row's protocol states: \"The system card (section 8.5) states the reported numbers use Claude Code in --bare mode, with production safeguards enabled (a fallback model answered flagged requests).\" The supplied system-card extracts attest only \"with safeguards enabled\", 66.36% at xhigh, and 64.8% at max; they do not mention \"--bare mode\", \"production\" safeguards, or any fallback model. The only other packet occurrences of \"--bare\" and fallback claims are the unverified locator quote (see the xhigh finding above) and the withdrawn row's own protocol, neither of which is a verbatim extract of the retained capture. Criterion 6: \"The protocol text must not claim anything the evidence does not show.\" The data values themselves are unaffected.",
+      "repair": "Either add the verbatim system-card extract(s) supporting \"--bare mode\" and the fallback-model statement to evidence.system_card.quotes, or trim the protocol sentence in all five rows to what the extracts show (e.g. \"with safeguards enabled\") and drop the parenthetical fallback claim."
+    },
+    {
+      "location": "self-reported:claude-opus-55-terminal-bench-4-0-xhigh -> protocol (final sentence)",
+      "severity": "low",
+      "evidence": "The protocol asserts the replaced row was \"withdrawn 2026-09-26\" and references it as \"the CR-123 row\". The packet confirms the withdrawal itself (goal text and evidence.withdrawn_row, whose model_id claude-opus-5.5::max conflicts with the caption's xhigh statement, confirming the misconfiguration), but no supplied evidence attests the date 2026-09-26 or the identifier \"CR-123\".",
+      "repair": "Add the withdrawal record (ticket id and date) to the evidence packet, or drop the unattested specifics and keep only what the packet supports (e.g. \"Replaces self-reported:claude-opus-55-terminal-bench-4-0, which had joined this cell to max effort; withdrawn\")."
+    }
+  ],
+  "fixed": [],
+  "missing_evidence": [
+    "Verbatim system-card extract for the sentence \"The numbers reported use Claude Code in --bare mode and xhigh thinking effort for Opus 5.5\" quoted in the xhigh row's supporting_sources locator (not present in evidence.system_card.quotes).",
+    "Verbatim system-card extract supporting the protocol claims of Claude Code \"--bare mode\", \"production\" safeguards, and a fallback model answering flagged requests (asserted in all five rows' protocols).",
+    "Withdrawal record attesting the date 2026-09-26 and the reference \"CR-123\" for the withdrawn row self-reported:claude-opus-55-terminal-bench-4-0."
+  ],
+  "uncertainties": [
+    "Whether evidence.system_card.quotes is intended to be exhaustive of the relevant section 8.5 text. If it is only a sample, the first two findings are evidence-completeness gaps (fix by adding extracts); if exhaustive, the artifact rows over-quote and over-claim (fix by editing locator/protocol text).",
+    "The chart-row locators' navigational details (section \"Coding\", viewSwitcher view \"Agentic terminal coding\") are not present in the supplied chart evidence; the substantive CSV line quotes (opus55 low/med/high/max) were verified verbatim against evidence.chart.csv_lines, so this is treated as unverifiable context, not an error.",
+    "Criterion 6's phrase \"supporting_sources equal evidence.system_card\" was read as applying where supporting_sources are present (xhigh and max rows; their url, retrieved_at, sha256 and file all match evidence.system_card). The low/medium/high chart rows carry no supporting_sources; treated as acceptable because the supplied system-card extracts report only xhigh and max efforts, but if the criterion requires the system card on every row, those three rows would need it added.",
+    "All other checks passed on the supplied evidence: caption supports xhigh for the printed 66.4 cell and the withdrawn ::max attachment was wrong; chart values 38.5/57.6/64.2/64.8 match the CSV y fields exactly with verbatim line quotes; effort mapping low/med/high/xhigh/max -> low/medium/high/xhigh/max is correct and all model_ids are in evidence.catalog_configurations; exactly one row per effort with no other-series rows; source metadata fields equal evidence.source on all rows; benchmark_id, unit, basis and comparison_key conform; artifact_sha256 is echoed from the packet and was not recomputed (no execution capability)."
+  ]
+}

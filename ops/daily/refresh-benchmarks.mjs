@@ -102,9 +102,12 @@ export const protocolSourceLocator = (reference) => reference.review_content ===
   ? 'Published protocol text; exact excerpt (the page also publishes LLM prompts, which are not supplied)'
   : reference.excerpt ? 'Published protocol text; exact excerpt when the full page exceeds the bound' : 'full visible primary text';
 
+// CR-173 (2026-09-26): the lifecycle criterion now defines `version_status`. Critics were told to judge it but never
+// told what it means, so they asked the protocol to evidence "published" (aa-automationbench, aa-aime, aa-gdpval rounds
+// of 2026-09-24..26) — a field that records how *we* pin the version, not something a methodology page states.
 export const PROTOCOL_REVIEW_CRITERIA = [
   'Check the registry version, benchmark identity, metric, units and description against the actual current primary protocol. If the excerpt cannot establish continuity, report missing evidence. A changed task set, harness, judges, configuration or release version cannot silently reuse the existing identity.',
-  'Check the lifecycle fields (status, version_status, superseded_by) against the same protocol text. `status` records whether the maintainer still reports results for this board: `"active"` means it still publishes them; `"retained"` means the protocol shows the board retired, removed, or replaced going forward, and we keep the values already collected without claiming they are current. `superseded_by` holds **our registry id for the successor board**, not a quotation: check that the protocol names that successor, and do not expect this board\'s protocol passage to establish the successor\'s version — that version is settled by the successor\'s own registry entry and its own evidence. Read status and supersession independently: a board can be superseded in one index and still be reported in another, and a supersession note alone is not a retirement. Report a mismatch when the protocol text contradicts one of these fields, and missing evidence when the excerpt cannot settle it. These fields are the row\'s only statement about whether the board is still live; judge them, and judge nothing else as such a statement. When the packet additionally carries this run\'s own generated summary of how many model rows\' values for this board\'s source field were added or changed in today\'s captured maintainer payload compared with the previously published snapshot, a nonzero count of added or changed values is affirmative evidence for `status: "active"` for this board only — a maintainer serving new or changed values is still reporting them; that summary settles nothing about the methodology, task set, harness, judges or version, and it can never establish `"retained"`.',
+  'Check the lifecycle fields (status, version_status, superseded_by) against the same protocol text. `status` records whether the maintainer still reports results for this board: `"active"` means it still publishes them; `"retained"` means the protocol shows the board retired, removed, or replaced going forward, and we keep the values already collected without claiming they are current. `version_status` records how our identity pins the version: `"published"` means the maintainer publishes a named version or release and `version` is that name — check that the protocol names it; `"snapshot"` means the maintainer names no version and `version` is our own dated capture identity (`snapshot-YYYY-MM-DD`) — nothing in the protocol has to state it, report a mismatch only if the protocol names a version that contradicts it. `superseded_by` holds **our registry id for the successor board**, not a quotation: check that the protocol names that successor, and do not expect this board\'s protocol passage to establish the successor\'s version — that version is settled by the successor\'s own registry entry and its own evidence. Read status and supersession independently: a board can be superseded in one index and still be reported in another, and a supersession note alone is not a retirement. Report a mismatch when the protocol text contradicts one of these fields, and missing evidence when the excerpt cannot settle it. These fields are the row\'s only statement about whether the board is still live; judge them, and judge nothing else as such a statement. When the packet additionally carries this run\'s own generated summary of how many model rows\' values for this board\'s source field were added or changed in today\'s captured maintainer payload compared with the previously published snapshot, a nonzero count of added or changed values is affirmative evidence for `status: "active"` for this board only — a maintainer serving new or changed values is still reporting them; that summary settles nothing about the methodology, task set, harness, judges or version, and it can never establish `"retained"`.',
 ];
 
 // One archive can carry several sources, so a member is keyed by URL and member name.
@@ -195,6 +198,11 @@ export function captureTargets({ registry, plan, vendor }) {
     add(spec.source); for (const key of ['method_source', 'categories_source', 'frontend_source', 'detail_source', 'config_source']) add(spec.parser?.[key]);
     // One-file-per-run sources (BU Bench): every run file is a primary source of its own row.
     for (const run of spec.parser?.runs ?? []) add(run);
+    for (const extra of spec.additional_sources ?? []) {
+      add(extra.source);
+      for (const key of ['method_source', 'categories_source', 'frontend_source', 'detail_source', 'config_source']) add(extra.parser?.[key]);
+      for (const run of extra.parser?.runs ?? []) add(run);
+    }
   }
   for (const row of vendor.observations) add(row.source);
   return { urls, documentUrls };
@@ -464,6 +472,12 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
       const proposed = structuredClone(spec); proposed.source = current(spec.source);
       for (const key of ['method_source', 'categories_source', 'frontend_source', 'detail_source', 'config_source']) if (spec.parser[key]) proposed.parser[key] = current(spec.parser[key]);
       if (spec.parser.runs) proposed.parser.runs = spec.parser.runs.map(current);
+      proposed.additional_sources = (spec.additional_sources ?? []).map((extra) => {
+        const currentExtra = structuredClone(extra); currentExtra.source = current(extra.source);
+        for (const key of ['method_source', 'categories_source', 'frontend_source', 'detail_source', 'config_source']) if (extra.parser?.[key]) currentExtra.parser[key] = current(extra.parser[key]);
+        if (extra.parser?.runs) currentExtra.parser.runs = extra.parser.runs.map(current);
+        return currentExtra;
+      });
       const onePlan = join(temporary, `plan-${index}.json`), output = join(temporary, `public-${index}.json`);
       await put(onePlan, { schema_version: 1, entries: [proposed] });
       await exec('python3', ['ops/daily/public-candidate.py', onePlan, output], { timeout: 60_000, maxBuffer: 2_000_000 });
@@ -504,9 +518,10 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
     // Joining happens in the offline ingestion draft before fingerprints are
     // issued, so approval binds exactly the final published observation.
     for (const row of changed) {
-      const rowSource = proposed.parser.runs?.find((run) => run.url === row.source.url) ?? proposed.source;
+      const rowConfig = proposed.additional_sources?.find((extra) => extra.source.url === row.source.url) ?? proposed;
+      const rowSource = rowConfig.parser?.runs?.find((run) => run.url === row.source.url) ?? rowConfig.source;
       changedIds.add(row.id); evidenceById.set(row.id, [{ ...rowSource, locator: row.source.locator,
-        content: JSON.stringify({ native_source_row: evidence[row.id], protocol: proposed.protocol, registry: { id: entry.id, version: entry.version, scoring: entry.scoring } }) }, ...protocolSources]);
+        content: JSON.stringify({ native_source_row: evidence[row.id], protocol: rowConfig.protocol ?? proposed.protocol, registry: { id: entry.id, version: entry.version, scoring: entry.scoring } }) }, ...protocolSources]);
     }
     publicRows = publicRows.filter((r) => r.benchmark_id !== spec.benchmark_id).concat(candidate.observations.map((r) => changedIds.has(r.id) ? r : old.get(r.id)));
     specChecks[index].push({ id: spec.benchmark_id, status: 'candidate', rows: candidate.observations.length, changed_rows: changed.length, ...(gone.size ? { withdrawn_by_source: withdrawnBySource } : {}) });

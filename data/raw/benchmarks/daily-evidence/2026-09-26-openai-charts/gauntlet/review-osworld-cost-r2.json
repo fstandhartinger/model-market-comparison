@@ -1,0 +1,37 @@
+```json
+{
+  "artifact_id": "cr173-openai-charts-osworld-cost",
+  "artifact_sha256": "cd68d13a9299dac4f555ae8c8dc963152a0cc8cf75bda7042f34d737db37bfc4",
+  "round": 2,
+  "verdict": "pass",
+  "coverage_checked": [
+    "self-reported:gpt-6-astra-low-openai-osworld-2-offline-cost",
+    "self-reported:gpt-6-astra-medium-openai-osworld-2-offline-cost",
+    "self-reported:gpt-6-astra-high-openai-osworld-2-offline-cost",
+    "self-reported:gpt-6-astra-xhigh-openai-osworld-2-offline-cost",
+    "self-reported:gpt-6-astra-max-openai-osworld-2-offline-cost",
+    "self-reported:gpt-6-luna-low-openai-osworld-2-offline-cost",
+    "self-reported:gpt-6-luna-medium-openai-osworld-2-offline-cost",
+    "self-reported:gpt-6-luna-high-openai-osworld-2-offline-cost",
+    "self-reported:gpt-6-luna-xhigh-openai-osworld-2-offline-cost",
+    "self-reported:gpt-6-luna-max-openai-osworld-2-offline-cost",
+    "self-reported:gpt-6-sol-low-openai-osworld-2-offline-cost",
+    "self-reported:gpt-6-sol-medium-openai-osworld-2-offline-cost",
+    "self-reported:gpt-6-sol-high-openai-osworld-2-offline-cost",
+    "self-reported:gpt-6-sol-xhigh-openai-osworld-2-offline-cost",
+    "self-reported:gpt-6-sol-max-openai-osworld-2-offline-cost"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "missing_evidence": [],
+  "uncertainties": [
+    "Value check: all 15 row values equal the cost field of the matching (model, effortLabel) datapoint in evidence.chart.gpt6_points (e.g. Astra low 2.5457, Luna xhigh 0.1639, Sol max 3.2543); unit USD, basis self_reported, no derivation present, as required for cost rows.",
+    "Completeness/skip scoping: all 15 GPT-6 datapoints have exactly one cost row each, no duplicates, no Claude/GPT-5.6 rows. The evidence.skipped_existing_configs entry [\"openai-osworld-2-offline::v2026.08.08\", \"gpt-6-sol::xhigh\"] is keyed to the SCORE benchmark, not the cost benchmark in this artifact; I read the exclusion as benchmark-scoped (the earlier accepted row is the printed-text score row for gpt-6-sol::xhigh), so the presence of the gpt-6-sol::xhigh COST row (2.2127) is correct and required for cost completeness. If the owner's intent were instead config-level exclusion across benchmarks, this row would have to be removed; the supplied evidence supports the benchmark-scoped reading.",
+    "All subject.name/variant/model_id values match the dataset model and effortLabel fields; all 15 model_ids are present in evidence.catalog_configurations; benchmark_id version v2026.08.08 matches the figure caption.",
+    "Provenance fields (url, retrieved_at, published_at, sha256, file) match evidence.source on every row; each locator opens with the correct registry name 'OSWorld 2.0 offline (v2026.08.08 release) cost per task', names section 'Computer use', chart title, chart id 6xqZKBY16kxH0Zm4jCsAaS and linkId 'osworld', quotes the caption verbatim, quotes the exact datapoint with '$$' escaping intact (e.g. cost_label \"$$2.55\" for Astra low), and comparison_key is null on all rows.",
+    "Astra cross-checks: low, high, xhigh, max quote datapoints identical to evidence.astra_post_points (pointOrder/score/x_label/x_metric/x_value/seriesId all match, including x_label \"$$3.2\"/\"$$6.97\"/\"$$7.88\"/\"$$10.1\" and the Wayback URL and sha256); the medium row's statement that the earlier Astra post charts no medium point is consistent with evidence.astra_post_points (keys are low, high, xhigh, max only). Differing cross-check values vs the row values are disclosure-only per the criterion and not defects. The protocol claim that the Astra post launched 2026-09-03 is not independently verifiable from the supplied evidence (no date field in evidence.astra_post_points); it is contextual prose, not a quoted datapoint or criterion item.",
+    "I could not recompute sha256 digests or re-fetch the source or Wayback copies; verification relied on the supplied evidence copies and the owner receipts stated in the packet (owner reports recomputing both sha256 values). I ran no commands and made no fixes."
+  ]
+}
+```

@@ -108,7 +108,9 @@ test('the vendor claims raise V4.1 Flash coverage without entering the Composite
   const dataset = await read('data/dataset.json');
   const rows = dataset.benchmark_results.observations.filter((o) => o.subject?.model_id === MODEL);
   // 2026-09-21 (iteration 154): 39 → 40, MathArena ArXivMath 2026-06 now joins DeepSeek-V4.1-Flash (Max).
-  assert.equal(rows.length, 40);
+  // 2026-09-26 (CR-173): 40 → 41, MathArena BrokenArXiv 2026-06 now joins DeepSeek-V4.1-Flash (Max) too.
+  // 2026-09-26 (CR-173): 41 → 43, LMArena WebDev and Agent Arena ("deepseek-v4.1-flash-max", "Deepseek V4.1 Flash (Max)").
+  assert.equal(rows.length, 43);
   assert.equal(rows.filter((o) => o.basis === 'self_reported').length, 19);
   const model = dataset.models.find((m) => m.id === MODEL);
   assert.ok(model);

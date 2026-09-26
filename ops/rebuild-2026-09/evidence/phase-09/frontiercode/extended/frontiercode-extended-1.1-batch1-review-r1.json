@@ -1,0 +1,36 @@
+{
+  "artifact_id": "frontiercode-extended-1.1-batch1-cr173-2026-09-26",
+  "artifact_sha256": "5d769586bcdfd167eb419f4fb0c0b65aceb64d9c53028fc5161f7c9171eaf26a",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:fed2681e54cd0067d0502ba2",
+    "public:7c39cff4f70158587f6032ce",
+    "public:ec07c0691eea642bca46cdfc",
+    "public:64a02045e472761bfb9f98d4",
+    "public:1816e03752d6bdfdee89cf71",
+    "public:e2ede7b8e22bde1b65ecba2f",
+    "public:12d57dffdf02841adb27adbc",
+    "public:7a7dd9c0b4b33c6c7729171b",
+    "public:42c2996700e3c2d89e9406dc",
+    "public:33c7e88b14e8c1b6452bfc7e",
+    "public:bdcb144d6a9510c1ff18f056",
+    "public:e9d8da2471c779daf585c393",
+    "public:7bd9f47c507ad5307db65948",
+    "public:d8244db53dad615920e51ae3",
+    "public:f0bf69dda880556cfcfc7419",
+    "public:c9bac790789df5bf99acf8f6",
+    "public:9d79259eb363e8650b305503",
+    "public:fa729295f13714e327f5d408",
+    "public:38306e97e802bfbd3d5bde4f",
+    "public:4c30ff748b0901276c14b6dd"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Checks were performed against the per-row source copies supplied in the packet (source_efforts_for_model, source_harness_for_model, source_extended_entry); the raw artifact bytes were re-verified and the full data file was not independently re-fetched, so artifact_sha256 and the capture hash edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc could not be recomputed here.",
+    "No execution tools available; the new_score × 100 arithmetic was validated by inspection and all values agree within the stated 1e-9 floating-point tolerance (e.g., 0.6358 → 63.580000000000005, 0.5015 → 50.14999999999999, 0.6246 → 62.46000000000001)."
+  ],
+  "missing_evidence": []
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "id": "frontiercode-cost::1.1",
+    "version": "1.1",
+    "version_guard": "Require data.json key v1_1 with subsets.main == 100 and the page text \"FrontierCode 1.1\". FrontierCode 1.0 (before unfair-internet-use zeroing) and the Extended subset are different identities.",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Cost per rollout",
+      "unit": "USD",
+      "range": [
+        0,
+        null
+      ],
+      "higher_better": false,
+      "notes": "Separate published metric, not a capability score and not a Composite input; the changelog notes pricing corrections (e.g. Sep 10, 2026)."
+    },
+    "description": "Cognition's published mean USD spend per rollout for each FrontierCode 1.1 Main model and reasoning effort.",
+    "maintainer": "Cognition"
+  }
+]

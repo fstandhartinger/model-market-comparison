@@ -74,6 +74,10 @@ test('the review asks about the lifecycle, and says a supersession alone is not 
   const [identity, lifecycle] = PROTOCOL_REVIEW_CRITERIA;
   assert.match(identity, /cannot silently reuse the existing identity/);
   for (const field of ['status', 'version_status', 'superseded_by']) assert.ok(lifecycle.includes(field), `the criterion must name ${field}`);
+  // CR-173: version_status is defined, so a critic can settle it: a published version must be named by the protocol,
+  // a dated snapshot identity is ours and needs no protocol statement unless the protocol contradicts it.
+  assert.match(lifecycle, /`"published"` means the maintainer publishes a named version or release/);
+  assert.match(lifecycle, /`"snapshot"` means the maintainer names no version and `version` is our own dated capture identity/);
   // Terminal-Bench 2.1 is superseded in the Intelligence Index and still reported in the Coding
   // Index. A criterion that equated supersession with retirement would have mislabelled it.
   assert.match(lifecycle, /supersession note alone is not a retirement/);

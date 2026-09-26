@@ -88,7 +88,384 @@
       "basis": "self_reported",
       "minimum_rows": 1,
       "source_urls": [
-        "https://arcprize.org/media/data/leaderboard/v1.json"
+        "https://arcprize.org/media/data/leaderboard/v1.json",
+        "https://arcprize.org/results/openai-gpt-6-luna",
+        "https://arcprize.org/results/openai-gpt-6-astra",
+        "https://arcprize.org/results/anthropic-claude-fable-5-1",
+        "https://arcprize.org/results/anthropic-claude-opus-5-5",
+        "https://arcprize.org/results/google-gemini-3-8-flash",
+        "https://arcprize.org/results/moonshot-kimi-k3",
+        "https://arcprize.org/results/deepseek-v4-flash-0731",
+        "https://arcprize.org/results/deepseek-v4-pro-0813"
+      ],
+      "additional_sources": [
+        {
+          "source": {
+            "url": "https://arcprize.org/results/openai-gpt-6-luna",
+            "file": "ops/rebuild-2026-09/evidence/phase-09/gpt6-luna-arc/captures/184926c7cd259eddc3f7.gz",
+            "sha256": "184926c7cd259eddc3f756ea32e5d8f2ef078543bf96cbe35d4460e0849f842e",
+            "retrieved_at": "2026-09-24T20:22:51.069121+00:00"
+          },
+          "parser": {
+            "kind": "arc_verified_results_page",
+            "model_name": "GPT-6 Luna",
+            "vendor": "OpenAI",
+            "expected_header": [
+              "Variant",
+              "ARC-AGI-1",
+              "ARC-AGI-2",
+              "ARC-AGI-3 (Standard harness)",
+              "ARC-AGI-3 (Provider Adapter harness)"
+            ],
+            "expected_variants": [
+              "Max",
+              "XHigh",
+              "High",
+              "Medium",
+              "Low",
+              "None"
+            ],
+            "effort_map": {
+              "Max": "max",
+              "XHigh": "xhigh",
+              "High": "high",
+              "Medium": "medium",
+              "Low": "low",
+              "None": "none"
+            },
+            "display_effort_map": {
+              "Max": "max",
+              "XHigh": "xhigh",
+              "High": "high",
+              "Medium": "medium",
+              "Low": "low",
+              "None": "Non-reasoning"
+            },
+            "benchmark_column": "ARC-AGI-1",
+            "name_field": "name",
+            "id_field": "source_id",
+            "value_field": "value"
+          },
+          "basis": "measured",
+          "protocol": "Official ARC Prize GPT-6 Luna results page (OpenAI), carrying an ARC Prize Verified badge; the date on the page, 2026-09-22, is the model's release date (it equals modelReleaseDate in ARC Prize's leaderboard v1.json/v2.json captured 2026-09-26), and the page states no publication date of its own. Page summary (visible text, tooltips omitted): \"GPT-6 Luna's best Semi-Private scores are 86.7% on v1 and 59.3% on v2, both at max reasoning. On v3, it reaches 0.2% with the Standard harness at medium reasoning and 0.6% with the Provider Adapter harness at max reasoning.\" The table lists per-variant ARC-AGI-1 and ARC-AGI-2 percentages. Basis is the evaluator-published benchmark result; source reasoning labels are retained.",
+          "minimum_rows": 6
+        },
+        {
+          "source": {
+            "url": "https://arcprize.org/results/openai-gpt-6-astra",
+            "file": "ops/rebuild-2026-09/evidence/phase-09/arc/captures/26e71e75eb565a5ef867.gz",
+            "sha256": "26e71e75eb565a5ef86753a202ef6111223860c069a16ca65e2b3dc2400de9f6",
+            "retrieved_at": "2026-09-26T04:22:35.628163+00:00"
+          },
+          "parser": {
+            "kind": "arc_verified_results_page",
+            "model_name": "GPT-6 Astra",
+            "vendor": "OpenAI",
+            "expected_header": [
+              "Variant",
+              "ARC-AGI-1",
+              "ARC-AGI-2",
+              "ARC-AGI-3 (Standard harness)",
+              "ARC-AGI-3 (Provider Adapter harness)"
+            ],
+            "expected_variants": [
+              "Max",
+              "XHigh",
+              "High",
+              "Medium",
+              "Low",
+              "None"
+            ],
+            "effort_map": {
+              "Max": "max",
+              "XHigh": "xhigh",
+              "High": "high",
+              "Medium": "medium",
+              "Low": "low",
+              "None": "none"
+            },
+            "display_effort_map": {
+              "Max": "max",
+              "XHigh": "xhigh",
+              "High": "high",
+              "Medium": "medium",
+              "Low": "low",
+              "None": "none"
+            },
+            "benchmark_column": "ARC-AGI-1",
+            "name_field": "name",
+            "id_field": "source_id",
+            "value_field": "value"
+          },
+          "basis": "measured",
+          "protocol": "Official ARC Prize GPT-6 Astra results page (OpenAI), carrying an ARC Prize Verified badge; the date on the page, 2026-09-02, is the model's release date (it equals modelReleaseDate in ARC Prize's leaderboard v1.json/v2.json captured 2026-09-26), and the page states no publication date of its own. Page summary (visible text, tooltips omitted): \"GPT-6 Astra's best observed ARC-AGI-3 Semi-Private result with the Standard harness was 62.7% at max reasoning for $26,098. With the Provider Adapter harness, its best observed result was 99.9% at high reasoning for $18,817. Read more in our blog post, OpenAI's GPT-6 Astra on ARC-AGI-3.\" The table lists per-variant ARC-AGI-1 and ARC-AGI-2 percentages. Basis is the evaluator-published benchmark result; source reasoning labels are retained.",
+          "minimum_rows": 6
+        },
+        {
+          "source": {
+            "url": "https://arcprize.org/results/anthropic-claude-fable-5-1",
+            "file": "ops/rebuild-2026-09/evidence/phase-09/arc/captures/5959850473af57806dab.gz",
+            "sha256": "5959850473af57806dab2f53c41a2e9083971347c2dc2f3c569471b28e9d22fe",
+            "retrieved_at": "2026-09-26T04:22:41.610517+00:00"
+          },
+          "parser": {
+            "kind": "arc_verified_results_page",
+            "model_name": "Claude Fable 5.1",
+            "vendor": "Anthropic",
+            "expected_header": [
+              "Variant",
+              "ARC-AGI-1",
+              "ARC-AGI-2",
+              "ARC-AGI-3"
+            ],
+            "expected_variants": [
+              "Max",
+              "XHigh",
+              "High",
+              "Medium",
+              "Low"
+            ],
+            "effort_map": {
+              "Max": "max",
+              "XHigh": "xhigh",
+              "High": "high",
+              "Medium": "medium",
+              "Low": "low"
+            },
+            "display_effort_map": {
+              "Max": "max",
+              "XHigh": "xhigh",
+              "High": "high",
+              "Medium": "medium",
+              "Low": "low"
+            },
+            "benchmark_column": "ARC-AGI-1",
+            "name_field": "name",
+            "id_field": "source_id",
+            "value_field": "value"
+          },
+          "basis": "measured",
+          "protocol": "Official ARC Prize Claude Fable 5.1 results page (Anthropic), carrying an ARC Prize Verified badge; the date on the page, 2026-09-01, is the model's release date (it equals modelReleaseDate in ARC Prize's leaderboard v1.json/v2.json captured 2026-09-26), and the page states no publication date of its own. Page summary (visible text, tooltips omitted): \"At max effort, Claude Fable 5.1 scores 97.5% on ARC-AGI-1 Semi-Private at $1.40 per task and 90.0% on ARC-AGI-2 Semi-Private at $4.49 per task.\" The table lists per-variant ARC-AGI-1 and ARC-AGI-2 percentages. Basis is the evaluator-published benchmark result; source reasoning labels are retained.",
+          "minimum_rows": 5
+        },
+        {
+          "source": {
+            "url": "https://arcprize.org/results/anthropic-claude-opus-5-5",
+            "file": "ops/rebuild-2026-09/evidence/phase-09/arc/captures/65961ac23fc040698195.gz",
+            "sha256": "65961ac23fc040698195fcc07d795802e07f795c2e91ad2693dd0faac32c6b16",
+            "retrieved_at": "2026-09-26T04:22:41.881829+00:00"
+          },
+          "parser": {
+            "kind": "arc_verified_results_page",
+            "model_name": "Claude Opus 5.5",
+            "vendor": "Anthropic",
+            "expected_header": [
+              "Variant",
+              "ARC-AGI-1",
+              "ARC-AGI-2",
+              "ARC-AGI-3"
+            ],
+            "expected_variants": [
+              "Max",
+              "XHigh",
+              "High",
+              "Medium",
+              "Low"
+            ],
+            "effort_map": {
+              "Max": "max",
+              "XHigh": "xhigh",
+              "High": "high",
+              "Medium": "medium",
+              "Low": "low"
+            },
+            "display_effort_map": {
+              "Max": "max",
+              "XHigh": "xhigh",
+              "High": "high",
+              "Medium": "medium",
+              "Low": "low"
+            },
+            "benchmark_column": "ARC-AGI-1",
+            "name_field": "name",
+            "id_field": "source_id",
+            "value_field": "value"
+          },
+          "basis": "measured",
+          "protocol": "Official ARC Prize Claude Opus 5.5 results page (Anthropic), carrying an ARC Prize Verified badge; the date on the page, 2026-09-22, is the model's release date (it equals modelReleaseDate in ARC Prize's leaderboard v1.json/v2.json captured 2026-09-26), and the page states no publication date of its own. Page summary (visible text, tooltips omitted): \"At high reasoning effort, Claude Opus 5.5 scores 98.5% on v1 Semi-Private and 93.3% on v2 Semi-Private.\" The table lists per-variant ARC-AGI-1 and ARC-AGI-2 percentages. Basis is the evaluator-published benchmark result; source reasoning labels are retained.",
+          "minimum_rows": 5
+        },
+        {
+          "source": {
+            "url": "https://arcprize.org/results/google-gemini-3-8-flash",
+            "file": "ops/rebuild-2026-09/evidence/phase-09/arc/captures/ecdd158f1a0cd15e2372.gz",
+            "sha256": "ecdd158f1a0cd15e2372dc634dce51db2bbeeb8c86a2624bae2ecd8596f18795",
+            "retrieved_at": "2026-09-26T04:22:44.631462+00:00"
+          },
+          "parser": {
+            "kind": "arc_verified_results_page",
+            "model_name": "Gemini 3.8 Flash",
+            "vendor": "Google",
+            "expected_header": [
+              "Variant",
+              "ARC-AGI-1",
+              "ARC-AGI-2",
+              "ARC-AGI-3 (Standard harness)",
+              "ARC-AGI-3 (Provider Adapter harness)"
+            ],
+            "expected_variants": [
+              "High",
+              "Medium",
+              "Low"
+            ],
+            "effort_map": {
+              "High": "high",
+              "Medium": "medium",
+              "Low": "low"
+            },
+            "display_effort_map": {
+              "High": "high",
+              "Medium": "medium",
+              "Low": "low"
+            },
+            "benchmark_column": "ARC-AGI-1",
+            "name_field": "name",
+            "id_field": "source_id",
+            "value_field": "value"
+          },
+          "basis": "measured",
+          "protocol": "Official ARC Prize Gemini 3.8 Flash results page (Google), carrying an ARC Prize Verified badge; the date on the page, 2026-09-02, is the model's release date (it equals modelReleaseDate in ARC Prize's leaderboard v1.json/v2.json captured 2026-09-26), and the page states no publication date of its own. Page summary (visible text, tooltips omitted): \"Gemini 3.8 Flash's best Semi-Private scores are 98.5% on v1 and 89.2% on v2, both at high reasoning. On v3, it reaches 10.4% with the Standard harness at high reasoning and 35.0% with the Provider Adapter harness at high reasoning.\" The table lists per-variant ARC-AGI-1 and ARC-AGI-2 percentages. Basis is the evaluator-published benchmark result; source reasoning labels are retained.",
+          "minimum_rows": 3
+        },
+        {
+          "source": {
+            "url": "https://arcprize.org/results/moonshot-kimi-k3",
+            "file": "ops/rebuild-2026-09/evidence/phase-09/arc/captures/163ec3ee0ffaedd24ecd.gz",
+            "sha256": "163ec3ee0ffaedd24ecdfefa201541e3c517555296291700246f492590461b3c",
+            "retrieved_at": "2026-09-26T04:22:47.390700+00:00"
+          },
+          "parser": {
+            "kind": "arc_verified_results_page",
+            "model_name": "Kimi K3",
+            "vendor": "Moonshot AI",
+            "expected_header": [
+              "Variant",
+              "ARC-AGI-1",
+              "ARC-AGI-2",
+              "ARC-AGI-3"
+            ],
+            "expected_variants": [
+              "Max",
+              "High",
+              "Low"
+            ],
+            "effort_map": {
+              "Max": "max",
+              "High": "high",
+              "Low": "low"
+            },
+            "display_effort_map": {
+              "Max": "max",
+              "High": "high",
+              "Low": "low"
+            },
+            "benchmark_column": "ARC-AGI-1",
+            "name_field": "name",
+            "id_field": "source_id",
+            "value_field": "value"
+          },
+          "basis": "measured",
+          "protocol": "Official ARC Prize Kimi K3 results page (Moonshot AI), carrying an ARC Prize Verified badge; the date on the page, 2026-07-16, is the model's release date (it equals modelReleaseDate in ARC Prize's leaderboard v1.json/v2.json captured 2026-09-26), and the page states no publication date of its own. Page summary (visible text, tooltips omitted): \"As of July 31, 2026, Moonshot AI's Kimi K3 sets a new high score for open-weight models evaluated by ARC Prize on both ARC-AGI-1 and ARC-AGI-2. At max effort, it scores 94.5% on ARC-AGI-1 Semi-Private at $0.77 per task and 60.4% on ARC-AGI-2 Semi-Private at $1.59 per task. ARC-AGI-3 testing is still in progress.\" The table lists per-variant ARC-AGI-1 and ARC-AGI-2 percentages. Basis is the evaluator-published benchmark result; source reasoning labels are retained.",
+          "minimum_rows": 3
+        },
+        {
+          "source": {
+            "url": "https://arcprize.org/results/deepseek-v4-flash-0731",
+            "file": "ops/rebuild-2026-09/evidence/phase-09/arc/captures/69f3f516118936fc86a4.gz",
+            "sha256": "69f3f516118936fc86a4f9daa76a91f9b2ca3688638eca8c772d5b6baf535c80",
+            "retrieved_at": "2026-09-26T04:22:50.346871+00:00"
+          },
+          "parser": {
+            "kind": "arc_verified_results_page",
+            "model_name": "DeepSeek V4 Flash 0731",
+            "vendor": "DeepSeek",
+            "expected_header": [
+              "Variant",
+              "ARC-AGI-1",
+              "ARC-AGI-2",
+              "ARC-AGI-3"
+            ],
+            "expected_variants": [
+              "Max",
+              "High",
+              "Low",
+              "None"
+            ],
+            "effort_map": {
+              "Max": "max",
+              "High": "high",
+              "Low": "low",
+              "None": "none"
+            },
+            "display_effort_map": {
+              "Max": "max",
+              "High": "high",
+              "Low": "low",
+              "None": "none"
+            },
+            "benchmark_column": "ARC-AGI-1",
+            "name_field": "name",
+            "id_field": "source_id",
+            "value_field": "value"
+          },
+          "basis": "measured",
+          "protocol": "Official ARC Prize DeepSeek V4 Flash 0731 results page (DeepSeek), carrying an ARC Prize Verified badge; the date on the page, 2026-07-31, is the model's release date (it equals modelReleaseDate in ARC Prize's leaderboard v1.json/v2.json captured 2026-09-26), and the page states no publication date of its own. Page summary (visible text, tooltips omitted): \"At max effort, DeepSeek V4 Flash 0731 scores 89.0% on ARC-AGI-1 Semi-Private at $0.02 per task and 61.4% on ARC-AGI-2 Semi-Private at $0.04 per task.\" The table lists per-variant ARC-AGI-1 and ARC-AGI-2 percentages. Basis is the evaluator-published benchmark result; source reasoning labels are retained.",
+          "minimum_rows": 4
+        },
+        {
+          "source": {
+            "url": "https://arcprize.org/results/deepseek-v4-pro-0813",
+            "file": "ops/rebuild-2026-09/evidence/phase-09/arc/captures/24a3503529f111cc4d6d.gz",
+            "sha256": "24a3503529f111cc4d6d1541040c08faf19bb2f5074ba5d847f66966131544a2",
+            "retrieved_at": "2026-09-26T04:22:53.095216+00:00"
+          },
+          "parser": {
+            "kind": "arc_verified_results_page",
+            "model_name": "DeepSeek V4 Pro 0813",
+            "vendor": "DeepSeek",
+            "expected_header": [
+              "Variant",
+              "ARC-AGI-1",
+              "ARC-AGI-2",
+              "ARC-AGI-3"
+            ],
+            "expected_variants": [
+              "Max",
+              "High",
+              "Low",
+              "None"
+            ],
+            "effort_map": {
+              "Max": "max",
+              "High": "high",
+              "Low": "low",
+              "None": "none"
+            },
+            "display_effort_map": {
+              "Max": "max",
+              "High": "high",
+              "Low": "low",
+              "None": "none"
+            },
+            "benchmark_column": "ARC-AGI-1",
+            "name_field": "name",
+            "id_field": "source_id",
+            "value_field": "value"
+          },
+          "basis": "measured",
+          "protocol": "Official ARC Prize DeepSeek V4 Pro 0813 results page (DeepSeek), carrying an ARC Prize Verified badge; the date on the page, 2026-08-13, is the model's release date (it equals modelReleaseDate in ARC Prize's leaderboard v1.json/v2.json captured 2026-09-26), and the page states no publication date of its own. Page summary (visible text, tooltips omitted): \"At max effort, DeepSeek V4 Pro 0813 scores 90.0% on ARC-AGI-1 Semi-Private at $0.30 per task and 61.3% on ARC-AGI-2 Semi-Private at $0.60 per task.\" The table lists per-variant ARC-AGI-1 and ARC-AGI-2 percentages. Basis is the evaluator-published benchmark result; source reasoning labels are retained.",
+          "minimum_rows": 4
+        }
       ]
     },
     {
@@ -139,7 +516,384 @@
       "basis": "self_reported",
       "minimum_rows": 1,
       "source_urls": [
-        "https://arcprize.org/media/data/leaderboard/v2.json"
+        "https://arcprize.org/media/data/leaderboard/v2.json",
+        "https://arcprize.org/results/openai-gpt-6-luna",
+        "https://arcprize.org/results/openai-gpt-6-astra",
+        "https://arcprize.org/results/anthropic-claude-fable-5-1",
+        "https://arcprize.org/results/anthropic-claude-opus-5-5",
+        "https://arcprize.org/results/google-gemini-3-8-flash",
+        "https://arcprize.org/results/moonshot-kimi-k3",
+        "https://arcprize.org/results/deepseek-v4-flash-0731",
+        "https://arcprize.org/results/deepseek-v4-pro-0813"
+      ],
+      "additional_sources": [
+        {
+          "source": {
+            "url": "https://arcprize.org/results/openai-gpt-6-luna",
+            "file": "ops/rebuild-2026-09/evidence/phase-09/gpt6-luna-arc/captures/184926c7cd259eddc3f7.gz",
+            "sha256": "184926c7cd259eddc3f756ea32e5d8f2ef078543bf96cbe35d4460e0849f842e",
+            "retrieved_at": "2026-09-24T20:22:51.069121+00:00"
+          },
+          "parser": {
+            "kind": "arc_verified_results_page",
+            "model_name": "GPT-6 Luna",
+            "vendor": "OpenAI",
+            "expected_header": [
+              "Variant",
+              "ARC-AGI-1",
+              "ARC-AGI-2",
+              "ARC-AGI-3 (Standard harness)",
+              "ARC-AGI-3 (Provider Adapter harness)"
+            ],
+            "expected_variants": [
+              "Max",
+              "XHigh",
+              "High",
+              "Medium",
+              "Low",
+              "None"
+            ],
+            "effort_map": {
+              "Max": "max",
+              "XHigh": "xhigh",
+              "High": "high",
+              "Medium": "medium",
+              "Low": "low",
+              "None": "none"
+            },
+            "display_effort_map": {
+              "Max": "max",
+              "XHigh": "xhigh",
+              "High": "high",
+              "Medium": "medium",
+              "Low": "low",
+              "None": "Non-reasoning"
+            },
+            "benchmark_column": "ARC-AGI-2",
+            "name_field": "name",
+            "id_field": "source_id",
+            "value_field": "value"
+          },
+          "basis": "measured",
+          "protocol": "Official ARC Prize GPT-6 Luna results page (OpenAI), carrying an ARC Prize Verified badge; the date on the page, 2026-09-22, is the model's release date (it equals modelReleaseDate in ARC Prize's leaderboard v1.json/v2.json captured 2026-09-26), and the page states no publication date of its own. Page summary (visible text, tooltips omitted): \"GPT-6 Luna's best Semi-Private scores are 86.7% on v1 and 59.3% on v2, both at max reasoning. On v3, it reaches 0.2% with the Standard harness at medium reasoning and 0.6% with the Provider Adapter harness at max reasoning.\" The table lists per-variant ARC-AGI-1 and ARC-AGI-2 percentages. Basis is the evaluator-published benchmark result; source reasoning labels are retained.",
+          "minimum_rows": 6
+        },
+        {
+          "source": {
+            "url": "https://arcprize.org/results/openai-gpt-6-astra",
+            "file": "ops/rebuild-2026-09/evidence/phase-09/arc/captures/26e71e75eb565a5ef867.gz",
+            "sha256": "26e71e75eb565a5ef86753a202ef6111223860c069a16ca65e2b3dc2400de9f6",
+            "retrieved_at": "2026-09-26T04:22:35.628163+00:00"
+          },
+          "parser": {
+            "kind": "arc_verified_results_page",
+            "model_name": "GPT-6 Astra",
+            "vendor": "OpenAI",
+            "expected_header": [
+              "Variant",
+              "ARC-AGI-1",
+              "ARC-AGI-2",
+              "ARC-AGI-3 (Standard harness)",
+              "ARC-AGI-3 (Provider Adapter harness)"
+            ],
+            "expected_variants": [
+              "Max",
+              "XHigh",
+              "High",
+              "Medium",
+              "Low",
+              "None"
+            ],
+            "effort_map": {
+              "Max": "max",
+              "XHigh": "xhigh",
+              "High": "high",
+              "Medium": "medium",
+              "Low": "low",
+              "None": "none"
+            },
+            "display_effort_map": {
+              "Max": "max",
+              "XHigh": "xhigh",
+              "High": "high",
+              "Medium": "medium",
+              "Low": "low",
+              "None": "none"
+            },
+            "benchmark_column": "ARC-AGI-2",
+            "name_field": "name",
+            "id_field": "source_id",
+            "value_field": "value"
+          },
+          "basis": "measured",
+          "protocol": "Official ARC Prize GPT-6 Astra results page (OpenAI), carrying an ARC Prize Verified badge; the date on the page, 2026-09-02, is the model's release date (it equals modelReleaseDate in ARC Prize's leaderboard v1.json/v2.json captured 2026-09-26), and the page states no publication date of its own. Page summary (visible text, tooltips omitted): \"GPT-6 Astra's best observed ARC-AGI-3 Semi-Private result with the Standard harness was 62.7% at max reasoning for $26,098. With the Provider Adapter harness, its best observed result was 99.9% at high reasoning for $18,817. Read more in our blog post, OpenAI's GPT-6 Astra on ARC-AGI-3.\" The table lists per-variant ARC-AGI-1 and ARC-AGI-2 percentages. Basis is the evaluator-published benchmark result; source reasoning labels are retained.",
+          "minimum_rows": 6
+        },
+        {
+          "source": {
+            "url": "https://arcprize.org/results/anthropic-claude-fable-5-1",
+            "file": "ops/rebuild-2026-09/evidence/phase-09/arc/captures/5959850473af57806dab.gz",
+            "sha256": "5959850473af57806dab2f53c41a2e9083971347c2dc2f3c569471b28e9d22fe",
+            "retrieved_at": "2026-09-26T04:22:41.610517+00:00"
+          },
+          "parser": {
+            "kind": "arc_verified_results_page",
+            "model_name": "Claude Fable 5.1",
+            "vendor": "Anthropic",
+            "expected_header": [
+              "Variant",
+              "ARC-AGI-1",
+              "ARC-AGI-2",
+              "ARC-AGI-3"
+            ],
+            "expected_variants": [
+              "Max",
+              "XHigh",
+              "High",
+              "Medium",
+              "Low"
+            ],
+            "effort_map": {
+              "Max": "max",
+              "XHigh": "xhigh",
+              "High": "high",
+              "Medium": "medium",
+              "Low": "low"
+            },
+            "display_effort_map": {
+              "Max": "max",
+              "XHigh": "xhigh",
+              "High": "high",
+              "Medium": "medium",
+              "Low": "low"
+            },
+            "benchmark_column": "ARC-AGI-2",
+            "name_field": "name",
+            "id_field": "source_id",
+            "value_field": "value"
+          },
+          "basis": "measured",
+          "protocol": "Official ARC Prize Claude Fable 5.1 results page (Anthropic), carrying an ARC Prize Verified badge; the date on the page, 2026-09-01, is the model's release date (it equals modelReleaseDate in ARC Prize's leaderboard v1.json/v2.json captured 2026-09-26), and the page states no publication date of its own. Page summary (visible text, tooltips omitted): \"At max effort, Claude Fable 5.1 scores 97.5% on ARC-AGI-1 Semi-Private at $1.40 per task and 90.0% on ARC-AGI-2 Semi-Private at $4.49 per task.\" The table lists per-variant ARC-AGI-1 and ARC-AGI-2 percentages. Basis is the evaluator-published benchmark result; source reasoning labels are retained.",
+          "minimum_rows": 5
+        },
+        {
+          "source": {
+            "url": "https://arcprize.org/results/anthropic-claude-opus-5-5",
+            "file": "ops/rebuild-2026-09/evidence/phase-09/arc/captures/65961ac23fc040698195.gz",
+            "sha256": "65961ac23fc040698195fcc07d795802e07f795c2e91ad2693dd0faac32c6b16",
+            "retrieved_at": "2026-09-26T04:22:41.881829+00:00"
+          },
+          "parser": {
+            "kind": "arc_verified_results_page",
+            "model_name": "Claude Opus 5.5",
+            "vendor": "Anthropic",
+            "expected_header": [
+              "Variant",
+              "ARC-AGI-1",
+              "ARC-AGI-2",
+              "ARC-AGI-3"
+            ],
+            "expected_variants": [
+              "Max",
+              "XHigh",
+              "High",
+              "Medium",
+              "Low"
+            ],
+            "effort_map": {
+              "Max": "max",
+              "XHigh": "xhigh",
+              "High": "high",
+              "Medium": "medium",
+              "Low": "low"
+            },
+            "display_effort_map": {
+              "Max": "max",
+              "XHigh": "xhigh",
+              "High": "high",
+              "Medium": "medium",
+              "Low": "low"
+            },
+            "benchmark_column": "ARC-AGI-2",
+            "name_field": "name",
+            "id_field": "source_id",
+            "value_field": "value"
+          },
+          "basis": "measured",
+          "protocol": "Official ARC Prize Claude Opus 5.5 results page (Anthropic), carrying an ARC Prize Verified badge; the date on the page, 2026-09-22, is the model's release date (it equals modelReleaseDate in ARC Prize's leaderboard v1.json/v2.json captured 2026-09-26), and the page states no publication date of its own. Page summary (visible text, tooltips omitted): \"At high reasoning effort, Claude Opus 5.5 scores 98.5% on v1 Semi-Private and 93.3% on v2 Semi-Private.\" The table lists per-variant ARC-AGI-1 and ARC-AGI-2 percentages. Basis is the evaluator-published benchmark result; source reasoning labels are retained.",
+          "minimum_rows": 5
+        },
+        {
+          "source": {
+            "url": "https://arcprize.org/results/google-gemini-3-8-flash",
+            "file": "ops/rebuild-2026-09/evidence/phase-09/arc/captures/ecdd158f1a0cd15e2372.gz",
+            "sha256": "ecdd158f1a0cd15e2372dc634dce51db2bbeeb8c86a2624bae2ecd8596f18795",
+            "retrieved_at": "2026-09-26T04:22:44.631462+00:00"
+          },
+          "parser": {
+            "kind": "arc_verified_results_page",
+            "model_name": "Gemini 3.8 Flash",
+            "vendor": "Google",
+            "expected_header": [
+              "Variant",
+              "ARC-AGI-1",
+              "ARC-AGI-2",
+              "ARC-AGI-3 (Standard harness)",
+              "ARC-AGI-3 (Provider Adapter harness)"
+            ],
+            "expected_variants": [
+              "High",
+              "Medium",
+              "Low"
+            ],
+            "effort_map": {
+              "High": "high",
+              "Medium": "medium",
+              "Low": "low"
+            },
+            "display_effort_map": {
+              "High": "high",
+              "Medium": "medium",
+              "Low": "low"
+            },
+            "benchmark_column": "ARC-AGI-2",
+            "name_field": "name",
+            "id_field": "source_id",
+            "value_field": "value"
+          },
+          "basis": "measured",
+          "protocol": "Official ARC Prize Gemini 3.8 Flash results page (Google), carrying an ARC Prize Verified badge; the date on the page, 2026-09-02, is the model's release date (it equals modelReleaseDate in ARC Prize's leaderboard v1.json/v2.json captured 2026-09-26), and the page states no publication date of its own. Page summary (visible text, tooltips omitted): \"Gemini 3.8 Flash's best Semi-Private scores are 98.5% on v1 and 89.2% on v2, both at high reasoning. On v3, it reaches 10.4% with the Standard harness at high reasoning and 35.0% with the Provider Adapter harness at high reasoning.\" The table lists per-variant ARC-AGI-1 and ARC-AGI-2 percentages. Basis is the evaluator-published benchmark result; source reasoning labels are retained.",
+          "minimum_rows": 3
+        },
+        {
+          "source": {
+            "url": "https://arcprize.org/results/moonshot-kimi-k3",
+            "file": "ops/rebuild-2026-09/evidence/phase-09/arc/captures/163ec3ee0ffaedd24ecd.gz",
+            "sha256": "163ec3ee0ffaedd24ecdfefa201541e3c517555296291700246f492590461b3c",
+            "retrieved_at": "2026-09-26T04:22:47.390700+00:00"
+          },
+          "parser": {
+            "kind": "arc_verified_results_page",
+            "model_name": "Kimi K3",
+            "vendor": "Moonshot AI",
+            "expected_header": [
+              "Variant",
+              "ARC-AGI-1",
+              "ARC-AGI-2",
+              "ARC-AGI-3"
+            ],
+            "expected_variants": [
+              "Max",
+              "High",
+              "Low"
+            ],
+            "effort_map": {
+              "Max": "max",
+              "High": "high",
+              "Low": "low"
+            },
+            "display_effort_map": {
+              "Max": "max",
+              "High": "high",
+              "Low": "low"
+            },
+            "benchmark_column": "ARC-AGI-2",
+            "name_field": "name",
+            "id_field": "source_id",
+            "value_field": "value"
+          },
+          "basis": "measured",
+          "protocol": "Official ARC Prize Kimi K3 results page (Moonshot AI), carrying an ARC Prize Verified badge; the date on the page, 2026-07-16, is the model's release date (it equals modelReleaseDate in ARC Prize's leaderboard v1.json/v2.json captured 2026-09-26), and the page states no publication date of its own. Page summary (visible text, tooltips omitted): \"As of July 31, 2026, Moonshot AI's Kimi K3 sets a new high score for open-weight models evaluated by ARC Prize on both ARC-AGI-1 and ARC-AGI-2. At max effort, it scores 94.5% on ARC-AGI-1 Semi-Private at $0.77 per task and 60.4% on ARC-AGI-2 Semi-Private at $1.59 per task. ARC-AGI-3 testing is still in progress.\" The table lists per-variant ARC-AGI-1 and ARC-AGI-2 percentages. Basis is the evaluator-published benchmark result; source reasoning labels are retained.",
+          "minimum_rows": 3
+        },
+        {
+          "source": {
+            "url": "https://arcprize.org/results/deepseek-v4-flash-0731",
+            "file": "ops/rebuild-2026-09/evidence/phase-09/arc/captures/69f3f516118936fc86a4.gz",
+            "sha256": "69f3f516118936fc86a4f9daa76a91f9b2ca3688638eca8c772d5b6baf535c80",
+            "retrieved_at": "2026-09-26T04:22:50.346871+00:00"
+          },
+          "parser": {
+            "kind": "arc_verified_results_page",
+            "model_name": "DeepSeek V4 Flash 0731",
+            "vendor": "DeepSeek",
+            "expected_header": [
+              "Variant",
+              "ARC-AGI-1",
+              "ARC-AGI-2",
+              "ARC-AGI-3"
+            ],
+            "expected_variants": [
+              "Max",
+              "High",
+              "Low",
+              "None"
+            ],
+            "effort_map": {
+              "Max": "max",
+              "High": "high",
+              "Low": "low",
+              "None": "none"
+            },
+            "display_effort_map": {
+              "Max": "max",
+              "High": "high",
+              "Low": "low",
+              "None": "none"
+            },
+            "benchmark_column": "ARC-AGI-2",
+            "name_field": "name",
+            "id_field": "source_id",
+            "value_field": "value"
+          },
+          "basis": "measured",
+          "protocol": "Official ARC Prize DeepSeek V4 Flash 0731 results page (DeepSeek), carrying an ARC Prize Verified badge; the date on the page, 2026-07-31, is the model's release date (it equals modelReleaseDate in ARC Prize's leaderboard v1.json/v2.json captured 2026-09-26), and the page states no publication date of its own. Page summary (visible text, tooltips omitted): \"At max effort, DeepSeek V4 Flash 0731 scores 89.0% on ARC-AGI-1 Semi-Private at $0.02 per task and 61.4% on ARC-AGI-2 Semi-Private at $0.04 per task.\" The table lists per-variant ARC-AGI-1 and ARC-AGI-2 percentages. Basis is the evaluator-published benchmark result; source reasoning labels are retained.",
+          "minimum_rows": 4
+        },
+        {
+          "source": {
+            "url": "https://arcprize.org/results/deepseek-v4-pro-0813",
+            "file": "ops/rebuild-2026-09/evidence/phase-09/arc/captures/24a3503529f111cc4d6d.gz",
+            "sha256": "24a3503529f111cc4d6d1541040c08faf19bb2f5074ba5d847f66966131544a2",
+            "retrieved_at": "2026-09-26T04:22:53.095216+00:00"
+          },
+          "parser": {
+            "kind": "arc_verified_results_page",
+            "model_name": "DeepSeek V4 Pro 0813",
+            "vendor": "DeepSeek",
+            "expected_header": [
+              "Variant",
+              "ARC-AGI-1",
+              "ARC-AGI-2",
+              "ARC-AGI-3"
+            ],
+            "expected_variants": [
+              "Max",
+              "High",
+              "Low",
+              "None"
+            ],
+            "effort_map": {
+              "Max": "max",
+              "High": "high",
+              "Low": "low",
+              "None": "none"
+            },
+            "display_effort_map": {
+              "Max": "max",
+              "High": "high",
+              "Low": "low",
+              "None": "none"
+            },
+            "benchmark_column": "ARC-AGI-2",
+            "name_field": "name",
+            "id_field": "source_id",
+            "value_field": "value"
+          },
+          "basis": "measured",
+          "protocol": "Official ARC Prize DeepSeek V4 Pro 0813 results page (DeepSeek), carrying an ARC Prize Verified badge; the date on the page, 2026-08-13, is the model's release date (it equals modelReleaseDate in ARC Prize's leaderboard v1.json/v2.json captured 2026-09-26), and the page states no publication date of its own. Page summary (visible text, tooltips omitted): \"At max effort, DeepSeek V4 Pro 0813 scores 90.0% on ARC-AGI-1 Semi-Private at $0.30 per task and 61.3% on ARC-AGI-2 Semi-Private at $0.60 per task.\" The table lists per-variant ARC-AGI-1 and ARC-AGI-2 percentages. Basis is the evaluator-published benchmark result; source reasoning labels are retained.",
+          "minimum_rows": 4
+        }
       ]
     },
     {
@@ -957,7 +1711,7 @@
         "value_field": "score"
       },
       "status": "collected",
-      "reason": "No safely attributable current result parsed from captured evidence. Homepage 'Leaderboard' section, MCQ tab: read the 'Score (AVG@5)' column per model row; settings stated as 'temperature: 0.7, top-p: 0.95 (except o1 series)'.",
+      "reason": "Retained dated snapshot (2026-09-10 capture), superseded by simple-bench::snapshot-2026-09-26 in CR-173; its rows stay bound to the 2026-09-10 bytes.",
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
         "format": "HTML/embedded data",
@@ -974,6 +1728,38 @@
         "retrieved_at": "2026-09-10T23:12:27.715001+00:00"
       },
       "protocol": "SimpleBench MCQ AVG@5 board only; human baselines and open-ended board excluded.",
+      "basis": "measured",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://simple-bench.com/static/js/leaderboard-data.js"
+      ],
+      "refresh": "manual"
+    },
+    {
+      "benchmark_id": "simple-bench::snapshot-2026-09-26",
+      "parser": {
+        "kind": "simplebench",
+        "name_field": "model",
+        "value_field": "score"
+      },
+      "status": "collected",
+      "reason": "SimpleBench MCQ leaderboard data file (static/js/leaderboard-data.js), captured 2026-09-26.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "HTML/embedded data",
+        "locator": "static/js/leaderboard-data.js, array `leaderboardData` (the MCQ tab; the separately named `openEndedData` board and the human rows are excluded): field `score` per `model`; settings stated on the homepage as 'temperature: 0.7, top-p: 0.95 (except o1 series)'.",
+        "version_guard": "Dated snapshot of the 2026-09-26 capture. Same MCQ AVG@5 protocol as snapshot-2026-09-10; a later capture with new rows becomes a new dated identity in a reviewed change (CR-34.2), a changed task set, metric or settings a new benchmark identity.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Dated snapshot of the 2026-09-26 capture. Same MCQ AVG@5 protocol as snapshot-2026-09-10; a later capture with new rows becomes a new dated identity in a reviewed change (CR-34.2), a changed task set, metric or settings a new benchmark identity.",
+      "source": {
+        "url": "https://simple-bench.com/static/js/leaderboard-data.js",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-26-vals-simplebench/capture/bbcf304f3df1b31fb1ca.gz",
+        "sha256": "bbcf304f3df1b31fb1cacf14207609e6d4251ee8504846d3b9df8d15632d9e72",
+        "retrieved_at": "2026-09-26T04:22:16.565907+00:00"
+      },
+      "protocol": "SimpleBench MCQ AVG@5 board only (temperature 0.7, top-p 0.95 except o1 series); human baselines and open-ended board excluded.",
       "basis": "measured",
       "minimum_rows": 1,
       "source_urls": [
@@ -1784,11 +2570,11 @@
       "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
       "source": {
         "url": "https://www.vals.ai/benchmarks/vals_index",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-18T12-58-20-378Z/558f8306d2b1cf1a1874.gz",
-        "sha256": "558f8306d2b1cf1a1874ebee5c907d17b0776ccc1f9e70fbb764af4470bb7bbb",
-        "retrieved_at": "2026-09-18T13:00:43.826192+00:00"
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-26-vals-simplebench/capture/b99902ee631d2073658f.gz",
+        "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+        "retrieved_at": "2026-09-26T04:22:13.903077+00:00"
       },
-      "protocol": "Vals Index v2 (updated 2026-09-10), component overall; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.",
+      "protocol": "Vals Index v2 (source metadata.version \"2\"; Vals re-dates the page when it adds models, so the page date is carried by each row's own capture, not by this identity), component overall; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.",
       "basis": "measured",
       "minimum_rows": 56,
       "source_urls": [
@@ -1835,11 +2621,11 @@
       "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
       "source": {
         "url": "https://www.vals.ai/benchmarks/vals_index",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-18T12-58-20-378Z/558f8306d2b1cf1a1874.gz",
-        "sha256": "558f8306d2b1cf1a1874ebee5c907d17b0776ccc1f9e70fbb764af4470bb7bbb",
-        "retrieved_at": "2026-09-18T13:00:43.826192+00:00"
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-26-vals-simplebench/capture/b99902ee631d2073658f.gz",
+        "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+        "retrieved_at": "2026-09-26T04:22:13.903077+00:00"
       },
-      "protocol": "Vals Index v2 (updated 2026-09-10), component finance_agent; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.",
+      "protocol": "Vals Index v2 (source metadata.version \"2\"; Vals re-dates the page when it adds models, so the page date is carried by each row's own capture, not by this identity), component finance_agent; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.",
       "basis": "measured",
       "minimum_rows": 56,
       "source_urls": [
@@ -1886,11 +2672,11 @@
       "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
       "source": {
         "url": "https://www.vals.ai/benchmarks/vals_index",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-18T12-58-20-378Z/558f8306d2b1cf1a1874.gz",
-        "sha256": "558f8306d2b1cf1a1874ebee5c907d17b0776ccc1f9e70fbb764af4470bb7bbb",
-        "retrieved_at": "2026-09-18T13:00:43.826192+00:00"
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-26-vals-simplebench/capture/b99902ee631d2073658f.gz",
+        "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+        "retrieved_at": "2026-09-26T04:22:13.903077+00:00"
       },
-      "protocol": "Vals Index v2 (updated 2026-09-10), component emb; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.",
+      "protocol": "Vals Index v2 (source metadata.version \"2\"; Vals re-dates the page when it adds models, so the page date is carried by each row's own capture, not by this identity), component emb; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.",
       "basis": "measured",
       "minimum_rows": 56,
       "source_urls": [
@@ -1937,11 +2723,11 @@
       "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
       "source": {
         "url": "https://www.vals.ai/benchmarks/vals_index",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-18T12-58-20-378Z/558f8306d2b1cf1a1874.gz",
-        "sha256": "558f8306d2b1cf1a1874ebee5c907d17b0776ccc1f9e70fbb764af4470bb7bbb",
-        "retrieved_at": "2026-09-18T13:00:43.826192+00:00"
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-26-vals-simplebench/capture/b99902ee631d2073658f.gz",
+        "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+        "retrieved_at": "2026-09-26T04:22:13.903077+00:00"
       },
-      "protocol": "Vals Index v2 (updated 2026-09-10), component terminal_bench_2_1; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.",
+      "protocol": "Vals Index v2 (source metadata.version \"2\"; Vals re-dates the page when it adds models, so the page date is carried by each row's own capture, not by this identity), component terminal_bench_2_1; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.",
       "basis": "measured",
       "minimum_rows": 56,
       "source_urls": [
@@ -1988,11 +2774,11 @@
       "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
       "source": {
         "url": "https://www.vals.ai/benchmarks/vals_index",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-18T12-58-20-378Z/558f8306d2b1cf1a1874.gz",
-        "sha256": "558f8306d2b1cf1a1874ebee5c907d17b0776ccc1f9e70fbb764af4470bb7bbb",
-        "retrieved_at": "2026-09-18T13:00:43.826192+00:00"
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-26-vals-simplebench/capture/b99902ee631d2073658f.gz",
+        "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+        "retrieved_at": "2026-09-26T04:22:13.903077+00:00"
       },
-      "protocol": "Vals Index v2 (updated 2026-09-10), component vibe_code_bench; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.",
+      "protocol": "Vals Index v2 (source metadata.version \"2\"; Vals re-dates the page when it adds models, so the page date is carried by each row's own capture, not by this identity), component vibe_code_bench; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.",
       "basis": "measured",
       "minimum_rows": 56,
       "source_urls": [
@@ -2039,11 +2825,11 @@
       "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
       "source": {
         "url": "https://www.vals.ai/benchmarks/vals_index",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-18T12-58-20-378Z/558f8306d2b1cf1a1874.gz",
-        "sha256": "558f8306d2b1cf1a1874ebee5c907d17b0776ccc1f9e70fbb764af4470bb7bbb",
-        "retrieved_at": "2026-09-18T13:00:43.826192+00:00"
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-26-vals-simplebench/capture/b99902ee631d2073658f.gz",
+        "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+        "retrieved_at": "2026-09-26T04:22:13.903077+00:00"
       },
-      "protocol": "Vals Index v2 (updated 2026-09-10), component code_migration; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.",
+      "protocol": "Vals Index v2 (source metadata.version \"2\"; Vals re-dates the page when it adds models, so the page date is carried by each row's own capture, not by this identity), component code_migration; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.",
       "basis": "measured",
       "minimum_rows": 56,
       "source_urls": [
@@ -2090,11 +2876,11 @@
       "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
       "source": {
         "url": "https://www.vals.ai/benchmarks/vals_index",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-18T12-58-20-378Z/558f8306d2b1cf1a1874.gz",
-        "sha256": "558f8306d2b1cf1a1874ebee5c907d17b0776ccc1f9e70fbb764af4470bb7bbb",
-        "retrieved_at": "2026-09-18T13:00:43.826192+00:00"
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-26-vals-simplebench/capture/b99902ee631d2073658f.gz",
+        "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+        "retrieved_at": "2026-09-26T04:22:13.903077+00:00"
       },
-      "protocol": "Vals Index v2 (updated 2026-09-10), component legal_research; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.",
+      "protocol": "Vals Index v2 (source metadata.version \"2\"; Vals re-dates the page when it adds models, so the page date is carried by each row's own capture, not by this identity), component legal_research; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.",
       "basis": "measured",
       "minimum_rows": 56,
       "source_urls": [
@@ -2141,11 +2927,11 @@
       "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
       "source": {
         "url": "https://www.vals.ai/benchmarks/vals_index",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-18T12-58-20-378Z/558f8306d2b1cf1a1874.gz",
-        "sha256": "558f8306d2b1cf1a1874ebee5c907d17b0776ccc1f9e70fbb764af4470bb7bbb",
-        "retrieved_at": "2026-09-18T13:00:43.826192+00:00"
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-26-vals-simplebench/capture/b99902ee631d2073658f.gz",
+        "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+        "retrieved_at": "2026-09-26T04:22:13.903077+00:00"
       },
-      "protocol": "Vals Index v2 (updated 2026-09-10), component legal_agent_benchmark; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.",
+      "protocol": "Vals Index v2 (source metadata.version \"2\"; Vals re-dates the page when it adds models, so the page date is carried by each row's own capture, not by this identity), component legal_agent_benchmark; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.",
       "basis": "measured",
       "minimum_rows": 56,
       "source_urls": [
@@ -2192,11 +2978,11 @@
       "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
       "source": {
         "url": "https://www.vals.ai/benchmarks/vals_index",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-18T12-58-20-378Z/558f8306d2b1cf1a1874.gz",
-        "sha256": "558f8306d2b1cf1a1874ebee5c907d17b0776ccc1f9e70fbb764af4470bb7bbb",
-        "retrieved_at": "2026-09-18T13:00:43.826192+00:00"
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-26-vals-simplebench/capture/b99902ee631d2073658f.gz",
+        "sha256": "b99902ee631d2073658f65a28eec15013cf11be39f753d97d3d492f103bbfd5f",
+        "retrieved_at": "2026-09-26T04:22:13.903077+00:00"
       },
-      "protocol": "Vals Index v2 (updated 2026-09-10), overall; published cost per test in USD per model slug; accuracy and latency retained as context, not converted.",
+      "protocol": "Vals Index v2 (source metadata.version \"2\"; Vals re-dates the page when it adds models, so the page date is carried by each row's own capture, not by this identity), overall; published cost per test in USD per model slug; accuracy and latency retained as context, not converted.",
       "basis": "measured",
       "minimum_rows": 55,
       "source_urls": [
@@ -2305,6 +3091,113 @@
       "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.",
       "basis": "self_reported",
       "minimum_rows": 98,
+      "source_urls": [
+        "https://cognition.com/frontiercode",
+        "https://cognition.com/data/frontiercode-leaderboard/data.json"
+      ]
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "parser": {
+        "kind": "effort_runs_json",
+        "row_path": "v1_1",
+        "subset": "extended",
+        "require": {
+          "subsets.extended": 150
+        },
+        "name_field": "name",
+        "value_field": "new_score",
+        "id_field": "id",
+        "harness_field": "harness",
+        "plain_text_names": true,
+        "scale": 100,
+        "context_keys": [
+          "new_score",
+          "correct",
+          "flagged_rate",
+          "cost",
+          "tokens"
+        ],
+        "method_source": {
+          "url": "https://cognition.com/frontiercode",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+          "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+          "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+        }
+      },
+      "status": "collected",
+      "reason": "Cognition publishes the board and its own SWE models; values are self_reported, multiplied by 100 from the published fraction; never a Composite input. Extended is the full 150-task set, its own identity (CR-173).",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/frontiercode-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
+        "format": "JSON data file requested by the leaderboard page",
+        "locator": "v1_1.data[model][effort].extended.new_score (fraction; stored ×100)",
+        "version_guard": "Require data.json key v1_1 with subsets.extended == 150 and the page text \"FrontierCode 1.1\". FrontierCode 1.0 (before unfair-internet-use zeroing) and the Main subset are different identities.",
+        "notes": "The leaderboard page loads its own https://cognition.com/data/frontiercode-leaderboard/data.json (E3 step 4: the page's own request, fetched directly once); robots.txt allows everything except /downloads/. Rows are model × published reasoning effort; the harness is the source's per-model harness. Cognition runs the board and ships its own SWE models, so every row is self_reported and needs a different-family critic review. The Extended subset is the full 150-task set (Main is its 100 hardest tasks), so it is its own identity (CR-173, 2026-09-26)."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Require data.json key v1_1 with subsets.extended == 150 and the page text \"FrontierCode 1.1\". FrontierCode 1.0 (before unfair-internet-use zeroing) and the Main subset are different identities.",
+      "source": {
+        "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+        "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+        "retrieved_at": "2026-09-26T04:23:00.682196+00:00"
+      },
+      "protocol": "FrontierCode 1.1 Extended (150 tasks, the full set); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.",
+      "basis": "self_reported",
+      "minimum_rows": 115,
+      "source_urls": [
+        "https://cognition.com/frontiercode",
+        "https://cognition.com/data/frontiercode-leaderboard/data.json"
+      ]
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "parser": {
+        "kind": "effort_runs_json",
+        "row_path": "v1_1",
+        "subset": "extended",
+        "require": {
+          "subsets.extended": 150
+        },
+        "name_field": "name",
+        "value_field": "cost",
+        "id_field": "id",
+        "harness_field": "harness",
+        "plain_text_names": true,
+        "context_keys": [
+          "new_score",
+          "correct",
+          "flagged_rate",
+          "cost",
+          "tokens"
+        ],
+        "method_source": {
+          "url": "https://cognition.com/frontiercode",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+          "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+          "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+        }
+      },
+      "status": "collected",
+      "reason": "Cognition publishes a USD cost per rollout next to the score; self_reported, not a score and never a Composite input. Extended subset (CR-173).",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/frontiercode-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
+        "format": "JSON data file requested by the leaderboard page",
+        "locator": "v1_1.data[model][effort].extended.cost (the leaderboard legend: \"Cost ($): the mean USD spend per rollout\")",
+        "version_guard": "Require data.json key v1_1 with subsets.extended == 150 and the page text \"FrontierCode 1.1\". FrontierCode 1.0 (before unfair-internet-use zeroing) and the Main subset are different identities.",
+        "notes": "The leaderboard page loads its own https://cognition.com/data/frontiercode-leaderboard/data.json (E3 step 4: the page's own request, fetched directly once); robots.txt allows everything except /downloads/. Rows are model × published reasoning effort; the harness is the source's per-model harness. Cognition runs the board and ships its own SWE models, so every row is self_reported and needs a different-family critic review. The Extended subset is the full 150-task set (Main is its 100 hardest tasks), so it is its own identity (CR-173, 2026-09-26)."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Require data.json key v1_1 with subsets.extended == 150 and the page text \"FrontierCode 1.1\". FrontierCode 1.0 (before unfair-internet-use zeroing) and the Main subset are different identities.",
+      "source": {
+        "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+        "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+        "retrieved_at": "2026-09-26T04:23:00.682196+00:00"
+      },
+      "protocol": "FrontierCode 1.1 Extended (150 tasks, the full set); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.",
+      "basis": "self_reported",
+      "minimum_rows": 115,
       "source_urls": [
         "https://cognition.com/frontiercode",
         "https://cognition.com/data/frontiercode-leaderboard/data.json"
@@ -3156,116 +4049,6 @@
       ]
     },
     {
-      "benchmark_id": "frontiermath-tiers-1-3::v2",
-      "refresh": "manual",
-      "parser": {
-        "kind": "csv",
-        "require_header": [
-          "Model version",
-          "mean_score",
-          "Best score (across scorers)",
-          "Release date",
-          "Organization",
-          "Country",
-          "Training compute (FLOP)",
-          "Training compute notes",
-          "stderr",
-          "Log viewer",
-          "Logs",
-          "Started at",
-          "id"
-        ],
-        "name_field": "Model version",
-        "value_field": "Best score (across scorers)",
-        "id_field": "Model version",
-        "plain_text_names": true,
-        "context_fields": [
-          "mean_score",
-          "stderr",
-          "Started at",
-          "id"
-        ]
-      },
-      "status": "collected",
-      "reason": "Epoch AI runs FrontierMath-Tiers-1-3-v2-Private itself (measured) and publishes the rows under CC BY 4.0. One row per Epoch model version.",
-      "recipe": {
-        "command": "curl --fail -A 'BenchmarkHeavenResearch/1.0' https://epoch.ai/data/benchmark_data.zip -o benchmark_data.zip && unzip -p benchmark_data.zip frontiermath_tiers_1_3_v2.csv | gzip -n > data/raw/benchmarks/daily-evidence/<ISO-date>-epoch-hub/epoch-frontiermath_tiers_1_3_v2.csv.gz (same for benchmark_metadata.csv); python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
-        "format": "CSV member of a ZIP archive",
-        "locator": "frontiermath_tiers_1_3_v2.csv: one row per Epoch \"Model version\" (<model>_<effort> or a bare slug); value \"Best score (across scorers)\" (fraction); mean_score, stderr, Started at and the Epoch run id kept in the protocol.",
-        "version_guard": "Exact 13-column Epoch run header (Model version, mean_score, Best score (across scorers), Release date, Organization, Country, Training compute (FLOP), Training compute notes, stderr, Log viewer, Logs, Started at, id), and benchmark_metadata.csv still maps FrontierMath-Tiers-1-3-v2-Private to frontiermath_tiers_1_3_v2.csv / \"Best score (across scorers)\" / release 2026-06-12. A new FrontierMath version or problem set, or a changed score column, is a new identity after review.",
-        "notes": "Manual snapshot, not part of the automatic daily refresh (see the registry notes)."
-      },
-      "cadence": "manual snapshot; refresh when the Epoch archive changes",
-      "version_guard": "Exact 13-column Epoch run header (Model version, mean_score, Best score (across scorers), Release date, Organization, Country, Training compute (FLOP), Training compute notes, stderr, Log viewer, Logs, Started at, id), and benchmark_metadata.csv still maps FrontierMath-Tiers-1-3-v2-Private to frontiermath_tiers_1_3_v2.csv / \"Best score (across scorers)\" / release 2026-06-12. A new FrontierMath version or problem set, or a changed score column, is a new identity after review.",
-      "source": {
-        "url": "https://epoch.ai/data/benchmark_data.zip",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-16-epoch-hub/epoch-frontiermath_tiers_1_3_v2.csv.gz",
-        "sha256": "9694a4425d1f9f1df13544dcd14a19e3bd55cd387a9269f76f8d6c4cb1013393",
-        "retrieved_at": "2026-09-16T09:43:00Z"
-      },
-      "protocol": "FrontierMath Tiers 1–3 v2 (Epoch AI) as published in Epoch AI's Benchmarking Hub (frontiermath_tiers_1_3_v2.csv); value = Best score (across scorers), a fraction; one row per Epoch model version; not a Composite input.",
-      "basis": "measured",
-      "minimum_rows": 100,
-      "source_urls": [
-        "https://epoch.ai/benchmarks"
-      ]
-    },
-    {
-      "benchmark_id": "frontiermath-tier-4::v2",
-      "refresh": "manual",
-      "parser": {
-        "kind": "csv",
-        "require_header": [
-          "Model version",
-          "mean_score",
-          "Best score (across scorers)",
-          "Release date",
-          "Organization",
-          "Country",
-          "Training compute (FLOP)",
-          "Training compute notes",
-          "stderr",
-          "Log viewer",
-          "Logs",
-          "Started at",
-          "id"
-        ],
-        "name_field": "Model version",
-        "value_field": "Best score (across scorers)",
-        "id_field": "Model version",
-        "plain_text_names": true,
-        "context_fields": [
-          "mean_score",
-          "stderr",
-          "Started at",
-          "id"
-        ]
-      },
-      "status": "collected",
-      "reason": "Epoch AI runs FrontierMath-Tier-4-v2-Private itself (measured) and publishes the rows under CC BY 4.0. One row per Epoch model version.",
-      "recipe": {
-        "command": "curl --fail -A 'BenchmarkHeavenResearch/1.0' https://epoch.ai/data/benchmark_data.zip -o benchmark_data.zip && unzip -p benchmark_data.zip frontiermath_tier_4_v2.csv | gzip -n > data/raw/benchmarks/daily-evidence/<ISO-date>-epoch-hub/epoch-frontiermath_tier_4_v2.csv.gz (same for benchmark_metadata.csv); python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
-        "format": "CSV member of a ZIP archive",
-        "locator": "frontiermath_tier_4_v2.csv: one row per Epoch \"Model version\" (<model>_<effort> or a bare slug); value \"Best score (across scorers)\" (fraction); mean_score, stderr, Started at and the Epoch run id kept in the protocol.",
-        "version_guard": "Exact 13-column Epoch run header (Model version, mean_score, Best score (across scorers), Release date, Organization, Country, Training compute (FLOP), Training compute notes, stderr, Log viewer, Logs, Started at, id), and benchmark_metadata.csv still maps FrontierMath-Tier-4-v2-Private to frontiermath_tier_4_v2.csv / \"Best score (across scorers)\" / release 2026-06-12. A new FrontierMath version or problem set, or a changed score column, is a new identity after review.",
-        "notes": "Manual snapshot, not part of the automatic daily refresh (see the registry notes)."
-      },
-      "cadence": "manual snapshot; refresh when the Epoch archive changes",
-      "version_guard": "Exact 13-column Epoch run header (Model version, mean_score, Best score (across scorers), Release date, Organization, Country, Training compute (FLOP), Training compute notes, stderr, Log viewer, Logs, Started at, id), and benchmark_metadata.csv still maps FrontierMath-Tier-4-v2-Private to frontiermath_tier_4_v2.csv / \"Best score (across scorers)\" / release 2026-06-12. A new FrontierMath version or problem set, or a changed score column, is a new identity after review.",
-      "source": {
-        "url": "https://epoch.ai/data/benchmark_data.zip",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-16-epoch-hub/epoch-frontiermath_tier_4_v2.csv.gz",
-        "sha256": "0c5a60359ff520a571a00b1c9d0001893d950607b5f7085ca96add349c6e0ca9",
-        "retrieved_at": "2026-09-16T09:43:00Z"
-      },
-      "protocol": "FrontierMath Tier 4 v2 (Epoch AI) as published in Epoch AI's Benchmarking Hub (frontiermath_tier_4_v2.csv); value = Best score (across scorers), a fraction; one row per Epoch model version; not a Composite input.",
-      "basis": "measured",
-      "minimum_rows": 60,
-      "source_urls": [
-        "https://epoch.ai/benchmarks"
-      ]
-    },
-    {
       "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
       "refresh": "manual",
       "parser": {
@@ -3873,180 +4656,6 @@
       "minimum_rows": 12,
       "source_urls": [
         "https://kernelbench.com/cuda"
-      ]
-    },
-    {
-      "benchmark_id": "chess-puzzles::snapshot-2026-09-18",
-      "refresh": "manual",
-      "parser": {
-        "kind": "csv",
-        "require_header": [
-          "Model version",
-          "mean_score",
-          "Best score (across scorers)",
-          "Release date",
-          "Organization",
-          "Country",
-          "Training compute (FLOP)",
-          "Training compute notes",
-          "stderr",
-          "Log viewer",
-          "Logs",
-          "Started at",
-          "id"
-        ],
-        "name_field": "Model version",
-        "value_field": "Best score (across scorers)",
-        "id_field": "Model version",
-        "plain_text_names": true,
-        "context_fields": [
-          "mean_score",
-          "stderr",
-          "Started at",
-          "id"
-        ]
-      },
-      "status": "collected",
-      "reason": "Epoch AI runs this board itself (measured) and publishes the rows under CC BY 4.0. One row per Epoch model version (CR-54.2, decided 2026-09-19 in data/raw/benchmarks/epoch-hub-decisions.json).",
-      "recipe": {
-        "command": "curl --fail -A 'BenchmarkHeavenResearch/1.0' https://epoch.ai/data/benchmark_data.zip -o benchmark_data.zip && unzip -p benchmark_data.zip chess_puzzles.csv | gzip -n > data/raw/benchmarks/daily-evidence/<ISO-date>-epoch-hub/epoch-chess_puzzles.csv.gz (same for benchmark_metadata.csv); python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
-        "format": "CSV member of a ZIP archive",
-        "locator": "chess_puzzles.csv: one row per Epoch “Model version” (<model>_<effort> or a bare slug); value “Best score (across scorers)” (fraction); mean_score, stderr, Started at and the Epoch run id kept in the protocol.",
-        "version_guard": "Exact 13-column Epoch run header and benchmark_metadata.csv still maps this board to chess_puzzles.csv / “Best score (across scorers)”. A changed problem set or score column is a new identity after review. epoch.ai robots.txt allows /data/ (verified 2026-09-16, CR-54.1); one capture per refresh, no retries against errors.",
-        "notes": "Manual snapshot, not part of the automatic daily refresh (see the registry notes)."
-      },
-      "cadence": "manual snapshot; refresh when the Epoch archive changes",
-      "version_guard": "Exact 13-column Epoch run header and benchmark_metadata.csv still maps this board to chess_puzzles.csv / “Best score (across scorers)”. A changed problem set or score column is a new identity after review.",
-      "source": {
-        "url": "https://epoch.ai/data/benchmark_data.zip",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-epoch-hub/epoch-chess_puzzles.csv.gz",
-        "sha256": "3e5c43320358dbdb1fbad2d646339dfb56f59ac666409d20d486783cbdf37497",
-        "retrieved_at": "2026-09-18T23:49:00Z"
-      },
-      "protocol": "Chess Puzzles run by Epoch AI (inspect-ai): 100 novel programmatic chess positions, one Stockfish-judged best move each; value = Best score (across scorers). mean_score, stderr, Started at and the Epoch run id stay in the protocol; CC BY 4.0, attribute Epoch AI.",
-      "minimum_rows": 160,
-      "publication_urls": [
-        {
-          "url": "https://epoch.ai/benchmarks/chess-puzzles",
-          "type": "official_leaderboard",
-          "role": "Epoch AI Benchmarking Hub board page (methodology)"
-        }
-      ]
-    },
-    {
-      "benchmark_id": "mystery-game-puzzles::snapshot-2026-09-18",
-      "refresh": "manual",
-      "parser": {
-        "kind": "csv",
-        "require_header": [
-          "Model version",
-          "mean_score",
-          "Best score (across scorers)",
-          "Release date",
-          "Organization",
-          "Country",
-          "Training compute (FLOP)",
-          "Training compute notes",
-          "stderr",
-          "Log viewer",
-          "Logs",
-          "Started at",
-          "id"
-        ],
-        "name_field": "Model version",
-        "value_field": "Best score (across scorers)",
-        "id_field": "Model version",
-        "plain_text_names": true,
-        "context_fields": [
-          "mean_score",
-          "stderr",
-          "Started at",
-          "id"
-        ]
-      },
-      "status": "collected",
-      "reason": "Epoch AI runs this board itself (measured) and publishes the rows under CC BY 4.0. One row per Epoch model version (CR-54.2, decided 2026-09-19 in data/raw/benchmarks/epoch-hub-decisions.json).",
-      "recipe": {
-        "command": "curl --fail -A 'BenchmarkHeavenResearch/1.0' https://epoch.ai/data/benchmark_data.zip -o benchmark_data.zip && unzip -p benchmark_data.zip mystery_game_puzzles.csv | gzip -n > data/raw/benchmarks/daily-evidence/<ISO-date>-epoch-hub/epoch-mystery_game_puzzles.csv.gz (same for benchmark_metadata.csv); python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
-        "format": "CSV member of a ZIP archive",
-        "locator": "mystery_game_puzzles.csv: one row per Epoch “Model version” (<model>_<effort> or a bare slug); value “Best score (across scorers)” (fraction); mean_score, stderr, Started at and the Epoch run id kept in the protocol.",
-        "version_guard": "Exact 13-column Epoch run header and benchmark_metadata.csv still maps this board to mystery_game_puzzles.csv / “Best score (across scorers)”. A changed problem set or score column is a new identity after review. epoch.ai robots.txt allows /data/ (verified 2026-09-16, CR-54.1); one capture per refresh, no retries against errors.",
-        "notes": "Manual snapshot, not part of the automatic daily refresh (see the registry notes)."
-      },
-      "cadence": "manual snapshot; refresh when the Epoch archive changes",
-      "version_guard": "Exact 13-column Epoch run header and benchmark_metadata.csv still maps this board to mystery_game_puzzles.csv / “Best score (across scorers)”. A changed problem set or score column is a new identity after review.",
-      "source": {
-        "url": "https://epoch.ai/data/benchmark_data.zip",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-epoch-hub/epoch-mystery_game_puzzles.csv.gz",
-        "sha256": "8915ec1884e41ae8b8e677a826d238b61bbada2d3c9e2c8e74f8096260a8f367",
-        "retrieved_at": "2026-09-18T23:49:00Z"
-      },
-      "protocol": "Mystery Game Puzzles run by Epoch AI (inspect-ai): 100 programmatic mid-game positions of an undisclosed game, one best move each; value = Best score (across scorers). mean_score, stderr, Started at and the Epoch run id stay in the protocol; CC BY 4.0, attribute Epoch AI.",
-      "minimum_rows": 80,
-      "publication_urls": [
-        {
-          "url": "https://epoch.ai/benchmarks/mystery-game-puzzles",
-          "type": "official_leaderboard",
-          "role": "Epoch AI Benchmarking Hub board page (methodology)"
-        }
-      ]
-    },
-    {
-      "benchmark_id": "ebr-bench::snapshot-2026-09-18",
-      "refresh": "manual",
-      "parser": {
-        "kind": "csv",
-        "require_header": [
-          "Model version",
-          "mean_score",
-          "Best score (across scorers)",
-          "Release date",
-          "Organization",
-          "Country",
-          "Training compute (FLOP)",
-          "Training compute notes",
-          "stderr",
-          "Log viewer",
-          "Logs",
-          "Started at",
-          "id"
-        ],
-        "name_field": "Model version",
-        "value_field": "Best score (across scorers)",
-        "id_field": "Model version",
-        "plain_text_names": true,
-        "context_fields": [
-          "mean_score",
-          "stderr",
-          "Started at",
-          "id"
-        ]
-      },
-      "status": "collected",
-      "reason": "Epoch AI runs this board itself (measured) and publishes the rows under CC BY 4.0. One row per Epoch model version (CR-54.2, decided 2026-09-19 in data/raw/benchmarks/epoch-hub-decisions.json).",
-      "recipe": {
-        "command": "curl --fail -A 'BenchmarkHeavenResearch/1.0' https://epoch.ai/data/benchmark_data.zip -o benchmark_data.zip && unzip -p benchmark_data.zip ebr_bench.csv | gzip -n > data/raw/benchmarks/daily-evidence/<ISO-date>-epoch-hub/epoch-ebr_bench.csv.gz (same for benchmark_metadata.csv); python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
-        "format": "CSV member of a ZIP archive",
-        "locator": "ebr_bench.csv: one row per Epoch “Model version” (<model>_<effort> or a bare slug); value “Best score (across scorers)” (fraction); mean_score, stderr, Started at and the Epoch run id kept in the protocol.",
-        "version_guard": "Exact 13-column Epoch run header and benchmark_metadata.csv still maps this board to ebr_bench.csv / “Best score (across scorers)”. A changed problem set or score column is a new identity after review. epoch.ai robots.txt allows /data/ (verified 2026-09-16, CR-54.1); one capture per refresh, no retries against errors.",
-        "notes": "Manual snapshot, not part of the automatic daily refresh (see the registry notes)."
-      },
-      "cadence": "manual snapshot; refresh when the Epoch archive changes",
-      "version_guard": "Exact 13-column Epoch run header and benchmark_metadata.csv still maps this board to ebr_bench.csv / “Best score (across scorers)”. A changed problem set or score column is a new identity after review.",
-      "source": {
-        "url": "https://epoch.ai/data/benchmark_data.zip",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-epoch-hub/epoch-ebr_bench.csv.gz",
-        "sha256": "78bb2cdcdfa51abefd24513acad55be5df36360ce48938d161178a65f2cf3800",
-        "retrieved_at": "2026-09-18T23:49:00Z"
-      },
-      "protocol": "EBR-bench run by Epoch AI (inspect-ai): repeated playthroughs of Earthborne Rangers with note-taking; value = Best score (across scorers). mean_score, stderr, Started at and the Epoch run id stay in the protocol; CC BY 4.0, attribute Epoch AI.",
-      "minimum_rows": 12,
-      "publication_urls": [
-        {
-          "url": "https://epoch.ai/benchmarks/ebr-bench",
-          "type": "official_leaderboard",
-          "role": "Epoch AI Benchmarking Hub board page (methodology)"
-        }
       ]
     },
     {
@@ -6213,6 +6822,18 @@
       }
     },
     {
+      "benchmark_id": "vals-biomysterybench::snapshot-2026-09-22",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Hash-bound primary-source snapshot reviewed for CR-173 on 2026-09-26; exact scores are retained in manual-board-observations.json.",
+      "recipe": {
+        "command": "Review the retained primary-source capture, confirm the named row and benchmark version, then update the manual observation file and evidence hash.",
+        "format": "Captured leaderboard HTML (Astro island props)",
+        "locator": "Astro island BenchmarkView props (decoded [type, value] pairs): benchmarkView.tasks.overall, one entry per model slug; field accuracy; the row's reasoning_effort / compute_effort is the stated setting.",
+        "version_guard": "Require source page \"Updated 9/22/2026\" (metadata.updated 2026-09-22); a re-dated page is a new dated identity. Keep this exact benchmark and operator separate from other similarly named boards."
+      }
+    },
+    {
       "benchmark_id": "vals-cua-bench::snapshot-2026-09-18",
       "refresh": "manual",
       "status": "collected",
@@ -6237,6 +6858,18 @@
       }
     },
     {
+      "benchmark_id": "vals-ioi::snapshot-2026-09-23",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Hash-bound primary-source snapshot reviewed for CR-173 on 2026-09-26; exact scores are retained in manual-board-observations.json.",
+      "recipe": {
+        "command": "Review the retained primary-source capture, confirm the named row and benchmark version, then update the manual observation file and evidence hash.",
+        "format": "Captured leaderboard HTML (Astro island props)",
+        "locator": "Astro island BenchmarkView props (decoded [type, value] pairs): benchmarkView.tasks.overall, one entry per model slug; field accuracy; the row's reasoning_effort / compute_effort is the stated setting.",
+        "version_guard": "Require source page \"Updated 9/23/2026\" (metadata.updated 2026-09-23); a re-dated page is a new dated identity. Keep this exact benchmark and operator separate from other similarly named boards."
+      }
+    },
+    {
       "benchmark_id": "vals-medscribe::snapshot-2026-09-21",
       "refresh": "manual",
       "status": "collected",
@@ -6246,6 +6879,18 @@
         "format": "Captured leaderboard HTML/JSON",
         "locator": "Exact row for Claude Opus 5.5; anthropic/claude-opus-5-5 (Vals: compute_effort max); quoted field \"overall\":{\"anthropic/claude-opus-5-5\":{\"accuracy\":91.43,...,\"cost_per_test\":1.154156}}",
         "version_guard": "Require source date/version page \"Updated 9/21/2026\"; keep this exact benchmark and operator separate from other similarly named boards."
+      }
+    },
+    {
+      "benchmark_id": "vals-medscribe::snapshot-2026-09-22",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Hash-bound primary-source snapshot reviewed for CR-173 on 2026-09-26; exact scores are retained in manual-board-observations.json.",
+      "recipe": {
+        "command": "Review the retained primary-source capture, confirm the named row and benchmark version, then update the manual observation file and evidence hash.",
+        "format": "Captured leaderboard HTML (Astro island props)",
+        "locator": "Astro island BenchmarkView props (decoded [type, value] pairs): benchmarkView.tasks.overall, one entry per model slug; field accuracy; the row's reasoning_effort / compute_effort is the stated setting.",
+        "version_guard": "Require source page \"Updated 9/22/2026\" (metadata.updated 2026-09-22); a re-dated page is a new dated identity. Keep this exact benchmark and operator separate from other similarly named boards."
       }
     },
     {
@@ -6261,6 +6906,18 @@
       }
     },
     {
+      "benchmark_id": "vals-mysterymechanism::snapshot-2026-09-23",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Hash-bound primary-source snapshot reviewed for CR-173 on 2026-09-26; exact scores are retained in manual-board-observations.json.",
+      "recipe": {
+        "command": "Review the retained primary-source capture, confirm the named row and benchmark version, then update the manual observation file and evidence hash.",
+        "format": "Captured leaderboard HTML (Astro island props)",
+        "locator": "Astro island BenchmarkView props (decoded [type, value] pairs): benchmarkView.tasks.overall, one entry per model slug; field accuracy; the row's reasoning_effort / compute_effort is the stated setting.",
+        "version_guard": "Require source page \"Updated 9/23/2026\" (metadata.updated 2026-09-23); a re-dated page is a new dated identity. Keep this exact benchmark and operator separate from other similarly named boards."
+      }
+    },
+    {
       "benchmark_id": "vals-programbench::snapshot-2026-09-21",
       "refresh": "manual",
       "status": "collected",
@@ -6270,6 +6927,18 @@
         "format": "Captured leaderboard HTML/JSON",
         "locator": "Exact row for Claude Opus 5.5; anthropic/claude-opus-5-5 (Vals: compute_effort max); quoted field \"overall\":{\"anthropic/claude-opus-5-5\":{\"accuracy\":18.5,...,\"cost_per_test\":42.65866}}",
         "version_guard": "Require source date/version page \"Updated 9/21/2026\"; keep this exact benchmark and operator separate from other similarly named boards."
+      }
+    },
+    {
+      "benchmark_id": "vals-programbench::snapshot-2026-09-23",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Hash-bound primary-source snapshot reviewed for CR-173 on 2026-09-26; exact scores are retained in manual-board-observations.json.",
+      "recipe": {
+        "command": "Review the retained primary-source capture, confirm the named row and benchmark version, then update the manual observation file and evidence hash.",
+        "format": "Captured leaderboard HTML (Astro island props)",
+        "locator": "Astro island BenchmarkView props (decoded [type, value] pairs): benchmarkView.tasks.overall, one entry per model slug; field accuracy; the row's reasoning_effort / compute_effort is the stated setting.",
+        "version_guard": "Require source page \"Updated 9/23/2026\" (metadata.updated 2026-09-23); a re-dated page is a new dated identity. Keep this exact benchmark and operator separate from other similarly named boards."
       }
     },
     {
@@ -6321,6 +6990,18 @@
       }
     },
     {
+      "benchmark_id": "vals-terminal-bench-4-0::snapshot-2026-09-22",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Hash-bound primary-source snapshot reviewed for CR-173 on 2026-09-26; exact scores are retained in manual-board-observations.json.",
+      "recipe": {
+        "command": "Review the retained primary-source capture, confirm the named row and benchmark version, then update the manual observation file and evidence hash.",
+        "format": "Captured leaderboard HTML (Astro island props)",
+        "locator": "Astro island BenchmarkView props (decoded [type, value] pairs): benchmarkView.tasks.overall, one entry per model slug; field accuracy; the row's reasoning_effort / compute_effort is the stated setting.",
+        "version_guard": "Require source page \"Updated 9/22/2026\" (metadata.updated 2026-09-22); a re-dated page is a new dated identity. Keep this exact benchmark and operator separate from other similarly named boards."
+      }
+    },
+    {
       "benchmark_id": "vals-terminal-bench-science::snapshot-2026-09-21",
       "refresh": "manual",
       "status": "collected",
@@ -6330,6 +7011,18 @@
         "format": "Captured leaderboard HTML/JSON",
         "locator": "Exact row for GPT-6 Astra; openai/gpt-6-astra (Vals: reasoning_effort max); quoted field \"overall\":{\"openai/gpt-6-astra\":{\"accuracy\":65.714,...,\"cost_per_test\":15.795618}}",
         "version_guard": "Require source date/version page \"Updated 9/21/2026\"; keep this exact benchmark and operator separate from other similarly named boards."
+      }
+    },
+    {
+      "benchmark_id": "vals-terminal-bench-science::snapshot-2026-09-23",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Hash-bound primary-source snapshot reviewed for CR-173 on 2026-09-26; exact scores are retained in manual-board-observations.json.",
+      "recipe": {
+        "command": "Review the retained primary-source capture, confirm the named row and benchmark version, then update the manual observation file and evidence hash.",
+        "format": "Captured leaderboard HTML (Astro island props)",
+        "locator": "Astro island BenchmarkView props (decoded [type, value] pairs): benchmarkView.tasks.overall, one entry per model slug; field accuracy; the row's reasoning_effort / compute_effort is the stated setting.",
+        "version_guard": "Require source page \"Updated 9/23/2026\" (metadata.updated 2026-09-23); a re-dated page is a new dated identity. Keep this exact benchmark and operator separate from other similarly named boards."
       }
     },
     {
@@ -6393,6 +7086,18 @@
       }
     },
     {
+      "benchmark_id": "vals-code-migration::snapshot-2026-09-22",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Hash-bound primary-source snapshot reviewed for CR-173 on 2026-09-26; exact scores are retained in manual-board-observations.json.",
+      "recipe": {
+        "command": "Review the retained primary-source capture, confirm the named row and benchmark version, then update the manual observation file and evidence hash.",
+        "format": "Captured leaderboard HTML (Astro island props)",
+        "locator": "Astro island BenchmarkView props (decoded [type, value] pairs): benchmarkView.tasks.overall, one entry per model slug; field accuracy; the row's reasoning_effort / compute_effort is the stated setting.",
+        "version_guard": "Require source page \"Updated 9/22/2026\" (metadata.updated 2026-09-22); a re-dated page is a new dated identity. Keep this exact benchmark and operator separate from other similarly named boards."
+      }
+    },
+    {
       "benchmark_id": "vals-emb::snapshot-2026-09-21",
       "refresh": "manual",
       "status": "collected",
@@ -6403,6 +7108,876 @@
         "locator": "Vals: Excel Modeling Benchmark; source model Claude Opus 5.5; source date page \"Updated 9/21/2026\"; standalone board (not Vals Index v2).",
         "version_guard": "Require the standalone /benchmarks/emb page and its \"Updated 9/21/2026\" marker; never join to vals-index-emb::2."
       }
+    },
+    {
+      "benchmark_id": "vals-emb::snapshot-2026-09-22",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Hash-bound primary-source snapshot reviewed for CR-173 on 2026-09-26; exact scores are retained in manual-board-observations.json.",
+      "recipe": {
+        "command": "Review the retained primary-source capture, confirm the named row and benchmark version, then update the manual observation file and evidence hash.",
+        "format": "Captured leaderboard HTML (Astro island props)",
+        "locator": "Astro island BenchmarkView props (decoded [type, value] pairs): benchmarkView.tasks.overall, one entry per model slug; field accuracy; the row's reasoning_effort / compute_effort is the stated setting.",
+        "version_guard": "Require source page \"Updated 9/22/2026\" (metadata.updated 2026-09-22); a re-dated page is a new dated identity. Keep this exact benchmark and operator separate from other similarly named boards."
+      }
+    },
+    {
+      "benchmark_id": "vals-cyberbench-v1-1::1.1",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Hash-bound primary-source snapshot reviewed for CR-173 on 2026-09-26; exact scores are retained in manual-board-observations.json.",
+      "recipe": {
+        "command": "Review the retained primary-source capture, confirm the named row and benchmark version, then update the manual observation file and evidence hash.",
+        "format": "Captured leaderboard HTML (Astro island props)",
+        "locator": "Astro island BenchmarkView props (decoded [type, value] pairs): benchmarkView.tasks.overall, one entry per model slug; field accuracy; the row's reasoning_effort / compute_effort is the stated setting.",
+        "version_guard": "Require benchmarkView.metadata.benchmark \"CyberBench v1.1\" and metadata.version \"1.1\"; keep this exact benchmark and operator separate from other similarly named boards."
+      }
+    },
+    {
+      "benchmark_id": "vals-medcode::snapshot-2026-09-22",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Hash-bound primary-source snapshot reviewed for CR-173 on 2026-09-26; exact scores are retained in manual-board-observations.json.",
+      "recipe": {
+        "command": "Review the retained primary-source capture, confirm the named row and benchmark version, then update the manual observation file and evidence hash.",
+        "format": "Captured leaderboard HTML (Astro island props)",
+        "locator": "Astro island BenchmarkView props (decoded [type, value] pairs): benchmarkView.tasks.overall, one entry per model slug; field accuracy; the row's reasoning_effort / compute_effort is the stated setting.",
+        "version_guard": "Require source page \"Updated 9/22/2026\" (metadata.updated 2026-09-22); a re-dated page is a new dated identity. Keep this exact benchmark and operator separate from other similarly named boards."
+      }
+    },
+    {
+      "benchmark_id": "vals-sage::snapshot-2026-09-22",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Hash-bound primary-source snapshot reviewed for CR-173 on 2026-09-26; exact scores are retained in manual-board-observations.json.",
+      "recipe": {
+        "command": "Review the retained primary-source capture, confirm the named row and benchmark version, then update the manual observation file and evidence hash.",
+        "format": "Captured leaderboard HTML (Astro island props)",
+        "locator": "Astro island BenchmarkView props (decoded [type, value] pairs): benchmarkView.tasks.overall, one entry per model slug; field accuracy; the row's reasoning_effort / compute_effort is the stated setting.",
+        "version_guard": "Require source page \"Updated 9/22/2026\" (metadata.updated 2026-09-22); a re-dated page is a new dated identity. Keep this exact benchmark and operator separate from other similarly named boards."
+      }
+    },
+    {
+      "benchmark_id": "vals-tax-agent-bench::snapshot-2026-09-23",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Hash-bound primary-source snapshot reviewed for CR-173 on 2026-09-26; exact scores are retained in manual-board-observations.json.",
+      "recipe": {
+        "command": "Review the retained primary-source capture, confirm the named row and benchmark version, then update the manual observation file and evidence hash.",
+        "format": "Captured leaderboard HTML (Astro island props)",
+        "locator": "Astro island BenchmarkView props (decoded [type, value] pairs): benchmarkView.tasks.overall, one entry per model slug; field accuracy; the row's reasoning_effort / compute_effort is the stated setting.",
+        "version_guard": "Require source page \"Updated 9/23/2026\" (metadata.updated 2026-09-23); a re-dated page is a new dated identity. Keep this exact benchmark and operator separate from other similarly named boards."
+      }
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "refresh": "manual",
+      "parser": {
+        "kind": "csv",
+        "require_header": [
+          "Model version",
+          "mean_score",
+          "Best score (across scorers)",
+          "Release date",
+          "Organization",
+          "Country",
+          "Training compute (FLOP)",
+          "Training compute notes",
+          "stderr",
+          "Log viewer",
+          "Logs",
+          "Started at",
+          "id"
+        ],
+        "name_field": "Model version",
+        "value_field": "Best score (across scorers)",
+        "id_field": "Model version",
+        "plain_text_names": true,
+        "context_fields": [
+          "mean_score",
+          "stderr",
+          "Started at",
+          "id"
+        ]
+      },
+      "status": "collected",
+      "reason": "Epoch AI runs FrontierMath-Tiers-1-3-v2-Private itself (measured) and publishes the rows under CC BY 4.0. One row per Epoch model version.",
+      "recipe": {
+        "command": "curl --fail -A 'BenchmarkHeavenResearch/1.0' https://epoch.ai/data/benchmark_data.zip -o benchmark_data.zip && unzip -p benchmark_data.zip frontiermath_tiers_1_3_v2.csv | gzip -n > data/raw/benchmarks/daily-evidence/<ISO-date>-epoch-hub/epoch-frontiermath_tiers_1_3_v2.csv.gz (same for benchmark_metadata.csv); python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "CSV member of a ZIP archive",
+        "locator": "frontiermath_tiers_1_3_v2.csv: one row per Epoch \"Model version\" (<model>_<effort> or a bare slug); value \"Best score (across scorers)\" (fraction); mean_score, stderr, Started at and the Epoch run id kept in the protocol.",
+        "version_guard": "Exact 13-column Epoch run header (Model version, mean_score, Best score (across scorers), Release date, Organization, Country, Training compute (FLOP), Training compute notes, stderr, Log viewer, Logs, Started at, id), and benchmark_metadata.csv still maps FrontierMath-Tiers-1-3-v2-Private to frontiermath_tiers_1_3_v2.csv / \"Best score (across scorers)\" / release 2026-06-12. A new FrontierMath version or problem set, or a changed score column, is a new identity after review.",
+        "notes": "Manual snapshot, not part of the automatic daily refresh (see the registry notes)."
+      },
+      "cadence": "manual snapshot; refresh when the Epoch archive changes",
+      "version_guard": "Exact 13-column Epoch run header (Model version, mean_score, Best score (across scorers), Release date, Organization, Country, Training compute (FLOP), Training compute notes, stderr, Log viewer, Logs, Started at, id), and benchmark_metadata.csv still maps FrontierMath-Tiers-1-3-v2-Private to frontiermath_tiers_1_3_v2.csv / \"Best score (across scorers)\" / release 2026-06-12. A new FrontierMath version or problem set, or a changed score column, is a new identity after review.",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-16-epoch-hub/epoch-frontiermath_tiers_1_3_v2.csv.gz",
+        "sha256": "9694a4425d1f9f1df13544dcd14a19e3bd55cd387a9269f76f8d6c4cb1013393",
+        "retrieved_at": "2026-09-16T09:43:00Z"
+      },
+      "protocol": "FrontierMath Tiers 1–3 v2 (Epoch AI) as published in Epoch AI's Benchmarking Hub (frontiermath_tiers_1_3_v2.csv); value = Best score (across scorers), a fraction; one row per Epoch model version; not a Composite input.",
+      "basis": "measured",
+      "minimum_rows": 100,
+      "source_urls": [
+        "https://epoch.ai/benchmarks"
+      ],
+      "additional_sources": [
+        {
+          "source": {
+            "url": "https://epoch.ai/data/benchmark_data.zip",
+            "zip_member": "frontiermath_tiers_1_3_v2.csv",
+            "container_sha256": "9391cbdd98035a1731e50164c89433188c72dfcd3c934f0eeeb43d493d95ecdb",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-epoch-scale-arena/epoch-hub/epoch-frontiermath_tiers_1_3_v2.csv.gz",
+            "sha256": "2e709279acb474ea57ebd2b255acf56cd87002b78da100cad9dbd1f929b9d789",
+            "retrieved_at": "2026-09-26T04:22:02Z"
+          },
+          "parser": {
+            "kind": "csv",
+            "require_header": [
+              "Model version",
+              "mean_score",
+              "Best score (across scorers)",
+              "Release date",
+              "Organization",
+              "Country",
+              "Training compute (FLOP)",
+              "Training compute notes",
+              "stderr",
+              "Log viewer",
+              "Logs",
+              "Started at",
+              "id"
+            ],
+            "name_field": "Model version",
+            "value_field": "Best score (across scorers)",
+            "id_field": "Model version",
+            "plain_text_names": true,
+            "context_fields": [
+              "mean_score",
+              "stderr",
+              "Started at",
+              "id"
+            ],
+            "include_field": "Model version",
+            "include_values": [
+              "muse-spark-1.3_max",
+              "muse-spark-1.3_xhigh"
+            ]
+          },
+          "basis": "measured",
+          "protocol": "FrontierMath Tiers 1–3 v2 (Epoch AI) as published in Epoch AI's Benchmarking Hub (frontiermath_tiers_1_3_v2.csv); value = Best score (across scorers), a fraction; one row per Epoch model version; not a Composite input. Rows from the 2026-09-26 capture of the same archive (member frontiermath_tiers_1_3_v2.csv, archive sha256 9391cbdd98035a1731e50164c89433188c72dfcd3c934f0eeeb43d493d95ecdb): only the model versions absent from the earlier capture; every earlier row is present and unchanged in this capture (CR-173).",
+          "minimum_rows": 2
+        }
+      ]
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "refresh": "manual",
+      "parser": {
+        "kind": "csv",
+        "require_header": [
+          "Model version",
+          "mean_score",
+          "Best score (across scorers)",
+          "Release date",
+          "Organization",
+          "Country",
+          "Training compute (FLOP)",
+          "Training compute notes",
+          "stderr",
+          "Log viewer",
+          "Logs",
+          "Started at",
+          "id"
+        ],
+        "name_field": "Model version",
+        "value_field": "Best score (across scorers)",
+        "id_field": "Model version",
+        "plain_text_names": true,
+        "context_fields": [
+          "mean_score",
+          "stderr",
+          "Started at",
+          "id"
+        ]
+      },
+      "status": "collected",
+      "reason": "Epoch AI runs FrontierMath-Tier-4-v2-Private itself (measured) and publishes the rows under CC BY 4.0. One row per Epoch model version.",
+      "recipe": {
+        "command": "curl --fail -A 'BenchmarkHeavenResearch/1.0' https://epoch.ai/data/benchmark_data.zip -o benchmark_data.zip && unzip -p benchmark_data.zip frontiermath_tier_4_v2.csv | gzip -n > data/raw/benchmarks/daily-evidence/<ISO-date>-epoch-hub/epoch-frontiermath_tier_4_v2.csv.gz (same for benchmark_metadata.csv); python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "CSV member of a ZIP archive",
+        "locator": "frontiermath_tier_4_v2.csv: one row per Epoch \"Model version\" (<model>_<effort> or a bare slug); value \"Best score (across scorers)\" (fraction); mean_score, stderr, Started at and the Epoch run id kept in the protocol.",
+        "version_guard": "Exact 13-column Epoch run header (Model version, mean_score, Best score (across scorers), Release date, Organization, Country, Training compute (FLOP), Training compute notes, stderr, Log viewer, Logs, Started at, id), and benchmark_metadata.csv still maps FrontierMath-Tier-4-v2-Private to frontiermath_tier_4_v2.csv / \"Best score (across scorers)\" / release 2026-06-12. A new FrontierMath version or problem set, or a changed score column, is a new identity after review.",
+        "notes": "Manual snapshot, not part of the automatic daily refresh (see the registry notes)."
+      },
+      "cadence": "manual snapshot; refresh when the Epoch archive changes",
+      "version_guard": "Exact 13-column Epoch run header (Model version, mean_score, Best score (across scorers), Release date, Organization, Country, Training compute (FLOP), Training compute notes, stderr, Log viewer, Logs, Started at, id), and benchmark_metadata.csv still maps FrontierMath-Tier-4-v2-Private to frontiermath_tier_4_v2.csv / \"Best score (across scorers)\" / release 2026-06-12. A new FrontierMath version or problem set, or a changed score column, is a new identity after review.",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-16-epoch-hub/epoch-frontiermath_tier_4_v2.csv.gz",
+        "sha256": "0c5a60359ff520a571a00b1c9d0001893d950607b5f7085ca96add349c6e0ca9",
+        "retrieved_at": "2026-09-16T09:43:00Z"
+      },
+      "protocol": "FrontierMath Tier 4 v2 (Epoch AI) as published in Epoch AI's Benchmarking Hub (frontiermath_tier_4_v2.csv); value = Best score (across scorers), a fraction; one row per Epoch model version; not a Composite input.",
+      "basis": "measured",
+      "minimum_rows": 60,
+      "source_urls": [
+        "https://epoch.ai/benchmarks"
+      ],
+      "additional_sources": [
+        {
+          "source": {
+            "url": "https://epoch.ai/data/benchmark_data.zip",
+            "zip_member": "frontiermath_tier_4_v2.csv",
+            "container_sha256": "9391cbdd98035a1731e50164c89433188c72dfcd3c934f0eeeb43d493d95ecdb",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-epoch-scale-arena/epoch-hub/epoch-frontiermath_tier_4_v2.csv.gz",
+            "sha256": "3b2e0155ee7ac16e25185f54295aadc293c1384029cd2f945d0813b5b66af758",
+            "retrieved_at": "2026-09-26T04:22:02Z"
+          },
+          "parser": {
+            "kind": "csv",
+            "require_header": [
+              "Model version",
+              "mean_score",
+              "Best score (across scorers)",
+              "Release date",
+              "Organization",
+              "Country",
+              "Training compute (FLOP)",
+              "Training compute notes",
+              "stderr",
+              "Log viewer",
+              "Logs",
+              "Started at",
+              "id"
+            ],
+            "name_field": "Model version",
+            "value_field": "Best score (across scorers)",
+            "id_field": "Model version",
+            "plain_text_names": true,
+            "context_fields": [
+              "mean_score",
+              "stderr",
+              "Started at",
+              "id"
+            ],
+            "include_field": "Model version",
+            "include_values": [
+              "muse-spark-1.3_max",
+              "muse-spark-1.3_xhigh"
+            ]
+          },
+          "basis": "measured",
+          "protocol": "FrontierMath Tier 4 v2 (Epoch AI) as published in Epoch AI's Benchmarking Hub (frontiermath_tier_4_v2.csv); value = Best score (across scorers), a fraction; one row per Epoch model version; not a Composite input. Rows from the 2026-09-26 capture of the same archive (member frontiermath_tier_4_v2.csv, archive sha256 9391cbdd98035a1731e50164c89433188c72dfcd3c934f0eeeb43d493d95ecdb): only the model versions absent from the earlier capture; every earlier row is present and unchanged in this capture (CR-173).",
+          "minimum_rows": 2
+        }
+      ]
+    },
+    {
+      "benchmark_id": "chess-puzzles::snapshot-2026-09-18",
+      "refresh": "manual",
+      "parser": {
+        "kind": "csv",
+        "require_header": [
+          "Model version",
+          "mean_score",
+          "Best score (across scorers)",
+          "Release date",
+          "Organization",
+          "Country",
+          "Training compute (FLOP)",
+          "Training compute notes",
+          "stderr",
+          "Log viewer",
+          "Logs",
+          "Started at",
+          "id"
+        ],
+        "name_field": "Model version",
+        "value_field": "Best score (across scorers)",
+        "id_field": "Model version",
+        "plain_text_names": true,
+        "context_fields": [
+          "mean_score",
+          "stderr",
+          "Started at",
+          "id"
+        ]
+      },
+      "status": "collected",
+      "reason": "Epoch AI runs this board itself (measured) and publishes the rows under CC BY 4.0. One row per Epoch model version (CR-54.2, decided 2026-09-19 in data/raw/benchmarks/epoch-hub-decisions.json).",
+      "recipe": {
+        "command": "curl --fail -A 'BenchmarkHeavenResearch/1.0' https://epoch.ai/data/benchmark_data.zip -o benchmark_data.zip && unzip -p benchmark_data.zip chess_puzzles.csv | gzip -n > data/raw/benchmarks/daily-evidence/<ISO-date>-epoch-hub/epoch-chess_puzzles.csv.gz (same for benchmark_metadata.csv); python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "CSV member of a ZIP archive",
+        "locator": "chess_puzzles.csv: one row per Epoch “Model version” (<model>_<effort> or a bare slug); value “Best score (across scorers)” (fraction); mean_score, stderr, Started at and the Epoch run id kept in the protocol.",
+        "version_guard": "Exact 13-column Epoch run header and benchmark_metadata.csv still maps this board to chess_puzzles.csv / “Best score (across scorers)”. A changed problem set or score column is a new identity after review. epoch.ai robots.txt allows /data/ (verified 2026-09-16, CR-54.1); one capture per refresh, no retries against errors.",
+        "notes": "Manual snapshot, not part of the automatic daily refresh (see the registry notes)."
+      },
+      "cadence": "manual snapshot; refresh when the Epoch archive changes",
+      "version_guard": "Exact 13-column Epoch run header and benchmark_metadata.csv still maps this board to chess_puzzles.csv / “Best score (across scorers)”. A changed problem set or score column is a new identity after review.",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-epoch-hub/epoch-chess_puzzles.csv.gz",
+        "sha256": "3e5c43320358dbdb1fbad2d646339dfb56f59ac666409d20d486783cbdf37497",
+        "retrieved_at": "2026-09-18T23:49:00Z"
+      },
+      "protocol": "Chess Puzzles run by Epoch AI (inspect-ai): 100 novel programmatic chess positions, one Stockfish-judged best move each; value = Best score (across scorers). mean_score, stderr, Started at and the Epoch run id stay in the protocol; CC BY 4.0, attribute Epoch AI.",
+      "minimum_rows": 160,
+      "publication_urls": [
+        {
+          "url": "https://epoch.ai/benchmarks/chess-puzzles",
+          "type": "official_leaderboard",
+          "role": "Epoch AI Benchmarking Hub board page (methodology)"
+        }
+      ],
+      "additional_sources": [
+        {
+          "source": {
+            "url": "https://epoch.ai/data/benchmark_data.zip",
+            "zip_member": "chess_puzzles.csv",
+            "container_sha256": "9391cbdd98035a1731e50164c89433188c72dfcd3c934f0eeeb43d493d95ecdb",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-epoch-scale-arena/epoch-hub/epoch-chess_puzzles.csv.gz",
+            "sha256": "070c778ea22f85eab823b20fe091a85955bb19ca7bd8e96976a90472e0196503",
+            "retrieved_at": "2026-09-26T04:22:02Z"
+          },
+          "parser": {
+            "kind": "csv",
+            "require_header": [
+              "Model version",
+              "mean_score",
+              "Best score (across scorers)",
+              "Release date",
+              "Organization",
+              "Country",
+              "Training compute (FLOP)",
+              "Training compute notes",
+              "stderr",
+              "Log viewer",
+              "Logs",
+              "Started at",
+              "id"
+            ],
+            "name_field": "Model version",
+            "value_field": "Best score (across scorers)",
+            "id_field": "Model version",
+            "plain_text_names": true,
+            "context_fields": [
+              "mean_score",
+              "stderr",
+              "Started at",
+              "id"
+            ],
+            "include_field": "Model version",
+            "include_values": [
+              "muse-spark-1.3_max"
+            ]
+          },
+          "basis": "measured",
+          "protocol": "Chess Puzzles run by Epoch AI (inspect-ai): 100 novel programmatic chess positions, one Stockfish-judged best move each; value = Best score (across scorers). mean_score, stderr, Started at and the Epoch run id stay in the protocol; CC BY 4.0, attribute Epoch AI. Rows from the 2026-09-26 capture of the same archive (member chess_puzzles.csv, archive sha256 9391cbdd98035a1731e50164c89433188c72dfcd3c934f0eeeb43d493d95ecdb): only the model versions absent from the earlier capture; every earlier row is present and unchanged in this capture (CR-173).",
+          "minimum_rows": 1
+        }
+      ]
+    },
+    {
+      "benchmark_id": "mystery-game-puzzles::snapshot-2026-09-18",
+      "refresh": "manual",
+      "parser": {
+        "kind": "csv",
+        "require_header": [
+          "Model version",
+          "mean_score",
+          "Best score (across scorers)",
+          "Release date",
+          "Organization",
+          "Country",
+          "Training compute (FLOP)",
+          "Training compute notes",
+          "stderr",
+          "Log viewer",
+          "Logs",
+          "Started at",
+          "id"
+        ],
+        "name_field": "Model version",
+        "value_field": "Best score (across scorers)",
+        "id_field": "Model version",
+        "plain_text_names": true,
+        "context_fields": [
+          "mean_score",
+          "stderr",
+          "Started at",
+          "id"
+        ]
+      },
+      "status": "collected",
+      "reason": "Epoch AI runs this board itself (measured) and publishes the rows under CC BY 4.0. One row per Epoch model version (CR-54.2, decided 2026-09-19 in data/raw/benchmarks/epoch-hub-decisions.json).",
+      "recipe": {
+        "command": "curl --fail -A 'BenchmarkHeavenResearch/1.0' https://epoch.ai/data/benchmark_data.zip -o benchmark_data.zip && unzip -p benchmark_data.zip mystery_game_puzzles.csv | gzip -n > data/raw/benchmarks/daily-evidence/<ISO-date>-epoch-hub/epoch-mystery_game_puzzles.csv.gz (same for benchmark_metadata.csv); python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "CSV member of a ZIP archive",
+        "locator": "mystery_game_puzzles.csv: one row per Epoch “Model version” (<model>_<effort> or a bare slug); value “Best score (across scorers)” (fraction); mean_score, stderr, Started at and the Epoch run id kept in the protocol.",
+        "version_guard": "Exact 13-column Epoch run header and benchmark_metadata.csv still maps this board to mystery_game_puzzles.csv / “Best score (across scorers)”. A changed problem set or score column is a new identity after review. epoch.ai robots.txt allows /data/ (verified 2026-09-16, CR-54.1); one capture per refresh, no retries against errors.",
+        "notes": "Manual snapshot, not part of the automatic daily refresh (see the registry notes)."
+      },
+      "cadence": "manual snapshot; refresh when the Epoch archive changes",
+      "version_guard": "Exact 13-column Epoch run header and benchmark_metadata.csv still maps this board to mystery_game_puzzles.csv / “Best score (across scorers)”. A changed problem set or score column is a new identity after review.",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-epoch-hub/epoch-mystery_game_puzzles.csv.gz",
+        "sha256": "8915ec1884e41ae8b8e677a826d238b61bbada2d3c9e2c8e74f8096260a8f367",
+        "retrieved_at": "2026-09-18T23:49:00Z"
+      },
+      "protocol": "Mystery Game Puzzles run by Epoch AI (inspect-ai): 100 programmatic mid-game positions of an undisclosed game, one best move each; value = Best score (across scorers). mean_score, stderr, Started at and the Epoch run id stay in the protocol; CC BY 4.0, attribute Epoch AI.",
+      "minimum_rows": 80,
+      "publication_urls": [
+        {
+          "url": "https://epoch.ai/benchmarks/mystery-game-puzzles",
+          "type": "official_leaderboard",
+          "role": "Epoch AI Benchmarking Hub board page (methodology)"
+        }
+      ],
+      "additional_sources": [
+        {
+          "source": {
+            "url": "https://epoch.ai/data/benchmark_data.zip",
+            "zip_member": "mystery_game_puzzles.csv",
+            "container_sha256": "9391cbdd98035a1731e50164c89433188c72dfcd3c934f0eeeb43d493d95ecdb",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-epoch-scale-arena/epoch-hub/epoch-mystery_game_puzzles.csv.gz",
+            "sha256": "9b3aeffaab18a37650dfd027545ba803d2d19a748b72beb82a76e713c208916f",
+            "retrieved_at": "2026-09-26T04:22:02Z"
+          },
+          "parser": {
+            "kind": "csv",
+            "require_header": [
+              "Model version",
+              "mean_score",
+              "Best score (across scorers)",
+              "Release date",
+              "Organization",
+              "Country",
+              "Training compute (FLOP)",
+              "Training compute notes",
+              "stderr",
+              "Log viewer",
+              "Logs",
+              "Started at",
+              "id"
+            ],
+            "name_field": "Model version",
+            "value_field": "Best score (across scorers)",
+            "id_field": "Model version",
+            "plain_text_names": true,
+            "context_fields": [
+              "mean_score",
+              "stderr",
+              "Started at",
+              "id"
+            ],
+            "include_field": "Model version",
+            "include_values": [
+              "muse-spark-1.3_max"
+            ]
+          },
+          "basis": "measured",
+          "protocol": "Mystery Game Puzzles run by Epoch AI (inspect-ai): 100 programmatic mid-game positions of an undisclosed game, one best move each; value = Best score (across scorers). mean_score, stderr, Started at and the Epoch run id stay in the protocol; CC BY 4.0, attribute Epoch AI. Rows from the 2026-09-26 capture of the same archive (member mystery_game_puzzles.csv, archive sha256 9391cbdd98035a1731e50164c89433188c72dfcd3c934f0eeeb43d493d95ecdb): only the model versions absent from the earlier capture; every earlier row is present and unchanged in this capture (CR-173).",
+          "minimum_rows": 1
+        }
+      ]
+    },
+    {
+      "benchmark_id": "ebr-bench::snapshot-2026-09-18",
+      "refresh": "manual",
+      "parser": {
+        "kind": "csv",
+        "require_header": [
+          "Model version",
+          "mean_score",
+          "Best score (across scorers)",
+          "Release date",
+          "Organization",
+          "Country",
+          "Training compute (FLOP)",
+          "Training compute notes",
+          "stderr",
+          "Log viewer",
+          "Logs",
+          "Started at",
+          "id"
+        ],
+        "name_field": "Model version",
+        "value_field": "Best score (across scorers)",
+        "id_field": "Model version",
+        "plain_text_names": true,
+        "context_fields": [
+          "mean_score",
+          "stderr",
+          "Started at",
+          "id"
+        ]
+      },
+      "status": "collected",
+      "reason": "Epoch AI runs this board itself (measured) and publishes the rows under CC BY 4.0. One row per Epoch model version (CR-54.2, decided 2026-09-19 in data/raw/benchmarks/epoch-hub-decisions.json).",
+      "recipe": {
+        "command": "curl --fail -A 'BenchmarkHeavenResearch/1.0' https://epoch.ai/data/benchmark_data.zip -o benchmark_data.zip && unzip -p benchmark_data.zip ebr_bench.csv | gzip -n > data/raw/benchmarks/daily-evidence/<ISO-date>-epoch-hub/epoch-ebr_bench.csv.gz (same for benchmark_metadata.csv); python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "CSV member of a ZIP archive",
+        "locator": "ebr_bench.csv: one row per Epoch “Model version” (<model>_<effort> or a bare slug); value “Best score (across scorers)” (fraction); mean_score, stderr, Started at and the Epoch run id kept in the protocol.",
+        "version_guard": "Exact 13-column Epoch run header and benchmark_metadata.csv still maps this board to ebr_bench.csv / “Best score (across scorers)”. A changed problem set or score column is a new identity after review. epoch.ai robots.txt allows /data/ (verified 2026-09-16, CR-54.1); one capture per refresh, no retries against errors.",
+        "notes": "Manual snapshot, not part of the automatic daily refresh (see the registry notes)."
+      },
+      "cadence": "manual snapshot; refresh when the Epoch archive changes",
+      "version_guard": "Exact 13-column Epoch run header and benchmark_metadata.csv still maps this board to ebr_bench.csv / “Best score (across scorers)”. A changed problem set or score column is a new identity after review.",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-18-epoch-hub/epoch-ebr_bench.csv.gz",
+        "sha256": "78bb2cdcdfa51abefd24513acad55be5df36360ce48938d161178a65f2cf3800",
+        "retrieved_at": "2026-09-18T23:49:00Z"
+      },
+      "protocol": "EBR-bench run by Epoch AI (inspect-ai): repeated playthroughs of Earthborne Rangers with note-taking; value = Best score (across scorers). mean_score, stderr, Started at and the Epoch run id stay in the protocol; CC BY 4.0, attribute Epoch AI.",
+      "minimum_rows": 12,
+      "publication_urls": [
+        {
+          "url": "https://epoch.ai/benchmarks/ebr-bench",
+          "type": "official_leaderboard",
+          "role": "Epoch AI Benchmarking Hub board page (methodology)"
+        }
+      ],
+      "additional_sources": [
+        {
+          "source": {
+            "url": "https://epoch.ai/data/benchmark_data.zip",
+            "zip_member": "ebr_bench.csv",
+            "container_sha256": "9391cbdd98035a1731e50164c89433188c72dfcd3c934f0eeeb43d493d95ecdb",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-26-epoch-scale-arena/epoch-hub/epoch-ebr_bench.csv.gz",
+            "sha256": "e772cdb2c1658f9b7e0d3570566a0b9800a4703cbe5b5764e0f04a9c399bb1ab",
+            "retrieved_at": "2026-09-26T04:22:02Z"
+          },
+          "parser": {
+            "kind": "csv",
+            "require_header": [
+              "Model version",
+              "mean_score",
+              "Best score (across scorers)",
+              "Release date",
+              "Organization",
+              "Country",
+              "Training compute (FLOP)",
+              "Training compute notes",
+              "stderr",
+              "Log viewer",
+              "Logs",
+              "Started at",
+              "id"
+            ],
+            "name_field": "Model version",
+            "value_field": "Best score (across scorers)",
+            "id_field": "Model version",
+            "plain_text_names": true,
+            "context_fields": [
+              "mean_score",
+              "stderr",
+              "Started at",
+              "id"
+            ],
+            "include_field": "Model version",
+            "include_values": [
+              "claude-opus-5-5_max",
+              "gpt-6-sol_max"
+            ]
+          },
+          "basis": "measured",
+          "protocol": "EBR-bench run by Epoch AI (inspect-ai): repeated playthroughs of Earthborne Rangers with note-taking; value = Best score (across scorers). mean_score, stderr, Started at and the Epoch run id stay in the protocol; CC BY 4.0, attribute Epoch AI. Rows from the 2026-09-26 capture of the same archive (member ebr_bench.csv, archive sha256 9391cbdd98035a1731e50164c89433188c72dfcd3c934f0eeeb43d493d95ecdb): only the model versions absent from the earlier capture; every earlier row is present and unchanged in this capture (CR-173).",
+          "minimum_rows": 2
+        }
+      ]
+    },
+    {
+      "benchmark_id": "furniture-assembly::snapshot-2026-09-26",
+      "refresh": "manual",
+      "parser": {
+        "kind": "csv",
+        "require_header": [
+          "Model version",
+          "mean_score",
+          "Best score (across scorers)",
+          "Release date",
+          "Organization",
+          "Country",
+          "Training compute (FLOP)",
+          "Training compute notes",
+          "stderr",
+          "Log viewer",
+          "Logs",
+          "Started at",
+          "id"
+        ],
+        "name_field": "Model version",
+        "value_field": "Best score (across scorers)",
+        "id_field": "Model version",
+        "plain_text_names": true,
+        "context_fields": [
+          "mean_score",
+          "stderr",
+          "Started at",
+          "id"
+        ]
+      },
+      "status": "collected",
+      "reason": "Epoch AI runs this board itself (measured) and publishes the rows under CC BY 4.0. One row per Epoch model version (CR-173, decided 2026-09-26 in data/raw/benchmarks/epoch-hub-decisions.json).",
+      "recipe": {
+        "command": "curl --fail -A 'BenchmarkHeavenResearch/1.0' https://epoch.ai/data/benchmark_data.zip -o benchmark_data.zip && unzip -p benchmark_data.zip furniture_assembly.csv | gzip -n > data/raw/benchmarks/daily-evidence/<ISO-date>-epoch-hub/epoch-furniture_assembly.csv.gz (same for benchmark_metadata.csv); python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "CSV member of a ZIP archive",
+        "locator": "furniture_assembly.csv: one row per Epoch “Model version” (<model>_<effort> or a bare slug); value “Best score (across scorers)” (fraction); mean_score, stderr, Started at and the Epoch run id kept in the protocol.",
+        "version_guard": "Exact 13-column Epoch run header (Model version, mean_score, Best score (across scorers), Release date, Organization, Country, Training compute (FLOP), Training compute notes, stderr, Log viewer, Logs, Started at, id) of furniture_assembly.csv. A new problem set, a changed score column or a changed header is a new identity after manual review; epoch.ai robots.txt allows /data/ (verified 2026-09-26); one capture per refresh, no retries against errors.",
+        "notes": "Manual snapshot, not part of the automatic daily refresh (see the registry notes)."
+      },
+      "cadence": "manual snapshot; refresh when the Epoch archive changes",
+      "version_guard": "Exact 13-column Epoch run header (Model version, mean_score, Best score (across scorers), Release date, Organization, Country, Training compute (FLOP), Training compute notes, stderr, Log viewer, Logs, Started at, id) of furniture_assembly.csv. A new problem set, a changed score column or a changed header is a new identity after manual review; epoch.ai robots.txt allows /data/ (verified 2026-09-26); one capture per refresh, no retries against errors.",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "zip_member": "furniture_assembly.csv",
+        "container_sha256": "9391cbdd98035a1731e50164c89433188c72dfcd3c934f0eeeb43d493d95ecdb",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-26-epoch-scale-arena/epoch-hub/epoch-furniture_assembly.csv.gz",
+        "sha256": "ed6ad54aa8b73e49222adf91405d3c05b18b10a72a21a8b0f64a753d8d31a8b7",
+        "retrieved_at": "2026-09-26T04:22:02Z"
+      },
+      "protocol": "Furniture Assembly Benchmark run by Epoch AI (60 IKEA assembly photos, agentic sandbox, lenient GPT-5.6 Sol grader for the mistake description); value = Best score (across scorers). mean_score, stderr, Started at and the Epoch run id stay in the protocol; CC BY 4.0, attribute Epoch AI.",
+      "minimum_rows": 27,
+      "publication_urls": [
+        {
+          "url": "https://epoch.ai/benchmarks/furniture-assembly",
+          "type": "official_leaderboard",
+          "role": "Epoch AI Benchmarking Hub board page (methodology)"
+        }
+      ]
+    },
+    {
+      "benchmark_id": "frontiermath-erdos::snapshot-2026-09-26",
+      "refresh": "manual",
+      "parser": {
+        "kind": "csv",
+        "require_header": [
+          "Model version",
+          "mean_score",
+          "Best score (across scorers)",
+          "Release date",
+          "Organization",
+          "Country",
+          "Training compute (FLOP)",
+          "Training compute notes",
+          "stderr",
+          "Log viewer",
+          "Logs",
+          "Started at",
+          "id"
+        ],
+        "name_field": "Model version",
+        "value_field": "Best score (across scorers)",
+        "id_field": "Model version",
+        "plain_text_names": true,
+        "context_fields": [
+          "mean_score",
+          "stderr",
+          "Started at",
+          "id"
+        ]
+      },
+      "status": "collected",
+      "reason": "Epoch AI runs this board itself (measured) and publishes the rows under CC BY 4.0. One row per Epoch model version (CR-173, decided 2026-09-26 in data/raw/benchmarks/epoch-hub-decisions.json).",
+      "recipe": {
+        "command": "curl --fail -A 'BenchmarkHeavenResearch/1.0' https://epoch.ai/data/benchmark_data.zip -o benchmark_data.zip && unzip -p benchmark_data.zip frontiermath_erdos.csv | gzip -n > data/raw/benchmarks/daily-evidence/<ISO-date>-epoch-hub/epoch-frontiermath_erdos.csv.gz (same for benchmark_metadata.csv); python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "CSV member of a ZIP archive",
+        "locator": "frontiermath_erdos.csv: one row per Epoch “Model version” (<model>_<effort> or a bare slug); value “Best score (across scorers)” (fraction); mean_score, stderr, Started at and the Epoch run id kept in the protocol.",
+        "version_guard": "Exact 13-column Epoch run header (Model version, mean_score, Best score (across scorers), Release date, Organization, Country, Training compute (FLOP), Training compute notes, stderr, Log viewer, Logs, Started at, id) of frontiermath_erdos.csv. A new problem set, a changed score column or a changed header is a new identity after manual review; epoch.ai robots.txt allows /data/ (verified 2026-09-26); one capture per refresh, no retries against errors.",
+        "notes": "Manual snapshot, not part of the automatic daily refresh (see the registry notes)."
+      },
+      "cadence": "manual snapshot; refresh when the Epoch archive changes",
+      "version_guard": "Exact 13-column Epoch run header (Model version, mean_score, Best score (across scorers), Release date, Organization, Country, Training compute (FLOP), Training compute notes, stderr, Log viewer, Logs, Started at, id) of frontiermath_erdos.csv. A new problem set, a changed score column or a changed header is a new identity after manual review; epoch.ai robots.txt allows /data/ (verified 2026-09-26); one capture per refresh, no retries against errors.",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "zip_member": "frontiermath_erdos.csv",
+        "container_sha256": "9391cbdd98035a1731e50164c89433188c72dfcd3c934f0eeeb43d493d95ecdb",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-26-epoch-scale-arena/epoch-hub/epoch-frontiermath_erdos.csv.gz",
+        "sha256": "f985d0e79e1d9245f98ef7ca2101d866bee57bb14d61033051df7de6ddeb9380",
+        "retrieved_at": "2026-09-26T04:22:02Z"
+      },
+      "protocol": "FrontierMath Erdős run by Epoch AI (68 Lean-formalised open Erdős conjectures, Comparator-verified proofs, one attempt per conjecture, $300 and 72 h limits); value = Best score (across scorers) = fraction resolved. mean_score, stderr, Started at and the Epoch run id stay in the protocol; CC BY 4.0, attribute Epoch AI.",
+      "minimum_rows": 5,
+      "publication_urls": [
+        {
+          "url": "https://epoch.ai/benchmarks/frontiermath-erdos",
+          "type": "official_leaderboard",
+          "role": "Epoch AI Benchmarking Hub board page (methodology)"
+        }
+      ]
+    },
+    {
+      "benchmark_id": "scale-swe-bench-pro-v2-full::snapshot-2026-09-26",
+      "parser": {
+        "kind": "scale_swepro",
+        "name_field": "model",
+        "value_field": "score",
+        "dataset_key": "full",
+        "require_text": [
+          "swe_bench_pro_public_v2",
+          "SWE-Bench Pro V2 Full"
+        ],
+        "context_fields": [
+          "rank",
+          "confidenceInterval_upper",
+          "createdAt",
+          "contaminationMessage"
+        ]
+      },
+      "status": "collected",
+      "reason": "Scale AI runs every listed configuration itself under the V2 locked protocol (measured); the label keeps harness and effort.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; review protocol; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "HTML with embedded Next.js flight data",
+        "locator": "Next.js flight data: variants[] entry with key \"full\" (label \"SWE-Bench Pro V2 Full\"), entries[] (model, score, confidenceInterval_upper, createdAt); the \"Performance Comparison\" table.",
+        "version_guard": "labs.scale.com page titled \"SWE-Bench Pro V2\" (require_text swe_bench_pro_public_v2 and \"SWE-Bench Pro V2 Full\") with exactly one embedded variant keyed \"full\". V2 = 642 tasks, locked protocol (Update September 22, 2026). A new task set, protocol or grade needs a new identity.",
+        "notes": "The same page serves the HARD subset under key \"hard\" (scale-swe-bench-pro-v2-hard, a separate identity). Exact joins come from data/raw/benchmarks/identity-map.json."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "labs.scale.com page titled \"SWE-Bench Pro V2\" (require_text swe_bench_pro_public_v2 and \"SWE-Bench Pro V2 Full\") with exactly one embedded variant keyed \"full\". V2 = 642 tasks, locked protocol (Update September 22, 2026). A new task set, protocol or grade needs a new identity.",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/swe_bench_pro_public_v2",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-26-epoch-scale-arena/scale/f7885e1f7cd684ec031f.gz",
+        "sha256": "f7885e1f7cd684ec031f62ae2fa259a88f89d5f1939f4c70d4742f5b5965e4ce",
+        "retrieved_at": "2026-09-26T04:25:04.119037+00:00"
+      },
+      "protocol": "SWE-Bench Pro V2 Full (Scale AI, 642 tasks, locked protocol of 2026-09-22); harness and effort as stated in the source label; * = mini-swe-agent harness; grayed rows = capped cost and 50 turns (else uncapped, 250 turns)",
+      "basis": "measured",
+      "minimum_rows": 10,
+      "source_urls": [
+        "https://labs.scale.com/leaderboard/swe_bench_pro_public_v2"
+      ]
+    },
+    {
+      "benchmark_id": "scale-swe-bench-pro-v2-hard::snapshot-2026-09-22",
+      "refresh": "manual",
+      "parser": {
+        "kind": "scale_swepro",
+        "name_field": "model",
+        "value_field": "score",
+        "dataset_key": "hard",
+        "require_text": [
+          "swe_bench_pro_public_v2",
+          "SWE-Bench Pro V2 HARD"
+        ],
+        "context_fields": [
+          "rank",
+          "confidenceInterval_upper",
+          "createdAt",
+          "contaminationMessage"
+        ],
+        "include_field": "model",
+        "include_values": [
+          "Opus 5 (Claude Code) xhigh",
+          "Fable 5.1 (Claude Code) high",
+          "Sonnet 5 (Claude Code) xhigh",
+          "Kimi-K3 (mini-swe-agent) max",
+          "GPT-5.6 Terra (Codex) xhigh",
+          "GLM-5.3 (mini-swe-agent) max",
+          "GPT-5.6 Sol (Codex) xhigh",
+          "Gemini 3.8 Flash (mini-swe-agent) high",
+          "Inkling (mini-swe-agent) xhigh",
+          "Haiku 4.5 (Claude Code) xhigh"
+        ]
+      },
+      "status": "collected",
+      "reason": "Scale AI runs every listed configuration itself under the V2 locked protocol (measured). The GPT-6 Astra (Codex) high row stays the CR-128 observation in manual-board-observations.json; this entry adds the other rows of the same board.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; review protocol; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "HTML with embedded Next.js flight data",
+        "locator": "Next.js flight data: variants[] entry with key \"hard\" (label \"SWE-Bench Pro V2 HARD\"), entries[] (model, score, confidenceInterval_upper, createdAt); the \"Performance Comparison\" table.",
+        "version_guard": "labs.scale.com page titled \"SWE-Bench Pro V2\" (require_text swe_bench_pro_public_v2 and \"SWE-Bench Pro V2 HARD\") with exactly one embedded variant keyed \"hard\". V2 = 642 tasks, locked protocol (Update September 22, 2026). A new task set, protocol or grade needs a new identity.",
+        "notes": "Manual (not refreshed daily): an allow-list of the source labels present on 2026-09-26, so the CR-128 GPT-6 Astra row is not duplicated. Every row carries createdAt 2026-09-22; the six rows shown on the 2026-09-22 scale.com/leaderboard capture have the same values."
+      },
+      "cadence": "manual snapshot; refresh after review",
+      "version_guard": "labs.scale.com page titled \"SWE-Bench Pro V2\" (require_text swe_bench_pro_public_v2 and \"SWE-Bench Pro V2 HARD\") with exactly one embedded variant keyed \"hard\". V2 = 642 tasks, locked protocol (Update September 22, 2026). A new task set, protocol or grade needs a new identity.",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/swe_bench_pro_public_v2",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-26-epoch-scale-arena/scale/f7885e1f7cd684ec031f.gz",
+        "sha256": "f7885e1f7cd684ec031f62ae2fa259a88f89d5f1939f4c70d4742f5b5965e4ce",
+        "retrieved_at": "2026-09-26T04:25:04.119037+00:00"
+      },
+      "protocol": "SWE-Bench Pro V2 HARD (Scale AI, locked protocol of 2026-09-22); harness and effort as stated in the source label; * = mini-swe-agent harness; grayed rows = capped cost and 50 turns (else uncapped, 250 turns)",
+      "basis": "measured",
+      "minimum_rows": 10,
+      "source_urls": [
+        "https://labs.scale.com/leaderboard/swe_bench_pro_public_v2"
+      ]
+    },
+    {
+      "benchmark_id": "lmarena-webdev::snapshot-2026-09-26",
+      "refresh": "manual",
+      "parser": {
+        "kind": "lmarena_leaderboard",
+        "leaderboard_id": "leaderboard-sets/public/leaderboards/webdev-overall-raw/leaderboard-snapshots/latest",
+        "name_field": "name",
+        "id_field": "id",
+        "value_field": "value",
+        "harness_field": "harness",
+        "plain_text_names": true
+      },
+      "status": "collected",
+      "reason": "LMArena publishes the rating from its own vote collection (measured). One row per LMArena model key.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR  (URL_LIST: [\"https://arena.ai/leaderboard/code/webdev\"]); review protocol; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "HTML with embedded Next.js flight data",
+        "locator": "Flight object leaderboard {id \"leaderboard-sets/public/leaderboards/webdev-overall-raw/leaderboard-snapshots/latest\", entries[]}: one row per modelKey; value rating; ratingLower/ratingUpper, votes, rank, releaseType and the vote cutoff kept in the protocol.",
+        "version_guard": "Next.js flight object whose leaderboard.id is \"leaderboard-sets/public/leaderboards/webdev-overall-raw/leaderboard-snapshots/latest\" (Code Arena | WebDev, category Overall), exactly one match, rows with modelKey, modelDisplayName, rating, ratingLower, ratingUpper, votes, rank. Ratings move with every vote cutoff: this identity is one dated snapshot (vote cutoff 2026-09-25T16:00:00Z); a new capture is a new snapshot identity after review.",
+        "notes": "Manual dated snapshot (not refreshed daily)."
+      },
+      "cadence": "manual dated snapshot",
+      "version_guard": "Next.js flight object whose leaderboard.id is \"leaderboard-sets/public/leaderboards/webdev-overall-raw/leaderboard-snapshots/latest\" (Code Arena | WebDev, category Overall), exactly one match, rows with modelKey, modelDisplayName, rating, ratingLower, ratingUpper, votes, rank. Ratings move with every vote cutoff: this identity is one dated snapshot (vote cutoff 2026-09-25T16:00:00Z); a new capture is a new snapshot identity after review.",
+      "source": {
+        "url": "https://arena.ai/leaderboard/code/webdev",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-26-epoch-scale-arena/arena/45baeb8a8c5ca92c79e6.gz",
+        "sha256": "45baeb8a8c5ca92c79e6576cc31b9c54df75714d4226a9ed7fc422bfb9a72ff9",
+        "retrieved_at": "2026-09-26T04:28:07.189169+00:00"
+      },
+      "protocol": "LMArena Code Arena WebDev, Overall category, snapshot with vote cutoff 2026-09-25T16:00:00Z; Bradley-Terry rating with 95% interval; harness from LMArena’s model key",
+      "basis": "measured",
+      "minimum_rows": 100,
+      "source_urls": [
+        "https://arena.ai/leaderboard/code/webdev"
+      ]
+    },
+    {
+      "benchmark_id": "lmarena-agent::snapshot-2026-09-26",
+      "refresh": "manual",
+      "parser": {
+        "kind": "lmarena_agent",
+        "name_field": "name",
+        "id_field": "id",
+        "value_field": "value",
+        "plain_text_names": true
+      },
+      "status": "collected",
+      "reason": "LMArena measures the net improvement from its own randomized Agent Mode sessions (measured). One row per LMArena contender.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR  (URL_LIST: [\"https://arena.ai/leaderboard/agent\"]); review protocol; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "HTML with embedded Next.js flight data",
+        "locator": "Flight object {arena.slug \"agent\", snapshot.rows[]}: one row per contenderName; value avgScore.value; avgScore.ci, pipelines, sessions, rank spread and snapshot lastUpdated kept in the protocol.",
+        "version_guard": "Next.js flight object with arena.slug \"agent\" and one snapshot.rows array (Overall), rows with contenderName, model, avgScore {value, ci, pipelines}, sessions, rank. Scores are treatment effects relative to the current average model and move with every snapshot: this identity is one dated snapshot (lastUpdated 2026-09-25T11:00:00Z); a new capture is a new snapshot identity after review.",
+        "notes": "Manual dated snapshot (not refreshed daily)."
+      },
+      "cadence": "manual dated snapshot",
+      "version_guard": "Next.js flight object with arena.slug \"agent\" and one snapshot.rows array (Overall), rows with contenderName, model, avgScore {value, ci, pipelines}, sessions, rank. Scores are treatment effects relative to the current average model and move with every snapshot: this identity is one dated snapshot (lastUpdated 2026-09-25T11:00:00Z); a new capture is a new snapshot identity after review.",
+      "source": {
+        "url": "https://arena.ai/leaderboard/agent",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-26-epoch-scale-arena/arena/835e9208454fb8afb711.gz",
+        "sha256": "835e9208454fb8afb711052b78e121a34a2fc1d88f9ce71ea31c23db71d7ed30",
+        "retrieved_at": "2026-09-26T04:28:11.833769+00:00"
+      },
+      "protocol": "LMArena Agent Arena, Overall, snapshot lastUpdated 2026-09-25T11:00:00Z; net improvement = equally weighted mean over five behavioural signals of the treatment effect versus the average model (fraction), 95% interval",
+      "basis": "measured",
+      "minimum_rows": 40,
+      "source_urls": [
+        "https://arena.ai/leaderboard/agent"
+      ]
     }
   ]
 }

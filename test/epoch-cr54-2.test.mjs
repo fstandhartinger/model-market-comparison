@@ -7,10 +7,13 @@ import { parseDeepSweId } from '../lib/coding-identity.mjs';
 // 2026-09-19 (iteration 115, CR-54.2): six more boards from Epoch AI's Benchmarking Hub archive
 // (cc-by-4.0, robots allows /data/), ingested as Epoch-run snapshots with the same slug-join rule
 // as the CR-54.1 boards. math_level_5 and frontiermath_erdos stay excluded with recorded reasons.
+// 2026-09-26 (CR-173): the 2026-09-26 archive capture adds, through an allow-listed `additional_sources` entry,
+// only the model versions the 2026-09-18 capture lacked (every earlier row is unchanged): chess and mystery
+// +1 (muse-spark-1.3_max), EBR-bench +2 (gpt-6-sol_max, claude-opus-5-5_max).
 const IDS = {
-  'chess-puzzles::snapshot-2026-09-18': 223,
-  'mystery-game-puzzles::snapshot-2026-09-18': 128,
-  'ebr-bench::snapshot-2026-09-18': 21,
+  'chess-puzzles::snapshot-2026-09-18': 224,
+  'mystery-game-puzzles::snapshot-2026-09-18': 129,
+  'ebr-bench::snapshot-2026-09-18': 23,
   'mirrorcode::snapshot-2026-09-18': 8,
   'epoch-gpqa-diamond::snapshot-2026-09-18': 313,
   'epoch-swe-bench-verified::snapshot-2026-09-18': 35,
@@ -30,8 +33,10 @@ print(json.dumps([[o['id'],o['benchmark_id'],o['subject']['source_id'],o['value'
   const fresh = JSON.parse(out);
   const committed = json('data/raw/benchmarks/public-observations.json').observations.filter((o) => o.benchmark_id in IDS)
     .map((o) => [o.id, o.benchmark_id, o.subject.source_id, o.value]);
-  assert.equal(fresh.length, 728);
-  assert.deepEqual(fresh, committed);
+  assert.equal(fresh.length, 732);
+  // CR-173: the later-capture rows are appended to the committed file, so compare as sets.
+  const byId = (a, b) => a[0].localeCompare(b[0]);
+  assert.deepEqual([...fresh].sort(byId), [...committed].sort(byId));
   for (const [id, n] of Object.entries(IDS)) assert.equal(fresh.filter((o) => o[1] === id).length, n, id);
   // The source's own numbers, read from the CSV members: Claude Fable 5.1 (max).
   const v = (id) => fresh.find((o) => o[1] === id && o[2] === 'claude-fable-5-1_max')?.[3];
@@ -64,7 +69,8 @@ test('CR-54.2: registry provenance — manual snapshots, fractions, categories, 
     assert.equal(e.scoring.unit, 'fraction', id);
     assert.equal(e.source_type, 'official_leaderboard', id);
     assert.ok(e.evidence.some((x) => x.url.endsWith('/robots.txt')), 'robots receipt');
-    assert.ok(e.evidence.every((x) => x.file.startsWith('data/raw/benchmarks/daily-evidence/2026-09-18-epoch-hub/')), `${id} evidence files`);
+    // CR-173: boards refreshed from the 2026-09-26 archive also cite that capture.
+    assert.ok(e.evidence.every((x) => /^data\/raw\/benchmarks\/daily-evidence\/(2026-09-18-epoch-hub|2026-09-26-epoch-scale-arena\/epoch-hub)\//.test(x.file)), `${id} evidence files`);
     assert.match(e.how_to_collect.notes, /CC BY 4\.0: attribute Epoch AI/);
     assert.equal(taxonomy[id.split('::')[0]], 'capability', `${id} enters the Benchmaxxing analysis`);
   }
@@ -82,9 +88,15 @@ test('CR-54.2: the two exclusions and all six inclusions are recorded with reaso
   }
   assert.equal(by.math_level_5?.decision, 'exclude');
   assert.match(by.math_level_5.reason, /2021|saturated|MATH-500/i);
-  assert.equal(by.frontiermath_erdos?.decision, 'exclude');
-  assert.match(by.frontiermath_erdos.reason, /0\.0|no signal|in_eci/i);
-  for (const board of ['math_level_5', 'frontiermath_erdos']) {
+  // CR-173 (2026-09-26): the erdos exclusion stays recorded, superseded by a later ingest decision because its
+  // revisit condition (a non-zero published result) was met in the 2026-09-26 archive.
+  const erdos = d.decisions.filter((x) => x.board === 'frontiermath_erdos');
+  assert.equal(erdos[0].decision, 'exclude');
+  assert.match(erdos[0].reason, /0\.0|no signal|in_eci/i);
+  assert.match(erdos[0].superseded_by_decision, /CR-173/);
+  assert.equal(erdos.at(-1).decision, 'ingest');
+  assert.equal(erdos.at(-1).identity, 'frontiermath-erdos::snapshot-2026-09-26');
+  for (const board of ['math_level_5']) {
     const family = board.replaceAll('_', '-');
     assert.ok(!json('data/raw/benchmarks/registry.json').entries.some((e) => e.family === family), `${family} is not in the registry`);
     assert.ok(!json('data/raw/benchmarks/collection-plan.json').entries.some((e) => e.benchmark_id.startsWith(`${family}::`)), `${family} is not in the plan`);
@@ -108,7 +120,9 @@ test('CR-54.2: every join re-derives from the slug and lands on an existing conf
   const map = json('data/raw/benchmarks/identity-map.json').entries.filter((e) => e.benchmark_id in IDS);
   // Iteration 160: 186 → 183, the three `nemotron-3-ultra` rows unjoined once that family merged into
   // `nemotron-3-ultra-550b-a55b` (single `::reasoning` configuration; the label states no setting).
-  assert.equal(map.length, 183, String(map.length));
+  // CR-173 (2026-09-26): 183 → 187, the four later-capture rows (ebr-bench gpt-6-sol_max and claude-opus-5-5_max,
+  // chess and mystery muse-spark-1.3_max) join by the same slug rule.
+  assert.equal(map.length, 187, String(map.length));
   const counts = Object.fromEntries(Object.keys(IDS).map((id) => [id, 0]));
   for (const e of map) {
     counts[e.benchmark_id] += 1;
@@ -120,9 +134,9 @@ test('CR-54.2: every join re-derives from the slug and lands on an existing conf
     assert.match(e.rule, /./, 'every join names its reviewed rule');
   }
   assert.deepEqual(counts, {
-    'chess-puzzles::snapshot-2026-09-18': 57,
-    'mystery-game-puzzles::snapshot-2026-09-18': 36,
-    'ebr-bench::snapshot-2026-09-18': 14,
+    'chess-puzzles::snapshot-2026-09-18': 58,
+    'mystery-game-puzzles::snapshot-2026-09-18': 37,
+    'ebr-bench::snapshot-2026-09-18': 16,
     'mirrorcode::snapshot-2026-09-18': 5,
     'epoch-gpqa-diamond::snapshot-2026-09-18': 62,
     'epoch-swe-bench-verified::snapshot-2026-09-18': 9,
@@ -134,7 +148,7 @@ test('CR-54.2: every join re-derives from the slug and lands on an existing conf
   const joined = scores.filter((o) => o.benchmark_id in IDS && o.subject.model_id);
   const legacyJoined = joined.filter((o) => !o.id.startsWith('cr128:'));
   const cr128Rows = joined.filter((o) => o.id.startsWith('cr128:'));
-  assert.equal(legacyJoined.length, 186, String(legacyJoined.length));
+  assert.equal(legacyJoined.length, 190, String(legacyJoined.length)); // CR-173: +4, see above
   // D180 (2026-09-23): these three rows were withdrawn. They carried `performance` from
   // https://epoch.ai/data/eci_benchmarks.csv — Epoch's chance-normalised ECI input statistic — on
   // identities whose declared metric is the hub export's "Best score (across scorers)", so each of

@@ -1,0 +1,31 @@
+{
+  "artifact_id": "cr173-vals-simplebench",
+  "artifact_sha256": "d1b24b82b1128fc1e1210895eb17576846078e71a4f3e715083c42bd4bb439f6",
+  "round": 2,
+  "verdict": "pass",
+  "coverage_checked": [
+    "C1",
+    "C2",
+    "C3",
+    "C5 (no withdrawals present in this part)",
+    "all 38 artifact rows in part a2",
+    "vals-terminal-bench-4-0::snapshot-2026-09-22: cr173:b8932f53fac0d738e978ee4d, cr173:2b8dec8a9690840d089ace56, cr173:ff118d4e78c10fa9c1350d1a, cr173:349bdc428dc97bc720e9b5d8, cr173:4a7b05d4d0ffe0d0daef3d54, cr173:3a3b7bef5ba9376ce14c21f0, cr173:95431e875b97915693e1e561, cr173:785b53649289739bf4147c68, cr173:e20a7b76e6f1e7aea9f05fc7, cr173:206caf04bf999e2bce58c2f8, cr173:aa53fd882b2194aeb5a76fa7, cr173:18ec3f955c595056f2f8e4a1, cr173:cd092d2ae71c38c60526825a",
+    "vals-terminal-bench-science::snapshot-2026-09-23: cr173:465334cc81e1a35de565afc8, cr173:f9828b2e47aafc816c3eb2f0, cr173:f2ee2194dde39778962028fb, cr173:fcccb51567a9afa5c06d38d6, cr173:3ce10f757b0fcddf9118008f, cr173:e509ab660fabfea1c0ed2beb, cr173:38632d8b833ea03930faf34f, cr173:83e6e73a00a7a87a8fb4be86, cr173:b56a928b6f85a43b519f6a03, cr173:94b117532de5f74683602a40, cr173:dbd4f8d429816be643918a71, cr173:eb4cdebfe40dd5ea5553491e, cr173:f43bcc9934fe2cf34950d6c1",
+    "vals-time-horizon-index-ksp::snapshot-2026-09-14: cr173:373be8bb8623a561d154a34c, cr173:4b39775294d2d9e2d30db3f8, cr173:58f4c966cb2d2dce8ab50696",
+    "vals-vibe-code-bench-1-100::snapshot-2026-09-22: cr173:c7a214dd4db6af6c7255bb4a, cr173:89206df933a91eff6a189c1d, cr173:7843542dfd5bd5c9702d0073, cr173:f2657899c0ed5cfc63b9ec21, cr173:3531bfc84bcc836e024e94bb, cr173:ed831c20a691d4b0eadfe21f, cr173:d981b143337ed10c595f0bc5, cr173:df096dc48342e56e0565b170, cr173:bb806aaa4ce1f3394b913406"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "alibaba/qwen3.8-max rows state no setting in the source (both effort fields null) while the catalog lists family qwen3.8-max with a single 'default' configuration, so a literal C2 reading could join qwen3.8-max::default. The supplied note states parseValsIndexId strips the trailing effort word so the slug is read as family qwen3.8 + max and refused as 'known refusal, not a join'; on that documented rule the null model_id is consistent, so this is not counted as an error.",
+    "CR-128 context rows (e.g., cr128:c65f3728ef6dbcced38b7328 cited by the 'replaces' field on cr173:c7a214dd4db6af6c7255bb4a) are only partially excerpted; their pre-existing values could not be independently re-derived beyond the excerpts provided.",
+    "Quoted capture timestamps and page sha256 values cannot be re-verified read-only; they are accepted as supplied provenance."
+  ],
+  "missing_evidence": [
+    "C4 registry payloads for the four identities covered here (maintainer and evidence-file fields) are not reproduced in part a2; only the identity/action lines and source citations are shown.",
+    "C3 supersede bookkeeping (retention of the old dated identities with superseded_by) for the two 'supersede' boards in this part (vals-terminal-bench-4-0, vals-terminal-bench-science) is asserted in the identity list but the superseded records are not shown; the packet states other parts are reviewed separately.",
+    "C6 tier assignments and their supporting tier facts are not part of this packet section; only dataset_type/industry metadata is quoted.",
+    "The 'replaces' target cr128:c65f3728ef6dbcced38b7328 for the Vibe Code Bench 1-100 claude-opus-5-5 row is referenced but its full prior row content is not included in this part."
+  ]
+}

@@ -51,6 +51,19 @@ const bodies = new Map(captures.map((c) => {
     { cwd: repo, encoding: 'utf8', maxBuffer: 16_000_000 })];
 }));
 
+// CR-173 (2026-09-26): the two FrontierCode entries gained protocol references the 2026-09-24 run never
+// captured (the methodology posts, the leaderboard's legend chunk, the data file's board-level keys through the
+// `frontiercode-meta` recipe). They resolve against the lane's own capture; a recipe reference is extracted
+// with its recipe, exactly as `protocol()` does.
+const later = read('data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/manifest.json');
+const extract = (file, recipe) => execFileSync('python3', ['ops/daily/public-candidate.py', 'text', file, ...(recipe ? [recipe] : [])],
+  { cwd: repo, encoding: 'utf8', maxBuffer: 16_000_000 });
+const bodyFor = (reference) => {
+  if (!reference.recipe && bodies.has(reference.url)) return bodies.get(reference.url);
+  const capture = later.find((c) => c.url === reference.url);
+  return capture ? extract(capture.file, reference.recipe) : undefined;
+};
+
 /** `protocol()`'s own reference filter, so this test reads the packet it really builds. */
 const packetReferences = (entry) =>
   (entry.evidence ?? []).filter((s) => !s.source_sha256 && !/literal field/.test(s.excerpt ?? ''));
@@ -66,7 +79,7 @@ test('D193: every reviewed reference of the six entries resolves against the run
     const references = packetReferences(entry(id));
     assert.ok(references.length >= 2, `${id}: expected at least two reviewed references`);
     for (const reference of references) {
-      const body = bodies.get(reference.url);
+      const body = bodyFor(reference);
       assert.ok(body, `${id}: no retained capture for ${reference.url}`);
       // This is the call that threw for all six on 2026-09-24.
       assert.doesNotThrow(() => protocolSourceContent(id, reference, body), `${id}: ${reference.url}`);
@@ -80,7 +93,7 @@ test('D193: the excerpt of every reviewed reference is verbatim, so the 60,000-b
       // `review_content: 'excerpt'` forces the excerpt path whatever the body's size — the state
       // these references reach on their own the moment their text grows past the bound.
       const forced = { ...reference, review_content: 'excerpt' };
-      assert.equal(protocolSourceContent(id, forced, bodies.get(reference.url)), reference.excerpt,
+      assert.equal(protocolSourceContent(id, forced, bodyFor(reference)), reference.excerpt,
         `${id}: ${reference.url} does not quote its own source`);
     }
   }
@@ -98,7 +111,8 @@ test('D193: the two value payloads stay out of the review packet and name a real
   const board = JSON.parse(bodies.get(PAYLOADS[1]));
   for (const id of ENTRIES) {
     const e = entry(id);
-    const payload = (e.evidence ?? []).filter((s) => PAYLOADS.includes(s.url));
+    // CR-173: a recipe reference to the same data file (board-level keys only) is reviewed; the value payload is not.
+    const payload = (e.evidence ?? []).filter((s) => PAYLOADS.includes(s.url) && !s.recipe);
     assert.equal(payload.length, 1, `${id}: exactly one value payload reference`);
     assert.ok(!packetReferences(e).includes(payload[0]), `${id}: the value payload is not reviewed`);
     const field = payload[0].excerpt.match(/^"(.+?)" \(literal field /)?.[1];

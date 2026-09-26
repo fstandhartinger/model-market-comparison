@@ -1,0 +1,32 @@
+{
+ "artifact_id": "cr173-openai-charts-agents-last-exam-score",
+ "artifact_sha256": "cbdbb4c40f8fda0bcf3e7460cb374cd0fb02bf3e64dac5831e3c5a161720220c",
+ "round": 3,
+ "verdict": "pass",
+ "coverage_checked": [
+  "self-reported:gpt-6-astra-low-openai-agents-last-exam-v1",
+  "self-reported:gpt-6-astra-medium-openai-agents-last-exam-v1",
+  "self-reported:gpt-6-astra-high-openai-agents-last-exam-v1",
+  "self-reported:gpt-6-astra-xhigh-openai-agents-last-exam-v1",
+  "self-reported:gpt-6-astra-max-openai-agents-last-exam-v1",
+  "self-reported:gpt-6-luna-low-openai-agents-last-exam-v1",
+  "self-reported:gpt-6-luna-medium-openai-agents-last-exam-v1",
+  "self-reported:gpt-6-luna-high-openai-agents-last-exam-v1",
+  "self-reported:gpt-6-luna-xhigh-openai-agents-last-exam-v1",
+  "self-reported:gpt-6-luna-max-openai-agents-last-exam-v1",
+  "self-reported:gpt-6-sol-low-openai-agents-last-exam-v1",
+  "self-reported:gpt-6-sol-medium-openai-agents-last-exam-v1",
+  "self-reported:gpt-6-sol-high-openai-agents-last-exam-v1",
+  "self-reported:gpt-6-sol-xhigh-openai-agents-last-exam-v1"
+ ],
+ "errors_found": 0,
+ "findings": [],
+ "fixed": [],
+ "missing_evidence": [],
+ "uncertainties": [
+  "Source and Astra-post sha256 values were checked by exact string comparison of each row against evidence.source and evidence.astra_post_points.source; I have no execution tools, so I could not recompute the hashes from the retained files and rely on the owner's receipt for that recomputation.",
+  "Value checks (score x 100) were done arithmetically on the decimal representations supplied; no float binary-representation edge case beyond printed decimals was observable.",
+  "Luna high row stores value 43.6 and derivation input 0.436, matching evidence score 0.436 exactly; the absent trailing zero is a representation detail, not a rounding discrepancy.",
+  "Completeness was verified against the 15 evidence.chart.gpt6_points entries minus evidence.skipped_existing_configs [openai-agents-last-exam::v1, gpt-6-sol::max]; the presence of the earlier accepted Sol max row itself (from the post's printed text) is outside this artifact and was not verifiable from the supplied packet."
+ ]
+}

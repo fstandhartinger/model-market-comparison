@@ -1,0 +1,24 @@
+```json
+{
+  "artifact_id": "arc-verified-anthropic-claude-fable-5-1",
+  "artifact_sha256": "7c13e238922592786e64c93ebe00e53a740cde71f78e0653c61b8f38a5dac6f8",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "c1: pass — all 10 values match the table cell-for-cell (v1: 97.5/96.5/96.0/94.5/90.0; v2: 90.0/90.0/88.8/86.3/78.3), unit percent, variants Max/XHigh/High/Medium/Low match labels and cells arrays; no arc-agi::3 rows (all ARC-AGI-3 cells are '—')",
+    "c2: pass — 5 arc-agi::1 + 5 arc-agi::2 rows, one per table variant, unique ids, no duplicates/missing/extras",
+    "c3: pass — excerpt shows alt='ARC Prize Verified' badge, <h1>Claude Fable 5.1</h1> equal to row page_model, vendor/date line 'Anthropic · Sep 1, 2026 · 5 reasoning variants'; basis measured per stated Verified-page precedent",
+    "c4: pass — published_at null on all 10 rows; Sep 1, 2026 appears only as source_row_context.model_release_date=2026-09-01, matching modelReleaseDate in owner crosscheck",
+    "c5: pass — all 10 proposed_model_id values (max/xhigh/high/medium/low) exist in catalog_configurations for claude-fable-5.1; all 10 identity_map_candidates entries match their rows' benchmark_id, source_id, and model_id; no unjoinable variants present",
+    "c6: pass — protocol claims limited to excerpt: badge, release date (owner-crosschecked), no publication date, exact quoted page summary including Semi-Private wording, per-variant v1/v2 table; tooltips explicitly noted omitted"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "sha256 values and owner crosscheck script output accepted as supplied; not independently recomputable (read-only reviewer, no tools)",
+    "Join treats page labels (Max/XHigh) as exact configurations via lowercase normalization to catalog suffixes; catalog set confirms the five suffixes, so risk is nominal"
+  ],
+  "missing_evidence": []
+}
+```

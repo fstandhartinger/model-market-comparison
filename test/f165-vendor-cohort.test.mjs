@@ -23,8 +23,10 @@ test('the rule selects launch posts only, never board submissions', () => {
   // The count may grow with a new launch ingest; what must not change is that every match is a
   // self-reported row and that the rule leaves the board submissions alone.
   assert.ok(launch.length >= 97, `expected at least the 97 launch rows the rule was measured on, got ${launch.length}`);
-  assert.deepEqual([...new Set(launch.map((o) => o.basis))], ['self_reported']);
-  const selfReported = observations.filter((o) => o.basis === 'self_reported');
+  // CR-173 (2026-09-26): OpenAI's chart-dataset scores are stored x100 as basis derived, source_basis self_reported;
+  // the rule is about the effective basis, which must still be self_reported for every launch row.
+  assert.deepEqual([...new Set(launch.map((o) => o.source_basis ?? o.basis))], ['self_reported']);
+  const selfReported = observations.filter((o) => (o.source_basis ?? o.basis) === 'self_reported');
   assert.ok(selfReported.length - launch.length > 500,
     'the other self-reported rows are board submissions; if that population collapsed, the rule widened');
   // The runners are vendors, not harnesses or boards.

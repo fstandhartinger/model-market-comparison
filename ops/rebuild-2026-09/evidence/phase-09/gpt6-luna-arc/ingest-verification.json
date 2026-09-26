@@ -1,0 +1,176 @@
+{
+  "status": "verified",
+  "scope": "GPT-6 Luna ARC-AGI-1 and ARC-AGI-2 published observations",
+  "source": {
+    "url": "https://arcprize.org/results/openai-gpt-6-luna",
+    "published_at": "2026-09-22",
+    "retrieved_at": "2026-09-24T20:22:51.069121+00:00",
+    "sha256": "184926c7cd259eddc3f756ea32e5d8f2ef078543bf96cbe35d4460e0849f842e"
+  },
+  "normal_ingest": {
+    "command": "node scripts/ingest-benchmark-scores.mjs",
+    "exit_code": 0,
+    "observations": 18620,
+    "missing": 643,
+    "unmatched": 9165,
+    "rejected": 492
+  },
+  "dataset_build": {
+    "command": "node scripts/build-dataset.mjs",
+    "exit_code": 0,
+    "models": 871,
+    "dataset_bytes": 54322951,
+    "dataset_sha256": "9a304d0b387147f9163a5229f15535f73569c997adc076c03e2a9481a1e0fbb2"
+  },
+  "history_state": {
+    "state_id": "20260924-040fed0c",
+    "file": "data/raw/benchmarks/history/states/20260924-040fed0c.json",
+    "bytes": 13980208,
+    "sha256": "0445cb6b3647bfb45c99ebaf028dc3e173c3ea679b151ebee325c45c246edcd1"
+  },
+  "scores_snapshot": {
+    "file": "data/raw/benchmarks/scores.json",
+    "bytes": 24422483,
+    "sha256": "988fe1dcf851407ef89141813f58a82bbef008ce7be24cc4459c160cc82af4a7"
+  },
+  "critic": {
+    "model": "z-ai/glm-5.3-flash",
+    "producer_model": "deepseek/deepseek-v4-flash-0731",
+    "round": 3,
+    "verdict": "pass",
+    "artifact_sha256": "8fb01d03b5a07c2bd7a1738e30097594b4e35d033ea39d24a18d8efade5f4a05",
+    "packet_sha256": "341691fde8e2ab5f145ea61647641224595558988eddb63a2029b805a80b8e9e",
+    "verdict_file_sha256": "064fd0d0a3ae50c36dcf5e44c6afe9f4886c8712e9d2effd9357609a21b5f0e7"
+  },
+  "rows": [
+    {
+      "benchmark_id": "arc-agi::1",
+      "source_id": "GPT-6 Luna|Max",
+      "model_id": "gpt-6-luna::max",
+      "value": 86.7,
+      "unit": "percent",
+      "basis": "measured",
+      "published_at": "2026-09-22",
+      "sha256": "184926c7cd259eddc3f756ea32e5d8f2ef078543bf96cbe35d4460e0849f842e"
+    },
+    {
+      "benchmark_id": "arc-agi::1",
+      "source_id": "GPT-6 Luna|XHigh",
+      "model_id": "gpt-6-luna::xhigh",
+      "value": 73,
+      "unit": "percent",
+      "basis": "measured",
+      "published_at": "2026-09-22",
+      "sha256": "184926c7cd259eddc3f756ea32e5d8f2ef078543bf96cbe35d4460e0849f842e"
+    },
+    {
+      "benchmark_id": "arc-agi::1",
+      "source_id": "GPT-6 Luna|High",
+      "model_id": "gpt-6-luna::high",
+      "value": 70.3,
+      "unit": "percent",
+      "basis": "measured",
+      "published_at": "2026-09-22",
+      "sha256": "184926c7cd259eddc3f756ea32e5d8f2ef078543bf96cbe35d4460e0849f842e"
+    },
+    {
+      "benchmark_id": "arc-agi::1",
+      "source_id": "GPT-6 Luna|Medium",
+      "model_id": "gpt-6-luna::medium",
+      "value": 61,
+      "unit": "percent",
+      "basis": "measured",
+      "published_at": "2026-09-22",
+      "sha256": "184926c7cd259eddc3f756ea32e5d8f2ef078543bf96cbe35d4460e0849f842e"
+    },
+    {
+      "benchmark_id": "arc-agi::1",
+      "source_id": "GPT-6 Luna|Low",
+      "model_id": "gpt-6-luna::low",
+      "value": 37.7,
+      "unit": "percent",
+      "basis": "measured",
+      "published_at": "2026-09-22",
+      "sha256": "184926c7cd259eddc3f756ea32e5d8f2ef078543bf96cbe35d4460e0849f842e"
+    },
+    {
+      "benchmark_id": "arc-agi::1",
+      "source_id": "GPT-6 Luna|None",
+      "model_id": "gpt-6-luna::non-reasoning",
+      "value": 8.8,
+      "unit": "percent",
+      "basis": "measured",
+      "published_at": "2026-09-22",
+      "sha256": "184926c7cd259eddc3f756ea32e5d8f2ef078543bf96cbe35d4460e0849f842e"
+    },
+    {
+      "benchmark_id": "arc-agi::2",
+      "source_id": "GPT-6 Luna|Max",
+      "model_id": "gpt-6-luna::max",
+      "value": 59.3,
+      "unit": "percent",
+      "basis": "measured",
+      "published_at": "2026-09-22",
+      "sha256": "184926c7cd259eddc3f756ea32e5d8f2ef078543bf96cbe35d4460e0849f842e"
+    },
+    {
+      "benchmark_id": "arc-agi::2",
+      "source_id": "GPT-6 Luna|XHigh",
+      "model_id": "gpt-6-luna::xhigh",
+      "value": 41.9,
+      "unit": "percent",
+      "basis": "measured",
+      "published_at": "2026-09-22",
+      "sha256": "184926c7cd259eddc3f756ea32e5d8f2ef078543bf96cbe35d4460e0849f842e"
+    },
+    {
+      "benchmark_id": "arc-agi::2",
+      "source_id": "GPT-6 Luna|High",
+      "model_id": "gpt-6-luna::high",
+      "value": 31.4,
+      "unit": "percent",
+      "basis": "measured",
+      "published_at": "2026-09-22",
+      "sha256": "184926c7cd259eddc3f756ea32e5d8f2ef078543bf96cbe35d4460e0849f842e"
+    },
+    {
+      "benchmark_id": "arc-agi::2",
+      "source_id": "GPT-6 Luna|Medium",
+      "model_id": "gpt-6-luna::medium",
+      "value": 18.1,
+      "unit": "percent",
+      "basis": "measured",
+      "published_at": "2026-09-22",
+      "sha256": "184926c7cd259eddc3f756ea32e5d8f2ef078543bf96cbe35d4460e0849f842e"
+    },
+    {
+      "benchmark_id": "arc-agi::2",
+      "source_id": "GPT-6 Luna|Low",
+      "model_id": "gpt-6-luna::low",
+      "value": 4.6,
+      "unit": "percent",
+      "basis": "measured",
+      "published_at": "2026-09-22",
+      "sha256": "184926c7cd259eddc3f756ea32e5d8f2ef078543bf96cbe35d4460e0849f842e"
+    },
+    {
+      "benchmark_id": "arc-agi::2",
+      "source_id": "GPT-6 Luna|None",
+      "model_id": "gpt-6-luna::non-reasoning",
+      "value": 0,
+      "unit": "percent",
+      "basis": "measured",
+      "published_at": "2026-09-22",
+      "sha256": "184926c7cd259eddc3f756ea32e5d8f2ef078543bf96cbe35d4460e0849f842e"
+    }
+  ],
+  "draft_join_check": {
+    "command": "node scripts/ingest-benchmark-scores.mjs --draft --out candidate-ingested.json",
+    "rows_checked": 12,
+    "output_bytes": 24422575,
+    "output_sha256": "72a396c3d12a8fbab9dcbf9ee96ad85ca425bf75d07e243ceac3b507e6cf9ec6",
+    "retained": false,
+    "reason": "The normal guarded ingest and dataset build completed; the draft snapshot was a large temporary file and is no longer needed."
+  },
+  "deployment_status": "Not deployed; serialized merge queue remains paused on unrelated unowned D191 changes in the deploy checkout."
+}

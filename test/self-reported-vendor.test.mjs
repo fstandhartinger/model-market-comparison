@@ -162,7 +162,10 @@ test('the shipped candidates are self-reported, sourced from retained captures a
   const entries = new Map((await read('data/raw/benchmarks/registry.json')).entries.map((e) => [e.id, e]));
   assert.ok(candidates.observations.length > 0);
   for (const o of candidates.observations) {
-    assert.equal(o.basis, 'self_reported');
+    // CR-173 (2026-09-26): a chart-dataset fraction stored x100 is basis derived with source_basis self_reported and its
+    // formula and input; it is still the vendor's own claim. Nothing else may be derived here.
+    assert.equal(o.source_basis ?? o.basis, 'self_reported');
+    if (o.basis === 'derived') assert.ok(o.derivation?.formula && o.derivation.inputs?.length === 1, `${o.id} records its scaling`);
     assert.equal(o.comparison_key, null);
     assert.ok(entries.has(o.benchmark_id));
     assert.equal(o.unit, entries.get(o.benchmark_id).scoring.unit);
@@ -247,7 +250,8 @@ test('a rebuild carries the hand-ingested release documents instead of deleting 
   // Each document's refusals and collections travel with its rows; nothing else does.
   assert.ok(carried.collections.every((c) => carried.observations.some((o) => o.benchmark_id === c.benchmark_id)));
   assert.ok(carried.rejected.every((r) => [...urls].some((url) => String(r.source_id).startsWith(url))));
-  assert.ok(carried.observations.every((o) => o.basis === 'self_reported'));
+  // CR-173: a scaled chart-dataset row is derived from a self-reported value; its effective basis stays self_reported.
+  assert.ok(carried.observations.every((o) => (o.source_basis ?? o.basis) === 'self_reported'));
 });
 
 test('the carry fails closed rather than losing a row quietly', async () => {

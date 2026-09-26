@@ -1,0 +1,28 @@
+{
+  "artifact_id": "cr173-vals-simplebench",
+  "artifact_sha256": "690f8454f93bf01f8c9167e51b33687ba2f040bc052e0e0a9f40806ebea59de2",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "C1 value check, all 39 rows in part b: vals-index::2 (1), vals-index-emb::2 (7), vals-index-vibe-code-bench::2 (7), vals-index-legal-research::2 (7), vals-index-hlab::2 (7), vals-index-cost::2 (10) — every value and source_row field matches the decoded Vals Index evidence for the exact slug and task",
+    "C2 setting/join check, all 39 rows: stated-effort rows (claude-opus-5.5::max via compute_effort=max, gpt-6-sol/gpt-6-luna::max, grok-4.7::xhigh, deepseek-v4-pro::max, deepseek-v4-pro-0813::max) verified against supplied catalog; deepseek-v4-flash-0731 reasoning_effort=high correctly null (family catalog is max-only, and default-join does not apply when a setting is stated); ling rows correctly null if family absent from catalog (see missing_evidence); mimo ::default joins unverifiable against supplied catalog (see missing_evidence)",
+    "C3 identity: vals-index*::2 matches metadata.version \"2\"; versioned identity correctly retained across Vals page re-date (9/10→9/23), per rule that re-dating forces new identity only for dated snapshots; protocol prefix change is consistent with this",
+    "C4: no new identities introduced in this part (all vals-index*::2 existing), so registry population/maintenance checks are not triggered here; row evidence ties to the 2026-09-26 Index capture",
+    "C5: no withdrawn rows present in this part",
+    "C6: no tier metadata supplied in part b; not checkable here"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Joins to mimo-v2.6-flash::default and mimo-v2.6-pro::default (public:c66354d0b9b2e652d8b5db0a, public:9ecc9627f98682d0dedb86f4, public:bad9e14c302b44fde7cc5382, public:becfaee3ebdbe7f6d3430dc0, public:454088b5c15cbebd6c99df5d, public:5183eaa06f10b93d2f02ea5b, public:b5f8bdc44b429bd2026cd3a4, public:d0365c45dc65a2f3b766bf7b, public:6c86080f9cd09963355bc6b5, public:fa6556a769df5d1cc5863886): C2's default-join condition (exactly one catalog configuration, the default) cannot be confirmed because the supplied catalog omits these families; no contradiction, but unverified",
+    "null joins for ant/ling-3.0-flash-af-rc3 are correct only if that family is absent from the catalog (or lacks a single default); catalog for it was not supplied",
+    "previous_value fields on the three cost rows (public:e8e87cc10333ff1238065dc1, public:d3bbb815362b998459940c41, public:2ffc018ad92f782b3b1ba356) cannot be checked against the prior capture from this packet",
+    "Completeness of the new/changed set (e.g., why evidence rows for terminal_bench_2_1, finance_agent, code_migration and the deepseek component rows produce no artifact rows) is not independently verifiable from this packet; presumed covered by the other parts of the split review"
+  ],
+  "missing_evidence": [
+    "Catalog configurations (or documented non-membership) for families mimo-v2.6-flash, mimo-v2.6-pro, ling-3.0-flash-af-rc3 — needed to fully verify C2 for 15 of the 39 rows",
+    "Full capture sha256 for the 2026-09-26 Vals Index capture (packet header truncates it as 'b99902ee631d…')",
+    "Prior-snapshot values confirming the three 'value'-changed cost rows and the absence of other changed rows"
+  ]
+}

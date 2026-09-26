@@ -1,0 +1,219 @@
+{
+  "schema_version": 1,
+  "entries": [
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "parser": {
+        "kind": "effort_runs_json",
+        "row_path": "v1_1",
+        "subset": "main",
+        "require": {
+          "subsets.main": 100
+        },
+        "name_field": "name",
+        "value_field": "new_score",
+        "id_field": "id",
+        "harness_field": "harness",
+        "plain_text_names": true,
+        "scale": 100,
+        "context_keys": [
+          "new_score",
+          "correct",
+          "flagged_rate",
+          "cost",
+          "tokens"
+        ],
+        "method_source": {
+          "url": "https://cognition.com/frontiercode",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+          "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+          "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+        }
+      },
+      "status": "collected",
+      "reason": "Cognition publishes the board and its own SWE models; values are self_reported, multiplied by 100 from the published fraction; never a Composite input.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/frontiercode-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
+        "format": "JSON data file requested by the leaderboard page",
+        "locator": "v1_1.data[model][effort].main.new_score (fraction; the rendered leaderboard shows it ×100 as \"Score\")",
+        "version_guard": "Require data.json key v1_1 with subsets.main == 100 and the page text \"FrontierCode 1.1\". FrontierCode 1.0 (before unfair-internet-use zeroing) and the Extended subset are different identities.",
+        "notes": "The leaderboard page loads its own https://cognition.com/data/frontiercode-leaderboard/data.json (E3 step 4: the page's own request, fetched directly once); robots.txt allows everything except /downloads/. Rows are model × published reasoning effort; the harness is the source's per-model harness. Cognition runs the board and ships its own SWE models, so every row is self_reported and needs a different-family critic review."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Require data.json key v1_1 with subsets.main == 100 and the page text \"FrontierCode 1.1\". FrontierCode 1.0 (before unfair-internet-use zeroing) and the Extended subset are different identities.",
+      "source": {
+        "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+        "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+        "retrieved_at": "2026-09-26T04:23:00.682196+00:00"
+      },
+      "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.",
+      "basis": "self_reported",
+      "minimum_rows": 98,
+      "source_urls": [
+        "https://cognition.com/frontiercode",
+        "https://cognition.com/data/frontiercode-leaderboard/data.json"
+      ]
+    },
+    {
+      "benchmark_id": "frontiercode-cost::1.1",
+      "parser": {
+        "kind": "effort_runs_json",
+        "row_path": "v1_1",
+        "subset": "main",
+        "require": {
+          "subsets.main": 100
+        },
+        "name_field": "name",
+        "value_field": "cost",
+        "id_field": "id",
+        "harness_field": "harness",
+        "plain_text_names": true,
+        "context_keys": [
+          "new_score",
+          "correct",
+          "flagged_rate",
+          "cost",
+          "tokens"
+        ],
+        "method_source": {
+          "url": "https://cognition.com/frontiercode",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+          "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+          "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+        }
+      },
+      "status": "collected",
+      "reason": "Cognition publishes a USD cost per rollout next to the score; self_reported, not a score and never a Composite input.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/frontiercode-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
+        "format": "JSON data file requested by the leaderboard page",
+        "locator": "v1_1.data[model][effort].main.cost (the rendered leaderboard: \"Cost ($): the mean USD spend per rollout\")",
+        "version_guard": "Require data.json key v1_1 with subsets.main == 100 and the page text \"FrontierCode 1.1\". FrontierCode 1.0 (before unfair-internet-use zeroing) and the Extended subset are different identities.",
+        "notes": "The leaderboard page loads its own https://cognition.com/data/frontiercode-leaderboard/data.json (E3 step 4: the page's own request, fetched directly once); robots.txt allows everything except /downloads/. Rows are model × published reasoning effort; the harness is the source's per-model harness. Cognition runs the board and ships its own SWE models, so every row is self_reported and needs a different-family critic review."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Require data.json key v1_1 with subsets.main == 100 and the page text \"FrontierCode 1.1\". FrontierCode 1.0 (before unfair-internet-use zeroing) and the Extended subset are different identities.",
+      "source": {
+        "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+        "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+        "retrieved_at": "2026-09-26T04:23:00.682196+00:00"
+      },
+      "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.",
+      "basis": "self_reported",
+      "minimum_rows": 98,
+      "source_urls": [
+        "https://cognition.com/frontiercode",
+        "https://cognition.com/data/frontiercode-leaderboard/data.json"
+      ]
+    },
+    {
+      "benchmark_id": "frontiercode-extended::1.1",
+      "parser": {
+        "kind": "effort_runs_json",
+        "row_path": "v1_1",
+        "subset": "extended",
+        "require": {
+          "subsets.extended": 150
+        },
+        "name_field": "name",
+        "value_field": "new_score",
+        "id_field": "id",
+        "harness_field": "harness",
+        "plain_text_names": true,
+        "scale": 100,
+        "context_keys": [
+          "new_score",
+          "correct",
+          "flagged_rate",
+          "cost",
+          "tokens"
+        ],
+        "method_source": {
+          "url": "https://cognition.com/frontiercode",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+          "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+          "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+        }
+      },
+      "status": "collected",
+      "reason": "Cognition publishes the board and its own SWE models; values are self_reported, multiplied by 100 from the published fraction; never a Composite input. Extended is the full 150-task set, its own identity (CR-173).",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/frontiercode-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
+        "format": "JSON data file requested by the leaderboard page",
+        "locator": "v1_1.data[model][effort].extended.new_score (fraction; stored ×100)",
+        "version_guard": "Require data.json key v1_1 with subsets.extended == 150 and the page text \"FrontierCode 1.1\". FrontierCode 1.0 (before unfair-internet-use zeroing) and the Main subset are different identities.",
+        "notes": "The leaderboard page loads its own https://cognition.com/data/frontiercode-leaderboard/data.json (E3 step 4: the page's own request, fetched directly once); robots.txt allows everything except /downloads/. Rows are model × published reasoning effort; the harness is the source's per-model harness. Cognition runs the board and ships its own SWE models, so every row is self_reported and needs a different-family critic review. The Extended subset is the full 150-task set (Main is its 100 hardest tasks), so it is its own identity (CR-173, 2026-09-26)."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Require data.json key v1_1 with subsets.extended == 150 and the page text \"FrontierCode 1.1\". FrontierCode 1.0 (before unfair-internet-use zeroing) and the Main subset are different identities.",
+      "source": {
+        "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+        "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+        "retrieved_at": "2026-09-26T04:23:00.682196+00:00"
+      },
+      "protocol": "FrontierCode 1.1 Extended (150 tasks, the full set); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.",
+      "basis": "self_reported",
+      "minimum_rows": 115,
+      "source_urls": [
+        "https://cognition.com/frontiercode",
+        "https://cognition.com/data/frontiercode-leaderboard/data.json"
+      ]
+    },
+    {
+      "benchmark_id": "frontiercode-extended-cost::1.1",
+      "parser": {
+        "kind": "effort_runs_json",
+        "row_path": "v1_1",
+        "subset": "extended",
+        "require": {
+          "subsets.extended": 150
+        },
+        "name_field": "name",
+        "value_field": "cost",
+        "id_field": "id",
+        "harness_field": "harness",
+        "plain_text_names": true,
+        "context_keys": [
+          "new_score",
+          "correct",
+          "flagged_rate",
+          "cost",
+          "tokens"
+        ],
+        "method_source": {
+          "url": "https://cognition.com/frontiercode",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/6f8eff1aea83bec6b2cb.gz",
+          "sha256": "6f8eff1aea83bec6b2cb071b367e7be7e9bf8707b06dc6ac99ea209b399a1082",
+          "retrieved_at": "2026-09-26T04:23:03.498355+00:00"
+        }
+      },
+      "status": "collected",
+      "reason": "Cognition publishes a USD cost per rollout next to the score; self_reported, not a score and never a Composite input. Extended subset (CR-173).",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/frontiercode-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
+        "format": "JSON data file requested by the leaderboard page",
+        "locator": "v1_1.data[model][effort].extended.cost (the leaderboard legend: \"Cost ($): the mean USD spend per rollout\")",
+        "version_guard": "Require data.json key v1_1 with subsets.extended == 150 and the page text \"FrontierCode 1.1\". FrontierCode 1.0 (before unfair-internet-use zeroing) and the Main subset are different identities.",
+        "notes": "The leaderboard page loads its own https://cognition.com/data/frontiercode-leaderboard/data.json (E3 step 4: the page's own request, fetched directly once); robots.txt allows everything except /downloads/. Rows are model × published reasoning effort; the harness is the source's per-model harness. Cognition runs the board and ships its own SWE models, so every row is self_reported and needs a different-family critic review. The Extended subset is the full 150-task set (Main is its 100 hardest tasks), so it is its own identity (CR-173, 2026-09-26)."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Require data.json key v1_1 with subsets.extended == 150 and the page text \"FrontierCode 1.1\". FrontierCode 1.0 (before unfair-internet-use zeroing) and the Main subset are different identities.",
+      "source": {
+        "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-26-frontiercode/edba28c872b94a4abf66.gz",
+        "sha256": "edba28c872b94a4abf665ed5443c52a001c75646eb4ae01a2c83a794128893bc",
+        "retrieved_at": "2026-09-26T04:23:00.682196+00:00"
+      },
+      "protocol": "FrontierCode 1.1 Extended (150 tasks, the full set); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.",
+      "basis": "self_reported",
+      "minimum_rows": 115,
+      "source_urls": [
+        "https://cognition.com/frontiercode",
+        "https://cognition.com/data/frontiercode-leaderboard/data.json"
+      ]
+    }
+  ]
+}

@@ -157,10 +157,16 @@ test('CR-78.3: the three level changes from the simulation, and Hy3 moving down'
   if (!pinned) t.diagnostic(`CR-78.3 point pins were written for AA snapshot 2026-09-10T21:47:16.627Z; data is ${aaSnapshot} — re-pin due`);
   // CR-128 (2026-09-23): independent Opus/GPT-6 rows on existing boards move the catalog jaggedness mean to 13.24;
   // Muse Spark's unchanged inputs now blend to 17.48, so its pin follows the rounded current result.
+  // CR-173 (2026-09-26, vals-simplebench): nine Vals standalone boards gained deliberate tiers (ProgramBench headline,
+  // ProofBench heldout; IOI and the Code Migration / Vibe Code twins of Index components secondary; EMB / Tax /
+  // MedScribe / MedCode domain) and Muse Spark 1.1 sits on several of them: gap 15.47 → 15.67, blend 17.98 → 18.18, strong → strong unchanged. Re-pinned.
   const expected = [
-    { id: 'muse-spark-1.1::xhigh', gap: 15.2, score: 17.5, before: 'strong', after: 'strong' },     // 11.69 → 14.03 → 18.08 → 17.87 before CR-128; 17.48 after
+    { id: 'muse-spark-1.1::xhigh', gap: 15.7, score: 18.2, before: 'strong', after: 'strong' },     // 11.69 → 14.03 → 18.08 → 17.87 before CR-128; 17.48 after; 18.18 after CR-173
     { id: 'qwen3.7-max::default', gap: 5.4, score: 6.7, before: 'light', after: 'medium' },         // 5.38 → 6.78 → 6.56
-    { id: 'gemini-3.6-flash::high', gap: 5.0, score: 6.0, before: 'light' },                        // 5.05 → 6.09 → 5.92 (0.08 under the medium line)
+    // 2026-09-26 (CR-173): Epoch's Furniture Assembly (heldout, 2026-09-26 archive) joins gemini-3.6-flash_high at 0.233 —
+    // a low heldout result — so its headline − heldout gap moves 5.05 → 7.54 and the blend 5.97 → 8.81: medium before and
+    // after the blend. Not fudged back; the other three pinned rows stay inside their ±0.5 bands.
+    { id: 'gemini-3.6-flash::high', gap: 7.5, score: 8.8, before: 'medium', after: 'medium' },     // 5.05 → 6.09 → 5.92 → 5.97 → 8.81
     { id: 'hy3::default', gap: 5.8, score: 5.1, before: 'light', after: 'light' },                  // 5.82 → 4.22 → 4.20 → 5.13
   ];
   for (const row of expected) {
