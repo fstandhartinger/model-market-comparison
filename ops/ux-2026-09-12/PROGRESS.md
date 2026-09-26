@@ -12890,3 +12890,105 @@ Not done here, still open: D219's remedy, CR-176.6's remaining non-implementer r
 sign-offs iteration 239 owes (F-203/F-204/F-205, D215, D216, CR-156.1–.3), CR-156.4, X6's remaining audit
 surface, the CR rows no harness covers (CR-148.1/.2, CR-152.1/.2/.5, CR-153.4, CR-158.4), Umami's own
 retention (CR-67.5 §7.4 residual 1), and F-206 (the CR-172 job's). **`ALL-ACCEPTED` is not appended.**
+
+## Iteration 241 — work (claude-opus), 2026-09-26 22:55–00:0x UTC — a display badge is not a model name
+
+Picked the remedy iteration 240 specified and deliberately did not rush: **D219**, the three arms failing closed
+on `"Prior public identities disappeared"`. Receipts: `/opt/benchmarkheaven/state/ux-evidence/iter241-d219/`
+(`simulate-before.json`, `simulate-after.json`, `scores-diff.json`, `estimates-diff.json`, `relabels.json`,
+`live/verification.json`, `vending-bench-live-20260926T2311Z.html`).
+
+### D219 — the badge, declared per source and stripped, and 27 identities corrected
+
+**Verified against the primary sources, not the recorded diagnosis.** eqbench's own renderer, in the very files
+the rows cite: `const isNsfwModel = currentModelName.startsWith('!'); currentModelName = currentModelName.replace(/^!/, '');`
+then the same two lines for `*`, and the *stripped* name is what the board builds its HuggingFace link and its
+per-model report filename from — so the badged spelling was never a label eqbench displayed and never an
+identity. Andon Labs is stronger still: the badge is a separate `<span>` pill, and the same cell names the model
+badge-free in its logo's `alt` attribute (`alt="GPT-6 Sol"` beside the visible `GPT-6 Sol New`).
+
+The marker is now declared per source in `collection-plan.json` (`name_markers`), with the page's own words for
+each marker, and stripped in `collect()`. **Never a global rule** — a trailing "New" is a real word in some model
+names — so Vending-Bench declares `confirm_with: name_image_alt` and the strip is accepted only when it
+reproduces that alt exactly; the html_table reader now keeps the alt text per cell as evidence. A test drives
+four synthetic mutations of the committed capture through the real collector: a logo alt that contradicts the
+strip, one that contradicts the plain name, a row with no alt at all, and the same truncation with the
+confirmation removed (which the loose rule accepts and the declared rule refuses).
+
+The 27 already-published badged labels are corrected in a new `display_badge_corrections` list, each with the
+**verbatim** renderer or markup excerpt from the capture that row cites. This is deliberately *not*
+`source_label_restatements`: D186 records a source restating its own label between two captures, and eleven of
+these rows still wear the badge today — the defect is our reading of it, and a record shaped for one board's
+restatement cannot state that honestly. Both lists produce the same second half, a withheld rejection carrying
+the old locator.
+
+**That second half did not reach, and the harness is what found it.** After the relabel the build produced **54**
+`"no longer published"` estimates of measurements still on the board — the D180/D186 trap. Neither existing route
+could see them: the states holding those labels predate `source_locator` (added 2026-09-18) and carry
+`model_id: null`, so the locator route has nothing to match and the pair route has no pair. `withheldSourceLabels`
+closes it, keyed on the exact `benchmark_id × label` the rejection names and nothing wider. The test calls
+`datedEstimates` twice and asserts the count is >0 without the label route — otherwise it would be proving nothing.
+
+**Vending-Bench's three missing rows are not a badge**, and a blanket strip would have hidden that. The board is a
+fixed ten rows; three entrants pushed `Claude Opus 4.6`, `GPT-5.5` and `GPT-5.6 Terra` off the bottom between the
+23 Sep and 25 Sep captures. There is no fuller board behind them: the page has exactly one `<table>`, its only
+"Show more" control expands the agent's system prompt, and the three names survive elsewhere only as chart colour
+variables (`--color-GPT-5.5: #059669`) with no score. Each gets its own withdrawal record — their values stay
+visible as dated "no longer published" estimates, which is the honest outcome for a displaced row. Because of
+those colour variables `test/public-withdrawals.test.mjs`'s substring rule called all three **still present**
+(measured: `!capture.includes(name)` is `false` for each); absence is now read off the board's own Model cells,
+and a changed board fails closed.
+
+**Nothing here was published on trust.** `simulate-d219-next-refresh.mjs` replays the next refresh offline through
+the daily's own path and still throws `"Prior public identities disappeared"` on all three arms with the pre-fix
+plan and prior rows (`D219_PLAN`/`D219_PRIOR`), and reconciles all three on this one: creative-writing takes 7 new
+models, longform 6, vending-bench 3 entrants and 3 withdrawals. The scores diff is exactly 27 renamed keys —
+**0 joins lost, 0 values moved** — and the estimate set is identical to before the relabel. Three of the corrected
+names (`gpt-6-astra`, `claude-fable-5-1`, `GLM-5.3`) now join the catalog, taking creative-writing from 24 to 27
+joined rows; the remaining unjoined names are an identity-map question for another iteration, not this one.
+
+`vending-bench::2` still serves its 2026-09-10 board today: the withdrawal records and the three entrants land in
+the 05:17 refresh, which is the row's real proof. Its live board was re-fetched at 23:11 UTC with the capture
+script's user agent and matches the 05:26 capture row for row.
+
+### D217 — the credential was gone again, three hours later
+
+The push failed with `could not read Username` and `~/.gitconfig` had **no** `[credential]` section at all — less
+than three hours after iteration 240 restored one. This is now twice in five days, so it is treated as recurring
+rather than an incident. Two things changed:
+
+1. **The documented helper is back**, not the bare `store` iteration 240 left: `/opt/mmc-daily/README.md` retired
+   `store` on purpose (it depends on `~/.git-credentials` staying fresh, populated only by an interactive push)
+   in favour of the scoped `credential.https://github.com.helper = ~/bin/git-credential-flori`, which reads a
+   verified PAT from the secrets file. Proved with `env -i HOME=… PATH=… git push --dry-run` — the minimal
+   cron-like environment the daily runs in.
+2. **The daily now proves the credential before it collects.** `git fetch` of a public repo succeeds without
+   credentials, so the first step that noticed was the push, after a ~73-minute collection. A no-op
+   `git push --dry-run origin <base>:refs/heads/main` *does* authenticate (measured: rc 128 with the helpers
+   emptied) and moves no ref (a test drives a real bare repo with an unpushed local commit to prove it cannot
+   publish early). It runs right after `fetch-main` with `GIT_TERMINAL_PROMPT=0`, fails in a second with the
+   config to check, and is a warning rather than a failure in a dry run.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D219 | open (diagnosed) → **implemented + verified live** | `60dfdb27`; `live/verification.json` **105/105** on three hosts; `simulate-{before,after}.json`; `scores-diff.json`; pins `test/d219-display-badge-corrections.test.mjs`, `test/d219-badge-parser.test.mjs` | Badge declared per source and stripped, 27 identities corrected and withheld under the old locator, 3 displaced Vending-Bench rows withdrawn with their locators. The simulator still fails closed on the pre-fix state. Written by this engine — a different one should re-run both tests and `verify-d219-live.mjs`. |
+| D219.1 (new) | **open** | `scores-diff.json` | The remaining unjoined eqbench names (106 of 133 on creative-writing) are an identity-map question this iteration deliberately left alone; a rushed join is the D180/D186 trap. |
+| D214 | diagnosed → **partly repaired** | this section; the 05:17 run is the proof | Three of the 27 retained arms were D219 and are fixed here. The 402 cascade was fixed in iteration 240 and the 00:41 and 05:17 runs are its proof; neither had run when this iteration started. |
+| D192 | open (largely subsumed) | — | Unchanged; the honest remainder is whatever survives the next two runs. |
+| D217 | open → **implemented** | `b5e1829b`; pin `test/d217-push-credential-preflight.test.mjs`; `~/.gitconfig.bak-before-d217-restore-20260926T2325Z` | Recurred within three hours of iteration 240's restore. Documented helper restored and proved under a minimal cron environment; the daily now fails in a second instead of after a 73-minute collection. The *cause* of the disappearance is still unknown — this makes it cheap and loud, not impossible. |
+
+Gates before each push: `node scripts/build-dataset.mjs` rc 0 (timestamp-only churn discarded), `CI=true npm test`
+**1,442 / 1,441 pass / 0 fail / 1 skip** at the first push and **1,444 / 1,443 / 0 fail / 1 skip** at the second,
+`npx tsc --noEmit -p .` rc 0, `npm run build` rc 0. Every new check was proved to fail against the unfixed state
+before it was trusted: the simulator on the pre-fix plan and prior rows, `datedEstimates` without the label route,
+the withdrawals substring rule against its own capture, and four parser mutations through the real collector.
+`60dfdb27` was live on both hosts at 23:25:25 UTC and the live verifier ran against it. `b5e1829b` changes only
+`ops/daily/daily.mjs` and a test — it has no runtime surface, so nothing about it is claimed from the live site;
+its proof is the dry-run push under a minimal cron environment and `test/d217-push-credential-preflight.test.mjs`.
+`git log origin/main..HEAD` was checked before each push and no other writer's files were touched.
+
+Not done here, still open: D219.1 (the unjoined eqbench identities), CR-176.6's remaining non-implementer review,
+the non-implementer sign-offs iterations 239–241 owe (F-203/F-204/F-205, D215, D216, CR-156.1–.3, D218, D219),
+CR-156.4, X6's remaining audit surface, the CR rows no harness covers (CR-148.1/.2, CR-152.1/.2/.5, CR-153.4,
+CR-158.4), Umami's own retention (CR-67.5 §7.4 residual 1), and F-206 (the CR-172 job's). **`ALL-ACCEPTED` is not
+appended.**
