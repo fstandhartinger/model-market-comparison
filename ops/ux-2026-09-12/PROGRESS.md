@@ -12876,10 +12876,14 @@ from the site for 16 days.
 | D217 | open (unchanged) | this section | Pushed with `git -c credential.helper=store` again; the global helper is present, the explicit flag was belt and braces. |
 
 Gates before both pushes: `node scripts/build-dataset.mjs` rc 0 (timestamp-only `generated_at`/`collected_at`
-churn discarded), `CI=true npm test` **1,433 tests / 1,432 pass / 0 fail / 1 skip**, `npx tsc --noEmit -p .`
+churn discarded), `CI=true npm test` **1,433 tests / 1,432 pass / 0 fail / 1 skip** before the rebase and **1,435 / 1,434 /
+0 fail / 1 skip** after it (CR-178, PR #45, landed mid-iteration and added two), `npx tsc --noEmit -p .`
 rc 0, `npm run build` rc 0. Each D218 test was proved to fail against the unfixed code before it was trusted
-(402 removed from the rule → both D218.1 tests red; body discarded again → D218.2 red). `36e0290a` is live on
-**both** hosts (`revision-watch.log`, 20:47:05 UTC); nothing in this iteration has a UI surface.
+(402 removed from the rule → both D218.1 tests red; body discarded again → D218.2 red). `36e0290a` was live on **both** hosts at 20:47:05 UTC and the
+rebased `c559fc5e` at 20:58:39/40 (`revision-watch.log`); nothing in this iteration has a UI surface.
+The checkout took CR-178's merge mid-iteration; the rebase was clean, both ledger sections survived, and
+the gate's new `checkLine` helper was re-checked against CR-178's rewritten `check-analytics-health.mjs`
+(still prints an `Analytics:` line, so the digest hook holds).
 `git log origin/main..HEAD` was checked before each push and no other writer's files were touched.
 
 Not done here, still open: D219's remedy, CR-176.6's remaining non-implementer review, the non-implementer
