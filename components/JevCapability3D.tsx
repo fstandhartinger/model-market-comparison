@@ -95,12 +95,13 @@ const INITIAL_VIEW: View = { yaw: 0.55, pitch: 0.32, zoom: 1, panX: 0, panY: 0 }
 const clamp = (value: number, minimum: number, maximum: number) => Math.max(minimum, Math.min(maximum, value));
 
 /** Canvas-free projection for browsers that disable WebGL. The same measured point coordinates are used. */
-function Projected3D({ points, costBounds, jevClassOnly, tipRef, resetViewRef }: {
+function Projected3D({ points, costBounds, jevClassOnly, tipRef, resetViewRef, rankedPoints }: {
   points: Point[];
   costBounds: [number, number];
   jevClassOnly: boolean;
   tipRef: { current: HTMLDivElement | null };
   resetViewRef: { current: () => void };
+  rankedPoints: { point: Point; score: number }[];
 }) {
   const hostRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -209,6 +210,28 @@ function Projected3D({ points, costBounds, jevClassOnly, tipRef, resetViewRef }:
       <g aria-hidden="true" stroke="rgb(var(--line))" strokeOpacity="0.55" strokeWidth="1">
         {grid.map(({ a, b, key }) => <line key={key} x1={a.x} y1={a.y} x2={b.x} y2={b.y} />)}
       </g>
+      <g aria-hidden="true" className="bh-jev-3d-axis-labels" data-bh-jev14-3d-axis-labels="true" pointerEvents="none" textAnchor="middle" fill="var(--muted)" fontSize="12" fontFamily="inherit">
+        {[
+          { name: 'cost', text: 'Cost · $/1k decisions · cheaper →', at: project(5.8, -5, 4.2) },
+          { name: 'capability', text: 'Capability 0–100', at: project(0, 6.3, 0) },
+          { name: 'speed', text: 'Speed · faster →', at: project(0, -5, 7.2) },
+        ].map((label) => (
+          <text key={label.name} data-bh-jev14-3d-axis-label={label.name} className="bh-jev-3d-axis-label" x={label.at.x} y={label.at.y}>{label.text}</text>
+        ))}
+      </g>
+      <g aria-hidden="true" className="bh-jev-3d-model-labels" data-bh-jev14-3d-model-labels="true" pointerEvents="none" textAnchor="start" fill="var(--muted)" fontSize="11" fontFamily="inherit">
+        {rankedPoints
+          .filter((entry) => entry.point.cost != null && entry.point.speed != null)
+          .slice(0, 5)
+          .map((entry, index) => {
+            const at = coord(entry.point);
+            return (
+              <text key={entry.point.key} data-bh-jev14-3d-model-label={entry.point.key} className="bh-jev-3d-model-label" x={at.x + 8} y={at.y - 8} fill={`rgb(var(${entry.point.colorVariable}))`}>
+                {`#${index + 1} ${entry.point.name}`}
+              </text>
+            );
+          })}
+      </g>
       {plotted.map(({ point, at }) => {
         const radius = clamp((3 + (point.jevbenchScore ?? 0) / 25) * at.perspective * view.zoom ** 0.25, 3, 9);
         const label = `${point.name}, Capability ${point.capability.toFixed(1)}, cost ${describeCost(point.cost)} per 1,000 decisions, Speed ${point.speed?.toFixed(1) ?? 'not reported'}`;
@@ -233,6 +256,7 @@ export function JevCapability3D({ points, costBounds }: { points: Point[]; costB
   const tipRef = useRef<HTMLDivElement>(null);
   const resetViewRef = useRef<() => void>(() => {});
   const updateOpacityRef = useRef<(enabled: boolean) => void>(() => {});
+  const updateLabelsRef = useRef<(entries: { point: Point; score: number }[]) => void>(() => {});
   const [visible, setVisible] = useState(false);
   const [fallback, setFallback] = useState(false);
   const [jevClassOnly, setJevClassOnly] = useState(true);
@@ -275,6 +299,12 @@ export function JevCapability3D({ points, costBounds }: { points: Point[]; costB
     .filter((entry): entry is { point: Point; score: number } => entry.score != null)
     .sort((a, b) => b.score - a.score || (a.point.rank ?? Infinity) - (b.point.rank ?? Infinity) || a.point.name.localeCompare(b.point.name))
     .slice(0, 5);
+  const rankedKey = ranked.map((entry) => `${entry.point.key}:${entry.score.toFixed(2)}`).join('|');
+
+  useEffect(() => {
+    updateLabelsRef.current(ranked);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rankedKey]);
 
   useEffect(() => {
     const box = boxRef.current;
@@ -402,7 +432,72 @@ export function JevCapability3D({ points, costBounds }: { points: Point[]; costB
         themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
         materials.push({ dispose: () => themeObserver.disconnect() });
 
-        const render = () => renderer?.render(scene, camera);
+        // CR-176.6: axis names for all three axes and permanent labels for the top five
+        // systems, kept on screen as DOM overlays anchored to their projected world
+        // positions through every rotation, pan and zoom. The top-five set follows the
+        // ranked control list (weights / Jev-class toggle) via updateLabelsRef.
+        const half = size / 2;
+        const labelLayer = document.createElement('div');
+        labelLayer.setAttribute('data-bh-jev14-3d-labels', 'true');
+        labelLayer.className = 'bh-jev-3d-labels';
+        box.appendChild(labelLayer);
+        const fixedRefs: { world: any; el: HTMLElement }[] = [];
+        let modelRefs: { world: any; el: HTMLElement }[] = [];
+        const axisDefs: Array<{ name: 'cost' | 'capability' | 'speed'; text: string; anchor: [number, number, number] }> = [
+          { name: 'cost', text: 'Cost · $/1k decisions · cheaper →', anchor: [half * 1.16, -half, half * 0.84] },
+          { name: 'capability', text: 'Capability 0–100', anchor: [0, half * 1.26, 0] },
+          { name: 'speed', text: 'Speed · faster →', anchor: [0, -half, half * 1.44] },
+        ];
+        for (const def of axisDefs) {
+          const el = document.createElement('div');
+          el.textContent = def.text;
+          el.setAttribute('data-bh-jev14-3d-axis-label', def.name);
+          el.className = 'bh-jev-3d-axis-label';
+          el.style.cssText = 'position:absolute;left:0;top:0;pointer-events:none;opacity:0;white-space:nowrap;';
+          labelLayer.appendChild(el);
+          fixedRefs.push({ world: new three.Vector3(def.anchor[0], def.anchor[1], def.anchor[2]), el });
+        }
+        const layoutLabels = () => {
+          const canvas = renderer?.domElement;
+          if (!canvas) return;
+          const w = canvas.clientWidth || box.clientWidth;
+          const h = canvas.clientHeight || box.clientHeight;
+          if (!w || !h) return;
+          const inset = 6;
+          for (const item of [...fixedRefs, ...modelRefs]) {
+            const projected = item.world.clone().project(camera);
+            const behind = projected.z > 1;
+            const px = Math.min(Math.max(((projected.x + 1) / 2) * w, inset), w - inset);
+            const py = Math.min(Math.max(((1 - (projected.y + 1) / 2)) * h, inset), h - inset);
+            item.el.style.transform = `translate(${px.toFixed(1)}px, ${py.toFixed(1)}px) translate(-50%, -115%)`;
+            item.el.style.opacity = behind ? '0' : '1';
+          }
+        };
+        updateLabelsRef.current = (entries: { point: Point; score: number }[]) => {
+          for (const ref of modelRefs) ref.el.remove();
+          modelRefs = [];
+          entries
+            .filter((entry) => entry.point.cost != null && entry.point.speed != null)
+            .slice(0, 5)
+            .forEach((entry, index) => {
+              const sphere = objects.find((candidate: any) => (candidate.userData.point as Point) === entry.point);
+              if (!sphere) return;
+              const el = document.createElement('div');
+              el.setAttribute('data-bh-jev14-3d-model-label', entry.point.key);
+              el.className = 'bh-jev-3d-model-label';
+              const dot = document.createElement('span');
+              dot.className = 'bh-jev-3d-model-dot';
+              dot.style.backgroundColor = `rgb(var(${entry.point.colorVariable}))`;
+              el.appendChild(dot);
+              el.appendChild(document.createTextNode(`#${index + 1} ${entry.point.name}`));
+              labelLayer.appendChild(el);
+              modelRefs.push({ world: sphere.position.clone(), el });
+            });
+          layoutLabels();
+        };
+        updateLabelsRef.current(ranked);
+
+        const render = () => { renderer?.render(scene, camera); layoutLabels(); };
         controls.addEventListener('change', render);
         const resize = () => {
           const nextWidth = Math.max(1, box.clientWidth);
@@ -462,6 +557,8 @@ export function JevCapability3D({ points, costBounds }: { points: Point[]; costB
       disposed = true;
       resetViewRef.current = () => {};
       updateOpacityRef.current = () => {};
+      updateLabelsRef.current = () => {};
+      box.querySelector('[data-bh-jev14-3d-labels]')?.remove();
       observer?.disconnect();
       if (resizeListener) window.removeEventListener('resize', resizeListener);
       cleanupPointer?.();
@@ -483,7 +580,7 @@ export function JevCapability3D({ points, costBounds }: { points: Point[]; costB
       </div>
     </div>
     <div ref={boxRef} className={`relative overflow-hidden rounded-lg border border-line bg-black/[.02] dark:bg-white/[.02] ${expanded ? 'h-[min(72vh,850px)] min-h-[350px]' : 'h-[350px] sm:h-[460px]'}`} data-bh-jev14-capability-3d-view>
-      {fallback && <Projected3D points={points} costBounds={costBounds} jevClassOnly={jevClassOnly} tipRef={tipRef} resetViewRef={resetViewRef} />}
+      {fallback && <Projected3D points={points} costBounds={costBounds} jevClassOnly={jevClassOnly} tipRef={tipRef} resetViewRef={resetViewRef} rankedPoints={ranked} />}
       <div className="pointer-events-none absolute left-2 top-2 z-10 grid gap-1 rounded-md border border-line bg-panel/90 px-2 py-1.5 text-[11px] font-semibold leading-tight shadow-sm sm:left-3 sm:top-3 sm:text-xs" data-bh-jev14-3d-axes>
         <span>Capability ↑ · 0–100</span><span>Cost · $/1k tasks (log), cheaper →</span><span>Speed · 0–100, faster →</span>
       </div>

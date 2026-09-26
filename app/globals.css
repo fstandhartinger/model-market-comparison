@@ -706,3 +706,13 @@ body.bh-fastlane-visible .bh-custom-evaluation-toast { bottom: calc(var(--bh-fas
 @media (max-width: 639.98px) {
   .group:hover .bh-jev-cap-tip, .group:focus-within .bh-jev-cap-tip { display: none !important; }
 }
+
+/* CR-176.6: 3D view overlays — axis names and top-five labels are DOM/SVG text, not WebGL glyphs.
+   DOM labels (WebGL path) sit in an absolutely positioned layer above the canvas; the SVG path draws
+   SVG text with the same classes so both paths share the theme-aware muted color. */
+.bh-jev-3d-labels { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.bh-jev-3d-axis-label, .bh-jev-3d-model-label { color: rgb(var(--muted)); }
+.bh-jev-3d-axis-label { font-size: 12px; font-weight: 600; }
+.bh-jev-3d-model-label { font-size: 11px; }
+.bh-jev-3d-model-dot { display: inline-block; width: 8px; height: 8px; border-radius: 9999px; margin-right: 4px; vertical-align: baseline; }
+

@@ -123,6 +123,34 @@ test('F-200 (pass 36): the Capability ⓘ panel is a definition list and the row
   assert.match(tip, /lastPointerType\.current === 'touch' && window\.innerWidth < 640/);
 });
 
+test('CR-176.6: the 3D capability view labels all three axes and pins the top five permanently', () => {
+  const source = readFileSync(path.join(root, 'components/JevCapability3D.tsx'), 'utf8');
+
+  // CR-176.6 verbatim: "add axis labels for all three. And labels for the top5 models."
+  // Both the WebGL path (DOM overlay, data-bh-jev14-3d-labels layer) and the SVG fallback
+  // draw the same three axis labels and the ranked top-five model labels.
+  assert.equal((source.match(/data-bh-jev14-3d-axis-label/g) ?? []).length >= 2, true, 'axis labels exist in both render paths');
+  assert.match(source, /data-bh-jev14-3d-axis-label=\{def\.name\}|data-bh-jev14-3d-axis-label=\{label\.name\}/);
+  assert.match(source, /Capability 0–100/);
+  assert.match(source, /Cost · \$\/1k decisions · cheaper →/);
+  assert.match(source, /Speed · faster →/);
+  assert.match(source, /data-bh-jev14-3d-model-label=.{0,40}entry\.point\.key/);
+  assert.equal((source.match(/data-bh-jev14-3d-model-label/g) ?? []).length >= 2, true, 'model labels exist in both render paths (DOM + SVG)');
+  assert.match(source, /data-bh-jev14-3d-labels/);
+  assert.match(source, /updateLabelsRef/);
+});
+
+test('CR-176.6 DOM: the fallback 3D view renders permanent axis names and top-five labels', () => {
+  const source = readFileSync(path.join(root, 'components/JevCapability3D.tsx'), 'utf8');
+  for (const name of ['cost', 'capability', 'speed']) {
+    assert.match(source, new RegExp(`name: '${name}'|data-bh-jev14-3d-axis-label="${name}"`), `${name} is one of the three labelled axes`);
+  }
+  assert.match(source, /data-bh-jev14-3d-axis-label=\{def\.name\}|data-bh-jev14-3d-axis-label=\{label\.name\}/, 'axis labels carry their axis name');
+  assert.equal((source.match(/data-bh-jev14-3d-model-label/g) ?? []).length >= 2, true, 'top-five labels exist in both render paths');
+  assert.match(source, /data-bh-jev14-3d-model-label=\{entry\.point\.key\}/);
+  assert.match(source, /`#\$\{index \+ 1\} \$\{entry\.point\.name\}`/, 'the model label shows its rank and measured name');
+});
+
 test('F-184 (Fable pass 34): the capability rows share one height and the header names the value columns', () => {
   const source = readFileSync(path.join(root, 'components/JevCapabilityChart.tsx'), 'utf8');
   // the trailing value column never wraps at sm+, on a track wide enough for the longest string
