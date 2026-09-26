@@ -17,35 +17,71 @@ const time = (v: number) => `${v.toFixed(3)} s`;
 type Track = 'all' | 'core' | 'everyday_photo';
 type FamilyCount = { public: number; sealed: number; retired: number };
 
+// F-198 (pass 36): a gated row says so. A row whose composite is below 1 because a gate factor is below 0.5
+// gets a muted sub-line naming the gate — in the bars and in the table's System cell.
+type GateInfo = { gate: string; line: string } | null;
+function gateOf(t: any, row: any): GateInfo {
+  if (t.composite.score >= 1) return null;
+  if ((t.axes?.calibration ?? 0) < 0.5) return { gate: 'Calibration', line: `0.0 · gated by Calibration (no probabilities reported)` };
+  const g = t.composite?.gates ?? {};
+  if ((g.cost ?? 1) < 0.5) return { gate: 'Cost', line: `0.0 · gated by Cost (USD ${t.cost.usd_per_1000.toFixed(2)} per 1,000 decisions)` };
+  if ((g.intelligence ?? 1) < 0.5) return { gate: 'Intelligence', line: `0.0 · gated by Intelligence (below the Jev-class floor)` };
+  if ((g.speed ?? 1) < 0.5) return { gate: 'Speed', line: `0.0 · gated by Speed (below the Jev-class floor)` };
+  return null;
+}
+
+// F-198 (pass 36): a parenthetical configuration leaves the bold name and becomes a muted sub-line;
+// quantisation keys keep the artifact's spelling but live in <code>.
+function splitName(name: string): { main: string; config: string | null } {
+  const m = name.match(/^(.*?)\s*\(([^()]*)\)$/);
+  return m ? { main: m[1].trim(), config: m[2] } : { main: name, config: null };
+}
+const CodeQuant = ({ text }: { text: string }) => {
+  const parts = text.split(/(PQ2_0|Q8_0)/);
+  return <>{parts.map((p, i) => p === 'PQ2_0' || p === 'Q8_0' ? <code key={i}>{p}</code> : p)}</>;
+};
+function SystemName({ name, gate }: { name: string; gate?: GateInfo }) {
+  const { main, config } = splitName(name);
+  return <>
+    <span><CodeQuant text={main} /></span>
+    {config && <span className="bh-muted block text-[11.5px] leading-snug">{config}</span>}
+    {gate && <span className="block text-[11.5px] leading-snug text-[rgb(var(--accent,234_88_12))]" data-bh-mm-gated={gate.gate}>{gate.line}</span>}
+  </>;
+}
+
 function RankingTable({ systems, track, all = false }: { systems: any[]; track: Track; all?: boolean }) {
   const rows = [...systems].sort((x, y) => y.tracks[track].composite.score - x.tracks[track].composite.score);
   return <div className="mt-4 overflow-x-auto rounded-xl border border-line">
-    <table className={`w-full ${all ? 'min-w-[1300px]' : 'min-w-[1080px]'} text-left text-sm`} data-bh-mm-ranking={track} aria-label={`${track === 'all' ? 'Full benchmark' : track === 'core' ? 'Licensed core' : 'Everyday photo'} ranking`}>
+    <table className={`w-full ${all ? 'min-w-[1240px]' : 'min-w-[1080px]'} text-left text-sm`} data-bh-mm-ranking={track} aria-label={`${track === 'all' ? 'Full benchmark' : track === 'core' ? 'Licensed core' : 'Everyday photo'} ranking`}>
       <thead><tr>
         <th className="sticky left-0 z-[1] w-14 min-w-14 bg-[var(--surface)] p-3 shadow-[inset_-1px_0_0_rgb(var(--line))]">#</th><th className="sticky left-14 z-[1] w-52 min-w-52 bg-[var(--surface)] p-3 shadow-[inset_-1px_0_0_rgb(var(--line))]">System</th><th className="p-3 text-right">Composite</th>
         <th className="p-3 text-right">Intelligence</th><th className="p-3 text-right">Calibration</th><th className="p-3 text-right">Speed</th><th className="p-3 text-right">Cost</th>
-        {all && <><th className="p-3 text-right">Gap (matched)</th><th className="p-3 text-right">Penalty</th></>}
+        {all && <><th className="p-3 text-right">Gap (matched)</th><th className="p-3 text-right">Earlier split</th></>}
         <th className="p-3 text-right">Public accuracy</th><th className="p-3 text-right">Sealed accuracy</th><th className="p-3 text-right">USD / 1,000</th>
-        <th className="p-3 text-right">Cost coverage</th>{all && <th className="p-3 text-right">p50 / p95</th>}
+        {all && <th className="p-3 text-right">p50 / p95</th>}
       </tr></thead>
       <tbody>{rows.map((s, i) => {
         const t = s.tracks[track];
+        const gate = gateOf(t, s);
+        // F-198 (pass 36): "Cost coverage" is no longer a column — rows under 100% receipt coverage fold it into the
+        // System cell. The "Penalty" column is gone (×1.000 on every row; the intro keeps the allowance sentence).
         return <tr key={s.key} className="border-t border-line">
           <td className="sticky left-0 z-[1] w-14 min-w-14 bg-[var(--surface)] p-3 font-bold tabular-nums shadow-[inset_-1px_0_0_rgb(var(--line))]">{i + 1}</td>
-          <th scope="row" className="sticky left-14 z-[1] w-52 min-w-52 bg-[var(--surface)] p-3 font-semibold shadow-[inset_-1px_0_0_rgb(var(--line))]">
-            {s.name}{s.api_flag && <span className="ml-2 inline-block rounded-full border border-accent px-2 py-0.5 text-[0.68rem] font-bold text-accent">API</span>}
+          <th scope="row" className="sticky left-14 z-[1] w-52 min-w-52 bg-[var(--surface)] p-3 text-left font-semibold shadow-[inset_-1px_0_0_rgb(var(--line))]">
+            <SystemName name={s.name} gate={gate} />
             {s.inference_setting && <p className="bh-muted mt-1 text-xs">Setting: {s.inference_setting}</p>}
+            {t.cost.coverage < 0.9995 && <p className="bh-muted mt-1 text-xs">Cost receipts cover {pct(t.cost.coverage)} of calls</p>}
+            {s.api_flag && <span className="mt-1 inline-block rounded-full border border-accent px-2 py-0.5 text-[0.68rem] font-bold text-accent">API</span>}
           </th>
           <td className="p-3 text-right font-bold tabular-nums">{score(t.composite.score)}</td>
           <td className="p-3 text-right tabular-nums">{score(t.axes.intelligence)}</td>
           <td className="p-3 text-right tabular-nums">{score(t.axes.calibration)}</td>
           <td className="p-3 text-right tabular-nums">{score(t.axes.speed)}</td>
           <td className="p-3 text-right tabular-nums">{score(t.axes.cost)}</td>
-          {all && <><td className="p-3 text-right tabular-nums whitespace-nowrap">{formatMatchedGapPp(t.matched_gap_pp)}</td><td className="p-3 text-right tabular-nums">×{t.penalty_multiplier.toFixed(3)}</td></>}
+          {all && <><td className="p-3 text-right tabular-nums whitespace-nowrap">{formatMatchedGapPp(t.matched_gap_pp)}</td><td className="p-3 text-right tabular-nums whitespace-nowrap">{s.previous_rank != null ? `#${s.previous_rank} · ${score(s.previous_score)}` : '—'}</td></>}
           <td className="p-3 text-right tabular-nums"><span className="whitespace-nowrap">{t.public.correct}/{t.public.n} · {pct(t.public.accuracy)}</span></td>
           <td className="p-3 text-right tabular-nums"><span className="whitespace-nowrap">{t.sealed.correct}/{t.sealed.n} · {pct(t.sealed.accuracy)}</span></td>
           <td className="p-3 text-right tabular-nums">{unitCost(t.cost.usd_per_1000)}</td>
-          <td className="p-3 text-right tabular-nums">{pct(t.cost.coverage)}</td>
           {all && <td className="p-3 text-right tabular-nums whitespace-nowrap">{time(t.speed.raw_p50_s)} / {time(t.speed.raw_p95_s)}</td>}
         </tr>;
       })}</tbody>
@@ -57,9 +93,10 @@ function ScoreBars({ systems, track }: { systems: any[]; track: Track }) {
   const rows = [...systems].sort((x, y) => y.tracks[track].composite.score - x.tracks[track].composite.score);
   return <ol className="mt-4 grid gap-2" data-bh-mm-bars={track}>{rows.map((s, i) => {
     const v = s.tracks[track].composite.score;
+    const gate = gateOf(s.tracks[track], s);
     const color = i === 0 ? 'bg-amber-400' : s.api_flag ? 'bg-pink-400' : 'bg-teal-400';
     return <li key={s.key} className="grid grid-cols-[minmax(0,11rem)_1fr_3.2rem] items-center gap-3 sm:grid-cols-[minmax(0,17rem)_1fr_3.5rem]">
-      <span className="min-w-0 break-words text-sm font-semibold leading-tight" title={s.name}>{i + 1}. {s.name}{s.api_flag && <span className="ml-1 whitespace-nowrap text-[0.68rem] font-bold text-accent">API</span>}</span>
+      <span className="min-w-0 break-words text-sm font-semibold leading-tight" title={s.name}>{i + 1}. <SystemName name={s.name} gate={gate} />{s.api_flag && <span className="ml-1 whitespace-nowrap text-[0.68rem] font-bold text-accent">API</span>}</span>
       <span className="h-5 rounded-md bg-black/10 dark:bg-white/10"><span className={`block h-full rounded-md ${color}`} style={{ width: `${Math.max(0.5, v)}%` }} /></span>
       <span className="text-right font-bold tabular-nums">{score(v)}</span>
     </li>;
@@ -78,7 +115,7 @@ function CandidateCoverageTable({ candidates }: { candidates: any[] }) {
       </tr></thead>
       <tbody>{candidates.map((candidate: any) => <tr key={candidate.candidate} className="border-t border-line align-top">
         <th scope="row" className="p-3 font-semibold">{candidate.candidate}</th>
-        <td className="p-3 text-xs">{candidate.source_revision}</td>
+        <td className="p-3 text-xs"><code title={candidate.source_revision}>{String(candidate.source_revision).slice(0, 12)}</code></td>
         <td className="p-3 text-xs">{candidate.access}</td>
         <td className="p-3 font-semibold">{candidate.status}</td>
         <td className="p-3">{candidate.reason}</td>
@@ -92,7 +129,6 @@ export async function MultimodalPreviewContent() {
   const s = a.split;
   const djevSpark = a.ranking.find((x: any) => x.key === 'djev_spark_nvfp4');
   const photoSealed = djevSpark.tracks.everyday_photo.sealed;
-  const topFive = a.ranking.slice(0, 5);
   const familyRows = Object.entries(s.family_counts) as [string, FamilyCount][];
   const systemsOverAllowance = a.ranking.filter((row: any) => row.tracks.all.matched_gap_pp > a.gap_allowance_pp).length;
   const reasons = s.public_reason_counts;
@@ -108,33 +144,36 @@ export async function MultimodalPreviewContent() {
 
     <section className="mt-10" aria-labelledby="bars-heading">
       <h2 id="bars-heading" className="text-2xl font-semibold">Composite score</h2>
-      <p className="bh-muted mt-1 text-sm">Whole benchmark, {s.items_total} decisions. Bars include all {a.n_systems} systems. Pink bars are hosted APIs; Gemma used Autoloops and no provider no-retention claim is made. The four axes and Jev-class gates are in the table below.</p>
+      <p className="bh-muted mt-1 text-sm">Whole benchmark, {s.items_total} decisions. Bars include all {a.n_systems} systems. Pink bars are hosted APIs; Gemma used Autoloops and no provider no-retention claim is made. A system whose Cost or Calibration axis falls under the gate scores 0; the row says which gate it is.</p>
       <ScoreBars systems={a.ranking} track="all" />
     </section>
+
+    <section className="mt-10 max-w-none" aria-labelledby="overall-heading">
+      <h2 id="overall-heading" className="text-2xl font-semibold">Full ranking</h2>
+      <p className="bh-muted mt-2 max-w-5xl text-sm">Ranked by the composite score: equal-weight Intelligence, Calibration, Speed and Cost axes, then the unchanged Jev-class gates. Matched gap is signed public-minus-sealed accuracy within the matched families. {systemsOverAllowance === 0 ? `No system currently exceeds the ${a.gap_allowance_pp} pp allowance.` : `${systemsOverAllowance} systems currently exceed the ${a.gap_allowance_pp} pp allowance.`} Hosted systems are marked API because their providers received sealed images and questions; the Gemma 4 endpoint is identified separately in the exposure note.</p>
+      <RankingTable systems={a.ranking} track="all" all />
+    </section>
+
     <ImageJevRadar systems={a.ranking} />
+    <ImageJevExamples />
 
-    <section className="mt-8 max-w-6xl rounded-xl border border-emerald-800 bg-emerald-950/30 p-5" aria-labelledby="top-five-heading">
-      <h2 id="top-five-heading" className="text-xl font-semibold">Top five by composite score</h2>
-      <p className="bh-muted mt-1 text-sm">The ranking uses the frozen v0.1 method and clean split.</p>
-      <ol className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-5">{topFive.map((row: any, i: number) => <li key={row.key} className="rounded-lg border border-line bg-[var(--surface)] p-3">
-        <span className="bh-muted text-xs">Rank {i + 1}</span><p className="mt-1 font-semibold">{row.name}{row.api_flag && <span className="ml-2 rounded-full border border-accent px-2 py-0.5 text-[0.68rem] text-accent">API</span>}</p><p className="mt-1 tabular-nums">{score(row.tracks.all.composite.score)}</p>{row.previous_rank != null && <p className="bh-muted mt-1 text-xs">Earlier split: #{row.previous_rank} · {score(row.previous_score)}</p>}
-      </li>)}</ol>
-    </section>
-
-    <section className="mt-10 max-w-6xl rounded-xl border-2 border-emerald-700 bg-emerald-50 p-5 text-emerald-950 shadow-sm dark:bg-emerald-950 dark:text-emerald-100" data-bh-mm-split-disposition={s.disposition.status}>
-      <h2 className="text-lg font-bold">Clean split — meets the approved one-third / two-thirds target</h2>
-      <p className="mt-2 text-sm">The split is now {s.items_public} public / {s.items_sealed} sealed ({s.public_percent.toFixed(1)}% / {s.sealed_percent.toFixed(1)}%). The public part is unchanged. The sealed part is {s.kept_sealed} never-exposed v0.1 items plus {s.fresh_sealed} fresh items from our private synthetic rotation pool, and all {a.n_systems} systems were re-run on the fresh items with their original settings. {s.items_retired} legacy items are retired and not scored. {s.disposition.frozen_before_results}</p>
-    </section>
-
-    <section className="mt-7 grid max-w-6xl gap-4 sm:grid-cols-2 lg:grid-cols-4" aria-label="Benchmark size">
-      <article className="bh-panel p-4"><p className="bh-eyebrow">Public / sealed split</p><p className="mt-1 text-2xl font-bold">{s.items_public} / {s.items_sealed}</p><p className="bh-muted mt-1 text-sm">{s.public_percent.toFixed(1)}% public · {s.sealed_percent.toFixed(1)}% sealed · was {s.previous_split.public} / {s.previous_split.sealed}</p></article>
-      <article className="bh-panel p-4"><p className="bh-eyebrow">Licensed real-source items</p><p className="mt-1 text-2xl font-bold">{s.licensed_core_total} items</p><p className="bh-muted mt-1 text-sm">{s.licensed_core_public} public · {s.licensed_core_sealed} sealed · {s.items_retired} retired</p></article>
-      <article className="bh-panel p-4"><p className="bh-eyebrow">Fresh sealed items</p><p className="mt-1 text-2xl font-bold">{s.fresh_sealed} items</p><p className="bh-muted mt-1 text-sm">Our own synthetic renders and photos · {s.pool_core_sealed} core · {s.everyday_photo_sealed_fresh} everyday photos</p></article>
-      <article className="bh-panel p-4"><p className="bh-eyebrow">Synthetic share</p><p className="mt-1 text-2xl font-bold">{s.synthetic_share_percent.toFixed(1)}%</p><p className="bh-muted mt-1 text-sm">{s.synthetic_total}/{s.items_total} scored items are our own synthetic content</p></article>
+    <section className="mt-10 max-w-6xl" aria-labelledby="track-heading">
+      <h2 id="track-heading" className="text-2xl font-semibold">Results by track</h2>
+      <p className="bh-muted mt-2 max-w-5xl text-sm">Each track is ranked on its own public and sealed items. The licensed core and synthetic everyday-photo results remain separately visible.</p>
+      <article className="mt-6" aria-labelledby="core-heading"><h3 id="core-heading" className="text-xl font-semibold">Core · {s.core_total} items</h3><p className="bh-muted mt-1 text-sm">{s.core_public} public · {s.core_sealed} sealed: {s.licensed_core_sealed} real-source items and {s.pool_core_sealed} fresh synthetic pool items (documents, charts, inventory, safety).</p><RankingTable systems={a.ranking} track="core" /></article>
+      <article className="mt-10" aria-labelledby="photo-heading"><h3 id="photo-heading" className="text-xl font-semibold">Everyday photo decisions · {s.everyday_photo_total} synthetic items</h3><p className="bh-muted mt-1 text-sm">{s.everyday_photo_public} public images from the promo set; {s.everyday_photo_sealed} sealed: {s.everyday_photo_sealed - s.everyday_photo_sealed_fresh} variants from the reviewed v0.1 candidate pool across {s.everyday_photo_situations} matched situations and {s.everyday_photo_sealed_fresh} fresh pool photos. Ambiguous labels were dropped after visual, two-model and gold-blind human checks. No brands and no focused faces.</p><RankingTable systems={a.ranking} track="everyday_photo" /></article>
+      <p className="mt-4 rounded-lg border border-line p-4 text-sm" data-bh-djev-spark-sealed-photo><b>djev-spark sealed photo result:</b> {photoSealed.correct}/{photoSealed.n} sealed decisions · {pct(photoSealed.accuracy)}. It saw the public promo images in an earlier inference-only video run, with no training; this sealed score is the independent measurement for it.</p>
     </section>
 
     <section className="mt-10 max-w-6xl" aria-labelledby="split-heading">
       <h2 id="split-heading" className="text-2xl font-semibold">Split</h2>
+      <p className="mt-3 text-sm">The split is {s.items_public} public / {s.items_sealed} sealed ({s.public_percent.toFixed(1)}% / {s.sealed_percent.toFixed(1)}%). The public part is unchanged. The sealed part is {s.kept_sealed} never-exposed v0.1 items plus {s.fresh_sealed} fresh items from our private synthetic rotation pool, and all {a.n_systems} systems were re-run on the fresh items with their original settings. {s.items_retired} legacy items are retired and not scored. {s.disposition.frozen_before_results}</p>
+      <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" aria-label="Benchmark size">
+        <article className="bh-panel p-4"><p className="bh-eyebrow">Public / sealed split</p><p className="mt-1 text-2xl font-bold">{s.items_public} / {s.items_sealed}</p><p className="bh-muted mt-1 text-sm">{s.public_percent.toFixed(1)}% public · {s.sealed_percent.toFixed(1)}% sealed · was {s.previous_split.public} / {s.previous_split.sealed}</p></article>
+        <article className="bh-panel p-4"><p className="bh-eyebrow">Licensed real-source items</p><p className="mt-1 text-2xl font-bold">{s.licensed_core_total} items</p><p className="bh-muted mt-1 text-sm">{s.licensed_core_public} public · {s.licensed_core_sealed} sealed · {s.items_retired} retired</p></article>
+        <article className="bh-panel p-4"><p className="bh-eyebrow">Fresh sealed items</p><p className="mt-1 text-2xl font-bold">{s.fresh_sealed} items</p><p className="bh-muted mt-1 text-sm">Our own synthetic renders and photos · {s.pool_core_sealed} core · {s.everyday_photo_sealed_fresh} everyday photos</p></article>
+        <article className="bh-panel p-4"><p className="bh-eyebrow">Synthetic share</p><p className="mt-1 text-2xl font-bold">{s.synthetic_share_percent.toFixed(1)}%</p><p className="bh-muted mt-1 text-sm">{s.synthetic_total}/{s.items_total} scored items are our own synthetic content</p></article>
+      </div>
       <div className="bh-panel mt-4 space-y-3 p-5 text-sm">
         <p><b>Public</b> means an item was already exposed anywhere. That includes all {reasons.mind2web_public_only} Mind2Web-derived items because Kev's training data overlaps Mind2Web; the {reasons.shown_in_promo_videos} promo photos shown in videos; the {reasons.shown_on_wip_page_and_status_video} example cards on this page and in the status video; and {reasons['in_public_repo_2026-09-21_preview']} source rows in the public site repository since the 21 Sep preview. The split also counts {reasons.image_in_public_repo} image asset already present in that repository. Every scored item that has never been exposed is sealed.</p>
         <p><b>Sealed</b> is {s.kept_sealed} never-exposed v0.1 items plus {s.fresh_sealed} fresh items drawn from our private synthetic rotation pool (documents, charts, inventory and safety scenes, and everyday photos). The draw was stratified by family and difficulty with a seeded draw, and the split counts and hashes were frozen before any system saw a fresh item. Computer Use and Browser Use pool items were excluded because those tracks stay separate. Existing item-level outputs are reused for the public and kept sealed items; every system was run on the fresh items with the same code, pinned revisions, prompts and settings as its original run.</p>
@@ -178,28 +217,6 @@ export async function MultimodalPreviewContent() {
       <p className="mt-4 rounded-lg border border-amber-600 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-950 dark:bg-amber-950/40 dark:text-amber-100" role="note" data-bh-mm-unmeasured>Not measured yet — no scores. {a.preview_tracks.scoring_status}</p>
     </section>
 
-    <section className="mt-10 max-w-6xl" aria-labelledby="candidate-coverage-heading">
-      <h2 id="candidate-coverage-heading" className="text-2xl font-semibold">Candidate coverage and review status</h2>
-      <p className="bh-muted mt-2 max-w-5xl text-sm">The ranking covers {a.n_systems} measured configurations. {a.candidate_coverage.included_note} Candidates below have no score unless listed in the ranking. Requested rows remain visible with the exact access or review blocker; exclusions describe the reviewed interface, license or duplicate status.</p>
-      <CandidateCoverageTable candidates={a.candidate_coverage.candidates} />
-    </section>
-
-    <ImageJevExamples />
-
-    <section className="mt-9 max-w-none" aria-labelledby="overall-heading">
-      <h2 id="overall-heading" className="text-2xl font-semibold">Full ranking</h2>
-      <p className="bh-muted mt-2 max-w-5xl text-sm">Ranked by the composite score: equal-weight Intelligence, Calibration, Speed and Cost axes, then the unchanged Jev-class gates. Matched gap is signed public-minus-sealed accuracy within the matched families; the penalty column shows the Intelligence multiplier. {systemsOverAllowance === 0 ? `No system currently exceeds the ${a.gap_allowance_pp} pp allowance.` : `${systemsOverAllowance} systems currently exceed the ${a.gap_allowance_pp} pp allowance.`} Hosted systems are marked API because their providers received sealed images and questions; the Gemma 4 endpoint is identified separately in the exposure note.</p>
-      <RankingTable systems={a.ranking} track="all" all />
-    </section>
-
-    <section className="mt-10 max-w-6xl" aria-labelledby="track-heading">
-      <h2 id="track-heading" className="text-2xl font-semibold">Results by track</h2>
-      <p className="bh-muted mt-2 max-w-5xl text-sm">Each track is ranked on its own public and sealed items. The licensed core and synthetic everyday-photo results remain separately visible.</p>
-      <article className="mt-6" aria-labelledby="core-heading"><h3 id="core-heading" className="text-xl font-semibold">Core · {s.core_total} items</h3><p className="bh-muted mt-1 text-sm">{s.core_public} public · {s.core_sealed} sealed: {s.licensed_core_sealed} real-source items and {s.pool_core_sealed} fresh synthetic pool items (documents, charts, inventory, safety).</p><RankingTable systems={a.ranking} track="core" /></article>
-      <article className="mt-10" aria-labelledby="photo-heading"><h3 id="photo-heading" className="text-xl font-semibold">Everyday photo decisions · {s.everyday_photo_total} synthetic items</h3><p className="bh-muted mt-1 text-sm">{s.everyday_photo_public} public images from the promo set; {s.everyday_photo_sealed} sealed: {s.everyday_photo_sealed - s.everyday_photo_sealed_fresh} variants from the reviewed v0.1 candidate pool across {s.everyday_photo_situations} matched situations and {s.everyday_photo_sealed_fresh} fresh pool photos. Ambiguous labels were dropped after visual, two-model and gold-blind human checks. No brands and no focused faces.</p><RankingTable systems={a.ranking} track="everyday_photo" /></article>
-      <p className="mt-4 rounded-lg border border-line p-4 text-sm" data-bh-djev-spark-sealed-photo><b>djev-spark sealed photo result:</b> {photoSealed.correct}/{photoSealed.n} sealed decisions · {pct(photoSealed.accuracy)}. It saw the public promo images in an earlier inference-only video run, with no training; this sealed score is the independent measurement for it.</p>
-    </section>
-
     <section className="mt-10 max-w-6xl" aria-labelledby="method-heading">
       <h2 id="method-heading" className="text-2xl font-semibold">Method and limitations</h2>
       <div className="bh-panel mt-4 space-y-4 p-5 text-sm">
@@ -213,6 +230,13 @@ export async function MultimodalPreviewContent() {
         <p><b>Exposure.</b> GPT-6 Luna and Gemini 3.8 Flash previously saw public promo-photo candidates and sealed-photo candidates in stateless label-check calls, including candidates later dropped. The checks showed no gold; human gold-blind adjudication decided inclusion. GPT-6 Luna is the saved low-reasoning-effort setting. Four OpenRouter systems used the requested no-retention route with fallback disabled; Gemma used the Autoloops endpoint and is API-flagged, with no no-retention claim made here. Local systems ran without network, credentials, or gold maps. {a.exposure.fresh_pool}</p>
       </div>
     </section>
+
+    <details className="mt-10 max-w-6xl rounded-xl border border-line bg-[var(--surface)] p-5" data-bh-mm-candidates-details>
+      <summary className="cursor-pointer text-2xl font-semibold">Requested and excluded candidates ({a.candidate_coverage.candidates.length})</summary>
+      <p className="bh-muted mt-3 max-w-5xl text-sm">The ranking covers {a.n_systems} measured configurations. {a.candidate_coverage.included_note} Candidates below have no score unless listed in the ranking. Requested rows remain visible with the exact access or review blocker; exclusions describe the reviewed interface, license or duplicate status.</p>
+      <CandidateCoverageTable candidates={a.candidate_coverage.candidates} />
+    </details>
+
     <p className="bh-muted mt-9 max-w-6xl border-t border-line pt-4 text-xs">Image JevBench is a separate benchmark from the text-only JevBench Score. Sealed item-level content remains private. Public/sealed item counts, accuracy, track and score breakdowns are aggregates. Results describe these exact tested configurations and do not establish absence from model training data.</p>
   </>;
 }

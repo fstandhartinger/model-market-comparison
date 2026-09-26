@@ -138,20 +138,30 @@ const share = (w: JevWeights, axis: JevAxis) => { const total = JEV_AXES.reduce(
 
 function JevWeightSliders({ position, weights, setWeights, presets }: { position: 'above' | 'below'; weights: JevWeights; setWeights: (w: JevWeights) => void; presets: JevPreset[] }) {
   const official = isOfficialWeights(weights);
+  // F-199 (pass 36): on a phone the sliders fold into a closed "Adjust weights" disclosure; a reader who set custom
+  // weights (?w= on load or a non-official preset) sees them open. Desktops always show the sliders (globals.css).
+  const [moreOpen, setMoreOpen] = useState(false);
+  useEffect(() => { if (!official) setMoreOpen(true); }, [official]);
+  // Desktop always shows the sliders without a click (the disclosure is a phone-only fold); the summary
+  // is display:none at ≥640 px, so opening it there is invisible and the fold stays phone behaviour.
+  useEffect(() => { if (window.matchMedia('(min-width: 640px)').matches) setMoreOpen(true); }, []);
   return <div className={`bh-jev-weights ${position === 'above' ? 'mt-4' : 'mt-4'}`} role="group" aria-label={`Axis weights (${position} the chart)`} data-bh-jev-weights={position}>
-    <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5">
-      <span className="text-sm font-semibold">Weights:</span>
-      {presets.map((p) => <button key={p.name} type="button" className="bh-jev-preset" aria-pressed={sameWeights(weights, p.weights)} onClick={() => setWeights(p.weights)} data-bh-jev-preset={p.name}>{p.name}</button>)}
+    <div className="bh-jev-presetrow flex flex-nowrap items-center gap-x-2 overflow-x-auto sm:flex-wrap sm:gap-y-1.5">
+      <span className="shrink-0 text-sm font-semibold">Weights:</span>
+      {presets.map((p) => <button key={p.name} type="button" className="bh-jev-preset shrink-0 snap-start" aria-pressed={sameWeights(weights, p.weights)} onClick={() => setWeights(p.weights)} data-bh-jev-preset={p.name}>{p.name}</button>)}
       {/* F-196 (Fable pass 36): the official state is already said by the pressed preset and the badge under the h2; only the custom state needs a label here. */}
-      {!official && <span className="bh-jevc-notdefault ml-1">Custom — not the official ranking</span>}
+      {!official && <span className="bh-jevc-notdefault ml-1 shrink-0">Custom — not the official ranking</span>}
     </div>
-    <div className="mt-2 grid grid-cols-2 gap-x-4 gap-y-1 sm:grid-cols-4">
-      {JEV_AXES.map((axis) => <label key={axis} className="block text-[12.5px]">
-        <span className="flex justify-between"><span>{AXIS_NAME[axis]}</span><b className="tabular">{share(weights, axis)}%</b></span>
-        <input type="range" min={0} max={100} step={5} value={weights[axis]} aria-valuetext={`${share(weights, axis)} percent`}
-          onChange={(e) => setWeights({ ...weights, [axis]: Number(e.target.value) })} data-bh-jev-weight={axis} />
-      </label>)}
-    </div>
+    <details className="bh-jev-weights-more mt-2 sm:mt-0" data-bh-jev-weights-more open={moreOpen} onToggle={(e) => setMoreOpen(e.currentTarget.open)}>
+      <summary className="cursor-pointer text-sm font-semibold text-accent sm:hidden">Adjust weights ↓</summary>
+      <div className="bh-jev-weights-grid mt-2 grid grid-cols-2 gap-x-4 gap-y-1 sm:grid-cols-4">
+        {JEV_AXES.map((axis) => <label key={axis} className="block text-[12.5px]">
+          <span className="flex justify-between"><span>{AXIS_NAME[axis]}</span><b className="tabular">{share(weights, axis)}%</b></span>
+          <input type="range" min={0} max={100} step={5} value={weights[axis]} aria-valuetext={`${share(weights, axis)} percent`}
+            onChange={(e) => setWeights({ ...weights, [axis]: Number(e.target.value) })} data-bh-jev-weight={axis} />
+        </label>)}
+      </div>
+    </details>
     {position === 'below' && <p className="bh-muted mt-1 text-[11.5px] leading-snug">Weights are relative: each axis counts in proportion to its slider. The score stays a weighted harmonic mean with the low-axis gates; an axis at 0 drops out together with its gate. Only equal weights give the official JevBench Score and rank.</p>}
   </div>;
 }
@@ -236,16 +246,16 @@ export function JevScoreChart({ revision, rows: officialRows, rankedCount, newLa
     <div className="bh-jev-viewby mt-4" data-bh-jev-viewby>
       <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5" role="group" aria-label="View the field by">
         <span className="text-sm font-semibold">View by:</span>
-        {VIEWS.map(([v, label]) => <button key={v} type="button" className="bh-viewby-btn" aria-pressed={view === v} onClick={() => choose(v)} data-bh-jev-view={v}>{label}</button>)}
+        {VIEWS.map(([v, label]) => <button key={v} type="button" className="bh-viewby-btn" aria-pressed={view === v} onClick={() => choose(v)} data-bh-jev-view={v} {...(v === 'intelligence' ? { 'data-bh-jev14-sort-intelligence': '' } : {})}>{label}</button>)}
         {capabilityHref && <a className="bh-viewby-btn is-jump" href={capabilityHref} data-bh-jev-view="capability" title="Back to the Capability ranking at the top of the page">Capability ↑</a>}
       </div>
       {/* CR-152 put the release's approved top-five sentence (artifact.top_five_note) above the chart; CR-151 shows it
           verbatim beside the switch it points to. The computed sentence is the fallback for releases without one. */}
       {approvedNote ? <p className="mt-2 text-[13px] leading-snug" data-bh-jev14-top-five-note>
         {approvedNote}{' '}
-        {view === 'intelligence'
-          ? <button type="button" className="bh-inline-btn whitespace-nowrap font-semibold text-accent underline" onClick={() => { choose('overall'); if (custom) setWeights(OFFICIAL_WEIGHTS); setSort(OFFICIAL); }} data-bh-jev14-sort-official>Back to the official order</button>
-          : <button type="button" className="bh-inline-btn whitespace-nowrap font-semibold text-accent underline" onClick={() => choose('intelligence')} data-bh-jev14-sort-intelligence>Sort by Intelligence ↓</button>}
+        {/* F-199 (pass 36): one control per sort — the inline intelligence sort button went; the
+            Intelligence View-by pill carries data-bh-jev14-sort-intelligence instead. The restore button stays. */}
+        {view === 'intelligence' && <button type="button" className="bh-inline-btn whitespace-nowrap font-semibold text-accent underline" onClick={() => { choose('overall'); if (custom) setWeights(OFFICIAL_WEIGHTS); setSort(OFFICIAL); }} data-bh-jev14-sort-official>Back to the official order</button>}
       </p> : fairness ? <p className="bh-muted mt-2 text-[13px] leading-snug" data-bh-jev-fairness>
         Among the top five, <b className="text-[color:var(--text)]">{fairness.topName}</b> is still the strongest reasoner (Intelligence {one(fairness.topInt)} vs {one(fairness.leadInt)}){fairness.leadsOn.length > 0 ? <>; <b className="text-[color:var(--text)]">{fairness.leadName}</b> leads on {joinWords(fairness.leadsOn)}</> : null}. JevBench weighs Intelligence, Calibration, Speed and Cost equally —{' '}
         <button type="button" className="bh-inline-btn text-accent underline" onClick={() => choose('intelligence')} data-bh-jev-fairness-sort>view by Intelligence</button> for raw reasoning.

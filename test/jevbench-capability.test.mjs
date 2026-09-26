@@ -93,7 +93,8 @@ test('CR-169 / D207: the ⓘ trigger is a small inline glyph that does not stret
   // 44 px tall control, which pushed the first Jev-class row down until it sat behind the compact
   // fast-lane banner on a 390 px phone (review gate 2026-09-25T19:20Z, D207). The trigger keeps a
   // 40 px tap area with the `before:` layer but must stay visually one line tall.
-  const source = readFileSync(path.join(root, 'components/JevCapabilityRanking.tsx'), 'utf8');
+  // F-200 (pass 36): the trigger lives in the client tip component now (JevCapabilityTip.tsx).
+  const source = readFileSync(path.join(root, 'components/JevCapabilityTip.tsx'), 'utf8');
   const trigger = source.match(/<button[^>]*bh-jev-info[^>]*>/);
   assert.ok(trigger, 'the ranking ⓘ trigger is present');
   assert.match(trigger[0], /min-h-0/, 'the trigger opts out of the 44 px button floor');
@@ -104,9 +105,22 @@ test('CR-169 / D207: the ⓘ trigger is a small inline glyph that does not stret
 test('CR-169 follow-up: long truncated names keep their ⓘ trigger visible', () => {
   // On a 390 px phone the name ellipsis also clipped the trigger, so rows with long names had no tap target.
   const source = readFileSync(path.join(root, 'components/JevCapabilityRanking.tsx'), 'utf8');
-  const nameCell = source.match(/<span className="col-start-2 row-start-1([^"]*)"[^>]*>\s*<span className="min-w-0 truncate">[\s\S]*?<\/span>\s*(?:\{\/\*[\s\S]*?\*\/\}\s*)?<button[^>]*bh-jev-info/);
+  const nameCell = source.match(/<span className="col-start-2 row-start-1([^"]*)"[^>]*>\s*<span className="min-w-0 truncate">[\s\S]*?<\/span>\s*(?:\{\/\*[\s\S]*?\*\/\}\s*)?<JevCapabilityTip /);
   assert.ok(nameCell, 'the ⓘ trigger is a sibling of the truncated name, not inside it');
   assert.doesNotMatch(nameCell[1], /truncate/, 'the cell that holds the trigger does not clip it');
+});
+
+test('F-200 (pass 36): the Capability ⓘ panel is a definition list and the row carries no 300-char title', () => {
+  const source = readFileSync(path.join(root, 'components/JevCapabilityRanking.tsx'), 'utf8');
+  const tip = readFileSync(path.join(root, 'components/JevCapabilityTip.tsx'), 'utf8');
+  assert.match(source, /<dl className="[^"]*" data-bh-jev-capability-tip-dl>[\s\S]*?Rank<\/dt>[\s\S]*?<\/dl>/);
+  const dts = [...source.matchAll(/<dt /g)].length;
+  assert.ok(dts >= 7, `≥ 7 definition rows (${dts})`);
+  assert.doesNotMatch(source, /title=\{tooltip\}/, 'the long native tooltip on the row is gone');
+  assert.match(source, /data-bh-jev-capability-tooltip/);
+  // desktop keeps the hover panel (globals.css gates .bh-jev-cap-tip off under 640 px); touch opens the modal
+  assert.match(tip, /aria-label="Close"/);
+  assert.match(tip, /lastPointerType\.current === 'touch' && window\.innerWidth < 640/);
 });
 
 test('F-184 (Fable pass 34): the capability rows share one height and the header names the value columns', () => {

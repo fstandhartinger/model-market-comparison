@@ -43,7 +43,10 @@ test('CR-152 serves v1.4.2 as the live board with a pinned page, API and fairnes
   assert.match(board, /data-bh-jev14-top-five-note/);
   assert.match(board, /aria-pressed=\{view === v\}/);
   assert.match(board, /\['intelligence', 'Intelligence'\]/);
-  assert.match(board, /onClick=\{\(\) => choose\('intelligence'\)\} data-bh-jev14-sort-intelligence/);
+  // F-199 (iter235): the inline "Sort by Intelligence ↓" button went — the Intelligence View-by pill is the one
+  // control and now carries the marker attribute; no source may render a second "Sort by …" CTA in the figure.
+  assert.match(board, /v === 'intelligence' \? \{ 'data-bh-jev14-sort-intelligence': '' \} : \{\}/);
+  assert.doesNotMatch(board, /Sort by Intelligence ↓/);
   assert.doesNotMatch(board, /<details[^>]*data-bh-jev14-sort-intelligence/);
   assert.match(sitemap, /"\/jev-models\/v1\.4\.2"/);
   assert.match(sitemap, /"\/jev-models\/v1\.4\.1"/);

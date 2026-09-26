@@ -23,7 +23,8 @@ test('F-195: no SVG text in the bubble charts is set below the 10 px floor', () 
 });
 
 test('F-196: the weight-slider group labels only the custom state', () => {
-  assert.match(board, /\{!official && <span className="bh-jevc-notdefault ml-1">Custom — not the official ranking<\/span>\}/);
+  // F-199 added shrink-0 so the pill never compacts inside the phone's sideways-scrolling preset row.
+  assert.match(board, /\{!official && <span className="bh-jevc-notdefault ml-1 shrink-0">Custom — not the official ranking<\/span>\}/);
   assert.doesNotMatch(board, /<span className="bh-jevc-official ml-1">Official<\/span>/);
   // the badge under the h2 still says Official for the equal-weight state
   assert.match(board, /<span className="bh-jevc-official mr-2">Official<\/span>/);

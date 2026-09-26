@@ -685,3 +685,24 @@ body.bh-fastlane-visible .bh-custom-evaluation-toast { bottom: calc(var(--bh-fas
 .bh-jev-weights input[type="range"] { width: 100%; accent-color: rgb(var(--accent, 56 189 248)); min-height: 28px; }
 .bh-jev-preset { border: 1px solid rgb(var(--line)); border-radius: 999px; padding: .15rem .6rem; font-size: 12px; min-height: 28px; }
 .bh-jev-preset[aria-pressed="true"] { border-color: currentColor; font-weight: 600; }
+
+/* F-199 (pass 36): on a phone the preset row is one sideways-scrolling line whose right edge fades so the
+   overflow is visible; the sliders sit in a closed disclosure. At 640 px and up, the disclosure always shows
+   the sliders (like the pre-fold layout) and the row wraps as before. */
+.bh-jev-presetrow { scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.bh-jev-presetrow::-webkit-scrollbar { display: none; }
+@media (max-width: 639.98px) {
+  .bh-jev-presetrow { max-width: 100%; mask-image: linear-gradient(to right, #000 82%, transparent 100%); -webkit-mask-image: linear-gradient(to right, #000 82%, transparent 100%); }
+}
+@media (min-width: 640px) {
+  .bh-jev-weights .bh-jev-presetrow { overflow-x: visible; scroll-snap-type: none; }
+  details.bh-jev-weights-more:not([open]) > .bh-jev-weights-grid { display: grid; }
+  details.bh-jev-weights-more > summary { display: none; }
+}
+
+/* F-200 (pass 36): the Capability ⓘ floating panel is pointer-device desktop only; a tapped row on a
+   phone-width viewport must not show it (the tap opens the modal instead). The Tailwind
+   group-hover/group-focus-within classes stay for documentation, the media query is the gate. */
+@media (max-width: 639.98px) {
+  .group:hover .bh-jev-cap-tip, .group:focus-within .bh-jev-cap-tip { display: none !important; }
+}

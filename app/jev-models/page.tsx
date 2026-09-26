@@ -168,7 +168,7 @@ export default async function JevModelsPage() {
       <h1 className="mt-1 text-3xl font-bold tracking-tight">JevBench by Benchmark Heaven</h1>
       <p className="mt-3 max-w-3xl text-lg" data-bh-jev-own>JevBench is <b>Benchmark Heaven&apos;s own benchmark</b> for Jev-class decision models: state and a bounded rubric in, a typed answer out.</p>
       <p className="mt-3 max-w-3xl text-sm">Making decisions from images? <a className="text-accent font-semibold underline" href="/image-jev-bench" data-bh-image-jev-link>Explore Image JevBench v0.1 and compare its systems</a>.</p>
-      <JevBoardIntentLinks />
+      {/* F-197 (pass 36): the guides moved below the Jev-class method panel; the head is the message. */}
       <p className="bh-muted mt-3 max-w-3xl text-xs leading-relaxed" data-bh-jev-meta>
         Scored {day(v14.generated)} · protocol <code>{v14.artifact.protocol}</code> · {v14.publicDecisions} public + {v14.sealedDecisions} sealed aggregate decisions · one request at a time from a server in Germany ·{' '}
         <a className="text-accent underline" href={JEVBENCH_REPO}>harness, public tasks &amp; scoring rules (MIT)</a> ·{' '}
@@ -183,6 +183,8 @@ export default async function JevModelsPage() {
     {/* Florian 25 Sep 2026: new page order — 1. Capability ranking of Jev-class systems, 2. bubble charts, 3. the official
         composite score with weight sliders, sorting and filters, 4. compare view, axes table and the rest as before. */}
     <JevCapabilityRanking systems={v14.systems} revision={v14.revision} officialHref="#jev14-chart-title" />
+    {/* F-197 (pass 36): the guides follow the Jev-class method panel (#jev-class-method), before the bubbles. */}
+    <JevBoardIntentLinks />
     <JevBubbleCharts points={jevClass.points} costLimit={jevClass.limits.cost} referenceName="Jev" />
 
     <JevModelsV14Board artifact={v14.artifact} sha256={v14.sha256} previous={previous} capabilityHref="#jev-capability" sealedFamilyN={v14Result.sealedFamilyN} compactMobile />

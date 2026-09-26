@@ -4,6 +4,7 @@ import { jevClassRows, type JevClassResult, type JevClassRow } from '../lib/jevb
 import { logBounds, costAxisPosition, costTicks, shortName, usd } from './JevCapabilityChart';
 import type { JevBubblePoint } from './JevBubbleChart';
 import { jevSourceUrl } from './jevSystemLinks';
+import { JevCapabilityTip } from './JevCapabilityTip';
 import { JEV_TYPE_LABEL, jevLegendTypes, jevTypeVarName } from './jevTypes';
 
 // Florian 25 Sep 2026 (DECISIONS.md): the page headline is the Capability ranking — the mean of Intelligence and
@@ -26,16 +27,27 @@ function RankingRow({ item, rank, costBounds, referenceCost, note }: {
   const name = shortName(row.display);
   const costRatio = cost == null || referenceCost <= 0 ? 'unknown' : `${(cost / referenceCost).toFixed(2)}× Jev`;
   const costWidth = cost == null ? 0 : cost === 0 ? 2 : costAxisPosition(cost, costBounds);
-  const tooltip = `${row.display}. Capability ${one(capability)}. Intelligence Score ${intelligence == null ? 'unknown' : one(intelligence)}. Calibration ${calibration == null ? 'unknown' : one(calibration)}. Cost Score ${costScore == null ? 'unknown' : one(costScore)}. Cost ${cost == null ? 'unknown' : `${usd(cost)} per 1,000 tasks, ${costRatio}`}. Median latency ${latency == null ? 'not reported (Speed axis used where available)' : secs(latency)}. Capability rank ${rank || 'outside Jev-class'}; official rank ${row.rank == null ? 'unranked' : `#${row.rank}`}.`;
+  // F-200 (pass 36): the ⓘ panel is a definition list, not one sentence; the 300-character native title on
+  // the row is gone, the ⓘ is the way in (desktop hover/focus panel, touch modal in JevCapabilityTip).
+  const tipTitle = `${row.display} · ${JEV_TYPE_LABEL[row.class] ?? row.class}`;
+  const tipBody = <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1" data-bh-jev-capability-tip-dl>
+    <dt className="text-gray-400">Capability</dt><dd className="tabular font-semibold">{one(capability)}</dd>
+    <dt className="text-gray-400">Intelligence</dt><dd className="tabular">{intelligence == null ? 'unknown' : one(intelligence)}</dd>
+    <dt className="text-gray-400">Calibration</dt><dd className="tabular">{calibration == null ? 'unknown' : one(calibration)}</dd>
+    <dt className="text-gray-400">Cost Score</dt><dd className="tabular">{costScore == null ? 'unknown' : one(costScore)}</dd>
+    <dt className="text-gray-400">Cost per 1,000 tasks</dt><dd className="tabular">{cost == null ? 'unknown' : `${usd(cost)} (${costRatio})`}</dd>
+    <dt className="text-gray-400">Median latency</dt><dd className="tabular">{latency == null ? 'not reported (Speed axis used where available)' : secs(latency)}</dd>
+    <dt className="text-gray-400">Rank</dt><dd className="tabular">Capability {rank || 'outside Jev-class'} · official {row.rank == null ? 'unranked' : `#${row.rank}`}</dd>
+  </dl>;
   const style = { '--jev-t': `var(${jevTypeVarName(row.class)})` } as CSSProperties;
   const link = jevSourceUrl(row.key, row.repo);
   return <li className={`group relative ${grid} min-h-[43px] items-center text-[11px] sm:text-sm`} style={style}
-    data-bh-jev14-capability-row={row.key} data-bh-jev14-capability-value={capability.toFixed(3)} data-bh-jev14-cost={cost ?? ''} title={tooltip}>
+    data-bh-jev14-capability-row={row.key} data-bh-jev14-capability-value={capability.toFixed(3)} data-bh-jev14-cost={cost ?? ''}>
     <span className="bh-muted tabular col-start-1 row-start-1 text-right">{rank || '–'}</span>
     <span className="col-start-2 row-start-1 flex min-w-0 items-center sm:justify-end" title={row.display}>
       <span className="min-w-0 truncate">{link ? <a href={link} target="_blank" rel="noopener noreferrer" className="underline decoration-[rgb(var(--line))] underline-offset-2 hover:text-accent" data-bh-jev-source={row.key}>{name}</a> : name}</span>
       {/* The ⓘ sits outside the truncated name so long names keep their tap target. */}
-      <button type="button" className="bh-jev-info relative ml-1 inline-flex h-4 min-h-0 w-4 shrink-0 items-center justify-center rounded text-accent before:absolute before:-inset-3 before:content-[''] focus:outline focus:outline-2" aria-label={`Details for ${row.display}`} aria-describedby={`jev-cap-tip-${row.key}`}>ⓘ</button>
+      <JevCapabilityTip label={`Details for ${row.display}`} title={tipTitle}>{tipBody}</JevCapabilityTip>
     </span>
     <span className="col-start-2 col-end-7 row-start-2 mt-0.5 flex min-w-0 flex-col justify-center gap-[3px] sm:col-start-3 sm:col-end-4 sm:row-start-1 sm:mt-0" aria-hidden="true">
       <span className="bh-jevc-grid flex h-[10px] rounded-sm"><span className={'bh-jevc-bar' + (row.ranked ? '' : ' is-partial')} style={{ width: `${Math.max(0, Math.min(100, capability))}%` }} /></span>
@@ -49,7 +61,12 @@ function RankingRow({ item, rank, costBounds, referenceCost, note }: {
     <b className="tabular col-start-5 row-start-1 text-right sm:col-start-6 sm:text-base">{one(capability)}</b>
     <span className="tabular col-start-6 row-start-1 text-right font-mono sm:col-start-7">{cost == null ? '—' : usd(cost)}{row.cost?.kind === 'estimate' ? '*' : ''}</span>
     {note && <span className="bh-muted col-start-2 col-end-7 row-start-3 mt-0.5 text-[11px] leading-snug sm:col-start-3 sm:col-end-8 sm:row-start-2" data-bh-jev-capability-note>{note}</span>}
-    <div id={`jev-cap-tip-${row.key}`} role="tooltip" className="bh-panel pointer-events-none absolute left-0 right-0 top-full z-20 hidden max-w-[560px] p-3 text-left text-xs leading-relaxed shadow-xl group-hover:block group-focus-within:block" data-bh-jev-capability-tooltip>{tooltip}</div>
+    {/* Desktop hover/focus panel (touch gets JevCapabilityTip's modal; globals.css scopes .bh-jev-cap-tip
+        to precise pointers so a tapped row never shows the floating panel). The name and class head it. */}
+    <div role="tooltip" className="bh-panel bh-jev-cap-tip pointer-events-none absolute left-0 right-0 top-full z-20 hidden max-w-[560px] p-3 text-left text-xs leading-relaxed shadow-xl group-hover:block group-focus-within:block" data-bh-jev-capability-tooltip>
+      <p className="mb-1.5 font-semibold">{tipTitle}</p>
+      {tipBody}
+    </div>
   </li>;
 }
 
@@ -82,7 +99,9 @@ export function JevCapabilityRanking({ systems, revision, officialHref }: { syst
   const outsideBar = (r: JevClassRow) => <RankingRow key={r.row.key} item={r} rank="" costBounds={costBounds} referenceCost={reference.cost} note={`Outside: ${r.reasons.join(', ')}`} />;
   const types = jevLegendTypes(rows.map((r) => r.row.class));
 
-  return <section id="jev-capability" className="mt-8 scroll-mt-6" aria-labelledby="jev-capability-title" data-bh-jev-capability-ranking>
+  // F-197 (pass 36): mt-6 not mt-8 — with the guides nav folded out of the page head the first Capability row
+  // must sit inside the tightened 590/660 px budgets; the smaller gap is the remaining headroom.
+  return <section id="jev-capability" className="mt-6 scroll-mt-6" aria-labelledby="jev-capability-title" data-bh-jev-capability-ranking>
     <p className="bh-eyebrow">JevBench {revision} · headline ranking</p>
     <h2 id="jev-capability-title" className="mt-1 text-2xl font-bold leading-snug sm:text-3xl">Capability ranking of Jev-class systems</h2>
     <p className="mt-2 max-w-4xl text-[15px] leading-snug">

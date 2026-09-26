@@ -129,9 +129,23 @@ test('public Image JevBench route leads with the ranking and preserves aggregate
   assert.match(page, /robots: \{ index: false, follow: false/);
   assert.match(publicPage, /canonical: '\/image-jev-bench'/);
   assert.match(publicPage, /openGraph:/);
-  assert.match(page, /Top five by composite score/);
-  assert.ok(page.indexOf('id="bars-heading"') < page.indexOf('id="split-heading"'));
-  assert.ok(page.indexOf('<ImageJevRadar systems={a.ranking} />') < page.indexOf('id="split-heading"'));
+  // F-198 (pass 36, iter235): the page is its results. Order: head → Composite score → Full ranking →
+  // Compare two systems → Examples → Results by track → Split → preview tracks → Method → closed candidates.
+  assert.doesNotMatch(page, /Top five by composite score/, 'the top-five panel is gone');
+  assert.doesNotMatch(page, /Clean split/, 'the clean-split alert is gone');
+  assert.doesNotMatch(page, /approved/i, 'no review-trail wording in the copy');
+  assert.ok(page.indexOf('id="bars-heading"') < page.indexOf('id="overall-heading"'));
+  assert.ok(page.indexOf('id="overall-heading"') < page.indexOf('<ImageJevRadar systems={a.ranking} />'));
+  assert.ok(page.indexOf('<ImageJevExamples />') < page.indexOf('id="track-heading"'));
+  assert.ok(page.indexOf('id="track-heading"') < page.indexOf('id="split-heading"'));
+  assert.ok(page.indexOf('id="split-heading"') < page.indexOf('id="preview-tracks-heading"'));
+  assert.ok(page.indexOf('id="preview-tracks-heading"') < page.indexOf('id="method-heading"'));
+  assert.match(page, /Earlier split/, 'the former top-five fact is a table column');
+  assert.doesNotMatch(page, /<th[^>]*>Penalty<\/th>/, 'the ×1.000 Penalty column is dropped');
+  assert.doesNotMatch(page, /Cost coverage<\/th>/, 'Cost coverage folds into the row note');
+  assert.match(page, /data-bh-mm-gated/, 'gated rows name the gate');
+  assert.match(page, /data-bh-mm-candidates-details/, 'the candidate table sits in a disclosure');
+  assert.match(page, /Requested and excluded candidates \(/);
   assert.match(radar, /from "\.\/JevRadars"/);
   assert.match(radar, /type="search" role="combobox"/);
   assert.match(radar, /ranked\[0\]\.key/);
@@ -144,7 +158,7 @@ test('public Image JevBench route leads with the ranking and preserves aggregate
   assert.match(page, /a\.preview_tracks\.kev_flag/);
   assert.match(page, /formatMatchedGapPp\(t\.matched_gap_pp\)/);
   assert.match(page, /Gap \(matched\)/);
-  assert.match(page, /t\.penalty_multiplier\.toFixed\(3\)/);
+  assert.doesNotMatch(page, /t\.penalty_multiplier\.toFixed\(3\)/, 'no Penalty column to print');
   assert.doesNotMatch(page, /80% public|25 points/);
   assert.match(page, /data-bh-djev-spark-sealed-photo/);
   assert.match(page, /<ImageJevExamples\s*\/>/);
@@ -159,7 +173,7 @@ test('public Image JevBench route leads with the ranking and preserves aggregate
   await assert.rejects(access(new URL('../public/jevbench-multimodal-preview', import.meta.url)), 'legacy public image folder stays deleted');
   await access(new URL('../app/image-jev-bench/page.tsx', import.meta.url));
   assert.match(page, /data-bh-mm-difficulty-caveat/);
-  assert.match(page, /data-bh-mm-split-disposition/);
+  assert.doesNotMatch(page, /data-bh-mm-split-disposition/, 'the disposition alert is gone; Split says the numbers plainly');
   assert.doesNotMatch(page, /Split target deviation|deviation pending/);
   const artifact = JSON.parse(data);
   assert.equal(artifact.sealed_item_details_included, false);

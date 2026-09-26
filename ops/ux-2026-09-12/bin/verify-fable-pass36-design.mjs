@@ -45,9 +45,15 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
       check('F-194', ctx, 'toast present 7 s after load', m.tVis, JSON.stringify(m.T));
       check('F-194', ctx, 'toast does not overlap the banner', m.overlap === 0, `overlap ${m.overlap}px, toast bottom ${m.toastBottom}`);
       check('F-194', ctx, 'toast fully inside the viewport', m.inView === true, JSON.stringify(m.T));
-      await p.waitForTimeout(10500);
-      const gone = await p.evaluate(() => !document.querySelector('.bh-custom-evaluation-toast'));
-      check('F-194', ctx, 'toast has landed into the badge by 18 s', gone, '');
+      // iter235 (opencode-kimi): replaced the fixed 18 s deadline with a bounded disappearance wait.
+      // The toast's timers start at React hydration (show 6 s, land 16 s, finish 16.95 s), not at
+      // navigation start; on this heavy hub hydration can lag goto() by over a second, so an absolute
+      // 18 s budget races the last 0.45 s of the landing animation. The acceptance property is that the
+      // toast auto-lands (timer-driven) and never overlaps the banner; a disappearance wait still catches
+      // a stuck/non-landing toast within 11 s.
+      const tSeen = Date.now();
+      const gone = await p.waitForFunction(() => !document.querySelector('.bh-custom-evaluation-toast'), { timeout: 11000 }).then(() => true).catch(() => false);
+      check('F-194', ctx, 'toast has landed into the badge (auto-lands)', gone, gone ? `gone after ${Date.now() - tSeen} ms from confirm` : 'still mounted 11 s after confirm');
     }
     if (want('F-195')) {
       await p.evaluate(() => { const f = document.querySelector('[data-bh-jev-bubble]'); if (f) window.scrollTo(0, f.getBoundingClientRect().top + scrollY - 40); }); await p.waitForTimeout(700);
@@ -66,6 +72,9 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
       await p.evaluate(() => { const f = document.querySelector('[data-bh-jev14-chart]'); if (f) window.scrollTo(0, f.getBoundingClientRect().top + scrollY - 20); }); await p.waitForTimeout(500);
       const before = await p.evaluate(read);
       check('F-196', ctx, 'official state: exactly one "Official" label in the figure', before && before.official === 1 && before.custom === 0, JSON.stringify(before));
+      // iter235 (opencode-kimi): since F-199 the phone folds the slider groups into a closed disclosure;
+      // a keyboard press on a slider inside a closed <details> is a no-op, so a phone user first opens it.
+      if (mobile) await p.evaluate(() => { const d = document.querySelector('[data-bh-jev-weights="above"] details'); if (d) d.open = true; }).then(() => p.waitForTimeout(300));
       const s = p.locator('[data-bh-jev-weights="above"] [data-bh-jev-weight="intelligence"]');
       let after = null;
       try { await s.scrollIntoViewIfNeeded(); await s.focus(); for (let i = 0; i < 6; i++) await p.keyboard.press('ArrowRight'); await p.waitForTimeout(800); after = await p.evaluate(read); } catch (e) { after = { err: String(e).slice(0, 120) }; }
@@ -85,12 +94,20 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
         const first = document.querySelector('[data-bh-jev14-capability-row]');
         return { links: links.length, shown, toggleVis: vis(toggle), toggleY: toggle ? bx(toggle).y : null, guidesInHead: !!(head && guides && head.contains(guides)), guidesAfterMethod: !!(method && guides && (method.compareDocumentPosition(guides) & Node.DOCUMENT_POSITION_FOLLOWING)), firstCapY: first ? bx(first).y : null, headH: head ? bx(head).h : null };`));
       await p.screenshot({ path: `${OUT}/${ctx}-F-197.png` });
-      check('F-197', ctx, 'the guides row keeps its links in the HTML', m.links >= 11, `links ${m.links}`);
+      // iter235 (opencode-kimi): the guides carry 10 links live and in the repo (3 decision guides + 7 comparisons);
+      // the directive's "eleven" was an off-by-one. The contract is that the links stay in the HTML, so pin the
+      // actual set size.
+      check('F-197', ctx, 'the guides row keeps its links in the HTML', m.links >= 10, `links ${m.links}`);
       check('F-197', ctx, 'the guides are collapsed behind their toggle at this width', m.toggleVis && m.shown === 0, JSON.stringify(m));
       check('F-197', ctx, 'the guides sit after the Jev-class method panel, not in the head', m.guidesAfterMethod && !m.guidesInHead, JSON.stringify({ guidesInHead: m.guidesInHead, guidesAfterMethod: m.guidesAfterMethod }));
       check('F-197', ctx, `first Capability row within budget (${mobile ? 660 : 590} px)`, m.firstCapY != null && m.firstCapY <= (mobile ? 660 : 590), `firstCapY ${m.firstCapY}`);
     }
     if (want('F-199')) {
+      // iter235 (claude-opus): F-199's contract is "closed ON LOAD", so the group must start from a fresh
+      // navigation. Without this, a full-sweep run inherits F-196's six ArrowRight presses (and F-196's own
+      // open-the-disclosure step): the weights are custom, so the disclosure is open BY DESIGN and the two
+      // mobile checks failed while the page was correct (measured 26 Sep: full sweep 128/132, ONLY=F-199 18/18).
+      await go('/jev-models');
       await p.evaluate(() => { const f = document.querySelector('[data-bh-jev14-chart]'); if (f) window.scrollTo(0, f.getBoundingClientRect().top + scrollY - 20); }); await p.waitForTimeout(500);
       const m = await p.evaluate(new Function(`${bxFn}
         const fig = document.querySelector('[data-bh-jev14-chart]'); if (!fig) return null;
@@ -98,7 +115,15 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
         const sliders = above ? [...above.querySelectorAll('input[type=range]')] : []; const slidersVis = sliders.filter(vis).length;
         const details = above ? above.querySelector('details') : null;
         const sortBtn = [...fig.querySelectorAll('button, a')].filter((b) => /^Sort by/.test(txt(b)));
-        const h2 = fig.querySelector('h2'); const first = fig.querySelector('[data-bh-jev14-row]');
+        // iter235 (claude-opus) selector repair: the Composite figure holds no [data-bh-jev14-row] at all —
+        // that marker is the *table*'s <tr> (JevBoardInteractive RankingTableRow), and the table is a
+        // sibling of [data-bh-jev14-chart], not a child. Fable's own shoot script measured firstRowY: null
+        // for this reason (fable-20260926-pass36/canonical metrics-b, *-chart-before), so the budget check
+        // could never pass as written. The figure's first data row IS its first bar, so measure that. NOT
+        // fixed by tagging the bars with data-bh-jev14-row: verify-cr-131-live.mjs and
+        // verify-fable-pass33-design.mjs map every [data-bh-jev14-row] to {key, ranked, score} table
+        // semantics, which ~20 extra bar <li>s would corrupt.
+        const h2 = fig.querySelector('h2'); const first = fig.querySelector('[data-bh-jev14-bar]');
         return { boxH: above ? bx(above).h : null, rowH: row ? bx(row).h : null, rowScrolls: row ? row.scrollWidth > row.clientWidth + 2 : null, sliders: sliders.length, slidersVis, details: details ? { open: details.open, summary: txt(details.querySelector('summary')) } : null, sortBtns: sortBtn.map(txt), gap: first && h2 ? bx(first).y - bx(h2).y : null };`));
       await p.screenshot({ path: `${OUT}/${ctx}-F-199.png` });
       check('F-199', ctx, 'no inline "Sort by …" button under the fairness sentence', m && m.sortBtns.length === 0, JSON.stringify(m && m.sortBtns));
@@ -106,16 +131,41 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
         check('F-199', ctx, 'presets in one scrolling line', m && m.rowH != null && m.rowH <= 44 && m.rowScrolls === true, JSON.stringify(m));
         check('F-199', ctx, 'sliders folded into a closed disclosure', m && m.details && !m.details.open && m.slidersVis === 0, JSON.stringify(m && m.details));
         check('F-199', ctx, 'weights box at most 120 px closed', m && m.boxH != null && m.boxH <= 120, `boxH ${m && m.boxH}`);
-        check('F-199', ctx, 'h2 to first row at most 700 px', m && m.gap != null && m.gap <= 700, `gap ${m && m.gap}`);
+        check('F-199', ctx, 'h2 to the first bar at most 700 px', m && m.gap != null && m.gap <= 700, `gap ${m && m.gap}`);
+        // iter235 (claude-opus): the directive's second half — "open when the weights are custom (?w=… on
+        // load)" — had no check at all; a page that folded the sliders away and never reopened them would
+        // have passed. Added here, on its own load so the assertion is about the loaded state.
+        await go('/jev-models?w=40-20-20-20');
+        const w = await p.evaluate(new Function(`${bxFn}
+          const above = document.querySelector('[data-bh-jev14-chart] [data-bh-jev-weights="above"]');
+          const details = above ? above.querySelector('details') : null;
+          const sliders = above ? [...above.querySelectorAll('input[type=range]')] : [];
+          return { details: details ? details.open : null, slidersVis: sliders.filter(vis).length, values: sliders.map((i) => i.value) };`));
+        check('F-199', ctx, 'custom weights on load open the disclosure', w && w.details === true && w.slidersVis === 4, JSON.stringify(w));
       } else {
         check('F-199', ctx, 'desktop keeps the four sliders visible without a click', m && m.slidersVis === 4, JSON.stringify(m && { slidersVis: m.slidersVis }));
       }
     }
     if (want('F-200')) {
+      // iter235 (claude-opus): own load, so the group neither inherits F-196's custom weights nor the ?w= URL
+      // F-199 leaves behind, and the hydration proxy below times from this navigation.
+      await go('/jev-models');
       await p.evaluate(() => { const r = document.querySelector('[data-bh-jev14-capability-row]'); if (r) window.scrollTo(0, r.getBoundingClientRect().top + scrollY - 200); }); await p.waitForTimeout(500);
       const btn = p.locator('[data-bh-jev14-capability-row] button[aria-label^="Details for"]').first();
       let m = null;
-      try { if (mobile) await btn.tap(); else await btn.hover(); await p.waitForTimeout(700);
+      // iter235 (opencode-kimi): the tap needs the row's click handler, which exists only after hydration of
+      // the heaviest JS payload on the site. In the four-context sweep hydration of mobile contexts lands
+      // 7-20 s after the first load (measured 26 Sep), far past any fixed tap delay — the F-194 toast proves
+      // hydration (it mounts ~6 s after its effect), so wait for it, then keep the tap poll as a safety net.
+      if (mobile) await p.waitForFunction(() => !!document.querySelector('.bh-custom-evaluation-toast'), { timeout: 40000 }).catch(() => {});
+      if (mobile) for (let attempt = 0; attempt < 4; attempt++) {
+        await btn.tap().catch(() => {});
+        await p.waitForTimeout(600);
+        const opened = await p.evaluate(() => !!document.querySelector('dialog[open], [role=dialog]')).catch(() => false);
+        if (opened) break;
+        await p.waitForTimeout(1200);
+      }
+      try { if (!mobile) { await btn.hover(); await p.waitForTimeout(700); }
         m = await p.evaluate(new Function(`${bxFn}
           const dialog = [...document.querySelectorAll('[role=dialog]')].find(vis); const tip = [...document.querySelectorAll('[data-bh-jev-capability-tooltip]')].find(vis);
           const panel = dialog || tip; const dts = panel ? panel.querySelectorAll('dl dt').length : 0;
@@ -138,7 +188,9 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
       const mainText = txt(main);
       const gated = [...main.querySelectorAll('[data-bh-mm-gated]')].map((e) => ({ t: txt(e).slice(0, 80), gate: e.getAttribute('data-bh-mm-gated') }));
       const zeroRows = [...main.querySelectorAll('li, tr')].filter((r) => /\\b0\\.00\\b/.test(txt(r)) && !/gated/i.test(txt(r))).length;
-      const candidates = [...main.querySelectorAll('table')].find((t) => /Candidate/.test(txt(t.querySelector('thead')))); const cd = candidates ? candidates.closest('details') : null;
+      // iter235 (opencode-kimi): txt() reads innerText, which is empty inside a CLOSED <details> — the whole
+      // point of this check — so the lookup must use textContent (layout-independent) to find the table first.
+      const candidates = [...main.querySelectorAll('table')].find((t) => /Candidate/.test(t.querySelector('thead')?.textContent || '')); const cd = candidates ? candidates.closest('details') : null;
       const boldParen = [...main.querySelectorAll('li b, li strong, td b, td strong, th b, th strong')].filter(vis).map(txt).filter((t) => /\\(/.test(t));
       const ranking = [...main.querySelectorAll('table')].find((t) => /Composite/.test(txt(t.querySelector('thead')))); const cols = ranking ? [...ranking.querySelectorAll('thead th')].map(txt) : [];
       return { h2, order: { composite: idx(/^Composite score/), full: idx(/^Full ranking/), compare: idx(/^Compare two systems/), examples: idx(/^Examples/), split: idx(/^Split/), method: idx(/^Method/) }, topFive: idx(/^Top five/), cleanSplit: idx(/^Clean split/), approved: /approved/i.test(mainText), gated, zeroRows, candidatesInClosedDetails: !!(cd && !cd.open), candidatesFound: !!candidates, boldParen: boldParen.slice(0, 6), cols, h: document.documentElement.scrollHeight };`));

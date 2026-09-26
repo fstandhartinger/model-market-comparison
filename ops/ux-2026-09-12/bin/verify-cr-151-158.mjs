@@ -280,8 +280,19 @@ async function main() {
         }, Object.fromEntries(systems.map((s) => [s.key, s.jevbench_score])));
         check(r, 'cr151_5_scores', numDiff.diffs.length === 0 && numDiff.checked >= ranked.length, `checked=${numDiff.checked} diffs=${numDiff.diffs.slice(0, 4)}`);
 
-        // CR-152.3 (repeat read after interactions): restore the official order, then the official top five must be back on top
-        await page.evaluate(() => { const b = document.querySelector('[data-bh-jev14-sort-official]'); if (b) b.click(); }).catch(() => {});
+        // CR-152.3 (repeat read after interactions): restore the official order, then the official top five must be back on top.
+        // iter235 fix: the CR-158.3 slider test left custom weights {100,25,25,25} active, which re-sorts by custom
+        // score (classifier-dev-fast lands on top). [data-bh-jev14-sort-official] only exists while
+        // view === 'intelligence' (JevBoardInteractive.tsx renders "Sort by Intelligence" otherwise), so the old
+        // one-button click was a silent no-op. The genuine restore path is the official-weights preset, which also
+        // auto-restores the rank sort; fall back to the explicit restore button when it exists.
+        await page.evaluate(() => {
+          const preset = [...document.querySelectorAll('[data-bh-jev-preset]')].find((b) => /official/i.test(b.textContent));
+          if (preset) preset.click();
+          const b = document.querySelector('[data-bh-jev14-sort-official]');
+          if (b) b.click();
+        }).catch(() => {});
+        await page.waitForTimeout(400);
         await page.waitForFunction((want) => { const b = document.querySelector('[data-bh-jev14-chart] [data-bh-jev14-bar]'); return b && b.getAttribute('data-bh-jev14-bar') === want; }, expectedTop5[0], { timeout: 8000 }).catch(() => {});
         const topBars = await page.evaluate(() => [...document.querySelectorAll('[data-bh-jev14-chart] [data-bh-jev14-bar]')].slice(0, 5).map((el) => el.getAttribute('data-bh-jev14-bar')));
         check(r, 'cr152_3_top5-restored', JSON.stringify(topBars) === JSON.stringify(expectedTop5), `page=${topBars} expected=${expectedTop5}`);
@@ -382,7 +393,7 @@ async function main() {
             if (dlg && !/SHA-256/i.test(await dlgText0())) { await page.keyboard.press('Escape').catch(() => {}); await page.waitForTimeout(300); dlg = 0; }
           }
           const dlgText = dlg ? await page.locator(dlgSel).first().textContent() : '';
-            if (dlg && !/SHA-256/i.test(await dlgText0())) { await page.keyboard.press('Escape').catch(() => {}); await page.waitForTimeout(300); dlg = 0; }
+          const hasSha = /SHA-256/i.test(dlgText);
           const hasRoute = /Vertex|Bedrock|OpenRouter|provider|route/i.test(dlgText);
           const hasDate = /\d{4}-\d{2}-\d{2}/.test(dlgText);
           const hasCache = /cache/i.test(dlgText);

@@ -23,17 +23,19 @@ test('F-157: the CR-118.4 note is rendered inside the board, after the ranking c
 
 test('F-158: the released image page labels measured axes and the legacy preview remains noindex', () => {
   assert.match(mm, /Calibration<\/th>/, 'calibration is a measured axis');
-  assert.match(mm, /Top five by composite score/);
+  assert.match(mm, /id="bars-heading"/, 'the page leads with the Composite score bars (F-198)');
   assert.doesNotMatch(mm, /Results and the release decision remain under review/);
   assert.match(mm, /robots: \{ index: false, follow: false/, 'legacy preview remains noindex');
 });
 
-test('F-159: the candidate rankings show public and sealed aggregates, receipt coverage and the top-five review cut', () => {
+test('F-159: the candidate rankings show public and sealed aggregates and receipt coverage folded into the row', () => {
+  // F-198 (pass 36): the top-five panel and the Cost-coverage column are gone; coverage under 100% folds
+  // into the System cell and the earlier split becomes a column.
   assert.match(mm, /data-bh-mm-ranking=\{track\}/);
   assert.match(mm, /Public accuracy/);
   assert.match(mm, /Sealed accuracy/);
-  assert.match(mm, /Cost coverage/);
-  assert.match(mm, /Top five by composite score/);
+  assert.match(mm, /Cost receipts cover/);
+  assert.match(mm, /Earlier split/);
   assert.match(mm, /data-bh-djev-spark-sealed-photo/);
 });
 
