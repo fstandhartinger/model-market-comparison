@@ -12516,3 +12516,24 @@ before anything was pushed. Not done here, still open: CR-156.1–.4, D210's run
 D205/Florian, D192, X6's remaining audit surface (R4.1/X4 design, R4.4, R6.2/R6.3, R8.1, R9.1, H1–H3,
 B2/B3/B7, X1–X3, X5), and the CR rows no harness covers yet (CR-148.1/.2, CR-152.1/.2/.5, CR-153.4,
 CR-158.4). **`ALL-ACCEPTED` is not appended.**
+
+## CR-176 / CR-177 — seeded 2026-09-26 (opencode-kimi, work)
+
+Source: Florian's two verbatim requests of 26 Sep 2026 (~11:40 UTC), carried in
+`03-CHANGE-REQUESTS-VERBATIM.md` and `04-CR-BRIEF.md` (both appended by the 26 Sep review gate
+`REVIEW-20260926T110003Z.md` and committed with this seed). CR-176 is presentation-only: no
+score, axis, official rank or Jev-class membership may change. CR-177 is an analytics defect,
+not a data change. Number check at seeding: the highest CR before these is CR-168 in `03`, CR-169
+in landed commit subjects; the gate already numbered them CR-176/CR-177 against PR titles up to
+CR-175, so the IDs are max+1 and are kept.
+
+| ID | Status | Evidence | Note |
+|---|---|---|---|
+| CR-176.1 | open | — | Dashed 2× separator label moves to the LEFT of the line in both bubble charts. Seeded only. |
+| CR-176.2 | open | — | Direction arrows at the top: cost "← pricier / cheaper →", speed "← slower / faster →". Seeded only. |
+| CR-176.3 | open | — | Speed chart shows in-class systems left of the 2× latency line. Root cause found at seeding: the Jev-class rule (binding: Florian 25 Sep, `DECISIONS.md`; CR-158 verified) gates on the **adjusted median (p50) latency**, while the chart plots the published composite `axes.speed` (the arithmetic mean of `score(p50)` and `score(p95)` — the log of the geometric mean) and draws its line at `reference.speed − 20·log10 2`. The two quantities disagree when p95 ≫ p50, so 7 in-class rows sit left of the line on live v1.4.2 data. Fix must keep the p50 gate and make the chart plot the median-latency speed. Seeded only. |
+| CR-176.4 | open | — | Bar-chart (JevBench Composite Score) `$/1k` header → `$/1k decisions`; drop the green heat on that column; est./ann. as pills left of the number. Seeded only. |
+| CR-176.5 | open | — | Same treatment for the `$/1k decisions` column of the "Axes, accuracy, latency and cost" table. Seeded only. |
+| CR-176.6 | open | — | 3D view: axis labels for all three axes and permanent labels for the top 5 systems. Seeded only. |
+| CR-177.1 | open | — | Umami shows 0 pageviews while banner events arrive. Seeded only. Note for the worker: the repo has a **first-party** visit counter (`lib/visit-stats.mjs`, `bh_visit_daily`) and `test/visit-stats.test.mjs` explicitly forbids a sitewide Umami/analytics script in `app/layout.tsx`; CR-67.4's privacy design must not be broken to "add pageviews". Read the intent before changing anything. |
+| CR-177.2 | open | — | Daily sanity check: pageviews 0 while events > 0 → digest alert. Seeded only. |

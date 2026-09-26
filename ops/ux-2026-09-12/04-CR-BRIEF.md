@@ -1333,3 +1333,23 @@ Source: the follow-up fix recorded in `03-CHANGE-REQUESTS-VERBATIM.md`.
 | ID | Requirement | Acceptance |
 |---|---|---|
 | CR-168.1 | Derive the banner endpoint's expected origin from the ingress-provided public host, as the checkout CSRF guard already does, so events are not dropped behind Coolify. | On both public hosts a real browser's banner beacon is answered 204 and the event reaches Umami; a post whose `Origin` does not match the public origin, or whose host is not an allowed public host, is still refused. |
+
+## CR-176 — Bubble-chart separators, Jev-class filter bug, cost columns, 3D labels (26 Sep 2026)
+
+Source: Florian's 26 Sep request, verbatim in `03-CHANGE-REQUESTS-VERBATIM.md`. Presentation only: no score, axis or rank change. The number was checked against PR titles up to CR-175; re-check max+1 before opening the PR.
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-176.1 | The dashed "2× Jev cost" / "2× Jev latency" separator label sits on the LEFT side of the line in both bubble charts. | Screenshots at 1440 and 390 px, light and dark, show the label left of the line and not overlapping points or the axis. |
+| CR-176.2 | Small direction labels with arrows at the top of each chart, next to the dashed line. Cost chart: "← pricier" on the left, "cheaper →" on the right. Speed chart: "← slower" on the left, "faster →" on the right. | Visible in normal and fullscreen/zoom views, both themes, not clipped on mobile. |
+| CR-176.3 | Filter bug: with "Show models that don't qualify as Jev-class" unchecked, the speed chart shows systems LEFT of the 2× Jev latency line, i.e. slower than Jev-class allows. Find the root cause (likely the filter and the plotted speed axis use different latency fields, e.g. raw vs adjusted/p50 vs p95, or a different Jev reference) and make the filter, the plotted positions and the line use ONE definition. | With the box unchecked, no plotted point in either chart lies on the wrong side of its dashed line. A test asserts this for the live data. The fix and its cause are explained in the PR. |
+| CR-176.4 | "JevBench Composite Score" table: rename the "$/1k" header to "$/1k decisions"; remove the green heat gradient from that column only; show "est." / "ann." as small tag pills to the LEFT of the number, so the numbers are right-aligned and line up (tabular numerals). | Desktop and mobile screenshots; the numbers' right edges align. |
+| CR-176.5 | Same treatment for the "$/1k decisions" column of the "Axes, accuracy, latency and cost" table. | As CR-176.4. |
+| CR-176.6 | 3D view: clear axis labels for all three axes (Capability, Cost, Speed), legible at every zoom and rotation and in fullscreen; permanent labels for the top 5 systems (ranked as the list next to it). | Screenshots at three rotations and in fullscreen, both themes. |
+
+## CR-177 — Restore page-view tracking
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-177.1 | Find why Umami records 0 pageviews for benchmarkheaven.com while the banner events arrive. Check the script tag, the first-party proxy, CSP, the data-website-id, the ingress host checks, ad-block-safe path and SPA route changes. Fix it without adding third-party trackers. | A visit to /, /jev-models and /image-jev-bench on both public hosts shows up as pageviews in Umami within minutes. SPA navigations count, verified via the API (/api/websites/<id>/stats). No personal data is added. |
+| CR-177.2 | Add a daily sanity check: if pageviews are 0 while events are above 0, alert through the digest. | The check exists and is tested once by simulating a 0-pageview day. |

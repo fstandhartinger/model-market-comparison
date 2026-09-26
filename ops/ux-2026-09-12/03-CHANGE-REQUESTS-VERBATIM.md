@@ -1994,3 +1994,19 @@ the preview": Florian here asks for exactly that link. Seeded by the review gate
 Not a separate Florian request: the follow-up PR #33 to CR-167, because the banner's analytics
 endpoint compared the `Origin` header against Next.js's internal localhost URL behind Coolify and
 therefore dropped every event. Seeded by the review gate `REVIEW-20260925T192004Z.md` (D206).
+
+## CR-176 — Florian, 26 Sep 2026 ~11:40 UTC (verbatim, via Claude Code laptop session)
+
+> On our JevBench page there are a few things I'd like to improve in that "Capability against cost and speed" section:
+> - that dashed separator line for 2x Jev cost/latency: let's put the label on the left side and add additional small labels with arrows to explain which side means faster (respective pricier) and which side means slower (respective cheaper) (e.g. on the left side of that dashed line at the very top add a label with an arrow pointing to the left and saying "slower" and on the right side of the dashed line a label with an arrow pointing to the right and saying "faster").
+> - The "Show models that don't qualify as Jev-class" filter: Why does the Capability vs speed chart show some models on the left hand side of that dashed line even though the filter checkbox isn't checked?
+>
+> In the table of "JevBench Composite Score" that "$/1k" column header should be renamed to "$/1k decisions" and the cells of this column shouldn't be filled with that green gradient. And we got to put the "est." and "ann." labels there as small bubbles/tags, on the left of the number so that the cost values are properly right aligned and under each other.
+> Similar in that "Axes, accuracy, latency and cost" table below in the "$/1k decisions" column.
+>
+> In the "Capability, cost and speed in 3D" view add axis labels for all three. And labels for the top 5 models.
+
+## CR-177 — Page views are not recorded (found 26 Sep 2026 while answering Florian's traffic question)
+
+> Florian (26 Sep): "Tell me how much page views and downloads all our pages have, also the JevBench and Image Jev Bench pages and benchmarkheaven …"
+Finding: Umami (bh-analytics.app.mintapis.com, website "Benchmark Heaven") reports 0 pageviews / 0 visitors for 24 h, 7 d and 30 d, while the custom events work: fastlane_banner_view 3,671, dismiss 521, click 21 over 7 d. So pageview tracking is broken, probably since the first-party event proxy (CR-167/168/174) or the Umami script setup.
