@@ -9,6 +9,7 @@ import { AaCredit } from "../components/AaCredit";
 import { EpochCredit } from "../components/EpochCredit";
 import { WebMcpTools } from "../components/WebMcpTools";
 import { FastlaneBanner } from "../components/FastlaneBanner";
+import { PageViewReporter } from "../components/PageViewReporter";
 
 const BRAND_CLAIM = "The most detailed cost–capability analysis in AI.";
 const BRAND_LINE = "Every model. Every Benchmark. Actual Costs.";
@@ -67,6 +68,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             </p>
           </footer>
           <FastlaneBanner />
+          {/* CR-177.1: reports in-app navigations to our own origin; renders nothing, stores nothing. */}
+          <PageViewReporter />
           </AccountProvider>
         </SettingsProvider>
       </body>

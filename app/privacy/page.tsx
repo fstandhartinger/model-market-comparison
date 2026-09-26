@@ -35,10 +35,11 @@ export default function PrivacyPage() {
         file request) and the Global Privacy Control / Do Not Track signals. These are processed in memory; only the daily
         totals are kept.</li>
       <li><strong>No device access and no identifiers:</strong> the statistics set no cookie, use no local storage, add no
-        script, pixel or extra request, and do not use your IP address. No ID, hash or fingerprint is created, so we
-        cannot count unique visitors or tell whether two page loads came from the same person, and statistics are never
-        linked to accounts. In our assessment no consent is required under § 25 TDDDG for this, so there is no cookie
-        banner.</li>
+        script or pixel, and do not use your IP address. This counter needs no extra request at all; only moving between
+        pages inside the site is reported by one small request to our own address, described below. No ID, hash or
+        fingerprint is created, so we cannot count unique visitors or tell whether two page loads came from the same
+        person, and statistics are never linked to accounts. In our assessment no consent is required under § 25 TDDDG
+        for this, so there is no cookie banner.</li>
       <li><strong>Purpose and legal basis:</strong> understanding which content is useful and planning capacity; our
         legitimate interest under Art. 6(1)(f) GDPR.</li>
       <li><strong>Where and who:</strong> the totals are kept in our own database on servers of Hetzner Online GmbH in the
@@ -52,7 +53,17 @@ export default function PrivacyPage() {
         a single person; you can still object by email to <a className="text-accent" href="mailto:info@productivity-boost.com">info@productivity-boost.com</a>,
         and we will answer and explain how to switch on one of these signals.</li>
     </ul>
-    <p className="mt-2">The priority-evaluation banner separately sends three interaction counts to our
+    <p className="mt-2">We also keep the same page counts in our own self-hosted Umami service, which runs on the same
+      Hetzner server that serves this site: for each page load our server passes on the host name you used and the
+      requested page, taken from a fixed list of the site&apos;s routes. Your browser never contacts that service, and
+      neither your IP address nor your User-Agent is passed on for these page counts &mdash; the request our server makes
+      carries a fixed browser identification that is the same for everybody, so the browser, device and &ldquo;visitor&rdquo;
+      figures in Umami are meaningless and we do not use them. Because a move between pages inside the site is invisible
+      to our server, those moves are reported by one small request from your browser to our own address
+      (<code>/api/page-view</code>), containing only the page path; it sets nothing on your device, reads nothing from it,
+      and is not sent when your browser signals Global Privacy Control or Do Not Track. Legal basis: our legitimate
+      interest in knowing which pages are read (Art. 6(1)(f) GDPR).</p>
+    <p className="mt-2">The priority-evaluation banner separately sends three interaction counts to the same
       self-hosted Umami service: when the banner appears, when its request link is used, and when it is dismissed.
       The event payload contains only the event name and whether the visitor was on a JevBench or ImageJevBench page;
       it contains no query string or form data. The server forwards the browser User-Agent to Umami, but not the
