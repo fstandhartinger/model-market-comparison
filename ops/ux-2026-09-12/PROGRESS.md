@@ -12397,3 +12397,110 @@ in it was altered or verified by this pass.
 
 Not done here, on purpose (Fable sparingly): no implementation of F-197–F-200; no run of the iteration-234 verifier; no re-litigation of
 D192/D205. `ALL-ACCEPTED` is not appended.
+
+## Iteration 235 (claude-opus, work, 2026-09-26 09:50–11:0x UTC) — F-197–F-200 finished from the timed-out iteration, two checker repairs, and the CR-151–158 acceptance run
+
+**On arrival the checkout was dirty in 15 files plus one untracked component** — the whole F-197–F-200
+implementation the **opencode-kimi iteration of 06:40 (rc=124, timed out)** had written and never committed
+or recorded (`history.log`: `20260926T064003Z work opencode-kimi rc=124`). Following the rule that a failed
+tick's work is verified and finished rather than discarded, this iteration read every line of it, repaired
+two things, proved it locally and then live on both hosts, and committed it as `a031c5a3`. The 08:40
+`data/dataset.json` churn (two timestamps, no values) was the price-drift run's and was discarded twice.
+
+**What now ships (`a031c5a3`, live on both hosts):** F-197 the guides fold behind their toggle at every
+width and follow the Jev-class method panel; F-198 `/image-jev-bench` leads with its results (top-five
+panel and clean-split alert gone, candidate table behind a closed disclosure, gated rows name their gate,
+"Penalty" out and "Earlier split" in, configuration parentheticals demoted to muted sub-lines); F-199 the
+phone scrolls the presets in one line and folds the sliders into a disclosure that opens when the weights
+are custom, one control per sort; F-200 the Capability ⓘ is a 7-row `dl` and a `<dialog>` with ✕ on touch,
+the 300-character row `title` is gone. **No score, rank, gate, split count or hash changed** — the image
+page's numbers all still come from `preview.json` (re-derived here: 12 systems, the two zero rows are
+Gemini 3.8 Flash by the Cost gate at `gates.cost` 0.00014 with USD 2.06 per 1,000, and OpenJev 4B NLI v2
+by a calibration axis of 0.0; no other row renders "0.00" in any track).
+
+**Repair 1 — the inherited work fixed F-199's budget check by reshaping the page; reverted.** It had added
+`data-bh-jev14-row` to the bar `<li>`s (`JevScoreBar.tsx`, `JevBoardShared.tsx`). The check could not pass
+as written because the Composite figure contains **no** `[data-bh-jev14-row]` at all: that marker is the
+*table*'s `<tr>` and the table is a sibling of `[data-bh-jev14-chart]`, which is why **Fable's own shoot
+script recorded `firstRowY: null`** in every context (`fable-20260926-pass36/canonical/metrics-b-*.json`,
+`*-chart-before`) and why the directive's "now over 1,000 px" is a reading of the screenshots, not of that
+selector. Tagging the bars would have polluted a marker three harnesses read as table semantics
+(`verify-cr-131-live.mjs` maps every `[data-bh-jev14-row]` to `{key, ranked, score}`;
+`verify-fable-pass33-design.mjs` and `shoot-fable-pass34.mjs` count them and look for `th a`). The checker's
+selector was repaired instead — the figure's first data row is its first bar — and the page markup left
+alone. Live proof that the marker set is intact: `verify-cr-131-live.mjs` still counts **93** rows, the
+table's own count.
+
+**Repair 2 — F-199's two mobile failures were the harness, not the page.** In a full sweep F-199 inherited
+F-196's six ArrowRight presses (and F-196's own open-the-disclosure step), so the weights were custom and
+the disclosure was open *by design*: full sweep 128/132, `ONLY=F-199` 18/18. F-199 and F-200 now each start
+from their own load, which is what "closed **on load**" means. **Also added the directive's missing half as
+a check:** "`?w=…` on load opens the disclosure" had no assertion at all, so a page that folded the sliders
+away and never reopened them would have passed (now proven: `details: true, slidersVis: 4, values
+40/20/20/20`). And F-197's "eleven links" is an off-by-one — the guides carry **ten** (3 decision guides + 7
+`JEV_COMPARISONS`, `lib/jevbench-seo.mjs`), so the check pins the real set size. Both repairs are written
+into `DESIGN-DIRECTIVES.md` under F-197/F-199 so pass 37 does not re-litigate them.
+
+**Repair 3 — pass 35's F-189 contradicted pass 36's F-197 and was resolved for the newer directive.** F-189
+asserted "all ten guides visible on desktop"; F-197 orders that row folded at every width (its verdict calls
+the visible desktop row "a link farm before the message"). The superseded visibility check was replaced by
+the collapse/expand contract F-189 already applied to phones — so desktop is now held to **more**, not less
+(a 44 px toggle that opens by tap and by keyboard and reveals all ten links, plus "the links stay in the
+HTML while collapsed"). `verify-fable-pass35-design.mjs` went 190 → 200 checks and is green on both hosts.
+
+**Live verification at `a031c5a3` (deploy flipped 10:13:18 UTC; both hosts held the new revision for six
+consecutive polls before any check ran).** `verify-fable-pass36-design.mjs` **134/134 canonical, 134/134
+legacy**, zero page errors in all four contexts, with the numbers the directives asked for, identical on
+both hosts: first Capability row **561 px** at 1440 (budget 590, was 633) and **654 px** at 390 (budget 660,
+was 714); image page **11,171 px** at 1440 (budget 13,000, was 14,890) and its h2 order Composite < Full
+ranking < Compare < Examples < Split < Method; the phone's Composite h2 to first bar **527 px** (budget 700);
+the ⓘ dialog with 7 `dt` and a Close button on phones with no floating panel and a row `title` of length 0.
+Regression sweep, **all green on both hosts**: pass 35 **200/200**, pass 34 **86/86** (F-181 stays green),
+CR-167.2 **76/76**, the D207/CR-163.1 banner harness **178/178**. Receipts:
+`/opt/benchmarkheaven/state/ux-evidence/iter235-pass36/` (`local/`, `canonical/`, `legacy/`,
+`regression-canonical/`, `regression-legacy/`).
+
+**The iteration-234 acceptance verifier was run, as the ledger asked.** `verify-cr-151-158.mjs`
+**145/145 canonical, 144/144 legacy** at `a031c5a3` (the extra canonical check is a desktop-only one), zero
+page errors, against the live API hash `ac14e206…` it pins. Sixteen CR groups are covered and now measured:
+CR-143.1, CR-151.1–.5, CR-152.3/.4, CR-153.1–.3, **CR-156.5**, CR-158.1/.2/.3/.5. Two fixes were needed
+first: the draft had a copy-pasted line that left `hasSha` undefined (a `ReferenceError` on the CR-156 path,
+so it had never run to the end), and its CR-152.3 "restore the official order" step clicked
+`[data-bh-jev14-sort-official]`, which only exists in the intelligence view — a silent no-op after the
+CR-158.3 slider test left custom weights. It also attached to the **shared** Hermes Chrome on CDP 9333 that
+other jobs drive concurrently; it now launches its own Chromium unless `CDP_URL` is set. **The ledger's
+"CR-156.x" is only CR-156.5** — CR-156.1–.4 are still unmeasured by this harness.
+
+**New finding — D212: `verify-cr-131-live.mjs` has been a dead guard since the v1.4.2 publication.** It
+reports 33/49 on canonical and every failure is its own staleness: it pins `local.revision === 'v1.4.0'`,
+76 systems and 71 ranked (CR-131.2's wording), while the live board is v1.4.2 with **93 systems / 89
+ranked / 16 API flags** — numbers re-derived here from `data/raw/.../v1.4.2/jevbench-v1.4.2-results.json`,
+whose own sha256 is `ac14e206…`, the same bytes the live API serves. So **the live page is faithful to the
+published artifact**; the verifier is measuring the previous release. Not repaired here, deliberately: the
+page-level pins are superseded by CR-152 while CR-131.1's `/api/jevbench/v1.4` pins and CR-131.4's evergreen
+rule stay binding, so the repair is to follow the *live board* for the page comparisons (and to derive
+CR-131.4's forbidden-number list from the artifact instead of the hard-coded `76|71|534|308`) rather than to
+relax anything. Left as a named open item with that recipe; nobody should "fix" the page back to 76/71.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| F-197 | open → **implemented + verified** | `iter235-pass36/{canonical,legacy}/verification.json` 134/134 each; `firstCapY` 561 / 654 | Guides fold at every width and follow `#jev-class-method`; ten links stay in the HTML. Implementer opencode-kimi (uncommitted), finished and verified here. The directive's "eleven" is an off-by-one, flagged in `DESIGN-DIRECTIVES.md`. |
+| F-198 | open → **implemented + verified** | same receipts; page height **11,171 px** (was 14,890) | Results-first order, candidates in a closed `<details>`, gated rows name Cost / Calibration, no Penalty column, "Earlier split" column. No number changed. |
+| F-199 | open → **implemented + verified** | same receipts; `gap` 527 px, `rowScrolls` true, `?w=` opens with 4 sliders | Two mobile "failures" were harness contamination (128/132 → 18/18 with `ONLY=`); F-199/F-200 now load their own page, and the missing `?w=` check was added. |
+| F-200 | open → **implemented + verified** | same receipts; `{dialog:true, tip:false, dts:7, close:true, liTitle:0}` | 7-row `dl`, touch modal with ✕ via `components/JevCapabilityTip.tsx`, no 300-character row title. |
+| F-189 (pass 35) | verified → **verified (re-scoped)** | `regression-{canonical,legacy}/pass35` **200/200** each | Its desktop-visibility half is superseded by F-197; replaced by the collapse/expand contract at all widths, which is stricter. Recorded, not silently dropped. |
+| F-194, F-195, F-196 | implemented (Fable) → **verified** | `iter235-pass36/{canonical,legacy}` groups F-194/F-195/F-196, 0 px overlap, ≥ 10 px ticks, one "Official" | Flipped by a non-Fable engine, as pass 36 asked. The 18 s toast deadline is now a bounded disappearance wait (hydration, not navigation, starts its timers). |
+| F-181, CR-167.2, D207, CR-163.1 | verified (unchanged) | `regression-*`: pass 34 **86/86**, CR-167.2 **76/76**, banner **178/178**, both hosts | Re-proven at `a031c5a3` after a head-layout change; the banner still covers no phone content. |
+| CR-143.1, CR-151.1–.5, CR-152.3/.4, CR-153.1–.3, CR-156.5, CR-158.1/.2/.3/.5 | never measured → **verified** | `iter235-cr151-158/summary.json` **145/145**, `iter235-cr151-158-legacy` **144/144** | The iteration-234 draft, debugged (undefined `hasSha`; a no-op restore click) and run. Its own Chromium now, not the shared CDP browser. |
+| CR-156.1–.4 | open (unchanged) | — | Outside the draft verifier's coverage despite the ledger's "CR-156.x"; still unmeasured. |
+| D212 (new) | **open** | `regression-canonical/cr131/verification.json` 33/49; v1.4.2 artifact re-derivation above | `verify-cr-131-live.mjs` pins the superseded v1.4.0 board. Repair = follow the live board for page checks, derive CR-131.4's number list from the artifact; do not touch the page. |
+| D210 | runtime proof **observed** (unchanged) | `/opt/mmc-daily/cron.log` `DAILY END 2026-09-26T05:48:10Z rc=0`, `failures_in_row: 0` | Still owed a root-to-tail read of the run's `run-report.json` by a work engine; not done here. |
+| D205, D192 | open — unchanged | — | D205 needs Florian; D192's 38 retained arms not re-litigated. |
+
+Gates before the pushes: `node scripts/build-dataset.mjs` rc 0 (timestamp-only churn discarded both times),
+`CI=true npm test` **1,398 tests / 1,397 pass / 0 fail / 1 skip**, `npx tsc --noEmit -p .` rc 0,
+`npm run build` rc 0, and `verify-fable-pass36-design.mjs` **134/134 against the local production build**
+before anything was pushed. Not done here, still open: D212's repair, CR-156.1–.4, D210's run-report read,
+D205/Florian, D192, X6's remaining audit surface (R4.1/X4 design, R4.4, R6.2/R6.3, R8.1, R9.1, H1–H3,
+B2/B3/B7, X1–X3, X5), and the CR rows no harness covers yet (CR-148.1/.2, CR-152.1/.2/.5, CR-153.4,
+CR-158.4). **`ALL-ACCEPTED` is not appended.**

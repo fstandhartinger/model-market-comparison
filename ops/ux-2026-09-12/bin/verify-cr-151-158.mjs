@@ -37,7 +37,12 @@ async function main() {
   const outClassKeys = new Set(cls.rows.filter((r) => !r.inClass).map((r) => r.row.key));
   const llmKeys = new Set(systems.filter((s) => s.class === 'llm-baseline').map((s) => s.key));
 
-  const browser = await chromium.connectOverCDP('http://127.0.0.1:9333');
+  // iter235 (claude-opus): the draft attached to the shared Hermes agent-profile Chrome on CDP 9333, which
+  // other jobs drive at the same time (and browser.close() on a CDP connection clears the contexts it made on
+  // that shared browser). Launch our own Chromium by default; set CDP_URL to attach deliberately.
+  const browser = process.env.CDP_URL
+    ? await chromium.connectOverCDP(process.env.CDP_URL)
+    : await chromium.launch({ ignoreDefaultArgs: ['--hide-scrollbars'] });
   const results = { generated_utc: new Date().toISOString(), hosts: {}, artifact_sha: LIVE_SHA, artifact_systems: systems.length, artifact_ranked: ranked.length, expected_top5: expectedTop5, jev_class_expected: { in: [...inClassKeys], limits: cls.limits } };
   let total = 0, failed = 0;
   const check = (r, name, ok, detail = '') => {

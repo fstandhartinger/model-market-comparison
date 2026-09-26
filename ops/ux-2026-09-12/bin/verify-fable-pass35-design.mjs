@@ -132,8 +132,14 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
       check('F-189', ctx, 'decision guides appear only once', m.guideLinks === 10, String(m.guideLinks));
       check('F-189', ctx, 'short class summary precedes the bars and full method follows them', m.summaryBefore && m.methodAfter && m.methodComplete, JSON.stringify({summaryBefore:m.summaryBefore,methodAfter:m.methodAfter,methodComplete:m.methodComplete}));
       check('F-189', ctx, 'no horizontal page overflow', !m.overflow, String(m.overflow));
-      if (kind === 'mobile') {
-        check('F-189', ctx, 'first headline row at y ≤ 720 on a phone', m.firstHeadlineY <= 720, String(m.firstHeadlineY));
+      if (kind === 'mobile') check('F-189', ctx, 'first headline row at y ≤ 720 on a phone', m.firstHeadlineY <= 720, String(m.firstHeadlineY));
+      {
+        // iter235 (claude-opus): pass 36's F-197 supersedes F-189's desktop half. F-189 asserted "all ten
+        // guides visible on desktop"; F-197 orders the row folded behind its toggle at EVERY width (the verdict
+        // calls the visible desktop row "a link farm before the message") and the links stay in the HTML. The
+        // superseded visibility check is replaced by the collapse/expand contract, which F-189 already applied
+        // to phones and which is width-independent — so desktop is now held to more, not less: a working
+        // toggle that reveals all ten links by tap and by keyboard.
         check('F-189', ctx, 'guides start collapsed behind a 44 px tap target', m.guideToggle?.expanded === 'false' && m.guideToggle.height >= 44, JSON.stringify(m.guideToggle));
         await p.locator('[data-bh-jev-board-guides-toggle]').click();
         check('F-189', ctx, 'guides expand by tap with all ten links visible', await p.locator('[data-bh-jev-board-guides-toggle]').getAttribute('aria-expanded') === 'true' && await p.locator('[data-bh-jev-board-guides] a:visible').count() === 10, '');
@@ -142,7 +148,8 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
         check('F-189', ctx, 'guides open by keyboard', await p.locator('[data-bh-jev-board-guides-toggle]').getAttribute('aria-expanded') === 'true', '');
         await p.keyboard.press('Space');
         check('F-189', ctx, 'guides close by keyboard', await p.locator('[data-bh-jev-board-guides-toggle]').getAttribute('aria-expanded') === 'false', '');
-      } else check('F-189', ctx, 'all ten guides visible on desktop', m.guideVisible === 10, String(m.guideVisible));
+        check('F-189', ctx, 'the guides links stay in the HTML while collapsed (F-197)', m.guideLinks === 10 && m.guideVisible === 0, JSON.stringify({ links: m.guideLinks, visible: m.guideVisible }));
+      }
       await p.locator('button[data-bh-jev-view="intelligence"]').click();
       const intel = await p.evaluate(() => ({ pressed: document.querySelector('button[data-bh-jev-view="intelligence"]')?.getAttribute('aria-pressed'),
         view: document.querySelector('[data-bh-jev14-chart]')?.getAttribute('data-bh-jev14-view'),

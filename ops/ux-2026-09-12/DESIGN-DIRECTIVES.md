@@ -418,6 +418,11 @@ toggle visible; the guides nav is after `#jev-class-method` in document order an
 `[data-bh-jev14-capability-row]` at y ≤ **590** at 1440 (now 633) and ≤ **660** at 390 (now 714); `verify-fable-pass35-design.mjs` F-189
 and `verify-cr-163*` still green (the first-row budget only tightens); group F-197.
 
+*Implementation note (iter235, claude-opus — checker repair, recorded so pass 37 does not re-litigate it):* the guides row carries
+**ten** links, not eleven — three decision guides plus `JEV_COMPARISONS` (6 top-five + 1 more = 7) in `lib/jevbench-seo.mjs`. The verdict's
+"eleven guide links in two rows" and the `≥ 11` accept threshold were an off-by-one against the code, so the check pinned the real set size
+(`≥ 10`). Nothing was removed from the row; the eleven-link claim above is the only wrong number in the pass.
+
 ### F-198 — The image benchmark page is its results; the review trail leaves the page `[mechanical]`
 
 *Where:* `app/jev-models/multimodal-preview/page.tsx` (`MultimodalPreviewContent`, shared by `/image-jev-bench`), `components/ImageJevRadar.tsx`
@@ -459,6 +464,15 @@ the fairness sentence goes; Florian's sentence (`artifact.top_five_note`) keeps 
 closed on load and no slider visible; the weights box ≤ 120 px closed; with `?w=40-20-20-20` the details open; the distance from the figure's
 h2 to the first `[data-bh-jev14-row]` ≤ 700 px (now over 1,000); no button whose text starts "Sort by" in the figure at any width; at 1440
 the four sliders visible without a click; `verify-fable-pass35-design.mjs` F-189 still green; group F-199.
+
+*Implementation note (iter235, claude-opus — checker repair):* the h2-to-first-row budget named `[data-bh-jev14-row]`, which the Composite
+figure does not contain: that marker is the **table**'s `<tr>` (`JevBoardInteractive`), and the table is a sibling of `[data-bh-jev14-chart]`,
+not a child. Pass 36's own shoot script recorded `firstRowY: null` for every context for this reason (`metrics-b-*.json`, `*-chart-before`),
+so the check could not pass as written and the "now over 1,000" figure is a reading of the screenshots, not of that selector. The figure's
+first data row **is** its first bar, so the check measures `[data-bh-jev14-bar]`. It was deliberately *not* fixed by tagging the bars with
+`data-bh-jev14-row`: `verify-cr-131-live.mjs`, `verify-fable-pass33-design.mjs` and `shoot-fable-pass34.mjs` map every `[data-bh-jev14-row]`
+to table semantics (`ranked`, `[data-bh-jev14-score]`, `th a`), which the extra bar `<li>`s would corrupt. The accept list's second half
+("`?w=40-20-20-20` opens the details") had no check at all and now has one.
 
 ### F-200 — The Capability ⓘ is a list, and a modal on a phone `[mechanical]`
 
