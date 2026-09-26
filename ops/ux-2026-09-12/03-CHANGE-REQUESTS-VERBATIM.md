@@ -1994,3 +1994,38 @@ the preview": Florian here asks for exactly that link. Seeded by the review gate
 Not a separate Florian request: the follow-up PR #33 to CR-167, because the banner's analytics
 endpoint compared the `Origin` header against Next.js's internal localhost URL behind Coolify and
 therefore dropped every event. Seeded by the review gate `REVIEW-20260925T192004Z.md` (D206).
+
+## CR-169 — JevBench v1.4.2 presentation finishing touches (job-scope transcription, 2026-09-25)
+
+**Provenance: job-prompt transcription, not a verbatim capture.** The allocated job's
+`/home/flori/jobs/jev-page-polish-20260925/PROMPT.md` labels this scope as Florian's 25 Sep request;
+no direct capture was found. It groups presentation work on `/jev-models` that builds on CR-151,
+CR-153 and CR-158. No score, rank, axis formula or benchmark method may change.
+
+1. Make the Capability ranking's colors, row details and right-aligned value columns understandable
+   at desktop and mobile widths; preserve the logarithmic cost axis and identify each system's cost
+   relative to Jev.
+2. Make the cost and speed bubble charts directionally truthful, explain their attractive quadrant,
+   synchronize selection, and support fullscreen zoom, pan, reset and the outside-class toggle.
+3. Use the dynamic “JevBench Composite Score” heading while preserving its count, anchor, navigation
+   and SEO references.
+4. Make both system-comparison pickers searchable, keyboard navigable and usable on mobile.
+5. Make the 3D chart's Jev-class control, current-weight composite top five, axis labels and
+   fullscreen interaction clear and usable.
+6. Use finer context-length bins selected from the public data, state inclusive bin edges and make
+   point values available to pointer, touch and keyboard users. Use the retained public aggregate;
+   do not expose per-item or sealed data.
+
+Acceptance is independent live verification at desktop 1440 px and mobile 390 px in light and dark,
+plus an unchanged official v1.4.2 scoring artifact.
+
+## CR-174 — Keep banner analytics enabled on every configured public host (review finding, 2026-09-26)
+
+**Provenance: review-gate finding, not a verbatim Florian request.** During the independent
+`REVIEW-20260926T020002Z.md` pass, `lib/account-sync.mjs` was found to accept three public hosts,
+while `app/api/fastlane-banner-event/route.ts` had a narrower two-host allowlist. The legacy mirror
+therefore received the endpoint's privacy-safe 204 response but its banner events were not forwarded
+to self-hosted Umami. This follow-up uses the shared `publicOrigin` allowlist for the banner route,
+keeps mismatched and unlisted origins refused, and adds a regression check so the two host lists
+cannot drift apart again. It changes only whether the already-authorized aggregate event is
+forwarded from the existing public mirror; it adds no payload fields or browser storage.

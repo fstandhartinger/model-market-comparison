@@ -12358,3 +12358,66 @@ D-rows' attending run, D205/Florian), X6's remaining audit surface (R4.1/X4 desi
 R8.1, R9.1, H1–H3, B2/B3/B7, X1–X3, X5, legacy host), D192, F-181's optional gate re-check, and the
 never-measured CR rows CR-143.1/.2, CR-148.1/.2, CR-151.1–.5, CR-152.1–.5, CR-153.1–.4,
 CR-156.1–.5, CR-158.1–.5 (acceptance checks seeded but unrun). **`ALL-ACCEPTED` is not appended.**
+
+## Iteration 234 — independent review gate (Codex Luna, 2026-09-26)
+
+Scope: changes since `REVIEW-20260925T192004Z.md`, commits `3a692a43..5d41469e` (baseline on the
+deployed site), plus independent rechecks of the active CR-163/164/167/168/169 and design claims
+listed here. Live revision was `5d41469e9d432685d6c9365e731e21c29fc162bb` on canonical, `www`, and
+legacy hosts. Receipts are in
+`/opt/benchmarkheaven/state/ux-evidence/review-20260926T020002Z/`.
+
+**Verdict: not accepted.** The current CR-169 release passes its two-host 134/134 polish verifier,
+the 24-case route/device/theme matrix, and the public-only context aggregate reconciliation. F-181
+passes 34/34. The compact banner state clears the first result row, but expanding the same bar
+covers the first result row on `/jev-models` and `/image-jev-bench`; the binding CR-167.2 acceptance
+does not exempt its expanded state. The legacy host also returns 204 while the deployed banner
+event route silently drops its Umami forward. Both are recorded as open. A small code fix and
+regression check for the latter are in this review branch only; they are not deployed. X6's
+line-by-line audit is incomplete, so `ALL-ACCEPTED` is not appended.
+
+### Independent live checks
+
+| Item | Result |
+|---|---|
+| CR-169.1–169.6 | Verified: `jev-polish-canonical/verification.json` 134/134 and `jev-polish-legacy/verification.json` 134/134. The 24-case browser matrix covers `/jev-models`, `/jev-models/v1.4.2`, and `/image-jev-bench`, canonical and legacy, desktop/mobile, light/dark. No page errors or horizontal overflow. Public aggregate's three finer bins reconcile to the earlier `<2k` totals for all 13 systems; no sealed/item-level values or official scores changed. |
+| F-181 | Verified: 34/34 on canonical and legacy, desktop/mobile and both themes; all applicable chart text is at least 10 px. `f181-live/verification.json`. |
+| CR-167.1, CR-167.3 | Verified in the live matrix and behavior check: 55 px collapsed bar; controls and CTA checked; × is session-only, permanent hide persists across reload/route, fresh session sees it; request page returns 200. Contrast measured 21:1. |
+| CR-167.2 | **Open**: collapsed bar clears the first Jev row by 23.34 px on the 390×844 hub; expanded bar starts at y=699.38 and overlays that row (which spans y=714–766). Expanded state also intersects the first image result row. Body padding keeps the document end reachable but does not satisfy first-row visibility. |
+| CR-167.4, CR-168.1 | **Open** on live deployment: canonical and legacy beacon requests return 204, but the legacy event is not forwarded. The deployed route has a two-host duplicate allowlist while shared `PUBLIC_HOSTS` has three entries. A route-level integration check failed 2/3 before the fix and passed 3/3 after it; `banner-route-integration.json` retains the in-process post-fix run with Umami mocked, not live traffic. |
+| CR-167.5 | Verified by independently re-fetching the existing live Stripe verification sessions: `livemode=true`, expired and unpaid, no PaymentIntent; host-matched USD 98/99 checkout URLs; live webhook enabled at the expected route and unsigned empty posts return 400 on all three hosts. No new session was created in this gate and no charge was made. |
+| CR-163.1, D207 | Verified for the default compact state: the first Jev row is visible above the banner. This does not close CR-167.2's expanded-state failure. |
+| D208, D206 | D208's consent/privacy record and route were re-read; D206 source provenance spot checks passed. D206's recurring allocation-to-03/04 guard remains open. CR-169 had been allocated without corresponding `03`/`04` rows; this gate added explicitly labeled prompt-transcription provenance and acceptance rows. |
+
+Banner evidence: `banner-live/behavior.json`, `banner-live/canonical-expanded.png`, and
+`banner-live/legacy-expanded.png`. The branch fix removes the banner route's duplicate host set and
+uses the shared `publicOrigin` guard; `test/fastlane-banner-event-hosts.test.mjs` protects all
+configured hosts and rejects an unlisted host. CR-174.1 stays open until that branch is deployed
+and browser beacons are confirmed to reach Umami on every configured host.
+
+### Gate results
+
+`node scripts/build-dataset.mjs`: pass (871 models / 674 families / 96 providers / 3,121 offers).
+Its timestamp-only `data/dataset.json` changes were discarded. `npm test`: 1,394 pass, 0 fail, 1
+skip (1,395 total). `npx tsc --noEmit -p .`: pass. `npm run build`: pass. Focused
+`node --test test/fastlane-banner-event-hosts.test.mjs`: pass. `git diff --check`: pass. Logs are
+retained beside the browser receipts. The source change and guard remain branch-only pending owner
+review and deployment.
+
+| ID | Status after this gate | Evidence / reason |
+|---|---|---|
+| CR-167.1 | verified | 24-case live matrix, geometry and contrast receipts |
+| CR-167.2 | verified → **open** | expanded banner obscures the first result row on both pages |
+| CR-167.3 | verified | `banner-live/behavior.json`, CTA 200, fresh-context and storage checks |
+| CR-167.4 | verified → **open** | deployed legacy route gives 204 but does not forward to Umami |
+| CR-167.5 | implemented → **verified** | Stripe readback and unsigned-webhook checks above; no new session created by this gate |
+| CR-168.1 | verified → **open** | same deployed legacy event drop; branch repair is not live |
+| CR-169.1–169.6 | implemented → **verified** | 134/134 per host plus 24-case live matrix and public aggregate audit |
+| CR-174.1 | **open** | regression test and route fix are branch-only; live forwarding proof awaits deployment |
+| F-181 | implemented → **verified** | independent 34/34 live pass |
+| D210 | implemented → **open** | static fix/test pass; next unattended refresh run has not occurred |
+| D200, D201, D202, D204 | implemented → **open** | still lack the unattended runtime run containing them |
+| D205, D192, X6 | **open** | D205 needs Florian; D192 unchanged; X6's listed audit surface remains unverified |
+
+No `ALL-ACCEPTED`: CR-167.2, CR-167.4/168.1, CR-174.1 and X6 remain open; the additional
+never-measured CR acceptance rows already listed above also remain open.
