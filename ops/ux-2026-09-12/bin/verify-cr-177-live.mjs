@@ -43,7 +43,11 @@ const api = async (path) => {
 };
 const window = (fromMs) => `startAt=${fromMs}&endAt=${Date.now() + 60_000}`;
 const stats = async (fromMs) => await api(`/api/websites/${SITE}/stats?${window(fromMs)}`);
-/** Umami v3 spells the page dimension `path`; `type=url` answers 400. */
+/** Umami v3 spells the page dimension `path` (`type=url` answers 400) and its `y` is **visits**, not views:
+ *  three forwards to one path answered `stats.pageviews: 3` and `metrics?type=path: [{y:1}]` (checked on a
+ *  throwaway website, 26 Sep 2026). Since every forward shares one Umami session (fixed agent, one server
+ *  address), a per-path row here means "at least one hit touched this path in the window", and the page-view
+ *  count itself is `stats.pageviews`. Both are used below, each for what it can prove. */
 const paths = async (fromMs) => await api(`/api/websites/${SITE}/metrics?${window(fromMs)}&type=path`);
 const countOf = (rows, path) => Number(rows.find((r) => r.x === path)?.y || 0);
 const pv = (s) => (typeof s?.pageviews === 'object' ? Number(s?.pageviews?.value) : Number(s?.pageviews));
@@ -154,13 +158,15 @@ const rows = await paths(t0).catch(() => []);
 const perPath = Object.fromEntries(NAMED.concat(['doc', 'gpc', 'dnt', 'nav', 'foreign'].map(marker)).map((p) => [p, countOf(rows, p)]));
 
 check('page views exist at all (the CR-177 defect is gone)', pv(after) > 0, `pageviews(24h)=${pv(after)}`);
-check('the run added page views', pv(after) - pv(before) >= 5, `before=${pv(before)} after=${pv(after)}`);
-for (const path of NAMED) check(`${path} is counted by name`, perPath[path] >= 1, `views=${perPath[path]}`);
-check('a page load is exactly one page view', perPath[marker('doc')] === 1, `views=${perPath[marker('doc')]}`);
-check('GPC adds nothing', perPath[marker('gpc')] === 0, `views=${perPath[marker('gpc')]}`);
-check('DNT adds nothing', perPath[marker('dnt')] === 0, `views=${perPath[marker('dnt')]}`);
-check('an in-app navigation report becomes exactly one page view', perPath[marker('nav')] === 1, `views=${perPath[marker('nav')]}`);
-check('a foreign origin adds nothing', perPath[marker('foreign')] === 0, `views=${perPath[marker('foreign')]}`);
+// The run makes exactly 7 countable hits: 3 named pages, 1 marker page load, the `/` load and the in-app
+// navigation of the click test, and 1 marker navigation report. Live visitors can only add to that.
+check('the run added at least its own 7 page views', pv(after) - pv(before) >= 7, `before=${pv(before)} after=${pv(after)}`);
+for (const path of NAMED) check(`${path} is counted by name`, perPath[path] >= 1, `visits=${perPath[path]}`);
+check('a page load appears under its own path', perPath[marker('doc')] === 1, `visits=${perPath[marker('doc')]}`);
+check('GPC adds nothing at all — no row for its page', perPath[marker('gpc')] === 0, `visits=${perPath[marker('gpc')]}`);
+check('DNT adds nothing at all — no row for its page', perPath[marker('dnt')] === 0, `visits=${perPath[marker('dnt')]}`);
+check('an in-app navigation report appears under its own path', perPath[marker('nav')] === 1, `visits=${perPath[marker('nav')]}`);
+check('a foreign origin adds nothing at all — no row for its page', perPath[marker('foreign')] === 0, `visits=${perPath[marker('foreign')]}`);
 check('the real in-app navigation target is counted', inAppTarget ? countOf(rows, inAppTarget) >= 1 : false, `path=${inAppTarget} views=${inAppTarget ? countOf(rows, inAppTarget) : '-'}`);
 check('no path outside the site\'s route list was forwarded', !rows.some((r) => r.x === '(unknown route)' || r.x.includes('wp-admin') || r.x.includes('?')),
   rows.filter((r) => r.x === '(unknown route)' || r.x.includes('wp-admin') || r.x.includes('?')).map((r) => r.x).join(' '));
@@ -168,7 +174,9 @@ check('no path outside the site\'s route list was forwarded', !rows.some((r) => 
 const passed = results.filter((r) => r.ok).length;
 await fs.writeFile(`${OUT}/verification.json`, `${JSON.stringify({
   base: BASE, run: RUN, at: new Date().toISOString(),
-  pageviews: { before: pv(before), after: pv(after) }, perPath, marker_paths: 'the /models/bh-cr177-* rows below are this run\'s own markers',
+  pageviews: { before: pv(before), after: pv(after), note: 'stats.pageviews over 24 h — the page-view count' },
+  perPath, perPath_note: 'metrics?type=path counts visits per path, not views; one shared Umami session means a row = "a hit touched this path"',
+  marker_paths: 'the /models/bh-cr177-* rows below are this run\'s own markers',
   paths_in_window: rows, passed, total: results.length, results,
 }, null, 2)}\n`);
 console.log(`\n${passed}/${results.length} — ${OUT}/verification.json`);

@@ -12535,5 +12535,86 @@ CR-175, so the IDs are max+1 and are kept.
 | CR-176.4 | implemented | iter236, `b542eaf6`, verified here, needs a non-implementer review | Done: bar section header now reads `$/1k decisions` (sort still keys on `usd`); the cost cell is no longer `bh-heat`-shaded, and `est.`/`ann.` are `bh-thin-tag` pills to the LEFT of a right-aligned tabular number; the `~` prefix is gone; figcaption says the column is not heat-shaded. Live 60/60 per host incl. pill-left-of-number geometry at 1440 and 390. |
 | CR-176.5 | implemented | iter236, `b542eaf6`, verified here, needs a non-implementer review | Same treatment in the axes table: `$/1k decisions` column keeps numeric sorting but loses the green heat; est./ann. pills sit left of a right-aligned tabular number; legend reworded to `ann.` and HeatLegend no longer claims $/1k is shaded. Live 60/60 per host incl. pill-to-number geometry at 1440 and 390, light and dark. |
 | CR-176.6 | implemented | iter237, local verify-cr-176-6-live 42/42 (desktop+phone, light+dark, WebGL + WebGL-disabled fallback), harness at `ops/ux-2026-09-12/bin/verify-cr-176-6-live.mjs`; needs a non-implementer review | Done: the 3D view names all three axes (`Cost · $/1k decisions · cheaper →`, `Capability 0–100`, `Speed · faster →`) and pins permanent rank+name labels on the top five ranked systems. WebGL path: DOM overlay layer (`data-bh-jev14-3d-labels`) lifted from projected world anchors through every rotate/pan/zoom via `updateLabelsRef`, following the weights / Jev-class ranking controls (a `rankedKey` effect). WebGL-disabled fallback: SVG `<text>` groups with the same labels, projected by the fallback camera and carrying `data-bh-jev14-3d-axis-label` / `data-bh-jev14-3d-model-label`. Gotcha fixed here: the WebGL effect's cleanup removed any `[data-bh-jev14-3d-labels]` inside the box, which silently deleted the fallback's SVG axis group — the SVG group now uses `data-bh-jev14-3d-axis-labels`. CSS labels added to `app/globals.css` (`.bh-jev-3d-labels/.bh-jev-3d-axis-label/.bh-jev-3d-model-label/.bh-jev-3d-model-dot`). Regression pins: `test/jevbench-capability.test.mjs` "CR-176.6" (source, both paths). |
-| CR-177.1 | open | — | Umami shows 0 pageviews while banner events arrive. Seeded only. Note for the worker: the repo has a **first-party** visit counter (`lib/visit-stats.mjs`, `bh_visit_daily`) and `test/visit-stats.test.mjs` explicitly forbids a sitewide Umami/analytics script in `app/layout.tsx`; CR-67.4's privacy design must not be broken to "add pageviews". Read the intent before changing anything. |
-| CR-177.2 | open | — | Daily sanity check: pageviews 0 while events > 0 → digest alert. Seeded only. |
+| CR-177.1 | open → **implemented + verified live** (iteration 238) | see the iteration-238 section | Umami shows 0 pageviews while banner events arrive. Seeded only. Note for the worker: the repo has a **first-party** visit counter (`lib/visit-stats.mjs`, `bh_visit_daily`) and `test/visit-stats.test.mjs` explicitly forbids a sitewide Umami/analytics script in `app/layout.tsx`; CR-67.4's privacy design must not be broken to "add pageviews". Read the intent before changing anything. |
+| CR-177.2 | open → **implemented + verified** (iteration 238) | see the iteration-238 section | Daily sanity check: pageviews 0 while events > 0 → digest alert. Seeded only. |
+
+## Iteration 238 — work (claude-opus), 2026-09-26 15:32–16:30 UTC — CR-177 page views: root cause, fix, daily check
+
+Picked CR-177.1/.2, the only open CR rows with a live defect behind them (CR-176.1–.6 are implemented and
+awaiting a non-implementer review; everything else open is either design judgement, D205/Florian, or a
+measurement someone else owes). Read `03`'s CR-177 text, `04`'s two acceptance rows and the CR-67.4/67.5
+privacy design **before** touching anything, because the seeding note warned that "adding pageviews" is
+exactly where that design gets broken.
+
+**Root cause, established before any code was written** (`iter238-cr177/ROOT-CAUSE.md`): Umami's collect
+endpoint decides what a hit is by the **presence of `name`** in the payload — with a name it is a custom
+event, without one it is a page view. The only code in this repository that has ever talked to Umami is
+CR-167's `app/api/fastlane-banner-event/route.ts`, and it always sends a name. **No page view was ever sent.**
+So the four candidates the brief lists (script tag, first-party proxy, CSP, ad-block path) were all dead ends
+by construction, and the website id was right: `stats` answered `pageviews: 0` while `metrics?type=event` for
+the same id and window answered 4,349 / 623 / 24. Two API facts worth keeping: the self-hosted v3 instance
+wants `Authorization: Bearer <key>` (the cloud header `x-umami-api-key` answers 401), and the page dimension
+is `type=path` (`type=url` answers 400). Both cost a round each to find.
+
+Proved on a throwaway Umami website (created and deleted through the API, so the real numbers were never
+touched): the same payload **without** `name` produced `pageviews: 2`; and a self-describing user agent was
+answered `{"beep":"boop"}` and stored nothing, because Umami runs `isbot` on that endpoint. That second probe
+decided a design point — the forward has to carry a plain-browser agent string.
+
+**The fix has two paths and adds no third-party anything.** Full page loads are forwarded by `middleware.ts`
+from the request it is already answering, through the *same* classification the first-party counter uses, so
+the two mechanisms cannot disagree about what a page load is — no client code at all, and an ad blocker
+cannot stop it. In-app navigations need the browser, because Next.js **deletes** the RSC and prefetch headers
+before middleware (`next/dist/server/web/adapter.js`, `FLIGHT_HEADERS`: "Headers should only be stripped for
+middleware"), so the server genuinely cannot tell a client-router navigation from a prefetch; that is also why
+`lib/visit-stats.mjs` never counted them. `components/PageViewReporter.tsx` posts the path to our own
+`/api/page-view`, which **re-derives** it from the site's route allow-list, so nothing a caller writes reaches
+Umami verbatim.
+
+**What deliberately does not happen:** no client-side analytics script, no cookie or storage, no visitor
+User-Agent (a fixed constant instead — this closes CR-67.5 §6.4 residual 1 for the new mechanism), no IP, no
+referrer, no query string, no hash, no unique-visitor key. PR #12's `/analytics` proxy with a daily visitor
+hash — the draft that has been waiting since 24 Sep — is **not** adopted: that hash is precisely what CR-67.5
+§3 rules out and what §2 already rejected once as draft "variant A". Stated in the record rather than hidden:
+Umami's visitor/browser/OS figures are now meaningless by construction (one session for everybody) and must
+never be quoted; page views are the number CR-177 asks for, and `bh_visit_daily` stays the authoritative
+count.
+
+**CR-67.5 §7** is the consent record for this, written the way §6 was: the §3 and §6.4 conditions walked one
+by one, the decision (no consent required, CR-67.6's no-banner branch stands), and four residuals — Umami's
+own retention still unrecorded, the endpoint unauthenticated like any public beacon (an accuracy limit, with a
+600/minute cap bounding it), the broken visitor figures, and the fact that the author is the implementer, so a
+non-implementer review is owed.
+
+**D213, found on the way:** `jev-models` and `image-jev-bench` were missing from the first-party counter's
+`PAGE_ROOTS`, so the two pages Florian asks about most have been stored as `(unknown route)` since CR-67.4
+shipped. Both are counted by name from this commit; past rows cannot be split apart.
+
+**One Umami limitation, measured rather than assumed, because it changes how the question gets answered:**
+`metrics?type=path` counts **visits per path, not views** — three forwards to one path answered
+`stats.pageviews: 3` and `type=path: [{"y":1}]`, and no parameter changes that. With one shared session a
+per-path row means "a hit touched this path". So Umami answers *how many page views the site has*, and the
+**per-page** split has to come from the first-party report `GET /api/operator/visits?days=N`, which holds exact
+views and visits per path — and, since D213, holds the two Jev pages by name. Whoever answers Florian's
+original question should quote page views from Umami and the per-page table from the operator report, never
+Umami's visitor or per-page figures.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| CR-177.1 | open → **implemented + verified live** | `iter238-cr177/{canonical,legacy,www}/verification.json` **25/25 each** at `1bdb838d`; `ROOT-CAUSE.md` | `/`, `/jev-models` and `/image-jev-bench` are counted by name on all three public hosts; a page load is one page view; a real in-app navigation produces exactly one same-origin report and one more page view; GPC, DNT, a foreign `Origin` and an unknown route add nothing at all; the browser makes no request to the analytics host and the page sets no cookie or new storage key. Page views over 24 h rose 35 → 45, 52 → 62, 145 → 159 across the three runs (the last already carrying real visitors). Written by this engine, so a different one must re-run the harness before this is `verified`; the label fix below is part of what it should check. |
+| CR-177.2 | open → **implemented + verified** | `analytics-health-{before,after}.json`; `test/analytics-health.test.mjs`; `/opt/mmc-daily/gate/gate.mjs` (`.bak-before-cr177-2-20260926`) | `scripts/check-analytics-health.mjs` printed the alert this CR is about **before** the fix (`0 page views … while 5,047 banner events arrived`, exit 2) and `ok: 77 page views, 5,077 events over 24 h` after it — the 0-page-view day is simulated in the unit test as well, with the live numbers. The daily gate appends the line to the digest it already sends (`analyticsLine(repo)`, fail-soft, 90 s budget, `⚠` prefix on an alert). It has not yet run inside a real daily; the 05:17 run is its own receipt. |
+| D213 (new) | **open → implemented + verified (same iteration)** | `test/umami-pageview.test.mjs` "D213"; the live receipts' `/jev-models` and `/image-jev-bench` rows | `PAGE_ROOTS` never contained `jev-models` or `image-jev-bench`, so since CR-67.4 the two most-asked-about pages were stored as `(unknown route)` in `bh_visit_daily` and would have reached Umami the same way. Both are counted by name now. Past rows cannot be split apart — the operator report's history for those pages stays inside `(unknown route)` until today. |
+| CR-67.5 §7 | **new record section** | `CR-67.5-CONSENT-DECISION.md` §7 | The consent assessment for the new mechanism, with §3's and §6.4's conditions walked one by one and four residuals stated. **Needs a reviewer that is not its author**, like §5 and §6. |
+| — | corrected in the same iteration | `verify-cr-177-live.mjs`; both receipt sets kept | The first run of the harness was 25/25 as well, but three of its check *names* said "page view" where the number came from `metrics?type=path`, which counts visits. The names were wrong, not the checks, so the harness was relabelled, given a note in its own receipt, and given one **new** assertion that does use the view count (`stats.pageviews` must rise by at least the run's own 7 hits); all three hosts were then re-run. Nothing was weakened. |
+
+Gates before the push: `node scripts/build-dataset.mjs` rc 0 (timestamp-only `generated_at`/`collected_at`
+churn discarded), `CI=true npm test` **1,415 tests / 1,414 pass / 0 fail / 1 skip**, `npx tsc --noEmit -p .`
+rc 0, `npm run build` rc 0, and the harness at **24/25 against the local production build** before anything
+was pushed (the one local failure is the dry run's own header injection, explained in `ROOT-CAUSE.md`).
+The checkout fast-forwarded to `aeb632bd` (merge-queue PR #37, CR-170) mid-iteration with my uncommitted files
+untouched; the gates above ran on that tree, and `git log origin/main..HEAD` was checked before pushing.
+
+Not done here, still open: CR-176.1–.6's non-implementer review, CR-156.1–.4, D210's run-report read, D205
+(needs Florian), D192, X6's remaining audit surface, the CR rows no harness covers (CR-148.1/.2,
+CR-152.1/.2/.5, CR-153.4, CR-158.4), and Umami's own retention, which nobody has recorded yet (CR-67.5 §6.4/§7.4
+residual 1). **`ALL-ACCEPTED` is not appended.**
