@@ -12600,12 +12600,21 @@ views and visits per path — and, since D213, holds the two Jev pages by name. 
 original question should quote page views from Umami and the per-page table from the operator report, never
 Umami's visitor or per-page figures.
 
+**Seeding note (2026-09-26, iteration 239):** CR-177.3 is added because Florian's verbatim CR-177 request
+includes “downloads” while the existing acceptance covers page views only. Scope boundary: user-requested,
+first-party downloadable resources; an outbound click is not a completed download, and in-page fetches of a
+dataset are not a human download. The live JevBench page explicitly links and declares
+`/api/jevbench/v1.4.2` as JSON; a single live fetch confirmed 200 / 606,898 bytes and was recorded as endpoint
+existence evidence, **not** as a download count. See `download-endpoint-live.json` in the iteration evidence
+root. No download count is claimed yet.
+
 | ID | Status | Evidence | Notes |
 |---|---|---|---|
-| CR-177.1 | open → **implemented + verified live** | `iter238-cr177/{canonical,legacy,www}/verification.json` **25/25 each** at `1bdb838d`; `ROOT-CAUSE.md` | `/`, `/jev-models` and `/image-jev-bench` are counted by name on all three public hosts; a page load is one page view; a real in-app navigation produces exactly one same-origin report and one more page view; GPC, DNT, a foreign `Origin` and an unknown route add nothing at all; the browser makes no request to the analytics host and the page sets no cookie or new storage key. Page views over 24 h rose 35 → 45, 52 → 62, 145 → 159 across the three runs (the last already carrying real visitors). Written by this engine, so a different one must re-run the harness before this is `verified`; the label fix below is part of what it should check. |
-| CR-177.2 | open → **implemented + verified** | `analytics-health-{before,after}.json`; `test/analytics-health.test.mjs`; `/opt/mmc-daily/gate/gate.mjs` (`.bak-before-cr177-2-20260926`) | `scripts/check-analytics-health.mjs` printed the alert this CR is about **before** the fix (`0 page views … while 5,047 banner events arrived`, exit 2) and `ok: 77 page views, 5,077 events over 24 h` after it — the 0-page-view day is simulated in the unit test as well, with the live numbers. The daily gate appends the line to the digest it already sends (`analyticsLine(repo)`, fail-soft, 90 s budget, `⚠` prefix on an alert). It has not yet run inside a real daily; the 05:17 run is its own receipt. |
+| CR-177.1 | open → implemented → **independently verified live** (iteration 239, Codex-Luna) | `iter239-cr177-review/{canonical,www,legacy}/verification.json` **25/25 each**, live revision `ee204f341a174c0030601cc8291ed95260532871`; report `REVIEW-20260926T185044Z.md` | `/`, `/jev-models`, `/image-jev-bench`, SPA navigation, GPC/DNT, foreign origin, unknown route, no direct Umami request, no new cookie/storage key all rechecked live. The `stats.pageviews` totals rose during each run. Umami's per-path rows remain visits, not views; use the operator report for per-page totals. |
+| CR-177.2 | open → implemented → **independently verified** (iteration 239, Codex-Luna) | `analytics-health-live.json`; `test/analytics-health.test.mjs`; `/opt/mmc-daily/gate/gate.mjs` `analyticsLine(repo)`; `REVIEW-20260926T185044Z.md` | Live health check: 3,161 page views and 5,522 events/24 h. The 0-page-view simulation alerts and the digest integration is fail-soft. A completed scheduled digest carrying the line has not yet been observed. |
+| CR-177.3 | **open** | `download-endpoint-live.json` (one GET confirms current JSON route; not a count) | Seeded from the explicit downloads clause in 03; no download telemetry/counts are implemented. Scope starts with the linked and declared JevBench JSON; exclude chart background fetches to that same endpoint and external-link clicks. Acceptance is in 04-CR-BRIEF.md. |
 | D213 (new) | **open → implemented + verified (same iteration)** | `test/umami-pageview.test.mjs` "D213"; the live receipts' `/jev-models` and `/image-jev-bench` rows | `PAGE_ROOTS` never contained `jev-models` or `image-jev-bench`, so since CR-67.4 the two most-asked-about pages were stored as `(unknown route)` in `bh_visit_daily` and would have reached Umami the same way. Both are counted by name now. Past rows cannot be split apart — the operator report's history for those pages stays inside `(unknown route)` until today. |
-| CR-67.5 §7 | **new record section** | `CR-67.5-CONSENT-DECISION.md` §7 | The consent assessment for the new mechanism, with §3's and §6.4's conditions walked one by one and four residuals stated. **Needs a reviewer that is not its author**, like §5 and §6. |
+| CR-67.5 §7 | **technical facts independently verified; no-consent conclusion unresolved** | `CR-67.5-CONSENT-DECISION.md` §7.6; `REVIEW-20260926T185044Z.md` | Codex-Luna passed the technical/live review but cannot endorse the categorical no-consent conclusion: §7 does not analyze the client `usePathname()` read and transmission against EDPB Guidelines 2/2023 v2.0 paras. 52–53. This review does not conclude consent is required. Do not report the no-banner position as independently cleared. |
 | — | corrected in the same iteration | `verify-cr-177-live.mjs`; both receipt sets kept | The first run of the harness was 25/25 as well, but three of its check *names* said "page view" where the number came from `metrics?type=path`, which counts visits. The names were wrong, not the checks, so the harness was relabelled, given a note in its own receipt, and given one **new** assertion that does use the view count (`stats.pageviews` must rise by at least the run's own 7 hits); all three hosts were then re-run. Nothing was weakened. |
 
 Gates before the push: `node scripts/build-dataset.mjs` rc 0 (timestamp-only `generated_at`/`collected_at`
@@ -12642,3 +12651,44 @@ Not done here, still open: CR-176.1–.6's non-implementer review, CR-156.1–.4
 (needs Florian), D192, X6's remaining audit surface, the CR rows no harness covers (CR-148.1/.2,
 CR-152.1/.2/.5, CR-153.4, CR-158.4), and Umami's own retention, which nobody has recorded yet (CR-67.5 §6.4/§7.4
 residual 1). **`ALL-ACCEPTED` is not appended.**
+
+## Iteration 239 — work/review (codex-luna), 2026-09-26 18:30–18:50 UTC
+
+One-writer check found no other active Benchmark Heaven writer. Worked in
+`/home/flori/wt/bh-cr177-review-20260926` on `jobs/bh-cr177-review-20260926`, based on `origin/main`
+`ee204f34`; the deploy checkout was not edited.
+
+**Seeded CR-177.3 before proceeding** because Florian's verbatim request includes downloads but CR-177.1/.2
+only cover page views and page-view health. The public JevBench page explicitly links and declares
+`/api/jevbench/v1.4.2` as a JSON `DataDownload`; the API also supplies the on-page chart, so acceptance
+requires separating user navigation from a background fetch. A live GET returned 200, JSON, 606,898 bytes;
+receipt `download-endpoint-live.json` records endpoint existence, not a download. `04-CR-BRIEF.md` now
+defines the first-party transfer scope, exclusions and minimum privacy/test acceptance; `PROGRESS.md`
+records the open row. Seed commit `00266591` was pushed before the review edits. No download count is claimed.
+
+**Independent CR-177 review.** Re-ran `verify-cr-177-live.mjs` against canonical, `www`, and legacy hosts:
+**25/25 each** at deployed revision `ee204f341a174c0030601cc8291ed95260532871`. Receipts are
+`/opt/benchmarkheaven/state/ux-evidence/iter239-cr177-review/{canonical,www,legacy}/verification.json`.
+Page-view totals rose during each run; the SPA route emitted exactly one same-origin report; all three
+Jev routes, GPC/DNT, foreign-origin and unknown-route behavior, no direct Umami browser request, and no
+new cookie/storage key passed. Independently ran `scripts/check-analytics-health.mjs --json`: 3,161 page
+views and 5,522 events over 24 h, level `ok`. Confirmed the 0-view-with-events simulation in
+`test/analytics-health.test.mjs` and the daily gate's `analyticsLine(repo)` integration. A completed
+scheduled digest carrying the line remains unobserved.
+
+**D215 (new, open).** The CR-67.5 §7 author concluded no consent is required for the page-view mechanism.
+The implementation facts pass review, but the record does not analyze `usePathname()` and the resulting
+client-to-server transmission under EDPB Guidelines 2/2023 v2.0 paras. 52–53. DSK v1.2 Rn. 87 declines a
+blanket no-consent conclusion for reach measurement; Rn. 88 gives a first-party page-count example that
+supports simple request-based counting but does not resolve this SPA path. **This review does not decide
+that consent is required**; it withholds independent approval of the categorical no-consent conclusion until
+the record addresses the client-side path specifically. The shipped code was left unchanged. Full cited
+review: `REVIEW-20260926T185044Z.md`; sources and verbatim evidence are in the evidence root's `citations.json`
+and `legal/` directory.
+
+**Gates before push:** `node scripts/build-dataset.mjs` rc 0 (870/673/95/3,135; generated timestamp churn
+restored); `CI=true npm test` **1,422 tests / 1,421 pass / 0 fail / 1 skip**; `tsc --noEmit -p .` rc 0;
+`git diff --check` clean. The isolated worktree had no dependencies installed, so its ignored `node_modules`
+link pointed read-only to the existing deploy-checkout dependencies during gates; no deployed files changed.
+Seed-only commit `00266591` and review/docs commit `b0373289` are pushed. Draft PR #44:
+https://github.com/fstandhartinger/model-market-comparison/pull/44. No `ALL-ACCEPTED` appended.
