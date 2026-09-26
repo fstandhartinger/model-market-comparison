@@ -136,6 +136,17 @@ function validateRows(rows) {
 // worker model found" from round 2 onwards. Every other reason, for every route, is still a single strike.
 const MALFORMED_OUTPUT = /malformed/i;
 const CONNECTION_DROP = /^fetch failed$/i;
+// D218 (2026-09-26): an HTTP status that describes the *account*, not the model. 401 (bad key), 403
+// (forbidden), 429 (rate limited) and 402 (out of credit) are answered identically for every model on the
+// key, so striking the model off is a category error: it removes a working route for the rest of the run
+// and the next arm reports the cause as "No supported viable worker model found".
+//
+// 402 was the omission, and it cost the 2026-09-26 05:17 run 27 retained sources. The OpenRouter balance
+// ran out ($0.137 left at 19:31 the previous evening); at 05:20:47 both paid routes answered 402 within
+// 1.6 s of each other, every one was filed as that model's own transport failure, and 20 of the 27 arms
+// then failed with a worker-selection message that named no billing problem at all. `aa-benchmark-fields`
+// has been retained on this pattern for 13 consecutive runs, since 2026-09-11.
+export const ACCOUNT_LEVEL_HTTP = /HTTP (401|402|403|429)/;
 export const WORKER_ROLES = ['producer', 'critic'];
 /** The most `worker-runner.mjs` accepts; anything above it is rejected before the call is made. */
 export const WORKER_MAX_TOKENS_CEILING = 32768;
@@ -236,7 +247,7 @@ export async function defaultRunner(args, { attempt = 1, maxTokens = null } = {}
   } catch (error) {
     const model = error.stderr?.match(/^worker\.sh: model=(\S+)/m)?.[1];
     const reason = error.stderr?.match(/^WORKER_ERROR: (.*)/m)?.[1] ?? 'Worker process failed';
-    if (model && failedFile && !/HTTP (401|403|429)/.test(reason)) {
+    if (model && failedFile && !ACCOUNT_LEVEL_HTTP.test(reason)) {
       await mkdir(state, { recursive: true });
       // D199: the transport or the process failed, not the model's answer — this strike never hardens.
       await appendFile(failedFile, JSON.stringify({ model, at: new Date().toISOString(), reason, role, failure: 'transport' }) + '\n');
@@ -656,7 +667,10 @@ export async function reviewArtifact({
       }
     } catch (error) {
       errors.push(`round ${round}: ${error.message}`);
-      if (round === maxRounds || /HTTP (401|403|429)|not qualified|not from a different|requires non-empty|exceeds.*bound|complete bounded extract/.test(error.message)) terminalError = error;
+      // D218: an account-level status is terminal for the same reason as the other three — another round
+      // cannot pay a bill. The 05:17 run spent three identical 402s per arm to learn that once.
+      if (round === maxRounds || ACCOUNT_LEVEL_HTTP.test(error.message)
+        || /not qualified|not from a different|requires non-empty|exceeds.*bound|complete bounded extract/.test(error.message)) terminalError = error;
     }
   }
 

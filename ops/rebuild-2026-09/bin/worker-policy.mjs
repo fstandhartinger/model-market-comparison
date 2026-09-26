@@ -211,3 +211,38 @@ export function validateCompletion(body, requested) {
   if (typeof choice.message?.content !== 'string' || !choice.message.content.trim()) throw new Error('Empty completion');
   return choice.message.content.trim();
 }
+
+// D218 (2026-09-26): a non-OK completion used to be reported as its bare status, and the provider's own
+// sentence — the only part that says what to do about it — was discarded unread. Two engines read the same
+// "OpenRouter completion HTTP 402" on 2026-09-26 and reached opposite conclusions (an empty account; an
+// intermittent, request-shaped fault), because neither could see the body. OpenRouter states the cause
+// outright: a 400 answers "you requested about 900000001 tokens (1 of text input, 900000000 in the output)",
+// and a 402 names the credit shortfall. `source-health.md` clips a reason at 160 characters, so the excerpt
+// is bounded to fit and flattened to one line; a cause has to survive that clip, which a status alone does
+// not need to.
+export const PROVIDER_ERROR_EXCERPT = 160;
+
+/** The provider's message, flattened to one bounded line. Never throws; returns '' when there is nothing to say. */
+export function providerErrorDetail(bodyText) {
+  if (typeof bodyText !== 'string' || !bodyText.trim()) return '';
+  let message = '';
+  try {
+    const parsed = JSON.parse(bodyText);
+    const candidate = parsed?.error?.message ?? (typeof parsed?.error === 'string' ? parsed.error : null) ?? parsed?.message;
+    if (typeof candidate === 'string') message = candidate;
+  } catch { /* not JSON — the raw text is the best we have */ }
+  const flat = (message || bodyText)
+    // A key never appears in an error body, but this string is written to receipts and to Florian's digest.
+    .replace(/sk-[A-Za-z0-9_-]{8,}/g, 'sk-[redacted]')
+    // Provider text is data, never instructions or layout: one line, no control characters.
+    .replace(/[\u0000-\u001f\u007f]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  return flat.length > PROVIDER_ERROR_EXCERPT ? `${flat.slice(0, PROVIDER_ERROR_EXCERPT - 1)}…` : flat;
+}
+
+/** `<label> completion HTTP <status>`, plus the provider's own reason when it gave one. */
+export function completionErrorMessage(label, status, bodyText) {
+  const detail = providerErrorDetail(bodyText);
+  return `${label} completion HTTP ${status}${detail ? `: ${detail}` : ''}`;
+}

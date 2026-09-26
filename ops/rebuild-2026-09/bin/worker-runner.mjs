@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { spawn, execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { createHash } from 'node:crypto';
-import { freeRouterCandidates, selectModel, selectModelForWorker, validateCompletion, freeRouteRole, routeLabel, SMOKE_TASK } from './worker-policy.mjs';
+import { freeRouterCandidates, selectModel, selectModelForWorker, validateCompletion, freeRouteRole, routeLabel, completionErrorMessage, SMOKE_TASK } from './worker-policy.mjs';
 import { writeJSONAtomic } from '../../../lib/snapshot.mjs';
 import { writeFile, rename, rm } from 'node:fs/promises';
 import { imageEvidence } from './worker-images.mjs';
@@ -254,7 +254,8 @@ try {
       body: JSON.stringify({ model: chosen.router_model, max_tokens: options.maxTokens, ...(reasoning ? { reasoning_effort: reasoning.effort } : {}), ...(responseFormat ? { response_format: responseFormat } : {}),
         messages: [{ role: 'system', content: system }, { role: 'user', content: task }] }),
     });
-    if (!response.ok) throw new Error(`Router completion HTTP ${response.status}`);
+    // D218: the body carries the reason; a bare status told nobody anything for 15 days.
+    if (!response.ok) throw new Error(completionErrorMessage('Router', response.status, await response.text().catch(() => '')));
     const body = await response.json();
     // The router returns the provider's model id; it must be exactly the route's model (no silent group fallback).
     const content = validateCompletion(body, chosen.provider_model);
@@ -270,7 +271,7 @@ try {
       headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json', 'HTTP-Referer': 'https://benchmarkheaven.com', 'X-Title': 'Benchmark Heaven QA' },
       body: JSON.stringify({ model: chosen.id, max_tokens: options.maxTokens, ...(reasoning ? { reasoning } : {}), ...(responseFormat ? { response_format: responseFormat } : {}), provider: { sort: 'price', ...(responseFormat ? { require_parameters: true } : {}), ...(Number.isFinite(options.maxPricePer1M) ? { max_price: { prompt: options.maxPricePer1M, completion: options.maxPricePer1M } } : {}) }, messages: [{ role: 'system', content: system }, { role: 'user', content: screenshots.parts.length ? [{ type: 'text', text: task }, ...screenshots.parts] : task }] }),
     });
-    if (!response.ok) throw new Error(`OpenRouter completion HTTP ${response.status}`);
+    if (!response.ok) throw new Error(completionErrorMessage('OpenRouter', response.status, await response.text().catch(() => '')));
     const body = await response.json();
     Object.assign(metadata, { actual_model: body.model ?? null, usage: body.usage ?? null, finish_reason: body.choices?.[0]?.finish_reason ?? null });
     result = { content: validateCompletion(body, chosen.id), actual_model: body.model, usage: body.usage ?? null, provider: body.provider ?? null };
