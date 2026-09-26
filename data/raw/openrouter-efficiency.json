@@ -1,5 +1,5 @@
 {
-  "collected_at": "2026-09-25T08:41:14.119Z",
+  "collected_at": "2026-09-26T05:19:38.494Z",
   "models": {
     "moonshotai/kimi-k3": {
       "or_model_id": "moonshotai/kimi-k3",
@@ -10251,6 +10251,697 @@
         "basis": "measured",
         "status": "available"
       }
+    },
+    "google/gemini-3.1-pro-preview-customtools": {
+      "or_model_id": "google/gemini-3.1-pro-preview-customtools",
+      "model_permaslug": "google/gemini-3.1-pro-preview-customtools-20260219",
+      "variant": "standard",
+      "endpoints": [
+        {
+          "or_model_id": "google/gemini-3.1-pro-preview-customtools",
+          "endpoint_tag": "google-ai-studio",
+          "provider": "Google AI Studio",
+          "endpoint_id": "3ccc4f6d-d337-43ed-9c40-bb43618ba0ca",
+          "cache_read_per_1m": 0.19999999999999998,
+          "cache_write_per_1m": 0.375,
+          "cache_hit_rate": 0.6101523536243766,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Google AI Studio",
+          "source_provider_slug": "google-ai-studio",
+          "total_tokens": 5438304
+        }
+      ],
+      "usage": {
+        "status": "available",
+        "daily": [
+          {
+            "date": "2026-09-25",
+            "total_prompt_tokens": 84789924,
+            "total_completion_tokens": 6178043,
+            "count": 6073
+          },
+          {
+            "date": "2026-09-24",
+            "total_prompt_tokens": 101582609,
+            "total_completion_tokens": 6782265,
+            "count": 4829
+          },
+          {
+            "date": "2026-09-23",
+            "total_prompt_tokens": 129552091,
+            "total_completion_tokens": 7618771,
+            "count": 6497
+          },
+          {
+            "date": "2026-09-22",
+            "total_prompt_tokens": 1271410129,
+            "total_completion_tokens": 16552939,
+            "count": 36395
+          },
+          {
+            "date": "2026-09-21",
+            "total_prompt_tokens": 269805050,
+            "total_completion_tokens": 7997174,
+            "count": 8060
+          },
+          {
+            "date": "2026-09-20",
+            "total_prompt_tokens": 60695547,
+            "total_completion_tokens": 5850273,
+            "count": 4976
+          },
+          {
+            "date": "2026-09-19",
+            "total_prompt_tokens": 57448990,
+            "total_completion_tokens": 3431327,
+            "count": 3257
+          }
+        ],
+        "total_prompt_tokens": 1975284340,
+        "total_completion_tokens": 54410792,
+        "total_requests": 70087,
+        "input_output_ratio": 36.30317198838054
+      },
+      "source_updated_at": "2026-09-26T05:19:27.691Z",
+      "window": {
+        "start_date": "2026-09-19",
+        "end_date": "2026-09-25"
+      },
+      "provenance": {
+        "source": "OpenRouter model-page usage",
+        "url": "https://openrouter.ai/google/gemini-3.1-pro-preview-customtools",
+        "collected_at": "2026-09-26T05:19:41.075Z",
+        "basis": "measured"
+      },
+      "response_sha256": "4bddd0e07d8f0246ee7adab2e550284c272cd2b11a8614cf6fc8d990d22c45f6",
+      "cache": {
+        "unjoined": [],
+        "returned_summaries": 1,
+        "summary_window": null,
+        "chart_date_range": {
+          "first": "2026-09-19 00:00:00",
+          "last": "2026-09-26 00:00:00"
+        },
+        "provenance": {
+          "source": "OpenRouter effective pricing statistics",
+          "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=google%2Fgemini-3.1-pro-preview-customtools-20260219&variant=standard&shape=v7",
+          "collected_at": "2026-09-26T05:19:43.154Z",
+          "basis": "measured"
+        },
+        "response_sha256": "5fb96224ccc0a65ae65513d521029a160e4f2bfa083b7938b4f5803f43610fc0"
+      },
+      "cache_attempt": {
+        "source": "OpenRouter effective pricing statistics",
+        "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=google%2Fgemini-3.1-pro-preview-customtools-20260219&variant=standard&shape=v7",
+        "collected_at": "2026-09-26T05:19:43.154Z",
+        "basis": "measured",
+        "status": "available"
+      }
+    },
+    "google/gemini-3.5-flash": {
+      "or_model_id": "google/gemini-3.5-flash",
+      "model_permaslug": "google/gemini-3.5-flash-20260519",
+      "variant": "standard",
+      "endpoints": [
+        {
+          "or_model_id": "google/gemini-3.5-flash",
+          "endpoint_tag": "google-vertex/global/flex",
+          "provider": "Google",
+          "endpoint_id": "37b2e71c-bef9-4699-9609-2f0a975e3ad1",
+          "cache_read_per_1m": 0.075,
+          "cache_write_per_1m": 0.04166666666666667,
+          "cache_hit_rate": 0.1571544094190265,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Google Vertex (1)",
+          "source_provider_slug": "google-vertex",
+          "total_tokens": 1969861
+        },
+        {
+          "or_model_id": "google/gemini-3.5-flash",
+          "endpoint_tag": "google-ai-studio/flex",
+          "provider": "Google AI Studio",
+          "endpoint_id": "ff46d1e7-3646-4264-8246-9a84e98b72ea",
+          "cache_read_per_1m": 0.075,
+          "cache_write_per_1m": 0.04166666666666667,
+          "cache_hit_rate": 0.19799843201230727,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Google AI Studio (3)",
+          "source_provider_slug": "google-ai-studio",
+          "total_tokens": 78583917
+        },
+        {
+          "or_model_id": "google/gemini-3.5-flash",
+          "endpoint_tag": "google-vertex/global",
+          "provider": "Google",
+          "endpoint_id": "d6dbb005-2f82-48a0-906c-222832fcd1ab",
+          "cache_read_per_1m": 0.15,
+          "cache_write_per_1m": 0.08333333333333334,
+          "cache_hit_rate": 0.4112703521931076,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Google Vertex (4)",
+          "source_provider_slug": "google-vertex",
+          "total_tokens": 2117389287
+        },
+        {
+          "or_model_id": "google/gemini-3.5-flash",
+          "endpoint_tag": "google-ai-studio",
+          "provider": "Google AI Studio",
+          "endpoint_id": "bd50061c-e1d8-469e-96b1-d322e77378f8",
+          "cache_read_per_1m": 0.15,
+          "cache_write_per_1m": 0.08333333333333334,
+          "cache_hit_rate": 0.5661027357676812,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Google AI Studio (2)",
+          "source_provider_slug": "google-ai-studio",
+          "total_tokens": 140949872
+        },
+        {
+          "or_model_id": "google/gemini-3.5-flash",
+          "endpoint_tag": "google-vertex/us",
+          "provider": "Google",
+          "endpoint_id": "47ab833d-a6ea-4f4f-9c0a-76beeb686228",
+          "cache_read_per_1m": 0.165,
+          "cache_write_per_1m": 0.08333333333333334,
+          "cache_hit_rate": null,
+          "cache_status": "not_in_effective_pricing",
+          "cache_note": "The provider table statistics publish latency/throughput/uptime; no verified endpoint cache-hit observation in this payload."
+        },
+        {
+          "or_model_id": "google/gemini-3.5-flash",
+          "endpoint_tag": "google-vertex/global/priority",
+          "provider": "Google",
+          "endpoint_id": "506034ca-e2e3-447a-8ca4-5ebc052785b2",
+          "cache_read_per_1m": 0.27,
+          "cache_write_per_1m": 0.15,
+          "cache_hit_rate": 0.6832681519845611,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Google Vertex (3)",
+          "source_provider_slug": "google-vertex",
+          "total_tokens": 40960578
+        },
+        {
+          "or_model_id": "google/gemini-3.5-flash",
+          "endpoint_tag": "google-ai-studio/priority",
+          "provider": "Google AI Studio",
+          "endpoint_id": "af10ee5d-2c51-44c4-8245-c782c8d3367c",
+          "cache_read_per_1m": 0.27,
+          "cache_write_per_1m": 0.15,
+          "cache_hit_rate": 0.4602556259296579,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Google AI Studio (1)",
+          "source_provider_slug": "google-ai-studio",
+          "total_tokens": 402202
+        }
+      ],
+      "usage": {
+        "status": "available",
+        "daily": [
+          {
+            "date": "2026-09-25",
+            "total_prompt_tokens": 22278964091,
+            "total_completion_tokens": 1593537032,
+            "count": 2692342
+          },
+          {
+            "date": "2026-09-24",
+            "total_prompt_tokens": 17141746587,
+            "total_completion_tokens": 1741141635,
+            "count": 2182066
+          },
+          {
+            "date": "2026-09-23",
+            "total_prompt_tokens": 16120688806,
+            "total_completion_tokens": 1337848254,
+            "count": 1599610
+          },
+          {
+            "date": "2026-09-22",
+            "total_prompt_tokens": 13170050570,
+            "total_completion_tokens": 1502387711,
+            "count": 1751777
+          },
+          {
+            "date": "2026-09-21",
+            "total_prompt_tokens": 12671105785,
+            "total_completion_tokens": 1301919719,
+            "count": 1367340
+          },
+          {
+            "date": "2026-09-20",
+            "total_prompt_tokens": 8386521703,
+            "total_completion_tokens": 711036495,
+            "count": 716063
+          },
+          {
+            "date": "2026-09-19",
+            "total_prompt_tokens": 6220233659,
+            "total_completion_tokens": 690315060,
+            "count": 758023
+          }
+        ],
+        "total_prompt_tokens": 95989311201,
+        "total_completion_tokens": 8878185906,
+        "total_requests": 11067221,
+        "input_output_ratio": 10.811815861631047
+      },
+      "source_updated_at": "2026-09-26T05:19:28.656Z",
+      "window": {
+        "start_date": "2026-09-19",
+        "end_date": "2026-09-25"
+      },
+      "provenance": {
+        "source": "OpenRouter model-page usage",
+        "url": "https://openrouter.ai/google/gemini-3.5-flash",
+        "collected_at": "2026-09-26T05:19:45.159Z",
+        "basis": "measured"
+      },
+      "response_sha256": "59ccd2cad16a45a4c55913091f2648df1240fb6d32cea1b8bf509d1c3b446630",
+      "cache": {
+        "unjoined": [],
+        "returned_summaries": 6,
+        "summary_window": null,
+        "chart_date_range": {
+          "first": "2026-09-19 00:00:00",
+          "last": "2026-09-26 00:00:00"
+        },
+        "provenance": {
+          "source": "OpenRouter effective pricing statistics",
+          "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=google%2Fgemini-3.5-flash-20260519&variant=standard&shape=v7",
+          "collected_at": "2026-09-26T05:19:47.255Z",
+          "basis": "measured"
+        },
+        "response_sha256": "6eed9c1fbb9d36eb27b1e1f0de3e6edfbebb1cb16f3be16e12fc43faaac6336f"
+      },
+      "cache_attempt": {
+        "source": "OpenRouter effective pricing statistics",
+        "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=google%2Fgemini-3.5-flash-20260519&variant=standard&shape=v7",
+        "collected_at": "2026-09-26T05:19:47.255Z",
+        "basis": "measured",
+        "status": "available"
+      }
+    },
+    "google/gemini-3.5-flash-lite": {
+      "or_model_id": "google/gemini-3.5-flash-lite",
+      "model_permaslug": "google/gemini-3.5-flash-lite-20260721",
+      "variant": "standard",
+      "endpoints": [
+        {
+          "or_model_id": "google/gemini-3.5-flash-lite",
+          "endpoint_tag": "google-vertex/global/flex",
+          "provider": "Google",
+          "endpoint_id": "46ba4a0e-87e9-4db7-9e69-f3f9cc7d799b",
+          "cache_read_per_1m": 0.015,
+          "cache_write_per_1m": 0.04166666666666667,
+          "cache_hit_rate": 0.007373663171444069,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Google Vertex (2)",
+          "source_provider_slug": "google-vertex",
+          "total_tokens": 25586852
+        },
+        {
+          "or_model_id": "google/gemini-3.5-flash-lite",
+          "endpoint_tag": "google-ai-studio/flex",
+          "provider": "Google AI Studio",
+          "endpoint_id": "67123002-c963-4781-8f9c-9bce16957f2d",
+          "cache_read_per_1m": 0.015,
+          "cache_write_per_1m": 0.04166666666666667,
+          "cache_hit_rate": 0.08089728655484106,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Google AI Studio (1)",
+          "source_provider_slug": "google-ai-studio",
+          "total_tokens": 56136715
+        },
+        {
+          "or_model_id": "google/gemini-3.5-flash-lite",
+          "endpoint_tag": "google-ai-studio",
+          "provider": "Google AI Studio",
+          "endpoint_id": "6bd8f433-79e1-416c-b407-1772eb796c9a",
+          "cache_read_per_1m": 0.03,
+          "cache_write_per_1m": 0.08333333333333334,
+          "cache_hit_rate": 0.3709702279795428,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Google AI Studio (2)",
+          "source_provider_slug": "google-ai-studio",
+          "total_tokens": 821202573
+        },
+        {
+          "or_model_id": "google/gemini-3.5-flash-lite",
+          "endpoint_tag": "google-vertex/global",
+          "provider": "Google",
+          "endpoint_id": "fe0e0167-572a-482b-8145-f262c1797e79",
+          "cache_read_per_1m": 0.03,
+          "cache_write_per_1m": 0.08333333333333334,
+          "cache_hit_rate": 0.34066000310330397,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Google Vertex (5)",
+          "source_provider_slug": "google-vertex",
+          "total_tokens": 4340619673
+        },
+        {
+          "or_model_id": "google/gemini-3.5-flash-lite",
+          "endpoint_tag": "google-vertex/eu",
+          "provider": "Google",
+          "endpoint_id": "4b471bd3-d337-4697-bcdb-8e0fed68e30a",
+          "cache_read_per_1m": 0.032999999999999995,
+          "cache_write_per_1m": 0.08333333333333334,
+          "cache_hit_rate": 0.24131411747936254,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Google Vertex (3)",
+          "source_provider_slug": "google-vertex",
+          "total_tokens": 28045932
+        },
+        {
+          "or_model_id": "google/gemini-3.5-flash-lite",
+          "endpoint_tag": "google-vertex/us",
+          "provider": "Google",
+          "endpoint_id": "27d4a81e-5406-4181-909f-de3c6a5c6420",
+          "cache_read_per_1m": 0.032999999999999995,
+          "cache_write_per_1m": 0.08333333333333334,
+          "cache_hit_rate": 0.500734040462504,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Google Vertex (1)",
+          "source_provider_slug": "google-vertex",
+          "total_tokens": 36120834
+        },
+        {
+          "or_model_id": "google/gemini-3.5-flash-lite",
+          "endpoint_tag": "google-vertex/global/priority",
+          "provider": "Google",
+          "endpoint_id": "c41311ca-9d67-424e-9049-1f30b84cf634",
+          "cache_read_per_1m": 0.054,
+          "cache_write_per_1m": 0.15,
+          "cache_hit_rate": 0.0695154621909362,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Google Vertex (4)",
+          "source_provider_slug": "google-vertex",
+          "total_tokens": 15138982
+        },
+        {
+          "or_model_id": "google/gemini-3.5-flash-lite",
+          "endpoint_tag": "google-ai-studio/priority",
+          "provider": "Google AI Studio",
+          "endpoint_id": "bbd2012d-08b2-4b43-9982-012e1ed863d6",
+          "cache_read_per_1m": 0.054,
+          "cache_write_per_1m": 0.15,
+          "cache_hit_rate": 0.0009761918038855525,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Google AI Studio (3)",
+          "source_provider_slug": "google-ai-studio",
+          "total_tokens": 12204318
+        }
+      ],
+      "usage": {
+        "status": "available",
+        "daily": [
+          {
+            "date": "2026-09-25",
+            "total_prompt_tokens": 36622503323,
+            "total_completion_tokens": 1370800664,
+            "count": 7886327
+          },
+          {
+            "date": "2026-09-24",
+            "total_prompt_tokens": 43716695546,
+            "total_completion_tokens": 1733824814,
+            "count": 9026889
+          },
+          {
+            "date": "2026-09-23",
+            "total_prompt_tokens": 34306197885,
+            "total_completion_tokens": 1681612269,
+            "count": 8795370
+          },
+          {
+            "date": "2026-09-22",
+            "total_prompt_tokens": 42040857126,
+            "total_completion_tokens": 1841682349,
+            "count": 8004441
+          },
+          {
+            "date": "2026-09-21",
+            "total_prompt_tokens": 32506416347,
+            "total_completion_tokens": 1353586721,
+            "count": 7684800
+          },
+          {
+            "date": "2026-09-20",
+            "total_prompt_tokens": 17499958265,
+            "total_completion_tokens": 791115461,
+            "count": 5186382
+          },
+          {
+            "date": "2026-09-19",
+            "total_prompt_tokens": 20789073878,
+            "total_completion_tokens": 855316607,
+            "count": 5661734
+          }
+        ],
+        "total_prompt_tokens": 227481702370,
+        "total_completion_tokens": 9627938885,
+        "total_requests": 52245943,
+        "input_output_ratio": 23.6272482705939
+      },
+      "source_updated_at": "2026-09-26T05:19:28.979Z",
+      "window": {
+        "start_date": "2026-09-19",
+        "end_date": "2026-09-25"
+      },
+      "provenance": {
+        "source": "OpenRouter model-page usage",
+        "url": "https://openrouter.ai/google/gemini-3.5-flash-lite",
+        "collected_at": "2026-09-26T05:19:49.259Z",
+        "basis": "measured"
+      },
+      "response_sha256": "bf1f313419c845cc87c3a1de433757af8344ad56b9183c6976885edce2e50739",
+      "cache": {
+        "unjoined": [],
+        "returned_summaries": 8,
+        "summary_window": null,
+        "chart_date_range": {
+          "first": "2026-09-19 00:00:00",
+          "last": "2026-09-26 00:00:00"
+        },
+        "provenance": {
+          "source": "OpenRouter effective pricing statistics",
+          "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=google%2Fgemini-3.5-flash-lite-20260721&variant=standard&shape=v7",
+          "collected_at": "2026-09-26T05:19:51.400Z",
+          "basis": "measured"
+        },
+        "response_sha256": "606311c93f467ccd747e98646d0f0ad0499d70a5797b1cb3a542d278384a6a5e"
+      },
+      "cache_attempt": {
+        "source": "OpenRouter effective pricing statistics",
+        "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=google%2Fgemini-3.5-flash-lite-20260721&variant=standard&shape=v7",
+        "collected_at": "2026-09-26T05:19:51.400Z",
+        "basis": "measured",
+        "status": "available"
+      }
+    },
+    "google/gemini-3.6-flash": {
+      "or_model_id": "google/gemini-3.6-flash",
+      "model_permaslug": "google/gemini-3.6-flash-20260721",
+      "variant": "standard",
+      "endpoints": [
+        {
+          "or_model_id": "google/gemini-3.6-flash",
+          "endpoint_tag": "google-vertex/global/flex",
+          "provider": "Google",
+          "endpoint_id": "e1fe155d-c774-4482-bc01-085a108f764f",
+          "cache_read_per_1m": 0.0375,
+          "cache_write_per_1m": 0.020833333333333336,
+          "cache_hit_rate": 0.045450042586915096,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Google Vertex (4)",
+          "source_provider_slug": "google-vertex",
+          "total_tokens": 2572761
+        },
+        {
+          "or_model_id": "google/gemini-3.6-flash",
+          "endpoint_tag": "google-ai-studio/flex",
+          "provider": "Google AI Studio",
+          "endpoint_id": "99ab51a2-2ac1-454d-83b6-c327b5d3fd6a",
+          "cache_read_per_1m": 0.0375,
+          "cache_write_per_1m": 0.020833333333333336,
+          "cache_hit_rate": 0.03301912947047408,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Google AI Studio (3)",
+          "source_provider_slug": "google-ai-studio",
+          "total_tokens": 1631726
+        },
+        {
+          "or_model_id": "google/gemini-3.6-flash",
+          "endpoint_tag": "google-ai-studio",
+          "provider": "Google AI Studio",
+          "endpoint_id": "5d6d133d-a953-4781-a835-7ee76f4e1388",
+          "cache_read_per_1m": 0.075,
+          "cache_write_per_1m": 0.04166666666666667,
+          "cache_hit_rate": 0.7083089139895176,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Google AI Studio (1)",
+          "source_provider_slug": "google-ai-studio",
+          "total_tokens": 258421482
+        },
+        {
+          "or_model_id": "google/gemini-3.6-flash",
+          "endpoint_tag": "google-vertex/global",
+          "provider": "Google",
+          "endpoint_id": "773559b7-003d-4013-a393-7e64844f5f0c",
+          "cache_read_per_1m": 0.075,
+          "cache_write_per_1m": 0.04166666666666667,
+          "cache_hit_rate": 0.26244743110569096,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Google Vertex (3)",
+          "source_provider_slug": "google-vertex",
+          "total_tokens": 4452738256
+        },
+        {
+          "or_model_id": "google/gemini-3.6-flash",
+          "endpoint_tag": "google-vertex/global/priority",
+          "provider": "Google",
+          "endpoint_id": "46270dac-6e39-4b85-9c9a-1d495081958c",
+          "cache_read_per_1m": 0.135,
+          "cache_write_per_1m": 0.075,
+          "cache_hit_rate": 0.007989387947208985,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Google Vertex (2)",
+          "source_provider_slug": "google-vertex",
+          "total_tokens": 15356192
+        },
+        {
+          "or_model_id": "google/gemini-3.6-flash",
+          "endpoint_tag": "google-ai-studio/priority",
+          "provider": "Google AI Studio",
+          "endpoint_id": "623e4907-8fa3-4a08-a3e4-d8c21eca695b",
+          "cache_read_per_1m": 0.135,
+          "cache_write_per_1m": 0.075,
+          "cache_hit_rate": 0.5953766291277321,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Google AI Studio (2)",
+          "source_provider_slug": "google-ai-studio",
+          "total_tokens": 56863582
+        },
+        {
+          "or_model_id": "google/gemini-3.6-flash",
+          "endpoint_tag": "google-vertex/us",
+          "provider": "Google",
+          "endpoint_id": "1d75db49-68b2-4cc9-a82b-42fde4a6f14a",
+          "cache_read_per_1m": 0.0825,
+          "cache_write_per_1m": 0.04166666666666667,
+          "cache_hit_rate": 0,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Google Vertex (1)",
+          "source_provider_slug": "google-vertex",
+          "total_tokens": 289569
+        }
+      ],
+      "usage": {
+        "status": "available",
+        "daily": [
+          {
+            "date": "2026-09-25",
+            "total_prompt_tokens": 15281346314,
+            "total_completion_tokens": 1670581733,
+            "count": 1924585
+          },
+          {
+            "date": "2026-09-24",
+            "total_prompt_tokens": 24772453898,
+            "total_completion_tokens": 1956435284,
+            "count": 1902851
+          },
+          {
+            "date": "2026-09-23",
+            "total_prompt_tokens": 36945459884,
+            "total_completion_tokens": 2362083013,
+            "count": 1806639
+          },
+          {
+            "date": "2026-09-22",
+            "total_prompt_tokens": 20354478830,
+            "total_completion_tokens": 1499639439,
+            "count": 1637849
+          },
+          {
+            "date": "2026-09-21",
+            "total_prompt_tokens": 25603608411,
+            "total_completion_tokens": 1422952007,
+            "count": 1220791
+          },
+          {
+            "date": "2026-09-20",
+            "total_prompt_tokens": 32454761320,
+            "total_completion_tokens": 1721710672,
+            "count": 1071364
+          },
+          {
+            "date": "2026-09-19",
+            "total_prompt_tokens": 20002460882,
+            "total_completion_tokens": 1155257356,
+            "count": 911536
+          }
+        ],
+        "total_prompt_tokens": 175414569539,
+        "total_completion_tokens": 11788659504,
+        "total_requests": 10475615,
+        "input_output_ratio": 14.879941988271035
+      },
+      "source_updated_at": "2026-09-26T05:19:29.374Z",
+      "window": {
+        "start_date": "2026-09-19",
+        "end_date": "2026-09-25"
+      },
+      "provenance": {
+        "source": "OpenRouter model-page usage",
+        "url": "https://openrouter.ai/google/gemini-3.6-flash",
+        "collected_at": "2026-09-26T05:19:53.403Z",
+        "basis": "measured"
+      },
+      "response_sha256": "d4f0c9ee05918f8e293823e9d7d8c6ed845cbb2f1f2f925c6e58360d00555f06",
+      "cache": {
+        "unjoined": [],
+        "returned_summaries": 7,
+        "summary_window": null,
+        "chart_date_range": {
+          "first": "2026-09-19 00:00:00",
+          "last": "2026-09-26 00:00:00"
+        },
+        "provenance": {
+          "source": "OpenRouter effective pricing statistics",
+          "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=google%2Fgemini-3.6-flash-20260721&variant=standard&shape=v7",
+          "collected_at": "2026-09-26T05:19:55.457Z",
+          "basis": "measured"
+        },
+        "response_sha256": "ecfabc40329b2019268976b695e94e18780f59833be5742fa94df2d1811b0475"
+      },
+      "cache_attempt": {
+        "source": "OpenRouter effective pricing statistics",
+        "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=google%2Fgemini-3.6-flash-20260721&variant=standard&shape=v7",
+        "collected_at": "2026-09-26T05:19:55.457Z",
+        "basis": "measured",
+        "status": "available"
+      }
     }
   },
   "attempts": {
@@ -10757,6 +11448,34 @@
       "collected_at": "2026-09-25T08:41:28.743Z",
       "status": "fetch_or_parse_failed",
       "reason": "OpenRouter provider table query missing"
+    },
+    "google/gemini-3.1-pro-preview-customtools": {
+      "source": "OpenRouter model page",
+      "url": "https://openrouter.ai/google/gemini-3.1-pro-preview-customtools",
+      "collected_at": "2026-09-26T05:19:41.075Z",
+      "status": "available",
+      "http_status": 200
+    },
+    "google/gemini-3.5-flash": {
+      "source": "OpenRouter model page",
+      "url": "https://openrouter.ai/google/gemini-3.5-flash",
+      "collected_at": "2026-09-26T05:19:45.159Z",
+      "status": "available",
+      "http_status": 200
+    },
+    "google/gemini-3.5-flash-lite": {
+      "source": "OpenRouter model page",
+      "url": "https://openrouter.ai/google/gemini-3.5-flash-lite",
+      "collected_at": "2026-09-26T05:19:49.259Z",
+      "status": "available",
+      "http_status": 200
+    },
+    "google/gemini-3.6-flash": {
+      "source": "OpenRouter model page",
+      "url": "https://openrouter.ai/google/gemini-3.6-flash",
+      "collected_at": "2026-09-26T05:19:53.403Z",
+      "status": "available",
+      "http_status": 200
     }
   },
   "rankings": {
@@ -10765,228 +11484,228 @@
         "model_permaslug": "stealth/space-bunny-alpha",
         "variant": "standard",
         "variant_permaslug": "stealth/space-bunny-alpha",
-        "date": "2026-09-24 00:00:00",
-        "total_prompt_tokens": 2907848454445,
-        "total_completion_tokens": 35766997593,
-        "total_requests": 26166343,
-        "input_output_ratio": 81.29976375244027
+        "date": "2026-09-25 00:00:00",
+        "total_prompt_tokens": 6164877209739,
+        "total_completion_tokens": 81222460465,
+        "total_requests": 54707294,
+        "input_output_ratio": 75.90113836055902
       },
       {
         "model_permaslug": "xiaomi/mimo-v2.6-flash-20260921",
         "variant": "standard",
         "variant_permaslug": "xiaomi/mimo-v2.6-flash-20260921",
-        "date": "2026-09-24 00:00:00",
-        "total_prompt_tokens": 1794499138216,
-        "total_completion_tokens": 30555549260,
-        "total_requests": 22685713,
-        "input_output_ratio": 58.72907480557592
+        "date": "2026-09-25 00:00:00",
+        "total_prompt_tokens": 3071084816598,
+        "total_completion_tokens": 45428412635,
+        "total_requests": 37450322,
+        "input_output_ratio": 67.60273226522347
+      },
+      {
+        "model_permaslug": "openai/gpt-6-luna-20260922",
+        "variant": "standard",
+        "variant_permaslug": "openai/gpt-6-luna-20260922",
+        "date": "2026-09-25 00:00:00",
+        "total_prompt_tokens": 1588822186798,
+        "total_completion_tokens": 57478323240,
+        "total_requests": 82354464,
+        "input_output_ratio": 27.642110925259484
       },
       {
         "model_permaslug": "typesafe/jev-1.13-20260917",
         "variant": "standard",
         "variant_permaslug": "typesafe/jev-1.13-20260917",
-        "date": "2026-09-24 00:00:00",
-        "total_prompt_tokens": 1657958367866,
-        "total_completion_tokens": 195006207527,
-        "total_requests": 578073350,
-        "input_output_ratio": 8.50207995371862
+        "date": "2026-09-25 00:00:00",
+        "total_prompt_tokens": 1978223976548,
+        "total_completion_tokens": 229086520472,
+        "total_requests": 682121800,
+        "input_output_ratio": 8.635270082552882
       },
       {
         "model_permaslug": "z-ai/glm-5.3-flash-20260826",
         "variant": "standard",
         "variant_permaslug": "z-ai/glm-5.3-flash-20260826",
-        "date": "2026-09-24 00:00:00",
-        "total_prompt_tokens": 18802276476705,
-        "total_completion_tokens": 232482571580,
-        "total_requests": 395716083,
-        "input_output_ratio": 80.87606889807185
+        "date": "2026-09-25 00:00:00",
+        "total_prompt_tokens": 18985397864795,
+        "total_completion_tokens": 231595261759,
+        "total_requests": 395030665,
+        "input_output_ratio": 81.97662474006643
       },
       {
         "model_permaslug": "deepseek/deepseek-v4.1-flash-20260910",
         "variant": "standard",
         "variant_permaslug": "deepseek/deepseek-v4.1-flash-20260910",
-        "date": "2026-09-24 00:00:00",
-        "total_prompt_tokens": 18622031503903,
-        "total_completion_tokens": 283460886194,
-        "total_requests": 320317516,
-        "input_output_ratio": 65.69524195715003
+        "date": "2026-09-25 00:00:00",
+        "total_prompt_tokens": 18965536110329,
+        "total_completion_tokens": 282121010941,
+        "total_requests": 322489677,
+        "input_output_ratio": 67.2248268467153
       },
       {
         "model_permaslug": "nvidia/nemotron-3-ultra-550b-a55b-20260604",
         "variant": "free",
         "variant_permaslug": "nvidia/nemotron-3-ultra-550b-a55b-20260604:free",
-        "date": "2026-09-24 00:00:00",
-        "total_prompt_tokens": 4964781479241,
-        "total_completion_tokens": 20066412931,
-        "total_requests": 35781687,
-        "input_output_ratio": 247.4174879343312
-      },
-      {
-        "model_permaslug": "z-ai/glm-5.3-20260816",
-        "variant": "standard",
-        "variant_permaslug": "z-ai/glm-5.3-20260816",
-        "date": "2026-09-24 00:00:00",
-        "total_prompt_tokens": 3156086658775,
-        "total_completion_tokens": 46860582608,
-        "total_requests": 40487985,
-        "input_output_ratio": 67.35056380276833
+        "date": "2026-09-25 00:00:00",
+        "total_prompt_tokens": 5139376297157,
+        "total_completion_tokens": 21614745327,
+        "total_requests": 37304165,
+        "input_output_ratio": 237.771771973513
       },
       {
         "model_permaslug": "z-ai/glm-5.2-20260616",
         "variant": "standard",
         "variant_permaslug": "z-ai/glm-5.2-20260616",
-        "date": "2026-09-24 00:00:00",
-        "total_prompt_tokens": 1625139173552,
-        "total_completion_tokens": 58349695569,
-        "total_requests": 56623826,
-        "input_output_ratio": 27.851716409218135
+        "date": "2026-09-25 00:00:00",
+        "total_prompt_tokens": 1611134850298,
+        "total_completion_tokens": 57748630304,
+        "total_requests": 57081657,
+        "input_output_ratio": 27.899100668131407
+      },
+      {
+        "model_permaslug": "z-ai/glm-5.3-20260816",
+        "variant": "standard",
+        "variant_permaslug": "z-ai/glm-5.3-20260816",
+        "date": "2026-09-25 00:00:00",
+        "total_prompt_tokens": 2997609668776,
+        "total_completion_tokens": 43666078509,
+        "total_requests": 40021492,
+        "input_output_ratio": 68.64847431074361
       },
       {
         "model_permaslug": "upstage/solar-pro4-20260810",
         "variant": "standard",
         "variant_permaslug": "upstage/solar-pro4-20260810",
-        "date": "2026-09-24 00:00:00",
-        "total_prompt_tokens": 1723038887802,
-        "total_completion_tokens": 17757948300,
-        "total_requests": 21940901,
-        "input_output_ratio": 97.02916455737176
-      },
-      {
-        "model_permaslug": "tencent/hy4-preview-20260827",
-        "variant": "standard",
-        "variant_permaslug": "tencent/hy4-preview-20260827",
-        "date": "2026-09-24 00:00:00",
-        "total_prompt_tokens": 12242751517053,
-        "total_completion_tokens": 105648473242,
-        "total_requests": 108000911,
-        "input_output_ratio": 115.88195400618395
+        "date": "2026-09-25 00:00:00",
+        "total_prompt_tokens": 1696609509163,
+        "total_completion_tokens": 17458868905,
+        "total_requests": 21523243,
+        "input_output_ratio": 97.1775158170248
       },
       {
         "model_permaslug": "google/gemini-3.8-flash-20260902",
         "variant": "standard",
         "variant_permaslug": "google/gemini-3.8-flash-20260902",
-        "date": "2026-09-24 00:00:00",
-        "total_prompt_tokens": 2063776698900,
-        "total_completion_tokens": 60614500433,
-        "total_requests": 62355861,
-        "input_output_ratio": 34.04757416389479
-      },
-      {
-        "model_permaslug": "meta/muse-spark-1.3-contributor-20260902",
-        "variant": "standard",
-        "variant_permaslug": "meta/muse-spark-1.3-contributor-20260902",
-        "date": "2026-09-24 00:00:00",
-        "total_prompt_tokens": 1962351153842,
-        "total_completion_tokens": 39071509350,
-        "total_requests": 44235768,
-        "input_output_ratio": 50.22460576742475
-      },
-      {
-        "model_permaslug": "minimax/minimax-m3-20260531",
-        "variant": "standard",
-        "variant_permaslug": "minimax/minimax-m3-20260531",
-        "date": "2026-09-24 00:00:00",
-        "total_prompt_tokens": 1412872665400,
-        "total_completion_tokens": 25961916746,
-        "total_requests": 30131430,
-        "input_output_ratio": 54.420968960917875
+        "date": "2026-09-25 00:00:00",
+        "total_prompt_tokens": 2129539966750,
+        "total_completion_tokens": 63183763874,
+        "total_requests": 65162467,
+        "input_output_ratio": 33.703911197767404
       },
       {
         "model_permaslug": "anthropic/claude-sonnet-5-20260630",
         "variant": "standard",
         "variant_permaslug": "anthropic/claude-sonnet-5-20260630",
-        "date": "2026-09-24 00:00:00",
-        "total_prompt_tokens": 1430898166252,
-        "total_completion_tokens": 24739345493,
-        "total_requests": 32298229,
-        "input_output_ratio": 57.83896613824617
+        "date": "2026-09-25 00:00:00",
+        "total_prompt_tokens": 1406123548461,
+        "total_completion_tokens": 24544016114,
+        "total_requests": 32795045,
+        "input_output_ratio": 57.28987228210553
       },
       {
-        "model_permaslug": "openai/gpt-5.6-sol-20260709",
+        "model_permaslug": "tencent/hy4-preview-20260827",
         "variant": "standard",
-        "variant_permaslug": "openai/gpt-5.6-sol-20260709",
-        "date": "2026-09-24 00:00:00",
-        "total_prompt_tokens": 1711207863758,
-        "total_completion_tokens": 25858684384,
-        "total_requests": 33525043,
-        "input_output_ratio": 66.1753644673743
+        "variant_permaslug": "tencent/hy4-preview-20260827",
+        "date": "2026-09-25 00:00:00",
+        "total_prompt_tokens": 11052795368942,
+        "total_completion_tokens": 95939384199,
+        "total_requests": 97245135,
+        "input_output_ratio": 115.20602786042487
+      },
+      {
+        "model_permaslug": "meta/muse-spark-1.3-contributor-20260902",
+        "variant": "standard",
+        "variant_permaslug": "meta/muse-spark-1.3-contributor-20260902",
+        "date": "2026-09-25 00:00:00",
+        "total_prompt_tokens": 1837241710121,
+        "total_completion_tokens": 38760706360,
+        "total_requests": 41251612,
+        "input_output_ratio": 47.399593110020916
       },
       {
         "model_permaslug": "deepseek/deepseek-v4-flash-20260423",
         "variant": "standard",
         "variant_permaslug": "deepseek/deepseek-v4-flash-20260423",
-        "date": "2026-09-24 00:00:00",
-        "total_prompt_tokens": 3202670700537,
-        "total_completion_tokens": 205180500015,
-        "total_requests": 363531370,
-        "input_output_ratio": 15.60904033425625
+        "date": "2026-09-25 00:00:00",
+        "total_prompt_tokens": 3171383660675,
+        "total_completion_tokens": 210296673524,
+        "total_requests": 358536625,
+        "input_output_ratio": 15.08052223333465
       },
       {
         "model_permaslug": "deepseek/deepseek-v4-flash-20260731",
         "variant": "standard",
         "variant_permaslug": "deepseek/deepseek-v4-flash-20260731",
-        "date": "2026-09-24 00:00:00",
-        "total_prompt_tokens": 7812414397857,
-        "total_completion_tokens": 489366512266,
-        "total_requests": 542005676,
-        "input_output_ratio": 15.964342066811644
+        "date": "2026-09-25 00:00:00",
+        "total_prompt_tokens": 7769699624906,
+        "total_completion_tokens": 456875049105,
+        "total_requests": 540763984,
+        "input_output_ratio": 17.006180661707248
+      },
+      {
+        "model_permaslug": "openai/gpt-5.6-sol-20260709",
+        "variant": "standard",
+        "variant_permaslug": "openai/gpt-5.6-sol-20260709",
+        "date": "2026-09-25 00:00:00",
+        "total_prompt_tokens": 1602404439275,
+        "total_completion_tokens": 25930320508,
+        "total_requests": 33723440,
+        "input_output_ratio": 61.796553528161276
       },
       {
         "model_permaslug": "tencent/hy3-20260706",
         "variant": "standard",
         "variant_permaslug": "tencent/hy3-20260706",
-        "date": "2026-09-24 00:00:00",
-        "total_prompt_tokens": 3498913177084,
-        "total_completion_tokens": 58136257312,
-        "total_requests": 54369426,
-        "input_output_ratio": 60.184699512154246
+        "date": "2026-09-25 00:00:00",
+        "total_prompt_tokens": 2996254482659,
+        "total_completion_tokens": 49721787572,
+        "total_requests": 47769107,
+        "input_output_ratio": 60.26039346071884
       },
       {
         "model_permaslug": "xiaomi/mimo-v2.5-20260422",
         "variant": "standard",
         "variant_permaslug": "xiaomi/mimo-v2.5-20260422",
-        "date": "2026-09-24 00:00:00",
-        "total_prompt_tokens": 4885463568118,
-        "total_completion_tokens": 42188096011,
-        "total_requests": 69437942,
-        "input_output_ratio": 115.80194486246022
+        "date": "2026-09-25 00:00:00",
+        "total_prompt_tokens": 4138403776036,
+        "total_completion_tokens": 37194888988,
+        "total_requests": 60316626,
+        "input_output_ratio": 111.2627000277149
       },
       {
         "model_permaslug": "openai/gpt-5.6-luna-20260709",
         "variant": "standard",
         "variant_permaslug": "openai/gpt-5.6-luna-20260709",
-        "date": "2026-09-24 00:00:00",
-        "total_prompt_tokens": 8557320989804,
-        "total_completion_tokens": 138686510924,
-        "total_requests": 301280173,
-        "input_output_ratio": 61.70261933039327
+        "date": "2026-09-25 00:00:00",
+        "total_prompt_tokens": 8460203627745,
+        "total_completion_tokens": 137316614856,
+        "total_requests": 289478336,
+        "input_output_ratio": 61.610924771317535
       }
     ],
     "window": {
-      "start_date": "2026-09-18",
-      "end_date": "2026-09-24"
+      "start_date": "2026-09-19",
+      "end_date": "2026-09-25"
     },
     "provenance": {
       "source": "OpenRouter weekly model rankings",
       "url": "https://openrouter.ai/rankings?view=week",
-      "collected_at": "2026-09-25T08:41:14.442Z",
+      "collected_at": "2026-09-26T05:19:39.050Z",
       "basis": "measured"
     },
-    "response_sha256": "867ffebf828513ce5bd349ed339a1f8e435b3a04fd48854242bba1e86037700e"
+    "response_sha256": "ee6584f98be771e008e7452766929e30ffb7f25b1e40637a9e4d7fcdf5fe86ab"
   },
   "rankings_attempt": {
     "source": "OpenRouter weekly model rankings",
     "url": "https://openrouter.ai/rankings?view=week",
-    "collected_at": "2026-09-25T08:41:14.442Z",
+    "collected_at": "2026-09-26T05:19:39.050Z",
     "basis": "measured",
     "status": "available"
   },
   "coverage": {
-    "catalog_models": 460,
+    "catalog_models": 458,
     "eligible_page_models": 331,
     "pages_selected": 4,
-    "pages_succeeded_this_run": 3,
-    "retained_model_pages": 64,
+    "pages_succeeded_this_run": 4,
+    "retained_model_pages": 68,
     "policy": "At most four model pages per normal daily run, oldest-attempt first; explicit initial batches capped at twelve. Per-observation dates are retained."
   }
 }

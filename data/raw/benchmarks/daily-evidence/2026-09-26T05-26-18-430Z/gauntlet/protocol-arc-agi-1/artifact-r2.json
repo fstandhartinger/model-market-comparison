@@ -1,0 +1,22 @@
+[
+  {
+    "id": "arc-agi::1",
+    "version": "1",
+    "version_guard": "Verify the published version 1 before reading results.",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Semi-private exact grid task solution rate",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "description": "The first-generation ARC-AGI benchmark measuring passive fluid intelligence, with leaderboard score plotted against cost-per-task.",
+    "maintainer": "ARC Prize, Inc."
+  }
+]

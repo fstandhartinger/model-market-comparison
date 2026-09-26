@@ -1,7 +1,7 @@
 {
   "source": "Nebius Token Factory — tokenfactory.nebius.com/api/public/models_info (first-party, public catalog)",
   "region": "mixed (eu-north1 / eu-west2 / us-central1 / uk-south1)",
-  "collected_at": "2026-09-25",
+  "collected_at": "2026-09-26",
   "listing_url": "https://tokenfactory.nebius.com/models",
   "method": "scripts/fetch-nebius-catalog.mjs: one GET of the public catalog (allowed by robots.txt); prices are flavors[].input/output_price_per_million_tokens in native USD; region from flavors[].regions[].country_code (EU member state → eu, US → us, UK → uk); non-chat types and zero-output-price rows (embeddings) omitted; curated model_name/provider_org carried over by exact model_id; new ids marked mapping=derived; catalog status kept per row. See nebius.method.md.",
   "models": [
@@ -215,6 +215,18 @@
       "notes": "flavor: cheap; served region: us-central1 (US); id Qwen/Qwen3.5-397B-A17B"
     },
     {
+      "model_name": "Qwen3.8 27B",
+      "provider_org": "Alibaba",
+      "input_per_1m_usd": 0.45,
+      "output_per_1m_usd": 3,
+      "region": "us",
+      "model_id": "Qwen/Qwen3.8-27B",
+      "context_length": 262144,
+      "status": "active",
+      "notes": "flavor: cheap; served region: us-central1 (US); id Qwen/Qwen3.8-27B",
+      "mapping": "derived"
+    },
+    {
       "model_name": "GLM 5.1",
       "provider_org": "Z.ai",
       "input_per_1m_usd": 1.4,
@@ -259,12 +271,14 @@
       "notes": "flavor: cheap; served region: us-north1 (US); id zai-org/GLM-5.3-Flash"
     }
   ],
-  "response_sha256": "d00c0eb7718afc9124118d0afdbe53d153c1f09e9bee39ea679c2823eb6d2b95",
+  "response_sha256": "44b1990bf1627176cca75da62b310084554bc40d49336459f9d34b4d9eb330ae",
   "skipped": [
     "Qwen/Qwen3-Embedding-8B"
   ],
   "diff": {
-    "added": [],
+    "added": [
+      "Qwen/Qwen3.8-27B"
+    ],
     "removed": [],
     "price_changed": [],
     "region_changed": []

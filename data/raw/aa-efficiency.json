@@ -3,7 +3,7 @@
   "basis": "measured",
   "interpretation": "benchmark_proxy",
   "caveat": "AA Intelligence Index benchmark token accounting. Ratios are BENCHMARK PROXIES, never typical user I/O usage; usage ratios must come from OpenRouter/Chutes sources.",
-  "collected_at": "2026-09-25T08:39:11.380Z",
+  "collected_at": "2026-09-26T05:17:34.198Z",
   "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
   "data_fields": {
     "tokens_per_task": "intelligenceIndexOutputTokensPerTask {reasoning, answer, output} (measured)",
@@ -13,10 +13,10 @@
   "attempts": [
     {
       "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
-      "fetched_at": "2026-09-25T08:39:11.177Z",
+      "fetched_at": "2026-09-26T05:17:33.853Z",
       "http_status": 200,
-      "bytes": 3935025,
-      "sha256": "8b5327aa8a700df5b699cb1df822a8e7bf8314e632a01789da18e0ab098247ae"
+      "bytes": 3926937,
+      "sha256": "b0f219233081f6d8f9484af50c475a93e47f3672f1476ed5a04b3e965d4c874d"
     }
   ],
   "coverage": {
@@ -1240,7 +1240,7 @@
       "source_id": "cc1e488b-8ba4-464d-875d-690166b15ad3",
       "slug": "glm-5-3-low",
       "name": "GLM-5.3 (low)",
-      "variant": null,
+      "variant": "low",
       "tokens_per_task": {
         "reasoning": 20919.107903812885,
         "answer": 9122.091190537685,

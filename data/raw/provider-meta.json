@@ -1,6 +1,6 @@
 {
   "source": "Hand-curated provider metadata from first-party sources and OpenRouter provider metadata. Judgments (eu_hosted, non_us, hyperscaler, notes) last checked 2026-07-12 (judgments_checked_at); collected_at dates the daily mechanical cross-check of country against OpenRouter's provider table (scripts/check-provider-meta.mjs, openrouter_crosscheck).",
-  "collected_at": "2026-09-25",
+  "collected_at": "2026-09-26",
   "country_disputes": {
     "Cohere": {
       "openrouter": "United States",
@@ -719,9 +719,9 @@
   },
   "judgments_checked_at": "2026-07-12",
   "openrouter_crosscheck": {
-    "checked_against": "data/raw/openrouter-data-policy.json retrieved 2026-09-25T08:41:31.316Z",
+    "checked_against": "data/raw/openrouter-data-policy.json retrieved 2026-09-26T05:19:57.964Z",
     "field": "country vs OpenRouter headquarters",
-    "agree": 45,
+    "agree": 44,
     "explained": [
       {
         "provider": "Cohere",
@@ -800,6 +800,7 @@
       "Reka",
       "Alibaba",
       "Baidu",
+      "Nex AGI",
       "Tencent",
       "InferenceNet",
       "TrustedTokens"

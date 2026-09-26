@@ -1,0 +1,22 @@
+[
+  {
+    "id": "blueprint-bench::2",
+    "version": "2",
+    "version_guard": "The page must still describe Blueprint-Bench 2 (50 apartments processed sequentially, ~20 photos each, 2D floor plans), the normalisation (random baseline 0, perfect 1), the scoring weights (Jaccard similarity 50 %) and both footnotes (** at or below the random baseline; * human baseline on 12 apartments); the table header must read Model / Score, three cells per row, one row per model. Another version, apartment set or scoring is a new identity, never a silent update of this one.",
+    "status": "active",
+    "version_status": "published",
+    "superseded_by": null,
+    "scoring": {
+      "metric": "Connectivity similarity score of the generated floor plans against ground truth, normalised so the random baseline is 0 and a perfect plan is 1",
+      "unit": "points",
+      "range": [
+        0,
+        1
+      ],
+      "higher_better": true,
+      "notes": "Each plan's room-connection graph is compared with the true plan under rotation and reflection: Jaccard similarity of room-to-room connections 50 %, degree similarity 20 %, density 10 %, room count 10 %, door count 5 %, orientation 5 %. The composite is normalised so that the random baseline maps to 0 and a perfect score to 1, and the board prints any score at or below the random baseline as 0.000 (marked ** on the page; the row's protocol keeps that marker). The number is shown the way the source publishes it — a normalised index, not a share of apartments solved. The page's human baseline (0.586, run on 12 of the 50 apartments) is not a model and is not collected. Secondary benchmark, never a Composite input."
+    },
+    "description": "An agent looks at about twenty interior photos of each of 50 apartments and draws the floor plan: which rooms exist and which rooms connect to which.",
+    "maintainer": "Andon Labs"
+  }
+]
