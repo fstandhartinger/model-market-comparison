@@ -711,6 +711,9 @@ body.bh-fastlane-visible .bh-custom-evaluation-toast { bottom: calc(var(--bh-fas
    DOM labels (WebGL path) sit in an absolutely positioned layer above the canvas; the SVG path draws
    SVG text with the same classes so both paths share the theme-aware muted color. */
 .bh-jev-3d-labels { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+/* F-201 (Fable pass 37): every label in the layer is positioned by its transform alone; a block-flow child would span the
+   box and its translate(-50%) would push the text off the left edge (the top-five labels shipped that way in CR-176.6). */
+.bh-jev-3d-labels > * { position: absolute; left: 0; top: 0; white-space: nowrap; }
 .bh-jev-3d-axis-label, .bh-jev-3d-model-label { color: rgb(var(--muted)); }
 .bh-jev-3d-axis-label { font-size: 12px; font-weight: 600; }
 .bh-jev-3d-model-label { font-size: 11px; }

@@ -224,12 +224,12 @@ export function JevBubbleChart({ id, kind, points, costLimit, referenceName, act
     const hborder = 4;
     return <g data-bh-jev-separator={marker} {...(marker === 'cost' ? { 'data-bh-jev-bubble-limit': '' } : { 'data-bh-jev-bubble-latency-limit': '' })}>
       <line x1={value} x2={value} y1={T} y2={H - B} stroke="var(--muted)" strokeDasharray="4 4" />
-      <text x={Math.max(hborder, value - 5)} y={T + 25} textAnchor="end" fill="var(--muted)" fontSize={narrow ? 9 : 10}
+      <text x={Math.max(hborder, value - 5)} y={T + 25} textAnchor="end" fill="var(--muted)" fontSize="10"
         stroke="var(--surface)" strokeWidth="3" paintOrder="stroke" data-bh-jev-separator-label>{label}</text>
-      {value - 6 - widthOf(leftArrow) >= hborder ? <text x={value - 6} y={T - 9} textAnchor="end" fill="var(--muted)" fontSize={narrow ? 9 : 10}>{leftArrow}</text>
-        : value - 6 >= hborder ? <text x={value - 4} y={T - 9} textAnchor="end" fill="var(--muted)" fontSize={narrow ? 9 : 10}>←</text> : null}
-      {value + 6 + widthOf(rightArrow) <= W - hborder ? <text x={value + 6} y={T - 9} textAnchor="start" fill="var(--muted)" fontSize={narrow ? 9 : 10}>{rightArrow}</text>
-        : value + 6 <= W - hborder ? <text x={value + 4} y={T - 9} textAnchor="start" fill="var(--muted)" fontSize={narrow ? 9 : 10}>→</text> : null}
+      {value - 6 - widthOf(leftArrow) >= hborder ? <text x={value - 6} y={T - 9} textAnchor="end" fill="var(--muted)" fontSize="10">{leftArrow}</text>
+        : value - 6 >= hborder ? <text x={value - 4} y={T - 9} textAnchor="end" fill="var(--muted)" fontSize="10">←</text> : null}
+      {value + 6 + widthOf(rightArrow) <= W - hborder ? <text x={value + 6} y={T - 9} textAnchor="start" fill="var(--muted)" fontSize="10">{rightArrow}</text>
+        : value + 6 <= W - hborder ? <text x={value + 4} y={T - 9} textAnchor="start" fill="var(--muted)" fontSize="10">→</text> : null}
     </g>;
   };
   const xTicks: { v: number; label: string; sub?: string }[] = kind === 'cost'

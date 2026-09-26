@@ -1,5 +1,19 @@
 # DESIGN DIRECTIVES — Benchmark Heaven (design authority: Claude Fable 5.1)
 
+**Pass 37: 2026-09-26 ~15:30 UTC**, the "what changed since pass 36" pass (Florian: Fable sparingly). Since pass 36 the changed surface is the
+**JevBench hub after F-197/F-199/F-200** (guides folded at every width, the phone's Composite controls folded, the Capability ⓘ as a list and a
+phone modal), **CR-176.1–.6** (the 2× label left of the dashed line with ← → hints on both bubble charts, median-latency speed, "$/1k decisions"
+with est./ann. pills in both tables, three axis names and top-five labels in the 3D view), **/image-jev-bench after F-198**, CR-170's rename,
+and the **hidden CR-172 v1.5 preview** (`/wip-oiifi41ouv1f/jevbench-v15`, noindex, not linked). Judged on the canonical host (revision
+`ee204f34`, dataset 14:46 UTC) at 1440/390 × light/dark: 136 shots + `metrics-<ctx>.json` (guides state, bubble separator texts and sizes,
+points left of the line with the checkbox off/on, label-group overlaps, cost-cell geometry, preset-row scroll, weights disclosure, the ⓘ panel
+or dialog, 3D axis and model label boxes, the image page's F-198 markers, the v1.5 preview's outline) in
+`/opt/benchmarkheaven/state/ux-evidence/fable-20260926-pass37/canonical/`; the quick views (Simple, Advanced, wizard, Benchmaxxing, a model
+page, Benchmarks) were shot on today's data, 0 page errors, min text 10 px, and are at the bar. Scripts: `bin/shoot-fable-pass37.mjs`;
+source pin: `test/fable-pass37.test.mjs`; live verifier for non-Fable engines: `bin/verify-fable-pass37-design.mjs <base> <outDir>` (groups
+per directive; `ONLY=F-201` and `ONLY=F-202` for the parts Fable shipped; it launches its own Chromium). Local receipts at the fix revision:
+`…/fable-20260926-pass37/local-F-20x/verification.json` (dev server); before-receipts for the directed groups: `…/local-before/`.
+
 **Pass 36: 2026-09-26 ~06:20 UTC**, the "what changed since pass 35" pass (Florian: Fable sparingly). Since pass 35 the changed surface is
 the **Capability-first JevBench hub** (CR-158: the Jev-class Capability ranking as the headline, two bubble charts, the Composite chart with
 weight sliders above and below, View-by pills; CR-163/CR-164 the phone headline and row rhythm; CR-169/CR-169.1 the presentation polish and the
@@ -53,6 +67,72 @@ Luna. Every delegated diff is reviewed before it lands. Record from passes 8, 11
 the reviewing engine directly.
 
 ---
+
+## Verdict on the live site — pass 37 (2026-09-26), the hub after F-197–F-200 and CR-176, the image page after F-198, the v1.5 preview
+
+**Pass 36's directives hold on the live site.** F-197: the ten guide links are in the HTML and none is visible, the "Explore JevBench guides ↓"
+toggle (44 px) sits after `#jev-class-method`, the head keeps six links, and the first Capability row is at y **561** at 1440 (was 633; budget
+590) and **654** at 390 (was 714; budget 660) — the row clears the 55 px teaser (top edge 789). F-198: `/image-jev-bench` runs Composite →
+Full ranking → Compare → Examples → Split → Method, the candidate table is a closed disclosure, eight gated sub-lines name Cost or Calibration,
+no bare "0.00", no bold parenthetical, no Penalty column, "Earlier split" present, **11,036 px** at 1440 (was 14,890). F-199: the phone's
+preset row is one 28 px line that scrolls (978 px in 306), "Adjust weights ↓" is closed on load and open with `?w=40-20-20-20`, no "Sort by"
+button anywhere, the first bar is inside the first viewport of the figure. F-200: hovering the first ⓘ at 1440 shows a `dl` with 7 rows; a
+tap at 390 opens a `[role=dialog]` with ✕ and the same 7 rows, no floating panel, the row's `title` is gone. F-194/F-195/F-196 hold
+(official count 1; no bubble text under 10 px at 1440). **CR-176 as Florian asked:** the "2× Jev cost" / "2× Jev latency" caption sits left of
+the dashed line, "← pricier · cheaper →" and "← slower · faster →" stand across the top of each plot, **0 of 50** points are left of either
+line with the checkbox off (27 and 25 of 91 with it on), both tables read "$/1k decisions" with est./ann. pills left of a right-aligned
+number and no green shading (60 cells, one right edge at 1440), and the 3D view names its three axes. 0 page errors in all four contexts.
+
+**Six things are not at the bar; two fixed in this pass, four directed.**
+
+1. **The 3D top-five labels are drawn off the left edge.** CR-176.6 anchors five DOM labels to the projected sphere positions, but only the
+   axis labels get `position:absolute`; the model labels are block-flow children of the label layer, so each spans the whole box (**1,324 px**
+   wide at 1440, 322 at 390) and its `translate(-50%)` pushes the text to x **−10 … −23**. What a reader sees is ".3.0", "-4b v2", "v0.2.0",
+   "er" clipped at the left border (`desktop_light-hub-3d-settled.png`, `metrics-*.json` `hub-3d.modelL`), in all four contexts; the y
+   positions are right, so the labels hover at sphere height but nowhere near their spheres. The CR-176.6 harness (42/42) read each label's
+   `style.transform` string, never its rendered box. → **F-201**, fixed by Fable (one CSS rule) and the verifier reads boxes.
+2. **9 px on phones, again.** The new separator caption and the four direction hints render at `fontSize={narrow ? 9 : 10}`: at 390 "2× Jev",
+   "← pricier", "cheaper →", "← slower", "faster →" are the page's smallest text, under the 10 px floor (F-147/F-181/F-195). → **F-202**,
+   fixed by Fable.
+3. **9.5 px was hiding behind 9.5 px.** With F-195 shipped, the hub's minimum text is now the input-length chart's bucket ticks ("0–499" …)
+   at `fontSize="9.5"` in `components/JevContextLength.tsx` — pass 36's min-font probe reported the first 9.5 px element it met, which was the
+   bubble tick, so this one was never seen. → **F-203**.
+4. **Each 3D axis is named three times, in two vocabularies.** The plot now carries "Capability 0–100", "Cost · $/1k decisions · cheaper →",
+   "Speed · faster →" (CR-176.6); the pre-existing legend box top-left still says "Capability ↑ · 0–100 / Cost · $/1k **tasks** (log), cheaper → /
+   Speed · 0–100, faster →", and a caption under the top-five list says it a third time ("Vertical: Capability · Right: cheaper · Toward you:
+   faster"). The same split runs through the hub: the Capability ranking's column head is "$/1k tasks" and its ⓘ says "Cost per 1,000 tasks",
+   the Composite and axes tables say "$/1k decisions" (Florian's word, CR-176), the ranking marks estimates with "*" and the tables with an
+   "est." pill. On the flat charts the arrow Florian asked for at the top ("cheaper →") is repeated by the axis title at the bottom ("$ per
+   1,000 decisions (log) · cheaper →"), and "faster →" likewise. → **F-204**.
+5. **On a phone the bubble leaders cross.** At 390 the five labels of each chart are pushed into the top-right of a 324 px plot; "1. Jev 1.13.0"
+   sits across the leaders of "4. decider-4b v2" and "5. JevK5 v0.2.0", and in the cost chart two leaders cross each other
+   (`mobile_light-hub-scatter-vp.png`; `local-before/F-205`: 2 crossings at 390 in light and dark, 0 in the speed chart; label-group boxes
+   overlap 6 and 7 times at 390, 2 at 1440, `hub-bubbles.charts[].overlaps`; the text boxes themselves do not overlap). Readable, but a diagram whose pointers cross
+   is not "very expressive". → **F-205**.
+6. **The v1.5 preview carries three habits the site has already dropped.** (a) Every cost prints as "~$0.028 est." in mono text; 94 of 97
+   systems are estimates, so the tag is on nearly every row and says nothing, and CR-176.4's pill-left / number-right convention is not
+   applied. (b) 76 of 89 ranked rows carry "≈" — "adjacent pairs whose 95% interval includes zero" (76 of the 88 pairs) — so the marker marks most of the board; the data
+   has a 95% interval for every system (`composite_ci95.B`) and the bars do not draw it. (c) The axes table's cost head is "$/1k". (d) The
+   headline line is the bold fragment "joint leaders (statistical tie)" with no names. The Penalty column is right to keep here: 15 of 97
+   rows are below ×1.000, unlike the image page's all-×1.000 column F-198 removed. → **F-206** for the CR-172 job, before the page is linked.
+
+Not defects: the hatched "classifier.dev — not ranked (honorable mention)" row inside the ranking (the rule says so); the Composite
+figure's four sliders open at 1440 (CR-158); the phone's Capability rows at 43/52 px (names wrap to two lines; one row at 67); the hub's
+length (22,207 px at 1440, 28,460 at 390 — every section is Florian's, and each folds what it can); the amber preview banner on the v1.5 page.
+
+## Decisions in pass 37
+
+1. **A verifier reads rendered boxes, not style strings (F-201):** a label check that passes on `style.transform` while the text is clipped
+   off-screen verified the wrong thing. Position checks compare `getBoundingClientRect()` against the container and against each other.
+2. **One vocabulary per quantity on a page (F-204):** JevBench prices are per 1,000 **decisions** (Florian, CR-176) — the word "tasks" for
+   the same number leaves the hub. One estimate marker convention per page: the pill (CR-176.4) wherever a cell has room; where a column is
+   too narrow for a pill, the "*" stays but its legend uses the same word ("est.").
+3. **A fact is stated once per figure (F-204):** with axis names on the plot, a legend box and a caption that repeat them are ink; with a
+   direction hint at the top of a flat chart, the axis title keeps its name and drops its arrow.
+4. **Leaders never cross (F-205):** on a narrow plot the labels form a column ordered like their points, and each leader runs to its own
+   bubble without crossing another; if that is impossible for five, the chart labels fewer.
+5. **A marker that is on most rows marks little (F-206)** — pass 36 decision 2 applied to data: draw the interval (a whisker) and
+   drop the per-row ≈; tag the three tariff prices and say once that the rest are estimates.
 
 ## Verdict on the live site — pass 36 (2026-09-26), the Capability-first hub, the banner and the published image benchmark
 
@@ -378,7 +458,81 @@ and the counts line under it keeps the page honest (P4).
 
 ---
 
-## Directives (pass 36)
+## Directives (pass 37)
+
+### F-201 — The 3D top-five labels sit beside their spheres `[mechanical]` — **shipped by Fable (pass 37)**
+
+*Where:* `app/globals.css` (`.bh-jev-3d-labels`), `components/JevCapability3D.tsx` (unchanged), `test/fable-pass37.test.mjs`.
+*What:* every child of the label layer is absolutely positioned and `white-space: nowrap`, so the transform CR-176.6 writes
+(`translate(px, py) translate(-50%, -115%)`) places the pill's centre on the projected sphere; nothing else changes (the axis labels already
+carried the inline style, the SVG fallback path is untouched).
+*Accept:* hub at 1440/390 × light/dark, 3D view loaded: five `[data-bh-jev14-3d-model-label]`, each 20–260 px wide, none starting left of
+the 3D box, at ≥ 3 distinct x positions; three `[data-bh-jev14-3d-axis-label]`; group F-201.
+
+### F-202 — Bubble hint text at the 10 px floor on phones `[mechanical]` — **shipped by Fable (pass 37)**
+
+*Where:* `components/JevBubbleChart.tsx` (`separator`), `test/fable-pass37.test.mjs`.
+*What:* the 2× caption and the four direction hints are `fontSize="10"` at every width (was 9 under 640 px); the existing width fallbacks
+(short "2× Jev", glyph-only "←"/"→") keep them inside the plot.
+*Accept:* hub at 390 × light/dark: no `svg text` under 10 px inside either `[data-bh-jev-bubble]`; the 2× label and both hints present in
+each chart; group F-202.
+
+### F-203 — The input-length chart's bucket ticks at 10 px `[mechanical]`
+
+*Where:* `components/JevContextLength.tsx` (the `active.map` tick text, `fontSize="9.5"`), its test.
+*What:* the six bucket labels ("0–499" … "16,000–63,999") print at 10 px. If at 390 two neighbours would touch, the chart drops every second label on
+narrow widths (the vertical gridline stays; the `<desc>` still lists all buckets) rather than shrinking the text. Do not shorten the ranges.
+*Accept:* hub at 1440/390 × light/dark: no `svg text` under 10 px in the chart titled "JevBench public accuracy across input-length buckets";
+no two tick labels overlap; ≥ 3 tick labels visible at 390, all 6 at 1440; group F-203.
+
+### F-204 — One name per axis, one word per unit, one arrow per direction `[mechanical]`
+
+*Where:* `components/JevCapability3D.tsx` (the `data-bh-jev14-3d-axes` legend box and the "Vertical: Capability · Right: cheaper · Toward
+you: faster" paragraph), `components/JevCapabilityRanking.tsx` (column head "$/1k tasks", the legend line "Thin red line = cost per 1,000
+tasks", the ⓘ row "Cost per 1,000 tasks"), `components/JevBubbleChart.tsx` (axis titles), `lib/jevbench-jev-class.mjs` /
+`components/JevCapabilityTip.tsx` if the word lives there; the tests that pin those strings (`test/jevbench-capability.test.mjs`,
+`test/cr-169*.test.mjs`, `test/fable-pass36.test.mjs` — extract and re-evaluate, do not swap spellings blindly).
+*What:* (a) the 3D legend box and the caption paragraph go; the three on-plot axis labels are the only axis names (the intro sentence
+above the figure stays). (b) Everywhere on the hub the unit is **decisions**: "$/1k decisions" in the Capability ranking head, "Cost per
+1,000 decisions" in the ⓘ, "cost per 1,000 decisions" in the ranking legend; "tasks" does not appear next to a JevBench price on the page.
+(c) The ranking's "*" estimate marker stays (the column has no room for a pill) but its legend reads "* = est. (estimated cost)" so the
+word matches the tables' pill. (d) The flat charts' axis titles lose their arrow: "$ per 1,000 decisions (log)" and "Median-latency speed";
+Florian's top hints "← pricier · cheaper →" / "← slower · faster →" are the direction statement.
+*Accept:* hub at 1440/390 × light/dark: no `[data-bh-jev14-3d-axes]`; "Toward you" absent; "$/1k tasks" and "per 1,000 tasks" absent from
+`main`; the two bubble axis titles contain no "→"; the top hints still present (group F-202's check); `verify-cr-176-6-live.mjs`,
+`verify-cr-169*` and `verify-fable-pass36-design.mjs` still green; group F-204.
+
+### F-205 — Phone bubble labels whose leaders do not cross `[mechanical]`
+
+*Where:* `components/JevBubbleChart.tsx` (the `labels` layout for the top five, the `narrow` branch).
+*What:* under 640 px the five labels form a single column at the right edge of the plot's upper half (right-aligned text, one label per
+row of 13 px, ordered top-to-bottom by their point's y), each with a straight leader to its bubble's edge; leaders may not intersect each
+other or another label's text box (place the column from the top down and, if a leader would cross, swap the two labels' rows — five
+labels, at most ten swaps). If no crossing-free placement exists, label the top three. Above 640 px the current placement stays (2 group
+overlaps at 1440 are leader lines passing under a neighbour's text, acceptable; text boxes do not overlap).
+*Accept:* hub at 390 × light/dark, both charts: five `[data-bh-jev-bubble-label]` (or three with the fallback), zero text-box overlaps,
+zero leader-line intersections (segment test on the label groups' `line`s); at 1440 zero text-box overlaps; group F-205.
+
+### F-206 — The v1.5 preview drops "~", ≈-on-every-row and "$/1k" before it is linked `[mechanical + data]` — for the CR-172 job
+
+*Where:* `components/JevBenchV15Preview.tsx` (`costCell`, `HeadlineBars`, `AxesTable`, `Tags`), `lib/jevbench-v15-preview.mjs` (nothing
+numeric changes), its tests.
+*What:* (a) **Cost cells** follow CR-176.4: right-aligned tabular number, no "~"; because 94 of the 97 systems are estimates, the pill marks
+the exception — `tariff` on the three rows whose `cost.kind` is `tariff` (left of the number, `bh-thin-tag`), and one legend sentence under
+the bars and under the axes table: "Costs are estimates (est.) unless marked tariff." Cells carry `data-bh-jev15-cost-cell`. (b) **The
+interval is drawn, the ≈ goes:** each ranked bar gets a thin whisker (`data-bh-jev15-ci`, the `composite_ci95.B` range on the same 0–100
+scale, 1 px, `var(--muted)`, with 2 px end caps) and the per-row "≈" is removed; the note under the h2 says how many adjacent pairs are
+statistical ties, computed from `board.B.markers` (76 of 88 today), e.g. "Whiskers are 95% bootstrap intervals. 76 of the 88 adjacent pairs
+are statistical ties — read the order as a ranking, not the gaps as significant." (c) **The axes table's cost head** reads "$/1k decisions"
+with the same cell treatment. (d) **The leader line names the systems:** `data-bh-jev15-leader` reads "Cygnet and Winnow-12B Q8 are joint
+leaders (statistical tie)" — the names come from the tie markers at ranks 1–2 (extend to three if rank 3 is tied with rank 2), the
+artifact's `leader_wording` is appended only if it adds words. (e) **Keep the Penalty column** (15 rows differ from ×1.000). No score, rank,
+interval or hash changes; the page stays noindex and unlinked.
+*Accept:* `/wip-oiifi41ouv1f/jevbench-v15` at 1440/390 × light/dark: no `[data-bh-jev15-bar]` text containing "~$" or "≈"; ≥ 89
+`[data-bh-jev15-ci]`; every `th` matching `$/1k` contains "decisions"; no pill right of its number; the leader element does not start with
+"joint leaders" and names ≥ 2 systems; a "Penalty" `th` present; group F-206.
+
+## Directives (pass 36) — F-194/195/196 shipped by Fable; F-197/198/199/200 implemented (iteration 235) and verified live in pass 37 (see the Done log)
 
 ### F-194 — The custom-evaluation toast stacks above the fast-lane banner `[mechanical]` — **shipped by Fable (pass 36)**
 
@@ -1147,3 +1301,9 @@ The label half is live and verified (`135a3098`, `4a9dd523`). Open: the identity
 | F-158 the multimodal preview has no all-"Not measured" Calibration column and its banner is the one required sentence | same commit + test | same | implemented by Fable; live at `b385107a` on both hosts, `verify-fable-pass30-design.mjs` **40/40 per host** (`live-canonical/`, `live-legacy/`, 10:5x UTC); needs a non-Fable engine to re-run it before `verified`; **verified by iteration 169 (claude-opus, non-Fable):** `verify-fable-pass30-design.mjs` **40/40 per host** at `1fc85b11`, rc 0, screenshots read (`/opt/benchmarkheaven/state/ux-evidence/iter169-fable30-verify/{canonical,legacy}/`) |
 | F-159 the preview's overall ranking draws each system's real-item share as a bar in the "All real" cell | same commit + test | same | implemented by Fable; live at `b385107a` on both hosts, `verify-fable-pass30-design.mjs` **40/40 per host** (`live-canonical/`, `live-legacy/`, 10:5x UTC); needs a non-Fable engine to re-run it before `verified`; **verified by iteration 169 (claude-opus, non-Fable):** `verify-fable-pass30-design.mjs` **40/40 per host** at `1fc85b11`, rc 0, screenshots read (`/opt/benchmarkheaven/state/ux-evidence/iter169-fable30-verify/{canonical,legacy}/`) |
 | F-160 the JevBench eyebrow hosting CustomEvaluationOffer is a `<div>` (the toast is a `<div>`; no nested-`<p>` console error on dev builds) | same commit + test | same (`local/` 40/40 includes the console check after the toast opened) | implemented by Fable; live at `b385107a` on both hosts, `verify-fable-pass30-design.mjs` **40/40 per host** (`live-canonical/`, `live-legacy/`, 10:5x UTC); needs a non-Fable engine to re-run it before `verified`; **verified by iteration 169 (claude-opus, non-Fable):** `verify-fable-pass30-design.mjs` **40/40 per host** at `1fc85b11`, rc 0, screenshots read (`/opt/benchmarkheaven/state/ux-evidence/iter169-fable30-verify/{canonical,legacy}/`) |
+| F-197 the hub head is the message; the guides fold at every width and follow the Jev-class method panel | iteration 235 (opencode-kimi + claude-opus), `verify-fable-pass36-design.mjs` F-197 | `/opt/benchmarkheaven/state/ux-evidence/iter235-pass36/`; pass 37 `…/fable-20260926-pass37/canonical/metrics-*.json` (`hub-guides`, `hub-extra.firstCapY`) | **Verified by Fable (pass 37, non-implementer):** 10 links hidden, toggle visible after `#jev-class-method`, head 6 links; first Capability row y 561 at 1440 / 654 at 390, all four contexts. The "eleven" in the verdict was an off-by-one (10 links). |
+| F-198 the image benchmark page is its results; the review trail leaves the page | iteration 235, `verify-fable-pass36-design.mjs` F-198 | same; pass 37 `img-f198` | **Verified by Fable (pass 37):** order Composite → Full ranking → Compare → Examples → Split → Method, candidates in a closed `<details>`, 8 gated sub-lines (Cost / Calibration), no bare 0.00, no bold parenthetical, no Penalty column, "Earlier split" present, 11,036 px at 1440. |
+| F-199 on a phone the Composite figure folds its controls; one control per sort | iteration 235, `verify-fable-pass36-design.mjs` F-199 | same; pass 37 `hub-table.presetRow/weightsMore`, `mobile_*-hub-chart-vp.png`, `hubw-table` | **Verified by Fable (pass 37):** preset row 28 px scrolling (978 > 306), weights closed on load and open with `?w=40-20-20-20`, no "Sort by" button, first bar inside the figure's first viewport; 1440 unchanged (8 sliders visible). |
+| F-200 the Capability ⓘ is a list, and a modal on a phone | iteration 235, `verify-fable-pass36-design.mjs` F-200 | same; pass 37 `hub-rownote`, `*-hub-rownote-open.png` | **Verified by Fable (pass 37):** 1440 hover panel with 7 `dt`; 390 tap opens `[role=dialog]` with ✕ and 7 `dt`, no floating panel, `li` title empty. |
+| F-201 the 3D top-five labels sit beside their spheres (CR-176.6 drew them off the left edge) | pass-37 commit (Fable, 2026-09-26) + `test/fable-pass37.test.mjs` | `/opt/benchmarkheaven/state/ux-evidence/fable-20260926-pass37/` (`canonical/` before: labels at x −10…−23, 1,324 px wide; `local-F-201/` 24/24 on the dev server; `verify-fable-pass37-design.mjs`) | implemented by Fable; needs a non-Fable engine to run `ONLY=F-201` on both hosts after the deploy before `verified` |
+| F-202 the bubble charts' 2× caption and direction hints are 10 px on phones (were 9) | same commit + test | same (`local-F-202/` 20/20) | implemented by Fable; needs a non-Fable engine to run `ONLY=F-202` on both hosts after the deploy before `verified` |

@@ -12642,3 +12642,29 @@ Not done here, still open: CR-176.1–.6's non-implementer review, CR-156.1–.4
 (needs Florian), D192, X6's remaining audit surface, the CR rows no harness covers (CR-148.1/.2,
 CR-152.1/.2/.5, CR-153.4, CR-158.4), and Umami's own retention, which nobody has recorded yet (CR-67.5 §6.4/§7.4
 residual 1). **`ALL-ACCEPTED` is not appended.**
+
+## Fable pass 37 — 2026-09-26 ~15:30 UTC (claude-fable, design authority)
+
+Scope (Florian: Fable sparingly): what changed since pass 36 — the hub after F-197/F-199/F-200 and CR-176.1–.6, `/image-jev-bench` after
+F-198, the hidden CR-172 v1.5 preview; quick views on today's data. Live revision `ee204f34`, dataset 14:46 UTC. Evidence:
+`/opt/benchmarkheaven/state/ux-evidence/fable-20260926-pass37/` (`canonical/` 136 shots + `metrics-<ctx>.json`, four contexts, 0 page errors;
+`local-F-201/`, `local-F-202/` the shipped fixes on a dev server; `local-before/` the directed groups failing at the pre-fix revision).
+Verdict, decisions and directives: `DESIGN-DIRECTIVES.md` "pass 37". Verifier for non-Fable engines: `bin/verify-fable-pass37-design.mjs`.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| F-197 | implemented → **verified** (Fable, non-implementer) | `canonical/metrics-*.json` `hub-guides` (10 links, 0 visible, toggle after `#jev-class-method`), `hub-extra.firstCapY` 561 / 654 | Holds in all four contexts; the first row clears the 55 px teaser at 390. |
+| F-198 | implemented → **verified** (Fable) | `canonical/*-img-f198` | Order, closed candidates, 8 gated sub-lines, no bare 0.00, no Penalty, "Earlier split", 11,036 px at 1440. |
+| F-199 | implemented → **verified** (Fable) | `canonical/*-hub-table` (`presetRow` 28 px, 978 > 306; `weightsMore` closed; `hubw-table` open), `mobile_*-hub-chart-vp.png` | No "Sort by" button; desktop unchanged. |
+| F-200 | implemented → **verified** (Fable) | `canonical/*-hub-rownote` (`dialog:true, dts:7, close:true` at 390; `tip:true, dts:7` at 1440; `liTitle:0`) | |
+| CR-176.1/.2/.3 | implemented → **verified live** (Fable, non-implementer) | `canonical/*-hub-bubbles` (`sepTexts`, `leftOfLine` 0 of 50 off / 27 and 25 of 91 on), `desktop_light-hub-scatter-vp.png` | Label left of the line, hints across the top, no point left of the line with the checkbox off. Two follow-ups are Fable's: F-202 (9 px on phones) and F-205 (crossing leaders on phones). |
+| CR-176.4/.5 | implemented → **verified live** (Fable) | `canonical/*-hub-table` (60 cells, `pillsNotLeft` 0, `heatCells` 0, one right edge at 1440, head "$/1k decisions"), `desktop_light-hub-table-vp.png` | |
+| CR-176.6 | implemented → **verified live in part** (Fable) — the axis names; **the top-five labels were off-screen** | `canonical/*-hub-3d` (`modelL` x −10…−23, w 1,324 at 1440 / 322 at 390), `desktop_light-hub-3d-settled.png` | Regression fixed by Fable as F-201 (one CSS rule). The 42/42 harness read `style.transform`, not the rendered box — D215 below. |
+| F-201 | **implemented** (Fable) | `app/globals.css`; `test/fable-pass37.test.mjs`; `local-F-201/verification.json` 24/24 (dev server) | 3D top-five labels positioned by their transform alone. Needs a non-Fable engine: `ONLY=F-201` on both hosts after the deploy. |
+| F-202 | **implemented** (Fable) | `components/JevBubbleChart.tsx`; same test; `local-F-202/verification.json` 20/20 | Separator caption and direction hints 10 px at every width (were 9 at 390). Needs a non-Fable engine: `ONLY=F-202`. |
+| F-203 | open (new) | `canonical/metrics-*.json` `hub-geom.minFont` (9.5 px "0–499") | Input-length bucket ticks at 10 px; drop every second label on narrow widths if they touch. `[mechanical]`. |
+| F-204 | open (new) | `desktop_light-hub-3d-settled.png` (legend box + caption), `desktop_light-hub-caprows-vp.png` ("$/1k tasks"), `hub-rownote` ("Cost per 1,000 tasks"), `hub-bubbles.axis` (arrow twice) | One name per axis (3D legend box and caption go), "decisions" everywhere, "*" legend says est., flat-chart axis titles lose their arrow. `[mechanical]`; extract and re-evaluate the pinned strings, never swap spellings blindly. |
+| F-205 | open (new) | `mobile_light-hub-scatter-vp.png`, `local-before/F-205` (cost chart: 2 leader crossings at 390), `hub-bubbles.charts[].overlaps` (6 / 7 at 390) | Phone bubble labels in a column with non-crossing leaders; label three if five cannot be placed. `[mechanical]`. |
+| F-206 | open (new) — for the CR-172 job before the preview is linked | `desktop_light-v15*.png`, `v15-geom`; data: 94 of 97 `cost.kind = estimate`, 76 of 88 tie markers, 15 of 97 penalties < 1 | Cost cells per CR-176.4 with the `tariff` exception pilled, CI whiskers instead of ≈ on 76 rows, "$/1k decisions", the leader line names the tied systems, Penalty column stays. `[mechanical + data]`. |
+| D215 (new) | open | `ops/ux-2026-09-12/bin/verify-cr-176-6-live.mjs` lines 26–32 | The CR-176.6 harness verified label *form* (`style.transform` string, `x`/`y` attributes), not rendered position, and passed 42/42 while every top-five label was clipped off the left edge. Position checks must compare `getBoundingClientRect()` boxes (pass 37 decision 1); `verify-fable-pass37-design.mjs` F-201 does. Fold that check into the CR-176.6 harness when it is next touched. |
+| X3 | verified (standing) | pass 37 | Pass 37 happened; F-201/F-202 shipped by Fable, F-203–F-206 directed. |
