@@ -20,7 +20,7 @@ export type JevV15System = {
   calibration: { score: number | null; parts: Partial<Record<JevV15Type, Record<string, number | null>>> };
   speed: { p50_s_raw: number | null; p95_s_raw: number | null; p50_s_adjusted: number | null; p95_s_adjusted: number | null; n?: number; adjustment: string | null };
   cost: { kind: string; usd_per_1000: number | null; basis: string };
-  rank: number | null; ranked: boolean; listing: 'ranked' | 'partial' | 'unranked' | 'unpriced'; not_ranked_because: string | null;
+  rank: number | null; ranked: boolean; listing: 'ranked' | 'partial' | 'unranked' | 'unpriced' | 'addendum'; would_place_B?: number; not_ranked_because: string | null;
   ranks: Record<JevV15Option, number | null>;
   not_scored_reason?: string;
 };

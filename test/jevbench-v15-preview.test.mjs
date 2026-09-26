@@ -71,3 +71,16 @@ test('public JevBench pages still use the pinned v1.4.2 artifact', async () => {
   assert.equal(sha256, JEVBENCH_V142_SHA256);
   assert.match(read('app/jev-models/v1.4.2/page.tsx'), /readJevbenchV142WithFamilies/);
 });
+
+test('hidden What-If Lab: noindex, unlinked, aggregate-only; addendum rows listed apart from the ranking', () => {
+  const html = readFileSync(new URL('../public/wip-oiifi41ouv1f/jevbench-v15-whatif.html', import.meta.url), 'utf8');
+  assert.match(html, /<meta name="robots" content="noindex, nofollow, noarchive">/);
+  assert.doesNotMatch(html, /"(task_id|item_id|gold|probs_as_returned)"\s*:/);
+  const art = JSON.parse(readFileSync(new URL('../data/raw/benchmarks/jevbench/v1.5/jevbench-v1.5.0-preview.json', import.meta.url), 'utf8'));
+  const add = art.systems.filter((s) => s.listing === 'addendum');
+  for (const s of add) {
+    assert.equal(s.ranked, false);
+    assert.ok(s.addendum && Number.isInteger(s.would_place_B));
+    assert.ok(!art.board.B.order.includes(s.key));
+  }
+});
