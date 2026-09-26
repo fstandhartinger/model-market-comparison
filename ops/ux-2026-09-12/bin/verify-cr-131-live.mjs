@@ -16,6 +16,7 @@ const OUT = process.argv[3] || `/opt/benchmarkheaven/state/ux-evidence/cr131-liv
 const EXPECTED_REVISION = process.argv[4]
   || execFileSync('git', ['rev-parse', 'HEAD'], { cwd: new URL('../../../', import.meta.url).pathname }).toString().trim();
 const ROOT = new URL('../../../', import.meta.url).pathname.replace(/\/$/, '');
+const { JEVBENCH_V142_ARTIFACT } = await import(`${ROOT}/lib/jevbench-v142.mjs`);
 const ARTIFACT = `${ROOT}/data/raw/benchmarks/jevbench/v1.4/jevbench-v1.4-results.json`;
 await mkdir(OUT, { recursive: true });
 const results = [];
@@ -33,6 +34,14 @@ const hasForbiddenKey = (value) => {
 const pngSize = (bytes) => bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))
   ? { width: bytes.readUInt32BE(16), height: bytes.readUInt32BE(20) } : null;
 
+// iter235 (claude-opus), D212: this file had two jobs mixed into one set of pins. CR-131.1's pinned
+// /api/jevbench/v1.4 contract is still binding and is still checked against the v1.4.0 bytes below. But
+// CR-131.2's "render the v1.4.0 board with 76 systems and 71 ranked" was superseded by CR-152, which
+// published v1.4.2 as the live board — so every page-level check below was measuring the previous release
+// and the whole guard reported a false 33/49 (the live page was faithful to the published artifact all
+// along). The live board is now read from the constant the hub itself renders from, so the next release
+// moves this guard with it instead of silently killing it.
+const BOARD_ARTIFACT = `${ROOT}/${JEVBENCH_V142_ARTIFACT}`;
 const localBytes = await readFile(ARTIFACT);
 const localSha = createHash('sha256').update(localBytes).digest('hex');
 const local = JSON.parse(localBytes.toString('utf8'));
@@ -41,6 +50,20 @@ const top5 = ranked.slice(0, 5);
 check('local/artifact-sha', localSha === '006ebff534221d913abe3195f87efeea420698ce0ab207beeb89dc3fb50fb517', localSha);
 check('local/shape', local.revision === 'v1.4.0' && local.systems.length === 76 && ranked.length === 71, { revision: local.revision, systems: local.systems.length, ranked: ranked.length });
 check('local/no-exact-item-level-fields', !hasForbiddenKey(local));
+
+const boardBytes = await readFile(BOARD_ARTIFACT);
+const board = JSON.parse(boardBytes.toString('utf8'));
+const boardRanked = board.systems.filter((row) => row.listing === 'ranked' && row.ranked === true).sort((a, b) => a.rank - b.rank);
+const boardTop5 = boardRanked.slice(0, 5);
+const boardApiFlags = board.systems.filter((row) => row.api_flag === true).length;
+// CR-131.4's evergreen rule is about *volatile* numbers in the head, so the forbidden list is derived from
+// the live board instead of the hard-coded 76|71|534|308 that outlived v1.4.0.
+const boardPublicDecisions = Object.entries(board.tiers ?? {}).filter(([tier]) => tier !== 'sealed').reduce((sum, [, n]) => sum + n, 0);
+const volatileNumbers = [board.systems.length, boardRanked.length, boardPublicDecisions, board.tiers?.sealed].filter((n) => Number.isFinite(n));
+const volatileInHead = new RegExp(`(?:^|[^\\d])(${volatileNumbers.join('|')})(?:[^\\d]|$)`);
+check('board/shape', board.revision === 'v1.4.2' && board.systems.length === 93 && boardRanked.length === 89, { revision: board.revision, systems: board.systems.length, ranked: boardRanked.length, apiFlags: boardApiFlags });
+check('board/is-the-live-api-artifact', createHash('sha256').update(boardBytes).digest('hex') === 'ac14e206dde51ae28e40dc1ea2ff1fecc4a449b941d098e9ecb5618bd533e5be', createHash('sha256').update(boardBytes).digest('hex'));
+check('board/no-exact-item-level-fields', !hasForbiddenKey(board));
 
 const metaResponse = await fetch(`${BASE}/api/meta?review=${Date.now()}-${Math.random()}`, { cache: 'no-store' });
 const meta = await metaResponse.json();
@@ -91,12 +114,12 @@ try {
       const tag = `${label}-${theme}`;
       await page.screenshot({ path: `${OUT}/${tag}-jev-models.png`, fullPage: false });
       check(`${tag}/board-present`, view.board);
-      check(`${tag}/rows-and-ranked-count`, view.rows.length === 76 && view.rows.filter((row) => row.ranked === '1').length === 71, { rows: view.rows.length, ranked: view.rows.filter((row) => row.ranked === '1').length });
-      check(`${tag}/top-five-rendered`, JSON.stringify(view.rows.filter((row) => row.ranked === '1').slice(0, 5).map((row) => [row.key, row.score])) === JSON.stringify(top5.map((row) => [row.key, Number(row.jevbench_score).toFixed(1)])), view.rows.slice(0, 5));
+      check(`${tag}/rows-and-ranked-count`, view.rows.length === board.systems.length && view.rows.filter((row) => row.ranked === '1').length === boardRanked.length, { rows: view.rows.length, ranked: view.rows.filter((row) => row.ranked === '1').length, expected: { rows: board.systems.length, ranked: boardRanked.length } });
+      check(`${tag}/top-five-rendered`, JSON.stringify(view.rows.filter((row) => row.ranked === '1').slice(0, 5).map((row) => [row.key, row.score])) === JSON.stringify(boardTop5.map((row) => [row.key, Number(row.jevbench_score).toFixed(1)])), view.rows.slice(0, 5));
       check(`${tag}/what-changed`, view.changes === 'What changed in v1.4');
-      check(`${tag}/api-flags`, view.apiFlags === local.systems.filter((row) => row.api_flag === true).length, { rendered: view.apiFlags, artifact: local.systems.filter((row) => row.api_flag === true).length });
+      check(`${tag}/api-flags`, view.apiFlags === boardApiFlags, { rendered: view.apiFlags, artifact: boardApiFlags });
       check(`${tag}/aggregate-only-disclosure`, /answers and item-level results are not published/i.test(view.apiNote));
-      check(`${tag}/evergreen-metadata`, view.title.startsWith('JevBench by Benchmark Heaven — Jev-class model benchmark') && view.description === 'Compare Jev-class decision models across intelligence, calibration, speed, and cost with JevBench.' && view.ogDescription === view.description && /[?&]v=og4(?:&|$)/.test(view.ogImage ?? '') && view.twitterImage === view.ogImage && !/(?:^|[^\d])(76|71|534|308)(?:[^\d]|$)/.test(view.head), { title: view.title, description: view.description, ogImage: view.ogImage });
+      check(`${tag}/evergreen-metadata`, view.title.startsWith('JevBench by Benchmark Heaven — Jev-class model benchmark') && view.description === 'Compare Jev-class decision models across intelligence, calibration, speed, and cost with JevBench.' && view.ogDescription === view.description && /[?&]v=og4(?:&|$)/.test(view.ogImage ?? '') && view.twitterImage === view.ogImage && !volatileInHead.test(view.head), { title: view.title, description: view.description, ogImage: view.ogImage });
       check(`${tag}/document-no-horizontal-overflow`, view.scrollWidth <= view.clientWidth + 1, { scrollWidth: view.scrollWidth, clientWidth: view.clientWidth });
       check(`${tag}/no-page-errors`, errors.length === 0, errors);
       await context.close();

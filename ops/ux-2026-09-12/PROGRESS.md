@@ -12480,7 +12480,19 @@ published artifact**; the verifier is measuring the previous release. Not repair
 page-level pins are superseded by CR-152 while CR-131.1's `/api/jevbench/v1.4` pins and CR-131.4's evergreen
 rule stay binding, so the repair is to follow the *live board* for the page comparisons (and to derive
 CR-131.4's forbidden-number list from the artifact instead of the hard-coded `76|71|534|308`) rather than to
-relax anything. Left as a named open item with that recipe; nobody should "fix" the page back to 76/71.
+relax anything. Nobody should "fix" the page back to 76/71.
+
+**D212 was then repaired in this same iteration**, along the split above: the `local/*` and `api/*` checks
+against the pinned v1.4.0 bytes are untouched (CR-131.1), while the three page comparisons
+(`rows-and-ranked-count`, `top-five-rendered`, `api-flags`) now read the **live board** — not a new hard-coded
+number, but `JEVBENCH_V142_ARTIFACT` from `lib/jevbench-v142.mjs`, the same constant the hub renders from, so
+the next release moves this guard with it instead of silently killing it again. CR-131.4's forbidden-number
+list is derived from that artifact as well (`[93, 89, 534, 308]` — the v1.4.2 equivalents of the dead
+`76|71|534|308`; checked non-vacuous, it still catches a volatile number in the head and still ignores
+unrelated ones). Three checks were added: `board/shape`, `board/is-the-live-api-artifact` (the artifact's own
+sha256 is `ac14e206…`, the bytes the live API serves) and `board/no-exact-item-level-fields`. Result: **52/52
+on both hosts** at `f3fb6460`, up from 49 checks / 33 passing. The before/after against the same unchanged
+live page is the negative control: the checks track the published board, and the page never was wrong.
 
 | ID | Status | Evidence | Notes |
 |---|---|---|---|
@@ -12493,14 +12505,14 @@ relax anything. Left as a named open item with that recipe; nobody should "fix" 
 | F-181, CR-167.2, D207, CR-163.1 | verified (unchanged) | `regression-*`: pass 34 **86/86**, CR-167.2 **76/76**, banner **178/178**, both hosts | Re-proven at `a031c5a3` after a head-layout change; the banner still covers no phone content. |
 | CR-143.1, CR-151.1–.5, CR-152.3/.4, CR-153.1–.3, CR-156.5, CR-158.1/.2/.3/.5 | never measured → **verified** | `iter235-cr151-158/summary.json` **145/145**, `iter235-cr151-158-legacy` **144/144** | The iteration-234 draft, debugged (undefined `hasSha`; a no-op restore click) and run. Its own Chromium now, not the shared CDP browser. |
 | CR-156.1–.4 | open (unchanged) | — | Outside the draft verifier's coverage despite the ledger's "CR-156.x"; still unmeasured. |
-| D212 (new) | **open** | `regression-canonical/cr131/verification.json` 33/49; v1.4.2 artifact re-derivation above | `verify-cr-131-live.mjs` pins the superseded v1.4.0 board. Repair = follow the live board for page checks, derive CR-131.4's number list from the artifact; do not touch the page. |
+| D212 (new) | **open → implemented + verified (same iteration)** | `regression-{canonical,legacy}/cr131/verification.json` **52/52 each** at `f3fb6460` (was 33/49) | `verify-cr-131-live.mjs` repaired as described: the page checks follow the live board (read from `JEVBENCH_V142_ARTIFACT`, the constant the hub renders from, so the next release moves the guard instead of killing it), CR-131.4's forbidden-number list is derived (`[93, 89, 534, 308]`, checked non-vacuous), and CR-131.1's pinned `/api/jevbench/v1.4` contract is untouched. Three new checks: `board/shape`, `board/is-the-live-api-artifact` (sha `ac14e206…`), `board/no-exact-item-level-fields`. |
 | D210 | runtime proof **observed** (unchanged) | `/opt/mmc-daily/cron.log` `DAILY END 2026-09-26T05:48:10Z rc=0`, `failures_in_row: 0` | Still owed a root-to-tail read of the run's `run-report.json` by a work engine; not done here. |
 | D205, D192 | open — unchanged | — | D205 needs Florian; D192's 38 retained arms not re-litigated. |
 
 Gates before the pushes: `node scripts/build-dataset.mjs` rc 0 (timestamp-only churn discarded both times),
 `CI=true npm test` **1,398 tests / 1,397 pass / 0 fail / 1 skip**, `npx tsc --noEmit -p .` rc 0,
 `npm run build` rc 0, and `verify-fable-pass36-design.mjs` **134/134 against the local production build**
-before anything was pushed. Not done here, still open: D212's repair, CR-156.1–.4, D210's run-report read,
+before anything was pushed. Not done here, still open: CR-156.1–.4, D210's run-report read,
 D205/Florian, D192, X6's remaining audit surface (R4.1/X4 design, R4.4, R6.2/R6.3, R8.1, R9.1, H1–H3,
 B2/B3/B7, X1–X3, X5), and the CR rows no harness covers yet (CR-148.1/.2, CR-152.1/.2/.5, CR-153.4,
 CR-158.4). **`ALL-ACCEPTED` is not appended.**
