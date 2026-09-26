@@ -1333,3 +1333,24 @@ Source: the follow-up fix recorded in `03-CHANGE-REQUESTS-VERBATIM.md`.
 | ID | Requirement | Acceptance |
 |---|---|---|
 | CR-168.1 | Derive the banner endpoint's expected origin from the ingress-provided public host, as the checkout CSRF guard already does, so events are not dropped behind Coolify. | On both public hosts a real browser's banner beacon is answered 204 and the event reaches Umami; a post whose `Origin` does not match the public origin, or whose host is not an allowed public host, is still refused. |
+
+## CR-169 — JevBench v1.4.2 presentation finishing touches
+
+Source: job-scope transcription in `03-CHANGE-REQUESTS-VERBATIM.md`; the recorded prompt is not a direct capture.
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-169.1 | Make Capability ranking colors, row details and numeric columns clear at desktop and mobile widths; keep the log-cost axis labeled and state each cost relative to Jev. | Every ranked row has a complete hover/tap detail; numeric values align under named headings; the cost scale is visibly logarithmic and details name the cost factor vs Jev. Both public hosts pass at 1440/390 in light/dark. |
+| CR-169.2 | Make cost/speed bubble directions and the attractive quadrant clear; synchronize selection; add usable fullscreen zoom, pan, reset and an outside-class toggle. | Both charts label the correct direction, show the quadrant hint and Jev threshold lines, synchronize pointer/touch selection, and pass fullscreen zoom/pan/reset checks at both widths and themes. |
+| CR-169.3 | Rename the dynamic composite heading while retaining its count and navigation/SEO anchors. | The live heading says “JevBench Composite Score” with the live count; no stale heading or SEO copy remains and the existing anchor resolves. |
+| CR-169.4 | Make the two comparison pickers searchable, keyboard navigable and mobile friendly. | Both controls are searchable comboboxes, keyboard selection works, and the chosen pair renders at 1440/390 in light/dark. |
+| CR-169.5 | Make the 3D chart's Jev-class control, current-weight composite top five, axes and fullscreen interaction clear. | The toggle defaults on; changing current weights changes the top five; axis labels stay legible through zoom; fullscreen zoom, pan and reset work. |
+| CR-169.6 | Add finer public context-length bins chosen from the data, state inclusive edges and expose point values accessibly. | Every plotted count matches the retained public aggregate; finer bins exactly reconcile to the prior `<2k` totals; edge labels and pointer/touch/keyboard details are live on both hosts at 1440/390 in light/dark; no item-level or sealed data is present. The official JevBench v1.4.2 score artifact remains unchanged. |
+
+## CR-174 — Keep banner analytics enabled on every configured public host
+
+Source: independent review finding in `REVIEW-20260926T020002Z.md`; a QA follow-up, not a Florian request.
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-174.1 | Use the shared `publicOrigin` host guard for banner events so every configured public host can forward the same allow-listed aggregate events. | On every host in `PUBLIC_HOSTS`, a real browser beacon is answered 204 and reaches Umami. Mismatched origins and hosts outside `PUBLIC_HOSTS` are not forwarded. The regression test covers the current canonical, `www`, and legacy hosts. |
