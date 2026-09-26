@@ -62,6 +62,7 @@ function HeadlineBars({ a, ranked }: { a: JevV15Artifact; ranked: JevV15System[]
     <h2 id="jev15-board-title" className="mt-1 text-xl font-bold leading-snug sm:text-2xl">JevBench Score: {ranked.length} ranked systems</h2>
     <p className="bh-muted mt-1 text-sm"><span className="bh-jevc-official mr-2">Official (B)</span>weighted harmonic mean of four 0–100 axes, Intelligence 40 · Calibration 20 · Speed 20 · Cost 20, with the low-axis gates · <a href="#jev15-method" className="text-accent underline">Method ↓</a></p>
     {a.board.B.leader_wording && <p className="mt-2 text-sm font-semibold" data-bh-jev15-leader>{a.board.B.leader_wording}</p>}
+    {a.headline_hold && <p className="mt-2 rounded border border-amber-500/60 bg-amber-500/10 p-2 text-sm" data-bh-jev15-headline-hold>{a.headline_hold}</p>}
     <p className="bh-muted mt-1 text-xs" data-bh-jev15-ties>{markers.length ? `Adjacent pairs whose paired-bootstrap 95% interval includes zero are marked ≈ (statistical tie).` : 'Bootstrap intervals and tie markers are not in this data file yet; they come with the official scorer output.'}</p>
     <div className="mt-4 hidden grid-cols-[1.8rem_15rem_minmax(0,1fr)_3.4rem_24rem] gap-x-2 text-[11px] sm:grid" aria-hidden="true">
       <span /><span /><span className="bh-muted font-mono">JevBench Score (B)</span><span className="bh-muted text-right font-mono">Score</span>

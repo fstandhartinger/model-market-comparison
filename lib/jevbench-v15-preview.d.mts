@@ -35,7 +35,7 @@ export type JevV15Artifact = {
   options: Record<JevV15Option, { weights: Record<keyof JevV15Axes, number>; intelligence_floor: number }>;
   views: string[]; n_ranked: number;
   board: Record<JevV15Option, { order: string[]; leader_wording: string | null; markers: JevV15Marker[] }>;
-  systems: JevV15System[]; not_measured: JevV15NotMeasured[]; roster_count: number;
+  systems: JevV15System[]; not_measured: JevV15NotMeasured[]; roster_count: number; headline_hold?: string | null;
 };
 
 export const JEVBENCH_V15_PREVIEW_ARTIFACT: string;

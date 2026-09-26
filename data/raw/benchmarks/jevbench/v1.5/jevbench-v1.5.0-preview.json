@@ -4,7 +4,7 @@
  "protocol": "jevbench::v1.5",
  "status": "preview-not-published",
  "run_kind": "official",
- "source_sha256": "94f218941081d183a79907c80e8e1e330a120d5534c3a5b1150bd8d87c2167a0",
+ "source_sha256": "5f5f50c1f7ab476a18aff04e86f6bdb17604da5638d84c4a7803a2ed838f16c8",
  "method_sha256": "c25d3d8b8512e4d93370a9e0c99705d19b2a9389956ca33b8a4bd2b0ec501c07",
  "pricing_addendum_sha256": "2fc44459ef801d0627062f7eefd973df40772e8ac117727479748e4be4c220cc",
  "sample": {
@@ -78,7 +78,6 @@
     "winnow-12b",
     "jev-1.13.0",
     "jev-omni",
-    "kushal-gemma4-31b-it-autoloops",
     "semif-qwen3.5-4b",
     "hopper",
     "jevk5-v02",
@@ -102,6 +101,7 @@
     "system-one-sg",
     "kev-4b",
     "typecastlm",
+    "kushal-gemma4-31b-it-autoloops",
     "gpt-6-luna-low",
     "malkuth-2b",
     "jevone",
@@ -217,23 +217,13 @@
     },
     {
      "upper": "jev-omni",
-     "lower": "kushal-gemma4-31b-it-autoloops",
-     "tie": false,
-     "diff_ci95": [
-      0.03800418106554133,
-      1.8459268112847873
-     ],
-     "p_upper_wins": 0.9775
-    },
-    {
-     "upper": "kushal-gemma4-31b-it-autoloops",
      "lower": "semif-qwen3.5-4b",
      "tie": true,
      "diff_ci95": [
-      -1.126180117097584,
-      1.5958953495524093
+      -0.28771192928647765,
+      2.6502864178335552
      ],
-     "p_upper_wins": 0.6115
+     "p_upper_wins": 0.932
     },
     {
      "upper": "semif-qwen3.5-4b",
@@ -457,13 +447,23 @@
     },
     {
      "upper": "typecastlm",
+     "lower": "kushal-gemma4-31b-it-autoloops",
+     "tie": true,
+     "diff_ci95": [
+      -6.217756711053712,
+      9.136841635528564
+     ],
+     "p_upper_wins": 0.574
+    },
+    {
+     "upper": "kushal-gemma4-31b-it-autoloops",
      "lower": "gpt-6-luna-low",
      "tie": true,
      "diff_ci95": [
-      -6.248390733927425,
-      9.108112186353093
+      -0.3557915631454904,
+      0.30906964879293364
      ],
-     "p_upper_wins": 0.573
+     "p_upper_wins": 0.4645
     },
     {
      "upper": "gpt-6-luna-low",
@@ -1063,7 +1063,6 @@
     "cygnet",
     "winnow-12b",
     "jev-1.13.0",
-    "kushal-gemma4-31b-it-autoloops",
     "jev-omni",
     "decider-4b-v2",
     "spark-s1-4b-v6",
@@ -1088,6 +1087,7 @@
     "system-one-sg",
     "gpt-6-luna-low",
     "localjev-qwen3.5-4b",
+    "kushal-gemma4-31b-it-autoloops",
     "gpt-6-luna",
     "kev-4b",
     "jevone",
@@ -1184,23 +1184,13 @@
     },
     {
      "upper": "jev-1.13.0",
-     "lower": "kushal-gemma4-31b-it-autoloops",
+     "lower": "jev-omni",
      "tie": false,
      "diff_ci95": [
-      0.005033096143601775,
-      1.6904547097027052
+      0.03260038401230006,
+      2.3351035962192195
      ],
-     "p_upper_wins": 0.975
-    },
-    {
-     "upper": "kushal-gemma4-31b-it-autoloops",
-     "lower": "jev-omni",
-     "tie": true,
-     "diff_ci95": [
-      -0.8013657262396592,
-      1.462095685075131
-     ],
-     "p_upper_wins": 0.689
+     "p_upper_wins": 0.978
     },
     {
      "upper": "jev-omni",
@@ -1434,13 +1424,23 @@
     },
     {
      "upper": "localjev-qwen3.5-4b",
-     "lower": "gpt-6-luna",
+     "lower": "kushal-gemma4-31b-it-autoloops",
      "tie": true,
      "diff_ci95": [
-      -6.188176940358562,
-      9.531628869052588
+      -6.535187987509815,
+      8.649383159652423
      ],
-     "p_upper_wins": 0.618
+     "p_upper_wins": 0.554
+    },
+    {
+     "upper": "kushal-gemma4-31b-it-autoloops",
+     "lower": "gpt-6-luna",
+     "tie": false,
+     "diff_ci95": [
+      0.14417824106909283,
+      1.0722712417256033
+     ],
+     "p_upper_wins": 0.9945
     },
     {
      "upper": "gpt-6-luna",
@@ -2052,7 +2052,6 @@
     "winnow-12b",
     "jev-1.13.0",
     "jev-omni",
-    "kushal-gemma4-31b-it-autoloops",
     "spark-s1-4b-v6",
     "malkuth-4b",
     "metask-jev-4b",
@@ -2068,6 +2067,7 @@
     "standardone-8b",
     "ninfer-qwen3.8-flash-next",
     "swanone",
+    "kushal-gemma4-31b-it-autoloops",
     "gpt-6-luna-low",
     "jevone",
     "gpt-6-luna",
@@ -2191,23 +2191,13 @@
     },
     {
      "upper": "jev-omni",
-     "lower": "kushal-gemma4-31b-it-autoloops",
-     "tie": false,
-     "diff_ci95": [
-      0.03800418106554133,
-      1.8459268112847873
-     ],
-     "p_upper_wins": 0.9775
-    },
-    {
-     "upper": "kushal-gemma4-31b-it-autoloops",
      "lower": "spark-s1-4b-v6",
      "tie": false,
      "diff_ci95": [
-      0.57770349497107,
-      3.544207208313482
+      1.6119512009557166,
+      4.422390953856982
      ],
-     "p_upper_wins": 0.996
+     "p_upper_wins": 1.0
     },
     {
      "upper": "spark-s1-4b-v6",
@@ -2351,13 +2341,23 @@
     },
     {
      "upper": "swanone",
-     "lower": "gpt-6-luna-low",
+     "lower": "kushal-gemma4-31b-it-autoloops",
      "tie": false,
      "diff_ci95": [
-      5.727898902103182,
-      6.665495468689885
+      5.781188438992954,
+      6.66504056595443
      ],
      "p_upper_wins": 1.0
+    },
+    {
+     "upper": "kushal-gemma4-31b-it-autoloops",
+     "lower": "gpt-6-luna-low",
+     "tie": true,
+     "diff_ci95": [
+      -0.3557915631454904,
+      0.30906964879293364
+     ],
+     "p_upper_wins": 0.4645
     },
     {
      "upper": "gpt-6-luna-low",
@@ -3946,234 +3946,6 @@
    }
   },
   {
-   "key": "kushal-gemma4-31b-it-autoloops",
-   "display": "Autoloops – Gemma 4 31B IT",
-   "addendum": null,
-   "author": "Autoloops",
-   "repo": null,
-   "class": "jev",
-   "licence": "Gemma terms of use (Google) for the base weights; hosted Autoloops service",
-   "open": "no",
-   "underlying": null,
-   "endpoint_kind": "api",
-   "endpoint_condition": "the operator's hosted API",
-   "gpu": null,
-   "adapter_id": "harness/specs/kushal-gemma4-31b-it-autoloops.json:extra.autoloops_systemone.AutoloopsSystemOneAdapter",
-   "api_flag": true,
-   "api_exposure_note": "API measurement: the operator's endpoint received sealed item text, without answers.",
-   "status": {
-    "status": "complete",
-    "rows": 1624,
-    "missing": 0,
-    "answered_ok": 1624
-   },
-   "full_coverage": true,
-   "support": {
-    "choice": "native",
-    "noul": "native",
-    "score": "native"
-   },
-   "planned_weight_denominator": 1.0,
-   "axes": {
-    "intelligence": 79.24644322771387,
-    "calibration": 83.58229936188614,
-    "speed": 83.9240668357571,
-    "cost": 49.98998457627238
-   },
-   "scores": {
-    "A": 70.76477084413578,
-    "B": 72.3073943500543,
-    "C": 70.76477084413578
-   },
-   "views": {
-    "Balanced 33:33:33": 67.33061961040617,
-    "Emphasis on Accuracy 60:20:20": 71.62904000486894,
-    "Emphasis on Cost 20:20:60": 59.11542200516892,
-    "Emphasis on Speed 20:60:20": 73.10276310254827,
-    "Intelligence only": 79.21469893904404
-   },
-   "composite_ci95": {
-    "A": [
-     70.01784337680755,
-     71.14880888515619
-    ],
-    "B": [
-     71.3150511279865,
-     72.97176185523182
-    ],
-    "C": [
-     70.01784337680755,
-     71.14880888515619
-    ]
-   },
-   "jevbench_score": 72.3073943500543,
-   "intelligence": {
-    "I_open": 79.24839353617108,
-    "I_sealed": 79.24449291925666,
-    "base": 79.24644322771387,
-    "gap": 0.003900616914421562,
-    "excess": -4.602200375291481,
-    "penalty": 1.0,
-    "per_type_split": {
-     "open|choice": {
-      "cc": 86.35693213456801,
-      "tiers": {
-       "easy": 98.19113656918904,
-       "standard": 93.76137249805042,
-       "judge": 96.88796680497926,
-       "hard": 71.7978848413631
-      },
-      "n": {
-       "easy": 72,
-       "standard": 84,
-       "judge": 114,
-       "hard": 169
-      }
-     },
-     "open|noul": {
-      "cc": 68.73077469121196,
-      "tiers": {
-       "easy": 76.47058823529412,
-       "standard": 72.72727272727273,
-       "judge": 78.43137254901961,
-       "hard": 57.52212389380531
-      },
-      "n": {
-       "easy": 34,
-       "standard": 66,
-       "judge": 102,
-       "hard": 113
-      }
-     },
-     "open|score": {
-      "cc": 75.54893518433636,
-      "tiers": {
-       "easy": 79.44374053586364,
-       "standard": 84.43635298314938,
-       "judge": 75.86669966490899,
-       "hard": 69.89320158661853
-      },
-      "n": {
-       "easy": 16,
-       "standard": 50,
-       "judge": 34,
-       "hard": 50
-      }
-     },
-     "sealed|choice": {
-      "cc": 87.5068098550186,
-      "tiers": {
-       "easy": 100.0,
-       "standard": 83.69934344577767,
-       "judge": 85.42402826855124,
-       "hard": 87.84933171324423
-      },
-      "n": {
-       "easy": 50,
-       "standard": 101,
-       "judge": 101,
-       "hard": 108
-      }
-     },
-     "sealed|noul": {
-      "cc": 67.45454545454545,
-      "tiers": {
-       "easy": 100.0,
-       "standard": 63.99999999999999,
-       "judge": 63.99999999999999,
-       "hard": 63.63636363636365
-      },
-      "n": {
-       "easy": 25,
-       "standard": 50,
-       "judge": 50,
-       "hard": 55
-      }
-     },
-     "sealed|score": {
-      "cc": 74.50980651244393,
-      "tiers": {
-       "easy": 77.31828535179173,
-       "standard": 74.77474662968355,
-       "judge": 74.55125067882011,
-       "hard": 73.64413361920504
-      },
-      "n": {
-       "easy": 25,
-       "standard": 50,
-       "judge": 50,
-       "hard": 55
-      }
-     }
-    }
-   },
-   "validity": {
-    "choice": {
-     "n": 799,
-     "invalid_rate": 0.0
-    },
-    "noul": {
-     "n": 495,
-     "invalid_rate": 0.0
-    },
-    "score": {
-     "n": 330,
-     "invalid_rate": 0.0
-    }
-   },
-   "calibration": {
-    "score": 83.58229936188614,
-    "parts": {
-     "choice": {
-      "ece_hard": 0.11069466505831069,
-      "ece_score": 77.86106698833785,
-      "mean_tvd": 0.24261659079045955,
-      "n_tvd": 50.0,
-      "n": 799.0,
-      "n_ece_hard": 277.0,
-      "score": 76.79970395464595
-     },
-     "noul": {
-      "ece": 0.024641134940521763,
-      "brier": 0.04314422942385484,
-      "n": 495.0,
-      "score": 95.07177301189564,
-      "abstention_rate": 0.13535353535353534
-     },
-     "score": {
-      "nrps": 0.05012237564914895,
-      "top_ece": 0.11835864691185555,
-      "n": 330.0,
-      "interval90_coverage": 0.9696969696969697,
-      "interval90_width": 0.33282828282828275,
-      "score": 85.658016526357
-     }
-    }
-   },
-   "speed": {
-    "p50_s_raw": 0.6074120700359344,
-    "p95_s_raw": 0.6669755268841981,
-    "p50_s_adjusted": 0.6074120700359344,
-    "p95_s_adjusted": 0.6669755268841981,
-    "n": 450,
-    "adjustment": "none (hosted API, measured as is)"
-   },
-   "cost": {
-    "kind": "estimate",
-    "usd_per_1000": 0.04645158251231527,
-    "basis": "ESTIMATE: exact base-model market reference (operator tariff excluded by 30-day rule)"
-   },
-   "rank": 5,
-   "ranked": true,
-   "listing": "ranked",
-   "not_ranked_because": null,
-   "ranks": {
-    "A": 7,
-    "B": 5,
-    "C": 7
-   }
-  },
-  {
    "key": "jev-omni",
    "display": "Jev-Omni (akhilaaa3, Gemma-4-12B merged)",
    "addendum": null,
@@ -4391,13 +4163,13 @@
     "usd_per_1000": 0.02917173645320197,
     "basis": "documented hosted-model estimate; no exact base-model floor applies"
    },
-   "rank": 6,
+   "rank": 5,
    "ranked": true,
    "listing": "ranked",
    "not_ranked_because": null,
    "ranks": {
     "A": 6,
-    "B": 6,
+    "B": 5,
     "C": 6
    }
   },
@@ -4619,13 +4391,13 @@
     "usd_per_1000": 0.015201077586206898,
     "basis": "documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, deprecated afterwards (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3)"
    },
-   "rank": 7,
+   "rank": 6,
    "ranked": true,
    "listing": "ranked",
    "not_ranked_because": null,
    "ranks": {
     "A": 3,
-    "B": 7,
+    "B": 6,
     "C": 3
    }
   },
@@ -4847,14 +4619,14 @@
     "usd_per_1000": 0.020857610837438423,
     "basis": "documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, deprecated afterwards (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3)"
    },
-   "rank": 8,
+   "rank": 7,
    "ranked": true,
    "listing": "ranked",
    "not_ranked_because": null,
    "ranks": {
-    "A": 12,
-    "B": 8,
-    "C": 8
+    "A": 11,
+    "B": 7,
+    "C": 7
    }
   },
   {
@@ -5075,14 +4847,14 @@
     "usd_per_1000": 0.01701689039408867,
     "basis": "documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, deprecated afterwards (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3)"
    },
-   "rank": 9,
+   "rank": 8,
    "ranked": true,
    "listing": "ranked",
    "not_ranked_because": null,
    "ranks": {
-    "A": 8,
-    "B": 9,
-    "C": 13
+    "A": 7,
+    "B": 8,
+    "C": 12
    }
   },
   {
@@ -5303,14 +5075,14 @@
     "usd_per_1000": 0.018118577586206896,
     "basis": "documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, deprecated afterwards (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3)"
    },
-   "rank": 10,
+   "rank": 9,
    "ranked": true,
    "listing": "ranked",
    "not_ranked_because": null,
    "ranks": {
-    "A": 9,
-    "B": 10,
-    "C": 14
+    "A": 8,
+    "B": 9,
+    "C": 13
    }
   },
   {
@@ -5531,14 +5303,14 @@
     "usd_per_1000": 0.025642610837438424,
     "basis": "documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, deprecated afterwards (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3)"
    },
-   "rank": 11,
+   "rank": 10,
    "ranked": true,
    "listing": "ranked",
    "not_ranked_because": null,
    "ranks": {
-    "A": 11,
-    "B": 11,
-    "C": 10
+    "A": 10,
+    "B": 10,
+    "C": 9
    }
   },
   {
@@ -5759,14 +5531,14 @@
     "usd_per_1000": 0.02968398399014778,
     "basis": "price floor: base-model reference price applied; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, deprecated afterwards (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3)"
    },
-   "rank": 12,
+   "rank": 11,
    "ranked": true,
    "listing": "ranked",
    "not_ranked_because": null,
    "ranks": {
-    "A": 13,
-    "B": 12,
-    "C": 9
+    "A": 12,
+    "B": 11,
+    "C": 8
    }
   },
   {
@@ -5987,14 +5759,14 @@
     "usd_per_1000": 0.01701689039408867,
     "basis": "documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, deprecated afterwards (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3)"
    },
-   "rank": 13,
+   "rank": 12,
    "ranked": true,
    "listing": "ranked",
    "not_ranked_because": null,
    "ranks": {
-    "A": 10,
-    "B": 13,
-    "C": 16
+    "A": 9,
+    "B": 12,
+    "C": 15
    }
   },
   {
@@ -6215,14 +5987,14 @@
     "usd_per_1000": 0.05320954433497537,
     "basis": "documented hosted-model estimate; no exact base-model floor applies"
    },
-   "rank": 14,
+   "rank": 13,
    "ranked": true,
    "listing": "ranked",
    "not_ranked_because": null,
    "ranks": {
-    "A": 17,
-    "B": 14,
-    "C": 11
+    "A": 16,
+    "B": 13,
+    "C": 10
    }
   },
   {
@@ -6443,14 +6215,14 @@
     "usd_per_1000": 0.016926853448275863,
     "basis": "documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, deprecated afterwards (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3)"
    },
-   "rank": 15,
+   "rank": 14,
    "ranked": true,
    "listing": "ranked",
    "not_ranked_because": null,
    "ranks": {
-    "A": 14,
-    "B": 15,
-    "C": 15
+    "A": 13,
+    "B": 14,
+    "C": 14
    }
   },
   {
@@ -6671,14 +6443,14 @@
     "usd_per_1000": 0.023522413793103446,
     "basis": "price floor: base-model reference price applied"
    },
-   "rank": 16,
+   "rank": 15,
    "ranked": true,
    "listing": "ranked",
    "not_ranked_because": null,
    "ranks": {
-    "A": 15,
-    "B": 16,
-    "C": 12
+    "A": 14,
+    "B": 15,
+    "C": 11
    }
   },
   {
@@ -6899,14 +6671,14 @@
     "usd_per_1000": 0.042420935960591134,
     "basis": "documented hosted-model estimate"
    },
-   "rank": 17,
+   "rank": 16,
    "ranked": true,
    "listing": "ranked",
    "not_ranked_because": null,
    "ranks": {
-    "A": 16,
-    "B": 17,
-    "C": 18
+    "A": 15,
+    "B": 16,
+    "C": 17
    }
   },
   {
@@ -7127,14 +6899,14 @@
     "usd_per_1000": 0.01664602832512315,
     "basis": "documented hosted-model estimate; no exact base-model floor applies"
    },
-   "rank": 18,
+   "rank": 17,
    "ranked": true,
    "listing": "ranked",
    "not_ranked_because": null,
    "ranks": {
-    "A": 18,
-    "B": 18,
-    "C": 17
+    "A": 17,
+    "B": 17,
+    "C": 16
    }
   },
   {
@@ -7355,14 +7127,14 @@
     "usd_per_1000": 0.06461391625615764,
     "basis": "documented hosted-model estimate"
    },
-   "rank": 19,
+   "rank": 18,
    "ranked": true,
    "listing": "ranked",
    "not_ranked_because": null,
    "ranks": {
-    "A": 19,
-    "B": 19,
-    "C": 19
+    "A": 18,
+    "B": 18,
+    "C": 18
    }
   },
   {
@@ -7583,14 +7355,14 @@
     "usd_per_1000": 0.08232764778325123,
     "basis": "documented hosted-model estimate"
    },
-   "rank": 20,
+   "rank": 19,
    "ranked": true,
    "listing": "ranked",
    "not_ranked_because": null,
    "ranks": {
-    "A": 24,
-    "B": 20,
-    "C": 21
+    "A": 23,
+    "B": 19,
+    "C": 20
    }
   },
   {
@@ -7811,14 +7583,14 @@
     "usd_per_1000": 0.07772456896551724,
     "basis": "documented hosted-model estimate"
    },
-   "rank": 21,
+   "rank": 20,
    "ranked": true,
    "listing": "ranked",
    "not_ranked_because": null,
    "ranks": {
-    "A": 23,
-    "B": 21,
-    "C": 20
+    "A": 22,
+    "B": 20,
+    "C": 19
    }
   },
   {
@@ -8039,14 +7811,14 @@
     "usd_per_1000": 0.08478293103448274,
     "basis": "price floor: base-model reference price applied"
    },
-   "rank": 22,
+   "rank": 21,
    "ranked": true,
    "listing": "ranked",
    "not_ranked_because": null,
    "ranks": {
-    "A": 25,
-    "B": 22,
-    "C": 22
+    "A": 24,
+    "B": 21,
+    "C": 21
    }
   },
   {
@@ -8267,13 +8039,13 @@
     "usd_per_1000": 0.011367487684729064,
     "basis": "ESTIMATE: v1.5 measured-input proxy; no exact base-model floor applies"
    },
-   "rank": 23,
+   "rank": 22,
    "ranked": true,
    "listing": "ranked",
    "not_ranked_because": null,
    "ranks": {
-    "A": 20,
-    "B": 23,
+    "A": 19,
+    "B": 22,
     "C": 27
    }
   },
@@ -8495,13 +8267,13 @@
     "usd_per_1000": 0.014771046798029557,
     "basis": "documented hosted-model estimate"
    },
-   "rank": 24,
+   "rank": 23,
    "ranked": true,
    "listing": "ranked",
    "not_ranked_because": null,
    "ranks": {
-    "A": 21,
-    "B": 24,
+    "A": 20,
+    "B": 23,
     "C": 28
    }
   },
@@ -8723,13 +8495,13 @@
     "usd_per_1000": 0.0167512315270936,
     "basis": "ESTIMATE (proxy tokens, I-2): exact base-model market reference; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, deprecated afterwards (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3)"
    },
-   "rank": 25,
+   "rank": 24,
    "ranked": true,
    "listing": "ranked",
    "not_ranked_because": null,
    "ranks": {
-    "A": 22,
-    "B": 25,
+    "A": 21,
+    "B": 24,
     "C": 29
    }
   },
@@ -8951,13 +8723,13 @@
     "usd_per_1000": 0.0653875104679803,
     "basis": "documented hosted-model estimate"
    },
-   "rank": 26,
+   "rank": 25,
    "ranked": true,
    "listing": "ranked",
    "not_ranked_because": null,
    "ranks": {
-    "A": 27,
-    "B": 26,
+    "A": 26,
+    "B": 25,
     "C": 26
    }
   },
@@ -9179,13 +8951,13 @@
     "usd_per_1000": 0.06829381896551724,
     "basis": "documented hosted-model estimate"
    },
-   "rank": 27,
+   "rank": 26,
    "ranked": true,
    "listing": "ranked",
    "not_ranked_because": null,
    "ranks": {
-    "A": 28,
-    "B": 27,
+    "A": 27,
+    "B": 26,
     "C": 30
    }
   },
@@ -9407,13 +9179,13 @@
     "usd_per_1000": 0.10750024630541874,
     "basis": "operator standard launch list price (interpretation I-1); no exact base-model floor applies"
    },
-   "rank": 28,
+   "rank": 27,
    "ranked": true,
    "listing": "ranked",
    "not_ranked_because": null,
    "ranks": {
     "A": 31,
-    "B": 28,
+    "B": 27,
     "C": 23
    }
   },
@@ -9635,14 +9407,242 @@
     "usd_per_1000": 0.022786576354679802,
     "basis": "documented hosted-model estimate; reference deepinfra:Qwen/Qwen3.5-4B frozen at the 25 Sep cut-off, deprecated afterwards (replaced by Qwen/Qwen3.5-9B); re-score if it changes (I-3)"
    },
+   "rank": 28,
+   "ranked": true,
+   "listing": "ranked",
+   "not_ranked_because": null,
+   "ranks": {
+    "A": 25,
+    "B": 28,
+    "C": 31
+   }
+  },
+  {
+   "key": "kushal-gemma4-31b-it-autoloops",
+   "display": "Autoloops – Gemma 4 31B IT",
+   "addendum": null,
+   "author": "Autoloops",
+   "repo": null,
+   "class": "jev",
+   "licence": "Gemma terms of use (Google) for the base weights; hosted Autoloops service",
+   "open": "no",
+   "underlying": null,
+   "endpoint_kind": "api",
+   "endpoint_condition": "the operator's hosted API",
+   "gpu": null,
+   "adapter_id": "harness/specs/kushal-gemma4-31b-it-autoloops.json:extra.autoloops_systemone.AutoloopsSystemOneAdapter",
+   "api_flag": true,
+   "api_exposure_note": "API measurement: the operator's endpoint received sealed item text, without answers.",
+   "status": {
+    "status": "complete",
+    "rows": 1624,
+    "missing": 0,
+    "answered_ok": 1624
+   },
+   "full_coverage": true,
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "planned_weight_denominator": 1.0,
+   "axes": {
+    "intelligence": 79.24644322771387,
+    "calibration": 83.58229936188614,
+    "speed": 83.9240668357571,
+    "cost": 39.586359989532696
+   },
+   "scores": {
+    "A": 40.59800496653759,
+    "B": 42.137844173637426,
+    "C": 40.59800496653759
+   },
+   "views": {
+    "Balanced 33:33:33": 37.76428102411274,
+    "Emphasis on Accuracy 60:20:20": 41.77022448992639,
+    "Emphasis on Cost 20:20:60": 31.242224221299974,
+    "Emphasis on Speed 20:60:20": 42.568256862438794,
+    "Intelligence only": 49.6742032433623
+   },
+   "composite_ci95": {
+    "A": [
+     40.20561413201668,
+     40.79948114547187
+    ],
+    "B": [
+     41.599899687551606,
+     42.49741172952219
+    ],
+    "C": [
+     40.20561413201668,
+     40.79948114547187
+    ]
+   },
+   "jevbench_score": 42.137844173637426,
+   "intelligence": {
+    "I_open": 79.24839353617108,
+    "I_sealed": 79.24449291925666,
+    "base": 79.24644322771387,
+    "gap": 0.003900616914421562,
+    "excess": -4.602200375291481,
+    "penalty": 1.0,
+    "per_type_split": {
+     "open|choice": {
+      "cc": 86.35693213456801,
+      "tiers": {
+       "easy": 98.19113656918904,
+       "standard": 93.76137249805042,
+       "judge": 96.88796680497926,
+       "hard": 71.7978848413631
+      },
+      "n": {
+       "easy": 72,
+       "standard": 84,
+       "judge": 114,
+       "hard": 169
+      }
+     },
+     "open|noul": {
+      "cc": 68.73077469121196,
+      "tiers": {
+       "easy": 76.47058823529412,
+       "standard": 72.72727272727273,
+       "judge": 78.43137254901961,
+       "hard": 57.52212389380531
+      },
+      "n": {
+       "easy": 34,
+       "standard": 66,
+       "judge": 102,
+       "hard": 113
+      }
+     },
+     "open|score": {
+      "cc": 75.54893518433636,
+      "tiers": {
+       "easy": 79.44374053586364,
+       "standard": 84.43635298314938,
+       "judge": 75.86669966490899,
+       "hard": 69.89320158661853
+      },
+      "n": {
+       "easy": 16,
+       "standard": 50,
+       "judge": 34,
+       "hard": 50
+      }
+     },
+     "sealed|choice": {
+      "cc": 87.5068098550186,
+      "tiers": {
+       "easy": 100.0,
+       "standard": 83.69934344577767,
+       "judge": 85.42402826855124,
+       "hard": 87.84933171324423
+      },
+      "n": {
+       "easy": 50,
+       "standard": 101,
+       "judge": 101,
+       "hard": 108
+      }
+     },
+     "sealed|noul": {
+      "cc": 67.45454545454545,
+      "tiers": {
+       "easy": 100.0,
+       "standard": 63.99999999999999,
+       "judge": 63.99999999999999,
+       "hard": 63.63636363636365
+      },
+      "n": {
+       "easy": 25,
+       "standard": 50,
+       "judge": 50,
+       "hard": 55
+      }
+     },
+     "sealed|score": {
+      "cc": 74.50980651244393,
+      "tiers": {
+       "easy": 77.31828535179173,
+       "standard": 74.77474662968355,
+       "judge": 74.55125067882011,
+       "hard": 73.64413361920504
+      },
+      "n": {
+       "easy": 25,
+       "standard": 50,
+       "judge": 50,
+       "hard": 55
+      }
+     }
+    }
+   },
+   "validity": {
+    "choice": {
+     "n": 799,
+     "invalid_rate": 0.0
+    },
+    "noul": {
+     "n": 495,
+     "invalid_rate": 0.0
+    },
+    "score": {
+     "n": 330,
+     "invalid_rate": 0.0
+    }
+   },
+   "calibration": {
+    "score": 83.58229936188614,
+    "parts": {
+     "choice": {
+      "ece_hard": 0.11069466505831069,
+      "ece_score": 77.86106698833785,
+      "mean_tvd": 0.24261659079045955,
+      "n_tvd": 50.0,
+      "n": 799.0,
+      "n_ece_hard": 277.0,
+      "score": 76.79970395464595
+     },
+     "noul": {
+      "ece": 0.024641134940521763,
+      "brier": 0.04314422942385484,
+      "n": 495.0,
+      "score": 95.07177301189564,
+      "abstention_rate": 0.13535353535353534
+     },
+     "score": {
+      "nrps": 0.05012237564914895,
+      "top_ece": 0.11835864691185555,
+      "n": 330.0,
+      "interval90_coverage": 0.9696969696969697,
+      "interval90_width": 0.33282828282828275,
+      "score": 85.658016526357
+     }
+    }
+   },
+   "speed": {
+    "p50_s_raw": 0.6074120700359344,
+    "p95_s_raw": 0.6669755268841981,
+    "p50_s_adjusted": 0.6074120700359344,
+    "p95_s_adjusted": 0.6669755268841981,
+    "n": 450,
+    "adjustment": "none (hosted API, measured as is)"
+   },
+   "cost": {
+    "kind": "tariff",
+    "usd_per_1000": 0.10322573891625615,
+    "basis": "operator standard launch list price (interpretation I-1)"
+   },
    "rank": 29,
    "ranked": true,
    "listing": "ranked",
    "not_ranked_because": null,
    "ranks": {
-    "A": 26,
+    "A": 30,
     "B": 29,
-    "C": 31
+    "C": 22
    }
   },
   {
@@ -10096,7 +10096,7 @@
    "listing": "ranked",
    "not_ranked_because": null,
    "ranks": {
-    "A": 29,
+    "A": 28,
     "B": 31,
     "C": 33
    }
@@ -10552,7 +10552,7 @@
    "listing": "ranked",
    "not_ranked_because": null,
    "ranks": {
-    "A": 30,
+    "A": 29,
     "B": 33,
     "C": 35
    }
@@ -23703,8 +23703,8 @@
    "rank": null,
    "ranked": false,
    "listing": "addendum",
-   "not_ranked_because": "v1.5.1 addendum A1: complete run, scored with the frozen v1.5.0 median gap (METHOD §4). B score 70.87 would place about #7. Addendum rows do not enter the v1.5.0 order or its tie markers.",
-   "would_place_B": 7,
+   "not_ranked_because": "v1.5.1 addendum A1: complete run, scored with the frozen v1.5.0 median gap (METHOD §4). B score 70.87 would place about #6. Addendum rows do not enter the v1.5.0 order or its tie markers.",
+   "would_place_B": 6,
    "ranks": {
     "A": null,
     "B": null,
@@ -23936,8 +23936,8 @@
    "rank": null,
    "ranked": false,
    "listing": "addendum",
-   "not_ranked_because": "v1.5.1 addendum A1: complete run, scored with the frozen v1.5.0 median gap (METHOD §4). B score 70.60 would place about #8. Addendum rows do not enter the v1.5.0 order or its tie markers.",
-   "would_place_B": 8,
+   "not_ranked_because": "v1.5.1 addendum A1: complete run, scored with the frozen v1.5.0 median gap (METHOD §4). B score 70.60 would place about #7. Addendum rows do not enter the v1.5.0 order or its tie markers.",
+   "would_place_B": 7,
    "ranks": {
     "A": null,
     "B": null,
@@ -24169,8 +24169,8 @@
    "rank": null,
    "ranked": false,
    "listing": "addendum",
-   "not_ranked_because": "v1.5.1 addendum A1: complete run, scored with the frozen v1.5.0 median gap (METHOD §4). B score 69.89 would place about #8. Addendum rows do not enter the v1.5.0 order or its tie markers.",
-   "would_place_B": 8,
+   "not_ranked_because": "v1.5.1 addendum A1: complete run, scored with the frozen v1.5.0 median gap (METHOD §4). B score 69.89 would place about #7. Addendum rows do not enter the v1.5.0 order or its tie markers.",
+   "would_place_B": 7,
    "ranks": {
     "A": null,
     "B": null,
@@ -24402,8 +24402,8 @@
    "rank": null,
    "ranked": false,
    "listing": "addendum",
-   "not_ranked_because": "v1.5.1 addendum A1: complete run, scored with the frozen v1.5.0 median gap (METHOD §4). B score 69.51 would place about #8. Addendum rows do not enter the v1.5.0 order or its tie markers.",
-   "would_place_B": 8,
+   "not_ranked_because": "v1.5.1 addendum A1: complete run, scored with the frozen v1.5.0 median gap (METHOD §4). B score 69.51 would place about #7. Addendum rows do not enter the v1.5.0 order or its tie markers.",
+   "would_place_B": 7,
    "ranks": {
     "A": null,
     "B": null,
@@ -25137,5 +25137,6 @@
    "reason": "Not measured. The public build and probe passed, but the six-item public smoke produced zero rows (vLLM engine core initialization failure, root cause not retained). No private input was sent."
   }
  ],
- "roster_count": 100
+ "roster_count": 100,
+ "headline_hold": "#1 held for review: classifier.dev (fast) returns no token counts. It is priced with the benchmark's proxy token count (558 per decision); on that basis it is a unique #1. At Jev 1.13.0's own measured count (769 per decision) it would be in a statistical tie with Cygnet. Under the new-#1 verification rule (#890), its #1 claim waits for Florian's decision."
 }
