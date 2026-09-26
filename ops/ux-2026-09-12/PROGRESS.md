@@ -12507,6 +12507,7 @@ live page is the negative control: the checks track the published board, and the
 | CR-156.1–.4 | open (unchanged) | — | Outside the draft verifier's coverage despite the ledger's "CR-156.x"; still unmeasured. |
 | D212 (new) | **open → implemented + verified (same iteration)** | `regression-{canonical,legacy}/cr131/verification.json` **52/52 each** at `f3fb6460` (was 33/49) | `verify-cr-131-live.mjs` repaired as described: the page checks follow the live board (read from `JEVBENCH_V142_ARTIFACT`, the constant the hub renders from, so the next release moves the guard instead of killing it), CR-131.4's forbidden-number list is derived (`[93, 89, 534, 308]`, checked non-vacuous), and CR-131.1's pinned `/api/jevbench/v1.4` contract is untouched. Three new checks: `board/shape`, `board/is-the-live-api-artifact` (sha `ac14e206…`), `board/no-exact-item-level-fields`. |
 | D210 | runtime proof **observed** (unchanged) | `/opt/mmc-daily/cron.log` `DAILY END 2026-09-26T05:48:10Z rc=0`, `failures_in_row: 0` | Still owed a root-to-tail read of the run's `run-report.json` by a work engine; not done here. |
+(Iteration 238: that read is done — see its addendum below; **D210 → verified**.)
 | D205, D192 | open — unchanged | — | D205 needs Florian; D192's 38 retained arms not re-litigated. |
 
 Gates before the pushes: `node scripts/build-dataset.mjs` rc 0 (timestamp-only churn discarded both times),
@@ -12614,7 +12615,30 @@ was pushed (the one local failure is the dry run's own header injection, explain
 The checkout fast-forwarded to `aeb632bd` (merge-queue PR #37, CR-170) mid-iteration with my uncommitted files
 untouched; the gates above ran on that tree, and `git log origin/main..HEAD` was checked before pushing.
 
-Not done here, still open: CR-176.1–.6's non-implementer review, CR-156.1–.4, D210's run-report read, D205
+### Iteration 238 addendum — D210's owed read, and a stale-arm diagnosis that contradicts the recorded one
+
+**D210 (the daily's `manual is not defined` ReferenceError) is proved at runtime.** The 05:17 run of
+2026-09-26 (`/opt/mmc-daily/runs/2026-09-26T05-17-01-948Z-4136552/reports/run-report.json`) was read root to
+tail by an engine that did not write the fix: 52 steps, `exit_code: 0`, `published: true`,
+`live_verified: true`, commit `e6f729a0`, **`refresh-benchmarks` ok=true**, `build-dataset`/`npm-build`/
+`npm-test`/`typecheck` ok, and the gate PASS in both stages (`precommit`: 8 of 2,939 locatable rows sampled,
+collector `Qwen/Qwen3.8-27B-TEE`; `prepush`: critic `moonshotai/Kimi-K3-TEE`). One step is `ok=false` by
+design: `fetch-lumina-ledger`, the documented pause since 2026-09-23, previous snapshot preserved. 214 sources
+attempted, 27 retained failures.
+
+**D214 (new, not this loop's to fix).** That same receipt carries **17 stale sources**, the oldest
+`aa-benchmark-fields` **failing since 2026-09-11 (15 days)**, and the reasons are dominated by
+`deepseek/deepseek-v4-flash-0731: OpenRouter completion HTTP 402` and `worker: No supported viable worker
+model found`. The recorded diagnosis for that pattern — an empty OpenRouter account — **does not hold today**:
+`GET /api/v1/credits` answers `total_credits 448.911`, `total_usage 432.956` (≈ **$15.95 left**, not zero),
+and a live call to that exact model with the run's own 32,768 `max_tokens` on the same key answered **HTTP
+200** twice (routed to Mancer 2 and Relace). So the 402 is intermittent or request-shaped, not a dead account,
+and topping up is not the fix — the arm needs an offline replay against its own capture. Two things do deserve
+someone's attention: the balance is low enough to run out soon, and `aa-benchmark-fields` has now been stale
+for over two weeks while the site kept publishing. Filed for the daily/gauntlet owner with the numbers above;
+nothing was changed here.
+
+Not done here, still open: CR-176.1–.6's non-implementer review, CR-156.1–.4, D214 (the stale arms, above), D205
 (needs Florian), D192, X6's remaining audit surface, the CR rows no harness covers (CR-148.1/.2,
 CR-152.1/.2/.5, CR-153.4, CR-158.4), and Umami's own retention, which nobody has recorded yet (CR-67.5 §6.4/§7.4
 residual 1). **`ALL-ACCEPTED` is not appended.**
