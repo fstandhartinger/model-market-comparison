@@ -133,6 +133,10 @@ test('CR-176.6: the 3D capability view labels all three axes and pins the top fi
   assert.match(source, /data-bh-jev14-3d-axis-label=\{def\.name\}|data-bh-jev14-3d-axis-label=\{label\.name\}/);
   assert.match(source, /Capability 0–100/);
   assert.match(source, /Cost · \$\/1k decisions · cheaper →/);
+  assert.match(source, /textAnchor=\{label\.name === 'cost' \? 'end' : 'middle'\}/, 'the longest SVG axis caption anchors inward');
+  assert.match(source, /estimatedTextWidth \+ 4\), size\.width - 4\)/, 'the SVG cost label clamps inside narrow plots');
+  assert.match(source, /const isCostAxis = el\.getAttribute\('data-bh-jev14-3d-axis-label'\) === 'cost'/, 'the WebGL axis label uses its measured width');
+  assert.match(source, /axisWidth \+ inset\), w - inset\)/, 'the WebGL cost label clamps inside narrow plots');
   assert.match(source, /Speed · faster →/);
   assert.match(source, /data-bh-jev14-3d-model-label=.{0,40}entry\.point\.key/);
   assert.equal((source.match(/data-bh-jev14-3d-model-label/g) ?? []).length >= 2, true, 'model labels exist in both render paths (DOM + SVG)');
