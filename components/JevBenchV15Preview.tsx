@@ -146,6 +146,15 @@ function AxesTable({ a, rows }: { a: JevV15Artifact; rows: JevV15System[] }) {
   </section>;
 }
 
+function Honorable({ rows }: { rows: JevV15System[] }) {
+  if (!rows.length) return null;
+  return <section className="bh-panel mt-10 max-w-5xl p-5" aria-labelledby="jev15-honorable" data-bh-jev15-honorable>
+    <h2 id="jev15-honorable" className="text-lg font-semibold">Listed, not ranked: honorable mention ({rows.length})</h2>
+    <p className="bh-muted mt-1 text-sm">Services that run on Jev itself are measured and shown, but not ranked against Jev, as in v1.4.2. They do not enter the field median gap or the tie markers.</p>
+    <ul className="bh-muted mt-2 space-y-1 text-sm">{rows.map((r) => <li key={r.key} data-bh-jev15-honorable-row={r.key}><b>{r.display}</b><Tags row={r} />: {r.not_ranked_because}. Official (B) score {r.scores?.B != null ? r.scores.B.toFixed(1) : '–'}.</li>)}</ul>
+  </section>;
+}
+
 function Addendum({ rows }: { rows: JevV15System[] }) {
   if (!rows.length) return null;
   return <section className="bh-panel mt-10 max-w-5xl p-5" aria-labelledby="jev15-addendum" data-bh-jev15-addendum-section>
@@ -188,6 +197,7 @@ function Method({ a, sha256 }: { a: JevV15Artifact; sha256: string }) {
 export function JevBenchV15Preview({ artifact: a, sha256 }: { artifact: JevV15Artifact; sha256: string }) {
   const ranked = a.systems.filter((s) => s.listing === 'ranked').sort((x, y) => (x.rank ?? 999) - (y.rank ?? 999));
   const partial = a.systems.filter((s) => s.listing === 'partial' || s.listing === 'unranked');
+  const honorable = a.systems.filter((s) => s.listing === 'honorable_mention');
   const addendum = a.systems.filter((s) => s.listing === 'addendum').sort((x, y) => (x.would_place_B ?? 999) - (y.would_place_B ?? 999));
   const unpriced = a.systems.filter((s) => s.listing === 'unpriced');
   const classes = [...new Set(a.systems.map((s) => s.class))];
@@ -198,7 +208,8 @@ export function JevBenchV15Preview({ artifact: a, sha256 }: { artifact: JevV15Ar
     <HeadlineBars a={a} ranked={ranked} />
     <p className="bh-muted mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs" aria-label="System types">{classes.map((c) => <span key={c} style={typeVar(c)} className="whitespace-nowrap"><span className="mr-1 inline-block h-2.5 w-2.5 rounded-full bg-[rgb(var(--jev-t))] align-middle" aria-hidden="true" />{JEV_TYPE_LABEL[c] ?? c}</span>)}</p>
     <OptionsTable a={a} ranked={ranked} />
-    <AxesTable a={a} rows={[...ranked, ...addendum, ...partial, ...unpriced]} />
+    <AxesTable a={a} rows={[...ranked, ...honorable, ...addendum, ...partial, ...unpriced]} />
+    <Honorable rows={honorable} />
     <Addendum rows={addendum} />
     <NotRanked a={a} partial={partial} unpriced={unpriced} />
     <Method a={a} sha256={sha256} />
