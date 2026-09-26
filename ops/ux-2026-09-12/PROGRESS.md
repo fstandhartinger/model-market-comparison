@@ -12668,3 +12668,108 @@ Verdict, decisions and directives: `DESIGN-DIRECTIVES.md` "pass 37". Verifier fo
 | F-206 | open (new) — for the CR-172 job before the preview is linked | `desktop_light-v15*.png`, `v15-geom`; data: 94 of 97 `cost.kind = estimate`, 76 of 88 tie markers, 15 of 97 penalties < 1 | Cost cells per CR-176.4 with the `tariff` exception pilled, CI whiskers instead of ≈ on 76 rows, "$/1k decisions", the leader line names the tied systems, Penalty column stays. `[mechanical + data]`. |
 | D215 (new) | open | `ops/ux-2026-09-12/bin/verify-cr-176-6-live.mjs` lines 26–32 | The CR-176.6 harness verified label *form* (`style.transform` string, `x`/`y` attributes), not rendered position, and passed 42/42 while every top-five label was clipped off the left edge. Position checks must compare `getBoundingClientRect()` boxes (pass 37 decision 1); `verify-fable-pass37-design.mjs` F-201 does. Fold that check into the CR-176.6 harness when it is next touched. |
 | X3 | verified (standing) | pass 37 | Pass 37 happened; F-201/F-202 shipped by Fable, F-203–F-206 directed. |
+
+## Iteration 239 — work (claude-opus), 2026-09-26 19:40–20:25 UTC — Fable pass 37's open directives, and a defect the strengthened check found
+
+Picked the pass-37 rows: F-201/F-202 needed a **non-Fable** engine to verify live (Fable shipped them), and
+F-203/F-204/F-205 were the open mechanical directives. F-206 is explicitly for the CR-172 job and was left
+alone. Along the way D215's harness repair turned up a live defect (D216) and CR-156.1–.3 got their first
+measurement.
+
+**F-201 and F-202 verified live, by an engine that did not write them.** `ONLY=F-201` **24/24** and
+`ONLY=F-202` **20/20** on canonical *and* legacy at `c810c748`, each group given its own page load.
+
+**F-203 — the input-length bucket ticks.** The attribute went 9.5 → 10, but that alone would not have been
+true on a phone: the svg carried `min-w-[700px]` against a 740-unit viewBox, so the whole chart rendered at
+0.946× and a 10 px attribute drew at **9.46 px**. The minimum width now matches the viewBox, so the scale is
+never below 1 and every text in that chart renders at least at its stated size. The directive's crowding
+guard is implemented and measured rather than assumed: with today's six buckets the gap is **126 units**
+against an **87 unit** widest label, so nothing touches and all six labels stay at both widths; the guard
+drops every second label (always keeping the last bin) if a future bucket set closes that gap — at nine
+active buckets the gap would be 78.5 units, which is why it is worth having.
+
+**F-204 — one name per axis, one word per unit, one arrow per direction.** The 3D legend box and the
+"Vertical: Capability · Right: cheaper · Toward you: faster" caption are gone; the three on-plot labels are
+the only axis names. "tasks" no longer appears next to a JevBench price anywhere on the hub (`$/1k decisions`
+in the Capability ranking head, `Cost per 1,000 decisions` in its ⓘ, `cost per 1,000 decisions` in its
+legend); the `*` marker legend reads `* = est. (estimated cost)` to match the tables' pill; the flat charts'
+axis titles dropped their arrow, since Florian's top hints are the direction statement. The directive warned
+about pinned strings: they were extracted and re-checked first — no test pinned any of the five, and the two
+that *are* pinned (`test/jevbench-capability.test.mjs`'s on-plot 3D axis names) are exactly the ones the
+directive keeps.
+
+**F-205 — phone bubble labels whose leaders do not cross.** Under a 640 px viewport the five labels are one
+right-aligned column in the plot's upper half, ordered top-to-bottom by their point's y, each with a straight
+leader to its bubble; rows are swapped until no two leaders cross (at most ten swaps), with the directive's
+top-three fallback if no crossing-free placement exists — it did not trigger, five labels are placed.
+Two departures from the directive's letter, both recorded rather than quietly taken:
+- **The row pitch is `fs + 9`, not 13 px.** The box the browser actually draws is the glyph cell (~1.3 em)
+  plus this label's 3 px halo stroke, ~17 px at 10.5 px type; 13 px rows would overlap under the verifier's
+  own `getBoundingClientRect` test. The pitch is derived from the font metrics instead.
+- **"Under 640 px" is read as the viewport, not the chart.** At 1440 the two-up grid gives each chart about
+  **625 px**, so a chart-width rule put the column on the desktop page too — and the directive says the 1440
+  placement stays. Measured, then changed: desktop is byte-for-byte the old greedy placement, except that it
+  now also rejects a candidate whose leader would cross an already-placed one.
+
+**D215 — the CR-176.6 harness now measures rendered boxes.** It read `style.transform` strings and `x`/`y`
+attributes and passed 42/42 while every top-five label was clipped off the left edge. It now reads
+`getBoundingClientRect()` for each label and for the 3D box: inside the box, a nowrap pill, distinct
+positions, still true after a rotation, in both render paths. One inherited check — three distinct *x*
+buckets — was a demand on the data, not on the page (on this board the top five project within **23 px** of
+each other horizontally), so it counts distinct positions in both axes now, with D216 as the readability gate.
+
+**D216 (new, found by that repair, fixed in the same iteration).** F-201 put each label beside its own
+sphere; it did not stop five labels that project close together from printing on top of one another. Measured
+live on the canonical host at `b5c8962c`, before the fix: **68/77** — **5 of 10** label pairs overlapping on a
+phone at rest and **all 10** after a rotation, 4 of 10 on desktop, 2 in the SVG fallback. Both paths now place
+each label by its own projection and then push a label that would land on an already-placed one clear of it,
+downward first and upward when the box runs out of room. The WebGL overlay measures each label once, so a drag
+forces no reflow; the fallback estimates width from the glyph count, having no layout to measure.
+
+**CR-156.1–.3 measured for the first time** (they were seeded by D206's back-fill and had no harness).
+`ops/ux-2026-09-12/bin/verify-cr-156-live.mjs` is browser-free, so it can run beside a Chromium verifier:
+**264/264**. All ten SEO routes answer 200 with a self-canonical, an internal link back to the JevBench pages
+and a live sitemap entry on **all three** public hosts; and all **126** figures the seven comparison pages
+print — nine measures × two systems × seven pairs — were re-derived from the live `/api/jevbench/v1.4.2` with
+the page's own formatters and compared as strings, so no page states a number measured separately for it.
+Two of my first rival keys (`jevk5`, `winnow-12b-q8`) did not exist in the API; the *pages* were right and the
+harness was wrong, corrected to `jevk5-v02` and `winnow-12b`.
+
+**D217 (new, operational).** `git push` from this checkout failed with `could not read Username for
+'https://github.com'`: `~/.gitconfig` had no `credential.helper` while `~/.git-credentials` held valid
+tokens — the recorded fix for the gh-helper breakage appears to have removed the whole section. This
+iteration pushed with `git -c credential.helper=store push` rather than editing a global file another agent
+was writing, then, once it had been stable for half an hour, restored it with
+`git config --global --add credential.helper store` and proved the default path with a dry-run push. Left as a
+row because nothing stops it recurring, and an unattended tick that cannot push loses its work silently.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| F-201 | implemented (Fable) → **verified live** (claude-opus, non-Fable) | `iter239-pass37/f201-{canonical,legacy}/verification.json` **24/24 each** at `c810c748` | Five labels, each a 20–260 px pill, none starting left of the 3D box, ≥3 distinct x positions, three axis labels — all four contexts, both hosts. |
+| F-202 | implemented (Fable) → **verified live** (claude-opus, non-Fable) | `iter239-pass37/f202-{canonical,legacy}/verification.json` **20/20 each** | No SVG text under 10 px in either bubble chart at 390; the 2× label and both direction hints present in each. |
+| F-203 | open → **implemented + verified live** | `iter239-pass37/F-203-{can,leg}/verification.json` **16/16 each** at `b5c8962c`; source pin `test/fable-pass37.test.mjs` | All six bucket labels drawn, none under 10 px, none overlapping, at 1440 and 390 in both themes on both hosts. Written by this engine — a different one should re-run `ONLY=F-203`. |
+| F-204 | open → **implemented + verified live** | `iter239-pass37/F-204-{can,leg}/verification.json` **24/24 each**; same pin | Legend box gone, no "Toward you", no `$/1k tasks`, both bubble axis titles free of the arrow — both hosts, four contexts. Same caveat: this engine wrote it. |
+| F-205 | open → **implemented + verified live** | `iter239-pass37/F-205-{can,leg}/verification.json` **28/28 each**; same pin | Five labelled leaders, **zero** text overlaps and **zero** leader crossings in both charts at 390; zero text overlaps at 1440. Same caveat. |
+| D215 | open → **implemented + verified live** | `ops/ux-2026-09-12/bin/verify-cr-176-6-live.mjs`; `iter239-pass37/d216-live-{canonical,legacy}/verification.json` **77/77 each** | Position claims are measured on rendered boxes in both render paths. Proven to bite before it was trusted: the same harness read **68/77** against the unfixed live page, and the nine failures were all real. |
+| D216 (new) | **open → implemented + verified live (same iteration)** | before: `iter239-pass37/d216-live-before/verification.json` **68/77** at `b5c8962c`; after: `d216-live-{canonical,legacy}/verification.json` **77/77 each** at `0c134a12`; pin `test/fable-pass37.test.mjs` | Five top-five labels printed on top of one another whenever their spheres project close together. Both paths de-clump now: zero overlapping pairs at rest and after a rotation, desktop and phone, light and dark, WebGL and the WebGL-disabled fallback, on both hosts. Written by this engine — a different one should re-run the harness. |
+| CR-156.1 | open → **implemented + verified live** | `iter239-pass37/cr156-all/verification.json` (264/264) | Ten routes, three hosts, all 200. |
+| CR-156.2 | open → **implemented + verified live** | same receipt | 126 printed figures re-derived from the live API and compared as strings; zero mismatches on canonical and legacy. |
+| CR-156.3 | open → **implemented + verified live** | same receipt | Self-canonical, internal link and live sitemap entry for every route on every host. IndexNow order is not observable from outside and is not claimed here. |
+| CR-156.4 | open (unchanged) | — | Needs the verified `sc-domain:benchmarkheaven.com` property; out of this harness's reach and not attempted. |
+| D217 (new) | **open** | `~/.gitconfig`, `~/.git-credentials`; this section | Global `credential.helper` was missing; restored with `--add` and proved with a dry-run push. Recurrence is unguarded. |
+
+Gates before each push: `node scripts/build-dataset.mjs` rc 0 (timestamp-only churn discarded), `CI=true npm
+test` **1,427 tests / 1,426 pass / 0 fail / 1 skip**, `npx tsc --noEmit -p .` rc 0, `npm run build` rc 0, and
+every directive group proved against a local production build before anything was pushed.
+`git log origin/main..HEAD` was checked before both pushes; no other writer's files were touched.
+
+**One narrowing of the Umami-retention residual, so the next engine does not re-derive it.** The analytics
+service is `https://bh-analytics.app.mintapis.com` (`UMAMI_ORIGIN` in `lib/umami-pageview.mjs`); it answers
+`/api/heartbeat` 200, but it does **not** run on Sandy — no container here matches it and no cron or user timer
+on this box touches it. So its retention cannot be established from this checkout and nothing is claimed about
+it here; whoever closes CR-67.5 §7.4 residual 1 needs access to the host that serves that domain.
+
+Not done here, still open: CR-176.6's remaining non-implementer review, CR-156.4, D214 (17 stale arms), D205
+(needs Florian), D192, X6's remaining audit surface, the CR rows no harness covers (CR-148.1/.2,
+CR-152.1/.2/.5, CR-153.4, CR-158.4), Umami's own retention (CR-67.5 §7.4 residual 1), and F-206 (the CR-172
+job's). **`ALL-ACCEPTED` is not appended.**
