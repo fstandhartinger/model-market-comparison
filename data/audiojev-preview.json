@@ -1,15 +1,15 @@
 {
  "method": "AudioJevBench v0.1 (METHOD.md) on JevBench v1.5 scorer",
- "G_med": null,
+ "G_med": 0.2866504084037018,
  "gap_allowance": 15.0,
  "blend": [
   0.25,
   0.75
  ],
- "difficulty_mismatch_flag": null,
+ "difficulty_mismatch_flag": false,
  "systems": [
   {
-   "key": "gemini-3.5-flash-lite (gemini-direct)",
+   "key": "gemini-3.1-flash-lite (gemini-direct, public-only)",
    "support": {
     "choice": "native",
     "noul": "native",
@@ -19,10 +19,10 @@
    "table": "public-only (provisional)",
    "api_flag": true,
    "sealed_route": false,
-   "n_items_scored": 6,
-   "n_rows": 6,
+   "n_items_scored": 112,
+   "n_rows": 118,
    "n_error_rows": 0,
-   "I_public": 88.88888888888889,
+   "I_public": 80.0963706054546,
    "I_sealed": null,
    "base": null,
    "gap": null,
@@ -30,144 +30,144 @@
    "penalty": null,
    "Intelligence": null,
    "typed": {
-    "open/choice": 77.77777777777777,
-    "open/noul": 100.0,
-    "open/score": 100.0,
+    "open/choice": 81.88679245283018,
+    "open/noul": 58.80952380952382,
+    "open/score": 97.8023737066342,
     "sealed/choice": null,
     "sealed/noul": null,
     "sealed/score": null
    },
    "typed_n": {
-    "open/choice": 3,
-    "open/noul": 2,
-    "open/score": 1,
+    "open/choice": 40,
+    "open/noul": 52,
+    "open/score": 20,
     "sealed/choice": 0,
     "sealed/noul": 0,
     "sealed/score": 0
    },
    "planned_weight": 1.0,
-   "Calibration": 50.0,
+   "Calibration": 64.00767227564103,
    "calibration_parts": {
     "choice": {
-     "ece_hard": null,
-     "ece_score": null,
+     "ece_hard": 0.26916666666666667,
+     "ece_score": 46.166666666666664,
      "mean_tvd": null,
      "n_tvd": 0,
-     "n": 3,
-     "n_ece_hard": 0,
-     "score": null
+     "n": 40,
+     "n_ece_hard": 12,
+     "score": 46.166666666666664
     },
     "noul": {
-     "ece": 0.0,
-     "brier": 0.0,
-     "n": 2,
-     "score": 100.0,
+     "ece": 0.15365384615384614,
+     "brier": 0.16644423076923082,
+     "n": 52,
+     "score": 69.26923076923077,
      "abstention_rate": 0.0
     },
     "score": {
-     "nrps": 0.0,
-     "top_ece": 0.0,
-     "n": 1,
+     "nrps": 0.0014375,
+     "top_ece": 0.05499999999999997,
+     "n": 20,
      "interval90_coverage": 1.0,
-     "interval90_width": 0.0,
-     "score": 100.0
+     "interval90_width": 0.0375,
+     "score": 94.428125
     }
    },
-   "p50_s": 1.4074908643960953,
-   "p95_s": 1.6275636713951827,
-   "p50_adj_s": 1.4074908643960953,
-   "p95_adj_s": 1.6275636713951827,
-   "n_latency": 4,
-   "Speed": 76.4001642787619,
+   "p50_s": 1.265935368835926,
+   "p95_s": 1.5105841778218747,
+   "p50_adj_s": 1.265935368835926,
+   "p95_adj_s": 1.5105841778218747,
+   "n_latency": 67,
+   "Speed": 77.18443534764658,
    "cost": {
-    "usd_per_1000": 0.19221666666666667,
+    "usd_per_1000": 0.23229661016949152,
     "basis": "tokens",
-    "list_usd_per_1000": 0.19221666666666667,
+    "list_usd_per_1000": 0.23229661016949152,
     "floor_usd_per_1000": null,
     "floor_binds": false,
     "estimate": false,
-    "source": "OR snapshot list price",
+    "source": "Gemini API paid tier standard list price, in force >= 30 days (GA 2026-05-07; same on 2026-08-20). receipts/GEMINI-PRICING-20260926.html (= 20260925 copy, text identical); unchanged vs Wayback receipts/GEMINI-PRICING-WAYBACK-20260820.html",
     "note": "no base-model floor"
    },
-   "Cost": 31.48626875066671,
+   "Cost": 29.0187138302408,
    "composite": {
-    "A": 20.84415364360651,
-    "B": 22.69944210124653,
-    "C": 20.84415364360651
+    "A": 17.839715942289498,
+    "B": 19.13623613855007,
+    "C": 17.839715942289498
    },
-   "headline": 22.69944210124653,
+   "headline": 19.13623613855007,
    "views": {
-    "Intelligence only": 35.24924870539417,
-    "Emphasis on Accuracy 60:20:20": 25.226452482064392,
-    "Emphasis on Speed 20:60:20": 24.09877459605508,
-    "Emphasis on Cost 20:20:60": 16.57576782732185,
-    "Balanced 33:33:33": 21.206532261266165
+    "Intelligence only": 26.97920500108498,
+    "Emphasis on Accuracy 60:20:20": 19.843809193548275,
+    "Emphasis on Speed 20:60:20": 19.62596852200215,
+    "Emphasis on Cost 20:20:60": 13.07358155036346,
+    "Balanced 33:33:33": 16.86941989423309
    },
-   "Capability": 69.44444444444444,
+   "Capability": 72.0520214405478,
    "jev_class": false,
    "robustness": {
     "clean": {
-     "acc": 0.8333333333333334,
-     "n": 6
+     "acc": 0.82303125,
+     "n": 80
     },
     "noisy_le5db": {
-     "acc": null,
-     "n": 0
+     "acc": 0.99875,
+     "n": 10
     },
     "english": {
-     "acc": 0.8333333333333334,
-     "n": 6
+     "acc": 0.9003819444444444,
+     "n": 72
     },
     "non_english": {
-     "acc": null,
-     "n": 0
+     "acc": 0.8238125000000001,
+     "n": 40
     },
     "background_talker": {
-     "acc": null,
-     "n": 0
+     "acc": 0.7142857142857143,
+     "n": 14
     },
     "overlap": {
-     "acc": null,
-     "n": 0
+     "acc": 0.6666666666666666,
+     "n": 12
     },
     "speaker_verification": {
-     "acc": null,
-     "n": 0
+     "acc": 0.6,
+     "n": 20
     },
     "sound_event": {
-     "acc": 0.5,
-     "n": 2
+     "acc": 0.9538541666666666,
+     "n": 24
     },
     "sound_under_speech": {
      "acc": null,
      "n": 0
     },
     "snr_15db": {
-     "acc": null,
-     "n": 0
+     "acc": 0.9962500000000001,
+     "n": 10
     },
     "snr_10db": {
-     "acc": null,
-     "n": 0
+     "acc": 0.9989583333333334,
+     "n": 12
     },
     "snr_5db": {
-     "acc": null,
-     "n": 0
+     "acc": 0.9979166666666667,
+     "n": 6
     },
     "snr_0db": {
-     "acc": null,
-     "n": 0
+     "acc": 1.0,
+     "n": 2
     },
-    "noise_slope_clean_minus_le5db": null,
-    "language_gap_en_minus_non_en": null
+    "noise_slope_clean_minus_le5db": -0.17571875000000003,
+    "language_gap_en_minus_non_en": 0.07656944444444436
    },
    "I_public_ci95": [
-    77.77777777777777,
-    100.0
+    70.8527088136845,
+    88.20232401815267
    ]
   },
   {
-   "key": "gpt-audio-mini (openai-direct)",
+   "key": "gemini-3.5-flash-lite (gemini-direct, public-only)",
    "support": {
     "choice": "native",
     "noul": "native",
@@ -177,10 +177,10 @@
    "table": "public-only (provisional)",
    "api_flag": true,
    "sealed_route": false,
-   "n_items_scored": 6,
-   "n_rows": 6,
+   "n_items_scored": 112,
+   "n_rows": 118,
    "n_error_rows": 0,
-   "I_public": 81.51388888888889,
+   "I_public": 73.53754011909027,
    "I_sealed": null,
    "base": null,
    "gap": null,
@@ -188,93 +188,868 @@
    "penalty": null,
    "Intelligence": null,
    "typed": {
-    "open/choice": 77.77777777777777,
-    "open/noul": 100.0,
-    "open/score": 70.5,
+    "open/choice": 79.64380179862457,
+    "open/noul": 47.97619047619048,
+    "open/score": 86.88636640292148,
     "sealed/choice": null,
     "sealed/noul": null,
     "sealed/score": null
    },
    "typed_n": {
-    "open/choice": 3,
-    "open/noul": 2,
-    "open/score": 1,
+    "open/choice": 40,
+    "open/noul": 52,
+    "open/score": 20,
     "sealed/choice": 0,
     "sealed/noul": 0,
     "sealed/score": 0
    },
    "planned_weight": 1.0,
-   "Calibration": 39.003437500000004,
+   "Calibration": 57.75232371794871,
    "calibration_parts": {
     "choice": {
-     "ece_hard": null,
-     "ece_score": null,
+     "ece_hard": 0.26916666666666667,
+     "ece_score": 46.166666666666664,
      "mean_tvd": null,
      "n_tvd": 0,
-     "n": 3,
-     "n_ece_hard": 0,
-     "score": null
+     "n": 40,
+     "n_ece_hard": 12,
+     "score": 46.166666666666664
     },
     "noul": {
-     "ece": 0.030000000000000023,
-     "brier": 0.0013000000000000021,
-     "n": 2,
-     "score": 94.0,
+     "ece": 0.2373076923076923,
+     "brier": 0.2358153846153846,
+     "n": 52,
+     "score": 52.53846153846153,
      "abstention_rate": 0.0
     },
     "score": {
-     "nrps": 0.039724999999999996,
-     "top_ece": 0.36,
-     "n": 1,
-     "interval90_coverage": 1.0,
-     "interval90_width": 0.5,
-     "score": 62.01375
+     "nrps": 0.05225,
+     "top_ece": 0.11250000000000004,
+     "n": 20,
+     "interval90_coverage": 0.9,
+     "interval90_width": 0.1,
+     "score": 86.13749999999999
     }
    },
-   "p50_s": 0.9638411924242973,
-   "p95_s": 1.9767179179936643,
-   "p50_adj_s": 0.9638411924242973,
-   "p95_adj_s": 1.9767179179936643,
-   "n_latency": 4,
-   "Speed": 77.20049817905138,
+   "p50_s": 1.3235006630420685,
+   "p95_s": 1.686235874146223,
+   "p50_adj_s": 1.3235006630420685,
+   "p95_adj_s": 1.686235874146223,
+   "n_latency": 67,
+   "Speed": 76.5135751224704,
    "cost": {
-    "usd_per_1000": 0.8949333333333334,
+    "usd_per_1000": 0.21993559322033895,
     "basis": "tokens",
-    "list_usd_per_1000": 0.8949333333333334,
+    "list_usd_per_1000": 0.21993559322033895,
+    "floor_usd_per_1000": null,
+    "floor_binds": false,
+    "estimate": false,
+    "source": "Gemini API paid tier standard list price (text/image/video/audio), in force >= 30 days (GA 2026-07-21; same on 2026-08-20). receipts/GEMINI-PRICING-20260926.html (= 20260925 copy, text identical); unchanged vs Wayback receipts/GEMINI-PRICING-WAYBACK-20260820.html",
+    "note": "no base-model floor"
+   },
+   "Cost": 29.73113443045827,
+   "composite": {
+    "A": 18.221308289874976,
+    "B": 19.381115444309344,
+    "C": 18.221308289874976
+   },
+   "headline": 19.381115444309344,
+   "views": {
+    "Intelligence only": 26.00111971341722,
+    "Emphasis on Accuracy 60:20:20": 20.20438770751764,
+    "Emphasis on Speed 20:60:20": 20.451640568579226,
+    "Emphasis on Cost 20:20:60": 13.857862370256177,
+    "Balanced 33:33:33": 17.59002222527251
+   },
+   "Capability": 65.64493191851949,
+   "jev_class": false,
+   "robustness": {
+    "clean": {
+     "acc": 0.78790625,
+     "n": 80
+    },
+    "noisy_le5db": {
+     "acc": 0.998,
+     "n": 10
+    },
+    "english": {
+     "acc": 0.8882638888888889,
+     "n": 72
+    },
+    "non_english": {
+     "acc": 0.71875,
+     "n": 40
+    },
+    "background_talker": {
+     "acc": 0.7857142857142857,
+     "n": 14
+    },
+    "overlap": {
+     "acc": 0.75,
+     "n": 12
+    },
+    "speaker_verification": {
+     "acc": 0.55,
+     "n": 20
+    },
+    "sound_event": {
+     "acc": 0.8781249999999999,
+     "n": 24
+    },
+    "sound_under_speech": {
+     "acc": null,
+     "n": 0
+    },
+    "snr_15db": {
+     "acc": 0.8692499999999999,
+     "n": 10
+    },
+    "snr_10db": {
+     "acc": 0.9166666666666666,
+     "n": 12
+    },
+    "snr_5db": {
+     "acc": 0.9966666666666667,
+     "n": 6
+    },
+    "snr_0db": {
+     "acc": 1.0,
+     "n": 2
+    },
+    "noise_slope_clean_minus_le5db": -0.21009374999999997,
+    "language_gap_en_minus_non_en": 0.16951388888888885
+   },
+   "I_public_ci95": [
+    62.6208854449649,
+    83.92702787254979
+   ]
+  },
+  {
+   "key": "gemini-3.5-flash (gemini-direct, public-only)",
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "support_families": null,
+   "table": "public-only (provisional)",
+   "api_flag": true,
+   "sealed_route": false,
+   "n_items_scored": 112,
+   "n_rows": 118,
+   "n_error_rows": 0,
+   "I_public": 87.19761397559633,
+   "I_sealed": null,
+   "base": null,
+   "gap": null,
+   "excess": null,
+   "penalty": null,
+   "Intelligence": null,
+   "typed": {
+    "open/choice": 90.94339622641509,
+    "open/noul": 67.85714285714286,
+    "open/score": 99.04652059241226,
+    "sealed/choice": null,
+    "sealed/noul": null,
+    "sealed/score": null
+   },
+   "typed_n": {
+    "open/choice": 40,
+    "open/noul": 52,
+    "open/score": 20,
+    "sealed/choice": 0,
+    "sealed/noul": 0,
+    "sealed/score": 0
+   },
+   "planned_weight": 1.0,
+   "Calibration": 78.97733974358975,
+   "calibration_parts": {
+    "choice": {
+     "ece_hard": 0.1283333333333333,
+     "ece_score": 74.33333333333334,
+     "mean_tvd": null,
+     "n_tvd": 0,
+     "n": 40,
+     "n_ece_hard": 12,
+     "score": 74.33333333333334
+    },
+    "noul": {
+     "ece": 0.15096153846153845,
+     "brier": 0.15083653846153847,
+     "n": 52,
+     "score": 69.8076923076923,
+     "abstention_rate": 0.0
+    },
+    "score": {
+     "nrps": 0.0002999999999999999,
+     "top_ece": 0.025499999999999856,
+     "n": 20,
+     "interval90_coverage": 1.0,
+     "interval90_width": 0.0,
+     "score": 97.43500000000002
+    }
+   },
+   "p50_s": 1.2694162279367447,
+   "p95_s": 1.694386307895183,
+   "p50_adj_s": 1.2694162279367447,
+   "p95_adj_s": 1.694386307895183,
+   "n_latency": 67,
+   "Speed": 76.67383520758746,
+   "cost": {
+    "usd_per_1000": 1.0691186440677964,
+    "basis": "tokens",
+    "list_usd_per_1000": 1.0691186440677964,
+    "floor_usd_per_1000": null,
+    "floor_binds": false,
+    "estimate": false,
+    "source": "Gemini API paid tier standard list price (single input rate), in force >= 30 days (GA 2026-05-19; same on 2026-08-20). receipts/GEMINI-PRICING-20260926.html (= 20260925 copy, text identical); unchanged vs Wayback receipts/GEMINI-PRICING-WAYBACK-20260820.html",
+    "note": "no base-model floor"
+   },
+   "Cost": 9.129222905341706,
+   "composite": {
+    "A": 0.9089205080148682,
+    "B": 1.0537780238035652,
+    "C": 0.9089205080148682
+   },
+   "headline": 1.0537780238035652,
+   "views": {
+    "Intelligence only": 2.906914211540111,
+    "Emphasis on Accuracy 60:20:20": 1.0617905521607367,
+    "Emphasis on Speed 20:60:20": 1.0409164866230478,
+    "Emphasis on Cost 20:20:60": 0.47202883383996086,
+    "Balanced 33:33:33": 0.7460808663972961
+   },
+   "Capability": 83.08747685959304,
+   "jev_class": false,
+   "robustness": {
+    "clean": {
+     "acc": 0.8865937500000001,
+     "n": 80
+    },
+    "noisy_le5db": {
+     "acc": 0.9994999999999999,
+     "n": 10
+    },
+    "english": {
+     "acc": 0.9156944444444444,
+     "n": 72
+    },
+    "non_english": {
+     "acc": 0.899375,
+     "n": 40
+    },
+    "background_talker": {
+     "acc": 0.9285714285714286,
+     "n": 14
+    },
+    "overlap": {
+     "acc": 0.9166666666666666,
+     "n": 12
+    },
+    "speaker_verification": {
+     "acc": 0.65,
+     "n": 20
+    },
+    "sound_event": {
+     "acc": 0.9563541666666667,
+     "n": 24
+    },
+    "sound_under_speech": {
+     "acc": null,
+     "n": 0
+    },
+    "snr_15db": {
+     "acc": 0.89825,
+     "n": 10
+    },
+    "snr_10db": {
+     "acc": 1.0,
+     "n": 12
+    },
+    "snr_5db": {
+     "acc": 0.9991666666666666,
+     "n": 6
+    },
+    "snr_0db": {
+     "acc": 1.0,
+     "n": 2
+    },
+    "noise_slope_clean_minus_le5db": -0.11290624999999987,
+    "language_gap_en_minus_non_en": 0.01631944444444433
+   },
+   "I_public_ci95": [
+    78.86205629752651,
+    94.47807720639575
+   ]
+  },
+  {
+   "key": "gemini-3.8-flash (gemini-direct, public-only)",
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "support_families": null,
+   "table": "public-only (provisional)",
+   "api_flag": true,
+   "sealed_route": false,
+   "n_items_scored": 112,
+   "n_rows": 118,
+   "n_error_rows": 1,
+   "I_public": 96.95907553932508,
+   "I_sealed": null,
+   "base": null,
+   "gap": null,
+   "excess": null,
+   "penalty": null,
+   "Intelligence": null,
+   "typed": {
+    "open/choice": 95.47169811320754,
+    "open/noul": 97.5,
+    "open/score": 99.39290593088525,
+    "sealed/choice": null,
+    "sealed/noul": null,
+    "sealed/score": null
+   },
+   "typed_n": {
+    "open/choice": 40,
+    "open/noul": 52,
+    "open/score": 20,
+    "sealed/choice": 0,
+    "sealed/noul": 0,
+    "sealed/score": 0
+   },
+   "planned_weight": 1.0,
+   "Calibration": 91.92010124387254,
+   "calibration_parts": {
+    "choice": {
+     "ece_hard": 0.0700833333333335,
+     "ece_score": 85.9833333333333,
+     "mean_tvd": null,
+     "n_tvd": 0,
+     "n": 40,
+     "n_ece_hard": 12,
+     "score": 85.9833333333333
+    },
+    "noul": {
+     "ece": 0.012411764705882324,
+     "brier": 0.000802921568627451,
+     "n": 51,
+     "score": 97.51764705882353,
+     "abstention_rate": 0.0
+    },
+    "score": {
+     "nrps": 7.817500000000012e-05,
+     "top_ece": 0.018000000000000016,
+     "n": 20,
+     "interval90_coverage": 1.0,
+     "interval90_width": 0.0,
+     "score": 98.19609125
+    }
+   },
+   "p50_s": 1.6520816385746002,
+   "p95_s": 2.366239707916975,
+   "p50_adj_s": 1.6520816385746002,
+   "p95_adj_s": 2.366239707916975,
+   "n_latency": 66,
+   "Speed": 74.07909757581609,
+   "cost": {
+    "usd_per_1000": 1.5273686440677965,
+    "basis": "tokens",
+    "list_usd_per_1000": 1.5273686440677965,
+    "floor_usd_per_1000": null,
+    "floor_binds": false,
+    "estimate": false,
+    "source": "ANNOUNCED REGULAR PRICE: page shows promotional $0.75 in / $3.75 out 'through December 31, 2026' and '$1.50 / $7.50 starting January 1, 2027'; promo excluded (METHOD 8.6). GA 2026-09-02 (24 days before the price read), so no price has been in force >= 30 days; not on the 2026-08-20 Wayback copy. receipts/GEMINI-PRICING-20260926.html (= 20260925 copy, text identical); unchanged vs Wayback receipts/GEMINI-PRICING-WAYBACK-20260820.html",
+    "note": "no base-model floor"
+   },
+   "Cost": 4.481683883158382,
+   "composite": {
+    "A": 0.12464710731655355,
+    "B": 0.14981581914051473,
+    "C": 0.12464710731655355
+   },
+   "headline": 0.14981581914051473,
+   "views": {
+    "Intelligence only": 0.7789882334829178,
+    "Emphasis on Accuracy 60:20:20": 0.15013238407082802,
+    "Emphasis on Speed 20:60:20": 0.14664083367890626,
+    "Emphasis on Cost 20:20:60": 0.057949727106092815,
+    "Balanced 33:33:33": 0.09760380156575549
+   },
+   "Capability": 94.43958839159882,
+   "jev_class": false,
+   "robustness": {
+    "clean": {
+     "acc": 0.97455625,
+     "n": 80
+    },
+    "noisy_le5db": {
+     "acc": 0.99975,
+     "n": 10
+    },
+    "english": {
+     "acc": 0.9854791666666668,
+     "n": 72
+    },
+    "non_english": {
+     "acc": 0.9748124999999999,
+     "n": 40
+    },
+    "background_talker": {
+     "acc": 1.0,
+     "n": 14
+    },
+    "overlap": {
+     "acc": 1.0,
+     "n": 12
+    },
+    "speaker_verification": {
+     "acc": 0.95,
+     "n": 20
+    },
+    "sound_event": {
+     "acc": 0.9577604166666666,
+     "n": 24
+    },
+    "sound_under_speech": {
+     "acc": null,
+     "n": 0
+    },
+    "snr_15db": {
+     "acc": 0.99925,
+     "n": 10
+    },
+    "snr_10db": {
+     "acc": 0.999375,
+     "n": 12
+    },
+    "snr_5db": {
+     "acc": 0.9995833333333334,
+     "n": 6
+    },
+    "snr_0db": {
+     "acc": 1.0,
+     "n": 2
+    },
+    "noise_slope_clean_minus_le5db": -0.025193750000000015,
+    "language_gap_en_minus_non_en": 0.010666666666666935
+   },
+   "I_public_ci95": [
+    91.85588283102933,
+    99.88412839886124
+   ]
+  },
+  {
+   "key": "gpt-audio-mini (openai-direct, public-only)",
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "support_families": null,
+   "table": "public-only (provisional)",
+   "api_flag": true,
+   "sealed_route": false,
+   "n_items_scored": 112,
+   "n_rows": 118,
+   "n_error_rows": 0,
+   "I_public": 68.61313420572964,
+   "I_sealed": null,
+   "base": null,
+   "gap": null,
+   "excess": null,
+   "penalty": null,
+   "Intelligence": null,
+   "typed": {
+    "open/choice": 75.45775528699667,
+    "open/noul": 46.72619047619048,
+    "open/score": 76.81083577273475,
+    "sealed/choice": null,
+    "sealed/noul": null,
+    "sealed/score": null
+   },
+   "typed_n": {
+    "open/choice": 40,
+    "open/noul": 52,
+    "open/score": 20,
+    "sealed/choice": 0,
+    "sealed/noul": 0,
+    "sealed/score": 0
+   },
+   "planned_weight": 1.0,
+   "Calibration": 64.00125160256411,
+   "calibration_parts": {
+    "choice": {
+     "ece_hard": 0.19166666666666668,
+     "ece_score": 61.66666666666667,
+     "mean_tvd": null,
+     "n_tvd": 0,
+     "n": 40,
+     "n_ece_hard": 12,
+     "score": 61.66666666666667
+    },
+    "noul": {
+     "ece": 0.2046153846153844,
+     "brier": 0.21603076923076936,
+     "n": 52,
+     "score": 59.076923076923116,
+     "abstention_rate": 0.0
+    },
+    "score": {
+     "nrps": 0.044105,
+     "top_ece": 0.242,
+     "n": 20,
+     "interval90_coverage": 1.0,
+     "interval90_width": 0.3125,
+     "score": 73.59475
+    }
+   },
+   "p50_s": 0.8435996994376183,
+   "p95_s": 1.238385786116123,
+   "p50_adj_s": 0.8435996994376183,
+   "p95_adj_s": 1.238385786116123,
+   "n_latency": 67,
+   "Speed": 79.81007625021935,
+   "cost": {
+    "usd_per_1000": 1.2436711864406778,
+    "basis": "tokens",
+    "list_usd_per_1000": 1.2436711864406778,
+    "floor_usd_per_1000": null,
+    "floor_binds": false,
+    "estimate": false,
+    "source": "OpenAI standard list price (audio in $10, text in $0.60, text out $2.40), in force >= 30 days (same on Wayback 2026-08-12; snapshot 2025-12-15). receipts/OPENAI-PRICING-20260926.md (+ .html); unchanged vs Wayback receipts/OPENAI-PRICING-MD-WAYBACK-20260812.md",
+    "note": "no base-model floor"
+   },
+   "Cost": 7.158832820635411,
+   "composite": {
+    "A": 0.44951101701551427,
+    "B": 0.5203171644295966,
+    "C": 0.44951101701551427
+   },
+   "headline": 0.5203171644295966,
+   "views": {
+    "Intelligence only": 1.406538714360425,
+    "Emphasis on Accuracy 60:20:20": 0.5231060195420676,
+    "Emphasis on Speed 20:60:20": 0.5342563939805939,
+    "Emphasis on Cost 20:20:60": 0.22972964854700215,
+    "Balanced 33:33:33": 0.3687151781123985
+   },
+   "Capability": 66.30719290414687,
+   "jev_class": false,
+   "robustness": {
+    "clean": {
+     "acc": 0.7707187500000001,
+     "n": 80
+    },
+    "noisy_le5db": {
+     "acc": 0.99275,
+     "n": 10
+    },
+    "english": {
+     "acc": 0.8238194444444445,
+     "n": 72
+    },
+    "non_english": {
+     "acc": 0.7682499999999999,
+     "n": 40
+    },
+    "background_talker": {
+     "acc": 0.6428571428571429,
+     "n": 14
+    },
+    "overlap": {
+     "acc": 0.6666666666666666,
+     "n": 12
+    },
+    "speaker_verification": {
+     "acc": 0.5,
+     "n": 20
+    },
+    "sound_event": {
+     "acc": 0.8361458333333335,
+     "n": 24
+    },
+    "sound_under_speech": {
+     "acc": null,
+     "n": 0
+    },
+    "snr_15db": {
+     "acc": 0.8807500000000001,
+     "n": 10
+    },
+    "snr_10db": {
+     "acc": 0.804375,
+     "n": 12
+    },
+    "snr_5db": {
+     "acc": 0.9879166666666667,
+     "n": 6
+    },
+    "snr_0db": {
+     "acc": 1.0,
+     "n": 2
+    },
+    "noise_slope_clean_minus_le5db": -0.2220312499999999,
+    "language_gap_en_minus_non_en": 0.05556944444444467
+   },
+   "I_public_ci95": [
+    57.942297205426634,
+    79.61273135047149
+   ]
+  },
+  {
+   "key": "gpt-audio (openai-direct, public-only)",
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "support_families": null,
+   "table": "public-only (provisional)",
+   "api_flag": true,
+   "sealed_route": false,
+   "n_items_scored": 112,
+   "n_rows": 118,
+   "n_error_rows": 17,
+   "I_public": 67.29535106429347,
+   "I_sealed": null,
+   "base": null,
+   "gap": null,
+   "excess": null,
+   "penalty": null,
+   "Intelligence": null,
+   "typed": {
+    "open/choice": 82.22904782799473,
+    "open/noul": 16.96428571428571,
+    "open/score": 87.75902288689872,
+    "sealed/choice": null,
+    "sealed/noul": null,
+    "sealed/score": null
+   },
+   "typed_n": {
+    "open/choice": 40,
+    "open/noul": 52,
+    "open/score": 20,
+    "sealed/choice": 0,
+    "sealed/noul": 0,
+    "sealed/score": 0
+   },
+   "planned_weight": 1.0,
+   "Calibration": 71.31442057291667,
+   "calibration_parts": {
+    "choice": {
+     "ece_hard": 0.21083333333333332,
+     "ece_score": 57.833333333333336,
+     "mean_tvd": null,
+     "n_tvd": 0,
+     "n": 40,
+     "n_ece_hard": 12,
+     "score": 57.833333333333336
+    },
+    "noul": {
+     "ece": 0.09800000000000011,
+     "brier": 0.07492285714285714,
+     "n": 35,
+     "score": 80.39999999999998,
+     "abstention_rate": 0.02857142857142858
+    },
+    "score": {
+     "nrps": 0.011179687500000002,
+     "top_ece": 0.10249999999999995,
+     "n": 20,
+     "interval90_coverage": 1.0,
+     "interval90_width": 0.2125,
+     "score": 89.191015625
+    }
+   },
+   "p50_s": 0.9469752758741379,
+   "p95_s": 1.5532693237066264,
+   "p50_adj_s": 0.9469752758741379,
+   "p95_adj_s": 1.5532693237066264,
+   "n_latency": 57,
+   "Speed": 78.32414594404372,
+   "cost": {
+    "usd_per_1000": 4.9440677966101685,
+    "basis": "tokens",
+    "list_usd_per_1000": 4.9440677966101685,
+    "floor_usd_per_1000": null,
+    "floor_binds": false,
+    "estimate": false,
+    "source": "OpenAI standard list price (audio in $32, text in $2.50, text out $10), in force >= 30 days (same on Wayback 2026-08-12; snapshot 2025-08-28). receipts/OPENAI-PRICING-20260926.md (+ .html); unchanged vs Wayback receipts/OPENAI-PRICING-MD-WAYBACK-20260812.md",
+    "note": "no base-model floor"
+   },
+   "Cost": 0.0,
+   "composite": {
+    "A": 0.0,
+    "B": 0.0,
+    "C": 0.0
+   },
+   "headline": 0.0,
+   "views": {
+    "Intelligence only": 0.0,
+    "Emphasis on Accuracy 60:20:20": 0.0,
+    "Emphasis on Speed 20:60:20": 0.0,
+    "Emphasis on Cost 20:20:60": 0.0,
+    "Balanced 33:33:33": 0.0
+   },
+   "Capability": 69.30488581860507,
+   "jev_class": false,
+   "robustness": {
+    "clean": {
+     "acc": 0.7177187499999998,
+     "n": 80
+    },
+    "noisy_le5db": {
+     "acc": 0.9891249999999999,
+     "n": 10
+    },
+    "english": {
+     "acc": 0.7682812499999999,
+     "n": 72
+    },
+    "non_english": {
+     "acc": 0.771,
+     "n": 40
+    },
+    "background_talker": {
+     "acc": 0.7142857142857143,
+     "n": 14
+    },
+    "overlap": {
+     "acc": 0.6666666666666666,
+     "n": 12
+    },
+    "speaker_verification": {
+     "acc": 0.15,
+     "n": 20
+    },
+    "sound_event": {
+     "acc": 0.9519791666666667,
+     "n": 24
+    },
+    "sound_under_speech": {
+     "acc": null,
+     "n": 0
+    },
+    "snr_15db": {
+     "acc": 0.8945000000000001,
+     "n": 10
+    },
+    "snr_10db": {
+     "acc": 0.8252083333333333,
+     "n": 12
+    },
+    "snr_5db": {
+     "acc": 0.9818749999999999,
+     "n": 6
+    },
+    "snr_0db": {
+     "acc": 1.0,
+     "n": 2
+    },
+    "noise_slope_clean_minus_le5db": -0.27140625000000007,
+    "language_gap_en_minus_non_en": -0.002718750000000103
+   },
+   "I_public_ci95": [
+    56.14105876928969,
+    77.9024119468092
+   ]
+  },
+  {
+   "key": "clap (laion/clap-htsat-fused, local-cpu, partial: sound_event)",
+   "support": {
+    "choice": "native"
+   },
+   "support_families": [
+    "sound_event"
+   ],
+   "table": "partial coverage",
+   "api_flag": false,
+   "sealed_route": true,
+   "n_items_scored": 95,
+   "n_rows": 95,
+   "n_error_rows": 0,
+   "I_public": 100.0,
+   "I_sealed": 93.42222222222222,
+   "base": 95.06666666666666,
+   "gap": 6.577777777777783,
+   "excess": 6.291127369374081,
+   "penalty": 1.0,
+   "Intelligence": 95.06666666666666,
+   "typed": {
+    "open/choice": 100.0,
+    "open/noul": null,
+    "open/score": null,
+    "sealed/choice": 93.42222222222222,
+    "sealed/noul": null,
+    "sealed/score": null
+   },
+   "typed_n": {
+    "open/choice": 12,
+    "open/noul": 0,
+    "open/score": 0,
+    "sealed/choice": 83,
+    "sealed/noul": 0,
+    "sealed/score": 0
+   },
+   "planned_weight": 0.5,
+   "Calibration": 0.0,
+   "calibration_parts": {
+    "choice": {
+     "ece_hard": 0.05820704368718739,
+     "ece_score": 88.35859126256253,
+     "mean_tvd": null,
+     "n_tvd": 0,
+     "n": 95,
+     "n_ece_hard": 40,
+     "score": 88.35859126256253
+    }
+   },
+   "p50_s": 0.23135222494602203,
+   "p95_s": 0.48081397227942935,
+   "p50_adj_s": 0.6127044498920441,
+   "p95_adj_s": 1.1116279445588586,
+   "n_latency": 4,
+   "Speed": 81.66789509788386,
+   "cost": {
+    "usd_per_1000": 0.0013246865131578934,
+    "basis": "tokens",
+    "list_usd_per_1000": 0.0013246865131578934,
     "floor_usd_per_1000": null,
     "floor_binds": false,
     "estimate": true,
-    "source": null,
+    "source": "ESTIMATE, tokenless/size-class rule: ~150M audio+text encoder -> base-size encoder class $0.005/M input, no output. Audio counted as 25 tokens/s (1,500 tokens/min; Gemini's documented audio token rate, used as a neutral audio-token convention) -> $0.0000075 per audio minute; label texts ~40 CLAP tokens/decision (smoke: 34) -> $0.0000002 per request. JevBench v1.2 size-class reference: DeepInfra base-size encoders (bge-base, e5-base, gte-base, all-mpnet-base) $0.005/M in, $0/M out (as openJev Verdict 151M in RESULTS-v1.2.md)",
     "note": "no base-model floor"
    },
-   "Cost": 11.446279467131689,
+   "Cost": 96.33660655854327,
    "composite": {
-    "A": 1.5165738004351959,
-    "B": 1.741182042123218,
-    "C": 1.5165738004351959
+    "A": 0.0,
+    "B": 0.0,
+    "C": 0.0
    },
-   "headline": 1.741182042123218,
+   "headline": 0.0,
    "views": {
-    "Intelligence only": 4.271892298618249,
-    "Emphasis on Accuracy 60:20:20": 1.9109672953152663,
-    "Emphasis on Speed 20:60:20": 1.8920515002541345,
-    "Emphasis on Cost 20:20:60": 0.9120115548918306,
-    "Balanced 33:33:33": 1.3964534196591671
+    "Intelligence only": 95.06666666666666,
+    "Emphasis on Accuracy 60:20:20": 92.28193374511493,
+    "Emphasis on Speed 20:60:20": 86.75533154047272,
+    "Emphasis on Cost 20:20:60": 92.75670624039948,
+    "Balanced 33:33:33": 90.51434416538137
    },
-   "Capability": 60.258663194444445,
-   "jev_class": false,
+   "Capability": 47.53333333333333,
+   "jev_class": true,
    "robustness": {
     "clean": {
-     "acc": 0.80875,
-     "n": 6
+     "acc": 0.95,
+     "n": 80
     },
     "noisy_le5db": {
-     "acc": null,
-     "n": 0
+     "acc": 0.9090909090909091,
+     "n": 11
     },
     "english": {
-     "acc": 0.80875,
-     "n": 6
+     "acc": 0.9473684210526315,
+     "n": 95
     },
     "non_english": {
      "acc": null,
@@ -293,8 +1068,8 @@
      "n": 0
     },
     "sound_event": {
-     "acc": 0.5,
-     "n": 2
+     "acc": 0.9473684210526315,
+     "n": 95
     },
     "sound_under_speech": {
      "acc": null,
@@ -305,448 +1080,1550 @@
      "n": 0
     },
     "snr_10db": {
-     "acc": null,
-     "n": 0
+     "acc": 1.0,
+     "n": 3
     },
     "snr_5db": {
-     "acc": null,
-     "n": 0
+     "acc": 0.875,
+     "n": 8
     },
     "snr_0db": {
      "acc": null,
      "n": 0
     },
-    "noise_slope_clean_minus_le5db": null,
+    "noise_slope_clean_minus_le5db": 0.040909090909090895,
     "language_gap_en_minus_non_en": null
-   },
-   "I_public_ci95": [
-    70.40277777777777,
-    92.625
-   ]
+   }
   },
   {
-   "key": "gpt-realtime-2.1-mini (openai-direct)",
+   "key": "ast (MIT/ast-finetuned-audioset-10-10-0.4593, local-cpu, partial: sound_event)",
+   "support": {
+    "choice": "native"
+   },
+   "support_families": [
+    "sound_event"
+   ],
+   "table": "partial coverage",
+   "api_flag": false,
+   "sealed_route": true,
+   "n_items_scored": 95,
+   "n_rows": 95,
+   "n_error_rows": 0,
+   "I_public": 37.5,
+   "I_sealed": 67.21851851851852,
+   "base": 59.78888888888889,
+   "gap": -29.718518518518522,
+   "excess": -30.005168926922224,
+   "penalty": 1.0,
+   "Intelligence": 59.78888888888889,
+   "typed": {
+    "open/choice": 37.5,
+    "open/noul": null,
+    "open/score": null,
+    "sealed/choice": 67.21851851851852,
+    "sealed/noul": null,
+    "sealed/score": null
+   },
+   "typed_n": {
+    "open/choice": 12,
+    "open/noul": 0,
+    "open/score": 0,
+    "sealed/choice": 83,
+    "sealed/noul": 0,
+    "sealed/score": 0
+   },
+   "planned_weight": 0.5,
+   "Calibration": 0.0,
+   "calibration_parts": {
+    "choice": {
+     "ece_hard": 0.10709848575985366,
+     "ece_score": 78.58030284802928,
+     "mean_tvd": null,
+     "n_tvd": 0,
+     "n": 95,
+     "n_ece_hard": 40,
+     "score": 78.58030284802928
+    }
+   },
+   "p50_s": 1.893221490085125,
+   "p95_s": 1.9042937215417624,
+   "p50_adj_s": 3.93644298017025,
+   "p95_adj_s": 3.9585874430835246,
+   "n_latency": 4,
+   "Speed": 68.07355792267002,
+   "cost": {
+    "usd_per_1000": 0.0011246865131578961,
+    "basis": "tokens",
+    "list_usd_per_1000": 0.0011246865131578961,
+    "floor_usd_per_1000": null,
+    "floor_binds": false,
+    "estimate": true,
+    "source": "ESTIMATE, tokenless/size-class rule: 87M audio-only classifier -> base-size encoder class $0.005/M input, no output, no text input; audio counted as 25 tokens/s -> $0.0000075 per audio minute. JevBench v1.2 size-class reference: DeepInfra base-size encoders (bge-base, e5-base, gte-base, all-mpnet-base) $0.005/M in, $0/M out (as openJev Verdict 151M in RESULTS-v1.2.md)",
+    "note": "no base-model floor"
+   },
+   "Cost": 98.46905538199255,
+   "composite": {
+    "A": 0.0,
+    "B": 0.0,
+    "C": 0.0
+   },
+   "headline": 0.0,
+   "views": {
+    "Intelligence only": 59.78888888888889,
+    "Emphasis on Accuracy 60:20:20": 66.64710486109685,
+    "Emphasis on Speed 20:60:20": 70.47120455251356,
+    "Emphasis on Cost 20:20:60": 80.7990293967847,
+    "Balanced 33:33:33": 72.16572353164919
+   },
+   "Capability": 29.894444444444446,
+   "jev_class": false,
+   "robustness": {
+    "clean": {
+     "acc": 0.85,
+     "n": 80
+    },
+    "noisy_le5db": {
+     "acc": 0.8181818181818182,
+     "n": 11
+    },
+    "english": {
+     "acc": 0.8526315789473684,
+     "n": 95
+    },
+    "non_english": {
+     "acc": null,
+     "n": 0
+    },
+    "background_talker": {
+     "acc": null,
+     "n": 0
+    },
+    "overlap": {
+     "acc": null,
+     "n": 0
+    },
+    "speaker_verification": {
+     "acc": null,
+     "n": 0
+    },
+    "sound_event": {
+     "acc": 0.8526315789473684,
+     "n": 95
+    },
+    "sound_under_speech": {
+     "acc": null,
+     "n": 0
+    },
+    "snr_15db": {
+     "acc": null,
+     "n": 0
+    },
+    "snr_10db": {
+     "acc": 1.0,
+     "n": 3
+    },
+    "snr_5db": {
+     "acc": 0.875,
+     "n": 8
+    },
+    "snr_0db": {
+     "acc": null,
+     "n": 0
+    },
+    "noise_slope_clean_minus_le5db": 0.031818181818181746,
+    "language_gap_en_minus_non_en": null
+   }
+  },
+  {
+   "key": "audiojev (mocomoco AudioJev-AudioDecisionModel edge ONNX, local-cpu, faithful)",
    "support": {
     "choice": "native",
     "noul": "native",
     "score": "native"
    },
    "support_families": null,
-   "table": "public-only (provisional)",
-   "api_flag": true,
-   "sealed_route": false,
-   "n_items_scored": 6,
-   "n_rows": 6,
-   "n_error_rows": 6,
-   "I_public": -72.22222222222221,
-   "I_sealed": null,
-   "base": null,
-   "gap": null,
-   "excess": null,
-   "penalty": null,
-   "Intelligence": null,
+   "table": "full",
+   "api_flag": false,
+   "sealed_route": true,
+   "n_items_scored": 988,
+   "n_rows": 1012,
+   "n_error_rows": 846,
+   "I_public": -55.20837178272397,
+   "I_sealed": -55.495022191127674,
+   "base": -55.423359589026745,
+   "gap": 0.2866504084037018,
+   "excess": 0.0,
+   "penalty": 1.0,
+   "Intelligence": 0.0,
    "typed": {
-    "open/choice": -44.444444444444436,
+    "open/choice": -18.951089385818506,
     "open/noul": -100.0,
-    "open/score": -100.0,
-    "sealed/choice": null,
-    "sealed/noul": null,
-    "sealed/score": null
+    "open/score": -82.93130835925888,
+    "sealed/choice": -26.039828591749384,
+    "sealed/noul": -94.02996310974251,
+    "sealed/score": -75.87046847126943
    },
    "typed_n": {
-    "open/choice": 3,
-    "open/noul": 2,
-    "open/score": 1,
-    "sealed/choice": 0,
-    "sealed/noul": 0,
-    "sealed/score": 0
+    "open/choice": 40,
+    "open/noul": 52,
+    "open/score": 20,
+    "sealed/choice": 338,
+    "sealed/noul": 434,
+    "sealed/score": 104
    },
    "planned_weight": 1.0,
    "Calibration": 0.0,
-   "calibration_parts": {},
-   "p50_s": null,
-   "p95_s": null,
-   "p50_adj_s": null,
-   "p95_adj_s": null,
-   "n_latency": 0,
-   "Speed": null,
+   "calibration_parts": {
+    "choice": {
+     "ece_hard": 0.17577527174908894,
+     "ece_score": 64.84494565018221,
+     "mean_tvd": null,
+     "n_tvd": 0,
+     "n": 103,
+     "n_ece_hard": 26,
+     "score": 64.84494565018221
+    },
+    "noul": {
+     "ece": 0.4890756420412976,
+     "brier": 0.4449572909785889,
+     "n": 31,
+     "score": 2.184871591740478,
+     "abstention_rate": 0.12903225806451613
+    },
+    "score": {
+     "nrps": 0.2749277478726361,
+     "top_ece": 0.3461533472087061,
+     "n": 26,
+     "interval90_coverage": 0.6923076923076923,
+     "interval90_width": 0.8173076923076923,
+     "score": 51.63827788549759
+    }
+   },
+   "p50_s": 0.7515922486782074,
+   "p95_s": 1.1845835037529462,
+   "p50_adj_s": 1.6531844973564147,
+   "p95_adj_s": 2.5191670075058923,
+   "n_latency": 15,
+   "Speed": 73.80421716053496,
    "cost": {
-    "usd_per_1000": 2.065466666666667,
+    "usd_per_1000": 0.00578485792366602,
     "basis": "tokens",
-    "list_usd_per_1000": 2.065466666666667,
+    "list_usd_per_1000": 0.00578485792366602,
     "floor_usd_per_1000": null,
     "floor_binds": false,
-    "estimate": false,
-    "source": null,
+    "estimate": true,
+    "source": "ESTIMATE, tokenless/size-class rule: 283 MB int8 ONNX (<= 0.6B params) -> JevBench v1.2 <=0.6B class reference DeepInfra Qwen3-Embedding-0.6B $0.01/M input, no generated output (as kev 0.6B in RESULTS-v1.2.md); audio 25 tokens/s -> $0.000015 per audio minute; text (context+question+criteria) ~300 tokens -> $0.000003 per request.",
     "note": "no base-model floor"
    },
-   "Cost": 0.549454283505554,
+   "Cost": 77.1312190861149,
    "composite": {
-    "A": null,
-    "B": null,
-    "C": null
+    "A": 0.0,
+    "B": 0.0,
+    "C": 0.0
    },
-   "headline": null,
+   "headline": 0.0,
    "views": {
     "Intelligence only": 0.0,
-    "Emphasis on Accuracy 60:20:20": null,
-    "Emphasis on Speed 20:60:20": null,
-    "Emphasis on Cost 20:20:60": null,
-    "Balanced 33:33:33": null
+    "Emphasis on Accuracy 60:20:20": 0.0,
+    "Emphasis on Speed 20:60:20": 0.0,
+    "Emphasis on Cost 20:20:60": 0.0,
+    "Balanced 33:33:33": 0.0
    },
    "Capability": 0.0,
    "jev_class": false,
    "robustness": {
     "clean": {
-     "acc": 0.0,
-     "n": 6
+     "acc": 0.09040910952476627,
+     "n": 691
     },
     "noisy_le5db": {
-     "acc": null,
-     "n": 0
+     "acc": 0.04615476923234922,
+     "n": 125
     },
     "english": {
-     "acc": 0.0,
-     "n": 6
+     "acc": 0.08898427372303236,
+     "n": 633
     },
     "non_english": {
-     "acc": null,
-     "n": 0
+     "acc": 0.08242095508575766,
+     "n": 355
     },
     "background_talker": {
-     "acc": null,
-     "n": 0
+     "acc": 0.0545894168629359,
+     "n": 112
     },
     "overlap": {
-     "acc": null,
-     "n": 0
+     "acc": 0.05172413793103448,
+     "n": 58
     },
     "speaker_verification": {
-     "acc": null,
-     "n": 0
+     "acc": 0.0,
+     "n": 116
     },
     "sound_event": {
-     "acc": 0.0,
-     "n": 2
+     "acc": 0.1269879340068707,
+     "n": 179
     },
     "sound_under_speech": {
      "acc": null,
      "n": 0
     },
     "snr_15db": {
-     "acc": null,
-     "n": 0
+     "acc": 0.07976252098917051,
+     "n": 82
     },
     "snr_10db": {
-     "acc": null,
-     "n": 0
+     "acc": 0.12139232320622845,
+     "n": 89
     },
     "snr_5db": {
-     "acc": null,
-     "n": 0
+     "acc": 0.03932584269662921,
+     "n": 89
     },
     "snr_0db": {
+     "acc": 0.05434782608695652,
+     "n": 23
+    },
+    "noise_slope_clean_minus_le5db": 0.04425434029241705,
+    "language_gap_en_minus_non_en": 0.006563318637274704
+   }
+  },
+  {
+   "key": "qwen2.5-omni-3b (pod)",
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "support_families": null,
+   "table": "full",
+   "api_flag": false,
+   "sealed_route": true,
+   "n_items_scored": 988,
+   "n_rows": 1012,
+   "n_error_rows": 17,
+   "I_public": 50.80474459709657,
+   "I_sealed": 49.923814525671915,
+   "base": 50.14404704352808,
+   "gap": 0.8809300714246575,
+   "excess": 0.5942796630209557,
+   "penalty": 1.0,
+   "Intelligence": 50.14404704352808,
+   "typed": {
+    "open/choice": 75.45775528699667,
+    "open/noul": 46.72619047619048,
+    "open/score": 5.577277338202475,
+    "sealed/choice": 74.77254673871836,
+    "sealed/noul": 41.321957478036865,
+    "sealed/score": 8.828207147214059
+   },
+   "typed_n": {
+    "open/choice": 40,
+    "open/noul": 52,
+    "open/score": 20,
+    "sealed/choice": 338,
+    "sealed/noul": 434,
+    "sealed/score": 104
+   },
+   "planned_weight": 1.0,
+   "Calibration": 57.39520189378974,
+   "calibration_parts": {
+    "choice": {
+     "ece_hard": 0.13920634920634925,
+     "ece_score": 72.15873015873015,
+     "mean_tvd": null,
+     "n_tvd": 0,
+     "n": 369,
+     "n_ece_hard": 126,
+     "score": 72.15873015873015
+    },
+    "noul": {
+     "ece": 0.2424279835390929,
+     "brier": 0.2637197530864199,
+     "n": 486,
+     "score": 51.51440329218142,
+     "abstention_rate": 0.0
+    },
+    "score": {
+     "nrps": 0.3250211206896551,
+     "top_ece": 0.6518965517241384,
+     "n": 116,
+     "interval90_coverage": 0.33620689655172414,
+     "interval90_width": 0.0,
+     "score": 33.74894396551724
+    }
+   },
+   "p50_s": 0.18614288500066323,
+   "p95_s": 0.32205574860017805,
+   "p50_adj_s": 0.5222857700013265,
+   "p95_adj_s": 0.7941114972003561,
+   "n_latency": 65,
+   "Speed": 83.82210322811827,
+   "cost": {
+    "usd_per_1000": 0.059601581027668,
+    "basis": "tokens",
+    "list_usd_per_1000": 0.059601581027668,
+    "floor_usd_per_1000": null,
+    "floor_binds": false,
+    "estimate": true,
+    "source": "ESTIMATE, METHOD 4 self-hosted rule: exact model not listed; LLM backbone Qwen2.5-3B not listed; nearest listed same-family size (Qwen2.5-7B, errs high) -> OpenRouter qwen/qwen-2.5-7b-instruct $0.1/M in, $0.2/M out; audio tokens (model's own processor count) billed at the input rate. receipts/OPENROUTER-MODELS-20260926T0435Z.json (public /api/v1/models, read 2026-09-26 04:35 UTC)",
+    "note": "no base-model floor"
+   },
+   "Cost": 46.742266592448175,
+   "composite": {
+    "A": 49.452052505776976,
+    "B": 48.21337349212255,
+    "C": 34.53986099119467
+   },
+   "headline": 48.21337349212255,
+   "views": {
+    "Intelligence only": 43.822677591418106,
+    "Emphasis on Accuracy 60:20:20": 46.90933773648908,
+    "Emphasis on Speed 20:60:20": 56.65596852236225,
+    "Emphasis on Cost 20:20:60": 45.49175128955554,
+    "Balanced 33:33:33": 49.220579453752364
+   },
+   "Capability": 53.76962446865891,
+   "jev_class": true,
+   "robustness": {
+    "clean": {
+     "acc": 0.7439869753979736,
+     "n": 691
+    },
+    "noisy_le5db": {
+     "acc": 0.77822,
+     "n": 125
+    },
+    "english": {
+     "acc": 0.7526066350710896,
+     "n": 633
+    },
+    "non_english": {
+     "acc": 0.7306901408450703,
+     "n": 355
+    },
+    "background_talker": {
+     "acc": 0.7100446428571429,
+     "n": 112
+    },
+    "overlap": {
+     "acc": 0.6551724137931034,
+     "n": 58
+    },
+    "speaker_verification": {
+     "acc": 0.49137931034482757,
+     "n": 116
+    },
+    "sound_event": {
+     "acc": 0.8226256983240223,
+     "n": 179
+    },
+    "sound_under_speech": {
      "acc": null,
      "n": 0
     },
-    "noise_slope_clean_minus_le5db": null,
-    "language_gap_en_minus_non_en": null
-   },
-   "I_public_ci95": [
-    -72.22222222222221,
-    -72.22222222222221
-   ]
+    "snr_15db": {
+     "acc": 0.7050914634146341,
+     "n": 82
+    },
+    "snr_10db": {
+     "acc": 0.7371348314606742,
+     "n": 89
+    },
+    "snr_5db": {
+     "acc": 0.7471910112359551,
+     "n": 89
+    },
+    "snr_0db": {
+     "acc": 0.8598913043478261,
+     "n": 23
+    },
+    "noise_slope_clean_minus_le5db": -0.034233024602026374,
+    "language_gap_en_minus_non_en": 0.021916494226019267
+   }
   },
   {
-   "key": "clap (local-cpu, diagnostic)",
+   "key": "qwen2.5-omni-7b (pod)",
    "support": {
-    "choice": "native"
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
    },
-   "support_families": [
-    "sound_event"
-   ],
-   "table": "partial coverage, public-only",
+   "support_families": null,
+   "table": "full",
    "api_flag": false,
    "sealed_route": true,
-   "n_items_scored": 2,
-   "n_rows": 2,
-   "n_error_rows": 0,
-   "I_public": 100.0,
-   "I_sealed": null,
-   "base": null,
-   "gap": null,
-   "excess": null,
-   "penalty": null,
-   "Intelligence": null,
+   "n_items_scored": 988,
+   "n_rows": 1012,
+   "n_error_rows": 42,
+   "I_public": 58.24126324282661,
+   "I_sealed": 57.63950163405214,
+   "base": 57.78994203624576,
+   "gap": 0.6017616087744742,
+   "excess": 0.31511120037077234,
+   "penalty": 1.0,
+   "Intelligence": 57.78994203624576,
    "typed": {
-    "open/choice": 100.0,
-    "open/noul": null,
-    "open/score": null,
-    "sealed/choice": null,
-    "sealed/noul": null,
-    "sealed/score": null
+    "open/choice": 69.02871812116317,
+    "open/noul": 51.19047619047619,
+    "open/score": 43.717140538503905,
+    "sealed/choice": 84.1289949649217,
+    "sealed/noul": 48.10208467268379,
+    "sealed/score": 14.197931933681348
    },
    "typed_n": {
-    "open/choice": 2,
-    "open/noul": 0,
-    "open/score": 0,
-    "sealed/choice": 0,
-    "sealed/noul": 0,
-    "sealed/score": 0
+    "open/choice": 40,
+    "open/noul": 52,
+    "open/score": 20,
+    "sealed/choice": 338,
+    "sealed/noul": 434,
+    "sealed/score": 104
    },
-   "planned_weight": 0.5,
-   "Calibration": 0.0,
+   "planned_weight": 1.0,
+   "Calibration": 78.47107035041574,
+   "calibration_parts": {
+    "choice": {
+     "ece_hard": 0.06527559055118089,
+     "ece_score": 86.94488188976382,
+     "mean_tvd": null,
+     "n_tvd": 0,
+     "n": 376,
+     "n_ece_hard": 127,
+     "score": 86.94488188976382
+    },
+    "noul": {
+     "ece": 0.1856172839506153,
+     "brier": 0.20438333333333344,
+     "n": 486,
+     "score": 62.87654320987694,
+     "abstention_rate": 0.026748971193415683
+    },
+    "score": {
+     "nrps": 0.10786034283200449,
+     "top_ece": 0.17489008446141402,
+     "n": 86,
+     "interval90_coverage": 0.9186046511627907,
+     "interval90_width": 0.36046511627906974,
+     "score": 77.11797441225838
+    }
+   },
+   "p50_s": 0.2629448459993,
+   "p95_s": 0.5533168321997437,
+   "p50_adj_s": 0.6758896919986,
+   "p95_adj_s": 1.2566336643994873,
+   "n_latency": 63,
+   "Speed": 80.70915486933306,
+   "cost": {
+    "usd_per_1000": 0.06284120553359678,
+    "basis": "tokens",
+    "list_usd_per_1000": 0.06284120553359678,
+    "floor_usd_per_1000": null,
+    "floor_binds": false,
+    "estimate": true,
+    "source": "ESTIMATE, METHOD 4 self-hosted rule: exact model not listed; base LLM Qwen2.5-7B listed -> OpenRouter qwen/qwen-2.5-7b-instruct $0.1/M in, $0.2/M out; audio tokens (model's own processor count) billed at the input rate. receipts/OPENROUTER-MODELS-20260926T0435Z.json (public /api/v1/models, read 2026-09-26 04:35 UTC)",
+    "note": "no base-model floor"
+   },
+   "Cost": 46.0526647639109,
+   "composite": {
+    "A": 52.89554055721485,
+    "B": 52.07340600397936,
+    "C": 49.07056705248508
+   },
+   "headline": 52.07340600397936,
+   "views": {
+    "Intelligence only": 49.0254716198868,
+    "Emphasis on Accuracy 60:20:20": 49.312534601627064,
+    "Emphasis on Speed 20:60:20": 55.67346570230566,
+    "Emphasis on Cost 20:20:60": 44.726157846346396,
+    "Balanced 33:33:33": 49.50578486858971
+   },
+   "Capability": 68.13050619333075,
+   "jev_class": true,
+   "robustness": {
+    "clean": {
+     "acc": 0.7728217991086533,
+     "n": 691
+    },
+    "noisy_le5db": {
+     "acc": 0.7624,
+     "n": 125
+    },
+    "english": {
+     "acc": 0.8043323273050229,
+     "n": 633
+    },
+    "non_english": {
+     "acc": 0.7465496811716068,
+     "n": 355
+    },
+    "background_talker": {
+     "acc": 0.7352889570007106,
+     "n": 112
+    },
+    "overlap": {
+     "acc": 0.7586206896551724,
+     "n": 58
+    },
+    "speaker_verification": {
+     "acc": 0.5086206896551724,
+     "n": 116
+    },
+    "sound_event": {
+     "acc": 0.9020251396648045,
+     "n": 179
+    },
+    "sound_under_speech": {
+     "acc": null,
+     "n": 0
+    },
+    "snr_15db": {
+     "acc": 0.8289345953161024,
+     "n": 82
+    },
+    "snr_10db": {
+     "acc": 0.8525280898876406,
+     "n": 89
+    },
+    "snr_5db": {
+     "acc": 0.7421348314606742,
+     "n": 89
+    },
+    "snr_0db": {
+     "acc": 0.7934782608695652,
+     "n": 23
+    },
+    "noise_slope_clean_minus_le5db": 0.010421799108653373,
+    "language_gap_en_minus_non_en": 0.057782646133416105
+   }
+  },
+  {
+   "key": "qwen2-audio-7b-instruct (pod)",
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "support_families": null,
+   "table": "full",
+   "api_flag": false,
+   "sealed_route": true,
+   "n_items_scored": 988,
+   "n_rows": 1012,
+   "n_error_rows": 852,
+   "I_public": -42.44121233230339,
+   "I_sealed": -49.54403474483616,
+   "base": -47.76832914170297,
+   "gap": 7.102822412532774,
+   "excess": 6.816172004129072,
+   "penalty": 1.0,
+   "Intelligence": 0.0,
+   "typed": {
+    "open/choice": -34.45789061442755,
+    "open/noul": -74.70238095238096,
+    "open/score": -26.146687147977477,
+    "sealed/choice": -39.76419268474312,
+    "sealed/noul": -85.22810812169229,
+    "sealed/score": -33.41964548816611
+   },
+   "typed_n": {
+    "open/choice": 40,
+    "open/noul": 52,
+    "open/score": 20,
+    "sealed/choice": 338,
+    "sealed/noul": 434,
+    "sealed/score": 104
+   },
+   "planned_weight": 1.0,
+   "Calibration": 25.638324739470058,
    "calibration_parts": {
     "choice": {
      "ece_hard": null,
      "ece_score": null,
      "mean_tvd": null,
      "n_tvd": 0,
-     "n": 2,
+     "n": 4,
      "n_ece_hard": 0,
      "score": null
+    },
+    "noul": {
+     "ece": 0.25462195121951237,
+     "brier": 0.29610245121951223,
+     "n": 82,
+     "score": 49.07560975609753,
+     "abstention_rate": 0.14634146341463417
+    },
+    "score": {
+     "nrps": 0.2650971580934508,
+     "top_ece": 0.3326745289354476,
+     "n": 71,
+     "interval90_coverage": 0.6619718309859155,
+     "interval90_width": 0.5176056338028169,
+     "score": 53.4776892017827
     }
    },
-   "p50_s": null,
-   "p95_s": null,
-   "p50_adj_s": null,
-   "p95_adj_s": null,
-   "n_latency": 0,
-   "Speed": null,
+   "p50_s": 0.2512743830002364,
+   "p95_s": 0.42603518629839526,
+   "p50_adj_s": 0.6525487660004728,
+   "p95_adj_s": 1.0020703725967905,
+   "n_latency": 20,
+   "Speed": 81.84488805376174,
    "cost": {
-    "usd_per_1000": 0.001,
-    "basis": "override",
-    "list_usd_per_1000": 0.001,
+    "usd_per_1000": 0.11163586956521736,
+    "basis": "tokens",
+    "list_usd_per_1000": 0.11163586956521736,
     "floor_usd_per_1000": null,
     "floor_binds": false,
     "estimate": true,
-    "source": "placeholder for smoke",
+    "source": "ESTIMATE, METHOD 4 self-hosted rule: exact model not listed; backbone Qwen-7B not listed; nearest same-vendor same-size class (Qwen2.5-7B) -> OpenRouter qwen/qwen-2.5-7b-instruct $0.1/M in, $0.2/M out; audio tokens (model's own processor count) billed at the input rate. receipts/OPENROUTER-MODELS-20260926T0435Z.json (public /api/v1/models, read 2026-09-26 04:35 UTC)",
     "note": "no base-model floor"
    },
-   "Cost": 100.0,
+   "Cost": 38.565887212676664,
    "composite": {
-    "A": null,
-    "B": null,
-    "C": null
+    "A": 0.0,
+    "B": 0.0,
+    "C": 0.0
    },
-   "headline": null,
+   "headline": 0.0,
    "views": {
-    "Intelligence only": 100.0,
-    "Emphasis on Accuracy 60:20:20": null,
-    "Emphasis on Speed 20:60:20": null,
-    "Emphasis on Cost 20:20:60": null,
-    "Balanced 33:33:33": null
+    "Intelligence only": 0.0,
+    "Emphasis on Accuracy 60:20:20": 0.0,
+    "Emphasis on Speed 20:60:20": 0.0,
+    "Emphasis on Cost 20:20:60": 0.0,
+    "Balanced 33:33:33": 0.0
    },
-   "Capability": 50.0,
-   "jev_class": false,
+   "Capability": 12.819162369735029,
+   "jev_class": true,
    "robustness": {
     "clean": {
-     "acc": 1.0,
-     "n": 2
+     "acc": 0.10039385161186187,
+     "n": 691
     },
     "noisy_le5db": {
-     "acc": null,
-     "n": 0
+     "acc": 0.06078,
+     "n": 125
     },
     "english": {
-     "acc": 1.0,
-     "n": 2
+     "acc": 0.12812005140175903,
+     "n": 633
     },
     "non_english": {
-     "acc": null,
-     "n": 0
+     "acc": 0.05466209180239284,
+     "n": 355
     },
     "background_talker": {
-     "acc": null,
-     "n": 0
+     "acc": 0.06752232142857142,
+     "n": 112
     },
     "overlap": {
-     "acc": null,
-     "n": 0
+     "acc": 0.08620689655172414,
+     "n": 58
     },
     "speaker_verification": {
-     "acc": null,
-     "n": 0
+     "acc": 0.0,
+     "n": 116
     },
     "sound_event": {
-     "acc": 1.0,
-     "n": 2
+     "acc": 0.09928805692209346,
+     "n": 179
     },
     "sound_under_speech": {
      "acc": null,
      "n": 0
     },
     "snr_15db": {
-     "acc": null,
-     "n": 0
+     "acc": 0.13063043722464712,
+     "n": 82
     },
     "snr_10db": {
-     "acc": null,
-     "n": 0
+     "acc": 0.1440863798982615,
+     "n": 89
     },
     "snr_5db": {
-     "acc": null,
-     "n": 0
+     "acc": 0.047471910112359544,
+     "n": 89
     },
     "snr_0db": {
-     "acc": null,
-     "n": 0
+     "acc": 0.05434782608695652,
+     "n": 23
     },
-    "noise_slope_clean_minus_le5db": null,
-    "language_gap_en_minus_non_en": null
-   },
-   "I_public_ci95": [
-    100.0,
-    100.0
-   ]
+    "noise_slope_clean_minus_le5db": 0.03961385161186187,
+    "language_gap_en_minus_non_en": 0.07345795959936618
+   }
   },
   {
-   "key": "ast (local-cpu, diagnostic)",
+   "key": "ultravox-v0_5-llama-3_2-1b (pod)",
    "support": {
-    "choice": "native"
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
    },
-   "support_families": [
-    "sound_event"
-   ],
-   "table": "partial coverage, public-only",
+   "support_families": null,
+   "table": "full",
    "api_flag": false,
    "sealed_route": true,
-   "n_items_scored": 2,
-   "n_rows": 2,
-   "n_error_rows": 0,
-   "I_public": 100.0,
-   "I_sealed": null,
-   "base": null,
-   "gap": null,
-   "excess": null,
-   "penalty": null,
-   "Intelligence": null,
+   "n_items_scored": 988,
+   "n_rows": 1012,
+   "n_error_rows": 272,
+   "I_public": -43.997783187851354,
+   "I_sealed": -29.294235686523624,
+   "base": -32.97012256185556,
+   "gap": -14.70354750132773,
+   "excess": -14.990197909731432,
+   "penalty": 1.0,
+   "Intelligence": 0.0,
    "typed": {
-    "open/choice": 100.0,
-    "open/noul": null,
-    "open/score": null,
-    "sealed/choice": null,
-    "sealed/noul": null,
-    "sealed/score": null
+    "open/choice": -32.214899960221935,
+    "open/noul": -84.28571428571429,
+    "open/score": -27.27561854524727,
+    "sealed/choice": -19.09300642808374,
+    "sealed/noul": -81.84801547377938,
+    "sealed/score": 2.8570855838523688
    },
    "typed_n": {
-    "open/choice": 2,
-    "open/noul": 0,
-    "open/score": 0,
-    "sealed/choice": 0,
-    "sealed/noul": 0,
-    "sealed/score": 0
+    "open/choice": 40,
+    "open/noul": 52,
+    "open/score": 20,
+    "sealed/choice": 338,
+    "sealed/noul": 434,
+    "sealed/score": 104
    },
-   "planned_weight": 0.5,
-   "Calibration": 0.0,
+   "planned_weight": 1.0,
+   "Calibration": 62.88036115119447,
    "calibration_parts": {
     "choice": {
-     "ece_hard": null,
-     "ece_score": null,
+     "ece_hard": 0.28809523809523807,
+     "ece_score": 42.38095238095239,
      "mean_tvd": null,
      "n_tvd": 0,
-     "n": 2,
-     "n_ece_hard": 0,
-     "score": null
+     "n": 136,
+     "n_ece_hard": 42,
+     "score": 42.38095238095239
+    },
+    "noul": {
+     "ece": 0.08209876543209871,
+     "brier": 0.2758641975308644,
+     "n": 486,
+     "score": 83.58024691358025,
+     "abstention_rate": 0.8065843621399177
+    },
+    "score": {
+     "nrps": 0.20106060606060625,
+     "top_ece": 0.06767676767676817,
+     "n": 99,
+     "interval90_coverage": 1.0,
+     "interval90_width": 1.0,
+     "score": 83.17929292929287
     }
    },
-   "p50_s": null,
-   "p95_s": null,
-   "p50_adj_s": null,
-   "p95_adj_s": null,
-   "n_latency": 0,
-   "Speed": null,
+   "p50_s": 0.0370754380019207,
+   "p95_s": 0.09863083500022185,
+   "p50_adj_s": 0.2241508760038414,
+   "p95_adj_s": 0.3472616700004437,
+   "n_latency": 41,
+   "Speed": 91.08802710067832,
    "cost": {
-    "usd_per_1000": 0.001,
-    "basis": "override",
-    "list_usd_per_1000": 0.001,
+    "usd_per_1000": 0.01934160177865612,
+    "basis": "tokens",
+    "list_usd_per_1000": 0.01934160177865612,
     "floor_usd_per_1000": null,
     "floor_binds": false,
     "estimate": true,
-    "source": "placeholder for smoke",
+    "source": "ESTIMATE, METHOD 4 self-hosted rule: exact model not listed; base LLM Llama-3.2-1B-Instruct listed -> OpenRouter meta-llama/llama-3.2-1b-instruct $0.027/M in, $0.201/M out; audio tokens (model's own processor count) billed at the input rate. receipts/OPENROUTER-MODELS-20260926T0435Z.json (public /api/v1/models, read 2026-09-26 04:35 UTC)",
     "note": "no base-model floor"
    },
-   "Cost": 100.0,
+   "Cost": 61.405226877353925,
    "composite": {
-    "A": null,
-    "B": null,
-    "C": null
+    "A": 0.0,
+    "B": 0.0,
+    "C": 0.0
    },
-   "headline": null,
+   "headline": 0.0,
    "views": {
-    "Intelligence only": 100.0,
-    "Emphasis on Accuracy 60:20:20": null,
-    "Emphasis on Speed 20:60:20": null,
-    "Emphasis on Cost 20:20:60": null,
-    "Balanced 33:33:33": null
+    "Intelligence only": 0.0,
+    "Emphasis on Accuracy 60:20:20": 0.0,
+    "Emphasis on Speed 20:60:20": 0.0,
+    "Emphasis on Cost 20:20:60": 0.0,
+    "Balanced 33:33:33": 0.0
    },
-   "Capability": 50.0,
-   "jev_class": false,
+   "Capability": 31.440180575597235,
+   "jev_class": true,
    "robustness": {
     "clean": {
-     "acc": 1.0,
-     "n": 2
+     "acc": 0.16045586107091175,
+     "n": 691
     },
     "noisy_le5db": {
-     "acc": null,
-     "n": 0
+     "acc": 0.14679999999999999,
+     "n": 125
     },
     "english": {
-     "acc": 1.0,
-     "n": 2
+     "acc": 0.16662717219589257,
+     "n": 633
     },
     "non_english": {
-     "acc": null,
-     "n": 0
+     "acc": 0.1783802816901409,
+     "n": 355
     },
     "background_talker": {
-     "acc": null,
-     "n": 0
+     "acc": 0.0955357142857143,
+     "n": 112
     },
     "overlap": {
-     "acc": null,
-     "n": 0
+     "acc": 0.06896551724137931,
+     "n": 58
     },
     "speaker_verification": {
-     "acc": null,
-     "n": 0
+     "acc": 0.017241379310344827,
+     "n": 116
     },
     "sound_event": {
-     "acc": 1.0,
-     "n": 2
+     "acc": 0.19134078212290503,
+     "n": 179
     },
     "sound_under_speech": {
      "acc": null,
      "n": 0
     },
     "snr_15db": {
-     "acc": null,
-     "n": 0
+     "acc": 0.18384146341463412,
+     "n": 82
     },
     "snr_10db": {
-     "acc": null,
-     "n": 0
+     "acc": 0.2752808988764045,
+     "n": 89
     },
     "snr_5db": {
-     "acc": null,
-     "n": 0
+     "acc": 0.16376404494382024,
+     "n": 89
     },
     "snr_0db": {
+     "acc": 0.12065217391304348,
+     "n": 23
+    },
+    "noise_slope_clean_minus_le5db": 0.013655861070911768,
+    "language_gap_en_minus_non_en": -0.01175310949424832
+   }
+  },
+  {
+   "key": "moss-audio-4b-instruct (pod)",
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "support_families": null,
+   "table": "full",
+   "api_flag": false,
+   "sealed_route": true,
+   "n_items_scored": 988,
+   "n_rows": 1012,
+   "n_error_rows": 13,
+   "I_public": 29.780589705973114,
+   "I_sealed": 32.44546104600687,
+   "base": 31.77924321099843,
+   "gap": -2.6648713400337556,
+   "excess": -2.9515217484374574,
+   "penalty": 1.0,
+   "Intelligence": 31.77924321099843,
+   "typed": {
+    "open/choice": 55.48613303916704,
+    "open/noul": 19.583333333333332,
+    "open/score": -11.433240587774975,
+    "sealed/choice": 49.656331633081166,
+    "sealed/noul": 17.725191000789245,
+    "sealed/score": 12.743989917075922
+   },
+   "typed_n": {
+    "open/choice": 40,
+    "open/noul": 52,
+    "open/score": 20,
+    "sealed/choice": 338,
+    "sealed/noul": 434,
+    "sealed/score": 104
+   },
+   "planned_weight": 1.0,
+   "Calibration": 23.937755542280563,
+   "calibration_parts": {
+    "choice": {
+     "ece_hard": 0.400483870967742,
+     "ece_score": 19.903225806451598,
+     "mean_tvd": null,
+     "n_tvd": 0,
+     "n": 365,
+     "n_ece_hard": 124,
+     "score": 19.903225806451598
+    },
+    "noul": {
+     "ece": 0.38594650205761444,
+     "brier": 0.3869553497942386,
+     "n": 486,
+     "score": 22.810699588477114,
+     "abstention_rate": 0.0
+    },
+    "score": {
+     "nrps": 0.3373225806451613,
+     "top_ece": 0.6177419354838714,
+     "n": 124,
+     "interval90_coverage": 0.3387096774193548,
+     "interval90_width": 0.0,
+     "score": 33.133870967741935
+    }
+   },
+   "p50_s": 0.122982607997983,
+   "p95_s": 0.29067411989854003,
+   "p50_adj_s": 0.395965215995966,
+   "p95_adj_s": 0.7313482397970801,
+   "n_latency": 63,
+   "Speed": 85.38218743006867,
+   "cost": {
+    "usd_per_1000": 0.06063946343873524,
+    "basis": "tokens",
+    "list_usd_per_1000": 0.06063946343873524,
+    "floor_usd_per_1000": null,
+    "floor_binds": false,
+    "estimate": true,
+    "source": "ESTIMATE, METHOD 4 self-hosted rule: exact model not listed; LLM backbone Qwen3-4B (model card) not listed; nearest listed same-family size (Qwen3-8B, errs high) -> OpenRouter qwen/qwen3-8b $0.117/M in, $0.455/M out; audio tokens (model's own processor count) billed at the input rate. receipts/OPENROUTER-MODELS-20260926T0435Z.json (public /api/v1/models, read 2026-09-26 04:35 UTC)",
+    "note": "no base-model floor"
+   },
+   "Cost": 46.51733950490184,
+   "composite": {
+    "A": 13.138477488775118,
+    "B": 12.676053340112375,
+    "C": 9.123942700538276
+   },
+   "headline": 12.676053340112375,
+   "views": {
+    "Intelligence only": 11.111696496756299,
+    "Emphasis on Accuracy 60:20:20": 13.699979494543681,
+    "Emphasis on Speed 20:60:20": 19.84394810286188,
+    "Emphasis on Cost 20:20:60": 16.237054508831704,
+    "Balanced 33:33:33": 16.218536549031626
+   },
+   "Capability": 27.858499376639497,
+   "jev_class": true,
+   "robustness": {
+    "clean": {
+     "acc": 0.634392185238784,
+     "n": 691
+    },
+    "noisy_le5db": {
+     "acc": 0.58544,
+     "n": 125
+    },
+    "english": {
+     "acc": 0.6542614533965243,
+     "n": 633
+    },
+    "non_english": {
+     "acc": 0.5792746478873239,
+     "n": 355
+    },
+    "background_talker": {
+     "acc": 0.5848660714285714,
+     "n": 112
+    },
+    "overlap": {
+     "acc": 0.5862068965517241,
+     "n": 58
+    },
+    "speaker_verification": {
+     "acc": 0.5,
+     "n": 116
+    },
+    "sound_event": {
+     "acc": 0.6662011173184358,
+     "n": 179
+    },
+    "sound_under_speech": {
      "acc": null,
      "n": 0
     },
-    "noise_slope_clean_minus_le5db": null,
-    "language_gap_en_minus_non_en": null
+    "snr_15db": {
+     "acc": 0.6573780487804879,
+     "n": 82
+    },
+    "snr_10db": {
+     "acc": 0.610561797752809,
+     "n": 89
+    },
+    "snr_5db": {
+     "acc": 0.5385393258426966,
+     "n": 89
+    },
+    "snr_0db": {
+     "acc": 0.75,
+     "n": 23
+    },
+    "noise_slope_clean_minus_le5db": 0.048952185238784085,
+    "language_gap_en_minus_non_en": 0.07498680550920045
+   }
+  },
+  {
+   "key": "voxtral-mini-3b-2507 (pod)",
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
    },
-   "I_public_ci95": [
-    100.0,
-    100.0
-   ]
+   "support_families": null,
+   "table": "full",
+   "api_flag": false,
+   "sealed_route": true,
+   "n_items_scored": 988,
+   "n_rows": 1012,
+   "n_error_rows": 38,
+   "I_public": 41.694541675746294,
+   "I_sealed": 48.99570311771209,
+   "base": 47.170412757220646,
+   "gap": -7.301161441965796,
+   "excess": -7.587811850369498,
+   "penalty": 1.0,
+   "Intelligence": 47.170412757220646,
+   "typed": {
+    "open/choice": 59.95095405838764,
+    "open/noul": 39.22619047619048,
+    "open/score": 7.650068110019429,
+    "sealed/choice": 69.74838697348888,
+    "sealed/noul": 36.25767046837808,
+    "sealed/score": 20.228368055492517
+   },
+   "typed_n": {
+    "open/choice": 40,
+    "open/noul": 52,
+    "open/score": 20,
+    "sealed/choice": 338,
+    "sealed/noul": 434,
+    "sealed/score": 104
+   },
+   "planned_weight": 1.0,
+   "Calibration": 48.437503830084694,
+   "calibration_parts": {
+    "choice": {
+     "ece_hard": 0.23905511811023727,
+     "ece_score": 52.18897637795254,
+     "mean_tvd": null,
+     "n_tvd": 0,
+     "n": 372,
+     "n_ece_hard": 127,
+     "score": 52.18897637795254
+    },
+    "noul": {
+     "ece": 0.2827010309278318,
+     "brier": 0.29137546391752583,
+     "n": 485,
+     "score": 43.459793814433645,
+     "abstention_rate": 0.0
+    },
+    "score": {
+     "nrps": 0.15664824202127667,
+     "top_ece": 0.4625531914893614,
+     "n": 94,
+     "interval90_coverage": 0.5,
+     "interval90_width": 0.08776595744680851,
+     "score": 45.912268750000024
+    }
+   },
+   "p50_s": 0.11658663950220216,
+   "p95_s": 0.3015661520008507,
+   "p50_adj_s": 0.38317327900440434,
+   "p95_adj_s": 0.7531323040017014,
+   "n_latency": 60,
+   "Speed": 85.39733508389375,
+   "cost": {
+    "usd_per_1000": 0.06982539525691701,
+    "basis": "tokens",
+    "list_usd_per_1000": 0.06982539525691701,
+    "floor_usd_per_1000": null,
+    "floor_binds": false,
+    "estimate": true,
+    "source": "ESTIMATE, METHOD 4 self-hosted rule: exact model not listed (only Voxtral-Small-24B is); backbone Ministral 3B -> same-family same-size Ministral 3 3B -> OpenRouter mistralai/ministral-3b-2512 $0.1/M in, $0.1/M out; audio tokens (model's own processor count) billed at the input rate. receipts/OPENROUTER-MODELS-20260926T0435Z.json (public /api/v1/models, read 2026-09-26 04:35 UTC)",
+    "note": "no base-model floor"
+   },
+   "Cost": 44.67959791696677,
+   "composite": {
+    "A": 37.43584365643234,
+    "B": 36.58195343234084,
+    "C": 25.99711365030023
+   },
+   "headline": 36.58195343234084,
+   "views": {
+    "Intelligence only": 33.523358727360815,
+    "Emphasis on Accuracy 60:20:20": 36.374285275014884,
+    "Emphasis on Speed 20:60:20": 45.145166012753165,
+    "Emphasis on Cost 20:20:60": 35.51497377822823,
+    "Balanced 33:33:33": 38.560484450425385
+   },
+   "Capability": 47.80395829365267,
+   "jev_class": true,
+   "robustness": {
+    "clean": {
+     "acc": 0.6978455137481911,
+     "n": 691
+    },
+    "noisy_le5db": {
+     "acc": 0.72278,
+     "n": 125
+    },
+    "english": {
+     "acc": 0.6881358609794629,
+     "n": 633
+    },
+    "non_english": {
+     "acc": 0.7729190140845069,
+     "n": 355
+    },
+    "background_talker": {
+     "acc": 0.7714732142857141,
+     "n": 112
+    },
+    "overlap": {
+     "acc": 0.6896551724137931,
+     "n": 58
+    },
+    "speaker_verification": {
+     "acc": 0.49137931034482757,
+     "n": 116
+    },
+    "sound_event": {
+     "acc": 0.5001396648044693,
+     "n": 179
+    },
+    "sound_under_speech": {
+     "acc": null,
+     "n": 0
+    },
+    "snr_15db": {
+     "acc": 0.8426829268292684,
+     "n": 82
+    },
+    "snr_10db": {
+     "acc": 0.7676123595505617,
+     "n": 89
+    },
+    "snr_5db": {
+     "acc": 0.725252808988764,
+     "n": 89
+    },
+    "snr_0db": {
+     "acc": 0.8173913043478261,
+     "n": 23
+    },
+    "noise_slope_clean_minus_le5db": -0.02493448625180883,
+    "language_gap_en_minus_non_en": -0.08478315310504403
+   }
+  },
+  {
+   "key": "qwen3-omni-30b-a3b-instruct (pod)",
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "support_families": null,
+   "table": "full",
+   "api_flag": false,
+   "sealed_route": true,
+   "n_items_scored": 988,
+   "n_rows": 1012,
+   "n_error_rows": 3,
+   "I_public": 86.854280386255,
+   "I_sealed": 79.1081060841375,
+   "base": 81.04464965966687,
+   "gap": 7.746174302117495,
+   "excess": 7.4595238937137935,
+   "penalty": 1.0,
+   "Intelligence": 81.04464965966687,
+   "typed": {
+    "open/choice": 89.04266094737403,
+    "open/noul": 75.77380952380953,
+    "open/score": 93.55799012646244,
+    "sealed/choice": 90.13516633778434,
+    "sealed/noul": 67.5855135371204,
+    "sealed/score": 68.57657812386094
+   },
+   "typed_n": {
+    "open/choice": 40,
+    "open/noul": 52,
+    "open/score": 20,
+    "sealed/choice": 338,
+    "sealed/noul": 434,
+    "sealed/score": 104
+   },
+   "planned_weight": 1.0,
+   "Calibration": 85.36104041202447,
+   "calibration_parts": {
+    "choice": {
+     "ece_hard": 0.02796875000000084,
+     "ece_score": 94.40624999999983,
+     "mean_tvd": null,
+     "n_tvd": 0,
+     "n": 377,
+     "n_ece_hard": 128,
+     "score": 94.40624999999983
+    },
+    "noul": {
+     "ece": 0.12150205761316694,
+     "brier": 0.14023765432098775,
+     "n": 486,
+     "score": 75.6995884773666,
+     "abstention_rate": 0.004115226337448541
+    },
+    "score": {
+     "nrps": 0.08656178861788619,
+     "top_ece": 0.1873983739837408,
+     "n": 123,
+     "interval90_coverage": 0.7886178861788617,
+     "interval90_width": 0.054878048780487805,
+     "score": 76.93207317073161
+    }
+   },
+   "p50_s": 0.2550642816349864,
+   "p95_s": 0.3652454958297312,
+   "p50_adj_s": 0.6601285632699728,
+   "p95_adj_s": 0.8804909916594624,
+   "n_latency": 67,
+   "Speed": 82.35646558203106,
+   "cost": {
+    "usd_per_1000": 0.0492908102766798,
+    "basis": "tokens",
+    "list_usd_per_1000": 0.0492908102766798,
+    "floor_usd_per_1000": null,
+    "floor_binds": false,
+    "estimate": true,
+    "source": "ESTIMATE, METHOD 4 self-hosted rule: exact model not listed; thinker = Qwen3-30B-A3B MoE -> same-family same-size Qwen3-30B-A3B-Instruct-2507 -> OpenRouter qwen/qwen3-30b-a3b-instruct-2507 $0.1/M in, $0.3/M out; audio tokens (model's own processor count) billed at the input rate. receipts/OPENROUTER-MODELS-20260926T0435Z.json (public /api/v1/models, read 2026-09-26 04:35 UTC)",
+    "note": "no base-model floor"
+   },
+   "Cost": 49.21702127653998,
+   "composite": {
+    "A": 68.57913630501457,
+    "B": 70.36171855963305,
+    "C": 68.57913630501457
+   },
+   "headline": 70.36171855963305,
+   "views": {
+    "Intelligence only": 78.52627415948334,
+    "Emphasis on Accuracy 60:20:20": 69.72984353993164,
+    "Emphasis on Speed 20:60:20": 70.12659785408603,
+    "Emphasis on Cost 20:20:60": 56.70496383719699,
+    "Balanced 33:33:33": 64.88432747111642
+   },
+   "Capability": 83.20284503584567,
+   "jev_class": true,
+   "robustness": {
+    "clean": {
+     "acc": 0.873314037626628,
+     "n": 691
+    },
+    "noisy_le5db": {
+     "acc": 0.88564,
+     "n": 125
+    },
+    "english": {
+     "acc": 0.8869905213270146,
+     "n": 633
+    },
+    "non_english": {
+     "acc": 0.8794507042253519,
+     "n": 355
+    },
+    "background_talker": {
+     "acc": 0.8417633928571427,
+     "n": 112
+    },
+    "overlap": {
+     "acc": 0.7413793103448276,
+     "n": 58
+    },
+    "speaker_verification": {
+     "acc": 0.6379310344827587,
+     "n": 116
+    },
+    "sound_event": {
+     "acc": 0.897695530726257,
+     "n": 179
+    },
+    "sound_under_speech": {
+     "acc": null,
+     "n": 0
+    },
+    "snr_15db": {
+     "acc": 0.9249390243902441,
+     "n": 82
+    },
+    "snr_10db": {
+     "acc": 0.92876404494382,
+     "n": 89
+    },
+    "snr_5db": {
+     "acc": 0.8956460674157303,
+     "n": 89
+    },
+    "snr_0db": {
+     "acc": 0.8257608695652173,
+     "n": 23
+    },
+    "noise_slope_clean_minus_le5db": -0.012325962373372024,
+    "language_gap_en_minus_non_en": 0.007539817101662738
+   }
+  },
+  {
+   "key": "cascade whisper-large-v3-turbo -> qwen3-4b-instruct-2507 (pod, cascade)",
+   "support": {
+    "choice": "native",
+    "noul": "native",
+    "score": "native"
+   },
+   "support_families": null,
+   "table": "full",
+   "api_flag": false,
+   "sealed_route": true,
+   "n_items_scored": 988,
+   "n_rows": 1012,
+   "n_error_rows": 53,
+   "I_public": 44.638826472237426,
+   "I_sealed": 49.37696674388705,
+   "base": 48.192431675974646,
+   "gap": -4.738140271649627,
+   "excess": -5.024790680053329,
+   "penalty": 1.0,
+   "Intelligence": 48.192431675974646,
+   "typed": {
+    "open/choice": 55.42265217159518,
+    "open/noul": 6.8452380952380985,
+    "open/score": 60.864763450521224,
+    "sealed/choice": 67.65042837728969,
+    "sealed/noul": 27.872923193766226,
+    "sealed/score": 34.334087027202614
+   },
+   "typed_n": {
+    "open/choice": 40,
+    "open/noul": 52,
+    "open/score": 20,
+    "sealed/choice": 338,
+    "sealed/noul": 434,
+    "sealed/score": 104
+   },
+   "planned_weight": 1.0,
+   "Calibration": 67.08667303097353,
+   "calibration_parts": {
+    "choice": {
+     "ece_hard": 0.08389523809523813,
+     "ece_score": 83.22095238095237,
+     "mean_tvd": null,
+     "n_tvd": 0,
+     "n": 326,
+     "n_ece_hard": 105,
+     "score": 83.22095238095237
+    },
+    "noul": {
+     "ece": 0.20451213991769499,
+     "brier": 0.23657970578189272,
+     "n": 486,
+     "score": 59.097572016461,
+     "abstention_rate": 0.1625514403292181
+    },
+    "score": {
+     "nrps": 0.2227337418699187,
+     "top_ece": 0.4605609756097569,
+     "n": 123,
+     "interval90_coverage": 0.4796747967479675,
+     "interval90_width": 0.09552845528455285,
+     "score": 42.80721534552838
+    }
+   },
+   "p50_s": 3.9472334579950257,
+   "p95_s": 4.4087486578970125,
+   "p50_adj_s": 8.044466915990052,
+   "p95_adj_s": 8.967497315794025,
+   "n_latency": 67,
+   "Speed": 61.41831474722815,
+   "cost": {
+    "usd_per_1000": 0.17409650342064587,
+    "basis": "tokens",
+    "list_usd_per_1000": 0.17409650342064587,
+    "floor_usd_per_1000": null,
+    "floor_binds": false,
+    "estimate": true,
+    "source": "ESTIMATE, METHOD 4 self-hosted rule: text model Qwen3-4B-Instruct-2507 not listed; nearest listed same-family size (Qwen3-8B, errs high) -> OpenRouter qwen/qwen3-8b $0.117/M in, $0.455/M out; audio tokens (model's own processor count) billed at the input rate. receipts/OPENROUTER-MODELS-20260926T0435Z.json (public /api/v1/models, read 2026-09-26 04:35 UTC)",
+    "note": "no base-model floor"
+   },
+   "Cost": 32.776298536847946,
+   "composite": {
+    "A": 19.367697586231934,
+    "B": 19.341765186715193,
+    "C": 13.449789990438843
+   },
+   "headline": 19.341765186715193,
+   "views": {
+    "Intelligence only": 19.238726333438887,
+    "Emphasis on Accuracy 60:20:20": 18.30515290478738,
+    "Emphasis on Speed 20:60:20": 19.939310573899792,
+    "Emphasis on Cost 20:20:60": 15.525892957790012,
+    "Balanced 33:33:33": 17.731529189986734
+   },
+   "Capability": 57.63955235347409,
+   "jev_class": false,
+   "robustness": {
+    "clean": {
+     "acc": 0.6505459479015921,
+     "n": 691
+    },
+    "noisy_le5db": {
+     "acc": 0.7542000000000001,
+     "n": 125
+    },
+    "english": {
+     "acc": 0.6516879936808849,
+     "n": 633
+    },
+    "non_english": {
+     "acc": 0.7644683098591548,
+     "n": 355
+    },
+    "background_talker": {
+     "acc": 0.7834486607142858,
+     "n": 112
+    },
+    "overlap": {
+     "acc": 0.7413793103448276,
+     "n": 58
+    },
+    "speaker_verification": {
+     "acc": 0.21551724137931033,
+     "n": 116
+    },
+    "sound_event": {
+     "acc": 0.37059916201117327,
+     "n": 179
+    },
+    "sound_under_speech": {
+     "acc": null,
+     "n": 0
+    },
+    "snr_15db": {
+     "acc": 0.8178810975609757,
+     "n": 82
+    },
+    "snr_10db": {
+     "acc": 0.8206320224719102,
+     "n": 89
+    },
+    "snr_5db": {
+     "acc": 0.7810393258426966,
+     "n": 89
+    },
+    "snr_0db": {
+     "acc": 0.8157608695652173,
+     "n": 23
+    },
+    "noise_slope_clean_minus_le5db": -0.10365405209840794,
+    "language_gap_en_minus_non_en": -0.11278031617826989
+   }
   }
  ],
  "preview_meta": {
-  "source": "harness/runs/smoke/scores.json",
-  "source_sha256": "33e5da8e2e16cdee8e26e2fcaf72fb233a28128795102f5f4f8c285ce9b810cf",
-  "exported_at": "2026-09-26 04:35 UTC"
+  "source": "/home/flori/jevbench-sealed/pool-v1.5/audiojev/runs/scores-final.json",
+  "source_sha256": "253306eb063917ee22cdd22d4558b9134dbc21f4925a4ae8cd6c5346cb838c09",
+  "exported_at": "2026-09-26 07:56 UTC"
  }
 }

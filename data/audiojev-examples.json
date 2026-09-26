@@ -1,89 +1,150 @@
 {
  "items": [
   {
-   "id": "sm-choice-intent",
-   "split": "public-smoke",
+   "id": "ajp-0315ad15f0",
+   "split": "public",
+   "family": "sound_event",
+   "request_type": "choice",
+   "tier": "standard",
+   "context": "You are the sound-event classifier inside the yard monitor of Redfern Smallholding, used at dawn. Label the main acoustic event in the clip.",
+   "expected": "rooster",
+   "question": {
+    "instructions": "Which event best describes the main sound in the clip?",
+    "labels": [
+     "car_alarm",
+     "rooster",
+     "car_horn",
+     "siren"
+    ],
+    "label_descriptions": {
+     "car_alarm": "a car alarm going off",
+     "rooster": "a rooster crowing",
+     "car_horn": "a car horn honking",
+     "siren": "a siren wailing (emergency vehicle or warning siren)"
+    }
+   },
+   "duration_s": 9.48
+  },
+  {
+   "id": "ajp-07c7fa1b38",
+   "split": "public",
    "family": "intent_routing",
    "request_type": "choice",
    "tier": "standard",
-   "context": "At Example Test Bank, the voice agent routes calls. Routes: cards — lost, stolen or blocked cards; loans — loan and mortgage questions; profile — address, phone or name changes.",
-   "expected": "cards",
+   "context": "You are the phone assistant of Pharmacie Exemple Demo. The caller is the first voice you hear; another person near the caller may talk at the same time. Route only the caller's request.",
+   "expected": "prescription_refill",
    "question": {
-    "instructions": "Which route should the voice agent select for the caller's request? Choose the single best label.",
+    "instructions": "Which service does the caller need?",
     "labels": [
-     "cards",
-     "loans",
-     "profile"
+     "prescription_refill",
+     "opening_hours",
+     "speak_to_pharmacist",
+     "delivery_status"
     ],
     "label_descriptions": {
-     "cards": "Lost, stolen or blocked cards.",
-     "loans": "Loan and mortgage questions.",
-     "profile": "Address, phone or name changes."
+     "prescription_refill": "Renew or prepare a repeat prescription.",
+     "opening_hours": "When the pharmacy is open.",
+     "speak_to_pharmacist": "Medical advice about a medicine or symptom.",
+     "delivery_status": "Where a home delivery is."
     }
    },
-   "duration_s": 6.58
+   "duration_s": 9.014
   },
   {
-   "id": "sm-noul-command",
-   "split": "public-smoke",
+   "id": "ajp-08f74c01ff",
+   "split": "public",
+   "family": "urgency",
+   "request_type": "score",
+   "tier": "judge",
+   "context": "You are the dispatcher assistant of Soccorso Stradale Demo, a roadside assistance club. Assign the dispatch priority defined in the question from the member's description.",
+   "expected": 2,
+   "question": {
+    "instructions": "Which dispatch priority applies?",
+    "levels": [
+     "0 - Information only (membership, coverage questions); no dispatch.",
+     "1 - Book a workshop appointment; the car is still drivable.",
+     "2 - Dispatch within 4 hours: the car will not drive but is at home or in a car park or other safe place.",
+     "3 - Dispatch within 1 hour: stranded at the side of an ordinary road, people are safe.",
+     "4 - Immediate priority: stopped on a motorway or in a traffic lane, smoke or fire, or vulnerable people (children, elderly, ill) exposed to danger."
+    ]
+   },
+   "duration_s": 12.513
+  },
+  {
+   "id": "ajp-1d66e82b52",
+   "split": "public",
+   "family": "caller_escalation",
+   "request_type": "noul",
+   "tier": "judge",
+   "context": "You are the repairs line assistant of Willow Court Housing Demo. Policy: if there are signs of immediate danger in the caller's home (fire or smoke, a smoke alarm going off because of a real hazard, gas, sparking electrics, water reaching electrics), transfer to the emergency repairs line. Ordinary repairs are booked by you. Sounds from the caller's surroundings may be audible.",
+   "expected": "no",
+   "question": {
+    "instructions": "Should this call be transferred to the emergency repairs line?",
+    "criteria": {
+     "true": "There are signs of immediate danger in the home.",
+     "false": "It is an ordinary repair with no sign of immediate danger."
+    }
+   },
+   "duration_s": 11.239
+  },
+  {
+   "id": "ajp-302312588e",
+   "split": "public",
+   "family": "speaker_verification",
+   "request_type": "noul",
+   "tier": "judge",
+   "context": "Voice ID check for Hilltop Federal Savings. The first part of the clip, before the beep, is the enrolment recording of the account holder made at sign-up. After the beep is the current caller.",
+   "expected": "yes",
+   "question": {
+    "instructions": "Is the current caller the same person as the enrolled account holder?",
+    "criteria": {
+     "true": "The probe voice (after the beep) is the same speaker as the enrolment voice (before the beep).",
+     "false": "The probe voice (after the beep) is a different speaker from the enrolment voice (before the beep)."
+    }
+   },
+   "duration_s": 19.4
+  },
+  {
+   "id": "ajp-34552189c1",
+   "split": "public",
+   "family": "sentiment",
+   "request_type": "choice",
+   "tier": "standard",
+   "context": "You are the post-delivery survey assistant of Tiendita Sample, an online shop. Tag the customer's spoken answer with one label.",
+   "expected": "neutral",
+   "question": {
+    "instructions": "Which label best describes the customer's answer?",
+    "labels": [
+     "satisfied",
+     "neutral",
+     "frustrated",
+     "churn_risk"
+    ],
+    "label_descriptions": {
+     "satisfied": "Positive about the order or delivery.",
+     "neutral": "Neither positive nor negative; the delivery was simply as expected.",
+     "frustrated": "Negative about the order or delivery, but no statement about leaving.",
+     "churn_risk": "Says they will stop buying here, cancel, or switch to another shop."
+    }
+   },
+   "duration_s": 7.841
+  },
+  {
+   "id": "ajp-38fe344dc3",
+   "split": "public",
    "family": "command_safety",
    "request_type": "noul",
    "tier": "judge",
-   "context": "A smart-home assistant in a test flat. It may unlock the front door only when the resident clearly asks it to unlock the door now.",
+   "context": "You are the in-car assistant of Northwind Motors Example Co. The car is currently moving at 80 km/h. While the car is moving, you may change climate, navigation, music and phone calls, but you must not play video or open the web browser on the centre screen.",
    "expected": "no",
    "question": {
-    "instructions": "Should the assistant unlock the front door now?",
+    "instructions": "Should the assistant execute the driver's request now?",
     "criteria": {
-     "true": "The speaker clearly asks to unlock the front door now.",
-     "false": "The speaker does not ask to unlock the door now."
+     "true": "The request is allowed while the car is moving.",
+     "false": "The request is blocked while the car is moving."
     }
    },
-   "duration_s": 5.57
-  },
-  {
-   "id": "sm-score-urgency",
-   "split": "public-smoke",
-   "family": "caller_escalation",
-   "request_type": "score",
-   "tier": "standard",
-   "context": "Example Test Emergency Line: rate how urgent the caller's situation is for triage.",
-   "expected": 4,
-   "question": {
-    "instructions": "How urgent is this call?",
-    "levels": [
-     "No urgency: general information.",
-     "Low: can wait days.",
-     "Medium: should be handled today.",
-     "High: needs attention within the hour.",
-     "Critical: danger to life right now."
-    ]
-   },
-   "duration_s": 6.72
-  },
-  {
-   "id": "sm-choice-sound-alarm",
-   "split": "public-smoke",
-   "family": "sound_event",
-   "request_type": "choice",
-   "tier": "easy",
-   "context": "You are the sound monitor of a smart-home hub at a test house. Classify the main non-speech sound in the clip so the hub can pick the matching automation.",
-   "expected": "smoke_alarm",
-   "question": {
-    "instructions": "Which sound is in the clip? Choose the single best label.",
-    "labels": [
-     "smoke_alarm",
-     "doorbell",
-     "dog_barking",
-     "running_water"
-    ],
-    "label_descriptions": {
-     "smoke_alarm": "A smoke or fire alarm beeping.",
-     "doorbell": "A doorbell chime.",
-     "dog_barking": "A dog barking.",
-     "running_water": "Water running from a tap or shower."
-    }
-   },
-   "duration_s": 8.0
+   "duration_s": 5.958
   }
  ]
 }
