@@ -1,0 +1,89 @@
+{
+ "items": [
+  {
+   "id": "sm-choice-intent",
+   "split": "public-smoke",
+   "family": "intent_routing",
+   "request_type": "choice",
+   "tier": "standard",
+   "context": "At Example Test Bank, the voice agent routes calls. Routes: cards — lost, stolen or blocked cards; loans — loan and mortgage questions; profile — address, phone or name changes.",
+   "expected": "cards",
+   "question": {
+    "instructions": "Which route should the voice agent select for the caller's request? Choose the single best label.",
+    "labels": [
+     "cards",
+     "loans",
+     "profile"
+    ],
+    "label_descriptions": {
+     "cards": "Lost, stolen or blocked cards.",
+     "loans": "Loan and mortgage questions.",
+     "profile": "Address, phone or name changes."
+    }
+   },
+   "duration_s": 6.58
+  },
+  {
+   "id": "sm-noul-command",
+   "split": "public-smoke",
+   "family": "command_safety",
+   "request_type": "noul",
+   "tier": "judge",
+   "context": "A smart-home assistant in a test flat. It may unlock the front door only when the resident clearly asks it to unlock the door now.",
+   "expected": "no",
+   "question": {
+    "instructions": "Should the assistant unlock the front door now?",
+    "criteria": {
+     "true": "The speaker clearly asks to unlock the front door now.",
+     "false": "The speaker does not ask to unlock the door now."
+    }
+   },
+   "duration_s": 5.57
+  },
+  {
+   "id": "sm-score-urgency",
+   "split": "public-smoke",
+   "family": "caller_escalation",
+   "request_type": "score",
+   "tier": "standard",
+   "context": "Example Test Emergency Line: rate how urgent the caller's situation is for triage.",
+   "expected": 4,
+   "question": {
+    "instructions": "How urgent is this call?",
+    "levels": [
+     "No urgency: general information.",
+     "Low: can wait days.",
+     "Medium: should be handled today.",
+     "High: needs attention within the hour.",
+     "Critical: danger to life right now."
+    ]
+   },
+   "duration_s": 6.72
+  },
+  {
+   "id": "sm-choice-sound-alarm",
+   "split": "public-smoke",
+   "family": "sound_event",
+   "request_type": "choice",
+   "tier": "easy",
+   "context": "You are the sound monitor of a smart-home hub at a test house. Classify the main non-speech sound in the clip so the hub can pick the matching automation.",
+   "expected": "smoke_alarm",
+   "question": {
+    "instructions": "Which sound is in the clip? Choose the single best label.",
+    "labels": [
+     "smoke_alarm",
+     "doorbell",
+     "dog_barking",
+     "running_water"
+    ],
+    "label_descriptions": {
+     "smoke_alarm": "A smoke or fire alarm beeping.",
+     "doorbell": "A doorbell chime.",
+     "dog_barking": "A dog barking.",
+     "running_water": "Water running from a tap or shower."
+    }
+   },
+   "duration_s": 8.0
+  }
+ ]
+}
