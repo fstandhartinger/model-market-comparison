@@ -12,6 +12,7 @@ import { readJevbenchV142, jevbenchV142View } from '../../../lib/jevbench-v142.m
 import { readJevbenchV142WithFamilies } from '../../../lib/jevbench-v142-families.mjs';
 import { jevV14RowNote } from '../../../lib/jevbench-v14.mjs';
 import { previewMetadata } from '../../../lib/seo';
+import { jevSystemKeyFromSlug, jevSystemPath, jevSystemSlug } from '../../../lib/jev-system-slug.mjs';
 
 // CR-129 (2026-09-23): Google Trends shows readers searching individual JevBench system names
 // (e.g. "semif", "laya model") directly — until now every one of them only existed as a row inside the
@@ -88,28 +89,28 @@ function describeRow(row: JevV12Row, view: JevV12View, all: JevV12Row[]): string
 
 export async function generateStaticParams() {
   const view = jevbenchV12View(await readJevbenchV12());
-  const existing = [...view.ranked, ...view.honorable, ...view.partial].map((r) => ({ system: r.key }));
+  const existing = [...view.ranked, ...view.honorable, ...view.partial].map((r) => ({ system: jevSystemSlug(r.key) }));
   const existingKeys = new Set(existing.map(({ system }) => system));
-  const current = jevbenchV142View(await readJevbenchV142()).systems.map((r) => ({ system: r.key }));
+  const current = jevbenchV142View(await readJevbenchV142()).systems.map((r) => ({ system: jevSystemSlug(r.key) }));
   const currentKeys = new Set(current.map(({ system }) => system));
   return [...current, ...existing.filter(({ system }) => !currentKeys.has(system))].filter(({ system }, index, rows) => rows.findIndex((r) => r.system === system) === index);
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ system: string }> }): Promise<Metadata> {
   const { system } = await params;
-  const key = decodeURIComponent(system);
+  const key = jevSystemKeyFromSlug(decodeURIComponent(system));
   const current = await findV141Row(key);
   const found = current ? null : await findRow(key);
   const row = found?.row ?? current?.row;
   if (!row) return { title: 'System not found' };
   const title = `${short(row.display)} — JevBench by Benchmark Heaven`;
   const description = `Explore the ${short(row.display)} configuration evaluated across intelligence, calibration, speed, and cost.`;
-  return previewMetadata({ path: `/jev-models/${encodeURIComponent(row.key)}`, documentTitle: title, title, description });
+  return previewMetadata({ path: jevSystemPath(row.key), documentTitle: title, title, description });
 }
 
 export default async function JevSystemPage({ params }: { params: Promise<{ system: string }> }) {
   const { system } = await params;
-  const key = decodeURIComponent(system);
+  const key = jevSystemKeyFromSlug(decodeURIComponent(system));
   const current = await findV141Row(key);
   if (current) return <JevV141SystemDetail row={current.row} ranked={current.view.ranked} revision={current.view.revision} generated={current.view.generated} note={current.note} sealedFamilyN={current.sealedFamilyN} hardFamilyN={current.hardFamilyN} />;
   const found = await findRow(key);
@@ -125,16 +126,16 @@ export default async function JevSystemPage({ params }: { params: Promise<{ syst
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'WebPage', '@id': `https://benchmarkheaven.com/jev-models/${row.key}#page`,
-        url: `https://benchmarkheaven.com/jev-models/${row.key}`, name: `${row.display} — JevBench ${view.revision}`,
+        '@type': 'WebPage', '@id': `https://benchmarkheaven.com${jevSystemPath(row.key)}#page`,
+        url: `https://benchmarkheaven.com${jevSystemPath(row.key)}`, name: `${row.display} — JevBench ${view.revision}`,
         description, dateModified: view.generated, isPartOf: { '@id': 'https://benchmarkheaven.com/#website' },
       },
       {
-        '@type': 'BreadcrumbList', '@id': `https://benchmarkheaven.com/jev-models/${row.key}#breadcrumb`,
+        '@type': 'BreadcrumbList', '@id': `https://benchmarkheaven.com${jevSystemPath(row.key)}#breadcrumb`,
         itemListElement: [
           { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://benchmarkheaven.com' },
           { '@type': 'ListItem', position: 2, name: 'Jev alternatives & benchmark', item: 'https://benchmarkheaven.com/jev-models' },
-          { '@type': 'ListItem', position: 3, name: row.display, item: `https://benchmarkheaven.com/jev-models/${row.key}` },
+          { '@type': 'ListItem', position: 3, name: row.display, item: `https://benchmarkheaven.com${jevSystemPath(row.key)}` },
         ],
       },
     ],

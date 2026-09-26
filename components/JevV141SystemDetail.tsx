@@ -6,6 +6,7 @@ import { JevAxisBand, typeColour } from './JevSystemCharts';
 import { JEV_TYPE_LABEL } from './jevTypes';
 import type { JevV14System } from '../lib/jevbench-v14.mjs';
 import { costBasisLabel, one, percent, usdPerThousand } from './JevBenchSeoBlocks';
+import { jevSystemPath } from '../lib/jev-system-slug.mjs';
 
 const short = (value: string) => value.split(' (')[0].split(', formerly')[0];
 const axisKeys = ['intelligence', 'calibration', 'speed', 'cost'] as const;
@@ -46,7 +47,7 @@ export function JevV141SystemDetail({ row, revision, generated, ranked, note = n
   const classLabel = JEV_TYPE_LABEL[row.class] ?? null;
   const classKey = classLabel ? null : (row.class || null);
   const subLineTail = [row.author ? `by ${row.author}` : null].filter(Boolean).join(' · ');
-  const path = `/jev-models/${encodeURIComponent(row.key)}`;
+  const path = jevSystemPath(row.key);
   const axes = row.axes ?? { intelligence: null, calibration: null, speed: null, cost: null };
   const description = `Published ${revision} aggregate detail for ${row.display}, including its JevBench Score, axes, accuracy aggregates, cost evidence and openness fields.`;
   const structuredData = {

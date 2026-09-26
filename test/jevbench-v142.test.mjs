@@ -9,7 +9,7 @@ const read = (path) => readFile(new URL(path, import.meta.url), 'utf8');
 test('CR-152 v1.4.2 is the exact aggregate-only release with the approved top five', () => {
   assert.equal(artifact.revision, 'v1.4.2');
   assert.equal(sha256, JEVBENCH_V142_SHA256);
-  assert.equal(sha256, 'ac14e206dde51ae28e40dc1ea2ff1fecc4a449b941d098e9ecb5618bd533e5be');
+  assert.equal(sha256, 'fb81f4e774e7a965eff7b5bed641cff62c7e51c9b28464dca83d5d7725990fcd');
   const ranked = artifact.systems.filter((row) => row.ranked).sort((a, b) => a.rank - b.rank);
   assert.equal(artifact.systems.length, 93);
   assert.equal(ranked.length, 89);

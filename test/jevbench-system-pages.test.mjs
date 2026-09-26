@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { readJevbenchV12, jevbenchV12View } from '../lib/jevbench-v12.mjs';
+import { readJevbenchV142 } from '../lib/jevbench-v142.mjs';
 
 const page = await readFile(new URL('../app/jev-models/[system]/page.tsx', import.meta.url), 'utf8');
 const hub = await readFile(new URL('../app/jev-models/page.tsx', import.meta.url), 'utf8');
@@ -20,7 +21,7 @@ test('CR-129 generateStaticParams is artifact-driven, not a hardcoded list', () 
   assert.match(page, /export async function generateStaticParams/);
   assert.match(page, /readJevbenchV12/);
   assert.match(page, /view\.ranked.*view\.honorable.*view\.partial/s);
-  assert.match(page, /system:\s*r\.key/);
+  assert.match(page, /system:\s*jevSystemSlug\(r\.key\)/);
 });
 
 test('CR-129 metadata is built only from row fields: main score, rank, and the not-ranked reason', () => {
@@ -48,14 +49,14 @@ test('CR-129 no GDPR-compliance claim (same rule CR-120 already follows on the p
 test('CR-129 sitemap gets one entry per JevBench system and still excludes multimodal-preview', () => {
   assert.match(sitemap, /readJevbenchV12/);
   assert.match(sitemap, /jevbenchV12View/);
-  assert.match(sitemap, /\/jev-models\/\$\{r\.key\}/);
+  assert.match(sitemap, /\$\{jevSystemPath\(r\.key\)\}/);
   assert.doesNotMatch(sitemap, /multimodal-preview/);
 });
 
 test('CR-129 the board links out to the new per-system pages, including semif and laya', () => {
   // F-169 (Fable pass 32): the hub's list of 52 links is gone; a system is reached from the row that
   // names it, so the template these pins follow moved from the page to the board component.
-  assert.match(board, /href=\{`\/jev-models\/\$\{r\.key\}`\}/);
+  assert.match(board, /href=\{jevSystemPath\(r\.key\)\}/);
   assert.doesNotMatch(hub, /Browse every JevBench system/);
   assert.doesNotMatch(hub, /data-bh-jev-system-links/);
 });
@@ -73,9 +74,22 @@ test('CR-129 the hub HTML actually contains links for semif-qwen3.5-4b and laya 
 
 test('F-171 current per-system pages resolve the current v1.4.x board first and draw its score evidence', () => {
   assert.match(page, /const current = await findV141Row\(key\);\n  if \(current\) return <JevV141SystemDetail/);
-  assert.match(page, /jevbenchV142View\(await readJevbenchV142\(\)\)\.systems\.map\(\(r\) => \(\{ system: r\.key \}\)\)/);
+  assert.match(page, /jevbenchV142View\(await readJevbenchV142\(\)\)\.systems\.map\(\(r\) => \(\{ system: jevSystemSlug\(r\.key\) \}\)\)/);
   assert.match(v141Detail, /data-bh-jev-system-score/);
   assert.match(v141Detail, /data-bh-jev-system-strip/);
   assert.match(v141Detail, /data-bh-jev-system-radar/);
   assert.match(v141Detail, /JevCompareV14/);
+});
+
+test('CR-170 a renamed system keeps its artifact key, gets a clean public slug, and the old URL redirects permanently', async () => {
+  const { jevSystemSlug, jevSystemKeyFromSlug, jevSystemPath, JEV_SYSTEM_SLUG_REDIRECTS } = await import('../lib/jev-system-slug.mjs');
+  assert.equal(jevSystemSlug('kushal-gemma4-31b-it-autoloops'), 'autoloops-gemma-4-31b-it');
+  assert.equal(jevSystemKeyFromSlug('autoloops-gemma-4-31b-it'), 'kushal-gemma4-31b-it-autoloops');
+  assert.equal(jevSystemPath('laya'), '/jev-models/laya');
+  assert.deepEqual(JEV_SYSTEM_SLUG_REDIRECTS, [{ source: '/jev-models/kushal-gemma4-31b-it-autoloops', destination: '/jev-models/autoloops-gemma-4-31b-it', permanent: true }]);
+  const { artifact } = await readJevbenchV142();
+  const row = artifact.systems.find((s) => s.key === 'kushal-gemma4-31b-it-autoloops');
+  assert.equal(row.display, 'Autoloops – Gemma 4 31B IT');
+  assert.equal(row.author, 'Autoloops');
+  assert.doesNotMatch(JSON.stringify(artifact), /Kushal/);
 });

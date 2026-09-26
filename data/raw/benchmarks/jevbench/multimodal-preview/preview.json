@@ -125,7 +125,7 @@
   "djev_spark": "djev-spark saw the 100 public promo photos in the earlier inference-only video run, with no training. Its score on the 95 sealed photo items is the independent measure.",
   "jev_omni": "This checkpoint was measured on a separate frozen JevBench v1.4 text set before this run. It received no ImageJevBench task input before this evaluation.",
   "bonsai": "Bonsai-2-27B v2 (PQ2_0 weights, Q8_0 MMProj) was measured offline on 24 Sep; the clean PNG-normalized rerun is scored.",
-  "gemma": "Kushal Patil's Gemma 4 31B IT (Autoloops): results on the original items are reused from the completed Autoloops measurement; the 333 fresh sealed items were run on 25 Sep with the original Autoloops runner. Returned per-request token usage is costed at the published Gemma 4 31B rates.",
+  "gemma": "Autoloops – Gemma 4 31B IT: results on the original items are reused from the completed Autoloops measurement; the 333 fresh sealed items were run on 25 Sep with the original Autoloops runner. Returned per-request token usage is costed at the published Gemma 4 31B rates.",
   "fresh_pool": "The fresh pool items were authored with Claude and reviewed by OpenAI Codex as a blind critic, and the pool photos were generated with an OpenAI image model. This is disclosed for the two OpenAI rows. Self-hosted systems ran the fresh items on one rented GPU pod in offline containers with read-only inputs."
  },
  "weights": {
@@ -970,7 +970,7 @@
   {
    "rank": 5,
    "key": "kushal_gemma4_31b_it_autoloops",
-   "name": "Kushal Patil — Gemma 4 31B IT (Autoloops)",
+   "name": "Autoloops – Gemma 4 31B IT",
    "api_flag": true,
    "prior_exposure": "Original items reused from the Autoloops measurement; fresh sealed items run 25 Sep.",
    "score": 47.13807675331833,

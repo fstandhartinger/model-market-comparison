@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
+import { jevSystemPath } from '../lib/jev-system-slug.mjs';
 
 export type OpenWeightAlternativeRow = {
   key: string;
@@ -122,7 +123,7 @@ export function JevOpenWeightAlternativesTable({ rows, revision }: { rows: OpenW
             {visibleRows.map((row) => (
               <tr key={row.key} className="border-b align-top last:border-0">
                 <th scope="row" className="px-3 py-3 font-semibold">
-                  <Link className="text-accent underline" href={'/jev-models/' + encodeURIComponent(row.key)}>
+                  <Link className="text-accent underline" href={jevSystemPath(row.key)}>
                     {row.display}
                   </Link>
                 </th>
