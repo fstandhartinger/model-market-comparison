@@ -163,6 +163,44 @@ for (const board of BOARDS) {
   }
   }
 }
+// 2026-09-27 (iteration 243, D220.1): a row its maintainer retracted has no observation any more, so the
+// joins above cannot rediscover it — but its reviewed entry is what keeps the retracted value withheld instead
+// of resurfacing as a history estimate (D180/D187, and test/coding-sources.test.mjs accepts exactly these two
+// records as a reason for an observation-less entry). A bare re-run used to delete them silently. Reviewed
+// entries whose row is covered by a withdrawal record are therefore carried over unchanged, and any *other*
+// disappearance stops the run: the house rule for a vanished public row is to fail closed, not to drop it.
+const withdrawnRows = new Set([
+  ...JSON.parse(readFileSync('data/raw/benchmarks/public-withdrawals.json')).withdrawals.map((w) => `${w.benchmark_id}\0${w.source_id}`),
+  ...(JSON.parse(readFileSync('data/raw/benchmarks/public-observations.json')).withdrawn_observations ?? [])
+    .filter((w) => w.withdrawn_reason).map((w) => `${w.benchmark_id}\0${w.subject.source_id}`),
+]);
+const key = (e) => `${e.benchmark_id}\0${e.source_id}\0${e.model_id}`;
+const joinedByKey = new Map(entries.map((e) => [key(e), e]));
+const carriedWithdrawn = [], droppedWithoutWithdrawal = [];
+// Re-emit in the previous file's order and insert each new join next to its own board, so the diff of a
+// re-run is a pure insertion and a reviewer sees only what actually changed.
+const ordered = [];
+for (const e of previous) {
+  const still = joinedByKey.get(key(e));
+  if (still) { ordered.push(still); continue; }
+  if (withdrawnRows.has(`${e.benchmark_id}\0${e.source_id}`)) { ordered.push(e); carriedWithdrawn.push(e); }
+  else droppedWithoutWithdrawal.push({ benchmark_id: e.benchmark_id, source_id: e.source_id, model_id: e.model_id });
+}
+const previousKeys = new Set(previous.map(key));
+for (const e of entries) {
+  if (previousKeys.has(key(e))) continue;
+  const at = ordered.map((x) => x.benchmark_id).lastIndexOf(e.benchmark_id);
+  ordered.splice(at < 0 ? ordered.length : at + 1, 0, e);
+}
+entries.length = 0;
+entries.push(...ordered);
+if (droppedWithoutWithdrawal.length && process.env.ALLOW_DROPS !== '1') {
+  writeFileSync('ops/benchmark-table-2026-09-15/identity-map-review.json', JSON.stringify({ generated_at: new Date().toISOString(), joined: entries.length, unmatched, carried_withdrawn: carriedWithdrawn, dropped_without_withdrawal: droppedWithoutWithdrawal }, null, 2) + '\n');
+  console.error(`${droppedWithoutWithdrawal.length} reviewed join(s) would disappear with no withdrawal record:`);
+  for (const d of droppedWithoutWithdrawal) console.error(`  ${d.benchmark_id} | ${d.source_id} -> ${d.model_id}`);
+  console.error('Record the withdrawal (data/raw/benchmarks/public-withdrawals.json or withdrawn_observations) or, if the rule itself changed, re-run with ALLOW_DROPS=1 and say so in the commit. identity-map.json was not written.');
+  process.exit(2);
+}
 writeFileSync('data/raw/benchmarks/identity-map.json', JSON.stringify({
   schema_version: 1,
   // Kept for older consumers; every current entry carries its own reviewed_at. Do not use
@@ -171,7 +209,7 @@ writeFileSync('data/raw/benchmarks/identity-map.json', JSON.stringify({
   policy: 'Exact joins for public boards whose labels are not catalog names. A label must state the exact model and a setting that exists as a catalog configuration; without a stated setting only a family whose catalog holds exactly one configuration, the default, joins; a configuration named more than once on one board joins neither row. Boards that label models by slug join only when the slug, after one documented normalisation (lower-case, `_`→`-`, a trailing `-<digit>-<digit>` read as a version), is exactly a catalog family key. Self-reported rows keep the critic approval of their unjoined observation; their join takes effect only with its own independent review receipt (`review`). Rules: lib/coding-identity.mjs (product-name boards) and lib/board-identity.mjs (slug boards).',
   entries,
 }, null, 2) + '\n');
-writeFileSync('ops/benchmark-table-2026-09-15/identity-map-review.json', JSON.stringify({ generated_at: new Date().toISOString(), joined: entries.length, unmatched }, null, 2) + '\n');
+writeFileSync('ops/benchmark-table-2026-09-15/identity-map-review.json', JSON.stringify({ generated_at: new Date().toISOString(), joined: entries.length, unmatched, carried_withdrawn: carriedWithdrawn, dropped_without_withdrawal: droppedWithoutWithdrawal }, null, 2) + '\n');
 console.log(JSON.stringify({ joined: entries.length, unmatched: unmatched.length }));
 for (const b of BOARDS) console.log(b.prefix, 'joined', entries.filter((e) => e.benchmark_id.startsWith(b.prefix)).length, 'unmatched', unmatched.filter((e) => e.benchmark_id.startsWith(b.prefix)).length);
 console.log('JOINS:', entries.map((e) => `${e.source_id}→${e.model_id}`).join(' | '));

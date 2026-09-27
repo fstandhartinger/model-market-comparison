@@ -13128,3 +13128,100 @@ the non-implementer sign-offs iterations 239–242 owe (F-203/F-204/F-205, D215,
 D219.1), CR-156.4, X6's remaining audit surface, the CR rows no harness covers (CR-148.1/.2, CR-152.1/.2/.5,
 CR-153.4, CR-158.4), Umami's own retention (CR-67.5 §7.4 residual 1), and F-206 (the CR-172 job's).
 **`ALL-ACCEPTED` is not appended.**
+
+---
+
+## Iteration 243 (claude-opus, 2026-09-27 00:20–01:0x UTC) — D220 closed: the 49 joins reviewed board by board, and the regeneration that was deleting withdrawn rows is stopped
+
+Iteration 242 filed D220 and refused to commit a bare `build-identity-map.mjs` re-run because it added 49
+joins, dropped 5, and eight pinned tests objected. This iteration did the review round it asked for. The
+answer is that **all 49 joins are right and none of the 5 drops was** — and the reason the drops looked like
+drift is a defect in the builder, not in the boards.
+
+### D220.1 — a re-run silently un-withheld every row a maintainer had retracted
+
+The five "removals" are not stale entries. Each is a row whose maintainer took the value back: four
+KernelBench-CUDA cells that flipped to `correct: false, peak_fraction: null` on 2026-09-22 (D187) and
+MathArena BrokenArXiv 06/2026's `Claude-Fable-5.1 (max)` (`public-withdrawals.json`). Their map entry is
+precisely what keeps the retracted value **withheld**: `test/coding-sources.test.mjs` accepts those two
+records as the reason a join has no observation, and without the entry `datedEstimates` republishes the
+value as a dated "no longer published" estimate — the exact failure D187 spent a commit scoping. A bare
+re-run deleted all five, and would have done so on whichever future run someone regenerated the map.
+
+`build-identity-map.mjs` now carries a reviewed entry over when a withdrawal record explains it, and **fails
+closed** (rc 2, nothing written) when a reviewed join would disappear for any other reason, with
+`ALLOW_DROPS=1` as the deliberate override for a rule change that really does drop a join. The guard was
+drilled, not just read: removing the MathArena withdrawal record and re-running gives rc 2, the message
+naming the exact join, and a byte-identical `identity-map.json`
+(`guard-drill.log`). Output ordering was also changed so a re-run is a pure insertion — this run's diff is
+343 added lines and **0 deleted**, which is what made the review possible at all.
+
+### The review round — 49 joins, each against its own capture
+
+Nothing was accepted from the rule alone; each join was checked against the hash-bound capture its own
+observation cites (`identity-map-review-round.json`).
+
+| Board group | Joins | What proves it |
+|---|---|---|
+| KernelBench-CUDA (3 of 4 boards) | 12 | Every cell is `correct: true`, audited `clean`/`interesting`, and appears in the board's own `ranked_passes` at the same value, in capture `c3e22679…dc83f404` |
+| Vals Index (4 boards) | 25 | The efforts come from the source rows. Claude Opus 5.5 is `compute_effort: max` on finance-agent and code-migration but **`high`** on terminal-bench-2.1, and the joins follow that per-board difference exactly |
+| MathArena BrokenArXiv 06 + 08/2026 | 5 | Both editions now publish `Claude-Fable-5.1 (low)` and `GPT-6 Astra (low)`; iteration 154 had already reviewed those two labels on the sibling ArXivMath board |
+| Context Arena MRCR v2 | 1 | `z-ai/glm-5.3@reasoning=low` states its setting in the label, like the already-joined `@high`/`@max` rows |
+| LiveBench 2026-06-25 | 6 | The board's own frontend metadata names each row's model and organisation |
+
+**Union Alpha — iteration 242's open question is answered, with the board's own words.** It asked whether
+LiveBench's `union-alpha` row is our stealth model "or a different system with the same alpha codename". It
+is ours: LiveBench's frontend metadata gives that row
+`url: "https://openrouter.ai/stealth/union-alpha", organization: "Stealth", displayName: "Union Alpha"` — the
+exact OpenRouter route `data/raw/manual.json` builds the catalog entry from, in the captured and hashed
+supporting source `0f3cc9bd…19ee5be0`. So CR-60's factual pin ("no measured observation exists") is simply
+out of date, and the honest move is to publish the measured 76.13 and re-pin the assertion with the reason —
+not to refuse a real public value to keep a test green. **What CR-60.2 actually asks for is unchanged and
+still pinned:** the two *announced* chart-read values stay preliminary, display-only, ‡-marked, out of every
+aggregate; LiveBench is not one of the seven Composite slots, so Union Alpha still has no Composite and no
+category score. Florian may overrule this reading.
+
+Five pinned tests were re-pinned with their reason, never weakened: `vulcanbench-kernelbench` (the four
+per-board join lists, re-derived from the 2026-09-25 capture, keeping the kinetic/muse exclusions and the
+label-parse assertions), `weirdml-v3` (BrokenArXiv 08/2026 4 → 6), `deepseek-v41-flash-claims` (coverage
+40 → 41, with every "the score may not move" assertion untouched), and the two Union Alpha ones above.
+`test/d220-identity-map-regeneration.test.mjs` is new and pins D220.1 both ways.
+
+**Measured effect.** `scores.json`: 49 rows newly joined, **0 lost, 0 moved, 0 value changes, 0 rows
+added or removed**. Published history-bridge estimates 3,337 → **3,334**: the bogus
+`vals-index-code-migration::2 | claude-opus-5.5::max | 54.997` is gone (twice) — the live defect D220 named,
+against a board that publishes **68.901** — plus one unjoined placeholder that is now a real row. **No new
+estimate appeared.** Sixteen further BrokenArXiv 08/2026 records changed only their `comparison` metadata
+(bridge count 10 → 11 as a new anchor joins both editions) and every one of them says "Not comparable under
+the bridge policy; no estimate is published" before and after, so no value reaches a page.
+
+### D221 (new) — one KernelBench board has been frozen for five days, and four published values are missing
+
+The review found this by asking why the same four frontier models joined three KernelBench boards and not
+the fourth. The fourth board is not different: `03_megaqwen_decode` in the same capture carries
+`claude/claude-opus-5-5 [xhigh]` at 7.39, `codex/gpt-6-sol [xhigh]` at 3.98, `grok/grok-4.7 [xhigh]` at 4.55
+and `codex/gpt-6-luna [xhigh]` at 2.86, all `correct: true`, all audited, all in the published
+`ranked_passes` — and the collector parses 18 valid rows from it. They are absent because the arm has been
+**retained since 2026-09-22**: "protocol not approved: round 1: 1 disputed rows quarantined; producer
+uncertainty cannot be overruled by a critic pass" (the 2026-09-25 run's `refresh-benchmarks.log`). Its three
+siblings, parsed from the same bytes by the same parser, passed and published. The same receipt lists **29
+failing sources**, several since 2026-09-11; that backlog as a whole is unfiled. Evidence:
+`d221-megaqwen-frozen-arm.json`. Not repaired here — a protocol round is its own unit of work.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D220 | open → **implemented** (needs a non-implementer sign-off) | `identity-map-review-round.json`, `scores-diff.json` (49 joined, 0 lost), `estimates-diff.json` (3,337 → 3,334, 0 new), `build-identity-map.log`, `npm-test.log`, `tsc.log`, `npm-build.log` | 49 joins approved board by board against their own captures; 0 refused. Union Alpha resolved with LiveBench's own metadata. Five pins re-derived with reasons. |
+| D220.1 (new) | **implemented** | `guard-drill.log`, `test/d220-identity-map-regeneration.test.mjs` | The builder no longer deletes the reviewed join of a withdrawn row, and refuses to write a map that loses one for any other reason. Re-runs are now a pure insertion. |
+| D221 (new) | **open** | `d221-megaqwen-frozen-arm.json` | KernelBench-CUDA megaqwen-decode retained since 2026-09-22 on an unapproved protocol round; four audited published cells missing. Replay the round offline against its own capture. The receipt's other 28 failing sources are unfiled. |
+
+Gates before the push: `node scripts/build-dataset.mjs` rc 0 (870 models / 673 families / 95 providers /
+3,135 offers), `CI=true npm test` **1,453 / 1,452 pass / 0 fail / 1 skip**, `npx tsc --noEmit -p .` rc 0,
+`npm run build` rc 0. `git log origin/main..HEAD` was checked before the push; no other writer's files were
+touched and nothing was staged except this iteration's own paths.
+
+Not done here, still open: **D221** and the 28 other failing sources on the same receipt, the 107 EQ-Bench
+rows a setting-less board cannot join (a question for Florian), CR-176.6's remaining non-implementer review,
+the non-implementer sign-offs iterations 239–243 owe (F-203/F-204/F-205, D215, D216, CR-156.1–.3, D218,
+D219, D219.1, D220, D220.1), CR-156.4, X6's remaining audit surface, the CR rows no harness covers
+(CR-148.1/.2, CR-152.1/.2/.5, CR-153.4, CR-158.4), Umami's own retention (CR-67.5 §7.4 residual 1), and
+F-206 (the CR-172 job's). **`ALL-ACCEPTED` is not appended.**

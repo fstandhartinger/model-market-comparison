@@ -8369,6 +8369,41 @@
       "reviewed_at": "2026-09-16"
     },
     {
+      "benchmark_id": "vals-index::2",
+      "source_id": "openai/gpt-6-sol",
+      "model_id": "gpt-6-sol::max",
+      "rule": "label states model gpt-6-sol and setting max; exact catalog configuration gpt-6-sol::max",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "vals-index::2",
+      "source_id": "grok/grok-4.7",
+      "model_id": "grok-4.7::xhigh",
+      "rule": "label states model grok-4.7 and setting xhigh; exact catalog configuration grok-4.7::xhigh",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "vals-index::2",
+      "source_id": "xiaomi/mimo-v2.6-flash",
+      "model_id": "mimo-v2.6-flash::default",
+      "rule": "label names mimo-v2.6-flash without a setting; the catalog has exactly one configuration, the default (mimo-v2.6-flash::default)",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "vals-index::2",
+      "source_id": "xiaomi/mimo-v2.6-pro",
+      "model_id": "mimo-v2.6-pro::default",
+      "rule": "label names mimo-v2.6-pro without a setting; the catalog has exactly one configuration, the default (mimo-v2.6-pro::default)",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "vals-index::2",
+      "source_id": "openai/gpt-6-luna",
+      "model_id": "gpt-6-luna::max",
+      "rule": "label states model gpt-6-luna and setting max; exact catalog configuration gpt-6-luna::max",
+      "reviewed_at": "2026-09-27"
+    },
+    {
       "benchmark_id": "vals-index-finance-agent::2",
       "source_id": "google/gemini-3.8-flash",
       "model_id": "gemini-3.8-flash::high",
@@ -8591,6 +8626,48 @@
       "model_id": "minimax-m2.7::default",
       "rule": "label names minimax-m2.7 without a setting; the catalog has exactly one configuration, the default (minimax-m2.7::default)",
       "reviewed_at": "2026-09-16"
+    },
+    {
+      "benchmark_id": "vals-index-finance-agent::2",
+      "source_id": "anthropic/claude-opus-5-5",
+      "model_id": "claude-opus-5.5::max",
+      "rule": "label states model claude-opus-5.5 and setting max; exact catalog configuration claude-opus-5.5::max",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "vals-index-finance-agent::2",
+      "source_id": "xiaomi/mimo-v2.6-pro",
+      "model_id": "mimo-v2.6-pro::default",
+      "rule": "label names mimo-v2.6-pro without a setting; the catalog has exactly one configuration, the default (mimo-v2.6-pro::default)",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "vals-index-finance-agent::2",
+      "source_id": "xiaomi/mimo-v2.6-flash",
+      "model_id": "mimo-v2.6-flash::default",
+      "rule": "label names mimo-v2.6-flash without a setting; the catalog has exactly one configuration, the default (mimo-v2.6-flash::default)",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "vals-index-finance-agent::2",
+      "source_id": "grok/grok-4.7",
+      "model_id": "grok-4.7::xhigh",
+      "rule": "label states model grok-4.7 and setting xhigh; exact catalog configuration grok-4.7::xhigh",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "vals-index-finance-agent::2",
+      "source_id": "openai/gpt-6-luna",
+      "model_id": "gpt-6-luna::max",
+      "rule": "label states model gpt-6-luna and setting max; exact catalog configuration gpt-6-luna::max",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "vals-index-finance-agent::2",
+      "source_id": "openai/gpt-6-sol",
+      "model_id": "gpt-6-sol::max",
+      "rule": "label states model gpt-6-sol and setting max; exact catalog configuration gpt-6-sol::max",
+      "reviewed_at": "2026-09-27"
     },
     {
       "benchmark_id": "vals-index-emb::2",
@@ -9055,6 +9132,48 @@
       "reviewed_at": "2026-09-16"
     },
     {
+      "benchmark_id": "vals-index-terminal-bench-2.1::2",
+      "source_id": "anthropic/claude-opus-5-5",
+      "model_id": "claude-opus-5.5::high",
+      "rule": "label states model claude-opus-5.5 and setting high; exact catalog configuration claude-opus-5.5::high",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "vals-index-terminal-bench-2.1::2",
+      "source_id": "openai/gpt-6-sol",
+      "model_id": "gpt-6-sol::max",
+      "rule": "label states model gpt-6-sol and setting max; exact catalog configuration gpt-6-sol::max",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "vals-index-terminal-bench-2.1::2",
+      "source_id": "xiaomi/mimo-v2.6-flash",
+      "model_id": "mimo-v2.6-flash::default",
+      "rule": "label names mimo-v2.6-flash without a setting; the catalog has exactly one configuration, the default (mimo-v2.6-flash::default)",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "vals-index-terminal-bench-2.1::2",
+      "source_id": "grok/grok-4.7",
+      "model_id": "grok-4.7::xhigh",
+      "rule": "label states model grok-4.7 and setting xhigh; exact catalog configuration grok-4.7::xhigh",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "vals-index-terminal-bench-2.1::2",
+      "source_id": "openai/gpt-6-luna",
+      "model_id": "gpt-6-luna::max",
+      "rule": "label states model gpt-6-luna and setting max; exact catalog configuration gpt-6-luna::max",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "vals-index-terminal-bench-2.1::2",
+      "source_id": "xiaomi/mimo-v2.6-pro",
+      "model_id": "mimo-v2.6-pro::default",
+      "rule": "label names mimo-v2.6-pro without a setting; the catalog has exactly one configuration, the default (mimo-v2.6-pro::default)",
+      "reviewed_at": "2026-09-27"
+    },
+    {
       "benchmark_id": "vals-index-vibe-code-bench::2",
       "source_id": "anthropic/claude-fable-5",
       "model_id": "claude-fable-5::max",
@@ -9515,6 +9634,62 @@
       "model_id": "grok-4.3::high",
       "rule": "label states model grok-4.3 and setting high; exact catalog configuration grok-4.3::high",
       "reviewed_at": "2026-09-16"
+    },
+    {
+      "benchmark_id": "vals-index-code-migration::2",
+      "source_id": "anthropic/claude-opus-5-5",
+      "model_id": "claude-opus-5.5::max",
+      "rule": "label states model claude-opus-5.5 and setting max; exact catalog configuration claude-opus-5.5::max",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "vals-index-code-migration::2",
+      "source_id": "openai/gpt-6-sol",
+      "model_id": "gpt-6-sol::max",
+      "rule": "label states model gpt-6-sol and setting max; exact catalog configuration gpt-6-sol::max",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "vals-index-code-migration::2",
+      "source_id": "openai/gpt-6-luna",
+      "model_id": "gpt-6-luna::max",
+      "rule": "label states model gpt-6-luna and setting max; exact catalog configuration gpt-6-luna::max",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "vals-index-code-migration::2",
+      "source_id": "grok/grok-4.7",
+      "model_id": "grok-4.7::xhigh",
+      "rule": "label states model grok-4.7 and setting xhigh; exact catalog configuration grok-4.7::xhigh",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "vals-index-code-migration::2",
+      "source_id": "xiaomi/mimo-v2.6-pro",
+      "model_id": "mimo-v2.6-pro::default",
+      "rule": "label names mimo-v2.6-pro without a setting; the catalog has exactly one configuration, the default (mimo-v2.6-pro::default)",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "vals-index-code-migration::2",
+      "source_id": "xiaomi/mimo-v2.6-flash",
+      "model_id": "mimo-v2.6-flash::default",
+      "rule": "label names mimo-v2.6-flash without a setting; the catalog has exactly one configuration, the default (mimo-v2.6-flash::default)",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "vals-index-code-migration::2",
+      "source_id": "zai/glm-5.2",
+      "model_id": "glm-5.2::max",
+      "rule": "label states model glm-5.2 and setting max; exact catalog configuration glm-5.2::max",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "vals-index-code-migration::2",
+      "source_id": "zai/glm-5.3-flash",
+      "model_id": "glm-5.3-flash::default",
+      "rule": "label names glm-5.3-flash without a setting; the catalog has exactly one configuration, the default (glm-5.3-flash::default)",
+      "reviewed_at": "2026-09-27"
     },
     {
       "benchmark_id": "vals-index-legal-research::2",
@@ -10364,6 +10539,27 @@
       "reviewed_at": "2026-09-16"
     },
     {
+      "benchmark_id": "matharena-brokenarxiv::2026-06",
+      "source_id": "GPT-6 Astra (low)",
+      "model_id": "gpt-6-astra::low",
+      "rule": "label states model gpt-6-astra and setting low; exact catalog configuration gpt-6-astra::low",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "matharena-brokenarxiv::2026-06",
+      "source_id": "Claude-Fable-5.1 (low)",
+      "model_id": "claude-fable-5.1::low",
+      "rule": "label states model claude-fable-5.1 and setting low; exact catalog configuration claude-fable-5.1::low",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "matharena-brokenarxiv::2026-06",
+      "source_id": "DeepSeek-V4.1-Flash (Max)",
+      "model_id": "deepseek-v4.1-flash::max",
+      "rule": "label states model deepseek-v4.1-flash and setting max; exact catalog configuration deepseek-v4.1-flash::max",
+      "reviewed_at": "2026-09-27"
+    },
+    {
       "benchmark_id": "matharena-brokenarxiv::2026-08",
       "source_id": "GPT-6 Astra (max)",
       "model_id": "gpt-6-astra::max",
@@ -10390,6 +10586,20 @@
       "model_id": "deepseek-v4.1-flash::max",
       "rule": "label states model deepseek-v4.1-flash and setting max; exact catalog configuration deepseek-v4.1-flash::max",
       "reviewed_at": "2026-09-19"
+    },
+    {
+      "benchmark_id": "matharena-brokenarxiv::2026-08",
+      "source_id": "Claude-Fable-5.1 (low)",
+      "model_id": "claude-fable-5.1::low",
+      "rule": "label states model claude-fable-5.1 and setting low; exact catalog configuration claude-fable-5.1::low",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "matharena-brokenarxiv::2026-08",
+      "source_id": "GPT-6 Astra (low)",
+      "model_id": "gpt-6-astra::low",
+      "rule": "label states model gpt-6-astra and setting low; exact catalog configuration gpt-6-astra::low",
+      "reviewed_at": "2026-09-27"
     },
     {
       "benchmark_id": "matharena-arxivmath::2026-06",
@@ -11673,6 +11883,34 @@
       "reviewed_at": "2026-09-18"
     },
     {
+      "benchmark_id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+      "source_id": "claude/claude-opus-5-5 [xhigh]",
+      "model_id": "claude-opus-5.5::xhigh",
+      "rule": "label states model claude-opus-5.5 and setting xhigh; exact catalog configuration claude-opus-5.5::xhigh",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+      "source_id": "codex/gpt-6-luna [xhigh]",
+      "model_id": "gpt-6-luna::xhigh",
+      "rule": "label states model gpt-6-luna and setting xhigh; exact catalog configuration gpt-6-luna::xhigh",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+      "source_id": "codex/gpt-6-sol [xhigh]",
+      "model_id": "gpt-6-sol::xhigh",
+      "rule": "label states model gpt-6-sol and setting xhigh; exact catalog configuration gpt-6-sol::xhigh",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "kernelbench-cuda-glm52-fused-moe::rtx-pro-6000",
+      "source_id": "grok/grok-4.7 [xhigh]",
+      "model_id": "grok-4.7::xhigh",
+      "rule": "label states model grok-4.7 and setting xhigh; exact catalog configuration grok-4.7::xhigh",
+      "reviewed_at": "2026-09-27"
+    },
+    {
       "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
       "source_id": "claude/claude-opus-4-8 [max]",
       "model_id": "claude-opus-4.8::max",
@@ -11715,6 +11953,34 @@
       "reviewed_at": "2026-09-18"
     },
     {
+      "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+      "source_id": "claude/claude-opus-5-5 [xhigh]",
+      "model_id": "claude-opus-5.5::xhigh",
+      "rule": "label states model claude-opus-5.5 and setting xhigh; exact catalog configuration claude-opus-5.5::xhigh",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+      "source_id": "codex/gpt-6-luna [xhigh]",
+      "model_id": "gpt-6-luna::xhigh",
+      "rule": "label states model gpt-6-luna and setting xhigh; exact catalog configuration gpt-6-luna::xhigh",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+      "source_id": "codex/gpt-6-sol [xhigh]",
+      "model_id": "gpt-6-sol::xhigh",
+      "rule": "label states model gpt-6-sol and setting xhigh; exact catalog configuration gpt-6-sol::xhigh",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "kernelbench-cuda-deepseek-nsa::rtx-pro-6000",
+      "source_id": "grok/grok-4.7 [xhigh]",
+      "model_id": "grok-4.7::xhigh",
+      "rule": "label states model grok-4.7 and setting xhigh; exact catalog configuration grok-4.7::xhigh",
+      "reviewed_at": "2026-09-27"
+    },
+    {
       "benchmark_id": "kernelbench-cuda-megaqwen-decode::rtx-pro-6000",
       "source_id": "claude/claude-opus-4-8 [max]",
       "model_id": "claude-opus-4.8::max",
@@ -11783,6 +12049,34 @@
       "model_id": "gemini-3.8-flash::high",
       "rule": "label states model gemini-3.8-flash and setting high; exact catalog configuration gemini-3.8-flash::high",
       "reviewed_at": "2026-09-18"
+    },
+    {
+      "benchmark_id": "kernelbench-cuda-grid-mingru-sps::rtx-pro-6000",
+      "source_id": "claude/claude-opus-5-5 [xhigh]",
+      "model_id": "claude-opus-5.5::xhigh",
+      "rule": "label states model claude-opus-5.5 and setting xhigh; exact catalog configuration claude-opus-5.5::xhigh",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "kernelbench-cuda-grid-mingru-sps::rtx-pro-6000",
+      "source_id": "codex/gpt-6-luna [xhigh]",
+      "model_id": "gpt-6-luna::xhigh",
+      "rule": "label states model gpt-6-luna and setting xhigh; exact catalog configuration gpt-6-luna::xhigh",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "kernelbench-cuda-grid-mingru-sps::rtx-pro-6000",
+      "source_id": "codex/gpt-6-sol [xhigh]",
+      "model_id": "gpt-6-sol::xhigh",
+      "rule": "label states model gpt-6-sol and setting xhigh; exact catalog configuration gpt-6-sol::xhigh",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "kernelbench-cuda-grid-mingru-sps::rtx-pro-6000",
+      "source_id": "grok/grok-4.7 [xhigh]",
+      "model_id": "grok-4.7::xhigh",
+      "rule": "label states model grok-4.7 and setting xhigh; exact catalog configuration grok-4.7::xhigh",
+      "reviewed_at": "2026-09-27"
     },
     {
       "benchmark_id": "frontierswe::2",
@@ -12511,6 +12805,13 @@
       "model_id": "laguna-xs-2.1::default",
       "rule": "label names laguna-xs-2.1 without a setting; the catalog has exactly one configuration, the default (laguna-xs-2.1::default)",
       "reviewed_at": "2026-09-21"
+    },
+    {
+      "benchmark_id": "context-arena-mrcr-v2::8-needle",
+      "source_id": "z-ai/glm-5.3@reasoning=low",
+      "model_id": "glm-5.3::low",
+      "rule": "label states model glm-5.3 and setting low; exact catalog configuration glm-5.3::low",
+      "reviewed_at": "2026-09-27"
     },
     {
       "benchmark_id": "blueprint-bench::2",
@@ -13638,6 +13939,48 @@
       "model_id": "deepseek-v4.1-flash::max",
       "rule": "label states model deepseek-v4.1-flash and setting max; exact catalog configuration deepseek-v4.1-flash::max",
       "reviewed_at": "2026-09-20"
+    },
+    {
+      "benchmark_id": "livebench::2026-06-25",
+      "source_id": "union-alpha",
+      "model_id": "union-alpha::default",
+      "rule": "label names union-alpha without a setting; the catalog has exactly one configuration, the default (union-alpha::default)",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "livebench::2026-06-25",
+      "source_id": "grok-4.7-xhigh",
+      "model_id": "grok-4.7::xhigh",
+      "rule": "label states model grok-4.7 and setting xhigh; exact catalog configuration grok-4.7::xhigh",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "livebench::2026-06-25",
+      "source_id": "claude-opus-5-5-max-effort",
+      "model_id": "claude-opus-5.5::max",
+      "rule": "label states model claude-opus-5.5 and setting max; exact catalog configuration claude-opus-5.5::max",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "livebench::2026-06-25",
+      "source_id": "claude-opus-5-5-xhigh-effort",
+      "model_id": "claude-opus-5.5::xhigh",
+      "rule": "label states model claude-opus-5.5 and setting xhigh; exact catalog configuration claude-opus-5.5::xhigh",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "livebench::2026-06-25",
+      "source_id": "gpt-6-sol-max",
+      "model_id": "gpt-6-sol::max",
+      "rule": "label states model gpt-6-sol and setting max; exact catalog configuration gpt-6-sol::max",
+      "reviewed_at": "2026-09-27"
+    },
+    {
+      "benchmark_id": "livebench::2026-06-25",
+      "source_id": "gpt-6-luna-max",
+      "model_id": "gpt-6-luna::max",
+      "rule": "label states model gpt-6-luna and setting max; exact catalog configuration gpt-6-luna::max",
+      "reviewed_at": "2026-09-27"
     },
     {
       "benchmark_id": "programbench::1",

@@ -113,9 +113,21 @@ test('the announcement posts carry the announced dates and claims (syndication p
   assert.match(oc.created_at, /^2026-09-16/);
 });
 
-test('no measured or self-reported observation exists for Union Alpha — aggregates have only honest inputs', () => {
+// 2026-09-27 (iteration 243, D220): LiveBench's release board 2026-06-25 published a measured `union-alpha`
+// row (76.13, source row 57 of the 2026-09-25 capture 05f59189…fb5ecb2d). It is this model and not a codename
+// collision: the board's own frontend metadata gives the row
+// `url: "https://openrouter.ai/stealth/union-alpha", organization: "Stealth", displayName: "Union Alpha"` —
+// the exact OpenRouter route the catalog entry is built from (data/raw/manual.json), in the captured and hashed
+// supporting source 0f3cc9bd…19ee5be0. So the count below is 2 preliminary + 1 measured, not "no measured value".
+// What CR-60.2 actually requires is unchanged and is what the rest of this suite pins: the two *announced*
+// chart-read values stay preliminary and display-only, and no preliminary figure reaches a score. LiveBench is
+// not one of the seven Composite slots (lib/composite.mjs), so the model still has no composite.
+test('Union Alpha\'s only non-preliminary input is LiveBench; aggregates have only honest inputs', () => {
   const mine = ds.benchmark_results.observations.filter((o) => o.subject.model_id === MODEL);
-  assert.deepEqual(mine.map((o) => o.basis).sort(), ['preliminary', 'preliminary']);
+  assert.deepEqual(mine.map((o) => o.basis).sort(), ['derived', 'preliminary', 'preliminary']);
+  const live = mine.find((o) => o.basis !== 'preliminary');
+  assert.equal(live.benchmark_id, 'livebench::2026-06-25');
+  assert.equal(live.source_basis, 'measured', 'LiveBench keeps its source basis through the ×-formula derivation');
   const ua = ds.models.find((m) => m.id === MODEL);
   assert.ok(ua, 'the catalog family exists');
   assert.ok(!ua.scores || ua.scores.composite == null, 'no composite is built from preliminary figures');
@@ -124,7 +136,10 @@ test('no measured or self-reported observation exists for Union Alpha — aggreg
 });
 
 test('the comparison matrix shows both values as preliminary cells, in the right row', () => {
-  assert.equal(cells.length, 2, 'Union Alpha has exactly the two announced cells');
+  // The two announced cells plus the measured LiveBench one (see the note above); the loop below checks that
+  // each announced value still sits on its own correct row with the preliminary basis code.
+  assert.equal(cells.length, 3, 'the two announced cells and the measured LiveBench cell');
+  assert.equal(cells.filter(([, , basis]) => basis === 3).length, 2, 'exactly the two announced cells are preliminary');
   for (const spec of ROWS) {
     const rowsOfBenchmark = matrix.rows.map((r, i) => [r, i]).filter(([r]) => r.benchmarkId === spec.benchmark_id);
     const withCell = rowsOfBenchmark.filter(([, i]) => cells.some(([rowIndex]) => rowIndex === i));
@@ -290,13 +305,21 @@ test('the model page really does render Union Alpha\'s preliminary rows', () => 
   const view = buildBenchmarkView(ds);
   const rows = view.axes
     .filter((a) => a.scores.some((r) => r.modelId === MODEL))
-    .map((a) => { const own = a.scores.filter((r) => r.modelId === MODEL); return { name: a.name, shown: latestScores(own)[0] ?? own[0] }; });
-  assert.equal(rows.length, ROWS.length, `the sheet shows ${ROWS.length} rows for ${MODEL}`);
-  for (const r of rows) assert.equal(r.shown.basis, 'preliminary', `${r.name} reaches the sheet as a preliminary value`);
+    .map((a) => { const own = a.scores.filter((r) => r.modelId === MODEL); return { name: a.name, shown: latestScores(own)[0] ?? own[0], axis: a }; });
+  // 2026-09-27 (iteration 243, D220): the measured LiveBench row joined the sheet, so the two announced rows are
+  // identified by their own benchmark ids rather than by being the only ones there.
+  const announced = rows.filter((r) => ROWS.some((spec) => r.axis.benchmarkId === spec.benchmark_id));
+  assert.equal(announced.length, ROWS.length, `the sheet shows ${ROWS.length} announced rows for ${MODEL}`);
+  for (const r of announced) assert.equal(r.shown.basis, 'preliminary', `${r.name} reaches the sheet as a preliminary value`);
   // …and `percentileFor` ranks measured rows only, so the sheet's bar is already absent for them.
-  for (const axis of view.axes.filter((a) => a.scores.some((r) => r.modelId === MODEL))) {
-    assert.equal(percentileFor(axis, MODEL), null, `${axis.name}: a preliminary row takes no percentile`);
+  for (const r of announced) {
+    assert.equal(percentileFor(r.axis, MODEL), null, `${r.axis.name}: a preliminary row takes no percentile`);
   }
+  // The measured row is the mirror image: it is measured, and it does take a percentile like any other model's.
+  const measured = rows.filter((r) => !ROWS.some((spec) => r.axis.benchmarkId === spec.benchmark_id));
+  assert.equal(measured.length, 1, 'LiveBench is the only measured row Union Alpha has');
+  assert.equal(measured[0].axis.benchmarkId, 'livebench::2026-06-25');
+  assert.notEqual(measured[0].shown.basis, 'preliminary');
 });
 
 // F-123 (Fable pass 23, found live): /benchmarks and the Simple Benchmarks section drew a data bar behind

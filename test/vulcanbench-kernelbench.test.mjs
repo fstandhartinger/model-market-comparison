@@ -123,10 +123,20 @@ test('KernelBench-CUDA joins: reviewed labels only; unaudited, bug and suspect c
   assert.deepEqual(parseKernelbenchCudaLabel('muse/muse-spark-1.3 [ultra]'), { family: 'muse-spark-1.3', effort: 'ultra' }, 'ultra is not a reviewed setting');
   const map = JSON.parse(readFileSync('data/raw/benchmarks/identity-map.json', 'utf8')).entries;
   const per = (id) => map.filter((e) => e.benchmark_id === id).map((e) => e.model_id).sort();
-  assert.deepEqual(per('kernelbench-cuda-glm52-fused-moe::rtx-pro-6000'), ['claude-fable-5.1::max', 'claude-opus-4.8::max', 'claude-opus-5::max', 'grok-4.6::xhigh']);
-  assert.deepEqual(per('kernelbench-cuda-deepseek-nsa::rtx-pro-6000'), ['claude-fable-5.1::max', 'claude-opus-4.8::max', 'claude-opus-5::max', 'gemini-3.8-flash::high', 'glm-5.3-flash::default', 'grok-4.6::xhigh']);
+  // 2026-09-27 (iteration 243, D220): kernelbench.com ran four more frontier models between the 2026-09-18
+  // capture these lists were first written from and the 2026-09-25 one. Each added cell is `correct: true`
+  // with an audited verdict and a peak_fraction in the committed capture
+  // (data/raw/benchmarks/daily-evidence/2026-09-25T08-50-35-039Z/c3e22679c1c23c355c86.gz, body sha256
+  // c3e22679c1c23c355c86fc8e8af4e7d40e344ce5e39a9cef4aef958cdc83f404), so the lists are re-derived from the
+  // board rather than the joins refused to keep an older list green. megaqwen-decode is the exception and the
+  // reason is not the board: its four cells are equally valid there, but the arm has been retained since
+  // 2026-09-22 on an unapproved protocol round (D221), so no 2026-09-25 row of it reached the observations.
+  // The withdrawn 2026-09-18 identities (D187) stay in every list — their entry is what keeps the retracted
+  // value withheld instead of resurfacing as a history estimate.
+  assert.deepEqual(per('kernelbench-cuda-glm52-fused-moe::rtx-pro-6000'), ['claude-fable-5.1::max', 'claude-opus-4.8::max', 'claude-opus-5.5::xhigh', 'claude-opus-5::max', 'gpt-6-luna::xhigh', 'gpt-6-sol::xhigh', 'grok-4.6::xhigh', 'grok-4.7::xhigh']);
+  assert.deepEqual(per('kernelbench-cuda-deepseek-nsa::rtx-pro-6000'), ['claude-fable-5.1::max', 'claude-opus-4.8::max', 'claude-opus-5.5::xhigh', 'claude-opus-5::max', 'gemini-3.8-flash::high', 'glm-5.3-flash::default', 'gpt-6-luna::xhigh', 'gpt-6-sol::xhigh', 'grok-4.6::xhigh', 'grok-4.7::xhigh']);
   assert.deepEqual(per('kernelbench-cuda-megaqwen-decode::rtx-pro-6000'), ['claude-fable-5.1::max', 'claude-opus-4.8::max', 'claude-opus-5::max', 'gemini-3.8-flash::high', 'glm-5.3-flash::default', 'grok-4.6::xhigh']);
-  assert.deepEqual(per('kernelbench-cuda-grid-mingru-sps::rtx-pro-6000'), ['claude-fable-5.1::max', 'claude-opus-4.8::max', 'claude-opus-5::max', 'gemini-3.8-flash::high']);
+  assert.deepEqual(per('kernelbench-cuda-grid-mingru-sps::rtx-pro-6000'), ['claude-fable-5.1::max', 'claude-opus-4.8::max', 'claude-opus-5.5::xhigh', 'claude-opus-5::max', 'gemini-3.8-flash::high', 'gpt-6-luna::xhigh', 'gpt-6-sol::xhigh', 'grok-4.7::xhigh']);
   for (const id of ['kernelbench-cuda-glm52-fused-moe::rtx-pro-6000', 'kernelbench-cuda-deepseek-nsa::rtx-pro-6000', 'kernelbench-cuda-megaqwen-decode::rtx-pro-6000', 'kernelbench-cuda-grid-mingru-sps::rtx-pro-6000'])
     assert.ok(!map.some((e) => e.benchmark_id === id && /kinetic|muse/.test(e.source_id)), 'kinetic and muse labels stay unmatched source identities');
 });

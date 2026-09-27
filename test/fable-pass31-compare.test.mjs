@@ -104,9 +104,12 @@ test('the counts come from the rows the table renders, for the real launch-day s
     assert.equal(p.total, rows.length, `${p.name}: the total is the number of rows the table fills`);
     assert.equal(p.total, p.measured + p.selfReported + p.preliminary, `${p.name}: every row has a basis`);
   }
-  // Union Alpha's two values are the chart-read ones CR-127.4 ingested; the sentence must say so.
+  // Union Alpha's two chart-read values are the ones CR-127.4 ingested; the sentence must say so.
+  // 2026-09-27 (iteration 243, D220): LiveBench's release board also publishes a measured row for it, so the
+  // model is no longer preliminary-only — what this test guards is that the sentence counts the preliminary
+  // rows against the total the table actually fills, whatever the rest of the row is.
   const union = state.profiles.find((p) => p.id === 'union-alpha::default');
-  assert.ok(union.preliminary > 0 && union.measured === 0, `Union Alpha is preliminary-only, got ${JSON.stringify(union)}`);
+  assert.ok(union.preliminary === 2 && union.measured === 1, `Union Alpha's two chart-read rows plus LiveBench, got ${JSON.stringify(union)}`);
   const sentence = compareClaimsSentence(state.profiles);
   assert.match(sentence, new RegExp(`Union Alpha: ${union.preliminary} of ${union.total}`));
   for (const p of state.profiles.filter((x) => x.selfReported > 0)) {

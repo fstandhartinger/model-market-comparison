@@ -75,7 +75,10 @@ print('ok')
   const map = JSON.parse(readFileSync('data/raw/benchmarks/identity-map.json', 'utf8')).entries;
   // CR-85.2 (2026-09-19): + DeepSeek-V4.1-Flash (Max) → deepseek-v4.1-flash::max on both boards.
   // 2026-09-21 (iteration 154): + GPT-6 Astra (low) and Claude-Fable-5.1 (low), published by the 2026-09-21 refresh.
+  // 2026-09-27 (iteration 243, D220): BrokenArXiv 08/2026 now publishes those two rows as well — 'Claude-Fable-5.1
+  // (low)' at 77.98 and 'GPT-6 Astra (low)' at 74.70 in the 2026-09-25 capture — so its list matches ArXivMath's.
+  // The counts above are read from the plan's own pinned capture and describe the frozen replay, not today's board.
   assert.equal(map.filter((e) => e.benchmark_id === 'matharena-arxivmath::2026-08').length, 6);
-  assert.equal(map.filter((e) => e.benchmark_id === 'matharena-brokenarxiv::2026-08').length, 4);
+  assert.equal(map.filter((e) => e.benchmark_id === 'matharena-brokenarxiv::2026-08').length, 6);
   assert.ok(!map.some((e) => e.benchmark_id === 'matharena-arxivmath::2026-08' && /Think/.test(e.source_id)), 'unreviewed settings stay unjoined');
 });
