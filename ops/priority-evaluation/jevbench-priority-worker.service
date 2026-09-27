@@ -1,5 +1,5 @@
 [Unit]
-Description=Process JevBench priority evaluation notices and deadline refunds
+Description=Pick up paid Benchmark Heaven evaluations and enforce payment-time SLAs
 After=network-online.target
 Wants=network-online.target
 
@@ -12,5 +12,6 @@ NoNewPrivileges=true
 PrivateTmp=true
 ProtectSystem=strict
 ProtectHome=read-only
-ReadWritePaths=%h/.notify
+ReadWritePaths=%h/.notify %h/jobs/fastlane-evaluations %h/.local/share/agent-board
+ReadWritePaths=%h/.local/state/telegram-reply-broker/callback-status.d
 RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6

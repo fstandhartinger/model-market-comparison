@@ -84,7 +84,7 @@ export async function markCheckoutFailed(requestId: string) {
 }
 
 type CheckoutEvent = {
-  eventId: string; eventType: string; requestId: string; mode: 'test' | 'live';
+  eventId: string; eventType: string; requestId: string; mode: 'test' | 'live'; eventCreatedAt: number;
   session: {
     id?: unknown; mode?: unknown; status?: unknown; payment_status?: unknown; currency?: unknown;
     amount_subtotal?: unknown; amount_total?: unknown; payment_intent?: unknown;
@@ -97,6 +97,7 @@ export async function recordPaidCheckout(input: CheckoutEvent): Promise<'recorde
   const requestId = input.requestId;
   if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(requestId)) throw new Error('Invalid request reference');
   if (typeof input.eventId !== 'string' || !input.eventId.startsWith('evt_') || input.eventId.length > 128) throw new Error('Invalid webhook event reference');
+  if (!Number.isSafeInteger(input.eventCreatedAt) || input.eventCreatedAt <= 0) throw new Error('Invalid payment event time');
   if (input.eventType !== 'checkout.session.completed' || session.mode !== 'payment' || session.status !== 'complete' || session.payment_status !== 'paid') throw new Error('Checkout session is not a completed payment');
   if (session.metadata?.priority_request_id !== requestId || session.client_reference_id !== requestId) throw new Error('Checkout reference does not match');
   if (session.currency !== 'usd' || typeof session.amount_subtotal !== 'number' || !Number.isSafeInteger(session.amount_subtotal) || typeof session.amount_total !== 'number' || !Number.isSafeInteger(session.amount_total)) throw new Error('Checkout amount is invalid');
@@ -135,9 +136,10 @@ export async function recordPaidCheckout(input: CheckoutEvent): Promise<'recorde
     if (row.status !== 'checkout_pending' && row.status !== 'checkout_failed') throw new Error('Request is not awaiting payment');
     await client.query(
       `UPDATE bh_priority_evaluation_requests SET status='paid', checkout_session_id=$2, payment_intent_id=$3,
-       amount_total=$4, notification_status='pending', updated_at=now()
+       amount_total=$4, paid_at=to_timestamp($5), notification_status='pending',
+       pickup_status='pending', board_status='pending', confirmation_status='pending', updated_at=now()
        WHERE id=$1`,
-      [requestId, session.id, paymentIntent, session.amount_total],
+      [requestId, session.id, paymentIntent, session.amount_total, input.eventCreatedAt],
     );
     await client.query('COMMIT');
     return 'recorded';

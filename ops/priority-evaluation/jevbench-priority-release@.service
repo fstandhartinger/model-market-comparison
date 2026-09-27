@@ -1,0 +1,22 @@
+[Unit]
+Description=Paid fast-lane leaderboard release %i
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 %h/bin/jevbench-priority-agent-runner.py %i release
+TimeoutStartSec=infinity
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=%h/jobs/fastlane-evaluations/%i %h/.local/share/agent-board %h/.notify
+ReadWritePaths=%h/.local/state/telegram-reply-broker/callback-status.d
+ReadOnlyPaths=/opt/model-market-comparison
+InaccessiblePaths=%h/jevbench-sealed
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+LockPersonality=true
+ProtectKernelTunables=true
+ProtectKernelModules=true

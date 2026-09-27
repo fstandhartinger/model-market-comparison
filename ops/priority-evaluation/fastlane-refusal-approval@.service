@@ -1,0 +1,16 @@
+[Unit]
+Description=One-tap refusal email approval watcher for priority request %i
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 %h/bin/jevbench-priority-approval.py watch %i
+TimeoutStartSec=43200
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=%h/jobs/fastlane-evaluations/%i %h/.notify
+ReadWritePaths=%h/.local/state/telegram-reply-broker/callback-status.d
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+LockPersonality=true

@@ -1,0 +1,12 @@
+[Unit]
+Description=Check for fast-lane customer replies every 15 minutes
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=15min
+AccuracySec=1min
+Persistent=true
+Unit=jevbench-priority-mail-watcher.service
+
+[Install]
+WantedBy=timers.target

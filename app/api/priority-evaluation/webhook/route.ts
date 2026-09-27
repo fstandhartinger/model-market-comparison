@@ -22,7 +22,8 @@ export async function POST(req: NextRequest) {
   catch { return json({ error: 'Invalid webhook event.' }, 400); }
   const eventId = event.id;
   const eventType = event.type;
-  if (typeof eventId !== 'string' || typeof eventType !== 'string') return json({ error: 'Invalid webhook event.' }, 400);
+  const eventCreated = event.created;
+  if (typeof eventId !== 'string' || typeof eventType !== 'string' || !Number.isSafeInteger(eventCreated) || (eventCreated as number) <= 0) return json({ error: 'Invalid webhook event.' }, 400);
   if (eventType !== 'checkout.session.completed') return json({ received: true, ignored: true });
   const livemode = event.livemode;
   if (typeof livemode !== 'boolean' || (livemode ? 'live' : 'test') !== activeMode) return json({ error: 'Payment mode does not match.' }, 400);
@@ -36,7 +37,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const result = await recordPaidCheckout({
-      eventId, eventType, requestId, mode: activeMode,
+      eventId, eventType, requestId, mode: activeMode, eventCreatedAt: eventCreated as number,
       session: checkout as never,
     });
     return json({ received: true, result });

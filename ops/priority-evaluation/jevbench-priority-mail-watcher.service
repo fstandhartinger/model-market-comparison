@@ -1,0 +1,18 @@
+[Unit]
+Description=Read-only Gmail watcher for open paid Benchmark Heaven evaluations
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 %h/bin/jevbench-priority-mail-watch.py cycle
+TimeoutStartSec=120
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=%h/.notify %h/.local/share/agent-board %h/jobs/fastlane-evaluations
+ReadWritePaths=%h/jobs/fastlane-plumb-release-20260927 %h/jobs/fastlane-laya-vision-20260927
+ReadWritePaths=%h/jobs/fastlane-imajev4b-20260927
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
