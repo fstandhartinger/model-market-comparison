@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
+import { gunzipSync } from 'node:zlib';
 import { parseVulcanbenchFrontierLabel, parseKernelbenchCudaLabel } from '../lib/board-identity.mjs';
 
 // 2026-09-18 (iteration 114, CR-82.3 / CR-82.4). The sources are the committed captures of
@@ -70,14 +71,55 @@ print('ok')
   assert.equal(output.trim(), 'ok');
 });
 
-test('VulcanBench Frontier joins: every model x effort column is an exact catalog configuration', () => {
+// D224 (2026-09-27): the assertion used to be a typed count ("all 24 model x effort columns join"),
+// which stayed green while the board grew past the reviewed label map — GPT-5.6 Sol's four
+// publishable columns and, from 2026-09-26, Claude Opus 5.5's four were silently refused as unknown
+// labels for days, and a correct rebuild that finally joined them would have turned the count red.
+// The board itself is the expectation now: every column it publishes has to resolve to an exact
+// catalog configuration, and every join the map holds has to be a column the board really carries.
+test('VulcanBench Frontier joins: every model x effort column the board publishes is an exact catalog configuration', () => {
   assert.deepEqual(parseVulcanbenchFrontierLabel('Fable 5.1 [max]'), { family: 'claude-fable-5.1', effort: 'max' });
   assert.deepEqual(parseVulcanbenchFrontierLabel('GPT-5.5 [extra-high]'), { family: 'gpt-5.5', effort: 'xhigh' }, "VulcanBench's own spelling of the xhigh tier");
   assert.deepEqual(parseVulcanbenchFrontierLabel('GPT-6 Astra [ultra]'), { family: 'gpt-6-astra', effort: 'ultra' }, 'an unreviewed setting is refused downstream');
+  assert.deepEqual(parseVulcanbenchFrontierLabel('Opus 5.5 [high]'), { family: 'claude-opus-5.5', effort: 'high' }, 'D224: the board spells Claude Opus 5.5 "Opus 5.5"');
+
+  // The newest retained capture of the board, whatever run took it — the same rule the protocol
+  // tests use, so a fresher board in a daily run is what this reads, not a pinned fixture.
+  const EVIDENCE = 'data/raw/benchmarks/daily-evidence';
+  const BOARD = 'https://vulcanbench.com/assets/data/swe-v4-board.csv';
+  let newest = null;
+  for (const dir of readdirSync(EVIDENCE).sort()) {
+    let manifest;
+    try { manifest = JSON.parse(readFileSync(`${EVIDENCE}/${dir}/manifest.json`, 'utf8')); } catch { continue; }
+    for (const receipt of Array.isArray(manifest) ? manifest : []) {
+      if (receipt.status === 200 && receipt.url === BOARD && receipt.file) newest = receipt;
+    }
+  }
+  assert.ok(newest, 'a retained capture of the board CSV');
+  const lines = gunzipSync(readFileSync(newest.file)).toString('utf8').trim().split('\n');
+  const head = lines[0].split(',');
+  const rows = lines.slice(1).map((line) => Object.fromEntries(line.split(',').map((cell, i) => [head[i], cell])));
+  assert.ok(rows.length, 'the capture carries board rows');
+
+  const configurations = new Set(JSON.parse(readFileSync('data/dataset.json', 'utf8')).models.map((m) => m.id));
+  const columns = new Map();
+  for (const row of rows) {
+    const label = `${row.model} [${row.effort}]`;
+    const parsed = parseVulcanbenchFrontierLabel(label);
+    assert.ok(parsed.family && parsed.effort,
+      `the board publishes ${label}, which no reviewed label rule resolves — review the model and extend the map`);
+    const id = `${parsed.family}::${parsed.effort}`;
+    assert.ok(configurations.has(id), `${label} resolves to ${id}, which is not a catalog configuration`);
+    columns.set(label, id);
+  }
+
   const map = JSON.parse(readFileSync('data/raw/benchmarks/identity-map.json', 'utf8')).entries;
-  assert.equal(map.filter((e) => e.benchmark_id === 'vulcanbench-frontier::4').length, 24, 'all 24 model x effort columns join');
-  const joined = map.filter((e) => e.benchmark_id === 'vulcanbench-frontier::4').map((e) => e.model_id);
-  assert.ok(joined.every((id) => /::(low|medium|high|xhigh|max)$/.test(id)), 'every join is an exact catalog configuration');
+  const joins = map.filter((e) => e.benchmark_id === 'vulcanbench-frontier::4');
+  assert.ok(joins.length, 'the map holds VulcanBench Frontier joins');
+  for (const join of joins) {
+    assert.ok(columns.has(join.source_id), `the map joins ${join.source_id}, which the board no longer publishes`);
+    assert.equal(join.model_id, columns.get(join.source_id), `${join.source_id} is joined to a different configuration than the label rule yields`);
+  }
 });
 
 test('KernelBench-CUDA parser scores only the site-valid cells and cross-checks the published ranked list', () => {

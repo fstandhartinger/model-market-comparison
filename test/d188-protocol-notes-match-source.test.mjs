@@ -52,36 +52,101 @@ const csv = (text) => {
   return lines.slice(1).map((line) => Object.fromEntries(line.split(',').map((cell, index) => [head[index], cell])));
 };
 
-test('D188: VulcanBench notes name every protocol family the board actually publishes', async () => {
-  const board = newestCapture('https://vulcanbench.com/assets/data/swe-v4-board.csv');
-  const rows = csv((await bytesOf(board)).toString());
-  const published = [...new Set(rows.map((row) => row.protocol))].sort();
-  assert.ok(published.length, 'the board CSV carries a protocol column');
+// D223 (2026-09-27). The protocol family is a *set* of reviewed revisions, not a numeric range:
+// the board's own numbering counts amendments, so v3.15 follows v3.7 while `Number('3.15') < 3.7`.
+// The revisions the notes claim, the revisions the guard admits and the revisions the board really
+// publishes have to be the same three sets, and the continuity the notes assert is re-derived from
+// the operator's own published bundles below rather than believed.
+const VULCAN_BOARD = 'https://vulcanbench.com/assets/data/swe-v4-board.csv';
+const vulcanRows = csv((await bytesOf(newestCapture(VULCAN_BOARD))).toString());
+const revisions = (text) => [...text.matchAll(/v(\d+\.\d+)/g)].map((m) => m[1]);
 
-  // The notes state the family as a range "code-quality-maintenance-vA–vB"; every protocol the
-  // board publishes has to fall inside it. Any unreviewed protocol revision fails this row.
-  const notes = entry('vulcanbench-frontier::4').scoring.notes;
-  const range = notes.match(/code-quality-maintenance-v(\d+\.\d+)–v(\d+\.\d+)/);
-  assert.ok(range, `the notes must state the protocol family as a range, got: ${notes}`);
-  const [low, high] = [Number(range[1]), Number(range[2])];
+test('D188: VulcanBench notes name every protocol revision the board actually publishes', () => {
+  const published = [...new Set(vulcanRows.map((row) => row.protocol))].sort();
+  assert.ok(published.length, 'the board CSV carries a protocol column');
   for (const protocol of published) {
-    const version = Number(protocol.replace('code-quality-maintenance-v', ''));
-    assert.ok(Number.isFinite(version), `unexpected protocol literal ${protocol}`);
-    assert.ok(version >= low && version <= high,
-      `the board publishes ${protocol}, outside the ${range[0]} the notes claim (published: ${published.join(', ')})`);
+    assert.match(protocol, /^code-quality-maintenance-v\d+\.\d+$/, `unexpected protocol literal ${protocol}`);
   }
-  // …and the range is not wider than the board: both ends are really published.
-  assert.ok(published.includes(`code-quality-maintenance-v${range[1]}`), `no board row uses v${range[1]}`);
-  assert.ok(published.includes(`code-quality-maintenance-v${range[2]}`), `no board row uses v${range[2]}`);
+  const notes = entry('vulcanbench-frontier::4').scoring.notes;
+  const claim = notes.match(/the reviewed set is exactly (.*?)\.\s/);
+  assert.ok(claim, `the notes must state the reviewed protocol set, got: ${notes}`);
+  const reviewed = revisions(claim[1]);
+  assert.ok(reviewed.length, 'the reviewed set names at least one revision');
+  // Neither narrower nor wider than the board: an unreviewed revision fails, and a revision the
+  // board has stopped publishing cannot be carried in the notes as if it were still compared.
+  assert.deepEqual([...new Set(reviewed)].sort(),
+    [...new Set(published.map((p) => p.replace('code-quality-maintenance-v', '')))].sort(),
+    `the notes claim v${reviewed.join(', v')} while the board publishes ${published.join(', ')}`);
 });
 
-test('D223: VulcanBench guard admits only the four protocols its continuity note covers', () => {
-  const guard = entry('vulcanbench-frontier::4').how_to_collect.version_guard;
+test('D223: the VulcanBench guard admits exactly the revisions the notes review', () => {
+  const board = entry('vulcanbench-frontier::4');
+  const guard = board.how_to_collect.version_guard;
   const allowList = guard.match(/protocol in exactly \{([^}]+)\}/);
   assert.ok(allowList, `the guard must state a closed protocol list, got: ${guard}`);
-  const allowed = [...allowList[1].matchAll(/code-quality-maintenance-v(\d+\.\d+)/g)].map((match) => match[1]);
-  assert.deepEqual(allowed, ['3.4', '3.5', '3.6', '3.7']);
-  assert.match(guard, /any other protocol revision.*fails closed/i);
+  const claim = board.scoring.notes.match(/the reviewed set is exactly (.*?)\.\s/);
+  assert.ok(claim, 'the notes state the reviewed protocol set');
+  assert.deepEqual(revisions(allowList[1]).sort(), revisions(claim[1]).sort(),
+    'the guard and the notes must review the same revisions');
+  assert.match(guard, /fails closed/i);
+});
+
+test('D223: every reviewed VulcanBench revision really is the same protocol, judges and task set', async () => {
+  const board = entry('vulcanbench-frontier::4');
+  const reviewed = revisions(board.scoring.notes.match(/the reviewed set is exactly (.*?)\.\s/)[1]);
+  // The bundle of a revision is not typed here: the board row itself names the report, and the
+  // report's slug is the directory the operator publishes its evidence under.
+  const bundleUrl = (revision) => {
+    const row = vulcanRows.find((r) => r.protocol === `code-quality-maintenance-v${revision}`);
+    assert.ok(row, `no board row uses v${revision}`);
+    const slug = row.report.replace(/^benchmarks\//, '').replace(/\.html$/, '');
+    return `https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/${slug}/judge-protocols.json`;
+  };
+  const bundles = new Map();
+  for (const revision of reviewed) {
+    bundles.set(revision, JSON.parse((await bytesOf(newestCapture(bundleUrl(revision)))).toString()));
+  }
+  // The invariants the board's own continuity sentence names — same rubric, controls, gates and
+  // judges — plus the scoring formula's weights. Byte-equality against the oldest reviewed
+  // revision, so a future revision that quietly changes any of them cannot be added to the notes.
+  // What may differ is the population itself: `population`, `protocol_ids`, `protocol_sha256`, the
+  // `amends` chain, and the operator's per-population handling notes (the single invalid-response
+  // retry disclosed from v3.7 on, v3.6's top-up, a revision's unpublished or not-judged runs).
+  const INVARIANTS = ['system', 'rubric', 'pair_instruction', 'probe_instruction', 'match_instruction',
+    'schemas', 'weights', 'gate_allowance', 'repeats', 'seed', 'single_panel_rule',
+    'control_source_hashes', 'scored_panel'];
+  const order = (revision) => revision.split('.').map(Number);
+  const [reference, ...rest] = [...reviewed].sort((a, b) =>
+    order(a)[0] - order(b)[0] || order(a)[1] - order(b)[1]);
+  for (const revision of rest) {
+    for (const field of INVARIANTS) {
+      assert.deepEqual(bundles.get(revision)[field], bundles.get(reference)[field],
+        `v${revision} changes ${field} against v${reference}: it is not the reviewed family`);
+    }
+    // The board row's protocol is one the bundle itself declares (v3.4's own pair is Muse v3.4
+    // with Grok v3.3, so the row's id has to be *among* them, not all of them).
+    assert.ok(Object.values(bundles.get(revision).protocol_ids).includes(`code-quality-maintenance-v${revision}`),
+      `the v${revision} bundle does not declare the protocol its board rows state`);
+  }
+  // A distinct protocol hash per revision is this family's norm, and the reason the notes cannot
+  // be written as "one frozen file": if they ever collapse to one hash, the claim needs rewording.
+  const hashes = new Set([...bundles.values()].flatMap((b) => Object.values(b.protocol_sha256)));
+  assert.ok(hashes.size > 1, 'the reviewed revisions are expected to carry their own protocol hashes');
+  // Every reviewed revision beyond the reference states the chain it amends, and the chain covers
+  // the earlier reviewed revisions — that is what makes it a continuation rather than a new family.
+  for (const revision of rest) {
+    const amends = Object.keys(bundles.get(revision).amends ?? {}).map((key) => key.replace(/^v/, ''));
+    assert.ok(amends.includes(reference), `v${revision} does not amend v${reference}`);
+  }
+  // Same task set: the two per-run exports the D223 review retained, compared id by id.
+  const taskSet = async (slug) => {
+    const rows = csv((await bytesOf(newestCapture(
+      `https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/${slug}/runs.csv`))).toString());
+    return [...new Set(rows.map((row) => row.task))].sort();
+  };
+  const [newest, oldest] = [await taskSet('swe-v4-opus55-v315'), await taskSet('swe-v4-astra-fable51-v34')];
+  assert.equal(oldest.length, 23, "the reference export covers the board's 23 tasks");
+  assert.deepEqual(newest, oldest, 'the v3.15 population ran a different task set');
 });
 
 test('D188: every date the VulcanBench guard annotates is a date the board prints', async () => {
