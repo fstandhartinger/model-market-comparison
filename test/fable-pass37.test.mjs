@@ -29,11 +29,13 @@ const ranking = readFileSync(new URL('../components/JevCapabilityRanking.tsx', i
 test('F-203: the input-length bucket ticks are 10 px, and the chart never renders below its own scale', () => {
   assert.match(context, /const tickFontSize = 10;/);
   assert.doesNotMatch(context, /fontSize="9\.5"/, 'no 9.5 px text is left in the chart');
-  // The viewBox is 740 wide; a smaller minimum width scaled the whole chart below 1 and drew a 10 px
-  // attribute at 9.46 px on a phone.
-  const view = context.match(/const width = (\d+), height/);
-  assert.ok(view, 'the chart still declares its viewBox width');
-  assert.match(context, new RegExp(`min-w-\\[${view[1]}px\\]`), 'the svg minimum width matches the viewBox width');
+  // A minimum width below the plot's own floor scaled the whole chart under 1 and drew a 10 px
+  // attribute at 9.46 px on a phone. F-208 (iteration 245) made the plot width measured rather than
+  // constant, so the floor is read out of the hook's argument instead of a `const width =` literal —
+  // the invariant being pinned is unchanged: the svg's CSS minimum is the plot's floor.
+  const floor = context.match(/usePlotWidth\((\d+)\)/);
+  assert.ok(floor, 'the chart still declares the floor width its plot never draws below');
+  assert.match(context, new RegExp(`min-w-\\[${floor[1]}px\\]`), 'the svg minimum width matches the plot floor');
   // The crowding guard drops every second label, always keeping the last bin, rather than shrinking the text.
   assert.match(context, /const tickCrowded = widestTick \+ 6 > tickGap;/);
   assert.match(context, /position % 2 === \(active\.length - 1\) % 2/);

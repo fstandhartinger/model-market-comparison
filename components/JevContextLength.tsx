@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { withFieldNames } from './jevFieldNames';
 
 type Capacity = {
@@ -167,6 +167,28 @@ function joinLabels(labels: string[]) {
   return `${labels.slice(0, -1).join(', ')} and ${labels[labels.length - 1]}`;
 }
 
+// F-208 (Fable pass 38): an SVG that scales with its container scales its text with it. At 1440 the
+// 740-unit viewBox stretched to about 1,330 px, so the 10 px bucket ticks rendered at ~18 px — the
+// hub's largest chart text, on its smallest labels. The chart now draws at its wrapper's pixel width,
+// exactly as JevBubbleChart's own `useWidth` does (the twin of this hook, with 260 as its floor), so
+// one SVG unit is one CSS pixel at every viewport. The 740 floor is what keeps the phone's sideways
+// scroll: at 390 the wrapper is ~322 px wide, the SVG stays 740 and the wrapper scrolls.
+function usePlotWidth(minimum: number) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [width, setWidth] = useState(minimum);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const update = () => setWidth(Math.max(minimum, Math.round(el.clientWidth)));
+    update();
+    if (typeof ResizeObserver === 'undefined') { window.addEventListener('resize', update); return () => window.removeEventListener('resize', update); }
+    const observer = new ResizeObserver(update);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [minimum]);
+  return { ref, width };
+}
+
 function AccuracyChart({ systems, labels, excluded, topRanked }: { systems: LengthSystem[]; labels: string[]; excluded: { system: string; reason: string }[]; topRanked: number }) {
   const [hoveredPoint, setHoveredPoint] = useState<string | null>(null);
   const [focusedPoint, setFocusedPoint] = useState<string | null>(null);
@@ -175,7 +197,10 @@ function AccuracyChart({ systems, labels, excluded, topRanked }: { systems: Leng
   const empty = labels.filter((_, index) => !active.some((bucket) => bucket.index === index));
   const lastDrawn = active.length ? active[active.length - 1].label : null;
   // Reserve room for the full last inclusive bin label, including on narrow scrollers.
-  const width = 740, height = 305, left = 52, right = 60, top = 16, bottom = 57;
+  // The server renders at the 740 floor and the observer widens it after hydration; this chart is
+  // ~17,000 px down the page, so nothing above the fold can shift.
+  const { ref: plotRef, width } = usePlotWidth(740);
+  const height = 305, left = 52, right = 60, top = 16, bottom = 57;
   const plotRight = width - right, plotBottom = height - bottom;
   const x = (position: number) => left + (plotRight - left) * (active.length < 2 ? 0 : position / (active.length - 1));
   const y = (value: number) => top + (plotBottom - top) * (1 - value);
@@ -200,8 +225,8 @@ function AccuracyChart({ systems, labels, excluded, topRanked }: { systems: Leng
     <p className="bh-muted mt-1 text-sm" data-bh-jev-context-coverage>{systems.length} of the top {topRanked} systems are plotted; {joinLabels(excluded.map((row) => `${row.system.replace(/\s*\([^)]*\)\s*$/, '')} (${row.reason.replace(/^excluded:\s*/, '')})`))} {excluded.length === 1 ? 'is' : 'are'} not.</p>
     <p className="bh-muted mt-1 text-xs" data-bh-jev-context-bin-edges>Input-token bins (inclusive): {labels.map((label) => INPUT_BUCKET_RANGES[label] ?? label).join('; ')}.</p>
     <p className="bh-muted mt-2 text-xs sm:hidden">Scroll the chart sideways to see every input range.</p>
-    <div className="mt-3 max-w-full overflow-x-auto" data-bh-jev-context-chart-scroll>
-    <svg className="block h-auto min-w-[740px] w-full" viewBox={`0 0 ${width} ${height}`} role="group" aria-labelledby="jev-context-svg-title jev-context-svg-desc">
+    <div ref={plotRef} className="mt-3 max-w-full overflow-x-auto" data-bh-jev-context-chart-scroll>
+    <svg className="block min-w-[740px]" width={width} height={height} viewBox={`0 0 ${width} ${height}`} role="group" aria-labelledby="jev-context-svg-title jev-context-svg-desc">
       <title id="jev-context-svg-title">JevBench public accuracy across input-length buckets</title>
       <desc id="jev-context-svg-desc">{systems.length} systems are plotted across {labels.join(', ')} input-token buckets. Bucket denominators differ by system and are available in the details table below.</desc>
       {[0, 0.25, 0.5, 0.75, 1].map((tick) => <g key={tick}>
@@ -212,7 +237,7 @@ function AccuracyChart({ systems, labels, excluded, topRanked }: { systems: Leng
         <line x1={x(position)} x2={x(position)} y1={top} y2={plotBottom} stroke="rgb(var(--line) / .42)" />
         {showTick(position) && <text x={x(position)} y={plotBottom + 18} textAnchor="middle" fill="var(--muted)" fontSize={tickFontSize}>{tickLabel(label)}</text>}
       </g>)}
-      <text x={(left + plotRight) / 2} y={height - 9} textAnchor="middle" fill="var(--text)" fontSize="10" className="hidden sm:block">Actual input tokens per decision</text>
+      <text x={(left + plotRight) / 2} y={height - 9} textAnchor="middle" fill="var(--text)" fontSize="11" className="hidden sm:block">Actual input tokens per decision</text>
       {systems.map((system, systemIndex) => {
         const points = drawn(system);
         return <g key={system.key}>
