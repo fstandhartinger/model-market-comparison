@@ -15610,15 +15610,16 @@ the packet was the problem. Rewritten as **one shell script and a packet whose o
 `bash <path>`"**, both finished within two minutes. A free worker driving a multi-step recipe is a different
 thing from a free worker running one command; give it the command.
 
-**F-206 — 52/52 on canonical, run by a non-claude engine (iteration 254, item 5).** `ONLY=F-206 node
+**F-206 — 52/52 on every public host, run by a non-claude engine (iteration 254, item 5).** `ONLY=F-206 node
 ops/ux-2026-09-12/bin/verify-fable-pass37-design.mjs https://benchmarkheaven.com <out>` at 19:23 UTC on the
 deployed revision, exit 0, four contexts (desktop/mobile × light/dark), 13 checks each. All five original
 findings are covered by name and all five are green: no `~$` cost text (0 rows), the `≈` marker gone with a
 drawn whisker on all 89 ranked bars, the header reading `$/1k decisions`, the cost tag as a pill left of the
 number, and the leader sentence naming its systems ("Cygnet and Winnow-12B Q8 are joint leaders (statistical
 tie)"). The verifier was not modified; a `rm -rf` on the out directory precedes the run so the receipt cannot
-be a stale one. **The wrapper script was written by claude and the measurement was made by Kimi** — said
-plainly so a review gate can weigh it rather than discover it.
+be a stale one. `www` and the legacy host were measured the same way minutes later and are **52/52** as well,
+so the acceptance is not a one-host claim. **The wrapper script was written by claude and the measurement was
+made by Kimi** — said plainly so a review gate can weigh it rather than discover it.
 
 **CR-148/152/153/158 — 33/41, re-measured after PR #10 closed (iteration 254, item 4).** Exit 1, 19:23 UTC.
 Green in full: **CR-148.2 5/5** and **CR-158.4 5/5**. Six of the eight reds are defects already filed and
@@ -15643,7 +15644,7 @@ gate's call, and it now has a non-claude number to make it on.
 
 | ID | Status | Evidence | Notes |
 |---|---|---|---|
-| F-206 (a)(b)(c)(d)(e) | implemented, no surviving non-implementer report → **verified** | `iter255-nonclaude/f206-canonical/{REPORT.txt,verification.json}` + four screenshots; Kimi K3 via Chutes, 19:23 UTC, exit 0 | **52/52** on canonical across desktop/mobile × light/dark. All five findings named and green. Only canonical was run; `www` and legacy serve the same revision but were not measured here. |
+| F-206 (a)(b)(c)(d)(e) | implemented, no surviving non-implementer report → **verified on all three hosts** | `iter255-nonclaude/f206-{canonical,www,legacy}/{REPORT.txt,verification.json}` + four screenshots per host; Kimi K3 via Chutes, 19:23–19:27 UTC, exit 0 on each | **52/52 on canonical, 52/52 on `www`, 52/52 on legacy**, each across desktop/mobile × light/dark. All five findings named and green on every host. |
 | CR-148.2 | implemented, pending non-implementer verification → **verified** | `iter255-nonclaude/cr148-158/verification.json`, group `cr148-2` **5/5** | Restore limited to the three paths, nothing else changed, no build/test/merge/deploy run, record exists, the next queue pass saw a clean checkout. |
 | CR-158.4 | implemented, pending non-implementer verification → **verified** | same receipt, group `cr158-4` **5/5** | Addendum frozen read-only at its pinned sha256, states all three rules, `DECISIONS.md` agrees, board #1340 carries it before the first v1.5 result. |
 | CR-152.1 | implemented, pending non-implementer verification → **verified with two filed defects (D236, D238)** | same receipt, `cr152-1` **6/8** | The six substantive clauses hold. The two reds are D236 and D238, both already filed and both "fix forward in the next JevBench release". |
