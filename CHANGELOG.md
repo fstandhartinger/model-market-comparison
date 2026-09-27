@@ -4,6 +4,31 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-27 — JevBench v1.4.2.1/v1.4.2.2 and Image JevBench v0.1.1/v0.1.2
+
+JevBench v1.4.2.1 adds Plumb-4B and preserves a frozen **94-system / 90-ranked** release.
+JevBench v1.4.2.2 adds Imajev-4B and becomes the live board at
+[`/jev-models`](https://benchmarkheaven.com/jev-models); it has **95 systems / 91 ranked**.
+Imajev-4B ranks #1 (67.3682) and Plumb-4B ranks #2 (65.8434). The earlier
+[`/jev-models/v1.4.2.1`](https://benchmarkheaven.com/jev-models/v1.4.2.1) and frozen
+[`/jev-models/v1.4.2.2`](https://benchmarkheaven.com/jev-models/v1.4.2.2) pages keep their
+respective pinned results. Both releases contain 534 public and 308 sealed decisions; the
+v1.4.2 scoring code and earlier measurement rows are unchanged.
+
+The result and family-supplement APIs are version-pinned at
+`/api/jevbench/v1.4.2.1`, `/api/jevbench/v1.4.2.1/families`,
+`/api/jevbench/v1.4.2.2` and `/api/jevbench/v1.4.2.2/families`. Each serves exact
+aggregate-only JSON and returns its SHA-256 in `X-Content-SHA256`; the hashes and consumer
+contract are in `API.md`.
+
+Image JevBench v0.1.1 is retained as a frozen data artifact. The current
+[`/image-jev-bench`](https://benchmarkheaven.com/image-jev-bench) page shows v0.1.2, with
+49 systems; Imajev-4B is #11 at 65.7245. The prior v0.1.1 artifact remains at
+`data/raw/benchmarks/jevbench/multimodal-preview/preview-v0.1.1.json`, and the current
+v0.1.2 aggregate is `preview.json` beside it. Image JevBench exposes system-level
+aggregates only; the committed site data does not publish sealed images, tasks, answer
+keys or per-item predictions.
+
 ## 2026-09-23 — A vendor's launch number says whose it is (F-165(a))
 
 **Presentation only: no benchmark value, unit, path or registry identity changed.** A lab's own run of a public
