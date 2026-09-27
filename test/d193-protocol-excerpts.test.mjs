@@ -37,10 +37,14 @@ const registry = read('data/raw/benchmarks/registry.json');
 // sizes their version guard asserts, and the original post states the blocker rule the score rests
 // on. Their retained captures live in their own dated folder, so the guarantee below reads both
 // manifests — every reviewed reference of these six entries, wherever its capture was kept.
+// D232 added a third: the leaderboard chunk that states the cost column's metric and unit, which is
+// discovered by marker rather than named by the registry, so it is taken from its receipt.
 const COGNITION_POSTS = ['https://cognition.com/blog/frontier-code-1.1', 'https://cognition.com/blog/frontier-code'];
 const captures = [...read('data/raw/benchmarks/daily-evidence/2026-09-24-d193/manifest.json'),
   ...read('data/raw/benchmarks/daily-evidence/2026-09-27-d230/manifest.json')
-    .filter((c) => COGNITION_POSTS.includes(c.url))];
+    .filter((c) => COGNITION_POSTS.includes(c.url)),
+  ...read('data/raw/benchmarks/daily-evidence/2026-09-27-d232/manifest.json')
+    .filter((c) => c.discovered_from === 'https://cognition.com/frontiercode')];
 
 const ENTRIES = ['ugi::snapshot-2026-09-10', 'ugi-natint::snapshot-2026-09-10',
   'ugi-willingness::snapshot-2026-09-10', 'ugi-writing::snapshot-2026-09-10',

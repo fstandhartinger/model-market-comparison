@@ -111,6 +111,17 @@ export const PROTOCOL_REVIEW_CRITERIA = [
 // One archive can carry several sources, so a member is keyed by URL and member name.
 export const captureKey = (source) => source.zip_member ? `${source.url}#zip:${source.zip_member}` : source.url;
 
+// A page whose own scripts carry the source text is captured as the page plus exactly one
+// discovered script: `follow_module_script` for a Vite/CRA single-bundle app, and
+// `follow_script_marker` (D230) for a page that declares many hashed chunks, where the
+// reviewed marker names the one chunk that holds the text.
+export const followsPageScript = (source) => Boolean(source?.page_url && (source.follow_module_script || source.follow_script_marker));
+// The capture that a follow request produced: keyed by the page it was discovered from, and — when a
+// marker named it — by that same marker, because two entries may follow one page for different text.
+export const discoveredScriptReceipt = (receipts, source) => [...receipts].find((r) => r.discovered_from === source.page_url
+  && (r.status === undefined || r.status === 200)
+  && (source.follow_script_marker ? r.follow_marker === source.follow_script_marker : !r.follow_marker));
+
 // D201 (2026-09-25): a registry entry whose collection recipe names `capture-vendor-documents.py`
 // and whose format declares a PDF cannot be probed by `capture-benchmark-sources.py` — that script
 // holds a 12 MB bound and retains original bytes, and today's only such document, the Claude Opus
@@ -179,11 +190,17 @@ export function captureTargets({ registry, plan, vendor }) {
     if (source?.url && skip.has(source.url)) return;
     // Vite SPA pages pin a hashed module bundle; only the stable page is queued,
     // and the bundle is discovered from its capture receipt.
-    if (source?.page_url && source.follow_module_script) { urls.set(source.page_url, { url: source.page_url, follow_module_script: true }); return; }
+    if (followsPageScript(source)) { urls.set(source.page_url, { url: source.page_url,
+      ...(source.follow_module_script ? { follow_module_script: true } : { follow_script_marker: source.follow_script_marker }) }); return; }
     if (!source?.url || !source.url.startsWith('https://')) return;
     if (/(^|\.)(x\.com|twitter\.com)$/.test(new URL(source.url).hostname)) return;
     // A file shipped only inside an archive is captured as that one member (see capture-benchmark-sources.py).
     if (source.zip_member) { urls.set(captureKey(source), { url: source.url, zip_member: source.zip_member }); return; }
+    // D230: the same page is usually also somebody's `primary_url`, and a plain URL queued after the
+    // follow request would silently cancel the discovery — the follow would then depend on the order
+    // the registry happens to be read in. A queued follow request is never downgraded to a plain GET.
+    const queued = urls.get(source.url);
+    if (queued && typeof queued === 'object' && (queued.follow_module_script || queued.follow_script_marker)) return;
     urls.set(source.url, source.url === 'https://uncommon-sandpiper-321.convex.cloud/api/query'
       ? { url: source.url, method: 'POST', body: { path: 'runs:getLeaderboard', args: {}, format: 'json' } } : source.url);
   };
@@ -281,7 +298,7 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
     // A page whose bundle hash changes every deploy is never satisfied by a
     // reused receipt of the page alone; it always re-runs the follow logic.
     const wanted = urls.get(captureKey(receipt));
-    if (wanted && typeof wanted === 'object' && wanted.follow_module_script) continue;
+    if (wanted && typeof wanted === 'object' && (wanted.follow_module_script || wanted.follow_script_marker)) continue;
     const target = join(evidenceDir, `${receipt.sha256.slice(0, 20)}.gz`);
     await cp(receipt.file, target); captured.set(captureKey(receipt), { ...receipt, file: target }); urls.delete(captureKey(receipt));
   }
@@ -317,9 +334,9 @@ export async function refreshBenchmarks({ runDir, review = reviewArtifact, runne
     } catch (error) { fail('vendor-documents', error); }
   }
   const current = (source) => {
-    if (source.page_url && source.follow_module_script) {
-      // The current source is the bundle discovered from this run's page capture.
-      const receipt = [...captured.values()].find((r) => r.discovered_from === source.page_url && r.status === 200);
+    if (followsPageScript(source)) {
+      // The current source is the script discovered from this run's page capture.
+      const receipt = discoveredScriptReceipt(captured.values(), source);
       if (!receipt) throw new Error(`Primary source unavailable: ${source.page_url}: discovered module script capture missing or failed`);
       return { ...source, ...receipt, fetched_at: receipt.retrieved_at };
     }

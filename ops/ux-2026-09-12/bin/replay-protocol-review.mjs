@@ -15,7 +15,7 @@ import { join } from 'node:path';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { reviewArtifact } from '../../daily/gauntlet.mjs';
-import { protocolReviewRow, PROTOCOL_REVIEW_CRITERIA, protocolSourceContent, protocolSourceLocator, captureKey, aaActivitySource } from '../../daily/refresh-benchmarks.mjs';
+import { protocolReviewRow, PROTOCOL_REVIEW_CRITERIA, protocolSourceContent, protocolSourceLocator, captureKey, aaActivitySource, followsPageScript, discoveredScriptReceipt } from '../../daily/refresh-benchmarks.mjs';
 
 const exec = promisify(execFile);
 const [id, outDir, ...flags] = process.argv.slice(2);
@@ -46,10 +46,12 @@ for (const reference of references) {
   // whose filename changes every deploy is reviewed through the bundle *this* capture found, not
   // through the URL the registry recorded when the entry was written (D188 — LiveBench could not
   // be replayed at all before this, because the recorded bundle name was two deploys old).
-  const receipt = reference.page_url && reference.follow_module_script
-    ? [...captured.values()].find((r) => r.discovered_from === reference.page_url)
+  // D230 adds the marker form of the same rule: where many hashed chunks are declared, the capture
+  // that carries the reviewed marker is the source.
+  const receipt = followsPageScript(reference)
+    ? discoveredScriptReceipt(captured.values(), reference)
     : captured.get(captureKey(reference));
-  if (!receipt) throw new Error(`no capture for ${reference.page_url && reference.follow_module_script ? `module script discovered from ${reference.page_url}` : captureKey(reference)} in the replay manifest`);
+  if (!receipt) throw new Error(`no capture for ${followsPageScript(reference) ? `${reference.follow_script_marker ? 'marked' : 'module'} script discovered from ${reference.page_url}` : captureKey(reference)} in the replay manifest`);
   const { stdout: body } = await exec('python3', ['ops/daily/public-candidate.py', 'text', receipt.file, ...(reference.recipe ? [reference.recipe] : [])], { maxBuffer: 16_000_000, timeout: 30_000 });
   const content = protocolSourceContent(entry.id, reference, body);
   sources.push({ ...reference, ...receipt, fetched_at: receipt.retrieved_at, content, locator: protocolSourceLocator(reference) });

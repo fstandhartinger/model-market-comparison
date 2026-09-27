@@ -5061,7 +5061,7 @@
         "identity_policy": "source_label",
         "locator": "v1_1.data[model][effort].main.cost (the rendered leaderboard: \"Cost ($): the mean USD spend per rollout\")",
         "version_guard": "Require data.json key v1_1 with subsets.main == 100 and the page text \"FrontierCode 1.1\". FrontierCode 1.0 (before unfair-internet-use zeroing) and the Extended subset are different identities.",
-        "notes": "The leaderboard page loads its own https://cognition.com/data/frontiercode-leaderboard/data.json (E3 step 4: the page's own request, fetched directly once); robots.txt allows everything except /downloads/. Rows are model × published reasoning effort; the harness is the source's per-model harness. Cognition runs the board and ships its own SWE models, so every row is self_reported and needs a different-family critic review."
+        "notes": "The leaderboard page loads its own https://cognition.com/data/frontiercode-leaderboard/data.json (E3 step 4: the page's own request, fetched directly once); robots.txt allows everything except /downloads/. Rows are model × published reasoning effort; the harness is the source's per-model harness. Cognition runs the board and ships its own SWE models, so every row is self_reported and needs a different-family critic review. The leaderboard's own column definition (metric name, unit and \"per rollout\") is in one of the 19 hashed chunks the page declares, and those names rotate on every deploy: it is captured by the declared-marker rule in scripts/capture-benchmark-sources.py (follow_script_marker), which keeps exactly the one declared script containing that marker and fails closed on zero or two."
       },
       "evidence": [
         {
@@ -5091,6 +5091,15 @@
           "sha256": "ac9003873a1d60566e9f3094caf4758d0f589db57b4c59d6458e29b286ef234f",
           "fetched_at": "2026-09-27T09:36:32.268327+00:00",
           "excerpt": "Diamond consists of the 50 hardest tasks in our full 150-task Extended set, while Main consists of the 100 hardest."
+        },
+        {
+          "page_url": "https://cognition.com/frontiercode",
+          "follow_script_marker": "note:\"Cost ($): the mean USD spend per rollout.\"",
+          "url": "https://cognition.com/_next/static/chunks/0~9a1jxgdu5tr.js?dpl=dpl_4iFKyV44ctVkgHLScGjvoenrBZep",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-27-d232/c390c2e6682cb6a7c462.gz",
+          "sha256": "64154fdcad634e8bfbd1ef5b3375ad2151990057193a12e49ae5afcc51f116d9",
+          "fetched_at": "2026-09-27T10:38:25.569880+00:00",
+          "excerpt": "{id:\"cost\",field:\"cost\",label:\"Cost ($)\",title:\"cost\",axisLabel:\"avg cost (USD) per rollout\",fmt:function(t){return t>=10?`$${Math.round(t)}`:`$${t.toFixed(2)}`},note:\"Cost ($): the mean USD spend per rollout.\"}"
         },
         {
           "url": "https://cognition.com/robots.txt",

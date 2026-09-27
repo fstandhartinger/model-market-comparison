@@ -15,6 +15,7 @@ while queue:
  item=queue.pop(0)
  url=item if isinstance(item,str) else item['url'];body=None;method='GET'
  follow=isinstance(item,dict) and item.get('follow_module_script') is True
+ marker=item.get('follow_script_marker') if isinstance(item,dict) else None
  member=item.get('zip_member') if isinstance(item,dict) else None
  if isinstance(item,dict) and item.get('method','GET')!='GET':
   # The sole POST adapter is a documented, read-only leaderboard query.
@@ -23,6 +24,7 @@ while queue:
  host=urllib.parse.urlsplit(url).netloc;origin='https://'+host
  r={'url':url,'retrieved_at':datetime.now(timezone.utc).isoformat(),'method':method}
  if isinstance(item,dict) and item.get('discovered_from'):r['discovered_from']=item['discovered_from']
+ if isinstance(item,dict) and item.get('follow_marker'):r['follow_marker']=item['follow_marker']
  if member:r['zip_member']=member
  if body is not None:r['request_body']=item['body']
  try:
@@ -63,6 +65,28 @@ while queue:
    matches+=re.findall(r'<script[^>]*\sdefer[^>]*\ssrc="(\.?/?static/js/main\.[A-Za-z0-9]+\.js)"',page)
    if len(matches)!=1:r['follow_error']='Expected exactly one module script, found '+str(len(matches))
    else:queue.append({'url':urllib.parse.urljoin(q.geturl(),matches[0]),'discovered_from':url})
+  if marker and q.status==200:
+   # D230: a Next.js page declares ~19 hashed chunks whose names rotate on every deploy, so the
+   # single-bundle rule above can never name the one that carries a column's own metric text. The
+   # page's *declared* same-origin scripts are fetched under the same robots policy and crawl delay,
+   # and the one containing the reviewed marker is the source. Exactly one, or nothing: zero matches
+   # and two matches are both recorded as an error and never guessed at. Only the winner is queued,
+   # so only the winner's body is ever written; the others are read and dropped.
+   page=b.decode('utf-8','replace');declared=[];hits=[]
+   for src in re.findall(r'<script[^>]*\ssrc="([^"]+)"',page):
+    u=urllib.parse.urljoin(q.geturl(),src)
+    if urllib.parse.urlsplit(u).netloc==host and u not in declared:declared.append(u)
+   try:
+    for u in declared:
+     if not rp.can_fetch(UA,u):raise RuntimeError('robots disallows a declared page script: '+u)
+     time.sleep(max(0,delay-(time.monotonic()-last.get(host,0))))
+     s=urllib.request.urlopen(urllib.request.Request(u,headers={'User-Agent':UA}),timeout=45);sb=s.read(12000000);last[host]=time.monotonic()
+     if len(sb)>=12000000:raise RuntimeError('Declared script exceeds 12MB bound: '+u)
+     if marker in sb.decode('utf-8','replace'):hits.append(u)
+    if len(hits)!=1:raise RuntimeError('Expected exactly one declared script containing the marker, found '+str(len(hits)))
+    queue.append({'url':hits[0],'discovered_from':url,'follow_marker':marker})
+   except Exception as e:r['follow_error']=str(e)
+   r.update(follow_marker=marker,declared_scripts=len(declared),marker_matches=hits)
  except Exception as e:
   if isinstance(e,urllib.error.HTTPError) and e.code in [403,429]:blocked.add(host)
   r.update(status='source_unreachable',reason=str(e))
