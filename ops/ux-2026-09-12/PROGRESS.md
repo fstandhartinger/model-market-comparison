@@ -13116,7 +13116,9 @@ elsewhere (224 insertions, 0 deletions); a future engine must not commit a bare 
 Gates before the push: `node scripts/build-dataset.mjs` rc 0 (870 models / 673 families / 95 providers / 3,135
 offers; the dataset diff is only `model_id`, `join_note`, the coverage counters and `unmatched_observations`),
 `CI=true npm test` **1,450 / 1,449 pass / 0 fail / 1 skip**, `npx tsc --noEmit -p .` rc 0, `npm run build` rc 0.
-`git log origin/main..HEAD` was checked before the push and no other writer's files were touched; the working tree
+Re-proven at HEAD after the ledger push: `live-c6c8294e/verification.json` **125/125 on each host** at
+`c6c8294e`, both hosts answering 200. `git log origin/main..HEAD` was checked before the push and no other
+writer's files were touched; the working tree
 held no foreign changes and nothing was staged except this iteration's own paths.
 
 Not done here, still open: **D220** (the identity-map regeneration drift filed above — it needs a per-board review
