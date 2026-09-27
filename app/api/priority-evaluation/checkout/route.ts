@@ -1,7 +1,8 @@
+import { randomUUID } from 'node:crypto';
 import { NextResponse, type NextRequest } from 'next/server';
 import { isJsonRequest, publicOrigin, sameOrigin } from '../../../../lib/account-sync.mjs';
 import { markCheckoutFailed, preparePriorityRequest, PrioritySubmissionConflict, saveCheckoutSession } from '../../../../lib/priority-evaluation-db';
-import { validatePrioritySubmission } from '../../../../lib/priority-evaluation.mjs';
+import { startPriorityCheckout, validatePrioritySubmission } from '../../../../lib/priority-evaluation.mjs';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -82,27 +83,19 @@ export async function POST(req: NextRequest) {
   const validated = validatePrioritySubmission(body);
   if (!validated.ok) return json({ error: validated.error }, 400);
 
-  let prepared: Awaited<ReturnType<typeof preparePriorityRequest>> | null = null;
-  try {
-    prepared = await preparePriorityRequest(validated.value, config.mode);
-    if (prepared.checkoutUrl) return json({ url: prepared.checkoutUrl });
-    const checkout = await createCheckoutSession({
-      id: prepared.id,
-      email: validated.value.email,
-      modelName: validated.value.modelName,
-      benchmarks: validated.value.benchmarks,
-      visibility: validated.value.visibility,
-      quote: validated.value.quote,
-      origin,
-      key: config.key,
-    });
-    await saveCheckoutSession(prepared.id, checkout.id, checkout.url);
-    return json({ url: checkout.url });
-  } catch (err) {
-    if (prepared && !prepared.checkoutUrl) await markCheckoutFailed(prepared.id).catch(() => undefined);
-    if (err instanceof PrioritySubmissionConflict) return json({ error: err.message }, 409);
-    // Do not log request content, email, model notes, or Stripe credentials.
-    console.error('Priority checkout failed:', err instanceof Error ? err.message.slice(0, 180) : 'unknown error');
-    return json({ error: 'Checkout could not be started. Please try again or email us.' }, 502);
-  }
+  const result = await startPriorityCheckout({
+    submission: validated.value,
+    stripeMode: config.mode,
+    stripeKey: config.key,
+    origin,
+    requestId: randomUUID(),
+    prepareRequest: preparePriorityRequest,
+    createSession: createCheckoutSession,
+    saveSession: saveCheckoutSession,
+    markFailed: markCheckoutFailed,
+    isConflict: (error) => error instanceof PrioritySubmissionConflict,
+    // Keep customer data and Stripe details out of logs; this ID joins the error to a request.
+    logFailure: (failure) => console.error('priority_evaluation_checkout_failed', JSON.stringify(failure)),
+  });
+  return json(result.body, result.status);
 }
