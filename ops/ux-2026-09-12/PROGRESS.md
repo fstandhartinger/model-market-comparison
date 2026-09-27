@@ -14933,6 +14933,19 @@ diff is the registry text and the build timestamps; no value moved), `CI=true np
    on the canonical host. D234 needs one too.
 4. **D221** is unchanged: the four KernelBench-CUDA cells stay unproven until a refresh publishes them.
 
+## CR-178 — ledger seed (2026-09-27, review iteration 253)
+
+Seeded from `04-CR-BRIEF.md` before this gate's review work, as required by its section 0.
+The rows start open; this gate will update them only after its own code, test, and live checks.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| CR-178.1 | open | `04-CR-BRIEF.md` | Verify trusted ingress IP and bounded actual User-Agent reach Umami through configured headers; DNT/GPC, bot, prefetch and route checks remain; no identity in request body/path/query/browser storage; tests cover valid and malformed or missing identity. |
+| CR-178.2 | open | `04-CR-BRIEF.md` | Verify full loads and SPA routes on benchmarkheaven.com and www, two distinct clients yield distinct visitors, plausible API stats, and Umami bot filtering remains enabled. |
+| CR-178.3 | open | `04-CR-BRIEF.md` | Verify the daily digest alerts for pageviews > 0 with visitors ≤ 1, or pageviews = 0 while events > 0; cover alert and healthy cases with tests. |
+| CR-178.4 | open | `04-CR-BRIEF.md` | Verify `/privacy`, the consent record, retention and daily-salt explanation, and the historical-count reconstruction finding in OUTPUT.md. |
+| CR-178.5 | open | `04-CR-BRIEF.md` | Verify the normal isolated-worktree/PR/merge-queue record, merged revision on both hosts, live settings/API evidence without credentials, and required independent privacy review. |
+
 ---
 
 ## Iteration 252 (claude-opus, 2026-09-27 14:40–15:30 UTC) — the Vals arms, and a sentence no source can carry
