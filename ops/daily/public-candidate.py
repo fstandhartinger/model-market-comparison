@@ -1,16 +1,25 @@
 #!/usr/bin/env python3
 """Offline candidate plus native source-row evidence; never execute downloaded code."""
-import sys, json, importlib.util, gzip, subprocess, re
+import sys, json, importlib.util, gzip, subprocess, re, resource
 from pathlib import Path
 from html.parser import HTMLParser
 # Candidate extraction must not create code artifacts in a data-only staging run.
 sys.dont_write_bytecode = True
 
+# Bound resource usage for untrusted PDF input: cap input size and constrain the
+# pdftotext child process's address space/CPU so a hostile PDF can't exhaust memory or CPU.
+MAX_PDF_BYTES = 50 * 1024 * 1024
+
+def _limit_pdf_resources():
+    resource.setrlimit(resource.RLIMIT_AS, (512 * 1024 * 1024, 512 * 1024 * 1024))
+    resource.setrlimit(resource.RLIMIT_CPU, (20, 20))
+
 if sys.argv[1] == 'text':
     path=Path(sys.argv[2]); data=path.read_bytes()
     if path.suffix=='.gz': data=gzip.decompress(data)
     if data.startswith(b'%PDF'):
-        raw=subprocess.run(['pdftotext','-layout','-','-'],input=data,stdout=subprocess.PIPE,stderr=subprocess.PIPE,check=True,timeout=20).stdout.decode('utf-8')
+        if len(data) > MAX_PDF_BYTES: raise ValueError(f'PDF exceeds {MAX_PDF_BYTES} byte limit')
+        raw=subprocess.run(['pdftotext','-layout','-','-'],input=data,stdout=subprocess.PIPE,stderr=subprocess.PIPE,check=True,timeout=20,preexec_fn=_limit_pdf_resources).stdout.decode('utf-8')
         if len(sys.argv)>3 and sys.argv[3]=='deepseek-v3-table6':
             pages=raw.split('\f')
             hits=[i for i,page in enumerate(pages) if re.search(r'Table 6\s*[|:]',page) and all(label in page for label in ['SWE Verified','Aider-Polyglot','LongBench v2','DeepSeek'])]
