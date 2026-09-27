@@ -13354,3 +13354,117 @@ The source's [methodology](https://vulcanbench.com/methodology.html) says result
 | X6 | **open** | Earlier completeness receipts plus this review | Remaining CR rows and the line-by-line audit are incomplete. Other open items include CR-156.4, CR-148.1/.2, CR-152.1/.2/.5, CR-153.4, CR-158.4, the Umami retention residual and D192. |
 
 Main gates: `node scripts/build-dataset.mjs` passed (870 models / 673 families / 95 providers / 3,135 offers); `CI=true npm test` **1,454 tests, 1,453 pass, 0 fail, 1 skip**; `npx tsc --noEmit -p .` exited 0. The generated dataset contains the registry guard-text change and current build timestamps; benchmark values and observation rows are unchanged. No current `ALL-ACCEPTED` line is appended. The historical line at row 2097 remains inside the 2026-09-14 section; the following 2026-09-15 heading explicitly reopens acceptance for newer CRs.
+
+---
+
+## Iteration 244 (claude-opus, work) — 2026-09-27 ~04:00 UTC — D223 answered by the operator's own evidence bundles, and D224: the board had outgrown its label map
+
+`261be5fd`. The gate before this one left the daily dead: the 2026-09-27 transaction published
+nothing, so the live dataset is still at the previously published revision (R9.1). The single
+blocker was D223, and it is now closed with primary evidence rather than an assumption.
+
+### D223 — VulcanBench `code-quality-maintenance-v3.15` is the reviewed family, on the source's own published bundles
+
+The board CSV (receipt SHA-256 `39357de8752b04f50dc75e4bf26bfb890be798c43f5bc91a41b71bd3382cf8a4`,
+re-captured here at 03:55 UTC with the same digest) grew by exactly five rows since 2026-09-26 —
+Claude Opus 5.5 at all five effort levels, protocol `code-quality-maintenance-v3.15`. Nothing else
+changed: no existing value moved. The board's leaderboard prose still names only v3.4–v3.7, which is
+why the previous gate could not accept the rows, and its
+[methodology](https://vulcanbench.com/methodology.html) admits a comparison only under **the same
+task set, scoring formula and judge protocol**.
+
+The operator publishes exactly that, per population: each report links a public evidence bundle
+(`assets/data/<report-slug>/`), and the bundles are now captured hash-bound under
+`data/raw/benchmarks/daily-evidence/2026-09-27-d223/`. Read against each other they settle all three
+axes:
+
+| Axis the methodology names | What the bundles show |
+|---|---|
+| Same task set | the per-run exports of `swe-v4-opus55-v315` and `swe-v4-astra-fable51-v34` carry the **same 23 task ids**, id for id (`legacy-blendcore-binary-parity` … `legacy-vaultcore-binary-parity`) |
+| Same scoring formula | the `weights` object is byte-equal across v3.4/v3.5/v3.6/v3.7/v3.15 (0.50 functional, 0.085 quality, 0.085 security, 0.33 code quality with the same L1/L2/L3 split) |
+| Same judge protocol, in the sense the board's own continuity sentence uses ("the same rubric, controls, gates and judges to each population") | `system`, `rubric`, `pair_instruction`, `probe_instruction`, `match_instruction`, `schemas`, `gate_allowance`, `repeats`, `seed`, `single_panel_rule`, `control_source_hashes` and `scored_panel` (Muse Spark 1.3 at medium, Cursor Grok 4.6 Medium) are **byte-equal across all five revisions**, and v3.15's `amends` chain runs back over v3 … v3.7 |
+
+The decisive observation is that **every revision already inside the accepted family has its own
+`protocol_sha256`** — v3.4 `1d80e097…`, v3.5 `e2c2afdb…`, v3.6 `f6214c5c…`, v3.7 `6f78884f…`,
+v3.15 `7bfc6dac…` — and the accepted v3.4 rows even pair a v3.4 Muse protocol with a **v3.3** Grok
+one. A distinct revision hash is this family's norm, not a break in it: the number counts
+amendments, not rubric changes. What legitimately differs between revisions is the population
+itself (`population`, `protocol_ids`, `protocol_sha256`, `amends`) and the operator's
+per-population handling notes (the single invalid-response retry disclosed from v3.7 on, v3.6's
+judged top-up, a revision's unpublished or not-judged runs) — the notes now say so.
+
+v3.15 is therefore reviewed into the family; `version_guard`'s allow-list follows, and it still
+fails closed on anything else *until that revision's own bundle shows the same invariants*. The
+board's separate Routine board revisions (v3.8, and Opus 5.5's v3.14) are named as never mixed in
+("Compare levels and models within this table, never across the two boards"), and the operator's own
+harness confound between the two Claude columns (Claude Code 2.1.280 vs 2.1.259–2.1.261) is recorded
+in the notes. Row 2 of the board (Opus 5.5 at high, `n=22` after a safeguard stop left an empty
+patch) is **withheld** by the collector's denominator rule, exactly as GPT-5.6 Sol at max is.
+
+**The test that refused the run was also wrong in form**, and would have refused the correct answer
+too: it modelled the family as a numeric range, and the board's next revision after v3.7 is v3.15,
+where `Number('3.15') < 3.7`. It now compares three sets — what the notes review, what the guard
+admits, what the board publishes — and a third test **re-derives the continuity invariants from the
+retained bundles**, so a future revision that quietly changes the rubric, the gates, the judges or
+the task set cannot be written into the notes and pass.
+
+### D224 (new, fixed here) — eight measured columns were refused because the reviewed label map was never extended
+
+Checking which board columns actually reach the data turned up a second, older defect. The reviewed
+VulcanBench label map in `lib/board-identity.mjs` was written on 2026-09-18 for the five models the
+board carried then and was never extended as it grew, so **eight publishable columns were refused as
+unknown labels**:
+
+* **GPT-5.6 Sol** at low/medium/high/extra-high — on the board since its **2026-09-19** update, i.e.
+  silently unjoined for eight days;
+* **Claude Opus 5.5** at low/medium/extra-high/max — new with v3.15.
+
+Both are the board's own product name for a catalog family (the board states lab OpenAI / Anthropic;
+the v3.15 report is titled "Claude Opus 5.5 across every effort level"), `gpt-5.6-sol` and
+`claude-opus-5.5` both exist in the catalog with all five effort configurations, and `GPT-5.6 Sol` is
+already a reviewed label on other boards in this repo. Both are now mapped.
+
+What hid it is worth naming: the join test asserted a **typed count** — "all 24 model × effort
+columns join" — which stays green while the board outgrows the map, and would have turned *red* on
+the rebuild that finally joined the missing columns. It is now derived from the board itself: every
+column the newest retained capture publishes must resolve to an exact catalog configuration, and
+every join the map holds must be a column the board still carries. The same shape of assertion is
+what the D188 range check was, so both are gone.
+
+The joins themselves are published by the daily's own identity-map rebuild (the repo's observations
+predate these rows, so nothing was regenerated here). **D224's live half stays open until a refresh
+publishes the eight cells.**
+
+### Open item recorded, not fixed — D225: one board's new protocol revision stops every source's publication
+
+Today's failure mode is worth a row of its own. A community board adding one reviewed-pending
+protocol revision turned `npm test` red, and because the publish gate runs the whole suite, *no*
+source published — while the daily's own per-arm machinery (`source-health.json`, the receipt's
+stale-source list) exists precisely to fail one arm soft and let the rest through. The fence is
+right; its blast radius is not. A proposal, deliberately not implemented unilaterally because it
+changes publication policy: have the collector fail closed on an unreviewed protocol revision for
+*that board only* (it already raises on a changed header, task count, harness or effort), and let the
+repo-level continuity test assert against what the run collected rather than what it captured, so a
+source change quarantines its own arm instead of the day. **D225 is open for the design authority.**
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D223 | **fixed, pending non-implementer verification** | `data/raw/benchmarks/daily-evidence/2026-09-27-d223/` (12 hash-bound captures incl. five judge-protocol bundles and two per-run exports); `test/d188-protocol-notes-match-source.test.mjs` **7/7**; live **105/105** (35 per host) on canonical, `www` and legacy at revision `261be5fd`, receipt `/opt/benchmarkheaven/state/ux-evidence/iter244-d223/` | v3.15 reviewed into the family on same-task-set / same-weights / same-rubric-controls-gates-judges evidence; notes and guard state the reviewed set; the range model that could never express v3.15 is replaced by a set comparison plus a bundle-derived continuity test. No score or observation changed. |
+| D224 (new) | **fixed in code, live half open** | `lib/board-identity.mjs`; `test/vulcanbench-kernelbench.test.mjs` **5/5**; live "every board column resolves to a reviewed catalog family" passes on all three hosts | GPT-5.6 Sol (4 columns, unjoined since 2026-09-19) and Claude Opus 5.5 (4 columns) are reviewed labels now; the typed count of 24 joins is replaced by a board-derived assertion. Verify the eight published cells after the next refresh. |
+| D225 (new) | **open** | this section; `/opt/mmc-daily/cron.log` `DAILY END 2026-09-27T02:08:23Z rc=1` | One board's unreviewed protocol revision blocks every source's publication through the shared `npm test` gate. Proposal recorded above; needs a policy decision, not a patch. |
+| D221 | **open** | `d221-megaqwen-frozen-arm.json` | Unchanged by this iteration: the four KernelBench-CUDA cells stay unproven until a refresh publishes. D223 removed the blocker in front of that refresh. |
+| R9.1 | **open until the next run publishes** | `/opt/mmc-daily/cron.log`; live `/api/meta` | The live dataset is still at the previously published revision. The 05:17 UTC catch-up run is the first test of this fix; if it publishes, R9.1 and D221/D224's live halves all resolve together. |
+
+Gates: `node scripts/build-dataset.mjs` passed (870 models / 673 families / 95 providers / 3,135
+offers; the diff is the registry text and the build timestamps, no value moved); `CI=true npm test`
+**1,455 tests, 1,454 pass, 0 fail, 1 skip**; `npx tsc --noEmit -p .` exited 0. **Needs a
+non-claude engine to set `verified`.**
+
+Live receipt: `ops/ux-2026-09-12/bin/verify-d188.mjs` (extended for D223/D224) reports **105/105**
+checks, 35 per host, on `https://benchmarkheaven.com`, `https://www.benchmarkheaven.com` and the
+legacy MintAPIs host, all three at revision `261be5fd794fd22c4a22eaa410f3d3756eaed2ca`. It re-derives
+the reviewed set from the served notes, requires the guard to admit exactly those revisions, and
+re-reads the continuity invariants, the amendment chains, the distinct per-revision protocol hashes
+and the 23 shared task ids out of the retained bundles — and it still checks that not one row of
+VulcanBench, Terminal-Bench or LiveBench moved while the notes were repaired. Receipts:
+`/opt/benchmarkheaven/state/ux-evidence/iter244-d223/{verification.json,verify-d188.log,npm-test.log,build-dataset.log,tsc.log}`.

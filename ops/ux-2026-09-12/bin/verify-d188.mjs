@@ -5,11 +5,16 @@
 // capture of the source the entry itself names, and the hosts are then required to agree:
 // the repaired text is what they serve, and not one board row changed while it was repaired.
 //
+// D223/D224 (2026-09-27) extend it: the VulcanBench protocol family is a reviewed *set*, the
+// continuity claimed for v3.15 is re-derived from the operator's own published evidence bundles,
+// and every column the board publishes has to resolve to an exact catalog configuration.
+//
 // usage: node verify-d188.mjs [outDir] [host ...]
 import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { gunzipSync } from 'node:zlib';
+import { parseVulcanbenchFrontierLabel } from '../../../lib/board-identity.mjs';
 
 const exec = promisify(execFile);
 const REPO = process.env.BH_REPO || '/opt/model-market-comparison';
@@ -49,9 +54,26 @@ const visible = async (receipt, recipe) => (await exec('python3',
   ['ops/daily/public-candidate.py', 'text', receipt.file, ...(recipe ? [recipe] : [])],
   { cwd: REPO, maxBuffer: 16_000_000 })).stdout;
 
-const vulcanRows = (await body(newest('https://vulcanbench.com/assets/data/swe-v4-board.csv'))).trim().split('\n');
-const vulcanHead = vulcanRows[0].split(',');
-const vulcanProtocols = [...new Set(vulcanRows.slice(1).map((line) => line.split(',')[vulcanHead.indexOf('protocol')]))].sort();
+const vulcanLines = (await body(newest('https://vulcanbench.com/assets/data/swe-v4-board.csv'))).trim().split('\n');
+const vulcanHead = vulcanLines[0].split(',');
+const vulcanRows = vulcanLines.slice(1).map((line) => Object.fromEntries(line.split(',').map((cell, i) => [vulcanHead[i], cell])));
+const vulcanProtocols = [...new Set(vulcanRows.map((row) => row.protocol))].sort();
+const revisions = (text) => [...text.matchAll(/v(\d+\.\d+)/g)].map((m) => m[1]);
+// D223: the bundle of a revision is the directory of the report the board row itself names.
+const bundleOf = async (revision) => {
+  const row = vulcanRows.find((r) => r.protocol === `code-quality-maintenance-v${revision}`);
+  if (!row) throw new Error(`no board row uses v${revision}`);
+  const slug = row.report.replace(/^benchmarks\//, '').replace(/\.html$/, '');
+  return JSON.parse(await body(newest(`https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/${slug}/judge-protocols.json`)));
+};
+const VULCAN_INVARIANTS = ['system', 'rubric', 'pair_instruction', 'probe_instruction', 'match_instruction',
+  'schemas', 'weights', 'gate_allowance', 'repeats', 'seed', 'single_panel_rule',
+  'control_source_hashes', 'scored_panel'];
+const taskIds = async (slug) => {
+  const lines = (await body(newest(`https://raw.githubusercontent.com/morganlinton/VulcanBenchCOM/main/assets/data/${slug}/runs.csv`))).trim().split('\n');
+  const head = lines[0].split(',');
+  return [...new Set(lines.slice(1).map((line) => line.split(',')[head.indexOf('task')]))].sort();
+};
 const tbenchRaw = await visible(newest('https://www.tbench.ai/'), 'next-rsc');
 const tbenchText = tbenchRaw.replace(/\s+/g, ' ');
 const vulcanPage = (await visible(newest('https://vulcanbench.com/leaderboard.html'))).replace(/\s+/g, ' ');
@@ -88,20 +110,56 @@ for (const host of HOSTS) {
   const vulcan = entry('vulcanbench-frontier::4');
   check(scope, 'vulcanbench served', !!vulcan, vulcan ? 'present' : 'missing');
   if (vulcan) {
-    const range = (vulcan.scoring?.notes ?? '').match(/code-quality-maintenance-v(\d+\.\d+)–v(\d+\.\d+)/);
-    check(scope, 'vulcanbench notes state a protocol range', !!range, vulcan.scoring?.notes?.slice(0, 160));
-    if (range) {
-      const inside = vulcanProtocols.filter((protocol) => {
-        const version = Number(protocol.replace('code-quality-maintenance-v', ''));
-        return version >= Number(range[1]) && version <= Number(range[2]);
-      });
-      check(scope, 'every published protocol is inside the stated range', inside.length === vulcanProtocols.length,
-        { stated: range[0], published: vulcanProtocols });
-      check(scope, 'the range ends are both published', vulcanProtocols.includes(`code-quality-maintenance-v${range[1]}`)
-        && vulcanProtocols.includes(`code-quality-maintenance-v${range[2]}`), { stated: range[0], published: vulcanProtocols });
-      check(scope, 'the stale v3.6 upper bound is gone', range[2] !== '3.6', range[0]);
-    }
+    // D223: the reviewed set, the guard's allow-list and the board's own protocols are one set.
+    const claim = (vulcan.scoring?.notes ?? '').match(/the reviewed set is exactly (.*?)\.\s/);
+    check(scope, 'vulcanbench notes state the reviewed protocol set', !!claim, vulcan.scoring?.notes?.slice(0, 200));
+    const published = [...new Set(vulcanProtocols.map((p) => p.replace('code-quality-maintenance-v', '')))].sort();
+    const reviewed = claim ? [...new Set(revisions(claim[1]))].sort() : [];
+    check(scope, 'the reviewed set is exactly what the board publishes',
+      JSON.stringify(reviewed) === JSON.stringify(published), { reviewed, published });
     const guard = vulcan.how_to_collect?.version_guard ?? '';
+    const allowList = guard.match(/protocol in exactly \{([^}]+)\}/);
+    check(scope, 'the guard states a closed protocol list', !!allowList, guard.slice(0, 160));
+    check(scope, 'the guard admits exactly the reviewed revisions',
+      !!allowList && JSON.stringify([...new Set(revisions(allowList[1]))].sort()) === JSON.stringify(reviewed),
+      { guard: allowList ? [...new Set(revisions(allowList[1]))].sort() : null, reviewed });
+    // …and the continuity those revisions claim is re-derived from the operator's own bundles.
+    if (reviewed.length) {
+      const order = (r) => r.split('.').map(Number);
+      const sorted = [...reviewed].sort((a, b) => order(a)[0] - order(b)[0] || order(a)[1] - order(b)[1]);
+      const bundles = new Map();
+      let readable = true;
+      for (const revision of sorted) {
+        try { bundles.set(revision, await bundleOf(revision)); } catch (error) { readable = false; check(scope, `v${revision} bundle retained`, false, error.message); }
+      }
+      if (readable) {
+        const [reference, ...rest] = sorted;
+        const changed = rest.filter((revision) => VULCAN_INVARIANTS
+          .some((field) => JSON.stringify(bundles.get(revision)[field]) !== JSON.stringify(bundles.get(reference)[field])));
+        check(scope, 'every reviewed revision keeps the rubric, gates, judges and weights of the oldest',
+          changed.length === 0, { reference, changed });
+        check(scope, "each revision's bundle declares the protocol its board rows state",
+          rest.every((revision) => Object.values(bundles.get(revision).protocol_ids).includes(`code-quality-maintenance-v${revision}`)),
+          rest.map((revision) => [revision, Object.values(bundles.get(revision).protocol_ids)]));
+        check(scope, 'each revision amends the oldest reviewed one',
+          rest.every((revision) => Object.keys(bundles.get(revision).amends ?? {}).map((k) => k.replace(/^v/, '')).includes(reference)),
+          rest.map((revision) => [revision, Object.keys(bundles.get(revision).amends ?? {})]));
+        const hashes = new Set([...bundles.values()].flatMap((b) => Object.values(b.protocol_sha256)));
+        check(scope, 'a distinct protocol hash per revision is the family norm', hashes.size > 1, hashes.size);
+      }
+      try {
+        const [newestTasks, oldestTasks] = [await taskIds('swe-v4-opus55-v315'), await taskIds('swe-v4-astra-fable51-v34')];
+        check(scope, 'the newest population ran the same 23 task ids as the reference',
+          oldestTasks.length === 23 && JSON.stringify(newestTasks) === JSON.stringify(oldestTasks),
+          { reference: oldestTasks.length, newest: newestTasks.length });
+      } catch (error) { check(scope, 'per-run exports retained', false, error.message); }
+    }
+    // D224: every column the board publishes resolves to an exact catalog configuration.
+    const unresolved = vulcanRows.map((row) => `${row.model} [${row.effort}]`).filter((label) => {
+      const parsed = parseVulcanbenchFrontierLabel(label);
+      return !(parsed.family && parsed.effort);
+    });
+    check(scope, 'every board column resolves to a reviewed catalog family', unresolved.length === 0, unresolved);
     const guardDates = [...new Set(guard.match(/\d{4}-\d{2}-\d{2}/g) ?? [])];
     check(scope, 'the guard annotates its exception with a date', guardDates.length > 0, guardDates);
     check(scope, 'every date the guard cites is one the board prints',
