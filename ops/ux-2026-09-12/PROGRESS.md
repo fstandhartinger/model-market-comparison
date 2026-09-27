@@ -13511,3 +13511,100 @@ gate itself is unchanged. `[judgment]`, claude-opus or codex-luna — the accept
 Gates: `CI=true npm test` **1,457 tests, 1,456 pass, 0 fail, 1 skip** (`npm-test.log`, exit 0); `npx tsc --noEmit -p .` exit 0 (`tsc.log`) — run on
 this iteration's tree (one CSS rule pair, one test, two scripts, two ledgers). `local-F-207/verification.json`: **24/24** on the dev server. `node scripts/build-dataset.mjs` was not run: no data, registry or lib file changed in this pass.
 **Needs a non-Fable engine to set `verified` on F-207(a).** Local previews: the dev server on port 3877 was stopped at the end of the pass.
+
+## Iteration 245 (claude-opus, work) — 2026-09-27 04:40–05:3x UTC — F-209: a source change quarantines its own arm, never the day
+
+`8bd80ea1`. Fable pass 38 decided D225 and directed it as **F-209** (`[judgment]`, claude-opus or
+codex-luna). This iteration implemented it, and the acceptance replay is the decisive A/B the
+directive asked for.
+
+### What was actually wrong
+
+On 2026-09-27 the 00:41 transaction published nothing. The board had grown five rows at
+`code-quality-maintenance-v3.15`; the run's own receipt shows the VulcanBench arm ending
+`retained_after_failure` — i.e. **the arm already failed soft, exactly as designed** — and the day
+still died, on `Command failed: npm test`. The repo-level continuity test read the newest retained
+capture, found a revision the notes did not review, and went red; the publish gate runs the whole
+suite, so eleven other failing-but-retained sources and every healthy one published nothing either.
+The fence was right. Its blast radius was a shared test file.
+
+### (a) The collector fails the arm, not the run
+
+The reviewed protocol set is now read out of the registry's own
+`how_to_collect.version_guard` — the sentence `protocolReviewRow` puts in front of a critic — and not
+out of a parser rule or a prefix test. That matters for two reasons: the board's numbering counts
+amendments (D223: v3.15 follows v3.7, and `Number('3.15') < 3.7`), and a revision may only enter the
+fence by being **reviewed into text that a critic reads**. One regex, two implementations (JS for the
+daily, python for the collector), pinned to each other against the live registry by
+`test/d225-source-arm-quarantine.test.mjs` — a rule with two implementations is a defect waiting to
+happen, so they are compared rather than trusted.
+
+A board stating a protocol outside that set raises one recognisable error; `refresh-benchmarks.mjs`
+turns exactly that error into a `source_changed_retained` check naming the unreviewed revision(s) and
+the reviewed set, keeps the arm's published rows untouched, and lets every other arm collect, test and
+publish. Every other failure shape is still `retained_after_failure`, unchanged. **Today's board
+publishes exactly the five reviewed revisions and VulcanBench is the only entry in the registry with
+such an allow-list, so this is a strict no-op for the current data** — verified, not assumed.
+
+A caller that parses without a registry entry (only a test does) keeps the original family floor, so
+nothing is ever accepted with no guard at all. Found by running the suite: widening the family prefix
+to cover v3.x had silently made `code-quality-maintenance-v4.0` acceptable in that call shape.
+
+### (b) The continuity test asserts against accepted captures
+
+A quarantined arm writes `quarantine.json` beside the manifest it describes, listing the captures **no
+accepted arm used** (a capture another arm published from is accepted evidence and is never withheld).
+`test/d188-protocol-notes-match-source.test.mjs` and `bin/verify-d188.mjs` now read the newest capture
+the collector *accepted* through one shared helper (`lib/source-quarantine.mjs`). A withheld newer
+capture is **named in the failure message**, never silently skipped: a check must not be able to pass
+by ignoring evidence it was supposed to read.
+
+**Scope kept to what the directive names, deliberately.** An arm that fails for another reason — a
+critic refusing the notes' wording, say — writes no quarantine record, so its newer capture is still
+read and can still turn the suite red. That is the right pressure (the registry text really has
+drifted and the test is what says so), and it is why the 2026-09-27 failure needed (a) as well as
+(b): with F-209 the collector quarantines before the protocol review is ever reached. Widening the
+withholding to every non-accepted capture would also hide real drift behind a soft arm failure; that
+is a policy change and is **not** made here.
+
+### (c) It is visible, and it escalates
+
+`source_changed_retained` maps to `attention`, and the existing `consecutive_failed_runs` only counts
+`failing`, so a quarantine had no streak at all. There is now a per-arm quarantine streak, the arm and
+its reason are named in `source-health.md` and in the run summary (`Arm stillgelegt …`) **on every run
+it stays quarantined**, and on the third consecutive run the notify pass raises a human-action block
+naming the arm, the revision and the registry field to review. Deduped on the arm and the exact
+revisions: a new unreviewed revision asks again, a standing one does not repeat daily.
+Two things are told apart by structure rather than by status: CR-34.2's OpenRouter changed-capture
+retention has used `source_changed_retained` since long before this, so a quarantine is recognised by
+the `unreviewed_protocols` field it carries, never by the status alone.
+
+### (d) The publish gate is unchanged
+
+`npm test`, build and typecheck still gate the commit. No score, note, guard or registry value changed;
+D223's review of v3.15 stands.
+
+### Acceptance — the replay, on the bytes that broke the day
+
+`ops/ux-2026-09-12/bin/replay-d225-quarantine.mjs`, run in a scratch worktree of the pushed
+`8bd80ea1`: **13/13**, all deterministic, no model call anywhere.
+Receipts `/opt/benchmarkheaven/state/ux-evidence/iter245-f209/replay/`.
+
+* **A — the arm, on the failed run's own capture** (`…/runs/2026-09-27T00-41-02-535Z-3199320/work/…/2026-09-27T00-54-53-549Z`, board SHA-256 `39357de8…`, re-derived from the bytes). With the reviewed set **read out of git at `261be5fd^`** — the four revisions the failed run actually had, never retyped — the arm quarantines, names `code-quality-maintenance-v3.15` and the reviewed set, and says in prose that its published rows are unchanged and every other source still publishes. With today's reviewed set the **same bytes collect normally** (28 rows, v3.15 among the protocols). So the fence is exactly the reviewed sentence.
+* **B — the fence still bites.** The same capture with one extra row at an invented `…-v3.16` quarantines against *today's* registry too.
+* **C — the day survives, proven both ways on one tree.** The mutated capture is written in as the newest evidence directory. **With** the quarantine record beside it the continuity suite is green; **without** it, the same tree reproduces the 2026-09-27 assertion verbatim — "the notes claim v3.4, v3.5, v3.6, v3.7, v3.15 while the board publishes … v3.16 …". That A/B is the whole directive.
+* **D — visibility.** `source-health.md` names the arm, its streak and its reason on the first quarantined run; the arm is `attention` with `consecutive_failed_runs` 0 (every other arm published); the third consecutive run raises the human-action block, and **`~/bin/notify now --dry-run` accepts its format** — that shape is notify's judgement, not ours, so it was asked rather than assumed.
+
+Not done as literally written: the directive's step "temporarily set the guard back to v3.4–v3.7, run
+the whole `npm test`, then restore" is not a world that ever existed with the current test file — the
+v3.4–v3.7 judge-protocol bundles the D223 tests re-derive continuity from were only captured *by*
+`261be5fd`, so un-doing D223 makes those checks fail for want of evidence rather than for want of
+F-209. Part C is the same claim without the artefact: today's registry, a synthetic unreviewed
+revision, and the suite run twice on one tree with and without the record. Part A still replays the
+pre-D223 reviewed set against the failed run's own bytes, which is the half that actually tests the
+fence.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| F-209 (= D225) | **implemented, pending non-implementer verification** | `8bd80ea1`; `lib/source-quarantine.mjs`; `test/d225-source-arm-quarantine.test.mjs` **9/9**; replay **13/13** at `/opt/benchmarkheaven/state/ux-evidence/iter245-f209/replay/verification.json`; live `verify-d188.mjs` receipt in `/opt/benchmarkheaven/state/ux-evidence/iter245-f209/live/` | Quarantine the arm, not the day; continuity checks on accepted captures; named every run and escalated on the third. A strict no-op for today's data. **Needs a non-claude engine to set `verified`** — `node ops/ux-2026-09-12/bin/replay-d225-quarantine.mjs <outDir>` from a scratch worktree reproduces the whole acceptance offline. |
+| D225 | **closed by F-209** | as above | The policy question was answered by the design authority in pass 38; the implementation is F-209's row. |
