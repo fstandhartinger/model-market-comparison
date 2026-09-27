@@ -29,19 +29,15 @@ const PROTOCOL_WORDS = /\b(metric|unit|units|range|task set|tasks|harness|judge|
 
 // The registry entries that still state the Composite policy without the marker. 47 whose last
 // sentence was *entirely* our handling of the row were converted by prefixing the marker and nothing
-// else; these 14 are the ones where the policy clause is welded onto something a source has to settle
-// — what the maintainer publishes per row (cursorbench), who runs the board (programbench), that an
-// LLM judge grades it (react-native-evals, researchclawbench, vulcanbench-frontier::4) — and splitting
-// those needs the captured page in hand, one family at a time. The list may shrink; a name cannot join
-// it without a reason in the same commit.
-const UNMARKED_POLICY = [
-  'apprenticebench-api-cost::snapshot-2026-09-14', 'apprenticebench-api::snapshot-2026-09-14',
-  'apprenticebench-cua-cost::snapshot-2026-09-14', 'apprenticebench-cua::snapshot-2026-09-14',
-  'cursorbench-cost::4.0', 'cursorbench::4.0', 'frontiercode-cost::1.1',
-  'matharena-brokenarxiv::2026-06', 'matharena-brokenarxiv::2026-08',
-  'openai-automationbench-cost::1.0.6', 'programbench::1', 'react-native-evals::91-evals',
-  'researchclawbench::40-tasks', 'vulcanbench-frontier::4',
-];
+// else; 12 more had the clause welded onto something a source has to settle — what the maintainer
+// publishes per row (cursorbench, apprenticebench), who publishes the board (programbench), that an
+// LLM judge grades it (react-native-evals, researchclawbench, matharena-brokenarxiv) — and were split
+// so the sourced half stays in front of the reviewer.
+//
+// These two are held back on purpose for one day: both are arms whose repair (D232, D234) lands in
+// tomorrow's 05:17 run, and their packet is not worth perturbing the night before its receipt.
+// The list may shrink; a name cannot join it without a reason in the same commit.
+const UNMARKED_POLICY = ['frontiercode-cost::1.1', 'vulcanbench-frontier::4'];
 const POLICY_CLAIM = /Composite input|enters the Composite|into the Composite/;
 const unmarked = () => registry.entries.filter((e) => {
   const notes = e.scoring?.notes ?? '';
@@ -49,7 +45,7 @@ const unmarked = () => registry.entries.filter((e) => {
 }).map((e) => e.id);
 
 test('the policy note is stripped from the reviewed row and kept in the published notes', () => {
-  assert.ok(marked.length >= 56, 'the nine Vals entries and the 47 converted boards carry the marker');
+  assert.ok(marked.length >= 68, 'the nine Vals entries and the 59 converted boards carry the marker');
   for (const entry of marked) {
     const reviewed = protocolReviewRow(entry).scoring.notes ?? '';
     assert.ok(!reviewed.includes(POLICY_NOTE_MARKER), `${entry.id}: the marker reached the reviewer`);
@@ -60,7 +56,7 @@ test('the policy note is stripped from the reviewed row and kept in the publishe
 });
 
 test('nothing hides behind the marker that a protocol page would have to settle', () => {
-  assert.ok(marked.length >= 56, 'the marker is in use');
+  assert.ok(marked.length >= 68, 'the marker is in use');
   for (const entry of marked) {
     const clause = entry.scoring.notes.slice(entry.scoring.notes.indexOf(POLICY_NOTE_MARKER));
     assert.equal(clause.split(POLICY_NOTE_MARKER).length, 2, `${entry.id}: the marker appears twice`);

@@ -2116,7 +2116,7 @@
           null
         ],
         "higher_better": false,
-        "notes": "Cost is a separate published metric, not a capability score and not a Composite input. Each published row is one model x harness x reasoning-effort configuration. The best human tester (51%, $7.21/task) published on the page is not a model row. Cost prices the mean per-task tokens (cache reads, fresh input, cache writes and output) at list rates."
+        "notes": "Cost is a separate published metric. Each published row is one model x harness x reasoning-effort configuration. The best human tester (51%, $7.21/task) published on the page is not a model row. Cost prices the mean per-task tokens (cache reads, fresh input, cache writes and output) at list rates. Benchmark Heaven policy: not a capability score and not a Composite input."
       },
       "maintainer": "NeoCognition",
       "source_type": "official_leaderboard",
@@ -2181,7 +2181,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Each published row is one model x harness x reasoning-effort configuration; this secondary benchmark is not a Composite input. The best human tester (51%, $7.21/task) published on the page is not a model row. Tokens per task is the mean of cache reads, fresh input, cache writes and output; cost prices those tokens at list rates."
+        "notes": "Each published row is one model x harness x reasoning-effort configuration. The best human tester (51%, $7.21/task) published on the page is not a model row. Tokens per task is the mean of cache reads, fresh input, cache writes and output; cost prices those tokens at list rates. Benchmark Heaven policy: secondary benchmark, not a Composite input."
       },
       "maintainer": "NeoCognition",
       "source_type": "official_leaderboard",
@@ -2246,7 +2246,7 @@
           null
         ],
         "higher_better": false,
-        "notes": "Cost is a separate published metric, not a capability score and not a Composite input. Each published row is one model x harness x reasoning-effort configuration. The best human tester (51%, $7.21/task) published on the page is not a model row. Cost prices the mean per-task tokens (cache reads, fresh input, cache writes and output) at list rates."
+        "notes": "Cost is a separate published metric. Each published row is one model x harness x reasoning-effort configuration. The best human tester (51%, $7.21/task) published on the page is not a model row. Cost prices the mean per-task tokens (cache reads, fresh input, cache writes and output) at list rates. Benchmark Heaven policy: not a capability score and not a Composite input."
       },
       "maintainer": "NeoCognition",
       "source_type": "official_leaderboard",
@@ -2311,7 +2311,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Each published row is one model x harness x reasoning-effort configuration; this secondary benchmark is not a Composite input. The best human tester (51%, $7.21/task) published on the page is not a model row. Tokens per task is the mean of cache reads, fresh input, cache writes and output; cost prices those tokens at list rates."
+        "notes": "Each published row is one model x harness x reasoning-effort configuration. The best human tester (51%, $7.21/task) published on the page is not a model row. Tokens per task is the mean of cache reads, fresh input, cache writes and output; cost prices those tokens at list rates. Benchmark Heaven policy: secondary benchmark, not a Composite input."
       },
       "maintainer": "NeoCognition",
       "source_type": "official_leaderboard",
@@ -3139,7 +3139,7 @@
           null
         ],
         "higher_better": false,
-        "notes": "Cost is a separate published metric, not a capability score and not a Composite input; it may reflect the source's adjusted pricing note."
+        "notes": "Cost is a separate published metric and may reflect the source's adjusted pricing note. Benchmark Heaven policy: not a capability score and not a Composite input."
       },
       "maintainer": "Cursor (Anysphere)",
       "source_type": "official_leaderboard",
@@ -3204,7 +3204,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Cursor publishes one score percentage per model and reasoning-effort configuration; this secondary benchmark is not a Composite input."
+        "notes": "Cursor publishes one score percentage per model and reasoning-effort configuration. Benchmark Heaven policy: secondary benchmark, not a Composite input."
       },
       "maintainer": "Cursor (Anysphere)",
       "source_type": "official_leaderboard",
@@ -7068,7 +7068,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Run by MathArena (SRI Lab, ETH Zurich, with INSAIT) on the June 2026 edition (54 problems). The 95% interval, cost, token counts and the source's own \"released after competition release\" flag stay in each observation's protocol. A model released after the problems were published may have seen them; the flag says so, it is not a correction. Monthly editions are separate identities. Secondary benchmark, never a Composite input. Graded by an LLM judge on a 0–2 scale per response (MathArena's BrokenArXiv methodology page), so it is a judged score."
+        "notes": "Run by MathArena (SRI Lab, ETH Zurich, with INSAIT) on the June 2026 edition (54 problems). The 95% interval, cost, token counts and the source's own \"released after competition release\" flag stay in each observation's protocol. A model released after the problems were published may have seen them; the flag says so, it is not a correction. Monthly editions are separate identities. Graded by an LLM judge on a 0–2 scale per response (MathArena's BrokenArXiv methodology page), so it is a judged score. Benchmark Heaven policy: secondary benchmark, never a Composite input."
       },
       "maintainer": "MathArena (SRI Lab, ETH Zurich; INSAIT)",
       "source_type": "official_leaderboard",
@@ -7173,7 +7173,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Run by MathArena (SRI Lab, ETH Zurich, with INSAIT) on the August 2026 edition (56 problems). The 95% interval, cost, token counts and the source's own \"released after competition release\" flag stay in each observation's protocol. A model released after the problems were published may have seen them; the flag says so, it is not a correction. Monthly editions are separate identities and editions are never averaged. Secondary benchmark, never a Composite input. A judged score: the August edition's own description states grading on a 0–3 scale per response, while MathArena's general BrokenArXiv methodology page (/brokenarxiv) describes a 0–2 score per response; this identity records the edition's own statement, and editions are judged separately, never mixed."
+        "notes": "Run by MathArena (SRI Lab, ETH Zurich, with INSAIT) on the August 2026 edition (56 problems). The 95% interval, cost, token counts and the source's own \"released after competition release\" flag stay in each observation's protocol. A model released after the problems were published may have seen them; the flag says so, it is not a correction. Monthly editions are separate identities and editions are never averaged. A judged score: the August edition's own description states grading on a 0–3 scale per response, while MathArena's general BrokenArXiv methodology page (/brokenarxiv) describes a 0–2 score per response; this identity records the edition's own statement, and editions are judged separately, never mixed. Benchmark Heaven policy: secondary benchmark, never a Composite input."
       },
       "maintainer": "MathArena (SRI Lab, ETH Zurich; INSAIT)",
       "source_type": "official_leaderboard",
@@ -8857,7 +8857,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Run under the mini-SWE-agent baseline harness in an offline docker container (--network none, 6-hour wall-time limit, 1000-step limit): the agent must architect and implement a fresh codebase that reproduces the reference binary's externally observable behavior; wrapping the binary, reusing an existing implementation or reading the original source is disqualification. Per-instance score = fraction of the instance's behavioral tests passed (registry ignore map applied; 2026-09-21 the map holds 200 empty lists, no ignored tests). The board also publishes Resolved (score = 1.0, fully solved instances) and Almost (score >= 0.95) shares, average API cost and LLM calls and output tokens per task, and each row's publication date; those stay in the protocol. The board's sub-percent per-instance scores are the same metric the package/verify CLI recomputes (src/programbench/submission.py: mean_score = sum(values)/n_total over 200). Community benchmark of an academic team (Princeton & Meta, arXiv:2605.03546); not a Composite input."
+        "notes": "Run under the mini-SWE-agent baseline harness in an offline docker container (--network none, 6-hour wall-time limit, 1000-step limit): the agent must architect and implement a fresh codebase that reproduces the reference binary's externally observable behavior; wrapping the binary, reusing an existing implementation or reading the original source is disqualification. Per-instance score = fraction of the instance's behavioral tests passed (registry ignore map applied; 2026-09-21 the map holds 200 empty lists, no ignored tests). The board also publishes Resolved (score = 1.0, fully solved instances) and Almost (score >= 0.95) shares, average API cost and LLM calls and output tokens per task, and each row's publication date; those stay in the protocol. The board's sub-percent per-instance scores are the same metric the package/verify CLI recomputes (src/programbench/submission.py: mean_score = sum(values)/n_total over 200). The board is published by an academic team (Princeton & Meta, arXiv:2605.03546). Benchmark Heaven policy: community benchmark, not a Composite input."
       },
       "maintainer": "ProgramBench team (John Yang, Kilian Lieret et al.; Princeton University & Meta)",
       "source_type": "official_leaderboard",
@@ -8979,7 +8979,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Each eval gives the model a small React Native app and a task prompt; the model solves it through OpenCode and a judge model reads the generated files against the eval's requirements.yaml (plain-language requirements, optional weights). The board repeats the whole suite (10 runs in the 2026-09-21 capture) and scores the summed requirement counts, and every row with the full requirement count reproduces its score exactly from its own passed and judged counts. Errored evals are not judged: a row can rest on fewer judged requirements than the board's largest (GPT OSS 120B: 3,420 of 3,960 on 2026-09-21), and for such rows the board's figure differs from the plain ratio by up to 0.03 points on 2026-09-21 (the collector accepts at most 0.1); both counts stay in each row's protocol, with tokens and cost where the board reports them. The judge model is not named on the board. The board names models by product name and gateway route and states no reasoning setting. Judged benchmark (an LLM judge rates requirement fulfilment, no ground-truth answer); secondary, never a Composite input."
+        "notes": "Each eval gives the model a small React Native app and a task prompt; the model solves it through OpenCode and a judge model reads the generated files against the eval's requirements.yaml (plain-language requirements, optional weights). The board repeats the whole suite (10 runs in the 2026-09-21 capture) and scores the summed requirement counts, and every row with the full requirement count reproduces its score exactly from its own passed and judged counts. Errored evals are not judged: a row can rest on fewer judged requirements than the board's largest (GPT OSS 120B: 3,420 of 3,960 on 2026-09-21), and for such rows the board's figure differs from the plain ratio by up to 0.03 points on 2026-09-21 (the collector accepts at most 0.1); both counts stay in each row's protocol, with tokens and cost where the board reports them. The judge model is not named on the board. The board names models by product name and gateway route and states no reasoning setting. Judged benchmark: an LLM judge rates requirement fulfilment, with no ground-truth answer. Benchmark Heaven policy: secondary, never a Composite input."
       },
       "maintainer": "Callstack (callstackincubator/evals)",
       "source_type": "official_leaderboard",
@@ -9191,7 +9191,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Only the board's ResearchHarness rows are collected: the benchmark's own lightweight baseline harness around a standalone model, so the rows compare models. The board's other rows (Claude Code, Codex CLI, InnoClaw, Qiushi Engine and more) are research-agent products built around some model and are not model rows. Pass@1 view (the page's default; its Pass@5 view takes the best of five attempts). The value is the plain mean of the row's scored tasks, the figure the page ranks by: a task without a scored run is left out rather than counted as 0, so coverage differs (33 to 40 of 40 on 2026-09-21) and stays in each row's protocol with the mean cost per task. The page says 100 = surpasses the paper, the README 70+. Judged benchmark (an LLM judge applies the rubric); secondary, never a Composite input."
+        "notes": "Only the board's ResearchHarness rows are collected: the benchmark's own lightweight baseline harness around a standalone model, so the rows compare models. The board's other rows (Claude Code, Codex CLI, InnoClaw, Qiushi Engine and more) are research-agent products built around some model and are not model rows. Pass@1 view (the page's default; its Pass@5 view takes the best of five attempts). The value is the plain mean of the row's scored tasks, the figure the page ranks by: a task without a scored run is left out rather than counted as 0, so coverage differs (33 to 40 of 40 on 2026-09-21) and stays in each row's protocol with the mean cost per task. The page says 100 = surpasses the paper, the README 70+. Judged benchmark: an LLM judge applies the rubric. Benchmark Heaven policy: secondary, never a Composite input."
       },
       "maintainer": "ResearchClawBench team (InternScience)",
       "source_type": "official_leaderboard",
@@ -17843,7 +17843,7 @@
           null
         ],
         "higher_better": false,
-        "notes": "A separately published metric, not a capability score and not a Composite input. OpenAI's own run, reported about its own models; it stays outside measured cohorts and the Composite. OpenAI states these evaluations ran in its research environment or via its API, which may differ from production ChatGPT."
+        "notes": "A separately published metric. OpenAI's own run, reported about its own models. OpenAI states these evaluations ran in its research environment or via its API, which may differ from production ChatGPT. Benchmark Heaven policy: not a capability score and not a Composite input; it stays outside measured cohorts and the Composite."
       },
       "maintainer": "Zapier (AutomationBench)",
       "source_type": "vendor_report",

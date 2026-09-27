@@ -69,17 +69,13 @@ for (const id of ['vals-index-vibe-code-bench::2', 'vals-index-hlab::2', 'vals-i
 // marker. The 14 boards where the clause is welded onto something a source has to settle are the
 // inventory that test/d235-policy-note.test.mjs pins; they are named here so this check stays honest
 // rather than being weakened when one of them appears.
-const INVENTORY = new Set(['apprenticebench-api-cost::snapshot-2026-09-14', 'apprenticebench-api::snapshot-2026-09-14',
-  'apprenticebench-cua-cost::snapshot-2026-09-14', 'apprenticebench-cua::snapshot-2026-09-14',
-  'cursorbench-cost::4.0', 'cursorbench::4.0', 'frontiercode-cost::1.1', 'matharena-brokenarxiv::2026-06',
-  'matharena-brokenarxiv::2026-08', 'openai-automationbench-cost::1.0.6', 'programbench::1',
-  'react-native-evals::91-evals', 'researchclawbench::40-tasks', 'vulcanbench-frontier::4']);
+const INVENTORY = new Set(['frontiercode-cost::1.1', 'vulcanbench-frontier::4']);
 const unmarked = rows.filter((b) => /Composite input|enters the Composite|into the Composite/.test(b?.scoring?.notes ?? '')
   && !(b?.scoring?.notes ?? '').includes(POLICY) && !INVENTORY.has(b.id)).map((b) => b.id);
-check('every served board states the Composite policy behind the marker, bar the 14 inventoried',
+check('every served board states the Composite policy behind the marker, bar the two inventoried',
   unmarked.length === 0, unmarked.join(', ') || 'none');
 const markedBoards = rows.filter((b) => (b?.scoring?.notes ?? '').includes(POLICY));
-check('the 47 converted boards and the nine Vals boards serve the marker', markedBoards.length >= 56, markedBoards.length);
+check('the 59 converted boards and the nine Vals boards serve the marker', markedBoards.length >= 68, markedBoards.length);
 // Everything after the marker is ours by definition, so the invariant is not "nothing follows" — it is
 // that no claim about what a value *means* hides there, where the reviewer can no longer see it. Same
 // word list as test/d235-policy-note.test.mjs.
