@@ -83,6 +83,17 @@ test('the capture receipt shows the whole declared set searched and exactly one 
   assert.deepEqual(receipts.map((r) => r.url).sort(), [PAGE, chunk.url].sort());
 });
 
+// The shape the capture script writes when the marker selects nothing, observed against a page with
+// no scripts at all (evidence: iter249-d232/fail-closed-probe/). The page capture still succeeds —
+// which matters, because `frontiercode::1.1` reviews that same page — and nothing is queued, so
+// `current()` finds no discovered receipt and the cost arm is retained rather than published.
+test('a marker that selects nothing leaves the page captured and the arm without a source', () => {
+  const softFail = [{ url: PAGE, status: 200, follow_marker: MARKER, declared_scripts: 0, marker_matches: [],
+    follow_error: 'Expected exactly one declared script containing the marker, found 0' }];
+  assert.equal(discoveredScriptReceipt(softFail, marked[0]), undefined);
+  assert.equal(softFail[0].status, 200);
+});
+
 test('a marker follow is only satisfied by a receipt carrying that marker', () => {
   const other = { page_url: PAGE, follow_script_marker: 'note:"Time (min): something else."' };
   assert.equal(discoveredScriptReceipt(receipts, other), undefined);

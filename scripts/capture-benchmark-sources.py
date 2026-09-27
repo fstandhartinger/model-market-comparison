@@ -72,11 +72,12 @@ while queue:
    # and the one containing the reviewed marker is the source. Exactly one, or nothing: zero matches
    # and two matches are both recorded as an error and never guessed at. Only the winner is queued,
    # so only the winner's body is ever written; the others are read and dropped.
-   page=b.decode('utf-8','replace');declared=[];hits=[]
-   for src in re.findall(r'<script[^>]*\ssrc="([^"]+)"',page):
-    u=urllib.parse.urljoin(q.geturl(),src)
-    if urllib.parse.urlsplit(u).netloc==host and u not in declared:declared.append(u)
+   declared=[];hits=[]
    try:
+    page=b.decode('utf-8','replace')
+    for src in re.findall(r'<script[^>]*\ssrc="([^"]+)"',page):
+     u=urllib.parse.urljoin(q.geturl(),src)
+     if urllib.parse.urlsplit(u).netloc==host and u not in declared:declared.append(u)
     for u in declared:
      if not rp.can_fetch(UA,u):raise RuntimeError('robots disallows a declared page script: '+u)
      time.sleep(max(0,delay-(time.monotonic()-last.get(host,0))))

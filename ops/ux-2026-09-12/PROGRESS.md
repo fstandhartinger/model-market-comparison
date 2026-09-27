@@ -14425,6 +14425,15 @@ Preflighted against the pre-deploy site: **17/27**, with exactly the ten checks 
 state failing and every count and value already passing
 (`…/iter249-d232/preflight/verification.json`).
 
+**The blast radius of the new rule, proved rather than argued.** The whole marker block fails soft:
+any exception in it — a robots rule, an oversized script, a decode error, zero or two matches —
+records a `follow_error` on the page receipt and leaves the page itself a successful capture, which
+matters because `frontiercode::1.1` reviews that same page. Observed against a page with no scripts
+at all (`…/iter249-d232/fail-closed-probe/`): `status 200`, `declared_scripts 0`, `marker_matches
+[]`, `follow_error "Expected exactly one declared script containing the marker, found 0"`, and
+nothing queued — so `current()` finds no source and the cost arm is retained, never published on a
+guess. `test/d232-declared-script-marker.test.mjs` pins that shape.
+
 ## Iteration 249 summary
 
 D192's **last one-row arm** is repaired. `frontiercode-cost::1.1` needed a source for two words
