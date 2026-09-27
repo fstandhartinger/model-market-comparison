@@ -1,0 +1,37 @@
+{
+  "artifact_id": "cr190-mentalhealthbench-overall",
+  "artifact_sha256": "95de8d33792744c43d20e7fa21809e9d3449a2e6ed1a748e2d23fa27241a484d",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "self-reported:claude-fable-5.1-openai-mentalhealthbench",
+    "self-reported:claude-haiku-4.5-openai-mentalhealthbench",
+    "self-reported:claude-opus-5.5-openai-mentalhealthbench",
+    "self-reported:claude-sonnet-5-openai-mentalhealthbench",
+    "self-reported:gemini-2.5-flash-openai-mentalhealthbench",
+    "self-reported:gemini-2.5-pro-openai-mentalhealthbench",
+    "self-reported:gemini-3.1-pro-openai-mentalhealthbench",
+    "self-reported:gemini-3.8-flash-openai-mentalhealthbench",
+    "self-reported:gpt-4o-march-2025-openai-mentalhealthbench",
+    "self-reported:gpt-5-thinking-openai-mentalhealthbench",
+    "self-reported:gpt-5.6-luna-aug-2026-openai-mentalhealthbench",
+    "self-reported:gpt-5.6-sol-aug-2026-openai-mentalhealthbench",
+    "self-reported:gpt-6-astra-openai-mentalhealthbench",
+    "self-reported:gpt-6-luna-openai-mentalhealthbench",
+    "self-reported:gpt-6-sol-openai-mentalhealthbench",
+    "self-reported:grok-4.7-openai-mentalhealthbench",
+    "self-reported:muse-spark-1.3-openai-mentalhealthbench"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "missing_evidence": [],
+  "uncertainties": [
+    "Value check: all 17 observation values, subject.name and subject.source_id match the printed labels and numbers in evidence.figure_5a_printed_block exactly (including \"(Aug 2026)\" and \"(March 2025)\" qualifiers), and every printed row of the block has a corresponding observation. Note: the block prints \"47.0\" for GPT-5.6 Sol (Aug 2026) while the artifact stores 47; these are the same JSON number, so this is not a defect, only a formatting difference.",
+    "Interval check: exactly 15 observations carry confidence_interval with level 0.95; each lower/upper matches the corresponding evidence.announcement_chart_values ciLow/ciHigh digit-for-digit, each chart value rounds at one decimal to the observation value, and every interval contains its value. The two models absent from announcement_chart_values (GPT-5 Thinking, Gemini 2.5 Flash) correctly carry no confidence_interval and no supporting_sources entry.",
+    "Basis/composite check: all 17 rows use benchmark_id \"openai-mentalhealthbench::snapshot-2026-09-23\", basis \"self_reported\", unit \"percent\", comparison_key null, subject.model_id null and subject.variant null; no row names a subject reasoning effort, no row contains a \"*\" display marker, and no cost row derived from Figure 6 appears.",
+    "Provenance check: all source blocks carry the paper URL, sha256 fa5a3dc17fb2a58f820a1f4269cde93010b7f7c3e98558f65d082a9c5690644f, file data/raw/benchmarks/daily-evidence/2026-09-27-cr190/fa5a3dc17fb2a58f820a.gz, published_at 2026-09-23, and a locator quoting that model's own printed row (panel a value plus panel b components cross-checked against the printed block, e.g. \"Claude Opus 5.5  52.4  −33  73\"). All 15 supporting_sources carry the announcement URL, sha256 dc0047a15f9272dd2c84281fb157b0dc9247cf09733890ac8a6446a803fcb10f, and the matching modelKey.",
+    "Protocol check: every protocol states OpenAI authored the benchmark, ran the models and supplies the judge, that rows are self_reported and never enter the Composite, and names the judge exactly as in evidence.judge_quote (\"GPT-5.6 Sol at high reasoning effort\"); no protocol claims independence or attaches a named effort to the subject.",
+    "Limitation: I have no execution or browsing tools, so sha256 digests, retained-file paths and the artifact_sha256 were verified only by string comparison against the criteria and evidence packet; I could not recompute digests from the underlying bytes or independently re-derive the CI numbers beyond the supplied values."
+  ]
+}

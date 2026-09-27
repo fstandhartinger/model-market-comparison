@@ -6,7 +6,11 @@ const dataset = JSON.parse(await readFile(new URL('../data/dataset.json', import
 const registry = JSON.parse(await readFile(new URL('../data/raw/benchmarks/registry.json', import.meta.url), 'utf8'));
 const POST = 'https://openai.com/index/introducing-gpt-6-sol-and-luna/';
 const SOURCE_SHA = 'de4e8f71186ee5dad44f6d9924f7418c7c8e1dbf726340e464a37b58375c58f5';
-const claims = dataset.benchmark_results.observations.filter((row) => row.id.startsWith('self-reported:gpt-6-') && row.id.includes('-openai-'));
+// CR-190: OpenAI now publishes a second board of its own (MentalHealthBench), whose rows include
+// GPT-6 models and match that id prefix without belonging to this launch post. The launch post's
+// claims are therefore selected by the source they were read from — the same correction iteration
+// 255 made to the registry pin above, and a tighter selector than the prefix it replaces.
+const claims = dataset.benchmark_results.observations.filter((row) => row.source.url === POST);
 const claim = (id) => claims.find((row) => row.id === id);
 
 test("CR-126.1: OpenAI's own runs keep their own registry identities and printed versions", () => {

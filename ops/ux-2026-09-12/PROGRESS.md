@@ -15717,3 +15717,192 @@ job state. The normal merge queue merged and deployed PR #57.
 
 `ALL-ACCEPTED` is not appended. The open rows above are sufficient to fail X6 and the
 04-CR-BRIEF acceptance gate.
+
+---
+
+## Iteration 256 (claude-opus, work) — 2026-09-27 22:2x–… UTC — CR-190.1's 17 rows, and the announcement page did print its numbers after all
+
+Iteration 255 registered MentalHealthBench and listed its 17 observations as the next iteration's first job.
+They are ingested here, with their critic round, their approvals and their refusals.
+
+### The "client-rendered shell with no printed values" was a payload nobody opened
+
+Iteration 255 recorded that `https://openai.com/index/introducing-mentalhealthbench/` "carries no printed
+values: its result figures are client-rendered `<div id="mentalhealthbench-overall">` shells". The shell is
+real, but the **bytes we already had retained** carry ten Vega-Lite specs in the RSC flight payload, and the
+one whose `linkId` is `mentalhealthbench-overall` holds the whole overall board as data:
+`{"modelKey":"gpt-6-astra","label":"GPT-6 Astra*","value":57.33367971855501,"ciLow":55.404377568631766,"ciHigh":59.26298186847825}`
+and fourteen more. That is machine-readable primary data from the author — exactly what CR-190.1 asks us to
+prefer over a chart — and it was inside the capture from the first day. Nothing new was fetched to find it.
+
+It changes two things. Every one of the fifteen models it covers now carries **OpenAI's own 95% confidence
+interval**, which the paper draws as an error bar and never prints. And every one of those fifteen values is
+read **twice, from two documents**: the extractor fails closed if the payload's full-precision number does not
+round to the paper's printed one decimal. All fifteen agree.
+
+The payload is not a superset: it omits **GPT-5 Thinking** and **Gemini 2.5 Flash**, which Figure 5(a) prints.
+So the paper stays the source of record for all 17 values and the announcement is a supporting source on the
+fifteen; the two paper-only rows carry no interval, and a check requires exactly those two to be the ones
+without.
+
+### Nothing is joined to a catalog configuration, and that is the finding
+
+The paper is explicit: "We use each model's API at **default** reasoning effort, temperature, and verbosity
+setting (when applicable)." Our catalog splits these families by effort and holds **no setting-less
+configuration** for any of them — `gpt-6-astra` has five, `claude-opus-5.5` five, `gpt-6-sol` six,
+`claude-haiku-4.5` two (`reasoning`/`non-reasoning`, neither a default), `gemini-2.5-flash` exactly one and it
+is `non-reasoning`, not a default. This is the same structural mismatch iteration 242 tallied for EQ-Bench
+(D219.1) and the rule `lib/board-identity.mjs` already states: a label that states no setting joins only a
+family whose catalog holds exactly one configuration **and** that configuration is the default. Picking one
+effort would assert a setting the source never states.
+
+Three labels were checked individually rather than waved through:
+
+- **`GPT-4o (March 2025)`** is the one family whose catalog key has a single `default` configuration
+  (`gpt-4o-march-2025-chatgpt-4o-latest::default`) — and it is **refused anyway**: that catalog entry is the
+  `chatgpt-4o-latest` snapshot, while the paper's Table 2 prices this model at $2.50/$10.00 per 1M tokens,
+  the standard `gpt-4o` API price. Joining it would silently swap one OpenAI product for another.
+- **`Gemini 2.5 Pro`** matches `gemini-2.5-pro::default` by display name, but the family also holds
+  `gemini-2.5-pro::openrouter`, so it is not the single configuration the rule requires.
+- **`GPT-5 Thinking`** is a ChatGPT product name that is in no catalog family at all.
+
+The rows are therefore published **unjoined**: `/api/benchmark-scores?benchmark_id=…` serves all 17 with their
+values, intervals, provenance and protocol on every host, and no model page claims one. What a join would need
+is written down as **D243** below, so it is a decision someone can take rather than a silence.
+
+**Figure 6 sharpens the refusal rather than softening it.** Its caption — "Connected points show different
+reasoning-effort settings for the same model" — shows the paper *does* distinguish effort settings where it ran
+them. Figure 5(a)'s one row per model is the default run, and it is the only board ingested here.
+
+### No cost row
+
+CR-190.1 asks for "cost per run if published". Table 2 publishes the **API prices** OpenAI used, not a cost per
+run, and Figure 6 plots mean generation cost on a **log axis with no printed values**. A number read off a
+log-scale scatter is not a measurement, so no cost observation exists and the critic's criteria forbid one.
+
+### The critic round
+
+`ops/rebuild-2026-09/bin/worker.sh --critic --model moonshotai/kimi-k3 --producer anthropic/claude-opus-5`,
+round 1, on a frozen artifact of the 17 observations. The packet is
+`data/raw/benchmarks/daily-evidence/2026-09-27-cr190/gauntlet/packet-r1.json`; the artifact, review and its
+execution receipt sit beside it. Its nine criteria are the ones this row can actually fail: every value and
+label must appear in the quoted Figure 5(a) block *and* every printed row must have an observation; exactly
+fifteen intervals, each matching its `modelKey` entry and containing the value; the two chart-omitted models
+must have none; no `subject.model_id` and no `variant` anywhere; no cost row; no `*` display marker in a name;
+the paper digest, the announcement digest and the per-model locator on every row; and a protocol that names
+the judge as the paper names it and claims no independence.
+
+### The extraction is a committed program, not a typed table
+
+`ops/ux-2026-09-12/bin/build-mentalhealthbench-rows.mjs` reads only the two retained captures, re-checks both
+against the manifest digests, parses Figure 5(a) with one strict line pattern, refuses to continue unless it
+reads exactly 17 rows and exactly 15 payload entries, and asserts that each payload label's slug equals the
+payload's own `modelKey` before using it. Re-running it on the same bytes produces the same rows, so a
+reviewer reproduces every number without fetching anything. Iteration 255's convenience list in the ledger was
+*not* used as input; the extractor's 17 values match it, which is the only thing that list was ever good for.
+
+### Where the numbers are now visible
+
+`/api/benchmark-scores?benchmark_id=openai-mentalhealthbench::snapshot-2026-09-23` serves all 17 rows with
+their values, intervals, sources and protocol, and the benchmark's coverage counter reports
+`observations: 17, unmatched_observations: 17`. The **"One benchmark" ranking view renders them**: an unjoined
+row still becomes a board row under its printed source label, so
+`/benchmarks?benchmark=openai-mentalhealthbench%3A%3Asnapshot-2026-09-23` shows the whole board with OpenAI's
+own intervals. What no page shows is a MentalHealthBench cell on a *model* page, because no row is joined —
+that half of CR-190.1's acceptance is open, and D243 says what would close it.
+
+### D243 (new) — what a join would need, so it is a decision and not a silence
+
+A MentalHealthBench value can reach a model page in exactly one of three ways, and none may be taken by an
+implementer alone:
+
+1. **A captured vendor statement of each API's default reasoning effort** (OpenAI, Anthropic, Google, xAI,
+   Meta), retained like any other source, making "API default" a *sourced* identity rather than an inference.
+   Five vendors, five captures, and Anthropic's adaptive reasoning may have no single answer.
+2. **A setting-less catalog configuration** for these families — a decision about what our catalog means by a
+   model called without an effort, which is the same open question iteration 242 left for EQ-Bench's 107 rows.
+3. **OpenAI publishing the settings** in a revised paper or an official dataset. None exists today: the only
+   GitHub repo and Hugging Face dataset under the name are one third-party re-upload.
+
+Until one of those lands, the rows stay unjoined. Nothing here waits on them: the values, intervals and
+provenance are published and a join is additive.
+
+### Gates
+
+`node scripts/build-dataset.mjs` ✓ — 870 models / 673 families / 94 providers / 3,134 offers, **unchanged**.
+The committed dataset diff was read field by field: **17 observations added, 0 removed, 0 values changed, 0
+joins added or moved**, the MentalHealthBench collection `manual_required` → `collected`, its coverage counter
+`0` → `17 observations / 17 unmatched`, and `composite.collected_at`. **`historical_estimates` stayed at 0** —
+the D180/D186 bridge did not fire, as it cannot for rows that join no model.
+`CI=true npm test` **1,523 tests, 1,522 pass, 0 fail, 1 skip**. `npx tsc --noEmit -p .` exit 0.
+`node scripts/validate-benchmark-registry.mjs` 293 entries / 29 AA field mappings / 240 verified evidence files.
+`scores.json` was **not hand-edited**: `node scripts/ingest-benchmark-scores.mjs` regenerated it, and the full
+(non-draft) run means `verifyScoreEvidence` accepted all 17 approvals against the critic receipt.
+A collector re-run (`node scripts/collect-self-reported-scores.mjs`) was executed and its output compared set
+by set with the pre-run file: **0 rows, collections or refusals gained or lost**, so the carried-document entry
+does what it is there for.
+
+### Four pinned tests objected, and each was a real pin meeting a new fact
+
+- **`test/gpt-6-sol-luna.test.mjs` (two tests).** Its `claims` selector was
+  `id.startsWith('self-reported:gpt-6-') && id.includes('-openai-')` — an id-prefix proxy for "the GPT-6 launch
+  post's rows". A second OpenAI-owned board with GPT-6 rows makes that proxy wrong: it swept up three
+  MentalHealthBench rows, so `claims.length === 6` read 9 and the effort check demanded a catalog join from a
+  row that must not have one. The selector is now `row.source.url === POST` — **the source the rows came from**,
+  which is what the test always meant and is tighter than the prefix it replaces. This is the same correction
+  iteration 255 made to the registry half of this very file.
+- **`test/self-reported-vendor.test.mjs` (two tests).** Both require a candidate's locator to record *where* in
+  the document the value was read. They accepted two forms: the legacy `matched line:` and a named
+  `row "<benchmark>" … under "<column>"`. A data label printed at the end of a bar in a paper figure has no
+  column, and writing one would describe a table the document does not contain. A **third form** is accepted,
+  and it is not weaker: it must name the figure and page, quote the printed row, and that quoted row must start
+  with this observation's own subject name **and** contain its own value as one of the row's cells. Five
+  negative cases are pinned in the same file — a neighbouring model's row, this model's row with the wrong
+  value, panel b's component read as the score, and a prose locator — and each is refused.
+
+Every one of the five new CR-190 checks was run against the pre-change dataset first and **all five failed**;
+two of them only after they were tightened, because an empty row set had made them pass vacuously.
+
+### The daily receipts iteration 255 asked for (item 2)
+
+The 00:41 and 05:17 runs of 2026-09-27 were read rather than assumed.
+
+**00:41 did not publish** — exit 1, `published: false`, red on `npm test`:
+`D188: VulcanBench notes name every protocol family the board actually publishes` — "the board publishes
+code-quality-maintenance-v3.15, outside the code-quality-maintenance-v3.4–v3.7 the notes claim". That is the
+numeric-range trap (`Number('3.15') < 3.7`) on the run's base `0f86be00`, and it is **already repaired**:
+iteration 244's D223 work rewrote the notes as a *set* ("v3.4, v3.5, v3.6, v3.7 and v3.15") and the current
+test compares three sets rather than a range. It passes on today's main in this iteration's own suite run. No
+action; the run is a receipt for a fix that landed after it, not an open defect.
+
+**05:17 published**: exit 0, base `88f33e8c` → commit `e55fe6d3`, live verification OK, dataset sha
+`2d2ff90a…`, 52 steps green and one failed — `fetch-lumina-ledger`, which fails by design while Lumina's
+public bulk downloads are paused and preserves the 2026-09-01 snapshot. `reports/source-health.md` still lists **16 failing arms**, but that run started at 05:17 UTC and
+iteration 254's D242 repair landed at ~19:00 UTC, so it could not contain it — **tomorrow's ordinary run is the
+receipt**, exactly as iteration 254 said. Seven arms are newer than iteration 254's table and are *not* covered
+by it: `vulcanbench-frontier::4`, `blueprint-bench::2`, `ugi-natint::snapshot-2026-09-10`,
+`ugi-writing::snapshot-2026-09-10`, `vals-index-hlab::2`, `vals-index-legal-research::2` and
+`vals-index-vibe-code-bench::2`. Checked before filing: these are **not** the "policy sentence" class iteration
+252 fixed — every one of those five registry entries already carries its `Benchmark Heaven policy:` marking.
+Their findings are different ones (a missing protocol excerpt for a metric or unit, a disputed row). That is a
+separate repair and is filed as **D244** rather than started here, because it needs the offline replay loop and
+several rounds per arm.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| CR-190.1 | open (registry half done) → **implemented: 17 rows published, join half open (D243)** | `data/raw/benchmarks/scores.json`; `data/raw/benchmarks/daily-evidence/2026-09-27-cr190/gauntlet/{packet,artifact,review}-r1.json` + `review-r1.json.meta.json`; `data/raw/benchmarks/score-approvals.json` (17 rows); `ops/ux-2026-09-12/bin/build-mentalhealthbench-rows.mjs`; `test/cr-190-mentalhealthbench.test.mjs`; gates in `/opt/benchmarkheaven/state/ux-evidence/iter256-cr190/` | All 17 of Figure 5(a)'s printed values, each `self_reported`, each with its own critic approval bound to `observationDigest`; 15 carry OpenAI's own 95% interval from the announcement's machine-readable chart payload, cross-checked against the paper's printed value. The board renders in the "One benchmark" view. **Still open:** no row joins a model configuration (D243), and no cost is published (Table 2 prints prices, not a cost per run; Figure 6 is a log-scale scatter with no printed values). Implemented by claude-opus; **needs a non-implementer verification.** |
+| D243 (new) | **open — decision needed** | this entry; `lib/board-identity.mjs`; iteration 242's D219.1 tally | A MentalHealthBench value reaches a model page only via a captured vendor statement of each API's default effort, a setting-less catalog configuration, or OpenAI publishing the settings. Same open question as EQ-Bench's 107 rows. Not an implementer's call. |
+| D244 (new) | **open** | `/opt/mmc-daily/runs/2026-09-27T05-17-01-898Z-781906/reports/source-health.md` | Seven arms failing the protocol review are newer than iteration 254's replay table and are *not* the policy-sentence class (all five registry entries already carry the `Benchmark Heaven policy:` marking). Needs the offline replay loop, several rounds per arm. |
+| CR-190.2 / CR-190.3 | verified (review gate 20260927T194003Z) | unchanged | Untouched here. The one correction: iteration 255's note that the announcement page "carries no printed values" was true of the rendered shell and false of the bytes — its RSC payload held the whole board. The `source_unreachable` + `desktop_chrome_cdp` receipt pair and `data/SCRAPING.md` recipe are unchanged and still correct. |
+
+**For the next iteration, in order:**
+
+1. **A non-implementer verification of CR-190.1** — `node ops/ux-2026-09-12/bin/verify-cr-190-live.mjs <out>`
+   against the deployed revision; clear the out directory first.
+2. **Tomorrow's ordinary daily run** is the receipt for iteration 254's D242 repair of the 16 retained arms.
+3. **D244's seven newer arms**, offline replay first (`replay-protocol-review.mjs`), several rounds per arm.
+4. **D243** needs an owner decision, not an implementation.
+5. D236–D239 still ride the next JevBench release; D240 is deliberately not back-filled; a review gate still
+   owes CR-148.1 a ruling on the non-claude measurement iteration 255 produced.
+
+**`ALL-ACCEPTED` is not appended.**

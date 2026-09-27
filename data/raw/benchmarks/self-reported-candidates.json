@@ -770,6 +770,123 @@
       "comparison_key": null
     },
     {
+      "id": "self-reported:claude-fable-5.1-openai-mentalhealthbench",
+      "benchmark_id": "openai-mentalhealthbench::snapshot-2026-09-23",
+      "subject": {
+        "source_id": "Claude Fable 5.1",
+        "name": "Claude Fable 5.1",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 46.4,
+      "unit": "percent",
+      "basis": "self_reported",
+      "confidence_interval": {
+        "level": 0.95,
+        "lower": 44.45371581197338,
+        "upper": 48.25724042836222
+      },
+      "source": {
+        "url": "https://cdn.openai.com/ctf-cdn/MentalHealthBench_A_Comprehensive_Benchmark_of_AI_Capabilities_in_Realistic_Mental_Health_Conversations.pdf",
+        "retrieved_at": "2026-09-27T18:57:20.590375+00:00",
+        "published_at": "2026-09-23",
+        "sha256": "fa5a3dc17fb2a58f820a1f4269cde93010b7f7c3e98558f65d082a9c5690644f",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-27-cr190/fa5a3dc17fb2a58f820a.gz",
+        "locator": "Figure 5(a) \"Overall model performance\", page 11: the printed task-clipped score data label at the end of this model's bar row; printed row (panel a value, then panel b's penalty and positive components): \"Claude Fable 5.1  46.4  −37  67\""
+      },
+      "supporting_sources": [
+        {
+          "url": "https://openai.com/index/introducing-mentalhealthbench/",
+          "retrieved_at": "2026-09-27T18:58:32.000000+00:00",
+          "published_at": "2026-09-23",
+          "sha256": "dc0047a15f9272dd2c84281fb157b0dc9247cf09733890ac8a6446a803fcb10f",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-27-cr190/dc0047a15f9272dd2c84.gz",
+          "locator": "Announcement page RSC payload, chart linkId \"mentalhealthbench-overall\" (\"Overall model performance\"), vegaLiteSpec.data.values entry modelKey \"claude-fable-5.1\": value 46.3554781201678, ciLow 44.45371581197338, ciHigh 48.25724042836222. The page's publicationDateText is \"September 23, 2026\"."
+        }
+      ],
+      "protocol": "Vendor-reported by OpenAI in its own MentalHealthBench paper (2026-09-23): mean task-clipped rubric score over 1,215 conversations, four independently sampled completions per task, each rubric criterion graded by an LLM judge (GPT-5.6 Sol at high reasoning effort). OpenAI authored the benchmark, ran every model itself and supplies the judge, so no row is an independent measurement; all rows are self_reported and never enter the Composite. The paper states \"We use each model’s API at default reasoning effort, temperature, and verbosity setting (when applicable)\", so no reasoning-effort configuration is identified and the row is not attached to one. The 95% confidence interval is OpenAI's own, read from the announcement page's machine-readable chart payload for modelKey \"claude-fable-5.1\", whose full-precision value 46.3554781201678 rounds to the paper's printed 46.4. Not joined to a catalog configuration: the source states the API default setting rather than a named effort, and the catalog holds no setting-less configuration for this family (the standing policy in lib/board-identity.mjs). Picking one effort would assert a setting the source never states.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:claude-haiku-4.5-openai-mentalhealthbench",
+      "benchmark_id": "openai-mentalhealthbench::snapshot-2026-09-23",
+      "subject": {
+        "source_id": "Claude Haiku 4.5",
+        "name": "Claude Haiku 4.5",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 41.7,
+      "unit": "percent",
+      "basis": "self_reported",
+      "confidence_interval": {
+        "level": 0.95,
+        "lower": 39.90646167351593,
+        "upper": 43.556699971614364
+      },
+      "source": {
+        "url": "https://cdn.openai.com/ctf-cdn/MentalHealthBench_A_Comprehensive_Benchmark_of_AI_Capabilities_in_Realistic_Mental_Health_Conversations.pdf",
+        "retrieved_at": "2026-09-27T18:57:20.590375+00:00",
+        "published_at": "2026-09-23",
+        "sha256": "fa5a3dc17fb2a58f820a1f4269cde93010b7f7c3e98558f65d082a9c5690644f",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-27-cr190/fa5a3dc17fb2a58f820a.gz",
+        "locator": "Figure 5(a) \"Overall model performance\", page 11: the printed task-clipped score data label at the end of this model's bar row; printed row (panel a value, then panel b's penalty and positive components): \"Claude Haiku 4.5  41.7  −33  58\""
+      },
+      "supporting_sources": [
+        {
+          "url": "https://openai.com/index/introducing-mentalhealthbench/",
+          "retrieved_at": "2026-09-27T18:58:32.000000+00:00",
+          "published_at": "2026-09-23",
+          "sha256": "dc0047a15f9272dd2c84281fb157b0dc9247cf09733890ac8a6446a803fcb10f",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-27-cr190/dc0047a15f9272dd2c84.gz",
+          "locator": "Announcement page RSC payload, chart linkId \"mentalhealthbench-overall\" (\"Overall model performance\"), vegaLiteSpec.data.values entry modelKey \"claude-haiku-4.5\": value 41.73158082256514, ciLow 39.90646167351593, ciHigh 43.556699971614364. The page's publicationDateText is \"September 23, 2026\"."
+        }
+      ],
+      "protocol": "Vendor-reported by OpenAI in its own MentalHealthBench paper (2026-09-23): mean task-clipped rubric score over 1,215 conversations, four independently sampled completions per task, each rubric criterion graded by an LLM judge (GPT-5.6 Sol at high reasoning effort). OpenAI authored the benchmark, ran every model itself and supplies the judge, so no row is an independent measurement; all rows are self_reported and never enter the Composite. The paper states \"We use each model’s API at default reasoning effort, temperature, and verbosity setting (when applicable)\", so no reasoning-effort configuration is identified and the row is not attached to one. The 95% confidence interval is OpenAI's own, read from the announcement page's machine-readable chart payload for modelKey \"claude-haiku-4.5\", whose full-precision value 41.73158082256514 rounds to the paper's printed 41.7. Not joined to a catalog configuration: the source states the API default setting rather than a named effort, and the catalog holds no setting-less configuration for this family (the standing policy in lib/board-identity.mjs). Picking one effort would assert a setting the source never states.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:claude-opus-5.5-openai-mentalhealthbench",
+      "benchmark_id": "openai-mentalhealthbench::snapshot-2026-09-23",
+      "subject": {
+        "source_id": "Claude Opus 5.5",
+        "name": "Claude Opus 5.5",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 52.4,
+      "unit": "percent",
+      "basis": "self_reported",
+      "confidence_interval": {
+        "level": 0.95,
+        "lower": 50.47237973435303,
+        "upper": 54.28445783385419
+      },
+      "source": {
+        "url": "https://cdn.openai.com/ctf-cdn/MentalHealthBench_A_Comprehensive_Benchmark_of_AI_Capabilities_in_Realistic_Mental_Health_Conversations.pdf",
+        "retrieved_at": "2026-09-27T18:57:20.590375+00:00",
+        "published_at": "2026-09-23",
+        "sha256": "fa5a3dc17fb2a58f820a1f4269cde93010b7f7c3e98558f65d082a9c5690644f",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-27-cr190/fa5a3dc17fb2a58f820a.gz",
+        "locator": "Figure 5(a) \"Overall model performance\", page 11: the printed task-clipped score data label at the end of this model's bar row; printed row (panel a value, then panel b's penalty and positive components): \"Claude Opus 5.5  52.4  −33  73\""
+      },
+      "supporting_sources": [
+        {
+          "url": "https://openai.com/index/introducing-mentalhealthbench/",
+          "retrieved_at": "2026-09-27T18:58:32.000000+00:00",
+          "published_at": "2026-09-23",
+          "sha256": "dc0047a15f9272dd2c84281fb157b0dc9247cf09733890ac8a6446a803fcb10f",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-27-cr190/dc0047a15f9272dd2c84.gz",
+          "locator": "Announcement page RSC payload, chart linkId \"mentalhealthbench-overall\" (\"Overall model performance\"), vegaLiteSpec.data.values entry modelKey \"claude-opus-5.5\": value 52.37841878410361, ciLow 50.47237973435303, ciHigh 54.28445783385419. The page's publicationDateText is \"September 23, 2026\"."
+        }
+      ],
+      "protocol": "Vendor-reported by OpenAI in its own MentalHealthBench paper (2026-09-23): mean task-clipped rubric score over 1,215 conversations, four independently sampled completions per task, each rubric criterion graded by an LLM judge (GPT-5.6 Sol at high reasoning effort). OpenAI authored the benchmark, ran every model itself and supplies the judge, so no row is an independent measurement; all rows are self_reported and never enter the Composite. The paper states \"We use each model’s API at default reasoning effort, temperature, and verbosity setting (when applicable)\", so no reasoning-effort configuration is identified and the row is not attached to one. The 95% confidence interval is OpenAI's own, read from the announcement page's machine-readable chart payload for modelKey \"claude-opus-5.5\", whose full-precision value 52.37841878410361 rounds to the paper's printed 52.4. Not joined to a catalog configuration: the source states the API default setting rather than a named effort, and the catalog holds no setting-less configuration for this family (the standing policy in lib/board-identity.mjs). Picking one effort would assert a setting the source never states.",
+      "comparison_key": null
+    },
+    {
       "id": "self-reported:claude-opus-55-aa-briefcase-v1-1",
       "benchmark_id": "anthropic-aa-briefcase-v1-1::1.1",
       "subject": {
@@ -1151,6 +1268,45 @@
         "locator": "Launch post benchmark table, row \"Terminal-Bench-Science 0.1\", under \"Opus 5.5\" (first column of: Opus 5.5 | Fable 5.1 | Opus 5 | GPT-6 Astra | GPT-5.6 Sol); printed row: 58.7% | 52.6% | 29.0% | 64.6% | 22.4%"
       },
       "protocol": "Vendor-reported by Anthropic for Claude Opus 5.5 in the Claude Opus 5.5 launch post, printed as \"Terminal-Bench-Science 0.1\". Standard configuration per Anthropic unless noted otherwise (system card Table 8.1.A caption): adaptive thinking at max effort, default sampling, averaged over five trials; production safeguards enabled (when they intervened, cyber tasks fell back to Claude Opus 4.8 and biology/frontier-LLM tasks to Claude Opus 5). Footnote 3: standard error ±3.5–5 pts per model. System card section 8.6: this run averaged 10 trials per task (700 trials), not five. No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:claude-sonnet-5-openai-mentalhealthbench",
+      "benchmark_id": "openai-mentalhealthbench::snapshot-2026-09-23",
+      "subject": {
+        "source_id": "Claude Sonnet 5",
+        "name": "Claude Sonnet 5",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 44.5,
+      "unit": "percent",
+      "basis": "self_reported",
+      "confidence_interval": {
+        "level": 0.95,
+        "lower": 42.74040265397115,
+        "upper": 46.33993677547013
+      },
+      "source": {
+        "url": "https://cdn.openai.com/ctf-cdn/MentalHealthBench_A_Comprehensive_Benchmark_of_AI_Capabilities_in_Realistic_Mental_Health_Conversations.pdf",
+        "retrieved_at": "2026-09-27T18:57:20.590375+00:00",
+        "published_at": "2026-09-23",
+        "sha256": "fa5a3dc17fb2a58f820a1f4269cde93010b7f7c3e98558f65d082a9c5690644f",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-27-cr190/fa5a3dc17fb2a58f820a.gz",
+        "locator": "Figure 5(a) \"Overall model performance\", page 11: the printed task-clipped score data label at the end of this model's bar row; printed row (panel a value, then panel b's penalty and positive components): \"Claude Sonnet 5  44.5  −30  61\""
+      },
+      "supporting_sources": [
+        {
+          "url": "https://openai.com/index/introducing-mentalhealthbench/",
+          "retrieved_at": "2026-09-27T18:58:32.000000+00:00",
+          "published_at": "2026-09-23",
+          "sha256": "dc0047a15f9272dd2c84281fb157b0dc9247cf09733890ac8a6446a803fcb10f",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-27-cr190/dc0047a15f9272dd2c84.gz",
+          "locator": "Announcement page RSC payload, chart linkId \"mentalhealthbench-overall\" (\"Overall model performance\"), vegaLiteSpec.data.values entry modelKey \"claude-sonnet-5\": value 44.54016971472064, ciLow 42.74040265397115, ciHigh 46.33993677547013. The page's publicationDateText is \"September 23, 2026\"."
+        }
+      ],
+      "protocol": "Vendor-reported by OpenAI in its own MentalHealthBench paper (2026-09-23): mean task-clipped rubric score over 1,215 conversations, four independently sampled completions per task, each rubric criterion graded by an LLM judge (GPT-5.6 Sol at high reasoning effort). OpenAI authored the benchmark, ran every model itself and supplies the judge, so no row is an independent measurement; all rows are self_reported and never enter the Composite. The paper states \"We use each model’s API at default reasoning effort, temperature, and verbosity setting (when applicable)\", so no reasoning-effort configuration is identified and the row is not attached to one. The 95% confidence interval is OpenAI's own, read from the announcement page's machine-readable chart payload for modelKey \"claude-sonnet-5\", whose full-precision value 44.54016971472064 rounds to the paper's printed 44.5. Not joined to a catalog configuration: the source states the API default setting rather than a named effort, and the catalog holds no setting-less configuration for this family (the standing policy in lib/board-identity.mjs). Picking one effort would assert a setting the source never states.",
       "comparison_key": null
     },
     {
@@ -1754,6 +1910,327 @@
       "comparison_key": null
     },
     {
+      "id": "self-reported:gemini-2.5-flash-openai-mentalhealthbench",
+      "benchmark_id": "openai-mentalhealthbench::snapshot-2026-09-23",
+      "subject": {
+        "source_id": "Gemini 2.5 Flash",
+        "name": "Gemini 2.5 Flash",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 33.5,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cdn.openai.com/ctf-cdn/MentalHealthBench_A_Comprehensive_Benchmark_of_AI_Capabilities_in_Realistic_Mental_Health_Conversations.pdf",
+        "retrieved_at": "2026-09-27T18:57:20.590375+00:00",
+        "published_at": "2026-09-23",
+        "sha256": "fa5a3dc17fb2a58f820a1f4269cde93010b7f7c3e98558f65d082a9c5690644f",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-27-cr190/fa5a3dc17fb2a58f820a.gz",
+        "locator": "Figure 5(a) \"Overall model performance\", page 11: the printed task-clipped score data label at the end of this model's bar row; printed row (panel a value, then panel b's penalty and positive components): \"Gemini 2.5 Flash  33.5  −37  49\""
+      },
+      "protocol": "Vendor-reported by OpenAI in its own MentalHealthBench paper (2026-09-23): mean task-clipped rubric score over 1,215 conversations, four independently sampled completions per task, each rubric criterion graded by an LLM judge (GPT-5.6 Sol at high reasoning effort). OpenAI authored the benchmark, ran every model itself and supplies the judge, so no row is an independent measurement; all rows are self_reported and never enter the Composite. The paper states \"We use each model’s API at default reasoning effort, temperature, and verbosity setting (when applicable)\", so no reasoning-effort configuration is identified and the row is not attached to one. The announcement page’s machine-readable overall chart omits this model, so only the paper’s printed value is available and no confidence interval is recorded. Not joined to a catalog configuration: the source states the API default setting rather than a named effort, and the catalog holds no setting-less configuration for this family (the standing policy in lib/board-identity.mjs). Picking one effort would assert a setting the source never states.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:gemini-2.5-pro-openai-mentalhealthbench",
+      "benchmark_id": "openai-mentalhealthbench::snapshot-2026-09-23",
+      "subject": {
+        "source_id": "Gemini 2.5 Pro",
+        "name": "Gemini 2.5 Pro",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 29.5,
+      "unit": "percent",
+      "basis": "self_reported",
+      "confidence_interval": {
+        "level": 0.95,
+        "lower": 27.757914340610856,
+        "upper": 31.253317830098037
+      },
+      "source": {
+        "url": "https://cdn.openai.com/ctf-cdn/MentalHealthBench_A_Comprehensive_Benchmark_of_AI_Capabilities_in_Realistic_Mental_Health_Conversations.pdf",
+        "retrieved_at": "2026-09-27T18:57:20.590375+00:00",
+        "published_at": "2026-09-23",
+        "sha256": "fa5a3dc17fb2a58f820a1f4269cde93010b7f7c3e98558f65d082a9c5690644f",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-27-cr190/fa5a3dc17fb2a58f820a.gz",
+        "locator": "Figure 5(a) \"Overall model performance\", page 11: the printed task-clipped score data label at the end of this model's bar row; printed row (panel a value, then panel b's penalty and positive components): \"Gemini 2.5 Pro  29.5  −42  46\""
+      },
+      "supporting_sources": [
+        {
+          "url": "https://openai.com/index/introducing-mentalhealthbench/",
+          "retrieved_at": "2026-09-27T18:58:32.000000+00:00",
+          "published_at": "2026-09-23",
+          "sha256": "dc0047a15f9272dd2c84281fb157b0dc9247cf09733890ac8a6446a803fcb10f",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-27-cr190/dc0047a15f9272dd2c84.gz",
+          "locator": "Announcement page RSC payload, chart linkId \"mentalhealthbench-overall\" (\"Overall model performance\"), vegaLiteSpec.data.values entry modelKey \"gemini-2.5-pro\": value 29.505616085354447, ciLow 27.757914340610856, ciHigh 31.253317830098037. The page's publicationDateText is \"September 23, 2026\"."
+        }
+      ],
+      "protocol": "Vendor-reported by OpenAI in its own MentalHealthBench paper (2026-09-23): mean task-clipped rubric score over 1,215 conversations, four independently sampled completions per task, each rubric criterion graded by an LLM judge (GPT-5.6 Sol at high reasoning effort). OpenAI authored the benchmark, ran every model itself and supplies the judge, so no row is an independent measurement; all rows are self_reported and never enter the Composite. The paper states \"We use each model’s API at default reasoning effort, temperature, and verbosity setting (when applicable)\", so no reasoning-effort configuration is identified and the row is not attached to one. The 95% confidence interval is OpenAI's own, read from the announcement page's machine-readable chart payload for modelKey \"gemini-2.5-pro\", whose full-precision value 29.505616085354447 rounds to the paper's printed 29.5. Not joined to a catalog configuration: the source states the API default setting rather than a named effort, and the catalog holds no setting-less configuration for this family (the standing policy in lib/board-identity.mjs). Picking one effort would assert a setting the source never states.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:gemini-3.1-pro-openai-mentalhealthbench",
+      "benchmark_id": "openai-mentalhealthbench::snapshot-2026-09-23",
+      "subject": {
+        "source_id": "Gemini 3.1 Pro",
+        "name": "Gemini 3.1 Pro",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 32.1,
+      "unit": "percent",
+      "basis": "self_reported",
+      "confidence_interval": {
+        "level": 0.95,
+        "lower": 30.26835980547899,
+        "upper": 33.84489489597216
+      },
+      "source": {
+        "url": "https://cdn.openai.com/ctf-cdn/MentalHealthBench_A_Comprehensive_Benchmark_of_AI_Capabilities_in_Realistic_Mental_Health_Conversations.pdf",
+        "retrieved_at": "2026-09-27T18:57:20.590375+00:00",
+        "published_at": "2026-09-23",
+        "sha256": "fa5a3dc17fb2a58f820a1f4269cde93010b7f7c3e98558f65d082a9c5690644f",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-27-cr190/fa5a3dc17fb2a58f820a.gz",
+        "locator": "Figure 5(a) \"Overall model performance\", page 11: the printed task-clipped score data label at the end of this model's bar row; printed row (panel a value, then panel b's penalty and positive components): \"Gemini 3.1 Pro  32.1  −44  50\""
+      },
+      "supporting_sources": [
+        {
+          "url": "https://openai.com/index/introducing-mentalhealthbench/",
+          "retrieved_at": "2026-09-27T18:58:32.000000+00:00",
+          "published_at": "2026-09-23",
+          "sha256": "dc0047a15f9272dd2c84281fb157b0dc9247cf09733890ac8a6446a803fcb10f",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-27-cr190/dc0047a15f9272dd2c84.gz",
+          "locator": "Announcement page RSC payload, chart linkId \"mentalhealthbench-overall\" (\"Overall model performance\"), vegaLiteSpec.data.values entry modelKey \"gemini-3.1-pro\": value 32.05662735072558, ciLow 30.26835980547899, ciHigh 33.84489489597216. The page's publicationDateText is \"September 23, 2026\"."
+        }
+      ],
+      "protocol": "Vendor-reported by OpenAI in its own MentalHealthBench paper (2026-09-23): mean task-clipped rubric score over 1,215 conversations, four independently sampled completions per task, each rubric criterion graded by an LLM judge (GPT-5.6 Sol at high reasoning effort). OpenAI authored the benchmark, ran every model itself and supplies the judge, so no row is an independent measurement; all rows are self_reported and never enter the Composite. The paper states \"We use each model’s API at default reasoning effort, temperature, and verbosity setting (when applicable)\", so no reasoning-effort configuration is identified and the row is not attached to one. The 95% confidence interval is OpenAI's own, read from the announcement page's machine-readable chart payload for modelKey \"gemini-3.1-pro\", whose full-precision value 32.05662735072558 rounds to the paper's printed 32.1. Not joined to a catalog configuration: the source states the API default setting rather than a named effort, and the catalog holds no setting-less configuration for this family (the standing policy in lib/board-identity.mjs). Picking one effort would assert a setting the source never states.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:gemini-3.8-flash-openai-mentalhealthbench",
+      "benchmark_id": "openai-mentalhealthbench::snapshot-2026-09-23",
+      "subject": {
+        "source_id": "Gemini 3.8 Flash",
+        "name": "Gemini 3.8 Flash",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 35.5,
+      "unit": "percent",
+      "basis": "self_reported",
+      "confidence_interval": {
+        "level": 0.95,
+        "lower": 33.667437731420904,
+        "upper": 37.33758516156921
+      },
+      "source": {
+        "url": "https://cdn.openai.com/ctf-cdn/MentalHealthBench_A_Comprehensive_Benchmark_of_AI_Capabilities_in_Realistic_Mental_Health_Conversations.pdf",
+        "retrieved_at": "2026-09-27T18:57:20.590375+00:00",
+        "published_at": "2026-09-23",
+        "sha256": "fa5a3dc17fb2a58f820a1f4269cde93010b7f7c3e98558f65d082a9c5690644f",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-27-cr190/fa5a3dc17fb2a58f820a.gz",
+        "locator": "Figure 5(a) \"Overall model performance\", page 11: the printed task-clipped score data label at the end of this model's bar row; printed row (panel a value, then panel b's penalty and positive components): \"Gemini 3.8 Flash  35.5  −39  53\""
+      },
+      "supporting_sources": [
+        {
+          "url": "https://openai.com/index/introducing-mentalhealthbench/",
+          "retrieved_at": "2026-09-27T18:58:32.000000+00:00",
+          "published_at": "2026-09-23",
+          "sha256": "dc0047a15f9272dd2c84281fb157b0dc9247cf09733890ac8a6446a803fcb10f",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-27-cr190/dc0047a15f9272dd2c84.gz",
+          "locator": "Announcement page RSC payload, chart linkId \"mentalhealthbench-overall\" (\"Overall model performance\"), vegaLiteSpec.data.values entry modelKey \"gemini-3.8-flash\": value 35.502511446495056, ciLow 33.667437731420904, ciHigh 37.33758516156921. The page's publicationDateText is \"September 23, 2026\"."
+        }
+      ],
+      "protocol": "Vendor-reported by OpenAI in its own MentalHealthBench paper (2026-09-23): mean task-clipped rubric score over 1,215 conversations, four independently sampled completions per task, each rubric criterion graded by an LLM judge (GPT-5.6 Sol at high reasoning effort). OpenAI authored the benchmark, ran every model itself and supplies the judge, so no row is an independent measurement; all rows are self_reported and never enter the Composite. The paper states \"We use each model’s API at default reasoning effort, temperature, and verbosity setting (when applicable)\", so no reasoning-effort configuration is identified and the row is not attached to one. The 95% confidence interval is OpenAI's own, read from the announcement page's machine-readable chart payload for modelKey \"gemini-3.8-flash\", whose full-precision value 35.502511446495056 rounds to the paper's printed 35.5. Not joined to a catalog configuration: the source states the API default setting rather than a named effort, and the catalog holds no setting-less configuration for this family (the standing policy in lib/board-identity.mjs). Picking one effort would assert a setting the source never states.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:gpt-4o-march-2025-openai-mentalhealthbench",
+      "benchmark_id": "openai-mentalhealthbench::snapshot-2026-09-23",
+      "subject": {
+        "source_id": "GPT-4o (March 2025)",
+        "name": "GPT-4o (March 2025)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 32.1,
+      "unit": "percent",
+      "basis": "self_reported",
+      "confidence_interval": {
+        "level": 0.95,
+        "lower": 30.35751587116473,
+        "upper": 33.80729716612596
+      },
+      "source": {
+        "url": "https://cdn.openai.com/ctf-cdn/MentalHealthBench_A_Comprehensive_Benchmark_of_AI_Capabilities_in_Realistic_Mental_Health_Conversations.pdf",
+        "retrieved_at": "2026-09-27T18:57:20.590375+00:00",
+        "published_at": "2026-09-23",
+        "sha256": "fa5a3dc17fb2a58f820a1f4269cde93010b7f7c3e98558f65d082a9c5690644f",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-27-cr190/fa5a3dc17fb2a58f820a.gz",
+        "locator": "Figure 5(a) \"Overall model performance\", page 11: the printed task-clipped score data label at the end of this model's bar row; printed row (panel a value, then panel b's penalty and positive components): \"GPT-4o (March 2025)  32.1  −31  45\""
+      },
+      "supporting_sources": [
+        {
+          "url": "https://openai.com/index/introducing-mentalhealthbench/",
+          "retrieved_at": "2026-09-27T18:58:32.000000+00:00",
+          "published_at": "2026-09-23",
+          "sha256": "dc0047a15f9272dd2c84281fb157b0dc9247cf09733890ac8a6446a803fcb10f",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-27-cr190/dc0047a15f9272dd2c84.gz",
+          "locator": "Announcement page RSC payload, chart linkId \"mentalhealthbench-overall\" (\"Overall model performance\"), vegaLiteSpec.data.values entry modelKey \"gpt-4o-march-2025\": value 32.08240651864534, ciLow 30.35751587116473, ciHigh 33.80729716612596. The page's publicationDateText is \"September 23, 2026\"."
+        }
+      ],
+      "protocol": "Vendor-reported by OpenAI in its own MentalHealthBench paper (2026-09-23): mean task-clipped rubric score over 1,215 conversations, four independently sampled completions per task, each rubric criterion graded by an LLM judge (GPT-5.6 Sol at high reasoning effort). OpenAI authored the benchmark, ran every model itself and supplies the judge, so no row is an independent measurement; all rows are self_reported and never enter the Composite. The paper states \"We use each model’s API at default reasoning effort, temperature, and verbosity setting (when applicable)\", so no reasoning-effort configuration is identified and the row is not attached to one. The 95% confidence interval is OpenAI's own, read from the announcement page's machine-readable chart payload for modelKey \"gpt-4o-march-2025\", whose full-precision value 32.08240651864534 rounds to the paper's printed 32.1. Not joined to a catalog configuration: the source states the API default setting rather than a named effort, and the catalog holds no setting-less configuration for this family (the standing policy in lib/board-identity.mjs). Picking one effort would assert a setting the source never states.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:gpt-5-thinking-openai-mentalhealthbench",
+      "benchmark_id": "openai-mentalhealthbench::snapshot-2026-09-23",
+      "subject": {
+        "source_id": "GPT-5 Thinking",
+        "name": "GPT-5 Thinking",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 42.9,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cdn.openai.com/ctf-cdn/MentalHealthBench_A_Comprehensive_Benchmark_of_AI_Capabilities_in_Realistic_Mental_Health_Conversations.pdf",
+        "retrieved_at": "2026-09-27T18:57:20.590375+00:00",
+        "published_at": "2026-09-23",
+        "sha256": "fa5a3dc17fb2a58f820a1f4269cde93010b7f7c3e98558f65d082a9c5690644f",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-27-cr190/fa5a3dc17fb2a58f820a.gz",
+        "locator": "Figure 5(a) \"Overall model performance\", page 11: the printed task-clipped score data label at the end of this model's bar row; printed row (panel a value, then panel b's penalty and positive components): \"GPT-5 Thinking  42.9  −38  63\""
+      },
+      "protocol": "Vendor-reported by OpenAI in its own MentalHealthBench paper (2026-09-23): mean task-clipped rubric score over 1,215 conversations, four independently sampled completions per task, each rubric criterion graded by an LLM judge (GPT-5.6 Sol at high reasoning effort). OpenAI authored the benchmark, ran every model itself and supplies the judge, so no row is an independent measurement; all rows are self_reported and never enter the Composite. The paper states \"We use each model’s API at default reasoning effort, temperature, and verbosity setting (when applicable)\", so no reasoning-effort configuration is identified and the row is not attached to one. The announcement page’s machine-readable overall chart omits this model, so only the paper’s printed value is available and no confidence interval is recorded. Not joined to a catalog configuration: the source states the API default setting rather than a named effort, and the catalog holds no setting-less configuration for this family (the standing policy in lib/board-identity.mjs). Picking one effort would assert a setting the source never states.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:gpt-5.6-luna-aug-2026-openai-mentalhealthbench",
+      "benchmark_id": "openai-mentalhealthbench::snapshot-2026-09-23",
+      "subject": {
+        "source_id": "GPT-5.6 Luna (Aug 2026)",
+        "name": "GPT-5.6 Luna (Aug 2026)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 44.9,
+      "unit": "percent",
+      "basis": "self_reported",
+      "confidence_interval": {
+        "level": 0.95,
+        "lower": 43.03245670573646,
+        "upper": 46.747116703089816
+      },
+      "source": {
+        "url": "https://cdn.openai.com/ctf-cdn/MentalHealthBench_A_Comprehensive_Benchmark_of_AI_Capabilities_in_Realistic_Mental_Health_Conversations.pdf",
+        "retrieved_at": "2026-09-27T18:57:20.590375+00:00",
+        "published_at": "2026-09-23",
+        "sha256": "fa5a3dc17fb2a58f820a1f4269cde93010b7f7c3e98558f65d082a9c5690644f",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-27-cr190/fa5a3dc17fb2a58f820a.gz",
+        "locator": "Figure 5(a) \"Overall model performance\", page 11: the printed task-clipped score data label at the end of this model's bar row; printed row (panel a value, then panel b's penalty and positive components): \"GPT-5.6 Luna (Aug 2026)  44.9  −26  59\""
+      },
+      "supporting_sources": [
+        {
+          "url": "https://openai.com/index/introducing-mentalhealthbench/",
+          "retrieved_at": "2026-09-27T18:58:32.000000+00:00",
+          "published_at": "2026-09-23",
+          "sha256": "dc0047a15f9272dd2c84281fb157b0dc9247cf09733890ac8a6446a803fcb10f",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-27-cr190/dc0047a15f9272dd2c84.gz",
+          "locator": "Announcement page RSC payload, chart linkId \"mentalhealthbench-overall\" (\"Overall model performance\"), vegaLiteSpec.data.values entry modelKey \"gpt-5.6-luna-aug-2026\": value 44.88978670441314, ciLow 43.03245670573646, ciHigh 46.747116703089816. The page's publicationDateText is \"September 23, 2026\"."
+        }
+      ],
+      "protocol": "Vendor-reported by OpenAI in its own MentalHealthBench paper (2026-09-23): mean task-clipped rubric score over 1,215 conversations, four independently sampled completions per task, each rubric criterion graded by an LLM judge (GPT-5.6 Sol at high reasoning effort). OpenAI authored the benchmark, ran every model itself and supplies the judge, so no row is an independent measurement; all rows are self_reported and never enter the Composite. The paper states \"We use each model’s API at default reasoning effort, temperature, and verbosity setting (when applicable)\", so no reasoning-effort configuration is identified and the row is not attached to one. The 95% confidence interval is OpenAI's own, read from the announcement page's machine-readable chart payload for modelKey \"gpt-5.6-luna-aug-2026\", whose full-precision value 44.88978670441314 rounds to the paper's printed 44.9. Not joined to a catalog configuration: the source states the API default setting rather than a named effort, and the catalog holds no setting-less configuration for this family (the standing policy in lib/board-identity.mjs). Picking one effort would assert a setting the source never states.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:gpt-5.6-sol-aug-2026-openai-mentalhealthbench",
+      "benchmark_id": "openai-mentalhealthbench::snapshot-2026-09-23",
+      "subject": {
+        "source_id": "GPT-5.6 Sol (Aug 2026)",
+        "name": "GPT-5.6 Sol (Aug 2026)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 47,
+      "unit": "percent",
+      "basis": "self_reported",
+      "confidence_interval": {
+        "level": 0.95,
+        "lower": 45.069220440927204,
+        "upper": 48.89141314728952
+      },
+      "source": {
+        "url": "https://cdn.openai.com/ctf-cdn/MentalHealthBench_A_Comprehensive_Benchmark_of_AI_Capabilities_in_Realistic_Mental_Health_Conversations.pdf",
+        "retrieved_at": "2026-09-27T18:57:20.590375+00:00",
+        "published_at": "2026-09-23",
+        "sha256": "fa5a3dc17fb2a58f820a1f4269cde93010b7f7c3e98558f65d082a9c5690644f",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-27-cr190/fa5a3dc17fb2a58f820a.gz",
+        "locator": "Figure 5(a) \"Overall model performance\", page 11: the printed task-clipped score data label at the end of this model's bar row; printed row (panel a value, then panel b's penalty and positive components): \"GPT-5.6 Sol (Aug 2026)  47.0  −27  62\""
+      },
+      "supporting_sources": [
+        {
+          "url": "https://openai.com/index/introducing-mentalhealthbench/",
+          "retrieved_at": "2026-09-27T18:58:32.000000+00:00",
+          "published_at": "2026-09-23",
+          "sha256": "dc0047a15f9272dd2c84281fb157b0dc9247cf09733890ac8a6446a803fcb10f",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-27-cr190/dc0047a15f9272dd2c84.gz",
+          "locator": "Announcement page RSC payload, chart linkId \"mentalhealthbench-overall\" (\"Overall model performance\"), vegaLiteSpec.data.values entry modelKey \"gpt-5.6-sol-aug-2026\": value 46.98031679410836, ciLow 45.069220440927204, ciHigh 48.89141314728952. The page's publicationDateText is \"September 23, 2026\"."
+        }
+      ],
+      "protocol": "Vendor-reported by OpenAI in its own MentalHealthBench paper (2026-09-23): mean task-clipped rubric score over 1,215 conversations, four independently sampled completions per task, each rubric criterion graded by an LLM judge (GPT-5.6 Sol at high reasoning effort). OpenAI authored the benchmark, ran every model itself and supplies the judge, so no row is an independent measurement; all rows are self_reported and never enter the Composite. The paper states \"We use each model’s API at default reasoning effort, temperature, and verbosity setting (when applicable)\", so no reasoning-effort configuration is identified and the row is not attached to one. The 95% confidence interval is OpenAI's own, read from the announcement page's machine-readable chart payload for modelKey \"gpt-5.6-sol-aug-2026\", whose full-precision value 46.98031679410836 rounds to the paper's printed 47. Not joined to a catalog configuration: the source states the API default setting rather than a named effort, and the catalog holds no setting-less configuration for this family (the standing policy in lib/board-identity.mjs). Picking one effort would assert a setting the source never states.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:gpt-6-astra-openai-mentalhealthbench",
+      "benchmark_id": "openai-mentalhealthbench::snapshot-2026-09-23",
+      "subject": {
+        "source_id": "GPT-6 Astra",
+        "name": "GPT-6 Astra",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 57.3,
+      "unit": "percent",
+      "basis": "self_reported",
+      "confidence_interval": {
+        "level": 0.95,
+        "lower": 55.404377568631766,
+        "upper": 59.26298186847825
+      },
+      "source": {
+        "url": "https://cdn.openai.com/ctf-cdn/MentalHealthBench_A_Comprehensive_Benchmark_of_AI_Capabilities_in_Realistic_Mental_Health_Conversations.pdf",
+        "retrieved_at": "2026-09-27T18:57:20.590375+00:00",
+        "published_at": "2026-09-23",
+        "sha256": "fa5a3dc17fb2a58f820a1f4269cde93010b7f7c3e98558f65d082a9c5690644f",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-27-cr190/fa5a3dc17fb2a58f820a.gz",
+        "locator": "Figure 5(a) \"Overall model performance\", page 11: the printed task-clipped score data label at the end of this model's bar row; printed row (panel a value, then panel b's penalty and positive components): \"GPT-6 Astra  57.3  −19  69\""
+      },
+      "supporting_sources": [
+        {
+          "url": "https://openai.com/index/introducing-mentalhealthbench/",
+          "retrieved_at": "2026-09-27T18:58:32.000000+00:00",
+          "published_at": "2026-09-23",
+          "sha256": "dc0047a15f9272dd2c84281fb157b0dc9247cf09733890ac8a6446a803fcb10f",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-27-cr190/dc0047a15f9272dd2c84.gz",
+          "locator": "Announcement page RSC payload, chart linkId \"mentalhealthbench-overall\" (\"Overall model performance\"), vegaLiteSpec.data.values entry modelKey \"gpt-6-astra\": value 57.33367971855501, ciLow 55.404377568631766, ciHigh 59.26298186847825. The page's publicationDateText is \"September 23, 2026\"."
+        }
+      ],
+      "protocol": "Vendor-reported by OpenAI in its own MentalHealthBench paper (2026-09-23): mean task-clipped rubric score over 1,215 conversations, four independently sampled completions per task, each rubric criterion graded by an LLM judge (GPT-5.6 Sol at high reasoning effort). OpenAI authored the benchmark, ran every model itself and supplies the judge, so no row is an independent measurement; all rows are self_reported and never enter the Composite. The paper states \"We use each model’s API at default reasoning effort, temperature, and verbosity setting (when applicable)\", so no reasoning-effort configuration is identified and the row is not attached to one. The 95% confidence interval is OpenAI's own, read from the announcement page's machine-readable chart payload for modelKey \"gpt-6-astra\", whose full-precision value 57.33367971855501 rounds to the paper's printed 57.3. Not joined to a catalog configuration: the source states the API default setting rather than a named effort, and the catalog holds no setting-less configuration for this family (the standing policy in lib/board-identity.mjs). Picking one effort would assert a setting the source never states.",
+      "comparison_key": null
+    },
+    {
       "id": "self-reported:gpt-6-luna-openai-deepswe-v1-1",
       "benchmark_id": "openai-deepswe-v1-1::1.1",
       "subject": {
@@ -1777,6 +2254,45 @@
       "protocol": "Vendor-reported by OpenAI for GPT-6 Luna at max reasoning effort, printed as \"DeepSWE v1.1\". OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
       "comparison_key": null,
       "join_note": "The launch post names the exact reasoning effort, and Artificial Analysis published the same family's effort configurations the same day, so this claim joins the configuration it was measured at (max) and never an effort alias."
+    },
+    {
+      "id": "self-reported:gpt-6-luna-openai-mentalhealthbench",
+      "benchmark_id": "openai-mentalhealthbench::snapshot-2026-09-23",
+      "subject": {
+        "source_id": "GPT-6 Luna",
+        "name": "GPT-6 Luna",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 50.2,
+      "unit": "percent",
+      "basis": "self_reported",
+      "confidence_interval": {
+        "level": 0.95,
+        "lower": 48.35783415473255,
+        "upper": 52.06240244185668
+      },
+      "source": {
+        "url": "https://cdn.openai.com/ctf-cdn/MentalHealthBench_A_Comprehensive_Benchmark_of_AI_Capabilities_in_Realistic_Mental_Health_Conversations.pdf",
+        "retrieved_at": "2026-09-27T18:57:20.590375+00:00",
+        "published_at": "2026-09-23",
+        "sha256": "fa5a3dc17fb2a58f820a1f4269cde93010b7f7c3e98558f65d082a9c5690644f",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-27-cr190/fa5a3dc17fb2a58f820a.gz",
+        "locator": "Figure 5(a) \"Overall model performance\", page 11: the printed task-clipped score data label at the end of this model's bar row; printed row (panel a value, then panel b's penalty and positive components): \"GPT-6 Luna  50.2  −19  61\""
+      },
+      "supporting_sources": [
+        {
+          "url": "https://openai.com/index/introducing-mentalhealthbench/",
+          "retrieved_at": "2026-09-27T18:58:32.000000+00:00",
+          "published_at": "2026-09-23",
+          "sha256": "dc0047a15f9272dd2c84281fb157b0dc9247cf09733890ac8a6446a803fcb10f",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-27-cr190/dc0047a15f9272dd2c84.gz",
+          "locator": "Announcement page RSC payload, chart linkId \"mentalhealthbench-overall\" (\"Overall model performance\"), vegaLiteSpec.data.values entry modelKey \"gpt-6-luna\": value 50.21011829829462, ciLow 48.35783415473255, ciHigh 52.06240244185668. The page's publicationDateText is \"September 23, 2026\"."
+        }
+      ],
+      "protocol": "Vendor-reported by OpenAI in its own MentalHealthBench paper (2026-09-23): mean task-clipped rubric score over 1,215 conversations, four independently sampled completions per task, each rubric criterion graded by an LLM judge (GPT-5.6 Sol at high reasoning effort). OpenAI authored the benchmark, ran every model itself and supplies the judge, so no row is an independent measurement; all rows are self_reported and never enter the Composite. The paper states \"We use each model’s API at default reasoning effort, temperature, and verbosity setting (when applicable)\", so no reasoning-effort configuration is identified and the row is not attached to one. The 95% confidence interval is OpenAI's own, read from the announcement page's machine-readable chart payload for modelKey \"gpt-6-luna\", whose full-precision value 50.21011829829462 rounds to the paper's printed 50.2. Not joined to a catalog configuration: the source states the API default setting rather than a named effort, and the catalog holds no setting-less configuration for this family (the standing policy in lib/board-identity.mjs). Picking one effort would assert a setting the source never states.",
+      "comparison_key": null
     },
     {
       "id": "self-reported:gpt-6-sol-openai-agents-last-exam-v1",
@@ -1879,6 +2395,45 @@
       "join_note": "The launch post names the exact reasoning effort, and Artificial Analysis published the same family's effort configurations the same day, so this claim joins the configuration it was measured at (max) and never an effort alias."
     },
     {
+      "id": "self-reported:gpt-6-sol-openai-mentalhealthbench",
+      "benchmark_id": "openai-mentalhealthbench::snapshot-2026-09-23",
+      "subject": {
+        "source_id": "GPT-6 Sol",
+        "name": "GPT-6 Sol",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 53.9,
+      "unit": "percent",
+      "basis": "self_reported",
+      "confidence_interval": {
+        "level": 0.95,
+        "lower": 52.09204414573345,
+        "upper": 55.789567485210846
+      },
+      "source": {
+        "url": "https://cdn.openai.com/ctf-cdn/MentalHealthBench_A_Comprehensive_Benchmark_of_AI_Capabilities_in_Realistic_Mental_Health_Conversations.pdf",
+        "retrieved_at": "2026-09-27T18:57:20.590375+00:00",
+        "published_at": "2026-09-23",
+        "sha256": "fa5a3dc17fb2a58f820a1f4269cde93010b7f7c3e98558f65d082a9c5690644f",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-27-cr190/fa5a3dc17fb2a58f820a.gz",
+        "locator": "Figure 5(a) \"Overall model performance\", page 11: the printed task-clipped score data label at the end of this model's bar row; printed row (panel a value, then panel b's penalty and positive components): \"GPT-6 Sol  53.9  −17  64\""
+      },
+      "supporting_sources": [
+        {
+          "url": "https://openai.com/index/introducing-mentalhealthbench/",
+          "retrieved_at": "2026-09-27T18:58:32.000000+00:00",
+          "published_at": "2026-09-23",
+          "sha256": "dc0047a15f9272dd2c84281fb157b0dc9247cf09733890ac8a6446a803fcb10f",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-27-cr190/dc0047a15f9272dd2c84.gz",
+          "locator": "Announcement page RSC payload, chart linkId \"mentalhealthbench-overall\" (\"Overall model performance\"), vegaLiteSpec.data.values entry modelKey \"gpt-6-sol\": value 53.940805815472146, ciLow 52.09204414573345, ciHigh 55.789567485210846. The page's publicationDateText is \"September 23, 2026\"."
+        }
+      ],
+      "protocol": "Vendor-reported by OpenAI in its own MentalHealthBench paper (2026-09-23): mean task-clipped rubric score over 1,215 conversations, four independently sampled completions per task, each rubric criterion graded by an LLM judge (GPT-5.6 Sol at high reasoning effort). OpenAI authored the benchmark, ran every model itself and supplies the judge, so no row is an independent measurement; all rows are self_reported and never enter the Composite. The paper states \"We use each model’s API at default reasoning effort, temperature, and verbosity setting (when applicable)\", so no reasoning-effort configuration is identified and the row is not attached to one. The 95% confidence interval is OpenAI's own, read from the announcement page's machine-readable chart payload for modelKey \"gpt-6-sol\", whose full-precision value 53.940805815472146 rounds to the paper's printed 53.9. Not joined to a catalog configuration: the source states the API default setting rather than a named effort, and the catalog holds no setting-less configuration for this family (the standing policy in lib/board-identity.mjs). Picking one effort would assert a setting the source never states.",
+      "comparison_key": null
+    },
+    {
       "id": "self-reported:gpt-6-sol-openai-osworld-2-offline",
       "benchmark_id": "openai-osworld-2-offline::v2026.08.08",
       "subject": {
@@ -1902,6 +2457,45 @@
       "protocol": "Vendor-reported by OpenAI for GPT-6 Sol at xhigh reasoning effort: partial reward on the OSWorld 2.0 offline set, release v2026.08.08. OpenAI states: \"Evaluations of GPT were performed in our research environment or via our API, which may provide slightly different output from production ChatGPT due to differences in the system prompts, tools available, etc.\" No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
       "comparison_key": null,
       "join_note": "The launch post names the exact reasoning effort, and Artificial Analysis published the same family's effort configurations the same day, so this claim joins the configuration it was measured at (xhigh) and never an effort alias."
+    },
+    {
+      "id": "self-reported:grok-4.7-openai-mentalhealthbench",
+      "benchmark_id": "openai-mentalhealthbench::snapshot-2026-09-23",
+      "subject": {
+        "source_id": "Grok 4.7",
+        "name": "Grok 4.7",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 41.3,
+      "unit": "percent",
+      "basis": "self_reported",
+      "confidence_interval": {
+        "level": 0.95,
+        "lower": 39.47582622343797,
+        "upper": 43.12885042730592
+      },
+      "source": {
+        "url": "https://cdn.openai.com/ctf-cdn/MentalHealthBench_A_Comprehensive_Benchmark_of_AI_Capabilities_in_Realistic_Mental_Health_Conversations.pdf",
+        "retrieved_at": "2026-09-27T18:57:20.590375+00:00",
+        "published_at": "2026-09-23",
+        "sha256": "fa5a3dc17fb2a58f820a1f4269cde93010b7f7c3e98558f65d082a9c5690644f",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-27-cr190/fa5a3dc17fb2a58f820a.gz",
+        "locator": "Figure 5(a) \"Overall model performance\", page 11: the printed task-clipped score data label at the end of this model's bar row; printed row (panel a value, then panel b's penalty and positive components): \"Grok 4.7  41.3  −29  56\""
+      },
+      "supporting_sources": [
+        {
+          "url": "https://openai.com/index/introducing-mentalhealthbench/",
+          "retrieved_at": "2026-09-27T18:58:32.000000+00:00",
+          "published_at": "2026-09-23",
+          "sha256": "dc0047a15f9272dd2c84281fb157b0dc9247cf09733890ac8a6446a803fcb10f",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-27-cr190/dc0047a15f9272dd2c84.gz",
+          "locator": "Announcement page RSC payload, chart linkId \"mentalhealthbench-overall\" (\"Overall model performance\"), vegaLiteSpec.data.values entry modelKey \"grok-4.7\": value 41.30233832537195, ciLow 39.47582622343797, ciHigh 43.12885042730592. The page's publicationDateText is \"September 23, 2026\"."
+        }
+      ],
+      "protocol": "Vendor-reported by OpenAI in its own MentalHealthBench paper (2026-09-23): mean task-clipped rubric score over 1,215 conversations, four independently sampled completions per task, each rubric criterion graded by an LLM judge (GPT-5.6 Sol at high reasoning effort). OpenAI authored the benchmark, ran every model itself and supplies the judge, so no row is an independent measurement; all rows are self_reported and never enter the Composite. The paper states \"We use each model’s API at default reasoning effort, temperature, and verbosity setting (when applicable)\", so no reasoning-effort configuration is identified and the row is not attached to one. The 95% confidence interval is OpenAI's own, read from the announcement page's machine-readable chart payload for modelKey \"grok-4.7\", whose full-precision value 41.30233832537195 rounds to the paper's printed 41.3. Not joined to a catalog configuration: the source states the API default setting rather than a named effort, and the catalog holds no setting-less configuration for this family (the standing policy in lib/board-identity.mjs). Picking one effort would assert a setting the source never states.",
+      "comparison_key": null
     },
     {
       "id": "self-reported:mimo-v26-agents-last-exam",
@@ -2309,6 +2903,45 @@
         "locator": "SECTIONS row \"Toolathlon-verified\" under \"MiMo-V2.6-Pro\"; first score in MODELS order"
       },
       "protocol": "Vendor-reported by Xiaomi for MiMo-V2.6-Pro, printed as \"Toolathlon-verified\" in the launch appendix. No independent reproduction is claimed. Replace with an independently measured matching-version result when available.",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:muse-spark-1.3-openai-mentalhealthbench",
+      "benchmark_id": "openai-mentalhealthbench::snapshot-2026-09-23",
+      "subject": {
+        "source_id": "Muse Spark 1.3",
+        "name": "Muse Spark 1.3",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 48.6,
+      "unit": "percent",
+      "basis": "self_reported",
+      "confidence_interval": {
+        "level": 0.95,
+        "lower": 46.677410036020525,
+        "upper": 50.518035715785224
+      },
+      "source": {
+        "url": "https://cdn.openai.com/ctf-cdn/MentalHealthBench_A_Comprehensive_Benchmark_of_AI_Capabilities_in_Realistic_Mental_Health_Conversations.pdf",
+        "retrieved_at": "2026-09-27T18:57:20.590375+00:00",
+        "published_at": "2026-09-23",
+        "sha256": "fa5a3dc17fb2a58f820a1f4269cde93010b7f7c3e98558f65d082a9c5690644f",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-27-cr190/fa5a3dc17fb2a58f820a.gz",
+        "locator": "Figure 5(a) \"Overall model performance\", page 11: the printed task-clipped score data label at the end of this model's bar row; printed row (panel a value, then panel b's penalty and positive components): \"Muse Spark 1.3  48.6  −39  71\""
+      },
+      "supporting_sources": [
+        {
+          "url": "https://openai.com/index/introducing-mentalhealthbench/",
+          "retrieved_at": "2026-09-27T18:58:32.000000+00:00",
+          "published_at": "2026-09-23",
+          "sha256": "dc0047a15f9272dd2c84281fb157b0dc9247cf09733890ac8a6446a803fcb10f",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-27-cr190/dc0047a15f9272dd2c84.gz",
+          "locator": "Announcement page RSC payload, chart linkId \"mentalhealthbench-overall\" (\"Overall model performance\"), vegaLiteSpec.data.values entry modelKey \"muse-spark-1.3\": value 48.597722875902875, ciLow 46.677410036020525, ciHigh 50.518035715785224. The page's publicationDateText is \"September 23, 2026\"."
+        }
+      ],
+      "protocol": "Vendor-reported by OpenAI in its own MentalHealthBench paper (2026-09-23): mean task-clipped rubric score over 1,215 conversations, four independently sampled completions per task, each rubric criterion graded by an LLM judge (GPT-5.6 Sol at high reasoning effort). OpenAI authored the benchmark, ran every model itself and supplies the judge, so no row is an independent measurement; all rows are self_reported and never enter the Composite. The paper states \"We use each model’s API at default reasoning effort, temperature, and verbosity setting (when applicable)\", so no reasoning-effort configuration is identified and the row is not attached to one. The 95% confidence interval is OpenAI's own, read from the announcement page's machine-readable chart payload for modelKey \"muse-spark-1.3\", whose full-precision value 48.597722875902875 rounds to the paper's printed 48.6. Not joined to a catalog configuration: the source states the API default setting rather than a named effort, and the catalog holds no setting-less configuration for this family (the standing policy in lib/board-identity.mjs). Picking one effort would assert a setting the source never states.",
       "comparison_key": null
     },
     {
@@ -3514,6 +4147,12 @@
       "reason": "OpenAI's GPT-6 Sol and Luna launch post captured and retained; only the values OpenAI prints as text about its own models are accepted. They are self-reported, never enter the Composite, and are replaced by independent matching-version results when those appear."
     },
     {
+      "benchmark_id": "openai-mentalhealthbench::snapshot-2026-09-23",
+      "status": "collected",
+      "source_url": "https://cdn.openai.com/ctf-cdn/MentalHealthBench_A_Comprehensive_Benchmark_of_AI_Capabilities_in_Realistic_Mental_Health_Conversations.pdf",
+      "reason": "OpenAI’s own MentalHealthBench paper captured and retained; the 17 rows of Figure 5(a) are the only values it prints as text for the overall board, and the announcement page’s machine-readable chart payload supplies OpenAI’s own 95% intervals for the 15 models it covers. The values are self-reported, never enter the Composite, and are replaced by independent matching-protocol results when those appear."
+    },
+    {
       "benchmark_id": "openai-osworld-2-offline::v2026.08.08",
       "status": "collected",
       "source_url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
@@ -3933,6 +4572,41 @@
       "reason": "Performance across agent scaffolds (DeepSWE v1.1, Terminal-Bench 2.1): Per-scaffold breakdown of two claims already ingested. The headline table's own harness (mini-SWE for DeepSWE v1.1, DeepSeek Harness Minimal for Terminal-Bench 2.1) is recorded in each row's protocol; the other scaffolds would duplicate one published result under one identity."
     },
     {
+      "benchmark_id": "openai-automationbench::1.0.6",
+      "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#Claude Fable 5.1 w/ Opus 5 Fallback (max)",
+      "reason": "Claude Fable 5.1 w/ Opus 5 Fallback (max) / AutomationBench 1.0.6 31.4%: Refused as a secondary quote: the post's closing note states \"Evaluations of competitor models were taken from publicly available reports\", so OpenAI is repeating another report, not publishing a measurement of its own. The label also names a fallback configuration that has no catalog identity, and OpenAI states its cost cell omits the Opus 5 fallbacks (~40% of tasks)."
+    },
+    {
+      "benchmark_id": "openai-automationbench::1.0.6",
+      "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#Claude Opus 5 (max)",
+      "reason": "Claude Opus 5 (max) / AutomationBench 1.0.6 26.9%: Refused as a secondary quote: the post's closing note states \"Evaluations of competitor models were taken from publicly available reports\", so OpenAI is repeating another report, not publishing a measurement of its own."
+    },
+    {
+      "benchmark_id": "openai-automationbench::1.0.6",
+      "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#GPT-6 Astra (low)",
+      "reason": "GPT-6 Astra (low) / AutomationBench 1.0.6 30.3%: the row belongs to the GPT-6 Astra launch, not to this one, and its cost cell is printed only as a multiple of GPT-6 Sol. Kept out of this identity until Astra's own release document is ingested under it."
+    },
+    {
+      "benchmark_id": "openai-automationbench::1.0.6",
+      "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#gpt-6-luna",
+      "reason": "GPT-6 Luna (high) / AutomationBench 1.0.6: the post prints only a change (\"improves on its predecessor by 5.4 percentage points at 58% lower cost per task\"), not an absolute score, and the chart carries no printed datapoint values. A graph estimate is not a claim."
+    },
+    {
+      "benchmark_id": "openai-deepswe-v1-1::1.1",
+      "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#Claude Fable 5 (xhigh)",
+      "reason": "Claude Fable 5 (xhigh) / DeepSWE v1.1 69.9%: Refused as a secondary quote: the post's closing note states \"Evaluations of competitor models were taken from publicly available reports\", so OpenAI is repeating another report, not publishing a measurement of its own."
+    },
+    {
+      "benchmark_id": "openai-osworld-2-offline::v2026.08.08",
+      "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#Claude Opus 5 (medium)",
+      "reason": "Claude Opus 5 (medium) / OSWorld 2.0 offline 60.5% comparison value 60.3%: Refused as a secondary quote: the post's closing note states \"Evaluations of competitor models were taken from publicly available reports\", so OpenAI is repeating another report, not publishing a measurement of its own."
+    },
+    {
+      "benchmark_id": "openai-osworld-2-offline::v2026.08.08",
+      "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#gpt-6-luna",
+      "reason": "GPT-6 Luna (max) / OSWorld 2.0 offline: the post states only that it \"is able to exceed GPT-5.6 Sol (medium) at one tenth of its cost\", with no printed value, and the chart carries no printed datapoint values."
+    },
+    {
       "benchmark_id": "swe-bench-multilingual::snapshot-2026-09-10",
       "source_id": "https://huggingface.co/Qwen/Qwen3.6-27B/raw/main/README.md#Qwen3.5-397B-A17B",
       "reason": "Withheld by review: Critic objection, not cleared: the published row prints the same value twice (69.3), so the critic would not accept the column attribution from the evidence shown. Withheld until a review clears it."
@@ -4056,41 +4730,6 @@
       "benchmark_id": "vending-bench::2",
       "source_id": "https://www-cdn.anthropic.com/57a52ea7d8f0e54e8a542e908266086df425cdf5/Claude%20Fable%205%20&%20Claude%20Mythos%205%20System%20Card.pdf#Claude Opus 4.8",
       "reason": "Claude Opus 4.8 / Vending-Bench 2 (final balance): no line carries the benchmark name with exactly one matching value (https://www-cdn.anthropic.com/57a52ea7d8f0e54e8a542e908266086df425cdf5/Claude%20Fable%205%20&%20Claude%20Mythos%205%20System%20Card.pdf)"
-    },
-    {
-      "benchmark_id": "openai-automationbench::1.0.6",
-      "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#Claude Fable 5.1 w/ Opus 5 Fallback (max)",
-      "reason": "Claude Fable 5.1 w/ Opus 5 Fallback (max) / AutomationBench 1.0.6 31.4%: Refused as a secondary quote: the post's closing note states \"Evaluations of competitor models were taken from publicly available reports\", so OpenAI is repeating another report, not publishing a measurement of its own. The label also names a fallback configuration that has no catalog identity, and OpenAI states its cost cell omits the Opus 5 fallbacks (~40% of tasks)."
-    },
-    {
-      "benchmark_id": "openai-automationbench::1.0.6",
-      "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#Claude Opus 5 (max)",
-      "reason": "Claude Opus 5 (max) / AutomationBench 1.0.6 26.9%: Refused as a secondary quote: the post's closing note states \"Evaluations of competitor models were taken from publicly available reports\", so OpenAI is repeating another report, not publishing a measurement of its own."
-    },
-    {
-      "benchmark_id": "openai-automationbench::1.0.6",
-      "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#GPT-6 Astra (low)",
-      "reason": "GPT-6 Astra (low) / AutomationBench 1.0.6 30.3%: the row belongs to the GPT-6 Astra launch, not to this one, and its cost cell is printed only as a multiple of GPT-6 Sol. Kept out of this identity until Astra's own release document is ingested under it."
-    },
-    {
-      "benchmark_id": "openai-automationbench::1.0.6",
-      "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#gpt-6-luna",
-      "reason": "GPT-6 Luna (high) / AutomationBench 1.0.6: the post prints only a change (\"improves on its predecessor by 5.4 percentage points at 58% lower cost per task\"), not an absolute score, and the chart carries no printed datapoint values. A graph estimate is not a claim."
-    },
-    {
-      "benchmark_id": "openai-deepswe-v1-1::1.1",
-      "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#Claude Fable 5 (xhigh)",
-      "reason": "Claude Fable 5 (xhigh) / DeepSWE v1.1 69.9%: Refused as a secondary quote: the post's closing note states \"Evaluations of competitor models were taken from publicly available reports\", so OpenAI is repeating another report, not publishing a measurement of its own."
-    },
-    {
-      "benchmark_id": "openai-osworld-2-offline::v2026.08.08",
-      "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#Claude Opus 5 (medium)",
-      "reason": "Claude Opus 5 (medium) / OSWorld 2.0 offline 60.5% comparison value 60.3%: Refused as a secondary quote: the post's closing note states \"Evaluations of competitor models were taken from publicly available reports\", so OpenAI is repeating another report, not publishing a measurement of its own."
-    },
-    {
-      "benchmark_id": "openai-osworld-2-offline::v2026.08.08",
-      "source_id": "https://openai.com/index/introducing-gpt-6-sol-and-luna/#gpt-6-luna",
-      "reason": "GPT-6 Luna (max) / OSWorld 2.0 offline: the post states only that it \"is able to exceed GPT-5.6 Sol (medium) at one tenth of its cost\", with no printed value, and the chart carries no printed datapoint values."
     }
   ]
 }

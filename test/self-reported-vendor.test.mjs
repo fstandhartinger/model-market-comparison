@@ -157,6 +157,35 @@ test('an observation carries the basis, the provenance and no comparison pair', 
   assert.match(observation.source.locator, /original document sha256 ccc/);
 });
 
+// CR-190: a chart in a research paper has no column header — its value is the data label printed at
+// the end of the model's own bar row, and a locator that invented a column would describe a table
+// the document does not contain. That third form is accepted only when it is at least as specific
+// as the named-column one: it must name the figure, quote the printed row, and that quoted row must
+// carry both this observation's own subject name and its own value. A locator quoting a neighbouring
+// model's row, or a row without the value, still fails.
+const figureLocator = (o) => {
+  const figure = /^Figure \d+\([a-z]\) "[^"]+", page \d+:/.test(o.source.locator);
+  const printedRow = o.source.locator.match(/printed row[^:]*: "([^"]+)"/);
+  if (!figure || !printedRow) return false;
+  const cells = printedRow[1].split(/\s{2,}/).map((c) => c.trim());
+  return printedRow[1].startsWith(o.subject.name) && cells.includes(o.value.toFixed(1))
+    && /data label at the end of this model's bar row/.test(o.source.locator);
+};
+
+test("a figure locator is refused when it quotes another model's row or another value", () => {
+  const base = 'Figure 5(a) "Overall model performance", page 11: the printed task-clipped score data label at the end of this model\'s bar row; printed row (panel a value, then panel b\'s penalty and positive components): ';
+  const ok = { subject: { name: 'GPT-6 Astra' }, value: 57.3, source: { locator: `${base}"GPT-6 Astra  57.3  \u221219  69"` } };
+  assert.equal(figureLocator(ok), true);
+  // the neighbouring row
+  assert.equal(figureLocator({ ...ok, source: { locator: `${base}"GPT-6 Sol  53.9  \u221217  64"` } }), false);
+  // this model's row, but the value the observation carries is not in it
+  assert.equal(figureLocator({ ...ok, value: 52.4, source: { locator: `${base}"GPT-6 Astra  57.3  \u221219  69"` } }), false);
+  // panel b's components are cells of the row, not the score: a value that is only a component fails
+  assert.equal(figureLocator({ ...ok, value: 69, source: { locator: `${base}"GPT-6 Astra  57.3  \u221219  69"` } }), false);
+  // a prose locator without the figure and the printed row
+  assert.equal(figureLocator({ ...ok, source: { locator: 'Launch post, the sentence naming the model' } }), false);
+});
+
 test('the shipped candidates are self-reported, sourced from retained captures and never a comparison pair', async () => {
   const candidates = await read('data/raw/benchmarks/self-reported-candidates.json');
   const entries = new Map((await read('data/raw/benchmarks/registry.json')).entries.map((e) => [e.id, e]));
@@ -176,7 +205,7 @@ test('the shipped candidates are self-reported, sourced from retained captures a
     const row = o.source.locator.match(/row "([^"]+)"/);
     const namedLocator = Boolean(row) && /under "[^"]+"/.test(o.source.locator)
       && row[1].includes(entries.get(o.benchmark_id).name);
-    assert.ok(legacyLocator || namedLocator, `${o.id} must record the row and column its value was found in`);
+    assert.ok(legacyLocator || namedLocator || figureLocator(o), `${o.id} must record the row and column its value was found in`);
   }
   assert.equal(new Set(candidates.observations.map((o) => o.id)).size, candidates.observations.length);
 });
@@ -231,7 +260,7 @@ test('every shipped candidate records the column its value was read from', async
   for (const o of candidates.observations) {
     const legacy = /re-verified against our own capture: .*(column |names )/.test(o.protocol);
     const named = /under "[^"]+"/.test(o.source.locator);
-    assert.ok(legacy || named, `${o.id} must record how the column was established`);
+    assert.ok(legacy || named || figureLocator(o), `${o.id} must record how the column was established`);
   }
 });
 
