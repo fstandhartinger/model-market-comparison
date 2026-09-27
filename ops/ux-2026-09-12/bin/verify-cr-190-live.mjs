@@ -57,6 +57,17 @@ for (const host of HOSTS) {
   check(host, 'every row names the retained paper capture', served.every((o) => o.source.sha256 === PAPER_SHA && o.source.published_at === '2026-09-23'), `${served.filter((o) => o.source.sha256 === PAPER_SHA).length}/17`);
   check(host, 'no value entered the Composite', served.every((o) => o.basis === 'self_reported') && !JSON.stringify(scores.divergences ?? []).includes('composite'), 'self-reported rows are outside the Composite by construction');
   check(host, 'the collection plan records the board as collected', scores.collection?.status === 'collected', scores.collection?.status);
+  // CR-190.1's "appears in the benchmarks list": the "One benchmark" ranking view renders an unjoined
+  // row under its printed source label, so the whole board is on the page and not only in the API.
+  const AXIS = `${ID}@@${encodeURIComponent('Published board')}@@percent`;
+  const view = await (await fetch(`${host}/api/benchmark-view?axis=${encodeURIComponent(AXIS)}`)).json();
+  const axis = (view.axes ?? []).find((a) => a.benchmarkId === ID);
+  check(host, 'the ranking view carries the board as its own axis', !!axis, axis ? axis.cohort : `absent among ${(view.axes ?? []).length}`);
+  check(host, 'the ranking view lists all 17 rows', axis?.scores?.length === 17, `${axis?.scores?.length} rows`);
+  const leader = (axis?.scores ?? []).slice().sort((a, b) => b.value - a.value)[0];
+  check(host, 'the board leader is the one the paper prints', leader?.name === 'GPT-6 Astra' && leader?.value === 57.3, `${leader?.name} ${leader?.value}`);
+  check(host, 'the ranking view carries the published intervals', (axis?.scores ?? []).filter((r) => r.confidenceInterval).length === 15,
+    `${(axis?.scores ?? []).filter((r) => r.confidenceInterval).length} intervals`);
 }
 await fs.writeFile(`${OUT}/verification.json`, JSON.stringify({ id: ID, at: new Date().toISOString(), checks }, null, 1));
 const pass = checks.filter((c) => c.ok).length;
