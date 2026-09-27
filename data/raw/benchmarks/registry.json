@@ -5125,6 +5125,11 @@
           "url": "https://cognition.com/blog/frontier-code-1.1",
           "type": "official_leaderboard",
           "role": "FrontierCode 1.1 release post: the 1.1 methodology, and the Main (100 hardest) / Extended (150) / deprecated Diamond subsets"
+        },
+        {
+          "url": "https://cognition.com/blog/frontier-code",
+          "type": "official_leaderboard",
+          "role": "Original FrontierCode release post: the blocker rule the score rests on (all blockers passed → weighted rubric aggregate, otherwise zero)"
         }
       ],
       "update_cadence": {
@@ -5149,7 +5154,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Source publishes a fraction; stored ×100 as a derived value (source basis self_reported). Main subset, 100 tasks. Runs flagged for unfair internet use are zeroed in 1.1. Secondary benchmark, not a Composite input."
+        "notes": "Main subset, 100 tasks — the 100 hardest of the 150-task Extended set. Runs flagged for unfair internet use are zeroed in 1.1. Secondary benchmark, not a Composite input."
       },
       "how_to_collect": {
         "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/frontiercode-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
@@ -5187,6 +5192,13 @@
           "sha256": "ac9003873a1d60566e9f3094caf4758d0f589db57b4c59d6458e29b286ef234f",
           "fetched_at": "2026-09-27T09:36:32.268327+00:00",
           "excerpt": "Diamond consists of the 50 hardest tasks in our full 150-task Extended set, while Main consists of the 100 hardest."
+        },
+        {
+          "url": "https://cognition.com/blog/frontier-code",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-27-d230/cd75d92daa65b5a118b3.gz",
+          "sha256": "f0b96affe2217e64b011eab4682dd90a84794db5322109fa625c3b5ed950d055",
+          "fetched_at": "2026-09-27T09:36:35.131564+00:00",
+          "excerpt": "If a solution satisfies all the blockers, it is considered passing, and its score is the weighted aggregate of all the rubric items it passes. Otherwise it receives a score of zero."
         },
         {
           "url": "https://cognition.com/robots.txt",
@@ -16114,7 +16126,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Each task scores the agent's change against the task's own reproduced baselines (leaderboard.csv in each task directory) with the same scripts, parsers, seeds and resource limits; the README states the paper switched from a geometric to an arithmetic mean in 2026-05 with rankings unchanged. The board shows one bar per model and harness (Claude Code, Codex, Kimi-Code) with the stated effort, and a \"Human SOTA\" reference computed from the reproduced human baselines (44.66 on 2026-09-22), kept in each row's protocol. A different subset or scoring is a new identity. StepFun's own Step 5 preview figure stays the separate vendor snapshot stepfun-mls-bench-lite::snapshot-2026-09-20."
+        "notes": "Each task scores the agent's change against the task's own reproduced baselines (leaderboard.csv in each task directory) with the same scripts, parsers, seeds and resource limits; the README states the paper switched from a geometric to an arithmetic mean in 2026.5 with rankings unchanged. The board shows one bar per model and harness (Claude Code, Codex, Kimi-Code) with the stated effort, and a \"Human SOTA\" reference computed from the reproduced human baselines (44.66), kept in each row's protocol. A different subset or scoring is a new identity. StepFun's own Step 5 preview figure stays the separate vendor snapshot stepfun-mls-bench-lite::snapshot-2026-09-20."
       },
       "maintainer": "MLS-Bench authors (Imbernoulli/MLS-Bench)",
       "source_type": "official_leaderboard",
@@ -16157,7 +16169,8 @@
           "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/c7e3934636b87819424c.gz",
           "sha256": "2d9959a04c240e2849e48817461fda4f71ca1f4efef4796f528ea2ac7c578f6d",
           "fetched_at": "2026-09-22T05:03:43.731594+00:00",
-          "excerpt": "Leaderboard — MLS-Bench-Lite Score. The evaluation is based on Harbor with a 5-hour exploration budget for each agent. … {\"title\":\"MLS-Bench Lite\",\"humanSota\":44.66,\"data\":[{\"key\":\"Claude Fable 5.1|Claude Code (max effort)\",\"effort\":\"max\",\"score\":50.3} …"
+          "excerpt": "Leaderboard — MLS-Bench-Lite Score. The evaluation is based on Harbor with a 5-hour exploration budget for each agent. … {\"title\":\"MLS-Bench Lite\",\"humanSota\":44.66,\"data\":[{\"key\":\"Claude Fable 5.1|Claude Code (max effort)\",\"effort\":\"max\",\"score\":50.3} …",
+          "recipe": "next-rsc"
         },
         {
           "url": "https://raw.githubusercontent.com/Imbernoulli/MLS-Bench/main/README.md",
@@ -16165,6 +16178,41 @@
           "sha256": "188e23dfa3ade939119b61ddf8934ae72b6f879a224753b86cab4674d1911fcf",
           "fetched_at": "2026-09-22T05:03:46.322990+00:00",
           "excerpt": "**MLS-Bench-Lite** is a **30-task subset** of the full 140-task suite, spanning **all 12 research domains**."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Imbernoulli/MLS-Bench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/d1bd5f205f6100e01df8.gz",
+          "sha256": "188e23dfa3ade939119b61ddf8934ae72b6f879a224753b86cab4674d1911fcf",
+          "fetched_at": "2026-09-22T05:03:46.322990+00:00",
+          "excerpt": "**2026.5** — **Scoring**: the main results table in the [arXiv paper](https://arxiv.org/abs/2605.08678) previously aggregated tasks within each area by geometric mean; switched to arithmetic mean for easier comparison with the per-task numbers. Rankings are unchanged and no conclusions are affected."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Imbernoulli/MLS-Bench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/d1bd5f205f6100e01df8.gz",
+          "sha256": "188e23dfa3ade939119b61ddf8934ae72b6f879a224753b86cab4674d1911fcf",
+          "fetched_at": "2026-09-22T05:03:46.322990+00:00",
+          "excerpt": "can an AI agent propose a new component, loss, optimizer, or training procedure whose gain transfers across settings, seeds, datasets, and scales?"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Imbernoulli/MLS-Bench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/d1bd5f205f6100e01df8.gz",
+          "sha256": "188e23dfa3ade939119b61ddf8934ae72b6f879a224753b86cab4674d1911fcf",
+          "fetched_at": "2026-09-22T05:03:46.322990+00:00",
+          "excerpt": "Each task fixes a research scaffold, gives the agent the relevant source code and strong baseline implementations, then asks for one algorithmic change inside a constrained edit surface."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Imbernoulli/MLS-Bench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/d1bd5f205f6100e01df8.gz",
+          "sha256": "188e23dfa3ade939119b61ddf8934ae72b6f879a224753b86cab4674d1911fcf",
+          "fetched_at": "2026-09-22T05:03:46.322990+00:00",
+          "excerpt": "Baseline scores are already populated in each task's `leaderboard.csv`, so running an agent alone is sufficient to obtain its normalized score under the MLS-Bench evaluation framework."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/Imbernoulli/MLS-Bench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-22-mls-bench/d1bd5f205f6100e01df8.gz",
+          "sha256": "188e23dfa3ade939119b61ddf8934ae72b6f879a224753b86cab4674d1911fcf",
+          "fetched_at": "2026-09-22T05:03:46.322990+00:00",
+          "excerpt": "Baselines and agents share the same task scripts, parsers, seeds, resource limits, and leaderboard code; only the source of the edits differs."
         }
       ]
     },

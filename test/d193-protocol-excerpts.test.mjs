@@ -32,13 +32,15 @@ import { protocolSourceContent } from '../ops/daily/refresh-benchmarks.mjs';
 const repo = new URL('..', import.meta.url);
 const read = (p) => JSON.parse(readFileSync(new URL(p, repo), 'utf8'));
 const registry = read('data/raw/benchmarks/registry.json');
-// D230 (2026-09-27) added a third reviewed reference to both `frontiercode*` entries — the
-// FrontierCode 1.1 release post, the only captured source that states the Main/Extended subset sizes
-// their version guard asserts. Its retained capture lives in its own dated folder, so the guarantee
-// below reads both: every reviewed reference of these six entries, wherever its capture was kept.
+// D230/D231 (2026-09-27) added reviewed references to both `frontiercode*` entries. Neither claim
+// they carry was in a captured source before: the 1.1 release post states the Main/Extended subset
+// sizes their version guard asserts, and the original post states the blocker rule the score rests
+// on. Their retained captures live in their own dated folder, so the guarantee below reads both
+// manifests — every reviewed reference of these six entries, wherever its capture was kept.
+const COGNITION_POSTS = ['https://cognition.com/blog/frontier-code-1.1', 'https://cognition.com/blog/frontier-code'];
 const captures = [...read('data/raw/benchmarks/daily-evidence/2026-09-24-d193/manifest.json'),
   ...read('data/raw/benchmarks/daily-evidence/2026-09-27-d230/manifest.json')
-    .filter((c) => c.url === 'https://cognition.com/blog/frontier-code-1.1')];
+    .filter((c) => COGNITION_POSTS.includes(c.url))];
 
 const ENTRIES = ['ugi::snapshot-2026-09-10', 'ugi-natint::snapshot-2026-09-10',
   'ugi-willingness::snapshot-2026-09-10', 'ugi-writing::snapshot-2026-09-10',
