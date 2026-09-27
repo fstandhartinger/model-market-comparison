@@ -259,7 +259,7 @@ function Projected3D({ points, costBounds, jevClassOnly, tipRef, resetViewRef, r
             <circle data-bh-jev14-3d-halo={entry.point.key} className="bh-jev-3d-halo" cx={at.x} cy={at.y} r={diameter / 2}
               fill="none" stroke={`rgb(var(${entry.point.colorVariable}))`} strokeWidth="2" />
             {leader && <line data-bh-jev14-3d-leader-line={entry.point.key} className="bh-jev-3d-leader-line"
-              x1={leader.x} y1={leader.y} x2={leader.to.x} y2={leader.to.y} stroke="rgb(var(--muted))" strokeWidth="1" />}
+              x1={leader.x} y1={leader.y} x2={leader.to.x} y2={leader.to.y} stroke="var(--muted)" strokeWidth="1" />}
             <text data-bh-jev14-3d-model-label={entry.point.key} className="bh-jev-3d-model-label" x={x} y={y} fill={`rgb(var(${entry.point.colorVariable}))`}>
               {text}
             </text>

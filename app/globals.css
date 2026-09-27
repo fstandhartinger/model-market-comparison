@@ -725,7 +725,11 @@ body.bh-fastlane-visible .bh-custom-evaluation-toast { bottom: calc(var(--bh-fas
 /* F-207(b): the tie between a label and the sphere it names is a ring drawn around the datum itself, never a second mark beside the
    label. The ring is transparent inside and carries a 1 px panel-coloured outer shadow so it reads on either theme, whatever the
    sphere colour behind it; its own colour is set inline from the point's class variable. When the declump pushed the plate more than
-   24 px from the ring's edge, a 1 px leader joins them. Both are placed by the same layout pass that moves the labels. */
-.bh-jev-3d-labels .bh-jev-3d-halo { border: 2px solid rgb(var(--muted)); border-radius: 9999px; background: transparent; box-shadow: 0 0 0 1px rgb(var(--panel) / .9); }
-.bh-jev-3d-labels .bh-jev-3d-leader-line { height: 1px; background: rgb(var(--muted)); transform-origin: 0 50%; }
+   24 px from the ring's edge, a 1 px leader joins them. Both are placed by the same layout pass that moves the labels.
+   `--muted` is a hex colour in this stylesheet (unlike `--panel`/`--line`, which are R G B triplets), so it is used
+   directly: `rgb(var(--muted))` is an invalid colour, and inside a `border` shorthand that invalidates the whole
+   declaration — width and style fall back to the initial `none`, which is a ring with no border at all. The longhands
+   are written out for the same reason: a colour that ever fails to substitute must not take the width and style with it. */
+.bh-jev-3d-labels .bh-jev-3d-halo { border-width: 2px; border-style: solid; border-color: var(--muted); border-radius: 9999px; background: transparent; box-shadow: 0 0 0 1px rgb(var(--panel) / .9); }
+.bh-jev-3d-labels .bh-jev-3d-leader-line { height: 1px; background: var(--muted); transform-origin: 0 50%; }
 

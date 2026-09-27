@@ -96,8 +96,17 @@ test('F-207(b): each labelled sphere wears a halo, and a pushed plate is joined 
   assert.match(three, /hide\(entry\.item\.halo\); hide\(entry\.item\.leader\);/);
   const rule = css.match(/\.bh-jev-3d-labels \.bh-jev-3d-halo \{([^}]*)\}/);
   assert.ok(rule, 'the ring rule exists');
-  assert.match(rule[1], /border: 2px solid/);
   assert.match(rule[1], /background: transparent;/);
   assert.match(rule[1], /box-shadow: 0 0 0 1px rgb\(var\(--panel\) \/ \.9\);/);
   assert.match(css, /\.bh-jev-3d-labels \.bh-jev-3d-leader-line \{[^}]*height: 1px;[^}]*transform-origin: 0 50%;[^}]*\}/);
+  // The ring first shipped with `border: 2px solid rgb(var(--muted))` and drew nothing: `--muted` is a hex
+  // colour in this stylesheet (`--panel`/`--line` are R G B triplets), `rgb(#4c5e75)` is not a colour, and an
+  // invalid colour inside a shorthand invalidates the whole declaration — width and style fall back to the
+  // initial `none`. Found live, not by this suite; the pass-38 verifier now reads the rendered ring width too.
+  assert.match(rule[1], /border-width: 2px;/, 'the width is its own longhand, so a bad colour cannot take it');
+  assert.match(rule[1], /border-style: solid;/, 'and neither can it take the style');
+  for (const [name, source] of [['the halo/leader CSS', `${rule[1]} ${(css.match(/\.bh-jev-3d-leader-line \{([^}]*)\}/) ?? ['', ''])[1]}`],
+    ['the SVG fallback', (three.match(/data-bh-jev14-3d-leader-line[\s\S]{0,400}/) ?? [''])[0]]]) {
+    assert.doesNotMatch(source, /rgb\(var\(--muted\)\)/, `${name} must use var(--muted) directly — it is a hex colour`);
+  }
 });

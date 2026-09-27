@@ -42,9 +42,26 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
       const canvas = !!(view && view.querySelector('canvas'));
       const labels = [...document.querySelectorAll('[data-bh-jev14-3d-model-label]')].map((e) => { const cs = getComputedStyle(e); const dot = e.querySelector('.bh-jev-3d-model-dot'); const d = dot ? bx(dot) : null; return { t: txt(e).slice(0, 40), ...bx(e), svg: e.namespaceURI === 'http://www.w3.org/2000/svg', alpha: alphaOf(cs.backgroundColor), radius: cs.borderRadius, dot: d ? { w: d.w, h: d.h, radius: getComputedStyle(dot).borderRadius } : null }; });
       let overlaps = 0; for (let i = 0; i < labels.length; i++) for (let j = i + 1; j < labels.length; j++) if (boxesOverlap(labels[i], labels[j])) overlaps++;
-      const halos = [...document.querySelectorAll('[data-bh-jev14-3d-halo]')].map((e) => ({ k: e.getAttribute('data-bh-jev14-3d-halo'), ...bx(e) }));
-      const ties = labels.map((l) => { const key = [...document.querySelectorAll('[data-bh-jev14-3d-model-label]')].find((e) => txt(e).slice(0, 40) === l.t)?.getAttribute('data-bh-jev14-3d-model-label'); const h = halos.find((x) => x.k === key); if (!h) return null; const cx = h.x + h.w / 2, cy = h.y + h.h / 2; const lx = Math.max(l.x, Math.min(cx, l.x + l.w)), ly = Math.max(l.y, Math.min(cy, l.y + l.h)); return Math.hypot(cx - lx, cy - ly); });
-      return { B, canvas, labels, overlaps, halos, ties };`));
+      // F-207b, strengthened by iteration 245: the ring's paint is read, not just its box. A
+      // "border: 2px solid rgb(var(--muted))" shorthand shipped with the ring invisible -- --muted is a
+      // hex colour in this stylesheet, rgb(#4c5e75) is not a colour, and an invalid colour inside a border
+      // shorthand invalidates the whole declaration, so width and style fell back to the initial none.
+      // The old check counted five elements and passed. (The D215 lesson: read rendered paint and boxes.)
+      const halos = [...document.querySelectorAll('[data-bh-jev14-3d-halo]')].map((e) => { const cs = getComputedStyle(e);
+        const svg = e.namespaceURI === 'http://www.w3.org/2000/svg';
+        return { k: e.getAttribute('data-bh-jev14-3d-halo'), ...bx(e), svg,
+          ring: svg ? parseFloat(e.getAttribute('stroke-width') ?? cs.strokeWidth) : parseFloat(cs.borderTopWidth),
+          ringColor: svg ? cs.stroke : cs.borderTopColor, inside: svg ? cs.fill : cs.backgroundColor, opacity: parseFloat(cs.opacity),
+          ringAlpha: alphaOf(svg ? cs.stroke : cs.borderTopColor), insideAlpha: alphaOf(svg ? cs.fill : cs.backgroundColor) }; });
+      // The directive's distance is from the plate to the ring's edge; a label further than that must
+      // carry its own drawn leader -- that key's leader, with paint and length, not five of any leader.
+      const leaders = Object.fromEntries([...document.querySelectorAll('[data-bh-jev14-3d-leader-line]')].map((e) => {
+        const cs = getComputedStyle(e); const svg = e.namespaceURI === 'http://www.w3.org/2000/svg';
+        const length = svg ? Math.hypot(e.x2.baseVal.value - e.x1.baseVal.value, e.y2.baseVal.value - e.y1.baseVal.value) : parseFloat(cs.width);
+        return [e.getAttribute('data-bh-jev14-3d-leader-line'),
+          { drawn: parseFloat(cs.opacity) > 0.1 && length > 1 && alphaOf(svg ? cs.stroke : cs.backgroundColor) > 0.1, length: Math.round(length) }]; }));
+      const ties = labels.map((l) => { const key = [...document.querySelectorAll('[data-bh-jev14-3d-model-label]')].find((e) => txt(e).slice(0, 40) === l.t)?.getAttribute('data-bh-jev14-3d-model-label'); const h = halos.find((x) => x.k === key); if (!h) return null; const cx = h.x + h.w / 2, cy = h.y + h.h / 2; const lx = Math.max(l.x, Math.min(cx, l.x + l.w)), ly = Math.max(l.y, Math.min(cy, l.y + l.h)); return { key, edge: Math.round((Math.hypot(cx - lx, cy - ly) - h.w / 2) * 10) / 10, leader: leaders[key] ?? null }; });
+      return { B, canvas, labels, overlaps, halos, ties, leaders };`));
     await p.screenshot({ path: `${OUT}/${ctx}-F-207.png` });
     const dom = m.labels.filter((l) => !l.svg);
     if (want('F-207')) {
@@ -61,7 +78,12 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
     if (want('F-207b')) {
       check('F-207b', ctx, 'five halos, one per labelled sphere ([data-bh-jev14-3d-halo])', m.halos.length === 5, JSON.stringify(m.halos.map((h) => h.k)));
       check('F-207b', ctx, 'every halo is a ring 12–40 px across inside the 3D box', m.halos.length === 5 && m.halos.every((h) => h.w >= 12 && h.w <= 40 && m.B && h.x >= m.B.x && h.x + h.w <= m.B.x + m.B.w), JSON.stringify(m.halos.map((h) => [h.w, h.h])));
-      check('F-207b', ctx, 'each label is within 24 px of its own halo, or joined to it by a leader', m.ties.length === 5 && m.ties.every((d) => d != null && d <= 24) || (await p.evaluate(() => document.querySelectorAll('[data-bh-jev14-3d-leader-line]').length)) === 5, JSON.stringify(m.ties));
+      check('F-207b', ctx, 'every halo is really drawn: a visible 2 px ring, transparent inside', m.halos.length === 5
+        && m.halos.every((h) => h.ring >= 2 && h.ringAlpha > 0.1 && h.opacity > 0.1 && h.insideAlpha < 0.1),
+        JSON.stringify(m.halos.map((h) => [h.k, h.ring, h.ringColor, h.inside, h.opacity])));
+      check('F-207b', ctx, 'each label is within 24 px of its halo\'s edge, or joined to it by its own drawn leader',
+        m.ties.length === 5 && m.ties.every((t) => t != null && (t.edge <= 24 || (t.leader && t.leader.drawn))),
+        JSON.stringify(m.ties));
     }
   }
   if (want('F-208')) {
