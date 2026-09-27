@@ -13210,7 +13210,7 @@ failing sources**, several since 2026-09-11; that backlog as a whole is unfiled.
 
 | ID | Status | Evidence | Notes |
 |---|---|---|---|
-| D220 | open → **implemented** (needs a non-implementer sign-off) | `identity-map-review-round.json`, `scores-diff.json` (49 joined, 0 lost), `estimates-diff.json` (3,337 → 3,334, 0 new), `build-identity-map.log`, `npm-test.log`, `tsc.log`, `npm-build.log` | 49 joins approved board by board against their own captures; 0 refused. Union Alpha resolved with LiveBench's own metadata. Five pins re-derived with reasons. |
+| D220 | open → **implemented, verified live 61/61 on both hosts at `83e24572`** (needs a non-implementer sign-off) | `identity-map-review-round.json`, `scores-diff.json` (49 joined, 0 lost), `estimates-diff.json` (3,337 → 3,334, 0 new), `build-identity-map.log`, `npm-test.log`, `tsc.log`, `npm-build.log` | 49 joins approved board by board against their own captures; 0 refused. Union Alpha resolved with LiveBench's own metadata. Five pins re-derived with reasons. |
 | D220.1 (new) | **implemented** | `guard-drill.log`, `test/d220-identity-map-regeneration.test.mjs` | The builder no longer deletes the reviewed join of a withdrawn row, and refuses to write a map that loses one for any other reason. Re-runs are now a pure insertion. |
 | D221 (new) | **open** | `d221-megaqwen-frozen-arm.json` | KernelBench-CUDA megaqwen-decode retained since 2026-09-22 on an unapproved protocol round; four audited published cells missing. Replay the round offline against its own capture. The receipt's other 28 failing sources are unfiled. |
 
@@ -13282,7 +13282,7 @@ can show the effect is the one after that.
 
 | ID | Status | Evidence | Notes |
 |---|---|---|---|
-| D222 (new) | **implemented** | `d222-replays/` (before: c1 mismatch in one round; after: all four accepted in one pass; `--lie` still blocked) | The four KernelBench entries shared one copied metric while SPEC sets the ceiling per problem, misattributed SPEC's ms rule to 03, never said that 02's published number is SPEC's context column, and asserted a page rendering no reviewed source shows. Corrected from SPEC.md and leaderboard.json only. |
+| D222 (new) | **implemented**, live at `83e24572` (text-only; its effect is a prediction about the next refresh) | `d222-replays/` (before: c1 mismatch in one round; after: all four accepted in one pass; `--lie` still blocked) | The four KernelBench entries shared one copied metric while SPEC sets the ceiling per problem, misattributed SPEC's ms rule to 03, never said that 02's published number is SPEC's context column, and asserted a page rendering no reviewed source shows. Corrected from SPEC.md and leaderboard.json only. |
 | D221 | **open** (cause fixed, effect unproven) | `d221-megaqwen-frozen-arm.json` | The four missing megaqwen cells should publish on the next refresh now that D222 is fixed. Verify against the next run's `refresh-benchmarks.log`; if the arm is still retained, the cause is not D222. |
 
 ### Live verification for both units
@@ -13302,11 +13302,13 @@ the defect check and Union Alpha's LiveBench row all fail because they are not d
 (`live-preflight/verification.json`). That is the expected shape of a pre-deploy run; the same script is what
 proves the deployed revision.
 
-**The push is not mine to time.** A full Benchmark Heaven transaction has held `run.lock` since 00:41 UTC, so
-the pre-push hook correctly refuses main; both commits are made and a rebase-safe watcher pushes them when the
-lock clears, aborting rather than guessing if the daily's own data commit conflicts (`push.log`). **Until that
-log says `PUSH OK` and a later run of `verify-d220-live.mjs` is green, D220 and D222 are implemented but not
-verified live.**
+**Verified live: 61 / 61 on each host** at revision `83e24572`, canonical and legacy
+(`live/verification.json`). Every one of the 49 reviewed joins is a measured cell at the board's own value;
+the named defect reads `{"values": [68.901]}` with 54.997 gone; all five retracted rows are still withheld
+with their retracted values nowhere in the cell; and Union Alpha shows LiveBench 76.13 with
+`basis: "measured"` while both announced rows still read `preliminary` and the page still marks them with ‡.
+The push waited on `run.lock`, which a full transaction held from 00:41; it cleared at 02:08 UTC and the
+revision went live at 02:12.
 
 **That running transaction independently reproduced D222's cause.** Its own `refresh-benchmarks.log`, from a
 clone taken before this work, retains `kernelbench-cuda-megaqwen-decode` for the third time with: "Restate
