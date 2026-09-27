@@ -40,6 +40,17 @@ const captures = read('data/raw/benchmarks/daily-evidence/2026-09-27-d226/manife
 const LEADERBOARD = 'https://arcprize.org/leaderboard';
 const POLICY = 'https://arcprize.org/policy';
 const ENTRIES = { 'arc-agi::1': 'https://arcprize.org/arc-agi/1', 'arc-agi::2': 'https://arcprize.org/arc-agi/2' };
+/** The exact reference list each entry is reviewed against. `arc-agi::1` carries a fourth — the
+ *  successor's own page — because D242 found that naming ARC-AGI-2 was not the same as sourcing it. */
+const REVIEWED = {
+  'arc-agi::1': [LEADERBOARD, POLICY, ENTRIES['arc-agi::1'], ENTRIES['arc-agi::2']],
+  'arc-agi::2': [LEADERBOARD, POLICY, ENTRIES['arc-agi::2']],
+};
+/** The passage that makes `superseded_by` a sourced field rather than a co-occurring name (D242). */
+const SUCCESSION = {
+  'arc-agi::1': 'ARC-AGI-2 - the next iteration of the benchmark',
+  'arc-agi::2': 'to ARC-AGI-3 which challenges AI agents',
+};
 
 /** The body the daily run hands to a protocol review: this capture through the same extractor. */
 const bodies = new Map(captures.map((c) => {
@@ -66,7 +77,8 @@ const entry = (id) => {
 test('D226: both boards are reviewed against the policy and their own version page, not the leaderboard alone', () => {
   for (const [id, page] of Object.entries(ENTRIES)) {
     const urls = packetReferences(entry(id)).map((r) => r.url);
-    assert.deepEqual(urls, [LEADERBOARD, POLICY, page], `${id}: reviewed references`);
+    assert.deepEqual(urls, REVIEWED[id], `${id}: reviewed references`);
+    assert.ok(urls.includes(page), `${id}: its own version page is reviewed`);
     for (const url of urls) assert.ok(bodies.has(url), `${id}: no retained capture for ${url}`);
   }
 });
@@ -80,11 +92,11 @@ test('D226: every reviewed reference resolves against its retained capture', () 
   }
 });
 
-test('D226: the two added references quote their own source verbatim, so the 60,000-byte bound is not what carries them', () => {
-  for (const [id, page] of Object.entries(ENTRIES)) {
+test('D226: the added references quote their own source verbatim, so the 60,000-byte bound is not what carries them', () => {
+  for (const id of Object.keys(ENTRIES)) {
     for (const reference of packetReferences(entry(id))) {
       if (reference.url === LEADERBOARD) continue; // pre-existing, two passages joined by an ellipsis
-      assert.ok([POLICY, page].includes(reference.url));
+      assert.ok(REVIEWED[id].includes(reference.url), `${id}: ${reference.url} is a reviewed reference`);
       // `review_content: 'excerpt'` forces the excerpt path whatever the body's size — the state
       // these references reach on their own the moment their text grows past the bound.
       assert.equal(protocolSourceContent(id, { ...reference, review_content: 'excerpt' },
@@ -120,7 +132,12 @@ test('D226: the supersession chain names a real board and the protocol names it 
     const e = entry(id);
     assert.equal(e.superseded_by, successor, `${id}: successor board`);
     assert.ok(ids.has(successor), `${id}: ${successor} is a registry entry`);
-    assert.ok(packet(id).includes(named), `${id}: the packet names ${named}`);
+    const text = packet(id);
+    assert.ok(text.includes(named), `${id}: the packet names ${named}`);
+    // D242: the name alone is what the packet already had while the arm kept refusing — every
+    // ARC page lists the whole series in its nav. The reviewed text has to *say* the succession.
+    assert.ok(text.includes(SUCCESSION[id]),
+      `${id}: the packet states the succession ("${SUCCESSION[id]}"), not just the name`);
     // c2 reads status and supersession independently: the Verified Leaderboard still reports both.
     assert.equal(e.status, 'active', `${id}: a named successor is not a retirement`);
     assert.equal(e.version_status, 'published', `${id}: version_status`);

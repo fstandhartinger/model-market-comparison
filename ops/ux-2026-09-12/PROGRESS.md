@@ -15342,3 +15342,119 @@ identical. Also in that directory: `preserved.patch` and `pr10.patch` with the o
 `hf-snapshot.json`, `hf-space-index.html`, `board-thread-13.txt`, the v1.4.2 artifact as served, and
 `mentalhealthbench-openai.html` — the 9,958-byte HTTP 403 interstitial that CR-190.3 is about.
 Board thread #8 entry **#2808** carries D236–D239 and the PR #10 decision to their owners.
+
+## Iteration 254 (claude-opus, work) — 2026-09-27 17:54–19:0x UTC — the sixteen retained arms, replayed before the next daily instead of after it
+
+The 15:40 review gate left one instruction that did not need a decision from anybody: *tomorrow's
+ordinary daily run is the required publication receipt for those repairs and the nine Vals boards.* Ten
+registry repairs (D226–D235) landed **after** the 05:17 run took its capture, so every one of the **16
+failing sources** in `reports/source-health.md` was sitting in the same state: repaired in the registry,
+unproven against a reviewer, and due to find out at 00:41 whether the repair worked. If one of them had
+not worked, that would have been discovered tomorrow morning and cost another whole day.
+
+So this iteration replayed all sixteen **offline, tonight**, with the real producer/critic gauntlet,
+against the captures the daily itself took — `ops/ux-2026-09-12/bin/replay-protocol-review.mjs` against a
+merged manifest of every retained 25–27 Sep capture set (`merged-manifest.json`, 677 receipts, newest
+capture wins per key, so a repair that cites a capture taken *after* the 05:17 run is reviewable too).
+Nothing was written to `data/` by the replay; it never publishes.
+
+**Fifteen of the sixteen passed unchanged.** The ten repairs work. Run times 28 s–413 s, four at a time:
+
+| arm | replay | arm | replay |
+|---|---|---|---|
+| `aa-aime::2025` | **pass** (28 s) | `vals-index::2` | **pass** (183 s) |
+| `frontierswe::2` | **pass** (98 s) | `vals-index-hlab::2` | **pass** (93 s) |
+| `arc-agi::2` | **pass** (413 s) | `vals-index-legal-research::2` | **pass** (273 s) |
+| `frontiercode::1.1` | **pass** (129 s) | `vals-index-vibe-code-bench::2` | **pass** (63 s) |
+| `frontiercode-cost::1.1` | **pass** (42 s) | `ugi-natint::snapshot-2026-09-10` | **pass** (74 s) |
+| `mls-bench-lite::30-tasks` | **pass** (71 s) | `ugi-writing::snapshot-2026-09-10` | **pass** (115 s) |
+| `vending-bench::2` | **pass** (137 s) | `blueprint-bench::2` | **pass** |
+| `vulcanbench-frontier::4` | **pass** (409 s) | `arc-agi::1` | **refused → repaired below** |
+
+This is evidence, not a guarantee: a gauntlet round is stochastic and one pass per arm is one pass. It
+is, however, the difference between sixteen unknowns and one known defect.
+
+### D242 — `arc-agi::1` was still refusing, and its own pin was the reason nobody could see it
+
+`arc-agi::1` came back **`revise`, one blocker**, verbatim:
+
+> The row sets superseded_by to 'arc-agi::2', but none of the supplied primary sources (leaderboard,
+> policy, ARC-AGI-1 page) explicitly name ARC-AGI-2 as the successor to ARC-AGI-1. Sources only refer to
+> ARC-AGI-2 as a subsequent challenge (e.g., 'triggered renewed interest in benchmarks like ARC-AGI-2' in
+> SOURCE 3) or as a version in the series, which does not constitute an explicit successor designation.
+
+The critic is right, and it is right about the strongest sentence either reviewed page contains. The
+`/arc-agi/1` page ends "The solving of ARC-AGI-1 triggered renewed interest in benchmarks **like**
+ARC-AGI-2" — a mention, not a succession. The `/leaderboard` text is worse for this field: it groups the
+two together ("its first versions (ARC-AGI-1 and 2) … to ARC-AGI-3"), which sources `arc-agi::2`'s
+`superseded_by: arc-agi::3` and says nothing about 1 → 2.
+
+**Why D226 did not catch this.** The pin written with this morning's repair asserted
+`packet(id).includes('ARC-AGI-2')` — and *every* ARC Prize page lists the whole series in its navigation,
+so that assertion passed while the arm was refusing on exactly this field. A green pin and a red arm, for
+five days. The test bar was weaker than the reviewer's bar.
+
+**The repair is evidence, and the pin is now stricter than the thing it guards.** The official
+**ARC-AGI-2 page** — already captured, already receipted, already cited by `arc-agi::2` itself
+(`2026-09-27-d226/816c1f2bf76312f86fd8.gz`, sha256 `6cefb2dd…a69962`) — says it directly, one sentence
+after a paragraph about ARC-AGI-1:
+
+> ARC-AGI-2 - the next iteration of the benchmark - is designed to stress-test the capabilities of
+> state-of-the-art AI reasoning systems…
+
+That page is added to `arc-agi::1`'s evidence as a fourth reviewed reference. No new fetch was made, no
+new source was introduced, and no claim changed: the row already said `superseded_by: arc-agi::2`; it now
+carries the passage that makes that a sourced field. The excerpt is the source **verbatim**, including the
+`"OpenAI ."` space the link boundary leaves in the extracted text — the first draft tidied that space away
+and `protocolSourceContent` correctly refused it as "passage changed or unavailable", which is the guard
+doing its job on me. `test/d226-arc-agi-protocol-evidence.test.mjs` now (a) pins the reference list
+per entry, so the fourth reference is declared rather than tolerated, (b) applies the verbatim-quote check
+to every non-leaderboard reference instead of a hard-coded pair, and (c) requires the packet to state the
+**succession passage** per entry (`ARC-AGI-2 - the next iteration of the benchmark`; `to ARC-AGI-3 which
+challenges AI agents`), not merely to contain the successor's name. 7/7.
+
+`arc-agi::1` then passed the replay **twice** — once with the first excerpt and again after the verbatim
+correction changed the artifact hash, so the pass is not one lucky round. Verdict `pass`, 0 findings,
+empty `missing_evidence`.
+
+### PR #10 — decided, closed as superseded (iteration 253's open item 5)
+
+Closed, not merged, with the reason on the PR
+([comment](https://github.com/fstandhartinger/model-market-comparison/pull/10#issuecomment-5858337297)).
+Merging it would have put a second, colliding `CR-143.x` into the allocation ledger and duplicated a
+verbatim capture that is already on `main`: iteration 253 rescued the entire payload as **CR-190** at
+`bcb044ac`, and the intake's post capture in `03` is byte-for-byte the block PR #10 adds. Nothing from the
+branch is lost, and the candidate itself remains open as CR-190.1–.3.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| D242 (new) | open → **fixed in this commit** | `iter254-protocol-replay/replays/arc-agi-1-{before,after}-fix*/review-r1.json`; `node --test test/d226-arc-agi-protocol-evidence.test.mjs` **7/7** | `arc-agi::1` refused on `superseded_by` for five days while D226's pin asserted only that the packet mentions "ARC-AGI-2", which every ARC page's nav satisfies. Fourth reviewed reference added (the successor's own page, already-captured), excerpt source-verbatim, pin tightened to the succession passage. Replay **pass** twice. |
+| D226 | verified → **still verified, pin strengthened** | same receipts | The morning's repair was right about the metric and the unit; its succession assertion was too weak to protect the field it was written for. Stricter, not weaker: nothing was relaxed to make a test pass. |
+| CR-148.1 | **open (defect D241)** → **closed: PR #10 formally closed as superseded** | PR #10 comment `5858337297`; `git log` `bcb044ac` | Iteration 253's condition was "until PR #10 is reviewed and merged **or formally closed as superseded**". It is closed, with the CR-143/CR-190 number collision and the byte-identical verbatim block named as the reason. The payload is on `main`; the candidate stays open as CR-190.1–.3. |
+| the 16 retained arms | 16 unproven → **15 proven offline, 1 repaired and proven** | `iter254-protocol-replay/replay-results.txt`, `replays/*.json` | Not a publication receipt — the 00:41/05:17 runs are still that. It is a receipt that no *known* registry defect is left standing in front of them. |
+
+**For the next iteration, in order:**
+
+1. **Read the 00:41 and 05:17 receipts against this iteration's table.** Any of the fifteen that fails
+   tomorrow anyway failed for a reason this offline replay could not see (a fresher capture, a different
+   worker, round variance) — diff the run's capture against `merged-manifest.json` before touching a
+   registry row, and do not repair a row that a stochastic round merely disliked once.
+2. **D236–D239 are still "fix forward in the next JevBench release"** — one release carries all four (the
+   Autoloops measurement hashes, the `jevact` footnote count, `djev` repriced off its announced tariff,
+   the Space brought to v1.4.2.1 with the CR-170 name). Never touch frozen bytes.
+3. **CR-190 needs the agent-Chrome route** (`~/.locks/chrome-9333.lock`) for the 403-protected primary
+   source, then the ordinary registry + gauntlet path. Untouched; oldest thing the standing rule asked for.
+4. **A non-claude engine still owes five rows a `verified`:** CR-148.2, CR-152.1, CR-152.5, CR-158.4 and
+   CR-153.4's accounting —
+   `GH_TOKEN=… node ops/ux-2026-09-12/bin/verify-cr-148-158-backfill.mjs <outDir>`. It was **33/41**; with
+   PR #10 now closed, CR-148.1's two PR clauses should read differently, so re-measure before quoting it.
+5. **F-206 (a)(b)(c)(e) has no surviving non-implementer report** (gate 20260927T072004Z's `f206-canonical`
+   receipt is on disk, the report is lost). Its implementer was claude-opus, so this engine cannot close
+   it; a non-claude reader re-running pass 37's `ONLY=F-206` on canonical is all it needs.
+
+**Receipts.** `/opt/benchmarkheaven/state/ux-evidence/iter254-protocol-replay/`: `replay-results.txt` (the
+table above as the driver wrote it), `replays/` (one verdict per arm, plus `arc-agi-1-before-fix`,
+`arc-agi-1-after-fix` and `arc-agi-1-after-fix-final` with their packets, producer artifacts and critic
+reviews), `merged-manifest.json` (the 677-receipt manifest the replays read), and the gates:
+`build-dataset-final.log` (870 models / 673 families / 94 providers / 3,134 offers), `npm-test-final.log`
+(**1,515 tests, 1,514 pass, 0 fail, 1 skip**) and `tsc-final.log` (empty, exit 0).
