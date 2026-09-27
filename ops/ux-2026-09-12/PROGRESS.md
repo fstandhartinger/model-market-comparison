@@ -14861,6 +14861,15 @@ boards keep the three copies identical; `test/d234-version-guard-twins.test.mjs`
 the 17 (cross) and 13 (inner) that differ today as an inventory of unreviewed drift — a list that may
 shrink, and that cannot grow without a reason in the same commit.
 
+**One cost of the bigger packet, named rather than discovered later.** The `--lie` control's **round 1 died with
+`deepseek/deepseek-v4-flash-0731: The operation was aborted due to timeout`** on the same 158 KB packet, and round 2
+then did the job. The round budget absorbed it, which is what it is for — but this arm's critic can now time out, so a
+run that reports a single timed-out round for `vulcanbench-frontier::4` is a retry, not a finding. It is also the same
+sentence `frontierswe::2` has been failing with for nine runs, which is worth carrying into that arm's diagnosis. If
+this recurs, the cheap lever is `review_content: 'excerpt'` on the three bundles that are only needed for the
+per-revision `protocol_sha256` claim (v3.5, v3.6, v3.7) — that returns ~57 KB without touching the two bundles the
+byte-equality comparison rests on.
+
 **The result.** Replayed again with the enlarged packet — **same producer (`z-ai/glm-5.3-flash`), same
 critic (`deepseek/deepseek-v4-flash-0731`), same captured bytes** — the review comes back
 `verdict: pass`, **0 findings, 0 missing evidence, full coverage**, accepted in round 1 with one
@@ -14871,7 +14880,7 @@ iteration 244.
 
 | ID | Status | Evidence | Notes |
 |---|---|---|---|
-| D234 (new) | **fixed, pending non-implementer verification** | `8c57a894`; replay **accepted** (1 fingerprint, 0 quarantined, `verdict: pass`, 0 findings) at `…/iter251-vulcan-replay/round2/`, the refusal it replaces at `…/round1/`, `--lie` at `…/replay-lie/` (its **producer already refuses**: `status: mismatch`, quoting "VulcanBench Frontier v4 · current suite", the 2026-09-19 update and the 2026-09-26 v3.15 report against the flipped `retained`; its critic round was still running when this was written — the result is a one-line follow-up, not a condition of the row); `test/d234-version-guard-twins.test.mjs` **4/4** | Reproduce offline: `BH_REPLAY_MANIFEST=<merged 05-33 + 2026-09-27-d223 manifest> node ops/ux-2026-09-12/bin/replay-protocol-review.mjs 'vulcanbench-frontier::4' <outDir>`. The merge is only needed offline — `captureTargets` queues every evidence URL, so tomorrow's run fetches all five bundles itself. |
+| D234 (new) | **fixed, pending non-implementer verification** | `8c57a894`; replay **accepted** (1 fingerprint, 0 quarantined, `verdict: pass`, 0 findings) at `…/iter251-vulcan-replay/round2/`, the refusal it replaces at `…/round1/`, `--lie` at `…/replay-lie/` — **fails closed**: `accepted: false`, 0 fingerprints, the row quarantined, the producer calling it `mismatch` against "VulcanBench Frontier v4 · current suite" and the critic raising a `[blocker]` on the lifecycle fields; `test/d234-version-guard-twins.test.mjs` **4/4** | Reproduce offline: `BH_REPLAY_MANIFEST=<merged 05-33 + 2026-09-27-d223 manifest> node ops/ux-2026-09-12/bin/replay-protocol-review.mjs 'vulcanbench-frontier::4' <outDir>`. The merge is only needed offline — `captureTargets` queues every evidence URL, so tomorrow's run fetches all five bundles itself. |
 | D188 / D223 / D224 fence | **still green after the repair** | `…/iter251-vulcan-replay/d188-live-3hosts/verification.json` **105/105** (35 per host) on canonical, `www` and legacy at `8c57a894`; `derived.vulcan_protocols` still lists all five reviewed revisions | The repaired guard keeps its closed `protocol in exactly {…}` list and its 2026-09-19 date, so the live checks that re-derive the reviewed set from the served notes read the same set they did before. |
 | D224 | code half verified, **live half: the block in front of it is removed** | as above; `public-observations.json` | The four Claude Opus 5.5 cells and the board's five v3.15 rows publish when the arm next collects — tomorrow's 05:17 is the receipt. GPT-5.6 Sol's four are already live from the 2026-09-25 capture (see the count above); only its `max` stays withheld. |
 
