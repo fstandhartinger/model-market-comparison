@@ -4,8 +4,8 @@ import { ImageJevExamples } from '../../../components/ImageJevExamples';
 import { ImageJevRadar } from '../../../components/ImageJevRadar';
 
 export const metadata: Metadata = {
-  title: 'Image JevBench v0.1',
-  description: 'Image JevBench v0.1 results, kept at this legacy preview URL.',
+  title: 'Image JevBench v0.1.1',
+  description: 'Image JevBench v0.1.1 results, kept at this legacy preview URL.',
   alternates: { canonical: '/image-jev-bench' },
   robots: { index: false, follow: false, googleBot: { index: false, follow: false } },
 };
@@ -135,8 +135,8 @@ export async function MultimodalPreviewContent() {
 
   return <>
     <header className="bh-page-head max-w-5xl">
-      <p className="bh-eyebrow">Image benchmark · v0.1</p>
-      <h1 className="mt-1 text-3xl font-bold tracking-tight sm:text-4xl">Image JevBench v0.1</h1>
+      <p className="bh-eyebrow">Image benchmark · {a.release_version}</p>
+      <h1 className="mt-1 text-3xl font-bold tracking-tight sm:text-4xl">Image JevBench {a.release_version}</h1>
       <p className="mt-3 max-w-3xl text-lg">A held-out comparison of systems that make decisions from images, from interface targets to everyday scenes.</p>
       <p className="bh-muted mt-2 max-w-4xl">The frozen benchmark has {s.items_total} scored items: {s.items_public} public and {s.items_sealed} sealed; {s.items_retired} further items are retired and not scored. This page shows aggregate sealed results only. It contains no sealed task, image, answer key, or per-item prediction.</p>
       <p className="mt-3 max-w-4xl rounded-lg border border-amber-600 bg-amber-50 px-4 py-2 text-sm text-amber-950 dark:bg-amber-950/40 dark:text-amber-100" role="note" data-bh-mm-difficulty-caveat><b>Caveat:</b> {a.method.difficulty_caveat}</p>

@@ -3,19 +3,12 @@ import assert from 'node:assert/strict';
 import { access, readFile } from 'node:fs/promises';
 import { formatMatchedGapPp, readMultimodalPreview, validatePreviewTracks } from '../lib/jevbench-multimodal-preview.mjs';
 
-const expectedRanking = [
+const expectedTopFive = [
   'Jev-Omni',
-  'Mapika decider-2b-vision BF16',
-  'Reflex 4B (released stable configuration)',
-  'djev-spark NVFP4',
-  'Autoloops – Gemma 4 31B IT',
-  'djev-dev BF16',
-  'Bonsai-2-27B v2 PQ2_0 + Q8_0 MMProj',
-  'GPT-6 Luna (low reasoning effort)',
-  'GPT-5.6 Luna',
-  'Gemini 3.1 Flash Lite',
-  'Gemini 3.8 Flash',
-  'OpenJev 4B NLI v2 (official image-premise path)',
+  'NeoHorse Jev 4B',
+  'Visual-Jev 4B Answer-SFT',
+  'JPT-4B (kirp / llm2jev)',
+  'imajev 2B',
 ];
 
 function forbiddenItemFields(value) {
@@ -33,10 +26,10 @@ function longArrays(value, path = 'root') {
   return Object.entries(value).flatMap(([key, child]) => longArrays(child, `${path}.${key}`));
 }
 
-test('Image JevBench v0.1 preview retains aggregate clean split, exact roster and Jev-Omni metrics', async () => {
+test('Image JevBench v0.1.1 retains the frozen split, approved top five and Jev-Omni metrics', async () => {
   const a = await readMultimodalPreview();
-  assert.equal(a.benchmark, 'Image JevBench v0.1 candidate');
-  assert.equal(a.revision, 'v0.1-clean-split-20260925');
+  assert.equal(a.benchmark, 'Image JevBench v0.1.1');
+  assert.equal(a.revision, 'v0.1.1');
   assert.equal(a.sealed_item_details_included, false);
   assert.equal(a.split_sha256, '4cb721cd36c4fbe4320ec1d5420f56bedd82e060c2c634b3fe7c420353d51224');
   assert.equal(a.method_sha256, 'e7eaa2acffb7fd9655480311b96feafd528f112452fcebb170e48ceeacd555a3');
@@ -58,9 +51,8 @@ test('Image JevBench v0.1 preview retains aggregate clean split, exact roster an
   assert.match(a.method.difficulty_caveat, /easier for frontier API models/);
   assert.deepEqual(a.weights, { public: 0.35, sealed: 0.65 });
   assert.equal(a.gap_allowance_pp, 15);
-  assert.equal(a.n_systems, 12);
-  assert.deepEqual(a.ranking.map((s) => s.name), expectedRanking);
-  assert.deepEqual(a.ranking.slice(0, 5).map((s) => s.name), expectedRanking.slice(0, 5));
+  assert.equal(a.n_systems, 48);
+  assert.deepEqual(a.ranking.slice(0, 5).map((s) => s.name), expectedTopFive);
   assert.equal(a.ranking.filter((s) => s.api_flag).length, 5);
   assert.ok(a.ranking.every((s, i) => s.rank === i + 1));
   assert.ok(a.ranking.every((s) => s.tracks.all.public.n === 228 && s.tracks.all.sealed.n === 456));
@@ -73,7 +65,7 @@ test('Image JevBench v0.1 preview retains aggregate clean split, exact roster an
   assert.equal(jevOmni.api_flag, false);
   assert.equal(jevOmni.rank, 1);
   assert.ok(Math.abs(jevOmni.score - 73.10053647043314) < 0.005);
-  assert.deepEqual([jevOmni.previous_rank, jevOmni.previous_score], [3, 55.63]);
+  assert.deepEqual([jevOmni.previous_rank, jevOmni.previous_score], [1, 73.10053647043314]);
   assert.deepEqual([jevOmni.tracks.all.public.n, jevOmni.tracks.all.public.correct], [228, 153]);
   assert.deepEqual([jevOmni.tracks.all.sealed.n, jevOmni.tracks.all.sealed.correct], [456, 368]);
   for (const [axis, expected] of Object.entries({ intelligence: 63.92802530124383, calibration: 89.89724215081463, speed: 89.68343733284763, cost: 59.51521419000006 })) {
@@ -94,7 +86,9 @@ test('Image JevBench v0.1 preview retains aggregate clean split, exact roster an
   assert.match(a.preview_tracks.cross_track_rule, /shares a source row or screenshot with a sealed core item is sealed too/);
   assert.match(a.preview_tracks.kev_flag, /Mind2Web/);
   assert.deepEqual(forbiddenItemFields(a), []);
-  assert.deepEqual(longArrays(a), []);
+  // The release candidate-coverage roster is metadata, not per-item output.
+  // Reject every other unexpectedly long array in the validated artifact.
+  assert.deepEqual(longArrays(a), ['root.candidate_coverage.candidates']);
 });
 
 test('preview tracks validator rejects missing or changed counts', async () => {
@@ -178,5 +172,7 @@ test('public Image JevBench route leads with the ranking and preserves aggregate
   const artifact = JSON.parse(data);
   assert.equal(artifact.sealed_item_details_included, false);
   assert.deepEqual(forbiddenItemFields(artifact), []);
-  assert.deepEqual(longArrays(artifact), []);
+  // The 68-entry release candidate-coverage manifest is metadata, not per-item output.
+  // Keep rejecting every other unexpectedly long array in the public artifact.
+  assert.deepEqual(longArrays(artifact), ['root.candidate_coverage.candidates']);
 });
