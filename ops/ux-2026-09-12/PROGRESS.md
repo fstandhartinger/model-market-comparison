@@ -15115,3 +15115,220 @@ Reviewed `c3019dd0..0d032122` (47 commits, 882 changed files) against the verbat
 
 X6 fails because open requirements and CR rows remain. **No `ALL-ACCEPTED` line is appended.**
 X7 sent: Telegram message_id **15664** at 2026-09-27 16:37 UTC; the message named the pushed review, first files to inspect, remaining blockers, and the recorded interpretations.
+
+## Iteration 253 (claude-opus, work) — 2026-09-27 16:50–19:0x UTC — the seven CR rows no harness ever covered, and the bookmark candidate that PR #10 swallowed
+
+Every review gate since 2026-09-25 has closed with the same list of CR blockers, and iteration 235's own
+note says why: **`CR-148.1/.2`, `CR-152.1/.2/.5`, `CR-153.4` and `CR-158.4` are "the CR rows no harness
+covers yet."** They were seeded by D206's back-fill with acceptance text and never measured — not failing,
+just unmeasured, for two days, while X6 was blamed on them. Nothing in them needs tomorrow's daily run:
+they are settled by disk, by GitHub, by the agent board and by the live hosts. So this iteration built the
+harness and measured all seven.
+
+`ops/ux-2026-09-12/bin/verify-cr-148-158-backfill.mjs <outDir>` (`ONLY=cr152-1` etc., `GH_TOKEN` for the
+PR and release reads) writes named checks and a `verification.json`, and exits 1 on any red so a partial
+result cannot be read as a pass. It reads nothing out of `PROGRESS.md` — every claim comes from the
+artefact it is about.
+
+**Result: 33/41. Five of the seven rows hold; two do not, and the harness found four further defects that
+no gate had looked for.**
+
+### The two rows that fail
+
+**CR-148.1 — the preserve-PR was never reviewed, never merged, and the candidate it carried is lost.**
+The mechanical half is exact: the preserved patch hashes to `55599d17…e80775`, touches exactly the three
+ops files, and PR #10's diff is the same 6,877 bytes with an identical sha256 over its added lines —
+**one line differs, the git blob `index` line of the `PROGRESS.md` hunk**, because the deploy checkout's
+blob was not `main`'s. That is as byte-identical as a patch applied to a different base can be, and it is
+recorded as such rather than as a miss. What fails is the rest of the sentence: **PR #10 has 0 reviews, no
+`bh-merge-ready` label, and is still open** three days on. So its payload never reached `main`: 7 of its 18
+substantive lines are absent.
+
+That payload was the **bookmark intake's MentalHealthBench candidate** (OpenAI, 23 Sep). Section 4 of the
+brief is unambiguous — "a post in that folder is Florian asking for it" — and the intake, which records the
+candidate as filed, will not file it again. So a benchmark Florian's standing rule asked for sat invisible
+for three days, and **not because anyone decided against it: nobody ever saw the row.** That is the defect,
+not the unmerged PR. It is repaired in this commit (D241 below).
+
+**CR-153.4 — the accounting that the row is entirely about was never written.**
+`/home/flori/jobs/jev-page-requests-final-20260925/OUTPUT.md` ships with **four unfilled placeholders** —
+`__STATUS__`, `__TABLE__`, `__VERIFY__`, `__DELETIONS__`. `__TABLE__` sits under the heading
+"## Request list (today + 24/25 Sep): done / not done", which is the whole of CR-153.4, and the German
+summary above it points at it ("Alte Wünsche (Wunsch 7): Stand siehe Tabelle unten"). The table does not
+exist. The substance is accounted for below instead; the artefact defect is D240.
+
+### CR-153.4's accounting, written where the loop is the authority
+
+CR-153's request 7 names its three sources: `DECISIONS.md`, `site-v142-gauntlet-20260925/PROMPT.md` and
+`jev-page-fixes-20260924/PROMPT.md`. Re-deriving that list from the sources themselves (not from the job's
+missing table), **every older request is done and was verified by an engine that did not implement it**:
+
+| Older 24/25 Sep request | Where it is carried | Status |
+|---|---|---|
+| jev-page-fixes 1–5 (compare radar for systems without a v1.2 hard run; GPT-6 Luna listed twice; invisible secondary cost series; dark-mode chart text + tooltips + top-five labels; finer context buckets, exact-limit log chart and `PROPOSAL-LONG-CONTEXT.md`) | CR-142.1–.5 | all **verified** (review gate 20260924T162002Z, `3233cff0`; CR-142.5's proposal exists in the job directory) |
+| jev-page-fixes "verify on all hosts, notify, write OUTPUT.md" | CR-142.6 | **verified** — three hosts on `b642a09e`, 1440/390 light/dark retained per host |
+| site-v142-gauntlet 1–4 (per-column green heat shading with a legend; sortable + filterable columns; the compact "View by" switch with the fairness sentence; the axes table annotated and moved below "Compare two systems") | CR-151.1–.5 | all **verified** — iteration 235, `iter235-cr151-158` 145/145 and 144/144 on the legacy host |
+| DECISIONS.md 24/25 Sep: the v1.4.2 release approval and its top five; the 20:30 base-model price rule; the 13:20 Capability-first + anti-gaming approval | CR-152.3/.4, CR-158.1/.2/.3/.5 | **verified** (iteration 235); the price rule's own rows are CR-152.2 and CR-158.4, measured here |
+
+So CR-153.4 had **nothing outstanding to finish** — which is exactly why nobody noticed the table was
+missing. The requirement's substance is satisfied by the four rows above; its artefact is not.
+
+### The four defects the harness found on the way
+
+**D236 — the Autoloops row is the one published row with no release evidence for its own numbers.**
+Eleven of the twelve systems new in v1.4.2 carry three sha256 hashes of the measurement they publish
+(`sealed_aggregate_sha256`, `detail_row_sha256`, `sealed_result_sha256`, under four different key spellings
+— the first draft of this checker demanded one spelling and produced eight false reds; it now counts
+64-hex values, which is what "hash-verified" means). `kushal-gemma4-31b-it-autoloops` carries **one**
+hash, `candidate_sha256` — a hash of a *candidate* file, not of the aggregate, the row or the result it
+publishes. This is not a CR-170 rename regression: the row shipped this way at publication
+(`c0075f10`), and **v1.4.2.1 propagated it unchanged today**. Remedy: publish the three measurement
+hashes for that row in the next release; do not backfill the frozen v1.4.2 bytes.
+
+**D237 — a published release surface still uses a name CR-170 retired.** The Hugging Face Space
+`benchmarkheaven/JevBench` is a release surface of CR-152.5 and its **534 compared numbers match the live
+board exactly** (89 rows joined on rank: score, all four axes, cost per 1,000 — zero mismatches). One
+string does not: rank 42 reads **"Kushal Patil — Gemma 4 31B IT (Autoloops)"** on the Space and
+**"Autoloops – Gemma 4 31B IT"** on the board. CR-170 renamed it at the operator's request on 25 Sep and
+the rename reached the site's artifact, the pins and ImageJevBench — not the Space. The Space is also now a
+whole revision behind (`snapshot.revision` `v1.4.2`, the site serves `v1.4.2.1` since 17:04 UTC today).
+**Not fixed here on purpose:** publishing to the Space is an outward release action, and shipping a rename
+onto a snapshot that is itself stale would leave the surface half-right. It belongs with the v1.4.2.1
+Space update, which just became due anyway — do both in one pass, by the v1.4.1 procedure.
+
+**D238 — `jevact` is the one row that does not say how much of its sealed score is refusals.**
+Nine ranked rows answered fewer than 308 sealed decisions validly, and eight of them print the count in
+their own footnote ("307/308 sealed items answered validly"). `jevact` answered **237/308** — the second
+largest shortfall on the board — and its footnote, which explains the 422 refusal path at length, never
+gives the number. It is in the published `sealed_aggregate.answered_valid`, so an API reader can find it;
+a page reader comparing rows cannot. v1.4.2.1 repeats it. This is a consistency defect against the
+convention its eight siblings follow, not a breach of CR-152.1's literal text — recorded as its own row so
+it is not mistaken for either.
+
+**D239 — one ranked row is still priced on an author-announced free-preview tariff.** CR-152.2's
+acceptance says plainly: "No author-announced or hypothetical tariff and no free tier is used as a price."
+`djev` — **ranked, #8 in v1.4.2 and #9 in v1.4.2.1** — has `cost.kind: "announced"` and a basis that begins
+"ANNOUNCED PRICE (free preview): djev's docs state $0.035 per million input tokens … prepaid billing not
+yet switched on, 19 Sep 2026, so nothing was charged". Florian's price rule of 24 Sep 20:30 predates the
+v1.4.2 publication and was applied to `instinct` that evening (its `superseded_basis` records the
+author-announced $0.03/M being dropped for the Qwen3.8-27B reference) — but not to `djev`. So CR-152.2
+**fails on one row**, with three things in its favour and one against: the row is fully disclosed
+(`kind: "announced"`, and the basis says nothing was charged), the frozen v1.5-M2 addendum explicitly
+forbids retroactive changes to published v1.4.2 rows and prescribes the repair "when they are next
+re-scored", and **the v1.5 preview has already done it** (`djev` and `djev-thinking` both read
+`kind: "estimate"`, "documented hosted-model estimate"). Against it: v1.4.2.1 shipped today without
+bringing the row in line, and DECISIONS.md of 26 Sep skips v1.4.3, so v1.5 is now the only remaining
+re-score. Nothing is changed in a published artifact here.
+
+### The five rows that hold
+
+**CR-148.2 — 5/5.** `checkout-restores.jsonl` records the restore of 2026-09-24T16:45:45Z: the patch
+sha256 matches, `paths` is exactly the three files, `status_before` is those three modified,
+`status_after` is **empty**, `untracked_preserved` is **empty**, the record carries no build/test/merge/
+deploy field, and the queue's next eight passes never report "deploy checkout has local changes". The
+restore did its job perfectly; only the PR it fed did not.
+
+**CR-152.1 — 6/8** (the two reds are D236 and D238, both recorded above as their own defects rather than
+as this row's failure). `easy 72 + standard 96 + judge 146 + hard 220 = 534` and `sealed = 308`; all **89
+ranked rows** ran all four frozen tiers and 308 sealed decisions with a finite calibration score and
+`partial: false`; the three partial rows are unranked, labelled `partial`, and each carries a published
+reason (`qwen3.8-27b`'s is in `footnotes`, not in `not_ranked_because` — the first draft of this checker
+called that a miss, wrongly); the published bytes contain **no** item-level field and no authoring batch
+has an unresolved verdict; and no `imajev` or run-13 row is in the artifact while DECISIONS.md records
+their deferral. One note for a later reader: **DECISIONS.md of 26 Sep skips v1.4.3 entirely**, so
+"deferred to v1.4.3" in the acceptance text now means deferred to v1.5. Superseded, not failed.
+
+**CR-152.2 — 3/4** (the red is D239). Instinct is priced `kind: estimate` on
+`reference_model: qwen/qwen3.8-27b` at $0.42/M input, labelled `ESTIMATE` in its own basis, with
+`superseded_basis` naming the author-announced tariff it replaced; and the re-score condition is written
+into the artifact's `cost_estimate_note` ("Author-announced tariffs and free tiers are never used. A row is
+re-scored when a bookable price is published.").
+
+**CR-152.5 — 6/7** (the red is D237, a name on an external surface, not a release-surface miss).
+`/api/jevbench/v1.4.2` is **HTTP 200 on all three public hosts with `x-content-sha256` equal to the
+sha256 of the body it serves** — `fb81f4e7…90fcd`, identical on canonical, `www` and legacy, and unchanged
+by today's v1.4.2.1 deploy, which is the correct behaviour for a frozen release. The GitHub release
+`v1.4.2` (2026-09-24T23:34:07Z) follows v1.4.1's shape exactly (no draft, no prerelease, no assets, a
+longer body). The Space carries "Publish JevBench v1.4.2 data" at 2026-09-24T23:34:40Z, 40 seconds after
+the release, its `snapshot.revision` is `v1.4.2` and its card names v1.4.2. The method is unchanged:
+`protocol: jevbench::v1.4`, `status: final`, and the revision note says the v1.4 formulas and all v1.4.1
+measurements are unchanged.
+
+**CR-158.4 — 5/5.** `METHOD-v1.5-ADDENDUM-PRICING.md` exists **read-only (mode 444)** and hashes to
+`2fc44459…20cc`. It states all three rules — the ≥30-day continuously-in-effect bookable list price, the
+`max(list, base-model reference)` floor computed per decision, and re-score-with-a-visible-note on a later
+price change — and DECISIONS.md's 15:15 entry states the same three, names that hash and names board
+#1340. The timing is provable from the board rather than asserted: the sample freeze **#1339 at
+13:13:47Z** says "No entrant has run yet", the addendum was posted at **#1340, 13:15:24Z** naming the file
+and its sha256, and the first entry reporting any v1.5 run is **#1352 at 13:46:14Z**. The addendum was
+frozen 97 seconds after the sample and 31 minutes before anything ran.
+
+### D241 — the bookmark candidate is back in the ledger, as CR-190
+
+The repair is not "merge PR #10". That PR is three days stale against files the loop rewrites daily, and
+its rows are numbered `CR-143.1/.2`, which **collide with the CR-139.2 sign-off rows already in the
+ledger** — the very collision `03` warns about under "Note on the CR-143 number collision". So the
+candidate is seeded here under a freshly allocated number, **CR-190** (`bh-allocate-cr`,
+2026-09-27T17:24:34Z), with the intake's capture verbatim and unchanged: the post, its author and date,
+its links, its media note and its registry check. The re-run registry check confirms it is still absent.
+The harness proves the rescue (`cr148-1/the-intake-candidate-is-in-the-ledger-under-some-number`), and
+CR-148.1 stays red, because CR-148.1 is about PR #10 and PR #10 is still unreviewed.
+
+**CR-190.3 records a real obstacle rather than pretending the candidate is ready to work.** A plain
+`curl` of `https://openai.com/index/introducing-mentalhealthbench/` returns **HTTP 403** ("Enable
+JavaScript and cookies to continue"), and a GitHub search finds no OpenAI-org repository. Bot protection
+is not to be circumvented, so the row says to read the page through the agent Chrome behind the shared
+`~/.locks/chrome-9333.lock` — the route the intake itself uses — or to find a machine-readable export, and
+to write whichever route works into `data/SCRAPING.md` as E3 requires.
+
+PR #10 is left open rather than closed: the merge queue ignores unlabelled PRs, so it is harmless, and
+closing another job's PR is not this loop's call. It is recorded as superseded by CR-190.
+
+### Three checker bugs, named because a green harness is worth nothing if it is wrong
+
+The first run read 28/38. Three of those ten reds were mine, and fixing them made the checks **stricter**,
+not weaker: (1) `release_evidence` keys are spelled four different ways across rows, so requiring three
+fixed names produced eight false reds — it now counts 64-hex values; (2) a partial row may publish its
+reason in `footnotes` rather than in `not_ranked_because`, and `qwen3.8-27b` does; (3) the board-entry
+splitter used `\Z`, which is a literal "Z" in JavaScript, so every entry body ran to the end of the thread
+and both the #1339 and the sha256 assertions failed on a correct board. A fourth was a gating bug:
+`ONLY=cr152-1` skipped the prefetch that `ONLY=cr152` ran, so the whole group threw — `needs()` now
+matches a group against its sub-rows in both directions. The HF Space join was rewritten too: the Space
+keys rows by display name, which is exactly the field D237 is about, so it joins on **rank** and compares
+the names in a check of their own.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| CR-148.1 | never measured → **open (defect D241)** | `iter253-cr-backfill/run4/verification.json` `cr148-1` **7/9** | Patch hash, file set and the added-line sha256 are exact; the one differing line is a git blob `index` line for a different base. PR #10 has 0 reviews, no `bh-merge-ready`, state open, so 7 of 18 substantive lines never reached `main`. The payload is rescued as CR-190 in this commit; CR-148.1 itself stays open until PR #10 is reviewed and merged or formally closed as superseded. |
+| CR-148.2 | never measured → **implemented, pending non-implementer verification** | same receipt, `cr148-2` **5/5** | Restore limited to the three tracked files, `status_after` and `untracked_preserved` both empty, no build/test/merge/deploy in the record, and the queue's next eight passes report no local changes. Measured, not implemented, by this engine — but a claude-opus row still wants a non-claude reader. |
+| CR-152.1 | never measured → **implemented, pending non-implementer verification** | same receipt, `cr152-1` **6/8** | 534 + 308 reconcile; 89 ranked rows complete over all five tiers; no item-level field published; partial rows unranked with published reasons; `imajev`/run-13 absent and deferred. The two reds are **D236** and **D238**, filed separately. Note: "deferred to v1.4.3" is superseded — DECISIONS.md, 26 Sep, skips v1.4.3. |
+| CR-152.2 | never measured → **open (defect D239)** | same receipt, `cr152-2` **3/4** | Instinct, the re-score condition and the "never used" wording all hold. `djev` is a ranked row priced `kind: "announced"` on a free-preview tariff, which the acceptance forbids. Disclosed, already repaired in the v1.5 preview, not retroactively changeable — see D239. |
+| CR-152.5 | never measured → **implemented, pending non-implementer verification** | same receipt, `cr152-5` **6/7** | API 200 with a truthful `x-content-sha256` on three hosts, one artifact everywhere, GitHub release and HF Space both updated by the v1.4.1 procedure, 534 Space numbers equal to the live board, method unchanged from v1.4. The one red is **D237**, a stale display name on the Space. |
+| CR-153.4 | never measured → **open (defect D240)**, substance accounted for here | same receipt, `cr153-4` **1/3**; the accounting table above | `OUTPUT.md` has four unfilled placeholders, including the request-list table CR-153.4 is entirely about. Re-derived from the three sources the CR names: every older 24/25 Sep request is done and verified (CR-142.1–.6, CR-151.1–.5, CR-152.3/.4, CR-158.1/.2/.3/.5). Nothing was left unfinished; the artefact is still wrong. |
+| CR-158.4 | never measured → **implemented, pending non-implementer verification** | same receipt, `cr158-4` **5/5** | Read-only, `2fc44459…20cc`, all three rules in the addendum and the same three in DECISIONS.md with the hash and board #1340 named; posted 97 s after the sample freeze (#1339 "No entrant has run yet") and 31 minutes before the first run (#1352). |
+| D236 (new) | **open** | `cr152-1/rows-new-in-v1.4.2-carry-release-evidence-hashes`; `git show c0075f10` | `kushal-gemma4-31b-it-autoloops` publishes one `candidate_sha256` where its eleven siblings publish three measurement hashes. Present since publication, propagated into v1.4.2.1. Fix forward in the next release; never edit frozen bytes. |
+| D237 (new) | **open** | `cr152-5/hf-snapshot-names-the-systems-as-the-live-board-does`; `hf-snapshot.json` in the receipt dir | The HF Space still prints the pre-CR-170 name at rank 42 and its snapshot is a revision behind. Deliberately not fixed here: do it with the v1.4.2.1 Space update, by the v1.4.1 procedure, so the surface is not left half-right. |
+| D238 (new) | **open** | `cr152-1/every-sealed-answer-shortfall-is-published` | `jevact` answered 237/308 sealed decisions validly and is the only such row whose footnote omits the count. The number is in the API; the page's prose is what is missing it. Fix in the next release's footnote. |
+| D239 (new) | **open** | `cr152-2/no-ranked-row-is-priced-on-an-announced-tariff-or-a-free-tier` | `djev`, ranked #8/#9, priced on an author-announced free-preview tariff against the 24 Sep 20:30 rule. The v1.5 preview already prices it as an estimate; v1.5 is now the only remaining re-score, since v1.4.3 is skipped. |
+| D240 (new) | **open** | `cr153-4/output-md-has-no-unfilled-placeholders` | `jev-page-requests-final-20260925/OUTPUT.md` shipped with `__STATUS__`, `__TABLE__`, `__VERIFY__` and `__DELETIONS__` unfilled. Not back-filled by this loop — writing another agent's job receipt two days later would be fabricating one. The substance is accounted for in this section instead. |
+| D241 (new) | open → **fixed in this commit** | `cr148-1/the-intake-candidate-is-in-the-ledger-under-some-number` **PASS**; `03`/`04` diffs | The bookmark intake's MentalHealthBench candidate was invisible for three days behind an unmerged PR. Seeded as **CR-190.1–.3** with the capture verbatim, a fresh number (the intake's `CR-143.x` collided with the CR-139.2 sign-off rows), and the 403 obstacle recorded rather than worked around. |
+| CR-190.1–.3 (new) | **open — never worked** | `04-CR-BRIEF.md` § CR-190 | The candidate itself is untouched: no number, no registry entry, no tier. The post is the pointer, never the measurement. |
+
+**For the next iteration, in order:**
+
+1. **The 00:41 and 05:17 runs are still the receipt for D224 (four Claude Opus 5.5 cells), D227, D233,
+   D234, D235's one red live check and the nine Vals boards.** Read `reports/source-health.md` first.
+2. **D236–D239 are all "fix forward in the next JevBench release"** — one release can carry all four
+   (the Autoloops measurement hashes, the `jevact` footnote count, `djev` repriced off its announced
+   tariff, and the Space brought to v1.4.2.1 with the CR-170 name). Do not touch frozen bytes for any of
+   them.
+3. **CR-190 needs the agent-Chrome route** (`~/.locks/chrome-9333.lock`) for a 403-protected primary
+   source, then the ordinary registry + gauntlet path. It is the oldest untouched thing Florian's standing
+   rule asked for.
+4. **A non-claude engine owes five rows a `verified`:** CR-148.2, CR-152.1, CR-152.5, CR-158.4 and
+   CR-153.4's accounting. One command reproduces all of them offline plus live:
+   `GH_TOKEN=… node ops/ux-2026-09-12/bin/verify-cr-148-158-backfill.mjs <outDir>` (currently **33/41**
+   at `09053ccc`; the eight reds are CR-148.1's two PR clauses, D236, D237, D238, D239 and D240's two checks —
+   nothing else may go red).
+5. **PR #10 wants a decision**, not another iteration of being ignored: review and merge it against
+   current files, or close it naming CR-190 as its successor.

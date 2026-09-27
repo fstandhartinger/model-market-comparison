@@ -2032,3 +2032,42 @@ Finding: Umami (bh-analytics.app.mintapis.com, website "Benchmark Heaven") repor
 > 5. Add the daily sanity check from CR-177.2 (alert via the digest if page views > 0 but visitors ≤ 1, or page views = 0 while events > 0).
 > 6. Backfill if possible: reconstruct unique-visitor counts for the past days from the first-party DB (hashed IP/UA or session ids, if stored) or from proxy access logs. Otherwise say clearly what cannot be recovered.
 > Ship via the normal worktree + PR + merge queue (CR id = max+1 re-checked right before the PR), verify live, update the CR ledger, and write OUTPUT.md. Send Florian ONE short message when it is live, with the first real visitor numbers.
+
+
+## CR-190 — New benchmarks from Florian's X bookmark folder "evals" (introducing-mentalhealthbench)
+
+**Provenance: filed automatically by the bookmark intake** (`/opt/benchmarkheaven/bin/bookmarks_intake.py`),
+24 Sep 2026 15:12 UTC. The *standing rule* behind it is verbatim Florian, 18 Sep 2026; the specific
+candidate is intake-generated and is a pointer, not a measurement.
+
+**Why this arrives under a new number, three days late (iteration 253, D241).** The intake wrote these
+rows into the read-only deploy checkout. CR-148 moved them into an isolated PR
+(`#10`, `docs: preserve CR-143 bookmark intake edits (CR-148)`), which is **still open, unreviewed and
+unlabelled**, so the payload never reached `main` and the intake — which considers the candidate filed —
+will not file it again. The intake had numbered the rows `CR-143.1/.2`, but the allocation ledger's
+CR-143 is the CR-139.2 cache-provenance sign-off (the collision `03` already warns about at
+"Note on the CR-143 number collision"), so the rescued rows are re-numbered **CR-190** here
+(`bh-allocate-cr`, 2026-09-27T17:24:34Z). Nothing of the intake's text was changed: the post below is
+its verbatim capture.
+
+Standing rule, Florian 18 Sep 2026, verbatim:
+
+> new rule for benchmark heaven: it should look into https://x.com/i/history/bookmarks/2098158441952907558 once a day and check if there are new evals/benchmarks it doesn't have in its list yet, and then add them
+
+Source folder: https://x.com/i/history/bookmarks/2098158441952907558
+
+### introducing-mentalhealthbench — https://x.com/OpenAI/status/2102837574092161102
+Bookmarked post by OpenAI (@OpenAI), posted Wed Sep 23 19:08:41 +0000 2026. Post text, verbatim:
+
+> We’re demonstrating how frontier models have continued to improve in realistic mental health conversations with MentalHealthBench.
+>
+> This new open benchmark was built with input from more than 80 mental health clinicians.
+>
+> We’re releasing it openly so other researchers can examine the methods, run their own evaluations, and build on the work.
+>
+> https://t.co/VTm5ZgxJbl
+
+Links in the post: `https://openai.com/index/introducing-mentalhealthbench/`
+Media in the post: `https://pbs.twimg.com/media/HS7G-iaa8AAw6YK.jpg` (results are often only in the image — read it).
+Registry check (re-run 2026-09-27): still **not** in `data/raw/benchmarks/registry.json` and in no other
+change request.
