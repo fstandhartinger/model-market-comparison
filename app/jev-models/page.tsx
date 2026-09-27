@@ -86,7 +86,7 @@ export default async function JevModelsPage() {
   const v14 = jevbenchV1422View(v14Result);
   // CR-191: compare against v1.4.2.1 so the board marks Imajev-4B as new in this revision.
   const previousRelease = (await readJevbenchV1421()).artifact;
-  const previous = { revision: previousRelease.revision, keys: previousRelease.systems.map((row) => row.key) };
+  const previous = { revision: previousRelease.revision, keys: previousRelease.systems.map((row: { key: string }) => row.key) };
   const v12 = await readJevbenchV12();
   const costUnit = v12.artifact.cost_unit;
   const costCorrection = (v12.artifact.cost_correction ?? null) as CostCorrection | null;
