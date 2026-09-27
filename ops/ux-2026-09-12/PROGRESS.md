@@ -15189,8 +15189,9 @@ hashes for that row in the next release; do not backfill the frozen v1.4.2 bytes
 `benchmarkheaven/JevBench` is a release surface of CR-152.5 and its **534 compared numbers match the live
 board exactly** (89 rows joined on rank: score, all four axes, cost per 1,000 — zero mismatches). One
 string does not: rank 42 reads **"Kushal Patil — Gemma 4 31B IT (Autoloops)"** on the Space and
-**"Autoloops – Gemma 4 31B IT"** on the board. CR-170 renamed it at the operator's request on 25 Sep and
-the rename reached the site's artifact, the pins and ImageJevBench — not the Space. The Space is also now a
+**"Autoloops – Gemma 4 31B IT"** on the board. CR-170 renamed it at the operator's request on 25 Sep; `e8799ee8` shows the rename reaching the site's
+artifact, `lib/jevbench-v142*.mjs`, the pins and the multimodal-preview test (its commit message names
+ImageJevBench) — not the Space. The Space is also now a
 whole revision behind (`snapshot.revision` `v1.4.2`, the site serves `v1.4.2.1` since 17:04 UTC today).
 **Not fixed here on purpose:** publishing to the Space is an outward release action, and shipping a rename
 onto a snapshot that is itself stale would leave the surface half-right. It belongs with the v1.4.2.1
@@ -15299,7 +15300,7 @@ the names in a check of their own.
 
 | ID | Status | Evidence | Notes |
 |---|---|---|---|
-| CR-148.1 | never measured → **open (defect D241)** | `iter253-cr-backfill/run4/verification.json` `cr148-1` **7/9** | Patch hash, file set and the added-line sha256 are exact; the one differing line is a git blob `index` line for a different base. PR #10 has 0 reviews, no `bh-merge-ready`, state open, so 7 of 18 substantive lines never reached `main`. The payload is rescued as CR-190 in this commit; CR-148.1 itself stays open until PR #10 is reviewed and merged or formally closed as superseded. |
+| CR-148.1 | never measured → **open (defect D241)** | `iter253-cr-backfill/{run4,final}/verification.json` `cr148-1` **7/9** | Patch hash, file set and the added-line sha256 are exact; the one differing line is a git blob `index` line for a different base. PR #10 has 0 reviews, no `bh-merge-ready`, state open, so 7 of 18 substantive lines never reached `main`. The payload is rescued as CR-190 in this commit; CR-148.1 itself stays open until PR #10 is reviewed and merged or formally closed as superseded. |
 | CR-148.2 | never measured → **implemented, pending non-implementer verification** | same receipt, `cr148-2` **5/5** | Restore limited to the three tracked files, `status_after` and `untracked_preserved` both empty, no build/test/merge/deploy in the record, and the queue's next eight passes report no local changes. Measured, not implemented, by this engine — but a claude-opus row still wants a non-claude reader. |
 | CR-152.1 | never measured → **implemented, pending non-implementer verification** | same receipt, `cr152-1` **6/8** | 534 + 308 reconcile; 89 ranked rows complete over all five tiers; no item-level field published; partial rows unranked with published reasons; `imajev`/run-13 absent and deferred. The two reds are **D236** and **D238**, filed separately. Note: "deferred to v1.4.3" is superseded — DECISIONS.md, 26 Sep, skips v1.4.3. |
 | CR-152.2 | never measured → **open (defect D239)** | same receipt, `cr152-2` **3/4** | Instinct, the re-score condition and the "never used" wording all hold. `djev` is a ranked row priced `kind: "announced"` on a free-preview tariff, which the acceptance forbids. Disclosed, already repaired in the v1.5 preview, not retroactively changeable — see D239. |
@@ -15328,7 +15329,16 @@ the names in a check of their own.
 4. **A non-claude engine owes five rows a `verified`:** CR-148.2, CR-152.1, CR-152.5, CR-158.4 and
    CR-153.4's accounting. One command reproduces all of them offline plus live:
    `GH_TOKEN=… node ops/ux-2026-09-12/bin/verify-cr-148-158-backfill.mjs <outDir>` (currently **33/41**
-   at `09053ccc`; the eight reds are CR-148.1's two PR clauses, D236, D237, D238, D239 and D240's two checks —
-   nothing else may go red).
+   at the deployed `bcb044ac`; the eight reds are CR-148.1's two PR clauses, D236, D237, D238, D239 and
+   D240's two checks — nothing else may go red).
 5. **PR #10 wants a decision**, not another iteration of being ignored: review and merge it against
    current files, or close it naming CR-190 as its successor.
+
+**Receipts.** `/opt/benchmarkheaven/state/ux-evidence/iter253-cr-backfill/`: `run1`–`run3` are the drafts
+kept beside the final run so the three checker bugs above are readable as a path rather than a claim;
+`run4` is the accepted run at `09053ccc` (the revision live while the work was done) and **`final` is the
+same 33/41 re-measured at the deployed `bcb044ac`, on all three public hosts**, with the eight reds
+identical. Also in that directory: `preserved.patch` and `pr10.patch` with the one-line body diff,
+`hf-snapshot.json`, `hf-space-index.html`, `board-thread-13.txt`, the v1.4.2 artifact as served, and
+`mentalhealthbench-openai.html` — the 9,958-byte HTTP 403 interstitial that CR-190.3 is about.
+Board thread #8 entry **#2808** carries D236–D239 and the PR #10 decision to their owners.
