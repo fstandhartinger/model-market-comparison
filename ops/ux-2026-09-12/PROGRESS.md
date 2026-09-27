@@ -13615,3 +13615,75 @@ fence.
 |---|---|---|---|
 | F-207(a) | implemented (Fable) → **verified** (claude-opus, non-Fable) | `ONLY=F-207` **24/24 per host** on `https://benchmarkheaven.com`, `https://www.benchmarkheaven.com` and the legacy MintAPIs host, all three at revision `85b92e94`: `/opt/benchmarkheaven/state/ux-evidence/iter245-f207/{canonical,www,legacy}/verification.json` | The plate and the bar marker are live: five labels, each on its plate, none starting left of the 3D box, no disc beside a label, 0 page errors in all four contexts. **A first run against the legacy host at 05:01 UTC read 20/23** — three misses in `desktop_dark`, all downstream of one page error, `Loading chunk 3736 failed`: the host was mid-redeploy and its served HTML referenced a chunk the new build no longer had. Recorded rather than dropped, because a reader of the receipt directory will see both runs: the re-run at the settled revision is 24/24, and the miss is the switchover, not the CSS (memory: the old container answers about a minute after `/api/meta` flips). |
 | F-209 live half | **unchanged, as the directive required** | `/opt/benchmarkheaven/state/ux-evidence/iter245-f209/live/{verification.json,verify-d188.log}` — `verify-d188.mjs` **105/105**, 35 per host, three hosts at `85b92e94` | (b) routed the verifier's capture scan through the accepted-capture helper; with no quarantine record anywhere the result is identical to iteration 244's. That is the point: the change is inert until an arm is actually quarantined. |
+
+### Iteration 245 (continued) — F-208 and F-207(b), and a ring that was never drawn
+
+Both of Fable pass 38's remaining `[mechanical]` directives are implemented. **A defect was found in
+F-207(b) by probing the rendered page rather than by any suite, and the check that had passed it is
+now stricter** — that is the part of this section worth reading.
+
+#### F-208 — the context chart draws at its pixel width
+
+`5161979f`. The accuracy-by-input-length chart was a 740-unit `viewBox` on a `w-full` svg, so at 1440
+the whole drawing stretched by ~1.79 and its 10 px bucket ticks rendered at ~20 px: the largest chart
+text on the hub, on its smallest labels (pass 38's probe: `ctx.scale` 1.79, tick boxes 20–22 px against
+the bubble charts' 12 px). The plot width is now measured off its own scrolling wrapper with a
+`ResizeObserver` and a `resize` fallback — the same shape as `JevBubbleChart`'s `useWidth`, floor 740
+instead of 260 — and the svg carries `width`/`height` attributes equal to its `viewBox`, so one SVG unit
+is one CSS pixel at every viewport. The horizontal maths already derived from `width`, so the buckets
+spread over the wider plot; vertical geometry, colours, markers, the thin-sample rule (F-185) and the
+phone's `min-w-[740px]` sideways scroll are unchanged. Only the axis title moves 10 → 11 px, to match the
+bubble charts' axis titles. The server renders at the floor and the observer widens it after hydration —
+the initial client render uses the floor too, so hydration matches — and the chart is ~17,000 px down the
+page, so nothing above the fold can shift.
+
+F-203's source pin read the plot width out of a `const width = 740` literal that no longer exists. It is
+repaired by reading the floor out of the hook's argument, **not** by swapping in a new spelling: the
+invariant it pins — the svg's CSS minimum is the plot's floor — is unchanged.
+
+#### F-207(b) — the labelled sphere wears a halo
+
+`88f33e8c`, corrected by `62824df8`. Each of the five labelled spheres carries a ring drawn around the
+datum itself: diameter 2 × (projected sphere radius + 4 px) clamped to 14–32 px, 2 px in the point's own
+class colour, transparent inside, with a 1 px panel-coloured outer shadow so it reads on either theme
+whatever sphere colour sits behind it. When D216's declump leaves the plate further than 24 px from the
+ring's edge, a 1 px leader runs from the plate's nearest edge midpoint to the ring's edge. Ring and
+leader are painted under the plate, so a plate that lands on its own sphere still reads as text on a
+plate. In the WebGL overlay the ring's size is the sphere's **projected** radius — what a reader sees at
+this zoom and perspective — measured by projecting one sphere radius along the camera's own right axis,
+unclamped (the label projection clamps to the box, which would distort it). Both are placed in the same
+`layoutLabels` pass, sizes measured once, so a drag still forces no reflow; a sphere behind the camera
+hides its ring and leader with its label, and rebuilding the top five removes them instead of leaving
+orphan rings. The projected SVG fallback draws the same ring as a `<circle>` and the same leader as a
+`<line>`. The geometry is one rule for both paths, so it lives in `lib/jev-3d-halo.mjs` beside
+`lib/radar.mjs` and is tested directly rather than pinned as component source text.
+
+#### The defect, and the check that passed it
+
+The first version shipped the ring **invisible**. `--muted` is a hex colour in this stylesheet (unlike
+`--panel` and `--line`, which are R G B triplets), so `rgb(var(--muted))` is not a colour — and an
+invalid colour inside a `border` shorthand makes the whole declaration invalid at computed-value time,
+which takes the width and the style down with it to their initial values (`border-style: none`, used
+width 0). The leader's `background: rgb(var(--muted))` failed the same way and drew nothing. Both now use
+`var(--muted)` directly, and the ring's width and style are their own longhands so a colour that ever
+fails to substitute cannot take them with it.
+
+**The pass-38 verifier read 16/16 on that.** Its F-207b group counted elements — five
+`[data-bh-jev14-3d-halo]` nodes, five `[data-bh-jev14-3d-leader-line]` nodes — which is the D215 mistake
+again (label *form* instead of rendered paint). It now reads the computed ring width, the ring and fill
+alphas and the layer opacity, and it measures the tie the way the directive words it: from the plate to
+the ring's **edge**, requiring *that label's own* leader to be drawn (opacity, length and stroke alpha)
+rather than five leaders of any kind to exist. Strengthened, never weakened — the positive control is
+recorded: with the broken shorthand restored the group reads **16/20** and names the zero-width ring in
+all four contexts; with the fix, **20/20**.
+
+One related latent no-op is recorded and **not** touched: `.bh-jev-3d-axis-label, .bh-jev-3d-model-label
+{ color: rgb(var(--muted)); }` (line 717 of `app/globals.css`, pre-existing) is invalid for the same
+reason, so those labels take their colour by inheritance. Correcting it would change rendered colour on a
+verified row (F-201/F-207a), so it belongs to a design pass, not to this fix. → **D226**.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| F-208 | **implemented, pending live verification** | `5161979f`; `test/fable-pass38.test.mjs` F-208; local `ONLY=F-208` **26/26** at 390/1440 × light/dark | Draws at its wrapper's pixel width; tick boxes within 2 px of the bubble charts'. Pass 37's `ONLY=F-203` re-run green. |
+| F-207(b) | **implemented, pending live verification** | `88f33e8c` + `62824df8`; `lib/jev-3d-halo.mjs`; local `ONLY=F-207b` **20/20**, positive control 16/20 with the defect restored | Ring on the datum, leader when the declump pushed the plate. Pass 37's `ONLY=F-201` re-run green. |
+| D226 (new) | **open** | `app/globals.css:717` | `color: rgb(var(--muted))` on the 3D labels is invalid and inert; the labels inherit their colour. A colour change on a verified row is the design authority's call. |
