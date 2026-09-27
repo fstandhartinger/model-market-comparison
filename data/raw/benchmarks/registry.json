@@ -2369,14 +2369,14 @@
       "category": "Reasoning",
       "one_sentence_description": "The first-generation ARC-AGI benchmark measuring passive fluid intelligence, with leaderboard score plotted against cost-per-task.",
       "scoring": {
-        "metric": "Semi-private exact grid task solution rate",
+        "metric": "Semi-Private Evaluation Set accuracy on the ARC Prize Verified Leaderboard",
         "unit": "percent",
         "range": [
           0,
           100
         ],
         "higher_better": true,
-        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+        "notes": "A single run is used; scores are not averaged across runs, and tasks for which a model could not produce full test outputs are marked incorrect. Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
       },
       "maintainer": "ARC Prize, Inc.",
       "source_type": "official_leaderboard",
@@ -2403,10 +2403,10 @@
         "value": false,
         "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
       },
-      "superseded_by": null,
+      "superseded_by": "arc-agi::2",
       "status": "active",
       "first_seen": "2026-09-10",
-      "last_verified": "2026-09-10",
+      "last_verified": "2026-09-27",
       "evidence": [
         {
           "url": "https://arcprize.org/leaderboard",
@@ -2414,6 +2414,20 @@
           "sha256": "be8541901a2e2a6ddeb54b73e55c5abcc33a13561d6d17e57fe9f424d836165d",
           "fetched_at": "2026-09-10T21:49:10Z",
           "excerpt": "ARC-AGI has evolved from its first versions (ARC-AGI-1 and 2) which measured passive fluid intelligence, to ARC-AGI-3 which challenges AI agents to adapt on the fly to novel interactive environments. ... For models that were not able to produce full test out puts, remaining tasks were marked as incorrect."
+        },
+        {
+          "url": "https://arcprize.org/policy",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-27-d226/abcb354de260eb4111ba.gz",
+          "sha256": "51054aa581bfe830ae932e791d0ee1e30b170d8a37d7851e5572548919740ade",
+          "fetched_at": "2026-09-27T08:25:02.480798+00:00",
+          "excerpt": "Semi-Private Evaluation Set - Used for frontier model testing on the Verified Leaderboard . When we evaluate frontier models, we expose tasks to third-party APIs. We require zero data retention agreements with all model providers we test. We also work closely with providers to prevent unintended data persistence. However, because tasks are sent to external APIs, we acknowledge the possibility of limited leakage over time. This is why we call it the \"Semi-Private\" set."
+        },
+        {
+          "url": "https://arcprize.org/arc-agi/1",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-27-d226/6197ae02a889d58ccd18.gz",
+          "sha256": "cd8dc49ddf823d94351a1a2143b48097e824ad8eacc1a5ee5f3b739becfd1086",
+          "fetched_at": "2026-09-27T08:25:05.150656+00:00",
+          "excerpt": "Semi-Private Eval Set 100 tasks Introduced in mid-2024, this set of 100 tasks was hand selected to use as a semi-private hold out set when testing closed source models."
         }
       ]
     },
@@ -2426,14 +2440,14 @@
       "category": "Reasoning",
       "one_sentence_description": "The second-generation ARC-AGI benchmark of passive fluid intelligence, with leaderboard score plotted against cost-per-task.",
       "scoring": {
-        "metric": "Semi-private exact grid task solution rate",
+        "metric": "Semi-Private Evaluation Set accuracy on the ARC Prize Verified Leaderboard",
         "unit": "percent",
         "range": [
           0,
           100
         ],
         "higher_better": true,
-        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+        "notes": "A single run is used; scores are not averaged across runs, and tasks for which a model could not produce full test outputs are marked incorrect. Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
       },
       "maintainer": "ARC Prize, Inc.",
       "source_type": "official_leaderboard",
@@ -2460,10 +2474,10 @@
         "value": false,
         "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
       },
-      "superseded_by": null,
+      "superseded_by": "arc-agi::3",
       "status": "active",
       "first_seen": "2026-09-10",
-      "last_verified": "2026-09-10",
+      "last_verified": "2026-09-27",
       "evidence": [
         {
           "url": "https://arcprize.org/leaderboard",
@@ -2471,6 +2485,20 @@
           "sha256": "be8541901a2e2a6ddeb54b73e55c5abcc33a13561d6d17e57fe9f424d836165d",
           "fetched_at": "2026-09-10T21:49:10Z",
           "excerpt": "ARC-AGI has evolved from its first versions (ARC-AGI-1 and 2) which measured passive fluid intelligence, to ARC-AGI-3 which challenges AI agents to adapt on the fly to novel interactive environments. ... ARC-AGI-2 score estimate based on partial testing results and o1-pro pricing."
+        },
+        {
+          "url": "https://arcprize.org/policy",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-27-d226/abcb354de260eb4111ba.gz",
+          "sha256": "51054aa581bfe830ae932e791d0ee1e30b170d8a37d7851e5572548919740ade",
+          "fetched_at": "2026-09-27T08:25:02.480798+00:00",
+          "excerpt": "Semi-Private Evaluation Set - Used for frontier model testing on the Verified Leaderboard . When we evaluate frontier models, we expose tasks to third-party APIs. We require zero data retention agreements with all model providers we test. We also work closely with providers to prevent unintended data persistence. However, because tasks are sent to external APIs, we acknowledge the possibility of limited leakage over time. This is why we call it the \"Semi-Private\" set."
+        },
+        {
+          "url": "https://arcprize.org/arc-agi/2",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-27-d226/816c1f2bf76312f86fd8.gz",
+          "sha256": "6cefb2dd10650d32a0ad23c793436198754101e0d05e48b2bbef93c5b4a69962",
+          "fetched_at": "2026-09-27T08:25:07.766507+00:00",
+          "excerpt": "Semi-Private Eval Set 120 tasks Calibrated, not public, all tasks solved pass@2 by at least two humans, used for Kaggle live contest leaderboard and ARC Prize leaderboard."
         }
       ]
     },
