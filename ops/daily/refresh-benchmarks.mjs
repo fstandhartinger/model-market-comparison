@@ -30,11 +30,31 @@ const put = (p, v) => writeJSONAtomic(p, v);
 // are reviewed against the native model-page fields in the separate aa-fields review — and a clause
 // telling one maintainer's board apart from another's, which only the pair of registry entries can
 // settle (pinned in test/benchmark-source-conflicts.test.mjs). The registry and the site keep both.
+//
+// D235 (2026-09-27): the clause is a *pair* of statements and both halves need registering. Only the
+// AA side was here; `vals-index-hlab::2` carried its own half ("not comparable with Artificial
+// Analysis' Harvey LAB-AA row" — pinned by the same test) into every review, where the Vals page
+// cannot settle it either.
 export const CROSS_SOURCE_CLAUSES = {
   'aa-harvey-lab::snapshot-2026-09-10': " — not the same run or scale as Vals AI's HLAB row",
+  'vals-index-hlab::2': " — not comparable with Artificial Analysis' Harvey LAB-AA row",
 };
+// D235: and a third kind — what *we* do with the board. "never a Composite input", "never join this
+// with X", "secondary benchmark": no maintainer's protocol page can support a sentence about
+// Benchmark Heaven's own Composite, so a reviewer that reads one is right to call it unsupported.
+// 66 registry entries carried such a sentence inside `scoring.notes` on 2026-09-27, and four Vals
+// arms were retained on it that day — twice reproducibly ([major] "with a standard error per model"
+// on vals-index-vibe-code-bench::2, [minor] on vals-index-legal-research::2) and four times only
+// sometimes, which is what a shared weak spot looks like through a free critic pair's variance.
+// A sentence beginning with this marker is our handling of the row, is stripped from the reviewed
+// row, and stays on the site — where it is how a reader tells a Composite input from a secondary
+// board. It may not smuggle a protocol claim past the reviewer: test/d235-policy-note.test.mjs
+// fails closed on a marked clause that mentions the metric, unit, task set, harness, judges or
+// version, and on anything written after it.
+export const POLICY_NOTE_MARKER = 'Benchmark Heaven policy:';
+export const withoutPolicyNote = (notes) => notes.split(POLICY_NOTE_MARKER)[0].trim();
 const withoutFieldNote = (scoring) => scoring?.notes == null ? scoring
-  : { ...scoring, notes: scoring.notes.replace(/\s*AA source field: [A-Za-z0-9_.]+\.?/g, '').trim() };
+  : { ...scoring, notes: withoutPolicyNote(scoring.notes.replace(/\s*AA source field: [A-Za-z0-9_.]+\.?/g, '').trim()) };
 export function protocolReviewRow(entry) {
   const clause = CROSS_SOURCE_CLAUSES[entry.id];
   if (clause && !entry.one_sentence_description.includes(clause)) throw new Error(`${entry.id}: cross-source clause no longer in the description`);

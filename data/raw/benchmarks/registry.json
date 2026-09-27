@@ -13424,7 +13424,7 @@
         }
       ],
       "update_cadence": {
-        "source_schedule": "Not stated by the source; page shows \"Updated 9/10/2026\".",
+        "source_schedule": "Not stated by the source. The page prints a last-updated date and the island props carry it as metadata.updated; it moves with every refresh, so read it from the capture, not from here (2026-09-23 in the 2026-09-27 capture; 2026-09-10 when these entries were written).",
         "check_recommendation": "Daily, at most one capture per source; stop on access restrictions."
       },
       "saturated": {
@@ -13445,7 +13445,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Coding sector component. The index scores a fixed subset (50 of 120 CLI tasks plus all 10 COBOL tasks, weighted 75/25), not the full standalone run. Vals AI publishes accuracy with a standard error per model; independent evaluator, secondary benchmark, not a Composite input."
+        "notes": "Coding sector component; the page's 2026-08-13 v2 update calls Code Migration \"A private benchmark involving porting projects to a set of four languages, including COBOL modernization\". Its Component Scores note states that the index scores a fixed subset of the published run — 50 of the 120 CLI migration tasks plus all 10 COBOL tasks, weighted 75% CLI and 25% COBOL — and not the full standalone run. The page reports these columns under its \"ACCURACY\" view (heading \"Industry Average Accuracy Comparison\") and prints index values as percentages in its Key Takeaways. Benchmark Heaven policy: Vals AI runs these evaluations itself, so we keep this as a secondary board and never use it as an input to our Composite score."
       },
       "how_to_collect": {
         "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/vals-index-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
@@ -13461,7 +13461,7 @@
           "file": "data/raw/benchmarks/daily-evidence/2026-09-13-vals-index/36d323b86dd8c014b0db.gz",
           "sha256": "2b21b4e7fa2b0c6182dadde6c391bccef329e83768e9ed53f329f0c3a24b2cc2",
           "fetched_at": "2026-09-13T20:31:43.399165+00:00",
-          "excerpt": "Vals Index v2 (updated 2026-09-10): code_migration holds 56 model rows with accuracy, stderr, cost_per_test and latency. Coding sector component. The index scores a fixed subset (50 of 120 CLI tasks plus all 10 COBOL tasks, weighted 75/25), not the full standalone run."
+          "excerpt": "Vals Index v2 (props metadata.version \"2\"): benchmarkView.tasks.code_migration holds one entry per model slug with accuracy, stderr, cost_per_test and latency — 65 model rows in the 2026-09-27 capture, 56 when the entry was written. Coding sector component; the Component Scores note states the index scores a fixed subset — 50 of 120 CLI tasks plus all 10 COBOL tasks, weighted 75/25 — not the full standalone run."
         },
         {
           "url": "https://www.vals.ai/robots.txt",
@@ -13489,7 +13489,7 @@
         }
       ],
       "update_cadence": {
-        "source_schedule": "Not stated by the source; page shows \"Updated 9/10/2026\".",
+        "source_schedule": "Not stated by the source. The page prints a last-updated date and the island props carry it as metadata.updated; it moves with every refresh, so read it from the capture, not from here (2026-09-23 in the 2026-09-27 capture; 2026-09-10 when these entries were written).",
         "check_recommendation": "Daily, at most one capture per source; stop on access restrictions."
       },
       "saturated": {
@@ -13510,7 +13510,7 @@
           null
         ],
         "higher_better": false,
-        "notes": "Separate published metric from the overall Vals Index row, not a capability score and not a Composite input."
+        "notes": "Separate published metric from the overall Vals Index row: the page offers a \"Cost\" view beside \"ACCURACY\" and its Key Takeaways state each model's index score together with a dollar cost per test. Benchmark Heaven policy: this is a published cost, not a capability score, and it never enters our Composite."
       },
       "how_to_collect": {
         "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/vals-index-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
@@ -13526,7 +13526,7 @@
           "file": "data/raw/benchmarks/daily-evidence/2026-09-13-vals-index/36d323b86dd8c014b0db.gz",
           "sha256": "2b21b4e7fa2b0c6182dadde6c391bccef329e83768e9ed53f329f0c3a24b2cc2",
           "fetched_at": "2026-09-13T20:31:43.399165+00:00",
-          "excerpt": "Vals Index v2 overall rows carry cost_per_test in USD (page: \"GPT-5.6 Luna reaches 59.88% at $0.62 per test\")."
+          "excerpt": "Vals Index v2 (props metadata.version \"2\"): the page offers a \"Cost\" view beside \"ACCURACY\" and its Key Takeaways state each model's index score together with a dollar cost per test. benchmarkView.tasks.overall carries cost_per_test in USD beside accuracy — 65 model rows in the 2026-09-27 capture, 56 when the entry was written."
         },
         {
           "url": "https://www.vals.ai/robots.txt",
@@ -13554,7 +13554,7 @@
         }
       ],
       "update_cadence": {
-        "source_schedule": "Not stated by the source; page shows \"Updated 9/10/2026\".",
+        "source_schedule": "Not stated by the source. The page prints a last-updated date and the island props carry it as metadata.updated; it moves with every refresh, so read it from the capture, not from here (2026-09-23 in the 2026-09-27 capture; 2026-09-10 when these entries were written).",
         "check_recommendation": "Daily, at most one capture per source; stop on access restrictions."
       },
       "saturated": {
@@ -13575,7 +13575,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Finance sector component; private benchmark. Vals AI publishes accuracy with a standard error per model; independent evaluator, secondary benchmark, not a Composite input."
+        "notes": "Finance sector component; the page's 2026-08-13 v2 update calls EMB \"A private benchmark for building complex financial models in Excel\". The page reports these columns under its \"ACCURACY\" view (heading \"Industry Average Accuracy Comparison\") and prints index values as percentages in its Key Takeaways. Benchmark Heaven policy: Vals AI runs these evaluations itself, so we keep this as a secondary board and never use it as an input to our Composite score."
       },
       "how_to_collect": {
         "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/vals-index-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
@@ -13591,7 +13591,7 @@
           "file": "data/raw/benchmarks/daily-evidence/2026-09-13-vals-index/36d323b86dd8c014b0db.gz",
           "sha256": "2b21b4e7fa2b0c6182dadde6c391bccef329e83768e9ed53f329f0c3a24b2cc2",
           "fetched_at": "2026-09-13T20:31:43.399165+00:00",
-          "excerpt": "Vals Index v2 (updated 2026-09-10): emb holds 56 model rows with accuracy, stderr, cost_per_test and latency. Finance sector component; private benchmark."
+          "excerpt": "Vals Index v2 (props metadata.version \"2\"): benchmarkView.tasks.emb holds one entry per model slug with accuracy, stderr, cost_per_test and latency — 65 model rows in the 2026-09-27 capture, 56 when the entry was written. Finance sector component; the 2026-08-13 v2 update calls EMB a private benchmark for building complex financial models in Excel."
         },
         {
           "url": "https://www.vals.ai/robots.txt",
@@ -13619,7 +13619,7 @@
         }
       ],
       "update_cadence": {
-        "source_schedule": "Not stated by the source; page shows \"Updated 9/10/2026\".",
+        "source_schedule": "Not stated by the source. The page prints a last-updated date and the island props carry it as metadata.updated; it moves with every refresh, so read it from the capture, not from here (2026-09-23 in the 2026-09-27 capture; 2026-09-10 when these entries were written).",
         "check_recommendation": "Daily, at most one capture per source; stop on access restrictions."
       },
       "saturated": {
@@ -13640,7 +13640,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Finance sector component; the index uses the Finance Agent v2 index subset, averaging three runs per model. Vals AI publishes accuracy with a standard error per model; independent evaluator, secondary benchmark, not a Composite input."
+        "notes": "Finance sector component; the page's 2026-05-13 update states that Finance uses the Finance Agent v2 index subset, averaging three runs per model. The page reports these columns under its \"ACCURACY\" view (heading \"Industry Average Accuracy Comparison\") and prints index values as percentages in its Key Takeaways. Benchmark Heaven policy: Vals AI runs these evaluations itself, so we keep this as a secondary board and never use it as an input to our Composite score."
       },
       "how_to_collect": {
         "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/vals-index-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
@@ -13656,7 +13656,7 @@
           "file": "data/raw/benchmarks/daily-evidence/2026-09-13-vals-index/36d323b86dd8c014b0db.gz",
           "sha256": "2b21b4e7fa2b0c6182dadde6c391bccef329e83768e9ed53f329f0c3a24b2cc2",
           "fetched_at": "2026-09-13T20:31:43.399165+00:00",
-          "excerpt": "Vals Index v2 (updated 2026-09-10): finance_agent holds 56 model rows with accuracy, stderr, cost_per_test and latency. Finance sector component; the index uses the Finance Agent v2 index subset, averaging three runs per model."
+          "excerpt": "Vals Index v2 (props metadata.version \"2\"): benchmarkView.tasks.finance_agent holds one entry per model slug with accuracy, stderr, cost_per_test and latency — 65 model rows in the 2026-09-27 capture, 56 when the entry was written. Finance sector component; the 2026-05-13 update states the index uses the Finance Agent v2 index subset, averaging three runs per model."
         },
         {
           "url": "https://www.vals.ai/robots.txt",
@@ -13684,7 +13684,7 @@
         }
       ],
       "update_cadence": {
-        "source_schedule": "Not stated by the source; page shows \"Updated 9/10/2026\".",
+        "source_schedule": "Not stated by the source. The page prints a last-updated date and the island props carry it as metadata.updated; it moves with every refresh, so read it from the capture, not from here (2026-09-23 in the 2026-09-27 capture; 2026-09-10 when these entries were written).",
         "check_recommendation": "Daily, at most one capture per source; stop on access restrictions."
       },
       "saturated": {
@@ -13705,7 +13705,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Legal sector component. Vals AI publishes accuracy with a standard error per model; independent evaluator, secondary benchmark, not a Composite input."
+        "notes": "Legal sector component; the page describes HLAB as Harvey's Legal Agent Benchmark, long-horizon legal work product creation, and — unlike EMB, Code Migration and Legal Research Bench — does not call it a private benchmark. The page reports these columns under its \"ACCURACY\" view (heading \"Industry Average Accuracy Comparison\") and prints index values as percentages in its Key Takeaways. Benchmark Heaven policy: Vals AI runs these evaluations itself, so we keep this as a secondary board and never use it as an input to our Composite score."
       },
       "how_to_collect": {
         "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/vals-index-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
@@ -13721,7 +13721,7 @@
           "file": "data/raw/benchmarks/daily-evidence/2026-09-13-vals-index/36d323b86dd8c014b0db.gz",
           "sha256": "2b21b4e7fa2b0c6182dadde6c391bccef329e83768e9ed53f329f0c3a24b2cc2",
           "fetched_at": "2026-09-13T20:31:43.399165+00:00",
-          "excerpt": "Vals Index v2 (updated 2026-09-10): legal_agent_benchmark holds 56 model rows with accuracy, stderr, cost_per_test and latency. Legal sector component."
+          "excerpt": "Vals Index v2 (props metadata.version \"2\"): benchmarkView.tasks.legal_agent_benchmark holds one entry per model slug with accuracy, stderr, cost_per_test and latency — 65 model rows in the 2026-09-27 capture, 56 when the entry was written. Legal sector component; the page describes HLAB as Harvey's Legal Agent Benchmark and does not call it a private benchmark."
         },
         {
           "url": "https://www.vals.ai/robots.txt",
@@ -13749,7 +13749,7 @@
         }
       ],
       "update_cadence": {
-        "source_schedule": "Not stated by the source; page shows \"Updated 9/10/2026\".",
+        "source_schedule": "Not stated by the source. The page prints a last-updated date and the island props carry it as metadata.updated; it moves with every refresh, so read it from the capture, not from here (2026-09-23 in the 2026-09-27 capture; 2026-09-10 when these entries were written).",
         "check_recommendation": "Daily, at most one capture per source; stop on access restrictions."
       },
       "saturated": {
@@ -13770,7 +13770,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Legal sector component; private benchmark. Vals AI publishes accuracy with a standard error per model; independent evaluator, secondary benchmark, not a Composite input."
+        "notes": "Legal sector component; the page's 2026-08-13 v2 update calls Legal Research Bench \"A private benchmark involving answering legal questions grounded in case law\". The page reports these columns under its \"ACCURACY\" view (heading \"Industry Average Accuracy Comparison\") and prints index values as percentages in its Key Takeaways. Benchmark Heaven policy: Vals AI runs these evaluations itself, so we keep this as a secondary board and never use it as an input to our Composite score."
       },
       "how_to_collect": {
         "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/vals-index-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
@@ -13786,7 +13786,7 @@
           "file": "data/raw/benchmarks/daily-evidence/2026-09-13-vals-index/36d323b86dd8c014b0db.gz",
           "sha256": "2b21b4e7fa2b0c6182dadde6c391bccef329e83768e9ed53f329f0c3a24b2cc2",
           "fetched_at": "2026-09-13T20:31:43.399165+00:00",
-          "excerpt": "Vals Index v2 (updated 2026-09-10): legal_research holds 56 model rows with accuracy, stderr, cost_per_test and latency. Legal sector component; private benchmark."
+          "excerpt": "Vals Index v2 (props metadata.version \"2\"): benchmarkView.tasks.legal_research holds one entry per model slug with accuracy, stderr, cost_per_test and latency — 65 model rows in the 2026-09-27 capture, 56 when the entry was written. Legal sector component; the 2026-08-13 v2 update calls Legal Research Bench a private benchmark for answering legal questions grounded in case law."
         },
         {
           "url": "https://www.vals.ai/robots.txt",
@@ -13814,7 +13814,7 @@
         }
       ],
       "update_cadence": {
-        "source_schedule": "Not stated by the source; page shows \"Updated 9/10/2026\".",
+        "source_schedule": "Not stated by the source. The page prints a last-updated date and the island props carry it as metadata.updated; it moves with every refresh, so read it from the capture, not from here (2026-09-23 in the 2026-09-27 capture; 2026-09-10 when these entries were written).",
         "check_recommendation": "Daily, at most one capture per source; stop on access restrictions."
       },
       "saturated": {
@@ -13835,7 +13835,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Coding sector component. Vals' own run: never join with aa-terminal-bench::2.1 or terminal-bench::4.0. Vals AI publishes accuracy with a standard error per model; independent evaluator, secondary benchmark, not a Composite input."
+        "notes": "Coding sector component; the page's Component Scores note states that each benchmark column is that benchmark's own published standalone score, under the same methodology, with Code Migration as the stated exception. The page reports these columns under its \"ACCURACY\" view (heading \"Industry Average Accuracy Comparison\") and prints index values as percentages in its Key Takeaways. Benchmark Heaven policy: Vals AI runs these evaluations itself, so we keep this as a secondary board and never use it as an input to our Composite score. Never join this row with aa-terminal-bench::2.1 or terminal-bench::4.0: this is Vals AI's own run."
       },
       "how_to_collect": {
         "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/vals-index-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
@@ -13851,7 +13851,7 @@
           "file": "data/raw/benchmarks/daily-evidence/2026-09-13-vals-index/36d323b86dd8c014b0db.gz",
           "sha256": "2b21b4e7fa2b0c6182dadde6c391bccef329e83768e9ed53f329f0c3a24b2cc2",
           "fetched_at": "2026-09-13T20:31:43.399165+00:00",
-          "excerpt": "Vals Index v2 (updated 2026-09-10): terminal_bench_2_1 holds 56 model rows with accuracy, stderr, cost_per_test and latency. Coding sector component. Vals' own run: never join with aa-terminal-bench::2.1 or terminal-bench::4.0."
+          "excerpt": "Vals Index v2 (props metadata.version \"2\"): benchmarkView.tasks.terminal_bench_2_1 holds one entry per model slug with accuracy, stderr, cost_per_test and latency — 65 model rows in the 2026-09-27 capture, 56 when the entry was written. Coding sector component; the Component Scores note states each column is that benchmark's own published standalone score, Code Migration excepted."
         },
         {
           "url": "https://www.vals.ai/robots.txt",
@@ -13879,7 +13879,7 @@
         }
       ],
       "update_cadence": {
-        "source_schedule": "Not stated by the source; page shows \"Updated 9/10/2026\".",
+        "source_schedule": "Not stated by the source. The page prints a last-updated date and the island props carry it as metadata.updated; it moves with every refresh, so read it from the capture, not from here (2026-09-23 in the 2026-09-27 capture; 2026-09-10 when these entries were written).",
         "check_recommendation": "Daily, at most one capture per source; stop on access restrictions."
       },
       "saturated": {
@@ -13900,7 +13900,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Coding sector component; private benchmark. Vals AI publishes accuracy with a standard error per model; independent evaluator, secondary benchmark, not a Composite input."
+        "notes": "Coding sector component; the page's Component Scores note states that each benchmark column is that benchmark's own published standalone score, under the same methodology, with Code Migration as the stated exception. Unlike EMB, Code Migration and Legal Research Bench, the page does not call Vibe Code Bench a private benchmark. The page reports these columns under its \"ACCURACY\" view (heading \"Industry Average Accuracy Comparison\") and prints index values as percentages in its Key Takeaways. Benchmark Heaven policy: Vals AI runs these evaluations itself, so we keep this as a secondary board and never use it as an input to our Composite score."
       },
       "how_to_collect": {
         "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/vals-index-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
@@ -13916,7 +13916,7 @@
           "file": "data/raw/benchmarks/daily-evidence/2026-09-13-vals-index/36d323b86dd8c014b0db.gz",
           "sha256": "2b21b4e7fa2b0c6182dadde6c391bccef329e83768e9ed53f329f0c3a24b2cc2",
           "fetched_at": "2026-09-13T20:31:43.399165+00:00",
-          "excerpt": "Vals Index v2 (updated 2026-09-10): vibe_code_bench holds 56 model rows with accuracy, stderr, cost_per_test and latency. Coding sector component; private benchmark."
+          "excerpt": "Vals Index v2 (props metadata.version \"2\"): benchmarkView.tasks.vibe_code_bench holds one entry per model slug with accuracy, stderr, cost_per_test and latency — 65 model rows in the 2026-09-27 capture, 56 when the entry was written. Coding sector component; the page does not call Vibe Code Bench a private benchmark."
         },
         {
           "url": "https://www.vals.ai/robots.txt",
@@ -13944,7 +13944,7 @@
         }
       ],
       "update_cadence": {
-        "source_schedule": "Not stated by the source; page shows \"Updated 9/10/2026\".",
+        "source_schedule": "Not stated by the source. The page prints a last-updated date and the island props carry it as metadata.updated; it moves with every refresh, so read it from the capture, not from here (2026-09-23 in the 2026-09-27 capture; 2026-09-10 when these entries were written).",
         "check_recommendation": "Daily, at most one capture per source; stop on access restrictions."
       },
       "saturated": {
@@ -13965,7 +13965,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Vals Index = (8.0 × Finance + 5.6 × Coding + 1.2 × Legal) / 14.8; each sector averages its component benchmarks. Vals AI publishes accuracy with a standard error per model; independent evaluator, secondary benchmark, not a Composite input."
+        "notes": "Vals Index = (8.0 × Finance + 5.6 × Coding + 1.2 × Legal) / 14.8; each sector is the average of its component benchmarks, as the page's Methodology section states. The page reports these columns under its \"ACCURACY\" view (heading \"Industry Average Accuracy Comparison\") and prints index values as percentages in its Key Takeaways. Benchmark Heaven policy: Vals AI runs these evaluations itself, so we keep this as a secondary board and never use it as an input to our Composite score."
       },
       "how_to_collect": {
         "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/vals-index-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
@@ -13981,7 +13981,7 @@
           "file": "data/raw/benchmarks/daily-evidence/2026-09-13-vals-index/36d323b86dd8c014b0db.gz",
           "sha256": "2b21b4e7fa2b0c6182dadde6c391bccef329e83768e9ed53f329f0c3a24b2cc2",
           "fetched_at": "2026-09-13T20:31:43.399165+00:00",
-          "excerpt": "Vals Index v2 (updated 2026-09-10): overall holds 56 model rows with accuracy, stderr, cost_per_test and latency. Vals Index = (8.0 × Finance + 5.6 × Coding + 1.2 × Legal) / 14.8; each sector averages its component benchmarks."
+          "excerpt": "Vals Index v2 (props metadata.version \"2\"): benchmarkView.tasks.overall holds one entry per model slug with accuracy, stderr, cost_per_test and latency — 65 model rows in the 2026-09-27 capture, 56 when the entry was written. Methodology: Vals Index = (8.0 × Finance + 5.6 × Coding + 1.2 × Legal) / 14.8, each sector the average of its component benchmarks."
         },
         {
           "url": "https://www.vals.ai/robots.txt",
