@@ -16,9 +16,20 @@ test("CR-126.1: OpenAI's own runs keep their own registry identities and printed
     'openai-automationbench-cost::1.0.6',
     'openai-automationbench::1.0.6',
     'openai-deepswe-v1-1::1.1',
+    'openai-mentalhealthbench::snapshot-2026-09-23',
     'openai-osworld-2-offline::v2026.08.08',
   ]);
-  assert.ok(own.every((row) => row.source_type === 'vendor_report' && row.primary_url === POST && row.status === 'active'));
+  // CR-190: a second OpenAI-owned family exists now, and it is not from this launch post, so the
+  // post's own four-plus-cost set is pinned by the source it came from rather than by the id prefix.
+  const fromPost = own.filter((row) => row.primary_url === POST);
+  assert.deepEqual(fromPost.map((row) => row.id).sort(), [
+    'openai-agents-last-exam::v1',
+    'openai-automationbench-cost::1.0.6',
+    'openai-automationbench::1.0.6',
+    'openai-deepswe-v1-1::1.1',
+    'openai-osworld-2-offline::v2026.08.08',
+  ]);
+  assert.ok(own.every((row) => row.source_type === 'vendor_report' && row.status === 'active'));
   const cost = registry.entries.find((row) => row.id === 'openai-automationbench-cost::1.0.6');
   assert.equal(cost.scoring.unit, 'USD');
   assert.equal(cost.scoring.higher_better, false);

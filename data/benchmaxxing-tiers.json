@@ -2,6 +2,10 @@
   "version": "2026-09-18",
   "note": "Benchmaxxing calibration tier table (job bh-benchmaxxing-calibration-20260917). Keyed by benchmark family (registry id before '::'). Tiers: headline = public question set that labs quote in release posts, so it is the board most exposed to targeted tuning and contamination; heldout = private/unpublished questions, tasks created after most training cutoffs, or a held-out split, which a lab cannot tune toward; domain = a vertical professional domain (legal, finance, spreadsheet, medical) whose gaps mostly show specialisation; secondary = public but rarely quoted, or measures a trait rather than task skill; aggregate = an index built from other boards (never compared); judged = graded by votes or a judge model (already outside the signal). Only benchmark facts decide a tier, never who scores well on it. 2026-09-19 (CR-54.2): six Epoch AI Benchmarking Hub boards joined with deliberate tiers; math_level_5 (2021 legacy, saturated MATH-500 precedent) and frontiermath_erdos (all five published rows score 0, not in ECI, benchmark_metadata leaves its source file blank) were excluded — see data/raw/benchmarks/epoch-hub-decisions.json.",
   "tiers": {
+    "openai-mentalhealthbench": {
+      "tier": "judged",
+      "reason": "Every criterion is scored by a judge model (GPT-5.6 Sol at high reasoning effort) against expert-written rubrics, so the board rates response quality rather than a verifiable ground truth; its registry update_cadence records a one-off 2026-09-23 research publication with no leaderboard."
+    },
     "aa-aime": {
       "tier": "headline",
       "reason": "AIME 2025 problems are public and quoted in nearly every reasoning-model release post."

@@ -190,6 +190,37 @@ Values are re-verified against those captures before they become candidates, and
 still needs an independent critic approval; see
 [versioned benchmark ingestion](../docs/benchmark-ingestion.md).
 
+## `openai.com/index/*` — the browser route for a 403 that robots.txt allows (CR-190.3, 2026-09-27)
+
+`https://openai.com/robots.txt` reads `User-agent: *` / `Allow: /`, and only `/microsoft-for-startups/`
+is disallowed. The publication pages under `/index/` nonetheless answer a plain HTTP client — including
+`scripts/capture-vendor-documents.py` with its `BenchmarkHeavenResearch/1.0` agent — with **HTTP 403** and a
+"Enable JavaScript and cookies to continue" page. We do not work around bot protection, and there is no
+challenge to solve here: the page is public and the crawl policy permits it, the plain client is simply
+refused.
+
+**The recipe.** Open the page once in the *shared* agent Chrome on CDP 9333 under the shared fair lock
+(`~/.locks/chrome-9333.lock`), keep the bytes the server returned for the **document request** unchanged,
+and close the tab again:
+
+    python3 ops/ux-2026-09-12/bin/cdp-capture-openai-page.py <URL> data/raw/benchmarks/daily-evidence/<DIR>
+
+It writes `<sha256-prefix>.gz` (the original response bytes, gzipped) and prints a receipt in the same shape
+`capture-vendor-documents.py` uses, with `capture_method: "desktop_chrome_cdp"` and a `capture_note` saying
+how the bytes were obtained. The receipt's `sha256` is the retained **body**, as everywhere else in a capture
+manifest; `registry.json`'s `evidence[].sha256` is the hash of the **`.gz` file**, which the receipt also
+prints as `gz_sha256`. Record the plain-client refusal in the same manifest (run the ordinary capture tool
+first and keep its `source_unreachable` receipt) so the reason for the deviation is in the evidence, not only
+in prose. Never start a second browser, never leave the tab open, and never execute downloaded JavaScript.
+
+**Where it applies.** `openai-agents-last-exam::v1`, `openai-automationbench::1.0.6`,
+`openai-automationbench-cost::1.0.6`, `openai-deepswe-v1-1::1.1` and `openai-osworld-2-offline::v2026.08.08`
+declare `how_to_collect.access = {"mode": "browser_only"}` because their only source is such a page, so the
+daily does not fetch them. `openai-mentalhealthbench::snapshot-2026-09-23` does **not**: its values come from
+the paper on `cdn.openai.com`, which the ordinary capture tool reaches with HTTP 200, and the browser route
+was used only to retain the announcement post as corroborating evidence.
+
+
 ## Benchmark sources from CR-20260915n — one decision per source (CR-38.1, started 2026-09-16)
 
 Florian listed ~55 benchmark sites and hubs on 15 Sep 2026. Each was audited for data access, robots.txt,

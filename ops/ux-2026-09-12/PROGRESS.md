@@ -15491,3 +15491,108 @@ capture** — doing so would have broken the hold to make a requirement look gre
 | ID | Status | Evidence | Notes |
 |---|---|---|---|
 | R9.1 | open → **open, reclassified: blocked by CR-139.3 (owner)** | live `/api/meta` (26 of 28 sources `2026-09-27`); `data/raw/aa-coding-agents.method.md`; `data/raw/benchmarks/ingestion-lock.json` `openrouter_aa_relay`; `scripts/lock-openrouter-aa-relay.mjs`; `scripts/build-dataset.mjs:544` | The two cited dates are a deliberate retained snapshot and a deliberate hash-locked capture, both held by the AA written-permission hold. Not a collector defect and not repairable by a work iteration. A future gate should cite CR-139.3 rather than re-listing the dates as staleness. |
+
+## Iteration 255 (claude-opus, work) — 2026-09-27 18:50–21:0x UTC — CR-190: the bookmark candidate is a real benchmark, read through the door that was open all along
+
+**CR-190 was the oldest thing the standing rule had asked for and nobody had touched it.** Florian's rule
+of 18 Sep — "look into [the bookmark folder] once a day and check if there are new evals/benchmarks it
+doesn't have in its list yet, and then add them" — produced one candidate on 24 Sep,
+*introducing-mentalhealthbench*. It then sat in an unmerged PR for three days (D241), came back as CR-190
+at iteration 253, and iteration 254 listed it as "**open — never worked**, the oldest thing the standing
+rule asked for". CR-190.3 named the obstacle: `https://openai.com/index/introducing-mentalhealthbench/`
+answers a plain `curl` with **HTTP 403**, and a GitHub search found no OpenAI repository.
+
+### The 403 is not the wall it looked like
+
+`https://openai.com/robots.txt` is `User-agent: *` / `Allow: /`, with only `/microsoft-for-startups/`
+disallowed — the crawl policy permits the page; the plain client is simply refused. Two doors were open:
+
+1. **The paper.** The post links `Read the paper`, and that link is
+   `https://cdn.openai.com/ctf-cdn/MentalHealthBench_…_Conversations.pdf` — a **different host**, which
+   `scripts/capture-vendor-documents.py` fetches with **HTTP 200** on the first try. It is 32 pages, and it
+   is where the numbers, the scoring formulas and the grading protocol actually are. The announcement page
+   never had them: its result figures are client-rendered `<div id="mentalhealthbench-overall">` shells with
+   no printed values, so even a successful fetch of the "primary" URL would have yielded nothing to ingest.
+2. **The agent Chrome**, which CR-190.3 itself named. The post was retained through one load on the shared
+   CDP 9333 under `~/.locks/chrome-9333.lock`, keeping the bytes the server returned for the document
+   request, tab closed in a `finally`. No challenge was solved, bypassed or replayed; no downloaded
+   JavaScript was executed. The plain-client refusal is kept in the same manifest as a
+   `source_unreachable` receipt, so the reason for the deviation sits in the evidence and not only in prose.
+
+Both receipts are in `data/raw/benchmarks/daily-evidence/2026-09-27-cr190/manifest.json`. The capture tool is
+committed at `ops/ux-2026-09-12/bin/cdp-capture-openai-page.py` and the recipe is written into
+`data/SCRAPING.md` as CR-190.3 requires — which also back-fills the five older `openai-*` entries that have
+declared `access: browser_only` since 22 Sep without the route ever being documented.
+
+### The candidate holds up, and it is genuinely new (CR-190.2)
+
+MentalHealthBench is real: an OpenAI publication of **2026-09-23**, 1,215 synthetic mental-health
+conversations, rubric criteria from **more than 80 licensed experts in 22 countries**, ten behavioural axes,
+17 evaluated models. It is **not** something we already carry under another name: the registry's only
+neighbour is `anthropic-healthbench-professional`, a different benchmark (Anthropic's self-reported
+HealthBench Professional cell), and the paper positions MentalHealthBench as building *on* HealthBench
+rather than renaming it. No alias is added, because there is nothing to alias.
+
+**No official export exists.** As of today OpenAI has published no dataset or code repository for it: the
+only GitHub repo and the only Hugging Face dataset carrying the name are **one third-party re-upload**
+(`MercuriusDream/MentalHealthBench`, created 2026-09-23T23:33Z, 72 downloads). That is not a primary source
+and is not used — the temptation to treat a convenient JSONL mirror as "machine-readable primary data" is
+exactly the mistake the rule exists to prevent.
+
+### What the entry says, and why every value will be `self_reported`
+
+`openai-mentalhealthbench::snapshot-2026-09-23` — no version is printed anywhere, so it is a dated identity.
+Category `Safety/Alignment`, kind `capability`, metric **mean task-clipped rubric score** (percent, 0–100).
+
+The three facts that decide its handling, each quoted from the retained bytes:
+
+- **It is judged.** "we use four independently sampled completions for each task and **grade each completion
+  with GPT-5.6 Sol at high reasoning effort**". Recorded in `data/benchmark-caveats.json` `judged` and as
+  tier `judged` in `data/benchmaxxing-tiers.json` — both, because a judged board needs the caveat *and* the
+  tier, and neither implies the other.
+- **No effort variant is identifiable.** "We use each model's API at **default** reasoning effort,
+  temperature, and verbosity setting (when applicable)." A row may therefore never be pinned to a named
+  effort configuration.
+- **Independence is not established for any row.** OpenAI is the benchmark's author, the vendor of five of
+  the seventeen evaluated models *and* the vendor of the judge. Unlike the GPT-6 launch post — where the
+  competitor cells were OpenAI *quoting* other reports and are refused as secondary quotes — here OpenAI ran
+  every model itself, so the competitor cells are measurements rather than quotes. They are still not
+  independent measurements. Every value stays `self_reported`, outside measured cohorts and outside the
+  Composite.
+
+**No cost is recorded.** The paper's Table 2 lists the API prices it used, and Figure 6 plots score against
+mean generation cost per response — but on a log axis with no printed values. A number read off a log-scale
+scatter is not a measurement, so CR-190.1's "cost per run if published" is answered with: not published
+numerically.
+
+### The one test that had to change, and it got stricter
+
+`test/gpt-6-sol-luna.test.mjs` pinned the complete list of `openai-*` registry families and then asserted
+that **every** one of them has `primary_url === POST`, the GPT-6 launch post. A second OpenAI-owned family
+whose source is a paper on another host breaks that. The pin was not loosened to accommodate it: the
+full `openai-*` list is still pinned (so a new OpenAI family still has to be declared), and the launch
+post's own five identities are now pinned **by the source they came from** rather than by an id prefix that
+merely happened to be exact. Two assertions where there was one.
+
+### Gates
+
+`node scripts/build-dataset.mjs` ✓ (870 models / 673 families / 94 providers / 3,134 offers, unchanged —
+a registry entry with no observations moves no number). `CI=true npm test` **1,515 tests, 1,514 pass, 0 fail,
+1 skip**. `npx tsc --noEmit -p .` exit 0. `node scripts/validate-benchmark-registry.mjs`: 293 entries.
+`scores.json` was **not hand-edited**: `node scripts/ingest-benchmark-scores.mjs` regenerated it and added
+exactly the six lines of the new `manual_required` collection row.
+
+| ID | Status | Evidence | Notes |
+|---|---|---|---|
+| CR-190.3 | **open — never worked** → **done** | `data/raw/benchmarks/daily-evidence/2026-09-27-cr190/manifest.json` (both the `source_unreachable` 403 receipt and the `desktop_chrome_cdp` receipt); `ops/ux-2026-09-12/bin/cdp-capture-openai-page.py`; `data/SCRAPING.md` new section | Route read and written down. The values themselves did not need it: the paper is on `cdn.openai.com` and the ordinary capture tool gets HTTP 200. Back-fills the five older `openai-*` `browser_only` entries, which never documented their route. |
+| CR-190.2 | **open — never worked** → **closed: genuinely new** | registry `how_to_collect.notes`; HF/GitHub searches in the iteration log | Not an alias of anything we carry. The only repo and dataset under the name are one third-party re-upload, refused as a non-primary source. |
+| CR-190.1 | **open — never worked** → **registry half done, scores half open** | `data/raw/benchmarks/registry.json` `openai-mentalhealthbench::snapshot-2026-09-23`; `data/benchmark-caveats.json`; `data/benchmaxxing-tiers.json`; `data/benchmark-taxonomy.json`; gates in `/opt/benchmarkheaven/state/ux-evidence/iter255-cr190/` | Registry entry with a pinned dated identity, full provenance, three verbatim excerpts, taxonomy, kind and tier all exist and validate. **Still open:** the 17 observations, which are all `self_reported` and therefore each need a `score-approvals.json` acceptance bound to the observation's SHA-256 plus a hashed different-family critic output, and a gauntlet round. Nothing is claimed to be on a model page yet. |
+
+**The 17 rows the next iteration ingests**, verbatim from Figure 5(a) of the retained paper (page 11),
+so they do not have to be read again: GPT-6 Astra 57.3 · GPT-6 Sol 53.9 · Claude Opus 5.5 52.4 ·
+GPT-6 Luna 50.2 · Muse Spark 1.3 48.6 · GPT-5.6 Sol (Aug 2026) 47.0 · Claude Fable 5.1 46.4 ·
+GPT-5.6 Luna (Aug 2026) 44.9 · Claude Sonnet 5 44.5 · GPT-5 Thinking 42.9 · Claude Haiku 4.5 41.7 ·
+Grok 4.7 41.3 · Gemini 3.8 Flash 35.5 · Gemini 2.5 Flash 33.5 · GPT-4o (March 2025) 32.1 ·
+Gemini 3.1 Pro 32.1 · Gemini 2.5 Pro 29.5. **Re-derive them from the capture before ingesting** — this
+list is a convenience, not the source. Identity is the paper's printed label including its dated
+qualifier, and no row may be pinned to a named reasoning effort.

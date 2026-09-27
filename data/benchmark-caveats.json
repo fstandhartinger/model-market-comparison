@@ -11,6 +11,11 @@
   },
   "judged_definition": "The published number ranks or rates outputs by preference or quality. A judge model that only checks whether an answer is correct (an equality checker, a majority vote on accuracy, an LLM normaliser in front of exact matching) is NOT judged — the ground truth still decides.",
   "judged": {
+    "openai-mentalhealthbench": {
+      "quote": "graded by an LLM judge, GPT-5.6 Sol at high reasoning effort",
+      "field": "scoring.notes",
+      "why": "Every rubric criterion is decided by a judge model's opinion of the response, not by an answer key or a verifier, so the published number rates quality rather than correctness."
+    },
     "anthropic-healthbench-professional": {
       "quote": "not percent accuracy",
       "field": "scoring.notes",
@@ -197,6 +202,12 @@
     "charxiv-reasoning": "GPT-4o only extracts the final answer and scores it 0/1 against the ground-truth answer — an equality check, the ground truth decides (added 2026-09-22, iteration 170)."
   },
   "freshness": {
+    "openai-mentalhealthbench": {
+      "task_window": null,
+      "contamination": "The conversations are synthetic and were created for this benchmark using privacy-preserving techniques; the source states no contamination control beyond that and names no task date window.",
+      "quote": "we created synthetic mental health conversations",
+      "field": "evidence.excerpt"
+    },
     "aa-aime": {
       "task_window": {
         "from": "2025",

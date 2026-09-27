@@ -1,0 +1,36 @@
+[
+ {
+  "url": "https://cdn.openai.com/ctf-cdn/MentalHealthBench_A_Comprehensive_Benchmark_of_AI_Capabilities_in_Realistic_Mental_Health_Conversations.pdf",
+  "retrieved_at": "2026-09-27T18:57:20.590375+00:00",
+  "status": 200,
+  "file": "data/raw/benchmarks/daily-evidence/2026-09-27-cr190/fa5a3dc17fb2a58f820a.gz",
+  "sha256": "fa5a3dc17fb2a58f820a1f4269cde93010b7f7c3e98558f65d082a9c5690644f",
+  "bytes": 138370,
+  "evidence": "pdf_text_layer",
+  "document_sha256": "f4ce5da8db2c7c3ec3512363f57b82a07367b30eb1b5ff20f0349f09bfcabd75",
+  "document_bytes": 2984142,
+  "final_url": "https://cdn.openai.com/ctf-cdn/MentalHealthBench_A_Comprehensive_Benchmark_of_AI_Capabilities_in_Realistic_Mental_Health_Conversations.pdf",
+  "extraction": "pdftotext -layout pdftotext version 22.02.0",
+  "pages": 32
+ },
+ {
+  "url": "https://openai.com/index/introducing-mentalhealthbench/",
+  "retrieved_at": "2026-09-27T18:58:39.275380+00:00",
+  "status": "source_unreachable",
+  "reason": "HTTP Error 403: Forbidden"
+ },
+ {
+  "url": "https://openai.com/index/introducing-mentalhealthbench/",
+  "retrieved_at": "2026-09-27T18:58:32.000000+00:00",
+  "status": 200,
+  "file": "data/raw/benchmarks/daily-evidence/2026-09-27-cr190/dc0047a15f9272dd2c84.gz",
+  "sha256": "dc0047a15f9272dd2c84281fb157b0dc9247cf09733890ac8a6446a803fcb10f",
+  "bytes": 1473038,
+  "evidence": "original_bytes",
+  "document_sha256": "dc0047a15f9272dd2c84281fb157b0dc9247cf09733890ac8a6446a803fcb10f",
+  "document_bytes": 1473038,
+  "final_url": "https://openai.com/index/introducing-mentalhealthbench/",
+  "capture_method": "desktop_chrome_cdp",
+  "capture_note": "scripts/capture-vendor-documents.py receives HTTP 403 for this path: openai.com answers a plain HTTP client with a challenge page even though https://openai.com/robots.txt allows it ('User-agent: *  Allow: /', only /microsoft-for-startups/ is disallowed). The page was therefore opened once in the shared desktop Chrome (CDP 9333, one tab, closed afterwards) and the bytes the server returned for the document request were retained unchanged - no challenge was solved, bypassed or replayed, and no downloaded JavaScript was executed here. Capture tool: ops/ux-2026-09-12/bin/cdp-capture-openai-page.py."
+ }
+]
