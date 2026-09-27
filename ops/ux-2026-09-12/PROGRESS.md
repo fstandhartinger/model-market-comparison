@@ -14583,7 +14583,18 @@ The 11:10 gate recorded `pass38-canonical` at **53/58**, five F-207/F-207b failu
 `[data-bh-jev14-3d-model-label]` and **swallowed the timeout**, so a hub that never attached its 3D
 scene under load was reported as five *design* defects. A scene that never arrived is a load failure;
 it now says so, with one reload and its own named check, so no design assertion can be read as red on
-an absent scene. That is +1 check per context (62 per host, not 58).
+an absent scene. That is +1 check per context.
+
+**And re-running it turned up a second thing the gate's green hid.** The hardened verifier reports
+**66/66 on each of the three hosts** at the closing revision `434887ff`, not 62 — because the gate's
+own passing run had taken the **SVG fallback** branch of the 3D chart, where `verify-fable-pass38-design.mjs`
+emits one check ("SVG fallback in use: labels are text (plate and marker do not apply)") in place of the
+two that actually assert F-207(a): the translucent plate and the bar-not-disc class marker. So its
+`58/58` meant "the plate and the marker were not evaluated in any context", not "the plate and the
+marker are right". This iteration's runs took the DOM-label branch and evaluated both, in all four
+contexts, on all three hosts — they pass. The check name is honest, so this is not a defect in the
+verifier; it is a reason not to read a pass total as coverage. F-207(a)'s `verified` row stands on
+iteration 245's 24/24, which did exercise the DOM branch.
 
 ### Receipts
 
@@ -14592,7 +14603,7 @@ an absent scene. That is +1 check per context (62 per host, not 58).
 | D233 (new) = the extractor rule | **fixed, pending non-implementer verification** | `1e84b7d0`; `extractor-equivalence.json` (2,491 captures, 0 length and 0 normalised differences), `scan-{old,new}.json` (428 refs / 0 failing, both), `control-old-extractor.txt`; `test/d233-inline-badge-line-structure.test.mjs` **4/4** | Reproduce the equivalence claim without the old file: any two revisions of `public-candidate.py` can be compared the same way, and the invariant to check is length *and* `\s+`-normalised equality, not the text itself. |
 | D233 = `vending-bench::2`, the retained arm | **fixed, pending non-implementer verification** | `b487108a`; replay **accepted** (1 fingerprint, 0 quarantined) at `…/iter250-d233/replay-round1/`, `--lie` failing closed in `…/replay-lie/`; live receipts below | Reproduce offline with `BH_REPLAY_MANIFEST=data/raw/benchmarks/daily-evidence/2026-09-27T05-33-09-831Z/manifest.json node ops/ux-2026-09-12/bin/replay-protocol-review.mjs 'vending-bench::2' <outDir>`. Prose only: the dataset diff is four strings and the build timestamp. |
 | D233 = the plan's second copy of the metric | **fixed, pending non-implementer verification and the next daily publish** | `collection-plan.json` entry 44; `test/d233-plan-protocol-twins.test.mjs` **3/3**; live `verify-d233-live.mjs` **11/12 per host** at `b487108a` (`…/iter250-d233/live/{canonical,www,legacy}/verification.json`) | The one red check is the published observations' frozen copy of the plan protocol; it clears when a run republishes this arm, and it must **not** be cleared by editing `public-observations.json` or `scores.json`. Preflight before the deploy was 7/12 with exactly the five new-state checks red, which is what shows the repair is prose only. |
-| pass38 verifier | **hardened** | this section; `/opt/benchmarkheaven/state/ux-evidence/review-20260927T111003Z/pass38-canonical{,-fixed}/verification.json` are the two runs that showed it | Stricter, not weaker: the design checks are unchanged and one precondition check is added. A future gate reading 53/58 with empty details should suspect the scene, not the CSS. |
+| pass38 verifier | **hardened; live 66/66 per host** | `/opt/benchmarkheaven/state/ux-evidence/iter250-d233/pass38-{canonical,www,legacy}/verification.json` at `434887ff`; the two gate runs that showed the problem are at `…/review-20260927T111003Z/pass38-canonical{,-fixed}/` | Stricter, not weaker: the design checks are unchanged and one precondition check is added. Two things for a future gate: 53/58 with empty details is the 3D scene, not the CSS; and a total that includes "SVG fallback in use" is a total in which F-207(a)'s plate and marker were never evaluated. |
 
 ### The 11:10 review gate also wrote receipts and no report — the second in a row
 
@@ -14631,3 +14642,57 @@ is gone for good, and a later gate may still reopen any of these.
 | F-208 | live-checked, pending non-implementer verification → **verified** | same receipt | Same gate. |
 | F-209 (= D225) | implemented, pending non-implementer verification → **verified** | `…/f209-d225/verification.json`, **13/13** | Same gate. The quarantine path is still a strict no-op on today's data; that is what the receipt shows. |
 | D223 / D224 | **open, with a non-implementer receipt on the fence** | `…/d188-d223-d224/verification.json`, **105/105** | The fence the 02:20 gate added is verified live. D223 itself is unchanged: VulcanBench v3.15 continuity still needs primary-source evidence or its own versioned entry. A green fence is not an accepted protocol. |
+
+## Iteration 250 summary
+
+The finding iteration 248 filed for its own iteration is fixed. `public-candidate.py text` put every
+HTML text node on its own line, so an inline `Deprecated` badge read as a heading over the next nav
+group and cost `blueprint-bench::2` a replay round. An inline formatting element can no longer start a
+line — and because the rule emits exactly one separator character per boundary either way, the
+extracted text keeps its byte length and its `\s+`-normalised form character for character. Measured
+over **every capture in the repository**: 2,491 files, 1,073 changed lines, **0** length and **0**
+normalised differences; `scan-protocol-excerpts.mjs` gives the same 428 references / 0 failing before
+and after. So a change that touches every protocol packet shipped with a proof instead of a hope.
+
+The arm it was expected to unblock was blocked on something else, and something worse:
+`vending-bench::2` claimed "(average across 5 runs)" and the source states no run count at all — the
+per-row counts in its own standard-error tooltips are **4, 5 and 6**. Retained since 2026-09-23,
+**accepted in round 1** after the correction, `--lie` still closed.
+
+Then the live check earned its keep: the same metric text lives a second time in
+`collection-plan.json`, is copied into every observation, and is served per cell — so the corrected
+registry sat beside ten cells still carrying the old claim, with all three gates green. The plan (the
+input) is corrected, sixteen verbatim twins are pinned against their registry metric, and the one red
+check is named as the receipt for the next daily rather than silenced.
+
+Two gate artefacts recorded: `verify-fable-pass38-design.mjs` swallowed its 3D-scene wait and reported
+a load failure as five design failures, and a passing total that contains "SVG fallback in use" is a
+total in which F-207(a) was never evaluated.
+
+Gates: `node scripts/build-dataset.mjs` 870 models / 673 families / 94 providers / 3,134 offers,
+`CI=true npm test` **1502 tests, 1501 pass, 0 fail, 1 skip** (exit 0, unpiped), `npx tsc --noEmit -p .`
+exit 0. Live: `verify-d233-live.mjs` **11/12 on each of the three hosts** at `434887ff` (the twelfth is
+tomorrow's publish), `verify-fable-pass38-design.mjs` **66/66 per host** at the same revision.
+
+Also recovered: the **11:10 codex-luna gate's 23 receipts**, written and then left out of every report —
+the second gate in a row to do this. They pay the non-implementer verification for D226, D228, D229,
+D231, D232, E1, F-207(b), F-208 and F-209, and D227's page half.
+
+**For the next iteration, in order:**
+
+1. **Tomorrow's 05:17 daily is the acceptance receipt for a lot**, and it is now the receipt for three
+   distinct things: the eight one-row arms of iterations 246–249 (whose repairs all landed *after* the
+   05:17 run of 2026-09-27 started, which is why that run still listed them stale), `vending-bench::2`,
+   and D227's `aa-benchmark-fields` unfreeze. Read `reports/source-health.md` first, then re-run
+   `verify-d233-live.mjs` on all three hosts: **12/12** is the receipt that the corrected protocol text
+   reached the published observations. If it is still 11/12, the arm did not publish — read the ingest
+   throw in the run's `run-report.json`, not `pipeline-streak.json`.
+2. **The eight multi-row arms of D192** are what survives that run. `vending-bench::2` is now off that
+   list, and the shape it turned out to have — a *quantitative claim the source never states* — is worth
+   looking for first in the rest: read the `producer-r*.json` note before reading the page.
+3. **A third gate writing receipts and no report** should be treated as a process problem, not a
+   transcription chore. Two iterations have now spent time recovering another engine's conclusions.
+   `iterate.sh`'s review path could require a `REVIEW-*.md` before it records `rc=0`.
+4. **D223** is unchanged and still needs primary-source evidence that VulcanBench v3.15 preserves the
+   v3.4–v3.7 protocol, or its own versioned entry. The fence around it is verified live; the fence is
+   not an acceptance.
